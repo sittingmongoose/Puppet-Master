@@ -400,25 +400,41 @@
   },
   {
     "block_id": "B-07",
-    "phase": "B",
-    "method": null,
-    "case": "B07",
-    "route": null,
-    "status": "UNSTARTED_RESERVED",
+    "phase": "B-development",
+    "method": "M15",
+    "case": "I07",
+    "route": "luna",
+    "status": "READY_DEVELOPMENT",
     "kind": "full-discovery",
-    "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "allowance_s": 4500,
+    "occupied_ceiling_s": 5400,
+    "method_version": "v1",
+    "stage_allowances_s": {
+      "research": 1800,
+      "critic": 1200,
+      "verifier": 900,
+      "reviser": 1500
+    },
+    "resource_version": "75-30-parallel20+15-25-v1"
   },
   {
     "block_id": "B-08",
-    "phase": "B",
-    "method": null,
-    "case": "B08",
-    "route": null,
-    "status": "UNSTARTED_RESERVED",
+    "phase": "B-development",
+    "method": "M15",
+    "case": "I08",
+    "route": "muse",
+    "status": "READY_DEVELOPMENT",
     "kind": "full-discovery",
-    "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "allowance_s": 4500,
+    "occupied_ceiling_s": 5400,
+    "method_version": "v1",
+    "stage_allowances_s": {
+      "research": 1800,
+      "critic": 1200,
+      "verifier": 900,
+      "reviser": 1500
+    },
+    "resource_version": "75-30-parallel20+15-25-v1"
   },
   {
     "block_id": "C-01",

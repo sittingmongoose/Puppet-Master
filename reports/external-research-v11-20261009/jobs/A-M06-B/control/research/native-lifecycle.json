@@ -1,0 +1,29 @@
+{
+  "record": "native-goal-lifecycle",
+  "stage": "research",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research",
+  "recorded_utc": "2026-10-09T21:06:00Z",
+  "science_saved_before_terminal": {
+    "discovery.md": {"mtime_utc": "2026-10-09T21:01:00Z", "bytes": 14089, "sha256": "1b52f7a48b048550d6319d1b5878d9829f01b04ba679d2c0972198ecb8efbb72"},
+    "source-map.json": {"mtime_utc": "2026-10-09T21:00:00Z", "bytes": 6362, "sha256": "e68097d3062fa3e3286eb20f8460b78c2118f2723528d0b558e9d36a20dbfdb1"},
+    "draft.md": {"mtime_utc": "2026-10-09T21:04:00Z", "bytes": 14040},
+    "sources_dir": "6 evidence files, S01-S06, sha256-pinned in source-map.json, verified OK"
+  },
+  "lifecycle": {
+    "goal_id": "UNKNOWN",
+    "activation_receipt": "UNKNOWN",
+    "driver_internal_calls": "UNKNOWN",
+    "note": "Per assignment infrastructure guard: the top-level /goal already activated the installed native integration loop; goal_start/t3_thread_launch/create_threads/delegate_task were not invoked and no verifier was created to prove lifecycle internals. Unobservable lifecycle fields remain UNKNOWN by rule; no receipt JSON was handwritten."
+  },
+  "observed_loop": {
+    "dispatch_tickets_received": 4,
+    "tickets_completed": ["independent discovery (O1-O3)", "freeze+reveal", "draft.md per-P dispositions (O4-O6)", "this lifecycle/delivery ticket"],
+    "verification_passes_recorded": 3,
+    "deadline_utc": "2026-10-09T21:17:52.979033+00:00",
+    "terminal_completion": "this turn's final complete answer; science artifacts predate it (mtimes 21:00-21:04 < terminal)"
+  },
+  "fallback": {
+    "predeclared_fallback_used": false,
+    "note": "Complete native answer is delivered directly in the terminal message; no verbatim-export fallback was needed. A short status does not replace the final."
+  }
+}

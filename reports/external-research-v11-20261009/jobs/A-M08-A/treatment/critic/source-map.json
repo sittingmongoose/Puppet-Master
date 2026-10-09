@@ -1,0 +1,115 @@
+{
+  "map_version": 1,
+  "written_at": "2026-10-09T20:55Z",
+  "stage": "critic",
+  "note": "Immutable source IDs reused unchanged from the predecessor research/source-map.json (no silent rebind). This map records the critic's own re-observations of the same sources; predecessor observations remain authoritative for their own timestamps. Evidence excerpts retained under sources/ per evidence_kind=full-discovery; access timestamps are session-clock UTC.",
+  "predecessor_map": "../research/source-map.json",
+  "index": "sources/index.md",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "OR-Tools Employee Scheduling documentation",
+      "kind": "primary-vendor-docs",
+      "url": "https://developers.google.com/optimization/scheduling/employee_scheduling",
+      "version_or_commit": "live docs page, no version label (same as predecessor observation)",
+      "locator": "on-page CP-SAT nurse examples (basic + shift-requests variant); absence of any size-limit statement and of timezone/DST content",
+      "accessed_at": "2026-10-09T20:47:00Z",
+      "observed_operations": ["WebFetch full-page claim-list verification", "verbatim quote capture", "explicit absence checks (size limit, timezone)"],
+      "evidence_file": "sources/re-observations.md#s01--or-tools-employee-scheduling-docs-re-access-2026-10-09t2047z",
+      "reobservation_of": "S01 in ../research/source-map.json (predecessor accessed_at 2026-10-09T20:32:00Z)"
+    },
+    {
+      "id": "S02",
+      "title": "Timefold Solver Load balancing and fairness documentation",
+      "kind": "primary-vendor-docs",
+      "url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/load-balancing-and-fairness",
+      "version_or_commit": "docs current with release line 2.7.1 (unchanged)",
+      "locator": "ConstraintCollectors.loadBalance section with fairAssignments example; unfairness property statements; score-trap paragraph",
+      "accessed_at": "2026-10-09T20:47:00Z",
+      "observed_operations": ["WebFetch full-page claim-list verification", "verbatim quote capture"],
+      "evidence_file": "sources/re-observations.md#s02--timefold-load-balancing-docs-re-access-2026-10-09t2047z",
+      "reobservation_of": "S02 in ../research/source-map.json (predecessor accessed_at 2026-10-09T20:32:00Z)"
+    },
+    {
+      "id": "S03",
+      "title": "TimefoldAI/timefold-quickstarts repository",
+      "kind": "primary-code-repo",
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts",
+      "version_or_commit": "default branch 'stable'; releases: none (API empty array)",
+      "locator": "Employee Scheduling use-case description; overview-table 'Notable Solver Concepts'; README app.timefold.ai tips; releases API",
+      "accessed_at": "2026-10-09T20:48:00Z",
+      "observed_operations": ["WebFetch README/use-case verification", "curl releases API returning [] at 20:52Z"],
+      "evidence_file": "sources/re-observations.md#s03--timefoldaitimefold-quickstarts-re-access-2026-10-09t2048z-releases-api-2052z",
+      "reobservation_of": "S03 in ../research/source-map.json (predecessor accessed_at 2026-10-09T20:32:00Z)"
+    },
+    {
+      "id": "S04",
+      "title": "google/or-tools releases page",
+      "kind": "primary-release-history",
+      "url": "https://github.com/google/or-tools/releases",
+      "version_or_commit": "v9.15 marked Latest; tags v9.6..v9.15 observed (unchanged)",
+      "locator": "v9.11 known issue; v9.13 known issues #4674/#4677; v9.14/v9.15 fixes; date rows lacking years",
+      "accessed_at": "2026-10-09T20:47:00Z",
+      "observed_operations": ["WebFetch release-notes claim-list verification", "verbatim quote capture incl. page's own typo"],
+      "evidence_file": "sources/re-observations.md#s04--googleor-tools-releases-re-access-2026-10-09t2047z",
+      "reobservation_of": "S04 in ../research/source-map.json (predecessor accessed_at 2026-10-09T20:33:00Z)"
+    },
+    {
+      "id": "S05",
+      "title": "TimefoldAI/timefold-solver releases page",
+      "kind": "primary-release-history",
+      "url": "https://github.com/TimefoldAI/timefold-solver/releases",
+      "version_or_commit": "2.7.1 latest (06 Oct); 1.34.0 maintenance line with EOL early 2027 (new)",
+      "locator": "release notes 2.7.1/2.7.0/2.0.0/1.34.0/2.6.0; move-selection fairness wording",
+      "accessed_at": "2026-10-09T20:48:00Z",
+      "observed_operations": ["WebFetch release-notes claim-list verification", "verbatim quote capture"],
+      "evidence_file": "sources/re-observations.md#s05--timefoldaitimefold-solver-releases-re-access-2026-10-09t2048z",
+      "reobservation_of": "S05 in ../research/source-map.json (predecessor accessed_at 2026-10-09T20:33:00Z)"
+    },
+    {
+      "id": "S06",
+      "title": "Golden: Top Volunteer Scheduling Platforms for Food Banks",
+      "kind": "vendor-blog-secondary",
+      "url": "https://goldenvolunteer.com/blog/volunteer-scheduling-platforms-food-banks",
+      "version_or_commit": "live blog post; publication date visible: 2026-09-14 (corrects predecessor 'no date visible')",
+      "locator": "three-category framework; $36.14 sentence; warehouse-operations phrasing; footer compare links (competitor names out-of-body); linked-post provenance for no-show predictor",
+      "accessed_at": "2026-10-09T20:48:00Z",
+      "observed_operations": ["WebFetch full-page claim-list verification", "verbatim quote capture", "provenance check for linked-post quote"],
+      "evidence_file": "sources/re-observations.md#s06--golden-food-bank-platforms-article-re-access-2026-10-09t2048z",
+      "reobservation_of": "S06 in ../research/source-map.json (predecessor accessed_at 2026-10-09T20:34:00Z)"
+    },
+    {
+      "id": "S07",
+      "title": "VolunteerHub features page",
+      "kind": "primary-vendor-product-page",
+      "url": "https://volunteerhub.com/features/",
+      "version_or_commit": "live product page",
+      "locator": "feature-name list; explicit absence of recurring-shifts and roster-import features; integrations list; 'intervals you designate' phrasing",
+      "accessed_at": "2026-10-09T20:47:00Z",
+      "observed_operations": ["WebFetch feature-name enumeration + absence check", "verbatim feature-name capture"],
+      "evidence_file": "sources/re-observations.md#s07--volunteerhub-features-page-re-access-2026-10-09t2047z",
+      "reobservation_of": "S07 in ../research/source-map.json (predecessor accessed_at 2026-10-09T20:34:00Z)"
+    },
+    {
+      "id": "S08",
+      "title": "Search-index product and community landscape",
+      "kind": "search-index-secondary",
+      "url": "(aggregated; see predecessor evidence file for per-lead URLs)",
+      "version_or_commit": "n/a",
+      "locator": "not re-fetched; predecessor leads-not-claims recording stands",
+      "accessed_at": null,
+      "observed_operations": ["no critic re-observation required; no critic claim rests on S08 beyond predecessor honesty labels"],
+      "evidence_file": "../research/sources/S08-search-landscape-secondary.md",
+      "reobservation_of": "S08 in ../research/source-map.json (predecessor accessed_at 2026-10-09T20:31:00Z)"
+    }
+  ],
+  "negative_evidence": [
+    {
+      "id": "N01",
+      "what": "raw shift_scheduling_sat.py internals",
+      "detail": "critic probes 2026-10-09T20:49-20:53Z: HTTP 404 on raw paths under stable, main, and tags v9.6/v9.10/v9.12 (both historical path variants), plus the blob path; GitHub contents API shows the file absent from the entire ortools/sat/samples tree on stable (no alias) and no shift* file in ortools/sat/python. The sophisticated example linked from the docs page is unlocatable across the v9.6-v9.15 window: docs-vs-repo inconsistency.",
+      "accessed_at": "2026-10-09T20:53:00Z",
+      "reobservation_of": "N01 in ../research/source-map.json (predecessor accessed_at 2026-10-09T20:34:00Z, two raw-path 404s)"
+    }
+  ]
+}

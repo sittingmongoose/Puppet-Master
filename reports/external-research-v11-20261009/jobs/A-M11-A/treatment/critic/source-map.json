@@ -1,0 +1,203 @@
+{
+  "map_version": 1,
+  "case": "S11",
+  "block": "A-M11-A",
+  "arm": "treatment",
+  "method": "M11",
+  "stage": "critic",
+  "created_utc": "2026-10-09T20:49:00Z",
+  "timestamp_note": "access_timestamp values are UTC, minute precision, taken from this critic run's verification fetches (20:44-20:49Z, 2026-10-09).",
+  "usage_billing": "unobserved: null (no usage or billing data was observable for any source)",
+  "immutable_ids_note": "Predecessor source IDs S01..S22 are inherited immutable from research/source-map.json (sha256 6cf438a6199488584a6f4f984a1215eab27c3902844bfccf1240163781b0281e) and are NOT rebound or restated here; their full records, locators, access timestamps, and evidence files remain authoritative in that map and research/sources/. This critic run's new sources are added as S23..S34 per the predecessor's own re-visit convention (add S<n+1>).",
+  "drift_note": "Mutable targets (main branches, live docs pages, GitHub API) were accessed 2026-10-09 20:44-20:49Z. Where the live state differs from the predecessor's capture (Whisper default model; Able Player v5 release set; release dates; Subtitle Edit platforms; Argos wording), the critic records both and treats the drift as measured evidence (critique.md M1-M6), not a silent rebind.",
+  "predecessor_reference": {
+    "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/source-map.json",
+    "sha256": "6cf438a6199488584a6f4f984a1215eab27c3902844bfccf1240163781b0281e",
+    "sources_count": 22,
+    "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources"
+  },
+  "evidence_file_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/critic/sources",
+  "navigable_index": "sources/index.md",
+  "sources": [
+    {
+      "id": "S23",
+      "title": "Able Player README (main branch, raw)",
+      "url": "https://raw.githubusercontent.com/ableplayer/ableplayer/main/README.md",
+      "publisher": "ableplayer (GitHub)",
+      "kind": "primary code README (main)",
+      "version": "main (2026-10)",
+      "commit": null,
+      "locator": "Interactive Transcript section",
+      "access_timestamp": "2026-10-09T20:44:00Z",
+      "observed_operations": [
+        "web fetch (raw markdown, full read); transcript feature sentence captured verbatim"
+      ],
+      "evidence_file": "sources/S23-S34-critic-verifications.md#s23"
+    },
+    {
+      "id": "S24",
+      "title": "MDN — <track> element (live docs)",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track",
+      "publisher": "Mozilla",
+      "kind": "official docs",
+      "version": null,
+      "commit": null,
+      "locator": "kind attribute values + default; .vtt format note",
+      "access_timestamp": "2026-10-09T20:44:00Z",
+      "observed_operations": [
+        "web fetch with targeted questions; default kind and captions/subtitles semantics quoted"
+      ],
+      "evidence_file": "sources/S23-S34-critic-verifications.md#s24"
+    },
+    {
+      "id": "S25",
+      "title": "W3C WAI — Selecting Web Accessibility Evaluation Tools (live page)",
+      "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+      "publisher": "W3C WAI",
+      "kind": "primary guidance (re-visit of S15)",
+      "version": null,
+      "commit": null,
+      "locator": "video transcript on page",
+      "access_timestamp": "2026-10-09T20:44:00Z",
+      "observed_operations": [
+        "web fetch with targeted questions; exact-quote check of the 'tools can't do it all' passage"
+      ],
+      "evidence_file": "sources/S23-S34-critic-verifications.md#s25"
+    },
+    {
+      "id": "S26",
+      "title": "GitHub API — ableplayer/ableplayer releases (20 newest)",
+      "url": "https://api.github.com/repos/ableplayer/ableplayer/releases?per_page=20",
+      "publisher": "GitHub API / ableplayer",
+      "kind": "primary code releases (API)",
+      "version": "v3.2..v5.1.0-beta2 as returned",
+      "commit": null,
+      "locator": "tag_name/published_at pairs; release bodies",
+      "access_timestamp": "2026-10-09T20:45:00Z",
+      "observed_operations": [
+        "web fetch (JSON, parsed); full tag/date list extracted; release-body quotes for v4.4..v5.0.0"
+      ],
+      "evidence_file": "sources/S23-S34-critic-verifications.md#s26"
+    },
+    {
+      "id": "S27",
+      "title": "GitHub API — ableplayer release tag v4.4",
+      "url": "https://api.github.com/repos/ableplayer/ableplayer/releases/tags/v4.4",
+      "publisher": "GitHub API / ableplayer",
+      "kind": "primary code release (API, single tag)",
+      "version": "v4.4",
+      "commit": null,
+      "locator": "created_at/published_at fields",
+      "access_timestamp": "2026-10-09T20:47:00Z",
+      "observed_operations": [
+        "web fetch (JSON); published_at 2021-11-16T22:37:45Z read verbatim"
+      ],
+      "evidence_file": "sources/S23-S34-critic-verifications.md#s27"
+    },
+    {
+      "id": "S28",
+      "title": "GitHub API — ableplayer release tag v5.0.0",
+      "url": "https://api.github.com/repos/ableplayer/ableplayer/releases/tags/v5.0.0",
+      "publisher": "GitHub API / ableplayer",
+      "kind": "primary code release (API, single tag)",
+      "version": "v5.0.0",
+      "commit": null,
+      "locator": "created_at/published_at fields + body bullets",
+      "access_timestamp": "2026-10-09T20:47:00Z",
+      "observed_operations": [
+        "web fetch (JSON); published 2026-06-21; ESM/NPM breaking-change bullets read"
+      ],
+      "evidence_file": "sources/S23-S34-critic-verifications.md#s28"
+    },
+    {
+      "id": "S29",
+      "title": "GitHub API — ableplayer release tag v4.5",
+      "url": "https://api.github.com/repos/ableplayer/ableplayer/releases/tags/v4.5",
+      "publisher": "GitHub API / ableplayer",
+      "kind": "primary code release (API, single tag)",
+      "version": "v4.5",
+      "commit": null,
+      "locator": "created_at/published_at fields",
+      "access_timestamp": "2026-10-09T20:47:00Z",
+      "observed_operations": [
+        "web fetch (JSON); published_at 2022-11-11T21:52:55Z read verbatim"
+      ],
+      "evidence_file": "sources/S23-S34-critic-verifications.md#s29"
+    },
+    {
+      "id": "S30",
+      "title": "openai/whisper — whisper/transcribe.py (main branch, raw)",
+      "url": "https://raw.githubusercontent.com/openai/whisper/main/whisper/transcribe.py",
+      "publisher": "OpenAI",
+      "kind": "primary code (main)",
+      "version": "main (2026-10)",
+      "commit": null,
+      "locator": "argparse add_argument lines for --model, --task, --output_format",
+      "access_timestamp": "2026-10-09T20:48:00Z",
+      "observed_operations": [
+        "web fetch (raw source, targeted read); defaults quoted verbatim: model=turbo, task=transcribe, output_format=all; translate help 'X->English translation'"
+      ],
+      "evidence_file": "sources/S23-S34-critic-verifications.md#s30"
+    },
+    {
+      "id": "S31",
+      "title": "openai/whisper — README (main branch, raw)",
+      "url": "https://raw.githubusercontent.com/openai/whisper/main/README.md",
+      "publisher": "OpenAI",
+      "kind": "primary code README (main)",
+      "version": "main (2026-10)",
+      "commit": null,
+      "locator": "default-setting prose; turbo/translate caveat",
+      "access_timestamp": "2026-10-09T20:44:00Z",
+      "observed_operations": [
+        "web fetch (raw markdown, full read); 'default setting (which selects the turbo model)' and turbo+translate original-language caveat captured"
+      ],
+      "evidence_file": "sources/S23-S34-critic-verifications.md#s31"
+    },
+    {
+      "id": "S32",
+      "title": "W3C H95 — Using the track element to provide captions (live page)",
+      "url": "https://www.w3.org/WAI/WCAG22/Techniques/html/H95",
+      "publisher": "W3C WAI",
+      "kind": "WCAG technique (re-visit of S07)",
+      "version": null,
+      "commit": null,
+      "locator": "description; regional note on subtitles labeling",
+      "access_timestamp": "2026-10-09T20:45:00Z",
+      "observed_operations": [
+        "web fetch with targeted questions; captions-vs-subtitles wording and regional note quoted"
+      ],
+      "evidence_file": "sources/S23-S34-critic-verifications.md#s32"
+    },
+    {
+      "id": "S33",
+      "title": "SubtitleEdit/subtitleedit — repository (live README)",
+      "url": "https://github.com/SubtitleEdit/subtitleedit",
+      "publisher": "SubtitleEdit (GitHub)",
+      "kind": "primary code (re-visit of S12, deeper)",
+      "version": "(2026-10)",
+      "commit": null,
+      "locator": "download/platform matrix; privacy section",
+      "access_timestamp": "2026-10-09T20:45:00Z",
+      "observed_operations": [
+        "web fetch with targeted questions; Windows/macOS/Linux platform evidence captured; format list absent from page"
+      ],
+      "evidence_file": "sources/S23-S34-critic-verifications.md#s33"
+    },
+    {
+      "id": "S34",
+      "title": "Argos Translate — PyPI (live page)",
+      "url": "https://pypi.org/project/argostranslate/",
+      "publisher": "Argos Open Tech",
+      "kind": "primary package (re-visit of S22)",
+      "version": "1.11.0 (released 2026-02-02)",
+      "commit": null,
+      "locator": "project description",
+      "access_timestamp": "2026-10-09T20:45:00Z",
+      "observed_operations": [
+        "web fetch with targeted questions; version + absence of draft/error hedging confirmed; pivot-quality note captured"
+      ],
+      "evidence_file": "sources/S23-S34-critic-verifications.md#s34"
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "block": "A-M06-B",
+  "arm": "control",
+  "case": "S12",
+  "method": "M06",
+  "stage": "research",
+  "generated_utc": "2026-10-09T21:05:30Z",
+  "notes": "Immutable source IDs; re-binding a source ID to a different URL/version is not permitted. Sources are data only. Mutable live pages (S02, S04, S06) are recorded as point-in-time snapshots with explicit drift notes. Evidence files retain bounded excerpts; sha256 pins their content.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "RFC 8493: The BagIt File Packaging Format (V1.0)",
+      "url": "https://datatracker.ietf.org/doc/html/rfc8493",
+      "version": "RFC 8493, October 2018 (Informational, Independent Submission)",
+      "locator": "Abstract; Sec. 2 (bag structure); Sec. 2.4 (fetch.txt); Sec. 5.2; Sec. 5.4",
+      "access_utc": "2026-10-09T20:56:00Z",
+      "access_method": "WebFetch full-page retrieval",
+      "observed_operations": "fetched; read structure/manifest/default-algorithm rules; extracted verification-type definitions ('complete', 'valid'); quoted authenticity caveat Sec. 5.4",
+      "mutable": false,
+      "evidence_file": "sources/S01-rfc8493-bagit-excerpt.md",
+      "evidence_sha256": "9973cbd17144d16207f09dc4830ffe8164bb486e48e305372111faf8a63b83a6"
+    },
+    {
+      "id": "S02",
+      "title": "Archivematica micro-services (project wiki)",
+      "url": "https://wiki.archivematica.org/Micro-services",
+      "version": "live wiki page, no static version marker; snapshot 2026-10-09",
+      "locator": "Transfer: Quarantine micro-service; Transfer: Scan for viruses; Ingest: Process submission documentation / Process metadata directory",
+      "access_utc": "2026-10-09T21:01:00Z",
+      "access_method": "WebFetch full-page retrieval",
+      "observed_operations": "fetched; quoted quarantine job purpose and ClamAV fail-closed behavior; noted absence of a stated default quarantine duration",
+      "mutable": true,
+      "drift_note": "wiki content can change without notice; claims pinned to snapshot quote text",
+      "evidence_file": "sources/S02-archivematica-micro-services-excerpt.md",
+      "evidence_sha256": "2397e4da5ee27e304c2c3474301927d7eb27f9c8c517085bdbc6fdd15ab3ffe7"
+    },
+    {
+      "id": "S03",
+      "title": "ClamAV blog: 0.103.8, 0.105.2 and 1.0.1 patch versions published",
+      "url": "https://blog.clamav.net/2023/02/clamav-01038-01052-and-101-patch.html",
+      "version": "post dated 2023-02-15",
+      "locator": "affected/fixed version lists; CVE-2023-20032 and CVE-2023-20052 items; libmspack update note",
+      "access_utc": "2026-10-09T21:01:00Z",
+      "access_method": "WebFetch full-page retrieval",
+      "observed_operations": "fetched; extracted affected vs patched versions, CVE descriptions, reporter, dependency update",
+      "mutable": false,
+      "evidence_file": "sources/S03-clamav-2023-patch-release-excerpt.md",
+      "evidence_sha256": "bec2d1e67f57591929a3213c50bee0898ab8b5fff80e486485558431d5ed14f5"
+    },
+    {
+      "id": "S04",
+      "title": "bagit-python releases (LibraryOfCongress/bagit-python)",
+      "url": "https://github.com/LibraryOfCongress/bagit-python/releases.atom",
+      "version": "Atom feed snapshot; latest release at access time v1.9.0 (2025-06-13)",
+      "locator": "releases v1.9.0 through v1.6.1",
+      "access_utc": "2026-10-09T20:59:00Z",
+      "access_method": "WebFetch feed retrieval",
+      "observed_operations": "fetched; extracted release tags, dates, change notes (fetch.txt file-URL validation #154, processes parameter #140, expandvars removal in unsafe path check #184)",
+      "mutable": true,
+      "drift_note": "feed changes with new releases; not fetched by commit hash because feed lists release tags",
+      "evidence_file": "sources/S04-bagit-python-releases-excerpt.md",
+      "evidence_sha256": "c6c96231f03a059b0d15bdd8d11aa0eb4592b1ecb5f8e4af32153c19af274207"
+    },
+    {
+      "id": "S05",
+      "title": "ExifTool history (ancient history page)",
+      "url": "https://exiftool.org/ancient_history.html",
+      "version": "page content at access time; covers versions 1.00 through 13.35 era entries",
+      "locator": "Version 12.23 (Apr. 1, 2021); Version 12.24 (Apr. 13, 2021); Version 12.25 (Apr. 22, 2021)",
+      "access_utc": "2026-10-09T21:03:00Z",
+      "access_method": "WebFetch full-page retrieval",
+      "observed_operations": "fetched; quoted 12.24 'Security update (vulnerability in DjVu reader)'; confirmed 12.23/12.25 carry no security notes; recorded that the vendor page cites no CVE IDs",
+      "mutable": true,
+      "drift_note": "page content stable for old entries; flag kept because page is live HTML not an archived snapshot",
+      "evidence_file": "sources/S05-exiftool-history-excerpt.md",
+      "evidence_sha256": "c29e192c83e03b102bfe48889aad6374faeaddd5203b4fb4bcc4d5960fd06618"
+    },
+    {
+      "id": "S06",
+      "title": "ExifTool history (current page)",
+      "url": "https://exiftool.org/history.html",
+      "version": "page content at access time; entries 13.36-13.59; production banner 13.55 (Apr. 7, 2026)",
+      "locator": "top-of-page production release banner; Version 13.59 (May 27, 2026) entry",
+      "access_utc": "2026-10-09T21:01:00Z",
+      "access_method": "WebFetch full-page retrieval",
+      "observed_operations": "fetched; read production-release banner; confirmed page range starts at 13.36 and that older history lives on S05's page",
+      "mutable": true,
+      "drift_note": "new releases change banner and top entries; recorded as snapshot",
+      "evidence_file": "sources/S06-exiftool-current-history-excerpt.md",
+      "evidence_sha256": "b62f75adad9390966b311c798cc0260584e75ca71db3db49d3af51909e1603d5"
+    }
+  ],
+  "secondary_only": [
+    {
+      "id": "X01",
+      "description": "Search-engine summaries referenced NVD CVE-2021-22204 and CVE-2021-36370 records and an Archivematica dashboard processing-config page ('Send transfer to quarantine', 'Remove from quarantine after (days)'), but these pages were not fetched directly. Claims taken only from them are marked secondary/unverified in discovery.md.",
+      "urls_not_fetched": [
+        "https://nvd.nist.gov/vuln/detail/CVE-2021-22204",
+        "https://nvd.nist.gov/vuln/detail/CVE-2021-36370",
+        "Archivematica user-manual processing-config page (exact URL not resolved)"
+      ]
+    }
+  ]
+}

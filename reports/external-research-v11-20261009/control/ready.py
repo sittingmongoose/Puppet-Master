@@ -16,6 +16,10 @@ for k,a in s['arms'].items():
   crit='critic-finalizer' if m=='M03' and arm=='treatment' else 'critic'
   nxt=crit if not (root/crit/'assignment.md').exists() else 'reviser' if crit=='critic' and complete(root/crit) and (root/crit/'critique.md').exists() and not (root/'reviser/assignment.md').exists() else None
  else:nxt=None
+ if m=='M15' and arm=='treatment':
+  if nxt=='reviser' and not (complete(root/'verifier') and (root/'verifier/verification.md').exists()):nxt=None
+  if res and not (root/'verifier/assignment.md').exists():
+   x=next(x for x in q if x['block_id']==a['block']);ready.append({'block':a['block'],'arm':arm,'stage':'verifier','route':x['route']})
  if nxt:
   x=next(x for x in q if x['block_id']==a['block']);route=x.get('stage_routes',{}).get(arm,{}).get(nxt,a['route'])
   ready.append({'block':a['block'],'arm':arm,'stage':nxt,'route':route})

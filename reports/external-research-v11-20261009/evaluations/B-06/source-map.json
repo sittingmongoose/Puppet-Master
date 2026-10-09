@@ -1,0 +1,1342 @@
+{
+  "block": "B-06",
+  "case": "I06",
+  "assignment": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-06/assignment.md",
+  "input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-06/input-map.json",
+    "sha256": "abecf3262a2c8132e4039987272a1406beabc39e2486edbc533cf6b204f89203"
+  },
+  "primary_evidence": {
+    "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-06/primary-evidence.json",
+    "sha256": "a203ce0541de6908aba3a9b5f3c6530aec8856a3095868ad5f9434820c1237d9",
+    "kind": "Bounded read-only public primary response extracts with access time, raw response hash and exact URL; code data never executed."
+  },
+  "independent_sources": [
+    {
+      "id": "E01",
+      "url": "https://support.getgrist.com/access-rules/",
+      "final_url": "https://support.getgrist.com/access-rules/",
+      "accessed_at": "2026-10-09T20:55:28.357457+00:00",
+      "http_status": 200,
+      "raw_bytes": 160114,
+      "raw_sha256": "8234e0158ad347afb3ea0b95386dccd00b9c56bbf270bcdab9001b3b642e4779",
+      "selection_pattern": "Enabling access rules|Checking new values|formula calculations|complete read access|Copy or download|newRec",
+      "truncated": false,
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E01",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E02",
+      "url": "https://api.github.com/advisories/GHSA-3v78-cw58-v685",
+      "accessed_at": "2026-10-09T20:55:28.359868+00:00",
+      "error": "HTTP Error 404: Not Found",
+      "version_or_edition": "GHSA-3v78-cw58-v685 advisory identity; response at access time",
+      "evidence_locator": "primary-evidence.json#E02",
+      "observed_operation": "Read-only failed fetch; no fact inferred",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E03",
+      "url": "https://api.github.com/advisories/GHSA-qh95-2qv8-pqx3",
+      "accessed_at": "2026-10-09T20:55:28.361032+00:00",
+      "error": "HTTP Error 404: Not Found",
+      "version_or_edition": "GHSA-qh95-2qv8-pqx3 advisory identity; response at access time",
+      "evidence_locator": "primary-evidence.json#E03",
+      "observed_operation": "Read-only failed fetch; no fact inferred",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E04",
+      "url": "https://api.github.com/repos/gristlabs/grist-core/releases/tags/v1.7.20",
+      "final_url": "https://api.github.com/repos/gristlabs/grist-core/releases/tags/v1.7.20",
+      "accessed_at": "2026-10-09T20:55:28.362089+00:00",
+      "http_status": 200,
+      "raw_bytes": 7943,
+      "raw_sha256": "b318e2928225b406ae2de30699de746c982b699a82dd55201a5be5033a929405",
+      "selection_pattern": null,
+      "truncated": false,
+      "version_or_edition": "grist-core v1.7.20, published 2026-09-28; undo fix commit994ff298",
+      "evidence_locator": "primary-evidence.json#E04",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E05",
+      "url": "https://api.github.com/repos/gristlabs/grist-core/releases/tags/v1.7.9",
+      "final_url": "https://api.github.com/repos/gristlabs/grist-core/releases/tags/v1.7.9",
+      "accessed_at": "2026-10-09T20:55:28.363099+00:00",
+      "http_status": 200,
+      "raw_bytes": 6354,
+      "raw_sha256": "8c6ddce0ff6c4bf06725a33b5d54dcf13fc190a66dddda62c9d568f60af5a524",
+      "selection_pattern": null,
+      "truncated": false,
+      "version_or_edition": "grist-core v1.7.9, published 2026-01-09",
+      "evidence_locator": "primary-evidence.json#E05",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E06",
+      "url": "https://raw.githubusercontent.com/gristlabs/grist-core/v1.7.20/app/server/lib/ActiveDoc.ts",
+      "final_url": "https://raw.githubusercontent.com/gristlabs/grist-core/v1.7.20/app/server/lib/ActiveDoc.ts",
+      "accessed_at": "2026-10-09T20:55:28.364723+00:00",
+      "http_status": 200,
+      "raw_bytes": 157356,
+      "raw_sha256": "67b5da5bfa5e26ebf21b4078edfc74e291f121a85be80654ba4cb3b82e623194",
+      "selection_pattern": "fetchURL|fetchUrl|GRIST_ENABLE_REQUEST|async.*request",
+      "truncated": false,
+      "superseded_excerpt_by": "E26",
+      "version_or_edition": "grist-core tag v1.7.20; raw response SHA-256 retained",
+      "evidence_locator": "primary-evidence.json#E06",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E07",
+      "url": "https://raw.githubusercontent.com/gristlabs/grist-core/v1.7.20/README.md",
+      "final_url": "https://raw.githubusercontent.com/gristlabs/grist-core/v1.7.20/README.md",
+      "accessed_at": "2026-10-09T20:55:28.550771+00:00",
+      "http_status": 200,
+      "raw_bytes": 56283,
+      "raw_sha256": "894c2bf468dcc48cc9184898acf546d3ee2d13424fd9bcb72a49737c076e6f7e",
+      "selection_pattern": "GRIST_ENABLE_REQUEST|GRIST_.*PROXY|HTTPS_PROXY|REQUEST\\(|authentication|login",
+      "truncated": true,
+      "superseded_excerpt_by": [
+        "E28",
+        "E33"
+      ],
+      "version_or_edition": "grist-core tag v1.7.20; raw response SHA-256 retained",
+      "evidence_locator": "primary-evidence.json#E07",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E08",
+      "url": "https://support.getgrist.com/install/authentication-overview/",
+      "final_url": "https://support.getgrist.com/install/authentication-overview/",
+      "accessed_at": "2026-10-09T20:55:28.575013+00:00",
+      "http_status": 200,
+      "raw_bytes": 121630,
+      "raw_sha256": "74c6b5da8ddd3d0b4be4e6c0dfe3eb3bdde465e70007d31abcbc863fef75deeb",
+      "selection_pattern": null,
+      "truncated": false,
+      "retained_section_ranges": [
+        [
+          330,
+          355
+        ]
+      ],
+      "retention_note": "Relevant numbered extracted/source sections only; no claim of retaining complete raw page.",
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E08",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E09",
+      "url": "https://nocodb.com/docs/product/integrations/data-sources",
+      "final_url": "https://nocodb.com/docs/product/integrations/data-sources",
+      "accessed_at": "2026-10-09T20:55:28.586314+00:00",
+      "http_status": 200,
+      "raw_bytes": 286071,
+      "raw_sha256": "032b4dc517107e475412a62f52e4cf80f133a379718f805847e05b259564c2f5",
+      "selection_pattern": null,
+      "truncated": false,
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E09",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E10",
+      "url": "https://baserow.io/user-docs/trash",
+      "accessed_at": "2026-10-09T20:55:28.586951+00:00",
+      "error": "HTTP Error 404: Not Found",
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E10",
+      "observed_operation": "Read-only failed fetch; no fact inferred",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E11",
+      "url": "https://www.getgrist.com/pricing/",
+      "final_url": "https://www.getgrist.com/pricing/",
+      "accessed_at": "2026-10-09T20:55:28.612240+00:00",
+      "http_status": 200,
+      "raw_bytes": 190073,
+      "raw_sha256": "de428f544be4357b74390737f76334fe064f570f97c7eb6770493adcf3f5f3e8",
+      "selection_pattern": "Pro|Business|records|guests|nonprofit|non-profit|activation",
+      "truncated": false,
+      "retained_section_ranges": [
+        [
+          77,
+          112
+        ],
+        [
+          170,
+          175
+        ],
+        [
+          210,
+          224
+        ],
+        [
+          323,
+          325
+        ],
+        [
+          342,
+          343
+        ]
+      ],
+      "retention_note": "Relevant numbered extracted/source sections only; no claim of retaining complete raw page.",
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E11",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E12",
+      "url": "https://baserow.io/pricing",
+      "final_url": "https://baserow.io/pricing",
+      "accessed_at": "2026-10-09T20:55:28.620999+00:00",
+      "http_status": 200,
+      "raw_bytes": 151526,
+      "raw_sha256": "98704e27c3b5786719395e35e14febe42192960f72250a47e4dcda38a266825a",
+      "selection_pattern": "Free|Premium|Advanced|250|history|row|role",
+      "truncated": false,
+      "retained_section_ranges": [
+        [
+          130,
+          213
+        ]
+      ],
+      "retention_note": "Relevant numbered extracted/source sections only; no claim of retaining complete raw page.",
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E12",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E13",
+      "url": "https://baserow.io/user-docs/field-level-permissions",
+      "final_url": "https://baserow.io/user-docs/field-level-permissions",
+      "accessed_at": "2026-10-09T20:55:28.703954+00:00",
+      "http_status": 200,
+      "raw_bytes": 136326,
+      "raw_sha256": "e2f5b27d8dfdbf0f9c809502afa221279ef0bf3b5da1e6d0d9d96c7b21081171",
+      "selection_pattern": "API reads|API writes|field-level|hiding fields|Hide fields|EDIT",
+      "truncated": true,
+      "retained_section_ranges": [
+        [
+          245,
+          275
+        ],
+        [
+          303,
+          344
+        ]
+      ],
+      "retention_note": "Relevant numbered extracted/source sections only; no claim of retaining complete raw page.",
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E13",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E14",
+      "url": "https://baserow.io/user-docs/application-builder-element-visibility",
+      "final_url": "https://baserow.io/user-docs/application-builder-element-visibility",
+      "accessed_at": "2026-10-09T20:55:28.734506+00:00",
+      "http_status": 200,
+      "raw_bytes": 109882,
+      "raw_sha256": "dfd88baa73d1aad52198dc18fabe9f4dfc33815d2f0a87dbc7545977ff6ead7b",
+      "selection_pattern": "Security|API enforcement|hidden|returned|data",
+      "truncated": false,
+      "retained_section_ranges": [
+        [
+          245,
+          303
+        ]
+      ],
+      "retention_note": "Relevant numbered extracted/source sections only; no claim of retaining complete raw page.",
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E14",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E15",
+      "url": "https://api.github.com/repos/libretime/libretime/pulls/3026",
+      "final_url": "https://api.github.com/repos/libretime/libretime/pulls/3026",
+      "accessed_at": "2026-10-09T20:55:28.830384+00:00",
+      "http_status": 200,
+      "raw_bytes": 19648,
+      "raw_sha256": "bf0c1507eef0e0234e7f52ed2fa72140b325b0fcf52dd62335fede39d869e467",
+      "selection_pattern": null,
+      "truncated": false,
+      "version_or_edition": "LibreTime PR3026; merged2024-06-05; merge2b43e51ed140bf307e491f0fcb7b84f95709d604",
+      "evidence_locator": "primary-evidence.json#E15",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E16",
+      "url": "https://raw.githubusercontent.com/libretime/libretime/4.5.0/CHANGELOG.md",
+      "final_url": "https://raw.githubusercontent.com/libretime/libretime/4.5.0/CHANGELOG.md",
+      "accessed_at": "2026-10-09T20:55:29.028339+00:00",
+      "http_status": 200,
+      "raw_bytes": 68895,
+      "raw_sha256": "394d1871f5380e0f3463bdd5028c82b3e6ef96263982fc1c91a39080b1819d9a",
+      "selection_pattern": null,
+      "truncated": true,
+      "retained_section_ranges": [
+        [
+          1,
+          81
+        ]
+      ],
+      "retention_note": "Relevant numbered extracted/source sections only; no claim of retaining complete raw page.",
+      "version_or_edition": "LibreTime tag4.5.0 CHANGELOG; 4.2.0/4.3.0/4.5.0 entries",
+      "evidence_locator": "primary-evidence.json#E16",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E17",
+      "url": "https://www.azuracast.com/docs/user-guide/playlists/",
+      "final_url": "https://www.azuracast.com/docs/user-guide/playlists/",
+      "accessed_at": "2026-10-09T20:55:29.065535+00:00",
+      "http_status": 200,
+      "raw_bytes": 49943,
+      "raw_sha256": "884703ba3360cb8bc9d5395e8fef9c9f37b53565608144793ba9c7a83ace0301",
+      "selection_pattern": "priority|2024|7|6|5|schedule|permission",
+      "truncated": false,
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E17",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E18",
+      "url": "https://www.azuracast.com/docs/getting-started/requirements/",
+      "final_url": "https://www.azuracast.com/docs/getting-started/requirements/",
+      "accessed_at": "2026-10-09T20:55:29.181364+00:00",
+      "http_status": 200,
+      "raw_bytes": 50424,
+      "raw_sha256": "e83b7a56b3002d8f88eea9c7dc0f8ba63e9aa7bdb8a2ef240c3a4559543924e7",
+      "selection_pattern": null,
+      "truncated": false,
+      "retained_section_ranges": [
+        [
+          74,
+          112
+        ]
+      ],
+      "retention_note": "Relevant numbered extracted/source sections only; no claim of retaining complete raw page.",
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E18",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E19",
+      "url": "https://libretime.org/docs/admin-manual/install/",
+      "final_url": "https://libretime.org/docs/admin-manual/install/",
+      "accessed_at": "2026-10-09T20:55:29.192192+00:00",
+      "http_status": 200,
+      "raw_bytes": 24684,
+      "raw_sha256": "d7a3e02c18d1c39b6a0343a1f1d4455bda72959ef6bd713f5f34d5563616df1c",
+      "selection_pattern": null,
+      "truncated": false,
+      "retained_section_ranges": [
+        [
+          43,
+          62
+        ]
+      ],
+      "retention_note": "Relevant numbered extracted/source sections only; no claim of retaining complete raw page.",
+      "version_or_edition": "LibreTime Stable4.x documentation edition, mutable page",
+      "evidence_locator": "primary-evidence.json#E19",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E20",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html",
+      "final_url": "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html",
+      "accessed_at": "2026-10-09T20:55:29.208592+00:00",
+      "http_status": 200,
+      "raw_bytes": 43779,
+      "raw_sha256": "a9bab2b8f419ee379b1ab37985d70b03bd6568952251d2f8a55036198990c9e8",
+      "selection_pattern": null,
+      "truncated": true,
+      "retained_section_ranges": [
+        [
+          22,
+          64
+        ]
+      ],
+      "retention_note": "Relevant numbered extracted/source sections only; no claim of retaining complete raw page.",
+      "version_or_edition": "WCAG2.2 Understanding1.4.1, informative interpretation of the criterion",
+      "evidence_locator": "primary-evidence.json#E20",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E21",
+      "url": "https://www.rivendellaudio.org/",
+      "final_url": "https://www.rivendellaudio.org/",
+      "accessed_at": "2026-10-09T20:55:29.279436+00:00",
+      "http_status": 200,
+      "raw_bytes": 10696,
+      "raw_sha256": "9b5d28ce14db05011e8f43cdf56c5d979623a03ca5b6e81af1e42a0b11b1b4df",
+      "selection_pattern": null,
+      "truncated": false,
+      "retained_section_ranges": [
+        [
+          1,
+          77
+        ]
+      ],
+      "retention_note": "Relevant numbered extracted/source sections only; no claim of retaining complete raw page.",
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E21",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E22",
+      "url": "https://forum.spinitron.com/t/calendar-concepts/172.json",
+      "final_url": "https://forum.spinitron.com/t/calendar-concepts/172.json",
+      "accessed_at": "2026-10-09T20:55:29.289628+00:00",
+      "http_status": 200,
+      "raw_bytes": 10833,
+      "raw_sha256": "3a22fc32ee97b0416cf41f5f5f3178c88867c1de1809fac8465dccfb7261a123",
+      "selection_pattern": null,
+      "truncated": true,
+      "superseded_excerpt_by": "E49",
+      "version_or_edition": "Spinitron product-maintained forum post2020-06-07; no release identity",
+      "evidence_locator": "primary-evidence.json#E22",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E23",
+      "url": "https://support.google.com/docs/answer/11468464?hl=en",
+      "final_url": "https://support.google.com/docs/answer/11468464?hl=en",
+      "accessed_at": "2026-10-09T20:55:29.300283+00:00",
+      "http_status": 200,
+      "raw_bytes": 1609225,
+      "raw_sha256": "978e76a5fb06829b415d6a0e99bd304585270fdb52b7e2c89d4efa5868c95a21",
+      "selection_pattern": null,
+      "truncated": false,
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E23",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E24",
+      "url": "https://baserow.io/user-docs/subscriptions-overview",
+      "final_url": "https://baserow.io/user-docs/subscriptions-overview",
+      "accessed_at": "2026-10-09T20:55:29.363597+00:00",
+      "http_status": 200,
+      "raw_bytes": 120899,
+      "raw_sha256": "a3233f31e570e4319ce433649c9dc084a06615871560e0a3e5f7cf874f1246ba",
+      "selection_pattern": "billable|Editors|Builders|Advanced|read.only",
+      "truncated": false,
+      "retained_section_ranges": [
+        [
+          301,
+          317
+        ]
+      ],
+      "retention_note": "Relevant numbered extracted/source sections only; no claim of retaining complete raw page.",
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E24",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E25",
+      "url": "https://libretime.org/docs/user-manual/scheduling-shows/",
+      "final_url": "https://libretime.org/docs/user-manual/scheduling-shows/",
+      "accessed_at": "2026-10-09T20:55:29.394718+00:00",
+      "http_status": 200,
+      "raw_bytes": 27595,
+      "raw_sha256": "d29edbe9a68b85829ad3dcb30de5a7c6ec93d18d1b27cf45bdf54d9aa6c9e549",
+      "selection_pattern": null,
+      "truncated": false,
+      "retained_section_ranges": [
+        [
+          40,
+          125
+        ]
+      ],
+      "retention_note": "Relevant numbered extracted/source sections only; no claim of retaining complete raw page.",
+      "version_or_edition": "LibreTime Stable4.x documentation edition, mutable page",
+      "evidence_locator": "primary-evidence.json#E25",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E26",
+      "url": "https://raw.githubusercontent.com/gristlabs/grist-core/v1.7.20/app/server/lib/ActiveDoc.ts",
+      "accessed_at": "2026-10-09T20:56:19.453509+00:00",
+      "http_status": 200,
+      "raw_sha256": "67b5da5bfa5e26ebf21b4078edfc74e291f121a85be80654ba4cb3b82e623194",
+      "raw_bytes": 157356,
+      "selection_pattern": "isUntrustedRequestBehaviorSet|formulaRequest|Requests",
+      "truncated": false,
+      "version_or_edition": "grist-core tag v1.7.20; raw response SHA-256 retained",
+      "evidence_locator": "primary-evidence.json#E26",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E27",
+      "url": "https://raw.githubusercontent.com/gristlabs/grist-core/v1.7.20/app/server/lib/uploads.ts",
+      "accessed_at": "2026-10-09T20:56:19.549193+00:00",
+      "http_status": 200,
+      "raw_sha256": "3c40cad2050035d6da6a510cfae1f4caba1d6f05ddf6e2d7cde40dc07fd7ad3b",
+      "raw_bytes": 23569,
+      "selection_pattern": "fetchURL|Proxy|untrusted",
+      "truncated": false,
+      "version_or_edition": "grist-core tag v1.7.20; raw response SHA-256 retained",
+      "evidence_locator": "primary-evidence.json#E27",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E28",
+      "url": "https://raw.githubusercontent.com/gristlabs/grist-core/v1.7.20/README.md",
+      "accessed_at": "2026-10-09T20:56:19.682973+00:00",
+      "http_status": 200,
+      "raw_sha256": "894c2bf468dcc48cc9184898acf546d3ee2d13424fd9bcb72a49737c076e6f7e",
+      "raw_bytes": 56283,
+      "selection_pattern": "GRIST_ENABLE_REQUEST_FUNCTION|GRIST_UNTRUSTED|GRIST_HTTPS_PROXY|HTTPS_PROXY|Authentication providers",
+      "truncated": false,
+      "version_or_edition": "grist-core tag v1.7.20; raw response SHA-256 retained",
+      "evidence_locator": "primary-evidence.json#E28",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E29",
+      "url": "https://raw.githubusercontent.com/gristlabs/grist-core/v1.7.20/app/server/lib/ProxyAgent.ts",
+      "accessed_at": "2026-10-09T20:56:40.235493+00:00",
+      "http_status": 200,
+      "raw_sha256": "29033cf2a48e68fb3ac9c67a3ed3270184c6f36d5f7324ab9cf36986c5bf933d",
+      "raw_bytes": 3791,
+      "selection_pattern": "isUntrustedRequestBehaviorSet|GRIST_PROXY_FOR_UNTRUSTED_URLS|function proxy|fetchUntrusted|direct",
+      "truncated": false,
+      "version_or_edition": "grist-core tag v1.7.20; raw response SHA-256 retained",
+      "evidence_locator": "primary-evidence.json#E29",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E30",
+      "url": "https://raw.githubusercontent.com/gristlabs/grist-core/v1.7.20/app/server/lib/Requests.ts",
+      "accessed_at": "2026-10-09T20:56:40.351967+00:00",
+      "http_status": 200,
+      "raw_sha256": "5a9ba2fa618b7d8ffee87313a3453c6315b48d07e79a8c17e610cf33a953282a",
+      "raw_bytes": 5166,
+      "selection_pattern": "GRIST_ENABLE_REQUEST_FUNCTION|fetchWithAgent|fetchUntrusted|fetch|Proxy",
+      "truncated": false,
+      "version_or_edition": "grist-core tag v1.7.20; raw response SHA-256 retained",
+      "evidence_locator": "primary-evidence.json#E30",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E31",
+      "url": "https://raw.githubusercontent.com/gristlabs/grist-core/v1.7.20/app/common/DocCalls.ts",
+      "accessed_at": "2026-10-09T20:56:40.470084+00:00",
+      "error": "HTTP Error 404: Not Found",
+      "version_or_edition": "grist-core tag v1.7.20; raw response SHA-256 retained",
+      "evidence_locator": "primary-evidence.json#E31",
+      "observed_operation": "Read-only failed fetch; no fact inferred",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E32",
+      "url": "https://raw.githubusercontent.com/gristlabs/grist-core/v1.7.20/app/client/components/DocComm.ts",
+      "accessed_at": "2026-10-09T20:56:40.598724+00:00",
+      "http_status": 200,
+      "raw_sha256": "1be332b52c2f00ffdab53a5872bf40e27eaa71ed1637e257f3a867bf2ecd9b66",
+      "raw_bytes": 9614,
+      "selection_pattern": "fetchURL",
+      "truncated": false,
+      "version_or_edition": "grist-core tag v1.7.20; raw response SHA-256 retained",
+      "evidence_locator": "primary-evidence.json#E32",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E33",
+      "url": "https://raw.githubusercontent.com/gristlabs/grist-core/v1.7.20/README.md",
+      "accessed_at": "2026-10-09T20:58:07.786860+00:00",
+      "http_status": 200,
+      "raw_sha256": "894c2bf468dcc48cc9184898acf546d3ee2d13424fd9bcb72a49737c076e6f7e",
+      "raw_bytes": 56283,
+      "selection_pattern": "References|Conditional Formatting|card views|no special server|SQLite|Apache|Sign in with getgrist.com",
+      "truncated": false,
+      "version_or_edition": "grist-core tag v1.7.20; raw response SHA-256 retained",
+      "evidence_locator": "primary-evidence.json#E33",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E34",
+      "url": "https://github.com/gristlabs/grist-core/security/advisories/GHSA-qh95-2qv8-pqx3",
+      "accessed_at": "2026-10-09T20:58:07.858737+00:00",
+      "http_status": 200,
+      "raw_sha256": "df64ef10d023eed144662d7553181ddb5e588a8690c39e1b74829bc003352d01",
+      "raw_bytes": 190394,
+      "selection_pattern": "Impact|websocket|fetchURL|Patches|Workarounds|1.7.6|Proxy|requests",
+      "truncated": false,
+      "version_or_edition": "GHSA-qh95-2qv8-pqx3 advisory identity; response at access time",
+      "evidence_locator": "primary-evidence.json#E34",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E35",
+      "url": "https://github.com/gristlabs/grist-core/security/advisories/GHSA-3v78-cw58-v685",
+      "accessed_at": "2026-10-09T20:58:08.398693+00:00",
+      "http_status": 200,
+      "raw_sha256": "2badd9b1e0dbb00d343bb9d73d2980318b4d90a850287ddac2797d19e6fe7d6a",
+      "raw_bytes": 190856,
+      "selection_pattern": "Impact|partial read|Patches|Workarounds|1.7.6|compare|remove|5.3",
+      "truncated": false,
+      "version_or_edition": "GHSA-3v78-cw58-v685 advisory identity; response at access time",
+      "evidence_locator": "primary-evidence.json#E35",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E36",
+      "url": "https://nocodb.com/docs/changelog/2026.04.2",
+      "accessed_at": "2026-10-09T20:58:08.864835+00:00",
+      "http_status": 200,
+      "raw_sha256": "3dcf6f461d5f92cbe1642de9c29570060b2ca9699e05eff0586a1c1b4dc4eea4",
+      "raw_bytes": 178233,
+      "selection_pattern": "Trash|deleted|external|cloud|retention|Plus|Business",
+      "truncated": false,
+      "version_or_edition": "NocoDB release2026.04.2; Record Trash availability/deployment exceptions",
+      "evidence_locator": "primary-evidence.json#E36",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E37",
+      "url": "https://baserow.io/user-docs/data-recovery-and-deletion",
+      "accessed_at": "2026-10-09T20:58:09.070379+00:00",
+      "http_status": 200,
+      "raw_sha256": "5b10585a941b1156d011a1c18d1d13803f3c674ebd33b62dd7bd62e9b80df2e9",
+      "raw_bytes": 136460,
+      "selection_pattern": "3 days|three|trash|permanent",
+      "truncated": false,
+      "retained_section_ranges": [
+        [
+          245,
+          290
+        ],
+        [
+          348,
+          369
+        ]
+      ],
+      "retention_note": "Relevant numbered extracted/source sections only; no claim of retaining complete raw page.",
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E37",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E38",
+      "url": "https://www.azuracast.com/docs",
+      "accessed_at": "2026-10-09T20:58:11.201520+00:00",
+      "error": "HTTP Error 403: Forbidden",
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E38",
+      "observed_operation": "Read-only failed fetch; no fact inferred",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E39",
+      "url": "https://baserow.io/user-docs/set-permission-level",
+      "accessed_at": "2026-10-09T20:58:11.246171+00:00",
+      "http_status": 200,
+      "raw_sha256": "65f4a065198a76dfc9a288b7c40f99a90e82cc608bb4dbd16c2eda45c6189810",
+      "raw_bytes": 124049,
+      "selection_pattern": "Advanced|Enterprise|Premium|Free|table|No Access|No access",
+      "truncated": false,
+      "retained_section_ranges": [
+        [
+          245,
+          277
+        ],
+        [
+          384,
+          411
+        ]
+      ],
+      "retention_note": "Relevant numbered extracted/source sections only; no claim of retaining complete raw page.",
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E39",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E40",
+      "url": "https://raw.githubusercontent.com/gristlabs/grist-core/v1.7.20/app/server/lib/outgoingRequests.ts",
+      "accessed_at": "2026-10-09T20:58:13.566480+00:00",
+      "http_status": 200,
+      "raw_sha256": "a20a0de74339ac1ab4d4814212b2e062c1ebe15356409fd846ca12a743a1e031",
+      "raw_bytes": 1449,
+      "selection_pattern": "isRequestFunctionEnabled|GRIST_ENABLE_REQUEST_FUNCTION|true|function",
+      "truncated": false,
+      "version_or_edition": "grist-core tag v1.7.20; raw response SHA-256 retained",
+      "evidence_locator": "primary-evidence.json#E40",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E42",
+      "url": "https://raw.githubusercontent.com/gristlabs/grist-core/v1.7.20/app/server/lib/Requests.ts",
+      "accessed_at": "2026-10-09T20:58:37.590040+00:00",
+      "http_status": 200,
+      "raw_bytes": 5166,
+      "raw_sha256": "5a9ba2fa618b7d8ffee87313a3453c6315b48d07e79a8c17e610cf33a953282a",
+      "selection_pattern": "lines 65-100",
+      "truncated": false,
+      "version_or_edition": "grist-core tag v1.7.20; raw response SHA-256 retained",
+      "evidence_locator": "primary-evidence.json#E42",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E43",
+      "url": "https://raw.githubusercontent.com/gristlabs/grist-core/v1.7.20/app/client/components/ImportSourceElem.ts",
+      "accessed_at": "2026-10-09T20:58:37.644653+00:00",
+      "error": "HTTP Error 404: Not Found",
+      "version_or_edition": "grist-core tag v1.7.20; raw response SHA-256 retained",
+      "evidence_locator": "primary-evidence.json#E43",
+      "observed_operation": "Read-only failed fetch; no fact inferred",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E44",
+      "url": "https://support.google.com/docs/answer/9331279?hl=en",
+      "accessed_at": "2026-10-09T20:59:24.905543+00:00",
+      "http_status": 200,
+      "raw_bytes": 1619397,
+      "raw_sha256": "09f7744e1d8b51f252457840ddee4c307e06ccd78ee19308cbed130af4a9ea81",
+      "selection_pattern": "version history|who|when",
+      "truncated": false,
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E44",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E45",
+      "url": "https://tiddlywiki.com/static/GettingStarted.html",
+      "accessed_at": "2026-10-09T20:59:25.306898+00:00",
+      "http_status": 200,
+      "raw_bytes": 12093,
+      "raw_sha256": "c2b33c72be45593d642693e0180031c1e34c61825403498badc3d3379eb85a7e",
+      "selection_pattern": "file|browser|server|download|local",
+      "truncated": false,
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E45",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E46",
+      "url": "https://raw.githubusercontent.com/gristlabs/grist-core/v1.7.20/app/server/lib/DocApi.ts",
+      "accessed_at": "2026-10-09T20:59:25.422750+00:00",
+      "http_status": 200,
+      "raw_bytes": 97624,
+      "raw_sha256": "bc7f7ddf0710a4e316fd66faa5c311e772a9239e6007c3e1ee294d354c986ff0",
+      "selection_pattern": "compare|hasFull|hasFullRead|states/remove",
+      "truncated": false,
+      "version_or_edition": "grist-core tag v1.7.20; raw response SHA-256 retained",
+      "evidence_locator": "primary-evidence.json#E46",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E47",
+      "url": "https://support.getgrist.com/conditional-formatting/",
+      "accessed_at": "2026-10-09T20:59:25.581126+00:00",
+      "http_status": 200,
+      "raw_bytes": 116745,
+      "raw_sha256": "fae60795d95b39c20b61bb3d56f6232ba81f4392b6cee45cb2e2b77ce6f16891",
+      "selection_pattern": "background|text|font|style|cell|color",
+      "truncated": false,
+      "version_or_edition": "Current unversioned/mutable public documentation; accessed_at retained",
+      "evidence_locator": "primary-evidence.json#E47",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E48",
+      "url": "https://github.com/LibreTime/libretime/pull/3160",
+      "accessed_at": "2026-10-09T20:59:25.718526+00:00",
+      "http_status": 200,
+      "raw_bytes": 440622,
+      "raw_sha256": "f381af20e0a22c3c7e242ff00ae8df1eb4781a341de7ac0462810d732335a5eb",
+      "selection_pattern": "metadata|newline|telnet|merged|Liquidsoap",
+      "truncated": false,
+      "version_or_edition": "LibreTime PR3160; merged2025-06-08; d7987bb; release4.5.0",
+      "evidence_locator": "primary-evidence.json#E48",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    },
+    {
+      "id": "E49",
+      "url": "https://forum.spinitron.com/t/calendar-concepts/172.json",
+      "accessed_at": "2026-10-09T20:59:27.022404+00:00",
+      "http_status": 200,
+      "raw_bytes": 10901,
+      "raw_sha256": "8b784fec0fd42a77e9e4c88f4594cf6dd035ac7bc2a7e3482d07bb36588fdff5",
+      "truncated": false,
+      "selection_pattern": "post_stream.posts[0]",
+      "version_or_edition": "Spinitron product-maintained forum post2020-06-07; no release identity",
+      "evidence_locator": "primary-evidence.json#E49",
+      "observed_operation": "Read-only HTTP fetch and bounded relevant-section inspection",
+      "evidence_qualification": "Raw response hash identifies fetched bytes; retained excerpt may be selected or superseded, never a claim to preserve the entire source."
+    }
+  ],
+  "frozen_source_registers": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/source-map.json",
+      "sha256": "e946630ef26814921a5922d01fe93341c7ecb64dbb1164e9138165d742c5cdb6",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/critic/source-map.json",
+      "sha256": "a0d3243be8c85bc702e8bbbce0ba0b097a4650479fb035f20c07c6e0e2770480",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/source-map.json",
+      "sha256": "d652969647ac84dc18133176455e61739ef3a4afc8c8a8ecd93e568bf9366918",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/critic/source-map.json",
+      "sha256": "68c32f3b7ac749435d02ea5b37f5f1ac0064984e0c8e5fb1697c1359ac20d613",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/source-map.json",
+      "sha256": "4347b11799926c1bf0cde13f4aa79071d43f862e17ba1e6718978c003ea2962e",
+      "matches_exact_input_map": true
+    }
+  ],
+  "frozen_source_inventory": [
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/C01-wcag-141.excerpt.md",
+      "sha256": "a9317241d1cc89d8b197ebc6c81e10108953a6ed5508020ce99f03bf2d1bf2e4",
+      "bytes": 1292,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/C02-grist-access-rules.excerpt.md",
+      "sha256": "ab32f74031d0ca52502f5914125b5c15b3d371ce5985cd7b77cbbad32fe5bdd6",
+      "bytes": 1747,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/C03-grist-1.7.7.excerpt.md",
+      "sha256": "44bb2e9e1ca4747b84cc7c735872bbf81485f82a35c6888e4c7289cb8f0c041f",
+      "bytes": 1298,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/C04-ghsa-compare.excerpt.md",
+      "sha256": "d3aef2bde910dd317c34d420088c54961059efa8025aaf7176f185c159b4fcdd",
+      "bytes": 1396,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/C05-grist-1.7.20.excerpt.md",
+      "sha256": "9962a1bad0687c7c3cf0b0eeab9871c3f2643fd8a8e4ad0049b328ea9b8e7a43",
+      "bytes": 937,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/C06-libretime-install.excerpt.md",
+      "sha256": "cfaa36af10bdab0877ffb4960c280c6afa1af7c77caffdfc253360c39f3175cf",
+      "bytes": 922,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/S01-wcag-141.excerpt.md",
+      "sha256": "4d3810f9c140935eb233f274d4ddb5e957b692d147ce31bd9cd543ab1183cab9",
+      "bytes": 747,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/S02-grist-access-rules.excerpt.md",
+      "sha256": "d2b2e7169b9ae7b16b4e2b6464c0772001c517fc5d74448b8c0dfc6f453b1925",
+      "bytes": 654,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/S03-grist-1.7.9.excerpt.md",
+      "sha256": "a9590aa39ded780da51482ce3b27a6f31b2f89ac935b625005193f98bc305a0c",
+      "bytes": 597,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/S04-cve-2025-64753.excerpt.md",
+      "sha256": "571aae145452488cdfcefde0a69a965fee24921b530165b938883dcc6c08e5ea",
+      "bytes": 759,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/S05-ghsa-1.7.7.ref.md",
+      "sha256": "9b4a9c989c2ef84c304a160143b30a8c3217261c212c9b3c320108cc4a983d31",
+      "bytes": 435,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/S06-libretime-docs.excerpt.md",
+      "sha256": "2df7cd1c09687f999ce28e439a7dd0d83203cfd95ace544e21bf0d26d4e1720a",
+      "bytes": 669,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/S07-azuracast-docs.excerpt.md",
+      "sha256": "30a368c34472ce29ee5018f0a69866f654110caebcfe7a6b614f48f51ae4f172",
+      "bytes": 547,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/S08-nocodb-baserow.excerpt.md",
+      "sha256": "b16eb40ae25a550ca4b0146612f7be3103403a1a445961935a8fc5671ea6f868",
+      "bytes": 629,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/S09-grist-selfhost.excerpt.md",
+      "sha256": "ca4b35cd7fe657ce5c2cf7d963f7ee057a7ad318134405f312d2f8bf4f468af7",
+      "bytes": 639,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/S10-rivendell.excerpt.md",
+      "sha256": "4c502d5ac672096faaa16d476e92eae6bb4c30d6a729a103d91ee237ab06874c",
+      "bytes": 418,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/S11-grist-1.7.20.ref.md",
+      "sha256": "7c0d6c94e6c2e6308dd0394adf1bfae465c6b622802f8ac730c316b62ee569e6",
+      "bytes": 495,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/sources/index.md",
+      "sha256": "09e277ac8297f4c7604dea33eb43bf273782d581772bd2b7cd0f35f622911c71",
+      "bytes": 2854,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/critic/sources/C01-wcag-141.excerpt.md",
+      "sha256": "a9317241d1cc89d8b197ebc6c81e10108953a6ed5508020ce99f03bf2d1bf2e4",
+      "bytes": 1292,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/critic/sources/C02-grist-access-rules.excerpt.md",
+      "sha256": "ab32f74031d0ca52502f5914125b5c15b3d371ce5985cd7b77cbbad32fe5bdd6",
+      "bytes": 1747,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/critic/sources/C03-grist-1.7.7.excerpt.md",
+      "sha256": "44bb2e9e1ca4747b84cc7c735872bbf81485f82a35c6888e4c7289cb8f0c041f",
+      "bytes": 1298,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/critic/sources/C04-ghsa-compare.excerpt.md",
+      "sha256": "d3aef2bde910dd317c34d420088c54961059efa8025aaf7176f185c159b4fcdd",
+      "bytes": 1396,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/critic/sources/C05-grist-1.7.20.excerpt.md",
+      "sha256": "9962a1bad0687c7c3cf0b0eeab9871c3f2643fd8a8e4ad0049b328ea9b8e7a43",
+      "bytes": 937,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/critic/sources/C06-libretime-install.excerpt.md",
+      "sha256": "cfaa36af10bdab0877ffb4960c280c6afa1af7c77caffdfc253360c39f3175cf",
+      "bytes": 922,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/critic/sources/index.md",
+      "sha256": "8cb95aad35d8f8b49cfb9a96fe63cfe3d0ad4210f789ea64fd5b896867584e22",
+      "bytes": 1649,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/sources/S01-wcag-141.excerpt.md",
+      "sha256": "4d3810f9c140935eb233f274d4ddb5e957b692d147ce31bd9cd543ab1183cab9",
+      "bytes": 747,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/sources/S02-grist-access-rules.excerpt.md",
+      "sha256": "d2b2e7169b9ae7b16b4e2b6464c0772001c517fc5d74448b8c0dfc6f453b1925",
+      "bytes": 654,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/sources/S03-grist-1.7.9.excerpt.md",
+      "sha256": "a9590aa39ded780da51482ce3b27a6f31b2f89ac935b625005193f98bc305a0c",
+      "bytes": 597,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/sources/S04-cve-2025-64753.excerpt.md",
+      "sha256": "571aae145452488cdfcefde0a69a965fee24921b530165b938883dcc6c08e5ea",
+      "bytes": 759,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/sources/S05-ghsa-1.7.7.ref.md",
+      "sha256": "9b4a9c989c2ef84c304a160143b30a8c3217261c212c9b3c320108cc4a983d31",
+      "bytes": 435,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/sources/S06-libretime-docs.excerpt.md",
+      "sha256": "2df7cd1c09687f999ce28e439a7dd0d83203cfd95ace544e21bf0d26d4e1720a",
+      "bytes": 669,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/sources/S07-azuracast-docs.excerpt.md",
+      "sha256": "30a368c34472ce29ee5018f0a69866f654110caebcfe7a6b614f48f51ae4f172",
+      "bytes": 547,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/sources/S08-nocodb-baserow.excerpt.md",
+      "sha256": "b16eb40ae25a550ca4b0146612f7be3103403a1a445961935a8fc5671ea6f868",
+      "bytes": 629,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/sources/S09-grist-selfhost.excerpt.md",
+      "sha256": "ca4b35cd7fe657ce5c2cf7d963f7ee057a7ad318134405f312d2f8bf4f468af7",
+      "bytes": 639,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/sources/S10-rivendell.excerpt.md",
+      "sha256": "4c502d5ac672096faaa16d476e92eae6bb4c30d6a729a103d91ee237ab06874c",
+      "bytes": 418,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/sources/S11-grist-1.7.20.ref.md",
+      "sha256": "7c0d6c94e6c2e6308dd0394adf1bfae465c6b622802f8ac730c316b62ee569e6",
+      "bytes": 495,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/sources/index.md",
+      "sha256": "98f3963b2813998122befd83b176fcd8008cc1076a51421d6ea4fc62863e4ae0",
+      "bytes": 1381,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/critic/sources/baserow-access.md",
+      "sha256": "bb7ba7cd7656cd0b3b4fb360389096b40333efe4bdbc8b25bc80b0cb917c289a",
+      "bytes": 1312,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/critic/sources/baserow-current.md",
+      "sha256": "d1df6f0b069b2c74215dbd2115be289e3703abaf65a0320b005a3980bd62b044",
+      "bytes": 2258,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/critic/sources/grist-current.md",
+      "sha256": "53be416060919a8990cd4fd85499ceb5bff7944fc541350e25cd1c96cf1cde0c",
+      "bytes": 2554,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/critic/sources/index.md",
+      "sha256": "e395a1353505bd2c2f7463ae971d4c6cf914390e1e94ca1f637bf015e0c5a2f4",
+      "bytes": 1383,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/critic/sources/libretime-evolution.md",
+      "sha256": "bb458f07e5a98cb9dbb15428d978a0ebda0ce95fcd91c26da6aabd96e0285571",
+      "bytes": 1660,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/critic/sources/libretime-scheduling.md",
+      "sha256": "44f93e5e3c90017547444fbf4d25b4f2c8d7d77a8db986057fce94a25efc8984",
+      "bytes": 1012,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/critic/sources/libretime-smartblock-3026.md",
+      "sha256": "27b6c403e7679645400633c5cc7a317cad57e47f48e75aac9c5b6238171601b9",
+      "bytes": 1368,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/critic/sources/sheets-offline.md",
+      "sha256": "2e40913d04374d5623f5cd7f49461d9a4e5956656548de248e6e1bee8a9bd110",
+      "bytes": 1217,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/critic/sources/spinitron-schedule.md",
+      "sha256": "aceefdbc0b54c05c2eed804a35fa4e1ca80014ecb2ecc0e49307d2b931bbf59f",
+      "bytes": 892,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/critic/sources/wcag-current.md",
+      "sha256": "de540509d315ac564a731addcb7bb2b08bc994ca5b8f1d9c5037f400fb3e0a3e",
+      "bytes": 1432,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/FETCH_TIMES.txt",
+      "sha256": "8e2917b8118934a7f3b1cad7304a728a11f17ad25b9111a92abe391ffbce599e",
+      "bytes": 971,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/azuracast-README.md",
+      "sha256": "2da15f3c8923a811388c51e6a8391fe079c9969e08ce7935c51d014bee412d02",
+      "bytes": 6541,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/azuracast-playlists.html",
+      "sha256": "884703ba3360cb8bc9d5395e8fef9c9f37b53565608144793ba9c7a83ace0301",
+      "bytes": 49943,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/azuracast-requirements.html",
+      "sha256": "e83b7a56b3002d8f88eea9c7dc0f8ba63e9aa7bdb8a2ef240c3a4559543924e7",
+      "bytes": 50424,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/azuracast-roles-permissions.md",
+      "sha256": "5738bdbdaa6b4ace8d99d232b0347af31ff07d8e48573514f2a19c4f12875648",
+      "bytes": 2207,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/baserow-pricing.html",
+      "sha256": "61b0c40ce29847512b93136b01b9b2abd100a2ddd1b04157a8361c1b55594c1d",
+      "bytes": 151526,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/grist-access-rules.html",
+      "sha256": "8234e0158ad347afb3ea0b95386dccd00b9c56bbf270bcdab9001b3b642e4779",
+      "bytes": 160114,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/grist-core-README.md",
+      "sha256": "c5fb7b1b385d179fc99bba809e6786d80c64dcd011aa625d29e633b07d0a810a",
+      "bytes": 56349,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/grist-limits.html",
+      "sha256": "db9d8af3d059b916950d86f11b2ff48027741f4e558c64b8f80cb41f54722f89",
+      "bytes": 124109,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/grist-pricing.html",
+      "sha256": "de428f544be4357b74390737f76334fe064f570f97c7eb6770493adcf3f5f3e8",
+      "bytes": 190073,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/grist-self-managed.html",
+      "sha256": "f4a53862eb628c599fde32af2d30f71e988b29d0e0a5df452aedfdb5d0876b4d",
+      "bytes": 183323,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/index.md",
+      "sha256": "45e9cc8a55e0d359a179cc3b717f8a57a51b3739bf3224226a4a0f710ed4f272",
+      "bytes": 3857,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/libretime-CHANGELOG.md",
+      "sha256": "394d1871f5380e0f3463bdd5028c82b3e6ef96263982fc1c91a39080b1819d9a",
+      "bytes": 68895,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/libretime-README.md",
+      "sha256": "ba3a095b9debfab70b2fb6ceefe3468fd1e4d0b74f90b0e959f2d2545d32cbd2",
+      "bytes": 2841,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/libretime-install.html",
+      "sha256": "d7a3e02c18d1c39b6a0343a1f1d4455bda72959ef6bd713f5f34d5563616df1c",
+      "bytes": 24684,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/libretime-pr3026.json",
+      "sha256": "82f95de6ecb0ef016df60bd65e96fbd1fbf1b0db1ea3115f14f4310f2f91a098",
+      "bytes": 22540,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/libretime-schedule.html",
+      "sha256": "b695de6f0a6db3546486d4243b4a0cbe4d51e4aa3e98ef268f1929b6865c1feb",
+      "bytes": 10707,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/libretime-user-manual.html",
+      "sha256": "a185ce4424d6cd15baedd141b1de303881ff877654f622b3ae1a0850057cbf44",
+      "bytes": 21142,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/rivendell-home.html",
+      "sha256": "9b5d28ce14db05011e8f43cdf56c5d979623a03ca5b6e81af1e42a0b11b1b4df",
+      "bytes": 10696,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/tiddlywiki-home.html",
+      "sha256": "8173897b124a1a0cae02332fc6b194c90d2622a4529b4cd7e0307d8368b6c650",
+      "bytes": 80000,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    },
+    {
+      "arm": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/wcag-use-of-color.html",
+      "sha256": "969e2b43a032b50dc79c93ddda9ffebcc65e9b0136ce6a3407c3af467643b7f5",
+      "bytes": 43782,
+      "scope": "Source indexes/registers and material cited evidence reviewed; raw HTML/code inspected in relevant sections, not asserted fully audited."
+    }
+  ],
+  "material_claim_links": {
+    "N2-F1": [
+      "E34",
+      "E26",
+      "E27",
+      "E28",
+      "E29",
+      "E40",
+      "E42",
+      "E32"
+    ],
+    "N1-F1": [
+      "E33",
+      "E47",
+      "frozen N1 S15 README lines45-56"
+    ]
+  },
+  "coverage_policy": "Primary facts, symbols and release applicability govern. Carried researcher/critic excerpts are fallible source-lineage. Failed lookups are not absence evidence. Frozen raw source hashes are provenance only, not scientific grades.",
+  "assessment_scientific_saved_at": "2026-10-09T21:06:18.874163+00:00"
+}

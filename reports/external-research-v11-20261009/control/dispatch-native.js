@@ -22,6 +22,8 @@ if(!(avail>=6)){text({blocked:"memory",avail});return null;}
 const prep=await tools.exec_command({cmd:"python3 "+rt+"/control/stage.py "+block+" "+arm+" "+stage,max_output_tokens:1100});
 if(prep.exit_code!==0){text(prep);return null;}
 const spec=JSON.parse(prep.output);if(spec.route!==(q.stage_routes?.[arm]?.[stage]??q.route))throw new Error("route mismatch");
+const receipt={observedAt:g.observedAt??new Date().toISOString(),source:constrainedRoute?g.source:"Unconstrained Codex route; no constrained-pool read required",completeCapacityView:true,route,museVisible:constrainedRoute?g.data.threads.filter(t=>t.provider?.instanceId==="muse").length:null,zcodeVisible:constrainedRoute?g.data.threads.filter(t=>t.provider?.instanceId==="zcode").length:null,availableGiB:avail,scope:"Pre-dispatch read, not atomic reservation; unrelated identities excluded"};
+await tools.apply_patch("*** Begin Patch\n*** Add File: "+spec.path+"/capacity-check.json\n+"+JSON.stringify(receipt)+"\n*** End Patch");
 const args={clientRequestId:"er11-116bb1e4-"+block+"-"+arm+"-"+stage+"-v1",mode:"async",role:"general",title:"ER11 "+block+" "+arm+" "+stage,target:load("routes")[spec.route],task:spec.prompt};
 const requestedAt=new Date().toISOString();
 await tools.apply_patch("*** Begin Patch\n*** Add File: "+spec.path+"/dispatch-request.json\n+"+JSON.stringify({requestedAt,args})+"\n*** End Patch");

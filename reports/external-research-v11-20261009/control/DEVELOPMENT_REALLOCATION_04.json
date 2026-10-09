@@ -1,0 +1,30 @@
+{
+  "locked_at": "2026-10-09T20:58:26.494227+00:00",
+  "original_cells": [
+    {
+      "block_id": "B-07",
+      "phase": "B",
+      "method": null,
+      "case": "B07",
+      "route": null,
+      "status": "UNSTARTED_RESERVED",
+      "kind": "full-discovery",
+      "allowance_s": 3600,
+      "occupied_ceiling_s": 5400
+    },
+    {
+      "block_id": "B-08",
+      "phase": "B",
+      "method": null,
+      "case": "B08",
+      "route": null,
+      "status": "UNSTARTED_RESERVED",
+      "kind": "full-discovery",
+      "allowance_s": 3600,
+      "occupied_ceiling_s": 5400
+    }
+  ],
+  "new_assignment": "M15-v1 on sealed I07/I08, matched Luna and Muse respectively",
+  "reason": "Known false criticism and lost supported plan scope retired M05-v2 and M13-v1. Add a genuinely separate independent fact-answer context while retaining full criticism/final scope; four agents/at most2simultaneous, added context charged. M14 active grades do not inform this recipe. Original queue and failures retained; only these unstarted reserved cells reassigned.",
+  "holdout": "All H contents remain sealed; no confirmation claim."
+}

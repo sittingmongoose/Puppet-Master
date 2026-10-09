@@ -1,5 +1,5 @@
 {
-  "source": "Exact-owned supported host/native scalar observations; first/latest, no fabricated lifecycle or full transcript",
+  "source": "Exact-owned supported host/native scalar observations; first/latest plus first observed active/complete Goal. No full transcripts or fabricated lifecycle. Unknown terminal timestamps stay null.",
   "groups": [
     {
       "key": "[\"/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/qualification/glm/assignment.md\", \"/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/qualification/glm/assignment.md\"]",
@@ -48,7 +48,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/qualification/glm/assignment.md",
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/qualification/glm/assignment.md"
@@ -145,7 +145,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M03-B/control/research/assignment.md"
         ],
@@ -241,7 +241,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/assignment.md"
         ],
@@ -337,7 +337,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/treatment/research/assignment.md"
         ],
@@ -439,7 +439,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/assignment.md"
         ],
@@ -541,7 +541,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/control/research/assignment.md"
         ],
@@ -643,7 +643,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/assignment.md"
         ],
@@ -739,7 +739,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/treatment/research/assignment.md"
         ],
@@ -835,7 +835,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/assignment.md"
         ],
@@ -937,7 +937,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/critic/assignment.md"
         ],
@@ -1033,7 +1033,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/assignment.md"
         ],
@@ -1129,7 +1129,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/assignment.md"
         ],
@@ -1231,7 +1231,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/reviser/assignment.md"
         ],
@@ -1333,7 +1333,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/assignment.md"
         ],
@@ -1429,7 +1429,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/assignment.md"
         ],
@@ -1525,7 +1525,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/assignment.md"
         ],
@@ -1621,7 +1621,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M03-B/treatment/research/assignment.md"
         ],
@@ -1717,7 +1717,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/critic/assignment.md"
         ],
@@ -1813,7 +1813,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/critic/assignment.md"
         ],
@@ -1909,7 +1909,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/reviser/assignment.md"
         ],
@@ -2005,7 +2005,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/assignment.md"
         ],
@@ -2101,7 +2101,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/assignment.md"
         ],
@@ -2203,7 +2203,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/assignment.md"
         ],
@@ -2299,15 +2299,15 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/critic/assignment.md"
         ],
         "backend_directory": "sess_f201fbec-a435-4bbf-92a7-33663cb97af4",
-        "state_sha256": "01970e379027a687a4812636cb35ce0c309fc72eacb5f6cd2d5fe801c72f51e6",
+        "state_sha256": "62a309acb0c350c540599851e52c47847bc6cdd901034877a19ef17715cc92f9",
         "actual_bridge_state": {
-          "status": "running",
-          "rounds": 2,
+          "status": "paused",
+          "rounds": 3,
           "tickets": [
             {
               "id": "t1",
@@ -2325,7 +2325,7 @@
               "id": "t3",
               "title": "Write final scientific artifacts critique.md (material vs minor findings, evidence and uncertainty, invalid-critic-demand explanations) and critic source-map.json in the critic stage_path only",
               "acceptance": "`python3 -c \"import json;json.load(open('<stage_path>/source-map.json'))\"` succeeds; critique.md contains explicit material/minor sections and no claims lacking a source anchor; `git -C /home/sittingmongoose/PM-Experiments/... status` (or find -newer) shows no writes outside the critic stage_path and no repo/canon edits",
-              "status": "pending"
+              "status": "done"
             },
             {
               "id": "t4",
@@ -2336,7 +2336,8 @@
           ],
           "handoffFresh": false,
           "createdAt": 1791578118825,
-          "updatedAt": 1791578888449,
+          "updatedAt": 1791579192705,
+          "endedReason": "cancelled",
           "objective_sha256": "879b055d5e8361e6de98eb469e868dc49d6a5e8bb746bf5d4e5d0772c926b9be"
         },
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
@@ -2394,15 +2395,15 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/assignment.md"
         ],
         "backend_directory": "sess_e0399ac6-30a6-4081-ab40-28915d0f25f6",
-        "state_sha256": "9ab98f04ded7d0f76ae631b0b07828349677b8077437b2ca29892416e1a0ed57",
+        "state_sha256": "efe779d62731123f4b51aad2ac2e01db8d525426e8c48accb93d5a5760bb7b33",
         "actual_bridge_state": {
-          "status": "running",
-          "rounds": 1,
+          "status": "complete",
+          "rounds": 5,
           "tickets": [
             {
               "id": "t1",
@@ -2414,30 +2415,31 @@
               "id": "t2",
               "title": "Independently inspect governing primary evidence",
               "acceptance": "Verify each consequential claim in the predecessor draft against its cited source (fetch/inspect public primary sources myself) and record own accesses with URL/version/timestamp; a per-claim judgment list exists covering every P disposition, omission, and correction/rejection in draft.md",
-              "status": "pending"
+              "status": "done"
             },
             {
               "id": "t3",
               "title": "Draft progressive critique (M08)",
               "acceptance": "Maintain one developing critique draft covering all obligations, retaining intermediate versions at transitions (draft-v1.md, draft-v2.md...); intermediate files exist under the critic dir and the current draft addresses brief scope, alternatives, and validation applicability",
-              "status": "pending"
+              "status": "done"
             },
             {
               "id": "t4",
               "title": "Save required science artifacts",
               "acceptance": "Write critique.md (material vs minor findings sections), source-map.json (immutable source IDs, exact URL/locator/access timestamp, navigable index), and bounded evidence under critic/sources/; verify with `ls` on the critic dir and `python3 -c \"import json;json.load(open('.../critic/source-map.json'))\"` succeeding",
-              "status": "pending"
+              "status": "done"
             },
             {
               "id": "t5",
               "title": "Pre-terminal preservation review",
               "acceptance": "Spend final reserve on contradiction/preservation check of critique.md vs sources, confirm no writes outside allowed_write_root and no predecessor-mutating edits; all artifacts present and internally consistent before ending the turn",
-              "status": "pending"
+              "status": "done"
             }
           ],
           "handoffFresh": false,
           "createdAt": 1791578703410,
-          "updatedAt": 1791578777634,
+          "updatedAt": 1791579382265,
+          "endedReason": "all tickets done",
           "objective_sha256": "7f81674a888b9f1d114116890b1ed52cf34c94f51f1743dcc3ee44560103db12"
         },
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
@@ -2489,15 +2491,15 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T20:49:57.110980+00:00",
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/critic/assignment.md"
         ],
         "backend_directory": "sess_87edd055-c199-4f6f-96c1-1bc0c252080a",
-        "state_sha256": "c73b1444e34b88f6844fde4e6c67b877221fe9cfd80022f7a326db4f8031e991",
+        "state_sha256": "cadd1e244c3a268cc4bcfe049a3b815ec316d717b8d603c78b3e380df9edaef6",
         "actual_bridge_state": {
-          "status": "running",
-          "rounds": 1,
+          "status": "complete",
+          "rounds": 4,
           "tickets": [
             {
               "id": "t1",
@@ -2509,25 +2511,611 @@
               "id": "t2",
               "title": "[Independent critique against primary evidence]",
               "acceptance": "Inspect governing primary sources under the declared source roots, challenge each consequential fact, P disposition, omission and false correction, and record evidence/uncertainty per finding; each finding line cites a source or marks uncertainty",
-              "status": "pending"
+              "status": "done"
             },
             {
               "id": "t3",
               "title": "[Write critique.md and source-map.json]",
               "acceptance": "Save critique.md (material vs minor findings sections) and source-map.json (exact URL/version/commit/locator/access timestamps, immutable source IDs) under /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/critic only: `python3 -c \"import json;json.load(open('source-map.json'))\"` and grep critique.md for both findings sections",
-              "status": "pending"
+              "status": "done"
             },
             {
               "id": "t4",
               "title": "[Native Goal lifecycle and on-time delivery]",
               "acceptance": "Create one actual fresh native Goal (objective<=4000 referencing this assignment), activate it, save all science files before terminal completion, then complete the Goal and deliver; verify stage files predate terminal state and completion occurs before 2026-10-09T21:06:18.669320+00:00, leaving unavailable lifecycle fields UNKNOWN",
-              "status": "pending"
+              "status": "done"
             }
           ],
           "handoffFresh": false,
           "createdAt": 1791578913478,
-          "updatedAt": 1791578993901,
+          "updatedAt": 1791579382744,
+          "endedReason": "all tickets done",
           "objective_sha256": "7a740b600f7b03cc62d7e727c4fa5fa37f7221361706b0274fbca98ef6a165ca"
+        },
+        "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
+      }
+    },
+    {
+      "key": "[\"/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/assignment.md\"]",
+      "first": {
+        "observed_at": "2026-10-09T20:56:52.923102+00:00",
+        "matched_assignment_refs": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/assignment.md"
+        ],
+        "backend_directory": "sess_9586ec65-f575-476f-9426-cf4b9e51da91",
+        "state_sha256": "f9b098ccbab78cec6a899b6418282199a6e0f7f1b499786f70b3225e9301d190",
+        "actual_bridge_state": {
+          "status": "running",
+          "rounds": 0,
+          "tickets": [
+            {
+              "id": "t1",
+              "title": "[Independent discovery for archive-transfer brief (O1-O3)]",
+              "acceptance": "Read cases/S12/brief.md only; research unfamiliar tools/products/workflows, primary-source behavior/defaults, and one issue/fix/release chain from public sources; write discovery.md, sources/ evidence and source-map.json (exact URL/version/commit/access timestamps) under jobs/A-M06-B/control/research; verify: ls shows discovery.md and source-map.json non-empty, source-map entries carry source IDs and access timestamps, and no case plan-root-only.md was read (grep for it in discovery.md returns nothing)",
+              "status": "pending"
+            },
+            {
+              "id": "t2",
+              "title": "[Freeze discovery and reveal own-case plan]",
+              "acceptance": "Run python3 /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/control/reveal-plan.py /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research; verify: script exits 0, revealed-plan.md exists in the stage path, and discovery.md/source-map.json hashes recorded before the run are unchanged after (sha256sum before/after)",
+              "status": "pending"
+            },
+            {
+              "id": "t3",
+              "title": "[Complete draft.md with exact per-P dispositions (O4-O6)]",
+              "acceptance": "After reading revealed-plan.md only, write draft.md comparing every exact P clause with dispositions (correction / optional enhancement / user decision / already-covered / rejected / uncertain), retaining retained findings, conditions, alternatives, uncertainty, and discriminating validation proposals clearly separated from executed checks; verify: grep -c '^- P' or the plan's P identifiers each appear in draft.md with a disposition, and draft.md distinguishes proposed vs executed validations",
+              "status": "pending"
+            },
+            {
+              "id": "t4",
+              "title": "[Native Goal lifecycle: science saved before terminal completion]",
+              "acceptance": "Confirm the fresh native Goal referring this assignment is active and complete it only after discovery.md, source-map.json and draft.md are written in the stage path; no goal_start/t3_thread_launch/delegate_task calls; verify: all three artifacts exist with mtimes earlier than the terminal completion, unavailable lifecycle fields recorded as UNKNOWN, and final answer exported verbatim if used as predeclared fallback",
+              "status": "pending"
+            }
+          ],
+          "handoffFresh": false,
+          "createdAt": 1791579245910,
+          "updatedAt": 1791579282065,
+          "objective_sha256": "b3446a3ebd1057dcaf2f5f8bab65745c81a3fceab70a34f58263f21ec5c67721"
+        },
+        "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
+      },
+      "latest": {
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
+        "matched_assignment_refs": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/assignment.md"
+        ],
+        "backend_directory": "sess_9586ec65-f575-476f-9426-cf4b9e51da91",
+        "state_sha256": "9dab57b2fa8dd4863d0a44ffea1f6520ff22f7bee8eea16a43a9bcdea1a0dee8",
+        "actual_bridge_state": {
+          "status": "complete",
+          "rounds": 4,
+          "tickets": [
+            {
+              "id": "t1",
+              "title": "[Independent discovery for archive-transfer brief (O1-O3)]",
+              "acceptance": "Read cases/S12/brief.md only; research unfamiliar tools/products/workflows, primary-source behavior/defaults, and one issue/fix/release chain from public sources; write discovery.md, sources/ evidence and source-map.json (exact URL/version/commit/access timestamps) under jobs/A-M06-B/control/research; verify: ls shows discovery.md and source-map.json non-empty, source-map entries carry source IDs and access timestamps, and no case plan-root-only.md was read (grep for it in discovery.md returns nothing)",
+              "status": "done"
+            },
+            {
+              "id": "t2",
+              "title": "[Freeze discovery and reveal own-case plan]",
+              "acceptance": "Run python3 /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/control/reveal-plan.py /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research; verify: script exits 0, revealed-plan.md exists in the stage path, and discovery.md/source-map.json hashes recorded before the run are unchanged after (sha256sum before/after)",
+              "status": "done"
+            },
+            {
+              "id": "t3",
+              "title": "[Complete draft.md with exact per-P dispositions (O4-O6)]",
+              "acceptance": "After reading revealed-plan.md only, write draft.md comparing every exact P clause with dispositions (correction / optional enhancement / user decision / already-covered / rejected / uncertain), retaining retained findings, conditions, alternatives, uncertainty, and discriminating validation proposals clearly separated from executed checks; verify: grep -c '^- P' or the plan's P identifiers each appear in draft.md with a disposition, and draft.md distinguishes proposed vs executed validations",
+              "status": "done"
+            },
+            {
+              "id": "t4",
+              "title": "[Native Goal lifecycle: science saved before terminal completion]",
+              "acceptance": "Confirm the fresh native Goal referring this assignment is active and complete it only after discovery.md, source-map.json and draft.md are written in the stage path; no goal_start/t3_thread_launch/delegate_task calls; verify: all three artifacts exist with mtimes earlier than the terminal completion, unavailable lifecycle fields recorded as UNKNOWN, and final answer exported verbatim if used as predeclared fallback",
+              "status": "done"
+            }
+          ],
+          "handoffFresh": false,
+          "createdAt": 1791579245910,
+          "updatedAt": 1791580001531,
+          "endedReason": "all tickets done",
+          "objective_sha256": "b3446a3ebd1057dcaf2f5f8bab65745c81a3fceab70a34f58263f21ec5c67721"
+        },
+        "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
+      }
+    },
+    {
+      "key": "[\"/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/assignment.md\"]",
+      "first": {
+        "observed_at": "2026-10-09T21:03:17.254016+00:00",
+        "matched_assignment_refs": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/assignment.md"
+        ],
+        "backend_directory": "sess_a8b7ac5f-df04-485a-9ab3-832f607fa975",
+        "state_sha256": "1b7ca9e87476b09953e970fe9858dfcdc8bba20ff915275e404eb3027290ce40",
+        "actual_bridge_state": {
+          "status": "running",
+          "rounds": 1,
+          "tickets": [
+            {
+              "id": "t1",
+              "title": "[Ingest predecessors and adjudicate every criticism]",
+              "acceptance": "Read brief.md, research/draft.md, discovery.md, research/source-map.json, critic/critique.md and critic/source-map.json; for each consequential criticism, re-check it against the retained evidence under research/sources/ and critic/sources/, then record an explicit accept/amend/reject/retain verdict in a working adjudication note inside reviser/",
+              "status": "done"
+            },
+            {
+              "id": "t2",
+              "title": "[Write complete final.md covering O1-O6 and all P clauses]",
+              "acceptance": "Author one coherent reviser/final.md covering full O1-O6 and every exact P clause with material text (no predecessor-ID-only references); verify with grep -c for each O1..O6 heading and each P-clause token, and a pass confirming every adjudication verdict from the prior ticket is reflected",
+              "status": "pending"
+            },
+            {
+              "id": "t3",
+              "title": "[Save reviser source-map.json and sources/ evidence index]",
+              "acceptance": "Write reviser/source-map.json with immutable source IDs, exact URL/version/commit/locator/access timestamps and observed operations, plus bounded permitted evidence under reviser/sources/ and a navigable index; verify with python3 -c \"import json;json.load(open('reviser/source-map.json'))\" and ls reviser/sources/",
+              "status": "pending"
+            },
+            {
+              "id": "t4",
+              "title": "[Save all science before native Goal terminal completion]",
+              "acceptance": "Confirm final.md, source-map.json and sources/ are fully written on disk before the native Goal completes (test -s on each file, timestamped before terminal); after terminal only mechanical delivery; record any unavailable native lifecycle fields as UNKNOWN rather than fabricating them",
+              "status": "pending"
+            },
+            {
+              "id": "t5",
+              "title": "[Pre-deadline integrity sweep]",
+              "acceptance": "Before the 2026-10-09T21:15:13Z deadline, ls the reviser/ write root to confirm only required artifacts exist (final.md, source-map.json, sources/, notes), all JSON parses, no writes outside allowed_write_root, and stop early preserving complete output",
+              "status": "pending"
+            }
+          ],
+          "handoffFresh": false,
+          "createdAt": 1791579446076,
+          "updatedAt": 1791579679523,
+          "objective_sha256": "73b3708e8f68e92ecc0093fb9a45f8d7757f6d0cbb832206f6fea7697484a90f"
+        },
+        "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
+      },
+      "latest": {
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
+        "matched_assignment_refs": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/assignment.md"
+        ],
+        "backend_directory": "sess_a8b7ac5f-df04-485a-9ab3-832f607fa975",
+        "state_sha256": "dfcbd1b34edb699ae4225417f5d2e08d15001601a5376b9f07e9ca40bfc5aed7",
+        "actual_bridge_state": {
+          "status": "complete",
+          "rounds": 5,
+          "tickets": [
+            {
+              "id": "t1",
+              "title": "[Ingest predecessors and adjudicate every criticism]",
+              "acceptance": "Read brief.md, research/draft.md, discovery.md, research/source-map.json, critic/critique.md and critic/source-map.json; for each consequential criticism, re-check it against the retained evidence under research/sources/ and critic/sources/, then record an explicit accept/amend/reject/retain verdict in a working adjudication note inside reviser/",
+              "status": "done"
+            },
+            {
+              "id": "t2",
+              "title": "[Write complete final.md covering O1-O6 and all P clauses]",
+              "acceptance": "Author one coherent reviser/final.md covering full O1-O6 and every exact P clause with material text (no predecessor-ID-only references); verify with grep -c for each O1..O6 heading and each P-clause token, and a pass confirming every adjudication verdict from the prior ticket is reflected",
+              "status": "done"
+            },
+            {
+              "id": "t3",
+              "title": "[Save reviser source-map.json and sources/ evidence index]",
+              "acceptance": "Write reviser/source-map.json with immutable source IDs, exact URL/version/commit/locator/access timestamps and observed operations, plus bounded permitted evidence under reviser/sources/ and a navigable index; verify with python3 -c \"import json;json.load(open('reviser/source-map.json'))\" and ls reviser/sources/",
+              "status": "done"
+            },
+            {
+              "id": "t4",
+              "title": "[Save all science before native Goal terminal completion]",
+              "acceptance": "Confirm final.md, source-map.json and sources/ are fully written on disk before the native Goal completes (test -s on each file, timestamped before terminal); after terminal only mechanical delivery; record any unavailable native lifecycle fields as UNKNOWN rather than fabricating them",
+              "status": "done"
+            },
+            {
+              "id": "t5",
+              "title": "[Pre-deadline integrity sweep]",
+              "acceptance": "Before the 2026-10-09T21:15:13Z deadline, ls the reviser/ write root to confirm only required artifacts exist (final.md, source-map.json, sources/, notes), all JSON parses, no writes outside allowed_write_root, and stop early preserving complete output",
+              "status": "done"
+            }
+          ],
+          "handoffFresh": false,
+          "createdAt": 1791579446076,
+          "updatedAt": 1791580138571,
+          "endedReason": "all tickets done",
+          "objective_sha256": "73b3708e8f68e92ecc0093fb9a45f8d7757f6d0cbb832206f6fea7697484a90f"
+        },
+        "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
+      }
+    },
+    {
+      "key": "[\"/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/assignment.md\"]",
+      "first": {
+        "observed_at": "2026-10-09T21:03:17.254016+00:00",
+        "matched_assignment_refs": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/assignment.md"
+        ],
+        "backend_directory": "sess_ce8345ab-5155-483c-933e-9e70913e6fe4",
+        "state_sha256": "a35b2700c9ae1117c4a7bc2067a0f1b4dbef494316ced97e29ea6fe9074a0251",
+        "actual_bridge_state": {
+          "status": "running",
+          "rounds": 1,
+          "tickets": [
+            {
+              "id": "t1",
+              "title": "[Read declared predecessor set and exact brief (draft.md, discovery.md, critic critique.md, both source-map.json, revealed-plan.md, S08 brief.md) plus source_roots evidence]",
+              "acceptance": "`ls` each path in input-map.json predecessors/source_roots succeeds; consequential claims cross-checked against cited evidence under research/sources and critic/sources",
+              "status": "done"
+            },
+            {
+              "id": "t2",
+              "title": "[Write own reviser source-map.json with immutable source IDs, exact URL/version/commit/locator/access timestamps, bounded permitted evidence under reviser/sources/ and a navigable index]",
+              "acceptance": "`python3 -c \"import json;json.load(open('<reviser>/source-map.json'))\"` parses; every cited source has ID+locator+access timestamp; index resolves to files that exist",
+              "status": "pending"
+            },
+            {
+              "id": "t3",
+              "title": "[Author ONE coherent COMPLETE final.md covering full O1-O6 and every exact P clause, with explicit accept/amend/reject/retain-uncertainty disposition per criticism, preserving supported discovery, mechanisms, alternatives, conditions, optional leads and validation distinctions as material text]",
+              "acceptance": "grep final.md for each O1-O6 heading and each P-clause token; every criticism from critique.md has a stated disposition line; no criticism answered by predecessor-ID reference alone",
+              "status": "pending"
+            },
+            {
+              "id": "t4",
+              "title": "[Run contradiction/preservation review over the full final draft and finalize artifacts in the allowed write root before deadline/terminal]",
+              "acceptance": "`stat` on reviser/final.md and reviser/source-map.json shows mtimes before 2026-10-09T21:15:01Z; files exist only under /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser",
+              "status": "pending"
+            }
+          ],
+          "handoffFresh": false,
+          "createdAt": 1791579439090,
+          "updatedAt": 1791579603713,
+          "objective_sha256": "dcb68c8e73ee1e1f69b4b0738d51d319d04c7d373057730fa1e13c308b3d7c16"
+        },
+        "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
+      },
+      "latest": {
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
+        "matched_assignment_refs": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/assignment.md"
+        ],
+        "backend_directory": "sess_ce8345ab-5155-483c-933e-9e70913e6fe4",
+        "state_sha256": "f82235fd3aa62f50736a8e7eede8dda2be1f4e3934e508ffd9ae7dd83bf8b1a0",
+        "actual_bridge_state": {
+          "status": "complete",
+          "rounds": 4,
+          "tickets": [
+            {
+              "id": "t1",
+              "title": "[Read declared predecessor set and exact brief (draft.md, discovery.md, critic critique.md, both source-map.json, revealed-plan.md, S08 brief.md) plus source_roots evidence]",
+              "acceptance": "`ls` each path in input-map.json predecessors/source_roots succeeds; consequential claims cross-checked against cited evidence under research/sources and critic/sources",
+              "status": "done"
+            },
+            {
+              "id": "t2",
+              "title": "[Write own reviser source-map.json with immutable source IDs, exact URL/version/commit/locator/access timestamps, bounded permitted evidence under reviser/sources/ and a navigable index]",
+              "acceptance": "`python3 -c \"import json;json.load(open('<reviser>/source-map.json'))\"` parses; every cited source has ID+locator+access timestamp; index resolves to files that exist",
+              "status": "done"
+            },
+            {
+              "id": "t3",
+              "title": "[Author ONE coherent COMPLETE final.md covering full O1-O6 and every exact P clause, with explicit accept/amend/reject/retain-uncertainty disposition per criticism, preserving supported discovery, mechanisms, alternatives, conditions, optional leads and validation distinctions as material text]",
+              "acceptance": "grep final.md for each O1-O6 heading and each P-clause token; every criticism from critique.md has a stated disposition line; no criticism answered by predecessor-ID reference alone",
+              "status": "done"
+            },
+            {
+              "id": "t4",
+              "title": "[Run contradiction/preservation review over the full final draft and finalize artifacts in the allowed write root before deadline/terminal]",
+              "acceptance": "`stat` on reviser/final.md and reviser/source-map.json shows mtimes before 2026-10-09T21:15:01Z; files exist only under /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser",
+              "status": "done"
+            }
+          ],
+          "handoffFresh": false,
+          "createdAt": 1791579439090,
+          "updatedAt": 1791580012968,
+          "endedReason": "all tickets done",
+          "objective_sha256": "dcb68c8e73ee1e1f69b4b0738d51d319d04c7d373057730fa1e13c308b3d7c16"
+        },
+        "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
+      }
+    },
+    {
+      "key": "[\"/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/research/assignment.md\"]",
+      "first": {
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
+        "matched_assignment_refs": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/research/assignment.md"
+        ],
+        "backend_directory": "sess_cd14499f-38e4-4084-868a-fee5b3d53d03",
+        "state_sha256": "89d492f9fb803d44b3fcaaac8cd829a343ff2f9f351867dcc13f33b3b4da3da3",
+        "actual_bridge_state": {
+          "status": "running",
+          "rounds": 0,
+          "tickets": [
+            {
+              "id": "t1",
+              "title": "[Evidence-first critic pass from brief alone]",
+              "acceptance": "Read cases/S12/brief.md only; independently derive obligations O1-O6 facts from public primary sources without opening any draft/plan; write evidence-first.md in the stage dir; verify: file exists, cites only sources chosen independently, contains no revealed-plan content",
+              "status": "pending"
+            },
+            {
+              "id": "t2",
+              "title": "[Discovery and source map saved before reveal]",
+              "acceptance": "Write substantive discovery.md and exact source-map.json (URL/version/commit/locator/access timestamp per source, immutable IDs) plus retained bounded evidence under sources/ with navigable index; verify: jq -e parses source-map.json, discovery.md covers O1-O6 with derived code/default/exception/applicability and issue-fix-release evidence, mtimes precede reveal-plan invocation",
+              "status": "pending"
+            },
+            {
+              "id": "t3",
+              "title": "[Freeze discovery and reveal own-case plan]",
+              "acceptance": "Run python3 .../control/reveal-plan.py .../jobs/A-M06-B/treatment/research; then and only then read revealed-plan.md; verify: script exit 0, revealed-plan.md exists, discovery.md byte-identical before/after (sha256sum)",
+              "status": "pending"
+            },
+            {
+              "id": "t4",
+              "title": "[Complete draft with exact per-P disposition]",
+              "acceptance": "Write draft.md covering every P in the revealed plan: disposition, retained findings, conditions, alternatives, optional capabilities/user decisions, uncertainty, discriminating validation proposals vs executed; verify: each revealed P id appears with a disposition, no post-reveal rewrite of discovery.md",
+              "status": "pending"
+            },
+            {
+              "id": "t5",
+              "title": "[Native Goal lifecycle and delivery]",
+              "acceptance": "Confirm one actual fresh native Goal referring to this assignment is active (existing installed loop; no goal_start/thread/delegate calls), save all science before terminal completion, complete the Goal, deliver final answer verbatim; verify: Goal terminal-complete after evidence-first.md, discovery.md, source-map.json, draft.md all exist, required artifacts present in stage dir at delivery",
+              "status": "pending"
+            }
+          ],
+          "handoffFresh": false,
+          "createdAt": 1791580289718,
+          "updatedAt": 1791580315531,
+          "objective_sha256": "dcc16d04bfd272d172f21ed99d9c3130ef2b995d123106aaa846c38e6fbeece5"
+        },
+        "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
+      },
+      "latest": {
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
+        "matched_assignment_refs": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/research/assignment.md"
+        ],
+        "backend_directory": "sess_cd14499f-38e4-4084-868a-fee5b3d53d03",
+        "state_sha256": "89d492f9fb803d44b3fcaaac8cd829a343ff2f9f351867dcc13f33b3b4da3da3",
+        "actual_bridge_state": {
+          "status": "running",
+          "rounds": 0,
+          "tickets": [
+            {
+              "id": "t1",
+              "title": "[Evidence-first critic pass from brief alone]",
+              "acceptance": "Read cases/S12/brief.md only; independently derive obligations O1-O6 facts from public primary sources without opening any draft/plan; write evidence-first.md in the stage dir; verify: file exists, cites only sources chosen independently, contains no revealed-plan content",
+              "status": "pending"
+            },
+            {
+              "id": "t2",
+              "title": "[Discovery and source map saved before reveal]",
+              "acceptance": "Write substantive discovery.md and exact source-map.json (URL/version/commit/locator/access timestamp per source, immutable IDs) plus retained bounded evidence under sources/ with navigable index; verify: jq -e parses source-map.json, discovery.md covers O1-O6 with derived code/default/exception/applicability and issue-fix-release evidence, mtimes precede reveal-plan invocation",
+              "status": "pending"
+            },
+            {
+              "id": "t3",
+              "title": "[Freeze discovery and reveal own-case plan]",
+              "acceptance": "Run python3 .../control/reveal-plan.py .../jobs/A-M06-B/treatment/research; then and only then read revealed-plan.md; verify: script exit 0, revealed-plan.md exists, discovery.md byte-identical before/after (sha256sum)",
+              "status": "pending"
+            },
+            {
+              "id": "t4",
+              "title": "[Complete draft with exact per-P disposition]",
+              "acceptance": "Write draft.md covering every P in the revealed plan: disposition, retained findings, conditions, alternatives, optional capabilities/user decisions, uncertainty, discriminating validation proposals vs executed; verify: each revealed P id appears with a disposition, no post-reveal rewrite of discovery.md",
+              "status": "pending"
+            },
+            {
+              "id": "t5",
+              "title": "[Native Goal lifecycle and delivery]",
+              "acceptance": "Confirm one actual fresh native Goal referring to this assignment is active (existing installed loop; no goal_start/thread/delegate calls), save all science before terminal completion, complete the Goal, deliver final answer verbatim; verify: Goal terminal-complete after evidence-first.md, discovery.md, source-map.json, draft.md all exist, required artifacts present in stage dir at delivery",
+              "status": "pending"
+            }
+          ],
+          "handoffFresh": false,
+          "createdAt": 1791580289718,
+          "updatedAt": 1791580315531,
+          "objective_sha256": "dcc16d04bfd272d172f21ed99d9c3130ef2b995d123106aaa846c38e6fbeece5"
+        },
+        "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
+      }
+    },
+    {
+      "key": "[\"/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/assignment.md\"]",
+      "first": {
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
+        "matched_assignment_refs": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/assignment.md"
+        ],
+        "backend_directory": "sess_be69b32e-a52e-4d61-90e8-1ddb43d4279a",
+        "state_sha256": "58302db68ba8de4340042e8e76d67368247b0e6e35a33aa003c9ae494a3faa95",
+        "actual_bridge_state": {
+          "status": "running",
+          "rounds": 0,
+          "tickets": [
+            {
+              "id": "t1",
+              "title": "[Ingest declared inputs] Read brief.md, predecessor draft.md/discovery.md/source-map.json/revealed-plan.md, and research/sources/ under the exact input-map paths; note every consequential claim, P disposition, and omission worth challenging",
+              "acceptance": "ls -l shows all 4 predecessors + brief exist; notes captured on each claim to challenge",
+              "status": "pending"
+            },
+            {
+              "id": "t2",
+              "title": "[Challenge against primary evidence] Independently inspect primary sources under research/sources and public primary sources to validate/challenge facts, dispositions, corrections/rejections, and validation applicability; classify findings material vs minor with evidence and uncertainty",
+              "acceptance": "each material finding cites a source file/URL; invalid critic demands explicitly explained",
+              "status": "pending"
+            },
+            {
+              "id": "t3",
+              "title": "[Write critique.md] Save critique.md in jobs/A-M06-B/control/critic with material vs minor findings sections, full material scope, no token cap truncation",
+              "acceptance": "cat critique.md contains material + minor sections and per-finding source citations",
+              "status": "pending"
+            },
+            {
+              "id": "t4",
+              "title": "[Write source-map.json] Record exact URL/version/commit/locator/access timestamp and observed operations for every source used; immutable IDs, no silent rebind, drift explicit; usage/billing null",
+              "acceptance": "python3 -c \"import json;json.load(open('.../critic/source-map.json'))\" succeeds and every critique finding maps to a source ID",
+              "status": "pending"
+            },
+            {
+              "id": "t5",
+              "title": "[Pre-terminal completeness check] Verify all required artifacts exist under the allowed write root only, before native Goal terminal completion",
+              "acceptance": "ls jobs/A-M06-B/control/critic shows critique.md + source-map.json; no writes outside allowed_write_root (git status clean in repo)",
+              "status": "pending"
+            }
+          ],
+          "handoffFresh": false,
+          "createdAt": 1791580267436,
+          "updatedAt": 1791580289538,
+          "objective_sha256": "6caa370743efc847fc7df6dc8fbe50bba3134aa5e09fb6f127bad3b029739f90"
+        },
+        "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
+      },
+      "latest": {
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
+        "matched_assignment_refs": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/assignment.md"
+        ],
+        "backend_directory": "sess_be69b32e-a52e-4d61-90e8-1ddb43d4279a",
+        "state_sha256": "58302db68ba8de4340042e8e76d67368247b0e6e35a33aa003c9ae494a3faa95",
+        "actual_bridge_state": {
+          "status": "running",
+          "rounds": 0,
+          "tickets": [
+            {
+              "id": "t1",
+              "title": "[Ingest declared inputs] Read brief.md, predecessor draft.md/discovery.md/source-map.json/revealed-plan.md, and research/sources/ under the exact input-map paths; note every consequential claim, P disposition, and omission worth challenging",
+              "acceptance": "ls -l shows all 4 predecessors + brief exist; notes captured on each claim to challenge",
+              "status": "pending"
+            },
+            {
+              "id": "t2",
+              "title": "[Challenge against primary evidence] Independently inspect primary sources under research/sources and public primary sources to validate/challenge facts, dispositions, corrections/rejections, and validation applicability; classify findings material vs minor with evidence and uncertainty",
+              "acceptance": "each material finding cites a source file/URL; invalid critic demands explicitly explained",
+              "status": "pending"
+            },
+            {
+              "id": "t3",
+              "title": "[Write critique.md] Save critique.md in jobs/A-M06-B/control/critic with material vs minor findings sections, full material scope, no token cap truncation",
+              "acceptance": "cat critique.md contains material + minor sections and per-finding source citations",
+              "status": "pending"
+            },
+            {
+              "id": "t4",
+              "title": "[Write source-map.json] Record exact URL/version/commit/locator/access timestamp and observed operations for every source used; immutable IDs, no silent rebind, drift explicit; usage/billing null",
+              "acceptance": "python3 -c \"import json;json.load(open('.../critic/source-map.json'))\" succeeds and every critique finding maps to a source ID",
+              "status": "pending"
+            },
+            {
+              "id": "t5",
+              "title": "[Pre-terminal completeness check] Verify all required artifacts exist under the allowed write root only, before native Goal terminal completion",
+              "acceptance": "ls jobs/A-M06-B/control/critic shows critique.md + source-map.json; no writes outside allowed_write_root (git status clean in repo)",
+              "status": "pending"
+            }
+          ],
+          "handoffFresh": false,
+          "createdAt": 1791580267436,
+          "updatedAt": 1791580289538,
+          "objective_sha256": "6caa370743efc847fc7df6dc8fbe50bba3134aa5e09fb6f127bad3b029739f90"
+        },
+        "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
+      }
+    },
+    {
+      "key": "[\"/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/research/assignment.md\"]",
+      "first": {
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
+        "matched_assignment_refs": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/research/assignment.md"
+        ],
+        "backend_directory": "sess_8e4812d9-e88f-48e1-a6da-0b6b9de257bc",
+        "state_sha256": "44e86943ca9474fc1521f0f7bf16ee17c6efed1e94940f8ae9ec4c8ef346e5b0",
+        "actual_bridge_state": {
+          "status": "running",
+          "rounds": 0,
+          "tickets": [
+            {
+              "id": "t1",
+              "title": "[Investigate brief O1-O6 and save discovery.md + source-map.json]",
+              "acceptance": "Read /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md only; research public primary sources; write discovery.md (covers O1-O6, unfamiliar products/approaches, code/default/exception/issue-fix-release evidence) and source-map.json (exact URL/version/commit/locator/access timestamp, immutable source IDs) under .../jobs/A-M08-A/control/research/ before any plan reveal; verify with `python3 -c \"import json;d=json.load(open('.../research/source-map.json'));assert d['sources'] and all(s.get('url') and s.get('accessed') for s in d['sources'])\"` and grep discovery.md for each O1..O6 obligation",
+              "status": "pending"
+            },
+            {
+              "id": "t2",
+              "title": "[Freeze discovery and reveal own-case plan]",
+              "acceptance": "Run `python3 /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/control/reveal-plan.py /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/research`; verify exit 0, revealed-plan.md exists in stage_path, discovery.md bytes unchanged after reveal (`sha256sum` before/after), and plan-root-only.md was never read",
+              "status": "pending"
+            },
+            {
+              "id": "t3",
+              "title": "[Write complete draft.md with per-P disposition vs executed plan]",
+              "acceptance": "Produce draft.md in stage_path: exact per-P disposition, retained findings, conditions, alternatives, optional capabilities/user decisions, uncertainty, and discriminating validation proposals vs executed, without rewriting discovery; verify `test -s .../research/draft.md` and grep for a disposition line per plan P-id in revealed-plan.md",
+              "status": "pending"
+            },
+            {
+              "id": "t4",
+              "title": "[Run native Goal lifecycle around saved science]",
+              "acceptance": "Confirm the top-level /goal native loop is active (no goal_start/thread/delegate calls, no handwritten receipt JSON); all discovery.md, source-map.json, draft.md saved before native terminal completion, then complete the Goal; unavailable lifecycle fields recorded UNKNOWN; verify artifacts' mtimes precede terminal completion time and no stray session/verifier processes were created",
+              "status": "pending"
+            },
+            {
+              "id": "t5",
+              "title": "[Final completeness and deadline delivery check]",
+              "acceptance": "Before 2026-10-09T21:35:26Z verify all required artifacts exist and are non-empty in .../A-M08-A/control/research/ (`ls -l discovery.md source-map.json draft.md revealed-plan.md` plus any science index), only allowed_write_root was written, and report delivery status honestly including any partial output if expired",
+              "status": "pending"
+            }
+          ],
+          "handoffFresh": false,
+          "createdAt": 1791580296533,
+          "updatedAt": 1791580322999,
+          "objective_sha256": "0d4ba4814c7554f005bffd65727ec2322dfb0d41309b79cdc1ce4bbeae173b31"
+        },
+        "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
+      },
+      "latest": {
+        "observed_at": "2026-10-09T21:12:30.613128+00:00",
+        "matched_assignment_refs": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/research/assignment.md"
+        ],
+        "backend_directory": "sess_8e4812d9-e88f-48e1-a6da-0b6b9de257bc",
+        "state_sha256": "44e86943ca9474fc1521f0f7bf16ee17c6efed1e94940f8ae9ec4c8ef346e5b0",
+        "actual_bridge_state": {
+          "status": "running",
+          "rounds": 0,
+          "tickets": [
+            {
+              "id": "t1",
+              "title": "[Investigate brief O1-O6 and save discovery.md + source-map.json]",
+              "acceptance": "Read /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md only; research public primary sources; write discovery.md (covers O1-O6, unfamiliar products/approaches, code/default/exception/issue-fix-release evidence) and source-map.json (exact URL/version/commit/locator/access timestamp, immutable source IDs) under .../jobs/A-M08-A/control/research/ before any plan reveal; verify with `python3 -c \"import json;d=json.load(open('.../research/source-map.json'));assert d['sources'] and all(s.get('url') and s.get('accessed') for s in d['sources'])\"` and grep discovery.md for each O1..O6 obligation",
+              "status": "pending"
+            },
+            {
+              "id": "t2",
+              "title": "[Freeze discovery and reveal own-case plan]",
+              "acceptance": "Run `python3 /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/control/reveal-plan.py /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/research`; verify exit 0, revealed-plan.md exists in stage_path, discovery.md bytes unchanged after reveal (`sha256sum` before/after), and plan-root-only.md was never read",
+              "status": "pending"
+            },
+            {
+              "id": "t3",
+              "title": "[Write complete draft.md with per-P disposition vs executed plan]",
+              "acceptance": "Produce draft.md in stage_path: exact per-P disposition, retained findings, conditions, alternatives, optional capabilities/user decisions, uncertainty, and discriminating validation proposals vs executed, without rewriting discovery; verify `test -s .../research/draft.md` and grep for a disposition line per plan P-id in revealed-plan.md",
+              "status": "pending"
+            },
+            {
+              "id": "t4",
+              "title": "[Run native Goal lifecycle around saved science]",
+              "acceptance": "Confirm the top-level /goal native loop is active (no goal_start/thread/delegate calls, no handwritten receipt JSON); all discovery.md, source-map.json, draft.md saved before native terminal completion, then complete the Goal; unavailable lifecycle fields recorded UNKNOWN; verify artifacts' mtimes precede terminal completion time and no stray session/verifier processes were created",
+              "status": "pending"
+            },
+            {
+              "id": "t5",
+              "title": "[Final completeness and deadline delivery check]",
+              "acceptance": "Before 2026-10-09T21:35:26Z verify all required artifacts exist and are non-empty in .../A-M08-A/control/research/ (`ls -l discovery.md source-map.json draft.md revealed-plan.md` plus any science index), only allowed_write_root was written, and report delivery status honestly including any partial output if expired",
+              "status": "pending"
+            }
+          ],
+          "handoffFresh": false,
+          "createdAt": 1791580296533,
+          "updatedAt": 1791580322999,
+          "objective_sha256": "0d4ba4814c7554f005bffd65727ec2322dfb0d41309b79cdc1ce4bbeae173b31"
         },
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       }

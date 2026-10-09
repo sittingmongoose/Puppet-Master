@@ -19,7 +19,7 @@ for a in ('control','treatment'):
  if root.exists():
   for s in root.iterdir():
    if s.is_dir() and (s/'task-result.json').exists():
-    for name in ('discovery.md','draft.md','critique.md','final.md','revision-pass.md','amendments.md','fidelity-check.md','source-map.json','evidence-first.md','revealed-plan.md','plan-reveal.json','assignment.md','input-map.json'):
+    for name in ('discovery.md','draft.md','critique.md','final.md','revision-pass.md','amendments.md','fidelity-check.md','source-map.json','evidence-first.md','verification.md','verification-questions.md','revealed-plan.md','plan-reveal.json','assignment.md','input-map.json'):
      f=s/name
      if f.exists():files.append({'path':str(f),'sha256':hashlib.sha256(f.read_bytes()).hexdigest(),'bytes':f.stat().st_size})
  arms['N1' if a=='treatment' else 'N2']={'actual_arm':a,'final_delivery':delivered,'scientific_artifact_available':available,'final':str(final) if available else None,'files':files,'source_roots':[str(x) for x in root.glob('*/sources') if x.is_dir()]}

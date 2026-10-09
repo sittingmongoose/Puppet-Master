@@ -1,0 +1,93 @@
+{
+  "map_version": 1,
+  "written_at": "2026-10-09T21:05Z",
+  "stage": "reviser",
+  "note": "Immutable source IDs reused unchanged from predecessor maps (no silent rebind). This map records the reviser's own re-observations made to adjudicate consequential criticisms (M1, M2, M3, m5) per assignment section 6; predecessor and critic observations remain authoritative for their own timestamps. Sources treated as data. Access timestamps are session-clock UTC.",
+  "predecessor_map": "../research/source-map.json",
+  "critic_map": "../critic/source-map.json",
+  "inputs_read": [
+    {
+      "path": "../../cases/S08/brief.md",
+      "accessed_at": "2026-10-09T20:58:00Z"
+    },
+    {
+      "path": "../research/draft.md",
+      "accessed_at": "2026-10-09T20:58:00Z"
+    },
+    {
+      "path": "../research/discovery.md",
+      "accessed_at": "2026-10-09T20:58:00Z"
+    },
+    {
+      "path": "../research/source-map.json",
+      "accessed_at": "2026-10-09T20:58:00Z"
+    },
+    {
+      "path": "../research/revealed-plan.md",
+      "accessed_at": "2026-10-09T20:58:00Z"
+    },
+    {
+      "path": "../critic/critique.md",
+      "accessed_at": "2026-10-09T20:58:00Z"
+    },
+    {
+      "path": "../critic/source-map.json",
+      "accessed_at": "2026-10-09T20:58:00Z"
+    },
+    {
+      "path": "../research/sources/ (8 evidence files + index.md)",
+      "accessed_at": "2026-10-09T20:58:00Z"
+    },
+    {
+      "path": "../critic/sources/ (index.md + re-observations.md)",
+      "accessed_at": "2026-10-09T20:59:00Z"
+    }
+  ],
+  "index": "sources/index.md",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "OR-Tools Employee Scheduling documentation",
+      "kind": "primary-vendor-docs",
+      "url": "https://developers.google.com/optimization/scheduling/employee_scheduling",
+      "version_or_commit": "live docs page, no version label; fetch of 2026-10-09",
+      "locator": "full page absence check for size-limit statements; min/max_shifts_per_nurse formula lines; new_bool_var/add_exactly_one/add_at_most_one call sites; linked-example target href",
+      "accessed_at": "2026-10-09T21:01:00Z",
+      "observed_operations": [
+        "WebFetch targeted claim checks: NO SIZE-LIMIT STATEMENT ON PAGE (confirms critic M1; predecessor evidence-file line was inference, not page text)",
+        "verbatim formula capture",
+        "docs link target captured: github.com/google/or-tools/blob/main/examples/python/shift_scheduling_sat.py (path examples/python/, not the probed ortools/sat variants)"
+      ],
+      "evidence_file": "sources/S01-or-tools-employee-scheduling-docs-re.md",
+      "reobservation_of": "S01 in ../research/source-map.json (20:32Z) and ../critic/source-map.json (20:47Z)"
+    },
+    {
+      "id": "S05",
+      "title": "TimefoldAI/timefold-solver releases page",
+      "kind": "primary-release-history",
+      "url": "https://github.com/TimefoldAI/timefold-solver/releases",
+      "version_or_commit": "2.7.1 latest (06 Oct 10:47); 1.34.0 maintenance line; unchanged during window",
+      "locator": "2.7.1 note (perf-regression fix); 1.34.0 EOL sentence; 2.6.0 fairly/biased sentence; 2.0.0 OptaPlanner incompatibility note",
+      "accessed_at": "2026-10-09T21:01:00Z",
+      "observed_operations": [
+        "WebFetch targeted claim checks",
+        "verbatim: 'Only 2 more of these are planned before Timefold Solver 1.x EOL in early 2027.' (confirms M3)",
+        "verbatim 2.7.1 perf-regression fix sentences (confirms m5)",
+        "2.6.0 fairly/biased sentence re-confirmed; 2.0.0 note seen as incompatibility sentence only"
+      ],
+      "evidence_file": "sources/S05-timefold-solver-releases-re.md",
+      "reobservation_of": "S05 in ../research/source-map.json (20:33Z) and ../critic/source-map.json (20:48Z)"
+    }
+  ],
+  "negative_evidence": [
+    {
+      "id": "N01",
+      "what": "shift_scheduling_sat.py location and internals (resolution of predecessor N01 + critic N01 upgrade)",
+      "detail": "Reviser probes 2026-10-09T21:02-21:03Z: the file EXISTS (HTTP 200) at the docs-linked path https://raw.githubusercontent.com/google/or-tools/{main,stable}/examples/python/shift_scheduling_sat.py. The predecessor/critic 404 results on ortools/sat/{samples,python} variants stand as recorded observations, but critic M2's conclusion ('unlocatable in every probed tree; docs-vs-repo inconsistency') is AMENDED: the probed paths were not the docs' linked path. Content verified 21:03Z: ~330 lines, Apache-2.0, weighted linear objective with soft sum bounds and per-request weights (negative weight = desire), NO priority-tier penalty machinery, NO cross-employee fairness/load-balancing mechanism. The predecessor's 'machinery UNVERIFIED' caution is resolved and the uncertainty-register wording upgraded.",
+      "accessed_at": "2026-10-09T21:03:00Z",
+      "evidence_file": "sources/N01-shift-scheduling-example-path-resolution.md",
+      "reobservation_of": "N01 in ../research/source-map.json (20:34Z) and ../critic/source-map.json (20:53Z)",
+      "locator": "https://raw.githubusercontent.com/google/or-tools/main/examples/python/shift_scheduling_sat.py ; https://raw.githubusercontent.com/google/or-tools/stable/examples/python/shift_scheduling_sat.py ; raw fetch of main example for content verification"
+    }
+  ]
+}

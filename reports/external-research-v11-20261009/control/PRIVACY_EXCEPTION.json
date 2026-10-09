@@ -1,0 +1,17 @@
+{
+  "recorded_at": "2026-10-09T21:04:48.457634+00:00",
+  "incident": "PRIVATE_EMAIL_IN_GIT_AUTHOR_METADATA",
+  "affected_ER11_report_commits": [
+    "af286a97f3f5e58bac096718a9eebdbac73cb333",
+    "9cd796b53c8c2047b3e4ca21b68d78f2fa16da80",
+    "e4422cc6d938e4dc3397ef276b00ff0a34b332e3",
+    "d991122ebf1da0971652646aa362c0fd0c49a455",
+    "92c92c22740b2e68520ef883d2e185bd980c41de"
+  ],
+  "source_content": "Report text redacted, but default git author configuration used the brief private email. The actual address is omitted from this report.",
+  "status": "Published immutable metadata remains exposed. No history rewrite or force push is performed under explicit user prohibition.",
+  "mitigation": "Future commits use supported GitHub public no-reply identity through per-command git -c user.email, without changing provider/account/configuration or existing commits.",
+  "claims": "This is a known privacy exception, not a claim of complete redaction. Scientific outputs/grades and original attempt accounting remain unchanged.",
+  "future_author_identity": "42017982+sittingmongoose@users.noreply.github.com",
+  "public_identity_source": "gh api users/sittingmongoose returned id42017982/login sittingmongoose; GitHub official commit email documentation supports ID+USERNAME@users.noreply.github.com"
+}

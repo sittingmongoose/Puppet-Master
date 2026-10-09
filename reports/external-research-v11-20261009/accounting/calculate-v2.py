@@ -12,30 +12,29 @@ def delta(a,b):
     return round((b-a).total_seconds(),3) if a is not None and b is not None else None
 def stamp(p):
     return datetime.datetime.fromtimestamp(p.stat().st_mtime,datetime.timezone.utc) if p.exists() else None
-native={}; bridge={}
+native={}; native_history={}; bridge={}
 for line in (R/'control/native-observations.jsonl').read_text().splitlines():
-    v=json.loads(line);native[v.get('task_id')]=v
+    v=json.loads(line);native[v.get('task_id')]=v;native_history.setdefault(v.get('task_id'),[]).append(v)
 for line in (R/'control/glm-integration-observations.jsonl').read_text().splitlines():
     v=json.loads(line)
     for ref in v.get('matched_assignment_refs',[]):bridge[str(Path(ref).parent)]=v
 allruns={}
 known_paths=list((R/'jobs').glob('*/*/*/host-runs.json'))+list((R/'evaluations').glob('*/host-runs.json'))+list((R/'qualification').glob('*/host-runs.json'))+list((R/'helpers').glob('*/host-runs.json'))
 for p in known_paths:
-    if '/accounting/' in str(p):continue
     for run in read(p).get('recentRuns',[]):allruns[run['runId']]=run
 def stage(p):
     d=read(p/'dispatch.json'); result=read(p/'task-result.json');h=read(p/'host-runs.json')
     runs=h.get('recentRuns',[]); run=next((v for v in runs if v['runId']==d.get('childRunId')),None)
-    n=native.get(d.get('taskId'),{}); z=bridge.get(str(p),{}).get('actual_bridge_state',{})
+    n=native.get(d.get('taskId'),{}); history=native_history.get(d.get('taskId'),[]); gs=[x.get('goal') for x in history if x.get('goal')]; z=bridge.get(str(p),{}).get('actual_bridge_state',{})
     end=dt(run.get('completedAt')) if run else None
     start=dt(run.get('startedAt')) if run else None
     deadline=dt(read(p/'freeze.json').get('deadline'))
     return {'requested_target':d.get('target'),'effective_host_provider':run.get('providerInstanceId') if run else None,'effective_host_model':run.get('model') if run else None,'path':str(p.relative_to(R)), 'task_id':d.get('taskId'), 'terminal_status':result.get('status'),
       'run_id':run.get('runId') if run else None,'started_at':start.isoformat() if start else None,
       'completed_at':end.isoformat() if end else None,'occupied_s':delta(start,end),
-      'occupied_so_far_s':delta(start,end or now), 'accepted_queue_s':delta(dt(d.get('acceptedAt')),start),
+      'occupied_so_far_s':delta(start,end or now), 'accepted_queue_s':delta(dt(run.get('requestedAt')) if run else None,start), 'host_request_to_start_s':delta(dt(run.get('requestedAt')) if run else None,start), 'tool_return_after_host_start_s':delta(start,dt(d.get('acceptedAt'))),
       'native_status':(n.get('goal') or {}).get('status') or z.get('status') or 'UNKNOWN',
-      'native_goal_cumulative':(n.get('goal') or {}), 'native_terminal_exact_time':None,
+      'native_goal_cumulative':(n.get('goal') or {}), 'native_terminal_exact_time':None,'native_activation_observed':any(x.get('status')=='active' for x in gs) if gs else None,'native_complete_observed':any(x.get('status')=='complete' for x in gs) if gs else None,'installed_integration_status':z.get('status'),'effective_selected_configuration':read(p/'effective-configuration.json') or None,
       'deadline':deadline.isoformat() if deadline else None, 'delivery_within_stage_deadline':end<=deadline if end and deadline else None,
       'input_tokens':None,'cached_input_subset':None,'output_tokens':None,'reasoning_output_subset':None,'billing':None}
 q=read(R/'control/queue.json');state=read(R/'control/state.json');rows=[]
@@ -85,7 +84,7 @@ dispatched=list((R/'jobs').glob('*/*/*/dispatch.json'))+list((R/'evaluations').g
 missing_host=[str(p.parent.relative_to(R)) for p in dispatched if not (p.parent/'host-runs.json').exists()]
 result={'missing_host_run_paths':missing_host,'extra_owned_contexts':extra,'extra_owned_context_occupied_s':extra_s,'occupied_total_is_partial':True,'snapshot_at':now.isoformat(),'original_logical_rows':80,'started_rows':sum(x['requested_at'] is not None for x in rows),
  'rows':rows,'pairs':pairs,'experiment_observed_distinct_runs':len(allruns),'experiment_additive_occupied_agent_s_so_far':round(elapsed,3),'experiment_runs_without_terminal_time':active,
- 'limits':['Artifact mtime is last saved complete final/map, not first complete bytes. Delivery uses actual host terminal timestamp, not root poll time.','Additive occupied intervals include retained-author wait; parallel actors each charged. Missing host runs leave arm total null. Shared paired evaluation charged once in experiment, never twice.','Native cumulative Goal counters kept per session, never summed with overlapping token/usage fields. Billing/subscription/input/cache/output/reasoning counters unavailable.','Candidate clocks start at frozen arm setup before accepted dispatch; queue and root handoff delays included. Source acquisition within arms charged. Campaign/bootstrap/case design is experiment overhead, not free or an invented per-arm cold setup allocation.','Stage deadlines measured at host terminal; last-science timestamps can independently be earlier. Native exact completion timestamp unknown. Strict method/native qualification remains separate.','All 80 original cells retained, including unstarted and failures; savings shown only for both-source-PASS delivery pairs with failure-inclusive rows alongside. No confidence/reliability/affordability claim from descriptive ratios.']}
+ 'limits':['Artifact mtime is last saved complete final/map, not first complete bytes. Delivery uses actual host terminal timestamp, not root poll time.','Additive occupied intervals include retained-author wait; parallel actors each charged. Missing host runs leave arm total null. Shared paired evaluation charged once in experiment, never twice.','Native cumulative Goal counters kept per session, never summed with overlapping token/usage fields. Billing/subscription/input/cache/output/reasoning counters unavailable.','Host queue uses supported run requestedAt to startedAt; acceptedAt in dispatch is tool-return observation and can follow native start, reported separately. Candidate clocks start at frozen arm setup before accepted dispatch; queue and root handoff delays included. Source acquisition within arms charged. Campaign/bootstrap/case design is experiment overhead, not free or an invented per-arm cold setup allocation.','Stage deadlines measured at host terminal; last-science timestamps can independently be earlier. Native exact completion timestamp unknown. Strict method/native qualification remains separate.','All 80 original cells retained, including unstarted and failures; savings shown only for both-source-PASS delivery pairs with failure-inclusive rows alongside. No confidence/reliability/affordability claim from descriptive ratios.']}
 (OUT/'TIMING.json').write_text(json.dumps(result,indent=2)+'\n')
 with (OUT/'ARMS_TIMING.csv').open('w') as f:
     flat=[{k:v for k,v in x.items() if k!='stages'} for x in rows];w=csv.DictWriter(f,fieldnames=list(flat[0]),lineterminator="\n");w.writeheader();w.writerows(flat)

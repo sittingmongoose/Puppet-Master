@@ -1,0 +1,2344 @@
+{
+  "block": "B-05",
+  "case": "I05",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-05/assignment.md",
+      "sha256": "82e36172362309005ac4a392c0292105d81fb563fd5cd4e6ebf02101888d5178"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-05/input-map.json",
+      "sha256": "d6af7d9d1d3a5786ade82c4f25b1df562284166d68719a4db8a3014c8166b43a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I05/brief.md",
+      "sha256": "a2357f324cd26f0985cbdba95afde678228b1224c8b4523e6886a52753d1abbe"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I05/plan-root-only.md",
+      "sha256": "aa7657a397e8ca5e6c819afca109200090b76a27d804d4a96f155aef743a0d57"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+      "sha256": "7bb60c4936b6aeb738f10892646b77d060c6f70b0d92255615f945e79aeca661"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/source-map.json",
+      "sha256": "a7af49af136e569894640b41f6150347fb97a7573bd7641b008d1285923abb98"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/assignment.md",
+      "sha256": "adf13c9bee03374022f940bb1dc447757cce9ecdcfb1b3202909e24968dad6ad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/input-map.json",
+      "sha256": "949331b33e96ddefe00dec26ef4b66487495a5ade188fc584fab28e850753f64"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/critique.md",
+      "sha256": "0e9f80519cdc39b1a42c4c765e42a96ecfcfcfe96f9b81b0f7ca0fea8d6c4269"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/source-map.json",
+      "sha256": "c506cefafbc58a21ddc75172d4d18aa899a4893630d10217897c213c64712d58"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/assignment.md",
+      "sha256": "f8bcbe47cda83d52e2d3337f7c1e7173cf9b2a9948583ad8bfc34878c3ae1e9b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/input-map.json",
+      "sha256": "79eb297014c42df5b3f883f2dd90d2d3fe136ca271f33f74a7374d1b18693f94"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/discovery.md",
+      "sha256": "0b8726c1aec018ac925dd0d837b3f891ab2ea57efc734587429f8c9ea7707baa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/draft.md",
+      "sha256": "e0b66c4ef7e6488d2b2e1545cfc0a1629b1a6e1ebbed3e53f76b3613886a3e7b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/source-map.json",
+      "sha256": "5d8b24686bd9c8353218e05ed327a025b977d14bc377e31ea0871446b675cc59"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/revealed-plan.md",
+      "sha256": "aa7657a397e8ca5e6c819afca109200090b76a27d804d4a96f155aef743a0d57"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/plan-reveal.json",
+      "sha256": "d5ca9b988648d77bc3a24c4b9ef261a82e75aafecf25d05f52511672be39ab1a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/assignment.md",
+      "sha256": "d64e75718c8e2224af80ecca49e88a3f87c9919ed6a968013ad7f23dc7626544"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/input-map.json",
+      "sha256": "09fcbf6c25623928209f45a9d9a58d84cea76664a6068beac4ccbe2607ea00dd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C01-pg18-rangetypes.md",
+      "sha256": "7b38587e4b2393c0643b767a4e515c188acebfc6189802ac419abacdc6b8a400"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C02-pg18-exclusion.md",
+      "sha256": "f21d6ceaad34fc7e3b9c6901ce121ab187a6918214af1e5d1a40744080d4511f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C03-pg18-createtable-predicate.md",
+      "sha256": "a48cbd0ec0447ea4fee0acbcfddbc76ea889bbfd395c0b1b730f59e745a49126"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C04-pg18-btree-gist.md",
+      "sha256": "4fd9a0a6e8cd97dcc306e03f7ec374f33f1cef809f6682cd618196fd74df44fb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C05-pocketbase-intro.md",
+      "sha256": "0542dd6ab3e150e9b694377a06b63a732c9fd74894b154e3ae46ec5b8a3f0948"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C06-pocketbase-rules.md",
+      "sha256": "de3eb7b76f8a9e8d9bd6b43b20e74a03aeb15729bd44cee2d64bd752b71b0ba4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C07-pocketbase-realtime.md",
+      "sha256": "72dc9391caf0807ca73f05a870c144554ecf77afaf37b851b6b2ed749245dfa5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C08-osrm-http.md",
+      "sha256": "afb5f48e29aff17f19780e05807f34d5c9c0bee114b8da204b83d91d57349df1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C09-timefold-score.md",
+      "sha256": "1489d07092880cbc7868025e1cc7884a457511f1b33ce079a3b18dd36e181f8e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C10-optaplanner-history.md",
+      "sha256": "d0dfa0712e8cc8a09eed7e5b4fa96e60ec511ce7400920b76f8967c3cd6adb47"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C11-calcom-roundrobin.md",
+      "sha256": "20e272f46bbad49a026862a535cf9c13b62c581212a5bad00e577e03f9185a6f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C12-w3c-apg-combobox.md",
+      "sha256": "0980a962bad1bd9197abd305d5b7e9bc73a75462bed3bcfc55dd178d00927eaf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S01-osrm-http.md",
+      "sha256": "7d6bf3f4a6dd493cca75e9457510b1631c8e3056195d831ac2f820567dd36ff9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S02-pg-rangetypes.md",
+      "sha256": "d9bc3eba80bbd1372ced3d5e13c0ee24edd4da6cac8333bf018c8312f124ea9f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S03-pg-exclusion.md",
+      "sha256": "192edfc224349816cf08f8971bfc61245f84f567cde0c8f82c9f90dbdd0b8ea7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S04-pg-btree-gist.md",
+      "sha256": "8fbc705444daccc42236dd47d861c1a4ee3083492298d67fd6dd4be762a0d4e3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S05-pocketbase-intro.md",
+      "sha256": "1961dde894acb8f66d5263acf30f6928085cab302f88e28a189dc3913e0a1556"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S06-pocketbase-rules.md",
+      "sha256": "59d9fe770378776bcf09b08c0fb8241832dd981ae57bdc937aaed1790be96f74"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S07-pocketbase-realtime.md",
+      "sha256": "feb9bc9eddfb4eae6b6b148344532383e60c8744d38d954c6a0cd66fd632e436"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S08-pocketbase-changelog.md",
+      "sha256": "1c55e0e499753b30b7b8ee270f2c668a16d427373e981e85e839c2c21ad05387"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S09-timefold-docs.md",
+      "sha256": "18d13344423ba62625950f112f0cbd7331f48ec3e11829955cfdb0283ebf6de4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S10-timefold-fork.md",
+      "sha256": "a0e574cdd53c8964dba818057c8038d0221314aaca08e4643c589e42ad640511"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S11-calcom-roundrobin.md",
+      "sha256": "0f371265a216841f814e8e748b6b7c6c8aa3dde8fce0353378f25d7c9ae7f0d0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S12-w3c-apg-combobox.md",
+      "sha256": "dd087330debbada52b5c39793633eaf6845f6c829acf3006cad65928622f039e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/index-critic.md",
+      "sha256": "c62fb669367eeb1906b82b07290df9c09b1da819b5cccd425f3f947fc0a53d1d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/index-research.md",
+      "sha256": "9f4e487db6cf56538832c06394842e63672d6039aaff0034b75322fe444509e5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/index.md",
+      "sha256": "d81a93189925afcd620c1c11483041bfd3de03369052eb0b1308d90eda78fd9f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C01-pg18-rangetypes.md",
+      "sha256": "7b38587e4b2393c0643b767a4e515c188acebfc6189802ac419abacdc6b8a400"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C02-pg18-exclusion.md",
+      "sha256": "f21d6ceaad34fc7e3b9c6901ce121ab187a6918214af1e5d1a40744080d4511f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C03-pg18-createtable-predicate.md",
+      "sha256": "a48cbd0ec0447ea4fee0acbcfddbc76ea889bbfd395c0b1b730f59e745a49126"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C04-pg18-btree-gist.md",
+      "sha256": "4fd9a0a6e8cd97dcc306e03f7ec374f33f1cef809f6682cd618196fd74df44fb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C05-pocketbase-intro.md",
+      "sha256": "0542dd6ab3e150e9b694377a06b63a732c9fd74894b154e3ae46ec5b8a3f0948"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C06-pocketbase-rules.md",
+      "sha256": "de3eb7b76f8a9e8d9bd6b43b20e74a03aeb15729bd44cee2d64bd752b71b0ba4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C07-pocketbase-realtime.md",
+      "sha256": "72dc9391caf0807ca73f05a870c144554ecf77afaf37b851b6b2ed749245dfa5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C08-osrm-http.md",
+      "sha256": "afb5f48e29aff17f19780e05807f34d5c9c0bee114b8da204b83d91d57349df1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C09-timefold-score.md",
+      "sha256": "1489d07092880cbc7868025e1cc7884a457511f1b33ce079a3b18dd36e181f8e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C10-optaplanner-history.md",
+      "sha256": "d0dfa0712e8cc8a09eed7e5b4fa96e60ec511ce7400920b76f8967c3cd6adb47"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C11-calcom-roundrobin.md",
+      "sha256": "20e272f46bbad49a026862a535cf9c13b62c581212a5bad00e577e03f9185a6f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C12-w3c-apg-combobox.md",
+      "sha256": "0980a962bad1bd9197abd305d5b7e9bc73a75462bed3bcfc55dd178d00927eaf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/index.md",
+      "sha256": "c62fb669367eeb1906b82b07290df9c09b1da819b5cccd425f3f947fc0a53d1d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S01-osrm-http.md",
+      "sha256": "7d6bf3f4a6dd493cca75e9457510b1631c8e3056195d831ac2f820567dd36ff9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S02-pg-rangetypes.md",
+      "sha256": "d9bc3eba80bbd1372ced3d5e13c0ee24edd4da6cac8333bf018c8312f124ea9f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S03-pg-exclusion.md",
+      "sha256": "192edfc224349816cf08f8971bfc61245f84f567cde0c8f82c9f90dbdd0b8ea7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S04-pg-btree-gist.md",
+      "sha256": "8fbc705444daccc42236dd47d861c1a4ee3083492298d67fd6dd4be762a0d4e3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S05-pocketbase-intro.md",
+      "sha256": "1961dde894acb8f66d5263acf30f6928085cab302f88e28a189dc3913e0a1556"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S06-pocketbase-rules.md",
+      "sha256": "59d9fe770378776bcf09b08c0fb8241832dd981ae57bdc937aaed1790be96f74"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S07-pocketbase-realtime.md",
+      "sha256": "feb9bc9eddfb4eae6b6b148344532383e60c8744d38d954c6a0cd66fd632e436"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S08-pocketbase-changelog.md",
+      "sha256": "1c55e0e499753b30b7b8ee270f2c668a16d427373e981e85e839c2c21ad05387"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S09-timefold-docs.md",
+      "sha256": "18d13344423ba62625950f112f0cbd7331f48ec3e11829955cfdb0283ebf6de4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S10-timefold-fork.md",
+      "sha256": "a0e574cdd53c8964dba818057c8038d0221314aaca08e4643c589e42ad640511"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S11-calcom-roundrobin.md",
+      "sha256": "0f371265a216841f814e8e748b6b7c6c8aa3dde8fce0353378f25d7c9ae7f0d0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S12-w3c-apg-combobox.md",
+      "sha256": "dd087330debbada52b5c39793633eaf6845f6c829acf3006cad65928622f039e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/index.md",
+      "sha256": "9f4e487db6cf56538832c06394842e63672d6039aaff0034b75322fe444509e5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/critique.md",
+      "sha256": "5b29919efebb43c12faab102dfb39f45ad8255b2ef9aedc6eb15786a4da273ac"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/source-map.json",
+      "sha256": "072c45e97fad7e808774685df240c3948b76bdb3351e792ae3a5d42f9b36238c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/evidence-first.md",
+      "sha256": "6a2b659127dde962387221ee4ed9dac3ebec42c61ae5bd024b03b4fe0ca55060"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/assignment.md",
+      "sha256": "229d65daed7e18c5912b12204f5fd12f0f8f1960bf0a846758a0cf74d80f86fb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/input-map.json",
+      "sha256": "0e07f8a08648cdc5770098b8510166cd2240449ffb24b63f01458ae706b447a9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/discovery.md",
+      "sha256": "5ed1ae258d43847acac4f49e7b7312a1eea3cafc82e039b7561619211fb6c39b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/draft.md",
+      "sha256": "b5fed16436993594bfe3bc10175cc928fcb7f673e3fd532c4f2fdd689c78b172"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/final.md",
+      "sha256": "e6c88e93b79c5818cf43952457a179ed6d4f4bf0e594cb06aae185a65465c192"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/source-map.json",
+      "sha256": "657e77c319721ed3854eff86d5213d047b1b5dc13dddbe311cfa5ac3e06218c5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/revealed-plan.md",
+      "sha256": "aa7657a397e8ca5e6c819afca109200090b76a27d804d4a96f155aef743a0d57"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/plan-reveal.json",
+      "sha256": "d643ab49ab7be7594be426de7ca697a8029a9e7210a5d5fd2a64ccc476b64562"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/assignment.md",
+      "sha256": "243415115728b968a5e805145019bda6aec86d55ea1a6e53eba747741f772ad2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/input-map.json",
+      "sha256": "f9af5cb42acce677f7b511e6709de86fb61d9003625b69355ba5c01c72cf5a32"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR01-interpreter-intelligence-scheduler.md",
+      "sha256": "76986497e7ec8007849e253b73aaf9c915ad2a497618e509fc153232af3aa82e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR02-interpreter-intelligence-buffers.md",
+      "sha256": "c4e32b2e3bdb48118bbe13630cb6b88df82e49c0cb272d8e07d096deae9a37ae"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR03-interpreter-intelligence-portal.md",
+      "sha256": "87e807466ce206a6b3704fd5c883dfb7cb68f3a9b66fc91e08070508db812c0f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR04-google-calendar-sharing.md",
+      "sha256": "7cbf550ad9c180b7d7b694e5d9ad9aeda9aace7cf5d9984f1bc0c5efc1791e44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR05-google-calendar-freebusy.md",
+      "sha256": "4f8652bb658908776d593577c61aa9256ddfec62371df75f7058cbc9c3c8cf63"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR06-google-calendar-scopes.md",
+      "sha256": "a3257ea9ad27fbe1ad5ebc9782d3a86791bb63178cbf9839992c973fa4b5044e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR07-google-calendar-release-notes.md",
+      "sha256": "748aea278cf9abc654dbf7cc92b8f53cba50bec3c0e26dc75849878fc3e5d76c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR08-wcag22.md",
+      "sha256": "e05507379d1020a36fa971f9c5bf3752afe5b9796ea4518e4e81341afb1c5244"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR09-calcom-race-issues.md",
+      "sha256": "eb6344420b67ee6c16308a0c2582cfc018ffdf59ee2aab100dbc5be7703e77a3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR10-interpreter-io-booking-lead.md",
+      "sha256": "2a3e81aff2215e23ea9b1a284d979d8d1e108d6a24c063eb9011785f7e7b8c8c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR11-case-brief.md",
+      "sha256": "85f1f81ff3f842f00e819c61b1660d5854d05b42cae53905406a57534afb437e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR12-postgresql-exclude-predicate.md",
+      "sha256": "2c93ab3cbad436664496fd73e92d2b8be71c0644623e1185aeb21e4b7b66bfc2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR13-w3c-evaluation-tools.md",
+      "sha256": "8a7d52a8523846c2ff29fea2aa798b91eac3c7320a381363438817558b8fe69e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR14-optaplanner-history.md",
+      "sha256": "a8363348fbf76806a6e9fa0f8ea69aef14277b9bca15f7808f363699235606bf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR15-timefold-repository.md",
+      "sha256": "ec2f658ea66fa1b887f83cb5e3ef0772d785620221c1105b258ccd0afb868a67"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/README.md",
+      "sha256": "6f645bd21cd9e540f46e05a7e384bf30b94f23158b62f900fd03c759c0f4b4a0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S01-pg-ddl-constraints-excerpt.md",
+      "sha256": "ef0d3e6ec57f07d1e808f1237aa833502c11877cbc652a5579d47ebf8fc812a8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S02-pg-rangetypes-excerpt.md",
+      "sha256": "f4efde1cbfd9e6c92156cff244c5b71fca61c0e7cf59bfb4a1a20c39bd0b5328"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S03-supabase-rls-excerpt.md",
+      "sha256": "01994471deddda8eacde27dbdd863651adc37df7a401532915df5d80d45d9068"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S04-pocketbase-intro-excerpt.md",
+      "sha256": "2fdec1d4b1b11ae03d6485517c2275585b2387fd3ba5e11e4994461b2b9ec43d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S05-pocketbase-rules-excerpt.md",
+      "sha256": "d457db1682ebd7cc5d84b4f9ca141b8b5aca33f52822d49a68c0f332f34f6900"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S06-osrm-api-excerpt.md",
+      "sha256": "44270313ed35e159eb6c740feeb2ab8cbdcc24f952e9f46ca5eaffebf37754ed"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S07-xstate-root-excerpt.md",
+      "sha256": "7cb93db2cad29b091df7e8d430d5c7b43ceecbe0e3dfe48cf42252cfcc479bf9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S08-xstate-migration-excerpt.md",
+      "sha256": "a9e69258bf25808db5851b383e7ba105a31cb6e8052cbcc52633731185a3e467"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S09-timefold-fork-excerpt.md",
+      "sha256": "ee54ee8f14898868a57ba720c05e8881d1c13aad90fa5989112f400db2bd8158"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S10-calcom-api-excerpt.md",
+      "sha256": "3dff74ec55f57f877295b0338fe7bdb201781ac3241172516a553ab8c96a1c32"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S11-timefold-docs-excerpt.md",
+      "sha256": "90964f4d951e0a55bb5804fdb2c42cb8b46ba33b2ba72ceff32c9f0edb374e78"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S12-novu-docs-excerpt.md",
+      "sha256": "1c6abbad5a786016736e7f8f2d79946bef1f235871e5a9f4555e7a01608b93b8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S13-secondary-search-notes.md",
+      "sha256": "a51a0c00f883b66774c08974041d1beec1cf3c70ef2a837018086d8a296b74b7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/index.md",
+      "sha256": "4c46281d3a307f69323ba213be76f7aed2c61c8c588cba1f1bbd3f8fbc86f731"
+    }
+  ],
+  "arms": {
+    "N1": {
+      "actual_arm": "treatment",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/final.md",
+      "grade": "FAIL",
+      "material_findings": [
+        {
+          "id": "N1-F1",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/final.md",
+            "lines": {
+              "start": 61,
+              "end": 61
+            }
+          },
+          "passage": "`42501` = grant bug",
+          "original_obligation": "O2; O5 accurate retained source behavior; sensitive client/availability authorization",
+          "type": "MATERIALLY_WRONG",
+          "severity": "medium",
+          "primary_evidence": [
+            {
+              "source_id": "E05",
+              "url": "https://supabase.com/docs/guides/database/postgres/row-level-security",
+              "release_or_edition": "Live official guide, accessed 2026-10-09",
+              "locator": "grants versus RLS; policy tests denial table, lines 1314–1320; service keys; views"
+            }
+          ],
+          "reasoning": "The conclusion turns one possible cause into a diagnostic identity. The same official guide explicitly lists an RLS WITH CHECK violation under 42501. This is a consequential error in the offered Postgres/Supabase authorization option: a legitimate policy denial can be misdiagnosed as a grant defect. The comparison of grants and policies is otherwise useful. No actual leakage, policy weakening, or runtime repair is alleged. Discovery records a valid one-way missing-grant example. Draft line 36 turns that into “grant bug not policy bug”; the final retains the wrong diagnostic identity.",
+          "related_candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/draft.md",
+              "line": 36,
+              "passage": "- Enhancement (recommended): Supabase/Postgres path — per-table RLS (grants AND policies, S03), interpreter payloads stripped to need-to-know columns via views/secure functions, `service_role` server-side only, `42501` = grant bug not policy bug (S03). PocketBase path — locked-default 5-rule model with rules-as-filters and documented failure codes (S05). Either path: availability data is coordinator-queried, never broadcast; interpreter home locations only with consent."
+            }
+          ]
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N1-m1",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/final.md",
+            "lines": {
+              "start": 95,
+              "end": 95
+            }
+          },
+          "assessment": "Fastest/cheapest to stand up is an unmeasured relative claim. Whole-project costs are explicitly unobserved and every architecture is a gated candidate, so this is not treated as proof of $4,200 fit or a separate material budget failure."
+        },
+        {
+          "id": "N1-m2",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/final.md",
+            "lines": {
+              "start": 88,
+              "end": 94
+            }
+          },
+          "evidence": [
+            {
+              "source_id": "E13",
+              "url": "https://project-osrm.org/docs/v5.24.0/api/",
+              "release_or_edition": "OSRM v5.24.0",
+              "locator": "General options; HTTP server; Table; Trip; example numeric matrices"
+            }
+          ],
+          "assessment": "Canonical manual travel uses integer seconds/meters, while OSRM example outputs contain fractions. Optional engine ingestion needs a precision/rounding contract. Manual-only R1 and an unselected route slice make this a minor integration limit, not a wrong unit."
+        },
+        {
+          "id": "N1-m3",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/final.md",
+            "lines": {
+              "start": 88,
+              "end": 88
+            }
+          },
+          "other_candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/final.md",
+            "lines": {
+              "start": 135,
+              "end": 135
+            }
+          },
+          "assessment": "Automatic feasibility rules are excluded from the base release but the build order mentions manual buffers. Manual annotation/human judgment can reconcile this; the prose should be read as conditional, not proof of an approved automated rules subsystem."
+        }
+      ],
+      "unresolved": [
+        "No runtime, application sandbox, concurrency witness, accessibility task execution or actual deployment exists in the supplied scientific artifacts.",
+        "Cooperative policy votes, precise client disclosure tiers, vocabulary/capability verification and real support capacity remain external decisions.",
+        "Actual build/operating costs, site count, route coverage/traffic accuracy and six-week pilot measurements are not established.",
+        "Public product guides establish capabilities/configuration warnings, not price, privacy configuration, legal sufficiency, coordinator-mobile success or full accessibility.",
+        "Architecture selection and manual travel confirmation are explicit gates; no option is an approved shipped system."
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "name": "Original obligations and explicit constraints",
+          "coverage": "COMPLETE_FOR_AVAILABLE_FROZEN_SCOPE",
+          "judgment": "COVERED_WITH_O2_DEFECT",
+          "evidence": [
+            {
+              "assessment_locator": "original brief and obligation/constraint ledgers"
+            }
+          ],
+          "reasoning": "All O1–O6 and explicit constraints were examined. The final is coherent planning rather than a delivered application; N1-F1 defeats accurate source behavior, while costs, votes and runtime remain explicit gates."
+        },
+        {
+          "axis": 2,
+          "name": "Primary behavior, defaults, exceptions, units/types and applicability",
+          "coverage": "COMPLETE_FOR_AVAILABLE_FROZEN_SCOPE",
+          "judgment": "MATERIAL_DEFECT",
+          "evidence": [
+            {
+              "assessment_locator": "primary claim ledger and source-map.json"
+            }
+          ],
+          "reasoning": "Independent primary checks cover every consequential final mechanism, not only the critic findings. N1-F1 is wrong; major database/routing/API/actor/evolution facts are otherwise grounded or clearly conditional. Minor estimates and future rounding are separated."
+        },
+        {
+          "axis": 3,
+          "name": "Useful unfamiliar discovery and viable alternatives",
+          "coverage": "COMPLETE_FOR_AVAILABLE_FROZEN_SCOPE",
+          "judgment": "SUBSTANTIVE_DISCOVERY",
+          "evidence": [
+            {
+              "assessment_locator": "discovery/draft/full final options"
+            }
+          ],
+          "reasoning": "The alternatives change architecture, matching, workflow or delivery choices; they do more than rename plan items. The interpreter-specific configure path adds value without claiming vendor fitness. Optional routing/optimizer/notification/calendar leads survive."
+        },
+        {
+          "axis": 4,
+          "name": "Every exact plan clause and disposition",
+          "coverage": "COMPLETE_FOR_AVAILABLE_FROZEN_SCOPE",
+          "judgment": "ALL_SIX_ASSESSED",
+          "evidence": [
+            {
+              "assessment_locator": "exact per-P ledger"
+            }
+          ],
+          "reasoning": "Exact clause text and per-clause independent dispositions are recorded. Atomic prevention and travel annotation are justified brief-fidelity corrections; payroll remains excluded and policy choices remain cooperative."
+        },
+        {
+          "axis": 5,
+          "name": "Draft–critique–final preservation and fallible criticism",
+          "coverage": "COMPLETE_FOR_AVAILABLE_FROZEN_SCOPE",
+          "judgment": "PRESERVED_WITH_INHERITED_FACT_ERROR",
+          "evidence": [
+            {
+              "assessment_locator": "full stage review and criticism ledger"
+            }
+          ],
+          "reasoning": "Full final prose preserves material discoveries, alternatives, constraints and uncertainty and applies qualified critic suggestions. The author’s claim of not re-fetching critic sources is retained as provenance; the evaluator checked them independently. Source error N1-F1 survives untouched."
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful validation, proposed versus executed",
+          "coverage": "COMPLETE_FOR_AVAILABLE_FROZEN_SCOPE",
+          "judgment": "MEANINGFUL_PROPOSALS_ONLY",
+          "evidence": [
+            {
+              "assessment_locator": "validation ledger and final executed/proposed sections"
+            }
+          ],
+          "reasoning": "Proposals have competing wrong-design oracles, including actual concurrent offer/accept transactions and stage payloads. Executed hashes/fetches do not test the product. No deployed correctness or formal accessibility conformance is credited."
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "claim_group": "PostgreSQL",
+            "candidate_locator": "final 60,75–76,109",
+            "judgment": "SUPPORTED_WITH_APPLICATION_GATE",
+            "evidence": [
+              {
+                "source_id": "E01",
+                "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+                "release_or_edition": "PostgreSQL 18",
+                "locator": "8.17.1, 8.17.3, 8.17.6, 8.17.10"
+              },
+              {
+                "source_id": "E02",
+                "url": "https://www.postgresql.org/docs/18/sql-createtable.html",
+                "release_or_edition": "PostgreSQL 18",
+                "locator": "EXCLUDE clause; WHERE (predicate), lines 321–326"
+              },
+              {
+                "source_id": "E03",
+                "url": "https://www.postgresql.org/docs/18/btree-gist.html",
+                "release_or_edition": "PostgreSQL 18",
+                "locator": "F.8 introduction; supported scalar types and trusted extension"
+              },
+              {
+                "source_id": "E04",
+                "url": "https://www.postgresql.org/docs/18/errcodes-appendix.html",
+                "release_or_edition": "18 documentation; page identifies 18.6",
+                "locator": "Table A.1, 23P01 and 42501"
+              }
+            ],
+            "assessment": "Exclusion, ranges and partial syntax are documented; interpreter/status/hold model and concurrent behavior remain implementation tests."
+          },
+          {
+            "claim_group": "Supabase",
+            "candidate_locator": "final 61,78–79,109",
+            "judgment": "MATERIALLY_WRONG_DIAGNOSTIC",
+            "evidence": [
+              {
+                "source_id": "E05",
+                "url": "https://supabase.com/docs/guides/database/postgres/row-level-security",
+                "release_or_edition": "Live official guide, accessed 2026-10-09",
+                "locator": "grants versus RLS; policy tests denial table, lines 1314–1320; service keys; views"
+              }
+            ],
+            "assessment": "Grants/policy separation and privileged-key concerns are useful; 42501 diagnostic identity fails. Field redaction/views are conditional, not automatically credited."
+          },
+          {
+            "claim_group": "PocketBase",
+            "candidate_locator": "final 61,95,120",
+            "judgment": "SUPPORTED_CAPABILITIES_AND_UNPROVED_APP",
+            "evidence": [
+              {
+                "source_id": "E06",
+                "url": "https://pocketbase.io/docs/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "Introduction; pre-1.0 compatibility warning"
+              },
+              {
+                "source_id": "E07",
+                "url": "https://pocketbase.io/docs/api-rules-and-filters/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "five rules, default null, filter behavior and status exceptions"
+              },
+              {
+                "source_id": "E09",
+                "url": "https://pocketbase.io/docs/go-database/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "Transaction; app.RunInTransaction, callback txApp, lines 170–180"
+              },
+              {
+                "source_id": "E10",
+                "url": "https://pocketbase.io/docs/js-records/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "Hide/Unhide fields; onRecordEnrich, lines 29–36"
+              }
+            ],
+            "assessment": "Default rules/codes/superuser bypass and pre-1.0 risk are real; correctness of chosen hooks/transaction design is not demonstrated."
+          },
+          {
+            "claim_group": "OSRM",
+            "candidate_locator": "final 63,88,94,122",
+            "judgment": "SUPPORTED_OPTIONAL_SLICE",
+            "evidence": [
+              {
+                "source_id": "E13",
+                "url": "https://project-osrm.org/docs/v5.24.0/api/",
+                "release_or_edition": "OSRM v5.24.0",
+                "locator": "General options; HTTP server; Table; Trip; example numeric matrices"
+              }
+            ],
+            "assessment": "Core units/defaults/route-vs-trip algorithms and profile applicability agree with v5.24.0. Manual integer record has a minor optional-ingestion precision gap."
+          },
+          {
+            "claim_group": "XState",
+            "candidate_locator": "final 64,73,109,123",
+            "judgment": "SUPPORTED_EVOLUTION_UNPROVED_PERSISTENCE",
+            "evidence": [
+              {
+                "source_id": "E14",
+                "url": "https://stately.ai/docs/xstate",
+                "release_or_edition": "XState v5 docs",
+                "locator": "createMachine/createActor examples; actor model"
+              },
+              {
+                "source_id": "E15",
+                "url": "https://stately.ai/docs/migration",
+                "release_or_edition": "XState v4 to v5",
+                "locator": "TypeScript 5 requirement; Machine/interpret/withConfig renames"
+              }
+            ],
+            "assessment": "v5 actor APIs and TS migration are documented; lifecycle guards and database atomicity remain distinct and persistence remains conditional."
+          },
+          {
+            "claim_group": "Timefold",
+            "candidate_locator": "final 62,97,111",
+            "judgment": "SUPPORTED_WITH_MAINTAINER_ATTRIBUTION",
+            "evidence": [
+              {
+                "source_id": "E16",
+                "url": "https://docs.timefold.ai/",
+                "release_or_edition": "Live product documentation index",
+                "locator": "Models, Solver and Platform"
+              },
+              {
+                "source_id": "E17",
+                "url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/score-calculation",
+                "release_or_edition": "Latest page displayed 2.7.1",
+                "locator": "Hard/soft levels; incremental constraint streams; score explanations"
+              },
+              {
+                "source_id": "E18",
+                "url": "https://github.com/TimefoldAI/timefold-solver",
+                "release_or_edition": "Current main README, not a pinned commit",
+                "locator": "Build from source; Editions; Legal notice, lines 237–270"
+              },
+              {
+                "source_id": "E19",
+                "url": "https://optaplanner.io/the-history-of-optaplanner",
+                "release_or_edition": "Maintainer-side history",
+                "locator": "End of life and Continuation, lines 25–40"
+              },
+              {
+                "source_id": "E20",
+                "url": "https://timefold.ai/blog/optaplanner-fork",
+                "release_or_edition": "May 2, 2023 announcement",
+                "locator": "Date and opening article, lines 110–138"
+              }
+            ],
+            "assessment": "Library/model/platform, Community/Enterprise and fork dates are grounded. Current JDK baseline is not a pin for every historic release; solver is optional Phase 2."
+          },
+          {
+            "claim_group": "Cal.com",
+            "candidate_locator": "final 65,96,111",
+            "judgment": "SUPPORTED_NARROW_API_AND_REPORTED_ISSUES",
+            "evidence": [
+              {
+                "source_id": "E21",
+                "url": "https://cal.com/docs/api-reference/v2/introduction",
+                "release_or_edition": "Cal.com API v2 live guide",
+                "locator": "OAuth/API key authentication; rate limits; Platform migration notice"
+              },
+              {
+                "source_id": "E22",
+                "url": "https://github.com/calcom/cal.diy/issues/29958",
+                "release_or_edition": "Open report; environment main 2026-08-13",
+                "locator": "confirm.handler.ts; proposed lock/transaction/CAS; suggested concurrent test"
+              },
+              {
+                "source_id": "E23",
+                "url": "https://github.com/calcom/cal.diy/issues/29967",
+                "release_or_edition": "Open report; environment main 2026-08-13",
+                "locator": "getBusyTimes.ts; PENDING filter; linked commit 10ad77e"
+              },
+              {
+                "source_id": "E24",
+                "url": "https://github.com/calcom/cal.diy/issues/29968",
+                "release_or_edition": "Issue report, not release proof",
+                "locator": "Issue title and linked family"
+              }
+            ],
+            "assessment": "API cap/keys/Platform freeze are scoped; routing, terms and round-robin adoption remain conditions. Reported race family does not establish every deployed release vulnerable or a merged fix."
+          },
+          {
+            "claim_group": "Novu",
+            "candidate_locator": "final 66,96,113",
+            "judgment": "SUPPORTED_CAPABILITIES_COST_UNKNOWN",
+            "evidence": [
+              {
+                "source_id": "E31",
+                "url": "https://docs.novu.co/",
+                "release_or_edition": "Live Novu documentation",
+                "locator": "Notify channels, Inbox and workflows"
+              },
+              {
+                "source_id": "E32",
+                "url": "https://github.com/novuhq/novu",
+                "release_or_edition": "Current main README, not a pinned commit",
+                "locator": "Communication infrastructure; embeddable preferences"
+              },
+              {
+                "source_id": "E33",
+                "url": "https://www.novu.co/changelog/novu-community-edition-v220-self-hosting/",
+                "release_or_edition": "Community Edition v2.2.0, May 18, 2025",
+                "locator": "Self-hosted release and dashboard workflow/preferences"
+              }
+            ],
+            "assessment": "Workflow, Inbox/preferences and a self-hosted edition exist; minimal built-in alternative is retained, no cost or edition-parity guarantee."
+          },
+          {
+            "claim_group": "Interpreter-operations options",
+            "candidate_locator": "final 68,92,119",
+            "judgment": "USEFUL_CONDITIONAL_COMPARATOR",
+            "evidence": [
+              {
+                "source_id": "E34",
+                "url": "https://interpreterintelligence.zendesk.com/hc/en-us/articles/12922072819483-Scheduler",
+                "release_or_edition": "Vendor guide updated December 6, 2023",
+                "locator": "eligibility filtering, scheduler timezone and offer actions"
+              },
+              {
+                "source_id": "E35",
+                "url": "https://interpreterintelligence.zendesk.com/hc/en-us/articles/15410092403483-Availability-and-Double-Booking-Buffers",
+                "release_or_edition": "Vendor guide updated September 29, 2023",
+                "locator": "offer pool, acceptance warning, negative/global buffers"
+              },
+              {
+                "source_id": "E36",
+                "url": "https://interpreterintelligence.zendesk.com/hc/en-us/articles/12922582860955-Interpreter-Portal-Desktop-Site-Mobile-App",
+                "release_or_edition": "Vendor guide updated June 24, 2026",
+                "locator": "Availability; accept/decline; mobile job closing"
+              },
+              {
+                "source_id": "E37",
+                "url": "https://interpreter.io/",
+                "release_or_edition": "Live vendor public page",
+                "locator": "Homepage retrieval"
+              }
+            ],
+            "assessment": "Default availability and offer-pool/buffer warnings are grounded. Interpreter mobile is not coordinator-mobile proof; current pricing/security/accessibility remain due-diligence gates."
+          },
+          {
+            "claim_group": "Accessibility",
+            "candidate_locator": "final 107,125",
+            "judgment": "MEANINGFUL_PROPOSAL_NO_CONFORMANCE",
+            "evidence": [
+              {
+                "source_id": "E29",
+                "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+                "release_or_edition": "W3C WAI official guidance",
+                "locator": "What evaluation tools can and cannot do"
+              },
+              {
+                "source_id": "E30",
+                "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                "release_or_edition": "WCAG 2.2 Recommendation December 12, 2024",
+                "locator": "2.1.1, 2.5.7, 2.5.8, 3.3.1–2, 4.1.2–3"
+              }
+            ],
+            "assessment": "WCAG 2.2 AA is a proposed cooperative target and automation only a partial signal; task evidence is not executed."
+          },
+          {
+            "claim_group": "Costs/licenses/secondary leads",
+            "candidate_locator": "final 63,65–68,90–113",
+            "judgment": "HONESTLY_UNRESOLVED",
+            "evidence": [],
+            "assessment": "ORS, Valhalla/traffic, Cal.com license, notification spend and vendor trial outcomes remain conditional. No unsupported secondary claim is silently promoted into a required shipped guarantee."
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "definition": "All consequential available authored-final claim groups assessed against independent primary sections or explicitly recognized as conditional/unestablished. Complete does not mean all vendors, every historical release, user decisions, market prices or unexecuted application behavior are known. Legacy fairness-page access limit is closed as a bounded historical excerpt/current-applicability judgment, not deferred whole-product verification."
+      },
+      "preservation_coverage": {
+        "complete_available_stage_review": true,
+        "stages": [
+          "research/discovery.md",
+          "research/draft.md",
+          "critic/evidence-first.md",
+          "critic/critique.md",
+          "research/final.md",
+          "all supplied source maps/indexes/excerpts"
+        ],
+        "assessment": "The final contains full material prose and explicitly addresses all seven major and five minor criticisms. It retains the original unfamiliar mechanisms, secondary alternatives and unresolved inputs; adds the interpreter-operations lead; separates base/optional architectures; expands hold, stage privacy, policy, manual-travel and UNFILLED semantics. Supabase misdiagnosis is inherited, not introduced by criticism. No material supported option is erased merely because a critic disliked it. Detailed OSRM request knobs and some XState aliases are compressed, with release-specific sources still referenced and implementation verification conditional.",
+        "critic_adjudication": [
+          {
+            "criticism": "M1",
+            "decision": "PARTIALLY_ACCEPT",
+            "final_locator": "final lines 9–11, 68, 92, 119",
+            "independent_reasoning": "Interpreter Intelligence is a materially different and useful due-diligence option; vendor guides substantiate relevance and configuration cautions. The critic overstates its absence as a necessary O1 failure: O1 does not require a named vertical product when several useful unfamiliar mechanisms were independently found. Final addition retains price/privacy/accessibility and coordinator-mobile uncertainty.",
+            "evidence": [
+              {
+                "source_id": "E34",
+                "url": "https://interpreterintelligence.zendesk.com/hc/en-us/articles/12922072819483-Scheduler",
+                "release_or_edition": "Vendor guide updated December 6, 2023",
+                "locator": "eligibility filtering, scheduler timezone and offer actions"
+              },
+              {
+                "source_id": "E35",
+                "url": "https://interpreterintelligence.zendesk.com/hc/en-us/articles/15410092403483-Availability-and-Double-Booking-Buffers",
+                "release_or_edition": "Vendor guide updated September 29, 2023",
+                "locator": "offer pool, acceptance warning, negative/global buffers"
+              },
+              {
+                "source_id": "E36",
+                "url": "https://interpreterintelligence.zendesk.com/hc/en-us/articles/12922582860955-Interpreter-Portal-Desktop-Site-Mobile-App",
+                "release_or_edition": "Vendor guide updated June 24, 2026",
+                "locator": "Availability; accept/decline; mobile job closing"
+              }
+            ]
+          },
+          {
+            "criticism": "M2",
+            "decision": "ACCEPT",
+            "final_locator": "final lines 12–16, 75–76, 120",
+            "independent_reasoning": "Offer reservation/TTL, release/retry and notification ordering are valid missing semantics. The final adds both hold and non-reserving models, conditions the PostgreSQL implementation on architecture choice, and distinguishes app conflict UX from native database errors. The reported Cal.com race is a hypothesis, not an independent release proof.",
+            "evidence": [
+              {
+                "source_id": "E01",
+                "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+                "release_or_edition": "PostgreSQL 18",
+                "locator": "8.17.1, 8.17.3, 8.17.6, 8.17.10"
+              },
+              {
+                "source_id": "E02",
+                "url": "https://www.postgresql.org/docs/18/sql-createtable.html",
+                "release_or_edition": "PostgreSQL 18",
+                "locator": "EXCLUDE clause; WHERE (predicate), lines 321–326"
+              },
+              {
+                "source_id": "E22",
+                "url": "https://github.com/calcom/cal.diy/issues/29958",
+                "release_or_edition": "Open report; environment main 2026-08-13",
+                "locator": "confirm.handler.ts; proposed lock/transaction/CAS; suggested concurrent test"
+              }
+            ]
+          },
+          {
+            "criticism": "M3",
+            "decision": "ACCEPT_AS_REFINEMENT",
+            "final_locator": "final lines 18–21, 78–79, 121",
+            "independent_reasoning": "Stage-aware disclosure and notification minimization are well justified by the original sensitive-data constraint. The precise coordinator scope is not established by four coordinators/three counties, and the final appropriately treats it as a decision.",
+            "evidence": [
+              {
+                "source_id": "E05",
+                "url": "https://supabase.com/docs/guides/database/postgres/row-level-security",
+                "release_or_edition": "Live official guide, accessed 2026-10-09",
+                "locator": "grants versus RLS; policy tests denial table, lines 1314–1320; service keys; views"
+              },
+              {
+                "source_id": "E07",
+                "url": "https://pocketbase.io/docs/api-rules-and-filters/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "five rules, default null, filter behavior and status exceptions"
+              },
+              {
+                "source_id": "E08",
+                "url": "https://pocketbase.io/docs/go-realtime/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "custom-topic example, HasSubscription, clients.Send and auth key"
+              },
+              {
+                "source_id": "E10",
+                "url": "https://pocketbase.io/docs/js-records/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "Hide/Unhide fields; onRecordEnrich, lines 29–36"
+              }
+            ]
+          },
+          {
+            "criticism": "M4",
+            "decision": "PARTIALLY_ACCEPT",
+            "final_locator": "final lines 22–26, 84–85, 101–102, 124",
+            "independent_reasoning": "Temporary defaults and reassignment steps benefit from explicit ratification. A proposed fail-safe is not automatically an unauthorized settled policy. Final release gates resolve the ambiguity and preserve the cooperative disagreement.",
+            "evidence": []
+          },
+          {
+            "criticism": "M5",
+            "decision": "PARTIALLY_ACCEPT",
+            "final_locator": "final lines 28–34, 87–97, 122",
+            "independent_reasoning": "Removing OSRM from the base architecture and withdrawing the small-graph assumption are justified. Types/provenance are useful. A critic objection to requiring manual travel capture solely because P6 omits it is too strong: the original brief explicitly requires tracking a travel estimate. Final narrow-reading qualification is acceptable.",
+            "evidence": [
+              {
+                "source_id": "E13",
+                "url": "https://project-osrm.org/docs/v5.24.0/api/",
+                "release_or_edition": "OSRM v5.24.0",
+                "locator": "General options; HTTP server; Table; Trip; example numeric matrices"
+              }
+            ]
+          },
+          {
+            "criticism": "M6",
+            "decision": "ACCEPT_WITH_CONTEXT",
+            "final_locator": "final lines 35–40, 107, 125",
+            "independent_reasoning": "Automation alone cannot establish accessibility. The draft also proposed manual AT work and did not claim execution, so the critic does not establish that an actual conformance result was fabricated. Final clearly adopts automation only as a partial signal.",
+            "evidence": [
+              {
+                "source_id": "E29",
+                "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+                "release_or_edition": "W3C WAI official guidance",
+                "locator": "What evaluation tools can and cannot do"
+              },
+              {
+                "source_id": "E30",
+                "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                "release_or_edition": "WCAG 2.2 Recommendation December 12, 2024",
+                "locator": "2.1.1, 2.5.7, 2.5.8, 3.3.1–2, 4.1.2–3"
+              }
+            ]
+          },
+          {
+            "criticism": "M7",
+            "decision": "ACCEPT",
+            "final_locator": "final lines 42–44, 90–97, 119, 126",
+            "independent_reasoning": "No effort/cost evidence made every bundle shippable inside the cap. Candidate shapes, an explicit costed build/configure comparison and six-week support accounting are proportionate planning responses. This is not a demand for unlimited operational guarantees.",
+            "evidence": []
+          },
+          {
+            "criticism": "minor 1",
+            "decision": "ACCEPT",
+            "final_locator": "final lines 45–46, 75–76, 109",
+            "independent_reasoning": "PostgreSQL explicitly permits WHERE (predicate); exact runtime predicate still needs testing.",
+            "evidence": [
+              {
+                "source_id": "E02",
+                "url": "https://www.postgresql.org/docs/18/sql-createtable.html",
+                "release_or_edition": "PostgreSQL 18",
+                "locator": "EXCLUDE clause; WHERE (predicate), lines 321–326"
+              }
+            ]
+          },
+          {
+            "criticism": "minor 2",
+            "decision": "ACCEPT",
+            "final_locator": "final lines 47, 73, 123",
+            "independent_reasoning": "Audited human reopen/new-cycle behavior preserves UNFILLED honesty without trapping corrected requests.",
+            "evidence": []
+          },
+          {
+            "criticism": "minor 3",
+            "decision": "ACCEPT",
+            "final_locator": "final lines 48, 127",
+            "independent_reasoning": "Unlabeled precision/recall would have no meaningful truth oracle. Descriptive pilot measurements with reasons are retained instead.",
+            "evidence": []
+          },
+          {
+            "criticism": "minor 4",
+            "decision": "ACCEPT",
+            "final_locator": "final lines 49, 62, 111",
+            "independent_reasoning": "Maintainer history is attributed and the current JDK 21 baseline is qualified; the XState migration already supplies an evolution chain.",
+            "evidence": [
+              {
+                "source_id": "E15",
+                "url": "https://stately.ai/docs/migration",
+                "release_or_edition": "XState v4 to v5",
+                "locator": "TypeScript 5 requirement; Machine/interpret/withConfig renames"
+              },
+              {
+                "source_id": "E18",
+                "url": "https://github.com/TimefoldAI/timefold-solver",
+                "release_or_edition": "Current main README, not a pinned commit",
+                "locator": "Build from source; Editions; Legal notice, lines 237–270"
+              },
+              {
+                "source_id": "E19",
+                "url": "https://optaplanner.io/the-history-of-optaplanner",
+                "release_or_edition": "Maintainer-side history",
+                "locator": "End of life and Continuation, lines 25–40"
+              },
+              {
+                "source_id": "E20",
+                "url": "https://timefold.ai/blog/optaplanner-fork",
+                "release_or_edition": "May 2, 2023 announcement",
+                "locator": "Date and opening article, lines 110–138"
+              }
+            ]
+          },
+          {
+            "criticism": "minor 5",
+            "decision": "ACCEPT",
+            "final_locator": "final lines 50, 95, 120",
+            "independent_reasoning": "No universal weaker-by-construction claim follows from collection rules. PocketBase can support a transaction design; its chosen path still needs a concurrent witness.",
+            "evidence": [
+              {
+                "source_id": "E09",
+                "url": "https://pocketbase.io/docs/go-database/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "Transaction; app.RunInTransaction, callback txApp, lines 170–180"
+              }
+            ]
+          }
+        ],
+        "independently_rejected_critic_overreach": [
+          "A vertical-product omission is not automatically an O1 failure.",
+          "The original brief supports requiring a minimal travel value despite P6 excluding rules.",
+          "An unexecuted automation proposal plus manual AT work is not proof of an actually fabricated conformance result.",
+          "Safe proposed defaults are not automatically settled cooperative decisions.",
+          "PocketBase is not universally unsafe or weaker solely because its default authorization is at API level."
+        ]
+      },
+      "grade_limits": [
+        "A source-grounded material defect suffices for FAIL; this is not a no-delivery or unfinished-scope label.",
+        "No runtime, price, legal applicability or full-product accessibility proof is credited.",
+        "Scientific assessment applies to the frozen authored artifacts; delivery/native/cost cannot be inferred from their prose."
+      ],
+      "obligation_coverage": [
+        {
+          "obligation": "O1",
+          "status": "FULFILLED_WITH_LIMITATIONS",
+          "candidate_locator": "final 58–68, 90–97",
+          "assessment": "Useful unfamiliar options include exclusion constraints, DB/API authorization, XState lifecycle, routing, optimizer, notification substrate and a conditional interpreter-operations configuration path. No citation-count criterion is used."
+        },
+        {
+          "obligation": "O2",
+          "status": "MATERIAL_DEFECT",
+          "candidate_locator": "final 60–66, 109–113",
+          "assessment": "Governing mechanisms/defaults/units are substantially investigated, but retained Supabase error diagnosis is wrong (N1-F1). Conditional vendors and exact application shapes remain honestly unproved."
+        },
+        {
+          "obligation": "O3",
+          "status": "FULFILLED",
+          "candidate_locator": "discovery evolution chains; final 62, 64–65, 111, 117",
+          "assessment": "XState v4→v5 breaking renames and TS requirement are relevant; Timefold fork/evolution is corroborated and maintainer history attributed. Open Cal.com reports illustrate concurrency; no fixed-release claim is established."
+        },
+        {
+          "obligation": "O4",
+          "status": "FULFILLED",
+          "candidate_locator": "final 70–88",
+          "assessment": "Every exact clause is quoted and independently assessed below; no supported payroll exclusion is overwritten and travel value versus rules is distinguished."
+        },
+        {
+          "obligation": "O5",
+          "status": "SUBSTANTIALLY_FULFILLED_WITH_DEFECT",
+          "candidate_locator": "final 54–56, 58–113, 129–148",
+          "assessment": "One self-contained final retains alternatives, policy disagreement and uncertainty, rather than relying on IDs. N1-F1 persists through draft-to-final; minor compressed technical details are recorded separately."
+        },
+        {
+          "obligation": "O6",
+          "status": "FULFILLED_AS_PROPOSALS",
+          "candidate_locator": "final 115–127",
+          "assessment": "Executed evidence is documentation/intake checking only. Concurrency, stage privacy, lifecycle, AT/phone, cost and six-week pilot proposals distinguish plausible wrong designs. No runtime guarantee is credited."
+        }
+      ],
+      "explicit_constraint_coverage": [
+        {
+          "constraint": "scale/location/short notice",
+          "status": "RETAINED",
+          "candidate_locator": "final 54–56, 68, 88",
+          "assessment": "26/4/3 scale is preserved; no small-site graph is assumed and offer lifecycle covers short-notice changes."
+        },
+        {
+          "constraint": "$4,200 and cooperative support",
+          "status": "RETAINED_AS_GATE",
+          "candidate_locator": "final 90–107, 119, 126",
+          "assessment": "Architecture selection awaits a costed comparison including build, operating/support and six-week work; no actual fit proof."
+        },
+        {
+          "constraint": "browser/phone/assistive technology",
+          "status": "RETAINED_AS_VALIDATION",
+          "candidate_locator": "final 119, 125, 129–139",
+          "assessment": "Responsive browser/day-edit and affected-interpreter AT work are proposed; no live UI or conformance result."
+        },
+        {
+          "constraint": "names/topics/availability sensitive",
+          "status": "RETAINED",
+          "candidate_locator": "final 54–56, 78–79, 121",
+          "assessment": "Stage fields, coordinator need, authenticated retrieval and minimal out-of-app notifications preserve intent; RLS diagnosis has N1-F1."
+        },
+        {
+          "constraint": "mode/access arrangements",
+          "status": "RETAINED",
+          "candidate_locator": "final 81–82, 104",
+          "assessment": "Structured verified matching, unfilled unmet requirements and override audit are explicit."
+        },
+        {
+          "constraint": "request/offer/accept/travel/complete/invoice",
+          "status": "RETAINED",
+          "candidate_locator": "final 72–88",
+          "assessment": "Typed manual travel with uncertainty, lifecycle exception/reopen and invoice-readiness are retained; no full payroll."
+        },
+        {
+          "constraint": "honest unfilled",
+          "status": "RETAINED",
+          "candidate_locator": "final 73, 123, 127",
+          "assessment": "Reason/actor/time and explicit human new cycle avoid implying a qualified interpreter exists."
+        },
+        {
+          "constraint": "confirmations and reassignment disputes",
+          "status": "RETAINED_AS_USER_DECISIONS",
+          "candidate_locator": "final 84–85, 101–102, 124",
+          "assessment": "Policies/effective date must be approved; provisional off/consent defaults are identified."
+        },
+        {
+          "constraint": "six weeks before more spend",
+          "status": "RETAINED",
+          "candidate_locator": "final 97, 105, 126–127",
+          "assessment": "Pilot metrics and spending/optimizer gate retain board authority."
+        }
+      ],
+      "plan_dispositions": [
+        {
+          "clause": "P1",
+          "exact_frozen_text": "Track an assignment from request through offer, acceptance, completion, and invoice readiness.",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/final.md",
+            "lines": {
+              "start": 72,
+              "end": 73
+            }
+          },
+          "authored_dispositions": [
+            "ALREADY_COVERED",
+            "CORRECTION"
+          ],
+          "independent_judgment": "Lifecycle is retained. UNFILLED with reason/audit and explicit reopen/new cycle addresses the original brief. Minimal travel capture is a reasonable correction of the thin plan, with automation deferred. Expiry/decline/cancel details improve lifecycle completeness."
+        },
+        {
+          "clause": "P2",
+          "exact_frozen_text": "Detect overlapping offers and accepted assignments across coordinators.",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/final.md",
+            "lines": {
+              "start": 75,
+              "end": 76
+            }
+          },
+          "authored_dispositions": [
+            "ALREADY_COVERED",
+            "CORRECTION",
+            "USER_DECISION"
+          ],
+          "independent_judgment": "Atomic conflict prevention is a justified response to cross-coordinator double offers; no single backend is mandated. Hold/TTL and non-reserving models are stated as alternatives, with accepts arbitrated atomically and retries/releases tested. Model N permits parallel provisional offers, so the cooperative must choose semantics; it is not evidence that all offers are automatically reserved."
+        },
+        {
+          "clause": "P3",
+          "exact_frozen_text": "Limit client and meeting details to the coordinator and assigned interpreter roles that need them.",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/final.md",
+            "lines": {
+              "start": 78,
+              "end": 79
+            }
+          },
+          "authored_dispositions": [
+            "ALREADY_COVERED",
+            "OPTIONAL_ENHANCEMENT",
+            "USER_DECISION"
+          ],
+          "independent_judgment": "The need-to-know principle is preserved and applied to offers, assigned work, coordinator scope, exports and notification payloads. Availability sensitivity remains explicit in the brief-fidelity paragraph. Row rules are not treated as sufficient field redaction. Specific coordinator scope is a decision, not a discovered universal legal restriction."
+        },
+        {
+          "clause": "P4",
+          "exact_frozen_text": "Record communication mode and access arrangements as structured assignment requirements.",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/final.md",
+            "lines": {
+              "start": 81,
+              "end": 82
+            }
+          },
+          "authored_dispositions": [
+            "ALREADY_COVERED",
+            "OPTIONAL_ENHANCEMENT",
+            "USER_DECISION"
+          ],
+          "independent_judgment": "Structured mode/access requirements become matchable checks with verified capability flags, mismatch refusal or an explicitly audited exception. Verification ownership is named. The plan does not by itself mandate a solver; the final does not force one."
+        },
+        {
+          "clause": "P5",
+          "exact_frozen_text": "Automated client confirmations and reassignment authority are cooperative policy decisions.",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/final.md",
+            "lines": {
+              "start": 84,
+              "end": 85
+            }
+          },
+          "authored_dispositions": [
+            "ALREADY_COVERED",
+            "USER_DECISION"
+          ],
+          "independent_judgment": "Both member disputes remain release decisions with decision records/effective dates. OFF and consent-required are provisional fail-safes requiring ratification, not claimed cooperative votes. Reassignment includes old consent, replacement acceptance, notification and audit."
+        },
+        {
+          "clause": "P6",
+          "exact_frozen_text": "Travel estimation rules and any payroll connection are outside the defined first release.",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/final.md",
+            "lines": {
+              "start": 87,
+              "end": 88
+            }
+          },
+          "authored_dispositions": [
+            "ALREADY_COVERED",
+            "UNCERTAIN",
+            "CORRECTION",
+            "USER_DECISION"
+          ],
+          "independent_judgment": "Payroll exclusion remains. The brief separately requires tracking a travel estimate, so excluding automated rules does not justify deleting the estimate value. Typed nullable manual capture with provenance is a defensible narrow reading. OSRM/automatic feasibility are optional and cost-gated; board confirmation is honest scope adjudication. Integer storage is a minor integration issue if fractional engine results are later used."
+        }
+      ],
+      "validation_coverage": [
+        {
+          "validation": "executed E1–E5",
+          "assessment": "Documentation/source-intake observations only; no runtime credit. Frozen files support what the author reported, but evaluator did not observe those historical executions directly. Fetches/excerpt checks do not discriminate competing deployed designs.",
+          "status": "DOCUMENTATION_ONLY"
+        },
+        {
+          "validation": "P-V0/P-V7",
+          "assessment": "Costed build/configure comparison and support diary are relevant under the cap. Neither has run; exact provider/labor costs remain user/builder inputs.",
+          "status": "PROPOSED"
+        },
+        {
+          "validation": "P-V1/P-V1b",
+          "assessment": "Concurrent offer AND accept paths, expiry/release/retry and idempotency are meaningful; winner/conflict and exactly-once state provide an oracle. Must run the selected path, not a sequential pre-check or an unrelated database demo.",
+          "status": "PROPOSED"
+        },
+        {
+          "validation": "P-V2",
+          "assessment": "Role-by-stage record/field, export, payload and reassignment checks discriminate collection-only or broad-role security; privileged client credentials are explicitly prohibited.",
+          "status": "PROPOSED"
+        },
+        {
+          "validation": "P-V3/P-V3a",
+          "assessment": "Units, null/unknown/provenance and site measurement address wrong zeros and unsupported county-size inference; cache/profile checks apply only to the approved route slice.",
+          "status": "PROPOSED"
+        },
+        {
+          "validation": "P-V4/P-V5",
+          "assessment": "Legal/illegal transition outcomes and approved-policy branch effects discriminate status strings and silent policy assumptions; reopen and notification enable/preference are explicit.",
+          "status": "PROPOSED"
+        },
+        {
+          "validation": "P-V6",
+          "assessment": "Automation is partial. Human keyboard/touch/AT and phone tasks are relevant; no formal WCAG conformance is established.",
+          "status": "PROPOSED"
+        },
+        {
+          "validation": "P-V8",
+          "assessment": "Descriptive six-week measures replace unsupported precision/recall. These are board decision evidence, not correctness or route-accuracy proof.",
+          "status": "PROPOSED"
+        }
+      ]
+    },
+    "N2": {
+      "actual_arm": "control",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+      "grade": "FAIL",
+      "material_findings": [
+        {
+          "id": "N2-F1",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+            "lines": {
+              "start": 484,
+              "end": 492
+            }
+          },
+          "passage": "no skill/mode/access matching, no travel feasibility, no\noffer→accept handshake",
+          "original_obligation": "O1/O2 useful alternatives and source-grounded product applicability; O5 preserve evidential qualification",
+          "type": "UNSUPPORTED_CONSEQUENTIAL",
+          "severity": "medium",
+          "primary_evidence": [
+            {
+              "source_id": "E25",
+              "url": "https://cal.com/blog/why-cal-com-s-routing-forms-are-a-game-changer-for-scheduling",
+              "release_or_edition": "Vendor product article March 3, 2025, v5.0",
+              "locator": "Attributes and dynamic routing; explicit fallback, lines 115–128"
+            },
+            {
+              "source_id": "E26",
+              "url": "https://cal.com/features/requires-confirmation",
+              "release_or_edition": "Live official feature page",
+              "locator": "Opt-in bookings, lines 91–119"
+            },
+            {
+              "source_id": "E27",
+              "url": "https://next.cal.com/blog/cal-com-v5-1",
+              "release_or_edition": "Cal.com v5.1 release post March 14, 2025",
+              "locator": "Weighted attribute routing and fairness reset interval"
+            }
+          ],
+          "reasoning": "The final gives categorical missing-feature reasons for restricting Cal.com to intake. Its only cited legacy round-robin source demonstrates a narrow fairness mechanism, not whole-product absences. Official v5.0 material documents attribute-based member routing, and the confirmation feature documents host approval before a booking is added. These mechanisms do not establish validated interpreter credentials, a complete cooperative offer lifecycle, privacy, UNFILLED handling or invoice readiness; rejecting Cal.com as a complete drop-in ledger can remain defensible. The material defect is the unsupported categorical rationale and mandatory intake-only boundary, not failure to recommend Cal.com. Critic source C11 says the capabilities are not evidenced on that page; that qualification does not survive in the final.",
+          "related_judgments": [
+            "Unsupported rejection rationale",
+            "Loss of narrow-page evidential qualification"
+          ],
+          "related_frozen_primary_excerpt": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C11-calcom-roundrobin.md",
+            "line": 15,
+            "passage": "Critic consequence: confirms predecessor S11 exactly. Draft's buy-vs-build verdict stands: useful fairness-toggle inspiration (least-recent vs least-count), not a substitute — no skill/mode matching, travel feasibility, offer/accept handshake, redaction, or UNFILLED semantics evidenced on this page.",
+            "sha256": "20e272f46bbad49a026862a535cf9c13b62c581212a5bad00e577e03f9185a6f"
+          }
+        },
+        {
+          "id": "N2-F2",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+            "lines": {
+              "start": 568,
+              "end": 576
+            }
+          },
+          "passage": "nightly backup of the data file +",
+          "original_obligation": "O2 governing operational behavior/applicability of chosen mechanism; O5 cooperative supportability and coherent first-release design",
+          "type": "MATERIALLY_INCOMPLETE",
+          "severity": "medium",
+          "primary_evidence": [
+            {
+              "source_id": "E11",
+              "url": "https://pocketbase.io/docs/going-to-production/",
+              "release_or_edition": "Official docs displaying v0.40.5; builtin backup v0.16+",
+              "locator": "Backup and Restore, lines 67–77"
+            }
+          ],
+          "reasoning": "The selected deployment is justified repeatedly by a one-file backup story and prescribes a nightly data-file-plus-config backup. PocketBase documents a full pb_data backup with a stopped application for manual copying, or a builtin snapshot archive. The candidate does not identify either method or the transactional-safety prerequisite and reduces the documented backup scope to a data file. A ZIP can indeed be one archive, so one-file wording alone would not establish a defect; the concrete data-file recipe makes the omission consequential to the chosen supportability story. No live unsafe backup, mandatory attachment feature, catastrophic loss, high-availability requirement, or restore result is alleged."
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N2-m1",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+            "lines": {
+              "start": 32,
+              "end": 34
+            }
+          },
+          "other_candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+            "lines": {
+              "start": 560,
+              "end": 569
+            }
+          },
+          "assessment": "The introduction says buildable/operable inside $4,200, but the cost section has qualitative categories and recurring estimates, no build-hours/rate/contingency total. Its planning-estimates/coop-validates qualification prevents treating this as a measured price claim; budget feasibility remains unestablished and is not credited."
+        },
+        {
+          "id": "N2-m2",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+            "lines": {
+              "start": 553,
+              "end": 559
+            }
+          },
+          "other_candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+            "lines": {
+              "start": 781,
+              "end": 783
+            }
+          },
+          "assessment": "Invoice CSV is mapped to V11, whose stated oracle concerns aggregate board metrics rather than invoice columns/completion/rate-reference integrity. Meaningful export testing exists, but this mapping leaves an invoice-specific validation gap."
+        },
+        {
+          "id": "N2-m3",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+            "lines": {
+              "start": 793,
+              "end": 793
+            }
+          },
+          "assessment": "Closing one proven commit path is loose language. Repeated NO-runtime disclosures and a future V1 acceptance gate make this a proposed-to-be-proven path in context; no fabricated runtime witness is charged."
+        },
+        {
+          "id": "N2-m4",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+            "lines": {
+              "start": 553,
+              "end": 559
+            }
+          },
+          "assessment": "The separate payroll process consumes invoice CSV despite a no-payroll-connection clause. A manually exported invoice-ready file is compatible with the original invoice boundary; no pay computation or automatic payroll integration is specified."
+        },
+        {
+          "id": "N2-m5",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+            "lines": {
+              "start": 594,
+              "end": 595
+            }
+          },
+          "evidence": [
+            {
+              "source_id": "E09",
+              "url": "https://pocketbase.io/docs/go-database/",
+              "release_or_edition": "Official docs displaying v0.40.5",
+              "locator": "Transaction; app.RunInTransaction, callback txApp, lines 170–180"
+            }
+          ],
+          "assessment": "Four coordinators imply few people, not proven tiny contention or a measured latency bound. A sole transactional writer is plausible, but needs its stated concurrent witness and application-path restrictions."
+        }
+      ],
+      "unresolved": [
+        "No runtime, application sandbox, concurrency witness, accessibility task execution or actual deployment exists in the supplied scientific artifacts.",
+        "Cooperative policy votes, precise client disclosure tiers, vocabulary/capability verification and real support capacity remain external decisions.",
+        "Actual build/operating costs, site count, route coverage/traffic accuracy and six-week pilot measurements are not established.",
+        "Public product guides establish capabilities/configuration warnings, not price, privacy configuration, legal sufficiency, coordinator-mobile success or full accessibility.",
+        "The finer M5–M7 criticism prose is absent from the frozen truncated critique; visible summary/detail was assessed, no unseen criticism is inferred."
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "name": "Original obligations and explicit constraints",
+          "coverage": "COMPLETE_FOR_AVAILABLE_FROZEN_SCOPE",
+          "judgment": "COVERED_WITH_O2/O5_DEFECTS",
+          "evidence": [
+            {
+              "assessment_locator": "original brief and obligation/constraint ledgers"
+            }
+          ],
+          "reasoning": "All original obligations/constraints were examined. Concrete single-store, availability, mobile and export design help. Source-grounded N2-F1/F2 prevent full-quality pass; the budget remains an unproved estimate."
+        },
+        {
+          "axis": 2,
+          "name": "Primary behavior, defaults, exceptions, units/types and applicability",
+          "coverage": "COMPLETE_FOR_AVAILABLE_FROZEN_SCOPE",
+          "judgment": "MATERIAL_DEFECTS",
+          "evidence": [
+            {
+              "assessment_locator": "primary claim ledger and source-map.json"
+            }
+          ],
+          "reasoning": "Most PG/PB/OSRM/Timefold/APG facts are supported at their documented scope. Categorical Cal.com negatives and the chosen backup recipe exceed their evidence. Mutable docs are qualified; no runtime capability is assumed."
+        },
+        {
+          "axis": 3,
+          "name": "Useful unfamiliar discovery and viable alternatives",
+          "coverage": "COMPLETE_FOR_AVAILABLE_FROZEN_SCOPE",
+          "judgment": "USEFUL_DISCOVERY_WITH_BAD_REJECTION",
+          "evidence": [
+            {
+              "assessment_locator": "discovery/draft/full final options"
+            }
+          ],
+          "reasoning": "Useful backend/routing/score/picker mechanisms and manual-versus-optimizer, single-store-versus-hardening paths are retained. N2-F1 gives an unsupported exclusion rationale for one actual comparator. Missing a vertical vendor alone is not a failure."
+        },
+        {
+          "axis": 4,
+          "name": "Every exact plan clause and disposition",
+          "coverage": "COMPLETE_FOR_AVAILABLE_FROZEN_SCOPE",
+          "judgment": "ALL_SIX_ASSESSED",
+          "evidence": [
+            {
+              "assessment_locator": "exact per-P ledger"
+            }
+          ],
+          "reasoning": "Exact P1–P6 are dispositioned, with required OSRM overreach corrected and manual estimate value preserved. Availability and policy authority remain. No automatic payroll calculation is introduced."
+        },
+        {
+          "axis": 5,
+          "name": "Draft–critique–final preservation and fallible criticism",
+          "coverage": "COMPLETE_FOR_AVAILABLE_FROZEN_SCOPE",
+          "judgment": "SUBSTANTIAL_PRESERVATION_WITH_LOST_QUALIFIER",
+          "evidence": [
+            {
+              "assessment_locator": "full stage review and criticism ledger"
+            }
+          ],
+          "reasoning": "The final retains material source content and user disagreement, rather than IDs alone. It does not invent missing detailed critique. It loses the narrow Cal.com evidential limitation and adds an unsupported operational simplification. Both are assessed independently of critic agreement."
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful validation, proposed versus executed",
+          "coverage": "COMPLETE_FOR_AVAILABLE_FROZEN_SCOPE",
+          "judgment": "MEANINGFUL_PROPOSALS_WITH_MINOR_MAPPING_GAP",
+          "evidence": [
+            {
+              "assessment_locator": "validation ledger and final executed/proposed sections"
+            }
+          ],
+          "reasoning": "V1–V11 are clearly proposed; actual persistent-state, unauthorized-disclosure, task and metrics oracles are present. Invoice-export mapping and proven wording are minor contextual limits. No evidence of executed concurrency/AT/backup/price success exists."
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "claim_group": "PostgreSQL hardening",
+            "candidate_locator": "final 268–293,442–458,746–749",
+            "judgment": "SUPPORTED_CONDITIONAL_FALLBACK",
+            "evidence": [
+              {
+                "source_id": "E01",
+                "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+                "release_or_edition": "PostgreSQL 18",
+                "locator": "8.17.1, 8.17.3, 8.17.6, 8.17.10"
+              },
+              {
+                "source_id": "E02",
+                "url": "https://www.postgresql.org/docs/18/sql-createtable.html",
+                "release_or_edition": "PostgreSQL 18",
+                "locator": "EXCLUDE clause; WHERE (predicate), lines 321–326"
+              },
+              {
+                "source_id": "E03",
+                "url": "https://www.postgresql.org/docs/18/btree-gist.html",
+                "release_or_edition": "PostgreSQL 18",
+                "locator": "F.8 introduction; supported scalar types and trusted extension"
+              },
+              {
+                "source_id": "E04",
+                "url": "https://www.postgresql.org/docs/18/errcodes-appendix.html",
+                "release_or_edition": "18 documentation; page identifies 18.6",
+                "locator": "Table A.1, 23P01 and 42501"
+              }
+            ],
+            "assessment": "Bounds, overlap, opclasses, partial predicate and SQLSTATE align with PG18; runtime active-row policy is not executed and main release remains PocketBase."
+          },
+          {
+            "claim_group": "PocketBase authorization/realtime",
+            "candidate_locator": "final 295–324,460–482,756–762",
+            "judgment": "SUPPORTED_UNPROVED_CONFIG",
+            "evidence": [
+              {
+                "source_id": "E06",
+                "url": "https://pocketbase.io/docs/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "Introduction; pre-1.0 compatibility warning"
+              },
+              {
+                "source_id": "E07",
+                "url": "https://pocketbase.io/docs/api-rules-and-filters/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "five rules, default null, filter behavior and status exceptions"
+              },
+              {
+                "source_id": "E08",
+                "url": "https://pocketbase.io/docs/go-realtime/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "custom-topic example, HasSubscription, clients.Send and auth key"
+              },
+              {
+                "source_id": "E10",
+                "url": "https://pocketbase.io/docs/js-records/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "Hide/Unhide fields; onRecordEnrich, lines 29–36"
+              }
+            ],
+            "assessment": "Codes/locked defaults/superuser exceptions are grounded. Collection-rule and field/custom-topic duties are distinguished; no actual least-privilege proof."
+          },
+          {
+            "claim_group": "PocketBase atomic owner",
+            "candidate_locator": "final 150–163,578–617,740–743",
+            "judgment": "PLAUSIBLE_UNPROVEN",
+            "evidence": [
+              {
+                "source_id": "E09",
+                "url": "https://pocketbase.io/docs/go-database/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "Transaction; app.RunInTransaction, callback txApp, lines 170–180"
+              }
+            ],
+            "assessment": "Official transaction/single-writer behavior supports a sole hold writer, provided callback/entry paths are correct. Four users is not proof of races absent; V1 still required."
+          },
+          {
+            "claim_group": "PocketBase deployment/backup",
+            "candidate_locator": "final 560–576,591–595",
+            "judgment": "MATERIALLY_INCOMPLETE",
+            "evidence": [
+              {
+                "source_id": "E11",
+                "url": "https://pocketbase.io/docs/going-to-production/",
+                "release_or_edition": "Official docs displaying v0.40.5; builtin backup v0.16+",
+                "locator": "Backup and Restore, lines 67–77"
+              }
+            ],
+            "assessment": "Single binary does not establish the stated data-file backup recipe sufficient or safe; N2-F2."
+          },
+          {
+            "claim_group": "PocketBase evolution",
+            "candidate_locator": "final 701–709",
+            "judgment": "SUPPORTED_RELEASE_CHAIN",
+            "evidence": [
+              {
+                "source_id": "E06",
+                "url": "https://pocketbase.io/docs/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "Introduction; pre-1.0 compatibility warning"
+              },
+              {
+                "source_id": "E12",
+                "url": "https://raw.githubusercontent.com/pocketbase/pocketbase/v0.40.5/CHANGELOG.md",
+                "release_or_edition": "Tag v0.40.5",
+                "locator": "v0.40.0 exit-code change; v0.40.4 migration deadlock #7836; v0.40.5 JSVM hardening"
+              }
+            ],
+            "assessment": "v0.40.0 command error behavior and later migration fixes support pin/stage/retest; missing old auth change is expressly not claimed observed."
+          },
+          {
+            "claim_group": "OSRM optional route",
+            "candidate_locator": "final 425–440,369–396,750–755",
+            "judgment": "SUPPORTED_GATED_RELEASE",
+            "evidence": [
+              {
+                "source_id": "E13",
+                "url": "https://project-osrm.org/docs/v5.24.0/api/",
+                "release_or_edition": "OSRM v5.24.0",
+                "locator": "General options; HTTP server; Table; Trip; example numeric matrices"
+              }
+            ],
+            "assessment": "Units, coordinate order, nulls, annotation defaults and fallback labeling agree with release docs. Candidate used mutable master; chosen R2 implementation must pin it before applicability can be established."
+          },
+          {
+            "claim_group": "Timefold option/evolution",
+            "candidate_locator": "final 406–423,686–699",
+            "judgment": "SUPPORTED_QUALIFIED_OPTION",
+            "evidence": [
+              {
+                "source_id": "E16",
+                "url": "https://docs.timefold.ai/",
+                "release_or_edition": "Live product documentation index",
+                "locator": "Models, Solver and Platform"
+              },
+              {
+                "source_id": "E17",
+                "url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/score-calculation",
+                "release_or_edition": "Latest page displayed 2.7.1",
+                "locator": "Hard/soft levels; incremental constraint streams; score explanations"
+              },
+              {
+                "source_id": "E18",
+                "url": "https://github.com/TimefoldAI/timefold-solver",
+                "release_or_edition": "Current main README, not a pinned commit",
+                "locator": "Build from source; Editions; Legal notice, lines 237–270"
+              },
+              {
+                "source_id": "E19",
+                "url": "https://optaplanner.io/the-history-of-optaplanner",
+                "release_or_edition": "Maintainer-side history",
+                "locator": "End of life and Continuation, lines 25–40"
+              },
+              {
+                "source_id": "E20",
+                "url": "https://timefold.ai/blog/optaplanner-fork",
+                "release_or_edition": "May 2, 2023 announcement",
+                "locator": "Date and opening article, lines 110–138"
+              }
+            ],
+            "assessment": "Hard/soft feasibility and incremental/explained score are credible mechanisms. Latest 2.7.1 facts are conditional; history/fix totals are maintainer claims, domain-model and performance are not independently measured."
+          },
+          {
+            "claim_group": "Cal.com comparator",
+            "candidate_locator": "final 484–492",
+            "judgment": "UNSUPPORTED_CATEGORICAL_REJECTION",
+            "evidence": [
+              {
+                "source_id": "E25",
+                "url": "https://cal.com/blog/why-cal-com-s-routing-forms-are-a-game-changer-for-scheduling",
+                "release_or_edition": "Vendor product article March 3, 2025, v5.0",
+                "locator": "Attributes and dynamic routing; explicit fallback, lines 115–128"
+              },
+              {
+                "source_id": "E26",
+                "url": "https://cal.com/features/requires-confirmation",
+                "release_or_edition": "Live official feature page",
+                "locator": "Opt-in bookings, lines 91–119"
+              },
+              {
+                "source_id": "E27",
+                "url": "https://next.cal.com/blog/cal-com-v5-1",
+                "release_or_edition": "Cal.com v5.1 release post March 14, 2025",
+                "locator": "Weighted attribute routing and fairness reset interval"
+              }
+            ],
+            "assessment": "Historical fairness pair has frozen-primary support, but current absence claims and intake-only rationale do not. Product/edition/release applicability must bound the comparison."
+          },
+          {
+            "claim_group": "APG/assistive technology",
+            "candidate_locator": "final 494–503,763–766",
+            "judgment": "SUPPORTED_PATTERN_BOUNDED_PROPOSAL",
+            "evidence": [
+              {
+                "source_id": "E28",
+                "url": "https://www.w3.org/WAI/ARIA/apg/patterns/combobox/",
+                "release_or_edition": "Live APG, normative claims bounded to pattern",
+                "locator": "Keyboard interaction and Roles/States/Properties; variants"
+              }
+            ],
+            "assessment": "Listbox-combobox keyboard/focus contract is relevant; variants/native options and whole-task AT success are not guaranteed by a short pattern list."
+          },
+          {
+            "claim_group": "First-release budget",
+            "candidate_locator": "final 33,560–569",
+            "judgment": "UNESTABLISHED_ESTIMATE",
+            "evidence": [
+              {
+                "source_id": "E06",
+                "url": "https://pocketbase.io/docs/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "Introduction; pre-1.0 compatibility warning"
+              }
+            ],
+            "assessment": "Backend availability and a smaller topology do not prove labor/support total under $4,200. Planning qualification retained; fit not credited."
+          },
+          {
+            "claim_group": "Other rejected/deferred approaches",
+            "candidate_locator": "final 505–509,639–684",
+            "judgment": "SCOPED_ENGINEERING_JUDGMENT",
+            "evidence": [],
+            "assessment": "Full payroll/native apps are explicitly out. Optional Valhalla/GraphHopper, manual pick, later solver and Postgres remain leads; black-box or commercial-default preferences are not counted as independently proved universal product defects."
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "definition": "All consequential available authored-final claim groups assessed against independent primary sections or explicitly recognized as conditional/unestablished. Complete does not mean all vendors, every historical release, user decisions, market prices or unexecuted application behavior are known. Legacy fairness-page access limit is closed as a bounded historical excerpt/current-applicability judgment, not deferred whole-product verification."
+      },
+      "preservation_coverage": {
+        "complete_available_stage_review": true,
+        "stages": [
+          "research/discovery.md",
+          "research/draft.md",
+          "critic/critique.md",
+          "reviser/final.md",
+          "all supplied source maps/indexes/excerpts"
+        ],
+        "assessment": "The final retains meaningful source facts and substantive options while correcting required routing, premature solver use and unresolved dual-store ownership. Exact requirement tokens, availability sensitivity, manual travel, policy disputes and budget/six-week limits survive in full prose. Predecessor Python speed and overly definite domain-model assertions are appropriately withdrawn/softened. The literal truncated critique is disclosed and only available detailed text/summary adjudicated. A narrow Cal.com source qualification is lost, leaving an unsound whole-product rejection; the newly added supportability recipe creates a separate material gap.",
+        "critic_adjudication": [
+          {
+            "criticism": "M1",
+            "decision": "ACCEPT",
+            "final_locator": "final lines 85–113, 369–396, 425–440",
+            "independent_reasoning": "Original manual estimate tracking does not require a routing service. Draft minimal-rules/OSRM-as-required correction was overreach. Final demotes the engine and defines honest manual annotations, retaining optional routing and its unknowns.",
+            "evidence": [
+              {
+                "source_id": "E13",
+                "url": "https://project-osrm.org/docs/v5.24.0/api/",
+                "release_or_edition": "OSRM v5.24.0",
+                "locator": "General options; HTTP server; Table; Trip; example numeric matrices"
+              }
+            ]
+          },
+          {
+            "criticism": "M2a",
+            "decision": "ACCEPT_WITH_CATEGORY_QUALIFICATION",
+            "final_locator": "final lines 115–125, 295–324",
+            "independent_reasoning": "Availability sensitivity is an original requirement and is retained. Promoting its label from enhancement to correction makes the disposition clearer, but the label alone would not prove an operational omission when draft privacy prose already included it.",
+            "evidence": [
+              {
+                "source_id": "E07",
+                "url": "https://pocketbase.io/docs/api-rules-and-filters/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "five rules, default null, filter behavior and status exceptions"
+              }
+            ]
+          },
+          {
+            "criticism": "M2b",
+            "decision": "ACCEPT",
+            "final_locator": "final lines 127–147, 295–324",
+            "independent_reasoning": "Exact-address-after-acceptance was an invented mandatory tier. The final keeps need-to-know while leaving precise disclosure timing to the cooperative. Custom topics receive explicit authorization/minimization responsibility rather than assumed rule inheritance.",
+            "evidence": [
+              {
+                "source_id": "E08",
+                "url": "https://pocketbase.io/docs/go-realtime/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "custom-topic example, HasSubscription, clients.Send and auth key"
+              },
+              {
+                "source_id": "E10",
+                "url": "https://pocketbase.io/docs/js-records/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "Hide/Unhide fields; onRecordEnrich, lines 29–36"
+              }
+            ]
+          },
+          {
+            "criticism": "M3",
+            "decision": "ACCEPT",
+            "final_locator": "final lines 150–163, 578–617",
+            "independent_reasoning": "The two-store seam lacked ownership/consistency/cost specifics. A single PocketBase store and sole atomic hold writer resolve the ambiguity in design. Official transaction semantics support plausibility; the real race test still gates acceptance.",
+            "evidence": [
+              {
+                "source_id": "E09",
+                "url": "https://pocketbase.io/docs/go-database/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "Transaction; app.RunInTransaction, callback txApp, lines 170–180"
+              }
+            ]
+          },
+          {
+            "criticism": "M4",
+            "decision": "ACCEPT_WITH_SCOPE_QUALIFICATION",
+            "final_locator": "final lines 165–187, 406–423",
+            "independent_reasoning": "Solver deferral is sensible under this budget and review boundary, but no measurement proves a solver could never fit. The useful hard-before-soft invariant survives in manual R1 selection; unsupported Python performance is dropped and domain-model guidance is softened for R2.",
+            "evidence": [
+              {
+                "source_id": "E16",
+                "url": "https://docs.timefold.ai/",
+                "release_or_edition": "Live product documentation index",
+                "locator": "Models, Solver and Platform"
+              },
+              {
+                "source_id": "E17",
+                "url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/score-calculation",
+                "release_or_edition": "Latest page displayed 2.7.1",
+                "locator": "Hard/soft levels; incremental constraint streams; score explanations"
+              },
+              {
+                "source_id": "E18",
+                "url": "https://github.com/TimefoldAI/timefold-solver",
+                "release_or_edition": "Current main README, not a pinned commit",
+                "locator": "Build from source; Editions; Legal notice, lines 237–270"
+              }
+            ]
+          },
+          {
+            "criticism": "M5",
+            "decision": "ACCEPT_VISIBLE_SUMMARY_ONLY",
+            "final_locator": "final lines 189–201, 511–576",
+            "independent_reasoning": "The nine mechanisms named in the visible summary are given full prose: availability entry, intake, notifications, roles, idempotency, phone recovery, export, costs and deployment. Cost fit is still unsubstantiated and deployment backup introduces N2-F2. The frozen critique literally stops after availability item 1 with a truncation marker; missing detailed subclaims cannot be adjudicated or invented.",
+            "evidence": [
+              {
+                "source_id": "E06",
+                "url": "https://pocketbase.io/docs/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "Introduction; pre-1.0 compatibility warning"
+              },
+              {
+                "source_id": "E11",
+                "url": "https://pocketbase.io/docs/going-to-production/",
+                "release_or_edition": "Official docs displaying v0.40.5; builtin backup v0.16+",
+                "locator": "Backup and Restore, lines 67–77"
+              }
+            ]
+          },
+          {
+            "criticism": "M6",
+            "decision": "MOSTLY_ACCEPT",
+            "final_locator": "final lines 203–217, 686–714",
+            "independent_reasoning": "Primary project history supersedes predecessor snippets; moving docs are explicitly pinned or deferred. Maintainer bug totals remain attributed, not audited. Missing exact Red Hat announcement review is not misrepresented as independent verification. The frozen Cal.com narrow-page qualifier is nevertheless lost (N2-F1).",
+            "evidence": [
+              {
+                "source_id": "E18",
+                "url": "https://github.com/TimefoldAI/timefold-solver",
+                "release_or_edition": "Current main README, not a pinned commit",
+                "locator": "Build from source; Editions; Legal notice, lines 237–270"
+              },
+              {
+                "source_id": "E19",
+                "url": "https://optaplanner.io/the-history-of-optaplanner",
+                "release_or_edition": "Maintainer-side history",
+                "locator": "End of life and Continuation, lines 25–40"
+              },
+              {
+                "source_id": "E20",
+                "url": "https://timefold.ai/blog/optaplanner-fork",
+                "release_or_edition": "May 2, 2023 announcement",
+                "locator": "Date and opening article, lines 110–138"
+              },
+              {
+                "source_id": "E27",
+                "url": "https://next.cal.com/blog/cal-com-v5-1",
+                "release_or_edition": "Cal.com v5.1 release post March 14, 2025",
+                "locator": "Weighted attribute routing and fairness reset interval"
+              }
+            ]
+          },
+          {
+            "criticism": "M7",
+            "decision": "ACCEPT_WITH_MINOR_GAP",
+            "final_locator": "final lines 219–231, 740–783",
+            "independent_reasoning": "Partial predicate support is closed; application predicate behavior is still proposed. Custom-topic tests address leakage rather than assumed inheritance; phone/idempotency mechanisms are concrete. V11 is the board-export oracle and does not actually validate the separate invoice CSV that also points to it.",
+            "evidence": [
+              {
+                "source_id": "E02",
+                "url": "https://www.postgresql.org/docs/18/sql-createtable.html",
+                "release_or_edition": "PostgreSQL 18",
+                "locator": "EXCLUDE clause; WHERE (predicate), lines 321–326"
+              },
+              {
+                "source_id": "E08",
+                "url": "https://pocketbase.io/docs/go-realtime/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "custom-topic example, HasSubscription, clients.Send and auth key"
+              },
+              {
+                "source_id": "E09",
+                "url": "https://pocketbase.io/docs/go-database/",
+                "release_or_edition": "Official docs displaying v0.40.5",
+                "locator": "Transaction; app.RunInTransaction, callback txApp, lines 170–180"
+              }
+            ]
+          }
+        ],
+        "missing_source_detail": "control/critic/critique.md ends at line 166 with ...[truncated 7519 chars]. Available detailed M1–M4 and M5 availability item, plus M1–M7 summary, were reviewed. Missing fine-grained M5–M7 prose cannot be assessed as if supplied.",
+        "independently_rejected_critic_overreach": [
+          "Disposition label changes alone are not evidence of missing privacy behavior.",
+          "Solver deferral is a prudent scope judgment, not a measured impossibility for every solver option.",
+          "The narrow legacy round-robin page cannot establish all Cal.com feature absences."
+        ]
+      },
+      "grade_limits": [
+        "A source-grounded material defect suffices for FAIL; this is not a no-delivery or unfinished-scope label.",
+        "No runtime, price, legal applicability or full-product accessibility proof is credited.",
+        "Scientific assessment applies to the frozen authored artifacts; delivery/native/cost cannot be inferred from their prose."
+      ],
+      "obligation_coverage": [
+        {
+          "obligation": "O1",
+          "status": "FULFILLED_WITH_MATERIAL_APPLICABILITY_DEFECT",
+          "candidate_locator": "final 398–509, 639–669",
+          "assessment": "Unfamiliar backend, atomic-conflict, route, optimizer and APG mechanisms are useful; manual selection versus solver and single-store versus Postgres are real alternatives. Cal.com categorical exclusion is not sourced (N2-F1); lack of a vertical-product name alone does not violate O1."
+        },
+        {
+          "obligation": "O2",
+          "status": "MATERIAL_DEFECTS",
+          "candidate_locator": "final 406–509, 560–617",
+          "assessment": "Most units/defaults and rule exceptions are sound. Whole-product negative assertions exceed the narrow source; chosen backup recipe omits documented scope/safety (N2-F1/F2). Backend cost fit is a planning assertion with no numerical build envelope."
+        },
+        {
+          "obligation": "O3",
+          "status": "FULFILLED_WITH_ATTRIBUTION",
+          "candidate_locator": "final 686–714",
+          "assessment": "Timefold continuation and version-specific PocketBase release behavior are relevant chains. Project history/fix totals are attributed; no reproduced regression or inspected merged fix is claimed."
+        },
+        {
+          "obligation": "O4",
+          "status": "FULFILLED_AFTER_VALID_RESCOPE",
+          "candidate_locator": "final 238–396",
+          "assessment": "All six exact clauses receive full dispositions. OSRM-as-required and solver-as-R1 claims are withdrawn, while travel value, sensitive availability and cooperative policy authority remain."
+        },
+        {
+          "obligation": "O5",
+          "status": "SUBSTANTIALLY_FULFILLED_WITH_DEFECT",
+          "candidate_locator": "final 52–76, 78–236, 398–714",
+          "assessment": "The full final preserves constraints, hard eligibility, sources/limits, optional engines and cooperative decisions. Critique truncation is disclosed. Narrow Cal.com evidence becomes a categorical conclusion; the added backup story lacks source qualification."
+        },
+        {
+          "obligation": "O6",
+          "status": "FULFILLED_AS_PROPOSALS_WITH_MINOR_GAPS",
+          "candidate_locator": "final 716–783",
+          "assessment": "No runtime is claimed in the executed section. V1–V11 contain meaningful concurrent, privacy, AT, policy, mobile and export checks; a few proposal labels say proven loosely and the invoice/board export mapping is incomplete."
+        }
+      ],
+      "explicit_constraint_coverage": [
+        {
+          "constraint": "scale/location/short notice",
+          "status": "RETAINED",
+          "candidate_locator": "final 32–50, 52–76, 594",
+          "assessment": "Small cooperative scope and short-notice phone edits are preserved. Four users does not prove tiny contention, but serialization is intended to control it and requires a witness."
+        },
+        {
+          "constraint": "$4,200 and cooperative support",
+          "status": "RETAINED_BUT_UNPROVED",
+          "candidate_locator": "final 33, 560–576, 591–595",
+          "assessment": "Components are reduced and costs called estimates; no labor allocation/total demonstrates fit. N2-F2 weakens the asserted backup support story."
+        },
+        {
+          "constraint": "browser/phone/assistive technology",
+          "status": "RETAINED_AS_VALIDATION",
+          "candidate_locator": "final 494–503, 546–551, 763–766, 776–780",
+          "assessment": "Phone retry/reconnect and picker/AT tasks are specified; full offline operation is deferred. No executed usability/conformance evidence."
+        },
+        {
+          "constraint": "names/topics/availability sensitive",
+          "status": "RETAINED",
+          "candidate_locator": "final 295–324, 528–539, 756–762",
+          "assessment": "Availability is private, fields/custom topics require authorization and clients see own status. Notification payload detail could be clearer; no actual leakage is proved."
+        },
+        {
+          "constraint": "mode/access arrangements",
+          "status": "RETAINED",
+          "candidate_locator": "final 325–346, 767–770",
+          "assessment": "Exact tokens/free text and hard eligibility before fairness are explicit."
+        },
+        {
+          "constraint": "request/offer/accept/travel/complete/invoice",
+          "status": "RETAINED",
+          "candidate_locator": "final 244–266, 369–396, 553–559",
+          "assessment": "Declared estimate, completion and invoice flag/export are kept without computed pay; payroll-consuming CSV wording remains loose."
+        },
+        {
+          "constraint": "honest unfilled",
+          "status": "RETAINED",
+          "candidate_locator": "final 244–266, 771–772",
+          "assessment": "UNFILLED reason/review cannot silently turn into a match; future user test has an independent misreading oracle."
+        },
+        {
+          "constraint": "confirmations and reassignment disputes",
+          "status": "RETAINED_AS_USER_DECISIONS",
+          "candidate_locator": "final 348–367, 773–775",
+          "assessment": "Member choices and configuration are retained; off/ask-first are initial fail-safe behavior, not observed approval."
+        },
+        {
+          "constraint": "six weeks before more spend",
+          "status": "RETAINED",
+          "candidate_locator": "final 639–669, 781–783",
+          "assessment": "Board metrics/export and later engine spending decisions retain the review boundary."
+        }
+      ],
+      "plan_dispositions": [
+        {
+          "clause": "P1",
+          "exact_frozen_text": "Track an assignment from request through offer, acceptance, completion, and invoice readiness.",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+            "lines": {
+              "start": 244,
+              "end": 266
+            }
+          },
+          "authored_dispositions": [
+            "ALREADY_COVERED",
+            "CORRECTION"
+          ],
+          "independent_judgment": "Request-to-invoice workflow is retained with travel annotation and a reasoned UNFILLED state. Explicit expiry/decline/cancel handling and human review do not imply availability. Routing and solver services are no longer required R1 mechanisms."
+        },
+        {
+          "clause": "P2",
+          "exact_frozen_text": "Detect overlapping offers and accepted assignments across coordinators.",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+            "lines": {
+              "start": 268,
+              "end": 293
+            }
+          },
+          "authored_dispositions": [
+            "ALREADY_COVERED",
+            "CORRECTION"
+          ],
+          "independent_judgment": "Detection is retained for UX, while the offer commit must prevent conflicting active holds. PocketBase is the selected single transactional writer; idempotency and history handling are specified. PostgreSQL exclusion is a conditional fallback. This is a plausible design under documented transaction behavior, not an executed guarantee."
+        },
+        {
+          "clause": "P3",
+          "exact_frozen_text": "Limit client and meeting details to the coordinator and assigned interpreter roles that need them.",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+            "lines": {
+              "start": 295,
+              "end": 324
+            }
+          },
+          "authored_dispositions": [
+            "ALREADY_COVERED",
+            "CORRECTION",
+            "USER_DECISION"
+          ],
+          "independent_judgment": "Availability non-enumerability is correctly included alongside names/topics. Collection rules, field projection and custom-topic authorization are separated. Exact-address-at-offer versus after-acceptance is appropriately a cooperative disclosure decision: travel assessment can need location before acceptance. Coordinator-full remains a design assumption that needs actual operational scope, not proof that everyone needs all data."
+        },
+        {
+          "clause": "P4",
+          "exact_frozen_text": "Record communication mode and access arrangements as structured assignment requirements.",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+            "lines": {
+              "start": 325,
+              "end": 346
+            }
+          },
+          "authored_dispositions": [
+            "ALREADY_COVERED",
+            "OPTIONAL_ENHANCEMENT",
+            "USER_DECISION"
+          ],
+          "independent_judgment": "Controlled vocabulary plus exact free-text arrangements preserve client requirements. Hard eligibility precedes fairness under every toggle. Capability and vocabulary governance remain user decisions, with no invented clinical credential guarantee. APG checks are task proposals, not conformance certification."
+        },
+        {
+          "clause": "P5",
+          "exact_frozen_text": "Automated client confirmations and reassignment authority are cooperative policy decisions.",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+            "lines": {
+              "start": 348,
+              "end": 367
+            }
+          },
+          "authored_dispositions": [
+            "ALREADY_COVERED",
+            "USER_DECISION"
+          ],
+          "independent_judgment": "The cooperative chooses confirmation and reassignment policy; OFF/ASK-first are safe initial configurable choices pending its decision. Approved branches require preferences, reason/notice and audit. The final does not present an actual member vote."
+        },
+        {
+          "clause": "P6",
+          "exact_frozen_text": "Travel estimation rules and any payroll connection are outside the defined first release.",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+            "lines": {
+              "start": 369,
+              "end": 396
+            }
+          },
+          "authored_dispositions": [
+            "ALREADY_COVERED",
+            "CORRECTION",
+            "OPTIONAL_ENHANCEMENT",
+            "USER_DECISION"
+          ],
+          "independent_judgment": "Manual declared duration/method/timestamp reconciles tracking an estimate with excluding estimation rules. Automated routing is R2. Payroll calculation is excluded; invoice export is retained. Describing a separate payroll process consuming a CSV is a loose boundary description, not an implemented payroll connection or calculation."
+        }
+      ],
+      "validation_coverage": [
+        {
+          "validation": "executed E1–E4",
+          "assessment": "Reads, hashes, inherited primary excerpts and static reasoning only; no runtime witnesses. The evaluator independently checks major source claims and does not accept author exit-status or hash consistency as product quality.",
+          "status": "DOCUMENTATION_ONLY"
+        },
+        {
+          "validation": "V1",
+          "assessment": "Real concurrent offers, sole writer, exactly one hold and duplicate-free retry distinguish check-then-write races. A persistent-state and losing-user result oracle is proposed; V1 must use the actual implementation and pinned release.",
+          "status": "PROPOSED"
+        },
+        {
+          "validation": "V2/V3",
+          "assessment": "Half-open adjacency and inactive history versus active offers discriminate wrong bounds and predicates. PostgreSQL syntax is already documented; runtime exclusion and adapted PocketBase state behavior remain proposals.",
+          "status": "PROPOSED"
+        },
+        {
+          "validation": "V4",
+          "assessment": "Manual label/method/timestamp and unknown handling apply to R1; engine units/profile sensitivity are separate optional gates, preserving release applicability.",
+          "status": "PROPOSED"
+        },
+        {
+          "validation": "V5",
+          "assessment": "List/count/field/realtime/custom topic/error/URL privacy checks discriminate several leak paths and correct status-code exceptions; no actual redaction guarantee follows from their proposal.",
+          "status": "PROPOSED"
+        },
+        {
+          "validation": "V6/V7",
+          "assessment": "Keyboard/SR interaction and exact client requirement tokens plus ineligible-before-fairness checks have meaningful task/eligibility oracles. A custom div is not intrinsically inaccessible; success depends on behavior.",
+          "status": "PROPOSED"
+        },
+        {
+          "validation": "V8/V9",
+          "assessment": "Observed user misreading of UNFILLED and per-policy message/override counts are stronger oracles than merely checking status strings or test process success.",
+          "status": "PROPOSED"
+        },
+        {
+          "validation": "V10",
+          "assessment": "Phone throttling/reconnect, visible pending/failure and reused idempotency keys test the stated R1 recovery mechanism; full offline queueing is not promised.",
+          "status": "PROPOSED"
+        },
+        {
+          "validation": "V11",
+          "assessment": "Reproduction of board metrics from event logs with no PII is a meaningful independent export oracle. It does not exercise invoice CSV completeness/rate-reference mapping despite the invoice section pointing to it.",
+          "status": "PROPOSED"
+        }
+      ]
+    }
+  },
+  "method_clues": {
+    "blinding": "PARTIAL_ONLY",
+    "observed": "Exact paths/stage assignments identify control as research→critic→fresh reviser and treatment as retained research author incorporating a critic. N1/N2 labels cannot make the comparison fully blind. These method clues were not a scientific scoring criterion.",
+    "other_evaluations_or_campaign_material_used": false
+  },
+  "comparative_quality_eligible": false,
+  "comparative_assessment": {
+    "quality_winner": null,
+    "speed_winner": null,
+    "reason": "Neither arm is a full-quality pass. Two FAIL labels do not imply equal quality. N1 has a more cautious architecture/vendor selection gate and explicit stage/payload privacy; N2 has a more concrete single-store, availability-entry and phone/idempotency design, but unsound comparator reasoning and backup supportability. These are distinct supported observations, not an overall speed/quality victory.",
+    "cost_comparison": null
+  },
+  "scope_limits": [
+    "Only exact B-05 inputs, original I05 brief/plan and relevant public primary evidence were used. No candidate repair or science feedback was sent.",
+    "All available final/stage/source-index text was reviewed; byte-identical source copies were compared. The frozen N2 critique contains a literal truncation marker, not a reviewer-imposed output cap.",
+    "Old Cal.com GitBook could not be independently retrieved; its bounded frozen primary excerpts support the historical fairness pair only. Current vendor releases/features directly test whole-product conclusions.",
+    "No application/runtime sandbox exists; no experimental behavior, merged fix, actual support cost, qualified accessibility result or legal assessment was manufactured.",
+    "Public moving documentation is identified by observed version/edition/access date and stable release sources where available. Exact release implementation still requires the candidate’s proposed gate.",
+    "No R9/ledger protocol, nested worker, account/config/service/Git/canon edit or executable download was used."
+  ],
+  "evaluation_started_at": "2026-10-09T20:49:36Z",
+  "evaluation_started_at_basis": "First observed native Goal activation; unobserved startup overhead is not inferred.",
+  "evaluation_completed_at": "2026-10-09T21:05:47.371435+00:00",
+  "observed_source_operations": {
+    "frozen_read_scope": "assignment, exact input map, rubric, original brief, frozen plan, all 28 listed stage artifacts and exact declared source roots",
+    "hash_verification": "All 28 listed files match both supplied SHA-256 and byte length. Source copies additionally hashed for provenance; this is not scientific validation.",
+    "independent_primary_operations": "Public web search/open/find/click and bounded direct legacy-page attempts; source-specific observations and failures are saved in source-map.json. Only primary sources used for technical judgments.",
+    "runtime_operations": [],
+    "operation_count_exact": null,
+    "count_limit": "Transport calls and underlying network requests differ; no fabricated exact request/billing count."
+  },
+  "native_and_cost_limits": {
+    "reviewer_goal_created_and_active_observed": true,
+    "reviewer_goal_terminal_at_serialization": false,
+    "completion_order": "Full required artifacts are saved and verified before native completion; supported native receipts remain in conversation, no handwritten lifecycle JSON.",
+    "candidate_native_completion": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_t3_delivery_basis": "Both final_delivery and scientific_artifact_available are true in exact input-map.json. No private runtime/host record consulted.",
+    "candidate_elapsed_seconds": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_tokens": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_billing": {
+      "N1": null,
+      "N2": null
+    },
+    "reviewer_billing": null,
+    "unknown_policy": "Unknown is null, never zero or scientific false."
+  }
+}

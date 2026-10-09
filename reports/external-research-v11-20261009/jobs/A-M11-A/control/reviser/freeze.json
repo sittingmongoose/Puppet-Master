@@ -1,0 +1,76 @@
+{
+  "frozen_at": "2026-10-09T20:57:13.652573+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S11/brief.md",
+      "sha256": "da5e0032e5ce6e30ca840d7b65d3d1a4104e87dbad54081d3b65ff9bfb059314",
+      "bytes": 1439
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M11.json",
+      "sha256": "573145407d4f75cc3e7b1f09cf0ff2e2b5a5585c07f73555282c86f1adb7e21b",
+      "bytes": 1469
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/assignment.md",
+      "sha256": "ea8677c7b5a8b760ba693480ac59cf043209df41d1d1756cd90d23b0825f7742",
+      "bytes": 3104
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/input-map.json",
+      "sha256": "62afb832cd5ca8c0d752fadadc0b0a61f88d28845eceb149f4526098fb54d954",
+      "bytes": 1544
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/draft.md",
+      "sha256": "729dbce303a0fdcc88361ca21e4ef2a4e5aa965ddf4815f1e6e42514a1dad4da",
+      "bytes": 15038
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/discovery.md",
+      "sha256": "d0c19c6324a3b23b265833263010965de551b10fad4e0ef0d050619cf2770551",
+      "bytes": 15027
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/source-map.json",
+      "sha256": "c61e59735657f89b178dd4805926fd98a45a574b0a6a7a77505408b3d8e5de98",
+      "bytes": 6604
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/revealed-plan.md",
+      "sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "bytes": 297
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/critic/source-map.json",
+      "sha256": "7af78151b82c496b352338d71a89c570103851a2a76950f65983778cd809404b",
+      "bytes": 10271
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/critic/critique.md",
+      "sha256": "a65acc91a5189b77da87cd27f77aca41b35d068aaf1b84ca6b4b0ff3bda0bb7d",
+      "bytes": 8519
+    }
+  ],
+  "method": {
+    "id": "M11",
+    "version": "v1",
+    "name": "entity-community-research-synthesis",
+    "control": "Independent full discovery with conventional flat source notes and direct complete synthesis, followed by same fresh critic/reviser.",
+    "treatment": "Independent full discovery from same brief; as evidence arrives extract source-backed entity-relation-entity records WITH conditions/date/release, resolve aliases only with evidence, form emergent topical communities, generate complete condition-preserving community reports, and reduce them to coherent draft. Before final, check local source neighborhoods for every consequential recommendation. Keep all original full evidence discoverable and original obligations/alternatives, no graph infrastructure install. Same source depth/time and critic/reviser.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Fresh externally researched GraphRAG",
+    "primary_methodology": "https://arxiv.org/abs/2404.16130",
+    "novelty": "Corpus representation and bottom-up community synthesis changes; beyond semantic rendering of an already-fixed result set. ER11 tests a FULL-DISCOVERY adapted recipe bundle, not isolated shared-source component.",
+    "adaptation_limit": "Paper/implementation mechanisms motivate the intervention; published benchmark gains are NOT ER11 evidence.",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "resource_version": "glm-24-18-18-v2",
+  "stage_allowance_s": 1080,
+  "deadline": "2026-10-09T21:15:13.652573+00:00"
+}

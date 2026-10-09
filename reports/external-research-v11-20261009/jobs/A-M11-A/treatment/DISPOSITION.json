@@ -1,0 +1,12 @@
+{
+  "recorded_at": "2026-10-09T20:53:44.544578+00:00",
+  "status": "FAILED_CRITIC_DELIVERY_DEADLINE",
+  "reason": "Original 18-minute critic deadline expired while task running; root requested stop at the bound deadline. Declared critic did not deliver terminal complete result; no fresh reviser substituted. Saved investigation/criticism retained as component evidence; no declared full final.",
+  "evidence": [
+    "critic/freeze.json",
+    "critic/deadline-stop.json",
+    "critic/task-result.json"
+  ],
+  "scientific_quality": null,
+  "time_eligible": false
+}

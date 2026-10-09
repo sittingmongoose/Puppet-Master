@@ -1,0 +1,1119 @@
+{
+  "block": "B-05",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-05/input-map.json",
+  "sources": [
+    {
+      "id": "E01",
+      "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+      "release_or_edition": "PostgreSQL 18",
+      "locator": "8.17.1, 8.17.3, 8.17.6, 8.17.10",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1",
+        "N2"
+      ],
+      "bounded_observation": "Time ranges, half-open construction and same-resource non-overlap exclusion are documented; a product still needs a chosen active-row model."
+    },
+    {
+      "id": "E02",
+      "url": "https://www.postgresql.org/docs/18/sql-createtable.html",
+      "release_or_edition": "PostgreSQL 18",
+      "locator": "EXCLUDE clause; WHERE (predicate), lines 321–326",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1",
+        "N2"
+      ],
+      "bounded_observation": "Partial exclusion syntax is explicitly supported. Predicate choice and runtime behavior are separate questions."
+    },
+    {
+      "id": "E03",
+      "url": "https://www.postgresql.org/docs/18/btree-gist.html",
+      "release_or_edition": "PostgreSQL 18",
+      "locator": "F.8 introduction; supported scalar types and trusted extension",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1",
+        "N2"
+      ],
+      "bounded_observation": "Scalar equality can participate alongside range overlap. Extension privileges and available types must match deployment."
+    },
+    {
+      "id": "E04",
+      "url": "https://www.postgresql.org/docs/18/errcodes-appendix.html",
+      "release_or_edition": "18 documentation; page identifies 18.6",
+      "locator": "Table A.1, 23P01 and 42501",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1",
+        "N2"
+      ],
+      "bounded_observation": "23P01 is exclusion_violation. PostgreSQL does not supply an application HTTP 409 contract."
+    },
+    {
+      "id": "E05",
+      "url": "https://supabase.com/docs/guides/database/postgres/row-level-security",
+      "release_or_edition": "Live official guide, accessed 2026-10-09",
+      "locator": "grants versus RLS; policy tests denial table, lines 1314–1320; service keys; views",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1"
+      ],
+      "bounded_observation": "Both absent grants and RLS WITH CHECK denial can produce 42501. USING rejection can instead match zero rows. Existing-project default grants are qualified."
+    },
+    {
+      "id": "E06",
+      "url": "https://pocketbase.io/docs/",
+      "release_or_edition": "Official docs displaying v0.40.5",
+      "locator": "Introduction; pre-1.0 compatibility warning",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1",
+        "N2"
+      ],
+      "bounded_observation": "Embedded SQLite, authentication and realtime are documented. Pre-1.0 migration responsibility is explicit; feature availability does not establish project cost."
+    },
+    {
+      "id": "E07",
+      "url": "https://pocketbase.io/docs/api-rules-and-filters/",
+      "release_or_edition": "Official docs displaying v0.40.5",
+      "locator": "five rules, default null, filter behavior and status exceptions",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1",
+        "N2"
+      ],
+      "bounded_observation": "Locked defaults, empty/public and conditional filters differ. Rule failures produce list-empty/create-400/view-update-delete-404; locked rules give 403 except authorized superusers."
+    },
+    {
+      "id": "E08",
+      "url": "https://pocketbase.io/docs/go-realtime/",
+      "release_or_edition": "Official docs displaying v0.40.5",
+      "locator": "custom-topic example, HasSubscription, clients.Send and auth key",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1",
+        "N2"
+      ],
+      "bounded_observation": "The custom-topic example sends builder-provided payloads. Subscription membership alone does not impose collection row/field authorization."
+    },
+    {
+      "id": "E09",
+      "url": "https://pocketbase.io/docs/go-database/",
+      "release_or_edition": "Official docs displaying v0.40.5",
+      "locator": "Transaction; app.RunInTransaction, callback txApp, lines 170–180",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1",
+        "N2"
+      ],
+      "bounded_observation": "A transaction persists on nil return; one writer/transaction and correct callback use matter. This supports a possible atomic PocketBase design, not proof of either proposed application."
+    },
+    {
+      "id": "E10",
+      "url": "https://pocketbase.io/docs/js-records/",
+      "release_or_edition": "Official docs displaying v0.40.5",
+      "locator": "Hide/Unhide fields; onRecordEnrich, lines 29–36",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1",
+        "N2"
+      ],
+      "bounded_observation": "Role-dependent serialization is possible with hidden fields and enrichment hooks, including ordinary record realtime. Arbitrary custom topics require separate enforcement."
+    },
+    {
+      "id": "E11",
+      "url": "https://pocketbase.io/docs/going-to-production/",
+      "release_or_edition": "Official docs displaying v0.40.5; builtin backup v0.16+",
+      "locator": "Backup and Restore, lines 67–77",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1",
+        "N2"
+      ],
+      "bounded_observation": "Documented manual backup covers pb_data while the app is stopped; builtin backup creates a directory snapshot ZIP. Local uploads are included; remote S3 files are excluded."
+    },
+    {
+      "id": "E12",
+      "url": "https://raw.githubusercontent.com/pocketbase/pocketbase/v0.40.5/CHANGELOG.md",
+      "release_or_edition": "Tag v0.40.5",
+      "locator": "v0.40.0 exit-code change; v0.40.4 migration deadlock #7836; v0.40.5 JSVM hardening",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N2"
+      ],
+      "bounded_observation": "A release-specific breaking-command behavior and later migration fixes are recorded. No application race or upgrade test was executed."
+    },
+    {
+      "id": "E13",
+      "url": "https://project-osrm.org/docs/v5.24.0/api/",
+      "release_or_edition": "OSRM v5.24.0",
+      "locator": "General options; HTTP server; Table; Trip; example numeric matrices",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1",
+        "N2"
+      ],
+      "bounded_observation": "Table uses fastest routes, seconds/meters and nullable matrices; duration is the default annotation. Numeric examples have fractions. Trip uses different algorithms below/above ten points and remains approximate. Extraction profile and requested annotation matter."
+    },
+    {
+      "id": "E14",
+      "url": "https://stately.ai/docs/xstate",
+      "release_or_edition": "XState v5 docs",
+      "locator": "createMachine/createActor examples; actor model",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1"
+      ],
+      "bounded_observation": "Lifecycle machinery is a plausible option. Persisted application state and database guards are not guaranteed by the example."
+    },
+    {
+      "id": "E15",
+      "url": "https://stately.ai/docs/migration",
+      "release_or_edition": "XState v4 to v5",
+      "locator": "TypeScript 5 requirement; Machine/interpret/withConfig renames",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1"
+      ],
+      "bounded_observation": "The migration describes concrete breaking API changes and TypeScript requirements; this is a relevant evolution chain."
+    },
+    {
+      "id": "E16",
+      "url": "https://docs.timefold.ai/",
+      "release_or_edition": "Live product documentation index",
+      "locator": "Models, Solver and Platform",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1",
+        "N2"
+      ],
+      "bounded_observation": "Managed models/platform and the embeddable solver are distinct offerings."
+    },
+    {
+      "id": "E17",
+      "url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/score-calculation",
+      "release_or_edition": "Latest page displayed 2.7.1",
+      "locator": "Hard/soft levels; incremental constraint streams; score explanations",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1",
+        "N2"
+      ],
+      "bounded_observation": "Feasibility can be prioritized over preferences; incremental scoring and explanations are documented. Neither latency nor cooperative-specific modeling was measured."
+    },
+    {
+      "id": "E18",
+      "url": "https://github.com/TimefoldAI/timefold-solver",
+      "release_or_edition": "Current main README, not a pinned commit",
+      "locator": "Build from source; Editions; Legal notice, lines 237–270",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1",
+        "N2"
+      ],
+      "bounded_observation": "Current build instructions specify JDK 21+. Community and commercial Enterprise differ; README gives the April 20, 2023 fork date."
+    },
+    {
+      "id": "E19",
+      "url": "https://optaplanner.io/the-history-of-optaplanner",
+      "release_or_edition": "Maintainer-side history",
+      "locator": "End of life and Continuation, lines 25–40",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1",
+        "N2"
+      ],
+      "bounded_observation": "The sponsorship/support/EOL and continuation account is primary project history. Its bug/security-fix total is a project claim, not an independent audit."
+    },
+    {
+      "id": "E20",
+      "url": "https://timefold.ai/blog/optaplanner-fork",
+      "release_or_edition": "May 2, 2023 announcement",
+      "locator": "Date and opening article, lines 110–138",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1",
+        "N2"
+      ],
+      "bounded_observation": "The recovered redirect confirms the May 2 announcement. Vendor performance comparisons here were not accepted as measured results."
+    },
+    {
+      "id": "E21",
+      "url": "https://cal.com/docs/api-reference/v2/introduction",
+      "release_or_edition": "Cal.com API v2 live guide",
+      "locator": "OAuth/API key authentication; rate limits; Platform migration notice",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1"
+      ],
+      "bounded_observation": "API-key limit and OAuth/key hygiene are documented. The December 15, 2025 freeze concerns Platform new signups, not all Cal.com customers."
+    },
+    {
+      "id": "E22",
+      "url": "https://github.com/calcom/cal.diy/issues/29958",
+      "release_or_edition": "Open report; environment main 2026-08-13",
+      "locator": "confirm.handler.ts; proposed lock/transaction/CAS; suggested concurrent test",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1"
+      ],
+      "bounded_observation": "A reported pending-confirmation race supplies a failure hypothesis and proposed oracle. It is not independently reproduced or proved fixed in a released product."
+    },
+    {
+      "id": "E23",
+      "url": "https://github.com/calcom/cal.diy/issues/29967",
+      "release_or_edition": "Open report; environment main 2026-08-13",
+      "locator": "getBusyTimes.ts; PENDING filter; linked commit 10ad77e",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1"
+      ],
+      "bounded_observation": "The page reports pending-slot invisibility and includes a later referencing commit. Presence of that commit is not a verified merged-release repair."
+    },
+    {
+      "id": "E24",
+      "url": "https://github.com/calcom/cal.diy/issues/29968",
+      "release_or_edition": "Issue report, not release proof",
+      "locator": "Issue title and linked family",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1"
+      ],
+      "bounded_observation": "The related report concerns setting an idempotency key at PENDING-to-ACCEPTED. It is used only as a reported issue lead."
+    },
+    {
+      "id": "E25",
+      "url": "https://cal.com/blog/why-cal-com-s-routing-forms-are-a-game-changer-for-scheduling",
+      "release_or_edition": "Vendor product article March 3, 2025, v5.0",
+      "locator": "Attributes and dynamic routing; explicit fallback, lines 115–128",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N2"
+      ],
+      "bounded_observation": "Cal.com documents routing by matching configured member attributes and fallback routing. This is not evidence of verified interpreter credentials or complete cooperative fit."
+    },
+    {
+      "id": "E26",
+      "url": "https://cal.com/features/requires-confirmation",
+      "release_or_edition": "Live official feature page",
+      "locator": "Opt-in bookings, lines 91–119",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N2"
+      ],
+      "bounded_observation": "Host confirmation before adding a booking is documented. It is not a complete proof of interpreter offer, reassignment consent, privacy or invoice workflow."
+    },
+    {
+      "id": "E27",
+      "url": "https://next.cal.com/blog/cal-com-v5-1",
+      "release_or_edition": "Cal.com v5.1 release post March 14, 2025",
+      "locator": "Weighted attribute routing and fairness reset interval",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N2"
+      ],
+      "bounded_observation": "The product evolved beyond the legacy fairness page. Edition, configuration and time-window assumptions matter to current comparisons."
+    },
+    {
+      "id": "E28",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/combobox/",
+      "release_or_edition": "Live APG, normative claims bounded to pattern",
+      "locator": "Keyboard interaction and Roles/States/Properties; variants",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N2"
+      ],
+      "bounded_observation": "The documented combobox variants have distinct keyboard and focus contracts. Following a subset does not establish whole-product accessibility."
+    },
+    {
+      "id": "E29",
+      "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+      "release_or_edition": "W3C WAI official guidance",
+      "locator": "What evaluation tools can and cannot do",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1"
+      ],
+      "bounded_observation": "Human judgment is needed; automation alone cannot determine accessibility."
+    },
+    {
+      "id": "E30",
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "release_or_edition": "WCAG 2.2 Recommendation December 12, 2024",
+      "locator": "2.1.1, 2.5.7, 2.5.8, 3.3.1–2, 4.1.2–3",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1"
+      ],
+      "bounded_observation": "Relevant task criteria include keyboard, alternatives to dragging, errors and programmatic state. Target-size rules have exceptions; these were not converted into blanket pixel claims."
+    },
+    {
+      "id": "E31",
+      "url": "https://docs.novu.co/",
+      "release_or_edition": "Live Novu documentation",
+      "locator": "Notify channels, Inbox and workflows",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1"
+      ],
+      "bounded_observation": "Multichannel workflow and Inbox capabilities are documented; pricing and deployment support were not demonstrated."
+    },
+    {
+      "id": "E32",
+      "url": "https://github.com/novuhq/novu",
+      "release_or_edition": "Current main README, not a pinned commit",
+      "locator": "Communication infrastructure; embeddable preferences",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1"
+      ],
+      "bounded_observation": "The repository describes user-controlled notification preferences. This does not establish a cooperative-specific privacy configuration."
+    },
+    {
+      "id": "E33",
+      "url": "https://www.novu.co/changelog/novu-community-edition-v220-self-hosting/",
+      "release_or_edition": "Community Edition v2.2.0, May 18, 2025",
+      "locator": "Self-hosted release and dashboard workflow/preferences",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1"
+      ],
+      "bounded_observation": "Self-hosting exists as a distinct release/edition path; parity and current operating expense remain unproved."
+    },
+    {
+      "id": "E34",
+      "url": "https://interpreterintelligence.zendesk.com/hc/en-us/articles/12922072819483-Scheduler",
+      "release_or_edition": "Vendor guide updated December 6, 2023",
+      "locator": "eligibility filtering, scheduler timezone and offer actions",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1"
+      ],
+      "bounded_observation": "An interpreter-operations comparator is relevant. Unfiltered display and selectable eligibility filters require care; the guide does not establish coordinator-phone accessibility."
+    },
+    {
+      "id": "E35",
+      "url": "https://interpreterintelligence.zendesk.com/hc/en-us/articles/15410092403483-Availability-and-Double-Booking-Buffers",
+      "release_or_edition": "Vendor guide updated September 29, 2023",
+      "locator": "offer pool, acceptance warning, negative/global buffers",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1"
+      ],
+      "bounded_observation": "Acceptance-time warnings vary by offer-pool settings; negative/global buffers can weaken checks. This is configuration-specific evidence, not universal automatic safety."
+    },
+    {
+      "id": "E36",
+      "url": "https://interpreterintelligence.zendesk.com/hc/en-us/articles/12922582860955-Interpreter-Portal-Desktop-Site-Mobile-App",
+      "release_or_edition": "Vendor guide updated June 24, 2026",
+      "locator": "Availability; accept/decline; mobile job closing",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1"
+      ],
+      "bounded_observation": "Unset availability means anytime; portal capabilities support a trial lead. Interpreter mobile support does not prove coordinator workflow, price or accessibility."
+    },
+    {
+      "id": "E37",
+      "url": "https://interpreter.io/",
+      "release_or_edition": "Live vendor public page",
+      "locator": "Homepage retrieval",
+      "independent_operation": "web open/find and focused reading",
+      "accessed_on": "2026-10-09",
+      "status": "READ",
+      "checked_arms": [
+        "N1"
+      ],
+      "bounded_observation": "The evaluator could retrieve a vendor page. N1 accurately labels its predecessor bot-checked lead as unverified; current retrieval establishes no price, privacy or accessibility guarantee."
+    }
+  ],
+  "failed_or_recovered_operations": [
+    {
+      "url": "https://calcom.gitbook.io/docs/enterprise-features/teams/round-robin-scheduling",
+      "operations": "web open, .md variant, bounded direct HTTP retries and exact-url primary search",
+      "result": "public legacy page unavailable; direct HTTP 403; no useful exact-query corroboration",
+      "scientific_limit": "Exact historical fairness descriptions were assessed from the frozen S11/C11 primary excerpts. Current whole-product absence claims were checked with E25–E27, not inferred from access failure."
+    },
+    {
+      "url": "https://timefold.ai/blog/2023/optaplanner-fork/",
+      "operations": "initial web open; follow official repository link",
+      "result": "initial Internal Error; recovered redirect to E20",
+      "scientific_limit": "Resolved."
+    },
+    {
+      "url": "https://docs.novu.co/platform/preferences",
+      "operations": "web open",
+      "result": "Internal Error",
+      "scientific_limit": "Capability corroborated through E32–E33; no deployment parity claimed."
+    },
+    {
+      "url": "https://docs.novu.co/self-hosting",
+      "operations": "web open",
+      "result": "Internal Error",
+      "scientific_limit": "Self-hosting corroborated through E33."
+    },
+    {
+      "url": "https://cal.com/docs/api-reference/v2/index",
+      "operations": "documentation index and bounded page attempts",
+      "result": "index rendering/access limitations",
+      "scientific_limit": "No private API or runtime inspected."
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-05/assignment.md",
+      "sha256": "82e36172362309005ac4a392c0292105d81fb563fd5cd4e6ebf02101888d5178",
+      "bytes": 2164
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-05/input-map.json",
+      "sha256": "d6af7d9d1d3a5786ade82c4f25b1df562284166d68719a4db8a3014c8166b43a",
+      "bytes": 8892
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I05/brief.md",
+      "sha256": "a2357f324cd26f0985cbdba95afde678228b1224c8b4523e6886a52753d1abbe",
+      "bytes": 2310
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I05/plan-root-only.md",
+      "sha256": "aa7657a397e8ca5e6c819afca109200090b76a27d804d4a96f155aef743a0d57",
+      "bytes": 574
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/final.md",
+      "sha256": "7bb60c4936b6aeb738f10892646b77d060c6f70b0d92255615f945e79aeca661",
+      "bytes": 46027
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/source-map.json",
+      "sha256": "a7af49af136e569894640b41f6150347fb97a7573bd7641b008d1285923abb98",
+      "bytes": 2405
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/assignment.md",
+      "sha256": "adf13c9bee03374022f940bb1dc447757cce9ecdcfb1b3202909e24968dad6ad",
+      "bytes": 2898
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/input-map.json",
+      "sha256": "949331b33e96ddefe00dec26ef4b66487495a5ade188fc584fab28e850753f64",
+      "bytes": 1523
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/critique.md",
+      "sha256": "0e9f80519cdc39b1a42c4c765e42a96ecfcfcfe96f9b81b0f7ca0fea8d6c4269",
+      "bytes": 13286
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/source-map.json",
+      "sha256": "c506cefafbc58a21ddc75172d4d18aa899a4893630d10217897c213c64712d58",
+      "bytes": 6718
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/assignment.md",
+      "sha256": "f8bcbe47cda83d52e2d3337f7c1e7173cf9b2a9948583ad8bfc34878c3ae1e9b",
+      "bytes": 2635
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/input-map.json",
+      "sha256": "79eb297014c42df5b3f883f2dd90d2d3fe136ca271f33f74a7374d1b18693f94",
+      "bytes": 1208
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/discovery.md",
+      "sha256": "0b8726c1aec018ac925dd0d837b3f891ab2ea57efc734587429f8c9ea7707baa",
+      "bytes": 19038
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/draft.md",
+      "sha256": "e0b66c4ef7e6488d2b2e1545cfc0a1629b1a6e1ebbed3e53f76b3613886a3e7b",
+      "bytes": 17464
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/source-map.json",
+      "sha256": "5d8b24686bd9c8353218e05ed327a025b977d14bc377e31ea0871446b675cc59",
+      "bytes": 7136
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/revealed-plan.md",
+      "sha256": "aa7657a397e8ca5e6c819afca109200090b76a27d804d4a96f155aef743a0d57",
+      "bytes": 574
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/plan-reveal.json",
+      "sha256": "d5ca9b988648d77bc3a24c4b9ef261a82e75aafecf25d05f52511672be39ab1a",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/assignment.md",
+      "sha256": "d64e75718c8e2224af80ecca49e88a3f87c9919ed6a968013ad7f23dc7626544",
+      "bytes": 3108
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/input-map.json",
+      "sha256": "09fcbf6c25623928209f45a9d9a58d84cea76664a6068beac4ccbe2607ea00dd",
+      "bytes": 677
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C01-pg18-rangetypes.md",
+      "sha256": "7b38587e4b2393c0643b767a4e515c188acebfc6189802ac419abacdc6b8a400",
+      "bytes": 1252
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C02-pg18-exclusion.md",
+      "sha256": "f21d6ceaad34fc7e3b9c6901ce121ab187a6918214af1e5d1a40744080d4511f",
+      "bytes": 802
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C03-pg18-createtable-predicate.md",
+      "sha256": "a48cbd0ec0447ea4fee0acbcfddbc76ea889bbfd395c0b1b730f59e745a49126",
+      "bytes": 1441
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C04-pg18-btree-gist.md",
+      "sha256": "4fd9a0a6e8cd97dcc306e03f7ec374f33f1cef809f6682cd618196fd74df44fb",
+      "bytes": 1217
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C05-pocketbase-intro.md",
+      "sha256": "0542dd6ab3e150e9b694377a06b63a732c9fd74894b154e3ae46ec5b8a3f0948",
+      "bytes": 1285
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C06-pocketbase-rules.md",
+      "sha256": "de3eb7b76f8a9e8d9bd6b43b20e74a03aeb15729bd44cee2d64bd752b71b0ba4",
+      "bytes": 1486
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C07-pocketbase-realtime.md",
+      "sha256": "72dc9391caf0807ca73f05a870c144554ecf77afaf37b851b6b2ed749245dfa5",
+      "bytes": 1697
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C08-osrm-http.md",
+      "sha256": "afb5f48e29aff17f19780e05807f34d5c9c0bee114b8da204b83d91d57349df1",
+      "bytes": 2236
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C09-timefold-score.md",
+      "sha256": "1489d07092880cbc7868025e1cc7884a457511f1b33ce079a3b18dd36e181f8e",
+      "bytes": 1738
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C10-optaplanner-history.md",
+      "sha256": "d0dfa0712e8cc8a09eed7e5b4fa96e60ec511ce7400920b76f8967c3cd6adb47",
+      "bytes": 1914
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C11-calcom-roundrobin.md",
+      "sha256": "20e272f46bbad49a026862a535cf9c13b62c581212a5bad00e577e03f9185a6f",
+      "bytes": 1316
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/C12-w3c-apg-combobox.md",
+      "sha256": "0980a962bad1bd9197abd305d5b7e9bc73a75462bed3bcfc55dd178d00927eaf",
+      "bytes": 2072
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S01-osrm-http.md",
+      "sha256": "7d6bf3f4a6dd493cca75e9457510b1631c8e3056195d831ac2f820567dd36ff9",
+      "bytes": 1760
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S02-pg-rangetypes.md",
+      "sha256": "d9bc3eba80bbd1372ced3d5e13c0ee24edd4da6cac8333bf018c8312f124ea9f",
+      "bytes": 1262
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S03-pg-exclusion.md",
+      "sha256": "192edfc224349816cf08f8971bfc61245f84f567cde0c8f82c9f90dbdd0b8ea7",
+      "bytes": 745
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S04-pg-btree-gist.md",
+      "sha256": "8fbc705444daccc42236dd47d861c1a4ee3083492298d67fd6dd4be762a0d4e3",
+      "bytes": 1144
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S05-pocketbase-intro.md",
+      "sha256": "1961dde894acb8f66d5263acf30f6928085cab302f88e28a189dc3913e0a1556",
+      "bytes": 1054
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S06-pocketbase-rules.md",
+      "sha256": "59d9fe770378776bcf09b08c0fb8241832dd981ae57bdc937aaed1790be96f74",
+      "bytes": 1093
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S07-pocketbase-realtime.md",
+      "sha256": "feb9bc9eddfb4eae6b6b148344532383e60c8744d38d954c6a0cd66fd632e436",
+      "bytes": 1121
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S08-pocketbase-changelog.md",
+      "sha256": "1c55e0e499753b30b7b8ee270f2c668a16d427373e981e85e839c2c21ad05387",
+      "bytes": 1205
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S09-timefold-docs.md",
+      "sha256": "18d13344423ba62625950f112f0cbd7331f48ec3e11829955cfdb0283ebf6de4",
+      "bytes": 1585
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S10-timefold-fork.md",
+      "sha256": "a0e574cdd53c8964dba818057c8038d0221314aaca08e4643c589e42ad640511",
+      "bytes": 1146
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S11-calcom-roundrobin.md",
+      "sha256": "0f371265a216841f814e8e748b6b7c6c8aa3dde8fce0353378f25d7c9ae7f0d0",
+      "bytes": 1239
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/S12-w3c-apg-combobox.md",
+      "sha256": "dd087330debbada52b5c39793633eaf6845f6c829acf3006cad65928622f039e",
+      "bytes": 1431
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/index-critic.md",
+      "sha256": "c62fb669367eeb1906b82b07290df9c09b1da819b5cccd425f3f947fc0a53d1d",
+      "bytes": 2760
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/index-research.md",
+      "sha256": "9f4e487db6cf56538832c06394842e63672d6039aaff0034b75322fe444509e5",
+      "bytes": 2133
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/reviser/sources/index.md",
+      "sha256": "d81a93189925afcd620c1c11483041bfd3de03369052eb0b1308d90eda78fd9f",
+      "bytes": 5019
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C01-pg18-rangetypes.md",
+      "sha256": "7b38587e4b2393c0643b767a4e515c188acebfc6189802ac419abacdc6b8a400",
+      "bytes": 1252
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C02-pg18-exclusion.md",
+      "sha256": "f21d6ceaad34fc7e3b9c6901ce121ab187a6918214af1e5d1a40744080d4511f",
+      "bytes": 802
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C03-pg18-createtable-predicate.md",
+      "sha256": "a48cbd0ec0447ea4fee0acbcfddbc76ea889bbfd395c0b1b730f59e745a49126",
+      "bytes": 1441
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C04-pg18-btree-gist.md",
+      "sha256": "4fd9a0a6e8cd97dcc306e03f7ec374f33f1cef809f6682cd618196fd74df44fb",
+      "bytes": 1217
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C05-pocketbase-intro.md",
+      "sha256": "0542dd6ab3e150e9b694377a06b63a732c9fd74894b154e3ae46ec5b8a3f0948",
+      "bytes": 1285
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C06-pocketbase-rules.md",
+      "sha256": "de3eb7b76f8a9e8d9bd6b43b20e74a03aeb15729bd44cee2d64bd752b71b0ba4",
+      "bytes": 1486
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C07-pocketbase-realtime.md",
+      "sha256": "72dc9391caf0807ca73f05a870c144554ecf77afaf37b851b6b2ed749245dfa5",
+      "bytes": 1697
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C08-osrm-http.md",
+      "sha256": "afb5f48e29aff17f19780e05807f34d5c9c0bee114b8da204b83d91d57349df1",
+      "bytes": 2236
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C09-timefold-score.md",
+      "sha256": "1489d07092880cbc7868025e1cc7884a457511f1b33ce079a3b18dd36e181f8e",
+      "bytes": 1738
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C10-optaplanner-history.md",
+      "sha256": "d0dfa0712e8cc8a09eed7e5b4fa96e60ec511ce7400920b76f8967c3cd6adb47",
+      "bytes": 1914
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C11-calcom-roundrobin.md",
+      "sha256": "20e272f46bbad49a026862a535cf9c13b62c581212a5bad00e577e03f9185a6f",
+      "bytes": 1316
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/C12-w3c-apg-combobox.md",
+      "sha256": "0980a962bad1bd9197abd305d5b7e9bc73a75462bed3bcfc55dd178d00927eaf",
+      "bytes": 2072
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/critic/sources/index.md",
+      "sha256": "c62fb669367eeb1906b82b07290df9c09b1da819b5cccd425f3f947fc0a53d1d",
+      "bytes": 2760
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S01-osrm-http.md",
+      "sha256": "7d6bf3f4a6dd493cca75e9457510b1631c8e3056195d831ac2f820567dd36ff9",
+      "bytes": 1760
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S02-pg-rangetypes.md",
+      "sha256": "d9bc3eba80bbd1372ced3d5e13c0ee24edd4da6cac8333bf018c8312f124ea9f",
+      "bytes": 1262
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S03-pg-exclusion.md",
+      "sha256": "192edfc224349816cf08f8971bfc61245f84f567cde0c8f82c9f90dbdd0b8ea7",
+      "bytes": 745
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S04-pg-btree-gist.md",
+      "sha256": "8fbc705444daccc42236dd47d861c1a4ee3083492298d67fd6dd4be762a0d4e3",
+      "bytes": 1144
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S05-pocketbase-intro.md",
+      "sha256": "1961dde894acb8f66d5263acf30f6928085cab302f88e28a189dc3913e0a1556",
+      "bytes": 1054
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S06-pocketbase-rules.md",
+      "sha256": "59d9fe770378776bcf09b08c0fb8241832dd981ae57bdc937aaed1790be96f74",
+      "bytes": 1093
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S07-pocketbase-realtime.md",
+      "sha256": "feb9bc9eddfb4eae6b6b148344532383e60c8744d38d954c6a0cd66fd632e436",
+      "bytes": 1121
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S08-pocketbase-changelog.md",
+      "sha256": "1c55e0e499753b30b7b8ee270f2c668a16d427373e981e85e839c2c21ad05387",
+      "bytes": 1205
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S09-timefold-docs.md",
+      "sha256": "18d13344423ba62625950f112f0cbd7331f48ec3e11829955cfdb0283ebf6de4",
+      "bytes": 1585
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S10-timefold-fork.md",
+      "sha256": "a0e574cdd53c8964dba818057c8038d0221314aaca08e4643c589e42ad640511",
+      "bytes": 1146
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S11-calcom-roundrobin.md",
+      "sha256": "0f371265a216841f814e8e748b6b7c6c8aa3dde8fce0353378f25d7c9ae7f0d0",
+      "bytes": 1239
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/S12-w3c-apg-combobox.md",
+      "sha256": "dd087330debbada52b5c39793633eaf6845f6c829acf3006cad65928622f039e",
+      "bytes": 1431
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/control/research/sources/index.md",
+      "sha256": "9f4e487db6cf56538832c06394842e63672d6039aaff0034b75322fe444509e5",
+      "bytes": 2133
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/critique.md",
+      "sha256": "5b29919efebb43c12faab102dfb39f45ad8255b2ef9aedc6eb15786a4da273ac",
+      "bytes": 17674
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/source-map.json",
+      "sha256": "072c45e97fad7e808774685df240c3948b76bdb3351e792ae3a5d42f9b36238c",
+      "bytes": 14785
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/evidence-first.md",
+      "sha256": "6a2b659127dde962387221ee4ed9dac3ebec42c61ae5bd024b03b4fe0ca55060",
+      "bytes": 9577
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/assignment.md",
+      "sha256": "229d65daed7e18c5912b12204f5fd12f0f8f1960bf0a846758a0cf74d80f86fb",
+      "bytes": 2982
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/input-map.json",
+      "sha256": "0e07f8a08648cdc5770098b8510166cd2240449ffb24b63f01458ae706b447a9",
+      "bytes": 1224
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/discovery.md",
+      "sha256": "5ed1ae258d43847acac4f49e7b7312a1eea3cafc82e039b7561619211fb6c39b",
+      "bytes": 25874
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/draft.md",
+      "sha256": "b5fed16436993594bfe3bc10175cc928fcb7f673e3fd532c4f2fdd689c78b172",
+      "bytes": 15941
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/final.md",
+      "sha256": "e6c88e93b79c5818cf43952457a179ed6d4f4bf0e594cb06aae185a65465c192",
+      "bytes": 27854
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/source-map.json",
+      "sha256": "657e77c319721ed3854eff86d5213d047b1b5dc13dddbe311cfa5ac3e06218c5",
+      "bytes": 7610
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/revealed-plan.md",
+      "sha256": "aa7657a397e8ca5e6c819afca109200090b76a27d804d4a96f155aef743a0d57",
+      "bytes": 574
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/plan-reveal.json",
+      "sha256": "d643ab49ab7be7594be426de7ca697a8029a9e7210a5d5fd2a64ccc476b64562",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/assignment.md",
+      "sha256": "243415115728b968a5e805145019bda6aec86d55ea1a6e53eba747741f772ad2",
+      "bytes": 3951
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/input-map.json",
+      "sha256": "f9af5cb42acce677f7b511e6709de86fb61d9003625b69355ba5c01c72cf5a32",
+      "bytes": 683
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR01-interpreter-intelligence-scheduler.md",
+      "sha256": "76986497e7ec8007849e253b73aaf9c915ad2a497618e509fc153232af3aa82e",
+      "bytes": 1400
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR02-interpreter-intelligence-buffers.md",
+      "sha256": "c4e32b2e3bdb48118bbe13630cb6b88df82e49c0cb272d8e07d096deae9a37ae",
+      "bytes": 1547
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR03-interpreter-intelligence-portal.md",
+      "sha256": "87e807466ce206a6b3704fd5c883dfb7cb68f3a9b66fc91e08070508db812c0f",
+      "bytes": 1362
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR04-google-calendar-sharing.md",
+      "sha256": "7cbf550ad9c180b7d7b694e5d9ad9aeda9aace7cf5d9984f1bc0c5efc1791e44",
+      "bytes": 1491
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR05-google-calendar-freebusy.md",
+      "sha256": "4f8652bb658908776d593577c61aa9256ddfec62371df75f7058cbc9c3c8cf63",
+      "bytes": 1445
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR06-google-calendar-scopes.md",
+      "sha256": "a3257ea9ad27fbe1ad5ebc9782d3a86791bb63178cbf9839992c973fa4b5044e",
+      "bytes": 1096
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR07-google-calendar-release-notes.md",
+      "sha256": "748aea278cf9abc654dbf7cc92b8f53cba50bec3c0e26dc75849878fc3e5d76c",
+      "bytes": 1287
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR08-wcag22.md",
+      "sha256": "e05507379d1020a36fa971f9c5bf3752afe5b9796ea4518e4e81341afb1c5244",
+      "bytes": 1596
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR09-calcom-race-issues.md",
+      "sha256": "eb6344420b67ee6c16308a0c2582cfc018ffdf59ee2aab100dbc5be7703e77a3",
+      "bytes": 2275
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR10-interpreter-io-booking-lead.md",
+      "sha256": "2a3e81aff2215e23ea9b1a284d979d8d1e108d6a24c063eb9011785f7e7b8c8c",
+      "bytes": 1297
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR11-case-brief.md",
+      "sha256": "85f1f81ff3f842f00e819c61b1660d5854d05b42cae53905406a57534afb437e",
+      "bytes": 1158
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR12-postgresql-exclude-predicate.md",
+      "sha256": "2c93ab3cbad436664496fd73e92d2b8be71c0644623e1185aeb21e4b7b66bfc2",
+      "bytes": 1048
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR13-w3c-evaluation-tools.md",
+      "sha256": "8a7d52a8523846c2ff29fea2aa798b91eac3c7320a381363438817558b8fe69e",
+      "bytes": 881
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR14-optaplanner-history.md",
+      "sha256": "a8363348fbf76806a6e9fa0f8ea69aef14277b9bca15f7808f363699235606bf",
+      "bytes": 1197
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/CR15-timefold-repository.md",
+      "sha256": "ec2f658ea66fa1b887f83cb5e3ef0772d785620221c1105b258ccd0afb868a67",
+      "bytes": 1125
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/critic/sources/README.md",
+      "sha256": "6f645bd21cd9e540f46e05a7e384bf30b94f23158b62f900fd03c759c0f4b4a0",
+      "bytes": 1767
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S01-pg-ddl-constraints-excerpt.md",
+      "sha256": "ef0d3e6ec57f07d1e808f1237aa833502c11877cbc652a5579d47ebf8fc812a8",
+      "bytes": 950
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S02-pg-rangetypes-excerpt.md",
+      "sha256": "f4efde1cbfd9e6c92156cff244c5b71fca61c0e7cf59bfb4a1a20c39bd0b5328",
+      "bytes": 1330
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S03-supabase-rls-excerpt.md",
+      "sha256": "01994471deddda8eacde27dbdd863651adc37df7a401532915df5d80d45d9068",
+      "bytes": 1440
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S04-pocketbase-intro-excerpt.md",
+      "sha256": "2fdec1d4b1b11ae03d6485517c2275585b2387fd3ba5e11e4994461b2b9ec43d",
+      "bytes": 1048
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S05-pocketbase-rules-excerpt.md",
+      "sha256": "d457db1682ebd7cc5d84b4f9ca141b8b5aca33f52822d49a68c0f332f34f6900",
+      "bytes": 1119
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S06-osrm-api-excerpt.md",
+      "sha256": "44270313ed35e159eb6c740feeb2ab8cbdcc24f952e9f46ca5eaffebf37754ed",
+      "bytes": 1643
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S07-xstate-root-excerpt.md",
+      "sha256": "7cb93db2cad29b091df7e8d430d5c7b43ceecbe0e3dfe48cf42252cfcc479bf9",
+      "bytes": 924
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S08-xstate-migration-excerpt.md",
+      "sha256": "a9e69258bf25808db5851b383e7ba105a31cb6e8052cbcc52633731185a3e467",
+      "bytes": 1011
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S09-timefold-fork-excerpt.md",
+      "sha256": "ee54ee8f14898868a57ba720c05e8881d1c13aad90fa5989112f400db2bd8158",
+      "bytes": 1523
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S10-calcom-api-excerpt.md",
+      "sha256": "3dff74ec55f57f877295b0338fe7bdb201781ac3241172516a553ab8c96a1c32",
+      "bytes": 1339
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S11-timefold-docs-excerpt.md",
+      "sha256": "90964f4d951e0a55bb5804fdb2c42cb8b46ba33b2ba72ceff32c9f0edb374e78",
+      "bytes": 1093
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S12-novu-docs-excerpt.md",
+      "sha256": "1c6abbad5a786016736e7f8f2d79946bef1f235871e5a9f4555e7a01608b93b8",
+      "bytes": 1305
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/S13-secondary-search-notes.md",
+      "sha256": "a51a0c00f883b66774c08974041d1beec1cf3c70ef2a837018086d8a296b74b7",
+      "bytes": 3128
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-05/treatment/research/sources/index.md",
+      "sha256": "4c46281d3a307f69323ba213be76f7aed2c61c8c588cba1f1bbd3f8fbc86f731",
+      "bytes": 2835
+    }
+  ],
+  "source_text_policy": "Untrusted source text used for factual comparison only; no source instruction executed. No executable downloaded. Bounded paraphrases, not full page captures.",
+  "operation_limits": "READ denotes evaluator-relevant section inspection, not all repository history or live application behavior. Search results outside primary domains were not used as evidence. Duplicate source copies were byte-compared; counts are provenance only."
+}
