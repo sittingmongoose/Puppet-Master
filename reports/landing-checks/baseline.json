@@ -495,7 +495,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 70,
+   "count": 71,
    "error": "stale_batch_report_sha256_after",
    "fingerprints": [
     "0443a8a64362",
@@ -535,6 +535,7 @@
     "7b1adafa0b47",
     "7d189bfc9676",
     "86c36fd5d1c8",
+    "873eb4c4a9c9",
     "883bfff60c5b",
     "8e579375935a",
     "950aa94900c6",
@@ -767,6 +768,16 @@
    "fingerprints": [
     "271f85538f3e"
    ],
+   "path": "Plans/DRY_Rules.md",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
    "path": "Plans/Executor_Protocol.md",
    "subcheck": "spec_lock"
   },
@@ -778,6 +789,16 @@
     "271f85538f3e"
    ],
    "path": "Plans/FinalGUISpec.md",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "Plans/Goal_Runtime_System.md",
    "subcheck": "spec_lock"
   },
   {
@@ -865,7 +886,7 @@
    "count": 1,
    "error": "missing_ref",
    "fingerprints": [
-    "3406a3f4709b"
+    "6eb91646e47a"
    ],
    "path": "Plans/00-plans-index.md",
    "subcheck": "support_refs"
@@ -1045,7 +1066,7 @@
    "count": 1,
    "error": "missing_ref",
    "fingerprints": [
-    "3406a3f4709b"
+    "6eb91646e47a"
    ],
    "path": "Plans/00-plans-index.md",
    "subcheck": "lint_contractrefs"
@@ -1413,6 +1434,7 @@
     "76cc66b925a5",
     "7b1adafa0b47",
     "86c36fd5d1c8",
+    "873eb4c4a9c9",
     "883bfff60c5b",
     "950aa94900c6",
     "9832a9faf6f7",
@@ -1421,7 +1443,6 @@
     "9f92f1e93c6a",
     "a3d6b9da09aa",
     "a47b5e065dbb",
-    "ad886d834503",
     "b159acc8328f",
     "c267768dc3da",
     "cb4c83d456ee",
@@ -1576,6 +1597,16 @@
    "fingerprints": [
     "271f85538f3e"
    ],
+   "path": "Plans/DRY_Rules.md",
+   "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
    "path": "Plans/Executor_Protocol.md",
    "subcheck": "verify_spec_lock"
   },
@@ -1587,6 +1618,16 @@
     "271f85538f3e"
    ],
    "path": "Plans/FinalGUISpec.md",
+   "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "Plans/Goal_Runtime_System.md",
    "subcheck": "verify_spec_lock"
   },
   {
@@ -1672,7 +1713,7 @@
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 4412,
+   "failure_total": 4573,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
@@ -1684,8 +1725,8 @@
      "sampled": 1
     },
     "evidence": {
-     "exported": 1425,
-     "reported": 1425,
+     "exported": 1504,
+     "reported": 1504,
      "sampled": 100
     },
     "implementation_readiness": {
@@ -1693,13 +1734,13 @@
      "sampled": 29
     },
     "plan_graph": {
-     "exported": 1425,
-     "reported": 1425,
+     "exported": 1504,
+     "reported": 1504,
      "sampled": 100
     },
     "plan_migration": {
-     "reported": 73,
-     "sampled": 73
+     "reported": 74,
+     "sampled": 74
     },
     "pm7_gui_fixtures": {
      "reported": 3,
@@ -1711,8 +1752,8 @@
      "sampled": 100
     },
     "spec_lock": {
-     "reported": 14,
-     "sampled": 14
+     "reported": 16,
+     "sampled": 16
     },
     "support_refs": {
      "reported": 1,
@@ -1731,7 +1772,7 @@
    }
   },
   "run-gates": {
-   "failure_total": 4429,
+   "failure_total": 4590,
    "status": "fail",
    "subchecks": {
     "json_syntax": {
@@ -1751,8 +1792,8 @@
      "sampled": 1
     },
     "validate_evidence": {
-     "exported": 1425,
-     "reported": 1425,
+     "exported": 1504,
+     "reported": 1504,
      "sampled": 50
     },
     "validate_implementation_readiness": {
@@ -1760,13 +1801,13 @@
      "sampled": 29
     },
     "validate_plan_graph": {
-     "exported": 1425,
-     "reported": 1425,
+     "exported": 1504,
+     "reported": 1504,
      "sampled": 50
     },
     "validate_plan_migration": {
-     "exported": 73,
-     "reported": 73,
+     "exported": 74,
+     "reported": 74,
      "sampled": 50
     },
     "validate_pm7_gui_fixtures": {
@@ -1779,17 +1820,17 @@
      "sampled": 50
     },
     "verify_spec_lock": {
-     "reported": 14,
-     "sampled": 14
+     "reported": 16,
+     "sampled": 16
     }
    }
   }
  },
- "commit": "0f10b3fa441cfed1ce861225defd50b1ae0e5202",
+ "commit": "baa698b338ed841704ff2ba7ba8137765f73cda2",
  "export_buckets": [
   {
    "check": "audit-governance",
-   "count": 1423,
+   "count": 1502,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1808,7 +1849,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 1423,
+   "count": 1502,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -2299,7 +2340,7 @@
   },
   {
    "check": "run-gates",
-   "count": 1423,
+   "count": 1502,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -2318,7 +2359,7 @@
   },
   {
    "check": "run-gates",
-   "count": 1423,
+   "count": 1502,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -2367,7 +2408,7 @@
   },
   {
    "check": "run-gates",
-   "count": 70,
+   "count": 71,
    "error": "stale_batch_report_sha256_after",
    "fingerprints": [
     "0443a8a64362",
@@ -2407,6 +2448,7 @@
     "7b1adafa0b47",
     "7d189bfc9676",
     "86c36fd5d1c8",
+    "873eb4c4a9c9",
     "883bfff60c5b",
     "8e579375935a",
     "950aa94900c6",
@@ -2918,8 +2960,8 @@
   }
  ],
  "max_fingerprints_per_bucket": 200,
- "recorded_at_utc": "2026-10-07T21:51:11Z",
- "run_dir": "Plans/.plan_migration/pds-20261007-001-current-planunit-snapshot",
+ "recorded_at_utc": "2026-10-09T02:13:42Z",
+ "run_dir": "Plans/.plan_migration/pds-20261009-001-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"
