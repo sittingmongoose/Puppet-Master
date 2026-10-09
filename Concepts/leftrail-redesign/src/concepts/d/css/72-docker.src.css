@@ -1,6 +1,12 @@
 /* ---- 9. Docker ------------------------------------------------------------------------------------------------------- */
 §K .sh-ctr.is-running { border: 0 !important; }
 §K .sh-ctr-h { gap: var(--d-gap); }
+/* the chevron, the status glyph and the CPU figure sit on the name's line, not on the middle of a two- or three-line
+   row (images and registries lay their rows out as grids of their own, below) */
+§K .sh-ctr-h { align-items: flex-start; }
+§K .sh-ctr-h > .sh-accchev { margin-top: calc(var(--d-fs-name) * var(--d-lh) / 2 - 4.5px); }
+§K .sh-ctr-h > :is(.sh-dot, .dot) { margin-top: calc(var(--d-fs-name) * var(--d-lh) / 2 - 6px); }
+§K .sh-ctr-h > .pm-rmetric { margin-top: calc(var(--d-fs-name) * var(--d-lh) / 2 - var(--d-fs-small) * .65); }
 /* the fleet summary is a section of its shelf, not a card inside it */
 §K .pm-sumcard {
   margin: 6px 0 0 !important; padding: 8px var(--d-pad) 4px !important; border: 0 !important; border-radius: 0 !important; background: none !important;
@@ -82,7 +88,7 @@
   left: -27px !important; top: 5px; width: 20px !important; height: 20px !important; border-width: 1.5px !important;
   font: 600 var(--d-fs-small)/1 var(--mono-font) !important; background: var(--surface) !important;
 }
-§{retro}K .sh-stage .sh-stgnum, §{nier}K .sh-stage .sh-stgnum { border-radius: 0 !important; }
+§{retro}K .sh-stage .sh-stgnum, §R[data-o55-nier-parts~="square"] #panel-docker .sh-stage .sh-stgnum { border-radius: 0 !important; }
 §K .sh-stage > .sh-accb { padding: 0 var(--d-pad) 0 24px !important; }
 §K .sh-stage > .sh-accb > .pm-acc-inner > :last-child { margin-bottom: 6px; }
 

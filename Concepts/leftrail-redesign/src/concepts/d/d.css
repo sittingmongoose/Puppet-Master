@@ -92,9 +92,9 @@
 [data-rail-skin="d"][data-theme="basic-light"], [data-rail-skin="d"][data-theme="friendly-light"] { --d-shelf-fill: 6%; --d-shelf-head: 11%; --d-shelf-line: 26%; --d-on-accent: #fff; }
 [data-rail-skin="d"][data-theme="retro-light"] { --d-on-accent: #fff; }
 [data-rail-skin="d"][data-theme="glass-light"] { --d-on-accent: #fff; }
-/* NieR Mode paints over Basic: square, ink and paper, hairlines; motion is a hard ink wipe */
+/* NieR Mode paints over Basic: ink and paper, hairlines; motion is a hard ink wipe. Corners follow the "Square
+   hairlines" part, as everywhere else in the app (with that part off NieR keeps Basic's radii). */
 [data-rail-skin="d"][data-o55-nier="on"] {
-  --d-R: 0px; --d-r: 0px;
   --d-line: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .26);
   --d-line-2: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .44);
   --d-hover: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .10);
@@ -106,6 +106,7 @@
   --d-ease: cubic-bezier(.7, 0, .2, 1);
   --d-spring: cubic-bezier(.7, 0, .2, 1);
 }
+[data-rail-skin="d"][data-o55-nier-parts~="square"] { --d-R: 0px; --d-r: 0px; }
 
 /* ---- 2. Panel chrome: header, context, tabs, toolbar, scroller, footer ------------------------------------------------
    The header is the panel's own surface, full bleed: no floating card. Content scrolls under it (the shell's frosted
@@ -278,6 +279,13 @@
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-foot .fm-footstat { gap: 6px; align-items: flex-start !important; font: 500 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-2) !important; white-space: normal !important; overflow: visible; min-width: 0; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-foot .fm-footmeta { font: 400 var(--d-fs-small)/1.3 var(--body-font) !important; color: var(--d-text-3) !important; }
+/* Files: the watch status takes the whole first line; the list facts sit under it, starting under its words and
+   wrapping instead of being cut (at 280 px the shell shows them beside the status, where neither fits) */
+[data-rail-skin="d"] #panel-files .sh-foot { flex-wrap: wrap; row-gap: 1px; }
+[data-rail-skin="d"] #panel-files .sh-foot > :is(.fm-footstat, .fm-indexchip) { flex: 1 1 100%; }
+[data-rail-skin="d"] #panel-files .sh-foot > .fm-footmeta {
+  flex: 1 1 100%; margin-left: 18px !important; white-space: normal !important; overflow: visible !important; text-overflow: clip !important;
+}
 
 /* ---- 3. Shelves: the coloured boxes that group the rail -------------------------------------------------------------
    The shelf is the only box. Its head is a band flush with the shelf's top (the shelf clips, so the band always has
@@ -295,11 +303,11 @@
   position: relative; display: flex !important; align-items: center; gap: var(--d-gap); flex-wrap: nowrap;
   min-height: var(--d-head-h); margin: 0 !important; padding: 0 calc(var(--d-in) + var(--d-pad)) !important;
   border-radius: 0 !important; box-shadow: none !important;
-  background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-head), transparent) !important;
-  transition: background-color var(--d-t1) var(--d-ease);
+  background-color: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-head), transparent) !important;
+  background-image: none !important; transition: background-color var(--d-t1) var(--d-ease);
 }
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-shelf > .sh-head[data-collapse] { cursor: pointer; }
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-shelf > .sh-head[data-collapse]:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) calc(var(--d-shelf-head) + 6%), transparent) !important; }
+/* (the shell's own .sh-head[data-collapse] { cursor: pointer } stays in charge, so NieR's Square pointer part reaches heads) */
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-shelf > .sh-head[data-collapse]:hover { background-color: color-mix(in srgb, var(--cat, var(--accent-blue)) calc(var(--d-shelf-head) + 6%), transparent) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-shelf > .sh-head:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -3px; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-head > .sh-accchev { width: 10px; height: 10px; margin: 0 -1px 0 -1px; color: var(--d-text-2); }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-head > .sh-hico {
@@ -351,6 +359,13 @@
   border: 0 !important; background: color-mix(in srgb, var(--d-warn) 10%, transparent) !important;
   font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text) !important;
 }
+/* heads that keep their count and actions in a trail (.sh-htrail: count + buttons): stacked, the trail opens up so the
+   count drops under the label and the buttons stay on the first line */
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-shelf > .sh-head[data-d-stack] > .sh-htrail { display: contents; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-head[data-d-stack] > .sh-htrail > .sh-hcount {
+  order: 9; flex: 1 1 100%; margin-left: var(--d-stack-x, 24px) !important; white-space: normal; overflow-wrap: anywhere; text-align: left;
+}
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-head[data-d-stack] > .sh-htrail > .sh-hacts { margin-left: auto; }
 
 /* ---- 4. Rows -----------------------------------------------------------------------------------------------------------
    Rows are flat inside their shelf (no card inside a card). A row's hover fill and an open item's fill are drawn on the
@@ -426,14 +441,14 @@
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-cfl .f { color: var(--d-text-2) !important; }
 
 /* meters: a hairline track, a rounded fill, tabular values */
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-occ { display: grid !important; grid-template-columns: 4.6em minmax(40px, 1fr) 3em; align-items: center; gap: 7px !important; padding: 3px 0 !important; font: 400 var(--d-fs-meta)/1.3 var(--body-font) !important; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-occ { display: grid !important; grid-template-columns: 4.6em minmax(40px, 1fr) auto; align-items: center; gap: 7px !important; padding: 3px 0 !important; font: 400 var(--d-fs-meta)/1.3 var(--body-font) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-occ .nm { max-width: none !important; min-width: 0; color: var(--d-text-3) !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-occ .bar { height: 4px !important; border-radius: 2px !important; background: var(--d-line) !important; min-width: 40px; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-occ .bar i { border-radius: 2px !important; background: var(--d-ok) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-occ .bar.warn i { background: var(--d-warn) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-occ .bar.err i { background: var(--d-fail) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-occ .v { min-width: 3.2em; text-align: right; font: 500 var(--d-fs-small)/1.3 var(--mono-font) !important; color: var(--d-text-2) !important; font-variant-numeric: tabular-nums; }
-[data-rail-skin="d"][data-theme^="retro"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-occ .bar, [data-rail-skin="d"][data-theme^="retro"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-occ .bar i, [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-occ .bar, [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-occ .bar i { border-radius: 0 !important; }
+[data-rail-skin="d"][data-theme^="retro"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-occ .bar, [data-rail-skin="d"][data-theme^="retro"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-occ .bar i, [data-rail-skin="d"][data-o55-nier-parts~="square"] #sidePanelSlot .pm-occ .bar, [data-rail-skin="d"][data-o55-nier-parts~="square"] #sidePanelSlot .pm-occ .bar i { border-radius: 0 !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-wrap { white-space: normal !important; overflow-wrap: anywhere; text-overflow: clip !important; }
 
 /* ---- 5. Status: shape + colour + word, never a capsule ------------------------------------------------------------------
@@ -464,7 +479,7 @@
   content: ''; position: absolute; inset: 1px; border-radius: 50%; border: 1.5px solid currentColor; opacity: 0; pointer-events: none;
   animation: d-pulse 2.2s cubic-bezier(.2, .7, .3, 1) infinite;
 }
-[data-rail-skin="d"][data-o55-nier="on"] .d-gl[data-pulse]::after, [data-rail-skin="d"][data-theme^="retro"] .d-gl[data-pulse]::after { border-radius: 0; }
+[data-rail-skin="d"][data-o55-nier-parts~="square"] .d-gl[data-pulse]::after, [data-rail-skin="d"][data-theme^="retro"] .d-gl[data-pulse]::after { border-radius: 0; }
 @keyframes d-pulse { 0% { opacity: .55; transform: scale(.7); } 70%, 100% { opacity: 0; transform: scale(1.65); } }
 /* dots that became glyphs: the element stays (contracts, colours from markup) but draws the glyph */
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) :is(.sh-dot, .dot).d-dot {
@@ -549,9 +564,11 @@
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) :is(.sh-bbranch, .sh-ctx) .pm6-tb-menu-trigger, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-select {
   display: flex !important; align-items: center; gap: 6px !important; width: 100%; min-height: 28px; padding: 4px 7px !important;
   border: 1px solid var(--d-ctl-line) !important; border-radius: var(--d-r) !important; background: var(--d-ctl-bg) !important;
-  font: 500 var(--d-fs-name)/1.25 var(--mono-font) !important; color: var(--d-text) !important; text-align: left; cursor: pointer;
+  font: 500 var(--d-fs-name)/1.25 var(--mono-font) !important; color: var(--d-text) !important; text-align: left;
   transition: background-color var(--d-t1) var(--d-ease), border-color var(--d-t1) var(--d-ease);
 }
+/* the hand, at no weight: NieR's Square pointer part (html[data-o55-nier-parts~="pointer"] button ...) draws its own */
+:where([data-rail-skin="d"]) :where(.sh-bbranch, .sh-ctx) .pm6-tb-menu-trigger, :where([data-rail-skin="d"]) .d-select { cursor: pointer; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) :is(.sh-bbranch, .sh-ctx) .pm6-tb-menu-trigger:hover, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-select:hover,
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) :is(.sh-bbranch, .sh-ctx) .pm6-tb-menu-trigger.is-menu-open, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-select.is-menu-open { background: var(--d-press) !important; border-color: var(--d-line-2) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) :is(.sh-bbranch, .sh-ctx) .pm6-tb-menu-trigger > .pm-ico:first-child { color: var(--d-text-3); width: 13px; height: 13px; }
@@ -648,9 +665,9 @@
 [data-rail-skin="d"] #panel-files .fm-openrow > .fm-path { flex: 1 1 auto !important; }
 [data-rail-skin="d"] #panel-files .fm-openrow > .sh-k { font: 400 var(--d-fs-small)/1 var(--body-font) !important; color: var(--d-text-3) !important; font-variant-numeric: tabular-nums; }
 [data-rail-skin="d"] #panel-files .fm-dirty { width: 7px !important; height: 7px !important; border-radius: 50% !important; background: var(--d-warn) !important; }
-[data-rail-skin="d"][data-theme^="retro"] #panel-files .fm-dirty, [data-rail-skin="d"][data-o55-nier="on"] #panel-files .fm-dirty { border-radius: 0 !important; }
+[data-rail-skin="d"][data-theme^="retro"] #panel-files .fm-dirty, [data-rail-skin="d"][data-o55-nier-parts~="square"] #panel-files .fm-dirty { border-radius: 0 !important; }
 [data-rail-skin="d"] #panel-files .fm-cbody { display: grid; gap: 4px; padding: 0 !important; }
-[data-rail-skin="d"] #panel-files .fm-cpath { font: 400 var(--d-fs-small)/1.45 var(--mono-font) !important; color: var(--d-text-3) !important; overflow-wrap: anywhere; white-space: normal !important; }
+[data-rail-skin="d"] #panel-files .fm-cpath { font: 400 var(--d-fs-small)/1.45 var(--mono-font) !important; color: var(--d-text-3) !important; overflow-wrap: anywhere; word-break: normal !important; white-space: normal !important; }
 [data-rail-skin="d"] #panel-files .fm-chunks { display: flex; gap: 10px; font: 500 var(--d-fs-small)/1.3 var(--mono-font) !important; }
 [data-rail-skin="d"] #panel-files .fm-chunks .add { color: var(--d-ok) !important; } [data-rail-skin="d"] #panel-files .fm-chunks .del { color: var(--d-fail) !important; }
 [data-rail-skin="d"] #panel-files .fm-chunks .meta { color: var(--d-text-3) !important; font-family: var(--body-font); }
@@ -676,6 +693,25 @@
 [data-rail-skin="d"] #panel-files .fm-openitem > .fm-openrow > .fm-cdir { grid-area: dir; }
 [data-rail-skin="d"] #panel-files .fm-openitem > .fm-openrow > .fm-cchev { grid-area: chev; }
 [data-rail-skin="d"] #panel-files :is(.fm-changerow, .fm-openrow) > .fm-cdir { text-align: left !important; direction: ltr !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* The Files context menu (portalled to <body>, so it sits outside the panels' scope): the chat picker's box and rows.
+   The shell sizes its gaps with --rail-gap, which only the rail defines, so out here icon and words touched. An item
+   without an icon ("Open in panel") keeps its words in the label column. Hover fills stay off under NieR Mode, where
+   the app's Menu cursor part draws the ink bar on .fm-ctx-item (so no colour here is !important). */
+[data-rail-skin="d"] #fileContextMenu, [data-rail-skin="d"] #fileContextMenu .fm-ctx-sub {
+  padding: var(--d-in) !important; border-radius: var(--d-R) !important; border: 1px solid var(--d-line-2) !important;
+  font-family: var(--body-font);
+}
+[data-rail-skin="d"] #fileContextMenu .fm-ctx-item {
+  min-height: 28px; padding: 4px 8px !important; gap: 8px !important; border-radius: var(--d-r) !important;
+  font: 500 var(--d-fs-name)/1.3 var(--body-font) !important; letter-spacing: 0; color: var(--d-text);
+}
+[data-rail-skin="d"]:not([data-o55-nier="on"]) #fileContextMenu .fm-ctx-item:not([aria-disabled="true"]):hover { background: var(--d-hover) !important; }
+[data-rail-skin="d"] #fileContextMenu .fm-ctx-item svg { width: 14px !important; height: 14px !important; color: var(--d-text-3); }
+[data-rail-skin="d"] #fileContextMenu .fm-ctx-item > .fm-ctx-label:first-child { margin-left: 22px; }
+[data-rail-skin="d"] #fileContextMenu .fm-ctx-item .fm-ctx-key { margin-left: auto; padding-left: 8px; font: 400 var(--d-fs-small)/1.3 var(--mono-font) !important; color: var(--d-text-3); }
+[data-rail-skin="d"] #fileContextMenu .fm-ctx-item.destructive, [data-rail-skin="d"] #fileContextMenu .fm-ctx-item.destructive svg { color: var(--d-fail); }
+[data-rail-skin="d"] #fileContextMenu .fm-ctx-sep { margin: var(--d-in) 6px !important; background: var(--d-line) !important; }
 
 /* ---- 8. Source control -------------------------------------------------------------------------------------------- */
 [data-rail-skin="d"] #panel-source .sh-chg-h .sh-name { gap: 6px; }
@@ -793,6 +829,12 @@
 /* ---- 9. Docker ------------------------------------------------------------------------------------------------------- */
 [data-rail-skin="d"] #panel-docker .sh-ctr.is-running { border: 0 !important; }
 [data-rail-skin="d"] #panel-docker .sh-ctr-h { gap: var(--d-gap); }
+/* the chevron, the status glyph and the CPU figure sit on the name's line, not on the middle of a two- or three-line
+   row (images and registries lay their rows out as grids of their own, below) */
+[data-rail-skin="d"] #panel-docker .sh-ctr-h { align-items: flex-start; }
+[data-rail-skin="d"] #panel-docker .sh-ctr-h > .sh-accchev { margin-top: calc(var(--d-fs-name) * var(--d-lh) / 2 - 4.5px); }
+[data-rail-skin="d"] #panel-docker .sh-ctr-h > :is(.sh-dot, .dot) { margin-top: calc(var(--d-fs-name) * var(--d-lh) / 2 - 6px); }
+[data-rail-skin="d"] #panel-docker .sh-ctr-h > .pm-rmetric { margin-top: calc(var(--d-fs-name) * var(--d-lh) / 2 - var(--d-fs-small) * .65); }
 /* the fleet summary is a section of its shelf, not a card inside it */
 [data-rail-skin="d"] #panel-docker .pm-sumcard {
   margin: 6px 0 0 !important; padding: 8px var(--d-pad) 4px !important; border: 0 !important; border-radius: 0 !important; background: none !important;
@@ -874,7 +916,7 @@
   left: -27px !important; top: 5px; width: 20px !important; height: 20px !important; border-width: 1.5px !important;
   font: 600 var(--d-fs-small)/1 var(--mono-font) !important; background: var(--surface) !important;
 }
-[data-rail-skin="d"][data-theme^="retro"] #panel-docker .sh-stage .sh-stgnum, [data-rail-skin="d"][data-o55-nier="on"] #panel-docker .sh-stage .sh-stgnum { border-radius: 0 !important; }
+[data-rail-skin="d"][data-theme^="retro"] #panel-docker .sh-stage .sh-stgnum, [data-rail-skin="d"][data-o55-nier-parts~="square"] #panel-docker .sh-stage .sh-stgnum { border-radius: 0 !important; }
 [data-rail-skin="d"] #panel-docker .sh-stage > .sh-accb { padding: 0 var(--d-pad) 0 24px !important; }
 [data-rail-skin="d"] #panel-docker .sh-stage > .sh-accb > .pm-acc-inner > :last-child { margin-bottom: 6px; }
 
@@ -962,8 +1004,38 @@
 [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-btn:hover { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
 [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-btn:hover svg { color: inherit !important; }
 [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-btn-primary { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
-[data-rail-skin="d"][data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(#panel-files,#panel-source,#panel-docker) :is(.sh-hlabel, .sh-title, .pm-sumcard-h, .pm7-post-card-title) {
-  text-transform: uppercase !important; letter-spacing: .14em !important;
+/* NieR parts, each followed exactly as the rest of the app follows it (opus-5.5 styles.d/14-nier-parts.css). The
+   attribute data-o55-nier-parts exists only while NieR Mode is painted. D's own fills carry a panel id, so these rules
+   carry #sidePanelSlot (every rail panel sits in it) and the app's own :not() filters to outrank them.
+   Menu cursor [cursor]: a row the skin tags .pmr-cur, a Files tree row and an inactive tab become the ink bar while
+   hovered (:hover, that element only); their words, glyphs, letters and numbers read in paper while the item carries
+   .o55np-cur-over, the class the Settings script puts on the hovered cursor-list item (also once when the part turns
+   on, for a pointer already resting there). A chosen tree row is the ink bar too. Numbers stay plain words (no
+   turned-over badge: D draws no capsules). */
+[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.pmr-cur, .fm-row, .pm-segtab-item):hover:not(.active):not([aria-disabled="true"]),
+[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot .fm-row.selected:not(.active):not([aria-disabled="true"]) {
+  background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-color: var(--o55-nier-ink) !important;
+  box-shadow: none !important; text-shadow: none !important;
+}
+[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.pmr-cur, .fm-row, .pm-segtab-item).o55np-cur-over:not(.active):not([aria-disabled="true"]) :where(*),
+[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot .fm-row.selected:not(.active):not([aria-disabled="true"]) :where(*) {
+  color: inherit !important; -webkit-text-fill-color: currentColor;
+}
+[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.pmr-cur, .fm-row).o55np-cur-over:not(.active) :is([class*="badge"], [class*="count"], kbd),
+[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot .fm-row.selected :is([class*="badge"], [class*="count"], kbd) {
+  background: transparent !important; border-color: transparent !important;
+}
+/* YoRHa headers [headers]: the panel title takes the app's .sh-title capitals (.16em); a shelf's label, a summary's head
+   and the publish card's title share their head with counts and buttons, so they take the app's card-title spacing
+   (.07em) and the rule with square end caps under the band, as the app's card heads do. Off: sentence case again. */
+[data-rail-skin="d"][data-o55-nier-parts~="headers"] #sidePanelSlot .sh-banner > .sh-title { text-transform: uppercase !important; letter-spacing: .16em !important; }
+[data-rail-skin="d"][data-o55-nier-parts~="headers"] #sidePanelSlot :is(.sh-hlabel, .pm-sumcard-h, .pm7-post-card-title) { text-transform: uppercase !important; letter-spacing: .07em !important; }
+[data-rail-skin="d"][data-o55-nier-parts~="headers"] #sidePanelSlot .sh-shelf > .sh-head {
+  background-image: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) !important;
+  background-size: 5px 5px, 5px 5px, calc(100% - 12px) 1px !important;
+  background-position: left bottom, right bottom, center calc(100% - 2px) !important;
+  background-repeat: no-repeat !important;
 }
 
 /* ---- 12. Reduced motion: nothing in the skin moves --------------------------------------------------------------- */

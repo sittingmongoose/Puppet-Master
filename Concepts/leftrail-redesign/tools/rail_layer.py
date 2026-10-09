@@ -44,6 +44,10 @@ BAND = ['      <div class="left-panel">', '<nav class="activity-bar collapsed" i
 
 # NieR Mode selector lists in the Settings script (opus-5.5 src/settings/kit.d/19-nier-parts.js). Each patch inserts the
 # rail's generic hook classes; concepts tag their elements with these classes instead of growing the lists.
+# Entries are anchored on the current kit; append new ones, never reorder (another lane may append one). The cursor
+# entry also brings the Settings script's o55np-cur-over class (put on the hovered cursor-list item, and once from
+# :hover when the Menu cursor part turns on) to .pmr-cur rows: src/css/40-nier.css and concept D's 90-themes key the
+# bar's paper text on that class, as the app does (opus-5.5 kit.d/19-nier-parts.js, 2026-10-08).
 NIER_SELECTOR_PATCHES = [
     ("    '.chat-dropdown-item', '.pm6-chat-more-item',",
      "    '.pmr-cur:not(.active):not([aria-disabled=\"true\"])', '.chat-dropdown-item', '.pm6-chat-more-item',",

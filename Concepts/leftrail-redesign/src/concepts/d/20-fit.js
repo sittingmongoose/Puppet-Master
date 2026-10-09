@@ -29,7 +29,7 @@ function stackHeads(root, force) {
   const heads = Array.from(root.querySelectorAll('.sh-shelf > .sh-head'));
   const widths = heads.map(h => h.offsetWidth);
   heads.forEach((h, i) => {
-    const c = h.querySelector(':scope > .sh-hcount'), l = h.querySelector(':scope > .sh-hlabel');
+    const c = h.querySelector(':scope > .sh-hcount, :scope > .sh-htrail > .sh-hcount'), l = h.querySelector(':scope > .sh-hlabel');
     if (!c || !l || !widths[i]) return;
     const key = widths[i] + '|' + c.textContent;
     if (!force && h._dStackKey === key) return;
@@ -108,6 +108,24 @@ function fitAll(only) {
     const sw = p.querySelector('.pm7-scm-engine-switch');
     if (sw && sw._dThumb) placeThumb(sw, false);
   });
+  recheckSoon();
+}
+/* a cut name is checked once more after things settle (a face that finished loading, an entrance that ended between
+   the measurement and the paint): any middle-truncated name that still overflows its box is fitted again */
+let recheckTimer = 0;
+function recheckSoon() {
+  if (recheckTimer) return;
+  recheckTimer = setTimeout(() => {
+    recheckTimer = 0;
+    if (!D.on) return;
+    panelEls().forEach(p => {
+      if (!p.offsetWidth) return;
+      const over = Array.from(p.querySelectorAll(MID_SEL)).filter(el => el._dFull != null && el.offsetParent && el.scrollWidth > el.clientWidth + 0.5);
+      if (!over.length) return;
+      over.forEach(el => { delete el._dFitKey; });
+      midFitAll(p);
+    });
+  }, 450);
 }
 let fitTimer = 0;
 function fitSoon() { clearTimeout(fitTimer); fitTimer = setTimeout(() => { if (D.on) fitAll(); }, 60); }
@@ -116,6 +134,9 @@ function watchFit() {
   if (window.ResizeObserver && slot) {
     const ro = new ResizeObserver(fitSoon);
     ro.observe(slot);
+    /* a panel's scroller loses its scrollbar's width when opening a row makes it overflow (the content box shrinks,
+       the slot does not): names measured on the wider box would be cut by the narrower one */
+    panelEls().forEach(p => { const sc = p.querySelector(':scope > .sh-scroll'); if (sc) ro.observe(sc); });
     D.observers.push(ro);
   }
   /* theme, NieR and text size change fonts and widths */
@@ -123,12 +144,15 @@ function watchFit() {
   mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-o55-nier-parts', 'style'] });
   D.observers.push(mo);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (D.on) fitAll(); });
+  /* the themes' fonts are embedded and load on first use (a theme switch, NieR Mode): every measurement taken with the
+     fallback face is wrong once the real one arrives, so a finished font load refits everything */
+  if (document.fonts && document.fonts.addEventListener) listen(document.fonts, 'loadingdone', () => { if (D.on) { clearFitCache(); fitSoon(); } });
 }
 
 /* Middle truncation for names that are paths or long ids: keep the head and the tail (the file name, the last part of
    a branch or container name) instead of cutting the end off. Measured with the element's own font on a canvas, the
    text is written once; the full name stays in the row's hover tag. */
-const MID_SEL = '.sh-chg-h .sh-nm-txt, .sh-ctr-h .sh-nm-txt, .sh-wt-h > .sh-branch, .sh-cfl > .f, .fm-cfile, .fm-openrow > .fm-path';
+const MID_SEL = '.sh-chg-h .sh-nm-txt, .sh-ctr-h .sh-nm-txt, .sh-wt-h > .sh-branch, .sh-cfl > .f, .fm-cfile, .fm-openrow > .fm-path, .fm-cdir, .sh-ctx .d-ctxpath';
 let measureCtx = null;
 function textWidth(el, text) {
   if (!measureCtx) measureCtx = document.createElement('canvas').getContext('2d');
@@ -180,7 +204,7 @@ function midFit(el) {
     if (t <= h) return;
     const cand = full.slice(0, h + 1) + '…' + full.slice(t);
     const kept = h + 1 + full.length - t;
-    const s = kept + 3 + (slash > 0 && t === slash ? 4 : 0);
+    const s = kept + 6 + (slash > 0 && t === slash ? 4 : 0);
     if (s > score && fits(cand)) { best = cand; score = s; }
   }));
   if (best && best !== el.textContent) el.textContent = best;

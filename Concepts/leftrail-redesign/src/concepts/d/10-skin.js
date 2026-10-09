@@ -214,13 +214,40 @@ function applyPaths(panel) {
     remember(() => { el.textContent = orig; delete el._dPath; if (dir) dir.remove(); });
   });
 }
-/* the repository location breaks between its parts, never inside one */
+/* the repository location and the image summary break between their parts, never inside one, and a separator dot
+   stays at the end of its line ("2.33 GB ·" / "refreshed 30s ago", not "· refreshed") */
 function applyDetail(panel) {
   panel.querySelectorAll('.pm7-context-detail, .sh-imgsum-t').forEach(el => {
     const t = ownText(el);
     if (!t || t.indexOf(' · ') < 0 || t.indexOf('\u00A0') >= 0) return;
-    setOwnText(el, t.split(' · ').map(s => s.replace(/ /g, '\u00A0')).join(' · '));
+    setOwnText(el, t.split(' · ').map(s => s.replace(/ /g, '\u00A0')).join('\u00A0· '));
   });
+}
+
+/* long paths, image references and fact values that must wrap break after a "/" (the last of a run: "http://" stays
+   whole), before an "@" or after a name's ":" ("jared/tastebook:" + "v1.2"; a time such as 14:02 stays whole), never
+   inside a name ("web/src/routes/recipe/[id]/" + "+page.svelte", not "+pa" + "ge.svelte"): a zero-width space marks
+   each place */
+const BREAK_SEL = '.fm-cpath, .sh-kvwrap > .sh-k.sh-mono, .sh-kv > .sh-v';
+const ZW = String.fromCharCode(0x200B);
+function applyPathBreaks(panel) {
+  panel.querySelectorAll(BREAK_SEL).forEach(el => {
+    if (el.children.length) return;
+    const t = ownText(el);
+    if (!t || t.indexOf(ZW) >= 0 || !/[/@]|[A-Za-z]:\w/.test(t)) return;
+    /* only a long token gets them: "linux/amd64, linux/arm64" still breaks at its space */
+    const marks = tok => tok.replace(/\/(?!\/)/g, '/' + ZW).replace(/@/g, ZW + '@').replace(/([A-Za-z]):(?=\w)/g, '$1:' + ZW);
+    const next = t.split(/(\s+)/).map(tok => (tok.length > 14 ? marks(tok) : tok)).join('');
+    if (next !== t) setOwnText(el, next);
+  });
+}
+
+/* the Files context menu lives in <body> (the shell portals it there); its labels get the same word fixes */
+function applyFileMenu(panel) {
+  if (panel.id !== 'panel-files') return;
+  const menu = document.getElementById('fileContextMenu');
+  if (!menu) return;
+  menu.querySelectorAll('.fm-ctx-label').forEach(l => { const t = ownText(l); if (t && WORDS[t] && WORDS[t] !== t) setOwnText(l, WORDS[t]); });
 }
 
 function applyToggles(panel) {
@@ -231,6 +258,8 @@ function applyPanel(panel, animate) {
   applyToggles(panel);
   applyPaths(panel);
   applyDetail(panel);
+  applyPathBreaks(panel);
+  applyFileMenu(panel);
   applyLabels(panel);
   applyWords(panel);
   applyChips(panel, animate);
