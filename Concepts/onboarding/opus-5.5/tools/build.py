@@ -481,6 +481,18 @@ PATCHES = [
      "    try {\n"
      "      new MutationObserver(resyncNextFrame).observe(document.documentElement, {\n",
      'page-tab ink: re-measure at the next frame'),
+    # With the tab ink waiting for the frame, the next reader in the same observer round forced the same whole-page
+    # style instead (m2's traces, 2026-10-09): the PM8 magnet's readTheme(), a getComputedStyle of its probe for the
+    # --pm8-* tokens. It now reads at the next frame too, ahead of the magnet loop's own frame (requested first), so
+    # nothing in a theme or motion write forces style: the frame's own pass serves every reader once.
+    ("      new MutationObserver(function () {\n"
+     "        readTheme();\n"
+     "        bloomHost = null;   /* radius may change with the theme */\n",
+     "      var themeFrame = 0;\n"
+     "      new MutationObserver(function () {\n"
+     "        if (!themeFrame) themeFrame = requestAnimationFrame(function () { themeFrame = 0; readTheme(); });\n"
+     "        bloomHost = null;   /* radius may change with the theme */\n",
+     'magnet tokens: re-read at the next frame'),
 ]
 
 
