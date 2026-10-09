@@ -6,6 +6,30 @@
 
 That visual-identity contract no longer holds. PMConcept7 has since taken deliberate product-surface evolution of its own -- the T20 model-first Home Workspace and, from 2026-08-20, the Prism Usage workspace and the retro-dark palette retune. Read the re-baseline section below first: as of 2026-08-27 PMConcept7 is also its own pipeline base.
 
+## The left rail is concept D, Polish — 2026-10-09
+
+Jared chose concept D ("Polish") of the left-rail redesign (`Concepts/leftrail-redesign/`) on 2026-10-09, and it is now
+the rail of `PMConcept7.html`. Since 2026-09-26 the page is published only by
+`Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7`; its `build_text()` now ends with a fourth step,
+`rail_layer.apply_published()` from `Concepts/leftrail-redesign/tools/rail_layer.py`, which adds:
+
+- `<style id="pm-rail-css">` before `</head>` and `<script id="pm-rail-js">` before `</body>` (between `RAIL:CSS` and
+  `RAIL:BODY` markers): the rail core (`window.PMR`: helpers, the chat-style menu `PMR.menu`, the host) and D's skin;
+- `data-rail-concept="d" data-rail-skin="d"` on the `<html>` tag, so D's look holds from the first frame.
+
+D is a skin, not a new rail: the shell's activity bar and its nine panels (`#panel-files` ... `#panel-artifacts`) stay
+in the markup with every behaviour and `data-demo-action`; D restyles them under `html[data-rail-skin="d"]` and records
+every DOM change it makes at run time. `PMR.concepts.set('current')` (a test hook; the page has no switcher) puts the
+shell's own rail back byte for byte. NieR Mode's hooks for the rail are kit source in
+`Concepts/onboarding/opus-5.5/src/settings/kit.d/19-nier-parts.js`: `.pmr-cur` in the cursor list (rows and menu items)
+and `.pmr-lock` in the brackets' click handler (the rail's tabs). Publishing D grew the page by 259,170 bytes
+(10,329,282 to 10,588,452, +2.5 %, measured on the first build that carried it).
+
+The comparison copy `Concepts/LeftRailPMConcept7.html` (`tools/build_rail.py`) is now this page plus the earlier
+concepts A, B and C and the status-bar "Rail" switcher (`rail_layer.apply_review()`), so its D is the published D;
+its "Original" option (id `current`, `?rail=current`, Alt+Shift+5) is the rail before Polish. Never hand-edit either
+page; see `Concepts/leftrail-redesign/README.md`.
+
 ## Re-baseline onto the hand-edited Prism Usage build — 2026-08-27
 
 `Concepts/PMConcept7.html` is now the 2026-08-20 version

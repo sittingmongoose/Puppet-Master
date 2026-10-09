@@ -27,7 +27,14 @@ python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # markers, patches,
 `build.py` reads the pinned base page (SHA-256 `b3888fad…`), swaps the base's Settings managers for the fork in
 `src/settings` (see Settings below), strips the old onboarding and tour, splices `src/`
 between `<!-- O55:… -->` markers and applies a few guarded, exactly-once patches (hover-tag roots, labels, the Teacher
-persona, and two owner exposures: Settings Transfer preview/apply and the layout restore).
+persona, and two owner exposures: Settings Transfer preview/apply and the layout restore). Its last step adds the left
+rail, concept D "Polish" (Jared's choice, 2026-10-09): `rail_layer.apply_published()` from
+`Concepts/leftrail-redesign/tools/rail_layer.py` puts the rail core and D's skin between `RAIL:CSS` / `RAIL:BODY`
+markers and `data-rail-concept="d" data-rail-skin="d"` on the `<html>` tag, and `build.py` / `--check` add
+`rail_layer.published_problems()` to their problem lists, so editing a D source without `--publish-pm7` fails the check.
+D's sources, the review copy with the earlier concepts A-C (`LeftRailPMConcept7.html`) and the rail's tools are in
+`Concepts/leftrail-redesign/` (see its README). The rail's NieR hooks are kit source: `.pmr-cur` in `CURSOR_SEL` and
+the `.pmr-lock` branch of `retChoose` in `src/settings/kit.d/19-nier-parts.js`.
 
 `Concepts/PMConcept7.html` is published only from this generator (2026-09-26 user direction): `--publish-pm7`
 writes the same built bytes to both outputs, and `--check` fails while `PMConcept7.html` is missing or differs by
