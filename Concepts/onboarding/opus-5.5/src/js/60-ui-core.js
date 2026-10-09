@@ -178,9 +178,19 @@
       /* NieR Mode turned on or off on the look screen (O55.nierLook.busy(): its moment is playing under the reboot's
          cover): the new cast is mounted waiting in the wings (ensembleHold) and lowered in at the reveal. When only NieR
          Mode changed (the chosen look and mode are the same), the four look tiles keep their scenes: the stage, the
-         rail, the look menu and the NieR row redraw, and the pane's morph leaves the tiles' hosts alone */
-      const busy = !!(O55.nierLook && O55.nierLook.busy && O55.nierLook.busy());
+         rail, the look menu and the NieR row redraw, and the pane's morph leaves the tiles' hosts alone.
+         Reduced Motion and a low-resource computer have no cover and no cross-fade: the old troupe is taken down in
+         this same task and the new one is mounted already at its end state, so the pane and the stage change in one
+         frame (the slice's first keyframe otherwise held the old troupe for a frame of its own). */
+      const instantLook = O55.motion.reduced() || !!O55.motion.lowResource;
+      const busy = !instantLook && !!(O55.nierLook && O55.nierLook.busy && O55.nierLook.busy());
+      const stage = S.root.querySelector('.o55-stage');
+      if (instantLook && stage) stage.querySelectorAll(':scope > .o55-scene-wrap').forEach((n) => n.remove());
       renderScene(true, false, { ensembleHold: busy });
+      if (instantLook && stage) {
+        const wrap = stage.querySelector(':scope > .o55-scene-wrap');
+        if (wrap) { wrap.style.animation = 'none'; wrap.setAttribute('data-o55-entered', ''); }
+      }
       renderRail(); refresh(); renderLook();
     }
     lastLook = look;

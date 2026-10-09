@@ -171,7 +171,26 @@
        (Reduced Motion, a low-resource computer) the repaint is the same task as the click, so it follows the toggle's
        own sound just after, rather than merging into it */
     const wake = () => { if (flight === F && inWindow()) O55.sound.play('wake'); };
-    if (instant()) { O55.motion.after(120, wake); enter(F); if (F.on) at(F, 400, () => speak(F)); return; }
+    /* the instant repaint (Reduced Motion, a low-resource computer) is one long paint: the pane and the stage change,
+       then that frame is shown. A double rAF, and a frame that is merely late against the click, both run at the
+       start of that paint, so wake was heard about half a second before anything changed. The next frame arrives
+       after the paint, which is when the new look is up; wake starts then. A fast repaint has no late frame, so the
+       fifth stands in for it. */
+    if (instant()) {
+      /* the first frame is the one that paints the new look, so it is late against the click and still not on screen.
+         wake plays on the frame after that paint. */
+      let last = 0, n = 0;
+      const step = (now) => {
+        if (flight !== F) return;
+        n += 1;
+        const late = last > 0 && now - last > 100;
+        last = now;
+        if ((n >= 2 && late) || n >= 5) { wake(); return; }
+        O55.motion.real.raf(step);
+      };
+      O55.motion.real.raf(step);
+      enter(F); if (F.on) at(F, 400, () => speak(F)); return;
+    }
     /* a reveal within 120 ms of that sound (no cover played: Still, Colors only, the Reboot moment part removed) waits
        for the rest of the 120 ms, so wake still sounds as the state sound it is (hero spec rule 10; films minor 4, where
        Still and Colors only dropped it); the stage keeps its own beats */
