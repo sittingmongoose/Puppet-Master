@@ -171,24 +171,14 @@
        (Reduced Motion, a low-resource computer) the repaint is the same task as the click, so it follows the toggle's
        own sound just after, rather than merging into it */
     const wake = () => { if (flight === F && inWindow()) O55.sound.play('wake'); };
-    /* the instant repaint (Reduced Motion, a low-resource computer) is one long paint: the pane and the stage change,
-       then that frame is shown. A double rAF, and a frame that is merely late against the click, both run at the
-       start of that paint, so wake was heard about half a second before anything changed. The next frame arrives
-       after the paint, which is when the new look is up; wake starts then. A fast repaint has no late frame, so the
-       fifth stands in for it. */
+    /* the instant repaint (Reduced Motion, a low-resource computer) is one task: syncTheme has taken the old cast down
+       and mounted the new one at its end state in the click's task, so the next rendering update presents the new look
+       and the one after it is the first frame with the new look up. A single rAF, and any timer, fire inside the
+       click's own long task or its first late frame, so wake was heard before anything changed (review N4: about half
+       a second early). A double rAF puts the choir on that second frame — at or after the picture on any clock, and
+       never closer than 120 ms to the hum. */
     if (instant()) {
-      /* the first frame is the one that paints the new look, so it is late against the click and still not on screen.
-         wake plays on the frame after that paint. */
-      let last = 0, n = 0;
-      const step = (now) => {
-        if (flight !== F) return;
-        n += 1;
-        const late = last > 0 && now - last > 100;
-        last = now;
-        if ((n >= 2 && late) || n >= 5) { wake(); return; }
-        O55.motion.real.raf(step);
-      };
-      O55.motion.real.raf(step);
+      O55.motion.real.raf(() => O55.motion.real.raf(wake));
       enter(F); if (F.on) at(F, 400, () => speak(F)); return;
     }
     /* a reveal within 120 ms of that sound (no cover played: Still, Colors only, the Reboot moment part removed) waits
