@@ -145,6 +145,30 @@
   var STRIP_SEL = '.editor-tab, [role="tab"]';
   var targetOf = function (e) { return e && e.target && e.target.closest ? e.target.closest(CURSOR_SEL) : null; };
   var cur = null, curT = null, curHide = 0;
+  /* the bar's paper text is the class o55np-cur-over on the item the pointer rests on (pointer only, never focus), set
+     and cleared in the same turn the pointer arrives or leaves (PMConcept7's curMark / curSyncHover / curAway) */
+  var CUR_OVER = 'o55np-cur-over', curBar = null;
+  function curMark(t) {
+    if (t === curBar) return;
+    if (curBar) curBar.classList.remove(CUR_OVER);
+    curBar = t || null;
+    if (curBar) curBar.classList.add(CUR_OVER);
+  }
+  /* a pointer already resting when the part turns on, or on an item a render replaced, sends no pointerover: read :hover
+     once (the deepest hovered element; querySelector(':hover') would answer <html>) */
+  function curSyncHover() {
+    var n = null; try { var all = document.querySelectorAll(':hover'); n = all.length ? all[all.length - 1] : null; } catch (e) { n = null; }
+    curMark(n && n.closest ? n.closest(CURSOR_SEL) : null);
+  }
+  /* leaving the window clears :hover and sends no pointerover: drop the class in that same turn */
+  function curAway(e) { if (!e.relatedTarget) curMark(null); }
+  /* the app's patch rewrites classes it does not know: after a render the hovered item gets the class back, and an item
+     the render replaced is found again through :hover */
+  function curReMark() {
+    if (!cur) return;
+    if (curBar && curBar.isConnected) { if (!curBar.classList.contains(CUR_OVER)) curBar.classList.add(CUR_OVER); }
+    else if (curBar) { curBar = null; curSyncHover(); }
+  }
   /* while the reboot cover is up the cursor does not point through it or tick for a hover the cover is hiding */
   var coverUp = false;
   function curPlace(t) {
@@ -163,6 +187,7 @@
   function curOff() { curT = null; if (cur && cur.hasAttribute('data-on')) cur.removeAttribute('data-on'); }
   function curOver(e) {
     var t = targetOf(e);
+    curMark(t);
     if (t === curT) { if (curHide) { window.clearTimeout(curHide); curHide = 0; } return; }
     if (!t) { if (!curHide && curT) curHide = window.setTimeout(function () { curHide = 0; curOff(); }, 90); return; }
     if (curHide) { window.clearTimeout(curHide); curHide = 0; }
@@ -178,11 +203,15 @@
     on: function () {
       cur = layer(); cur.id = 'o55np-cursor'; cur.innerHTML = '<i></i>';
       document.addEventListener('pointerover', curOver, true);
+      document.addEventListener('pointerout', curAway, true);
       document.addEventListener('focusin', curFocus, true);
+      curSyncHover();
     },
     off: function () {
       document.removeEventListener('pointerover', curOver, true);
+      document.removeEventListener('pointerout', curAway, true);
       document.removeEventListener('focusin', curFocus, true);
+      curMark(null);
       if (curHide) window.clearTimeout(curHide); curHide = 0; curT = null;
       if (cur) cur.remove(); cur = null;
     }
@@ -1031,6 +1060,7 @@
       if (html.getAttribute('data-o55-nier') !== 'on') { lastTid = null; seenMsg = null; return; }
       if (pod) podShySoon();
       try {
+        curReMark();
         var phase = info && info.phase;
         if (phase === 'overlay') onToasts(c);
         else if (phase === 'app') onApp(c);

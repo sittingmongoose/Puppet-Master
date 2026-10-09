@@ -198,7 +198,10 @@ removes every NieR attribute, layer and font.
 - **Look:** ink on parchment, square hairlines, the menu cursor (an ink bar with
   paper text and a stepping square cursor), YoRHa headers, the parchment
   ground, target brackets on focus and the chosen thread, diamond loaders, the
-  square pointer and square icon strokes.
+  square pointer and square icon strokes. The cursor's paper text follows a
+  class on the hovered item rather than a `:hover` rule on its whole subtree,
+  as in PMConcept7, so moving the pointer restyles only the two items it
+  leaves and enters.
 - **Motion:** the reboot moment when NieR turns on or off, as PMConcept7
   draws it: a plate in the look's own NieR ground (never a full ink or
   parchment sheet) grows in held steps from the control you pressed, types a
