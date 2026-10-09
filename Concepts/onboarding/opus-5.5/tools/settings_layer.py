@@ -207,6 +207,20 @@ def web_font_checks(src: Path) -> list[str]:
     for f, s, w in sorted(text):
         if f in SYMBOL_MIRRORED and (f, s, w) not in {(a, b, c) for a, b, c, _ in sym}:
             problems.append(f'text face {f} {s} {w} has no PM Symbols face (src/css/03-symbols.css)')
+    # Script slices (DL-161, amended 2026-10-09): a family's Latin face comes after its unicode-range slices, so the
+    # Latin bytes win every code point they share, and every embedded file is listed in src/fonts/SOURCE.md.
+    seen_latin = set()
+    for f, s, w, u, _ in faces:
+        if 'pm-symbols' in u:
+            continue
+        if '-latin-' in u and '-latin-ext-' not in u:
+            seen_latin.add((f, s, w))
+        elif (f, s, w) in seen_latin:
+            problems.append(f'{f} {s} {w}: the slice {u} comes after the Latin face; declare the Latin face last')
+    listed = set(re.findall(r'`([\w.-]+\.woff2)`', (src / 'fonts' / 'SOURCE.md').read_text(encoding='utf-8')))
+    for path in sorted((src / 'fonts').glob('*.woff2')) + sorted(FONT_DIR.glob('*.woff2')):
+        if path.name not in listed:
+            problems.append(f'{path.name} is embedded but not listed in src/fonts/SOURCE.md')
     base = (PKG.parents[1] / 'Onboarding concepts' / 'TestPMConcept.html').read_text(encoding='utf-8')
     sym_css = (src / 'css' / '03-symbols.css').read_text(encoding='utf-8')
     for sel, prop, rest in re.findall(r"^([^@{}\n]+?)\s*\{\s*(font-family|--mono-font)\s*:\s*'PM Symbols Mono',\s*([^;]+);",
