@@ -52,7 +52,7 @@
       "registry_id": "TCR-SETTINGS-PACKET-COMMANDS",
       "source_path": "Plans/settings_system_contract_fixtures.json",
       "json_pointer": "/packet_command_dispositions",
-      "source_sha256": "6871d6791d5d946d8e4d8ccd635e7d5417499a2d2e8bc4ee2c927cbfcfd1c90e",
+      "source_sha256": "05193f2717d90c8a64b71902fd0ac914fdfa1809b1b4753179a2706d031d8727",
       "owner_plan": "Plans/Settings_System.md",
       "plan_unit": "SSYS-023",
       "expected_token_count": 80,
@@ -8203,6 +8203,14 @@
       "TCP-SET-ROUTE",
       "ui_action",
       "settings.onboarding.run_again",
+      "partial",
+      "Route simulation exists; native exact-return routing is not proven."
+    ],
+    [
+      "TOUCH-SET-016",
+      "TCP-SET-ROUTE",
+      "ui_action",
+      "settings.guided_tour.resume",
       "partial",
       "Route simulation exists; native exact-return routing is not proven."
     ],

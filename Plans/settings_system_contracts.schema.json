@@ -2645,6 +2645,7 @@
           "enum": [
             "overview",
             "run-onboarding-again",
+            "resume-guided-tour",
             "replay-guided-tour",
             "check:{check_id}"
           ]
@@ -2663,6 +2664,7 @@
       "required": [
         "settings.onboarding.open",
         "settings.onboarding.run_again",
+        "settings.guided_tour.resume",
         "settings.guided_tour.replay",
         "settings.doctor.open",
         "settings.doctor.remediation.open"
@@ -2672,6 +2674,9 @@
           "$ref": "#/$defs/settings_route_ui_action_contract"
         },
         "settings.onboarding.run_again": {
+          "$ref": "#/$defs/settings_route_ui_action_contract"
+        },
+        "settings.guided_tour.resume": {
           "$ref": "#/$defs/settings_route_ui_action_contract"
         },
         "settings.guided_tour.replay": {

@@ -1,7 +1,7 @@
 /* Guided Tour acceptance, driven by real CDP input against the built concept.
  * node tools/tour_scenarios.mjs <out-dir> [--only t1,t2] [--theme basic-dark] [--snaps] [--page <path>]
  * t1 every step by hand (real clicks, a real mouse drag) then Restore; t2 every action through Show Me then Keep;
- * t3 Skip restores everything; t4 fails closed after reload without owner basis; t5 a missing target offers Take me there; t6 Back rewinds a
+ * t3 Skip restores everything; t4 a reload resumes from the saved basis and Skip still restores; t5 a missing target offers Take me there; t6 Back rewinds a
  * step so it can be done again or watched with Show Me; t7 Run Onboarding Again (and a replay) start the tour over.
  * Each run asserts zero network requests and unchanged usage counters, and writes report.json + screenshots. */
 import { launch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs';
@@ -270,19 +270,23 @@ def('t3', 'Skip Tour restores everything', async (t, A) => {
   A.ok(await t.ev(() => !document.querySelector('.o55-guided-thread')), 'Guided example thread removed');
   A.eq(await t.ev(() => window.O55.store.get('tour', {}).status), 'skipped', 'recorded as skipped');
 });
-def('t4', 'Reload without owner snapshot shows safe recovery', async (t, A) => {
+def('t4', 'A reload resumes from the saved basis, and Skip still restores', async (t, A) => {
   await t.ev(() => window.PM7_GUIDED_TOUR.start({})); await sleep(900);
   await byHandChapter1(t, A); await t.untilStep('workspace_orientation');
+  const before = await t.ev(() => window.O55.tour.defs.findIndex((d) => d.id === window.O55.tour.state().step));
   await t.page.goto(pathToFileURL(PAGE).href + '?o55=off'); await sleep(1600);
+  A.ok(await t.ev(() => { const s = JSON.stringify(window.O55.store.get('tour', {})); return !s.includes('draft') && !s.includes('layout') && s.includes('snapshot_ref'); }), 'bounded checkpoint holds refs only');
+  A.ok(await t.ev(() => { const b = JSON.parse(localStorage.getItem('pm.o55.tour-basis.v1') || 'null'); return !!(b && b.snap && b.snap.layout && !('draft' in b.snap)); }), 'layout basis kept without the draft');
   await t.ev(() => window.O55.boot.tourChip()); await sleep(200);
   A.ok(await t.ev(() => !!document.getElementById('o55-tourchip')), 'resume chip offered');
-  await t.click('#o55-tourchip [data-o55-chip="resume"]', 'Resume'); await sleep(900);
-  A.eq(await t.ev(() => window.O55.store.get('tour', {}).status), 'resume-unavailable', 'missing owner basis cannot resume');
-  A.ok(await t.ev(() => !!document.getElementById('o55-tour-recovery')), 'recovery panel offered');
-  A.ok(await t.ev(() => !window.O55.tour.running), 'tour does not claim resumed progress');
-  A.ok(await t.ev(() => { const s = JSON.stringify(window.O55.store.get('tour', {})); return !s.includes('draft') && !s.includes('layout') && s.includes('snapshot_ref'); }), 'bounded checkpoint retained');
-  await t.ev(() => window.O55.tour.finish(false));
-  A.eq(await t.ev(() => window.O55.store.get('tour', {}).status), 'resume-unavailable', 'missing restoration basis cannot complete');
+  await t.click('#o55-tourchip [data-o55-chip="resume"]', 'Resume'); await sleep(1400);
+  A.ok(await t.ev(() => window.O55.tour.running), 'the tour resumes');
+  A.ok(await t.ev(() => !document.getElementById('o55-tour-recovery')), 'no recovery panel');
+  const at = await t.ev(() => window.O55.tour.defs.findIndex((d) => d.id === window.O55.tour.state().step));
+  A.ok(at >= 0 && at <= before, `resumes at or before the saved step (${at} <= ${before})`);
+  await t.ev(() => window.O55.tour.skip()); await sleep(1400);
+  A.eq(await t.ev(() => window.O55.store.get('tour', {}).status), 'skipped', 'Skip after a reload restores and completes');
+  A.ok(await t.ev(() => !localStorage.getItem('pm.o55.tour-basis.v1')), 'basis removed once used');
 });
 def('t5', 'A missing target offers Take me there', async (t, A) => {
   await t.ev(() => window.PM7_GUIDED_TOUR.start({})); await sleep(700);
@@ -375,14 +379,17 @@ def('t7', 'Run Onboarding Again, and a replay, start the tour over', async (t, A
   await t.untilStep('select_teacher', 12000); await t.callout('showMe');
   await t.untilStep('send_question', 12000); await sleep(1500);
   A.eq(await t.step(), 'send_question', 'the question sent in the last run does not count in this one');
-  /* A reload cannot silently discard a Tour restoration basis through Run Onboarding Again. */
+  /* After a reload, Run Onboarding Again resets the tour completely: no recovery panel, no saved progress. */
   await t.page.goto(pathToFileURL(PAGE).href + '?o55=off'); await sleep(1600);
   A.eq(await t.ev(() => (window.O55.store.get('tour', {}) || {}).status), 'running', 'the unfinished tour is saved');
   await t.click('#pm-home-more-btn', 'Home more options'); await t.click('#pm-home-more-menu [data-pm-home-action="run-onboarding"]', 'Run Onboarding Again'); await sleep(1500);
-  A.eq(await t.ev(() => window.O55.store.get('tour', {}).status), 'resume-unavailable', 'unresolved Tour checkpoint stays available');
-  A.ok(await t.ev(() => !!document.getElementById('o55-tour-recovery')), 'review and restart are explicit');
-  await t.click('#o55-tour-recovery [data-o55-recovery="restart"]', 'Acknowledge recovery and restart'); await sleep(1400);
-  A.eq(await t.step(), 'comfort_intro', 'explicit recovery starts at the first step');
+  A.ok(await t.ev(() => !!(window.O55.S && window.O55.S.open)), 'onboarding opens');
+  A.ok(await t.ev(() => !document.getElementById('o55-tour-recovery')), 'no recovery panel');
+  A.eq(await t.ev(() => window.O55.store.get('tour', null)), null, 'tour progress cleared');
+  A.ok(await t.ev(() => !localStorage.getItem('pm.o55.tour-basis.v1')), 'tour basis cleared');
+  await t.ev(() => window.O55.ui.close('close')); await sleep(900);
+  await t.ev(() => window.PM7_GUIDED_TOUR.start({})); await sleep(1400);
+  A.eq(await t.step(), 'comfort_intro', 'the next tour starts at the first step');
   A.eq(await t.ev(() => window.O55.tour.state().done.length), 0, 'nothing counts as done');
 });
 

@@ -918,7 +918,7 @@ owner_hints: [Plans/UI_Wiring_Rules.md, Plans/FinalGUISpec.md, Plans/Wiring_Matr
 
 ## Settings command and route-only action wiring addendum - 2026-08-31
 
-Settings wiring has exactly five canonical commands and five specialized route-only UI actions. `Plans/Settings_System.md` owns target, mutation, export, and exact-return semantics; `Plans/Commands_System.md` owns central command-family registration; this document owns the UI action-to-command boundary. A handler-location string is a required sole destination, not evidence that the dispatcher or handler exists. Until native executable evidence observes that path, the action remains unavailable with `handler_unavailable` or another exact Settings-owned disabled reason.
+Settings wiring has exactly five canonical commands and six specialized route-only UI actions. `Plans/Settings_System.md` owns target, mutation, export, and exact-return semantics; `Plans/Commands_System.md` owns central command-family registration; this document owns the UI action-to-command boundary. A handler-location string is a required sole destination, not evidence that the dispatcher or handler exists. Until native executable evidence observes that path, the action remains unavailable with `handler_unavailable` or another exact Settings-owned disabled reason.
 
 | canonical command | Settings semantic owner | UI action boundary | result/return boundary |
 |---|---|---|---|
@@ -932,11 +932,12 @@ Settings wiring has exactly five canonical commands and five specialized route-o
 |---|---|---|---|
 | `settings.onboarding.open` | `manager_id=onboarding-guided-tour`, `detail_id=overview` | Opens the Settings dependency/entry projection. Product Onboarding remains owned by Planning Wizard/its retained owners; this action starts no onboarding run. | `pm.settings_route_return.v1`; current origin context/focus only. |
 | `settings.onboarding.run_again` | `manager_id=onboarding-guided-tour`, `detail_id=run-onboarding-again` | Opens the owner-routed run-again choice. It does not itself restart, reset, or mutate Onboarding. | `pm.settings_route_return.v1`; current origin context/focus only. |
+| `settings.guided_tour.resume` | `manager_id=onboarding-guided-tour`, `detail_id=resume-guided-tour` | Opens the retained Guided Tour owner route for its resumable checkpoint (Resume Guided Tour). It does not itself resume, revalidate, or persist tour state; with no checkpoint that can resume it is disabled and dispatches nothing. | `pm.settings_route_return.v1`; current origin context/focus only. |
 | `settings.guided_tour.replay` | `manager_id=onboarding-guided-tour`, `detail_id=replay-guided-tour` | Opens the retained Guided Tour owner route. It does not itself replay or persist tour state. | `pm.settings_route_return.v1`; current origin context/focus only. |
 | `settings.doctor.open` | `manager_id=doctor`, `detail_id=overview` | Opens the cached/currentness-labelled Doctor projection. Doctor and domain owners retain checks; no probe runs. | `pm.settings_route_return.v1`; current origin context/focus only. |
 | `settings.doctor.remediation.open` | `manager_id=doctor`, `detail_id=check:{check_id}` | Opens one exact owner remediation route. It does not execute a probe, repair, permission change, install, or mutation. | `pm.settings_route_return.v1`; current origin context/focus only. |
 
-Each route-only action carries `effect=route_only` and `owner_operation_authorized=false`. All ten rows require stable role/name, keyboard and pointer parity, current availability and disabled-reason projection, one dispatch at most, deterministic focus return, stale-generation rejection, and a bounded receipt/result assertion with no unexpected persisted EventRecord. A disabled action dispatches zero commands. Concept simulation remains simulation and earns no handler or native-wiring credit.
+Each route-only action carries `effect=route_only` and `owner_operation_authorized=false`. All eleven rows require stable role/name, keyboard and pointer parity, current availability and disabled-reason projection, one dispatch at most, deterministic focus return, stale-generation rejection, and a bounded receipt/result assertion with no unexpected persisted EventRecord. A disabled action dispatches zero commands. Concept simulation remains simulation and earns no handler or native-wiring credit.
 
 Under DL-041, the DRY default-guard toggle may use the existing preview/apply transaction sequence only after the exact owner-key-to-valid-setting-ID and writer mapping is proven; until then, `owner_contract_missing` disables mutation dispatch and setting writes. `cmd.settings.agent_rules.dry_method_default_guard.set` is retired source lineage and must not have a primary production row, handler or dispatch alias. The selected future event name is `settings.updated`, preserving `app.agent_rules.dry_method_default_guard` and the current result `transaction_id` plus its request/Project/revision/receipt joins. This naming decision does not change current transaction `expected_event_types=[]` before independent Event Authority admission, revive the obsolete per-setting production row, or establish an alias from `settings.agent_rules.dry_method_default_guard.updated`.
 
@@ -950,7 +951,7 @@ unit_type: wiring_contract
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: >-
-  The Settings UI exposes exactly five canonical command boundaries and five route-only Onboarding, Guided Tour,
+  The Settings UI exposes exactly five canonical command boundaries and six route-only Onboarding, Guided Tour,
   and Doctor actions. Every row binds one Settings-owned target, one central command, one request/result or exact-return
   contract, one availability/disabled projection, deterministic focus return, and no fabricated owner operation,
   EventRecord, dispatcher, or handler claim.
@@ -960,12 +961,12 @@ depends_on: [CS-069, SSYS-018, SSYS-019, SSYS-022, UIW-013]
 unblocks: []
 acceptance_criteria:
   - The command census is exactly cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, and cmd.settings.export with their Settings-owned request/result pairs.
-  - The route-only census is exactly settings.onboarding.open, settings.onboarding.run_again, settings.guided_tour.replay, settings.doctor.open, and settings.doctor.remediation.open, each dispatching cmd.settings.open with its frozen manager/detail target.
+  - The route-only census is exactly settings.onboarding.open, settings.onboarding.run_again, settings.guided_tour.resume, settings.guided_tour.replay, settings.doctor.open, and settings.doctor.remediation.open, each dispatching cmd.settings.open with its frozen manager/detail target.
   - All open and specialized route actions return through the one canonical pm.settings_route_return.v1 contract.
-  - Route-only actions authorize no Onboarding run, Guided Tour replay, Doctor probe, or remediation operation; disabled actions dispatch nothing.
+  - Route-only actions authorize no Onboarding run, Guided Tour resume or replay, Doctor probe, or remediation operation; disabled actions dispatch nothing.
   - Declared handler destinations, schemas, production-intent rows, and concept simulation do not prove executable handlers or native wiring.
   - Pointer/keyboard parity, accessibility, focus return, stale rejection, exact dispatch count, receipt/result, and no-unregistered-event behavior are required before production credit.
-validation_surfaces: [Plans/settings_system_contract_fixtures.json, Plans/Wiring_Matrix.production.json, future Settings ten-row command/action census, handler-absence, stale-return, accessibility, and no-unregistered-event fixtures]
+validation_surfaces: [Plans/settings_system_contract_fixtures.json, Plans/Wiring_Matrix.production.json, future Settings eleven-row command/action census, handler-absence, stale-return, accessibility, and no-unregistered-event fixtures]
 risk_class: settings_ui_action_owner_or_return_drift
 reasoning_tier: high
 context_scope: settings_commands_and_route_only_actions
@@ -976,10 +977,10 @@ source_lineage:
   - Plans/Settings_System.md#SSYS-019
   - Plans/Settings_System.md#SSYS-022
   - source_ref:chat:settings-reference-review-canon-closure-2026-08-31
-preserved_exact_tokens: [cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, cmd.settings.export, settings.onboarding.open, settings.onboarding.run_again, settings.guided_tour.replay, settings.doctor.open, settings.doctor.remediation.open, pm.settings_route_return.v1, owner_operation_authorized=false]
+preserved_exact_tokens: [cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, cmd.settings.export, settings.onboarding.open, settings.onboarding.run_again, settings.guided_tour.resume, settings.guided_tour.replay, settings.doctor.open, settings.doctor.remediation.open, pm.settings_route_return.v1, owner_operation_authorized=false]
 negative_constraints:
   - Do not mint a command or alias for a route-only UI action.
-  - Do not execute Onboarding, Guided Tour, Doctor probe, or remediation work from a Settings route action.
+  - Do not execute Onboarding, Guided Tour resume or replay, Doctor probe, or remediation work from a Settings route action.
   - Do not claim a runtime handler from a declared handler path, schema, static wiring row, or concept simulation.
   - Do not emit or infer an unregistered EventRecord.
 owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Commands_System.md, Plans/Settings_System.md, Plans/Wiring_Matrix.production.json]

@@ -8,10 +8,29 @@
   const O55 = window.O55, U = O55.util, T = (k, v) => O55.t(k, v), M = O55.motion;
   const TR = O55.tour = { defs: [], byId: {}, running: false };
   const KEY = 'tour', ROOT = 'pm-o55-tour';
-  /* Concept-only restoration basis lives in memory. The durable checkpoint contains a bounded reference and
-     owner identities, never composer text, inline layout or per-step DOM snapshots. A reload without the basis
-     stays unavailable until the person explicitly acknowledges recovery. */
-  const recovery = new Map();
+  /* The restoration basis, by snapshot ref. The durable checkpoint (KEY) holds only that ref and owner identities.
+     The basis itself stands in for the layout owner's snapshot store: the Home layout, the dashboard's cards, the
+     page, thread, persona and explanation mode, kept in its own record so a reload can still resume the tour and
+     put the layout back. The composer's text stays in memory only; after a reload the composer is left as it is. */
+  const BASIS = 'pm.o55.tour-basis.v1';
+  const live = new Map();
+  const readBasis = () => { try { const raw = localStorage.getItem(BASIS); return raw ? JSON.parse(raw) : null; } catch (_) { return null; } };
+  const recovery = {
+    get(ref) {
+      if (!ref) return undefined;
+      if (live.has(ref)) return live.get(ref);
+      const kept = readBasis();
+      return kept && kept.ref === ref && kept.snap ? Object.assign({}, kept.snap, { draft: null }) : undefined;
+    },
+    has(ref) { return !!recovery.get(ref); },
+    set(ref, snap) {
+      live.set(ref, snap);
+      const kept = Object.assign({}, snap); delete kept.draft;
+      try { localStorage.setItem(BASIS, JSON.stringify({ ref, snap: kept })); } catch (_) {}
+    },
+    delete(ref) { live.delete(ref); const kept = readBasis(); if (kept && kept.ref === ref) { try { localStorage.removeItem(BASIS); } catch (_) {} } },
+    clear() { live.clear(); try { localStorage.removeItem(BASIS); } catch (_) {} }
+  };
   const st = TR.st = { sess: null, root: null, step: null, advancing: false, show: null, hole: null, spring: null, poll: null, raf: 0, snap: null, missingSince: 0, tips: 'normal', paused: false, entries: {}, rewinding: false, entering: false, ending: false, pendingBack: false, seq: 0 };
   const CHAPTERS = ['ask', 'workspace', 'plan'];
   TR.CHAPTERS = CHAPTERS;
@@ -778,44 +797,50 @@
       if (action === 'retry') TR.retryRestore();
       if (action === 'restart') TR.acknowledgeRecovery({ acknowledged: true, ownerReconciled: true }); };
   }
-  function validResume(saved, requestedProject) {
+  /* Where a saved tour picks up: its own step, or the earliest completed action whose owner predicate no longer
+     holds (a reload can undo what a step did). -1 when it cannot resume at all: no basis, another Project, or the
+     thread it would go back to is gone. */
+  function resumeIndex(saved, requestedProject) {
     if (!saved || saved.v !== 2 || saved.status !== 'running' || !recovery.has(saved.snapshot_ref) ||
         !Number.isInteger(saved.index) || saved.index < 0 || saved.index >= TR.defs.length || !Array.isArray(saved.done) ||
-        saved.done.some((id) => !TR.byId[id]) || (requestedProject && saved.project !== requestedProject)) return false;
+        saved.done.some((id) => !TR.byId[id]) || (requestedProject && saved.project !== requestedProject)) return -1;
     const basis = recovery.get(saved.snapshot_ref);
     const demo = window.PM_DEMO;
     if (saved.thread_ref !== basis.thread || saved.page_ref !== basis.page ||
-        (basis.thread && !(demo && demo.state && demo.state.chat && demo.state.chat.threads[basis.thread]))) return false;
-    /* A completed action is only trusted while its current owner predicate still holds. A changed Project,
-       missing thread or invalidated step result restarts guidance from the current owner state. */
+        (basis.thread && !(demo && demo.state && demo.state.chat && demo.state.chat.threads[basis.thread]))) return -1;
+    /* A completed action is only trusted while its current owner predicate still holds; guidance goes back to the
+       earliest one that does not. */
     const projected = Object.assign({}, st, { sess: saved, snap: basis });
-    return saved.done.every((id) => { const step = TR.byId[id]; if (step.index >= saved.index || step.kind !== 'action' || !step.done) return true;
-      try { return !!step.done(projected); } catch (_) { return false; } });
+    return saved.done.reduce((at, id) => { const step = TR.byId[id]; if (step.index >= saved.index || step.kind !== 'action' || !step.done) return at;
+      let holds = false; try { holds = !!step.done(projected); } catch (_) {}
+      return holds ? at : Math.min(at, step.index); }, saved.index);
   }
 
   /* ------------------------------------------------------------------ lifecycle */
+  /* start({fresh}) starts over: the last run (running, waiting on its restore, or saved) is put away first and
+     the tour begins at step one. start({}) picks up a saved run where it stopped, or begins one when there is
+     none; a saved run that can no longer pick up (another Project, its thread gone) begins again, and says so. */
   TR.start = async function start(o) {
     o = o || {};
-    if (o.fresh && TR.running) { const result = await end('skipped', false, { silent: true }); if (result.status === 'restore-pending') return false; }
+    if (o.fresh) await TR.reset({ silent: true, force: true });
+    else if (TR.running) { if (st.sess && st.sess.status === 'restore-pending') showRecovery(O55.store.get(KEY, null)); return true; }
     if (O55.S && O55.S.open) O55.ui.close('done');
-    const saved = O55.store.get(KEY, null);
-    if (TR.hasUnresolved() && saved.status !== 'running') {
-      showRecovery(saved);
-      return false;
+    const saved = o.fresh ? null : O55.store.get(KEY, null);
+    if (saved && saved.status === 'restore-pending') { showRecovery(saved); return false; }
+    const at = saved && saved.status === 'running' ? resumeIndex(saved, o.project || null) : -1;
+    const resume = at >= 0;
+    if (saved && !resume) {
+      /* the layout the interrupted run left behind is never taken as the new starting point: what of its basis is
+         still there goes back first, and the notice says when the earlier layout could not be put back */
+      const interrupted = ['running', 'resume-unavailable'].includes(saved.status);
+      const basis = interrupted ? recovery.get(saved.snapshot_ref) : null;
+      let back = false;
+      if (basis) { try { const res = await restore(basis, false); back = res.layout !== 'failed' && res.widgets !== 'failed'; } catch (_) {} }
+      await TR.reset({ silent: true, force: true });
+      if (interrupted) O55.pageToast(T(back ? 'tour.resumeFresh' : 'tour.resumeFreshLost'), 6000);
     }
-    if (saved && saved.status === 'running' && saved.v !== 2) {
-      const bounded = { v: 2, status: 'resume-unavailable', index: Number.isInteger(saved.index) ? saved.index : 0,
-        done: Array.isArray(saved.done) ? saved.done.filter((id) => !!TR.byId[id]) : [], project: saved.project || null,
-        snapshot_ref: 'legacy-snapshot-unavailable', thread_ref: saved.snap && saved.snap.thread || null };
-      O55.store.set(KEY, bounded); showRecovery(bounded); return false;
-    }
-    if (saved && saved.v === 2 && saved.status === 'running' && (o.fresh || !recovery.has(saved.snapshot_ref) || !validResume(saved, o.project || null))) {
-      saved.status = 'resume-unavailable'; O55.store.set(KEY, saved); showRecovery(saved);
-      return false; /* a reload cannot infer or silently replace the original owner restoration basis */
-    }
-    const resume = !o.fresh && validResume(saved, o.project || null);
     build(); syncTheme();
-    st.sess = resume ? { status: 'running', index: saved.index, done: saved.done || [], started: saved.started, project: saved.project || o.project || null, chatTucked: !!saved.chatTucked } : { status: 'running', index: 0, done: [], started: new Date().toISOString(), project: o.project || null };
+    st.sess = resume ? { status: 'running', index: at, done: saved.done.filter((id) => TR.byId[id].index < at), started: saved.started, project: saved.project || o.project || null, chatTucked: !!saved.chatTucked } : { status: 'running', index: 0, done: [], started: new Date().toISOString(), project: o.project || null };
     st.tips = (resume && saved.tips) || 'normal';
     /* a new run starts clean: nothing the last run sent, answered or planned counts as done */
     if (!resume) { if (TR.chat && TR.chat.reset) TR.chat.reset(); if (TR.practice && TR.practice.reset) TR.practice.reset(); }
@@ -887,7 +912,7 @@
       st.sess.restored = res; st.sess.status = 'restore-pending';
       st.sess.requestedStatus = status;
       st.sess.requestedKeep = !!keep;
-      O55.store.set(KEY, { v: 2, status: 'restore-pending', requested_status: status, index: st.sess.index,
+      O55.store.set(KEY, { v: 2, status: 'restore-pending', requested_status: status, requested_keep: !!keep, index: st.sess.index,
         done: st.sess.done.slice(0, TR.defs.length), project: st.sess.project, snapshot_ref: st.snapshotRef,
         thread_ref: st.snap && st.snap.thread, page_ref: st.snap && st.snap.page, restored: res });
       O55.pageToast(T('tour.restoreFailed'));
@@ -895,20 +920,27 @@
       emit('end', { status: 'restore-pending', keep: !!keep });
       return { ...res, status: 'restore-pending' };
     }
-    TR.running = false;
     /* Chat tucked away by the tour on a phone-width window comes back either way; the learner never hid it */
     if (keep && st.sess.chatTucked && window.PM_HOME_WORKSPACE) { try { window.PM_HOME_WORKSPACE.setSurfaceVisible('chat', true, 'cmd.panel.switch'); } catch (_) {} }
+    standDown(status, keep, res, !(o && o.silent) && closing.sound);
+    O55.store.set(KEY, { v: 2, status, done: st.sess.done, finished: new Date().toISOString(), keep: !!keep, restored: res });
+    return res;
+  }
+  /* the tour leaves the page: its chat adapter, its basis, its recovery note and its root go, and the clock runs */
+  function standDown(status, keep, res, sound) {
+    TR.running = false;
     TR.chat && TR.chat.uninstall();
-    st.sess.status = status; st.sess.restored = res; O55.store.set(KEY, { v: 2, status, done: st.sess.done, finished: new Date().toISOString(), keep: !!keep, restored: res });
+    if (st.sess) { st.sess.status = status; st.sess.restored = res; }
     recovery.delete(st.snapshotRef);
     const recoveryBox = document.getElementById('o55-tour-recovery'); if (recoveryBox) recoveryBox.remove();
     document.documentElement.removeAttribute('data-o55-tour');
     if (st.pausedClock && window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.resume) { try { window.PM_DEMO.clock.resume(); } catch (_) {} }
-    st.root.classList.add('o55t-closing'); if (!(o && o.silent) && closing.sound) O55.sound.play(closing.sound);
+    st.pausedClock = false;
+    if (!st.root) return;
+    st.root.classList.add('o55t-closing'); if (sound) O55.sound.play(sound);
     emit('end', { status, keep: !!keep });
     /* (a new run started inside these 360 ms keeps its root, its step and its spotlight) */
     M.after(360, () => { st.root.classList.remove('o55t-closing'); if (TR.running) return; st.root.hidden = true; st.step = null; st.hole = null; st.target = null; emit('closed', {}); });
-    return res;
   }
   /* run fn with the page's toasts silenced (only when asked): what the tour's own restore raises is dropped */
   async function hushed(on, fn) {
@@ -943,31 +975,52 @@
     TR.landing && TR.landing();
     window.dispatchEvent(new CustomEvent('o55:tour', { detail: { type: 'finished', keep: !!keep, restored: res } }));
   }
-  /* Run Onboarding Again: the tour starts over too. A running tour ends (the layout comes back); its saved progress,
-     its resume chip and what it remembers of the last run go. */
+  /* Run Onboarding Again and Start over: the tour starts over too. A running tour ends (the layout comes back); its
+     saved progress, its basis, its resume chip, its recovery note and what it remembers of the last run go. With
+     force a layout that could not be put back does not hold the reset: the tour stands down and the person is told
+     where to reset the layout. */
   TR.reset = async function reset(o) {
-    const saved = O55.store.get(KEY, null);
-    if (TR.hasUnresolved()) {
-      if (saved.status === 'running') { saved.status = 'resume-unavailable'; O55.store.set(KEY, saved); }
-      if (!o || !o.acknowledged || !o.ownerReconciled) { showRecovery(saved); return false; }
+    o = o || {};
+    if (TR.running) {
+      const result = await end('skipped', false, o);
+      if (result.status === 'restore-pending') { if (!o.force) return result; standDown('skipped', false, result, false); }
     }
-    if (TR.running) { const result = await end('skipped', false, o); if (result.status === 'restore-pending') return result; }
-    O55.store.clear(KEY);
+    const saved = O55.store.get(KEY, null);
+    if (saved && saved.snapshot_ref) recovery.delete(saved.snapshot_ref);
+    O55.store.clear(KEY); recovery.clear();
     st.entries = {};
     if (TR.chat && TR.chat.reset) TR.chat.reset();
     if (TR.practice && TR.practice.reset) TR.practice.reset();
-    const chip = document.getElementById('o55-tourchip'); if (chip) chip.remove();
+    ['o55-tourchip', 'o55-tour-recovery'].forEach((id) => { const n = document.getElementById(id); if (n) n.remove(); });
+    return true;
   };
   TR.skip = skip; TR.finish = finish; TR.go = (id) => goStep(TR.byId[id].index);
-  TR.hasUnresolved = () => { const saved = O55.store.get(KEY, null); return !!(saved &&
-    (['restore-pending', 'resume-unavailable'].includes(saved.status) ||
-      (saved.status === 'running' && (saved.v !== 2 || !validResume(saved, null))))); };
-  TR.retryRestore = () => st.sess && st.sess.status === 'restore-pending' ? (st.sess.requestedStatus === 'done' ? finish(!!st.sess.requestedKeep) : skip()) : null;
+  /* only a layout that could not be put back holds anything up; an interrupted run simply resumes or begins again */
+  TR.hasUnresolved = () => { const saved = O55.store.get(KEY, null); return !!(saved && saved.status === 'restore-pending'); };
+  /* what Settings and the resume chip offer: {running} while the tour is open, {step, total} when a saved run can
+     pick up, else null */
+  TR.resumable = () => {
+    if (TR.running) return { running: true, step: st.sess ? st.sess.index + 1 : 1, total: TR.defs.length };
+    const saved = O55.store.get(KEY, null), at = saved && saved.status === 'running' ? resumeIndex(saved, null) : -1;
+    return at >= 0 ? { running: false, step: at + 1, total: TR.defs.length } : null;
+  };
+  TR.resume = (o) => TR.start(Object.assign({}, o || {}, { fresh: false }));
+  TR.restart = (o) => TR.start(Object.assign({}, o || {}, { fresh: true }));
+  /* Retry restore: in the same page the tour's own end runs again; after a reload the saved basis is put back */
+  TR.retryRestore = async () => {
+    if (st.sess && st.sess.status === 'restore-pending' && TR.running) return st.sess.requestedStatus === 'done' ? finish(!!st.sess.requestedKeep) : skip();
+    const saved = O55.store.get(KEY, null);
+    if (!saved || saved.status !== 'restore-pending' || !recovery.has(saved.snapshot_ref)) return null;
+    const res = await restore(recovery.get(saved.snapshot_ref), !!saved.requested_keep);
+    if (res.layout === 'failed' || res.widgets === 'failed' || !res.chat || res.chat.status !== 'restored') { O55.pageToast(T('tour.restoreFailed')); return { ...res, status: 'restore-pending' }; }
+    await TR.reset({ silent: true });
+    O55.store.set(KEY, { v: 2, status: saved.requested_status || 'skipped', finished: new Date().toISOString(), keep: !!saved.requested_keep, restored: res });
+    O55.pageToast(T('tour.skipped'));
+    return res;
+  };
   TR.acknowledgeRecovery = function (o) {
-    const saved = O55.store.get(KEY, null), home = window.PM_HOME_WORKSPACE, chat = window.PM_DEMO && window.PM_DEMO.state && window.PM_DEMO.state.chat;
-    if (!saved || !['restore-pending', 'resume-unavailable'].includes(saved.status) || !o || o.acknowledged !== true || o.ownerReconciled !== true || !home || !home.layout || !chat) return false;
-    O55.store.clear(KEY); recovery.delete(saved.snapshot_ref);
-    const box = document.getElementById('o55-tour-recovery'); if (box) box.remove();
+    const saved = O55.store.get(KEY, null);
+    if (!saved || !o || o.acknowledged !== true) return false;
     return TR.start({ fresh: true, project: saved.project });
   };
   TR.state = () => ({ running: TR.running, step: st.step && st.step.id, done: st.sess ? st.sess.done.slice() : [], paused: st.paused, tips: st.tips });

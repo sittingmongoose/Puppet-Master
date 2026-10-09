@@ -366,6 +366,28 @@ PATCHES = [
     ('<span class="setup-label">Guided Tour</span><span class="setup-meta">Learn the live workspace with a local teacher</span>',
      '<span class="setup-label">Replay Guided Tour</span><span class="setup-meta">Try the main actions again with a local example</span>',
      'settings essential setup: tour row'),
+    # Settings Home › Essential setup: Run Onboarding Again, Resume the Guided Tour and Start the Guided Tour over
+    # (window.O55TourSettingsRows in src/js/95-boot.js; the two rows above stay as its fallback).
+    ('<span class="setup-meta">Try the main actions again with a local example</span></span>${icon(\'chevron\')}</button>\n',
+     '<span class="setup-meta">Try the main actions again with a local example</span></span>${icon(\'chevron\')}</button>`}\n',
+     'settings essential setup: tour rows end'),
+    ('          <button class="setup-row" data-action="replay-onboarding" data-source-surface="home_menu" data-ui-action-id="settings.onboarding.run_again">',
+     '          ${window.O55TourSettingsRows ? window.O55TourSettingsRows(icon) : `<button class="setup-row" data-action="replay-onboarding" data-source-surface="home_menu" data-ui-action-id="settings.onboarding.run_again">',
+     'settings essential setup: tour rows start'),
+    ("      case 'start-guided-tour': if(window.PM7_GUIDED_TOUR&&typeof window.PM7_GUIDED_TOUR.start==='function')window.PM7_GUIDED_TOUR.start({source:'settings'});",
+     "      case 'resume-guided-tour': if(window.PM7_GUIDED_TOUR&&typeof window.PM7_GUIDED_TOUR.resume==='function'){window.PM7_GUIDED_TOUR.resume({source:'settings'});return;}\n"
+     "      case 'restart-guided-tour': if(window.PM7_GUIDED_TOUR&&typeof window.PM7_GUIDED_TOUR.restart==='function'){window.PM7_GUIDED_TOUR.restart({source:'settings'});return;}\n"
+     "      case 'start-guided-tour': if(window.PM7_GUIDED_TOUR&&typeof window.PM7_GUIDED_TOUR.start==='function')window.PM7_GUIDED_TOUR.start({source:'settings'});",
+     'settings: resume and restart tour actions'),
+    ("      'settings.guided_tour.replay':['Replay guided tour','Learn the workspace again step by step.'],",
+     "      'settings.guided_tour.resume':['Resume the Guided Tour','Pick up the tour at the step where it stopped.'],\n"
+     "      'settings.guided_tour.replay':['Start the Guided Tour over','Begin the tour again from its first step.'],",
+     'hover label tour resume and restart'),
+    # Settings search › Restore home layout pointed its detail panel at "restore-defaults", which is not a setting on
+    # App & Input, so the panel opened empty. It now opens the real row and asks the Reset Home layout question.
+    ("      ['Restore home layout', 'Open structured desktop and window settings', 'general', 'app-input', 'restore-defaults'],",
+     "      ['Restore home layout', 'Put Home panels, docks and the terminal back in their default places', 'general', 'app-input', 'general.startup.reset-home-layout'],",
+     'settings search: restore home layout target'),
     ("'settings.onboarding.run_again':['Run setup again','Review your setup choices from the beginning.']",
      "'settings.onboarding.run_again':['Run Onboarding Again','Go through the first-time setup again.']",
      'hover label settings.onboarding.run_again'),

@@ -115,6 +115,15 @@
       "effect": "route_only",
       "owner_operation_authorized": false
     },
+    "settings.guided_tour.resume": {
+      "command_id": "cmd.settings.open",
+      "request_schema_id": "pm.settings_route_request.v1",
+      "result_schema_id": "pm.settings_route_return.v1",
+      "target_manager_id": "onboarding-guided-tour",
+      "target_detail_id": "resume-guided-tour",
+      "effect": "route_only",
+      "owner_operation_authorized": false
+    },
     "settings.guided_tour.replay": {
       "command_id": "cmd.settings.open",
       "request_schema_id": "pm.settings_route_request.v1",

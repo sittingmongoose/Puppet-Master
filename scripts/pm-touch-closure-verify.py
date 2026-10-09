@@ -362,6 +362,7 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     route_actions = {
         "settings.onboarding.open",
         "settings.onboarding.run_again",
+        "settings.guided_tour.resume",
         "settings.guided_tour.replay",
         "settings.doctor.open",
         "settings.doctor.remediation.open",
@@ -1868,8 +1869,11 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # 2026-09-29 tour re-point (DL-126, ledger pldg-20260927-005 q-018): one
     # blocked TCP-TOUR-CHAT row for cmd.chat.eli5.explain_reply (674 -> 675); it
     # stays out of production wiring, so no entry, exclusion or alias changes.
+    # 2026-10-09 Settings route-only resume action (SSYS-019, UIW-014, CS-069): one
+    # partial TCP-SET-ROUTE ui_action row, TOUCH-SET-016 (675 -> 676); no profile,
+    # exclusion, alias, production-intent entry or native proof is added.
     exact_resolved_denominators = {
-        "row_count": 675,
+        "row_count": 676,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
         "profile_count": 135,

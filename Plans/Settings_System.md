@@ -12,7 +12,7 @@ Settings is a project-bound system with three coordinated layers:
 2. the 828 ordinary setting rows in `Plans/settings_inventory.json`; and
 3. the full manager system for setup, policy, defaults, human-readable status, diagnostics, repair entry points, and owner-routed operational work.
 
-`Plans/settings_system_contracts.schema.json` is the strict Draft 2020-12 shape owner for Settings-owned records. `Plans/settings_system_contract_fixtures.json` freezes the five Settings command contracts, five route-only Onboarding/Guided Tour/Doctor UI actions, the 38-entry manager registry, three named visible-state projections, exact dispositions for all 80 older-packet command tokens, and positive/negative contract fixtures. Those machine files are canonical Plans contracts but remain schema/fixture evidence only; they do not prove a registered handler, production wiring, persistence execution, native rendering, or certification.
+`Plans/settings_system_contracts.schema.json` is the strict Draft 2020-12 shape owner for Settings-owned records. `Plans/settings_system_contract_fixtures.json` freezes the five Settings command contracts, six route-only Onboarding/Guided Tour/Doctor UI actions, the 38-entry manager registry, three named visible-state projections, exact dispositions for all 80 older-packet command tokens, and positive/negative contract fixtures. Those machine files are canonical Plans contracts but remain schema/fixture evidence only; they do not prove a registered handler, production wiring, persistence execution, native rendering, or certification.
 
 This owner supersedes prior Settings presentation and ordinary-persistence clauses in `Plans/FinalGUISpec.md`, including the visible search-first shelves/bloom shell in F3-432 and the universal/global or inheritance implications in F3-438, F3-440, F3-442, F3-510, and F3-511. It retains the canonical 828-ID inventory, the useful F3-433 fuzzy matching behavior, live owner-derived status, typed row renderers, eight built-in themes, and owner-routed deep links where this document incorporates them.
 
@@ -653,9 +653,11 @@ canonical_text: >-
   Settings exposes Readiness and Setup as a dependency projection and resumable route surface only. Product Onboarding,
   Installation and Deployment, and Server Claim and Bootstrap remain three coordinated owner flows under SMPFS-146;
   Settings may launch or resume them with exact Project, origin, target, operation, and continuation context but cannot
-  merge or own their state machines. `settings.onboarding.open`, `settings.onboarding.run_again`, and
-  `settings.guided_tour.replay` are route-only UI actions over `cmd.settings.open`; they target the
-  `onboarding-guided-tour` manager with exact detail IDs `overview`, `run-onboarding-again`, and `replay-guided-tour`.
+  merge or own their state machines. `settings.onboarding.open`, `settings.onboarding.run_again`,
+  `settings.guided_tour.resume`, and `settings.guided_tour.replay` are route-only UI actions over `cmd.settings.open`;
+  they target the `onboarding-guided-tour` manager with exact detail IDs `overview`, `run-onboarding-again`,
+  `resume-guided-tour`, and `replay-guided-tour`. Resume Guided Tour is available only while the Guided Tour owner
+  reports a checkpoint that can resume, and is otherwise disabled with that reason.
   The authorized operational Doctor workspace is a full K3 Settings presentation over the N2-151/N2-152/N2-153
   registry, router, and normalized cached projections. It may render the cached-first overview, stable groups and filters,
   scoped `Check now` requests, progressive `Details` / `Logs` / `Receipt`, and one owner-routed remediation per finding.
@@ -670,7 +672,7 @@ depends_on: [SSYS-012, SSYS-013, SMPFS-146, N2-151, N2-152, N2-153]
 unblocks: [SSYS-015, SSYS-017]
 acceptance_criteria:
   - Each dependency identifies its retained owner, currentness, evidence, route, and continuation.
-  - The five route-only UI action IDs validate against the machine fixture and preserve exact return context.
+  - The six route-only UI action IDs validate against the machine fixture and preserve exact return context.
   - The operational Doctor workspace renders cached-first normalized findings, scoped-check pending state, lazy bounded redacted Details/Logs/Receipt, and one canonical owner remediation without giving Settings probe or mutation authority.
   - Closing, filtering, refreshing, or returning from remediation preserves the stable finding identity and exact focus/currentness context; route success alone cannot mark remediation complete.
   - UI completion, reachability, fixture data, or a spinner cannot produce readiness or Doctor success.
@@ -685,7 +687,7 @@ source_lineage:
   - Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-146
   - Plans/newtools.md#N2-151
   - source_ref:chat:settings-canonical-owner-lane-2026-08-31
-preserved_exact_tokens: [Product Onboarding, Installation and Deployment, Server Claim and Bootstrap, operational Doctor workspace, Guided Tour, Check now, Details, Logs, Receipt, settings.onboarding.run_again, settings.guided_tour.replay, settings.doctor.remediation.open, continuation, domain_owner_only, no private mutation]
+preserved_exact_tokens: [Product Onboarding, Installation and Deployment, Server Claim and Bootstrap, operational Doctor workspace, Guided Tour, Check now, Details, Logs, Receipt, settings.onboarding.run_again, settings.guided_tour.resume, settings.guided_tour.replay, settings.doctor.remediation.open, continuation, domain_owner_only, no private mutation]
 negative_constraints: [Do not merge the three onboarding flows., Do not run Doctor probes or mutations from Settings., Do not claim readiness from UI completion or route success., Do not treat the authorized full Doctor presentation as Settings-owned check truth or repair authority., Do not build a parallel Product Onboarding or Guided Tour state machine in Settings.]
 owner_hints: [Plans/Settings_System.md, Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/newtools.md]
 ```
@@ -881,7 +883,8 @@ canonical_text: >-
   route, focus, query, scroll anchor, continuation ID/generation, expiry, close policy, and Escape order:
   close_transient, close_details, clear_query, return_to_opener. A stale generation or changed context rejects return and
   preserves the current surface. The route-only UI actions settings.onboarding.open, settings.onboarding.run_again,
-  settings.guided_tour.replay, settings.doctor.open, and settings.doctor.remediation.open all dispatch cmd.settings.open;
+  settings.guided_tour.resume, settings.guided_tour.replay, settings.doctor.open, and settings.doctor.remediation.open
+  all dispatch cmd.settings.open;
   they authorize navigation only and never execute Onboarding, tour, probe, repair, or remediation work.
 gui_related: true
 gui_classification_reason: This unit defines visible Settings navigation, deterministic close/Escape behavior, and focus/query/scroll restoration.
@@ -890,7 +893,7 @@ unblocks: [SSYS-017]
 acceptance_criteria:
   - Setting and manager routes are mutually exclusive and use stable IDs rather than labels or DOM selectors.
   - Exact return restores focus, query, and scroll only when continuation generation and context still match.
-  - The five route-only UI actions use the frozen manager/detail targets and authorize no owner operation.
+  - The six route-only UI actions use the frozen manager/detail targets and authorize no owner operation.
   - Visible Back/Close presentation remains host/K3-controlled while the semantic Back/Close/Escape contract is mandatory.
 validation_surfaces: [Plans/settings_system_contracts.schema.json, Plans/settings_system_contract_fixtures.json, future navigation and stale-return fixtures]
 risk_class: settings_route_or_return_context_drift
@@ -902,7 +905,7 @@ source_lineage:
   - source_ref:chat:settings-route-contract-lane-2026-08-31
   - Plans/Settings_System.md#SSYS-006
   - Plans/Settings_System.md#SSYS-014
-preserved_exact_tokens: [settings.onboarding.open, settings.onboarding.run_again, settings.guided_tour.replay, settings.doctor.open, settings.doctor.remediation.open, close_transient, close_details, clear_query, return_to_opener]
+preserved_exact_tokens: [settings.onboarding.open, settings.onboarding.run_again, settings.guided_tour.resume, settings.guided_tour.replay, settings.doctor.open, settings.doctor.remediation.open, close_transient, close_details, clear_query, return_to_opener]
 negative_constraints: [Do not route by visible label., Do not restore into a changed Project or topology., Do not treat a route-only action as owner work.]
 owner_hints: [Plans/Settings_System.md, Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md]
 ```
@@ -1199,7 +1202,7 @@ Each descriptor freezes title, purpose, owner refs or named owner gap, dispositi
 
 ### 3.6 Events and command boundary
 
-Settings semantically registers the five command IDs in SSYS-018 and the five route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; until they do, the action is disabled with `command_not_registered` or `handler_unavailable` and dispatches nothing. Settings registers no EventRecord family. If a retained owner requires persistence through EventRecord, its family must be independently admitted through Event Authority; absence remains `missing_event_registration`, never success.
+Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; until they do, the action is disabled with `command_not_registered` or `handler_unavailable` and dispatches nothing. Settings registers no EventRecord family. If a retained owner requires persistence through EventRecord, its family must be independently admitted through Event Authority; absence remains `missing_event_registration`, never success.
 
 Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its `request_id`, `project_id`, `changed_setting_ids`, revisions and `receipt_ref` remain the current transaction join, not new event fields admitted here. The setting key does not override Settings/Storage scope or permit a fabricated application-scoped transaction. It does not match the current ordinary `setting_id` grammar and is not automatically the inventory ID `memory.assembly.dry-method-guard`; do not insert the owner key into `changed_setting_ids`, infer that alias, or claim the writer mapping is closed without explicit owner evidence. Until that key-to-valid-setting-ID and writer mapping is proven, the toggle remains disabled with the existing `owner_contract_missing` reason and dispatches no mutation command and performs no setting write. `cmd.settings.agent_rules.dry_method_default_guard.set` remains retired with no dispatch alias. Historical `settings.agent_rules.dry_method_default_guard.updated` records remain read-only source/history lineage until an explicit payload-compatible migration is separately established. This approved naming choice registers no EventRecord and supplies no missing producer, schema or checkpoint authority.
 
@@ -1302,7 +1305,7 @@ Node compilation remains blocked for any affected unit while its retained owner 
 Deferred:
 
 - normalize `Plans/settings_inventory.json` and its schema so historical global/account/provider/run scope vocabulary cannot be misread as non-Project persistence authority;
-- register the five accepted Settings commands and five route-only UI actions without token drift in Commands, Catalog, UI Wiring, production Wiring Matrix, handlers, selectors, reverse wiring, and fixtures;
+- register the five accepted Settings commands and six route-only UI actions without token drift in Commands, Catalog, UI Wiring, production Wiring Matrix, handlers, selectors, reverse wiring, and fixtures;
 - admit required EventRecord families individually, if their owners require persisted events;
 - integrate the `Plans/Backup_Restore_System.md` command families through central registration, sole handlers, production wiring, storage/event admission, and runtime backup/restore drills; and
 - implement and independently verify the Rust Settings system on the Slint desktop and the Leptos web client (DL-139).
@@ -2539,6 +2542,8 @@ A row whose meaning depends on another switch or choice shows only while that sw
 ### 6. Owner routes and flows instead of a generic action panel
 
 No Settings action opens the generic "What this does" preview panel whose button only reported that the action was requested. An inventory action row does one of two things. It routes to the owner surface that does the job and lands on the exact control: `ai.accounts.github-connect` to Source Control; `ai.usage.quota-management` to Providers & Accounts › Usage & budgets; `personas.library.persona-manager` to Personas; `general.interaction.settings-search` (Search all settings) to the Settings search box (`settings.search.focus`); `general.interaction.dashboard-widgets` (Choose widgets) to the Home dashboard's own widget picker, since a typed list of widget names could never be valid; `general.startup.reset-home-layout` (Reset the layout) to Home's own Reset Layout (`cmd.workspace_layout.reset`) after one plain question naming what moves back and what is kept; a per-account or per-service row, including every API key row, to its account or service. Or it runs one small flow bound to the owner's command and availability: a form (fields to fill in; non-secret answers are kept, secrets are only marked as saved in the keychain), a check (steps run in order with an outcome and the time of the last run), a confirm (a plain question with the consequence, marked dangerous when it removes something), a list (things to read or act on, each with its own action or Remove) or an order (an ordered list). A flow performs no owner operation itself: it dispatches the owner's registered command or shows the owner's unavailable reason (SSYS-015, SSYS-020), and where SSYS-013 requires a route (container, registry, publish and SCM operations) the row routes to the owner surface instead.
+
+A Settings search result for an action row, such as Restore home layout for `general.startup.reset-home-layout`, lands on that exact row and asks the row's own plain question; search never opens Details for an id that is not on the page it opens, which would draw an empty panel.
 
 Adding an MCP server, a plugin, a skill, a command, a shortcut, a persona, a crew, a Goal template, a language server, a formatter, a test profile, a debug profile, a permission profile, a server, an SSH computer or an SSH key, setting up a way in from away, moving or copying a workspace, copying, loading or saving settings, connecting a code service, setting up Git, creating a repository and contributing to another project are guided set-ups in one window over the dimmed page, in the onboarding wizard's form: the steps as a rail, one plain question per step, Back and Continue, and a click on the dimmed page never closes it. Each commits through its owner's command; the answers a row remembers are its inventory values.
 

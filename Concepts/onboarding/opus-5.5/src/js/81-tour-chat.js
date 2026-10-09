@@ -98,7 +98,9 @@
   /* ---------------------------------------------------------------- controls (real) */
   C.personaBtn = () => TR.q('.pm6-chat-personabtn');
   C.personaItem = (name) => TR.q(`.pm6-chat-personaitem[data-persona="${name}"]`);
-  C.persona = () => ((TR.q('#chatPanel .persona-label') || {}).textContent || '').trim();
+  /* the persona in use, read from the visible Chat first, else from Chat while it is hidden (a tour started on
+     Settings snapshots and restores with Chat out of sight; reading only a visible label made every Skip fail) */
+  C.persona = () => ((TR.q('#chatPanel .persona-label') || document.querySelector('#chatPanel .persona-label') || {}).textContent || '').trim();
   C.eli5Btn = () => TR.q('span.chat-toggle-btn.toggle-eli5');
   C.composer = () => TR.q('#chatPanel textarea.pm6-chat-input') || TR.q('textarea.pm6-chat-input');
   C.sendBtn = () => TR.q('#chatPanel .pm6-chat-send') || TR.q('.pm6-chat-send');
@@ -254,8 +256,9 @@
         const row = document.querySelector(`.chat-thread-item[data-thread="${C.threadId}"]`); if (row) row.remove();
         out.guided = 'removed';
       }
+      /* (a basis read back after a reload has no draft, draft null: the composer is left as it is) */
       const ta = C.composer(); if (!ta && snap.draft) return { status: 'failed', reason: 'composer_unavailable' };
-      if (ta && ta.value !== snap.draft) { ta.value = snap.draft || ''; ta.dispatchEvent(new Event('input', { bubbles: true })); }
+      if (ta && snap.draft != null && ta.value !== snap.draft) { ta.value = snap.draft; ta.dispatchEvent(new Event('input', { bubbles: true })); }
     } catch (_) { return { status: 'failed', reason: 'chat_restore_failed' }; }
     if (snap.persona && C.persona() !== snap.persona) return { status: 'failed', reason: 'persona_restore_failed' };
     if (snap.eli5 !== eli5On()) return { status: 'failed', reason: 'eli5_restore_failed' };

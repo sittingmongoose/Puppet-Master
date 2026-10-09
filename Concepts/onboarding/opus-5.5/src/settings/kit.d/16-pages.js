@@ -77,6 +77,28 @@ PM51.on('o55-home-reset', () => {
     showToast('Home layout reset', 'Everything is back in its default place.', 'success', 2600);
   });
 });
+/* Settings Home › Essential setup is drawn before the Guided Tour has loaded, and the resume row's step moves as the
+   tour runs: the tour rows (window.O55TourSettingsRows, src/js/95-boot.js) are redrawn in place when the tour boots
+   and whenever it starts, resumes, finishes or is skipped. */
+PM51.refreshTourRows = function () {
+  if (typeof window.O55TourSettingsRows !== 'function') return;
+  const first = root.querySelector('.home-panel .setup-row[data-action="replay-onboarding"]'); if (!first) return;
+  first.parentElement.querySelectorAll('.setup-row:is([data-action="start-guided-tour"],[data-action="resume-guided-tour"],[data-action="restart-guided-tour"])').forEach(r => r.remove());
+  first.outerHTML = window.O55TourSettingsRows(icon);
+};
+window.addEventListener('o55:tour', () => PM51.refreshTourRows());
+/* Settings search › Restore home layout: a quick action that names a setting opens that row (and, for a row whose
+   whole job is one action, asks its question). It used to open the detail panel for an id that is not on the page,
+   which drew an empty panel. */
+const o55QuickActionSearch = applySearchSelection;
+applySearchSelection = function (p) {
+  if (p && p.kind === 'quick-action' && p.id && findSettingGlobal(p.id) && PM51.revealSetting(p.id)) {
+    const run = String((O55R[p.id] || {}).pm51 || '').replace(/^pm51-/, '');
+    if (run && actions[run]) window.setTimeout(() => actions[run](null, null), 420);
+    return;
+  }
+  return o55QuickActionSearch(p);
+};
 
 /* ---------- Words to always accept: a real word list ------------------------------------------------------------------ */
 /* The hand row said "42 words" and its button opened a page that pointed back at the row. It is now a list of the

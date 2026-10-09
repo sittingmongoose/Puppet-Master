@@ -618,7 +618,7 @@
     O55.owners.resetOps(); O55.flow.clearInflight();
     S.env = O55.fixtures.make(O55.store.get('scenario', 'fresh'));
     O55.motion.setLowResource(!!S.env.lowResource, 'scenario');
-    if (O55.tour && O55.tour.reset) O55.tour.reset({ silent: true });
+    if (O55.tour && O55.tour.reset) O55.tour.reset({ silent: true, force: true });
   }
   /* Solid backdrop. A computer that cannot draw the dimmed app beneath at full rate (no GPU: the app's live backdrop
      blurs, paper grounds and translucent layers composited in software, one pass per frame of motion in the window)
@@ -650,7 +650,6 @@
   function flushOpen() { const m = pendingMount; if (m) { pendingMount = null; m(); } }
   function open(opts) {
     opts = opts || {};
-    if (opts.fresh && O55.tour && O55.tour.hasUnresolved && O55.tour.hasUnresolved()) { O55.tour.start({}); return false; }
     /* The scrim dims on the click, and the window is mounted on the next frame. Building it in the click's own
        turn held the first paint for most of a second, so the app sat undimmed (minor 14). The click adds one
        empty scrim and returns; the build, the inert app and the theme land on the next frame, under that dim.

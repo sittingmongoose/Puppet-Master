@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L4935-L4993
 
-Source SHA256: `eec7c52d7e287ee5f9a29140708909593230e46e320f8d26cb98401e3c0971fd`
+Source SHA256: `193828ed8a0a85fc27e834f5ab259f9f0a3aaaea2da31067d6620dd8bb079535`
 
 ---
 
@@ -22,7 +22,7 @@ The Settings family contains exactly five canonical command IDs. `Plans/Settings
 
 All five commands use the shared command identity, actor/permission, exact Project/topology context, expected revision or generation, idempotency, availability, disabled-reason, acknowledgement, and result boundaries required by their Settings schemas. `accepted` or `acknowledged` is not transaction completion. Settings registers no EventRecord family here; current wiring uses a bounded receipt/route/result disposition and must reject unexpected persisted events until Event Authority independently admits an owner family.
 
-The route-only UI actions `settings.onboarding.open`, `settings.onboarding.run_again`, `settings.guided_tour.replay`, `settings.doctor.open`, and `settings.doctor.remediation.open` are not additional commands or aliases. They dispatch `cmd.settings.open` with the exact target frozen by Settings and cannot start Onboarding, replay a tour, run a Doctor probe, or perform remediation.
+The route-only UI actions `settings.onboarding.open`, `settings.onboarding.run_again`, `settings.guided_tour.resume`, `settings.guided_tour.replay`, `settings.doctor.open`, and `settings.doctor.remediation.open` are not additional commands or aliases. They dispatch `cmd.settings.open` with the exact target frozen by Settings and cannot start Onboarding, resume or replay a tour, run a Doctor probe, or perform remediation.
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-018, ContractName:Plans/Settings_System.md#SSYS-019, ContractName:Plans/settings_system_contracts.schema.json, ContractName:Plans/settings_system_contract_fixtures.json, ContractName:Plans/UI_Wiring_Rules.md
 
@@ -35,7 +35,7 @@ status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
   Exactly five canonical cmd.settings commands are centrally registered with the Settings-owned request/result,
-  availability, disabled-reason, idempotency/currentness, receipt, and no-unregistered-event boundaries. The five
+  availability, disabled-reason, idempotency/currentness, receipt, and no-unregistered-event boundaries. The six
   Onboarding, Guided Tour, and Doctor UI actions remain route-only cmd.settings.open consumers. Declared handler
   destinations are contract targets and do not prove that a dispatcher or runtime handler exists.
 gui_related: true
@@ -46,7 +46,7 @@ acceptance_criteria:
   - The registered set is exactly cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, and cmd.settings.export.
   - Every command preserves the exact request_schema_ref and result_schema_ref owned by Plans/settings_system_contracts.schema.json; cmd.settings.open returns pm.settings_route_return.v1.
   - Preview and open write no setting value; apply and rollback settle only through pm.settings_transaction_result.v1 with owner readback; export returns a non-secret pm.settings_export_manifest.v1.
-  - The five route-only UI actions dispatch cmd.settings.open and authorize no Onboarding, Guided Tour, Doctor probe, or remediation operation.
+  - The six route-only UI actions dispatch cmd.settings.open and authorize no Onboarding, Guided Tour, Doctor probe, or remediation operation.
   - Registration, a declared handler location, static wiring, schema validation, or a concept simulation is not runtime-handler evidence; handler_unavailable remains truthful until executable proof exists.
   - No unregistered EventRecord is emitted or inferred.
 validation_surfaces: [Plans/settings_system_contract_fixtures.json, Plans/Wiring_Matrix.production.json, future Settings dispatcher, handler-absence, CAS, idempotency, restart, redaction, accessibility, and no-unregistered-event fixtures]
