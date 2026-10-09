@@ -160,7 +160,7 @@
     var px = 0, py = 0, have = false, buttons = 0, hit = null, want = null, moved = false;
     var lastHitEl = null, lastHitT = null, lastHitAt = 0;
     var hover = null, springs = new Set(), lit = new Set();
-    var running = false, lastT = 0, wasRest = false;
+    var running = false, lastT = 0, wasRest = false, visCache = null;
 
     function gestureRest() {
       var b = document.body;
@@ -327,10 +327,13 @@
         if (proxyWanted(ns.kind) && !ns.clippers) ns.clippers = clippersOf(next);
         rectsDirty = true;
       }
-      if (rectsDirty || (wasMoved && now - rectsAt > 1000)) readRects();
+      var reread = rectsDirty || (wasMoved && now - rectsAt > 1000);
+      if (reread) readRects();
       var hc = next ? candOf(next) : null;
-      var vis = null;
-      if (next && hc && proxyWanted(st(next).kind)) vis = visibleRect(st(next));
+      /* the visible part (clipping ancestors' rects) is read with the rects, never on its own in a frame */
+      if (!next || !hc || !proxyWanted(st(next).kind)) visCache = null;
+      else if (reread || enter || !visCache) visCache = visibleRect(st(next));
+      var vis = visCache;
 
       /* WRITE ----------------------------------------------------------- */
       if (kindQueue.length) flushKinds();
