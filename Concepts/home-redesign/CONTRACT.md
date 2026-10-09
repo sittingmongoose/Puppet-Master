@@ -115,7 +115,7 @@ The returned instance may implement any of:
 |---|---|
 | `unmount()` | the tab closes, or its panel is destroyed; release timers, observers, sessions |
 | `serialize()` | the layout is saved; return JSON-safe state, at most 16 KB (no scrollback, no buffers) |
-| `onResize({ w, h })` | after the body's size changed, batched to one call per frame; also called once after mount |
+| `onResize({ w, h, final })` | after the body's size changed, batched to one call per frame; also called once after mount. `final` is `false` while a divider drag or a layout animation is still moving the body and `true` on the last call, so costly work (a terminal's reflow and PTY resize) can wait for it |
 | `onShow()` / `onHide()` | the tab became the active tab of a visible panel / stopped being visible (another tab, collapsed panel, maximized sibling, narrow switcher). Stop animation work while hidden |
 | `onFocus()` / `onBlur()` | keyboard focus entered / left the tab body |
 | `onLook(look)` | look changed (section 10); CSS does most of this, use it for canvases and computed colours |
@@ -225,7 +225,8 @@ Convenience forms: `PM_HOME.openFile(path, { line, col, mode, where })`, `PM_HOM
 | narrow reveal | rule 5 above plus the narrow switcher; the chat is never a tab |
 
 Other events: `'open'` (`{ tabId, panelId, kind, created, by }`), `'focus'` (focused panel changed), `'layout'`
-(tree committed), `'narrow'` (`{ step }`), `'look'`. `PM_HOME.on` returns an unsubscribe function.
+(a structural commit: the page-side mirror of `workspace.layout_changed`), `'narrow'` (`{ step }`), `'look'`.
+`PM_HOME.on` returns an unsubscribe function.
 
 ### 6.2 Compatibility shims (kept until the callers move)
 
@@ -260,15 +261,19 @@ rows as full-width list rows (no tiles, no pills), then Recent.
 
 ## 8. Commands
 
-Every committed change is one command with a receipt; previews (hover, drag, menu open) dispatch nothing; a changed
-release commits once; a failed commit rolls back. Ids are the concept's proposal; the Plans thread owns the final
-names, and the concept keeps them in one table (`src/panels/js/02-commands.js`) so a rename is one edit.
+Every committed structural change is one command with a receipt and emits the one existing event
+`workspace.layout_changed` (no new event family); an open that only reveals an existing tab emits nothing. Previews
+(hover, drag, menu open, the "+" menu, the "+N" list, panel menus) dispatch nothing; a changed release commits once; a
+failed commit rolls back. Activation and maximize are view state: typed local UI actions (`ui.panel_tab.activate`,
+`ui.workspace_layout.maximize`) with no receipt and no event, written with the layout's view-state block. Names agreed
+with the Plans thread on 2026-10-09; the concept keeps them in one table (`src/panels/js/02-commands.js`).
 
 | Command | Args | Notes |
 |---|---|---|
-| `cmd.panel_tab.open` | open spec | alias targets: `cmd.file.open` (files), `cmd.nav.open_subject`, `cmd.browser.open_workspace_preview` |
-| `cmd.panel_tab.activate` | `tabId` | view state; recorded in the layout as the panel's active tab |
+| `cmd.panel_tab.open` | open spec | `cmd.file.open`, `cmd.nav.open_subject`, `cmd.browser.open_workspace_preview` and `cmd.terminal.open` keep their ids, carry the same placement fields (`where`, `mode`, `by`, `background`) and resolve through this one module |
+| `ui.panel_tab.activate` | `tabId` | view state (no receipt, no event) |
 | `cmd.panel_tab.close` | `tabId` | `cmd.editor.close_tab` is an alias |
+| `cmd.panel_tab.rename` | `tabId, label` | a user label that the kind's own label no longer overrides; empty restores the kind's |
 | `cmd.panel_tab.move` | `tabId, panelId, index` or `tabId, split: { panelId, edge }` | reorder, move to panel, drag-to-edge split |
 | `cmd.panel_tab.keep` | `tabId` | preview to kept |
 | `cmd.panel_tab.pin` / `.unpin` | `tabId` | |
@@ -277,7 +282,7 @@ names, and the concept keeps them in one table (`src/panels/js/02-commands.js`) 
 | `cmd.workspace_layout.move_surface` | `panelId, target: { panelId, edge }` | whole-panel drag by its corner grip |
 | `cmd.workspace_layout.resize_surface` | `splitId, sizes` | one commit on release |
 | `cmd.workspace_layout.set_collapsed` | `panelId, collapsed` | collapse to strip, any panel (D2) |
-| `cmd.workspace_layout.maximize` | `panelId` or `null` | |
+| `ui.workspace_layout.maximize` | `panelId` or `null` | view state, a flag outside the tree (D1) |
 | `cmd.workspace_layout.close_panel` | `panelId` | tabs close (with `canClose`) |
 | `cmd.workspace_layout.lock` | `panelId, locked` | |
 | `cmd.workspace_layout.apply_named` / `.save_named` / `.reset` | `name` | `reset` is "Restore home layout" (`general.startup.reset-home-layout`) |
@@ -371,4 +376,6 @@ root. A kind never appends its own overlay to `document.body`.
 
 ## 15. Change log
 
-- v1 (2026-10-09): first publication.
+- v1 (2026-10-09): first publication. Same day, additive: command names agreed with the Plans thread (activation and
+  maximize are `ui.*` view-state actions, `cmd.panel_tab.rename`, one `workspace.layout_changed` event), `onResize` gains
+  `final`.
