@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "3bbfc7facdfa66248f4c451ab948fb06af73713d3747b98f79fd858d3321abe9",
+      "sha256": "92eba7689ac7b869c17df2f9804aaede614d825704278a8f4540a308eb381abd",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -5720,7 +5720,7 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 12529,
+      "line_count": 12531,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 148,
       "plan_unit_ids": [
@@ -6020,7 +6020,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "293e2430e0ce1a7ff20b4079cbab90320573e33b606b1d086b5a5ac81272d6bb",
+      "sha256": "18f7780ed030e5d278f0af2f52ca0c09b7c669f1fa062726b760d4ead419b6e0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 148
@@ -6434,7 +6434,7 @@
         "shared_runtime_parallel_owner_drift",
         "usage_role_parallel_owner_drift"
       ],
-      "sha256": "7e4f8cad922c7da46552bb2d8bdcd455287d93cb429253afbc71418b97b4242d",
+      "sha256": "f74170d53bb0c3e40f22f0036119e31e5ec6ca1471fda28804f777671dd4dc7b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 51
@@ -6928,7 +6928,7 @@
         "future editor viewer renderer",
         "future file tree renderer"
       ],
-      "line_count": 5237,
+      "line_count": 5240,
       "path": "Plans/FileManager.md",
       "plan_unit_count": 84,
       "plan_unit_ids": [
@@ -7037,7 +7037,7 @@
         "migration_lineage",
         "source_history_identity_safety_or_false_recovery"
       ],
-      "sha256": "c67f9c527cd5cd8120371c5a7f1276ae1d2a35a3d899c1d862dba4403fa404c4",
+      "sha256": "67a2ee82304de9502783981ff00dd2bb54a91fe6bd86dc5c3483b7b452b15033",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 84
@@ -7430,9 +7430,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 35,
-        "True": 579
+        "True": 580
       },
-      "heading_count": 991,
+      "heading_count": 992,
       "implementation_surfaces": [
         "Concepts/PMConcept7.html",
         "Concepts/chat-assistant-concepts/5.6 Pro/attachments.js",
@@ -7561,9 +7561,9 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 42551,
+      "line_count": 42663,
       "path": "Plans/FinalGUISpec.md",
-      "plan_unit_count": 614,
+      "plan_unit_count": 615,
       "plan_unit_ids": [
         "F3-501",
         "F3-502",
@@ -8177,6 +8177,7 @@
         "F3-620",
         "F3-621",
         "F3-622",
+        "F3-625",
         "F3-623",
         "F3-624"
       ],
@@ -8315,10 +8316,10 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "166e3db237b19799c7dd021d5f241c76f90bb7389aac03e6dcf7f60ffaa8588a",
+      "sha256": "e587aedbe3b19c871cdce0a190fed9a489a3b8c2c29f21fbe4fcbf65e9fea8b9",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 613,
+        "accepted": 614,
         "retired": 1
       },
       "title": "Puppet Master GUI Specification -- Slint Rewrite",
@@ -8330,7 +8331,7 @@
         "gui_requirement": 29,
         "integration_contract": 13,
         "interaction_contract": 5,
-        "requirement": 482,
+        "requirement": 483,
         "security_constraint": 1,
         "validation_rule": 1
       },
@@ -8812,7 +8813,7 @@
         "Plans/event_family_registry.json",
         "future remote Git cache adapter"
       ],
-      "line_count": 2623,
+      "line_count": 2634,
       "path": "Plans/GitHub_Integration.md",
       "plan_unit_count": 42,
       "plan_unit_ids": [
@@ -8872,7 +8873,7 @@
         "p1_security_release_supply_chain_hardening",
         "remote_cache_consumer_drift"
       ],
-      "sha256": "3b122997225b66efa9e1d952e17ade0b97bf8e0118ada86bfe75a074fa514592",
+      "sha256": "27e532c3a6ee0cb98efdd8e93a41ab28a12367f9bfb2899ea393c7ba589e5ad4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 42
@@ -16105,7 +16106,7 @@
         "future runtime artifact rows",
         "future runtime artifacts panel"
       ],
-      "line_count": 3109,
+      "line_count": 3117,
       "path": "Plans/Runtime_Artifacts_Panel.md",
       "plan_unit_count": 58,
       "plan_unit_ids": [
@@ -16231,7 +16232,7 @@
         "teacher_activity_trace_gap",
         "vision_artifact_lineage_loss"
       ],
-      "sha256": "8cdf9c1f55b1a22fefbe40697928c4f6aab276ef2cab5c95c716d3b98109bb9d",
+      "sha256": "316061539b6b9e751c84c7996f550e1d8e35ce9dafdbbd566751dddf2ad3aeac",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 57,
@@ -20672,7 +20673,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-10T00:18:09Z",
+  "generated_at_utc": "2026-10-10T00:18:52Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20681,12 +20682,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3560,
-      "True": 3440
+      "True": 3441
     },
-    "plan_unit_count": 7000,
+    "plan_unit_count": 7001,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6808,
+      "accepted": 6809,
       "retired": 182,
       "superseded": 10
     },
@@ -20753,7 +20754,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5426,
+      "requirement": 5427,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

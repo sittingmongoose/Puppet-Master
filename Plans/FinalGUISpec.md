@@ -7740,6 +7740,11 @@ canonical_text: >-
   Search is a one-visible-at-a-time side-panel occupant with explicit open-focus behavior,
   user/content search UI, grep-style result rows, replace-in-files, and shared OpenFile path/range
   routing.
+  Amended 2026-10-09 (DL-162): in the rail each result group shows the file name on line 1 and its folder on line 2,
+  each keeping its head and end (F3-620); a hit shows at most two lines and, when the match would fall past them,
+  starts at an ellipsis just before the match so the match always shows; the three match options join as one control
+  beside a full-width scope field; counts read with their words (16 in 6 files, 3 of 16); and notes are quiet text,
+  not boxes.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -7764,6 +7769,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0039"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "/open-focus"
 - "/user-search"
@@ -7791,6 +7797,10 @@ canonical_text: >-
   Search owns indexing controls for enable/disable, rebuild, large-file threshold default 10 MB,
   generated-file exclusions, follow-symlinks, visible freshness states, cancellation, and remote
   watcher freshness copy without duplicate watcher setup.
+  Amended 2026-10-09 (DL-162): in the rail index freshness shows under the panel title as F3-619's glyph and word
+  with the file count (Indexed · 1,284 files): indexing as running, stale as the stale clock, and unindexed or
+  fallback as a warning. The rebuild strip is one sentence with its action, such as the build progress with Cancel
+  or the changes since a revision with Refresh.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -7815,6 +7825,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0039"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "search-owner"
 - "10 MB"
@@ -29257,6 +29268,8 @@ canonical_text: >-
   where items after the separator position are the hidden tray set; no new storage key is
   introduced. Activity-item hotkeys follow the visual order of the bar, so reordering changes
   hotkey targets and hidden items drop out of the hotkey sequence.
+  Amended 2026-10-09 (DL-162): the More tray opens as the chat picker beside More and an empty tray says how to hide
+  an icon (F3-625); the gestures, persistence and hotkey order above are unchanged.
 gui_related: true
 gui_classification_reason: This unit defines visible activity bar reorder, hide, tray, and hotkey behavior.
 split_recommended: false
@@ -29282,6 +29295,7 @@ source_lineage:
 - "Plans/FinalGUISpec.md:2290"
 - "Plans/FinalGUISpec.md:2377"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "activity_bar_order:v1"
 - "separator position"
@@ -33151,6 +33165,10 @@ canonical_text: >-
   map to bundled SVG icon_id entries; no emoji ever renders. The panel has no file-locks
   section: file-lock semantics are retired, and rows may show declared touch sets and
   file-activity claims only.
+  Amended 2026-10-09 (DL-162): in the rail the lifecycle states draw as F3-619's glyph and word, the blocked
+  question and the waiting time stay readable in the collapsed row, the economics and lane facts read as plain words
+  and numbers, and model names are plain words, not capsules; the vocabulary, mapping and ordering above are
+  unchanged.
 gui_related: true
 gui_classification_reason: This unit defines the visible Agents panel lifecycle chips, queue and attention presentation, economics, staleness treatment, and icon substitution.
 split_recommended: false
@@ -33177,6 +33195,7 @@ node_compile_hint:
 source_lineage:
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only per Plans/usage-feature.md)"
 - "Plans/orchestrator-subagent-integration.md (OSI-175, OSI-190, OSI-425..OSI-432 registry-mirror and tracking canon)"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "queued"
 - "running"
@@ -33533,6 +33552,10 @@ canonical_text: >-
   paused, Pause when running; step commands are enabled only while paused; Stop and
   Disconnect are enabled whenever a session exists; Disconnect replaces Stop for
   attach sessions.
+  Amended 2026-10-09 (DL-162): in the rail, the bottom Debug tab and the session picker the session state draws as
+  FinalGUISpec F3-619's glyph and word in place of the rail chip and status dots: initializing as pending, running
+  as live, paused as the paused glyph, terminated as the stopped ring and adapter_crashed as failed. Every surface
+  still reads the one session store.
 gui_related: true
 gui_classification_reason: This unit defines the visible session-state chips, transport enablement, and inspection clear/populate behavior driven by DAP events.
 split_recommended: false
@@ -33561,6 +33584,7 @@ source_lineage:
 - "zed-industries/zed crates/debugger_ui (research lineage)"
 - "nvim-dap-ui (research lineage)"
 - "Plans/FinalGUISpec.md:17921 (F3-259 DAP debugger reliability risk row)"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "none"
 - "initializing"
@@ -33608,6 +33632,9 @@ canonical_text: >-
   focused session. Starting a configuration that is already running prompts a
   duplicate-session confirm. The bottom Debug tab shows one sub-tab per session,
   and closing a sub-tab offers terminate.
+  Amended 2026-10-09 (DL-162): in the rail the session picker opens as the chat picker (F3-621) and lists each
+  session with its state glyph and word by F3-483's mapping in place of coloured dots and a spinner; a terminated
+  session keeps its struck-through label, the focused session is checked, and the per-row close action is unchanged.
 gui_related: true
 gui_classification_reason: This unit defines the visible session picker, focus model, and per-session sub-tab behavior.
 split_recommended: false
@@ -33634,6 +33661,7 @@ source_lineage:
 - "user-decision:2026-07-27-run-debug-revival"
 - "zed-industries/zed crates/debugger_ui (research lineage; status-dot session picker)"
 - "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "starting"
 - "running"
@@ -33679,6 +33707,12 @@ canonical_text: >-
   (shelves populated), and terminated (a banner with the exit code and a Restart
   action). Panel width, motion, and fitting follow F3-471, F3-473, and F3-480
   (referenced).
+  Amended 2026-10-09 (DL-162): in the rail the launch row is a configuration field showing the configuration's name
+  and then its command, above Start Debugging and Run Without Debugging joined as one split control, then the gear.
+  The configuration menu opens as the chat picker (F3-621), grouped Recent, then Other configurations, then Add
+  Configuration… and Edit configurations file. Shelf labels are sentence case, the canon tokens Debug & Run, Start
+  Debugging and Run Without Debugging keep their case, and a shelf head whose summary does not fit moves it under
+  the label (F3-620).
 gui_related: true
 gui_classification_reason: This unit defines the visible section-by-section layout and empty-state vocabulary of the Run & Debug rail panel.
 split_recommended: false
@@ -33706,6 +33740,7 @@ source_lineage:
 - "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
 - "zed-industries/zed crates/debugger_ui (research lineage)"
 - "eclipse-theia/theia debug plugin (research lineage)"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "Add Configuration…"
 - "Edit configurations file"
@@ -33873,6 +33908,9 @@ canonical_text: >-
   Plans/storage-plan.md, not restated. Editor-gutter sync: the gutter marker and
   the shelf row are two renderers of the same breakpoint record; the record is the
   truth with a single owner, and toggling either renderer updates both.
+  Amended 2026-10-09 (DL-162): in the rail the conditional badge is the condition written out after the location and
+  function as when followed by the expression, with no capsule (F3-619); the logpoint diamond and the hollow
+  unverified mark stay.
 gui_related: true
 gui_classification_reason: This unit defines the visible breakpoint shelf rows, glyphs, edit strip, and gutter-sync rendering contract.
 split_recommended: false
@@ -33900,6 +33938,7 @@ source_lineage:
 - "user-decision:2026-07-27-run-debug-revival"
 - "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
 - "nvim-dap-ui (research lineage)"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "Expression"
 - "Hit Count"
@@ -34039,6 +34078,10 @@ canonical_text: >-
   §7.20.2 pane list's "Debug Console" entry and the locked-decision "classical
   debugger surface" entry both resolve here. Reveal and focus behavior follows
   F3-491.
+  Amended 2026-10-09 (DL-162): the bottom Debug tab takes the rail's type and quiet buttons (F3-618), draws its
+  mirrored state chip as F3-619's glyph and word, marks the selected session sub-tab with an ink, shows stream tags
+  as coloured lowercase words, and opens its configuration menu as the chat picker (F3-621). In TERMINATED the
+  retained console scrollback stays visible under the ended chrome, as this unit already requires.
 gui_related: true
 gui_classification_reason: This unit defines the visible bottom-zone Debug tab states, session chrome, console, and conditional process pane.
 split_recommended: false
@@ -34067,6 +34110,7 @@ source_lineage:
 - "zed-industries/zed crates/debugger_ui (research lineage)"
 - "Plans/FinalGUISpec.md:1787 (§7.20.2 Debug, Problems, Output, and Ports pane list)"
 - "Plans/Section15_MVP_Promoted_Features_Spec.md (Debug Console pane ownership; referenced)"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "Start Debugging"
 - "Terminate"
@@ -35961,6 +36005,9 @@ canonical_text: >-
   availability, protected handoffs, ObservableWork phases, alerts, focus, and return context without owning provider,
   source-control, backup, scheduler, encryption/key, connector, auth, Doctor, notification-store, or status truth.
   Every packet action remains visibly truthful and unavailable until its owner and central runtime integration exist.
+  Amended 2026-10-09 (DL-162): in the left rail the AutomationBinding selector is a field labelled Automation
+  service that opens the chat picker (F3-621), never a native select; picking runs
+  ui.repository_automation.binding.select and changes nothing else.
 gui_related: true
 gui_classification_reason: This unit defines canonical shell identity, shared visual components, routes, copy, protected states, progress, alerts, themes, accessibility, and responsive behavior.
 split_recommended: false
@@ -36010,6 +36057,7 @@ source_lineage:
   - packet:04_LEFT_RAIL_AND_CAPABILITY_DRIVEN_GUI.md#GUI-008
   - packet:12_BACKUP_SETTINGS_ONBOARDING_DOCTOR.md
   - packet:tsnet/04_GUI_ONBOARDING_DOCTOR_DELTAS.md
+  - "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens: [repository_automation, Actions & Pipelines, github_actions, DestinationCard, ScopeCoverageSummary, SnapshotBrowser, RestorePreview, RecoveryKitHandoff, VerificationBadge, RetentionPreview, ObservableWorkProgress, Tailscale, Built into Puppet Master, Connection engine, K3 Tome Tabs, PMConcept7, handler_unavailable, "expected_event_types=[]"]
 negative_constraints:
   - Do not add a Backup, Tailscale, forge-specific, Server, Sync, or second Activity Bar item or notification center.
@@ -42009,7 +42057,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-153, ContractName:Plans/Final
 
 ## DL-162 — The Left Rail Takes The Polish Design (2026-10-09)
 
-This addendum compiles the owner decision DL-162: on 2026-10-09 Jared chose concept D, "Polish", of the left-rail review copy `Concepts/LeftRailPMConcept7.html` for the left rail. Polish keeps the Cozy Shelves structure and its coloured shelf boxes (F3-472, F3-474, F3-497) and polishes them: tighter geometry where horizontal space is short, one readable type ladder, statuses as glyph and word instead of pills, text that fits by layout instead of by abbreviation, the chat's picker for every dropdown, and motion in each theme family's own voice. The units below own the rail's presentation only; behaviour, state vocabularies and commands stay with the panel owners (`Plans/FileManager.md`, `Plans/Source_Control_System.md`, `Plans/Jujutsu_Integration.md`, `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/Containers_Registry_and_Unraid.md`, `Plans/Automated_Testing_System.md`, `Plans/Runtime_Artifacts_Panel.md`, and the Run & Debug and Agents units F3-482 to F3-496, F3-452 and F3-477), and `Plans/DRY_Rules.md#DR-057` keeps this grammar in one place. F3-480 (3) is amended in place for the rail. The concept is source lineage only (`Concepts/leftrail-redesign/src/concepts/d/` at commit c93e341606): its class names, its measured pixel values outside these units and its demo data are not canon. Not decided here, and left to a later compile under the same decision: whether the Jujutsu view of Source Control has sub-tabs, the commands and wiring the remaining panels' build adds, and the activity bar's More tray.
+This addendum compiles the owner decision DL-162: on 2026-10-09 Jared chose concept D, "Polish", of the left-rail review copy `Concepts/LeftRailPMConcept7.html` for the left rail. Polish keeps the Cozy Shelves structure and its coloured shelf boxes (F3-472, F3-474, F3-497) and polishes them: tighter geometry where horizontal space is short, one readable type ladder, statuses as glyph and word instead of pills, text that fits by layout instead of by abbreviation, the chat's picker for every dropdown, and motion in each theme family's own voice. The units below own the rail's presentation only; behaviour, state vocabularies and commands stay with the panel owners (`Plans/FileManager.md`, `Plans/Source_Control_System.md`, `Plans/Jujutsu_Integration.md`, `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/Containers_Registry_and_Unraid.md`, `Plans/Automated_Testing_System.md`, `Plans/Runtime_Artifacts_Panel.md`, and the Run & Debug and Agents units F3-482 to F3-496, F3-452 and F3-477), and `Plans/DRY_Rules.md#DR-057` keeps this grammar in one place. F3-480 (3) is amended in place for the rail. The concept is source lineage only (`Concepts/leftrail-redesign/src/concepts/d/` at commit c93e341606): its class names, its measured pixel values outside these units and its demo data are not canon. Settled later on 2026-10-09 under the same decision: the Jujutsu view of Source Control has its own five tabs (DL-163, F3-623 and F3-624); the remaining six panels and the bottom Debug tab take this grammar through amendments in their owner units, with no new command, action or wiring row; and the activity bar's More tray is F3-625.
 
 ### F3-618 — The Left Rail's Geometry, Shelves And Type
 
@@ -42102,11 +42150,15 @@ canonical_text: >-
   only while something is restarting, building or being watched; the current branch or bookmark a ring around a dot;
   stopped or idle an empty ring; pending, queued or waiting a dashed ring that turns slowly, one turn in 7 s, or in
   eight steps over 4 s under Retro; stale a ring with clock hands; unknown a dashed ring with a question mark; changed a
-  half-filled circle; orphaned an open arc with a dot; a stash a tray. Knock-outs show whatever is behind the glyph,
+  half-filled circle; orphaned an open arc with a dot; a stash a tray; paused (a debug session) a solid disc with two
+  bars knocked out; immutable (a Jujutsu change) a solid disc with a padlock knocked out. Errored, a harness
+  failure, takes the failed shape in its own colour so it stays distinct from failed, and skipped, cancelled and
+  terminated take the stopped ring. Knock-outs show whatever is behind the glyph,
   a shelf tint or a selected row. Colours are token roles: done and live --graph-passed, running --graph-running,
   warning, stale and changed --accent-warning, failed and blocked --graph-failed, pending and info --accent-blue,
-  idle and unknown the muted text colour, conflict --accent-magenta, orphaned --accent-orange, and current
-  --accent-primary, the selection colour; under NieR Mode done, live and idle draw in the NieR ink. Shape and word always carry the state, so it
+  idle, unknown and immutable the muted text colour, paused --accent-warning, conflict --accent-magenta, orphaned
+  and errored --accent-orange, and current --accent-primary, the selection colour; under NieR Mode done, live,
+  idle and paused draw in the NieR ink. Shape and word always carry the state, so it
   never rests on colour alone. Counts are plain numbers in tabular figures, right-aligned in one column across a
   panel's shelf heads, never in a capsule, and a count that changes rolls to its new value. The File Manager's git
   letters (F-074) stay letters, without a capsule, in one fixed column. Wherever a rail panel's owner unit says chip,
@@ -42370,6 +42422,66 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/WorktreeGitImprovement.md#W-075, ContractName:Plans/FinalGUISpec.md#F3-475, ContractName:Plans/FinalGUISpec.md#F3-529
+
+### F3-625 — The Activity Bar's More Tray In The Polish Design
+
+```yaml
+plan_unit_id: F3-625
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The activity bar's More tray (F3-419) opens as the chat picker of F3-621 beside the More button, under the heading
+  "Hidden from the bar" (DL-162). Each hidden item is a row with the bar's own icon and the item's real name, never
+  its internal id (Actions & Pipelines, not repository_automation). Picking a row restores the item at the end of
+  the bar; pressing a row and dragging it onto the bar restores it at the drop position; dragging a bar icon onto
+  More hides it; a second click on More closes the tray. With nothing hidden, More still opens and says how to hide
+  an icon instead of doing nothing. The tray's keyboard is the picker's (arrows, Enter, Escape with focus back on
+  More), and More itself is reachable by keyboard. The More button shows its hover, open and drop-target states in
+  the look's own treatment, and the drag ghost and drop line use the rail's radii and ink. The rail's resize handle
+  keeps the shell's glow in Basic, Friendly and Glass, is a hard square light in Retro and an ink mark under NieR
+  Mode. The gestures, the activity_bar_order:v1 persistence with its separator position and the hotkey order are
+  F3-419's and are unchanged; no command, action or storage key is added.
+gui_related: true
+gui_classification_reason: Defines the visible More tray and the rail resize handle in the Polish design.
+split_recommended: false
+depends_on: [DL-162, F3-419, F3-621]
+unblocks: []
+acceptance_criteria:
+  - "More opens the chat picker listing every hidden item with its icon and real name; click restores at the end of the bar, drag restores at the drop position, and dragging a bar icon onto More hides it."
+  - "With nothing hidden, More opens a picker that explains how to hide an icon."
+  - "The tray is operable by keyboard and Escape returns focus to More."
+  - "No command, action, wiring row or storage key is added."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: rail_presentation_drift
+reasoning_tier: standard
+context_scope: left_rail_polish
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-162"
+  - "Concepts/leftrail-redesign/src/concepts/d/41-more.js, 40-bar.js and css/80-bar.src.css, css/81-more.src.css (lane commit 8d4ce13e3e; concept lineage only)"
+preserved_exact_tokens:
+  - "Hidden from the bar"
+  - "activity_bar_order:v1"
+negative_constraints:
+  - "Do not show an item's internal id in the More tray."
+  - "Do not add a storage key or a command for the More tray."
+compatibility_only_notes:
+  - "The concept builds the picker from the shell's own hidden tray and hands picks and drags to it; its More button is not yet keyboard-focusable and it stores the order under its own local key."
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/FinalGUISpec.md#F3-419, ContractName:Plans/FinalGUISpec.md#F3-621
 
 ## DL-163 — The Jujutsu View Of Source Control Gets Its Own Five Tabs (2026-10-09)
 

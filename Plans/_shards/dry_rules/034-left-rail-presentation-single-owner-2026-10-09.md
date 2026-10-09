@@ -4,7 +4,7 @@ Source: `Plans/DRY_Rules.md`
 
 Source lines: L3087-L3147
 
-Source SHA256: `7e4f8cad922c7da46552bb2d8bdcd455287d93cb429253afbc71418b97b4242d`
+Source SHA256: `f74170d53bb0c3e40f22f0036119e31e5ec6ca1471fda28804f777671dd4dc7b`
 
 ---
 
@@ -20,8 +20,8 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
-  The left rail's presentation grammar has exactly one GUI owner, FinalGUISpec F3-618 to F3-622 with F3-472,
-  F3-473 and F3-480: the geometry and radii, the shelf tints, the type ladder, the status glyphs and words, plain
+  The left rail's presentation grammar has exactly one GUI owner, FinalGUISpec F3-618 to F3-622 and F3-625 with
+  F3-472, F3-473 and F3-480, and F3-623's fit rule for the two Source Control strips: the geometry and radii, the shelf tints, the type ladder, the status glyphs and words, plain
   counts, fitting by layout, the rail dropdown style and the motion of each theme family (DL-162). The panel owner
   documents (FileManager, Source_Control_System, Jujutsu_Integration, WorktreeGitImprovement, GitHub_Integration
   and the Forge owners, Containers_Registry_and_Unraid, Automated_Testing_System, Runtime_Artifacts_Panel, and the
@@ -34,7 +34,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Fixes one owner for the left rail's presentation grammar."
 split_recommended: false
-depends_on: [DL-162, F3-618, F3-619, F3-620, F3-621, F3-622]
+depends_on: [DL-162, F3-618, F3-619, F3-620, F3-621, F3-622, F3-625]
 unblocks: []
 acceptance_criteria:
   - "No panel owner document defines its own rail geometry, type size, status capsule, abbreviation rule, dropdown style or motion voice."

@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L13-L3625
 
-Source SHA256: `293e2430e0ce1a7ff20b4079cbab90320573e33b606b1d086b5a5ac81272d6bb`
+Source SHA256: `18f7780ed030e5d278f0af2f52ca0c09b7c669f1fa062726b760d4ead419b6e0`
 
 ---
 
@@ -3574,7 +3574,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-606, ContractName:Plans/Final
 4. **Dropdowns and motion** (`Plans/FinalGUISpec.md#F3-621`), including the tab switch redone for the owner's issue 3: one move per theme family on one clock, Retro stepping its ink tab by tab on a 33 ms tick with only the tab under the ink lit, and NieR Mode cutting the ink to the tab and locking the target brackets onto the chosen tab's final box once the click has landed.
 5. **The Owner dropdown and the folding publish card** (`Plans/FinalGUISpec.md#F3-622`; `Plans/WorktreeGitImprovement.md#W-075` amended). Neither adds a command or a wiring row.
 6. **One owner for the rail's look** (`Plans/DRY_Rules.md#DR-057`).
-7. **Not decided yet:** whether the Jujutsu view of Source Control has sub-tabs, the commands and wiring the build of the remaining six panels adds, and the activity bar's More tray. They are recorded under this decision when they are settled.
+7. **Settled later the same day:** the Jujutsu view's tabs are DL-163's. The six other panels and the bottom Debug tab take this design through amendments in their owner units, all on the commands they already had, with no new command, action or wiring row (`Plans/FinalGUISpec.md#F3-045`, `#F3-046`, `#F3-477`, `#F3-483`, `#F3-484`, `#F3-485`, `#F3-488`, `#F3-490`, `#F3-528`, `Plans/GitHub_Integration.md#GI-035`, `#GI-036`, `#GI-040`, `Plans/Runtime_Artifacts_Panel.md#RAP-050`, `#RAP-051` and `Plans/FileManager.md#F-076`). The status glyphs gain paused, immutable and errored (`Plans/FinalGUISpec.md#F3-619`). The More tray opens as the chat picker (`Plans/FinalGUISpec.md#F3-625`, `#F3-419` amended).
 
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md`, SHA-256 `4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06` (the owner request, verbatim, and the design he chose); the concept source `Concepts/leftrail-redesign/src/concepts/d/` at commit c93e341606 (concept lineage only).
 

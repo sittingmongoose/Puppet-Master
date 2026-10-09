@@ -2,15 +2,15 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42010-L42372
+Source lines: L42058-L42484
 
-Source SHA256: `166e3db237b19799c7dd021d5f241c76f90bb7389aac03e6dcf7f60ffaa8588a`
+Source SHA256: `e587aedbe3b19c871cdce0a190fed9a489a3b8c2c29f21fbe4fcbf65e9fea8b9`
 
 ---
 
 ## DL-162 — The Left Rail Takes The Polish Design (2026-10-09)
 
-This addendum compiles the owner decision DL-162: on 2026-10-09 Jared chose concept D, "Polish", of the left-rail review copy `Concepts/LeftRailPMConcept7.html` for the left rail. Polish keeps the Cozy Shelves structure and its coloured shelf boxes (F3-472, F3-474, F3-497) and polishes them: tighter geometry where horizontal space is short, one readable type ladder, statuses as glyph and word instead of pills, text that fits by layout instead of by abbreviation, the chat's picker for every dropdown, and motion in each theme family's own voice. The units below own the rail's presentation only; behaviour, state vocabularies and commands stay with the panel owners (`Plans/FileManager.md`, `Plans/Source_Control_System.md`, `Plans/Jujutsu_Integration.md`, `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/Containers_Registry_and_Unraid.md`, `Plans/Automated_Testing_System.md`, `Plans/Runtime_Artifacts_Panel.md`, and the Run & Debug and Agents units F3-482 to F3-496, F3-452 and F3-477), and `Plans/DRY_Rules.md#DR-057` keeps this grammar in one place. F3-480 (3) is amended in place for the rail. The concept is source lineage only (`Concepts/leftrail-redesign/src/concepts/d/` at commit c93e341606): its class names, its measured pixel values outside these units and its demo data are not canon. Not decided here, and left to a later compile under the same decision: whether the Jujutsu view of Source Control has sub-tabs, the commands and wiring the remaining panels' build adds, and the activity bar's More tray.
+This addendum compiles the owner decision DL-162: on 2026-10-09 Jared chose concept D, "Polish", of the left-rail review copy `Concepts/LeftRailPMConcept7.html` for the left rail. Polish keeps the Cozy Shelves structure and its coloured shelf boxes (F3-472, F3-474, F3-497) and polishes them: tighter geometry where horizontal space is short, one readable type ladder, statuses as glyph and word instead of pills, text that fits by layout instead of by abbreviation, the chat's picker for every dropdown, and motion in each theme family's own voice. The units below own the rail's presentation only; behaviour, state vocabularies and commands stay with the panel owners (`Plans/FileManager.md`, `Plans/Source_Control_System.md`, `Plans/Jujutsu_Integration.md`, `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/Containers_Registry_and_Unraid.md`, `Plans/Automated_Testing_System.md`, `Plans/Runtime_Artifacts_Panel.md`, and the Run & Debug and Agents units F3-482 to F3-496, F3-452 and F3-477), and `Plans/DRY_Rules.md#DR-057` keeps this grammar in one place. F3-480 (3) is amended in place for the rail. The concept is source lineage only (`Concepts/leftrail-redesign/src/concepts/d/` at commit c93e341606): its class names, its measured pixel values outside these units and its demo data are not canon. Settled later on 2026-10-09 under the same decision: the Jujutsu view of Source Control has its own five tabs (DL-163, F3-623 and F3-624); the remaining six panels and the bottom Debug tab take this grammar through amendments in their owner units, with no new command, action or wiring row; and the activity bar's More tray is F3-625.
 
 ### F3-618 — The Left Rail's Geometry, Shelves And Type
 
@@ -103,11 +103,15 @@ canonical_text: >-
   only while something is restarting, building or being watched; the current branch or bookmark a ring around a dot;
   stopped or idle an empty ring; pending, queued or waiting a dashed ring that turns slowly, one turn in 7 s, or in
   eight steps over 4 s under Retro; stale a ring with clock hands; unknown a dashed ring with a question mark; changed a
-  half-filled circle; orphaned an open arc with a dot; a stash a tray. Knock-outs show whatever is behind the glyph,
+  half-filled circle; orphaned an open arc with a dot; a stash a tray; paused (a debug session) a solid disc with two
+  bars knocked out; immutable (a Jujutsu change) a solid disc with a padlock knocked out. Errored, a harness
+  failure, takes the failed shape in its own colour so it stays distinct from failed, and skipped, cancelled and
+  terminated take the stopped ring. Knock-outs show whatever is behind the glyph,
   a shelf tint or a selected row. Colours are token roles: done and live --graph-passed, running --graph-running,
   warning, stale and changed --accent-warning, failed and blocked --graph-failed, pending and info --accent-blue,
-  idle and unknown the muted text colour, conflict --accent-magenta, orphaned --accent-orange, and current
-  --accent-primary, the selection colour; under NieR Mode done, live and idle draw in the NieR ink. Shape and word always carry the state, so it
+  idle, unknown and immutable the muted text colour, paused --accent-warning, conflict --accent-magenta, orphaned
+  and errored --accent-orange, and current --accent-primary, the selection colour; under NieR Mode done, live,
+  idle and paused draw in the NieR ink. Shape and word always carry the state, so it
   never rests on colour alone. Counts are plain numbers in tabular figures, right-aligned in one column across a
   panel's shelf heads, never in a capsule, and a count that changes rolls to its new value. The File Manager's git
   letters (F-074) stay letters, without a capsule, in one fixed column. Wherever a rail panel's owner unit says chip,
@@ -371,3 +375,63 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/WorktreeGitImprovement.md#W-075, ContractName:Plans/FinalGUISpec.md#F3-475, ContractName:Plans/FinalGUISpec.md#F3-529
+
+### F3-625 — The Activity Bar's More Tray In The Polish Design
+
+```yaml
+plan_unit_id: F3-625
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The activity bar's More tray (F3-419) opens as the chat picker of F3-621 beside the More button, under the heading
+  "Hidden from the bar" (DL-162). Each hidden item is a row with the bar's own icon and the item's real name, never
+  its internal id (Actions & Pipelines, not repository_automation). Picking a row restores the item at the end of
+  the bar; pressing a row and dragging it onto the bar restores it at the drop position; dragging a bar icon onto
+  More hides it; a second click on More closes the tray. With nothing hidden, More still opens and says how to hide
+  an icon instead of doing nothing. The tray's keyboard is the picker's (arrows, Enter, Escape with focus back on
+  More), and More itself is reachable by keyboard. The More button shows its hover, open and drop-target states in
+  the look's own treatment, and the drag ghost and drop line use the rail's radii and ink. The rail's resize handle
+  keeps the shell's glow in Basic, Friendly and Glass, is a hard square light in Retro and an ink mark under NieR
+  Mode. The gestures, the activity_bar_order:v1 persistence with its separator position and the hotkey order are
+  F3-419's and are unchanged; no command, action or storage key is added.
+gui_related: true
+gui_classification_reason: Defines the visible More tray and the rail resize handle in the Polish design.
+split_recommended: false
+depends_on: [DL-162, F3-419, F3-621]
+unblocks: []
+acceptance_criteria:
+  - "More opens the chat picker listing every hidden item with its icon and real name; click restores at the end of the bar, drag restores at the drop position, and dragging a bar icon onto More hides it."
+  - "With nothing hidden, More opens a picker that explains how to hide an icon."
+  - "The tray is operable by keyboard and Escape returns focus to More."
+  - "No command, action, wiring row or storage key is added."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: rail_presentation_drift
+reasoning_tier: standard
+context_scope: left_rail_polish
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-162"
+  - "Concepts/leftrail-redesign/src/concepts/d/41-more.js, 40-bar.js and css/80-bar.src.css, css/81-more.src.css (lane commit 8d4ce13e3e; concept lineage only)"
+preserved_exact_tokens:
+  - "Hidden from the bar"
+  - "activity_bar_order:v1"
+negative_constraints:
+  - "Do not show an item's internal id in the More tray."
+  - "Do not add a storage key or a command for the More tray."
+compatibility_only_notes:
+  - "The concept builds the picker from the shell's own hidden tray and hands picks and drags to it; its More button is not yet keyboard-focusable and it stores the order under its own local key."
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/FinalGUISpec.md#F3-419, ContractName:Plans/FinalGUISpec.md#F3-621

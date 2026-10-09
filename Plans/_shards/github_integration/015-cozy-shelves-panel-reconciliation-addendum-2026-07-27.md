@@ -2,9 +2,9 @@
 
 Source: `Plans/GitHub_Integration.md`
 
-Source lines: L2119-L2521
+Source lines: L2119-L2532
 
-Source SHA256: `3b122997225b66efa9e1d952e17ade0b97bf8e0118ada86bfe75a074fa514592`
+Source SHA256: `27e532c3a6ee0cb98efdd8e93a41ab28a12367f9bfb2899ea393c7ba589e5ad4`
 
 ---
 
@@ -32,6 +32,10 @@ canonical_text: >-
   (non-interactive, expiry date disclosed) rather than failing downloads, and in-progress runs show an
   available-after-completion placeholder instead of an empty strip. This refines the Failure triage view and
   its auto-expand failing-step behavior; log excerpts remain evidence, never canonical product state.
+  Amended 2026-10-09 (DL-162): in the rail a run row shows its name on line 1 and number, ref, age and state word on
+  line 2; a failed run's failure line stays visible while the row is closed and wraps rather than being cut; job
+  states draw as FinalGUISpec F3-619's glyphs (passed as done, failed, running as live, queued as pending, skipped
+  as the stopped ring); and counts are spelled out with their words (4 passed · 2 failed · 1 running).
 gui_related: true
 gui_classification_reason: Defines the user-visible in-rail run detail depth, expansion, log excerpt, attempts, and artifacts presentation.
 depends_on: []
@@ -57,6 +61,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - 'Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)'
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - failure-first compact expansion
 - Previous attempts
@@ -94,6 +99,8 @@ canonical_text: >-
   to an explicit unresolved-dispatch state rather than disappearing. Workflows whose triggers are
   schedule-only expose no dispatch affordance at all - absence of workflow_dispatch renders no disabled
   button and no dispatch form entry point.
+  Amended 2026-10-09 (DL-162): in the rail the dispatch form is a section of its run or workflow row, not a box
+  inside a box, and a disabled Run shows its blocked reason as a line under it.
 gui_related: true
 gui_classification_reason: Defines the user-visible typed dispatch form, submit discipline, and post-dispatch correlation behavior.
 depends_on: []
@@ -119,6 +126,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - 'Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)'
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - workflow_dispatch
 - actions_dispatch_input_invalid
@@ -323,6 +331,8 @@ canonical_text: >-
   maps to actions_observation_stale (warning, retryable, refresh CTA), and receipts keep the shared
   wait_state_class?, timeout_class?, and observation timestamps from Plans/Contracts_V0.md. Pinned-workflow
   health badges for scheduled workflows follow the same rule and must not go red on staleness alone.
+  Amended 2026-10-09 (DL-162): in the rail the pinned-workflow health badges draw as FinalGUISpec F3-619's glyph and
+  word, stale as the stale clock, never a capsule.
 gui_related: true
 gui_classification_reason: Governs how scheduled-workflow rows and health badges render staleness versus failure.
 depends_on: []
@@ -344,6 +354,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - 'Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)'
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - actions_observation_stale
 - wait_state_class?

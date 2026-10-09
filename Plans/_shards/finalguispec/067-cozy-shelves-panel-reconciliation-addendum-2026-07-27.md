@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32753-L33442
+Source lines: L32767-L33461
 
-Source SHA256: `166e3db237b19799c7dd021d5f241c76f90bb7389aac03e6dcf7f60ffaa8588a`
+Source SHA256: `e587aedbe3b19c871cdce0a190fed9a489a3b8c2c29f21fbe4fcbf65e9fea8b9`
 
 ---
 
@@ -409,6 +409,10 @@ canonical_text: >-
   map to bundled SVG icon_id entries; no emoji ever renders. The panel has no file-locks
   section: file-lock semantics are retired, and rows may show declared touch sets and
   file-activity claims only.
+  Amended 2026-10-09 (DL-162): in the rail the lifecycle states draw as F3-619's glyph and word, the blocked
+  question and the waiting time stay readable in the collapsed row, the economics and lane facts read as plain words
+  and numbers, and model names are plain words, not capsules; the vocabulary, mapping and ordering above are
+  unchanged.
 gui_related: true
 gui_classification_reason: This unit defines the visible Agents panel lifecycle chips, queue and attention presentation, economics, staleness treatment, and icon substitution.
 split_recommended: false
@@ -435,6 +439,7 @@ node_compile_hint:
 source_lineage:
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves winning concept; source-lineage-only per Plans/usage-feature.md)"
 - "Plans/orchestrator-subagent-integration.md (OSI-175, OSI-190, OSI-425..OSI-432 registry-mirror and tracking canon)"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "queued"
 - "running"

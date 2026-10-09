@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3633-L12501
+Source lines: L3633-L12503
 
-Source SHA256: `293e2430e0ce1a7ff20b4079cbab90320573e33b606b1d086b5a5ac81272d6bb`
+Source SHA256: `18f7780ed030e5d278f0af2f52ca0c09b7c669f1fa062726b760d4ead419b6e0`
 
 ---
 
@@ -8768,13 +8768,15 @@ canonical_text: >-
   under the Animation speed and reduced-motion settings (F3-621). The worktree owner filter becomes an Owner
   dropdown and the publish and review card folds (F3-622, W-075 amended), with no new command. DR-057 keeps the
   grammar in one owner. Open owner questions: whether the rail's glyphs and the chat's 13 status marks (F3-585)
-  should be one set, and whether the rail's frosted scroll-under plates fit F3-431's blur budget. Left for later
-  under this decision: the Jujutsu view's sub-tabs, the remaining panels' commands and wiring, and the More tray.
+  should be one set, and whether the rail's frosted scroll-under plates fit F3-431's blur budget. Settled later
+  under this decision: the Jujutsu view's tabs (DL-163), the remaining panels and the bottom Debug tab in their
+  owner units with no new command, action or wiring row, the paused, immutable and errored glyphs (F3-619), and the
+  More tray as the chat picker (F3-625).
 gui_related: true
 gui_classification_reason: Records an owner decision on the left rail's presentation.
 split_recommended: false
 depends_on: [F3-472, F3-474, F3-480, F3-445, F3-471]
-unblocks: [F3-618, F3-619, F3-620, F3-621, F3-622, DR-057]
+unblocks: [F3-618, F3-619, F3-620, F3-621, F3-622, F3-625, DR-057]
 acceptance_criteria:
   - "The rail's geometry, type, statuses, fitting, dropdowns and motion are owned by F3-618 to F3-622, and the amended consumer units point at them."
   - "No command, action or wiring row is added by this decision."

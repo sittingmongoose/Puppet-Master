@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5341-L26478
+Source lines: L5341-L26489
 
-Source SHA256: `166e3db237b19799c7dd021d5f241c76f90bb7389aac03e6dcf7f60ffaa8588a`
+Source SHA256: `e587aedbe3b19c871cdce0a190fed9a489a3b8c2c29f21fbe4fcbf65e9fea8b9`
 
 ---
 
@@ -2410,6 +2410,11 @@ canonical_text: >-
   Search is a one-visible-at-a-time side-panel occupant with explicit open-focus behavior,
   user/content search UI, grep-style result rows, replace-in-files, and shared OpenFile path/range
   routing.
+  Amended 2026-10-09 (DL-162): in the rail each result group shows the file name on line 1 and its folder on line 2,
+  each keeping its head and end (F3-620); a hit shows at most two lines and, when the match would fall past them,
+  starts at an ellipsis just before the match so the match always shows; the three match options join as one control
+  beside a full-width scope field; counts read with their words (16 in 6 files, 3 of 16); and notes are quiet text,
+  not boxes.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -2434,6 +2439,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0039"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "/open-focus"
 - "/user-search"
@@ -2461,6 +2467,10 @@ canonical_text: >-
   Search owns indexing controls for enable/disable, rebuild, large-file threshold default 10 MB,
   generated-file exclusions, follow-symlinks, visible freshness states, cancellation, and remote
   watcher freshness copy without duplicate watcher setup.
+  Amended 2026-10-09 (DL-162): in the rail index freshness shows under the panel title as F3-619's glyph and word
+  with the file count (Indexed · 1,284 files): indexing as running, stale as the stale clock, and unindexed or
+  fallback as a warning. The rebuild strip is one sentence with its action, such as the build progress with Cancel
+  or the changes since a revision with Refresh.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -2485,6 +2495,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0039"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "search-owner"
 - "10 MB"
