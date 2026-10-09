@@ -79,6 +79,10 @@ PUBLISHED_ABSENT_SETTINGS = ('.pmr-chosen', '.pmr-strip')
 # rail's generic hook classes; concepts tag their elements with these classes instead of growing the lists.
 # Review copy only (apply_review): .pmr-chosen and .pmr-strip serve concepts A, B and C. Concept D's two hooks, .pmr-cur
 # in the cursor list and the brackets locking after the click on .pmr-lock, are kit source since 2026-10-09 (published).
+# Entries are anchored on the current kit; append new ones, never reorder. The kit's cursor list also brings the Settings
+# script's o55np-cur-over class (put on the hovered cursor-list item, and once from :hover when the Menu cursor part turns
+# on) to .pmr-cur rows: src/css/40-nier.css and concept D's 90-themes key the bar's paper text on that class, as the app
+# does (opus-5.5 kit.d/19-nier-parts.js, 2026-10-08).
 NIER_SELECTOR_PATCHES = [
     ('.page-index-title, .pm-segtab-item, .activity-bar .icon,',
      '.page-index-title, .pm-segtab-item, .pmr-chosen, .activity-bar .icon,',

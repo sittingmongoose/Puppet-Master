@@ -79,6 +79,8 @@ const WORDS = {
   'v1.2 -> Unraid': 'v1.2 → Unraid',
   '+ New Worktree': 'New worktree',
   '+ New branch': 'New branch',
+  'Open in Panel': 'Open in panel',
+  'vm not running — start colima · Retry': 'VM not running — start colima · Retry',
 };
 /* phrases the shell shortens inside longer text: [pattern, replacement] over a text node's whole value */
 const PHRASES = [

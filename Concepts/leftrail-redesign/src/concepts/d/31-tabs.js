@@ -16,7 +16,7 @@
               when it lands the chosen tab shows in inverse video for one tick; the new view prints line by line
      NieR     the ink cuts to the chosen tab (under the pointer it already was the ink bar) and the target brackets lock
               onto exactly that box: items carry .pmr-lock, which makes the brackets part place itself after the click
-              has landed (tools/rail_layer.py adds that to the Settings script) */
+              has landed (the opus-5.5 kit's retChoose, kit.d/19-nier-parts.js, since 2026-10-09) */
 
 const TAB_GLIDE = {
   basic:    { dur: 220, ease: 'cubic-bezier(.2, .8, .2, 1)' },

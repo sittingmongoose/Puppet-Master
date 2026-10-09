@@ -26,7 +26,7 @@
   content: ''; position: absolute; inset: 1px; border-radius: 50%; border: 1.5px solid currentColor; opacity: 0; pointer-events: none;
   animation: d-pulse 2.2s cubic-bezier(.2, .7, .3, 1) infinite;
 }
-§R[data-o55-nier="on"] .d-gl[data-pulse]::after, §R[data-theme^="retro"] .d-gl[data-pulse]::after { border-radius: 0; }
+§R[data-o55-nier-parts~="square"] .d-gl[data-pulse]::after, §R[data-theme^="retro"] .d-gl[data-pulse]::after { border-radius: 0; }
 @keyframes d-pulse { 0% { opacity: .55; transform: scale(.7); } 70%, 100% { opacity: 0; transform: scale(1.65); } }
 /* dots that became glyphs: the element stays (contracts, colours from markup) but draws the glyph */
 § :is(.sh-dot, .dot).d-dot {

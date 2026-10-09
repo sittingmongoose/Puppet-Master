@@ -48,8 +48,8 @@
 /* the Files root picker sits on the status line as a quiet text trigger */
 §F .sh-banner > .sh-bbranch { width: auto !important; max-width: 100%; margin: 0 0 0 -5px !important; flex: none; }
 §F .sh-banner > .sh-bbranch .pm6-tb-menu-trigger {
-  display: inline-flex !important; width: auto !important; border: 0 !important; background: none !important; padding: 1px 5px !important; min-height: 22px; gap: 5px !important; max-width: 100%;
-  border-radius: var(--d-r) !important; font: 500 var(--d-fs-meta)/1.3 var(--mono-font) !important; color: var(--d-text-2) !important;
+  display: inline-flex !important; width: auto !important; border: 0 !important; background: none !important; box-shadow: none !important; padding: 1px 5px !important; min-height: 22px; gap: 5px !important; max-width: 100%;
+  border-radius: var(--d-rs) !important; font: 500 var(--d-fs-meta)/1.3 var(--mono-font) !important; color: var(--d-text-2) !important;
 }
 §F .sh-banner > .sh-bbranch .pm6-tb-menu-label { display: inline !important; font: inherit !important; color: inherit !important; max-width: none !important; }
 §F .sh-banner > .sh-bbranch .pm6-tb-menu-trigger:hover, §F .sh-banner > .sh-bbranch .pm6-tb-menu-trigger.is-menu-open { background: var(--d-hover) !important; color: var(--d-text) !important; }
@@ -128,3 +128,10 @@
 }
 § .sh-foot .fm-footstat { gap: 6px; align-items: flex-start !important; font: 500 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-2) !important; white-space: normal !important; overflow: visible; min-width: 0; }
 § .sh-foot .fm-footmeta { font: 400 var(--d-fs-small)/1.3 var(--body-font) !important; color: var(--d-text-3) !important; }
+/* Files: the watch status takes the whole first line; the list facts sit under it, starting under its words and
+   wrapping instead of being cut (at 280 px the shell shows them beside the status, where neither fits) */
+§F .sh-foot { flex-wrap: wrap; row-gap: 1px; }
+§F .sh-foot > :is(.fm-footstat, .fm-indexchip) { flex: 1 1 100%; }
+§F .sh-foot > .fm-footmeta {
+  flex: 1 1 100%; margin-left: 18px !important; white-space: normal !important; overflow: visible !important; text-overflow: clip !important;
+}

@@ -36,8 +36,39 @@
 §{nier} .pm-btn:hover { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
 §{nier} .pm-btn:hover svg { color: inherit !important; }
 §{nier} .pm-btn-primary { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
-§R[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(#panel-files,#panel-source,#panel-docker) :is(.sh-hlabel, .sh-title, .pm-sumcard-h, .pm7-post-card-title) {
-  text-transform: uppercase !important; letter-spacing: .14em !important;
+/* NieR parts, each followed exactly as the rest of the app follows it (opus-5.5 styles.d/14-nier-parts.css). The
+   attribute data-o55-nier-parts exists only while NieR Mode is painted. D's own fills carry a panel id, so these rules
+   carry #sidePanelSlot (every rail panel sits in it) and the app's own :not() filters to outrank them.
+   Menu cursor [cursor]: a row the skin tags .pmr-cur, a Files tree row and an inactive tab become the ink bar while
+   hovered (:hover, that element only); their words, glyphs, letters and numbers read in paper while the item carries
+   .o55np-cur-over, the class the Settings script puts on the hovered cursor-list item (also once when the part turns
+   on, for a pointer already resting there). A chosen tree row is the ink bar too. Numbers stay plain words (no
+   turned-over badge: D draws no capsules). */
+§R[data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.pmr-cur, .fm-row, .pm-segtab-item):hover:not(.active):not([aria-disabled="true"]),
+§R[data-o55-nier-parts~="cursor"] #sidePanelSlot .fm-row.selected:not(.active):not([aria-disabled="true"]) {
+  background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-color: var(--o55-nier-ink) !important;
+  box-shadow: none !important; text-shadow: none !important;
+}
+§R[data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.pmr-cur, .fm-row, .pm-segtab-item).o55np-cur-over:not(.active):not([aria-disabled="true"]) :where(*),
+§R[data-o55-nier-parts~="cursor"] #sidePanelSlot .fm-row.selected:not(.active):not([aria-disabled="true"]) :where(*) {
+  color: inherit !important; -webkit-text-fill-color: currentColor;
+}
+§R[data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.pmr-cur, .fm-row).o55np-cur-over:not(.active) :is([class*="badge"], [class*="count"], kbd),
+§R[data-o55-nier-parts~="cursor"] #sidePanelSlot .fm-row.selected :is([class*="badge"], [class*="count"], kbd) {
+  background: transparent !important; border-color: transparent !important;
+}
+/* YoRHa headers [headers]: the panel title takes the app's .sh-title capitals (.16em); a shelf's label, a summary's head
+   and the publish card's title share their head with counts and buttons, so they take the app's card-title spacing
+   (.07em) and the rule with square end caps under the band, as the app's card heads do. Off: sentence case again. */
+§R[data-o55-nier-parts~="headers"] #sidePanelSlot .sh-banner > .sh-title { text-transform: uppercase !important; letter-spacing: .16em !important; }
+§R[data-o55-nier-parts~="headers"] #sidePanelSlot :is(.sh-hlabel, .pm-sumcard-h, .pm7-post-card-title) { text-transform: uppercase !important; letter-spacing: .07em !important; }
+§R[data-o55-nier-parts~="headers"] #sidePanelSlot .pm-sumcard-h > .c { text-transform: none !important; letter-spacing: 0 !important; }
+§R[data-o55-nier-parts~="headers"] #sidePanelSlot .sh-shelf > .sh-head {
+  background-image: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) !important;
+  background-size: 5px 5px, 5px 5px, calc(100% - 12px) 1px !important;
+  background-position: left bottom, right bottom, center calc(100% - 2px) !important;
+  background-repeat: no-repeat !important;
 }
 
 /* ---- 12. Reduced motion: nothing in the skin moves --------------------------------------------------------------- */

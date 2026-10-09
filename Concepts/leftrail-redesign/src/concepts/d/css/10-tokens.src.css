@@ -88,9 +88,13 @@
 §R[data-theme="basic-light"], §R[data-theme="friendly-light"] { --d-shelf-fill: 6%; --d-shelf-head: 11%; --d-shelf-line: 26%; --d-on-accent: #fff; }
 §R[data-theme="retro-light"] { --d-on-accent: #fff; }
 §R[data-theme="glass-light"] { --d-on-accent: #fff; }
-/* NieR Mode paints over Basic: square, ink and paper, hairlines; motion is a hard ink wipe */
+/* Glass's surfaces are about half transparent (and a blur does not take inside the frosted rail), so its chrome plates
+   take the surface colour at full strength: a row scrolled under the header or the tab strip does not show through */
+§R[data-theme="glass-dark"] { --d-chrome: rgb(37, 28, 57); }
+§R[data-theme="glass-light"] { --d-chrome: rgb(241, 242, 238); }
+/* NieR Mode paints over Basic: ink and paper, hairlines; motion is a hard ink wipe. Corners follow the "Square
+   hairlines" part, as everywhere else in the app (with that part off NieR keeps Basic's radii). */
 §R[data-o55-nier="on"] {
-  --d-R: 0px; --d-r: 0px;
   --d-line: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .26);
   --d-line-2: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .44);
   --d-hover: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .10);
@@ -102,3 +106,4 @@
   --d-ease: cubic-bezier(.7, 0, .2, 1);
   --d-spring: cubic-bezier(.7, 0, .2, 1);
 }
+§R[data-o55-nier-parts~="square"] { --d-R: 0px; --d-r: 0px; }
