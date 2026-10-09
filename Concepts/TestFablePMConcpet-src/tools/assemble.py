@@ -6,7 +6,7 @@ plants four marker pairs. Every run: replaces marker contents with the current
 sources from ./src. Idempotent.
 """
 import re, sys, pathlib, hashlib
-ROOT = pathlib.Path('/mnt/Cursor/PuppetMaster/Concepts/TestFablePMConcpet.html')
+ROOT = pathlib.Path('/mnt/Cursor/PuppetMaster/Concepts/Onboarding concepts/TestFablePMConcpet.html')
 SRC = pathlib.Path(__file__).resolve().parent.parent
 doc = ROOT.read_text(encoding='utf-8')
 

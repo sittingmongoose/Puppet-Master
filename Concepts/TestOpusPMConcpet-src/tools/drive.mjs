@@ -2,7 +2,7 @@
 import { chromium } from '/home/sittingmongoose/.npm/_npx/9833c18b2d85bc59/node_modules/playwright-core/index.mjs';
 import { mkdirSync } from 'node:fs';
 
-export const TARGET = 'file:///mnt/Cursor/PuppetMaster/Concepts/TestOpusPMConcpet.html';
+export const TARGET = 'file:///mnt/Cursor/PuppetMaster/Concepts/Onboarding%20concepts/TestOpusPMConcpet.html';
 export const PROFILE = '/tmp/claude-1000/-mnt-Cursor-PuppetMaster/b39dbd86-951c-408b-bab8-5d2199315c1f/scratchpad/opus-chrome-profile';
 
 export async function launch({ theme = 'friendly-dark', width = 1600, height = 1000, reduced = false } = {}) {

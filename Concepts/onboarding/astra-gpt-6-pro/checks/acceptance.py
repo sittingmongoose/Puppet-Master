@@ -6,7 +6,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 import json,time,traceback,hashlib,os,tempfile
 ROOT=Path(__file__).resolve().parents[4];OUT=Path(tempfile.mkdtemp(prefix='astra-acceptance-'))
-source=(ROOT/'Concepts/TestAstraPmConcept.html').read_text();results=[]
+source=(ROOT/'Concepts/Onboarding concepts/TestAstraPmConcept.html').read_text();results=[]
 with sync_playwright() as pw:
  b=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH','/usr/bin/chromium'),headless=True,args=['--no-sandbox','--disable-dev-shm-usage'])
  p=b.new_page(viewport={'width':1440,'height':960},reduced_motion='reduce');p.set_default_timeout(12000);errors=[];requests=[]

@@ -326,7 +326,6 @@
       "match_kind": "exact",
       "canonical_route": "Plans/UI_Wiring_Rules.md",
       "evidence_refs": [
-        "Concepts/PMConcept.html",
         "Plans/UI_Wiring_Rules.md",
         "Plans/FinalGUISpec.md"
       ],
@@ -335,7 +334,7 @@
         "PMConcept lineage"
       ],
       "validator_policy": "allow",
-      "notes": "PMConcept is concept/source-lineage input only."
+      "notes": "PMConcept is concept/source-lineage input only. Concepts/PMConcept.html was removed from the tree on 2026-10-06 (Jared's Concepts cleanup); its last content is in git history at 7e7b41f8bc."
     },
     {
       "raw_ref": "Plans/.pipeline/research_packet.json",

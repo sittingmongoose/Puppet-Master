@@ -3,7 +3,7 @@ from playwright.sync_api import sync_playwright
 import json, traceback, os, tempfile
 ROOT=Path(__file__).resolve().parents[4];O=Path(tempfile.mkdtemp(prefix='astra-pointer-'));results=[]
 with sync_playwright() as pw:
- b=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH','/usr/bin/chromium'),headless=True,args=['--no-sandbox','--disable-dev-shm-usage']);p=b.new_page(viewport={'width':1440,'height':960},reduced_motion='reduce');p.evaluate(Path(__file__).with_name('storage_shim.js').read_text());p.set_content((ROOT/'Concepts/TestAstraPmConcept.html').read_text());p.wait_for_timeout(600)
+ b=pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH','/usr/bin/chromium'),headless=True,args=['--no-sandbox','--disable-dev-shm-usage']);p=b.new_page(viewport={'width':1440,'height':960},reduced_motion='reduce');p.evaluate(Path(__file__).with_name('storage_shim.js').read_text());p.set_content((ROOT/'Concepts/Onboarding concepts/TestAstraPmConcept.html').read_text());p.wait_for_timeout(600)
  def test(name,fn):
   try:fn();results.append({'name':name,'status':'pass'});print('PASS',name,flush=True)
   except Exception as e:results.append({'name':name,'status':'fail','trace':traceback.format_exc()});print('FAIL',name,str(e),flush=True)
@@ -23,7 +23,7 @@ with sync_playwright() as pw:
   p.evaluate('PM7_GUIDED_TOUR.start({replay:true})');p.evaluate('PM7_GUIDED_TOUR.showMe()');p.evaluate('PM7_GUIDED_TOUR.next()');p.evaluate('PM7_GUIDED_TOUR.showMe()');p.evaluate('PM7_GUIDED_TOUR.next()');p.evaluate('PM7_GUIDED_TOUR.showMe()');changed=p.evaluate('PM_HOME_WORKSPACE.layout.surfaces');p.evaluate("const el=document.createElement('input');el.type='checkbox';el.id='as-keep-layout';el.checked=true;document.body.append(el);PM7_GUIDED_TOUR.skip();el.remove()");assert p.evaluate('PM_HOME_WORKSPACE.layout.surfaces')==changed
  test('27_explicit_layout_retention',keep)
  def restore_storage():
-  p.evaluate('ASTRA.demo.reset();ASTRA.act("start");ASTRA.act("local");ASTRA.act("kind","new")');p.locator('#name').fill('Survives remount');p.locator('[data-as="project-next"]').click();stored=p.evaluate('localStorage._dump()');q=b.new_page(viewport={'width':1440,'height':960});q.evaluate(Path(__file__).with_name('storage_shim.js').read_text());q.evaluate('(pairs)=>Object.entries(pairs).forEach(([k,v])=>localStorage.setItem(k,v))',stored);q.set_content((ROOT/'Concepts/TestAstraPmConcept.html').read_text());q.wait_for_timeout(400);assert q.evaluate('ASTRA.state.stage')=='storage';assert q.evaluate('ASTRA.state.draft.name')=='Survives remount';q.close()
+  p.evaluate('ASTRA.demo.reset();ASTRA.act("start");ASTRA.act("local");ASTRA.act("kind","new")');p.locator('#name').fill('Survives remount');p.locator('[data-as="project-next"]').click();stored=p.evaluate('localStorage._dump()');q=b.new_page(viewport={'width':1440,'height':960});q.evaluate(Path(__file__).with_name('storage_shim.js').read_text());q.evaluate('(pairs)=>Object.entries(pairs).forEach(([k,v])=>localStorage.setItem(k,v))',stored);q.set_content((ROOT/'Concepts/Onboarding concepts/TestAstraPmConcept.html').read_text());q.wait_for_timeout(400);assert q.evaluate('ASTRA.state.stage')=='storage';assert q.evaluate('ASTRA.state.draft.name')=='Survives remount';q.close()
  test('28_serialized_draft_rehydration_not_disk_certification',restore_storage)
  (O/'extra-acceptance.json').write_text(json.dumps(results,indent=2));b.close()
 

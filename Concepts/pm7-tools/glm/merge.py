@@ -16,7 +16,7 @@ def read(name):
             return p.read_text(encoding='utf-8')
     raise SystemExit('missing source: ' + name)
 
-TARGET = Path('/mnt/Cursor/PuppetMaster/Concepts/TestGLMPMConcept.html')
+TARGET = Path('/mnt/Cursor/PuppetMaster/Concepts/Onboarding concepts/TestGLMPMConcept.html')
 
 doc = TARGET.read_text(encoding='utf-8')
 t0 = time.time()

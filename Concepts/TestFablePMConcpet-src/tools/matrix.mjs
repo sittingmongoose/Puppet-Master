@@ -6,7 +6,7 @@ async function scenario(name, fn, opts={}) {
   const page = await ctx.newPage();
   const errs=[]; page.on('pageerror', e => errs.push(e.message)); page.on('console', m=>{ if(m.type()==='error') errs.push('console: '+m.text().slice(0,200)); });
   await page.addInitScript((pre)=>{ try{ if(!sessionStorage.getItem('mx-init')){ localStorage.clear(); sessionStorage.setItem('mx-init','1'); if(pre) Object.keys(pre).forEach(k=>localStorage.setItem(k, pre[k])); } }catch(e){} }, opts.pre||null);
-  await page.goto('file:///mnt/Cursor/PuppetMaster/Concepts/TestFablePMConcpet.html' + (opts.hash||''), { waitUntil: 'load', timeout: 60000 });
+  await page.goto('file:///mnt/Cursor/PuppetMaster/Concepts/Onboarding%20concepts/TestFablePMConcpet.html' + (opts.hash||''), { waitUntil: 'load', timeout: 60000 });
   await page.waitForTimeout(600);
   try { await page.waitForFunction(()=>window.PMF_ONBOARDING && (!window.PMF_ONBOARDING.state.open || !!window.PMF_ONBOARDING.state.screen), null, { timeout: 8000 }); } catch (e) {}
   await page.waitForTimeout(400);
