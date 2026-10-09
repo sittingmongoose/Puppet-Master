@@ -3375,6 +3375,38 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-onb-20261007/JARED-RE
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-082, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/Settings_System.md#SSYS-043
 
+### DL-156: The Plan card's buttons line up and fit the card in every theme
+
+**Question:** How should the Plan card's buttons, and the scheduled-build line above them, be laid out so they fit the card in every theme?
+
+**Why it came up:** On 2026-10-09 Jared sent a Retro Light screenshot of the Plan card in the chat. Build was shorter than Revise and Open plan, and its text was smaller. The three buttons sat on a grey band that touched the card's bottom padding and had no inset of its own, so they didn't line up with anything. The scheduled-build line wrapped "(Chicago time)" against Details. He asked for the buttons to be better designed for the space, in all themes.
+
+**What you get:**
+- One row of buttons for every Plan: Build, Revise (while the Plan is Ready) and Open plan on the chat card, and the same row in the editor's footer, on a finished Plan's compact card, under a paused or waiting build, in the scheduled-build line and on the "Build started" receipt. Every button is the same height with the same text size, in all ten themes, with even gaps.
+- No grey band. One thin line separates the Plan's summary from its status: the scheduled build, the step count ("6 steps · Ready") and the buttons, all on the card's left edge.
+- The scheduled-build line reads in rows: "Builds weeknights 10 PM–2 AM (Chicago time)" with Details beside it, then "next: tonight" and the night ribbon. "Use V6" and "Cancel schedule" get their own row under the sentence instead of squeezing it into a narrow column.
+- While building, "Building…" stays at full strength rather than greyed out, and the step count is plain words at the end of the row.
+- After you press Build on a Plan that also had a schedule, the line now reads "Schedule ended · you started this build now, so the schedule won’t start a second one." It used to offer "Use V" for a version that didn't exist.
+
+**What it costs:**
+- Build is a little taller than before (32 px, like every other button in the chat's cards). The card grows by a few pixels.
+- The scheduled-build line can take one more row on a wide card, because its detail now sits under the lead rather than beside it.
+
+**Options considered:** Keep the grey band, but stretch it to the card's edges with its own padding. Not chosen: no other chat card uses a band, and the wand modules' cards put their actions on the content edge. Put the step count at the right end of the button row. Not chosen: in Retro's wider type it wrapped at the card's usual width. The "Schedule ended" wording is the lead's ruling: Build already ends the schedule, and the old notice offered a version that did not exist. Jared may want to confirm it.
+
+**What Jared asked (2026-10-09, relayed with his screenshot by the orchestrator thread):** that the Plan card's buttons, which did not line up well, be designed for the space in every theme. The record states his request in plain words rather than quoting it (decision card 2 of 2026-10-07, recorded in DL-145).
+
+**What the spec now says:**
+1. **The Plan card's status zone and one action row** (`Plans/FinalGUISpec.md#F3-606`; section 6 now points to it).
+2. **The schedule line's layout** (`Plans/FinalGUISpec.md#F3-607`).
+3. **Schedule ended** (`Plans/Scheduling_and_Quota_Resume.md#SQR-015`, amended): a schedule invalidated with no newer version leads with Schedule ended and offers no Use V<n>.
+4. **One shared row** (`Plans/DRY_Rules.md#DR-047`): no Plan surface sizes its own buttons.
+5. **Unchanged:** no command, action id, wiring, setting or label is added or removed.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-20261009/JARED_REQUEST.md`, SHA-256 `4454066fa6584209b779ebf33441037b484f09f452599fcbef3477383782a93d` (the owner request); `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-20261009/JARED-SCREENSHOT-retro-light.png`, SHA-256 `e668fe203ee8aeeb9c9ed1e8aa2f263f525188ce14d4a837958074aace4b839b` (his screenshot).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-606, ContractName:Plans/FinalGUISpec.md#F3-607, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-015, ContractName:Plans/DRY_Rules.md#DR-047
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -11763,6 +11795,61 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
+```
+
+### DL-156 - The Plan Card's Buttons Line Up And Fit The Card In Every Theme
+
+```yaml
+plan_unit_id: DL-156
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-156 records the owner request of 2026-10-09: the Plan card's buttons, which did not line up, are designed for
+  the space in every theme. Every Plan surface's actions use one shared action row: one height and one type size,
+  even gaps, Build as a boxed primary (DR-047). The transcript card has no tinted footer band: one hairline opens a
+  status zone of the schedule line, the step count and the action row on the card's content edge (F3-606). The
+  schedule line reads in rows, its decision controls on a row of their own (F3-607). Disabled Build labels keep full
+  contrast. By the lead's ruling, a schedule that Build or an ended run invalidated, with no newer version, reads
+  Schedule ended and offers no Use V<n> (SQR-015). No command, action id, wiring, setting or label is added or
+  removed. The record states the request in plain words, without quoting him.
+gui_related: true
+gui_classification_reason: Records an owner decision on the Plan card's action row and schedule line layout.
+split_recommended: false
+depends_on: [DL-145, F3-566, SQR-015, APR-071]
+unblocks: [F3-606, F3-607, DR-047]
+acceptance_criteria:
+  - "Every Plan action row has one control height and type size in all ten themes (F3-606, DR-047)."
+  - "The schedule line's decision controls sit on their own row (F3-607), and an invalidated schedule with no newer version reads Schedule ended (SQR-015)."
+  - "The owner request is recorded in plain words, with the source cited by path and SHA-256."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: plan_card_layout_drift
+reasoning_tier: medium
+context_scope: chat_plan_card_actions_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/DRY_Rules.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-20261009/JARED_REQUEST.md, SHA-256 4454066fa6584209b779ebf33441037b484f09f452599fcbef3477383782a93d"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-20261009/JARED-SCREENSHOT-retro-light.png, SHA-256 e668fe203ee8aeeb9c9ed1e8aa2f263f525188ce14d4a837958074aace4b839b"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-156"
+  - "Schedule ended"
+  - "action row"
+negative_constraints:
+  - "Do not add a command, action id or setting for this layout."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
 ```
 
 ## Migration Coverage

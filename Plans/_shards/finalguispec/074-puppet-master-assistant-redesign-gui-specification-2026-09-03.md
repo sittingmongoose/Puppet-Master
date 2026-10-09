@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L36126-L36433
 
-Source SHA256: `f53b691e46c27e09fd2db732b918c0650a0f8b9516dd9b49d708c869ab1be25a`
+Source SHA256: `8ea8e45b6cf40c4bf9db481a2f6375effcca477279159277b750006e10c9682d`
 
 ---
 
@@ -52,7 +52,7 @@ What a wand module attaches to an ordinary reply is one line each (F3-570): the 
 
 The Plan is a transcript card because it is a human-readable deliverable. Its header carries the Plan title, a `Plan · V5` badge, and a `Rich Text` / `Markdown` toggle with Rich Text selected by default. The body renders headings, paragraphs, tables, lists, code, Mermaid, charts, images, diagrams and supported artifacts with stable scroll and selection, **no editable caret**, an optional step-status gutter while building, and embedded artifacts that open in the normal artifact viewer. The Markdown view is read-only and preserves block identity.
 
-The footer carries exactly one primary status control that changes label rather than being replaced by a separate badge. Before build the actions are `[Build] [Build With Crew] [Build At…] [Revise] [Send To Planning Wizard] [Export] [Cancel]`. During execution the primary control reads `Building…` alongside `Open To-Dos` and `Cancel`. After a terminal result it reads `Completed` or `Canceled`. A pause, quota wait or window boundary may appear as small support copy such as `Building… · paused until 10:00 PM`, but the button itself still reads `Building…`.
+The footer carries exactly one primary status control that changes label rather than being replaced by a separate badge. Before build the actions are `[Build] [Build With Crew] [Build At…] [Revise] [Send To Planning Wizard] [Export] [Cancel]`. During execution the primary control reads `Building…` alongside `Open To-Dos` and `Cancel`. After a terminal result it reads `Completed` or `Canceled`. A pause, quota wait or window boundary may appear as small support copy such as `Building… · paused until 10:00 PM`, but the button itself still reads `Building…`. The transcript card's status zone and its one action row are F3-606, and the schedule line's layout is F3-607 (DL-156).
 
 Historical Completed and Canceled cards stay in place and default to compact. A later Plan appears lower in the transcript. There is no Plan picker and no `Superseded` label.
 
