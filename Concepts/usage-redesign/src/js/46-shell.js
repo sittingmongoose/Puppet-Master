@@ -191,6 +191,7 @@
   function textW(text, face) {
     if (!fitCtx) { try { fitCtx = document.createElement('canvas').getContext('2d'); } catch (error) { return 0; } }
     fitCtx.font = face.font;
+    if (PMU.charts && PMU.charts.faceReady) PMU.charts.faceReady(face.font);   /* a face still loading is asked for; it re-fits when it lands */
     var s0 = face.tt === 'uppercase' ? String(text).toUpperCase() : String(text);
     return fitCtx.measureText(s0).width + (parseFloat(face.ls) || 0) * s0.length;
   }
@@ -221,6 +222,8 @@
     tbW = w; fitDesc();
   }).observe(tbEl);
   if (PMU.theme && PMU.theme.onChange) PMU.theme.onChange(function () { faces = null; requestAnimationFrame(fitDesc); });
+  /* an embedded face that landed after a measure (30-charts-core.js faceReady): measure again in it */
+  if (PMU.charts && PMU.charts.onFaces) PMU.charts.onFaces(function () { faces = null; faceKey = null; fitDesc(); });
   function setView(patch, source) {
     var changed = Object.keys(patch).filter(function (k) { return patch[k] !== undefined && st[k] !== patch[k]; });
     if (!changed.length) return false;

@@ -285,6 +285,7 @@
   function resyncSoon() { if (headT) return; headT = requestAnimationFrame(function () { headT = 0; resyncHeads(); }); }
   if (PMU.theme && PMU.theme.onChange) PMU.theme.onChange(resyncSoon);
   try { if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', resyncSoon); } catch (error) {}
+  if (PMU.charts && PMU.charts.onFaces) PMU.charts.onFaces(resyncSoon);   /* a face that landed after a measure (item 9) */
   PMU.cards = {
     HEAD_PX: HEAD_PX,
     headForm: headForm,

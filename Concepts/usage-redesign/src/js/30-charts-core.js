@@ -475,7 +475,43 @@
   };
 
   /* ---------- text width without layout: canvas measure of the theme faces, cached per look ---------- */
-  var cv = null, fontKey = '', faces = { mono: 'monospace', font: 'sans-serif' };
+  /* Embedded faces (DL-161: data-URI woff2, font-display: swap) load on first use, and a canvas measure never waits for
+     one: a face or weight that is still loading measures in the fallback face (Jared's item 9, 2026-10-09: a Friendly
+     switch rendered the board while Poppins 500 was still loading). So every measure asks first whether its face is
+     ready (document.fonts.check, once per font string), asks for it when it is not, and counts the miss; a memo never
+     keeps a measure that missed (50-w-common.js wrapLines). When the faces asked for have landed, every measure is
+     redone once: the charts.onFaces listeners run (the wrap memo clears, the board's bodies re-render at their size,
+     the heads and the room subtitle re-fit). The sample holds a Latin letter and two PM Symbols, so the symbol faces
+     mirrored on each text face (unicode-range) are asked for together with it. */
+  var FACE_SAMPLE = 'Ag0 ≈→';
+  var cv = null, fontKey = '', faces = { mono: 'monospace', font: 'sans-serif' }, faceOk = {}, faceAsked = {}, missN = 0, missAt = 0, faceFns = [], landT = 0;
+  function faceReady(font) {
+    if (faceOk[font]) return true;
+    var fs = document.fonts;
+    if (!fs || typeof fs.check !== 'function' || typeof fs.load !== 'function') { faceOk[font] = true; return true; }
+    if (!faceAsked[font]) {
+      var ok = true;
+      try { ok = fs.check(font, FACE_SAMPLE); } catch (error) { ok = true; }
+      if (ok) { faceOk[font] = true; return true; }
+      faceAsked[font] = true;
+      /* settled either way: a face that failed to load is final too (the fallback is then what the page draws) */
+      var done = function () { faceOk[font] = true; delete faceAsked[font]; landed(); };
+      try { fs.load(font, FACE_SAMPLE).then(done, done); } catch (error) { done(); }
+    }
+    missN++;
+    return false;
+  }
+  function landed() {
+    if (landT) return;
+    /* one batch for the faces that land together (a look's regular and bold cuts arrive within a few ms) */
+    landT = setTimeout(function () {
+      landT = 0;
+      if (Object.keys(faceAsked).length) return;   /* the last face to land runs the batch */
+      if (missN === missAt) return;
+      missAt = missN; fontKey = '';
+      faceFns.slice().forEach(function (fn) { try { fn(); } catch (error) { console.error('[pm-usage] faces listener', error); } });
+    }, 16);
+  }
   function textW(str, px, mono, weight) {
     var look = PMU.theme.look().key;
     if (fontKey !== look) {
@@ -485,9 +521,16 @@
     }
     if (!cv) cv = document.createElement('canvas').getContext('2d');
     cv.font = (weight || 400) + ' ' + (px || 11) + 'px ' + (mono ? faces.mono : faces.font);
+    faceReady(cv.font);
     return cv.measureText(String(str)).width * (mono ? 0.9 : 1);
   }
   charts.textW = textW;
+  /* a font string ('600 13px Inter, system-ui'), ready to measure? (false: a fallback measure, counted; the face is asked for) */
+  charts.faceReady = faceReady;
+  /* the miss count so far: a caller that memoizes compares it before and after its measures */
+  charts.faceMisses = function () { return missN; };
+  /* fn() once the faces a missed measure asked for have landed */
+  charts.onFaces = function (fn) { faceFns.push(fn); };
 
   /* ---------- scales ---------- */
   function niceStep(raw) {
