@@ -80,7 +80,7 @@
         }).join('') +
         '<i class="pmu-skyswitch"' + (th.auto ? '' : ' data-off') + ' data-at="' + swAt + '" style="bottom:calc(var(--sky-foot) + ' + (swAt / 100) + ' * var(--sky-h))"><span>' + (th.auto ? swAt + '%' : 'OFF') + '</span></i>' +
         '<i class="pmu-skyfront" style="bottom:calc(var(--sky-foot) + ' + (swAt / 100) + ' * var(--sky-h))"></i>' +
-        '</div>' + (cols.length > n ? C.more(cols.length - n, 'windows', false, cols.slice(n).map(function (c) { return c.p.name + ' · ' + c.a.nickname + ' · ' + c.w.label + ' ' + C.fmt(c.w.pct, 'pct') + ' used · ' + F.resetLine(c.w).text; })) : '') + '</div>';
+        '</div>' + (cols.length > n ? C.more(cols.length - n, 'windows', 'at a wider size', cols.slice(n).map(function (c) { return c.p.name + ' · ' + c.a.nickname + ' · ' + c.w.label + ' ' + C.fmt(c.w.pct, 'pct') + ' used · ' + F.resetLine(c.w).text; })) : '') + '</div>';
       if (body._pmuDry) return;
       /* the plot's geometry for the beats and the toggle (no layout read later): the line runs from -4 px to the plot's
          width less 34 px; the body is the plot's width */
@@ -458,7 +458,10 @@
       var head = heroOk ? C.heroHead(ctx, { value: 100, fmt: 'pct', label: 'of readings carry a named authority',
         sub: b(nRep) + ' provider reported · ' + b(nEst) + ' PM ' + (nEst === 1 ? 'estimate' : 'estimates') + ' · ' + b(0) + ' stale · ' + b(0) + ' unknown' }) : '';
       var H = Math.max(120, bh - (heroOk ? 66 : 0) - 26 - 6);
-      var colW = Math.max(110, Math.min(200, Math.floor(bw * 0.26))), gapW = Math.max(40, Math.floor((bw - 3 * colW) / 2)), tight = colW < 170;
+      /* (lane c-presets) three columns and two gaps inside the body at every width: a 400 px board gave the flow 372 px and
+         the 110 px column floor ran the LABEL column 38 px past the card */
+      var gapMin = bw < 460 ? 24 : 40, colW = Math.max(84, Math.min(200, Math.floor(bw * 0.26), Math.floor((bw - 2 * gapMin) / 3)));
+      var gapW = Math.max(gapMin, Math.floor((bw - 3 * colW) / 2)), tight = colW < 170;
       var leftH = Math.floor((H - 6 * (rows.length - 1)) / rows.length);
       /* a source box names its reading by its Settings name with its age when both fit, the name alone when only the
          name fits (the age stays in the hover tag), else the short word with the age (final fix M8) */

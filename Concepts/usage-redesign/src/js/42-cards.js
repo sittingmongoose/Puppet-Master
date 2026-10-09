@@ -160,8 +160,10 @@
   var CLS_ORDER = ['S', 'M', 'L', 'XL'], GAP_PX = 8, ROW_PX = 30, FOLD_TAG = 'Not shown at this size';
   /* what counts as one item of a kind for fit = n (a kind without an entry, or a card that draws none, fits "nothing
      folded") */
-  var ITEM_SEL = { kpi: '.pmu-fact', limit: '.pmu-accrow', provider: '.pmu-accrow', list: '.pmu-lrow', table: '.pmu-trow', agenda: '.pmu-agline',
+  var ITEM_SEL = { kpi: '.pmu-fact', limit: '.pmu-accrow', provider: '.pmu-accrow', list: '.pmu-lrow', table: '.pmu-tbody > .pmu-trow', agenda: '.pmu-agline',
     qhist: '.pmu-qrow:not(.pmu-qaxis)', models: '.pmu-sbrow', ranked: '.pmu-rk', mix: '.pmu-mixrow', providers: '.pmu-provrow', context: '.pmu-ctxleg' };
+  /* a plate of one account has no account rows: its "account" is the plate, complete when every window meter shows */
+  var WHOLE_SEL = { limit: '.pmu-limitmeter', provider: '.pmu-accmeter' };
   var ITEM_WORD = { kpi: ['fact', 'facts'], limit: ['account', 'accounts'], provider: ['account', 'accounts'], list: ['row', 'rows'], table: ['row', 'rows'],
     agenda: ['reset', 'resets'], qhist: ['account', 'accounts'], models: ['model', 'models'], ranked: ['row', 'rows'], mix: ['part', 'parts'],
     providers: ['provider', 'providers'], context: ['family', 'families'] };
@@ -174,20 +176,42 @@
   }
   function offered(p, cls) { return !p.from || CLS_ORDER.indexOf(cls) >= CLS_ORDER.indexOf(p.from); }
   function widthOf(p, cls) { return typeof p.w === 'object' ? (p.w[cls] != null ? p.w[cls] : p.w.S) : p.w; }
-  function fitKeyOf(id, cls, w, fit) { return [id, cls, w, fit, viewKey(id)].join('|'); }
+  /* a preset's width at the board now: authored in tracks at the nominal 47 px pitch (S at a 557 px board, M at 929 px),
+     resolved to the same pixel width at the live pitch (never more than 2 % narrower: the content tiers switch at fixed
+     pixel widths, and a 264 px "274 px" card crossed them), so a preset is the same card on a 400 px board (pitch 34)
+     and a 1700 px one; a board-wide preset takes the class's tracks. Inside the kind's range. A preset with minPx is not
+     offered where the board cannot give it that width (the one-line switch strip needs about 480 px). */
+  var NOMINAL_PITCH = 47;
+  function widthAt(p, ks, cls) {
+    var cap = Math.max(1, Math.min(cls.tracks, (ks && ks.wMax) || cls.tracks)), lo = Math.min((ks && ks.wMin) || 1, cap);
+    if (p.full) return cap;
+    var pitch = cls.pitchX || NOMINAL_PITCH, px = widthOf(p, cls.name) * NOMINAL_PITCH - GAP_PX;
+    var t = Math.max(1, Math.round((px + GAP_PX) / pitch));
+    while (t * pitch - GAP_PX < px * 0.98) t += 1;
+    return Math.max(lo, Math.min(cap, t));
+  }
+  /* the measured height belongs to the card's pixel width (the same tracks are 34 px apart on a 400 px board, 47 on a
+     557 px one) */
+  function pxOf(w) { var c = clsNow(); return Math.round(w * (c.pitchX || NOMINAL_PITCH) - GAP_PX); }
+  function fitKeyOf(id, cls, w, fit) { return [id, cls, pxOf(w), fit, viewKey(id)].join('|'); }
   /* the presets a panel offers at the board's class now: [{id, name, desc, w, h, fit, measured}] (a fit preset's h is its
      measured height when known, else the kind's fallback) */
   function presetsOf(id) {
     var ks = PMU.widgets.spec(id), cls = clsNow();
     if (!ks) return [];
-    return (ks.presets || []).filter(function (p) { return offered(p, cls.name); }).map(function (p) {
-      var w = Math.max(ks.wMin || 1, Math.min(widthOf(p, cls.name), cls.tracks, ks.wMax || cls.tracks)), h = p.h, measured = p.fit == null;
+    var list = (ks.presets || []).filter(function (p) { return offered(p, cls.name) && (!p.minPx || Math.min(cls.tracks, (ks.wMax || cls.tracks)) * (cls.pitchX || NOMINAL_PITCH) - GAP_PX >= p.minPx); }).map(function (p) {
+      var w = widthAt(p, ks, cls), h = p.h, measured = p.fit == null;
       if (p.fit != null) {
         var k = fitCache[fitKeyOf(id, cls.name, w, p.fit)], pk = picked[id];
         if (k != null) { h = k; measured = true; }
-        else if (pk && pk.pid === p.id && pk.cls === cls.name && pk.w === w) { h = pk.h; measured = true; }
+        else if (pk && pk.pid === p.id && pk.cls === cls.name && pk.w === w && pk.px === pxOf(w)) { h = pk.h; measured = true; }
       }
-      return { id: p.id, name: p.name, desc: p.desc, w: w, h: h, fit: p.fit == null ? null : p.fit, measured: measured };
+      return { id: p.id, name: p.name, desc: p.desc, w: w, h: h, fit: p.fit == null ? null : p.fit, hMin: p.hMin || null, measured: measured };
+    });
+    /* two presets that come to the same size here (a narrow board gives a 10- and a 12-track preset its whole width; a
+       fit of eight rows where the panel has eight) are one preset: the later, larger tier keeps the row */
+    return list.filter(function (p, i) {
+      return !list.slice(i + 1).some(function (q) { return q.w === p.w && (p.measured && q.measured ? q.h === p.h : p.fit == null && q.fit == null ? q.h === p.h : p.fit != null && q.fit === p.fit); });
     });
   }
   /* the preset name of a size (the menu's "Current", the resize outline, the layout record's preset_id): with the widget
@@ -200,7 +224,7 @@
       var m = list.filter(function (p) { return p.w === w && p.h === h && p.measured; })[0];
       return m ? m.name : null;
     }
-    var q = (ks && ks.presets || []).filter(function (x) { return offered(x, cls) && x.fit == null && widthOf(x, cls) === w && x.h === h; })[0];
+    var c0 = clsNow(), q = (ks && ks.presets || []).filter(function (x) { return offered(x, cls) && x.fit == null && widthAt(x, ks, c0) === w && x.h === h; })[0];
     return q ? q.name : null;
   }
 
@@ -253,11 +277,26 @@
     var bb = body ? body.getBoundingClientRect() : null;
     var inside = function (el) { var r = el.getBoundingClientRect(); return r.height > 0 && r.top >= bb.top - 1 && r.bottom <= bb.bottom + 1; };
     var items = sel && body ? Array.prototype.filter.call(body.querySelectorAll(sel), inside).length : 0;
+    var whole = WHOLE_SEL[kind] && body ? Array.prototype.filter.call(body.querySelectorAll(WHOLE_SEL[kind]), inside).length : 0;
+    /* clipped: a word, a mark or a chart running past the card's edges (a fragment, whatever the fold markers say) */
+    var cr = card.getBoundingClientRect(), clipped = false;
+    if (body) Array.prototype.some.call(body.querySelectorAll('*'), function (el) {
+      if (el.closest('svg') && !/^svg$/i.test(el.tagName)) return false;
+      var own = /^svg$/i.test(el.tagName) || Array.prototype.some.call(el.childNodes, function (n) { return n.nodeType === 3 && n.nodeValue.trim(); });
+      if (!own) return false;
+      var r = el.getBoundingClientRect(); if (!r.width || !r.height) return false;
+      if (r.bottom > cr.bottom + 1 || r.top < bb.top - 1 || r.right > cr.right + 1 || r.left < cr.left - 1) { clipped = true; return true; }
+      return false;
+    });
     var hidden = 0;
     Array.prototype.forEach.call(card.querySelectorAll('.pmu-more'), function (el) { var m = /^(\d+) more\b/.exec(el.textContent || ''); if (m && el.getClientRects().length) hidden += +m[1]; });
     Array.prototype.forEach.call(card.querySelectorAll('.pmu-headmore'), function (el) { hidden += +(el.getAttribute('data-n') || 0); });
-    var tagged = !!card.querySelector('[data-pm-hover-label="' + FOLD_TAG + '"]');
-    return { items: items, hidden: hidden, folded: hidden > 0 || tagged };
+    /* a fold tag without a count ("Not shown at this size" on a body, a strip, a ring) counts the items its tag lists, so
+       a fit can tell a strip that folds four families from a ladder that folds none */
+    var tags = Array.prototype.filter.call(card.querySelectorAll('[data-pm-hover-label="' + FOLD_TAG + '"]'), function (el) { return !el.classList.contains('pmu-headmore') && !el.classList.contains('pmu-more'); });
+    tags.forEach(function (el) { var d = el.getAttribute('data-pm-hover-detail') || ''; hidden += d ? d.split('; ').length : 1; });
+    var tagged = tags.length > 0 || !!card.querySelector('[data-pm-hover-label="' + FOLD_TAG + '"]');
+    return { items: items, whole: whole, hidden: hidden, folded: hidden > 0 || tagged, clipped: clipped };
   }
   /* the smallest height (rows) at width w that shows fit = n items, or everything (fit 'all'); where even the kind's tallest
      size folds, the smallest that shows as much as the tallest. A job renders one height a step, so the picker can
@@ -270,18 +309,28 @@
     if (job.h != null) { job.done = true; return job; }
     jobs[key] = job;
     var ks = PMU.widgets.spec(id) || {};
-    var pre = (ks.presets || []).filter(function (p) { return p.fit === fit && widthOf(p, cls.name) === w; })[0];
-    var hMin = Math.max(ks.hMin || 3, 3), hMax = Math.max(hMin, Math.min(ks.hMax || 30, 40));
+    var pre = (ks.presets || []).filter(function (p) { return p.fit === fit && offered(p, cls.name) && widthAt(p, ks, cls) === w; })[0];
+    /* a preset's own floor (per class): the form it names needs its rows (the switch ladder) */
+    var pm = pre && pre.hMin ? (typeof pre.hMin === 'object' ? pre.hMin[cls.name] || 0 : pre.hMin) : 0;
+    var hMin = Math.max(ks.hMin || 3, 3, pm), hMax = Math.max(hMin, Math.min(ks.hMax || 30, 40));
     var fb = Math.max(hMin, Math.min(hMax, pre ? pre.h : hMin)), want = fit === 'all' ? null : +fit;
-    var card = null, top = null, rFb = null, lo = hMin, hi = hMax, phase = 'fb';
+    var card = null, top = null, lo = hMin, hi = hMax, phase = 'top';
     var at = function (h) {
       if (!card) { var host = hostEl(); if (!host) throw new Error('no host'); card = ghostCard(id); host.appendChild(card); }
       job.renders++; return renderAt(card, w, h);
     };
+    /* judged against the tallest size: n items (or every item there is), every window of a one-account plate, or
+       everything the tallest shows; never a clipped card where the tallest is whole */
     var ok = function (r) {
-      if (top && top.folded && fit === 'all') return r.items >= top.items && r.hidden <= top.hidden;
-      if (want != null && (r.items > 0 || (top && top.items > 0))) return r.items >= (top ? Math.min(want, top.items) : want);
-      return !r.folded;
+      if (r.clipped && !top.clipped) return false;
+      if (fit === 'all') {
+        if (top.items > 0) return r.items >= top.items && r.hidden <= top.hidden;
+        if (top.whole > 0 && r.whole < top.whole) return false;
+        return top.folded ? r.hidden <= top.hidden : !r.folded;
+      }
+      if (top.items > 0) return r.items >= Math.min(want, top.items);
+      if (top.whole > 0) return r.whole >= top.whole;
+      return top.folded ? r.hidden <= top.hidden : !r.folded;
     };
     var finish = function (h) {
       job.done = true; job.h = h; delete jobs[key];
@@ -289,14 +338,13 @@
       dropGhost(card); card = null;
       if (PMU.cards._fitLog) PMU.cards._fitLog.push({ id: id, w: w, fit: fit, h: h, renders: job.renders, ms: Math.round(performance.now() - job.t0) });
     };
-    /* the fallback height first (usually within a row or two of the answer), then a bisection on the side it points to;
-       where the fallback falls short, the tallest size says how many items there are and whether everything can show
-       (then the fallback is judged again by that) */
+    /* the tallest size first (how many items there are, whether everything can show), then the fallback height (usually
+       within a row or two of the answer), then a bisection on the side it points to */
     job.step = function () {
       if (job.done) return true;
       try {
-        if (phase === 'fb') { rFb = at(fb); if (ok(rFb)) { lo = hMin; hi = fb; phase = 'bisect'; } else phase = 'top'; }
-        else if (phase === 'top') { top = at(hMax); if (ok(rFb)) { lo = hMin; hi = fb; } else { lo = fb + 1; hi = hMax; } phase = 'bisect'; }
+        if (phase === 'top') { top = at(hMax); phase = 'fb'; }
+        else if (phase === 'fb') { if (ok(at(fb))) { lo = hMin; hi = fb; } else { lo = fb + 1; hi = hMax; } phase = 'bisect'; }
         else if (lo < hi) { var mid = (lo + hi) >> 1; if (ok(at(mid))) hi = mid; else lo = mid + 1; }
         if (phase === 'bisect' && lo >= hi) finish(lo);
       } catch (error) { console.error('[pm-usage] preset fit ' + id, error); finish(null); }
@@ -348,7 +396,7 @@
     if (raw) { PMU.board.resize(id, { w: +raw[1], h: +raw[2] }, 'size_menu'); return true; }
     var p = presetsOf(id).filter(function (x) { return x.id === m[1]; })[0]; if (!p) return false;
     var h = presetH(id, p);
-    picked[id] = { cls: clsNow().name, w: p.w, h: h, pid: p.id };
+    picked[id] = { cls: clsNow().name, w: p.w, px: pxOf(p.w), h: h, pid: p.id };
     PMU.board.resize(id, { w: p.w, h: h }, 'size_menu');
     return true;
   }
@@ -617,7 +665,20 @@
       var id = card.getAttribute('data-widget'), kind = PMU.widgets.kindOf(id);
       withView(id, function () {
         var ctx = ctxFor(card, tier, entering);
+        var titleEl = card.querySelector('.pmu-cardtitle'), title0 = titleEl ? titleEl.textContent : '';
         syncHead(card, ctx);
+        /* the head's title just changed (the short title of a narrow tile): the tier was measured under the old head (a
+           wrapped title took the tile's second line, so a 4 x 4 tile rendered its h0 strip with a free line under it);
+           measure again and render for the head as it is now (lane c-presets) */
+        if (titleEl && titleEl.textContent !== title0 && PMU.board && PMU.board.measure) {
+          var t2 = PMU.board.measure(card);
+          if (t2.w !== tier.w || t2.h !== tier.h || t2.bw !== tier.bw || t2.bh !== tier.bh) {
+            tier = t2;
+            if (card.getAttribute('data-tw') !== tier.w) card.setAttribute('data-tw', tier.w);
+            if (card.getAttribute('data-th') !== tier.h) card.setAttribute('data-th', tier.h);
+            ctx = ctxFor(card, tier, entering);
+          }
+        }
         if (body._pmuKind && body._pmuKind.destroy) { try { body._pmuKind.destroy(body, body._pmuCtx); } catch (error) {} }
         body.textContent = '';
         var head = card.querySelector('.pmu-headtools'); if (head) head.textContent = '';

@@ -333,7 +333,9 @@
          days out in a hidden fourth column and printed "continued" under its own day). Two columns from 520 px, three from
          900; a day that runs into the next column carries its head there ("continued", only at a column top); the foot line
          counts what was actually laid out. */
-      var bw = ctx.tier.bw, colsN = bw >= 900 ? 3 : bw >= 520 ? 2 : 1, GAP = 28;
+      /* (lane c-presets) a column of at least 300 px, so a line keeps its account and provider on one line: two columns
+         from 628 px, three from 960 (two 250 px columns at a 557 px board wrapped every line to three) */
+      var bw = ctx.tier.bw, colsN = bw >= 960 ? 3 : bw >= 628 ? 2 : 1, GAP = 28;
       var colW = (bw - GAP * (colsN - 1)) / colsN, narrow = colW < 300;
       var minLine = narrow ? 48 : 42, headH = 32;
       /* the text column: the line's grid (time 46 / 52 px, mark 18, the used column as wide as its widest value) */

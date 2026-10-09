@@ -786,9 +786,13 @@
       var cta = '<button type="button" class="pmu-textbtn pmu-setupcta" data-pmu-act="setup-open"' + C.hover('Open Provider Connections', 'Settings · AI · operation ' + acct.operation_id + ' · continuation ' + acct.continuation_id) + '>Open Provider Connections</button>';
       var blocks = [{ h: 34, html: '<div class="pmu-setuphead">' + C.glyph('gear') + '<b>' + esc(acct.status) + '</b></div>', always: true }]
         .concat([{ h: 36, html: '<div class="pmu-setupcta-row">' + cta + '</div>', always: true }])
-        .concat([{ h: 22, html: '<p class="pmu-setupnote">No automatic acquisition or route change.</p>' }])
-        .concat(rows.map(function (r) { return { h: 32, html: '<div class="pmu-amount pmu-amt">' + C.glyph(r[2]) + '<span>' + esc(r[0]) + '</span><span class="pmu-amtv"><b>' + esc(r[1]) + '</b></span></div>' }; }));
+        .concat([{ h: 22, html: '<p class="pmu-setupnote">No automatic acquisition or route change.</p>', t: 'No automatic acquisition or route change.' }])
+        .concat(rows.map(function (r) { return { h: 32, html: '<div class="pmu-amount pmu-amt">' + C.glyph(r[2]) + '<span>' + esc(r[0]) + '</span><span class="pmu-amtv"><b>' + esc(r[1]) + '</b></span></div>', t: r[0] + ' ' + r[1] }; }));
       var res = C.stack(blocks, ctx.tier.bh);
+      /* the blocks that do not fit are counted in the head (+N, its hover tag lists them), never dropped silently (lane
+         c-presets: the size presets read the count) */
+      var hid = res.hidden.map(function (b) { return b.t; }).filter(Boolean);
+      C.headMore(ctx, body, hid);
       body.innerHTML = '<div class="pmu-setup">' + res.html + '</div>';
     }
   });

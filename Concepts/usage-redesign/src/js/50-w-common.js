@@ -174,7 +174,9 @@
      each); the line's hover tag lists them, so nothing a card holds is ever hidden silently (CONTENT-3) */
   C.more = function (n, what, short, items) {
     var w = what ? (n === 1 ? String(what).replace(/s$/, '') : what) : (n === 1 ? 'row' : 'rows');
-    return n > 0 ? '<div class="pmu-more"' + C.foldHover(items) + '>' + esc(n + ' more ' + w + (short ? '' : ' at a taller size')) + '</div>' : '';
+    /* short: no "at a taller size" (true), or the words that say what would show them ('at a wider size': the skyline's
+       towers stand side by side) */
+    return n > 0 ? '<div class="pmu-more"' + C.foldHover(items) + '>' + esc(n + ' more ' + w + (typeof short === 'string' ? ' ' + short : short ? '' : ' at a taller size')) + '</div>' : '';
   };
   /* the hover tag of a "N more" line: every folded reading, in reading order */
   C.FOLD_LABEL = 'Not shown at this size';
@@ -1061,6 +1063,10 @@
       var m = ctx.model;
       if (!m) { body.innerHTML = C.empty('No reading for this panel'); return; }
       var h = ctx.tier.h, wide = ctx.tier.w === 'xl' && C.h(ctx, 'h2');
+      /* a body of 50-59 px holds the value line and one line under it (34 + 17): it takes the h1 share-out, not the bare
+         h0 strip (lane c-presets: a 4 x 4 tile whose head count wrapped its title measured 58 px and showed the value
+         alone over an empty band) */
+      if (h === 'h0' && ctx.tier.bh >= 50) h = 'h1';
       var valueHtml = m.vs ? '<span class="pmu-kpivs">' + C.vs(m.vs, m.word) + '</span>'
         : m.text != null ? '<b class="pmu-kpivalue"><span class="pmu-num">' + esc(m.text) + '</span>' + (m.unit ? '<span class="pmu-u">' + esc(m.unit) + '</span>' : '') + '</b>'
         : C.valHtml(m.value, m.fmt, 'pmu-kpivalue', ctx.id + ':v').replace('class="pmu-num"', 'class="pmu-num" data-count="kpi"');
@@ -1611,7 +1617,9 @@
       var bh = ctx.tier.bh;
       var heroW = C.isHero(ctx) && (C.w(ctx, 'm') || (ctx.tier.bw >= 200 && bh < 84 + 30 + 3 * LEG));
       /* facts take a third column only where the legend keeps about 240 px beside the ring */
-      var factsRoom = C.w(ctx, 'l') && (!heroW || ctx.tier.bw - 168 - 32 >= 480);
+      /* (lane c-presets: the third column needs about 500 px; at 360-499 it squeezed the families to "Mess / ages" and the
+         facts to "Reclaima / ble" over each other, so there the facts fold into the head count instead) */
+      var factsRoom = ctx.tier.bw >= 500 && (!heroW || ctx.tier.bw - 168 - 32 >= 480);
       var oneCol = side || ctx.tier.bw < 300, per = oneCol ? 1 : 2, needRows = Math.ceil(n / per);
       /* measured: ring + 10 px gap, composition bar 8 px + 10 px gap, legend rows 24 px (26 in NieR), "N more" line 24 px.
          A stacked card keeps the 84 px ring and the bar only when every family still fits; otherwise the bar goes (the ring

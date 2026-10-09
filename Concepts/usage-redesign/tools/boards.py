@@ -32,27 +32,37 @@ LEVELS = {'G': 'glance', 'D': 'detailed', 'X': 'diagnostics'}
 # (agenda replaces the lane timeline); provider plates are taller (Atlas rows, 66 px comfortable rows).
 # Presets (lane c-presets, Jared 2026-10-09: "Panel size presets need to be rethought and polished. Currently they make
 # the panels small and the content doesn't make sense."; PRESETS.md in the lane folder): every preset is one complete
-# content tier, 2-3 per kind. A preset's width is per board class (S / M / L / XL tracks): the same pixel width at every
-# class (S, M and L share the track count, XL takes about 47/56 of it), or the board's width ('full'). Its height is rows,
-# or by content: fit = n (the smallest height that shows n complete items: accounts, rows, resets, models) or 'all' (the
-# smallest that folds nothing), measured at runtime by rendering the kind in a hidden card at that width (42-cards.js);
-# h is then the fallback before the measure (and what --check validates). frm = the first class that offers it (a
-# board-wide preset that would only repeat another at S).
+# content tier, 2-3 per kind. A preset's width is authored in tracks at the nominal 47 px pitch (S at a 557 px board, M at
+# 929 px), per board class (S / M / L / XL) where a class should offer a wider card, or the board's width ('full'); the
+# engine resolves it to the same pixel width at the live pitch (42-cards.js widthAt), so a preset is the same card on a
+# 400 px board and a 1600 px one. Its height is rows, or by content: fit = n (the smallest height that shows n complete
+# items: accounts, rows, resets, models) or 'all' (the smallest that folds nothing), measured at runtime by rendering the
+# kind in a hidden card at that width (42-cards.js); h is then the fallback before the measure (and what --check
+# validates). hmin = the smallest height a fit preset may take (a form that needs its rows: the switch ladder); minpx =
+# the card width the preset's form needs (not offered on a narrower board: the one-line switch strip on a 400 px board).
+# frm = the first class that offers it (a board-wide preset that would only repeat another at S).
 CLS_ORDER = ['S', 'M', 'L', 'XL']
-XL_OF = {4: 4, 5: 5, 6: 5, 7: 6, 8: 7, 9: 8, 10: 9, 11: 10, 12: 11, 14: 12, 16: 14}
+NOMINAL_PITCH = 47
 
 
-def P(pid, name, w, h, desc, fit=None, frm=None):
-    """One preset. w: tracks at S / M / L (XL from XL_OF), a 4-tuple (S, M, L, XL), or 'full' (the board's width)."""
-    if w == 'full':
+def P(pid, name, w, h, desc, fit=None, frm=None, hmin=None, minpx=None):
+    """One preset. w: tracks at the nominal pitch (every class), a 4-tuple (S, M, L, XL), or 'full' (the board's width)."""
+    full = w == 'full'
+    if full:
         ws = {'S': 12, 'M': 20, 'L': 24, 'XL': 30}
     elif isinstance(w, tuple):
         ws = dict(zip(CLS_ORDER, w))
     else:
-        ws = {'S': w, 'M': w, 'L': w, 'XL': XL_OF.get(w, max(4, round(w * 47 / 56)))}
+        ws = {c: w for c in CLS_ORDER}
     out = {'id': pid, 'name': name, 'w': ws, 'h': h, 'desc': desc}
+    if full:
+        out['full'] = True
     if fit is not None:
         out['fit'] = fit
+    if hmin is not None:
+        out['hMin'] = hmin
+    if minpx is not None:
+        out['minPx'] = minpx
     if frm:
         out['from'] = frm
     return out
@@ -67,39 +77,39 @@ KINDS = {
         P('compact', 'Compact', 4, 4, 'The value and its line'),
         P('standard', 'Standard', 6, 6, 'Value, line and the first facts'),
         P('expanded', 'Expanded', 8, 8, 'Value, line and every fact', fit='all')]),
-    'kpis': (6, None, 3, 12, [
+    'kpis': (6, None, 3, 14, [
         P('strip', 'Strip', 'full', 3, "Every total's value on one line", frm='M'),
         P('compact', 'Compact', 8, 9, 'Every total, two to a row', fit='all'),
         P('standard', 'Standard', 'full', 5, 'Every total, side by side', fit='all')]),
-    'limit': (3, 12, 3, 24, [
+    # (lane d-plans turns a plan plate into one row per account: its width may reach the board's, its height grows by rows)
+    'limit': (3, None, 3, 24, [
         P('compact', 'Compact', 4, 9, "The active account's windows", fit=1),
         P('standard', 'Standard', 8, 12, 'Three accounts, a column per window', fit=3),
         P('expanded', 'Expanded', 12, 14, 'Every account, window and fact', fit='all')]),
     'provider': (3, None, 3, 24, [
         P('compact', 'Compact', 6, 7, 'The active account', fit=1),
-        P('standard', 'Standard', 8, 12, 'Every account and its binding window', fit='all'),
+        P('standard', 'Standard', 10, 12, 'Every account and its binding window', fit='all'),
         P('expanded', 'Expanded', (12, 16, 16, 16), 12, 'Every account, window and action', fit='all')]),
     'switch': (4, None, 3, 14, [
-        P('strip', 'Strip', 'full', 3, 'The switch levels on one line'),
+        P('strip', 'Strip', 'full', 3, 'The switch levels on one line', minpx=480),
         P('panel', 'Panel', 6, 10, 'Controls and most room, stacked', fit='all'),
-        P('ladder', 'Ladder', 'full', 8, "Controls and every provider's room", fit='all')]),
+        P('ladder', 'Ladder', 'full', 10, "Controls and every account's headroom", fit='all', hmin={'S': 9, 'M': 7, 'L': 7, 'XL': 7}, minpx=480)]),
     'providers': (4, None, 3, 12, [
         P('compact', 'Compact', 6, 5, 'Every provider, stacked', fit='all'),
         P('standard', 'Standard', 10, 4, 'Every provider on one line', fit='all'),
-        P('wide', 'Wide', 'full', 3, 'Every provider, in columns', fit='all')]),
+        P('wide', 'Wide', 'full', 3, 'Every provider, in columns', fit='all', frm='M')]),
     'group': (6, None, 2, 2, [P('band', 'Band', 'full', 2, 'The group heading across the board')]),
-    'setup': (4, 16, 3, 14, [
+    'setup': (4, 16, 3, 18, [
         P('compact', 'Compact', 6, 7, 'State, Settings link and note'),
         P('expanded', 'Expanded', 8, 8, 'Every setup fact', fit='all')]),
     'context': (4, 14, 5, 14, [
         P('compact', 'Compact', 6, 10, 'The ring and every family', fit='all'),
-        P('standard', 'Standard', 9, 9, 'Adds the window facts', fit='all'),
-        P('expanded', 'Expanded', 12, 9, 'Adds route and last compaction', fit='all')]),
+        P('expanded', 'Expanded', 12, 13, 'Adds every fact, route and compaction', fit='all')]),
     'trend': (4, None, 4, 20, [
         P('compact', 'Compact', 5, 5, 'The number and its sparkline'),
         P('standard', 'Standard', 8, 10, 'The chart with axes and legend'),
-        P('wide', 'Wide', WIDE(), 10, 'Adds the facts row and the peak'),
-        P('full', 'Full width', 'full', 11, "The board's width, finer buckets", frm='M')]),
+        P('wide', 'Wide', WIDE(), 11, 'Adds the headline, facts row and peak'),
+        P('full', 'Full width', 'full', 12, "The board's width, finer buckets", frm='M')]),
     'columns': (4, None, 4, 16, [
         P('compact', 'Compact', 5, 6, 'Labelled bars, a few buckets'),
         P('standard', 'Standard', 8, 8, 'Labelled bars with the caption'),
@@ -146,15 +156,15 @@ KINDS = {
         P('standard', 'Standard', 8, 9, 'Six rows with their second line', fit=6),
         P('expanded', 'Expanded', 12, 10, 'Every row with its note', fit='all')]),
     'table': (6, None, 5, 30, [
-        P('compact', 'Compact', 8, 8, 'Four rows, the main columns', fit=4),
+        P('compact', 'Compact', 10, 8, 'Four rows, the main columns', fit=4),
         P('standard', 'Standard', 12, 12, 'Eight rows, more columns', fit=8),
         P('full', 'Full width', 'full', 14, 'Every row and every column', fit='all')]),
-    'alert': (4, 10, 4, 12, [
+    'alert': (4, 10, 4, 16, [
         P('compact', 'Compact', 6, 6, 'The state and what happened'),
         P('expanded', 'Expanded', 8, 9, 'Adds the meter, actions and facts', fit='all')]),
-    'free': (3, 12, 4, 16, [
+    'free': (3, 12, 4, 20, [
         P('compact', 'Compact', 4, 7, 'State, capacity and route'),
-        P('expanded', 'Expanded', 6, 13, 'Adds every fact of the route', fit='all')]),
+        P('expanded', 'Expanded', 8, 13, 'Adds every fact of the route', fit='all')]),
     'cache': (3, 8, 4, 14, [
         P('compact', 'Compact', 4, 7, 'The ring and the savings'),
         P('expanded', 'Expanded', 6, 11, 'Adds every fact', fit='all')]),
@@ -615,6 +625,10 @@ def check_presets() -> list[str]:
                     problems.append(f'kind {kind} preset {p["id"]} at {cls}: width {w} outside {wmin}-{min(wmax or tracks[cls], tracks[cls])}')
                 if not (hmin <= h <= hmax):
                     problems.append(f'kind {kind} preset {p["id"]}: height {h} outside {hmin}-{hmax}')
+                pm = p.get('hMin')
+                pm = pm.get(cls) if isinstance(pm, dict) else pm
+                if pm is not None and not (hmin <= pm <= hmax):
+                    problems.append(f'kind {kind} preset {p["id"]} at {cls}: hMin {pm} outside {hmin}-{hmax}')
                 if fit is not None and fit != 'all' and not (isinstance(fit, int) and fit > 0):
                     problems.append(f'kind {kind} preset {p["id"]}: fit must be a positive count or "all"')
                 key = (w, h if fit is None else ('fit', fit))
