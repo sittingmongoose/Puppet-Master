@@ -76,8 +76,12 @@
   /* ------------------------------------------------------------------ performances */
   const live = new Set();
   function perf(name) {
-    const p = { name, timers: [], anims: [], ends: [], done: false };
-    p.at = (ms, fn) => { const t = M.after(Math.max(0, ms), () => { if (!p.done) fn(); }); p.timers.push(t); return t; };
+    const p = { name, timers: [], anims: [], ends: [], done: false, q: null };
+    p.at = (ms, fn) => { if (p.q) { p.q.push([ms, fn]); return null; } const t = M.after(Math.max(0, ms), () => { if (!p.done) fn(); }); p.timers.push(t); return t; };
+    /* beats held until the picture starts: hold() queues them, go() starts them from now (a performance's sounds then
+       start with its first frame, not when it was built: a long frame delays both alike) */
+    p.hold = () => { if (!p.q) p.q = []; return p; };
+    p.go = () => { const q = p.q; p.q = null; if (q && !p.done) q.forEach(([ms, fn]) => p.at(ms, fn)); };
     p.anim = (el, kf, o) => { if (!el || !el.animate) return null; try { const a = el.animate(kf, o); p.anims.push(a); return a; } catch (_) { return null; } };
     p.end = (fn) => { p.ends.push(fn); return p; };
     p.finish = () => {
@@ -147,7 +151,8 @@
   const markBody = (el, on) => { if (el && el.classList.contains('o55fm-body') !== on) el.classList.toggle('o55fm-body', on); };
   /* the strings follow the heads while bodies move (the rig measures its hooks for that long) */
   const watch = (svg, ms) => { if (A.rig && svg) A.rig.watch(svg, { settle: ms }); };
-  /* a bow in the family's way: the pose and the timing it bows and rises with */
+  /* the old troupe's quick bow at the end of an act (the act card), in the family's way: the pose and the timing it bows
+     and rises with (the curtain call's bows pitch the upper body instead: PITCH) */
   const BOW = {
     basic: { pose: 'translateY(2px) scale(1.03, 0.82)', down: 200, up: 180, ease: 'cubic-bezier(0.2, 0, 0, 1)' },
     friendly: { pose: 'scale(1.1, 0.78)', down: 260, up: 360, ease: 'cubic-bezier(0.34, 1.56, 0.64, 1)', rise: [{ transform: 'scale(1.1, 0.78)' }, { transform: 'scale(0.94, 1.1)', offset: 0.45 }, { transform: 'none' }] },
@@ -290,13 +295,14 @@
     P.anim(part(L, 'sheet'), [{ transform: 'translateY(0px)' }, { transform: 'translateY(5px)', offset: 0.16 }, { transform: `translateY(${-(y1 - V.y + 24).toFixed(1)}px)` }], { duration: 440, delay: lift, easing: 'cubic-bezier(0.45, 0, 0.2, 1)', fill: 'forwards' });
     return lift + 460;
   };
-  /* Friendly: a paper title card on a wooden stick pops up from under the stage, wobbles, its paper star spins, and
-     it ducks back down */
+  /* Friendly: a paper title card on a wooden stick pops up out of a slot in the boards, wobbles, its paper star spins,
+     and it ducks back down into the slot. (On the wide stage the slot is a paper strip 40 units under the card, so the
+     stick never crosses the new scene's art and words; on the narrow band it comes up from the band's foot.) */
   CARD.friendly = function friendlyCard(L, V, nar, w, hooks) {
     const p = L.ctx.pal, f = 'friendly';
     const cw = nar ? Math.min(380, V.w - 50) : Math.min(262, V.w - 46), ch = nar ? Math.min(80, V.h - 26) : 116;
     const cx = V.x + V.w / 2, cy = nar ? V.y + V.h / 2 - 6 : V.y + V.h * 0.31;
-    const x0 = cx - cw / 2, y0 = cy - ch / 2, y1 = y0 + ch, bottom = V.y + V.h + 30;
+    const x0 = cx - cw / 2, y0 = cy - ch / 2, y1 = y0 + ch, slot = nar ? null : y1 + 40, bottom = slot != null ? slot + 8 : V.y + V.h + 30;
     const OL = `stroke="${p.ink}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"`;
     const band = nar ? 14 : 18, n = Math.max(6, Math.round(cw / 26)), step = cw / n;
     let sc = `M${x0} ${y0 + band}`;
@@ -305,16 +311,21 @@
     const card = `M${x0 + 12} ${y0}H${x0 + cw - 12}a12 12 0 0 1 12 12V${y1 - 12}a12 12 0 0 1 -12 12H${x0 + 12}a12 12 0 0 1 -12 -12V${y0 + 12}a12 12 0 0 1 12 -12Z`;
     const star = 'M0 -12 Q2 -2 12 0 Q2 2 0 12 Q-2 2 -12 0 Q-2 -2 0 -12Z';
     const stx = x0 + cw - 4, sty = y0 + 2;
-    L.root.innerHTML = `<g data-k="rise"><g transform="translate(3 4)" fill="${p.shadow}"><rect x="${cx - 5}" y="${y1 - 4}" width="10" height="${(bottom - y1).toFixed(1)}" rx="4"/></g>`
+    const sw = cw + 40, sx0 = cx - sw / 2;
+    const slotArt = slot == null ? '' : `<g data-k="slot"><rect x="${sx0 + 3}" y="${slot - 2}" width="${sw}" height="13" rx="6.5" fill="${p.shadow}"/>`
+      + `<rect x="${sx0}" y="${slot - 6}" width="${sw}" height="13" rx="6.5" fill="${p.wood}" ${OL}/><path d="M${sx0 + 18} ${slot}H${sx0 + sw - 18}" stroke="${p.ink}" stroke-width="3" stroke-linecap="round"/></g>`;
+    if (slot != null) L.svg.querySelector('defs').insertAdjacentHTML('beforeend', `<clipPath id="${L.ctx.uid}-slot"><rect x="${(V.x - 60).toFixed(1)}" y="${(V.y - 120).toFixed(1)}" width="${(V.w + 120).toFixed(1)}" height="${(slot - V.y + 120).toFixed(1)}"/></clipPath>`);
+    L.root.innerHTML = (slot != null ? `<g clip-path="url(#${L.ctx.uid}-slot)">` : '<g>') + `<g data-k="rise"><g transform="translate(3 4)" fill="${p.shadow}"><rect x="${cx - 5}" y="${y1 - 4}" width="10" height="${(bottom - y1).toFixed(1)}" rx="4"/></g>`
       + `<rect x="${cx - 5}" y="${y1 - 4}" width="10" height="${(bottom - y1).toFixed(1)}" rx="4" fill="${p.wood}" ${OL}/><rect x="${cx - 2.5}" y="${y1 + 2}" width="3" height="${(bottom - y1).toFixed(1)}" rx="1.5" fill="${p.woodHi}" opacity="0.8"/>`
       + `<g data-k="card" class="o55fm-wobble"><path d="${card}" transform="translate(3 4)" fill="${p.shadow}"/>`
       + `<path d="${card}" fill="${p.paper}" ${OL}/><path d="${sc}" fill="${p.sun}" stroke="${p.ink}" stroke-width="1.6" stroke-linejoin="round"/>`
       + txt(f, cx, y0 + band + (nar ? 15 : 20), T('card.friendly.kicker'), nar ? 9.5 : 11, { fill: p.ink })
       + txt(f, cx, y0 + band + (nar ? 38 : 50), w.from, nar ? 20 : 27, { fill: p.ink, w: 700 })
       + txt(f, cx, y1 - (nar ? 8 : 12), T('card.friendly.next', { chapter: w.to }), nar ? 9 : 10.5, { fill: p.ink, w: 500 })
-      + `<g transform="translate(${stx} ${sty})"><g data-k="star" class="o55fm-spin"><path d="${star}" transform="translate(2 3)" fill="${p.shadow}"/><path d="${star}" fill="${p.peach}" ${OL}/></g></g></g></g>`;
-    const P = hooks.p, c0 = hooks.c0, dist = (bottom - y0 + 10).toFixed(1);
-    const rise = part(L, 'rise');
+      + `<g transform="translate(${stx} ${sty})"><g data-k="star" class="o55fm-spin"><path d="${star}" transform="translate(2 3)" fill="${p.shadow}"/><path d="${star}" fill="${p.peach}" ${OL}/></g></g></g></g></g>` + slotArt;
+    const P = hooks.p, c0 = hooks.c0, dist = ((slot != null ? slot + 8 : bottom) - y0 + 10).toFixed(1);
+    const rise = part(L, 'rise'), sl = part(L, 'slot');
+    if (sl) P.anim(sl, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 160, delay: c0 - 40, easing: 'ease-out', fill: 'backwards' });
     P.anim(rise, [{ transform: `translateY(${dist}px)` }, { transform: 'translateY(0px)' }], { duration: 520, delay: c0, easing: 'cubic-bezier(0.34, 1.45, 0.64, 1)', fill: 'backwards' });
     const land = c0 + 250;
     P.at(land, hooks.land);
@@ -324,14 +335,16 @@
     P.anim(part(L, 'star'), [{ transform: 'rotate(0deg) scale(1)' }, { transform: 'rotate(200deg) scale(1.35)', offset: 0.5 }, { transform: 'rotate(360deg) scale(1)' }], { duration: 620, delay: c0 + 460, easing: 'ease-out' });
     const duck = c0 + 1420;
     P.anim(rise, [{ transform: 'translateY(0px)' }, { transform: 'translateY(-12px)', offset: 0.28 }, { transform: `translateY(${dist}px)` }], { duration: 400, delay: duck, easing: 'cubic-bezier(0.5, 0, 0.75, 0)', fill: 'forwards' });
-    return duck + 420;
+    if (sl) P.anim(sl, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(6px)' }], { duration: 160, delay: duck + 330, easing: 'ease-in', fill: 'forwards' });
+    return duck + 500;
   };
   /* Glass: a beam comes on, a frosted plate rises into focus under it and is lit by a streak sweeping across it, light
      motes rise off its edge; then the beam goes out and the plate floats away out of focus */
   CARD.glass = function glassCard(L, V, nar, w, hooks) {
     const p = L.ctx.pal, f = 'glass', u = L.ctx.uid;
     const cw = nar ? Math.min(390, V.w - 40) : Math.min(268, V.w - 40), ch = nar ? Math.min(82, V.h - 22) : 112;
-    const cx = V.x + V.w / 2, cy = nar ? V.y + V.h / 2 : V.y + V.h * 0.31;
+    /* (hung under the control bar, so the bar reads as its hanger and its rod never crosses the words) */
+    const cx = V.x + V.w / 2, cy = nar ? V.y + V.h / 2 : V.y + V.h * 0.31 + 40;
     const x0 = cx - cw / 2, y0 = cy - ch / 2, y1 = y0 + ch;
     const top = V.y - 10, beam = `M${cx - 26} ${top}H${cx + 26}L${x0 + cw + 14} ${y0 + ch * 0.5}H${x0 - 14}Z`;
     let motes = '';
@@ -340,7 +353,7 @@
       + `<g data-k="plate" class="o55fm-focus"><ellipse cx="${cx}" cy="${cy}" rx="${(cw * 0.62).toFixed(1)}" ry="${(ch * 0.9).toFixed(1)}" fill="${L.ctx.url('glow-lav')}"/>`
       + `<rect x="${x0}" y="${y0}" width="${cw}" height="${ch}" rx="16" fill="${L.ctx.url('glass')}" stroke="${L.ctx.url('edge')}" stroke-width="1.4"/>`
       + `<path d="M${x0 + 14} ${y0 + 5}H${x0 + cw * 0.45}" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="1.4" stroke-linecap="round"/>`
-      + `<g clip-path="url(#${u}-plateclip)"><rect data-k="streak" x="${x0 - 70}" y="${y0 - 20}" width="46" height="${ch + 40}" fill="url(#${u}-streak)" transform="rotate(14 ${x0} ${cy})"/></g>`
+      + `<g clip-path="url(#${u}-plateclip)"><g transform="rotate(14 ${x0} ${cy})"><rect data-k="streak" x="${x0 - 70}" y="${y0 - 20}" width="46" height="${ch + 40}" fill="url(#${u}-streak)"/></g></g>`
       + `<ellipse cx="${cx}" cy="${cy + (nar ? 2 : 4)}" rx="${(cw * 0.36).toFixed(1)}" ry="${nar ? 16 : 20}" fill="${L.ctx.url('glow-pink')}" opacity="0.55"/>`
       + txt(f, cx, y0 + (nar ? 19 : 25), T('card.glass.kicker'), nar ? 7.5 : 8.5, { fill: p.textDim, ls: 1.6, caps: true })
       + txt(f, cx, cy + (nar ? 9 : 11), w.from, nar ? 20 : 26, { fill: p.text, ls: 0.8 })
@@ -351,7 +364,7 @@
     const P = hooks.p, c0 = hooks.c0;
     P.anim(part(L, 'beam'), IN, { duration: 300, delay: c0, easing: 'ease-out', fill: 'backwards' });
     P.anim(part(L, 'plate'), [{ opacity: 0, transform: 'translateY(8px) scale(1.06)' }, { opacity: 1, transform: 'none' }], { duration: 560, delay: c0 + 60, easing: EASE.glass, fill: 'backwards' });
-    P.anim(part(L, 'streak'), [{ transform: `rotate(14deg) translateX(0px)` }, { transform: `rotate(14deg) translateX(${(cw + 150).toFixed(1)}px)` }], { duration: 460, delay: c0 + 280, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', fill: 'both' });
+    P.anim(part(L, 'streak'), [{ transform: 'translateX(0px)' }, { transform: `translateX(${(cw + 150).toFixed(1)}px)` }], { duration: 460, delay: c0 + 280, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', fill: 'both' });
     const land = c0 + 320;
     P.at(land, hooks.land);
     parts(L, 'mote').forEach((m, i) => {
@@ -393,7 +406,7 @@
         + `<g data-k="bonus">${txt(f, bx, ty + 112, bonus, bs, { a: 'start', fill: p.text })}${txt(f, bx + monoW(bonus + ' ', bs), ty + 112, '0000', bs, { a: 'start', fill: p.c, k: 'digits' })}</g>`
         + `<g data-k="next">${txt(f, cx, ty + 146, next, 13, { fill: p.text })}</g>`
         + `<g data-k="ready">${txt(f, cx, ty + 184, ready, 17, { fill: p.b })}</g>`
-        + (L.ctx.fam.props.helper && V.h > 420 ? [-1, 0, 1].map((k, i) => `<g data-k="sprite" transform="translate(${cx + k * 62} ${ty + 286})">${L.ctx.fam.props.helper(L.ctx, { x: 0, y: 0, s: 1, opts: { variant: i, pose: i === 1 ? 'wave' : 'stand', px: 5 } })}</g>`).join('') : '');
+        + (L.ctx.fam.props.helper && V.h > 420 ? [-1, 0, 1].map((k, i) => `<g transform="translate(${cx + k * 62} ${ty + 286})"><g data-k="sprite">${L.ctx.fam.props.helper(L.ctx, { x: 0, y: 0, s: 1, opts: { variant: i, pose: i === 1 ? 'wave' : 'stand', px: 5 } })}</g></g>`).join('') : '');
     }
     /* the screen in the cabinet's own ground (Dark: its panel, a shade above the night stage, so the stage never reads
        darker while it shows; Light: the cream) */
@@ -410,7 +423,8 @@
     const digits = part(L, 'digits'), steps = 5, STEP = 100;
     for (let i = 1; i <= steps; i++) P.at(land + 160 + i * STEP, () => { if (digits) digits.textContent = String(Math.round((1000 * i) / steps)).padStart(4, '0'); play('phase', { step: i }); });
     parts(L, 'star').forEach((el, i) => P.anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: land + 160 + [2, 4, 5][i] * STEP, fill: 'backwards' }));
-    /* the troupe's sprites jump on the tally, one pixel step up and down, one after another */
+    /* the troupe's sprites jump on the tally, one pixel step up and down, one after another (each placed by its wrapper:
+       a Web Animation's transform replaces an SVG transform attribute, so nothing animated carries one) */
     parts(L, 'sprite').forEach((el, i) => P.anim(el, [{ transform: 'translateY(0px)' }, { transform: 'translateY(-10px)', offset: 0.5 }, { transform: 'translateY(0px)' }], { duration: 240, delay: land + 200 + i * 110, easing: 'steps(2, end)', iterations: 2 }));
     P.end(() => { if (digits) digits.textContent = '1000'; });
     const nx = land + 160 + steps * STEP + 60;
@@ -465,16 +479,61 @@
 
   /* ================================================================== the curtain call */
   /* Ready (first arrival): the family curtain opens (the scene's own), the troupe stands in a line; the three bow on the
-     notes of the chord, a rest, then they rise on the resolving sting with the family's finale and its celebration;
-     h2 points at the tour button (the composition), and the rail walks to READY and re-stamps every check. The
-     finale's emblem is part of Ready's composition (57-scenes-journey.js, A.famCall.emblems), so Reduced Motion and a
-     reopened window show it; the call holds it back until the rise. */
-  const CC = { bows: [1000, 1150, 1300], rest: 1480, rise: 1640, end: 2500 };
+     notes of the chord, a rest, then they rise on the resolving sting with the family's finale (its emblem leads, the
+     celebration under it); h2 points at the tour button (the composition), and the rail walks to READY and re-stamps
+     every check. The finale's emblem is part of Ready's composition (57-scenes-journey.js, A.famCall.emblems), so
+     Reduced Motion and a reopened window show it; the call holds it back until the rise. Basic's beats start 300 ms
+     later than the others': its cover sheet lifts and its drawing inks itself until about 1.5 s, and the bows wait for
+     a finished stage. */
+  const CC0 = { bows: [1000, 1150, 1300], rest: 1480, rise: 1640, end: 2500 };
+  const ccOf = (f) => { const d = f === 'basic' ? 300 : 0; return { bows: CC0.bows.map((t) => t + d), rest: CC0.rest + d, rise: CC0.rise + d, end: CC0.end + d + (f === 'friendly' ? 300 : 0) }; };
+  /* the curtain call's bow: the upper body (the art's .o55-up groups) pitches toward the audience about the hips while
+     the legs stand, as NieR's units bow. Seen from the front, a pitch foreshortens the torso about the hip line and
+     brings the head down over the chest: a scale about that line (k), a little wider as it comes toward us (sx). Basic
+     bows measured, with no overshoot; Friendly deep and springy, rising past upright before it settles; Glass slow,
+     its head lowering into its spotlight. Retro's sprites never scale: they bow in two frames (retroBow). */
+  const PITCH = {
+    basic: { hip: -18, k: 0.76, sx: 1.04, down: 240, up: 260, ease: EASE.basic },
+    friendly: { hip: -6, k: 0.62, sx: 1.1, down: 260, up: 480, ease: 'cubic-bezier(0.3, 0, 0.25, 1)', over: [1.1, 0.95] },
+    glass: { hip: -12, k: 0.82, sx: 1.03, down: 420, up: 520, ease: EASE.glass }
+  };
+  const pitchT = (b, k, sx) => `translate(0px, ${(b.hip * (1 - k)).toFixed(2)}px) scale(${sx}, ${k})`;
+  const upsOf = (el) => [...el.querySelectorAll(':scope > .o55-up')];
+  /* the head's string point goes with the head while the troupe bows (an invisible point, put back where it was) */
+  function hookWithHead(p, el) {
+    const ups = upsOf(el), hk = el.querySelector(':scope > .o55-hook[data-hook="head"]'), last = ups[ups.length - 1];
+    if (!hk || !last) return;
+    const next = hk.nextSibling;
+    last.appendChild(hk);
+    p.end(() => { if (el.isConnected || hk.parentNode === last) el.insertBefore(hk, next && next.parentNode === el ? next : null); });
+  }
+  function pitchDown(p, f, el) {
+    const b = PITCH[f];
+    return upsOf(el).map((u) => p.anim(u, [{ transform: 'none' }, { transform: pitchT(b, b.k, b.sx) }], { duration: b.down, easing: b.ease, fill: 'forwards' }));
+  }
+  function pitchUp(p, f, el) {
+    const b = PITCH[f], from = { transform: pitchT(b, b.k, b.sx) };
+    upsOf(el).forEach((u) => p.anim(u, b.over ? [from, { transform: pitchT(b, b.over[0], b.over[1]), offset: 0.42 }, { transform: 'none' }] : [from, { transform: 'none' }],
+      { duration: b.up, easing: b.over ? 'cubic-bezier(0.3, 0.5, 0.3, 1)' : b.ease }));
+  }
+  /* Retro: each sprite bows in two frames (54-art-retro.js bowA, bowB: the head a block down with the hands coming in,
+     then the crown toward the audience with the hands together), 90 ms apart, and rises the same way back */
+  function retroFrames(p, g, el, ctx) {
+    const art = el.querySelector(':scope > g[transform]'), F = A.families.retro; if (!art || !F) return null;
+    const v = Number((keyOf(g).match(/\d+/) || [0])[0]) || 0, px = A.metrics('retro').helperPx || 7, box = document.createElementNS(NS, 'svg');
+    const frame = (pose) => { box.innerHTML = F.props.helper(ctx, { x: 0, y: 0, s: 1, opts: { variant: v, pose, px } }); const fr = box.firstElementChild && box.firstElementChild.querySelector(':scope > g[transform]'); if (fr) { fr.style.display = 'none'; fr.classList.add('o55fm-bowf'); } return fr; };
+    const a = frame('bowA'), b = frame('bowB'); if (!a || !b) return null;
+    art.after(a, b);
+    const show = (n) => { art.style.display = n === 0 ? '' : 'none'; a.style.display = n === 1 ? '' : 'none'; b.style.display = n === 2 ? '' : 'none'; };
+    p.end(() => { a.remove(); b.remove(); art.style.display = ''; });
+    return { show };
+  }
   function curtainCall(f, sting) {
     const st = stageEl(), svg = sceneOf(st), R = runState(), s = O55.S; if (!svg || !s) return false;
-    const p = perf('call'), hs = helpersOf(svg), els = hs.map(body).filter(Boolean), bows = new Map();
+    const p = perf('call'), cc = ccOf(f), hs = helpersOf(svg), els = hs.map(body).filter(Boolean);
     R.calling = true;
     const em = (k) => [...svg.querySelectorAll(`.o55-it[data-key^="fm-${k}"]`)].map(body).filter(Boolean);
+    const band = !/^\s*\S+\s+0\s/.test(svg.getAttribute('viewBox') || '');
     let rose = false;
     const rise = () => {
       if (rose) return; rose = true;
@@ -482,68 +541,120 @@
     };
     p.end(() => { if (!quiet) rise(); R.calling = false; els.forEach((el) => markBody(el, false)); if (f === 'retro') tally(svg, 1, true); if (!quiet && s.railHold) { s.railHold = null; O55.ui.renderRail(); } });
     p.at(170, () => railWalk(f, () => restamp(f)));
+    /* the bodies: Retro's bow frames, the others' heads carry their string points while they bow */
+    const ctx = f === 'retro' ? famCtx(f, st) : null;
+    const frames = els.map((el, i) => (f === 'retro' ? retroFrames(p, hs[i], el, ctx) : (hookWithHead(p, el), null)));
     /* the finale's emblem waits for the rise (Glass's spotlights come on one by one with the bows) */
-    const finale = FINALE[f](p, svg, em, els);
-    p.end(() => { if (!quiet && s.railHold) { s.railHold = null; O55.ui.renderRail(); } });
+    const finale = FINALE[f](p, svg, em, els, cc, { st, band, hs });
+    const bows = new Map();
     hs.forEach((g, i) => {
       const el = els[i]; if (!el) return;
-      p.at(CC.bows[i] != null ? CC.bows[i] : CC.bows[2] + (i - 2) * 150, () => {
-        bows.set(el, bowDown(p, f, el, 0, true));
+      p.at(cc.bows[i] != null ? cc.bows[i] : cc.bows[2] + (i - 2) * 150, () => {
+        if (f === 'retro') { const fr = frames[i]; if (fr) { fr.show(1); p.at(90, () => fr.show(2)); } }
+        else bows.set(el, pitchDown(p, f, el));
         watch(svg, 900);
         play('bow', Object.assign(voice(g), { chapter: 'ready' }));
         if (finale.bow) finale.bow(i);
       });
     });
-    p.at(CC.rest, () => { if (O55.sound.rest) O55.sound.rest(150); });
-    p.at(CC.rise, () => {
-      els.forEach((el) => { const a = bows.get(el); if (a) a.cancel(); bowUp(p, f, el); });
+    p.at(cc.rest, () => { if (O55.sound.rest) O55.sound.rest(150); });
+    p.at(cc.rise, () => {
+      els.forEach((el, i) => {
+        if (f === 'retro') {
+          /* back up in two frames, then a two-step hop: up a step, up again, and down the same way */
+          const fr = frames[i]; if (fr) { fr.show(1); p.at(60, () => fr.show(0)); }
+          markBody(el, true);
+          p.anim(el, [{ transform: 'none', easing: 'step-end' }, { transform: 'translateY(-4px)', offset: 0.2, easing: 'step-end' }, { transform: 'translateY(-9px)', offset: 0.4, easing: 'step-end' },
+            { transform: 'translateY(-9px)', offset: 0.6, easing: 'step-end' }, { transform: 'translateY(-4px)', offset: 0.8, easing: 'step-end' }, { transform: 'none' }], { duration: 360, delay: 60 + i * 70 });
+        } else { (bows.get(el) || []).forEach((a) => a && a.cancel()); pitchUp(p, f, el); }
+      });
       watch(svg, 900);
       rise();
       if (finale.rise) finale.rise();
-      /* the celebration 140 ms after the resolving sting, so it layers on it (sparkles) instead of replacing it */
-      p.at(140, () => { if (A.celebrate) A.celebrate(st, { big: true, count: f === 'friendly' ? 30 : 38, at: [240, f === 'glass' ? 300 : 250] }); });
+      /* the celebration 140 ms after the resolving sting, under the emblem: a smaller burst, so the emblem leads */
+      p.at(140, () => { if (A.celebrate) A.celebrate(st, { big: true, count: 18, at: [240, band ? 330 : f === 'glass' ? 300 : 250] }); });
     });
-    p.at(CC.end, () => p.finish());
+    p.at(cc.end, () => p.finish());
     return true;
   }
   /* each family's finale: the emblem held back from the first frame (fill: backwards), and what it does at the bows and
      the rise */
   const FINALE = {
-    basic(p, svg, em) {
+    /* Basic: the APPROVED stamp presses onto the READY sign (on the narrow band, beside h2's head) */
+    basic(p, svg, em, els, cc) {
       const s = em('stamp');
-      s.forEach((el) => { el.classList.add('o55fm-stamp'); p.anim(el, [{ transform: 'scale(1.8)', opacity: 0 }, { transform: 'scale(0.94)', opacity: 1, offset: 0.7 }, { transform: 'scale(1)', opacity: 1 }], { duration: 160, delay: CC.rise + 80, easing: 'cubic-bezier(0.3, 0, 0.8, 0.15)', fill: 'backwards' }); });
+      s.forEach((el) => { el.classList.add('o55fm-stamp'); p.anim(el, [{ transform: 'scale(1.8)', opacity: 0 }, { transform: 'scale(0.94)', opacity: 1, offset: 0.7 }, { transform: 'scale(1)', opacity: 1 }], { duration: 160, delay: cc.rise + 80, easing: 'cubic-bezier(0.3, 0, 0.8, 0.15)', fill: 'backwards' }); });
       p.end(() => s.forEach((el) => el.classList.remove('o55fm-stamp')));
       return { rise() { p.at(240, () => play('land', { voice: 0, pan: 0 })); } };
     },
-    friendly(p, svg, em) {
+    /* Friendly: bravo. Three big paper roses are thrown from the house, from in front of the stage lip, large as they
+       pass the audience, turn over in the air and land across the boards; the troupe steps back a beat as they land */
+    friendly(p, svg, em, els, cc, o) {
       const rs = em('rose');
       rs.forEach((el, i) => {
         el.classList.add('o55fm-spin');
-        const dx = [-70, 20, 90][i % 3], spin = [-330, 300, -390][i % 3];
-        p.anim(el, [{ transform: `translate(${dx}px, 190px) rotate(${spin}deg)`, opacity: 0 }, { transform: `translate(${dx}px, 190px) rotate(${spin}deg)`, opacity: 1, offset: 0.02 },
-          { transform: `translate(${(dx * 0.45).toFixed(1)}px, -50px) rotate(${(spin * 0.4).toFixed(0)}deg)`, opacity: 1, offset: 0.55 }, { transform: 'translate(0px, 0px) rotate(0deg)', opacity: 1 }],
-        { duration: 560, delay: CC.rise + 60 + i * 110, easing: 'cubic-bezier(0.3, 0.1, 0.5, 1)', fill: 'backwards' });
+        /* (the path in the scene's units, turned into the rose's own: its item is scaled and turned) */
+        const tf = (el.closest('.o55-it') || el).style.transform || '', sc = Number((tf.match(/scale\(\s*([\d.]+)/) || [])[1]) || 1, rr = ((Number((tf.match(/rotate\(\s*(-?[\d.]+)deg/) || [])[1]) || 0) * Math.PI) / 180;
+        const tr = (x, y) => `translate(${((x * Math.cos(rr) + y * Math.sin(rr)) / sc).toFixed(1)}px, ${((-x * Math.sin(rr) + y * Math.cos(rr)) / sc).toFixed(1)}px)`;
+        const dx = [-60, 10, 70][i % 3], spin = [-300, 330, -380][i % 3], up = o.band ? 70 : 130, from = o.band ? 150 : 240;
+        p.anim(el, [{ transform: `${tr(dx, from)} rotate(${spin}deg) scale(1.5)`, opacity: 0 }, { transform: `${tr(dx, from)} rotate(${spin}deg) scale(1.5)`, opacity: 1, offset: 0.02 },
+          { transform: `${tr(dx * 0.35, -up)} rotate(${(spin * 0.35).toFixed(0)}deg) scale(1.15)`, opacity: 1, offset: 0.55 }, { transform: 'translate(0px, 0px) rotate(0deg) scale(1)', opacity: 1 }],
+        { duration: 640, delay: cc.rise + 40 + i * 120, easing: 'cubic-bezier(0.3, 0.1, 0.5, 1)', fill: 'backwards' });
       });
       p.end(() => rs.forEach((el) => el.classList.remove('o55fm-spin')));
-      return { rise() { rs.forEach((el, i) => p.at(620 + i * 110, () => play('land', { voice: i, pan: [-0.35, 0, 0.35][i % 3] }))); } };
+      return { rise() {
+        rs.forEach((el, i) => p.at(680 + i * 120, () => play('land', { voice: i, pan: [-0.35, 0, 0.35][i % 3] })));
+        p.at(700, () => els.forEach((el, i) => { markBody(el, true); p.anim(el, [{ transform: 'none' }, { transform: 'translateY(-5px) scale(0.95)', offset: 0.35 }, { transform: 'none' }], { duration: 520, delay: i * 50, easing: 'cubic-bezier(0.34, 1.4, 0.64, 1)' }); }));
+      } };
     },
-    glass(p, svg, em, els) {
+    /* Glass: a spotlight comes on over each helper as it bows (its core flares); on the resolving chord the three
+       spots swell together and the cores flare in one chord, and light motes rise off the three pools: the sparkle */
+    glass(p, svg, em, els, cc, o) {
       const sp = em('spot');
-      sp.forEach((el, i) => p.anim(el, IN, { duration: 260, delay: (CC.bows[i] != null ? CC.bows[i] : CC.bows[2]) + 20, easing: 'ease-out', fill: 'backwards' }));
+      sp.forEach((el, i) => p.anim(el, IN, { duration: 260, delay: (cc.bows[i] != null ? cc.bows[i] : cc.bows[2]) + 20, easing: 'ease-out', fill: 'backwards' }));
       const cores = els.map((el) => [...el.querySelectorAll('.o55-core')]);
-      const flare = (i) => (cores[i] || []).forEach((c) => { c.classList.add('o55fm-flare'); p.anim(c, [{ transform: 'scale(1)' }, { transform: 'scale(2.1)', offset: 0.3 }, { transform: 'scale(1)' }], { duration: 520, easing: 'ease-out' }); });
+      const flare = (i, big) => (cores[i] || []).forEach((c) => { c.classList.add('o55fm-flare'); p.anim(c, [{ transform: 'scale(1)' }, { transform: `scale(${big ? 2.8 : 2.1})`, offset: 0.3 }, { transform: 'scale(1)' }], { duration: big ? 640 : 520, easing: 'ease-out' }); });
       p.end(() => cores.forEach((cs) => cs.forEach((c) => c.classList.remove('o55fm-flare'))));
-      return { bow: flare, rise() { cores.forEach((cs, i) => p.at(i * 70, () => flare(i))); } };
+      return {
+        bow: flare,
+        rise() {
+          cores.forEach((cs, i) => flare(i, true));
+          sp.forEach((el) => { el.classList.add('o55fm-swell'); const fl = el.querySelector('.o55fm-spotflare'); p.anim(el, [{ transform: 'scale(1, 1)' }, { transform: 'scale(1.3, 1.02)', offset: 0.32 }, { transform: 'scale(1, 1)' }], { duration: 760, easing: 'cubic-bezier(0.2, 0.7, 0.3, 1)' });
+            if (fl) p.anim(fl, [{ opacity: 0 }, { opacity: 1, offset: 0.25 }, { opacity: 0 }], { duration: 900, easing: 'ease-out' }); });
+          p.end(() => sp.forEach((el) => el.classList.remove('o55fm-swell')));
+          glassMotes(p, o.st, svg, sp);
+        }
+      };
     },
+    /* Retro: ALL CLEAR types on big between the sign and the heads, the sprites hop, SETUP 100% tallies, and the arrow by
+       h2's pointing hand blinks toward the tour button */
     retro(p, svg, em) {
       const cl = em('clear'), ar = em('arrow'), sc = em('score');
-      sc.forEach((el) => p.anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: CC.rise + 420, fill: 'backwards' }));
-      cl.forEach((el) => p.anim(el, [{ clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)' }], { duration: 360, delay: CC.rise + 60, easing: 'steps(9, end)', fill: 'backwards' }));
-      ar.forEach((el) => p.anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: CC.rise + 520, fill: 'backwards' }));
+      sc.forEach((el) => p.anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: CC0.rise + 420, fill: 'backwards' }));
+      cl.forEach((el) => p.anim(el, [{ clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)' }], { duration: 360, delay: CC0.rise + 60, easing: 'steps(9, end)', fill: 'backwards' }));
+      ar.forEach((el) => p.anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: CC0.rise + 520, fill: 'backwards' }));
       tally(svg, 0, false);
       return { rise() { for (let i = 1; i <= 8; i++) p.at(420 + i * 90, () => { tally(svg, i / 8, false); play('phase', { step: i }); }); } };
     }
   };
+  /* Glass's sparkle at the rise: light motes rise off each spotlight's pool, in an overlay over the stage (in the
+     scene's own units) that goes with the call */
+  function glassMotes(p, st, svg, sp) {
+    if (!st || !sp.length) return;
+    const vb = svg.getAttribute('viewBox') || '0 0 480 600', L = makeLayer(st, 'glass', vb, famCtx('glass', st));
+    p.end(() => L.div.remove());
+    const pal = L.ctx.pal, floor = A.metrics('glass').floor;
+    let out = '';
+    sp.forEach((el, j) => {
+      const it = el.closest('.o55-it'), x0 = Number(((it && it.style.transform) || '').match(/translate\(\s*(-?[\d.]+)px/)?.[1]) || 240 + (j - 1) * 112;
+      for (let i = 0; i < 6; i++) { const x = x0 - 40 + ((i * 37 + j * 11) % 80), r = 1.5 + (i % 3) * 0.6; out += `<g transform="translate(${x.toFixed(1)} ${floor - 4})"><g data-k="mote"><circle r="${(r * 3.2).toFixed(1)}" fill="${L.ctx.url('glow-' + ['lav', 'pink', 'mint'][j % 3])}"/><circle r="${r.toFixed(1)}" fill="${pal.core}"/></g></g>`; }
+    });
+    L.root.innerHTML = out;
+    parts(L, 'mote').forEach((m, i) => {
+      const up = 90 + (i % 5) * 26, dx = (i % 2 ? 1 : -1) * (5 + (i % 4) * 4);
+      p.anim(m, [{ transform: 'translate(0px, 0px)', opacity: 0 }, { opacity: 0.95, offset: 0.2 }, { transform: `translate(${dx}px, ${-up}px)`, opacity: 0 }], { duration: 1000 + (i % 3) * 180, delay: 60 + (i % 6) * 70, easing: 'ease-out', fill: 'both' });
+    });
+  }
   /* Retro's score line: SETUP n %, written whole at its end state */
   function tally(svg, k, end) {
     const t = svg && svg.querySelector('.o55-it[data-key="fm-score"] [data-fm="score"]'); if (!t) return;
@@ -551,14 +662,17 @@
     if (t.textContent !== v) t.textContent = v;
   }
 
-  /* the emblems in Ready's composition (asked for by 57-scenes-journey.js for the four families) */
+  /* the emblems in Ready's composition (asked for by 57-scenes-journey.js for the four families). On the narrow
+     window's band (ctx.band: about y 318..434 of the scene at 760 px, the troupe's heads and shoulders) each emblem is
+     placed where the band shows it: Basic's stamp above h2's head, Retro's ALL CLEAR across the band's top with the
+     arrow by h2's head, Friendly's roses along the band's foot between the troupe. */
   A.famCall = {
     emblems(ctx) {
-      const f = ctx.family, m = A.metrics(f), floor = m.floor, sign = m.signY || 64;
-      if (f === 'basic') return [{ key: 'fm-stamp', prop: 'fmStamp', x: 318, y: sign + 34, r: -7, layer: 'front' }];
-      if (f === 'friendly') return [[152, floor + 14], [218, floor + 18], [374, floor + 14]].map(([x, y], i) => ({ key: 'fm-rose' + i, prop: 'fmRose', x, y, s: 1.45, r: [-24, 12, 30][i], layer: 'front', opts: { v: i } }));
+      const f = ctx.family, m = A.metrics(f), floor = m.floor, sign = m.signY || 64, nar = !!ctx.band;
+      if (f === 'basic') return [{ key: 'fm-stamp', prop: 'fmStamp', x: nar ? 404 : 318, y: nar ? 343 : sign + 34, r: -7, layer: 'front' }];
+      if (f === 'friendly') return (nar ? [[184, 420], [296, 424], [414, 418]] : [[148, floor + 44], [262, floor + 50], [374, floor + 44]]).map(([x, y], i) => ({ key: 'fm-rose' + i, prop: 'fmRose', x, y, s: nar ? 2 : 3.5, r: (nar ? [-60, 40, 70] : [-70, 18, 74])[i], layer: 'front', opts: { v: i } }));
       if (f === 'glass') return [-1, 0, 1].map((s, i) => ({ key: 'fm-spot' + i, prop: 'fmSpot', x: 240 + s * 112, y: floor + 4, layer: 'back', opts: { v: i, top: 30 - floor, tint: ['lav', 'pink', 'mint'][i] } }));
-      if (f === 'retro') return [{ key: 'fm-clear', prop: 'fmClear', x: 240, y: 28, layer: 'front' }, { key: 'fm-score', prop: 'fmScore', x: 240, y: floor + 72, layer: 'front' }, { key: 'fm-arrow', prop: 'fmArrow', x: 402, y: floor - 60, layer: 'front' }];
+      if (f === 'retro') return [{ key: 'fm-clear', prop: 'fmClear', x: 240, y: nar ? 336 : 262, layer: 'front', opts: { size: nar ? 22 : 26 } }, { key: 'fm-score', prop: 'fmScore', x: 240, y: floor + 72, layer: 'front' }, { key: 'fm-arrow', prop: 'fmArrow', x: nar ? 422 : 426, y: nar ? 398 : floor - 26, layer: 'front' }];
       return [];
     }
   };
@@ -577,22 +691,29 @@
       return `<g><path d="M0 4 Q-3 14 -10 22" fill="none" stroke="${p.ink}" stroke-width="3.6" stroke-linecap="round"/><path d="M0 4 Q-3 14 -10 22" fill="none" stroke="${p.mint}" stroke-width="2" stroke-linecap="round"/>`
         + `<path d="M-6 14 q-8 -2 -10 -9 q8 0 10 9Z" fill="${p.mint}" ${OL}/><g transform="translate(2 3)" fill="${p.shadow}"><circle r="10"/></g>${petals}<circle r="3.6" fill="${p.sun}" ${OL}/></g>`;
     };
+    /* a spotlight's cone in its own gradient, white at the top to the helper's tint at its pool, strong enough to read
+       on Light's pale stage (and its flare, the same cone brighter, shown only while the spots swell at the rise) */
     if (F.glass && !F.glass.props.fmSpot) F.glass.props.fmSpot = (ctx, item) => {
-      const o = item.opts || {}, top = o.top || -440;
-      return `<g><path d="M-16 ${top}H16L62 -6H-62Z" fill="${ctx.url('beam')}"/><ellipse cx="0" cy="-4" rx="70" ry="13" fill="${ctx.url('glow-' + (o.tint || 'lav'))}"/>`
-        + `<ellipse cx="0" cy="-4" rx="46" ry="7" fill="none" stroke="${ctx.pal.core}" stroke-opacity="0.35" stroke-width="1"/></g>`;
+      const o = item.opts || {}, top = o.top || -440, p = ctx.pal, tint = p[o.tint || 'lav'] || p.core, id = ctx.url('fmspot' + (o.v || 0)).slice(5, -1);
+      const a = p.dark ? [0.34, 0.16, 0.05] : [0.62, 0.34, 0.1], cone = `M-16 ${top}H16L62 -6H-62Z`;
+      return `<g><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="${a[0]}"/><stop offset="0.55" stop-color="${tint}" stop-opacity="${a[1]}"/><stop offset="1" stop-color="${tint}" stop-opacity="${a[2]}"/></linearGradient></defs>`
+        + `<path d="${cone}" fill="url(#${id})"/><path class="o55fm-spotflare" d="${cone}" fill="url(#${id})" opacity="0"/>`
+        + `<path d="M-16 ${top}L-62 -6M16 ${top}L62 -6" fill="none" stroke="${tint}" stroke-opacity="${p.dark ? 0.22 : 0.4}" stroke-width="1"/>`
+        + `<ellipse cx="0" cy="-4" rx="70" ry="13" fill="${ctx.url('glow-' + (o.tint || 'lav'))}"/><ellipse cx="0" cy="-4" rx="46" ry="7" fill="none" stroke="${p.core}" stroke-opacity="${p.dark ? 0.35 : 0.6}" stroke-width="1"/></g>`;
     };
-    if (F.retro && !F.retro.props.fmClear) F.retro.props.fmClear = (ctx) => {
-      const p = ctx.pal, a = T('call.retro.clear').toUpperCase();
-      return `<g>${txt('retro', 2, 2, a, 18, { fill: p.dark ? '#000' : p.dim })}${txt('retro', 0, 0, a, 18, { fill: p.a })}</g>`;
+    if (F.retro && !F.retro.props.fmClear) F.retro.props.fmClear = (ctx, item) => {
+      const p = ctx.pal, a = T('call.retro.clear').toUpperCase(), z = (item.opts || {}).size || 26, d = Math.max(2, Math.round(z / 9));
+      return `<g>${txt('retro', d, d, a, z, { fill: p.dark ? '#000' : p.dim, w: 700 })}${txt('retro', 0, 0, a, z, { fill: p.a, w: 700 })}</g>`;
     };
     if (F.retro && !F.retro.props.fmScore) F.retro.props.fmScore = (ctx) => {
       const p = ctx.pal, s = T('call.retro.score', { n: 100 }).toUpperCase();
       return `<g><text data-fm="score" x="0" y="0" text-anchor="middle" font-family="${esc(FONT.retro)}" font-weight="600" font-size="11" fill="${p.c}">${esc(s)}</text></g>`;
     };
+    /* an arrow down and to the right, toward the tour button, blinking between the accent and nothing (14-family-
+       moments.css .o55fm-blink; still under Reduced Motion and on a low-resource computer) */
     if (F.retro && !F.retro.props.fmArrow) F.retro.props.fmArrow = (ctx) => {
       const p = ctx.pal, k = p.dark ? '#000' : p.ink;
-      return `<g class="o55-px-blink">${A.sprite(['kk......', 'kak.....', 'kaak....', 'kaaak...', 'kaaaak..', 'kaaak...', 'kaak....', 'kak.....', 'kk......'], { k, a: p.c }, 3)}</g>`;
+      return `<g><g class="o55fm-blink">${A.sprite(['kk.......', 'kak......', '.kak.....', '..kak....', '...kak.kk', '....kakak', '.....kaak', '....kaaak', '...kaaaak', '...kkkkkk'], { k, a: p.a }, 3)}</g></g>`;
     };
   }
 
@@ -605,9 +726,21 @@
       return { i, x, y, head: [x + m.hook[0] * s, y + m.hook[1] * s], hook: [cx + a[0], m.barY + a[1]] };
     });
   }
-  /* the overlay a wake starts with, drawn at open() so the first painted frame already shows it: Friendly's closed
-     house curtain and its footlights, Glass's dusk veil, Retro's attract screen (Basic starts on its bare sheet) */
+  /* the overlay a wake starts with, drawn at open() so the first painted frame already shows it: Basic's blank sheet
+     with the parallel rule parked above it, Friendly's closed house curtain and its footlights, Glass's dusk veil,
+     Retro's attract screen */
   const WAKE0 = {
+    basic(L, vb) {
+      /* the blank sheet covers the drawing from the rule's edge down; the rule and the sheet travel down together, so
+         the drawing shows exactly where the rule has passed (the sheet is the paper's own ground, without its grid) */
+      const p = L.ctx.pal, V = vbFull(vb), top = V.y - 20;
+      let tk = '';
+      for (let x = 20; x <= 460; x += 10) tk += `M${x} 0V${x % 50 === 0 ? 7 : 4}`;
+      L.root.innerHTML = `<g data-k="cover"><rect x="-40" y="${top}" width="560" height="${V.h + 70}" fill="${p.paper}"/></g><g data-k="cons"></g>`
+        + `<g data-k="rule"><g transform="translate(0 ${top})"><rect x="14" y="-16" width="452" height="16" fill="${p.paper}" fill-opacity="0.92" stroke="${p.ink2}" stroke-width="0.8"/>`
+        + `<path d="${tk}" transform="translate(0 -16)" fill="none" stroke="${p.ink2}" stroke-width="0.7"/><path d="M14 0H466" stroke="${p.ink}" stroke-width="1.4"/>`
+        + `<circle cx="30" cy="-8" r="3" fill="none" stroke="${p.ink2}" stroke-width="0.8"/><circle cx="450" cy="-8" r="3" fill="none" stroke="${p.ink2}" stroke-width="0.8"/></g></g>`;
+    },
     friendly(L, vb) {
       /* the footlights stand on the stage's own front (the stage prop at the floor + 28: a wood rail at -4..14 with its
          lamps at +4), in front of the curtain; on the narrow band, whose view stops above the stage, along its foot */
@@ -623,7 +756,8 @@
     },
     glass(L, vb) {
       const p = L.ctx.pal, V = vbFull(vb);
-      L.root.innerHTML = `<rect data-k="veil" x="-40" y="${V.y - 40}" width="560" height="${V.h + 80}" fill="${p.dark ? '#07050d' : '#5f4a7c'}" opacity="${p.dark ? 0.8 : 0.5}"/>`;
+      /* (Light's dusk is a cool, thin slate: the pastel lab with its lights off, not a grey overlay) */
+      L.root.innerHTML = `<rect data-k="veil" x="-40" y="${V.y - 40}" width="560" height="${V.h + 80}" fill="${p.dark ? '#07050d' : '#2c2840'}" opacity="${p.dark ? 0.8 : 0.3}"/>`;
     },
     retro(L, vb, nar) {
       const p = L.ctx.pal, V = vbFull(vb), cx = 240, k = p.dark ? '#000' : p.ink;
@@ -647,30 +781,32 @@
     }
   };
   const WAKE = {};
-  /* Basic: a parallel rule sweeps down the sheet, construction lines draw on behind it, compass circles mark the heads,
-     the ink draws over them (the scene's own entrance), the construction fades, the strings are tensioned one by one */
+  /* Basic: the window opens on a blank sheet. A parallel rule sweeps down it and the drawing appears exactly where it
+     has passed (the sheet travels down with it); construction is drafted ahead of the ink: the dash-dot centreline runs
+     down and compass circles mark where the heads will be, and each construction line is drawn along the rule's edge
+     as it passes (the bar, the heads, the floor); the construction fades once the rule has left, the strings are
+     tensioned one by one as it leaves the floor, h0 waves and the welcome chord plays */
   WAKE.basic = function basicWake(p, L, svg, marks) {
-    const pal = L.ctx.pal, V = vbFull(L.vb), top = V.y - 20, bottom = V.y + V.h + 30;
-    const lines = [{ y: A.metrics('basic').barY, x0: 40, x1: 440 }, { y: marks[0].head[1], x0: 52, x1: 428 }, { y: A.metrics('basic').floor, x0: 30, x1: 450 }];
-    const faint = `fill="none" stroke="${pal.ink2}" stroke-width="0.7" stroke-linecap="round" pathLength="1"`;
-    let tk = '';
-    for (let x = 20; x <= 460; x += 10) tk += `M${x} 0V${x % 50 === 0 ? 7 : 4}`;
+    const pal = L.ctx.pal, V = vbFull(L.vb), top = V.y - 20, bottom = V.y + V.h + 30, m = A.metrics('basic');
+    const lines = [{ y: m.barY, x0: 40, x1: 440 }, { y: marks[0].head[1], x0: 52, x1: 428 }, { y: m.floor, x0: 30, x1: 450 }];
+    const con = `fill="none" stroke="${pal.ink2}" stroke-width="1.2" stroke-linecap="round" pathLength="1"`;
     const dash = []; for (let y = V.y + 10; y < V.y + V.h - 10; y += 22) dash.push(`M240 ${y.toFixed(0)}V${(y + 12).toFixed(0)}M240 ${(y + 16).toFixed(0)}V${(y + 18).toFixed(0)}`);
-    L.root.innerHTML = `<g data-k="cons">${lines.map((l) => `<path data-k="cl" d="M${l.x0} ${l.y.toFixed(1)}H${l.x1}" ${faint}/>`).join('')}`
-      + marks.map((m) => `<circle data-k="cc" cx="${m.head[0].toFixed(1)}" cy="${(m.head[1] + 9 * 1.75).toFixed(1)}" r="24" ${faint} transform="rotate(-90 ${m.head[0].toFixed(1)} ${(m.head[1] + 9 * 1.75).toFixed(1)})"/>`
-        + `<path data-k="cx" d="M${(m.head[0] - 30).toFixed(1)} ${(m.head[1] + 15.75).toFixed(1)}H${(m.head[0] + 30).toFixed(1)}M${m.head[0].toFixed(1)} ${(m.head[1] - 14).toFixed(1)}V${(m.head[1] + 46).toFixed(1)}" ${faint}/>`).join('')
-      + `<path data-k="center" d="${dash.join('')}" ${faint}/></g>`
-      + `<g data-k="rule" transform="translate(0 ${top})"><rect x="14" y="-16" width="452" height="16" fill="${pal.paper}" fill-opacity="0.92" stroke="${pal.ink2}" stroke-width="0.8"/>`
-      + `<path d="${tk}" transform="translate(0 -16)" fill="none" stroke="${pal.ink2}" stroke-width="0.7"/><path d="M14 0H466" stroke="${pal.ink}" stroke-width="1.4"/>`
-      + `<circle cx="30" cy="-8" r="3" fill="none" stroke="${pal.ink2}" stroke-width="0.8"/><circle cx="450" cy="-8" r="3" fill="none" stroke="${pal.ink2}" stroke-width="0.8"/></g>`;
-    const rule = part(L, 'rule'), t0 = 60, dur = 820, at = (y) => t0 + ((y - top) / (bottom - top)) * dur;
-    p.anim(rule, [{ transform: `translate(0px, ${top}px)` }, { transform: `translate(0px, ${bottom}px)` }], { duration: dur, delay: t0, easing: 'linear', fill: 'both' });
-    parts(L, 'cl').forEach((el, i) => { const t = at(lines[i].y); p.anim(el, DRAW, { duration: 240, delay: t, easing: 'cubic-bezier(0.45, 0, 0.2, 1)', fill: 'backwards' }); p.at(t, () => play('phase', { step: i * 2 })); });
-    parts(L, 'cc').forEach((el, i) => p.anim(el, DRAW, { duration: 300, delay: 300 + i * 120, easing: 'cubic-bezier(0.45, 0, 0.2, 1)', fill: 'backwards' }));
-    parts(L, 'cx').forEach((el, i) => p.anim(el, DRAW, { duration: 220, delay: 380 + i * 120, easing: 'cubic-bezier(0.45, 0, 0.2, 1)', fill: 'backwards' }));
-    p.anim(part(L, 'center'), DRAW, { duration: 520, delay: 160, easing: 'linear', fill: 'backwards' });
-    p.anim(part(L, 'cons'), OUT, { duration: 420, delay: 1300, easing: 'ease-in', fill: 'forwards' });
-    return { strings: 1360, gap: 110 };
+    const cy = (mk) => (mk.head[1] + 9 * m.helperScale).toFixed(1), hx = (mk) => mk.head[0].toFixed(1);
+    const cons = part(L, 'cons');
+    if (cons) cons.innerHTML = lines.map((l) => `<path data-k="cl" d="M${l.x0} ${l.y.toFixed(1)}H${l.x1}" ${con}/>`).join('')
+      + marks.map((mk) => `<circle data-k="cc" cx="${hx(mk)}" cy="${cy(mk)}" r="24" ${con} transform="rotate(-90 ${hx(mk)} ${cy(mk)})"/>`
+        + `<path data-k="cx" d="M${(mk.head[0] - 30).toFixed(1)} ${cy(mk)}H${(mk.head[0] + 30).toFixed(1)}M${hx(mk)} ${(mk.head[1] - 14).toFixed(1)}V${(mk.head[1] + 46).toFixed(1)}" ${con}/>`).join('')
+      + `<path data-k="center" d="${dash.join('')}" ${con}/>`;
+    const t0 = 60, dur = 820, dist = (bottom - top).toFixed(1), at = (y) => t0 + ((y - top) / (bottom - top)) * dur;
+    [part(L, 'cover'), part(L, 'rule')].forEach((el) => p.anim(el, [{ transform: 'translateY(0px)' }, { transform: `translateY(${dist}px)` }], { duration: dur, delay: t0, easing: 'linear', fill: 'both' }));
+    /* each construction line drawn along the rule's edge as the rule passes it, quickly, as a pencil runs along it */
+    parts(L, 'cl').forEach((el, i) => { const t = at(lines[i].y) - 30; p.anim(el, DRAW, { duration: 150, delay: t, easing: 'cubic-bezier(0.45, 0, 0.2, 1)', fill: 'backwards' }); p.at(t, () => play('phase', { step: i * 2 })); });
+    /* the centreline and the compass circles run ahead of the rule, on the blank sheet */
+    p.anim(part(L, 'center'), DRAW, { duration: 560, delay: 100, easing: 'linear', fill: 'backwards' });
+    parts(L, 'cc').forEach((el, i) => p.anim(el, DRAW, { duration: 280, delay: 200 + i * 110, easing: 'cubic-bezier(0.45, 0, 0.2, 1)', fill: 'backwards' }));
+    parts(L, 'cx').forEach((el, i) => p.anim(el, DRAW, { duration: 200, delay: 280 + i * 110, easing: 'cubic-bezier(0.45, 0, 0.2, 1)', fill: 'backwards' }));
+    p.anim(cons, OUT, { duration: 420, delay: 1000, easing: 'ease-in', fill: 'forwards' });
+    return { strings: Math.round(at(m.floor)) + 200, gap: 110, amp: 1.25, cheer: 1340, chord: 1410, end: 2000 };
   };
   /* Friendly: the footlights light one by one, the curtain gathers into the drapes, the paper troupe folds up */
   WAKE.friendly = function friendlyWake(p, L, svg, marks, bodies) {
@@ -694,41 +830,55 @@
     watch(svg, 1900);
     return { strings: 0 };
   };
-  /* Glass: the beam comes on as the dusk lifts, light runs down each filament into its helper's core, motes rise */
+  /* Glass: the lab switches on. The stage sits in the dusk with its cores out; the switch clicks and the beam snaps on
+     (100 ms, its pool lit on the floor), the dusk lifts in 350 ms once it is on, a comet of light runs down each
+     filament into its helper (a 50-unit tail in a gradient stroke with a glowing head: no filter), whose core lights
+     on its bell, and motes rise off the floor; h0 waves and the welcome chord plays */
   WAKE.glass = function glassWake(p, L, svg, marks, bodies) {
-    const pal = L.ctx.pal, V = vbFull(L.vb);
+    const pal = L.ctx.pal, V = vbFull(L.vb), u = L.ctx.uid, floor = A.metrics('glass').floor, on = 220;
     /* (from the veil's own opacity: a keyframe of 1 would darken it before it lifts) */
     const veil = part(L, 'veil'), v0 = veil ? +veil.getAttribute('opacity') || 1 : 1;
-    p.anim(veil, [{ opacity: v0 }, { opacity: 0 }], { duration: 900, delay: 200, easing: 'cubic-bezier(0.3, 0, 0.3, 1)', fill: 'forwards' });
-    p.at(200, () => play('reveal'));
+    /* the beam over the dusk, the stage's own cone and its pool on the floor: it snaps on, then gives way to the stage's
+       own beam as the dusk lifts (in its cone the brightness hardly moves while the rest of the stage comes up) */
+    L.svg.querySelector('defs').insertAdjacentHTML('beforeend', `<linearGradient id="${u}-wbeam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="${pal.dark ? 0.34 : 0.6}"/><stop offset="1" stop-color="#fff" stop-opacity="${pal.dark ? 0.06 : 0.12}"/></linearGradient>`
+      + `<radialGradient id="${u}-wpool"><stop offset="0" stop-color="#fff" stop-opacity="${pal.dark ? 0.5 : 0.75}"/><stop offset="0.6" stop-color="${pal.core}" stop-opacity="${pal.dark ? 0.18 : 0.3}"/><stop offset="1" stop-color="${pal.core}" stop-opacity="0"/></radialGradient>`
+      + ['lav', 'pink', 'mint'].map((t, i) => `<linearGradient id="${u}-tail${i}" gradientUnits="userSpaceOnUse" x1="-56" y1="0" x2="0" y2="0"><stop offset="0" stop-color="${pal[t]}" stop-opacity="0"/><stop offset="0.65" stop-color="${pal[t]}" stop-opacity="${pal.dark ? 0.6 : 0.85}"/><stop offset="1" stop-color="#fff" stop-opacity="1"/></linearGradient>`).join(''));
+    let comets = '';
+    marks.forEach((mk, i) => { comets += `<g data-k="comet"><path d="M-56 0H0" fill="none" stroke="url(#${u}-tail${i % 3})" stroke-width="${pal.dark ? 3 : 3.6}" stroke-linecap="round"/><circle r="12" fill="${L.ctx.url('glow-' + ['lav', 'pink', 'mint'][i % 3])}"/><circle r="3.2" fill="${pal.core}" stroke="${pal[['lav', 'pink', 'mint'][i % 3]]}" stroke-opacity="${pal.dark ? 0 : 0.8}" stroke-width="1.2"/></g>`; });
+    let motes = '';
+    for (let i = 0; i < 12; i++) { const x = 96 + ((i * 53) % 290), y = Math.min(floor + 10, V.y + V.h - 8), r = 1.4 + (i % 3) * 0.6; motes += `<g transform="translate(${x} ${y})"><g data-k="mote"><circle r="${(r * 3).toFixed(1)}" fill="${L.ctx.url('glow-' + ['lav', 'pink', 'mint'][i % 3])}"/><circle r="${r.toFixed(1)}" fill="${pal.core}"/></g></g>`; }
+    L.root.insertAdjacentHTML('beforeend', `<g data-k="lamp"><path d="M196 ${floor - 330}H284L410 ${floor - 18}H70Z" fill="url(#${u}-wbeam)"/><ellipse cx="240" cy="${floor - 12}" rx="176" ry="28" fill="url(#${u}-wpool)"/></g>`
+      + `<g class="o55fm-travel">${comets}</g>${motes}`);
+    const lamp = part(L, 'lamp');
+    p.anim(lamp, [{ opacity: 0 }, { opacity: 1 }], { duration: 100, delay: on, easing: 'ease-out', fill: 'backwards' });
+    p.anim(lamp, [{ opacity: 1 }, { opacity: 0 }], { duration: 460, delay: on + 140, easing: 'cubic-bezier(0.3, 0, 0.3, 1)', fill: 'forwards' });
+    p.anim(veil, [{ opacity: v0 }, { opacity: 0 }], { duration: 350, delay: on + 120, easing: 'cubic-bezier(0.3, 0, 0.3, 1)', fill: 'forwards' });
+    p.at(on, () => play('reveal'));
     const beam = svg.querySelector('.o55-it[data-key="stage"] .o55-beam');
-    if (beam) p.anim(beam, [{ opacity: 0 }, { opacity: 1 }], { duration: 320, delay: 200, easing: 'ease-out', fill: 'backwards' });
+    if (beam) p.anim(beam, [{ opacity: 0 }, { opacity: 1 }], { duration: 100, delay: on, easing: 'ease-out', fill: 'backwards' });
     /* the cores and their glows are out until the light reaches them */
     const lit = bodies.map((el) => [...el.querySelectorAll('.o55-core, circle[fill*="glow"]')]);
-    let streaks = '';
-    marks.forEach((m) => { streaks += `<path data-k="streak" d="M-9 0H9" fill="none" stroke="${pal.core}" stroke-width="2.6" stroke-linecap="round"/>`; });
-    let motes = '';
-    for (let i = 0; i < 12; i++) { const x = 96 + ((i * 53) % 290), y = Math.min(A.metrics('glass').floor + 10, V.y + V.h - 8), r = 1.4 + (i % 3) * 0.6; motes += `<g data-k="mote" transform="translate(${x} ${y})"><g><circle r="${(r * 3).toFixed(1)}" fill="${L.ctx.url('glow-' + ['lav', 'pink', 'mint'][i % 3])}"/><circle r="${r.toFixed(1)}" fill="${pal.core}"/></g></g>`; }
-    L.root.insertAdjacentHTML('beforeend', `<g class="o55fm-travel">${streaks}</g>${motes}`);
-    parts(L, 'streak').forEach((el, i) => {
-      const m = marks[i], a = m.hook, b = [m.head[0], m.head[1] - 2], ang = (Math.atan2(b[1] - a[1], b[0] - a[0]) * 180) / Math.PI, t = 450 + i * 150;
-      p.anim(el, [{ transform: `translate(${a[0]}px, ${a[1]}px) rotate(${ang.toFixed(1)}deg)`, opacity: 0 }, { opacity: 1, offset: 0.1 }, { transform: `translate(${b[0].toFixed(1)}px, ${b[1].toFixed(1)}px) rotate(${ang.toFixed(1)}deg)`, opacity: 1, offset: 0.92 }, { transform: `translate(${b[0].toFixed(1)}px, ${b[1].toFixed(1)}px) rotate(${ang.toFixed(1)}deg)`, opacity: 0 }],
-        { duration: 280, delay: t, easing: 'cubic-bezier(0.4, 0, 0.6, 1)', fill: 'both' });
-      (lit[i] || []).forEach((c) => { c.classList.add('o55fm-flare'); p.anim(c, [{ opacity: 0.1, transform: 'scale(0.5)' }, { opacity: 1, transform: 'scale(1.35)', offset: 0.45 }, { opacity: 1, transform: 'scale(1)' }], { duration: 420, delay: t + 250, easing: 'ease-out', fill: 'backwards' }); });
-      p.at(t + 250, () => play('string', Object.assign(voice(bodies[i] && bodies[i].closest('.o55-it')), { step: i })));
+    parts(L, 'comet').forEach((el, i) => {
+      const mk = marks[i], a = mk.hook, b = [mk.head[0], mk.head[1] - 2], ang = (Math.atan2(b[1] - a[1], b[0] - a[0]) * 180) / Math.PI, t = 560 + i * 160;
+      const at = (q) => `translate(${q[0].toFixed(1)}px, ${q[1].toFixed(1)}px) rotate(${ang.toFixed(1)}deg)`;
+      p.anim(el, [{ transform: at(a), opacity: 0 }, { opacity: 1, offset: 0.08 }, { transform: at(b), opacity: 1, offset: 0.9 }, { transform: at(b), opacity: 0 }],
+        { duration: 340, delay: t, easing: 'cubic-bezier(0.45, 0, 0.7, 1)', fill: 'both' });
+      (lit[i] || []).forEach((c) => { c.classList.add('o55fm-flare'); p.anim(c, [{ opacity: 0.1, transform: 'scale(0.5)' }, { opacity: 1, transform: 'scale(1.45)', offset: 0.4 }, { opacity: 1, transform: 'scale(1)' }], { duration: 460, delay: t + 300, easing: 'ease-out', fill: 'backwards' }); });
+      p.at(t + 300, () => play('string', Object.assign(voice(bodies[i] && bodies[i].closest('.o55-it')), { step: i })));
     });
     p.end(() => lit.forEach((cs) => cs.forEach((c) => c.classList.remove('o55fm-flare'))));
-    parts(L, 'mote').forEach((m, i) => {
-      const g = m.firstElementChild, up = 80 + (i % 4) * 22, dx = (i % 2 ? 1 : -1) * (6 + (i % 3) * 5);
-      p.anim(g, [{ transform: 'translate(0px, 0px)', opacity: 0 }, { opacity: 0.9, offset: 0.25 }, { transform: `translate(${dx}px, ${-up}px)`, opacity: 0 }], { duration: 1000 + (i % 3) * 160, delay: 900 + i * 60, easing: 'ease-out', fill: 'both' });
+    parts(L, 'mote').forEach((g, i) => {
+      const up = 80 + (i % 4) * 22, dx = (i % 2 ? 1 : -1) * (6 + (i % 3) * 5);
+      p.anim(g, [{ transform: 'translate(0px, 0px)', opacity: 0 }, { opacity: 0.9, offset: 0.25 }, { transform: `translate(${dx}px, ${-up}px)`, opacity: 0 }], { duration: 1000 + (i % 3) * 160, delay: 1000 + i * 60, easing: 'ease-out', fill: 'both' });
     });
-    return { strings: 0 };
+    return { strings: 0, cheer: 1500, chord: 1570, end: 2300 };
   };
   /* Retro: attract mode types its title, PRESS START blinks, PLAYER 1, the screen wipes away and the sprites spawn */
   WAKE.retro = function retroWake(p, L, svg, marks, bodies) {
     const pal = L.ctx.pal, tg = part(L, 'title'), sg = part(L, 'start'), pg = part(L, 'player'), panel = part(L, 'panel');
     p.anim(tg, [{ clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)' }], { duration: 360, delay: 60, easing: 'steps(12, end)', fill: 'both' });
-    p.anim(sg, [{ opacity: 1 }, { opacity: 0, offset: 0.25 }, { opacity: 1, offset: 0.5 }, { opacity: 0, offset: 0.75 }, { opacity: 0 }], { duration: 360, delay: 460, easing: 'steps(1, end)', fill: 'both' });
+    /* (born on its first blink: no fill before it, so the delay shows nothing) */
+    p.anim(sg, [{ opacity: 1 }, { opacity: 0, offset: 0.25 }, { opacity: 1, offset: 0.5 }, { opacity: 0, offset: 0.75 }, { opacity: 0 }], { duration: 360, delay: 460, easing: 'steps(1, end)', fill: 'forwards' });
     p.anim(pg, [{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: 820, fill: 'both' });
     p.at(820, () => play('select'));
     p.anim(panel, [{ clipPath: 'inset(0% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 100% 0%)' }], { duration: 180, delay: 960, easing: 'steps(6, end)', fill: 'forwards' });
@@ -736,11 +886,12 @@
     /* each sprite spawns: a column of pixel blocks drops onto its spot in stepped frames, then the sprite is there */
     const px = A.metrics('retro').helperPx || 7;
     let cols = '';
-    marks.forEach((m) => { cols += `<g data-k="col" transform="translate(${m.x - px} ${m.y - 14 * px})">${[0, 1, 2].map((j) => `<rect x="0" y="${-j * 3 * px}" width="${2 * px}" height="${2 * px}" fill="${j ? pal.c : pal.a}"/>`).join('')}</g>`; });
+    marks.forEach((m) => { cols += `<g transform="translate(${m.x - px} ${m.y - 14 * px})"><g data-k="col" style="opacity:0">${[0, 1, 2].map((j) => `<rect x="0" y="${-j * 3 * px}" width="${2 * px}" height="${2 * px}" fill="${j ? pal.c : pal.a}"/>`).join('')}</g></g>`; });
     L.root.insertAdjacentHTML('beforeend', cols);
     parts(L, 'col').forEach((c, i) => {
       const t = 1120 + i * 140, fall = 14 * px - 2 * px;
-      p.anim(c, [{ transform: 'translateY(-60px)', opacity: 1 }, { transform: `translateY(${fall}px)`, opacity: 1, offset: 0.99 }, { transform: `translateY(${fall}px)`, opacity: 0 }], { duration: 160, delay: t, easing: 'steps(4, end)', fill: 'both' });
+      /* (shown only while it drops: hidden before, over the attract screen, and once the sprite is there) */
+      p.anim(c, [{ transform: 'translateY(-60px)', opacity: 1 }, { transform: `translateY(${fall}px)`, opacity: 1, offset: 0.99 }, { transform: `translateY(${fall}px)`, opacity: 1 }], { duration: 160, delay: t, easing: 'steps(4, end)' });
       const el = bodies[i], g = el && el.closest('.o55-it');
       if (el) p.anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: t + 160, fill: 'both' });
       /* its strings come with it */
@@ -763,7 +914,8 @@
   /* the wake: from the release of the first screen; ends awake: the overlay gone, the stage as it always is */
   function wake(f, cold) {
     const st = stageEl(), svg = sceneOf(st); if (!st || !svg || cold.done) { endCold(); return; }
-    const p = perf('wake');
+    /* (the beats wait for the picture's first frame: a long frame after building delays the sound with the picture) */
+    const p = perf('wake').hold();
     cold.p = p;
     const L = cold.L || makeLayer(st, f, svg.getAttribute('viewBox') || '0 0 480 600', famCtx(f, st));
     cold.L = L;
@@ -772,11 +924,13 @@
     p.end(() => { bodies.forEach((el) => markBody(el, false)); endCold(); });
     const marks = heroMarks(f), r = WAKE[f](p, L, svg, marks, bodies) || {};
     /* the strings are tensioned one by one (each helper plucked, its wire ringing on its chord tone) */
-    if (r.strings) hs.forEach((g, i) => p.at(r.strings + i * (r.gap || 110), () => { if (A.rig) A.rig.pluck(svg, keyOf(g), { amp: 0.7, dir: i % 2 ? -1 : 1 }); play('string', Object.assign(voice(g), { step: i })); }));
+    if (r.strings) hs.forEach((g, i) => p.at(r.strings + i * (r.gap || 110), () => { if (A.rig) A.rig.pluck(svg, keyOf(g), { amp: r.amp || 0.7, dir: i % 2 ? -1 : 1 }); play('string', Object.assign(voice(g), { step: i })); }));
     const h0 = hs.find((g) => keyOf(g) === 'h0');
-    p.at(1650, () => { if (h0) { if (A.rig && h0.querySelector('.o55-arm, .o55-wf')) A.rig.cheer(svg, 'h0'); play('cheer', voice(h0)); } });
-    p.at(1720, () => play('chapter', { chapter: 'welcome', depth: 0, intensity: 0.45 }));
-    p.at(2300, () => p.finish());
+    p.at(r.cheer || 1650, () => { if (h0) { if (A.rig && h0.querySelector('.o55-arm, .o55-wf')) A.rig.cheer(svg, 'h0'); play('cheer', voice(h0)); } });
+    p.at(r.chord || 1720, () => play('chapter', { chapter: 'welcome', depth: 0, intensity: 0.45 }));
+    p.at(r.end || 2300, () => p.finish());
+    const first = p.anims.find(Boolean), go = () => { if (!p.done) p.go(); };
+    if (first && first.ready) first.ready.then(go, go); else M.real.raf(go);
   }
   /* while the stage is asleep a key or a press anywhere wakes it at once (the window takes focus only once its first
      screen shows, and on a slow computer that is a while: the window's own snap would not hear it) */
@@ -854,7 +1008,8 @@
       if (def) R.maxIdx = Math.max(R.maxIdx, progressOf(def).index);
       const f = famNow();
       if (!f) { if (s && s.railHold && claim) { s.railHold = null; O55.ui.renderRail(); } endCold(); return false; }
-      if (dir === 'open' && R.cold) { const cold = R.cold; calmFrames(1200).then(() => { if (R.cold === cold && !cold.done && shown()) wake(f, cold); else if (R.cold === cold) endCold(); }); return false; }
+      /* (Basic's rule also waits out the drawing's own slide in, 520 ms, under its blank sheet: what it reveals stands still) */
+      if (dir === 'open' && R.cold) { const cold = R.cold; Promise.all([calmFrames(1200), f === 'basic' ? new Promise((res) => M.after(560, res)) : null]).then(() => { if (R.cold === cold && !cold.done && shown()) wake(f, cold); else if (R.cold === cold) endCold(); }); return false; }
       /* the rail stays in its old state until the moment's beat walks it (NieR's screen hook, asked first, lets go of
          any hold while NieR Mode is not painted; it is taken again here, in the same task, so no frame shows between) */
       if (claim && claim.pr && (claim.kind === 'card' || R.calling)) { s.railHold = claim.pr; O55.ui.renderRail(); }

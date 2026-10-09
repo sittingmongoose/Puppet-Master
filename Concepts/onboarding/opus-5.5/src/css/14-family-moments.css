@@ -9,7 +9,9 @@
 /* the troupe acts about its feet; stamps, stars, roses, cores and plates about their centres */
 .o55fm-body, .o55fm-wobble { transform-box: fill-box; transform-origin: 50% 100%; }
 .o55fm-stamp, .o55fm-spin, .o55fm-flare, .o55fm-pop, .o55fm-focus { transform-box: fill-box; transform-origin: 50% 50%; }
-.o55fm-travel > path { transform-box: view-box; transform-origin: 0 0; }
+/* Glass's spotlights swell at the rise about the top of their cone */
+.o55fm-swell { transform-box: fill-box; transform-origin: 50% 0%; }
+.o55fm-travel > * { transform-box: view-box; transform-origin: 0 0; }
 /* Friendly's house curtain gathers into the side drapes, each half toward its own edge */
 .o55fm-layer .o55-cur-l { transform-origin: 0% 50%; }
 .o55fm-layer .o55-cur-r { transform-origin: 100% 50%; }
@@ -23,11 +25,12 @@
 /* the rail walks to the new chapter: Basic a dimension line with its end ticks, Friendly a paper pennant, Glass a
    light pulse, Retro the cursor block (moved by transform; 66-family-window.js) */
 .o55fm-walk { position: absolute; z-index: 2; pointer-events: none; display: block; }
-.o55fm-walk-basic { height: 1px; margin-top: -0.5px; background: color-mix(in srgb, var(--o55-accent) 85%, transparent); transform-origin: 0 50%; }
-.o55fm-walk-basic::before, .o55fm-walk-basic::after { content: ''; position: absolute; top: -4px; width: 1px; height: 9px; background: color-mix(in srgb, var(--o55-accent) 85%, transparent); }
+.o55fm-walk-basic { height: 1.5px; margin-top: -0.75px; background: color-mix(in srgb, var(--o55-accent) 90%, transparent); transform-origin: 0 50%; }
+.o55fm-walk-basic::before, .o55fm-walk-basic::after { content: ''; position: absolute; top: -4px; width: 1.5px; height: 9.5px; background: color-mix(in srgb, var(--o55-accent) 90%, transparent); }
 .o55fm-walk-basic::before { left: 0; }
 .o55fm-walk-basic::after { right: 0; }
 .o55fm-walk-friendly { width: 2px; height: 17px; margin-left: -1px; border-radius: 1px; background: color-mix(in srgb, var(--text-primary) 60%, transparent); transform-origin: 50% 100%; }
+.o55fm-walk-friendly::before { content: ''; position: absolute; left: 1px; top: -2px; width: 17px; height: 14px; background: var(--text-primary); clip-path: polygon(0 0, 100% 50%, 0 100%); }
 .o55fm-walk-friendly::after { content: ''; position: absolute; left: 2px; top: 0; width: 13px; height: 10px; background: var(--o55-accent); clip-path: polygon(0 0, 100% 50%, 0 100%); }
 .o55fm-walk-glass { width: 24px; height: 24px; margin-left: -12px; margin-top: -6px; border-radius: 50%;
   background: radial-gradient(circle, #fff 0 16%, color-mix(in srgb, var(--o55-accent) 75%, transparent) 30%, color-mix(in srgb, var(--accent-magenta) 30%, transparent) 50%, transparent 70%); }
@@ -42,5 +45,10 @@
 @keyframes o55fm-rs-friendly { 0% { transform: scale(1); } 40% { transform: scale(1.6); } 100% { transform: scale(1); } }
 @keyframes o55fm-rs-glass { 0% { transform: scale(1); } 30% { transform: scale(1.55); } 100% { transform: scale(1); } }
 @keyframes o55fm-rs-retro { 0% { opacity: 1; } 25% { opacity: 0.15; } 50% { opacity: 1; } 75% { opacity: 0.15; } 100% { opacity: 1; } }
+/* Retro's Ready arrow blinks between the accent and nothing; held still (shown) wherever the drawings' small loops are */
+.o55fm-blink { animation: o55fm-blink 1.1s steps(1, end) infinite; }
+@keyframes o55fm-blink { 0%, 62% { opacity: 1; } 63%, 100% { opacity: 0; } }
+.o55-scene-wrap:is(.o55-scene-held, .o55-scene-waiting) .o55fm-blink, .o55-still .o55fm-blink, [data-o55-ambient="off"] .o55fm-blink,
+html[data-o55-lowres] .o55fm-blink, html[data-motion="reduced"] .o55fm-blink { animation: none; }
 html[data-motion="reduced"] .o55fm-layer, html[data-motion="reduced"] .o55fm-walk { display: none; }
-@media (prefers-reduced-motion: reduce) { .o55fm-layer, .o55fm-walk { display: none; } }
+@media (prefers-reduced-motion: reduce) { .o55fm-layer, .o55fm-walk { display: none; } .o55fm-blink { animation: none; } }

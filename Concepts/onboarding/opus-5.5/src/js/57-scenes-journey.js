@@ -187,8 +187,9 @@
   /* Ready: the curtain lifts, the helpers bow, a sign reads ready. */
   A.defineScene('ready', {
     /* (the narrow band frames the troupe's heads and shoulders, so the curtain call's bows read there: on the 170 px
-       band of a 760 px window the scene shows about y 294..406; NieR's lane for Pod sits just above the heads) */
-    label: 'art.hero', band: [0, 210, 480, 280], bandNier: [0, 210, 480, 280],
+       band of a 760 px window the scene shows about y 318..434 of the four looks' drawing, the heads in the middle with
+       room to bow, and y 294..406 of NieR's, whose lane for Pod sits just above the heads) */
+    label: 'art.hero', band: [0, 236, 480, 280], bandNier: [0, 210, 480, 280],
     compose(ctx) {
       /* NieR's troupe stands in a line for its curtain call (O55.art.curtainCall bows it and rises it), and the unit
          nearest the pane ends pointing at it: the next thing to press is the Guided Tour. The curtain opens on it
@@ -198,7 +199,7 @@
          APPROVED stamp, Friendly's paper roses, Glass's spotlights, Retro's ALL CLEAR) is part of the picture, so
          Reduced Motion and a reopened window show it; the call holds it back until its rise. */
       const nier = ctx.family === 'nier';
-      const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: nier ? null : 'rise' }].concat(A.ensemble(ctx, { poses: ['stand', 'wave', 'point'], standing: nier }));
+      const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: nier ? null : 'rise' }].concat(A.ensemble(ctx, { poses: ['stand', 'wave', ctx.family === 'retro' ? 'aim' : 'point'], standing: nier }));
       if (!nier && A.famCall) items.push(...A.famCall.emblems(ctx));
       items.push({ key: 'sign', prop: 'badge', x: 240, y: nier && ctx.band ? BAND_SIGN : A.metrics(ctx.family).signY || 64, s: R(ctx) ? 1 : 1.5, layer: 'front', anim: 'drop', delay: 700, opts: { label: L('ready', 'ready'), glyph: 'check', accent: true } });
       items.push(...sparks([[80, 180, 0], [404, 160, 1], [96, 420, 2], [398, 410, 3], [240, 540, 0]], 900));
