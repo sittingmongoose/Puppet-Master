@@ -74,6 +74,29 @@ function dsrPhrase(root, list) {
     remember(() => { n.nodeValue = orig; });
   });
 }
+/* does an element's text need more room than its box gives it? scrollWidth and clientWidth are whole pixels, so text
+   that overflows by a fraction is cut with an ellipsis while the two still read equal: measure the text itself (a
+   Range keeps its laid-out width even when the ellipsis hides part of it) against the box's content width */
+function dsrOver(el) {
+  if (!el || !el.firstChild) return false;
+  const box = el.getBoundingClientRect();
+  if (!box.width) return false;
+  const cs = getComputedStyle(el);
+  const room = box.width - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0) - (parseFloat(cs.borderLeftWidth) || 0) - (parseFloat(cs.borderRightWidth) || 0);
+  const rg = document.createRange();
+  rg.selectNodeContents(el);
+  return rg.getBoundingClientRect().width > room + .05;
+}
+/* clearFit removes the skin's --d-stack-x from a shelf head and leaves style="" behind: a head that had no style
+   attribute before the skin gets it removed again on undo (it runs after clearFit), so "Current" is byte-identical */
+function dsrStyleGuard(panel) {
+  panel.querySelectorAll('.sh-shelf > .sh-head').forEach(h => {
+    if (h._dStyleGuard) return;
+    h._dStyleGuard = true;
+    const had = h.hasAttribute('style');
+    remember(() => { delete h._dStyleGuard; if (!had && h.getAttribute('style') === '') h.removeAttribute('style'); });
+  });
+}
 /* two-part rows (expression and value, frame and location): side by side when both fit, else the second part moves
    under the first. Widths are read first (one layout), keyed so a pass with nothing changed does no work. */
 function dsrStackPairs(root, specs) {
@@ -89,24 +112,45 @@ function dsrStackPairs(root, specs) {
     if (r._dStackKey === key) return;
     r._dStackKey = key;
     r.removeAttribute('data-d-stack');
-    if (a.scrollWidth > a.clientWidth + 1 || b.scrollWidth > b.clientWidth + 1) r.setAttribute('data-d-stack', '');
+    if (dsrOver(a) || dsrOver(b)) r.setAttribute('data-d-stack', '');
   });
 }
-/* middle-cut names (shared midFit), refit only when the room or the text changed */
+/* middle-cut names (shared midFit), refit only when the room or the text changed. The room is the box's own width to
+   a tenth of a pixel: the shared midFit decides "it fits" on whole pixels (scrollWidth <= clientWidth), so a name
+   0.4 px too wide was left whole and its last glyph clipped; such a name is cut one step further here. */
+const dsrRoom = el => (el.offsetParent ? Math.round(el.getBoundingClientRect().width * 10) / 10 : 0);
 function dsrMidFit(els) {
-  const rooms = els.map(el => (el.offsetParent ? el.clientWidth : 0));
+  const rooms = els.map(dsrRoom);
   els.forEach((el, i) => {
     if (!rooms[i]) return;
     const key = rooms[i] + '|' + (el._dFull != null ? el._dFull : el.textContent);
     if (el._dFitKey === key) return;
     midFit(el);
-    el._dFitKey = el.clientWidth + '|' + (el._dFull != null ? el._dFull : el.textContent);
+    if (!el.classList.contains('d-wrap') && el._dFull != null && dsrOver(el)) dsrCutParts(el, el._dFull);
+    el._dFitKey = dsrRoom(el) + '|' + (el._dFull != null ? el._dFull : el.textContent);
   });
+}
+/* the one-step-further cut: whole parts first ("web/…/lib/components/recipe/editor"), the longest the box holds, the
+   one that keeps more of the end on a tie; else the plain middle cut, one character at a time */
+function dsrCutParts(el, full) {
+  const room = el.getBoundingClientRect().width, cur = el.textContent.length, seps = [], cands = [];
+  for (let i = 1; i < full.length - 1; i++) if ('/-_.'.indexOf(full[i]) >= 0) seps.push(i);
+  seps.forEach(h => seps.forEach(t => {
+    if (t <= h) return;
+    const c = full.slice(0, h + 1) + '…' + full.slice(t);
+    if (c.length < cur && textWidth(el, c) <= room) cands.push([c, full.length - t]);
+  }));
+  cands.sort((a, b) => b[0].length - a[0].length || b[1] - a[1]);
+  for (const [c] of cands.slice(0, 8)) { el.textContent = c; if (!dsrOver(el)) return; }
+  let n = Math.min(full.length, cur) - 1;
+  while (n > 4) { el.textContent = midText(full, n); if (!dsrOver(el)) return; n -= 1; }
 }
 
 /* ---- Search ---- */
 const SRCH_ROWS = '.sh-fileh, .sh-hit, .sh-filtoggle, #shIgnoreToggle';
-const srchState = w => (/^indexed\b/i.test(w) ? 'ok' : /^(indexing|building)\b/i.test(w) ? 'run' : /^stale\b/i.test(w) ? 'stale' : /^(unindexed|fallback)\b/i.test(w) ? 'warn' : 'unknown');
+/* the scope names are written in title case ("All Files"); labels are sentence case ("All files", "web/ only") */
+const srchScopeWord = s => (/^[A-Z][a-z]+( [A-Z][a-z]+)+$/.test(s) ? s.charAt(0) + s.slice(1).toLowerCase() : s);
+const srchState = w =>(/^indexed\b/i.test(w) ? 'ok' : /^(indexing|building)\b/i.test(w) ? 'run' : /^stale\b/i.test(w) ? 'stale' : /^(unindexed|fallback)\b/i.test(w) ? 'warn' : 'unknown');
 
 function srchApply(panel, animate) {
   /* the index state under the title: glyph + word, the count written out */
@@ -136,7 +180,21 @@ function srchApply(panel, animate) {
     [/^(\s*)(\d+) in (\d+)(\s*)$/, '$1$2 in $3 files$4'],         // shelf counts "16 in 6"
     [/^(\s*)\/ (\d+)(\s*)$/, '$1of $2$3'],                         // footer "3 / 16"
     [/^(\s*)Prev(\s*)$/, '$1Previous$2'],
+    [/\bPrev \/ Next\b/, 'Previous / Next'],                       // the notes name the footer buttons
   ]);
+  /* the footer button's hover tag says what its label says */
+  panel.querySelectorAll('.sh-foot [data-demo-action="cmd.search.previous_result"]').forEach(b => {
+    ['title', 'aria-label', 'data-pm-hover-label', 'data-pm-hover-native-title'].forEach(a => { if (b.getAttribute(a) === 'Prev') setAttr(b, a, 'Previous'); });
+  });
+  /* the scope field: the shell's label stays (it relabels it on a pick), hidden; the skin shows it in sentence case */
+  panel.querySelectorAll('.sh-scope .pm6-tb-menu-trigger').forEach(trig => {
+    const lab = trig.querySelector(':scope > .pm6-tb-menu-label');
+    if (!lab) return;
+    let m = trig.querySelector(':scope > .d-scopelab');
+    if (!m) m = inject(trig, PMR.h('span.d-scopelab'), lab.nextSibling);
+    const t = srchScopeWord(lab.textContent.trim());
+    if (m.textContent !== t) m.textContent = t;
+  });
   /* result groups: file name on line 1, its folder on line 2 */
   panel.querySelectorAll('.sh-fileh > .sh-fp').forEach(fp => {
     if (fp._dPath != null || fp.children.length) return;
@@ -150,6 +208,7 @@ function srchApply(panel, animate) {
     remember(() => { fp.textContent = orig; delete fp._dPath; dir.remove(); });
   });
   panel.querySelectorAll(SRCH_ROWS).forEach(el => addClass(el, 'pmr-cur'));
+  dsrStyleGuard(panel);
   dsrWire();
   srchFit(panel);
 }
@@ -181,8 +240,21 @@ function srchFitHit(code) {
       lead.nodeValue = '…\u2060' + full.slice(full.length - k);                  // a word joiner: no break after the ellipsis
       if (shown()) { best = k; lo = k + 1; } else hi = k - 1;
     }
+    /* start on a whole word: back to the start of the word the cut falls in when the match still shows, else on to
+       the next word */
+    const BRK = /[\s(.,:;=<>\[{"'`]/;
     let s = full.length - best;
-    for (let k = s; k < Math.min(full.length - 1, s + 8); k++) if (/[\s(.,:\[{]/.test(full[k])) { s = k + 1; break; }   // start on a whole word
+    if (s > 0 && !BRK.test(full[s - 1])) {
+      let back = s - 1;
+      while (back > 0 && !BRK.test(full[back - 1])) back--;
+      lead.nodeValue = '…\u2060' + full.slice(back);
+      if (back > 0 && s - back <= 24 && shown()) s = back;
+      else {
+        let fwd = s;
+        while (fwd < full.length && !BRK.test(full[fwd - 1])) fwd++;
+        if (fwd - s <= 24) s = fwd;
+      }
+    }
     lead.nodeValue = '…\u2060' + full.slice(s);
   }
   code._dFitKey = w + '|' + code._dLead;
@@ -190,6 +262,16 @@ function srchFitHit(code) {
 function srchFit(panel) {
   if (!panel || !panel.offsetWidth) return;
   dsrMidFit(Array.from(panel.querySelectorAll('.sh-fileh > .sh-fp, .sh-fileh > .d-fdir')));
+  /* the facts line: when the query time does not fit after the counts it takes its own line, without a leading dot */
+  panel.querySelectorAll('.sh-stats').forEach(st => {
+    const t = st.querySelector(':scope > .sh-stat-time'), b = st.querySelector(':scope > b');
+    if (!t || !b || !st.offsetParent) return;
+    const key = dsrRoom(st) + '|' + st.textContent;
+    if (st._dFitKey === key) return;
+    st._dFitKey = key;
+    st.removeAttribute('data-d-stack');
+    if (t.getBoundingClientRect().top > b.getBoundingClientRect().top + 2) st.setAttribute('data-d-stack', '');
+  });
   panel.querySelectorAll('.sh-hit > code, .sh-rr > code').forEach(c => { if (c.offsetParent) srchFitHit(c); });
 }
 
@@ -202,7 +284,7 @@ function srchReveal(panel, tog) {
 }
 
 /* ---- wiring shared by both files: re-fit on theme / width / font change, menus, clicks ---- */
-let dsrWired = false, dsrTimer = 0;
+let dsrWired = false, dsrTimer = 0, dsrLate = 0;
 function dsrFitAll() {
   if (!D.on) return;
   srchFit(document.getElementById('panel-search'));
@@ -216,7 +298,11 @@ function dsrClick(ev) {
   if (!t || !t.closest) return;
   const sp = t.closest('#panel-search');
   if (sp) {
-    if (t.closest('[data-tab]')) requestAnimationFrame(() => srchFit(sp));
+    /* a tab, a disclosure, a result group, Expand all / Collapse all: names and hits that just came into view are fitted
+       at once, and again once the panel has settled (a scrollbar that came or went changes every row's room) */
+    requestAnimationFrame(() => { if (D.on) srchFit(sp); });
+    clearTimeout(dsrLate);
+    dsrLate = setTimeout(dsrFitAll, Math.round(spec().dur * 1.6) + 120);
     const tog = t.closest('#shIdxToggle, #shFilterToggle');
     if (tog) requestAnimationFrame(() => srchReveal(sp, tog));
     return;
@@ -224,26 +310,54 @@ function dsrClick(ev) {
   const rp = t.closest('#panel-run');
   if (rp && typeof rdpClick === 'function') rdpClick(rp, t);
 }
+/* the scope menu lists the scopes in sentence case, like the field */
+function srchOpenScope(trig, keyboard) {
+  const wrap = trig.closest('.pm6-tb-menu-wrap'), menu = wrap && wrap.querySelector('.pm6-tb-menu');
+  if (!menu) return false;
+  const def = shellMenuDef(menu);
+  def.groups.forEach(g => g.items.forEach(it => { it.label = srchScopeWord(it.label); }));
+  const w = Math.max(240, Math.min(320, Math.round(trig.getBoundingClientRect().width)));
+  PMR.menu.toggle(def, trig, { width: w, keyboard, onPick: it => { if (it._src) it._src.click(); } });
+  return true;
+}
+function dsrMenuOpen(ev, keyboard) {
+  if (!D.on) return;
+  const trig = ev.target && ev.target.closest && ev.target.closest('#panel-search .sh-scope .pm6-tb-menu-trigger');
+  if (trig) {
+    if (srchOpenScope(trig, keyboard)) { ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation(); }
+    return;
+  }
+  if (typeof rdpMenuOpen === 'function') rdpMenuOpen(ev, keyboard);
+}
+function dsrMenuClick(ev) { dsrMenuOpen(ev, false); }
+function dsrMenuKey(ev) { if (['Enter', ' ', 'ArrowDown'].includes(ev.key)) dsrMenuOpen(ev, true); }
 function dsrWire() {
   if (dsrWired) return;
   dsrWired = true;
-  const slot = document.getElementById('sidePanelSlot');
-  if (window.ResizeObserver && slot) { const ro = new ResizeObserver(dsrFitSoon); ro.observe(slot); D.observers.push(ro); }
+  /* the slot's width, and each panel's scroller: its content box narrows when a scrollbar appears */
+  if (window.ResizeObserver) {
+    const ro = new ResizeObserver(dsrFitSoon);
+    const slot = document.getElementById('sidePanelSlot');
+    if (slot) ro.observe(slot);
+    document.querySelectorAll('#panel-search .sh-scroll, #panel-run .sh-scroll').forEach(sc => ro.observe(sc));
+    D.observers.push(ro);
+  }
   const mo = new MutationObserver(dsrFitSoon);
   mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-o55-nier-parts', 'style'] });
   D.observers.push(mo);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(dsrFitSoon);
   listen(document, 'click', dsrClick);
-  if (typeof rdpMenuClick === 'function') {
-    /* window capture runs before the shared document-capture routing, so the run panel's own menus (configurations,
-       sessions) and the bottom Debug tab's open as PMR.menu with their own groups and glyphs */
-    listen(window, 'click', rdpMenuClick, true);
-    listen(window, 'keydown', rdpMenuKey, true);
-  }
+  /* the index details, the filters and the result groups open with a transition: refit when it ends */
+  const sp = document.getElementById('panel-search');
+  if (sp) listen(sp, 'transitionend', e => { if (e.target.matches && e.target.matches('#shIdxPanel, #shFilterPanel, .sh-accb')) dsrFitSoon(); });
+  /* window capture runs before the shared document-capture routing, so the scope menu, the run panel's own menus
+     (configurations, sessions) and the bottom Debug tab's open as PMR.menu with their own labels, groups and glyphs */
+  listen(window, 'click', dsrMenuClick, true);
+  listen(window, 'keydown', dsrMenuKey, true);
 }
 
 panelHook('panel-search', {
   apply(panel, animate) { srchApply(panel, animate); },
   show(panel) { srchFit(panel); },
-  unmount() { dsrWired = false; clearTimeout(dsrTimer); },
+  unmount() { dsrWired = false; clearTimeout(dsrTimer); clearTimeout(dsrLate); },
 });

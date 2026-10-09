@@ -24,10 +24,12 @@
 /* header status: the skin's line replaces the shell's two lengths */
 §@run #rdStatus > .sh-btext { display: none !important; }
 
-/* ---- launch row: the configuration field, then Start Debugging | Run Without Debugging, then the gear ---- */
+/* ---- launch row: the configuration field with its gear (Open configurations file) beside it, then Start Debugging |
+   Run Without Debugging across the whole width. The actions box opens up (display: contents) so the gear can sit on
+   the field's line: at 240 px with a scrollbar, a gear on the button's line left Start Debugging F5 too little room. ---- */
 §@run .sh-launchrow { display: block !important; margin: 0 0 var(--d-g) !important; padding: 0 !important; }
-§@run .sh-launch-cluster { display: flex !important; flex-wrap: wrap !important; gap: 6px !important; width: 100%; min-width: 0; }
-§@run .sh-cfgwrap { flex: 1 1 100% !important; min-width: 0 !important; width: 100%; }
+§@run .sh-launch-cluster { display: flex !important; flex-wrap: wrap !important; align-items: stretch !important; column-gap: 0 !important; row-gap: 6px !important; width: 100%; min-width: 0; }
+§@run .sh-cfgwrap { order: 0; flex: 1 1 0 !important; min-width: 0 !important; width: auto; margin-right: 6px !important; }
 §@run :is(.sh-cfgbtn, .sh-af-adapter .pm6-tb-menu-trigger, .sh-bpedit-mode .pm6-tb-menu-trigger, .sh-sesspick) {
   display: flex !important; align-items: center; gap: 7px !important; width: 100% !important; max-width: none !important; min-width: 0 !important;
   min-height: 28px; margin: 0 !important; padding: 4px 8px !important; box-sizing: border-box;
@@ -49,9 +51,9 @@
 §@run .d-cfgname { font: 600 var(--d-fs-name)/1.3 var(--body-font); color: var(--d-text); overflow-wrap: anywhere; }
 §@run .d-cfgcmd { font: 400 var(--d-fs-small)/1.3 var(--mono-font); color: var(--d-text-3); overflow-wrap: anywhere; }
 §@run .d-cfgcmd:empty { display: none; }
-§@run .sh-launch-acts { display: flex !important; flex: 1 1 100% !important; align-items: stretch; gap: 0 !important; min-width: 0; }
+§@run .sh-launch-acts { display: contents !important; }
 §@run .sh-startbtn {
-  flex: 1 1 auto !important; min-width: 0; min-height: 30px !important; justify-content: flex-start !important; gap: 7px !important;
+  order: 2; flex: 1 1 calc(100% - 32px) !important; min-width: 0; min-height: 30px !important; justify-content: flex-start !important; gap: 7px !important;
   padding: 4px 10px !important; border-radius: var(--d-r) 0 0 var(--d-r) !important;
 }
 §@run .sh-startbtn .eq-full { display: inline !important; }
@@ -61,7 +63,7 @@
   font: 500 var(--d-fs-small)/1 var(--mono-font) !important; color: inherit !important; opacity: .72;
 }
 §@run .sh-startalt {
-  flex: none !important; width: 32px; min-height: 30px !important; padding: 0 !important; margin: 0 6px 0 0 !important;
+  order: 3; flex: none !important; width: 32px; min-height: 30px !important; padding: 0 !important; margin: 0 !important;
   border: 0 !important; border-radius: 0 var(--d-r) var(--d-r) 0 !important;
   background: var(--accent-primary) !important; color: var(--d-on-accent) !important;
   box-shadow: inset 1px 0 0 color-mix(in srgb, var(--d-on-accent) 38%, transparent) !important;
@@ -69,10 +71,17 @@
 §@run .sh-startalt:hover { background: color-mix(in srgb, var(--accent-primary) 88%, var(--text-primary)) !important; }
 §@run .sh-startalt svg, §@run .sh-startalt .pm-ico { color: inherit !important; }
 §@run .sh-launch-acts > .pm-minibtn {
-  width: 32px !important; height: auto !important; min-height: 30px; border: 1px solid var(--d-ctl-line) !important; background: var(--d-ctl-bg) !important;
+  order: 1; align-self: stretch; width: 32px !important; height: auto !important; min-height: 30px; border: 1px solid var(--d-ctl-line) !important; background: var(--d-ctl-bg) !important;
 }
-§{nier}@run .sh-startalt { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; box-shadow: inset 1px 0 0 rgba(var(--o55-nier-paper-rgb, 238, 233, 216), .4) !important; }
-§{retro}@run .sh-startalt { box-shadow: inset 1px 0 0 color-mix(in srgb, var(--d-on-accent) 38%, transparent), 1px 1px 0 var(--d-ctl-line) !important; }
+/* NieR and Retro: the shared family rules for .pm-btn in 90-themes come later with the same weight, so these name the
+   button by its place in the launch row to win (NieR would otherwise make this half transparent and invisible) */
+§{nier}@run .sh-launch-acts > .pm-btn.sh-startalt {
+  border: 0 !important; background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important;
+  box-shadow: inset 1px 0 0 rgba(var(--o55-nier-paper-rgb, 238, 233, 216), .4) !important;
+}
+§{nier}@run .sh-launch-acts > .pm-btn.sh-startalt:hover { background: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .82) !important; }
+§{nier}@run .sh-launch-acts > .pm-btn.sh-startbtn { border-color: var(--o55-nier-ink) !important; }
+§{retro}@run .sh-launch-acts > .pm-btn.sh-startalt { box-shadow: inset 1px 0 0 color-mix(in srgb, var(--d-on-accent) 38%, transparent), 1px 1px 0 var(--d-ctl-line) !important; }
 
 /* add-configuration form: one neutral box, each label above its field (no clipped label column) */
 §@run .sh-addform {
@@ -85,6 +94,10 @@
 §@run .sh-af-adapter, §@run .sh-af-input { flex: none !important; width: 100%; }
 §@run .sh-af-acts { flex-direction: row !important; flex-wrap: wrap; justify-content: flex-start !important; gap: 6px !important; margin-top: 8px !important; }
 §@run .sh-af-acts > .pm-btn { flex: 1 1 auto; }
+
+/* text fields (add form, breakpoint condition): the field is the D box; Glass paints every input, which would show as
+   a second, darker box inside it */
+§@run .pm-input input { background: transparent !important; border: 0 !important; box-shadow: none !important; }
 
 /* ---- shelf heads: the trail box opens up, so label, summary and actions are one row; a summary that does not fit
    moves under the label (data-d-stack, set by 52-run.js) ---- */
@@ -125,13 +138,14 @@
 §@run .pm-minibtn:is([data-demo-disabled="1"], [aria-disabled="true"]):hover { background: transparent !important; color: var(--d-text-2) !important; }
 §@run .sh-sess {
   display: grid !important; grid-template-columns: 12px minmax(0, 1fr) auto; grid-template-areas: "gl name name" "gl line chip";
-  column-gap: 6px; row-gap: 1px; align-items: baseline; min-height: var(--d-row-h); margin: 0 0 2px !important; padding: 5px var(--d-pad) !important;
+  column-gap: var(--d-gap); row-gap: 1px; align-items: baseline; min-height: var(--d-row-h); margin: 0 0 2px !important;
+  padding: 5px var(--d-pad) 5px calc(var(--d-pad) - 3px) !important;
   border: 0 !important; border-radius: var(--d-r) !important; background: transparent; cursor: pointer; transition: background-color var(--d-t1) var(--d-ease);
 }
 §@run .sh-sess:last-child { margin-bottom: 0 !important; }
 §@run .sh-sess:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
 §@run .sh-sess.is-active { background: var(--d-sel) !important; }
-§@run .sh-sess.is-child { margin-left: 0 !important; padding-left: calc(var(--d-pad) + 14px) !important; }
+§@run .sh-sess.is-child { margin-left: 0 !important; padding-left: calc(var(--d-pad) + 10px) !important; }
 §@run .sh-sess > .d-gl { grid-area: gl; align-self: start; margin-top: 3px; }
 §@run .sh-sess > .sh-sdot, §@run .sh-sess .sh-sessline { display: none !important; }
 §@run .sh-sess > .sh-sessmeta { display: contents !important; }
@@ -150,14 +164,15 @@
 
 /* ---- Variables & watch, Call stack: name and value side by side, the value under the name when both do not fit ---- */
 §@run .sh-glabel { padding: 6px var(--d-pad) 2px !important; font: 600 var(--d-fs-meta)/1.3 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text-3) !important; }
+/* names start in the column the names after a chevron use (pad + chevron + gap: 24 px in Basic); a row with a chevron
+   (a variable with members) keeps the plain pad */
 §@run :is(.sh-watch, .sh-var:not([data-acc]), .sh-var-h, .sh-frame) {
   position: relative; display: flex !important; align-items: baseline; gap: 8px !important; min-height: 26px; margin: 0 !important;
-  padding: 4px var(--d-pad) !important; border-radius: var(--d-r) !important; background: transparent; transition: background-color var(--d-t1) var(--d-ease);
+  padding: 4px var(--d-pad) 4px calc(var(--d-pad) + 13px) !important; border-radius: var(--d-r) !important; background: transparent; transition: background-color var(--d-t1) var(--d-ease);
 }
-§@run .sh-var:not([data-acc]) { padding-left: calc(var(--d-pad) + 13px) !important; }
 §@run .sh-var.is-childvar { padding-left: calc(var(--d-pad) + 26px) !important; }
 §@run .sh-var[data-acc] { display: block !important; padding: 0 !important; border-radius: var(--d-r) !important; }
-§@run .sh-var-h { gap: var(--d-gap) !important; cursor: pointer; }
+§@run .sh-var > .sh-var-h { gap: var(--d-gap) !important; padding-left: var(--d-pad) !important; cursor: pointer; }
 §@run .sh-var-h > .sh-accchev, §@run .sh-scope-h > .sh-accchev { width: 9px !important; height: 9px !important; flex: none; align-self: center; color: var(--d-text-3) !important; }
 §@run .sh-var-h > .sh-vname { margin-right: 4px; }
 §@run .sh-var[data-acc] > .sh-accb { padding: 0 !important; }
@@ -191,12 +206,19 @@
   border-radius: var(--d-r); background: color-mix(in srgb, var(--cat, var(--accent-blue)) 18%, var(--surface));
   box-shadow: -10px 0 8px -6px color-mix(in srgb, var(--cat, var(--accent-blue)) 18%, var(--surface));
 }
-§{glass}@run .sh-rowbtns { background: var(--surface-elevated); box-shadow: -10px 0 8px -6px var(--surface-elevated); }
+/* Glass: an opaque tint (its surfaces are see-through, which let the covered end of the name read through the icons;
+   no blur per row) */
+§{glass}@run .sh-rowbtns {
+  --d-rb: color-mix(in srgb, rgb(var(--glass-tint-rgb, 46, 34, 72)) 86%, var(--text-primary));
+  background: var(--d-rb); box-shadow: -10px 0 8px -6px var(--d-rb);
+}
 :is(§@run) :is(.sh-watch, .sh-var, .sh-frame, .sh-bp):focus-within .sh-rowbtns { display: inline-flex; }
 §{nier}@run .pmr-cur:hover > .sh-rowbtns { background: var(--o55-nier-ink); box-shadow: none; }
+§{nier}@run .pmr-cur:hover > .sh-rowbtns .pm-minibtn { color: var(--o55-nier-on-ink) !important; }
+§{nier}@run .pmr-cur:hover > .sh-rowbtns .pm-minibtn:hover { background: rgba(var(--o55-nier-paper-rgb, 238, 233, 216), .2) !important; color: var(--o55-nier-on-ink) !important; }
 /* call stack: the thread, then its frames; the paused reason is a status */
 §@run .sh-thread-h {
-  display: flex !important; flex-wrap: wrap; align-items: baseline; gap: 2px 8px !important; padding: 4px var(--d-pad) 2px !important;
+  display: flex !important; flex-wrap: wrap; align-items: baseline; gap: 2px 8px !important; padding: 4px var(--d-pad) 2px calc(var(--d-pad) + 13px) !important;
   font: 600 var(--d-fs-mono)/1.35 var(--mono-font) !important; color: var(--d-text) !important;
 }
 §@run .sh-thread-h > .sh-chip {
@@ -207,16 +229,22 @@
 §@run .sh-frame.is-active { background: var(--d-sel) !important; }
 §@run .sh-frame.is-lib { opacity: .62; }
 §@run .sh-more {
-  display: block; margin: 0 !important; padding: 4px var(--d-pad) !important; min-height: 24px; border-radius: var(--d-r) !important;
+  display: block; margin: 0 !important; padding: 4px var(--d-pad) 4px calc(var(--d-pad) + 13px) !important; min-height: 24px; border-radius: var(--d-r) !important;
   font: 500 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-pend) !important; cursor: pointer;
 }
 §@run .sh-more:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
 
 /* ---- Breakpoints: toggle glyph, location (opens the source), the function and the condition after it ---- */
 §@run .sh-bp {
-  position: relative; display: flex !important; align-items: flex-start; gap: 4px !important; min-height: 28px; margin: 0 !important;
-  padding: 2px var(--d-pad) 2px 2px !important; border-radius: var(--d-r) !important; transition: background-color var(--d-t1) var(--d-ease);
+  position: relative; display: flex !important; align-items: flex-start; gap: var(--d-gap) !important; min-height: 28px; margin: 0 !important;
+  padding: 2px var(--d-pad) 2px calc(var(--d-pad) - 3px) !important; border-radius: var(--d-r) !important; transition: background-color var(--d-t1) var(--d-ease);
 }
+/* a 12 px column with a 16 px hit area (the 2 px each side overlap the row's pad and the gap); no fill on hover, which
+   on a strip this narrow would read as a capsule */
+§@run .sh-bp > .sh-bptog { width: 16px !important; min-width: 16px !important; height: 24px !important; margin: 0 -2px !important; background: transparent !important; }
+§@run .sh-bp > .sh-bptog svg, §@run .sh-bp > .sh-bptog .pm-ico { width: 12px !important; height: 12px !important; }
+§@run .sh-bp > .sh-bptog:hover { background: transparent !important; color: color-mix(in srgb, var(--d-fail) 72%, var(--d-text)) !important; }
+§@run .sh-bp.is-disabled > .sh-bptog:hover { color: var(--d-text-2) !important; }
 §@run .sh-bp:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
 §@run .sh-bp.is-disabled { opacity: .55; }
 §@run .sh-bptog { color: var(--d-fail) !important; }
@@ -245,8 +273,20 @@
   border-radius: var(--d-r) !important; font: 400 var(--d-fs-name)/1.3 var(--body-font) !important; color: var(--d-text) !important; cursor: pointer;
 }
 §@run .sh-bpx:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
-§@run .sh-bpx input { width: 14px; height: 14px; margin: 0; flex: none; accent-color: var(--accent-primary); }
-§{nier}@run .sh-bpx input { accent-color: var(--o55-nier-ink); }
+§@run .sh-bpx input {
+  -webkit-appearance: none !important; appearance: none !important; flex: none; width: 14px !important; height: 14px !important; margin: 0 !important; padding: 0 !important;
+  box-sizing: border-box; border: 1.5px solid var(--d-line-2) !important; border-radius: min(var(--d-r), 3px) !important;
+  background: transparent !important; box-shadow: none !important; cursor: pointer;
+  transition: background-color var(--d-t1) var(--d-ease), border-color var(--d-t1) var(--d-ease);
+}
+/* checked: the accent box with the tick knocked out of it (a mask, like the status glyphs), so it shows the row behind */
+§@run .sh-bpx input:checked {
+  border-color: var(--accent-primary) !important; background: var(--accent-primary) !important;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><defs><mask id='m'><rect width='16' height='16' fill='white'/><path d='M4 8.3l2.7 2.7L12 5.6' fill='none' stroke='black' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/></mask></defs><rect width='16' height='16' mask='url(%23m)'/></svg>") center / 100% no-repeat;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><defs><mask id='m'><rect width='16' height='16' fill='white'/><path d='M4 8.3l2.7 2.7L12 5.6' fill='none' stroke='black' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/></mask></defs><rect width='16' height='16' mask='url(%23m)'/></svg>") center / 100% no-repeat;
+}
+§@run .sh-bpx input:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
+§{nier}@run .sh-bpx input:checked { border-color: var(--o55-nier-ink) !important; background: var(--o55-nier-ink) !important; }
 §R[data-o55-nier="on"][data-o55-nier-parts~="headers"] #panel-run :is(.sh-hlabel, .sh-title, .sh-glabel) { text-transform: uppercase !important; letter-spacing: .14em !important; }
 
 /* ---- the bottom Debug tab ---- */
@@ -322,7 +362,10 @@
 §@#bottomDebugHost .rd-text { color: var(--d-text-2) !important; }
 §@#bottomDebugHost .rd-replrow { gap: 8px !important; padding: 6px 12px !important; border-top: 1px solid var(--d-line) !important; }
 §@#bottomDebugHost .rd-prompt { font: 700 var(--d-fs-title)/1 var(--mono-font); color: var(--accent-primary) !important; }
-§@#bottomDebugHost .rd-replrow input { font: 400 var(--d-fs-mono)/1.4 var(--mono-font) !important; color: var(--d-text) !important; }
+§@#bottomDebugHost .rd-replrow input {
+  background: transparent !important; border: 0 !important; box-shadow: none !important;
+  font: 400 var(--d-fs-mono)/1.4 var(--mono-font) !important; color: var(--d-text) !important;
+}
 §@#bottomDebugHost .rd-replrow input::placeholder { color: var(--d-text-3); }
 /* ended: the session tabs, the ended chrome (exit code, Restart), and the console scrollback the shell keeps (F3-490) */
 §@#bottomDebugHost[data-rd-state="term"] .rd-live, §@#bottomDebugHost[data-rd-state="term"] .rd-term { display: contents !important; }

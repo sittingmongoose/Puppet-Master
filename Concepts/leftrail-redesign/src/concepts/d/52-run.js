@@ -80,14 +80,25 @@ function rdpApply(panel, animate) {
   rdpFit(panel);
 }
 
+/* the shell writes a configuration as "name — command" ("tastebook-api — cargo run") but also the other way round
+   ("vite dev — tastebook-web", "cargo test — import worker suite"): the part that starts with a program is the command
+   (mono, line 2), the other part the name (line 1); a label with no command part stays whole on line 1 */
+const RDP_CMD = /^(cargo|vite|npm|npx|pnpm|yarn|node|deno|bun|python3?|pytest|uv|go|make|just|docker|podman|dotnet|java|gradle|mvn|ruby|rails|bundle|php|swift|zig|bash|sh)\b/;
+function rdpCfgParts(full) {
+  const m = /^(.*?)\s+[—–]\s+(.*)$/.exec(full);
+  if (!m) return [full, ''];
+  if (RDP_CMD.test(m[2])) return [m[1], m[2]];
+  if (RDP_CMD.test(m[1])) return [m[2], m[1]];
+  return [full, ''];
+}
 function rdpCfgField(trig) {
   const lab = trig.querySelector('.pm6-tb-menu-label');
   if (!lab) return;
   const full = (lab.querySelector('.eq-full') || lab).textContent.trim();
-  const m = /^(.*?)\s+[—–]\s+(.*)$/.exec(full);
   let f = trig.querySelector(':scope > .d-cfg');
   if (!f) { f = PMR.h('span.d-cfg', PMR.h('span.d-cfgname'), PMR.h('span.d-cfgcmd')); inject(trig, f, lab); }
-  const n = f.firstChild, c = f.lastChild, nt = m ? m[1] : full, ct = m ? m[2] : '';
+  const [nt, ct] = rdpCfgParts(full);
+  const n = f.firstChild, c = f.lastChild;
   if (n.textContent !== nt) n.textContent = nt;
   if (c.textContent !== ct) c.textContent = ct;
 }
@@ -96,6 +107,7 @@ function rdpCfgField(trig) {
    actions only show while the shelf is open, so the open state is part of the key (the shared stackHeads keys on width
    and text only and would keep a fit measured while the shelf was closed); the theme is too, since it changes fonts. */
 function rdpStackHeads(panel) {
+  dsrStyleGuard(panel);
   const heads = Array.from(panel.querySelectorAll('.sh-shelf > .sh-head'));
   const ws = heads.map(h => h.offsetWidth);
   const root = document.documentElement, look = root.getAttribute('data-theme') + (root.getAttribute('data-o55-nier') || '');
@@ -108,7 +120,7 @@ function rdpStackHeads(panel) {
     h._dRunStackKey = key;
     h._dStackKey = ws[i] + '|' + c.textContent;            // the shared stackHeads' key: it leaves this head to us
     h.removeAttribute('data-d-stack');
-    if (l.scrollWidth > l.clientWidth + 1 || h.scrollWidth > h.clientWidth + 1) {
+    if (dsrOver(l) || h.scrollWidth > h.clientWidth + 1) {
       h.setAttribute('data-d-stack', '');
       const pad = parseFloat(getComputedStyle(h).paddingLeft) || 0;
       h.style.setProperty('--d-stack-x', Math.max(0, l.offsetLeft - pad) + 'px');
@@ -126,8 +138,7 @@ function rdpFit(panel) {
     if (row._dStackKey === key) return;
     row._dStackKey = key;
     row.removeAttribute('data-d-stack');
-    const r = line.querySelector('.d-str');
-    if (line.scrollWidth > line.clientWidth + 1 || (r && r.scrollWidth > r.clientWidth + 1)) row.setAttribute('data-d-stack', '');
+    if (dsrOver(line) || dsrOver(line.querySelector('.d-str'))) row.setAttribute('data-d-stack', '');
   });
   dsrStackPairs(panel, [
     ['.sh-watch', '.sh-wexpr', '.sh-wval'],
@@ -154,7 +165,9 @@ function rdpOpenConfigs(trig, keyboard) {
   menu.querySelectorAll('.pm6-tb-menu-item').forEach((it, i) => {
     const lab = (it.querySelector('.pm6-tb-menu-item-label') || it).textContent.trim();
     if (it.getAttribute('data-demo-action') === 'cmd.run_debug.config.select') {
-      const def = { label: it.getAttribute('data-label') || lab, value: String(i), selected: it.classList.contains('is-selected'), _src: it };
+      /* name first, like the field ("tastebook-web — vite dev", not the shell's "vite dev — tastebook-web") */
+      const [nt, ct] = rdpCfgParts(it.getAttribute('data-label') || lab);
+      const def = { label: ct ? nt + ' — ' + ct : nt, value: String(i), selected: it.classList.contains('is-selected'), _src: it };
       (it.querySelector('.pm6-tb-menu-meta') ? recent : rest).push(def);
     } else acts.push({ label: lab, icon: /config\.add$/.test(it.getAttribute('data-demo-action') || '') ? 'plus' : 'edit', _src: it });
   });
@@ -204,8 +217,6 @@ function rdpMenuOpen(ev, keyboard) {
   else if (inHost) done = openShellMenu(trig, keyboard);      // the shared routing covers the rail panels only
   if (done) { ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation(); }
 }
-function rdpMenuClick(ev) { rdpMenuOpen(ev, false); }
-function rdpMenuKey(ev) { if (['Enter', ' ', 'ArrowDown'].includes(ev.key)) rdpMenuOpen(ev, true); }
 
 /* ---- the bottom Debug tab (F3-490): not one of the nine panels, so it has its own observer ---- */
 function rdhApply(host, animate) {
@@ -265,5 +276,7 @@ panelHook('panel-run', {
       if (sc) deal(dealList(sc), { delay: Math.round(spec().step * 1.5) });
     }
   },
-  unmount() { dsrWired = false; rdhState = null; },
+  /* clearFit has dropped every data-d-stack; this file's own head key must go too, or the next mount finds it still
+     matching and leaves a stacked head unstacked (D -> Current -> D) */
+  unmount(panel) { dsrWired = false; rdhState = null; panel.querySelectorAll('.sh-head').forEach(h => { delete h._dRunStackKey; }); },
 });
