@@ -49,6 +49,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | `src/js/64-nier-look.js` | `O55.nierLook`: NieR Mode where a look is chosen (the Pick a look row, the look popover's row, the Adjust panel) and the preview that is committed with the look into the new Project. |
 | `src/js/65–74` | Screens by chapter: Welcome, Computer (Connect, Server, Restore), Project (begin, folder, NAS/SSH, name, start-like, keep safe, online copy, away, review, creating, protect), AI (providers, Free Models), Ready. |
 | `src/js/66-nier-window.js` + `src/css/11-window-nier.css`, `13-nier-look.css` | The NieR window (`O55.nierWindow`, NieR Mode's skin of the onboarding window) and the styles of the look row, its thumbnail and its Adjust panel. |
+| `src/js/66-family-window.js` + `src/css/14-family-moments.css` | The four looks' own hero moments (`O55.famWindow`): the wake, the act card and the curtain call in Basic, Friendly, Glass and Retro, asked after NieR's skin (see "The four looks' hero moments"). |
 | `src/js/80–84` | The Guided Tour: engine (spotlight, callout, bar, Show Me pointer, snapshot/restore, checkpoints), the Teacher chat adapter (local answers, Explain this reply simply), the Planning Wizard practice run, and the 18 steps; then NieR Mode's Pod 042 chat adapter. |
 | `src/js/85-tour-nier.js` + `src/css/41-tour-nier.css` | The Guided Tour's NieR skin: Pod 042 in the callout and as the Show Me pointer, the square spotlight, the hung chapter cards and the results card. |
 | `src/js/90–95` | Concept demo pill; boot, shims for the shell's existing callers, driver switches (`?o55=fresh|off|screen=<id>`, `?o55scenario=<id>`). |
@@ -291,6 +292,42 @@ Under Reduced Motion and the Still and Colors only presets every moment stands i
 is skipped, Quiet drops the Pod beats, low resource plays the instant paths, and input never waits: a key or a press
 snaps a running performance to its end state.
 
+### The four looks' hero moments (Phase 2)
+
+Basic, Friendly, Glass and Retro have their own act card, wake and curtain call, each in its own world's materials
+and working in its Light and Dark (`O55.famWindow`, `src/js/66-family-window.js`, styles in
+`src/css/14-family-moments.css`, words in `src/copy.d/60-family-moments.json`). So there are five styles of each
+moment, and **NieR always wins**: `O55.ui.skin` asks `O55.nierWindow` first, exactly as before, and asks the family
+skin only when NieR's answer is falsy; every family hook also stands down at once while NieR Mode is painted (live
+or the onboarding preview), whatever family is under it. The moments play on the same occasions as NieR's: the wake on
+a fresh open on Welcome, the act card on the first forward arrival in a chapter this run (it claims the chapter's
+one sting and plays it as it lands, and the rail is held in its old state until then), the curtain call on the first
+forward arrival at Ready (it claims Ready's resolving sting).
+
+| Look | The wake (Welcome, a fresh open) | The act card (a chapter's end) | The curtain call (Ready) |
+|---|---|---|---|
+| Basic (blueprint) | The window opens on a blank drawing sheet with a parallel rule parked above it. The rule sweeps down and the blank sheet travels with it, so the drawing appears exactly where the rule has passed; construction is drafted ahead of the ink (a dash-dot centreline running down, compass circles where the heads will be) and each construction line is drawn along the rule's edge as it passes the control bar, the heads and the floor. The construction fades, each string is tensioned (plucked, ringing on its helper's chord tone) as the rule leaves the floor, h0 waves and the welcome chord plays. | The old troupe nods; a title block is drafted over the stage (frame, then cells, the finished chapter in the big cell, Next: and Sheet n of 5), lands on the chapter's sting while a dimension line draws along the rail to the new chapter, is stamped DONE in orange with a felt thump, and is lifted off the stage like the cover sheet. | The cover sheet lifts on the troupe in a line; once the drawing has finished inking, three measured bows on the chord (the upper body pitched toward the audience about the hips, no overshoot), a rest, then they straighten on the resolving chord as an orange APPROVED stamp presses onto the READY sign, with drafting-mark confetti; the rail re-stamps every chapter. |
+| Friendly (paper theatre) | The window springs open on the closed velvet house curtain with the footlights on the stage lip in front of it; the lamps light one by one with plinks, the curtain gathers into the drapes and the paper troupe, lying flat on the boards, folds up one by one; h0 waves, the welcome chord. | The old troupe gives a squashy bow; a paper title card on a wooden stick pops up out of a slot in the boards just under it (That's a wrap!, the chapter, Next up:), lands on the sting with a paper thump and wobbles, its paper star spins, a paper pennant hops along the rail; the card ducks back into the slot. | The velvet gathers; each puppet gives a deep paper bow on the chord (the upper body pitched about the hips with a squash, springing up past upright); on the resolving chord three big paper roses are thrown from the house, large as they pass the audience, turn over in the air and land across the front boards as the troupe steps back a beat; paper confetti, the rail's nodes pop one by one. |
+| Glass (light lab) | The lab opens in the dusk (a thin cool slate in Light), the cores out; the switch clicks and the beam snaps on with its pool on the floor, the dusk lifts in 350 ms, a comet of light runs down each filament into its helper, whose core lights with a bell on its note, motes rise off the floor; h0 waves, the welcome chord. | The old troupe dips; a beam comes on from above and a frosted glass plate, hung under the control bar, rises into focus under it, a bright streak sweeps across the plate as it lights (Chapter complete, the chapter, Next:) on the sting, motes rise off its edge, a light pulse runs along the rail; the beam goes out and the plate floats away. | The frosted panes slide apart; each helper bows slowly, its head lowering into the light, as a spotlight comes on over it and its core flares; on the resolving chord the three spots swell together, the cores flare in one chord and light motes rise off the pools; the rail's nodes brighten one by one. |
+| Retro (arcade) | Attract mode: PUPPET MASTER types on in pixel type over the stage, PRESS START blinks, PLAYER 1 with a coin blip, the screen wipes away in steps and each sprite spawns (a column of pixel blocks drops onto its spot, then the sprite and its string are there); h0 waves, the chip chord. | The old sprites duck a pixel step; an interstitial screen wipes down in steps: the chapter types on and CLEAR! cuts in on the chip sting, the rail's cursor hops to the new chapter, a BONUS tally counts up with blips and stars, the troupe's sprites jump, NEXT: and a blinking READY?, then it wipes away. | The pixel wall steps away; each sprite bows in two frames on its chip note (the head a block down, then the crown toward the audience with the hands together); on the resolving arpeggio they come up and hop two pixel steps, pixel confetti bursts, ALL CLEAR types on big between the sign and the heads, SETUP 100% tallies under the stage, h2 points at the pane and an arrow by its hand blinks toward the tour button; the rail's boxes blink one by one. |
+
+Ready's end state is the one deliberate change to a settled screen: in the four looks the troupe stands in a line with
+h2 pointing at the tour button (it was bow, wave, bow; Retro's h2 has a pointing sprite of its own, `aim`), each look's
+emblem of its call is part of the composition (Basic's APPROVED stamp, Friendly's roses, Glass's spotlights, Retro's
+ALL CLEAR, score and arrow), and the narrow window's band frames the troupe's heads and shoulders with room to bow,
+each emblem placed inside it (Basic's stamp above h2's head, Retro's ALL CLEAR across its top and the arrow by h2's
+head, Friendly's roses along its foot, Glass's spots as they are). The emblem leads the finale: the celebration under
+it is a smaller burst (18 pieces). The bows pitch the upper body: the Basic, Friendly and Glass helpers draw everything
+above the hips in `.o55-up` groups (two or three per helper, in the drawing's own paint order, so every settled picture
+is unchanged), which the call scales about the hip line while the legs stand, and the head's string point rides with
+the head while it bows. Reduced Motion and a low-resource computer show
+every moment's end state at once: no wake, no card (the chapter's sting plays on the move, as before), Ready drawn in
+its end composition with the previous quiet celebration rule. A key or a press snaps a running moment to its end
+(the card's sting plays then if it had not landed); a screen change or the window closing ends one silently.
+The moments use each look's own kit (`phase`, `string`, `land`, `bow`, `cheer`, `move`, `reveal`, `chapter`,
+`checkpoint`, `celebrate` and `rest`); no take was added, so the kits, `TRIM`, `DUR` and the sound library are
+unchanged.
+
 ### The NieR art family
 
 `src/js/54-art-nier.js` draws the fifth art family, the unit marionettes: small android units in the YoRHa spirit,
@@ -403,6 +440,20 @@ becomes in Slint:
 | A unit's bow (the upper body pitching about the hips in two held steps, the head dropping below its knot) | `transform-scale-y` with `transform-origin` on the hip line, plus the head's `y`, both stepped by a `Timer` |
 | Two-line clamp with balanced wrap (`line-clamp: 2`, `text-wrap: balance`) | `Text { wrap: word-wrap; overflow: elide; }` with a fixed height |
 | Glyph decode (`FX.decode`: short labels scrambling left to right) | a `Timer` stepping the shown string |
+| The four looks' stage overlay (`.o55fm-layer`: one SVG in the scene's own viewBox and slice over the art panel, for the hero moments' cards, rule, curtain, veil and attract screen) | an element over the art panel with the scene's scale and offset; its `Path`, `Rectangle` and `Text` children in scene units |
+| A drawing acting about its feet (the act card's old troupe bowing, Friendly's fold-up from flat, the troupe stepping back as the roses land: `scale` on the prop's drawing group, fill-box, origin 50 % 100 %) | `transform-scale-x/-y` with `transform-origin` at the feet |
+| The curtain call's bow in the four looks (the helper's upper-body groups, `.o55-up`, scaled about the hip line, a little wider, while the legs stand; Friendly's rises past upright) | the upper body as one child element with `transform-scale-y`/`-x` and `transform-origin` on the hip line, animated |
+| Retro's sprite bow (two extra sprite frames swapped in for the standing one, 90 ms apart) and its two-step hop | `visible` toggled on the frames by a `Timer`; the hop as `y` stepped by the same `Timer` |
+| Basic's wake reveal (a blank sheet in the paper colour and the parallel rule moving down together over the drawing) | a `Rectangle` in the paper colour over the art panel whose `y` animates with the rule's |
+| Glass's comet down a filament (a tail stroked with a linear gradient, a radial-gradient head, moved and turned along the string) | a `Path` with a `@linear-gradient` stroke and a circle filled with `@radial-gradient`, `x`/`y` animated, `transform-rotation` set to the string's angle |
+| Friendly's stage slot (the card on its stick rising from behind a paper strip: a static `clipPath` above the strip) | a clipping `Rectangle` ending at the strip, the card a child whose `y` animates |
+| Glass's spotlights at the rise (a cone swelling about its top, its brighter copy fading in and out) | `transform-scale-x` with `transform-origin` at the cone's top, and `opacity`, animated |
+| Retro's Ready arrow blinking (opacity in steps, endless; still when the drawings' loops are) | `visible` toggled by a `Timer` |
+| A parallel rule sweeping down, a card on a stick rising and ducking, a sheet lifted off, a plate floating away | `y` (and `opacity`) animated with `animate y { duration; easing }` |
+| A rubber stamp pressed on (scale from 1.7 to 1 with opacity, one-shot) | `transform-scale-x/-y` and `opacity` animated |
+| A light streak sweeping across a glass plate (a static SVG `clipPath` of the plate's rounded rectangle; the streak's transform moves) | a clipping `Rectangle { clip: true; border-radius }` with the streak a child whose `x` animates |
+| A score or bonus tally stepping digits (five to eight writes) | a `Timer` stepping the `Text`'s number |
+| Rail markers (Basic's dimension line drawing on, Friendly's pennant hop, Glass's light pulse, Retro's cursor hop) and Ready's re-stamp | a `Rectangle` (or `Path`) whose `x`, width or scale animate; the hop as `y` keyframes; the re-stamp a `transform-scale` or `opacity` pulse per node with a delay |
 
 ## Status
 
