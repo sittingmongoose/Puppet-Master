@@ -882,17 +882,16 @@
          third one fired at the start of the long paint whenever that paint was the third frame. A fast release
          has no late frame, so the fifth stands in for it. Every other screen still starts on the next frame.
          The screen's start state goes up now, in the release's own task, so that long frame (the first to show the
-         screen) shows the entrance unstarted, not the finished pane: the title laid out untyped, its typing waiting
-         for the cue, and the entrance's blocks held at their first step (data-o55nw-cue) so they step in from the
-         cue with the rows' ticks. The entrance classes go back on first: the opening held this screen longer than
-         the entrance's settle fallback (60-ui-core.js transition, 2.6 s), which had taken them off a screen nobody
-         had seen, so at 1x the rows and the subtitle came up whole (fv check 1). */
+         screen) shows the entrance unstarted, not the finished pane (fv check 1): the title laid out untyped, its
+         typing waiting for the cue, and the entrance's blocks held at their first step (data-o55nw-cue) so they step
+         in from the cue with the rows' ticks. The entrance is the screen's own (data-o55nw-enter, 11-window-nier.css):
+         .o55-entering's settle fallback (60-ui-core.js transition, 2.6 s from the build) had taken that class off this
+         held screen before the release at 1x, or in the middle of the entrance at 0.25x. Once it has played, both go
+         in one task, so nothing steps in twice. */
       if (cold) {
-        if (!layer.classList.contains('o55-entering')) {
-          layer.classList.add('o55-entering', 'o55-in-open');
-          M.settled(layer, { fallback: 2600 }).then(() => layer.classList.remove('o55-entering', 'o55-in-open'));
-        }
+        layer.setAttribute('data-o55nw-enter', '');
         layer.setAttribute('data-o55nw-cue', '');
+        M.settled(layer, { fallback: 2600 }).then(() => { layer.removeAttribute('data-o55nw-enter'); layer.classList.remove('o55-entering', 'o55-in-open'); });
         let cue = null;
         const h = layer.querySelector('#o55-h');
         if (h) { F.decode(h, { sound: true, at: new Promise((res) => { cue = res; }) }); o.typed = true; }
