@@ -77,7 +77,7 @@ So a stale hash for one document keeps one key however often the document change
 
 Baseline home: `reports/landing-checks/baseline.json`. Not `Plans/.evidence/`, because AGENTS.md
 calls that a build-governance artifact, CLAUDE.md forbids hand-editing it, and AGENTS.md reserves
-writing it to the designated Plans agent; a file that is refreshed on a schedule cannot live under
+writing it to a reseal Jared assigns; a file that is refreshed on a schedule cannot live under
 that rule. `reports/**` is the documented home for compact result bundles.
 
 It refuses to run on a sparse worktree. The three checks read the whole tree, so everything outside
@@ -145,7 +145,7 @@ HASH_RE = re.compile(r"\b[0-9a-f]{32,}\b")
 TIME_RE = re.compile(r"\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})?")
 SPAN_ID_RE_CACHE: dict[str, re.Pattern[str]] = {}
 
-# Error kinds that a canon edit is expected to produce until the designated Plans agent reseals.
+# Error kinds that a canon edit is expected to produce until the next reseal Jared assigns.
 # AGENTS.md already carves these out of a landing refusal: Spec Lock `stale_hash`, stale owner or
 # artifact evidence hashes, a stale readiness report, the stale plan-migration snapshot. The script
 # only names them; reports/landing-checks/README.md lists them by that grouping.
@@ -1897,7 +1897,7 @@ def main() -> int:
         elif not blocking:
             advice = []
             if any(item["stale"] for item in on_branch):
-                advice.append("governance staleness for what this branch edited, so ask the Plans agent for a reseal")
+                advice.append("governance staleness for what this branch edited, so report a reseal request to Jared")
             if pre_existing and changed_on_branch:
                 advice.append(f"pre-existing failures whose count has not risen, {changed_on_branch} of them "
                               "with changed content on files this branch touched, so compare those with the "
@@ -1907,7 +1907,7 @@ def main() -> int:
             if any(item["key"] not in {other["key"] for other in on_branch} for item in new_items):
                 advice.append("new but names no file this branch touched, so report it to Jared")
             if any(row["stale"] for row in subcheck_growth):
-                advice.append("the readiness growth counter of stale readiness rows, so ask for a reseal")
+                advice.append("the readiness growth counter of stale readiness rows, so include it in the reseal request to Jared")
             if any(not row["stale"] and not row.get("keyed_from_export") for row in subcheck_growth):
                 advice.append("a subcheck that reports more than the baseline, with every failure still printed")
             if any(not row["stale"] and row.get("keyed_from_export") for row in subcheck_growth):

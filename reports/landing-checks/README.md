@@ -285,7 +285,7 @@ being among its rows are the evidence that it saw what the aggregate saw.
 
 AGENTS.md names four things as governance staleness: Spec Lock `stale_hash`, stale owner or artifact
 evidence hashes, a stale readiness report, and the stale plan-migration snapshot. Editing canon
-produces them until the designated Plans agent reseals, so they never stop a landing: on a file the
+produces them until the next reseal, which Jared assigns to an agent as its own task, so they never stop a landing: on a file the
 branch edited they are reported with a reseal request and the check exits 1. The script recognises
 them by error kind.
 

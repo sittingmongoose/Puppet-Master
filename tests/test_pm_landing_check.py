@@ -1256,7 +1256,7 @@ class RuleOneOnABranch(LandingRun):
         self.assertEqual(code, 1, out)
         self.assertIn("Naming a path this branch touches: 1", out)
         self.assertIn("event_authority_currentness_validator_drift", out)
-        self.assertIn("ask the Plans agent for a reseal", out)
+        self.assertIn("report a reseal request to Jared", out)
 
     def test_a_readiness_failure_that_is_not_staleness_on_an_edited_document_exits_two(self):
         self.stub(gates={self.RG_READINESS: [pnc_stale("Plans/Base.md")]})
