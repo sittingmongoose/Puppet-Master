@@ -622,6 +622,12 @@
        curtain is not drawn (no Slice open part, a low-resource computer, Reduced Motion). */
     const M = O55.motion, parts = out.parts;
     const cc = !!current && out.family === 'nier' && html.indexOf('o55-cur-all') >= 0 && !M.reduced() && !M.lowResource && (!parts || parts.indexOf('slice') >= 0);
+    /* a NieR scene that slices in over another NieR scene: the old cast (units, You, the machine, the control bar, the
+       strings, a hung sign) steps out whole on the frame the slice starts (30-art.css .o55-out-whole; a held change's
+       old layer from its release), so the slice cuts only the set: it had cut the old troupe at the head or the waist
+       (the act card's release at 760 px). The curtain call keeps its troupe until the curtain covers it, and the
+       cross-fades (no Slice open part, Reduced Motion) fade it whole. */
+    const whole = !!current && !cc && !cast && out.family === 'nier' && !M.reduced() && (!parts || parts.indexOf('slice') >= 0);
     wrap.className = 'o55-scene-wrap o55-enter' + (cc ? ' o55-cc-in' : '') + (ctx && ctx.ensembleHold ? ' o55-ens-hold' : '') + (ctx && ctx.still ? ' o55-still' : '');
     wrap.setAttribute('data-scene', sceneId); wrap.setAttribute('data-family', out.family);
     if (ctx && ctx.still) wrap.setAttribute('data-o55-ambient', 'off');
@@ -629,6 +635,7 @@
     wrap.firstElementChild.setAttribute('data-o55-t0', String(Math.round(O55.motion.now())));
     if (current) {
       current.classList.add('o55-out');
+      if (whole) current.classList.add('o55-out-whole');
       current.setAttribute('aria-hidden', 'true');
       current.setAttribute('inert', '');
       const done = () => current.remove();
