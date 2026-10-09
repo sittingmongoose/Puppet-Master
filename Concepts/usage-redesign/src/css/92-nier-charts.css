@@ -114,6 +114,14 @@ html[data-o55-nier-parts~="intel"] #panel-usage .pmu-readout { box-shadow: 3px 3
 html[data-o55-nier-parts~="intel"] #panel-usage .pmu-readout strong { position: relative; padding-left: 21px; letter-spacing: .12em; }
 html[data-o55-nier-parts~="intel"] #panel-usage .pmu-readout strong::before { content: ""; position: absolute; left: 9px; top: 50%; width: 5px; height: 5px; margin-top: -3px;
   background: var(--o55-nier-on-ink); }
+/* the ink band unfolds from its left edge as the readout appears, in the app's intel unfold (140 ms, the same curve). Only
+   the band moves: the card is placed by its own transform (30-charts-core.js), so a scale on it would move it too. The
+   band folds back as the card fades; a readout that moves between buckets keeps it open. Compositor only (transform). */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-o55-nier-parts~="intel"]:not([data-motion="reduced"]) #panel-usage .pmu-readout strong { transform: scaleX(.08); transform-origin: 0 50%;
+    transition: transform calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2, .85, .25, 1); }
+  html[data-o55-nier-parts~="intel"]:not([data-motion="reduced"]) #panel-usage .pmu-readout.is-on strong { transform: none; }
+}
 
 /* ---------- square: every chart corner is 0 (rings and dots are SVG, so they stay round) ---------- */
 html[data-o55-nier-parts~="square"] #panel-usage :is(.pmu-colstack, .pmu-sbbar, .pmu-sbfill, .pmu-mixbar, .pmu-tb, .pmu-tb i, .pmu-rkbar, .pmu-rkfill, .pmu-splitbar, .pmu-hc, .pmu-hs i,

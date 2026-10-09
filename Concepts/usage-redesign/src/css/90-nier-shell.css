@@ -95,6 +95,7 @@ html[data-o55-nier-parts~="diamonds"] #panel-usage .pmu-iconbtn.spinning svg { b
   transform: rotate(45deg) scale(.72); animation: pmu-nier-diamond calc(650ms * var(--pmu-speed, 1)) linear 1; }
 html[data-o55-nier-parts~="diamonds"] #panel-usage .pmu-iconbtn.spinning svg > * { visibility: hidden; }
 html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] #panel-usage .pmu-iconbtn.spinning svg { animation: none; }
+@media (prefers-reduced-motion: reduce) { html[data-o55-nier-parts~="diamonds"] #panel-usage .pmu-iconbtn.spinning svg { animation: none; } }
 @keyframes pmu-nier-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.72); } to { transform: rotateY(180deg) rotate(45deg) scale(.72); } }
 
 /* group heading bands are not plates: no corner ticks, no ink frame */
@@ -195,15 +196,21 @@ html[data-o55-nier-parts~="glyphs"] #panel-usage .pmu-card[data-head="band"] > .
 
 /* ---- Slice [slice]: the inspector opens from a line across its middle and closes back to it, the app's o55np-slice
    (menus and dialogs: scale from a line, one flicker step) instead of the Basic spring that overshot. Compositor only
-   (scale and opacity); Reduce Motion keeps the instant drawer. ---- */
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #panel-usage .pmu-inspector { transform: none; scale: 1 .006; transform-origin: 50% 50%;
-  transition: scale calc(150ms * var(--pmu-speed, 1)) steps(3, jump-end), opacity calc(60ms * var(--pmu-speed, 1)) linear calc(150ms * var(--pmu-speed, 1)),
-    visibility 0s linear calc(210ms * var(--pmu-speed, 1)); }
-html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #panel-usage .pmu-inspector.open { scale: none; transition: none;
-  animation: o55np-slice calc(300ms * var(--pmu-speed, 1)) linear backwards; }
-@media (prefers-reduced-motion: reduce) {
-  html[data-o55-nier-parts~="slice"] #panel-usage .pmu-inspector, html[data-o55-nier-parts~="slice"] #panel-usage .pmu-inspector.open { scale: none; transition: none; animation: none; }
+   (scale and opacity). Reduce Motion, the app's setting (data-motion) or the system's, opens and closes the drawer at
+   once: the slice exists only under prefers-reduced-motion: no-preference, so no override has to win on specificity
+   (an override inside @media (reduce) lost to the :not([data-motion]) rule and the slice played; GPU probe 2026-10-09). ---- */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #panel-usage .pmu-inspector { transform: none; scale: 1 .006; transform-origin: 50% 50%;
+    transition: scale calc(150ms * var(--pmu-speed, 1)) steps(3, jump-end), opacity calc(60ms * var(--pmu-speed, 1)) linear calc(150ms * var(--pmu-speed, 1)),
+      visibility 0s linear calc(210ms * var(--pmu-speed, 1)); }
+  html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) #panel-usage .pmu-inspector.open { scale: none; transition: none;
+    animation: o55np-slice calc(300ms * var(--pmu-speed, 1)) linear backwards; }
 }
+@media (prefers-reduced-motion: reduce) {
+  html[data-o55-nier="on"] #panel-usage .pmu-inspector.pmu-inspector, html[data-o55-nier="on"] #panel-usage .pmu-inspector.pmu-inspector::before { transition: none; animation: none; }
+}
+html[data-motion="reduced"][data-o55-nier="on"] #panel-usage .pmu-inspector.pmu-inspector,
+html[data-motion="reduced"][data-o55-nier="on"] #panel-usage .pmu-inspector.pmu-inspector::before { transition: none; animation: none; }
 
 /* ---- Pod voice [voice] and the intel frame [headers]: Usage's stage note reads as a Report (14-nier-parts.css:336 names
    the retired #pm7uToast) in a square ink frame with the hard shadow, its mark in an ink square ---- */
