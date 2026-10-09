@@ -1,0 +1,51 @@
+/* Embedded web fonts. The base page names these faces in its theme tokens but never shipped them, so every machine
+   without them installed fell back to its own sans or mono. Each face is a Latin-subset woff2 in src/fonts, inlined as
+   a data: URI by tools/build.py (url("o55font:<file>") -> data:), so the page never asks the network for a font.
+   src/fonts/SOURCE.md lists every file's origin and SHA-256.
+   Which looks use which face (measured in the built page):
+     Basic, Glass  -> Inter (body and display)
+     Friendly      -> Poppins (body and display), Nunito behind it
+     Retro         -> IBM Plex Mono (body, display and code)
+     every look    -> "Georgia" (the bold italic "i" of the info badges), Gelasio standing in
+   Inter, Poppins 400-700 and IBM Plex Mono 400-700 are the exact bytes 5.6 Pro embeds
+   (Concepts/chat-assistant-concepts/5.6 Pro/styles.css and pmx-system.css), so both concepts render the same face.
+   Weights and styles follow what the CSS computes to: Inter is variable (the UI asks for in-between weights such as
+   560, 650 and 760); Poppins and Plex add italic 400/600 for the muted notes and thought streams; Poppins adds 800
+   so 750-800 do not snap down to 700. Plex Mono has no 800; its 700 is the heaviest cut.
+   Nunito is Friendly's named fallback, embedded because Plans/FinalGUISpec.md F3-430 bundles it with the theme faces;
+   it covers the same Latin set as Poppins, so it only draws if Poppins fails to load.
+   Not embedded: Orbitron and Rajdhani (the :root defaults every look overrides, so no text computes to them) and
+   JetBrains Mono (behind IBM Plex Mono with the same Latin coverage; its file is already here as "PM NieR Mono").
+   Roboto, Segoe UI, SF Pro/SF Mono, Menlo, Consolas, Monaco, Cascadia Mono, ui-monospace and system-ui are platform
+   stacks, left to the machine on purpose. The symbols no face here carries (arrows, check marks, box lines and the
+   like) are PM Symbols, in 03-symbols.css. */
+
+/* Inter: SIL Open Font License 1.1 (src/fonts/OFL-Inter.txt). Variable, wght 100-900. */
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap; src: url("o55font:inter-latin-100-900-normal.woff2") format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: italic; font-weight: 100 900; font-display: swap; src: url("o55font:inter-latin-100-900-italic.woff2") format('woff2'); }
+
+/* Poppins: SIL Open Font License 1.1 (src/fonts/OFL-Poppins.txt). Static cuts. */
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 400; font-display: swap; src: url("o55font:poppins-latin-400-normal.woff2") format('woff2'); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 500; font-display: swap; src: url("o55font:poppins-latin-500-normal.woff2") format('woff2'); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 600; font-display: swap; src: url("o55font:poppins-latin-600-normal.woff2") format('woff2'); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 700; font-display: swap; src: url("o55font:poppins-latin-700-normal.woff2") format('woff2'); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 800; font-display: swap; src: url("o55font:poppins-latin-800-normal.woff2") format('woff2'); }
+@font-face { font-family: 'Poppins'; font-style: italic; font-weight: 400; font-display: swap; src: url("o55font:poppins-latin-400-italic.woff2") format('woff2'); }
+@font-face { font-family: 'Poppins'; font-style: italic; font-weight: 600; font-display: swap; src: url("o55font:poppins-latin-600-italic.woff2") format('woff2'); }
+
+/* Nunito: SIL Open Font License 1.1 (src/fonts/OFL-Nunito.txt). Variable, wght 200-1000. */
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 200 1000; font-display: swap; src: url("o55font:nunito-latin-200-1000-normal.woff2") format('woff2'); }
+
+/* IBM Plex Mono: SIL Open Font License 1.1 (src/fonts/OFL-IBMPlexMono.txt). Static cuts; the unicode-range is 5.6 Pro's. */
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url("o55font:ibm-plex-mono-latin-400-normal.woff2") format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url("o55font:ibm-plex-mono-latin-500-normal.woff2") format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url("o55font:ibm-plex-mono-latin-600-normal.woff2") format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 700; font-display: swap; src: url("o55font:ibm-plex-mono-latin-700-normal.woff2") format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'IBM Plex Mono'; font-style: italic; font-weight: 400; font-display: swap; src: url("o55font:ibm-plex-mono-latin-400-italic.woff2") format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'IBM Plex Mono'; font-style: italic; font-weight: 600; font-display: swap; src: url("o55font:ibm-plex-mono-latin-600-italic.woff2") format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+/* "Georgia" is Gelasio: SIL Open Font License 1.1 (src/fonts/OFL-Gelasio.txt). Georgia itself is proprietary and
+   cannot be embedded; Gelasio is drawn to Georgia's metrics. Declared under the name the base page asks for
+   (font-family:Georgia,serif), so every machine renders the same face, including ones with Georgia installed. Only the
+   bold italic cut is used. */
+@font-face { font-family: 'Georgia'; font-style: italic; font-weight: 700; font-display: swap; src: url("o55font:gelasio-latin-700-italic.woff2") format('woff2'); }

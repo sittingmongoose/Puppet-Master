@@ -2667,8 +2667,8 @@ status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   The wand modules' presentation grammar has exactly one GUI owner, FinalGUISpec F3-566 with
-  F3-567 through F3-577, F3-592, F3-594 and F3-595: the configuration sheet anatomy, sizes and yield
-  rules, the plate and the cast plate, kind marks and the agent puppets (one puppet primitive draws
+  F3-567 through F3-577, F3-592, F3-594, F3-595, F3-601 and F3-602: the configuration sheet anatomy, sizes and yield
+  rules, the plate and the cast plate (its floor and wrap, with the shared parts DR-045 names), kind marks and the agent puppets (one puppet primitive draws
   every agent everywhere, DL-149), run card budgets and width tiers, the one-line receipt, the dock, the one-line
   reply traces and the run view as an editor document (ACD-480). Every implementation builds these
   from one shared set of primitives; a module owner supplies content only and never forks or
@@ -2720,3 +2720,366 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/assistant-chat-design.md#ACD-469, ContractName:Plans/Executor_Protocol.md#EP-128
+
+## Concept web fonts share one set of files — 2026-10-09
+
+PMConcept7 and the 5.6 Pro chat concept embed the same theme web fonts; this rule keeps them from forking the files.
+
+### DR-050 - Concept Web Fonts Share One Set Of Files
+
+```yaml
+plan_unit_id: DR-050
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: >-
+  The concepts' embedded copies of the theme web fonts are one set of files. Every face the 5.6 Pro chat
+  concept embeds (Inter, Poppins and IBM Plex Mono, in Concepts/chat-assistant-concepts/5.6 Pro/styles.css and
+  pmx-system.css) is carried byte for byte by PMConcept7's Concepts/onboarding/opus-5.5/src/fonts, whose
+  SOURCE.md lists each file's source and SHA-256. A concept that adds or changes a shared face changes it for
+  both, and Concepts/onboarding/opus-5.5/tools/build.py --check fails while a face 5.6 Pro embeds is missing
+  from src/fonts byte for byte. Which faces each theme family uses stays F3-430's; this rule only fixes that the
+  concepts do not keep two versions of the same face.
+gui_related: true
+gui_classification_reason: "Keeps the concepts' theme faces identical so both concepts draw the same letters."
+split_recommended: false
+depends_on: [F3-430, DL-161]
+unblocks: []
+acceptance_criteria:
+  - "Each face 5.6 Pro embeds decodes to a file in Concepts/onboarding/opus-5.5/src/fonts with the same SHA-256."
+  - "build.py --check reports a missing or changed shared face as a failure."
+validation_surfaces:
+  - python3 Concepts/onboarding/opus-5.5/tools/build.py --check
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: duplicate_presentation_authority
+reasoning_tier: standard
+context_scope: concept_web_fonts
+implementation_surfaces:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: exact_key_static_dry_gate_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4"
+  - "Plans/Decision_Log.md#DL-161"
+preserved_exact_tokens:
+  - "F3-430"
+  - "SOURCE.md"
+  - "byte for byte"
+negative_constraints:
+  - "Do not give one concept its own version of a face the other already embeds."
+  - "Do not restate which theme family uses which face here; F3-430 owns that."
+owner_hints:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-430, ContractName:Plans/Decision_Log.md#DL-161
+
+### DR-045 - One Plate Fit Rule, One Cast Grammar With Its Wrap, One Track
+
+```yaml
+plan_unit_id: DR-045
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: >-
+  How a drawing keeps its place as the rows beside it grow is one shared mechanism, not a fix per sheet (DL-154).
+  Every plate slot in a wand-module sheet (the four collaboration kinds' cast plates, Scheduling's plates, Back Seat
+  Driver's cue plate) is fitted by one rule: the richest mode that fits at scale 1, never past the slot's floor, the
+  leanest drawing that fits the slot's width, with the caption only for a slot no drawing fits (F3-601). Every
+  collaboration graph, in a setup sheet and at the head of a run view, is drawn by the one cast grammar of F3-595,
+  whose wrap mode is the only way a team too wide for one row is drawn; a kind describes its cast and its mode list and
+  never draws its own wrapped or scrolling variant. Every run card's and preview's stop track is the one track
+  primitive, whose wrapping of eight or more stops (F3-602) serves every kind; a kind supplies its stops and never caps
+  or restyles the track itself. The roster's own overflow (its lean steps, then its scroll with the fade) stays the
+  one roster rule of F3-566. DR-044's single owner of the wand grammar stands; this rule names the shared parts the
+  owner's growth behaviour lives in.
+gui_related: true
+gui_classification_reason: "Fixes one shared mechanism for plates, cast graphs and tracks that must stay in view as rows grow."
+split_recommended: false
+depends_on: [DR-044, DL-154, F3-566, F3-595]
+unblocks: [F3-601, F3-602]
+acceptance_criteria:
+  - "No sheet, kind or run view carries its own plate fitting, wrapped cast drawing or track wrapping."
+  - "No kind caps the number of stops on its track below its own limit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: duplicate_presentation_authority
+reasoning_tier: high
+context_scope: wand_modules_gui
+implementation_surfaces:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: exact_key_static_dry_gate_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-154"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-popup-graphs-20261009/JARED_REQUEST.md, SHA-256 46723a8829ea87fc5e01a261d81e92e32f3f1bc2e8a428af6704b1e3a91229e2"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/module-shell.js pmxPlateFit, pmxCastFit and pmxTrack and pmx-system.js fitPlates (concept lineage only)"
+preserved_exact_tokens:
+  - "DR-044"
+  - "F3-595"
+  - "one track primitive"
+negative_constraints:
+  - "Do not give a sheet or a kind its own plate fitting, wrapped graph or track wrapping."
+  - "Do not cap a track's stops in a kind below that kind's own limit."
+owner_hints:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/DRY_Rules.md#DR-044, ContractName:Plans/Decision_Log.md#DL-154, ContractName:Plans/FinalGUISpec.md#F3-601, ContractName:Plans/FinalGUISpec.md#F3-602, ContractName:Plans/FinalGUISpec.md#F3-595
+
+## Plan action row single shared row — 2026-10-09
+
+The Plan card's footer had drifted from the other cards' actions: its Build control was shorter, with smaller type, than the buttons beside it, and the footer drew a tinted band of its own. DL-156 fixes the layout; this rule keeps every Plan surface on the one shared row.
+
+### DR-047 - Plan Actions Use The One Shared Action Row
+
+```yaml
+plan_unit_id: DR-047
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: >-
+  Every Plan surface that shows actions draws them with the one action row the wand modules use (F3-566 J-2): the
+  transcript Plan card, the editor's sticky footer and its More row, the compact Completed or Canceled card, a
+  Building plan's attention actions, the schedule line's decision and the Build-started receipt. The Build control is
+  a boxed primary inside that row, not a control with sizes of its own, and the row's spacing rule treats it as one
+  (F3-606). A Plan surface supplies its controls and their order only; it never restates the row's height, type,
+  padding or gaps, and it never adds a band, inset or one-off button style. A wait or attention line beside the
+  actions uses the same mark column as the schedule line (F3-607). The labels, statuses and eligibility stay with
+  Assistant_Plan_Runtime and the schedule line's words with SQR-015.
+gui_related: true
+gui_classification_reason: "Keeps one action-row grammar for every Plan surface."
+split_recommended: false
+depends_on: [DR-044, F3-566, DL-156]
+unblocks: [F3-606]
+acceptance_criteria:
+  - "No Plan surface defines its own button height, type size, padding or gap for its actions."
+  - "The Build control's size comes from the shared row, and the row's spacing treats it as a boxed primary."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: duplicate_presentation_authority
+reasoning_tier: medium
+context_scope: chat_plan_card_actions_20261009
+implementation_surfaces:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: exact_key_static_dry_gate_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-156"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-20261009/JARED_REQUEST.md, SHA-256 4454066fa6584209b779ebf33441037b484f09f452599fcbef3477383782a93d"
+preserved_exact_tokens:
+  - "F3-566"
+  - "F3-606"
+  - "action row"
+negative_constraints:
+  - "Do not give a Plan surface its own action sizes or a tinted footer band."
+owner_hints:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/DRY_Rules.md#DR-044, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/FinalGUISpec.md#F3-606, ContractName:Plans/FinalGUISpec.md#F3-607
+
+## 5.6 Pro chat round single owners — 2026-10-09
+
+The 5.6 Pro chat round (DL-140 to DL-151) introduced shared presentation pieces that must live in one place each: the neon icon registry, the status set, and the transcript renderer that the subagent live transcript reuses. DR-044 already covers the agent puppets and the cast plate.
+
+### DR-051 - One Icon Registry And One Status Set For The Assistant Chat
+
+```yaml
+plan_unit_id: DR-051
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: >-
+  Every icon in the assistant chat is drawn from one icon registry with one drawing per concept (FinalGUISpec F3-584,
+  DL-140), and every status is drawn from one set of 13 status marks (F3-585, DL-141). The transcript, the composer,
+  thread history, the chat header, the activity bar and Activity Detail, the working activity, menus, wand sheets and
+  module cards draw through them; no surface keeps its own icon table or status glyphs, and a module mark primitive
+  draws the registry's glyphs rather than its own. Roles (control, status, concept), acts, tones and the per-family
+  motion voices are the registry's, not a surface's. Theme families and NieR Mode restyle the registry's drawings and
+  never fork them; the capabilities wand's colours (F3-588) are the registry's one recorded exception. Provider marks,
+  agent puppets (DR-044, F3-594), charts and illustrations are not icons and have their own owners. The composer's
+  Send and Stop is one control with one owner (F3-587), never a per-surface variant.
+gui_related: true
+gui_classification_reason: "Fixes one owner each for the chat's icons and its status marks."
+split_recommended: false
+depends_on: [DR-043, DR-044, F3-584, F3-585, F3-587]
+unblocks: []
+acceptance_criteria:
+  - "No chat surface or module defines an icon table or a status glyph of its own."
+  - "A theme family or NieR Mode changes how a registry glyph is drawn, never which drawing names a concept."
+  - "Status marks in thread rows, the chat header, the activity bar, To-Dos, plan steps and module cards come from the one set."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: duplicate_presentation_authority
+reasoning_tier: high
+context_scope: chat_tweaks_20261007
+implementation_surfaces:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: exact_key_static_dry_gate_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-140"
+  - "Plans/Decision_Log.md#DL-141"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md, Neon icon family (concept lineage only)"
+preserved_exact_tokens:
+  - "F3-584"
+  - "F3-585"
+  - "one drawing per concept"
+negative_constraints:
+  - "Do not add a surface-local icon table or status glyph."
+  - "Do not fork a registry drawing per theme family or for NieR Mode."
+owner_hints:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-584, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/FinalGUISpec.md#F3-587, ContractName:Plans/DRY_Rules.md#DR-044
+
+### DR-052 - One Transcript Renderer For The Chat And Its Read-Only Child Transcripts
+
+```yaml
+plan_unit_id: DR-052
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: >-
+  The subagent live transcript (assistant-chat-design ACD-485, FinalGUISpec F3-593) is drawn by the chat's one
+  transcript renderer: the turn mark, the spine, the eight families of ACD-469 and the theme's motion voice (ACD-475)
+  are the chat's, not a copy. The live transcript differs only by what the renderer is given: a read-only mount with
+  no composer and no mutation control, its own root and view resources (UIW-031), and the child run's records. Its
+  stretch rows reuse the working activity's Step Rail (ACD-473) rather than a second rail, and its status words come
+  from the child-run status projection (ACD-485). Neither the chat nor the live transcript restates the family map, the
+  accent budget or EP-128's vocabulary (DR-043).
+gui_related: true
+gui_classification_reason: "Keeps the subagent live transcript on the chat's renderer instead of a forked transcript."
+split_recommended: false
+depends_on: [DR-043, ACD-469, ACD-473, ACD-485]
+unblocks: []
+acceptance_criteria:
+  - "No second transcript renderer, family map or Step Rail exists for the subagent live transcript."
+  - "The live transcript's mount has its own root and binds none of the chat's view resources."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: duplicate_presentation_authority
+reasoning_tier: high
+context_scope: chat_tweaks_20261007
+implementation_surfaces:
+  - Plans/DRY_Rules.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: exact_key_static_dry_gate_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-147"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md, Transcript turns: Subagent live transcripts (concept lineage only)"
+preserved_exact_tokens:
+  - "ACD-485"
+  - "Step Rail"
+negative_constraints:
+  - "Do not fork the transcript renderer or the Step Rail for a child transcript."
+owner_hints:
+  - Plans/DRY_Rules.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-485, ContractName:Plans/assistant-chat-design.md#ACD-469, ContractName:Plans/assistant-chat-design.md#ACD-473, ContractName:Plans/DRY_Rules.md#DR-043
+
+## NieR Mode editor, reboot plate, look store and onboarding hero moments single owners — 2026-10-09
+
+DL-152 reaches NieR Mode from four places and DL-153 gives onboarding's hero moments five styles and the first paint the stored look. Each of these must exist once, so the four places and the five styles never grow copies of their own.
+
+### DR-056 - One NieR Mode Editor, One Reboot Plate, One Look Store And One Set Of Hero Moments
+
+```yaml
+plan_unit_id: DR-056
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: >-
+  NieR Mode has exactly one editor, SSYS-043's row editor titled NieR Mode, reached from the Settings row Customize
+  NieR Mode, the title-bar theme selector, the Guided Tour bar's Look menu and the onboarding look choice and its Look
+  menu, and drawn either as a popup dialog over the application or as a panel inside the onboarding window. It reads
+  and writes only through a store: live, the current Project's Settings through cmd.settings.transaction.preview then
+  cmd.settings.transaction.apply; inside the onboarding window, the onboarding preview through
+  ui.onboarding.choose_look, written with the Project at commit (DL-153). Its open, close and replay are
+  ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay, and inside the
+  onboarding window ui.onboarding.choose_look opens and closes the panel. No surface keeps a second editor or its own
+  preset, part or background list. Every NieR Mode on or off, from Settings, the title bar, the Tour or the onboarding
+  window, plays the one reboot plate and its slat transition (F3-598); no surface draws a plate of its own. The look
+  has one store, the current Project's Settings (SSYS-010): the first paint only reads it (F3-468), and no app-global,
+  cross-Project or local-storage theme copy or paint hint exists. Onboarding's hero moments (the wake, the act card
+  and the curtain call) have one trigger, one end state, one snap to that end state and one sound path through the
+  Notifications & Sounds owner's player (DR-043); their five styles, NieR's (F3-598) and the four families' (F3-600),
+  differ in presentation only.
+gui_related: true
+gui_classification_reason: "Fixes single owners for the NieR Mode editor, the reboot plate, the look store and onboarding's hero moments."
+split_recommended: false
+depends_on: [SSYS-043, SSYS-010, F3-468, F3-598, F3-600, DL-152, DL-153, DR-043]
+unblocks: []
+acceptance_criteria:
+  - "The Settings row, the title-bar theme selector, the Tour bar's Look menu and the onboarding look choice open the same NieR Mode editor; no second editor, preset list, part list or background list exists."
+  - "The editor writes only through the live Settings transaction pair or, inside the onboarding window, through ui.onboarding.choose_look's preview, never through a store of its own."
+  - "Every NieR Mode on or off plays the one reboot plate and slat transition, wherever it is turned."
+  - "The theme and NieR rows are stored only in the current Project's Settings; the first paint reads them and keeps no app-global, cross-Project or local-storage copy or hint."
+  - "The five styles of the wake, the act card and the curtain call share one trigger, end state, snap and sound path and differ in presentation only."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-touch-closure-verify.py
+risk_class: duplicate_presentation_authority
+reasoning_tier: high
+context_scope: nier_onboarding_tour
+implementation_surfaces:
+  - Plans/DRY_Rules.md
+  - Plans/Settings_System.md
+  - Plans/FinalGUISpec.md
+  - Plans/Planning_Wizard.md
+node_compile_hint:
+  mode: exact_key_static_dry_gate_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-152"
+  - "Plans/Decision_Log.md#DL-153"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-next-20261009/JARED-REQUEST-20261009.md, SHA-256 5d4f5b2aa55364c55fb022e4624657b5185e5ea5b316b6108b880dde51a98e48"
+preserved_exact_tokens:
+  - "NieR Mode"
+  - "Customize NieR Mode"
+  - "ui.settings.nier_editor.open"
+  - "ui.settings.nier_editor.close"
+  - "ui.settings.nier_editor.replay"
+  - "ui.onboarding.choose_look"
+negative_constraints:
+  - "Do not build a second NieR Mode editor, preset list, part list or background list for any surface."
+  - "Do not draw a reboot plate or transition of a surface's own."
+  - "Do not keep a theme copy or paint hint outside the current Project's Settings."
+  - "Do not give one family's hero moments a trigger, end state, snap or sound path of their own."
+owner_hints:
+  - Plans/DRY_Rules.md
+  - Plans/Settings_System.md
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-043, ContractName:Plans/Settings_System.md#SSYS-010, ContractName:Plans/FinalGUISpec.md#F3-468, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-600, ContractName:Plans/Decision_Log.md#DL-152, ContractName:Plans/Decision_Log.md#DL-153, ContractName:Plans/DRY_Rules.md#DR-043

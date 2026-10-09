@@ -1345,8 +1345,10 @@ The Plan card's schedule line is secondary information beside the Build control;
 the next occurrence with a thin night ribbon (the slot, a now tick and the step progress); during an open slot
 it reads "Building now" with the wrap-up time. Every other state leads with its canon token: `Outside execution
 window` with when it continues, `Paused` for a build the user paused, `Waiting for Usage` with the reset time and
-its reset truth (no countdown when the reset is unknown), and `Schedule needs update` for an invalidated schedule,
-with Use V<n> and Cancel schedule. The line never replaces the Build control's `Building…`, and `Scheduled` is
+its reset truth (no countdown when the reset is unknown), and `Schedule needs update` for a schedule a revision
+invalidated, with Use V<n> and Cancel schedule. A schedule invalidated with no newer version to rebind to (Build ran
+the bound version now, or the bound execution ended) leads with `Schedule ended` and says why ("you started this build
+now, so the schedule won't start a second one."), with no Use V<n> (DL-156). Its layout is FinalGUISpec F3-607. The line never replaces the Build control's `Building…`, and `Scheduled` is
 never a primary Plan status (PSCHED-011).
 
 ```yaml
@@ -1363,8 +1365,9 @@ canonical_text: >-
   Technical details on the sheet (DL-148). The Plan card schedule line is secondary information whose placement
   is Assistant Plan Runtime's and whose content is this owner's: cadence, slot, next occurrence and a night
   ribbon before a run, Building now with the wrap-up time during a slot, and otherwise a lead canon token of
-  Outside execution window, Paused, Waiting for Usage (with reset truth, no countdown when unknown) or Schedule
-  needs update with Use V<n> and Cancel schedule. It never replaces the Build control's Building… and Scheduled
+  Outside execution window, Paused, Waiting for Usage (with reset truth, no countdown when unknown), Schedule
+  needs update with Use V<n> and Cancel schedule for a schedule a revision invalidated, or Schedule ended, with no
+  Use V<n>, for a schedule invalidated with no newer version to rebind to (DL-156); its layout is F3-607. It never replaces the Build control's Building… and Scheduled
   is never a primary Plan status.
 gui_related: true
 gui_classification_reason: Defines the Build At sheet's recorded values and the Plan card schedule line's states.
@@ -1373,7 +1376,8 @@ unblocks: [SQR-016, SQR-018]
 acceptance_criteria:
   - "Every value shown on the Build At sheet, including the grace minutes, equals the value recorded on the schedule."
   - "The chosen grace_seconds survives restart in pm.execution.schedule.v2; a v1 read uses the previously effective default."
-  - "Each secondary state of the schedule line begins with Outside execution window, Paused, Waiting for Usage or Schedule needs update."
+  - "Each secondary state of the schedule line begins with Outside execution window, Paused, Waiting for Usage, Schedule needs update or Schedule ended."
+  - "A schedule invalidated with no newer version never offers Use V<n>."
   - "The Build control keeps Building… while the schedule line shows any secondary state."
   - "An unknown reset renders no countdown on the schedule line."
 validation_surfaces:
@@ -1394,11 +1398,13 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.8 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-06 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
   - "Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 7"
+  - "Plans/Decision_Log.md#DL-156 (Schedule ended, 2026-10-09)"
 preserved_exact_tokens:
   - "Outside execution window"
   - "Waiting for Usage"
   - "Paused"
   - "Schedule needs update"
+  - "Schedule ended"
   - "pm.execution.schedule.v2"
   - "Building…"
   - "grace_seconds"

@@ -23,7 +23,7 @@
       if (what === 'toggle') return render(el, b.getAttribute('aria-expanded') !== 'true');
       if (what === 'scenario') { O55.store.set('scenario', b.getAttribute('data-arg')); O55.S.env = O55.fixtures.make(b.getAttribute('data-arg')); O55.owners.resetOps(); O55.motion.setLowResource(!!O55.S.env.lowResource, 'scenario'); render(el, false); return O55.ui.open({ fresh: true }); }
       if (what === 'restart') { render(el, false); O55.owners.resetOps(); return O55.ui.open({ fresh: true }); }
-      if (what === 'reset') { O55.store.clear('onboarding'); O55.store.clear('tour'); O55.store.set('scenario', 'fresh'); O55.S.env = O55.fixtures.make('fresh'); O55.owners.resetOps(); render(el, false); return O55.ui.open({ fresh: true }); }
+      if (what === 'reset') { O55.store.clear('onboarding'); O55.store.clear('tour'); O55.store.set('scenario', 'fresh'); O55.S.env = O55.fixtures.make('fresh'); O55.owners.resetOps(); render(el, false); return O55.ui.open({ fresh: true, install: true }); }
     });
     ['keydown', 'keyup', 'keypress'].forEach((ev) => el.addEventListener(ev, (e) => { e.stopPropagation(); if (e.type === 'keydown' && e.key === 'Escape') render(el, false); }));
   }

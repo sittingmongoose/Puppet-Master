@@ -10,4 +10,4 @@
 .transcript{scroll-padding-bottom:calc(var(--thread-float-h,44px) + 28px)}
 .transcript button,.transcript a,.transcript summary{scroll-margin-bottom:calc(var(--thread-float-h,44px) + 28px)}
 
-.pd-compact-actions{grid-column:2;display:flex;gap:8px;flex-wrap:wrap;min-width:0}.pd-compact-actions>*{max-width:100%}
+.pd-compact-actions{grid-column:2;min-width:0}.pd-compact-actions>*{max-width:100%}

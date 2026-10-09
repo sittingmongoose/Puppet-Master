@@ -181,12 +181,13 @@ Goal is a per-thread Activity domain. It is not a transcript card, it does not s
 The Activity-bar item appears only for the current thread and only when an active or retained Goal record exists. Its hover preview is interactive rather than a passive tooltip:
 
 ```text
-Goal · Running
+Goal · Running · Revision n
 <two-line objective preview>
-[Pause] [Cancel] [edit icon]
+[Pause] [Edit objective]          [Cancel Goal]
+Objective history ▾  (n revisions)
 ```
 
-`Paused` and `Blocked` states substitute `Resume` for `Pause`, and render `Resume` disabled with the owner-supplied reason when the Goal is blocked and the condition has not cleared. The edit icon opens Goal Activity Detail already in edit mode with the objective textarea focused. Clicking the Activity item itself opens the ordinary detail view. No separate `Open` button is required.
+The preview draws the same compact Goal projection as Goal Activity Detail below, with the bound Plan row when the Goal is bound and no Details button (DL-147, FinalGUISpec F3-593, amended 2026-10-09). `Paused` and `Blocked` states substitute `Resume` for `Pause`, and render `Resume` disabled with the owner-supplied reason when the Goal is blocked and the condition has not cleared. Edit objective opens Goal Activity Detail already in edit mode with the objective textarea focused. Clicking the Activity item itself opens the ordinary detail view. No separate `Open` button is required.
 
 Goal Activity Detail contains the objective, one lifecycle control row and the objective history (DL-147, FinalGUISpec F3-593):
 

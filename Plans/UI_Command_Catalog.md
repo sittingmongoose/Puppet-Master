@@ -7701,13 +7701,16 @@ status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
   UCC-106 retains eleven historical cmd.onboarding.* identifiers as searchable command-era source lineage only; none is
-  a current command, alias, primary handler, or production-wiring row. Current Product Onboarding uses exactly thirteen typed
+  a current command, alias, primary handler, or production-wiring row. Current Product Onboarding uses exactly fourteen typed
   owner-local actions ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close,
   ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways,
   ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow,
-  ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, and ui.onboarding.finish. These are local
+  ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, and
+  ui.onboarding.choose_look. These are local
   UI actions, not semantic commands or catalog registrations, and use the closed pm.product_onboarding.action_request.v2
-  and pm.product_onboarding.action_result.v2 contracts. Every request consumes PWIZ-021's closed, normalized, secret-free
+  and pm.product_onboarding.action_result.v2 contracts. ui.onboarding.choose_look (DL-153) is a local look preview,
+  and so is the look ui.onboarding.start opens in (Basic Dark for first_run, the look on screen for settings_rerun):
+  neither dispatches cmd.theme.* or a Settings transaction, and the look is written with the Project at commit. Every request consumes PWIZ-021's closed, normalized, secret-free
   local_context, including phase-specific draft/preflight/commit bindings as defined by the owner schema;
   arbitrary/raw payload fields and secret-bearing values are rejected. An action that launches owner work carries a typed owner
   route or intent and maps to that owner's existing canonical command and sole handler. The command-era reference to
@@ -7722,7 +7725,8 @@ depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, UCC-102, CS-053]
 unblocks: []
 acceptance_criteria:
   - The eleven retained cmd.onboarding.* tokens are searchable source lineage only and receive no command registration, alias, primary handler, or production-wiring row.
-  - Every current Product Onboarding control emits exactly one of the thirteen ui.onboarding.* typed local action IDs owned by PWIZ-021 through PWIZ-023.
+  - Every current Product Onboarding control emits exactly one of the fourteen ui.onboarding.* typed local action IDs owned by PWIZ-021 through PWIZ-023.
+  - The onboarding look choice, its NieR Mode controls and its start look are local previews through ui.onboarding.choose_look and ui.onboarding.start; neither dispatches cmd.theme.* or a Settings transaction (DL-153).
   - The eight packet candidate cmd.onboarding.* tokens are durably rejected as commands, aliases, primary handlers, and production-wiring rows; they do not normalize to the typed local action set.
   - Defer durably preserves exact stage, path, active branch, bounded history, revision/continuation, initiating Client, and focus return; Close is a non-completion dismissal; Skip records an explicit skipped session; Details is ephemeral, same-stage, non-persistent, and owner-command-free.
   - OnboardingActionRequest/OnboardingActionResult close the request/result vocabulary. Applied, disabled, and rejected results are distinct; disabled/rejected results have no local effect, session write, continuation, owner route, or production receipt and expose exact reasons.
@@ -7793,6 +7797,7 @@ preserved_exact_tokens:
   - "ui.onboarding.run_automatic_preparation"
   - "ui.onboarding.choose_first_project"
   - "ui.onboarding.finish"
+  - "ui.onboarding.choose_look"
   - "local_context"
   - "skip_product_onboarding"
   - "skip_optional_scope"
@@ -8114,7 +8119,7 @@ Every command in this addendum consumes the closed v2 `UICommandResponse` in `Pl
 
 The following former rows are preserved verbatim enough for search, audit, and one-time migration lineage.
 They are not members of the active GUI command table above, are not aliases, and receive no primary handler
-or production-wiring row. Current Product Onboarding uses the thirteen typed local `ui.onboarding.*` actions
+or production-wiring row. Current Product Onboarding uses the fourteen typed local `ui.onboarding.*` actions
 enumerated by UCC-106 and routes owner work to the target owner's existing canonical command.
 
 | Historical token | Retained command-era payload/result/error/effect lineage | Current disposition |
@@ -8162,7 +8167,14 @@ canonical_text: >-
   contracts with field-level payload, result, error, and receipt/event requirements.
   Existing FileManager CRUD, launch-chain, and runtime allowed-action rows remain
   canonical and are strengthened by the shared UICommandResponse and no fabricated
-  command_applied event rule.
+  command_applied event rule. In the cmd.theme.* family the title bar's Light/Dark/Auto
+  segmented control dispatches cmd.theme.set_mode, while its family rows and NieR Mode
+  checkbox, the Guided Tour bar's Look menu and the NieR Mode editor compose
+  cmd.settings.transaction.preview then cmd.settings.transaction.apply as UCC-120's
+  local affordances do; no theme family or NieR command is added. The application's start
+  and onboarding's look previews (ui.onboarding.start, ui.onboarding.choose_look) dispatch
+  no cmd.theme.* and emit no settings.theme.updated: the pre-paint reads the stored theme
+  of the Project the application opens on (F3-468, DL-153).
 gui_related: true
 gui_classification_reason: Defines user-visible GUI command families, command payloads, responses, disabled states, and receipts.
 depends_on: [UCC-089, UCC-097]
@@ -8173,6 +8185,7 @@ acceptance_criteria:
   - Runtime allowed_action_ids map only to canonical `cmd.runtime.*` commands.
   - FileManager CRUD commands are not duplicated; existing rows remain canonical and gain the shared response/receipt acceptance bar.
   - No command in this addendum uses or authorizes fabricated `*.command_applied` events.
+  - Only the title bar's Light/Dark/Auto control dispatches a cmd.theme.* command for the look; family, NieR Mode and NieR editor changes use the Settings transaction pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.theme.updated (F3-468, DL-153).
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-plan-index.py validate
@@ -8224,7 +8237,7 @@ owner_hints:
 
 This addendum repairs non-runtime UI command catalog rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
-- Repairs `sfk-ddc264cdea296caf349adecd`: active semantic-command rows UCC-049 through UCC-105 inherit the strict schema overlay below. Each active row exposes `command_id`, `payload_required`, `payload_optional`, `result_fields`, `error_codes`, `disabled_reason_codes`, and `owner_doc_ref` either through a concrete current `cmd.*` token in its preserved tokens or through the owner-referenced family schema named in the overlay. Rows with prose-only or slash-token source lineage are implementation-ready only through that owner reference, not as free-form handler text. UCC-106 is now an explicit lineage exclusion: its eleven retained `cmd.onboarding.*` command-era tokens are not active commands or aliases; its separate eight packet candidates are rejected as commands, aliases, and handlers; and its current thirteen `ui.onboarding.*` tokens are typed local UI actions rather than command-schema rows.
+- Repairs `sfk-ddc264cdea296caf349adecd`: active semantic-command rows UCC-049 through UCC-105 inherit the strict schema overlay below. Each active row exposes `command_id`, `payload_required`, `payload_optional`, `result_fields`, `error_codes`, `disabled_reason_codes`, and `owner_doc_ref` either through a concrete current `cmd.*` token in its preserved tokens or through the owner-referenced family schema named in the overlay. Rows with prose-only or slash-token source lineage are implementation-ready only through that owner reference, not as free-form handler text. UCC-106 is now an explicit lineage exclusion: its eleven retained `cmd.onboarding.*` command-era tokens are not active commands or aliases; its separate eight packet candidates are rejected as commands, aliases, and handlers; and its current fourteen `ui.onboarding.*` tokens (`ui.onboarding.choose_look` added by DL-153) are typed local UI actions rather than command-schema rows.
 - Repairs `sfk-ed92df2325332306b2463b50`: browser production command IDs keep `cmd.browser.share_with_agent` and `cmd.browser.revoke_share_with_agent`; `cmd.browser.run_code`, `cmd.browser.evaluate`, legacy `browser_run_code`, and legacy `browser_evaluate` are compatibility-only diagnostic/page-evaluation lineage, not default production browser commands.
 
 ### UCC-049 through UCC-105 strict schema overlay and UCC-106 lineage exclusion
@@ -8254,7 +8267,7 @@ Common fields for every covered row:
 | `UCC-089` through `UCC-095` | Runtime recovery command family in this catalog. | `run_id`, `blocked_sequence`, `allowed_action_id`, `node_id?`, `attempt_id?`, `safe_point_id?`, `baseline_ref?`, and `permission_carry_ref?`; pre-attempt blocked rows MUST NOT fabricate an `attempt_id`. |
 | `UCC-096` through `UCC-100` | Goal, Planning Wizard, Plan Compile, discovery-routed search, and history wrapper command families in this catalog. | `goal_id?`, `thread_id?`, `planning_session_id?`, `plan_pack_ref?`, `plan_compile_run_id?`, `history_query_ref?`, and `target_identity_ref?` for the concrete command. |
 | `UCC-101` through `UCC-105` | Vision bridge, Teach, notification/sound, DRY settings, and containerized-host command families in this catalog. UCC-103 expressly excludes retired non-alias `cmd.settings.open_notifications`; current Notifications navigation uses `cmd.settings.open`. | `image_ref?`, `teach_session_id?`, `notification_destination_id?`, `sound_asset_id?`, `settings_key?`, `host_capability_ref?`, and `host_profile_id?` for the concrete current command. |
-| `UCC-106` | Product Onboarding is owned by `Plans/Planning_Wizard.md` PWIZ-021 through PWIZ-025. Its eleven command-era `cmd.onboarding.*` identifiers are retained source lineage only, its separate eight packet candidate tokens are rejected as commands/aliases/handlers, and its thirteen `ui.onboarding.*` identifiers are typed owner-local UI actions. | Not applicable: no Onboarding command schema, alias, primary handler, or production-wiring row. Owner-launch actions consume the v2 phase/draft/preflight/Project-commit bindings and target the existing owner's command; local request/result IDs are `pm.product_onboarding.action_request.v2` and `pm.product_onboarding.action_result.v2`. |
+| `UCC-106` | Product Onboarding is owned by `Plans/Planning_Wizard.md` PWIZ-021 through PWIZ-025. Its eleven command-era `cmd.onboarding.*` identifiers are retained source lineage only, its separate eight packet candidate tokens are rejected as commands/aliases/handlers, and its fourteen `ui.onboarding.*` identifiers (`ui.onboarding.choose_look` added by DL-153) are typed owner-local UI actions. | Not applicable: no Onboarding command schema, alias, primary handler, or production-wiring row. Owner-launch actions consume the v2 phase/draft/preflight/Project-commit bindings and target the existing owner's command; local request/result IDs are `pm.product_onboarding.action_request.v2` and `pm.product_onboarding.action_result.v2`. |
 
 Compatibility-only and retired source tokens in these rows remain searchable lineage. They do not become command IDs unless the row's `command_id` rule maps them to a concrete active `cmd.*` value or an explicit `alias_of_command_id`; tokens expressly marked non-alias never normalize or dispatch.
 
@@ -9214,7 +9227,9 @@ canonical_text: >-
   command encodes no bloom-specific geometry. The historical cmd.settings.open_notifications,
   cmd.settings.category.reset, and cmd.settings.suggestion.dismiss spellings are retained only as retired,
   non-alias local-affordance lineage. Notifications navigation emits cmd.settings.open. Category reset and
-  suggestion dismissal each compose cmd.settings.transaction.preview followed by cmd.settings.transaction.apply.
+  suggestion dismissal each compose cmd.settings.transaction.preview followed by cmd.settings.transaction.apply,
+  and so do the live look controls (DL-153): the title-bar theme selector's family rows and NieR Mode checkbox, the
+  Guided Tour bar's Look menu and sound control, and every live edit in the NieR Mode editor (SSYS-043, F3-082).
   The historical spellings receive no primary handler, production-wiring row, or alias. SSYS-023's hash-bound
   80-token disposition registry is transitive catalog input: its canonical targets retain their existing rows, its
   seven typed local actions receive no command rows, and retired or rejected packet spellings remain non-actionable.
@@ -14611,3 +14626,103 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-484, ContractName:Plans/Settings_System.md, ContractName:Plans/Decision_Log.md#DL-126
+
+## 5.6 Pro Chat Round Command Census (2026-10-09)
+
+The 5.6 Pro chat round (DL-140 to DL-151, FinalGUISpec F3-584 to F3-597, F3-616, F3-617 and assistant-chat-design ACD-485) adds no command identity. Every control it adds, moves or retires is a row of this catalog, view state, draft state, a Settings write the Settings owner owns, or a concept demo. Each control's disposition and its surfaces:
+
+| Control | Disposition | Surfaces |
+|---|---|---|
+| Send and Stop chip, and its Queue state (F3-587) | Command, `cmd.chat.send` (with `delivery_mode` `queue` while busy) or `cmd.chat.stop`, exactly one bound at a time (UCC-168, UIW-030). A press with nothing to send dispatches nothing; a press on a full queue dispatches nothing and shows the owner's `queue_full` reason. | `composer` |
+| Goal panel and Goal preview: Pause or Resume; Cancel Goal | Command, `cmd.chat.goal.pause`, `cmd.chat.goal.resume`, `cmd.chat.goal.cancel` (unchanged identities) | `goal_hover`, Goal Activity Detail |
+| Goal preview: Edit objective | Command, `cmd.chat.goal.open_editor` | `goal_hover` only |
+| Goal Activity Detail: Edit objective; Cancel edit; Objective history | View. Edit swaps in the objective editor; Objective history opens the revision list in place. | Goal Activity Detail |
+| Goal Activity Detail: Save | Command, `cmd.chat.goal.update` (unchanged) | Goal Activity Detail |
+| Goal: Revise Plan on a blocked bound Goal | Command, `cmd.chat.plan.request_revision` (unchanged) | Goal Activity Detail, `goal_hover` |
+| Goal: View Goal, Details, Ask for a replacement | No producer. DL-147 retires them; `cmd.chat.goal.propose_update` keeps its agent-proposal producer. | — |
+| To-Do row select and expand; Close details | View | To-Dos Activity Detail |
+| To-Do: Open work | Command, `cmd.chat.todos.open_work`, from the selected item's detail only (DL-147) | `todo_activity` |
+| To-Do: Start work, Run work | No producer. They were concept labels; the To-Do owner registers no user command that changes an item (DL-147). | — |
+| Open a subagent: its Activity Detail row or Open live transcript, a live agents card row, a working-activity satellite, a Child agents row, or another working-activity row naming a child agent (ACD-485) | Command, revised, `cmd.agents.open_thread` with the child run's thread ref. No chat-local subagent open command or alias exists. | `activity_detail_subagents`, `live_agents_card`, `working_activity` |
+| A Subagents preview row | Route into Activity Detail on that agent, the same as every preview row (F3-537); not an opener of the live transcript | `activity_preview` |
+| Subagent live transcript: a stretch row, Expand or Collapse, More details | View | `subagent_feed` |
+| Subagent live transcript: Copy | Command, `cmd.chat.copy_message` (unchanged) | `subagent_feed` |
+| Activity Detail domain tabs (F3-616) | View | Activity Detail |
+| Message More and its panel (F3-591) | View | `message_chrome` |
+| A setup sheet's dropdown trigger, pressed again (F3-568) | View | collaboration and wand sheets |
+| Schedule Message send-time track (F3-592) | Draft (already in the Schedule Message table above) | `schedule_sheet` |
+| Technical details (F3-617) | View on a setup sheet's Advanced page; no producer anywhere else | collaboration sheets, Back Seat Driver sheet |
+| Show raw data on a record | View | message and scheduled-message records, Memory |
+| Hover tags, their press-to-close, and activity preview dwell (F3-590, F3-523) | Presentation, no command (UIW-013) | every chat surface |
+| NieR Mode in the chat (F3-589) | Settings write, owned by the Settings owner (SSYS-043). The concept's Demo Studio Plug-in Chips, presets, background picker and Play reboot moment are concept demos (ACD-474). | Settings |
+
+### UCC-188 - 5.6 Pro Chat Round Command Census And Subagent Open Reuse
+
+```yaml
+plan_unit_id: UCC-188
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  The 5.6 Pro chat round adds no command identity. Send and Stop bind cmd.chat.send (delivery_mode queue while busy)
+  or cmd.chat.stop, exactly one at a time, and a press with nothing to send, or on a full queue, dispatches nothing,
+  the full queue showing queue_full. Goal: Pause, Resume and Cancel Goal keep their identities on the preview and the
+  panel; the preview's Edit objective is cmd.chat.goal.open_editor from goal_hover only, while Edit, Cancel edit and
+  Objective history inside Goal Activity Detail are view state; Save is cmd.chat.goal.update and Revise Plan
+  cmd.chat.plan.request_revision; View Goal, Details and Ask for a replacement have no producer, and
+  cmd.chat.goal.propose_update keeps its agent-proposal producer. To-Dos: Open work is cmd.chat.todos.open_work from
+  the selected detail only, and Start work and Run work have no producer. Every opener of a subagent's read-only live
+  transcript (ACD-485) reuses cmd.agents.open_thread (UCC-129) with the child run's thread ref, never a chat-local
+  alias; a Subagents preview row routes into Activity Detail on that agent (F3-537). Inside the live transcript a
+  stretch row, Expand or Collapse and More details are view state and Copy is cmd.chat.copy_message; nothing in it
+  dispatches a command that changes the child or the parent. Activity Detail's tabs, message More, a dropdown's own
+  trigger, Technical details on a setup sheet's Advanced page and Show raw data are view state; the send-time track
+  is draft state; hover tags are presentation; NieR Mode is a Settings write, and the concept's Demo Studio NieR
+  controls are concept demos.
+gui_related: true
+gui_classification_reason: "Maps every control the 5.6 Pro chat round adds, moves or retires to a catalog row, view, draft, Settings or demo disposition."
+split_recommended: false
+depends_on: [UCC-129, UCC-168, UCC-170, ACD-485, F3-587, F3-593, F3-617]
+unblocks: [WM-073, WM-074, WM-075]
+acceptance_criteria:
+  - "No command identity is added for the round, and no chat-local subagent open command or alias exists."
+  - "Every subagent opener named by ACD-485 dispatches cmd.agents.open_thread, and no Subagents preview row opens the live transcript."
+  - "cmd.chat.goal.open_editor is raised from goal_hover only; Edit inside Goal Activity Detail dispatches nothing."
+  - "cmd.chat.todos.open_work is raised from a To-Do's selected detail and never from a row."
+  - "No control in the subagent live transcript dispatches a command that changes the child or the parent thread."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: chat_command_catalog_gap
+reasoning_tier: high
+context_scope: chat_tweaks_20261007
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: chat_composer_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-143"
+  - "Plans/Decision_Log.md#DL-147"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; data-action open-agent, feed-stretch, goal-* and send in the concept range 7468d1b676 to 1b60a7abab)"
+preserved_exact_tokens:
+  - "cmd.agents.open_thread"
+  - "cmd.chat.goal.open_editor"
+  - "cmd.chat.todos.open_work"
+  - "cmd.chat.copy_message"
+  - "queue_full"
+negative_constraints:
+  - "Do not mint a command for a view-state, draft-state or presentation control of the round."
+  - "Do not add a chat-local command or alias for opening a subagent."
+  - "Do not let a Subagents preview row open the live transcript."
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+```
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-129, ContractName:Plans/UI_Command_Catalog.md#UCC-168, ContractName:Plans/assistant-chat-design.md#ACD-485, ContractName:Plans/FinalGUISpec.md#F3-593, ContractName:Plans/FinalGUISpec.md#F3-617

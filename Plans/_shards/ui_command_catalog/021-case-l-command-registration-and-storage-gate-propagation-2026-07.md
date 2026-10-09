@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8523-L9719
+Source lines: L8536-L9734
 
-Source SHA256: `96296f9a137b515ccb5cae5c4cb35c0f3a73485e35952c0cd9ec86e775083dc5`
+Source SHA256: `7e7a12bc3665362a924617f7c64082425560954817ded9433258a97dec0db260`
 
 ---
 
@@ -702,7 +702,9 @@ canonical_text: >-
   command encodes no bloom-specific geometry. The historical cmd.settings.open_notifications,
   cmd.settings.category.reset, and cmd.settings.suggestion.dismiss spellings are retained only as retired,
   non-alias local-affordance lineage. Notifications navigation emits cmd.settings.open. Category reset and
-  suggestion dismissal each compose cmd.settings.transaction.preview followed by cmd.settings.transaction.apply.
+  suggestion dismissal each compose cmd.settings.transaction.preview followed by cmd.settings.transaction.apply,
+  and so do the live look controls (DL-153): the title-bar theme selector's family rows and NieR Mode checkbox, the
+  Guided Tour bar's Look menu and sound control, and every live edit in the NieR Mode editor (SSYS-043, F3-082).
   The historical spellings receive no primary handler, production-wiring row, or alias. SSYS-023's hash-bound
   80-token disposition registry is transitive catalog input: its canonical targets retain their existing rows, its
   seven typed local actions receive no command rows, and retired or rejected packet spellings remain non-actionable.

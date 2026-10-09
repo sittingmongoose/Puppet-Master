@@ -992,13 +992,16 @@ Product Onboarding remains one bounded modal over the visible, input-blocked app
 nested modal, substitute application frame, or browser-history surface. No browser/route Back or breadcrumb chrome is added;
 the existing typed `ui.onboarding.back` control changes only the modal's bounded stage or owner-branch presentation.
 
-The exact current typed-local action census is thirteen:
+The exact current typed-local action census is fourteen:
 `ui.onboarding.start`, `ui.onboarding.next`, `ui.onboarding.back`, `ui.onboarding.close`, `ui.onboarding.skip`,
 `ui.onboarding.defer`, `ui.onboarding.open_details`, `ui.onboarding.more_ways`,
 `ui.onboarding.choose_simple_path`, `ui.onboarding.open_owner_flow`,
-`ui.onboarding.run_automatic_preparation`, `ui.onboarding.choose_first_project`, and `ui.onboarding.finish`.
+`ui.onboarding.run_automatic_preparation`, `ui.onboarding.choose_first_project`, `ui.onboarding.finish`, and
+`ui.onboarding.choose_look` (DL-153).
 Every actionable control emits exactly one of these IDs. They are not `UICommand`s, catalog aliases, handler names,
-EventRecords, or production-wiring rows.
+EventRecords, or production-wiring rows. The one control inside the modal that emits another typed local action is
+the Play reboot moment of the Settings-owned NieR Mode editor panel, which keeps `ui.settings.nier_editor.replay` and
+writes nothing (`Plans/Settings_System.md#SSYS-043`).
 
 Each action emits one closed `pm.product_onboarding.action_request.v2` and consumes the exact PWIZ-021 owner definition
 for session/stage/currentness, local context, phase-specific command/preflight/commit bindings and focus identity.
@@ -1015,6 +1018,8 @@ activating.
 
 | Typed local action | Required local result boundary |
 |---|---|
+| `ui.onboarding.start` | `source_surface=first_run` (the window opened by itself because no Project exists yet) paints a Basic Dark preview from the first frame, with Basic Dark preselected and NieR Mode unticked, whatever look was shown before; `source_surface=settings_rerun` (Run Onboarding Again) starts in the look on screen, NieR Mode included, preselected. Neither dispatches `cmd.theme.*` nor writes a setting (`Plans/FinalGUISpec.md#F3-520`, DL-153). |
+| `ui.onboarding.choose_look` | `intent=choose_look` (a look tile, or a family and Light/Dark in the Look menu) or `intent=preview_nier` (the NieR Mode checkbox, or a preset, part, background or Turn on in the NieR Mode editor panel) carries a closed `local_context.look_choice` whose only non-null fields are the ones the intent changes, previews that look, and writes the session (the draft's `theme_family` and `theme_mode`, the session's NieR choice) with `local_effect=look_previewed`. `intent=toggle_look_menu` or `toggle_look_editor` opens or closes the header's Look menu or the editor panel with `expanded`, `look_choice=null` and `disclosure_opened` or `disclosure_closed`, writing nothing. It has no owner route or owner command, `production_receipt_ref=null` and `owner_mutation_claimed=false`, and never dispatches `cmd.theme.*` or a Settings transaction; the look is written with the Project at commit (`Plans/FinalGUISpec.md#F3-520`, DL-153). |
 | `ui.onboarding.defer` | Before modal dismissal, durably write one resumable continuation snapshot preserving exact stage, selected path, active branch, bounded history, revision, continuation generation, initiating Client, and return-focus identity. It does not complete or skip the session and claims no owner mutation. |
 | `ui.onboarding.close` | Dismiss the modal and restore initiating focus without marking the session completed, skipped, deferred, or any owner Ready. It does not silently cancel owner work. |
 | `ui.onboarding.skip` | Record the explicit `skipped` session outcome without implying Onboarding-path completion or owner readiness. |
@@ -1039,7 +1044,7 @@ non-completing Close, and ephemeral Details behavior at their declared
 evidence layers. They do not prove a native Slint controller, native Storage binding, dispatcher/handler execution,
 production persistence, runtime behavior, accessibility certification, motion quality, or visual acceptance.
 
-ContractRef: ContractName:Plans/Planning_Wizard.md#PWIZ-021, ContractName:Plans/Planning_Wizard.md#PWIZ-022, ContractName:Plans/UI_Command_Catalog.md#UCC-106, ContractName:Plans/Wiring_Matrix.md#WM-041, SchemaID:pm.product_onboarding.action_request.v2, SchemaID:pm.product_onboarding.action_result.v2
+ContractRef: ContractName:Plans/Planning_Wizard.md#PWIZ-021, ContractName:Plans/Planning_Wizard.md#PWIZ-022, ContractName:Plans/UI_Command_Catalog.md#UCC-106, ContractName:Plans/Wiring_Matrix.md#WM-041, ContractName:Plans/Decision_Log.md#DL-153, ContractName:Plans/FinalGUISpec.md#F3-520, SchemaID:pm.product_onboarding.action_request.v2, SchemaID:pm.product_onboarding.action_result.v2
 
 ### UIW-015 - Product Onboarding typed-local request/result closure
 
@@ -1049,13 +1054,17 @@ unit_type: wiring_contract
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: >-
-  Product Onboarding exposes exactly thirteen typed local ui.onboarding.* actions through the closed action-request and
+  Product Onboarding exposes exactly fourteen typed local ui.onboarding.* actions through the closed action-request and
   action-result envelopes. Every control has one action, accessible availability/disabled behavior, deterministic local
   result and focus return, and an owner route only where the action explicitly launches the existing owner command.
   Every request includes closed normalized secret-free local_context, and more_ways/skip variants are disambiguated by
   exact intent, scope, choice, branch, and result-effect combinations rather than arbitrary control payload.
   Defer durably preserves exact continuation, Close is a non-completion dismissal, Skip records a skipped session, and
-  Details is ephemeral/same-stage/non-persistent/owner-command-free. No cmd.onboarding.* command, alias, handler,
+  Details is ephemeral/same-stage/non-persistent/owner-command-free. ui.onboarding.choose_look (DL-153) previews the
+  look choice, the NieR Mode checkbox, the header's Look menu and the NieR Mode editor panel through a closed
+  look_choice, with no owner route, cmd.theme.* or Settings transaction, the look being written with the Project at
+  commit; ui.onboarding.start opens a first_run window in a Basic Dark preview and a settings_rerun window in the look
+  on screen. No cmd.onboarding.* command, alias, handler,
   EventRecord, production row, full-page route, or breadcrumb chrome is created.
 gui_related: true
 gui_classification_reason: Defines the visible modal controls, activation/result behavior, disabled presentation, focus return, and Details disclosure.
@@ -1063,7 +1072,9 @@ split_recommended: false
 depends_on: [PWIZ-021, PWIZ-022, UCC-106, WM-041, UIW-013]
 unblocks: []
 acceptance_criteria:
-  - The exact action census is the thirteen named ui.onboarding.* IDs, and every authored control carries exactly one typed local action.
+  - The exact action census is the fourteen named ui.onboarding.* IDs, and every authored control carries exactly one typed local action.
+  - ui.onboarding.choose_look's choose_look and preview_nier intents carry a closed look_choice with only the changed fields non-null and write the session with look_previewed; its two toggles carry look_choice null and write nothing; none has an owner route, owner command, cmd.theme.* or Settings transaction (DL-153).
+  - ui.onboarding.start with source_surface first_run paints a Basic Dark preview with Basic Dark preselected and NieR Mode unticked; with settings_rerun it keeps the look on screen preselected; neither writes a setting (F3-520, DL-153).
   - Every request/result validates against pm.product_onboarding.action_request.v2 and pm.product_onboarding.action_result.v2 with closed applied, disabled, and rejected outcomes.
   - local_context consumes PWIZ-021's exact closed v2 owner definition, including required nullable phase/command/preflight/Project-commit bindings and their gated proofs; the wiring rule does not re-own a field list. Missing/additional/arbitrary/raw/secret-bearing context is rejected.
   - UI controls preserve the bounded uncreated draft and Settings-owned copy preview until exact Review commit. Precommit routes require current owner-issued read-only or selected-source-auth admission and actual owner request validation; a route/ref string alone grants nothing. Paid-provider then Free Models setup uses the real committed Project; Close/resume/Back neither undo nor repeat its creation. Consume PWIZ-021, PJCT-007, SSYS-036, MACS-005, and MS-122.
@@ -1082,7 +1093,7 @@ source_lineage:
   - approved current Product Onboarding source/schema reconciliation
   - Plans/Planning_Wizard.md#PWIZ-021
   - Plans/product_onboarding_contracts.schema.json
-preserved_exact_tokens: [ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, pm.product_onboarding.action_request.v2, pm.product_onboarding.action_result.v2, local_context, skip_product_onboarding, skip_optional_scope, toggle_setup_options, update_branch_state, session_skipped, optional_scope_skipped, cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, cmd.onboarding.skip]
+preserved_exact_tokens: [ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, ui.onboarding.choose_look, look_choice, look_previewed, preview_nier, toggle_look_menu, toggle_look_editor, pm.product_onboarding.action_request.v2, pm.product_onboarding.action_result.v2, local_context, skip_product_onboarding, skip_optional_scope, toggle_setup_options, update_branch_state, session_skipped, optional_scope_skipped, cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, cmd.onboarding.skip]
 negative_constraints:
   - Do not register, alias, normalize, wire, or assign handlers to packet candidate cmd.onboarding.* tokens.
   - Do not fabricate an owner mutation, production receipt, EventRecord, or durable write from local Details or a disabled/rejected result.
@@ -1864,3 +1875,121 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/FinalGUISpec.md#F3-568, ContractName:Plans/UI_Command_Catalog.md#UCC-156
+
+## 5.6 Pro chat round wiring — 2026-10-09
+
+### UIW-030 - A Control Slot Whose Command Changes With State Binds One Command At A Time
+
+The composer's Send and Stop chip (FinalGUISpec F3-587) is one control slot that changes what it does with the thread's state: Send, Queue while the assistant is busy and the composer holds text, and Stop while a run is live and the composer is empty. UIW-003's one element, one command holds for it at every instant.
+
+```yaml
+plan_unit_id: UIW-030
+unit_type: wiring_rule
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: >-
+  A control slot whose command changes with state, such as the composer's Send and Stop chip (F3-587), binds exactly
+  one registered command at any instant, chosen from the owners' projections (the run state, the composer buffer and
+  the follow-up queue), never from the control's own animation or a client timer. A press dispatches the command
+  bound when the press began, once. The second and later clicks of one multi-click, counted by the platform's click
+  count and never by a time window, dispatch nothing, so a double-click on Send cannot stop the run it started. A
+  press with nothing to send dispatches nothing, and a press while the follow-up queue is full dispatches nothing and
+  shows the owner's queue_full reason; the refusal motion is presentation. Stop dispatches only cmd.chat.stop: it never
+  dispatches cmd.chat.queue.remove or a queued send, so the queue stays as ACD-471 says. Opening a thread whose run is
+  live binds Stop at once from the run projection, without replaying any send motion. The slot's accessible name and
+  description follow the bound command, and its disabled reason is the bound command's.
+gui_related: true
+gui_classification_reason: "Wires the composer's Send, Queue and Stop chip to one command at a time with exact refusal behaviour."
+split_recommended: false
+depends_on: [UIW-003, UIW-018, UCC-168, ACD-471, F3-587]
+unblocks: [WM-074]
+acceptance_criteria:
+  - "At every instant the Send and Stop chip binds exactly one of cmd.chat.send and cmd.chat.stop, read from the owners' projections."
+  - "A double-click on Send dispatches cmd.chat.send once and never cmd.chat.stop."
+  - "A press with an empty composer and no live run, or on a full queue, dispatches nothing; the full queue announces queue_full."
+  - "Stop leaves every queued entry in place and sends none of them."
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: double_dispatch_or_state_morph_misbind
+reasoning_tier: high
+context_scope: chat_composer_commands
+implementation_surfaces:
+  - Plans/UI_Wiring_Rules.md
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: wiring_rule
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-143"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md, Composer chrome (concept lineage only)"
+preserved_exact_tokens:
+  - "queue_full"
+  - "cmd.chat.send"
+  - "cmd.chat.stop"
+negative_constraints:
+  - "Do not dispatch on the second click of a multi-click, and do not detect a double-click with a time window."
+  - "Do not let Stop remove or send a queued entry."
+  - "Do not choose the bound command from the control's animation state."
+owner_hints:
+  - Plans/UI_Wiring_Rules.md
+```
+
+ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-003, ContractName:Plans/UI_Command_Catalog.md#UCC-168, ContractName:Plans/assistant-chat-design.md#ACD-471, ContractName:Plans/FinalGUISpec.md#F3-587
+
+### UIW-031 - A Read-Only Child Transcript Document Binds No Mutation And Owns Its View Resources
+
+The subagent live transcript (assistant-chat-design ACD-485) is an editor document beside the chat, drawn by the chat's transcript renderer on a root of its own.
+
+```yaml
+plan_unit_id: UIW-031
+unit_type: wiring_rule
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: >-
+  A subagent's read-only live transcript document (ACD-485) is opened by cmd.agents.open_thread and binds no command
+  that changes the child run or the parent thread: its controls are view state (a stretch row's toggle, Expand or
+  Collapse, More details) and cmd.chat.copy_message, and its event and needs-you items render without actions. The
+  document mounts its own view resources (its spine and its observers, live follow of the child's new items, and the
+  stretch rows' motion) and binds none of the chat's: the chat's reply streaming, sound cues, follow-along and
+  jump-to-latest never read or drive it, and nothing arriving in it plays a chat cue. Closing the document releases its
+  resources exactly once and changes nothing in the child run; reopening it focuses one document and duplicates none.
+  The chat's own teardown on a thread switch, reset or close (UIW-024) releases the chat's resources and never the
+  document's.
+gui_related: true
+gui_classification_reason: "Keeps the subagent live transcript read-only and its presentation separate from the chat's."
+split_recommended: false
+depends_on: [UIW-024, ACD-485, UCC-188]
+unblocks: [WM-073]
+acceptance_criteria:
+  - "No control in the subagent live transcript dispatches a command other than cmd.chat.copy_message."
+  - "Items arriving in the document play no chat cue and do not move the chat's spine, follow-along or jump-to-latest."
+  - "Closing the document releases its observers and live follow once, and reopening it creates one document."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: read_only_surface_mutation_or_cross_bound_view
+reasoning_tier: high
+context_scope: chat_view_lifecycle
+implementation_surfaces:
+  - Plans/UI_Wiring_Rules.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: wiring_rule
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-147"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md, Transcript turns: Subagent live transcripts (concept lineage only)"
+preserved_exact_tokens:
+  - "cmd.agents.open_thread"
+  - "cmd.chat.copy_message"
+negative_constraints:
+  - "Do not bind a mutation command in the subagent live transcript."
+  - "Do not let the chat's streaming, sound or follow-along bind to the document."
+owner_hints:
+  - Plans/UI_Wiring_Rules.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-485, ContractName:Plans/UI_Wiring_Rules.md#UIW-024, ContractName:Plans/UI_Command_Catalog.md#UCC-188

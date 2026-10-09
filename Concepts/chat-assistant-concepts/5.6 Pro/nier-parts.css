@@ -507,6 +507,8 @@ html[data-o55-nier-parts~="cursor"] .qs-ask .qs-other-ask.is-on {
 }
 html[data-o55-nier-parts~="cursor"] .qs-ask-opt.is-on .qs-num,
 html[data-o55-nier-parts~="cursor"] .qs-ask .qs-other-ask.is-on .qs-num { color: var(--o55-nier-on-ink); }
+/* item 5 (2026-10-09): an option's description rides the cursor too, in paper a step quieter than its label */
+html[data-o55-nier-parts~="cursor"] .qs-ask-opt.is-on .qs-ask-opt-desc { color: var(--o55-nier-on-ink); opacity: .8; }
 html[data-o55-nier-parts~="cursor"] .qs-ask-opt.is-on .qs-ask-mark,
 html[data-o55-nier-parts~="cursor"] .qs-ask .qs-other-ask.is-on .qs-ask-mark { background: var(--o55-nier-on-ink); border-color: var(--o55-nier-on-ink); }
 html[data-o55-nier-parts~="cursor"] .qs-ask-opt.is-on .qs-ask-mark-radio::after,

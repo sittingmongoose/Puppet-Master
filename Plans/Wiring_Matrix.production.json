@@ -1390,7 +1390,8 @@
         "The durable effect is the owner typed result, receipt or projection under Plans/assistant-chat-design.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
-        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "WM-075 (DL-147, F3-593, UCC-188): goal_hover's Edit objective is the Goal preview's, which draws the compact Goal projection; inside Goal Activity Detail Edit objective only swaps in the objective editor as view state and dispatches nothing. No View Goal, Details or Ask for a replacement producer remains."
       ],
       "evidence_required": "Future production evidence for cmd.chat.goal.open_editor: source-hashed native dispatcher and sole handler handlers::assistant_chat::goal_open_editor, typed GoalEditorRoute/RouteResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/assistant-chat-design.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.goal.open_editor. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_goal_open_editor.availability",
@@ -2163,7 +2164,8 @@
         "The durable effect is the owner typed result, receipt or projection under Plans/ToDo_Runtime.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
-        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "WM-075 (DL-147, F3-593, UCC-188): Open work is raised from a To-Do's selected detail only, when the item has a work binding; To-Do rows carry no buttons, and Start work and Run work have no producer."
       ],
       "evidence_required": "Future production evidence for cmd.chat.todos.open_work: source-hashed native dispatcher and sole handler handlers::todo_runtime::todos_open_work, typed TodoWorkRoute/RouteResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/ToDo_Runtime.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat.todos.open_work. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_todos_open_work.availability",
@@ -7204,7 +7206,9 @@
         "cmd.agents.open_thread must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.agents.open_thread must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "cmd.agents.open_thread availability class is selection (agent_thread_ref_resolvable) with confirmation class none; disabled reasons come only from the closed set: stale_projection (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)",
-        "The agents/subagents mirror stays read-only; opening a thread mutates nothing in the mirror."
+        "The agents/subagents mirror stays read-only; opening a thread mutates nothing in the mirror.",
+        "WM-073 (UCC-188, ACD-485, DL-147): the assistant chat's subagent openers also raise cmd.agents.open_thread with the child run's thread ref: the Activity Detail Subagents row and its Open live transcript, a live agents card row, a working-activity satellite, a row of the working activity's Child agents list, and another working-activity row that names a child agent. From the chat the RouteResult opens the child run as one read-only editor document beside the chat (ACD-480), focusing an open document instead of duplicating it.",
+        "A row of the activity bar's Subagents preview is not a producer of this command: it routes into Activity Detail on that agent (FinalGUISpec F3-537). No chat-local subagent open command or alias exists, and the opened document binds no command that changes the child run or the parent thread (UIW-031)."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Orchestrator_Page.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_agents_open_thread.enabled",
@@ -17060,7 +17064,9 @@
         "cmd.chat.send exposes state selector and disabled reason before dispatch.",
         "cmd.chat.send dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
         "cmd.chat.send uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
-        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification.",
+        "WM-074 (UIW-030, F3-587): the composer's Send and Stop chip binds cmd.chat.send only while it shows Send or Queue, chosen from the run, composer-buffer and follow-up-queue projections; a busy send carries delivery_mode queue or steer (UCC-168).",
+        "A press dispatches once; the second and later clicks of one multi-click, counted by the platform click count and never by a time window, dispatch nothing. A press with nothing to send dispatches nothing, and a press while the follow-up queue is full dispatches nothing and announces queue_full."
       ],
       "evidence_required": "Production wiring contract for cmd.chat.send. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.chat_send.availability",
@@ -17175,7 +17181,9 @@
         "cmd.chat.stop must expose projected state selector and disabled reason before dispatch",
         "cmd.chat.stop dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.chat.stop must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.chat.stop must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.chat.stop must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "WM-074 (UIW-030, F3-587, ACD-471): the composer's Send and Stop chip binds cmd.chat.stop only while a run is live and the composer is empty; the second click of a double-click on Send never dispatches cmd.chat.stop, and opening a thread whose run is live binds Stop at once from the run projection.",
+        "cmd.chat.stop never dispatches cmd.chat.queue.remove or a queued send: queued entries stay until the user's Send, Send now, Edit or Remove."
       ],
       "evidence_required": "Production wiring contract for cmd.chat.stop; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.chat_stop.availability",
@@ -55795,7 +55803,7 @@
     },
     "catalog.settings_transaction_apply": {
       "ui_element_id": "catalog.settings_transaction_apply",
-      "ui_location": "Settings K3 workspace > confirmed current transaction preview; Project-owner commit chain applying the SSYS-036 explicitly selected settings copy after Project commit",
+      "ui_location": "Settings K3 workspace > confirmed current transaction preview; Project-owner commit chain applying the SSYS-036 explicitly selected settings copy after Project commit; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153)",
       "ui_command_id": "cmd.settings.transaction.apply",
       "handler_location": "handlers::settings::transaction_apply",
       "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request",
@@ -55805,7 +55813,8 @@
         "Apply exactly one current preview under revision/CAS and idempotency guards",
         "Route each value to its sole owner and require readback before committed",
         "Return refused, failed, or rollback_required truthfully and never infer success from acknowledgement",
-        "Onboarding-selected copy can apply only after SSYS-036 rebind to the actual committed Project and current preview/permission/CAS. It cannot apply an uncreated draft, broaden selected settings, copy secrets or treat command acknowledgement as completion."
+        "Onboarding-selected copy can apply only after SSYS-036 rebind to the actual committed Project and current preview/permission/CAS. It cannot apply an uncreated draft, broaden selected settings, copy secrets or treat command acknowledgement as completion.",
+        "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041)."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, sole-owner routing, CAS/race, idempotent replay, restart, readback, partial-failure, and rollback fixtures are required before certification.",
       "state_selector": "state.commands.settings_transaction_apply.availability",
@@ -55848,6 +55857,11 @@
           "test_id": "wiring.cmd_settings_transaction_apply.onboarding_phase_binding",
           "evidence_kind": "dispatcher_fixture",
           "requirement": "Onboarding-selected copy can apply only after SSYS-036 rebind to the actual committed Project and current preview/permission/CAS. It cannot apply an uncreated draft, broaden selected settings, copy secrets or treat command acknowledgement as completion. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
+        },
+        {
+          "test_id": "wiring.cmd_settings_transaction_apply.look_surfaces",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041). Static owner declarations only; native dispatcher and owner proof remain required."
         }
       ],
       "event_test_requirements": [
@@ -55856,7 +55870,7 @@
     },
     "catalog.settings_transaction_preview": {
       "ui_element_id": "catalog.settings_transaction_preview",
-      "ui_location": "Settings K3 workspace > every pending value, import, reset, and bulk-change review; Product Onboarding uncreated Project Copy settings from preview and postcommit rebind through SSYS-036",
+      "ui_location": "Settings K3 workspace > every pending value, import, reset, and bulk-change review; Product Onboarding uncreated Project Copy settings from preview and postcommit rebind through SSYS-036; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153)",
       "ui_command_id": "cmd.settings.transaction.preview",
       "handler_location": "handlers::settings::transaction_preview",
       "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request",
@@ -55866,7 +55880,8 @@
         "Resolve exact stable setting IDs and owner routes without committing",
         "Reject stale revisions, invalid values, permission/policy blockers, secrets, and unavailable owners with typed reasons",
         "Return rollback eligibility and migration/readback requirements without claiming a handler ran",
-        "Validate the SSYS-036 draft-preview request/result variants without a destination Project, exact current source/draft/explicit setting choices and excluded secrets/local state. Postcommit rebind verifies the actual Project and exact preview/hash, recomputes preview under current ownership/permission, then requires ordinary apply; no precommit write."
+        "Validate the SSYS-036 draft-preview request/result variants without a destination Project, exact current source/draft/explicit setting choices and excluded secrets/local state. Postcommit rebind verifies the actual Project and exact preview/hash, recomputes preview under current ownership/permission, then requires ordinary apply; no precommit write.",
+        "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041)."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, owner-resolution, permission, stale-CAS, and no-write fixtures are required before production certification.",
       "state_selector": "state.commands.settings_transaction_preview.availability",
@@ -55909,6 +55924,11 @@
           "test_id": "wiring.cmd_settings_transaction_preview.onboarding_phase_binding",
           "evidence_kind": "dispatcher_fixture",
           "requirement": "Validate the SSYS-036 draft-preview request/result variants without a destination Project, exact current source/draft/explicit setting choices and excluded secrets/local state. Postcommit rebind verifies the actual Project and exact preview/hash, recomputes preview under current ownership/permission, then requires ordinary apply; no precommit write. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
+        },
+        {
+          "test_id": "wiring.cmd_settings_transaction_preview.look_surfaces",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041). Static owner declarations only; native dispatcher and owner proof remain required."
         }
       ],
       "event_test_requirements": [
@@ -56247,7 +56267,7 @@
     },
     "catalog.sound_preview": {
       "ui_element_id": "catalog.sound_preview",
-      "ui_location": "Sound surface > Preview",
+      "ui_location": "Sound surface > Preview; Settings > Notifications & Sounds > Sound library > Play on every entry, the Setup & tour and NieR groups included (F3-599, DL-153)",
       "ui_command_id": "cmd.sound.preview",
       "handler_location": "handlers::sound::preview",
       "expected_event_types": [],
@@ -56256,7 +56276,8 @@
         "cmd.sound.preview must expose projected state selector and disabled reason before dispatch",
         "cmd.sound.preview dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.sound.preview must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.sound.preview must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.sound.preview must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Previewing a Setup & tour or NieR library entry dispatches cmd.sound.preview after an explicit gesture under F3-405's preview rules; the library's Which look switch (ui.settings.sound_library.look.select) and Show N more takes (ui.settings.sound_library.takes.toggle) are typed local presentation actions that dispatch nothing."
       ],
       "evidence_required": "Production wiring contract for cmd.sound.preview; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.sound_preview.availability",
@@ -56294,6 +56315,11 @@
           "test_id": "wiring.catalog.sound_preview.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.sound_preview.setup_tour_and_nier_groups",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Previewing a Setup & tour or NieR library entry dispatches cmd.sound.preview after an explicit gesture under F3-405's preview rules; the library's Which look switch (ui.settings.sound_library.look.select) and Show N more takes (ui.settings.sound_library.takes.toggle) are typed local presentation actions that dispatch nothing. Static owner declarations only; native dispatcher proof remains required."
         }
       ],
       "event_test_requirements": [

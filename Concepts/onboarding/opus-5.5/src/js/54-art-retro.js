@@ -28,7 +28,13 @@
     wave: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksks', '.kssssssks', '.kssmmsska', '..kkkkkk.a', '.kaaaaaaaa', 'kaaaaaaaak', 'saaaaaaaak', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
     /* the second frame of the wave: the hand comes down to head height, the sleeve shorter */
     wave2: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssks', '..kkkkkk.s', '.kaaaaaaaa', 'kaaaaaaaak', 'saaaaaaaak', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
-    carry: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssk.', '..kkkkkk..', '.kaaaaaak.', 'kawwwwwwak', 'kswkkkkwsk', '.kwwwwwwk.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.']
+    carry: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssk.', '..kkkkkk..', '.kaaaaaak.', 'kawwwwwwak', 'kswkkkkwsk', '.kwwwwwwk.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
+    /* the curtain call's frames (66-family-window.js; no scene asks for these poses): a bow in two frames, the head one
+       block down with the hands coming in, then the crown toward the audience with the hands together; and Ready's
+       pointing helper, the near arm straight out toward the pane (12 wide, one column each side, so the body stays put) */
+    bowA: ['..........', '..kkkkkk..', '.khhhhhhk.', '.khhhhhhk.', '.kskssksk.', '.kssmmssk.', '..kkkkkk..', 'kaaaaaaaak', 'kaaaaaaaak', '.saaaaaas.', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
+    bowB: ['..........', '..........', '..kkkkkk..', '.khhhhhhk.', '.khhhhhhk.', '.khhhhhhk.', '.khsssshk.', 'kakkkkkkak', 'kaaaaaaaak', '.kaassaak.', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
+    aim: ['...kkkkkk...', '..khhhhhhk..', '..khsssshk..', '..kskssksk..', '..kssssssk..', '..kssmmssk..', '...kkkkkk...', '..kaaaaaakkk', '.kaaaaaaaaas', '.saaaaaaaakk', '..kaaaaaak..', '..kbbkkbbk..', '..kbk..kbk..', '..kk....kk..']
   };
   const BAR = ['............kkkk............', '...........k....k...........', '............kkkk............', '.............kk.............',
     'kkkkkkkkkkkkkwwkkkkkkkkkkkkk', 'kyywwwwwwwwwwwwwwwwwwwwwwyyk', 'kkkkkkkkkkkkkwwkkkkkkkkkkkkk', '............kwwk............',

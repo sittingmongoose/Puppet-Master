@@ -514,24 +514,62 @@
     for (var i = 0; i < slots.length; i++) {
       var slot = slots[i], kids = slot.children, h = slot.clientHeight, w = slot.clientWidth, pick = null;
       if (!kids.length) continue;
+      /* before the sheet settles, its entrance's rise inflates the column's scrollHeight and puts a scrollbar beside the
+         slot for a moment; the slot's width is read without it, so the first mode is the one the settled sheet keeps */
+      var scol = slot.closest('.pmx-col'), sroot = overlayRoot();
+      if (scol && !(sroot && sroot.classList.contains('pmx-sheet-settled'))) {
+        var ccs = getComputedStyle(scol);
+        w += Math.max(0, scol.offsetWidth - scol.clientWidth - (parseFloat(ccs.borderLeftWidth) || 0) - (parseFloat(ccs.borderRightWidth) || 0));
+      }
       /* a slot in a scrolling one-column body is not height-bound: only the width decides */
       if (getComputedStyle(slot).getPropertyValue('--pmx-fit-free').trim() === '1') h = Infinity;
       /* a mode fits when its drawing fits at scale 1: its natural height in the slot's height and its viewBox
          width in the slot's width (a drawing is never scaled down, review cycle 1); a caption always fits */
       /* 1 % of width is layout rounding, not a scale (Basic's 1.26fr main column is 575.4 px for a 576 drawing) */
       var fitsW = function (kid) { var svg = kid.querySelector(':scope > .pmx-plate-svg'), fw = svg && svg.viewBox && svg.viewBox.baseVal ? svg.viewBox.baseVal.width : 0; return !fw || fw <= w * 1.01 + 0.5; };
+      /* the slot's floor (2026-10-09, Jared: "it pushes the graph out of view"): the leanest drawing that fits the slot's
+         width. The slot claims that height (--pmx-fit-min), so a roster's growing rows scroll in their own region before
+         the drawing would give way, and the caption is left only for a slot no drawing fits the width of (past the
+         limit). */
+      var floorKid = null, floorH = Infinity;
+      for (var f = 0; f < kids.length; f++) {
+        var ffh = parseFloat(kids[f].getAttribute('data-fit-h'));
+        if (kids[f].getAttribute('data-mode') !== 'caption' && isFinite(ffh) && ffh < floorH && fitsW(kids[f])) { floorKid = kids[f]; floorH = ffh; }
+      }
+      /* data-floor names the floor's mode for the verifiers (pmx-verify's no-scroll: a roster may scroll once its slot
+         shows the floor) */
+      var fm = floorKid ? floorKid.getAttribute('data-mode') || '' : '';
+      if (fm) { if (slot.getAttribute('data-floor') !== fm) slot.setAttribute('data-floor', fm); } else if (slot.hasAttribute('data-floor')) slot.removeAttribute('data-floor');
+      if (floorKid && h !== Infinity) {
+        var want = Math.ceil(floorH) + 'px';
+        if (slot.style.getPropertyValue('--pmx-fit-min') !== want) { slot.style.setProperty('--pmx-fit-min', want); h = slot.clientHeight; }
+      }
       for (var j = 0; j < kids.length; j++) {
         var fh = parseFloat(kids[j].getAttribute('data-fit-h'));
         if (isFinite(fh) && fh <= h + 0.5 && fitsW(kids[j])) { pick = kids[j]; break; }
       }
       /* nothing fits at scale 1: the caption mode if the slot has one (a lane passes pmxPlateFit({caption})),
          else the leanest mode (the one case left where a drawing is scaled; a lane avoids it with a caption) */
+      if (!pick && floorKid) pick = floorKid;
       if (!pick) { for (var c = 0; c < kids.length; c++) if (kids[c].getAttribute('data-mode') === 'caption') pick = kids[c]; }
       if (!pick) pick = kids[kids.length - 1];
       var lk = slot.getAttribute('data-k') || String(i);
       /* a yield step never lands on a mode too wide for the slot (a mode after the caption, pmxPlateFit tail): the
          drawing would be scaled down; the slot keeps the leanest step that fits */
-      if (lean && lean[lk]) { var at0 = Array.prototype.indexOf.call(kids, pick), to = Math.min(kids.length - 1, at0 + lean[lk]); while (to > at0 && !fitsW(kids[to]) && kids[to].getAttribute('data-mode') !== 'caption') to--; pick = kids[to]; }
+      /* a yield step never lands past the floor: while a drawing fits the width, the steps run over the drawings that fit
+         the slot (width and height) and stop at the leanest of them, never at the caption */
+      if (lean && lean[lk]) {
+        var at0 = Array.prototype.indexOf.call(kids, pick);
+        if (floorKid) {
+          var steps = lean[lk];
+          for (var st = at0 + 1; st < kids.length && steps > 0; st++) {
+            var sk = kids[st], sh = parseFloat(sk.getAttribute('data-fit-h'));
+            if (sk.getAttribute('data-mode') !== 'caption' && fitsW(sk) && isFinite(sh) && sh <= h + 0.5) { pick = sk; steps--; }
+          }
+        } else { var to = Math.min(kids.length - 1, at0 + lean[lk]); while (to > at0 && !fitsW(kids[to]) && kids[to].getAttribute('data-mode') !== 'caption') to--; pick = kids[to]; }
+      }
+      /* data-pick: the one drawing shown, where a slot holds two of one mode (the cast's wrap at 576 and at 500) */
+      for (var dp = 0; dp < kids.length; dp++) { if (kids[dp] === pick) { if (!pick.hasAttribute('data-pick')) pick.setAttribute('data-pick', ''); } else if (kids[dp].hasAttribute('data-pick')) kids[dp].removeAttribute('data-pick'); }
       var mode = pick.getAttribute('data-mode') || '', key = slot.getAttribute('data-k'), was = slot.getAttribute('data-fit');
       if (key) plateFitMem[key] = mode;
       if (was !== mode) {
@@ -554,7 +592,8 @@
      layout, so marks are measured without it */
   function markOverflow(sheet) {
     /* 6.3 yield order (review cycle 1; lead ruling on spec conflict G: J-2's 60 px rows stay): the plate has
-       already yielded to its leanest mode (flex: the slot's floor is the leanest mode's height) before a roster's
+       already yielded to its floor (flex: the slot's floor is the height of its leanest drawing that fits its width,
+       fitPlates) before a roster's
        rows can overflow; then the roster's column helpers drop (lean 1), then the rows' secondary fine lines
        (lean 2); only then do the rows scroll with the 14 px fade. Measured from the natural state every time. */
     var rows = sheet.querySelectorAll('.pmx-roster-rows');

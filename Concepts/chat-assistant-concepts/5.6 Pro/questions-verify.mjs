@@ -840,6 +840,316 @@ await t('Q10. Ask Card preparing pill is a row with a two-ring orrery', async ()
   return info;
 });
 
+/* ======================================================================= L */
+/* Long answers (item 5, 2026-10-09: "what happens if the answers are much longer? Will it dynamically adjust its
+   size and still look good?"). Demo Studio's "Long answers questionnaire" (D.longQuestions) is the deployment
+   questionnaire written long: a three-line prompt with a description, object options with descriptions, an
+   unbroken URL as an option label, a multi answer plus a long Something else, a ten-line note with a URL, and the
+   review of all of it. The Ask Card must grow with its content up to the room above the composer, then scroll its
+   body inside the card with the footer in reach, and nothing may scroll or clip sideways. */
+async function openLong(idx = 0) {
+  await page.evaluate(() => { PM56_DEMO.reset(); });
+  await page.waitForTimeout(260);
+  await page.evaluate(idx => {
+    PM56_DEMO.setVariant(6, 8);
+    PM56_DEMO.trigger('Long answers questionnaire');
+    const c = PM56_EXT.ctx();
+    c.state.questionIndex = idx;
+    c.renderApp();
+  }, idx);
+  await page.waitForTimeout(SETTLE + 200);
+}
+/* where the card sits against the stage, the header, the composer and its own cap */
+const askFit = () => page.evaluate(() => {
+  const card = document.querySelector('.decision-host .qs-ask');
+  if (!card) return null;
+  const body = card.querySelector('.qs-ask-body'), foot = card.querySelector('.qs-ask-foot');
+  const stage = document.querySelector('.chat-stage'), head = stage.querySelector(':scope > .chat-header');
+  const comp = stage.querySelector(':scope > .composer');
+  const R = e => e.getBoundingClientRect();
+  const cr = R(card), sr = R(stage), hr = R(head), pr = R(comp), fr = R(foot);
+  const cap = parseFloat(getComputedStyle(card).maxHeight);
+  return {
+    h: cr.height, top: cr.top, bottom: cr.bottom, cap,
+    headBottom: hr.bottom, compTop: pr.top, compBottom: pr.bottom, stageBottom: sr.bottom,
+    footTop: fr.top, footBottom: fr.bottom,
+    scrolls: body.scrollHeight > body.clientHeight + 1, isScroll: card.classList.contains('is-scroll'),
+    bodySH: body.scrollHeight, bodyCH: body.clientHeight, bodySW: body.scrollWidth, bodyCW: body.clientWidth,
+    docSW: document.documentElement.scrollWidth, vw: innerWidth
+  };
+});
+const footHits = () => page.evaluate(() => {
+  const out = [];
+  document.querySelectorAll('.decision-host .qs-ask-foot button:not(:disabled), .decision-host .qs-ask-x').forEach(b => {
+    const r = b.getBoundingClientRect();
+    const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+    if (!(r.bottom <= innerHeight && hit && (hit === b || b.contains(hit)))) out.push((b.textContent.trim() || b.className) + ' -> ' + (hit ? hit.className : 'nothing'));
+  });
+  return out;
+});
+/* every painted text block and control inside the card stays inside the card, and no box scrolls sideways */
+const askSideways = () => page.evaluate(() => {
+  const card = document.querySelector('.decision-host .qs-ask');
+  if (!card) return ['no Ask Card'];
+  const cr = card.getBoundingClientRect(), out = [];
+  card.querySelectorAll('*').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.width < 1 || el.closest('.qs-reel-out, [aria-hidden="true"]')) return;   /* decorative glyphs may bloom */
+    if (r.right > cr.right + 1 || r.left < cr.left - 1) out.push('escapes: ' + el.className);
+    if (el.scrollWidth > el.clientWidth + 1 && el.clientWidth > 0 && !/^(svg|path|i)$/i.test(el.tagName)) out.push('sideways: ' + (el.className || el.tagName));
+  });
+  const body = card.querySelector('.qs-ask-body');
+  if (body && body.scrollWidth > body.clientWidth + 1) out.push('body scrolls sideways by ' + (body.scrollWidth - body.clientWidth));
+  if (document.documentElement.scrollWidth > innerWidth) out.push('page scrolls sideways');
+  return [...new Set(out)].slice(0, 6);
+});
+
+await t('L1. the Ask Card grows with its content and stops at the room above the composer (and shrinks back)', async () => {
+  await openQuestion(); await setTake(8);
+  const short = await askFit();
+  must(short && !short.scrolls && !short.isScroll, `stock q1 scrolls: ${JSON.stringify(short)}`);
+  must(short.h < short.cap - 40, `stock card ${short.h} not under its cap ${short.cap}`);
+  const rows = [];
+  for (const idx of [0, 1, 3]) {
+    await openLong(idx);
+    const f = await askFit();
+    must(f, `no Ask Card on long q${idx + 1}`);
+    rows.push(`q${idx + 1}:${Math.round(f.h)}/${Math.round(f.cap)}`);
+    must(f.h > short.h + 60, `long q${idx + 1} card ${f.h} did not grow past stock ${short.h}`);
+    must(f.h <= f.cap + 1, `long q${idx + 1} card ${f.h} over its cap ${f.cap}`);
+    must(f.top >= f.headBottom + 40, `card top ${f.top} leaves no transcript under the header (${f.headBottom})`);
+    must(f.bottom <= f.compTop + 1, `card bottom ${f.bottom} over the composer ${f.compTop}`);
+    must(f.compBottom <= f.stageBottom + 1, `composer pushed off the stage: ${f.compBottom} > ${f.stageBottom}`);
+  }
+  await openLong(2);
+  const note = await askFit();
+  must(note.h < note.cap - 20 && !note.scrolls, `the note step (${note.h} of ${note.cap}) should fit without scrolling`);
+  await openQuestion(); await setTake(8);
+  const back = await askFit();
+  must(Math.abs(back.h - short.h) <= 2, `card did not shrink back: ${back.h} vs ${short.h}`);
+  return rows.join(' ');
+});
+await t('L2. Back, Skip, Next/Submit and close stay painted and clickable on every long step', async () => {
+  const bad = [];
+  for (const idx of [0, 1, 2, 3]) {
+    await openLong(idx);
+    const miss = await footHits();
+    if (miss.length) bad.push(`q${idx + 1}: ${miss.join(', ')}`);
+  }
+  must(!bad.length, bad.join(' | '));
+  await openLong(3);
+  const r = await clickPainted('.decision-host [data-action="submit-questionnaire"]');
+  return `submit hit at ${r.x},${r.y}`;
+});
+await t('L3. past the cap the body scrolls inside the card: the footer, the page and the transcript stay put', async () => {
+  await openLong(3);
+  const before = await askFit();
+  must(before.scrolls && before.isScroll, `review does not scroll: ${JSON.stringify(before)}`);
+  const pos = await page.evaluate(() => {
+    const b = document.querySelector('.qs-ask-body').getBoundingClientRect();
+    const tr = document.querySelector('.chat-stage > .transcript');
+    return { x: b.left + b.width / 2, y: b.top + b.height / 2, tr: tr ? tr.scrollTop : 0, doc: document.scrollingElement.scrollTop };
+  });
+  await page.mouse.move(pos.x, pos.y);
+  await page.mouse.wheel(0, 260);
+  await page.waitForTimeout(400);
+  const after = await page.evaluate(() => {
+    const body = document.querySelector('.qs-ask-body'), tr = document.querySelector('.chat-stage > .transcript');
+    return { top: body.scrollTop, cls: body.className, tr: tr ? tr.scrollTop : 0, doc: document.scrollingElement.scrollTop,
+      foot: document.querySelector('.qs-ask-foot').getBoundingClientRect().top };
+  });
+  must(after.top > 100, `body did not scroll (scrollTop ${after.top})`);
+  /* the transcript may settle by a pixel on its own (stick-to-bottom); a leaked wheel moves it by the whole delta */
+  must(Math.abs(after.tr - pos.tr) <= 2 && after.doc === pos.doc, `scroll leaked: transcript ${pos.tr}->${after.tr}, page ${pos.doc}->${after.doc}`);
+  must(Math.abs(after.foot - before.footTop) < 1, `footer moved ${before.footTop} -> ${after.foot}`);
+  must(!/\bat-start\b/.test(after.cls), `top fade not lit after scrolling: ${after.cls}`);
+  await page.mouse.wheel(0, 4000);
+  await page.waitForTimeout(400);
+  const end = await page.evaluate(() => document.querySelector('.qs-ask-body').className);
+  must(/\bat-end\b/.test(end), `bottom edge not reached: ${end}`);
+  return `scrollTop ${after.top}`;
+});
+await t('L4. nothing escapes the card or scrolls sideways, in all ten themes, at full and 300px host widths', async () => {
+  const themes = await page.evaluate(() => PM56_DATA.themes.map(t => t.id));
+  must(themes.length === 10, `expected ten themes, got ${themes.length}`);
+  const bad = [];
+  for (const th of themes) {
+    for (const w of [0, 300]) {
+      for (const idx of [0, 1, 2, 3]) {
+        await openLong(idx);
+        await page.evaluate(t => PM56_DEMO.setTheme(t), th);
+        if (w) await setHostWidth(w);
+        await page.waitForTimeout(260);
+        const out = await askSideways();
+        const f = await askFit();
+        if (f && (f.h > f.cap + 1 || f.bottom > f.compTop + 1)) out.push(`card ${Math.round(f.h)} cap ${Math.round(f.cap)} bottom ${Math.round(f.bottom)} composer ${Math.round(f.compTop)}`);
+        if (out.length) bad.push(`${th}/${w || 'full'}/q${idx + 1}: ${out.join(', ')}`);
+        if (w) await page.evaluate(() => document.documentElement.style.removeProperty('--editor-w'));
+      }
+    }
+  }
+  await page.evaluate(() => PM56_DEMO.setTheme('basic-dark'));
+  must(!bad.length, bad.slice(0, 6).join(' | '));
+  return themes.length * 8 + ' renders';
+});
+await t('L5. long option labels wrap whole, and canonical {label, description} options paint their descriptions', async () => {
+  await openLong(0);
+  const o = await page.evaluate(() => {
+    const rows = [...document.querySelectorAll('.qs-ask-opt')];
+    const fx = PM56_DATA.longQuestions[0].options;
+    return rows.map((r, i) => {
+      const label = r.querySelector('.qs-ask-opt-label'), desc = r.querySelector('.qs-ask-opt-desc');
+      const lr = label.getBoundingClientRect(), rr = r.getBoundingClientRect();
+      const want = typeof fx[i] === 'object' ? fx[i] : { label: fx[i] };
+      return { label: label.textContent, wantLabel: want.label, desc: desc ? desc.textContent : '', wantDesc: want.description || '',
+        lines: Math.round(lr.height / parseFloat(getComputedStyle(label).lineHeight)), inside: lr.right <= rr.right + 0.5 };
+    });
+  });
+  must(o.length === 4, `${o.length} option rows`);
+  for (const r of o) {
+    must(r.label === r.wantLabel, `label "${r.label.slice(0, 40)}" vs fixture "${r.wantLabel.slice(0, 40)}"`);
+    must(r.desc === r.wantDesc, `description "${r.desc.slice(0, 40)}" vs fixture "${r.wantDesc.slice(0, 40)}"`);
+    must(r.inside, `label runs past its row: ${r.label.slice(0, 40)}`);
+  }
+  must(o[2].lines >= 2, `the URL option did not wrap (${o[2].lines} line)`);
+  return o.map(r => r.lines).join('/') + ' lines';
+});
+await t('L6. free text grows with what is typed: Something else and the note never scroll inside themselves', async () => {
+  await openLong(1);
+  const other = await page.evaluate(() => {
+    const t = document.querySelector('.qs-other-ask .qs-other-input');
+    return t ? { tag: t.tagName, h: t.clientHeight, sh: t.scrollHeight, lh: parseFloat(getComputedStyle(t).lineHeight), v: t.value } : null;
+  });
+  must(other && other.tag === 'TEXTAREA', `Something else is ${other && other.tag}`);
+  must(other.sh <= other.h + 1, `Something else scrolls inside itself (${other.sh} > ${other.h})`);
+  must(other.h >= other.lh * 3, `Something else did not grow (${other.h}px for ${other.v.length} chars)`);
+  await clickPainted('.qs-other-ask .qs-other-input');
+  await page.keyboard.press('Control+End');   /* End alone stops at the end of the wrapped first line */
+  await page.keyboard.type(' and a second line of detail', { delay: 2 });
+  await page.keyboard.press('Shift+Enter');
+  await page.keyboard.type('third line', { delay: 2 });
+  await page.waitForTimeout(260);
+  const grown = await page.evaluate(() => { const t = document.querySelector('.qs-other-ask .qs-other-input'); return { h: t.clientHeight, sh: t.scrollHeight, v: t.value }; });
+  must(grown.h > other.h, `typing two more lines did not grow it (${other.h} -> ${grown.h})`);
+  must(grown.sh <= grown.h + 1, 'Something else scrolls inside itself after typing');
+  must(/third line$/.test(grown.v), 'typed text not in the field');
+  const ans = await page.evaluate(() => PM56_DEMO.getState().questions[1].other);
+  must(/third line$/.test(ans), 'typed text not in the answer');
+  await openLong(2);
+  const note = await page.evaluate(() => {
+    const t = document.querySelector('.qs-ask-note-input');
+    return t ? { h: t.clientHeight, sh: t.scrollHeight, v: t.value } : null;
+  });
+  must(note && note.sh <= note.h + 1, `the note scrolls inside itself (${note && note.sh} > ${note && note.h})`);
+  must(note.v.includes('https://deploy.example.internal/hosts/truenas'), 'the note lost its URL');
+  return `other ${other.h}->${grown.h}px, note ${note.h}px`;
+});
+await t('L7. review shows every answer whole: line breaks kept, URL wrapped, nothing clipped', async () => {
+  await openLong(3);
+  const rv = await page.evaluate(() => {
+    const qs = PM56_DEMO.getState().questions;
+    return [...document.querySelectorAll('.qs-ask-review-a')].map((a, i) => ({
+      text: a.innerText, raw: a.textContent, sw: a.scrollWidth, cw: a.clientWidth, ws: getComputedStyle(a).whiteSpace,
+      want: (qs[i].other || '').split('\n')[0]
+    }));
+  });
+  must(rv.length === 3, `${rv.length} review answers`);
+  for (const r of rv) must(r.sw <= r.cw + 1, `review answer scrolls sideways: ${r.raw.slice(0, 40)}`);
+  must(rv[2].ws === 'pre-line' && rv[2].text.split('\n').length >= 5, `the note lost its line breaks (${rv[2].ws}, ${rv[2].text.split('\n').length} lines)`);
+  must(rv[1].raw.includes('readiness&expect=200'), 'the Something else URL is not in the review');
+  return rv.map(r => r.text.split('\n').length).join('/') + ' lines';
+});
+await t('L8. scroll stays where the user left it on a re-render, and each question opens at its top', async () => {
+  await openLong(0);
+  await page.evaluate(() => { document.querySelector('.qs-ask-body').scrollTop = 120; });
+  await page.waitForTimeout(120);
+  await clickPainted('.qs-ask [data-action="answer-choice"]', 1);
+  await page.waitForTimeout(260);
+  const kept = await page.evaluate(() => ({ top: document.querySelector('.qs-ask-body').scrollTop, ans: PM56_DEMO.getState().questions[0].answer,
+    want: PM56_DATA.longQuestions[0].options[1].label }));
+  must(kept.ans === kept.want, `click did not answer (${kept.ans})`);
+  must(kept.top > 60, `selecting an option reset the scroll (${kept.top})`);
+  await clickPainted('.decision-host [data-action="next-question"]');
+  await page.waitForTimeout(SETTLE);
+  const next = await page.evaluate(() => ({ i: PM56_DEMO.getState().questionIndex, top: document.querySelector('.qs-ask-body').scrollTop }));
+  must(next.i === 1 && next.top === 0, `next question opened at ${next.top} (index ${next.i})`);
+  return `kept ${Math.round(kept.top)}`;
+});
+await t('L9. the open morph lands on the capped height, and a smaller window lowers the cap', async () => {
+  await openLong(3);
+  const fit = await askFit();
+  await clickPainted('.qs-ask [data-action="close-decision"]');
+  await page.waitForTimeout(REDUCED ? 60 : 900);
+  await page.evaluate(() => { const c = PM56_EXT.ctx(); c.state.questions = JSON.parse(JSON.stringify(PM56_DATA.longQuestions)); c.state.questionIndex = 3; PM56_DEMO.openQuestionnaire(); });
+  let peak = 0;
+  for (let i = 0; i < 12; i++) {
+    peak = Math.max(peak, await page.evaluate(() => { const s = document.querySelector('.decision-host .qs-shell'); return s ? s.getBoundingClientRect().height : 0; }));
+    await page.waitForTimeout(50);
+  }
+  await page.waitForTimeout(SETTLE);
+  const landed = await askFit();
+  const shellH = await page.evaluate(() => document.querySelector('.decision-host .qs-shell').getBoundingClientRect().height);
+  must(Math.abs(landed.h - fit.h) <= 2, `reopened at ${landed.h}, was ${fit.h}`);
+  must(Math.abs(shellH - landed.h) <= 3, `shell ${shellH} vs card ${landed.h} after the morph`);
+  must(peak <= fit.cap * 1.08 + 4, `morph overshot to ${peak} against a cap of ${fit.cap}`);
+  must(landed.isScroll, 'reopened card lost its scroll state');
+  await page.setViewportSize({ width: 1440, height: 680 });
+  await page.waitForTimeout(400);
+  const small = await askFit();
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.waitForTimeout(400);
+  must(small.h < fit.h - 150, `card ${small.h} did not follow the window down from ${fit.h}`);
+  must(small.bottom <= small.compTop + 1 && small.compBottom <= small.stageBottom + 1, `680px window: card ${small.bottom} composer ${small.compTop}-${small.compBottom} stage ${small.stageBottom}`);
+  must((await footHits()).length === 0, '680px window: footer not clickable');
+  return `peak ${Math.round(peak)}, landed ${Math.round(landed.h)}, 680px window ${Math.round(small.h)}`;
+});
+await t('L10. the stock questionnaire never scrolls or fades', async () => {
+  await openQuestion(); await setTake(8);
+  const bad = [];
+  for (let i = 0; i < 5; i++) {
+    const f = await askFit();
+    if (!f || f.scrolls || f.isScroll) bad.push(`q${i + 1}: ${f ? f.bodySH + '/' + f.bodyCH : 'no card'}`);
+    if (i === 4) break;
+    await page.evaluate(i => { const c = PM56_EXT.ctx(); c.state.questionIndex = i; c.renderApp(); }, i + 1);
+    await page.waitForTimeout(SETTLE);
+  }
+  must(!bad.length, bad.join(' | '));
+});
+await t('L11. the @-file sprout opens where the body can show it', async () => {
+  await openLong(2);
+  await clickPainted('.qs-ask-note-input');
+  await page.keyboard.press('Control+End');
+  await page.keyboard.type(' @', { delay: 2 });
+  await page.waitForTimeout(320);
+  const sp = await page.evaluate(() => {
+    const m = document.querySelector('.qs-ask .qs-mention'), body = document.querySelector('.qs-ask-body');
+    if (!m) return null;
+    const r = m.getBoundingClientRect(), b = body.getBoundingClientRect();
+    const item = m.querySelector('.qs-mention-item'), ir = item.getBoundingClientRect();
+    const hit = document.elementFromPoint(ir.left + ir.width / 2, ir.top + ir.height / 2);
+    return { down: m.classList.contains('is-down'), inside: r.top >= b.top - 1 && r.bottom <= b.bottom + 1, owns: !!hit && (hit === item || item.contains(hit)) };
+  });
+  must(sp, 'no sprout after typing @');
+  must(sp.down, 'the sprout opened upward with no room above the note');
+  must(sp.inside && sp.owns, `sprout not shown whole inside the body: ${JSON.stringify(sp)}`);
+  await page.keyboard.press('Backspace');
+  await page.keyboard.press('Backspace');
+  return sp;
+});
+await t('L12. NieR: an option description on the menu cursor reads in paper, like its label', async () => {
+  await openLong(0);
+  await page.evaluate(() => PM56_DEMO.setTheme('nier-dark'));
+  await page.waitForTimeout(400);
+  const c = await page.evaluate(() => {
+    const on = document.querySelector('.qs-ask-opt.is-on');
+    const L = getComputedStyle(on.querySelector('.qs-ask-opt-label')).color, D = getComputedStyle(on.querySelector('.qs-ask-opt-desc')).color;
+    return { L, D, bg: getComputedStyle(on).backgroundColor };
+  });
+  await page.evaluate(() => PM56_DEMO.setTheme('basic-dark'));
+  must(c.L === c.D, `description ${c.D} vs label ${c.L} on ${c.bg}`);
+  return c;
+});
+
 /* ======================================================================= E */
 await t('E1. the surface survives two full work ticks without remounting (stable data-k)', async () => {
   await openQuestion(); await setTake(0);
