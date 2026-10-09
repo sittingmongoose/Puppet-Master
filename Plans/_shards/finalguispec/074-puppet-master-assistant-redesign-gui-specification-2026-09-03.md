@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L36126-L36433
 
-Source SHA256: `ec9fcca7a80f55122d75bbc7d9b1700ff628f9d28b94f4d4ade985e4f06ff116`
+Source SHA256: `d23c471b63b1379cdb499e78f33b76cc91d5e28e2410ae67701b63a85d344e53`
 
 ---
 
@@ -58,7 +58,7 @@ Historical Completed and Canceled cards stay in place and default to compact. A 
 
 ### 7. Goal Activity UI
 
-Goal appears in the Activity bar only for the current thread and only when an active or retained Goal record exists. Its hover preview is interactive: `Goal · Running`, a two-line objective preview, and `[Pause] [Cancel] [edit icon]`, with Resume replacing Pause when eligible. The edit icon opens Activity Detail in edit mode; clicking the Goal item itself opens the normal detail view.
+Goal appears in the Activity bar only for the current thread and only when an active or retained Goal record exists. Its hover preview is interactive and draws the same compact Goal projection as Activity Detail: `Goal · Running` with the revision, a two-line objective preview, the control row `[Pause] [Edit objective] … [Cancel Goal]`, the bound Plan row when the Goal is bound and the `Objective history ▾` disclosure, with Resume replacing Pause when eligible and no Details button (amended 2026-10-09, F3-593). Edit opens Activity Detail in edit mode; clicking the Goal item itself opens the normal detail view.
 
 Activity Detail shows the objective, then one control row `[Pause/Resume] [Edit objective] … [Cancel Goal]` with Cancel Goal alone at the far edge, and an `Objective history ▾` footer that opens the revision list in place; Edit objective shows the text-only objective editor with `[Save] [Cancel edit]`. There is no View Goal route and no Ask for a replacement control (amended 2026-10-08, DL-147, F3-593). It must not show a title, phases, child Goals, budgets, a current action, a next action, or separate scope and done-when fields. Agent-proposed changes use the existing approval host showing only the current objective, the proposed objective, `Approve Change` and `Cancel`. **There is no Goal transcript card.**
 

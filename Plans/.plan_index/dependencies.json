@@ -6682,6 +6682,7 @@
     "SCS-014",
     "SP-254",
     "SRV-013",
+    "DR-052",
     "SP-273",
     "WM-041",
     "F3-590",
@@ -6798,6 +6799,7 @@
     "UCC-164",
     "DR-041",
     "UIW-019",
+    "UIW-030",
     "F3-528",
     "SSYS-027",
     "CV-351",
@@ -6912,6 +6914,7 @@
     "BSD-029",
     "ATS-047",
     "SSYS-040",
+    "DR-051",
     "F3-580",
     "F3-574",
     "F3-579",
@@ -6954,14 +6957,22 @@
     "F3-595",
     "UCC-175",
     "ATS-046",
+    "F3-616",
+    "F3-617",
     "CS-087",
     "UCC-170",
     "ATS-054",
     "ATS-062",
     "CDRY-022",
+    "UCC-188",
     "WM-063",
     "CDRY-023",
+    "CS-093",
+    "UIW-031",
+    "WM-074",
+    "WM-075",
     "WM-064",
+    "WM-073",
     "ATS-066"
   ],
   "build_order_blocked_nodes": [],
@@ -10993,6 +11004,11 @@
       "edge_type": "depends_on",
       "from": "ACD-485",
       "to": "DL-147"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-485",
+      "to": "UCC-129"
     },
     {
       "edge_type": "depends_on",
@@ -18488,6 +18504,21 @@
       "edge_type": "depends_on",
       "from": "CS-087",
       "to": "UCC-175"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CS-093",
+      "to": "CDRY-021"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CS-093",
+      "to": "CS-079"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CS-093",
+      "to": "UCC-188"
     },
     {
       "edge_type": "depends_on",
@@ -26401,6 +26432,51 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "DR-051",
+      "to": "DR-043"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DR-051",
+      "to": "DR-044"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DR-051",
+      "to": "F3-584"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DR-051",
+      "to": "F3-585"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DR-051",
+      "to": "F3-587"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DR-052",
+      "to": "ACD-469"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DR-052",
+      "to": "ACD-473"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DR-052",
+      "to": "ACD-485"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DR-052",
+      "to": "DR-043"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "EP-096",
       "to": "EP-005"
     },
@@ -30938,6 +31014,56 @@
       "edge_type": "depends_on",
       "from": "F3-599",
       "to": "UCC-103"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-616",
+      "to": "F3-523"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-616",
+      "to": "F3-567"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-616",
+      "to": "F3-584"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-616",
+      "to": "F3-585"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-616",
+      "to": "F3-593"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-616",
+      "to": "F3-595"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-617",
+      "to": "DL-148"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-617",
+      "to": "DL-149"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-617",
+      "to": "F3-592"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-617",
+      "to": "F3-595"
     },
     {
       "edge_type": "depends_on",
@@ -80896,6 +81022,41 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "UCC-188",
+      "to": "ACD-485"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-188",
+      "to": "F3-587"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-188",
+      "to": "F3-593"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-188",
+      "to": "F3-617"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-188",
+      "to": "UCC-129"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-188",
+      "to": "UCC-168"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-188",
+      "to": "UCC-170"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "UF-001",
       "to": "UF-002"
     },
@@ -83618,6 +83779,46 @@
       "edge_type": "depends_on",
       "from": "UIW-025",
       "to": "UCC-156"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-030",
+      "to": "ACD-471"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-030",
+      "to": "F3-587"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-030",
+      "to": "UCC-168"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-030",
+      "to": "UIW-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-030",
+      "to": "UIW-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-031",
+      "to": "ACD-485"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-031",
+      "to": "UCC-188"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-031",
+      "to": "UIW-024"
     },
     {
       "edge_type": "depends_on",
@@ -88183,6 +88384,66 @@
       "edge_type": "depends_on",
       "from": "WM-064",
       "to": "WM-063"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-073",
+      "to": "ACD-485"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-073",
+      "to": "UCC-129"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-073",
+      "to": "UCC-188"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-073",
+      "to": "UIW-031"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-074",
+      "to": "F3-587"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-074",
+      "to": "UCC-168"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-074",
+      "to": "UCC-188"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-074",
+      "to": "UIW-030"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-075",
+      "to": "F3-593"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-075",
+      "to": "GRS-055"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-075",
+      "to": "TDR-011"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-075",
+      "to": "UCC-188"
     },
     {
       "edge_type": "depends_on",
@@ -102881,6 +103142,21 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "UCC-188",
+      "to": "WM-073"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UCC-188",
+      "to": "WM-074"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UCC-188",
+      "to": "WM-075"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "UF-074",
       "to": "F3-400"
     },
@@ -103058,6 +103334,16 @@
       "edge_type": "unblocks",
       "from": "UIW-025",
       "to": "F3-568"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UIW-030",
+      "to": "WM-074"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UIW-031",
+      "to": "WM-073"
     },
     {
       "edge_type": "unblocks",
@@ -103310,7 +103596,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-10-09T18:01:06Z",
+  "generated_at_utc": "2026-10-09T19:28:28Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -103322,8 +103608,8 @@
       "source_location": {
         "heading": "0PI-001 - Plans Index Retired Source-Preserving Bridge",
         "heading_level": 3,
-        "heading_line": 931,
-        "line": 933,
+        "heading_line": 933,
+        "line": 935,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103339,8 +103625,8 @@
       "source_location": {
         "heading": "0PI-002 - Index Authority And Compliance",
         "heading_level": 3,
-        "heading_line": 1046,
-        "line": 1048,
+        "heading_line": 1048,
+        "line": 1050,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103356,8 +103642,8 @@
       "source_location": {
         "heading": "0PI-003 - Change Summary And Index Role",
         "heading_level": 3,
-        "heading_line": 1094,
-        "line": 1096,
+        "heading_line": 1096,
+        "line": 1098,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103373,8 +103659,8 @@
       "source_location": {
         "heading": "0PI-004 - Anti Drift Reading Order",
         "heading_level": 3,
-        "heading_line": 1145,
-        "line": 1147,
+        "heading_line": 1147,
+        "line": 1149,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103390,8 +103676,8 @@
       "source_location": {
         "heading": "0PI-005 - Owner Map Guard And Initial Seams",
         "heading_level": 3,
-        "heading_line": 1200,
-        "line": 1202,
+        "heading_line": 1202,
+        "line": 1204,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103407,8 +103693,8 @@
       "source_location": {
         "heading": "0PI-006 - Owner Map Routing And Stale Consumer Seams",
         "heading_level": 3,
-        "heading_line": 1249,
-        "line": 1251,
+        "heading_line": 1251,
+        "line": 1253,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103424,8 +103710,8 @@
       "source_location": {
         "heading": "0PI-007 - Owner Map Runtime File Storage Seams",
         "heading_level": 3,
-        "heading_line": 1300,
-        "line": 1302,
+        "heading_line": 1302,
+        "line": 1304,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103441,8 +103727,8 @@
       "source_location": {
         "heading": "0PI-008 - Owner Map GUI Widget Usage Final Pass Seams",
         "heading_level": 3,
-        "heading_line": 1351,
-        "line": 1353,
+        "heading_line": 1353,
+        "line": 1355,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103458,8 +103744,8 @@
       "source_location": {
         "heading": "0PI-009 - Rewrite Agent Loop Architecture Baseline",
         "heading_level": 3,
-        "heading_line": 1404,
-        "line": 1406,
+        "heading_line": 1406,
+        "line": 1408,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103475,8 +103761,8 @@
       "source_location": {
         "heading": "0PI-010 - Rewrite UI Auth Account Carry Through",
         "heading_level": 3,
-        "heading_line": 1455,
-        "line": 1457,
+        "heading_line": 1457,
+        "line": 1459,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103492,8 +103778,8 @@
       "source_location": {
         "heading": "0PI-011 - Provider Account Owner Split",
         "heading_level": 3,
-        "heading_line": 1515,
-        "line": 1517,
+        "heading_line": 1517,
+        "line": 1519,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103509,8 +103795,8 @@
       "source_location": {
         "heading": "0PI-012 - PM Planning And Node Readiness Owner Split",
         "heading_level": 3,
-        "heading_line": 1566,
-        "line": 1568,
+        "heading_line": 1568,
+        "line": 1570,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103526,8 +103812,8 @@
       "source_location": {
         "heading": "0PI-013 - Instant Grep Live Canon Map",
         "heading_level": 3,
-        "heading_line": 1618,
-        "line": 1620,
+        "heading_line": 1620,
+        "line": 1622,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103543,8 +103829,8 @@
       "source_location": {
         "heading": "0PI-014 - Instant Grep Owner Split",
         "heading_level": 3,
-        "heading_line": 1667,
-        "line": 1669,
+        "heading_line": 1669,
+        "line": 1671,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103560,8 +103846,8 @@
       "source_location": {
         "heading": "0PI-015 - Browser Owner Split",
         "heading_level": 3,
-        "heading_line": 1716,
-        "line": 1718,
+        "heading_line": 1718,
+        "line": 1720,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103577,8 +103863,8 @@
       "source_location": {
         "heading": "0PI-016 - Browser Stale Cleanup And Consumer Map",
         "heading_level": 3,
-        "heading_line": 1769,
-        "line": 1771,
+        "heading_line": 1771,
+        "line": 1773,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103594,8 +103880,8 @@
       "source_location": {
         "heading": "0PI-017 - Slash Chat SSOT Boundary",
         "heading_level": 3,
-        "heading_line": 1821,
-        "line": 1823,
+        "heading_line": 1823,
+        "line": 1825,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103611,8 +103897,8 @@
       "source_location": {
         "heading": "0PI-018 - Slash Chat Scope And Drift Risks",
         "heading_level": 3,
-        "heading_line": 1872,
-        "line": 1874,
+        "heading_line": 1874,
+        "line": 1876,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103628,8 +103914,8 @@
       "source_location": {
         "heading": "0PI-019 - Artifact HITL Tool Owner Split",
         "heading_level": 3,
-        "heading_line": 1924,
-        "line": 1926,
+        "heading_line": 1926,
+        "line": 1928,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103645,8 +103931,8 @@
       "source_location": {
         "heading": "0PI-020 - Approval Compatibility Boundary",
         "heading_level": 3,
-        "heading_line": 1975,
-        "line": 1977,
+        "heading_line": 1977,
+        "line": 1979,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103662,8 +103948,8 @@
       "source_location": {
         "heading": "0PI-021 - Terminal Ownership Map",
         "heading_level": 3,
-        "heading_line": 2024,
-        "line": 2026,
+        "heading_line": 2026,
+        "line": 2028,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103679,8 +103965,8 @@
       "source_location": {
         "heading": "0PI-022 - File Manager Editor Owner Posture",
         "heading_level": 3,
-        "heading_line": 2077,
-        "line": 2079,
+        "heading_line": 2079,
+        "line": 2081,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103696,8 +103982,8 @@
       "source_location": {
         "heading": "0PI-023 - File Manager Editor Packetization Gates",
         "heading_level": 3,
-        "heading_line": 2127,
-        "line": 2129,
+        "heading_line": 2129,
+        "line": 2131,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103713,8 +103999,8 @@
       "source_location": {
         "heading": "0PI-024 - GUI Worktree And Source Control Handoff",
         "heading_level": 3,
-        "heading_line": 2180,
-        "line": 2182,
+        "heading_line": 2182,
+        "line": 2184,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103730,8 +104016,8 @@
       "source_location": {
         "heading": "0PI-025 - Debug Ownership And Packet Coupling",
         "heading_level": 3,
-        "heading_line": 2233,
-        "line": 2235,
+        "heading_line": 2235,
+        "line": 2237,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103747,8 +104033,8 @@
       "source_location": {
         "heading": "0PI-026 - Plan Map Table Core UX Owners",
         "heading_level": 3,
-        "heading_line": 2287,
-        "line": 2289,
+        "heading_line": 2289,
+        "line": 2291,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103764,8 +104050,8 @@
       "source_location": {
         "heading": "0PI-027 - Plan Map Table Planning Runtime Artifacts",
         "heading_level": 3,
-        "heading_line": 2339,
-        "line": 2341,
+        "heading_line": 2341,
+        "line": 2343,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103781,8 +104067,8 @@
       "source_location": {
         "heading": "0PI-028 - Plan Map Table Widgets Config Media Wiring",
         "heading_level": 3,
-        "heading_line": 2398,
-        "line": 2400,
+        "heading_line": 2400,
+        "line": 2402,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103798,8 +104084,8 @@
       "source_location": {
         "heading": "0PI-029 - Instant Grep Sparse N Gram Owner Split",
         "heading_level": 3,
-        "heading_line": 2459,
-        "line": 2461,
+        "heading_line": 2461,
+        "line": 2463,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103815,8 +104101,8 @@
       "source_location": {
         "heading": "0PI-030 - Cross-Cutting Backend Duplication Hotspots",
         "heading_level": 3,
-        "heading_line": 2511,
-        "line": 2513,
+        "heading_line": 2513,
+        "line": 2515,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103832,8 +104118,8 @@
       "source_location": {
         "heading": "0PI-031 - Context Lens UI Hotspot",
         "heading_level": 3,
-        "heading_line": 2568,
-        "line": 2570,
+        "heading_line": 2570,
+        "line": 2572,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103849,8 +104135,8 @@
       "source_location": {
         "heading": "0PI-032 - Rewrite-Era Owner Guidance",
         "heading_level": 3,
-        "heading_line": 2617,
-        "line": 2619,
+        "heading_line": 2619,
+        "line": 2621,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103866,8 +104152,8 @@
       "source_location": {
         "heading": "0PI-033 - Shard Governance Boundaries",
         "heading_level": 3,
-        "heading_line": 2668,
-        "line": 2670,
+        "heading_line": 2670,
+        "line": 2672,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103883,8 +104169,8 @@
       "source_location": {
         "heading": "0PI-034 - Shard Index Routing Table",
         "heading_level": 3,
-        "heading_line": 2725,
-        "line": 2727,
+        "heading_line": 2727,
+        "line": 2729,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103900,8 +104186,8 @@
       "source_location": {
         "heading": "0PI-035 - Containers Registry Unraid Owner Scope",
         "heading_level": 3,
-        "heading_line": 2781,
-        "line": 2783,
+        "heading_line": 2783,
+        "line": 2785,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103917,8 +104203,8 @@
       "source_location": {
         "heading": "0PI-036 - Docker Manager Auth UX Routing",
         "heading_level": 3,
-        "heading_line": 2835,
-        "line": 2837,
+        "heading_line": 2837,
+        "line": 2839,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103934,8 +104220,8 @@
       "source_location": {
         "heading": "0PI-037 - Runtime Packet Owner Routing",
         "heading_level": 3,
-        "heading_line": 2885,
-        "line": 2887,
+        "heading_line": 2887,
+        "line": 2889,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103951,8 +104237,8 @@
       "source_location": {
         "heading": "0PI-038 - Runtime Rendering And Blocked UX",
         "heading_level": 3,
-        "heading_line": 2941,
-        "line": 2943,
+        "heading_line": 2943,
+        "line": 2945,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103968,8 +104254,8 @@
       "source_location": {
         "heading": "0PI-039 - Source Control Actions Docker Owner Split",
         "heading_level": 3,
-        "heading_line": 2995,
-        "line": 2997,
+        "heading_line": 2997,
+        "line": 2999,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -103985,8 +104271,8 @@
       "source_location": {
         "heading": "0PI-040 - Visible Source-Control Surface Routing",
         "heading_level": 3,
-        "heading_line": 3051,
-        "line": 3053,
+        "heading_line": 3053,
+        "line": 3055,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104002,8 +104288,8 @@
       "source_location": {
         "heading": "0PI-041 - Retired Git Alias And Stale-Canon Risk",
         "heading_level": 3,
-        "heading_line": 3115,
-        "line": 3117,
+        "heading_line": 3117,
+        "line": 3119,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104019,8 +104305,8 @@
       "source_location": {
         "heading": "0PI-042 - Web Firecrawl Owner Set",
         "heading_level": 3,
-        "heading_line": 3170,
-        "line": 3172,
+        "heading_line": 3172,
+        "line": 3174,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104036,8 +104322,8 @@
       "source_location": {
         "heading": "0PI-043 - Firecrawl Consumer Deference And Anchors",
         "heading_level": 3,
-        "heading_line": 3241,
-        "line": 3243,
+        "heading_line": 3243,
+        "line": 3245,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104053,8 +104339,8 @@
       "source_location": {
         "heading": "0PI-044 - Firecrawl Obligation Routing",
         "heading_level": 3,
-        "heading_line": 3313,
-        "line": 3315,
+        "heading_line": 3315,
+        "line": 3317,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104070,8 +104356,8 @@
       "source_location": {
         "heading": "0PI-045 - Slash And Provider Drift Guards",
         "heading_level": 3,
-        "heading_line": 3385,
-        "line": 3387,
+        "heading_line": 3387,
+        "line": 3389,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104087,8 +104373,8 @@
       "source_location": {
         "heading": "0PI-046 - Firecrawl Packet-Conflict Reset Scope",
         "heading_level": 3,
-        "heading_line": 3451,
-        "line": 3453,
+        "heading_line": 3453,
+        "line": 3455,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104104,8 +104390,8 @@
       "source_location": {
         "heading": "0PI-047 - Reset Operation Constraints",
         "heading_level": 3,
-        "heading_line": 3515,
-        "line": 3517,
+        "heading_line": 3517,
+        "line": 3519,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104121,8 +104407,8 @@
       "source_location": {
         "heading": "0PI-048 - Legacy Fidelity Traceability",
         "heading_level": 3,
-        "heading_line": 3587,
-        "line": 3589,
+        "heading_line": 3589,
+        "line": 3591,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104138,8 +104424,8 @@
       "source_location": {
         "heading": "0PI-049 - Additional Fidelity And Webmap Guard",
         "heading_level": 3,
-        "heading_line": 3660,
-        "line": 3662,
+        "heading_line": 3662,
+        "line": 3664,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104155,8 +104441,8 @@
       "source_location": {
         "heading": "0PI-050 - A2A OpenCode Packet Boundary",
         "heading_level": 3,
-        "heading_line": 3732,
-        "line": 3734,
+        "heading_line": 3734,
+        "line": 3736,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104172,8 +104458,8 @@
       "source_location": {
         "heading": "0PI-051 - A2A Impacted-Doc Taxonomy",
         "heading_level": 3,
-        "heading_line": 3793,
-        "line": 3795,
+        "heading_line": 3795,
+        "line": 3797,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104189,8 +104475,8 @@
       "source_location": {
         "heading": "0PI-052 - A2A Cleanup And Final Narrowing",
         "heading_level": 3,
-        "heading_line": 3868,
-        "line": 3870,
+        "heading_line": 3870,
+        "line": 3872,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104206,8 +104492,8 @@
       "source_location": {
         "heading": "0PI-053 - A2A Evidence And Anchor Exactness",
         "heading_level": 3,
-        "heading_line": 3936,
-        "line": 3938,
+        "heading_line": 3938,
+        "line": 3940,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104223,8 +104509,8 @@
       "source_location": {
         "heading": "0PI-054 - Standardization Owner Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 4014,
-        "line": 4016,
+        "heading_line": 4016,
+        "line": 4018,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104240,8 +104526,8 @@
       "source_location": {
         "heading": "0PI-055 - Goal Runtime System Owner Map",
         "heading_level": 3,
-        "heading_line": 4066,
-        "line": 4068,
+        "heading_line": 4068,
+        "line": 4070,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104257,8 +104543,8 @@
       "source_location": {
         "heading": "0PI-056 - Orchestrator Goal Runtime Flow Owner Map",
         "heading_level": 3,
-        "heading_line": 4155,
-        "line": 4157,
+        "heading_line": 4157,
+        "line": 4159,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104274,8 +104560,8 @@
       "source_location": {
         "heading": "0PI-057 - Semantic Audit Closure Owner Map",
         "heading_level": 3,
-        "heading_line": 4290,
-        "line": 4292,
+        "heading_line": 4292,
+        "line": 4294,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104291,8 +104577,8 @@
       "source_location": {
         "heading": "0PI-058 - Plans-To-Code Handoff Owner Map",
         "heading_level": 3,
-        "heading_line": 4379,
-        "line": 4381,
+        "heading_line": 4381,
+        "line": 4383,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104308,8 +104594,8 @@
       "source_location": {
         "heading": "0PI-059 - PRD Builder And Planning Wizard Owner Map",
         "heading_level": 3,
-        "heading_line": 4500,
-        "line": 4502,
+        "heading_line": 4502,
+        "line": 4504,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104325,8 +104611,8 @@
       "source_location": {
         "heading": "Native Discovery Owner Map (2026-06-22)",
         "heading_level": 3,
-        "heading_line": 4601,
-        "line": 4612,
+        "heading_line": 4603,
+        "line": 4614,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104342,8 +104628,8 @@
       "source_location": {
         "heading": "0PI-061 - Provider Updates Owner Map And Retired Gemini CLI Anchor",
         "heading_level": 3,
-        "heading_line": 4694,
-        "line": 4696,
+        "heading_line": 4696,
+        "line": 4698,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104359,8 +104645,8 @@
       "source_location": {
         "heading": "0PI-062 - Miscellaneous History Vision Bridge Teach Owner Map",
         "heading_level": 3,
-        "heading_line": 4774,
-        "line": 4776,
+        "heading_line": 4776,
+        "line": 4778,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104376,8 +104662,8 @@
       "source_location": {
         "heading": "0PI-063 - Miscellaneous Feature Intake Compile Owner Map",
         "heading_level": 3,
-        "heading_line": 4983,
-        "line": 4985,
+        "heading_line": 4985,
+        "line": 4987,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104393,8 +104679,8 @@
       "source_location": {
         "heading": "0PI-064 - Free Models Compile Owner Map",
         "heading_level": 3,
-        "heading_line": 5067,
-        "line": 5069,
+        "heading_line": 5069,
+        "line": 5071,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104410,8 +104696,8 @@
       "source_location": {
         "heading": "0PI-065 - Containerized Hosts Compile Owner Map",
         "heading_level": 3,
-        "heading_line": 5130,
-        "line": 5132,
+        "heading_line": 5132,
+        "line": 5134,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104427,8 +104713,8 @@
       "source_location": {
         "heading": "0PI-066 - 0PI-066",
         "heading_level": 3,
-        "heading_line": 5227,
-        "line": 5229,
+        "heading_line": 5229,
+        "line": 5231,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104444,8 +104730,8 @@
       "source_location": {
         "heading": "0PI-067 - Shared Integration Runtime Owner Routing",
         "heading_level": 3,
-        "heading_line": 5474,
-        "line": 5476,
+        "heading_line": 5476,
+        "line": 5478,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104461,8 +104747,8 @@
       "source_location": {
         "heading": "0PI-068 - 203-Command Touch Closure Owner And Machine-Registry Map",
         "heading_level": 3,
-        "heading_line": 5529,
-        "line": 5531,
+        "heading_line": 5531,
+        "line": 5533,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -123458,6 +123744,23 @@
       "unit_type": "command_contract"
     },
     {
+      "context_scope": "chat_tweaks_20261007",
+      "gui_related": true,
+      "owner_doc": "Plans/Commands_System.md",
+      "plan_unit_id": "CS-093",
+      "reasoning_tier": "medium",
+      "risk_class": "invented_command_identity",
+      "source_location": {
+        "heading": "CS-093 - 5.6 Pro Chat Round Non-Command Controls And The Subagent Open Reuse",
+        "heading_level": 3,
+        "heading_line": 7455,
+        "line": 7472,
+        "path": "Plans/Commands_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "contracts_v0_residual_source",
       "gui_related": true,
       "owner_doc": "Plans/Contracts_V0.md",
@@ -137545,6 +137848,40 @@
         "heading_level": 3,
         "heading_line": 2661,
         "line": 2663,
+        "path": "Plans/DRY_Rules.md"
+      },
+      "status": "accepted",
+      "unit_type": "invariant"
+    },
+    {
+      "context_scope": "chat_tweaks_20261007",
+      "gui_related": true,
+      "owner_doc": "Plans/DRY_Rules.md",
+      "plan_unit_id": "DR-051",
+      "reasoning_tier": "high",
+      "risk_class": "duplicate_presentation_authority",
+      "source_location": {
+        "heading": "DR-051 - One Icon Registry And One Status Set For The Assistant Chat",
+        "heading_level": 3,
+        "heading_line": 2728,
+        "line": 2730,
+        "path": "Plans/DRY_Rules.md"
+      },
+      "status": "accepted",
+      "unit_type": "invariant"
+    },
+    {
+      "context_scope": "chat_tweaks_20261007",
+      "gui_related": true,
+      "owner_doc": "Plans/DRY_Rules.md",
+      "plan_unit_id": "DR-052",
+      "reasoning_tier": "high",
+      "risk_class": "duplicate_presentation_authority",
+      "source_location": {
+        "heading": "DR-052 - One Transcript Renderer For The Chat And Its Read-Only Child Transcripts",
+        "heading_level": 3,
+        "heading_line": 2785,
+        "line": 2787,
         "path": "Plans/DRY_Rules.md"
       },
       "status": "accepted",
@@ -155087,8 +155424,8 @@
       "source_location": {
         "heading": "F3-594 — Agents Are Puppets",
         "heading_level": 3,
-        "heading_line": 40790,
-        "line": 40792,
+        "heading_line": 40793,
+        "line": 40795,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155104,8 +155441,8 @@
       "source_location": {
         "heading": "F3-595 — Cast Plates In Sheets And Run Views",
         "heading_level": 3,
-        "heading_line": 40877,
-        "line": 40879,
+        "heading_line": 40880,
+        "line": 40882,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155121,8 +155458,8 @@
       "source_location": {
         "heading": "F3-596 — The Ask Card's Look",
         "heading_level": 3,
-        "heading_line": 40952,
-        "line": 40954,
+        "heading_line": 40955,
+        "line": 40957,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155138,8 +155475,8 @@
       "source_location": {
         "heading": "F3-597 — The Assistant Chat Under The Retro Themes",
         "heading_level": 3,
-        "heading_line": 41015,
-        "line": 41017,
+        "heading_line": 41018,
+        "line": 41020,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155155,8 +155492,8 @@
       "source_location": {
         "heading": "F3-598 — NieR Mode In Product Onboarding And The Guided Tour",
         "heading_level": 3,
-        "heading_line": 41101,
-        "line": 41103,
+        "heading_line": 41104,
+        "line": 41106,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155172,8 +155509,42 @@
       "source_location": {
         "heading": "F3-599 — Onboarding And Guided Tour Sound Cues In Notifications And Sounds",
         "heading_level": 3,
-        "heading_line": 41234,
-        "line": 41236,
+        "heading_line": 41237,
+        "line": 41239,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "chat_tweaks_20261007",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-616",
+      "reasoning_tier": "standard",
+      "risk_class": "chat_activity_detail_drift",
+      "source_location": {
+        "heading": "F3-616 — Activity Detail Tabs, Collaboration Domain Tones And The Round's Last Polish",
+        "heading_level": 3,
+        "heading_line": 41355,
+        "line": 41357,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "chat_tweaks_20261007",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-617",
+      "reasoning_tier": "standard",
+      "risk_class": "internal_identifier_leak",
+      "source_location": {
+        "heading": "F3-617 — Technical Details Remains Only On A Setup Sheet's Advanced Page",
+        "heading_level": 3,
+        "heading_line": 41420,
+        "line": 41422,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -158334,8 +158705,8 @@
       "source_location": {
         "heading": "GRS-001 - Native Goal Mode Scope And Retired Prompt Boundary",
         "heading_level": 3,
-        "heading_line": 310,
-        "line": 312,
+        "heading_line": 311,
+        "line": 313,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158351,8 +158722,8 @@
       "source_location": {
         "heading": "GRS-002 - One Runtime Engine With Three Product Integrations",
         "heading_level": 3,
-        "heading_line": 999,
-        "line": 1001,
+        "heading_line": 1000,
+        "line": 1002,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158368,8 +158739,8 @@
       "source_location": {
         "heading": "GRS-003 - Invisible Planning Wizard Goal Boundary",
         "heading_level": 3,
-        "heading_line": 1084,
-        "line": 1086,
+        "heading_line": 1085,
+        "line": 1087,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158385,8 +158756,8 @@
       "source_location": {
         "heading": "GRS-004 - Whole-Goal Coherence With Sharded Inputs",
         "heading_level": 3,
-        "heading_line": 1163,
-        "line": 1165,
+        "heading_line": 1164,
+        "line": 1166,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158402,8 +158773,8 @@
       "source_location": {
         "heading": "GRS-005 - Durable Goal State And Event Log",
         "heading_level": 3,
-        "heading_line": 1251,
-        "line": 1253,
+        "heading_line": 1252,
+        "line": 1254,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158419,8 +158790,8 @@
       "source_location": {
         "heading": "GRS-006 - Scheduler Continuation And Revisioned Goal Updates",
         "heading_level": 3,
-        "heading_line": 1310,
-        "line": 1312,
+        "heading_line": 1311,
+        "line": 1313,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158436,8 +158807,8 @@
       "source_location": {
         "heading": "GRS-007 - Goal Replan Event For Material Changes",
         "heading_level": 3,
-        "heading_line": 1373,
-        "line": 1375,
+        "heading_line": 1374,
+        "line": 1376,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158453,8 +158824,8 @@
       "source_location": {
         "heading": "GRS-008 - Objective Attachments And Phase-Bound Snapshots",
         "heading_level": 3,
-        "heading_line": 1427,
-        "line": 1429,
+        "heading_line": 1428,
+        "line": 1430,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -158470,8 +158841,8 @@
       "source_location": {
         "heading": "GRS-009 - Worker Role Separation And Bounded Authority",
         "heading_level": 3,
-        "heading_line": 1500,
-        "line": 1502,
+        "heading_line": 1501,
+        "line": 1503,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -158487,8 +158858,8 @@
       "source_location": {
         "heading": "GRS-010 - Model Role Policy And Certification-Tier Verifier Requirements",
         "heading_level": 3,
-        "heading_line": 1576,
-        "line": 1578,
+        "heading_line": 1577,
+        "line": 1579,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -158504,8 +158875,8 @@
       "source_location": {
         "heading": "GRS-011 - Provider-Neutral Escalation Triggers",
         "heading_level": 3,
-        "heading_line": 1651,
-        "line": 1653,
+        "heading_line": 1652,
+        "line": 1654,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158521,8 +158892,8 @@
       "source_location": {
         "heading": "GRS-012 - Goal Completion Receipt Authority",
         "heading_level": 3,
-        "heading_line": 1711,
-        "line": 1713,
+        "heading_line": 1712,
+        "line": 1714,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158538,8 +158909,8 @@
       "source_location": {
         "heading": "GRS-013 - Risk-Tiered Completion Certification",
         "heading_level": 3,
-        "heading_line": 1781,
-        "line": 1783,
+        "heading_line": 1782,
+        "line": 1784,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -158555,8 +158926,8 @@
       "source_location": {
         "heading": "GRS-014 - Verifier Unavailable And Evidence Retention Policy",
         "heading_level": 3,
-        "heading_line": 1839,
-        "line": 1841,
+        "heading_line": 1840,
+        "line": 1842,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -158572,8 +158943,8 @@
       "source_location": {
         "heading": "GRS-015 - Progress Fingerprints, Budgets, And Validators",
         "heading_level": 3,
-        "heading_line": 1906,
-        "line": 1908,
+        "heading_line": 1907,
+        "line": 1909,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -158589,8 +158960,8 @@
       "source_location": {
         "heading": "GRS-016 - Parallel Child Goals And Parent Completion Authority",
         "heading_level": 3,
-        "heading_line": 1972,
-        "line": 1974,
+        "heading_line": 1973,
+        "line": 1975,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -158606,8 +158977,8 @@
       "source_location": {
         "heading": "GRS-017 - Child Goal Write Authority And Single-Writer Leases",
         "heading_level": 3,
-        "heading_line": 2049,
-        "line": 2051,
+        "heading_line": 2050,
+        "line": 2052,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -158623,8 +158994,8 @@
       "source_location": {
         "heading": "GRS-018 - Task Template Catalog And Goal-Type Completion Criteria",
         "heading_level": 3,
-        "heading_line": 2107,
-        "line": 2109,
+        "heading_line": 2108,
+        "line": 2110,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158640,8 +159011,8 @@
       "source_location": {
         "heading": "GRS-019 - Autonomous Recovery And Exact Blockers",
         "heading_level": 3,
-        "heading_line": 2198,
-        "line": 2200,
+        "heading_line": 2199,
+        "line": 2201,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158657,8 +159028,8 @@
       "source_location": {
         "heading": "GRS-020 - Approval Boundaries For High-Risk Goal Actions",
         "heading_level": 3,
-        "heading_line": 2270,
-        "line": 2272,
+        "heading_line": 2271,
+        "line": 2273,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158674,8 +159045,8 @@
       "source_location": {
         "heading": "GRS-021 - Goal Compile Acceptance And Governance Boundary",
         "heading_level": 3,
-        "heading_line": 2325,
-        "line": 2327,
+        "heading_line": 2326,
+        "line": 2328,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158691,8 +159062,8 @@
       "source_location": {
         "heading": "GRS-022 - Goal Runtime Risk Register",
         "heading_level": 3,
-        "heading_line": 2389,
-        "line": 2391,
+        "heading_line": 2390,
+        "line": 2392,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158708,8 +159079,8 @@
       "source_location": {
         "heading": "GRS-023 - Reference Patterns Are Lineage, Not Canonical Owners",
         "heading_level": 3,
-        "heading_line": 2438,
-        "line": 2440,
+        "heading_line": 2439,
+        "line": 2441,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158725,8 +159096,8 @@
       "source_location": {
         "heading": "GRS-024 - Legacy Chain Wizard Compatibility And Plan Graph Runtime Boundary",
         "heading_level": 3,
-        "heading_line": 2504,
-        "line": 2506,
+        "heading_line": 2505,
+        "line": 2507,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158742,8 +159113,8 @@
       "source_location": {
         "heading": "GRS-025 - Goal UI Styling, Persistence Substrate, And Provider Defaults",
         "heading_level": 3,
-        "heading_line": 2558,
-        "line": 2560,
+        "heading_line": 2559,
+        "line": 2561,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158759,8 +159130,8 @@
       "source_location": {
         "heading": "GRS-026 - Orchestrator GoalRun Runtime Envelope",
         "heading_level": 3,
-        "heading_line": 3901,
-        "line": 3903,
+        "heading_line": 3902,
+        "line": 3904,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158776,8 +159147,8 @@
       "source_location": {
         "heading": "GRS-027 - Verification Repair Loop And Certification Policy",
         "heading_level": 3,
-        "heading_line": 3972,
-        "line": 3974,
+        "heading_line": 3973,
+        "line": 3975,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "superseded",
@@ -158793,8 +159164,8 @@
       "source_location": {
         "heading": "GRS-028 - Planning Wizard Approval To PlanCompile Boundary",
         "heading_level": 3,
-        "heading_line": 4097,
-        "line": 4099,
+        "heading_line": 4098,
+        "line": 4100,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158810,8 +159181,8 @@
       "source_location": {
         "heading": "GRS-029 - Hands-Off Autonomy And HITL Boundary",
         "heading_level": 3,
-        "heading_line": 4154,
-        "line": 4156,
+        "heading_line": 4155,
+        "line": 4157,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158827,8 +159198,8 @@
       "source_location": {
         "heading": "GRS-030 - Plans-To-Code Goal Completion Certification",
         "heading_level": 3,
-        "heading_line": 4208,
-        "line": 4210,
+        "heading_line": 4209,
+        "line": 4211,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158844,8 +159215,8 @@
       "source_location": {
         "heading": "GRS-031 - Approve And Build Launch, Parallel Enforcement, And Atomic Activation",
         "heading_level": 3,
-        "heading_line": 4271,
-        "line": 4273,
+        "heading_line": 4272,
+        "line": 4274,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158861,8 +159232,8 @@
       "source_location": {
         "heading": "GRS-032 - Goal Runtime Host Capability Consumption Boundary",
         "heading_level": 3,
-        "heading_line": 934,
-        "line": 936,
+        "heading_line": 935,
+        "line": 937,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158878,8 +159249,8 @@
       "source_location": {
         "heading": "GRS-033 - P1-AGENT-FOCUS-WATCHDOG",
         "heading_level": 3,
-        "heading_line": 4412,
-        "line": 4414,
+        "heading_line": 4413,
+        "line": 4415,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158895,8 +159266,8 @@
       "source_location": {
         "heading": "GRS-034 - P1-INTERRUPT-CANCEL-SETTLEMENT",
         "heading_level": 3,
-        "heading_line": 4490,
-        "line": 4492,
+        "heading_line": 4491,
+        "line": 4493,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158912,8 +159283,8 @@
       "source_location": {
         "heading": "GRS-035 - P0-AGENT-CONTROL-PLANE-ENVELOPE",
         "heading_level": 3,
-        "heading_line": 4569,
-        "line": 4571,
+        "heading_line": 4570,
+        "line": 4572,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158929,8 +159300,8 @@
       "source_location": {
         "heading": "GRS-036 - P0-SUBAGENT-EXECUTION-CONTRACT",
         "heading_level": 3,
-        "heading_line": 4666,
-        "line": 4668,
+        "heading_line": 4667,
+        "line": 4669,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158946,8 +159317,8 @@
       "source_location": {
         "heading": "GRS-037 - P0-LOOP-BREAKER-TAXONOMY",
         "heading_level": 3,
-        "heading_line": 4756,
-        "line": 4758,
+        "heading_line": 4757,
+        "line": 4759,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158963,8 +159334,8 @@
       "source_location": {
         "heading": "GRS-038 - P0-GOAL-SCOPE-SUBAGENT-ISOLATION",
         "heading_level": 3,
-        "heading_line": 4848,
-        "line": 4850,
+        "heading_line": 4849,
+        "line": 4851,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158980,8 +159351,8 @@
       "source_location": {
         "heading": "GRS-039 - P1-EXTERNAL-AGENT-HANDOFF-IMPORT",
         "heading_level": 3,
-        "heading_line": 4923,
-        "line": 4925,
+        "heading_line": 4924,
+        "line": 4926,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -158997,8 +159368,8 @@
       "source_location": {
         "heading": "GRS-040 - GRS-040",
         "heading_level": 3,
-        "heading_line": 4996,
-        "line": 4998,
+        "heading_line": 4997,
+        "line": 4999,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159014,8 +159385,8 @@
       "source_location": {
         "heading": "GRS-041 - FABLE Goal Runtime Event Payload Closure",
         "heading_level": 3,
-        "heading_line": 5043,
-        "line": 5045,
+        "heading_line": 5044,
+        "line": 5046,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159031,8 +159402,8 @@
       "source_location": {
         "heading": "GRS-042 - Case L Canonical Goal Receipt Recovery Truth",
         "heading_level": 3,
-        "heading_line": 5234,
-        "line": 5236,
+        "heading_line": 5235,
+        "line": 5237,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159048,8 +159419,8 @@
       "source_location": {
         "heading": "GRS-043 - Case L Goal Event And Recovery Admission",
         "heading_level": 3,
-        "heading_line": 5282,
-        "line": 5284,
+        "heading_line": 5283,
+        "line": 5285,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159065,8 +159436,8 @@
       "source_location": {
         "heading": "GRS-044 - Durable Server-Owned Goal Lineage",
         "heading_level": 3,
-        "heading_line": 866,
-        "line": 868,
+        "heading_line": 867,
+        "line": 869,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159082,8 +159453,8 @@
       "source_location": {
         "heading": "GRS-045 - Bounded Advisory Consumers And Goal Control Fail Closure",
         "heading_level": 3,
-        "heading_line": 898,
-        "line": 900,
+        "heading_line": 899,
+        "line": 901,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159099,8 +159470,8 @@
       "source_location": {
         "heading": "GRS-046 - Frozen Goal Route And Explicit Rebind",
         "heading_level": 3,
-        "heading_line": 820,
-        "line": 822,
+        "heading_line": 821,
+        "line": 823,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159116,8 +159487,8 @@
       "source_location": {
         "heading": "GRS-047 - Goal Handoff Command And Local-Projection Closure",
         "heading_level": 3,
-        "heading_line": 786,
-        "line": 788,
+        "heading_line": 787,
+        "line": 789,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159133,8 +159504,8 @@
       "source_location": {
         "heading": "GRS-048 - Goal V2 Record And Retired Field Prohibition",
         "heading_level": 3,
-        "heading_line": 367,
-        "line": 369,
+        "heading_line": 368,
+        "line": 370,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159150,8 +159521,8 @@
       "source_location": {
         "heading": "GRS-049 - Retired Goal Role Cast And Model-Role Policy",
         "heading_level": 3,
-        "heading_line": 415,
-        "line": 417,
+        "heading_line": 416,
+        "line": 418,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159167,8 +159538,8 @@
       "source_location": {
         "heading": "GRS-050 - Durable Host Continuation And Evidence-Gated Completion",
         "heading_level": 3,
-        "heading_line": 456,
-        "line": 458,
+        "heading_line": 457,
+        "line": 459,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159184,8 +159555,8 @@
       "source_location": {
         "heading": "GRS-051 - Manual Stop Precedence Over Every Automatic Resume",
         "heading_level": 3,
-        "heading_line": 501,
-        "line": 503,
+        "heading_line": 502,
+        "line": 504,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159201,8 +159572,8 @@
       "source_location": {
         "heading": "GRS-052 - Retired Child Goals And Their Replacement Owners",
         "heading_level": 3,
-        "heading_line": 545,
-        "line": 547,
+        "heading_line": 546,
+        "line": 548,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159218,8 +159589,8 @@
       "source_location": {
         "heading": "GRS-053 - Internal Caller Boundary And Workflow-Owned State",
         "heading_level": 3,
-        "heading_line": 588,
-        "line": 590,
+        "heading_line": 589,
+        "line": 591,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159235,8 +159606,8 @@
       "source_location": {
         "heading": "GRS-054 - Goal Change Authority And Two-Path Revision",
         "heading_level": 3,
-        "heading_line": 633,
-        "line": 635,
+        "heading_line": 634,
+        "line": 636,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159252,8 +159623,8 @@
       "source_location": {
         "heading": "GRS-055 - Goal And To-Dos Are Activity Domains",
         "heading_level": 3,
-        "heading_line": 679,
-        "line": 681,
+        "heading_line": 680,
+        "line": 682,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159269,8 +159640,8 @@
       "source_location": {
         "heading": "GRS-056 - Goal V1 To V2 Migration With Dropped-Field Custody",
         "heading_level": 3,
-        "heading_line": 726,
-        "line": 728,
+        "heading_line": 727,
+        "line": 729,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159286,8 +159657,8 @@
       "source_location": {
         "heading": "Working Notebook Authority Boundary Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 5434,
-        "line": 5438,
+        "heading_line": 5435,
+        "line": 5439,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159303,8 +159674,8 @@
       "source_location": {
         "heading": "18. Goal Activity Detail Presentation and Bound Plan Synchronization (APR-059)",
         "heading_level": 3,
-        "heading_line": 5478,
-        "line": 5496,
+        "heading_line": 5479,
+        "line": 5497,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159320,8 +159691,8 @@
       "source_location": {
         "heading": "GRS-060 - Historical child-status event disposition",
         "heading_level": 3,
-        "heading_line": 5541,
-        "line": 5543,
+        "heading_line": 5542,
+        "line": 5544,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159337,8 +159708,8 @@
       "source_location": {
         "heading": "GRS-061 - Historical Goal degradation and current projection quality",
         "heading_level": 3,
-        "heading_line": 5618,
-        "line": 5620,
+        "heading_line": 5619,
+        "line": 5621,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159354,8 +159725,8 @@
       "source_location": {
         "heading": "GRS-062 - Exact historical Goal scheduling contract",
         "heading_level": 3,
-        "heading_line": 5740,
-        "line": 5742,
+        "heading_line": 5741,
+        "line": 5743,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159371,8 +159742,8 @@
       "source_location": {
         "heading": "GRS-064 - Shared Goal Body Currentness And Accepted History",
         "heading_level": 3,
-        "heading_line": 5998,
-        "line": 6000,
+        "heading_line": 5999,
+        "line": 6001,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159388,8 +159759,8 @@
       "source_location": {
         "heading": "GRS-065 - Original Standard Workflow Certification Decision",
         "heading_level": 3,
-        "heading_line": 6093,
-        "line": 6095,
+        "heading_line": 6094,
+        "line": 6096,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159405,8 +159776,8 @@
       "source_location": {
         "heading": "GRS-066 - Original Goal creation command settlement",
         "heading_level": 2,
-        "heading_line": 6158,
-        "line": 6160,
+        "heading_line": 6159,
+        "line": 6161,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159422,8 +159793,8 @@
       "source_location": {
         "heading": "GRS-067 - Passive Creation Observation And Independent Command Result",
         "heading_level": 3,
-        "heading_line": 6232,
-        "line": 6234,
+        "heading_line": 6233,
+        "line": 6235,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159439,8 +159810,8 @@
       "source_location": {
         "heading": "GRS-068 - Original Objective Update Acceptance And Effect Settlement",
         "heading_level": 3,
-        "heading_line": 6317,
-        "line": 6318,
+        "heading_line": 6318,
+        "line": 6319,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159456,8 +159827,8 @@
       "source_location": {
         "heading": "GRS-069 - Exact historical goal.progressed contract",
         "heading_level": 3,
-        "heading_line": 6392,
-        "line": 6394,
+        "heading_line": 6393,
+        "line": 6395,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159473,8 +159844,8 @@
       "source_location": {
         "heading": "GRS-070 - Exact historical goal.replanned contract",
         "heading_level": 3,
-        "heading_line": 6484,
-        "line": 6486,
+        "heading_line": 6485,
+        "line": 6487,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159490,8 +159861,8 @@
       "source_location": {
         "heading": "GRS-071 - Exact historical goal.stopped contract",
         "heading_level": 3,
-        "heading_line": 6576,
-        "line": 6578,
+        "heading_line": 6577,
+        "line": 6579,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159507,8 +159878,8 @@
       "source_location": {
         "heading": "GRS-072 - Exact historical goal.verification_decided contract",
         "heading_level": 3,
-        "heading_line": 6667,
-        "line": 6669,
+        "heading_line": 6668,
+        "line": 6670,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159524,8 +159895,8 @@
       "source_location": {
         "heading": "GRS-073 - Current explicit Goal cancellation",
         "heading_level": 3,
-        "heading_line": 6759,
-        "line": 6761,
+        "heading_line": 6760,
+        "line": 6762,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159541,8 +159912,8 @@
       "source_location": {
         "heading": "GRS-074 - Original execution association authority",
         "heading_level": 3,
-        "heading_line": 6850,
-        "line": 6852,
+        "heading_line": 6851,
+        "line": 6853,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159558,8 +159929,8 @@
       "source_location": {
         "heading": "GRS-075 - Current Workflow Child-Goal Retirement Admission",
         "heading_level": 3,
-        "heading_line": 6959,
-        "line": 6961,
+        "heading_line": 6960,
+        "line": 6962,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159575,8 +159946,8 @@
       "source_location": {
         "heading": "Terminal branch preservation",
         "heading_level": 4,
-        "heading_line": 7041,
-        "line": 7049,
+        "heading_line": 7042,
+        "line": 7050,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159592,8 +159963,8 @@
       "source_location": {
         "heading": "Explicit current reader and later lifecycle boundary",
         "heading_level": 4,
-        "heading_line": 7241,
-        "line": 7255,
+        "heading_line": 7242,
+        "line": 7256,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159609,8 +159980,8 @@
       "source_location": {
         "heading": "Explicit unproved installation prerequisites",
         "heading_level": 4,
-        "heading_line": 7356,
-        "line": 7362,
+        "heading_line": 7357,
+        "line": 7363,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159626,8 +159997,8 @@
       "source_location": {
         "heading": "GRS-079 - Exact original Workflow started-v3 semantics and read roles",
         "heading_level": 3,
-        "heading_line": 7433,
-        "line": 7451,
+        "heading_line": 7434,
+        "line": 7452,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159643,8 +160014,8 @@
       "source_location": {
         "heading": "GRS-080 - Positive original cancelled-v3 semantics and bounded read roles",
         "heading_level": 3,
-        "heading_line": 7496,
-        "line": 7516,
+        "heading_line": 7497,
+        "line": 7517,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159660,8 +160031,8 @@
       "source_location": {
         "heading": "GRS-081 - Original Workflow Goal cancellation private current inspection",
         "heading_level": 3,
-        "heading_line": 7565,
-        "line": 7575,
+        "heading_line": 7566,
+        "line": 7576,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159677,8 +160048,8 @@
       "source_location": {
         "heading": "GRS-082 — Fresh Standard Workflow certification original source (2026-09-20)",
         "heading_level": 2,
-        "heading_line": 7644,
-        "line": 7646,
+        "heading_line": 7645,
+        "line": 7647,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159694,8 +160065,8 @@
       "source_location": {
         "heading": "GRS-083 — Original certified producer composition and source-only authority (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 7741,
-        "line": 7743,
+        "heading_line": 7742,
+        "line": 7744,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159711,8 +160082,8 @@
       "source_location": {
         "heading": "GRS-084 — Whole certified v3 Event identity, released custody, native/event/history distinction and passive current consumers (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 7801,
-        "line": 7803,
+        "heading_line": 7802,
+        "line": 7804,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -159728,8 +160099,8 @@
       "source_location": {
         "heading": "GRS-085 — Mandatory started/cancelled/certified prefix projection, scope validation, halt rules and source lifetime (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 7873,
-        "line": 7875,
+        "heading_line": 7874,
+        "line": 7876,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -216278,6 +216649,23 @@
       "unit_type": "command_contract"
     },
     {
+      "context_scope": "chat_tweaks_20261007",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "plan_unit_id": "UCC-188",
+      "reasoning_tier": "high",
+      "risk_class": "chat_command_catalog_gap",
+      "source_location": {
+        "heading": "UCC-188 - 5.6 Pro Chat Round Command Census And Subagent Open Reuse",
+        "heading_level": 3,
+        "heading_line": 14644,
+        "line": 14646,
+        "path": "Plans/UI_Command_Catalog.md"
+      },
+      "status": "accepted",
+      "unit_type": "command_contract"
+    },
+    {
       "context_scope": "usage_feature_generated_tail_batch_197",
       "gui_related": false,
       "owner_doc": "Plans/usage-feature.md",
@@ -218503,6 +218891,40 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "chat_composer_commands",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Wiring_Rules.md",
+      "plan_unit_id": "UIW-030",
+      "reasoning_tier": "high",
+      "risk_class": "double_dispatch_or_state_morph_misbind",
+      "source_location": {
+        "heading": "UIW-030 - A Control Slot Whose Command Changes With State Binds One Command At A Time",
+        "heading_level": 3,
+        "heading_line": 1870,
+        "line": 1874,
+        "path": "Plans/UI_Wiring_Rules.md"
+      },
+      "status": "accepted",
+      "unit_type": "wiring_rule"
+    },
+    {
+      "context_scope": "chat_view_lifecycle",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Wiring_Rules.md",
+      "plan_unit_id": "UIW-031",
+      "reasoning_tier": "high",
+      "risk_class": "read_only_surface_mutation_or_cross_bound_view",
+      "source_location": {
+        "heading": "UIW-031 - A Read-Only Child Transcript Document Binds No Mutation And Owns Its View Resources",
+        "heading_level": 3,
+        "heading_line": 1930,
+        "line": 1934,
+        "path": "Plans/UI_Wiring_Rules.md"
+      },
+      "status": "accepted",
+      "unit_type": "wiring_rule"
     },
     {
       "context_scope": "worktree_git_generated_tail_batch_204",
@@ -221004,6 +221426,57 @@
       "unit_type": "integration_contract"
     },
     {
+      "context_scope": "chat_tweaks_20261007",
+      "gui_related": true,
+      "owner_doc": "Plans/Wiring_Matrix.md",
+      "plan_unit_id": "WM-073",
+      "reasoning_tier": "medium",
+      "risk_class": "wand_module_surface_drift",
+      "source_location": {
+        "heading": "WM-073 - Subagent Openers Reuse The Agents Open-Thread Entry",
+        "heading_level": 3,
+        "heading_line": 5239,
+        "line": 5243,
+        "path": "Plans/Wiring_Matrix.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "chat_composer_commands",
+      "gui_related": true,
+      "owner_doc": "Plans/Wiring_Matrix.md",
+      "plan_unit_id": "WM-074",
+      "reasoning_tier": "medium",
+      "risk_class": "double_dispatch_or_state_morph_misbind",
+      "source_location": {
+        "heading": "WM-074 - Send And Stop Chip Wiring",
+        "heading_level": 3,
+        "heading_line": 5294,
+        "line": 5298,
+        "path": "Plans/Wiring_Matrix.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "chat_tweaks_20261007",
+      "gui_related": true,
+      "owner_doc": "Plans/Wiring_Matrix.md",
+      "plan_unit_id": "WM-075",
+      "reasoning_tier": "medium",
+      "risk_class": "wand_module_surface_drift",
+      "source_location": {
+        "heading": "WM-075 - Goal Panel And To-Do Row Wiring After DL-147",
+        "heading_level": 3,
+        "heading_line": 5348,
+        "line": 5352,
+        "path": "Plans/Wiring_Matrix.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
       "context_scope": "working_notebook",
       "gui_related": false,
       "owner_doc": "Plans/Working_Notebook.md",
@@ -221690,12 +222163,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 16388,
+    "depends_on_edge_count": 16438,
     "downstream_blocked_node_count": 0,
-    "edge_count": 19268,
-    "node_count": 6963,
+    "edge_count": 19323,
+    "node_count": 6974,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2880,
+    "unblocks_edge_count": 2885,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []
