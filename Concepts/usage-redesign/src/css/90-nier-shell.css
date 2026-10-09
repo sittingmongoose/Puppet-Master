@@ -143,6 +143,11 @@ html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.is-disabled:hover {
    count is a square paper cell with ink numerals (the app's badge rule, 14-nier-parts.css:53; square, never a pill) */
 html[data-o55-nier-parts~="cursor"] #panel-usage :is(.pmu-poprow.o55np-cur-over, .pmu-poprow.active) .pmu-micon { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .55); }
 html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.o55np-cur-over .pmu-mcheck-off { border-color: var(--o55-nier-on-ink); }
+/* an official mark inside the bar turns over the same way: a square paper cell behind it, so the provider's own artwork for
+   this look's surface stays legible on the ink (GPU stills: the OpenAI mark vanished on the bar in both modes). The mark is
+   never recoloured; the cell is painted by its background and a 3 px spread, so the row does not move. */
+html[data-o55-nier-parts~="cursor"] #panel-usage :is(.pmu-poprow.o55np-cur-over, .pmu-poprow.active) .pmu-mlead-mark,
+html[data-o55-nier="on"] #panel-usage .pmu-mitem.active .pmu-mlead-mark { background: var(--o55-nier-on-ink); box-shadow: 0 0 0 3px var(--o55-nier-on-ink); }
 html[data-o55-nier-parts~="cursor"] #panel-usage :is(.pmu-navbtn.o55np-cur-over, .pmu-navbtn.active) .pmu-navcount:not([hidden]) {
   padding: 1px 5px; background: var(--o55-nier-on-ink); color: var(--o55-nier-ink) !important; -webkit-text-fill-color: currentColor; }
 
