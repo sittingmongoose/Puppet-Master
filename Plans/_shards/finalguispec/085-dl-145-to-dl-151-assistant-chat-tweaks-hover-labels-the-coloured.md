@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L40509-L41095
 
-Source SHA256: `f53b691e46c27e09fd2db732b918c0650a0f8b9516dd9b49d708c869ab1be25a`
+Source SHA256: `c7c82becfc1761e3bfcfcae84ee4785729ece53a4113a3528b7f09fda1bef191`
 
 ---
 
@@ -478,7 +478,7 @@ gui_related: true
 gui_classification_reason: Defines the questions card's visual presentation.
 split_recommended: false
 depends_on: [DL-150, ACD-469, F3-585, F3-589]
-unblocks: []
+unblocks: [F3-609]
 acceptance_criteria:
   - "The Ask Card's behaviour, draft lifecycle and choreography timings are unchanged."
   - "The chosen option, the progress wire and the one filled primary render in every theme; under NieR Mode the chosen answer is the menu cursor and nothing glows."

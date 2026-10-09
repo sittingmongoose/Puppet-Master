@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3384-L11766
+Source lines: L3413-L11841
 
-Source SHA256: `e3792b33109db9b96f0cef6bee55b0369c15407a43e5af00569dad39f487fd8c`
+Source SHA256: `14e4f65df5f9b9a369417225d558394aac797c5fc77f2b5817b16e6edb44ecaa`
 
 ---
 
@@ -8390,4 +8390,50 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
+```
+
+### DL-158 - The Ask Card Fits Long Answers
+
+```yaml
+plan_unit_id: DL-158
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-158 records the owner request of 2026-10-09. The questions card (the Ask Card) adjusts to long answers: it grows
+  and shrinks with its content up to the room above the composer, then scrolls its body inside the card with Back,
+  Skip, Next or Submit and close always in reach; long text and long web addresses wrap inside their rows; option and
+  question descriptions are shown; Something else and the note grow as they are typed; review shows answers whole; a
+  questionnaire whose content fits is unchanged (F3-609).
+gui_related: true
+gui_classification_reason: Records an owner decision on how the questions card handles long content.
+split_recommended: false
+depends_on: [DL-150]
+unblocks: [F3-609]
+acceptance_criteria:
+  - "The Ask Card's behaviour and draft lifecycle are unchanged (assistant-chat-design section 7.4)."
+  - "The owner's request is recorded in plain words with its source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: question_card_presentation_drift
+reasoning_tier: standard
+context_scope: chat_fixes_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-questionnaire-long-answers-20261009/JARED_REQUEST.md, SHA-256 b1b1280a6dac4c2b1afed428e91c817bba1c2e7c360bfdae59b3bdec34cacf52"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-158"
+  - "Ask Card"
+negative_constraints:
+  - "Do not cut long answers short to make them fit."
+  - "Do not change the questionnaire's behaviour through its size."
+owner_hints:
+  - Plans/FinalGUISpec.md
 ```
