@@ -2,14 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L13-L122
+Source lines: L13-L124
 
-Source SHA256: `85c6c443ffa7825416c41b3e49e307121719b6b2090b942f9ef959c185f9c41c`
+Source SHA256: `095e62522a44640289618b70263316f7b13636c7b9bc8329fea1abca3fe1742b`
 
 ---
 
 ## Change Summary
 
+- 2026-10-09: Owner decision DL-156 on the Plan card's buttons, recorded in plain words (`Plans/Decision_Log.md#DL-156`): every Plan surface's actions use one shared action row with one height and type size (`Plans/DRY_Rules.md#DR-047`); the transcript card loses its tinted footer band for one hairline and a status zone on the content edge (`Plans/FinalGUISpec.md#F3-606`); the schedule line reads in rows with its decision on a row of its own (`#F3-607`); and a schedule invalidated with no newer version reads Schedule ended (`Plans/Scheduling_and_Quota_Resume.md#SQR-015`, amended).
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-156, ContractName:Plans/FinalGUISpec.md#F3-606, ContractName:Plans/FinalGUISpec.md#F3-607, ContractName:Plans/DRY_Rules.md#DR-047, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-015
 - 2026-10-09: Coverage audit of the landed 5.6 Pro chat round (DL-140 to DL-151): commands, wiring and DRY now cover it. Every control the round adds, moves or retires is mapped in `Plans/UI_Command_Catalog.md#UCC-188` and `Plans/Commands_System.md#CS-093`, and no command is added: opening a subagent's live transcript reuses `cmd.agents.open_thread`, and a Subagents preview row opens Activity Detail (`Plans/assistant-chat-design.md#ACD-485` corrected). Wiring: the subagent openers, the Send and Stop chip, and the Goal and To-Do controls gain acceptance checks on five existing entries of `Plans/Wiring_Matrix.production.json` (`Plans/Wiring_Matrix.md#WM-073`, `#WM-074`, `#WM-075`), under two new rules, a control slot that binds one command at a time with a click-count guard (`Plans/UI_Wiring_Rules.md#UIW-030`) and the read-only child transcript document (`#UIW-031`). DRY: one icon registry and one status set (`Plans/DRY_Rules.md#DR-051`), and one transcript renderer for the chat and its child transcripts (`#DR-052`). FinalGUISpec gains the release-candidate polish that landed after DL-151 (Activity Detail tab fit, the collaboration domains' activity bar tone, the one-line Waiting on chip, Back Seat Driver's plain read line; `Plans/FinalGUISpec.md#F3-616`) and decision card 8's full scope, Technical details only on a setup sheet's Advanced page (`#F3-617`). The Goal preview draws the compact Goal projection with no Details button (`#F3-593`, section 7, `Plans/Goal_Runtime_System.md` Goal Activity domain surface).
   ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-188, ContractName:Plans/Commands_System.md#CS-093, ContractName:Plans/Wiring_Matrix.md#WM-073, ContractName:Plans/Wiring_Matrix.md#WM-074, ContractName:Plans/Wiring_Matrix.md#WM-075, ContractName:Plans/UI_Wiring_Rules.md#UIW-030, ContractName:Plans/UI_Wiring_Rules.md#UIW-031, ContractName:Plans/DRY_Rules.md#DR-051, ContractName:Plans/DRY_Rules.md#DR-052, ContractName:Plans/FinalGUISpec.md#F3-616, ContractName:Plans/FinalGUISpec.md#F3-617, ContractName:Plans/assistant-chat-design.md#ACD-485
 - 2026-10-09: Owner decision DL-160 removes the Last item button from the To-Do panel's navigation line, which keeps the visible count and Expand all (`Plans/Decision_Log.md#DL-160`); F3-593 is amended to match (`Plans/FinalGUISpec.md#F3-593`). No command or wiring entry existed for the button, so none is retired.

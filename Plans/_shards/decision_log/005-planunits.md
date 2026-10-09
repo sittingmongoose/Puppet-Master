@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3384-L11818
+Source lines: L3416-L11905
 
-Source SHA256: `a0e3b111ee3f07aa9ea8c92ff889dbe9d015818c6aa5fcc707335fabbcec19a8`
+Source SHA256: `d40ff4bafd9964d3a2e1c2fe4a77520a7e481a9b3b705f0ef941b192263b8416`
 
 ---
 
@@ -8390,6 +8390,61 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
+```
+
+### DL-156 - The Plan Card's Buttons Line Up And Fit The Card In Every Theme
+
+```yaml
+plan_unit_id: DL-156
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-156 records the owner request of 2026-10-09: the Plan card's buttons, which did not line up, are designed for
+  the space in every theme. Every Plan surface's actions use one shared action row: one height and one type size,
+  even gaps, Build as a boxed primary (DR-047). The transcript card has no tinted footer band: one hairline opens a
+  status zone of the schedule line, the step count and the action row on the card's content edge (F3-606). The
+  schedule line reads in rows, its decision controls on a row of their own (F3-607). Disabled Build labels keep full
+  contrast. By the lead's ruling, a schedule that Build or an ended run invalidated, with no newer version, reads
+  Schedule ended and offers no Use V<n> (SQR-015). No command, action id, wiring, setting or label is added or
+  removed. The record states the request in plain words, without quoting him.
+gui_related: true
+gui_classification_reason: Records an owner decision on the Plan card's action row and schedule line layout.
+split_recommended: false
+depends_on: [DL-145, F3-566, SQR-015, APR-071]
+unblocks: [F3-606, F3-607, DR-047]
+acceptance_criteria:
+  - "Every Plan action row has one control height and type size in all ten themes (F3-606, DR-047)."
+  - "The schedule line's decision controls sit on their own row (F3-607), and an invalidated schedule with no newer version reads Schedule ended (SQR-015)."
+  - "The owner request is recorded in plain words, with the source cited by path and SHA-256."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: plan_card_layout_drift
+reasoning_tier: medium
+context_scope: chat_plan_card_actions_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/DRY_Rules.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-20261009/JARED_REQUEST.md, SHA-256 4454066fa6584209b779ebf33441037b484f09f452599fcbef3477383782a93d"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-20261009/JARED-SCREENSHOT-retro-light.png, SHA-256 e668fe203ee8aeeb9c9ed1e8aa2f263f525188ce14d4a837958074aace4b839b"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-156"
+  - "Schedule ended"
+  - "action row"
+negative_constraints:
+  - "Do not add a command, action id or setting for this layout."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
 ```
 
 ### DL-160 - The To-Do Navigation Line Loses Its Last Item Button

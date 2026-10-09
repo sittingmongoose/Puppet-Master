@@ -1095,11 +1095,13 @@
      header and reads the version rather than the status.
      ===================================================================== */
   var BUILD_LABEL = { ready:'Build', building:'Building…', completed:'Completed', canceled:'Canceled' };
+  /* the preview card's status word beside its step count ("6 steps · Ready") */
+  var BUILD_STATUS = { ready:'Ready', building:'Building', completed:'Completed', canceled:'Canceled' };
 
   function buildControl(r){
     var label = BUILD_LABEL[r.status] || 'Build';
     var live  = r.status==='ready'&&eligible(r).build;
-    var cls   = 'pd-build pd-build-'+esc(r.status);
+    var cls   = 'pd-build pmx-act pd-build-'+esc(r.status);
     /* Terminal states and Building… are the SAME element, disabled. Rendering a
        <span> for them would make it a badge, which §7.3 explicitly rules out. */
     return '<button type="button" class="'+cls+'"'+(live?'':' disabled aria-disabled="true"')+
@@ -1118,13 +1120,13 @@
     var a=attention(r);
     if(!a) return r.wait ? '<span class="pd-wait">'+waitMark('wait')+esc(r.wait)+'</span>' : '';
     var acts=a.allowed_action_ids.map(function(id){
-      return '<button type="button" class="soft-button pd-act pd-attn-act" data-action="pd-attn" data-id="'+esc(r.plan_id)+'" data-value="'+esc(id)+'" data-expected="'+esc(encodeURIComponent(JSON.stringify(recoverySnapshot(r.plan_id))))+'">'+esc(ATTN_LABEL[id]||id)+'</button>';
+      return '<button type="button" class="soft-button pmx-act pd-act pd-attn-act" data-action="pd-attn" data-id="'+esc(r.plan_id)+'" data-value="'+esc(id)+'" data-expected="'+esc(encodeURIComponent(JSON.stringify(recoverySnapshot(r.plan_id))))+'">'+esc(ATTN_LABEL[id]||id)+'</button>';
     }).join('');
     var att=a.attempt ? '<span class="pd-attn-attempt">attempt '+esc(a.attempt)+'</span>' : '';
     return '<span class="pd-wait pd-attn pd-attn-'+esc(a.tone)+'" data-condition="'+esc(a.condition_kind)+'">'+
       (a.tone==='warning'?ICON.warning:waitMark(/^Paused\b/.test(a.line)?'paused':a.condition_kind))+
       '<span class="pd-attn-copy"><strong>'+esc(a.line)+'</strong><span>'+esc(a.reason)+'</span>'+att+'</span>'+
-      acts+'</span>';
+      (acts?'<span class="pd-attn-acts pmx-actions">'+acts+'</span>':'')+'</span>';
   }
   var ATTN_LABEL = {
     resume:'Resume', retry:'Retry', cancel:'Cancel build', details:'Details',
@@ -1154,7 +1156,7 @@
      5. THE CARD
      ===================================================================== */
   function actionBtn(a,label,id,extra,kind){
-    return '<button type="button" class="'+(kind||'soft-button')+' pd-act" data-action="'+esc(a)+'" data-id="'+esc(id)+'"'+(a==='pd-build-goal'&&rec(id)?' data-version="'+rec(id).version+'" data-hash="'+hashOf(body(rec(id)))+'"':'')+(extra||'')+'>'+esc(label)+'</button>';
+    return '<button type="button" class="'+(kind||'soft-button')+' pmx-act pd-act" data-action="'+esc(a)+'" data-id="'+esc(id)+'"'+(a==='pd-build-goal'&&rec(id)?' data-version="'+rec(id).version+'" data-hash="'+hashOf(body(rec(id)))+'"':'')+(extra||'')+'>'+esc(label)+'</button>';
   }
 
   function cardHeader(r){
@@ -1265,7 +1267,7 @@
         esc(blk.map(function(x){ return x.id+(x.why?' — '+x.why:''); }).join('; '))+
         '</span></span></span>'
       : '';
-    return '<div class="pd-foot">'+primary.join('')+'<button type="button" class="soft-button" data-action="pd-more-actions" data-id="'+esc(r.plan_id)+'" aria-expanded="'+!!(ui.more&&ui.more[r.plan_id])+'">More ›</button>'+(ui.more&&ui.more[r.plan_id]?'<div class="polish-plan-more">'+out.join('')+'</div>':'')+progressSummary(r)+blkLine+waitCopy(r)+'</div>';
+    return '<div class="pd-foot pmx-actions">'+primary.join('')+'<button type="button" class="soft-button pmx-act" data-action="pd-more-actions" data-id="'+esc(r.plan_id)+'" aria-expanded="'+!!(ui.more&&ui.more[r.plan_id])+'">More ›</button>'+(ui.more&&ui.more[r.plan_id]?'<div class="polish-plan-more pmx-actions">'+out.join('')+'</div>':'')+progressSummary(r)+blkLine+waitCopy(r)+'</div>';
   }
 
   /* Historical Completed/Canceled cards stay IN PLACE and default COMPACT
@@ -1278,8 +1280,8 @@
         '<span class="pd-compact-dot" aria-hidden="true">'+(r.status==='completed'?stepMark('completed'):'')+'</span>'+
         '<div class="pd-compact-copy"><strong>'+esc(r.title)+'</strong>'+
           '<span>'+esc(r.strategy)+' · V'+r.version+'</span></div>'+
-        '<div class="pd-compact-actions">'+buildControl(r)+
-        '<button type="button" class="soft-button pd-act" data-action="pd-expand" data-id="'+esc(r.plan_id)+'">Open</button></div>'+
+        '<div class="pd-compact-actions pmx-actions">'+buildControl(r)+
+        '<button type="button" class="soft-button pmx-act pd-act" data-action="pd-expand" data-id="'+esc(r.plan_id)+'">Open</button></div>'+
       '</div>'+why+
     '</article>';
   }
@@ -1309,8 +1311,8 @@
       '<div class="plan-preview-kicker">'+ICON.plan+'<span>Plan</span><span>V'+r.version+' · '+esc(r.strategy)+'</span></div>'+
       '<button class="plan-preview-open" data-action="pd-info" data-id="'+esc(r.plan_id)+'"><strong>'+esc(r.title)+'</strong>'+(summary?'<span>'+esc(summary)+'</span>':'')+'</button>'+
       (window.PM56_SCHED?.planSummary(r.plan_id)||'')+
-      '<div class="plan-preview-meta"><span>'+steps(body(r)).length+(steps(body(r)).length===1?' step':' steps')+'</span><span>'+esc(r.status)+'</span></div>'+
-      '<div class="pd-foot">'+buildControl(r)+(e.revise?actionBtn('pd-revise','Revise',r.plan_id):'')+actionBtn('pd-info','Open plan',r.plan_id)+
+      '<p class="plan-preview-meta"><span>'+steps(body(r)).length+(steps(body(r)).length===1?' step':' steps')+'</span><span>'+esc(BUILD_STATUS[r.status]||r.status)+'</span></p>'+
+      '<div class="pd-foot pmx-actions">'+buildControl(r)+(e.revise?actionBtn('pd-revise','Revise',r.plan_id):'')+actionBtn('pd-info','Open plan',r.plan_id)+
         (r.status==='building'?progressSummary(r)+waitCopy(r):'')+'</div></article>';
   }
 
@@ -2408,7 +2410,7 @@
  // A Plan receipt is a linked record, not a Goal state or generic work note.
  EXT.slot('transcriptMessage',c=>{
   const m=c.message||c.m;if(!m||!['plan-run-receipt','plan-revision-receipt'].includes(m.type))return '';
-  return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('plan',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button data-action="pd-info" data-id="'+c.esc(m.plan_id)+'">Open plan</button></div>';
+  return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('plan',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button type="button" class="soft-button pmx-act" data-action="pd-info" data-id="'+c.esc(m.plan_id)+'">Open plan</button></div>';
  });
 
   EXT.action('pd-open-goal',(c,b)=>{const r=rec(b.dataset.id),g=r&&window.PM56_GOAL.bound(r.plan_id);if(g&&!window.PM56_GOAL.cancelled(g)){if(c.thread.id!==g.thread)c.switchThread(g.thread);c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';c.closeDialog();c.state.menu=null;if(innerWidth<=1100)c.state.editorRevealed=false;c.renderApp();}return true;});

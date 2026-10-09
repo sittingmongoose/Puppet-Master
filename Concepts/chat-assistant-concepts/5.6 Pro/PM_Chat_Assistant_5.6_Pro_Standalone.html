@@ -9829,7 +9829,8 @@ p.pmx-meta, .pmx-meta{margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-r
 /* J-2: 32 px actions with 10 px sides; wrapped rows keep 12 px; boxed neighbours keep 10 px (text buttons carry their own padding) */
 .pmx-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px 6px;min-height:32px;width:100%;min-width:0;}
 .pmx-act{height:32px;min-height:32px;padding:0 10px;border-radius:8px;font:var(--pmx-w-560) 12px/16px var(--font-ui);white-space:nowrap;}
-.pmx-actions > :is(.primary-button, .soft-button) + .primary-button, .pmx-actions > :is(.primary-button, .soft-button) + .soft-button{margin-left:4px;}
+/* the Plan card's Build (.pd-build, plans.js) is a boxed primary too (C56, DR-047) */
+.pmx-actions > :is(.primary-button, .soft-button, .pd-build) + :is(.primary-button, .soft-button, .pd-build){margin-left:4px;}
 .pmx-act.text-button{color:var(--muted);background:none;}
 .pmx-act.text-button:hover{color:var(--text);background:var(--surface-3);}
 .pmx-act.primary-button{height:32px;min-height:32px;padding:0 14px;}
@@ -11825,22 +11826,23 @@ body.pm56-reduced .pmx-run[data-density="live"] .pmx-stop[data-state="now"] + .p
 }
 .plan-doc .pd-md-block{ display:block; }
 
-/* ------------------------------------------------------------ the footer */
-.plan-doc .pd-foot{
-  display:flex; flex-wrap:wrap; align-items:center; gap:6px;
-  padding:10px 14px; border-top:1px solid var(--border); background:var(--surface-3);
-}
-/* ONE control. It changes LABEL; it is never replaced by a status badge. */
+/* ------------------------------------------------------------ the footer
+   C56: the footer is the shared action row (.pmx-actions, module-shell.css) and every control in it is a .pmx-act,
+   so Build, Revise, Open plan and More are one height (32 px) and one type size, with 10 px between boxed
+   neighbours. It is a row on the card's content edge, never a tinted band with its own inset. */
+.plan-doc .pd-foot{ padding:12px 14px; border-top:1px solid var(--border); }
+/* ONE control. It changes LABEL; it is never replaced by a status badge. Its size is the .pmx-act's; the sides are
+   the primary action's 14 px. */
 .plan-doc .pd-build{
-  height:26px; padding:0 13px; cursor:pointer;
-  border:1px solid var(--accent); border-radius:var(--radius-sm);
+  padding:0 14px; cursor:pointer;
+  border:1px solid var(--accent);
   background:var(--accent); color:var(--on-accent);
-  font:600 12px/1 var(--font-ui); white-space:nowrap;
+  font:600 12px/16px var(--font-ui); white-space:nowrap;
   transition:filter var(--spring-soft), background var(--spring-soft),
              color var(--spring-soft), border-color var(--spring-soft);
 }
 .plan-doc .pd-build:hover:not([disabled]){ filter:brightness(1.08); }
-.plan-doc .pd-build[disabled]{ cursor:default; }
+.plan-doc .pd-build[disabled]{ cursor:default; opacity:1; }  /* a label, not a greyed control: .pmx-act[disabled] would fade it */
 .plan-doc .pd-build-building{
   background:var(--surface-2); color:var(--text); border-color:var(--accent);
 }
@@ -11865,13 +11867,15 @@ html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:
 /* Support copy sits BESIDE the control, never inside it — a paused build still
    reads "Building…" on the button. */
 .plan-doc .pd-wait{
-  display:inline-flex; align-items:center; gap:6px; margin-left:2px;
+  display:inline-flex; align-items:center; gap:6px;
   font:400 11px/1.4 var(--font-ui); color:var(--muted);
 }
 /* the wait line's mark is a status mark (waiting-dep, paused; plans.js waitMark), inked by its tone, never the
    accent; its .nx-st wrapper is already flex:none (neon-icons.css) */
 .plan-doc .pd-wait svg{ flex:0 0 auto; }
 .plan-doc .pd-act{ white-space:nowrap; }
+/* in the action row the support copy takes a row of its own under the buttons, on the content edge */
+.plan-doc .pd-foot > .pd-wait{ flex:1 1 100%; min-width:0; }
 
 /* --------------------------------------------------- historical compact */
 .plan-doc-compact{ background:var(--surface-2); }
@@ -11995,7 +11999,6 @@ html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:
 
 /* ---------------------------------------------------------- narrow panes */
 @media (max-width:590px){
-  .plan-doc .pd-foot{ gap:5px; }
   .plan-doc .pd-kv span{ flex-basis:110px; }
   .plan-doc .pd-body{ max-height:380px; }
 }
@@ -12055,7 +12058,11 @@ html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:
 .plan-doc .pd-md-mark-mixed{ color:var(--accent); opacity:.8; }
 
 /* --- the attention line beside the Build control ------------------------- */
-.plan-doc .pd-attn{ align-items:flex-start; gap:8px; flex-wrap:wrap; }
+/* the mark column and its 10 px gap match the schedule line's (plan-demo-batch2.css); the admitted actions are an
+   action row under the copy */
+.plan-doc .pd-attn{ display:grid; grid-template-columns:16px minmax(0,1fr); align-items:start; gap:6px 10px; }
+.plan-doc .pd-attn > svg, .plan-doc .pd-attn > .nx-st{ margin-top:1px; }
+.plan-doc .pd-attn-acts{ grid-column:2; }
 .plan-doc .pd-attn-copy{ display:flex; flex-direction:column; gap:1px; min-width:0; }
 .plan-doc .pd-attn-copy strong{ font:600 11.5px/1.4 var(--font-ui); color:var(--text); }
 .plan-doc .pd-attn-copy span{ font:400 11px/1.5 var(--font-ui); color:var(--muted); }
@@ -12065,15 +12072,13 @@ html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:
   align-self:flex-start; font:500 10px/1.4 var(--font-ui); color:var(--subtle);
   border:1px solid var(--border); border-radius:999px; padding:0 6px; margin-top:2px;
 }
-.plan-doc .pd-attn-act{ font-size:11px; padding:3px 8px; }
 
 /* --- the compact To-Do completion summary (not a second lifecycle chip) --- */
+/* plain words at the row's end, so it never reads as a third button or a status chip */
 .plan-doc .pd-progress{
-  font:500 11px/1.5 var(--font-ui); color:var(--muted);
-  border:1px solid var(--border); border-radius:999px; padding:2px 9px;
-  background:var(--surface-3);
+  margin-left:auto; font:500 11.5px/16px var(--font-ui); color:var(--muted); font-variant-numeric:tabular-nums;
 }
-.plan-doc .pd-progress-stale{ color:var(--subtle); border-style:dashed; }
+.plan-doc .pd-progress-stale{ color:var(--subtle); font-style:italic; }
 
 /* --- typed embeds -------------------------------------------------------- */
 .plan-doc .pd-embed{
@@ -14323,8 +14328,8 @@ body[data-theme^="retro"] .pmx-dflt-title{ font-size:12.5px; }
 .todo-detail .todo-chips { display:grid; }
 .todo-detail .todo-chip { white-space:normal; }
 /* Consistent quiet card headers and footers; work components are excluded. */
-.polish-plan-more { display:flex; flex-wrap:wrap; gap:6px; flex-basis:100%; padding-top:5px; }
-.plan-doc .pd-foot { gap:7px; }
+/* More's actions: a second .pmx-actions row under the footer's (C56) */
+.polish-plan-more { flex-basis:100%; }
 .polish-wand-group { border-bottom:1px solid var(--border); }
 .polish-wand-group:last-child { border:0; }
 .polish-group-toggle { min-height:36px; }
@@ -14417,8 +14422,14 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .plan-preview-open strong{font-size:14px;font-weight:600;line-height:1.45;}
 .plan-preview-open:hover strong{text-decoration:underline;text-underline-offset:3px;}
 .plan-preview-open>span{font-size:11px;line-height:1.6;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.plan-preview-meta{display:flex;gap:12px;font-size:10px;color:var(--muted);text-transform:capitalize;margin:4px 0 9px;}
-.plan-preview .pd-foot{padding:11px 0 0;margin:0;}
+/* C56: one hairline opens the card's status zone (the schedule line when there is one, else the step count), and
+   the action row closes it on the content edge: no tinted band, no inset of its own, the card's padding below. */
+.plan-preview-open + :is(.plan-schedule-line,.plan-preview-meta){margin-top:3px;padding-top:12px;border-top:1px solid var(--border);}
+.plan-preview .plan-schedule-line{margin-bottom:0;padding-bottom:0;border-bottom:0;}
+.plan-preview-meta{display:flex;gap:6px;margin:0;font:500 11px/16px var(--font-ui);color:var(--muted);font-variant-numeric:tabular-nums;}
+.plan-preview-meta > span + span::before{content:"·";margin-right:6px;}
+.plan-preview .plan-schedule-line + .plan-preview-meta{margin-top:10px;}
+.plan-preview .pd-foot{margin:12px 0 0;padding:0;border:0;background:none;}
 .plan-doc-editor{max-width:960px;margin:0 auto;padding:25px 30px;min-width:0;}
 .plan-doc-editor .pd-head-main{min-width:0;}
 .pd-title>button{border:0;padding:0;font:inherit;color:inherit;background:transparent;text-align:left;cursor:pointer;}
@@ -14506,26 +14517,34 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .plan-demo-guide small{display:block;color:var(--muted);font-size:10px;margin-bottom:4px;}
 .plan-demo-guide strong{display:block;font-size:12px;font-weight:550;}
 .plan-demo-controls{display:flex;gap:8px;align-items:center;}
-.plan-demo-guide button,.plan-run-line button{padding:6px 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface-2,transparent);color:inherit;font:inherit;cursor:pointer;}
+.plan-demo-guide button{padding:6px 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface-2,transparent);color:inherit;font:inherit;cursor:pointer;}
 .plan-demo-guide button:disabled{opacity:.5;cursor:default;}
 .plan-demo-guide .plan-demo-close{padding:6px;display:grid;place-items:center;}
 .plan-demo-guide p{flex-basis:100%;margin:0;font-size:11px;}
 .plan-run-line{display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 0;color:var(--muted);font-size:12px;}
 .plan-run-line span{flex:1;min-width:0;}
 .plan-run-line small{display:block;margin-top:4px;}
+/* its Open plan is the Plan footer's .soft-button.pmx-act (C56), not a one-off button */
 
-/* The Plan card's schedule line (scheduling.js planSummary; DESIGN-SPEC 8.8 "In chat", IMPACT A1-30): one row of
-   the canon token and its sentence, the actions it allows, and under them the night ribbon and the steps built.
-   It sits beside the Plan's Build control and never takes its place. No strips, no boxes: a hairline under it. */
-.plan-schedule-line{display:grid;grid-template-columns:16px minmax(0,1fr) auto;align-items:start;gap:6px 10px;min-width:0;margin:0 0 10px;padding:8px 0 10px;border-bottom:1px solid var(--border);color:var(--muted);}
-.plan-sched-mark{display:flex;padding-top:2px;color:var(--muted);}
-.plan-sched-say{margin:0;min-width:0;padding-top:1px;font:450 12px/17.5px var(--font-ui);color:var(--muted);overflow-wrap:anywhere;}
+/* The Plan card's schedule line (scheduling.js planSummary; DESIGN-SPEC 8.8 "In chat", IMPACT A1-30): the canon token,
+   its lead on the first row with Details beside it, then the detail and the night ribbon (and the steps built) flowing
+   on the row below; a decision's buttons (Use V6, Cancel schedule) get their own row under the sentence (C56). It sits
+   beside the Plan's Build control and never takes its place. No strips, no boxes: a hairline under it. The mark column
+   and its 10 px gap are the same as the Build attention line's (plans.css .pd-attn). */
+.plan-schedule-line{display:grid;grid-template-columns:16px minmax(0,1fr) auto;align-items:start;gap:4px 10px;min-width:0;margin:0 0 10px;padding:8px 0 10px;border-bottom:1px solid var(--border);color:var(--muted);}
+.plan-sched-mark{display:flex;padding-top:1px;color:var(--muted);}
+.plan-sched-say{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;margin:0;min-width:0;font:450 12px/17.5px var(--font-ui);color:var(--muted);}
+.plan-sched-say > b{flex:1 0 100%;min-width:0;color:var(--text);font-weight:600;overflow-wrap:break-word;}
 .plan-sched-say b{color:var(--text);font-weight:600;}
+.plan-sched-sep{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+.plan-sched-detail{flex:0 1 auto;min-width:0;overflow-wrap:break-word;}
 .plan-schedule-line[data-tone="update"] .plan-sched-mark{color:var(--warning);}
-.plan-sched-acts{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:0 10px;margin:-6px -10px -6px 0;}
-.plan-sched-acts > .text-button, .plan-sched-acts > .soft-button{height:32px;min-height:32px;padding:0 10px;font:600 12px/16px var(--font-ui);white-space:nowrap;}
+/* Details: a 32 px text action centred on the lead's first line, its label on the content edge */
+.plan-sched-acts{display:flex;align-items:center;margin:-7px -10px -7px 0;}
 .plan-sched-acts > .text-button{color:var(--muted);}
-.plan-sched-foot{grid-column:2 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;min-width:0;font:500 11.5px/17px var(--font-ui);color:var(--muted);font-variant-numeric:tabular-nums;}
+.plan-sched-decide{grid-column:2 / -1;margin-top:6px;}
+.plan-sched-decide > .text-button:first-child{margin-left:-10px;}
+.plan-sched-foot{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;min-width:0;font:500 11.5px/17px var(--font-ui);color:var(--muted);font-variant-numeric:tabular-nums;}
 .plan-sched-ribbon{display:block;flex:none;}
 .plan-sched-base{stroke:var(--border-strong);stroke-width:1;}
 .plan-sched-band{fill:var(--muted);opacity:.7;}
@@ -14536,7 +14555,7 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .plan-sched-overnight{grid-column:2 / -1;margin:2px 0 0;min-width:0;font:450 12px/17.5px var(--font-ui);color:var(--muted);overflow-wrap:anywhere;}
 .plan-sched-overnight b{color:var(--text);font-weight:600;}
 .plan-sched-overnight > .text-button{height:32px;min-height:32px;margin:-8px 0 -8px 0;padding:0 10px;color:var(--text);font:600 12px/16px var(--font-ui);vertical-align:baseline;}
-@container (max-width: 360px){ .plan-schedule-line{grid-template-columns:16px minmax(0,1fr);} .plan-sched-acts{grid-column:2;justify-content:flex-start;margin:0 0 -6px -10px;} }
+@container (max-width: 360px){ .plan-schedule-line{grid-template-columns:16px minmax(0,1fr);} .plan-sched-acts{grid-column:2;margin:-4px 0 -7px -10px;} }
 
 /* the guide is a pmx guide (G-25); beside the Plan it only needs the document's side margins */
 .editor-body>.schedule-demo-guide{margin:12px 20px;}
@@ -15402,7 +15421,7 @@ body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-mem-rule-text{font
 .transcript{scroll-padding-bottom:calc(var(--thread-float-h,44px) + 28px)}
 .transcript button,.transcript a,.transcript summary{scroll-margin-bottom:calc(var(--thread-float-h,44px) + 28px)}
 
-.pd-compact-actions{grid-column:2;display:flex;gap:8px;flex-wrap:wrap;min-width:0}.pd-compact-actions>*{max-width:100%}
+.pd-compact-actions{grid-column:2;min-width:0}.pd-compact-actions>*{max-width:100%}
 
 /* Native card/section grammar. No side stripes or working-animation changes. */
 .debug-document{padding:22px;color:var(--text);font:13px/1.6 var(--font-ui);min-width:0;max-width:100%}
@@ -45272,11 +45291,13 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
      header and reads the version rather than the status.
      ===================================================================== */
   var BUILD_LABEL = { ready:'Build', building:'Building…', completed:'Completed', canceled:'Canceled' };
+  /* the preview card's status word beside its step count ("6 steps · Ready") */
+  var BUILD_STATUS = { ready:'Ready', building:'Building', completed:'Completed', canceled:'Canceled' };
 
   function buildControl(r){
     var label = BUILD_LABEL[r.status] || 'Build';
     var live  = r.status==='ready'&&eligible(r).build;
-    var cls   = 'pd-build pd-build-'+esc(r.status);
+    var cls   = 'pd-build pmx-act pd-build-'+esc(r.status);
     /* Terminal states and Building… are the SAME element, disabled. Rendering a
        <span> for them would make it a badge, which §7.3 explicitly rules out. */
     return '<button type="button" class="'+cls+'"'+(live?'':' disabled aria-disabled="true"')+
@@ -45295,13 +45316,13 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     var a=attention(r);
     if(!a) return r.wait ? '<span class="pd-wait">'+waitMark('wait')+esc(r.wait)+'</span>' : '';
     var acts=a.allowed_action_ids.map(function(id){
-      return '<button type="button" class="soft-button pd-act pd-attn-act" data-action="pd-attn" data-id="'+esc(r.plan_id)+'" data-value="'+esc(id)+'" data-expected="'+esc(encodeURIComponent(JSON.stringify(recoverySnapshot(r.plan_id))))+'">'+esc(ATTN_LABEL[id]||id)+'</button>';
+      return '<button type="button" class="soft-button pmx-act pd-act pd-attn-act" data-action="pd-attn" data-id="'+esc(r.plan_id)+'" data-value="'+esc(id)+'" data-expected="'+esc(encodeURIComponent(JSON.stringify(recoverySnapshot(r.plan_id))))+'">'+esc(ATTN_LABEL[id]||id)+'</button>';
     }).join('');
     var att=a.attempt ? '<span class="pd-attn-attempt">attempt '+esc(a.attempt)+'</span>' : '';
     return '<span class="pd-wait pd-attn pd-attn-'+esc(a.tone)+'" data-condition="'+esc(a.condition_kind)+'">'+
       (a.tone==='warning'?ICON.warning:waitMark(/^Paused\b/.test(a.line)?'paused':a.condition_kind))+
       '<span class="pd-attn-copy"><strong>'+esc(a.line)+'</strong><span>'+esc(a.reason)+'</span>'+att+'</span>'+
-      acts+'</span>';
+      (acts?'<span class="pd-attn-acts pmx-actions">'+acts+'</span>':'')+'</span>';
   }
   var ATTN_LABEL = {
     resume:'Resume', retry:'Retry', cancel:'Cancel build', details:'Details',
@@ -45331,7 +45352,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
      5. THE CARD
      ===================================================================== */
   function actionBtn(a,label,id,extra,kind){
-    return '<button type="button" class="'+(kind||'soft-button')+' pd-act" data-action="'+esc(a)+'" data-id="'+esc(id)+'"'+(a==='pd-build-goal'&&rec(id)?' data-version="'+rec(id).version+'" data-hash="'+hashOf(body(rec(id)))+'"':'')+(extra||'')+'>'+esc(label)+'</button>';
+    return '<button type="button" class="'+(kind||'soft-button')+' pmx-act pd-act" data-action="'+esc(a)+'" data-id="'+esc(id)+'"'+(a==='pd-build-goal'&&rec(id)?' data-version="'+rec(id).version+'" data-hash="'+hashOf(body(rec(id)))+'"':'')+(extra||'')+'>'+esc(label)+'</button>';
   }
 
   function cardHeader(r){
@@ -45442,7 +45463,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
         esc(blk.map(function(x){ return x.id+(x.why?' — '+x.why:''); }).join('; '))+
         '</span></span></span>'
       : '';
-    return '<div class="pd-foot">'+primary.join('')+'<button type="button" class="soft-button" data-action="pd-more-actions" data-id="'+esc(r.plan_id)+'" aria-expanded="'+!!(ui.more&&ui.more[r.plan_id])+'">More ›</button>'+(ui.more&&ui.more[r.plan_id]?'<div class="polish-plan-more">'+out.join('')+'</div>':'')+progressSummary(r)+blkLine+waitCopy(r)+'</div>';
+    return '<div class="pd-foot pmx-actions">'+primary.join('')+'<button type="button" class="soft-button pmx-act" data-action="pd-more-actions" data-id="'+esc(r.plan_id)+'" aria-expanded="'+!!(ui.more&&ui.more[r.plan_id])+'">More ›</button>'+(ui.more&&ui.more[r.plan_id]?'<div class="polish-plan-more pmx-actions">'+out.join('')+'</div>':'')+progressSummary(r)+blkLine+waitCopy(r)+'</div>';
   }
 
   /* Historical Completed/Canceled cards stay IN PLACE and default COMPACT
@@ -45455,8 +45476,8 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
         '<span class="pd-compact-dot" aria-hidden="true">'+(r.status==='completed'?stepMark('completed'):'')+'</span>'+
         '<div class="pd-compact-copy"><strong>'+esc(r.title)+'</strong>'+
           '<span>'+esc(r.strategy)+' · V'+r.version+'</span></div>'+
-        '<div class="pd-compact-actions">'+buildControl(r)+
-        '<button type="button" class="soft-button pd-act" data-action="pd-expand" data-id="'+esc(r.plan_id)+'">Open</button></div>'+
+        '<div class="pd-compact-actions pmx-actions">'+buildControl(r)+
+        '<button type="button" class="soft-button pmx-act pd-act" data-action="pd-expand" data-id="'+esc(r.plan_id)+'">Open</button></div>'+
       '</div>'+why+
     '</article>';
   }
@@ -45486,8 +45507,8 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
       '<div class="plan-preview-kicker">'+ICON.plan+'<span>Plan</span><span>V'+r.version+' · '+esc(r.strategy)+'</span></div>'+
       '<button class="plan-preview-open" data-action="pd-info" data-id="'+esc(r.plan_id)+'"><strong>'+esc(r.title)+'</strong>'+(summary?'<span>'+esc(summary)+'</span>':'')+'</button>'+
       (window.PM56_SCHED?.planSummary(r.plan_id)||'')+
-      '<div class="plan-preview-meta"><span>'+steps(body(r)).length+(steps(body(r)).length===1?' step':' steps')+'</span><span>'+esc(r.status)+'</span></div>'+
-      '<div class="pd-foot">'+buildControl(r)+(e.revise?actionBtn('pd-revise','Revise',r.plan_id):'')+actionBtn('pd-info','Open plan',r.plan_id)+
+      '<p class="plan-preview-meta"><span>'+steps(body(r)).length+(steps(body(r)).length===1?' step':' steps')+'</span><span>'+esc(BUILD_STATUS[r.status]||r.status)+'</span></p>'+
+      '<div class="pd-foot pmx-actions">'+buildControl(r)+(e.revise?actionBtn('pd-revise','Revise',r.plan_id):'')+actionBtn('pd-info','Open plan',r.plan_id)+
         (r.status==='building'?progressSummary(r)+waitCopy(r):'')+'</div></article>';
   }
 
@@ -46585,7 +46606,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
  // A Plan receipt is a linked record, not a Goal state or generic work note.
  EXT.slot('transcriptMessage',c=>{
   const m=c.message||c.m;if(!m||!['plan-run-receipt','plan-revision-receipt'].includes(m.type))return '';
-  return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('plan',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button data-action="pd-info" data-id="'+c.esc(m.plan_id)+'">Open plan</button></div>';
+  return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('plan',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button type="button" class="soft-button pmx-act" data-action="pd-info" data-id="'+c.esc(m.plan_id)+'">Open plan</button></div>';
  });
 
   EXT.action('pd-open-goal',(c,b)=>{const r=rec(b.dataset.id),g=r&&window.PM56_GOAL.bound(r.plan_id);if(g&&!window.PM56_GOAL.cancelled(g)){if(c.thread.id!==g.thread)c.switchThread(g.thread);c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';c.closeDialog();c.state.menu=null;if(innerWidth<=1100)c.state.editorRevealed=false;c.renderApp();}return true;});
@@ -54885,13 +54906,16 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     /* "continues Mon 10:00 PM": the weekday is always named, even tonight */
     var nextDay=Number.isFinite(nextMs)&&nextMs?(function(p){return p?DAY_LABELS[T0.weekday(p)]+' '+clockAt(nextMs,zone):'';})(zp(zone,nextMs)):'';
     /* a slot set in another zone than the viewer's names it once (its times are that zone's wall times) */
-    var oz=otherZone(zone),zt=oz?' ('+esc(oz)+')':'';
+    var oz=otherZone(zone),zt=oz?' ('+esc(nb(oz))+')':'';  /* the zone never breaks inside its parentheses (C56) */
     var rep=api&&api.executionReport&&b.dispatchReceipt?api.executionReport(planId):null,cs=rep&&rep.completion_summary,steps=cs&&cs.leaf_steps?cs.resolved+' of '+cs.leaf_steps+' steps':'';
     var slot=one?'':nightsWord(b.days_of_week)+' '+slotText(b.local_start,b.local_pause);
-    if(b.state==='invalidated'){
+    /* Build (or an ended run) invalidates the schedule without a new version: nothing to rebind, so the line says the
+       schedule is over instead of offering "Use V" for a version that does not exist */
+    if(b.state==='invalidated'&&b.pendingVersion==null){tone='done';lead='Schedule ended';say=/^Build Now/.test(b.invalidated_reason||'')?'you started this build now, so the schedule won’t start a second one.':'the build it was set for has ended, so it won’t start again.';}
+    else if(b.state==='invalidated'){
       tone='update';lead='Schedule needs update';say='You edited this plan (now V'+esc(b.pendingVersion)+'). <b>Build V'+esc(b.pendingVersion)+' instead?</b>';
-      acts='<button type="button" class="soft-button" data-action="sched-rebind-build" data-id="'+id+'" data-version="'+esc(b.pendingVersion)+'" data-hash="'+esc(b.pendingHash)+'" data-revision="'+b.revision+'">Use V'+esc(b.pendingVersion)+'</button>'+
-        '<button type="button" class="text-button" data-action="sched-cancel-build" data-id="'+id+'" data-revision="'+b.revision+'" data-currentness="'+esc(buildCurrent(b))+'">Cancel schedule</button>';
+      acts='<button type="button" class="soft-button pmx-act" data-action="sched-rebind-build" data-id="'+id+'" data-version="'+esc(b.pendingVersion)+'" data-hash="'+esc(b.pendingHash)+'" data-revision="'+b.revision+'">Use V'+esc(b.pendingVersion)+'</button>'+
+        '<button type="button" class="text-button pmx-act" data-action="sched-cancel-build" data-id="'+id+'" data-revision="'+b.revision+'" data-currentness="'+esc(buildCurrent(b))+'">Cancel schedule</button>';
     }else if(b.state==='canceled'||b.state==='cancelled'){tone='done';lead='Schedule canceled';say='V'+esc(b.exact_target_version)+' won’t be built on a schedule.';}
     else if(b.state==='held'){tone='update';lead='Held';say=esc(buildHeldWords(b));}
     else if(b.state==='expired'){tone='done';lead='Skipped';say='it was more than '+Math.round((b.grace_seconds||SCHED_DEFAULTS.build.graceMinutes*60)/60)+' min late.';}
@@ -54913,10 +54937,14 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     else{ribbon=true;lead='Builds '+esc(slot)+zt;say=nextSay?'next: '+esc(nextWords({kind:'recurring_window',timezone:zone,days:b.days_of_week,startTime:b.local_start,pauseTime:b.local_pause},now)||nextSay):'';}
     var foot=ribbon||steps?'<span class="plan-sched-foot">'+(ribbon?nightRibbon(b,now):'')+(steps&&tone!=='done'?'<span>'+esc(steps)+'</span>':'')+'</span>':'';
     /* 8.8 "the next morning, one receipt": what the night did, once the slot has paused it safely */
-    if(lead==='Outside execution window')foot+=overnightReceipt(b,steps);
+    var night=lead==='Outside execution window'?overnightReceipt(b,steps):'';
+    /* C56: the lead is the line's first row and Details sits beside it; what follows the lead (the detail, then the
+       night ribbon) flows on the row below, and a decision's buttons get a row of their own under the sentence, so
+       neither ever squeezes the sentence into a narrow column. The " · " stays in the text for screen readers. */
     return '<div class="plan-schedule-line" data-plan-schedule="'+id+'" data-tone="'+tone+'"><span class="plan-sched-mark">'+SH.pmxKindMark('build-at',16)+'</span>'+
-      '<p class="plan-sched-say"><b>'+lead+'</b>'+(say?' · '+say:'')+'</p><span class="plan-sched-acts">'+acts+
-      '<button type="button" class="text-button" data-action="sched-open-plan-record" data-id="'+id+'">'+(b.state==='invalidated'?'Review':'Details')+'</button></span>'+foot+'</div>';
+      '<p class="plan-sched-say"><b>'+lead+'</b>'+(say?'<span class="plan-sched-sep"> · </span><span class="plan-sched-detail">'+say+'</span>':'')+foot+'</p>'+
+      '<span class="plan-sched-acts"><button type="button" class="text-button pmx-act" data-action="sched-open-plan-record" data-id="'+id+'">'+(b.state==='invalidated'&&b.pendingVersion!=null?'Review':'Details')+'</button></span>'+
+      (acts?'<span class="plan-sched-decide pmx-actions">'+acts+'</span>':'')+night+'</div>';
   }
   function overnightReceipt(b,steps){
     /* the night began when the run was admitted (its receipt) or, on a later night, when the slot reopened */
