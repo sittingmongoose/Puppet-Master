@@ -314,9 +314,20 @@ Basic) never reaches it.
   and More details controls, **scroll-to-bottom**) uses the app **hover card**,
   not a native `title` tooltip. The popup is a **24px selector-style pill**
   (`surface-3`, 1px border, 9px radius, 12px type). Icons themselves stay
-  icon-only; the name appears on hover. Rows inside an open Activity Bar
-  preview keep native titles, because a hover card there would replace the
-  preview under the pointer.
+  icon-only; the name appears on hover.
+- **Previews are the one exception** (Jared, 2026-10-09; Plans DL-157,
+  F3-590, UIW-013). The chat shows one hover surface at a time, so a hover card
+  inside an open Activity Bar preview would replace the preview under the
+  pointer: nothing inside an open preview opens one. The Subagents rows keep
+  the native title "Open <agent>", the Artifacts rows "Open <artifact>", the
+  Changes rows "<path> — <summary>", and the Crew member rows (shown while no
+  Crew run is live) the member's name. The Goal preview's controls (Pause or
+  Resume, Edit — accessible name "Edit objective" — Cancel Goal, Open exact
+  Plan · Vn, Revise Plan, Objective history), the To-Do rows and their
+  more-items and blocked lines, a collaboration kind's run rows, a live Crew
+  run's rows and every preview head have no title and no hover card. Outside
+  an open preview the rule holds: the Goal panel's Edit and a To-Do row in
+  Activity Detail keep their hover cards.
 - Persona / Model / Mode / Permissions always use the hover card too, with a
   short action line (`Persona · …`, `Model · …`, `Mode · …`,
   `Permissions · …`) whether the chip is labeled or icon-only.
@@ -1009,7 +1020,11 @@ on the left and **Cancel Goal**, in danger ink, alone at the far edge (Edit's
 accessible name is "Edit objective", its hover card in the panel says so, and
 it reads **Edit objective** wherever the row is at least 300px wide, as in the
 Activity Bar preview); the bound Plan's **Open exact Plan · Vn** (and **Revise
-Plan** while the Goal is blocked) when the Goal is bound; and an **Objective
+Plan** while the Goal is blocked) when the Goal is bound. Open exact Plan · Vn
+(`goal-open-plan-version`; product command `cmd.chat.plan.open_version`, Plans
+DL-157) opens that exact version: the Plan's own editor tab while Vn is still
+its version, otherwise Vn's retained read-only document. It never opens Plan
+Details or a newer version, and pressed in the preview it closes the preview; and an **Objective
 history** disclosure as its footer, with the revision count, which opens the
 history inline without leaving the compact projection. There is no View Goal
 route, no **Details** button and no Ask for a replacement. Editing the
@@ -2277,7 +2292,8 @@ and deliberately not in the Multi-Agent Workflows group. It is never a card.
   countdown when the reset is unknown; "**Paused** · …" for a build you
   paused; and "**Schedule ended** · you started this build now, so the
   schedule won’t start a second one." after Build runs the version the
-  schedule was bound to. That last state offers no "Use V…": there is no new
+  schedule was bound to (wording approved by Jared, 2026-10-09; Plans
+  DL-157). That last state offers no "Use V…": there is no new
   version to rebind to, so its link reads Details rather than Review.
 - **Its layout.** The canon token is the first row, in the text colour, with
   **Details** (**Review** when a new version is waiting) beside it. Details

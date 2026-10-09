@@ -2016,6 +2016,18 @@
     var r=rec(id);if(!r)return;
     ctx.state.editorRevealed=true;ctx.closeMenu();ctx.closeDialog();ctx.openEditor('plan:'+id);
   }
+  /* cmd.chat.plan.open_version (DL-157): a bound Goal's Open exact Plan · Vn opens that
+     version's document and nothing else. While Vn is still the Plan's version that is the
+     Plan's own tab; once a later version exists it is Vn's retained, read-only document.
+     It never opens Plan Details and never substitutes a newer version. */
+  function openPlanVersion(ctx,id,v){
+    var r=rec(id);v=Number(v);
+    if(!r||!v){ctx.toast('Cannot open','The bound Plan is missing.');return false;}
+    if(r.version===v){openPlanEditor(ctx,id);return true;}
+    var ref=r.document_refs&&r.document_refs[v];
+    if(!ref){ctx.toast('Cannot open','Plan V'+v+' is not retained.');return false;}
+    ctx.state.editorRevealed=true;ctx.closeMenu();ctx.closeDialog();ctx.openEditor(window.PM56_ARTIFACTS.route(ref));return true;
+  }
   function openDlg(ctx, kind, id){ ctx.openDialog({ type:DLG[kind], id:id }); }
 
   var ACTIONS = {
@@ -2598,6 +2610,7 @@
     grillExtension:function(){ return QGRILL; },
     embeds:function(id){ var r=rec(id); return r?body(r).filter(function(b){return b.t==='plan_embed';}):null; },
     openDetails:openPlanEditor,
+    openVersion:openPlanVersion,
     // Window state is decided by Scheduling; Plan owns safe pause/resume.
     pauseForWindow:function(id,binding,reason,kind='window'){
       const r=rec(id);if(!r||r.status!=='building'||r.approved?.plan_run_id!==binding.plan_run_id||r.version!==binding.version||hashOf(body(r))!==binding.hash)return {ok:false,error:'stale_window_binding'};
