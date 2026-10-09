@@ -30,39 +30,150 @@ LEVELS = {'G': 'glance', 'D': 'detailed', 'X': 'diagnostics'}
 # kind: (wMin, wMax, hMin, hMax, presets)   wMax None = board width
 # Amendment A1 (DESIGN-SPEC-ATLAS.md, 2026-10-02): new kinds kpis, models, donut, breakdown, efficiency, qhist and agenda
 # (agenda replaces the lane timeline); provider plates are taller (Atlas rows, 66 px comfortable rows).
+# Presets (lane c-presets, Jared 2026-10-09: "Panel size presets need to be rethought and polished. Currently they make
+# the panels small and the content doesn't make sense."; PRESETS.md in the lane folder): every preset is one complete
+# content tier, 2-3 per kind. A preset's width is per board class (S / M / L / XL tracks): the same pixel width at every
+# class (S, M and L share the track count, XL takes about 47/56 of it), or the board's width ('full'). Its height is rows,
+# or by content: fit = n (the smallest height that shows n complete items: accounts, rows, resets, models) or 'all' (the
+# smallest that folds nothing), measured at runtime by rendering the kind in a hidden card at that width (42-cards.js);
+# h is then the fallback before the measure (and what --check validates). frm = the first class that offers it (a
+# board-wide preset that would only repeat another at S).
+CLS_ORDER = ['S', 'M', 'L', 'XL']
+XL_OF = {4: 4, 5: 5, 6: 5, 7: 6, 8: 7, 9: 8, 10: 9, 11: 10, 12: 11, 14: 12, 16: 14}
+
+
+def P(pid, name, w, h, desc, fit=None, frm=None):
+    """One preset. w: tracks at S / M / L (XL from XL_OF), a 4-tuple (S, M, L, XL), or 'full' (the board's width)."""
+    if w == 'full':
+        ws = {'S': 12, 'M': 20, 'L': 24, 'XL': 30}
+    elif isinstance(w, tuple):
+        ws = dict(zip(CLS_ORDER, w))
+    else:
+        ws = {'S': w, 'M': w, 'L': w, 'XL': XL_OF.get(w, max(4, round(w * 47 / 56)))}
+    out = {'id': pid, 'name': name, 'w': ws, 'h': h, 'desc': desc}
+    if fit is not None:
+        out['fit'] = fit
+    if frm:
+        out['from'] = frm
+    return out
+
+
+def WIDE(s=12, m=14):
+    return (s, m, m, m)
+
+
 KINDS = {
-    'kpi':       (3, 12, 3, 12, [('Strip', 4, 3), ('Compact', 3, 4), ('Standard', 4, 4), ('Wide', 6, 4), ('Tall', 4, 6), ('Expanded', 6, 6), ('Maximum', 8, 6)]),
-    'kpis':      (6, None, 3, 9, [('Strip', 12, 3), ('Row', 20, 4), ('Wide', 24, 4), ('Two rows', 12, 7)]),
-    'limit':     (3, 10, 3, 12, [('Strip', 6, 3), ('Compact', 4, 6), ('Standard', 4, 8), ('Wide', 6, 7), ('Expanded', 8, 9), ('Maximum', 10, 11)]),
-    'provider':  (3, None, 3, 20, [('Strip', 6, 3), ('Compact', 4, 5), ('Standard', 4, 7), ('Wide', 6, 7), ('Expanded', 8, 9), ('Group', 10, 11), ('Group wide', 14, 11), ('Group full', 20, 11)]),
-    'switch':    (4, None, 3, 14, [('Strip', 12, 3), ('Wide', 20, 3), ('Two lines', 10, 4), ('Panel', 4, 8), ('Ladder', 20, 8)]),
-    'providers': (4, None, 3, 12, [('Compact', 4, 4), ('Standard', 6, 5), ('Wide', 10, 4), ('Strip', 20, 3)]),
-    'group':     (6, None, 2, 2, [('Band', 12, 2), ('Wide', 20, 2), ('Full', 24, 2)]),
-    'setup':     (4, 16, 3, 14, [('Strip', 6, 3), ('Standard', 5, 7), ('Wide', 8, 7)]),
-    'context':   (4, 14, 5, 14, [('Compact', 4, 6), ('Tall', 4, 8), ('Standard', 6, 6), ('Wide', 9, 6), ('Expanded', 12, 7)]),
-    'trend':     (4, None, 4, 20, [('Compact', 5, 5), ('Standard', 8, 7), ('Wide', 12, 7), ('Tall', 8, 10), ('Full', 20, 8)]),
-    'columns':   (4, None, 4, 16, [('Compact', 5, 5), ('Standard', 8, 7), ('Wide', 12, 6)]),
-    'budget':    (5, None, 5, 16, [('Compact', 5, 6), ('Standard', 8, 8), ('Wide', 12, 8)]),
-    'heat':      (6, None, 5, 11, [('Compact', 6, 6), ('Standard', 10, 7), ('Wide', 14, 9)]),
-    'agenda':    (4, None, 4, 30, [('Compact', 4, 8), ('Standard', 8, 10), ('Wide', 12, 12), ('Full', 24, 12)]),
-    'qhist':     (6, None, 5, 40, [('Compact', 8, 10), ('Standard', 12, 16), ('Wide', 20, 27), ('Full', 24, 27)]),
-    'models':    (6, None, 5, 16, [('Compact', 6, 8), ('Standard', 10, 10), ('Wide', 16, 11), ('Full', 24, 11)]),
-    'donut':     (5, 14, 6, 14, [('Compact', 5, 10), ('Standard', 8, 11), ('Tall', 7, 12), ('Wide', 12, 9)]),
-    'breakdown': (5, 16, 5, 14, [('Compact', 5, 10), ('Standard', 8, 11), ('Tall', 7, 12), ('Wide', 12, 9)]),
-    'efficiency': (4, 14, 5, 12, [('Compact', 4, 9), ('Standard', 6, 10), ('Wide', 12, 8)]),
-    'ranked':    (4, 14, 4, 16, [('Compact', 4, 6), ('Standard', 5, 7), ('Wide', 8, 6), ('Tall', 5, 10)]),
-    'mix':       (4, None, 3, 12, [('Compact', 4, 4), ('Standard', 6, 5), ('Wide', 10, 5)]),
-    'list':      (4, None, 3, 20, [('Compact', 4, 5), ('Standard', 5, 7), ('Wide', 8, 6), ('Full', 12, 7)]),
-    'table':     (6, None, 5, 30, [('Standard', 10, 10), ('Wide', 14, 10), ('Tall', 10, 16), ('Full', 20, 12)]),
-    'alert':     (4, 10, 4, 10, [('Compact', 4, 6), ('Standard', 5, 7), ('Wide', 8, 6)]),
-    'free':      (3, 12, 4, 16, [('Compact', 4, 6), ('Standard', 4, 7), ('Wide', 6, 6)]),
-    'cache':     (3, 8, 4, 14, [('Compact', 4, 6), ('Standard', 4, 7), ('Wide', 6, 6)]),
-    'gauge':     (3, 8, 4, 12, [('Compact', 4, 5), ('Standard', 5, 6), ('Tall', 5, 10), ('Wide', 8, 5)]),
+    'kpi': (3, 12, 3, 12, [
+        P('compact', 'Compact', 4, 4, 'The value and its line'),
+        P('standard', 'Standard', 6, 6, 'Value, line and the first facts'),
+        P('expanded', 'Expanded', 8, 8, 'Value, line and every fact', fit='all')]),
+    'kpis': (6, None, 3, 12, [
+        P('strip', 'Strip', 'full', 3, "Every total's value on one line", frm='M'),
+        P('compact', 'Compact', 8, 9, 'Every total, two to a row', fit='all'),
+        P('standard', 'Standard', 'full', 5, 'Every total, side by side', fit='all')]),
+    'limit': (3, 12, 3, 24, [
+        P('compact', 'Compact', 4, 9, "The active account's windows", fit=1),
+        P('standard', 'Standard', 8, 12, 'Three accounts, a column per window', fit=3),
+        P('expanded', 'Expanded', 12, 14, 'Every account, window and fact', fit='all')]),
+    'provider': (3, None, 3, 24, [
+        P('compact', 'Compact', 6, 7, 'The active account', fit=1),
+        P('standard', 'Standard', 8, 12, 'Every account and its binding window', fit='all'),
+        P('expanded', 'Expanded', (12, 16, 16, 16), 12, 'Every account, window and action', fit='all')]),
+    'switch': (4, None, 3, 14, [
+        P('strip', 'Strip', 'full', 3, 'The switch levels on one line'),
+        P('panel', 'Panel', 6, 10, 'Controls and most room, stacked', fit='all'),
+        P('ladder', 'Ladder', 'full', 8, "Controls and every provider's room", fit='all')]),
+    'providers': (4, None, 3, 12, [
+        P('compact', 'Compact', 6, 5, 'Every provider, stacked', fit='all'),
+        P('standard', 'Standard', 10, 4, 'Every provider on one line', fit='all'),
+        P('wide', 'Wide', 'full', 3, 'Every provider, in columns', fit='all')]),
+    'group': (6, None, 2, 2, [P('band', 'Band', 'full', 2, 'The group heading across the board')]),
+    'setup': (4, 16, 3, 14, [
+        P('compact', 'Compact', 6, 7, 'State, Settings link and note'),
+        P('expanded', 'Expanded', 8, 8, 'Every setup fact', fit='all')]),
+    'context': (4, 14, 5, 14, [
+        P('compact', 'Compact', 6, 10, 'The ring and every family', fit='all'),
+        P('standard', 'Standard', 9, 9, 'Adds the window facts', fit='all'),
+        P('expanded', 'Expanded', 12, 9, 'Adds route and last compaction', fit='all')]),
+    'trend': (4, None, 4, 20, [
+        P('compact', 'Compact', 5, 5, 'The number and its sparkline'),
+        P('standard', 'Standard', 8, 10, 'The chart with axes and legend'),
+        P('wide', 'Wide', WIDE(), 10, 'Adds the facts row and the peak'),
+        P('full', 'Full width', 'full', 11, "The board's width, finer buckets", frm='M')]),
+    'columns': (4, None, 4, 16, [
+        P('compact', 'Compact', 5, 6, 'Labelled bars, a few buckets'),
+        P('standard', 'Standard', 8, 8, 'Labelled bars with the caption'),
+        P('wide', 'Wide', WIDE(), 9, 'More buckets, caption and facts'),
+        P('full', 'Full width', 'full', 9, 'Every bucket across the board', frm='M')]),
+    'budget': (5, None, 5, 16, [
+        P('compact', 'Compact', 6, 7, 'Spend, estimate and a small line'),
+        P('standard', 'Standard', 8, 10, 'Projection chart and burn facts'),
+        P('expanded', 'Expanded', WIDE(), 10, 'Adds plan versus metered')]),
+    'heat': (6, None, 5, 14, [
+        P('standard', 'Standard', 8, 10, 'Every hour of the week'),
+        P('wide', 'Wide', WIDE(), 11, 'Adds hour labels and Tokens / Cost')]),
+    'agenda': (6, None, 4, 30, [
+        P('compact', 'Compact', (6, 6, 6, 6), 10, 'The next four resets', fit=4),
+        P('standard', 'Standard', 8, 16, 'The next eight resets', fit=8),
+        P('wide', 'Wide', 'full', 14, 'Every reset, a column per day', fit='all')]),
+    'qhist': (6, None, 5, 40, [
+        P('compact', 'Compact', 8, 10, 'The first four accounts', fit=4),
+        P('standard', 'Standard', 12, 30, "Every account's main window", fit='all'),
+        P('wide', 'Wide', 'full', 27, "Adds the week's day labels", fit='all', frm='M')]),
+    'models': (6, None, 5, 20, [
+        P('compact', 'Compact', (6, 6, 6, 6), 9, 'The top three models', fit=3),
+        P('standard', 'Standard', 10, 12, 'Every model and its cost bar', fit='all'),
+        P('wide', 'Wide', (12, 16, 16, 16), 12, 'Adds share and tokens', fit='all')]),
+    'donut': (5, 14, 6, 14, [
+        P('compact', 'Compact', 6, 10, 'The ring and the top models'),
+        P('standard', 'Standard', 8, 12, 'Adds the Tokens / Cost switch'),
+        P('wide', 'Wide', 12, 10, 'The ring beside every model')]),
+    'breakdown': (5, 16, 5, 14, [
+        P('compact', 'Compact', 6, 12, 'Every token type, stacked', fit='all'),
+        P('wide', 'Wide', 12, 10, 'Tokens and cost side by side', fit='all')]),
+    'efficiency': (4, 14, 5, 12, [
+        P('compact', 'Compact', 6, 10, 'Ring, savings and the split'),
+        P('wide', 'Wide', 12, 8, 'Ring beside savings and the note')]),
+    'ranked': (5, 14, 4, 16, [
+        P('compact', 'Compact', 7, 7, 'The top three and their share', fit=3),
+        P('standard', 'Standard', 7, 10, 'Every row and its share', fit='all'),
+        P('wide', 'Wide', 12, 9, "Adds each row's role", fit='all')]),
+    'mix': (4, None, 3, 12, [
+        P('compact', 'Compact', 6, 6, 'The bar and every part', fit='all'),
+        P('wide', 'Wide', 12, 6, "Adds each part's note", fit='all')]),
+    'list': (4, None, 3, 24, [
+        P('compact', 'Compact', 6, 6, 'The first three rows', fit=3),
+        P('standard', 'Standard', 8, 9, 'Six rows with their second line', fit=6),
+        P('expanded', 'Expanded', 12, 10, 'Every row with its note', fit='all')]),
+    'table': (6, None, 5, 30, [
+        P('compact', 'Compact', 8, 8, 'Four rows, the main columns', fit=4),
+        P('standard', 'Standard', 12, 12, 'Eight rows, more columns', fit=8),
+        P('full', 'Full width', 'full', 14, 'Every row and every column', fit='all')]),
+    'alert': (4, 10, 4, 12, [
+        P('compact', 'Compact', 6, 6, 'The state and what happened'),
+        P('expanded', 'Expanded', 8, 9, 'Adds the meter, actions and facts', fit='all')]),
+    'free': (3, 12, 4, 16, [
+        P('compact', 'Compact', 4, 7, 'State, capacity and route'),
+        P('expanded', 'Expanded', 6, 13, 'Adds every fact of the route', fit='all')]),
+    'cache': (3, 8, 4, 14, [
+        P('compact', 'Compact', 4, 7, 'The ring and the savings'),
+        P('expanded', 'Expanded', 6, 11, 'Adds every fact', fit='all')]),
+    'gauge': (3, 8, 4, 12, [
+        P('compact', 'Compact', 4, 5, 'The ring and the calls'),
+        P('expanded', 'Expanded', 8, 6, 'The ring beside every fact', fit='all')]),
     # WOW round (POLISH2 content, 2026-10-02): the room heroes of the rooms that had no chart on their first screen
-    'skyline':   (8, None, 6, 16, [('Standard', 12, 10), ('Tall', 12, 12), ('Wide', 20, 10)]),
-    'attempts':  (8, None, 5, 14, [('Standard', 12, 8), ('Wide', 20, 10)]),
-    'flow':      (10, None, 7, 14, [('Standard', 14, 10), ('Wide', 20, 11)]),
-    'windows':   (8, None, 6, 14, [('Standard', 12, 9), ('Wide', 20, 10)]),
+    'skyline': (8, None, 6, 16, [
+        P('standard', 'Standard', (12, 12, 14, 16), 10, "Every active account's tower"),
+        P('full', 'Full width', 'full', 11, 'The towers across the board', frm='M')]),
+    'attempts': (8, None, 5, 14, [
+        P('standard', 'Standard', (12, 12, 14, 16), 8, 'Every attempt on its lane'),
+        P('full', 'Full width', 'full', 10, 'The lanes across the board', frm='M')]),
+    'flow': (10, None, 7, 14, [
+        P('standard', 'Standard', (12, 14, 14, 16), 10, 'Readings, authority and labels'),
+        P('full', 'Full width', 'full', 11, 'The flow across the board', frm='M')]),
+    'windows': (8, None, 6, 20, [
+        P('standard', 'Standard', (12, 12, 14, 16), 9, 'Every window of the week', fit='all'),
+        P('full', 'Full width', 'full', 10, 'The week across the board', fit='all', frm='M')]),
 }
 
 # id: (kind, level, title, meta). Titles and metas are the old page's (PARITY section 2), with countdown-free wording.
@@ -484,8 +595,37 @@ def known_ids() -> list[str]:
     return json.loads(m.group(1)) if m else []
 
 
+def check_presets() -> list[str]:
+    """Every preset fits its kind's range at every class that offers it, ids are unique, and no two presets of a kind are
+    the same size at a class (WS-017: each preset is its own content tier)."""
+    problems, tracks = [], {'S': 12, 'M': 20, 'L': 24, 'XL': 30}
+    for kind, (wmin, wmax, hmin, hmax, presets) in KINDS.items():
+        ids = [p['id'] for p in presets]
+        if len(ids) != len(set(ids)):
+            problems.append(f'kind {kind}: preset ids repeat {ids}')
+        if not presets:
+            problems.append(f'kind {kind}: no preset')
+        for cls in CLS_ORDER:
+            seen = {}
+            for p in presets:
+                if p.get('from') and CLS_ORDER.index(cls) < CLS_ORDER.index(p['from']):
+                    continue
+                w, h, fit = p['w'][cls], p['h'], p.get('fit')
+                if not (wmin <= w <= min(wmax or tracks[cls], tracks[cls])):
+                    problems.append(f'kind {kind} preset {p["id"]} at {cls}: width {w} outside {wmin}-{min(wmax or tracks[cls], tracks[cls])}')
+                if not (hmin <= h <= hmax):
+                    problems.append(f'kind {kind} preset {p["id"]}: height {h} outside {hmin}-{hmax}')
+                if fit is not None and fit != 'all' and not (isinstance(fit, int) and fit > 0):
+                    problems.append(f'kind {kind} preset {p["id"]}: fit must be a positive count or "all"')
+                key = (w, h if fit is None else ('fit', fit))
+                if key in seen:
+                    problems.append(f'kind {kind} at {cls}: presets {seen[key]} and {p["id"]} are the same size')
+                seen[key] = p['id']
+    return problems
+
+
 def build():
-    problems, boards = [], {}
+    problems, boards = check_presets(), {}
     for room in ROOMS:
         boards[room] = {}
         for cls, cols in CLASSES.items():
@@ -534,8 +674,7 @@ def build():
 
 def js(boards) -> str:
     widgets = {wid: {'kind': k, 'level': LEVELS[lv], 'title': t, 'meta': m} for wid, (k, lv, t, m) in W.items()}
-    kinds = {k: {'wMin': a, 'wMax': b, 'hMin': c, 'hMax': d, 'presets': [{'name': n, 'w': w, 'h': h} for n, w, h in p]}
-             for k, (a, b, c, d, p) in KINDS.items()}
+    kinds = {k: {'wMin': a, 'wMax': b, 'hMin': c, 'hMax': d, 'presets': p} for k, (a, b, c, d, p) in KINDS.items()}
     rooms = {}
     for room in ROOMS:
         rooms[room] = {cls: [[e['id'], e['x'], e['y'], e['w'], e['h']] for e in boards[room][cls]] for cls in CLASSES}

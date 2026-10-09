@@ -58,15 +58,18 @@
   C.headTools = function (ctx, html, minTier) {
     /* a dry render (the in-place checks) never touches the live head: it repeats the last decision */
     if (ctx.body && ctx.body._pmuDry || ctx._dry) return html && headToolsIn[ctx.id] ? '' : html ? '<div class="pmu-bodytools">' + html + '</div>' : '';
-    if (!html) { headToolsIn[ctx.id] = false; if (ctx.head) ctx.head.innerHTML = ''; return ''; }
+    /* a size preview or fit measure (42-cards.js, a hidden card of the same widget) decides for itself and leaves the live
+       card's record alone */
+    var mem = ctx.card && ctx.card._pmuPreview ? {} : headToolsIn;
+    if (!html) { mem[ctx.id] = false; if (ctx.head) ctx.head.innerHTML = ''; return ''; }
     if (ctx.head && C.w(ctx, minTier || 'l')) {
       ctx.head.innerHTML = html;
       var card = ctx.head.closest('.pmu-card'), title = card && card.querySelector('.pmu-cardtitle'), key = card && card.querySelector('.pmu-cardkey:not([hidden])');
       var avail = (card ? card.clientWidth : ctx.tier.bw + 28) - 28;
       var need = (title ? title.scrollWidth : 0) + ctx.head.scrollWidth + TOOLS_RESERVE + 10 + (key ? key.offsetWidth + 10 : 0);
-      if (need <= avail) { headToolsIn[ctx.id] = true; return ''; }
+      if (need <= avail) { mem[ctx.id] = true; return ''; }
     }
-    headToolsIn[ctx.id] = false;
+    mem[ctx.id] = false;
     if (ctx.head) ctx.head.innerHTML = '';
     return '<div class="pmu-bodytools">' + html + '</div>';
   };
@@ -695,6 +698,16 @@
     b.setAttribute('data-pm-hover-detail', rows.concat(notes).join('; '));
   }
   C.fitLater = fitLater;
+  /* one synchronous fit pass over one body (the size presets' measure and miniature, 42-cards.js): the rows the passes
+     would trim later are trimmed now, so what the hidden card shows is what the board will show */
+  C.fitNow = function (body) {
+    if (!body || !body.isConnected) return;
+    /* the queued passes leave it alone: it is fitted now, and a preview is scaled once fitted (a later pass would read
+       scaled boxes) */
+    var i = fitQueue.indexOf(body); if (i >= 0) fitQueue.splice(i, 1);
+    var j = fitAgain.indexOf(body); if (j >= 0) fitAgain.splice(j, 1);
+    body._pmuFitDone = false; fitFlush([body]);
+  };
   /* a web font that finishes loading after the render (NieR's mono, Retro's face) can push a row or a foot past the body:
      the fit pass runs once more over the board when the fonts settle (NieR Light at 1440: "4 more facts" cut at the edge) */
   try {

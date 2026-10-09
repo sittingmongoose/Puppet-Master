@@ -705,3 +705,33 @@ html[data-o55-nier="on"] #panel-usage .pmu-headmore { font-family: var(--pmu-mon
 #panel-usage .pmu-kpi .pmu-kpiline.has-count-row { flex-wrap: wrap; row-gap: 0; }
 #panel-usage .pmu-kpiline.has-count-row .pmu-headmore.is-inline { height: 18px; }
 #panel-usage .pmu-headmore.is-row { display: flex; justify-content: flex-end; width: 100%; height: 18px; margin: 0; padding: 0; flex: none; grid-column: 1 / -1; }
+
+/* ------------------------------------------------------------------ the size picker's preview (lane c-presets, Jared item 1)
+   The stage of the size menu: the real card at the preset's size (a hidden-card render, 42-cards.js), scaled into a well
+   over the board's track grid at the same scale, an accent frame that springs between presets, and a caption that says
+   what the miniature shows. The miniature never takes the pointer, focus or a hover tag. */
+#panel-usage .pmu-szstage { position: relative; margin: 2px 0 4px; }
+#panel-usage .pmu-szview { position: relative; height: 160px; overflow: hidden; border-radius: calc(var(--pmu-r-mitem, 8px) + 2px);
+  box-shadow: inset 0 0 0 1px var(--pmu-rule-2); contain: layout paint; }
+#panel-usage .pmu-szgrid { position: absolute; inset: 0; pointer-events: none; opacity: .7;
+  background-image: linear-gradient(to right, color-mix(in srgb, var(--pmu-ink) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--pmu-ink) 5%, transparent) 1px, transparent 1px);
+  background-size: var(--sz-px, 24px) var(--sz-py, 15px); background-position: var(--sz-ox, 0) var(--sz-oy, 0); }
+#panel-usage .pmu-szoutline { position: absolute; left: 0; top: 0; transform-origin: 0 0; pointer-events: none; border-radius: var(--pmu-r-card);
+  box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--pmu-accent) 62%, transparent), 0 0 22px color-mix(in srgb, var(--pmu-accent) 22%, transparent); }
+#panel-usage .pmu-szitem { position: absolute; transform-origin: 0 0; pointer-events: none; }
+/* a tall card's miniature runs under the stage's lower edge: the last 36 px fade out */
+#panel-usage .pmu-szview.is-crop { -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent); }
+#panel-usage .pmu-szitem > .pmu-card { position: relative; box-sizing: border-box; pointer-events: none; }
+#panel-usage .pmu-szitem > .pmu-card .pmu-cardtools, #panel-usage .pmu-szitem > .pmu-card .pmu-h,
+#panel-usage .pmu-szmeasure .pmu-cardtools, #panel-usage .pmu-szmeasure .pmu-h { visibility: hidden; }
+#panel-usage .pmu-szcap { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 8px; row-gap: 1px; padding: 7px 2px 0; font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-szcap b { color: var(--pmu-ink); font-size: 13px; font-weight: 640; }
+#panel-usage .pmu-szcap .pmu-szdim { font-variant-numeric: tabular-nums; }
+#panel-usage .pmu-szcap .pmu-szwhat { flex-basis: 100%; color: var(--pmu-ink-2); }
+#panel-usage .pmu-szmeasure { position: absolute; left: -40000px; top: 0; width: 0; height: 0; overflow: visible; visibility: hidden; pointer-events: none; }
+#panel-usage .pmu-szmeasure > .pmu-card { position: absolute; left: 0; top: 0; }
+/* the footprint glyph of a size row: the card's share of the board's width and its height */
+#panel-usage .pmu-micon svg.pmu-szfp { width: 22px; height: 16px; }
+html[data-theme^="retro"] #panel-usage .pmu-szview, html[data-o55-nier="on"] #panel-usage .pmu-szview { border-radius: 0; }
+html[data-theme^="retro"] #panel-usage .pmu-szoutline, html[data-o55-nier="on"] #panel-usage .pmu-szoutline { border-radius: 0; box-shadow: 0 0 0 1.5px var(--pmu-accent); }

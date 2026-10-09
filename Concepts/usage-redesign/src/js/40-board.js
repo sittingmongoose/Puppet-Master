@@ -153,7 +153,7 @@
         var g = geo[id] || {}, cls = current.cls ? current.cls.name : null, mine = cls && g[cls] ? parseGeo(g[cls]) : null;
         var card = current.room === room ? cardOf(id) : null;
         var rec = { room_id: room, widget_id: id, visible: !(st.hidden[room] || {})[id], order_index: order[id] != null ? order[id] : null, geometry: g,
-          preset_id: mine ? (PMU.cards.sizeName(kindSpec(id), mine.w, mine.h) || 'custom') : null,
+          preset_id: mine ? (PMU.cards.sizeName(kindSpec(id), mine.w, mine.h, id) || 'custom') : null,
           semantic_tier_id: card ? (card.getAttribute('data-tw') || '') + '.' + (card.getAttribute('data-th') || '') : null,
           configuration_refs: cfgRefs(configs[id]), committed_revision: revisions[id] || 0 };
         byWidget[room + '/' + id] = rec; recs.push(rec);
@@ -256,7 +256,8 @@
     var kept = rects.filter(function (r) { var b = PMU_BOARDS.widgets[r.id]; return !/^acct-/.test(r.id) || !b || b.kind !== 'provider' || withAccounts[r.id]; });
     var have = {}; kept.forEach(function (r) { have[r.id] = true; });
     var extra = Object.keys(withAccounts).filter(function (id) { return !have[id]; }).map(function (id) {
-      var many = withAccounts[id].accounts.length > 1; return { id: id, w: Math.min(many ? 10 : 4, cls.tracks), h: many ? 11 : 7 };
+      /* the provider presets' widths (lane c-presets): Standard for a group, Compact for one account */
+      var many = withAccounts[id].accounts.length > 1; return { id: id, w: Math.min(many ? 10 : 6, cls.tracks), h: many ? 12 : 7 };
     });
     if (!extra.length) return kept;
     return kept.concat(firstFitInto(kept, extra, cls.tracks));
@@ -1059,7 +1060,7 @@
     }
   }
   function sizeLabel(id, r) {
-    var name = PMU.cards.sizeName(kindSpec(id), r.w, r.h);
+    var name = PMU.cards.sizeName(kindSpec(id), r.w, r.h, id);
     return { name: name, size: r.w + ' x ' + r.h };
   }
   function tierNote(card, r) {
@@ -1240,7 +1241,7 @@
         receipt = command('cmd.widget.move', { room: room, widget_id: g.id, from: { x: g.me.x, y: g.me.y }, to: { x: g.target.x, y: g.target.y }, board_class: cls,
           moved_peers: peers.map(function (r) { return { widget_id: r.id, to: { x: r.x, y: r.y } }; }), source: g.source || (g.kb ? 'keyboard' : 'pointer') }, { moved: true });
       } else {
-        var nm = PMU.cards.sizeName(kindSpec(g.id), g.target.w, g.target.h);
+        var nm = PMU.cards.sizeName(kindSpec(g.id), g.target.w, g.target.h, g.id);
         var form = PMU.cards.headForm(PMU.widgets.get(g.id) || {}, g.target.w, g.target.h, current.cls.pitchX);
         var tt = tierOf(g.target.w * current.cls.pitchX - GAP - 28, g.target.h * ROW - GAP - (PMU.cards.HEAD_PX[form] || 34) - (form === 'plate' ? 16 : 10));
         receipt = command('cmd.widget.resize', { room: room, widget_id: g.id, from: { x: g.me.x, y: g.me.y, w: g.me.w, h: g.me.h },
@@ -1499,7 +1500,9 @@
     } else if (shift) {
       /* Shift steps to the next preset in the arrow's direction: Right / Left by width, Down / Up by height (ties: the
          preset closest in the other dimension) */
-      var presets = (ks.presets || []).filter(function (p) { return p.w <= cls.tracks - r.x; });
+      /* the presets offered at this board class, a fit preset at its measured height (lane c-presets) */
+      var presets = (PMU.cards.presets ? PMU.cards.presets(g.id) : []).filter(function (p) { return p.w <= cls.tracks - r.x; })
+        .map(function (p) { return { w: p.w, h: PMU.cards.presetH ? PMU.cards.presetH(g.id, p) : p.h }; });
       var horiz = key === 'ArrowRight' || key === 'ArrowLeft', fwd = key === 'ArrowRight' || key === 'ArrowDown';
       var cands = presets.filter(function (p) { var a = horiz ? p.w : p.h, b = horiz ? r.w : r.h; return fwd ? a > b : a < b; });
       cands.sort(function (p, q) {
