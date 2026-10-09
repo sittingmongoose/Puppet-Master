@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L40509-L41095
 
-Source SHA256: `c1dd6c3a52fc67deeb3e38f489c41c1340c5414dc7b1ac85e64914d0701730b1`
+Source SHA256: `f53b691e46c27e09fd2db732b918c0650a0f8b9516dd9b49d708c869ab1be25a`
 
 ---
 
@@ -315,7 +315,7 @@ canonical_text: >-
   clear body with a lit edge and a light core); Retro is a pixel sprite. Under NieR Mode every agent is PMConcept7's
   NieR puppet unit: ink on parchment with no hue and no halo, a rigid ink visor band that overhangs the head, an ink
   coat, square joints and the role prop in ink. Its geometry and ink tokens belong to PMConcept7's onboarding owner of
-  that unit (the handoff in this unit's lineage until that owner lands); the chat adds only Grill Me's kettle grill
+  that unit, F3-598; the chat adds only Grill Me's kettle grill
   and the Moderator's gavel, drawn in ink, and the working state's static ink stage-floor line. No NieR part gates the
   puppet's look or its visor. Detail by size: the smallest sizes draw a bust, or under NieR Mode a pixel figure;
   larger sizes add the whole figure and its strings, then the face, then the joints, feet and family detail. States
@@ -330,7 +330,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines how every agent is drawn in the assistant chat and the wand module sheets.
 split_recommended: false
-depends_on: [DL-149, F3-566, F3-584, F3-585, F3-588, F3-589, DL-111]
+depends_on: [DL-149, F3-566, F3-584, F3-585, F3-588, F3-589, F3-598, DL-111]
 unblocks: [F3-595]
 acceptance_criteria:
   - "One puppet primitive renders every agent in sheets, run cards, run views, Activity and the live agents card in every theme, NieR Mode included, and no agent is drawn as initials."
@@ -374,7 +374,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-149, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/FinalGUISpec.md#F3-584, ContractName:Plans/FinalGUISpec.md#F3-589, ContractName:Plans/DRY_Rules.md#DR-044
+ContractRef: ContractName:Plans/Decision_Log.md#DL-149, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/FinalGUISpec.md#F3-584, ContractName:Plans/FinalGUISpec.md#F3-589, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/DRY_Rules.md#DR-044
 
 ### F3-595 — Cast Plates In Sheets And Run Views
 
