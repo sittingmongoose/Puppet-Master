@@ -184,17 +184,19 @@ html[data-theme^="retro"] #panel-usage .pmu-mark[data-mark="glow"] { stroke-widt
 
 /* ---------- crosshair and readout card (A1 7.1) ---------- */
 /* every part is placed by JS with the `translate` property (never `transform`: under the dots' `scale` a transform position was
-   scaled too, item 3); the 1 px rule is centred on the bucket (margin -.5) so it runs through its dots' centres */
+   scaled too, item 3); the 1 px rule is centred on the bucket (margin -.5) so it runs through its dots' centres; the rule, the
+   band and the dots slide by one WAAPI glide each with a shared start time (the dots along their own line, charts.hover),
+   not by transitions, so no frame shows a dot off the rule */
 #panel-usage .pmu-xh { position: absolute; left: 0; top: 0; width: 1px; height: 0; margin-left: -.5px; background: var(--pmu-ink-3); opacity: 0; pointer-events: none; z-index: 3;
-  transition: translate 140ms cubic-bezier(.2,.8,.2,1), opacity 140ms cubic-bezier(.2,.8,.2,1); }
+  transition: opacity 140ms cubic-bezier(.2,.8,.2,1); }
 /* the hovered bucket's band (accent 8 %), the hovered series' dot grown to 5 px with a 12 px halo (WOW-SPEC 3.5) */
 #panel-usage .pmu-xband { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 1; pointer-events: none; opacity: 0; border-radius: 3px;
   background: linear-gradient(180deg, color-mix(in srgb, var(--accent-primary) 4%, transparent), color-mix(in srgb, var(--accent-primary) 9%, transparent));
-  transition: translate calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), opacity calc(120ms * var(--pmu-speed, 1)) cubic-bezier(.22,.8,.28,1), width calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1); }
+  transition: opacity calc(120ms * var(--pmu-speed, 1)) cubic-bezier(.22,.8,.28,1), width calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1); }
 #panel-usage .pmu-xband.is-on { opacity: 1; }
 #panel-usage .pmu-xdot { position: absolute; left: 0; top: 0; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--pmu-card);
   border: 2px solid var(--c, var(--pmu-ink)); box-sizing: border-box; opacity: 0; pointer-events: none; z-index: 4;
-  transition: translate calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), opacity calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), scale calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.34,1.45,.64,1); scale: .8; }
+  transition: opacity calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1), scale calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.34,1.45,.64,1); scale: .8; }
 #panel-usage .pmu-xdot.is-hot { background: var(--c, var(--pmu-ink)); border-color: var(--pmu-card); scale: 1;
   box-shadow: 0 0 0 6px color-mix(in srgb, var(--c, var(--pmu-ink)) 22%, transparent); }
 #panel-usage .pmu-xdot[data-dot="ink"] { border-color: var(--pmu-ink); }

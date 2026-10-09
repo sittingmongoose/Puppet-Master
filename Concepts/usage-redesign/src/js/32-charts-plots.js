@@ -206,6 +206,23 @@
     return out;
   }
   function mix(a, b, k) { return !finite(b) ? null : !finite(a) ? b : a + (b - a) * k; }
+  /* the y of a sampled row (N samples from x0 to x1, the polyline the plot draws) at plot x; null in a gap. The crosshair's
+     dots glide along it between buckets (charts.hover cfg.yAt) */
+  function rowAt(row, x0, x1, x) {
+    var n = row ? row.length : 0; if (!n) return null;
+    var u = n > 1 && x1 > x0 ? (x - x0) / (x1 - x0) * (n - 1) : 0;
+    if (u < -0.01 || u > n - 0.99) return null;
+    u = clamp(u, 0, n - 1);
+    var i = Math.min(n - 2, Math.floor(u)), f = u - i, a = row[i], b = row[Math.min(n - 1, i + 1)];
+    if (n === 1) return finite(a) ? a : null;
+    if (finite(a) && finite(b)) return a + (b - a) * f;
+    return f < 0.01 && finite(a) ? a : f > 0.99 && finite(b) ? b : null;
+  }
+  /* y at plot x on a series drawn as monotone runs through (xs[i], ys[i]) (charts.monoD draws the same curve); null in a gap */
+  function runsAt(xs, ys) {
+    var fns = charts.runs(ys).map(function (run) { return { a: xs[run[0]], b: xs[run[run.length - 1]], f: charts.monotone(run.map(function (i) { return xs[i]; }), run.map(function (i) { return ys[i]; })) }; });
+    return function (x) { for (var q = 0; q < fns.length; q++) if (x >= fns[q].a - 0.01 && x <= fns[q].b + 0.01) return fns[q].f(x); return null; };
+  }
   /* morphs read as data in every family (WOW-SPEC 5): one continuous ease-out, the same on the JS path tween and on the
      WAAPI marks that ride it */
   var MORPH_EASE = 'cubic-bezier(.33,1,.68,1)';
@@ -591,6 +608,12 @@
     var cfg = {
       n: n, pad: { t: geo.pad.t, h: geo.ph, l: geo.pad.l, r: geo.pad.r },
       xAt: function (i) { return mids[i]; },
+      /* the same rows the plot draws, in the order of dots(i) */
+      yAt: function (k, x) {
+        var rows = geo.token || geo.stacked ? [geo.tot] : geo.lv.slice();
+        if (cost) rows.push(geo.cs);
+        return rowAt(rows[k], geo.x0, geo.x1, x);
+      },
       dots: function (i) {
         var out = [];
         if (geo.token || geo.stacked) { if (finite(totals[i])) out.push({ y: Y(totals[i]), key: geo.token ? { tk: geo.totTk } : { idx: incSeries[incSeries.length - 1].idx }, dk: geo.token ? 'all' : null }); }
@@ -905,8 +928,10 @@
     }
     c._lgeo = { sig: sig, W: W, H: Hh, pts: pts, pad: pad, ph: ph, xs: xs, lo: lo, top: ya.top, ya: ya, t0: dom.t0, t1: dom.t1 };
     if (!compact) {
+      var curves = [];
       var cfg = {
         n: n, pad: { t: pad.t, h: ph, l: pad.l, r: pad.r }, xAt: function (i) { return xs[i]; },
+        yAt: function (k, x) { var cv = curves[k] || (curves[k] = pts[k] ? runsAt(xs, pts[k]) : function () { return null; }); return cv(x); },
         dots: function (i) { return series.map(function (sr, j) { return { y: pts[j][i], key: { idx: sr.idx != null ? sr.idx : j, vendor: sr.vendor, tk: sr.tk }, dk: 'S' + j }; }); },
         html: function (i) {
           var ro = charts.ro, lo2 = dom.x[i], h = ro.title(charts.spanLabel(lo2, lo2 + dom.bucket, dom.bucket));
@@ -1405,9 +1430,18 @@
     } else { charts.patchSvg(f.plot, s); charts.patchSvg(f.over, fs); charts.patchHtml(f.hl, hl); }
     f._pS = s; f._pO = fs; f._pH = hl;
     if (!compact) {
-      var n = days;
+      var n = days, lineAt = null;
       var cfg = {
         n: n, pad: { t: pad.t, h: ph, l: pad.l, r: pad.r }, xAt: function (i) { return X(i + 1); },
+        /* on the spend line up to its last point, then on the projection's straight line to the period's end */
+        yAt: function (k, x) {
+          if (k || !pts.length) return null;
+          var lp = pts[pts.length - 1];
+          if (x <= lp[0] + 0.01) { if (!lineAt) lineAt = runsAt(pts.map(function (q) { return q[0]; }), pts.map(function (q) { return q[1]; })); return lineAt(x); }
+          if (!pr || !finite(pr.to) || !finite(cum[cum.length - 1])) return null;
+          var xa = X(cum.length), xb = X(days), ya0 = Y(cum[cum.length - 1]), yb0 = Y(pr.to);
+          return xb > xa ? ya0 + (yb0 - ya0) * clamp((x - xa) / (xb - xa), 0, 1) : ya0;
+        },
         dots: function (i) {
           if (i < cum.length && finite(cum[i])) return [{ y: Y(cum[i]), key: { idx: 0 } }];
           if (pr && finite(pr.to) && cum.length) { var a = cum[cum.length - 1], fr = (i + 1 - cum.length) / Math.max(1, days - cum.length); return [{ y: Y(a + (pr.to - a) * fr), key: { idx: 0 } }]; }
@@ -1704,6 +1738,8 @@
     var valAt = function (w, tt) { var v = null; (w.points || []).forEach(function (p) { if (p.t <= tt) v = p.v; }); return v; };
     var cfg = {
       n: times.length, pad: { t: pad.t, h: ph, l: pad.l, r: pad.r }, xAt: function (i) { return X(times[i]); },
+      /* the window's step line: each reading holds until the next */
+      yAt: function (k, x) { var w = wins[k]; if (!w) return null; var v = valAt(w, t0 + (x - pad.l) / Math.max(1, pw) * (t1 - t0) + 1); return finite(v) ? Y(v) : null; },
       dots: function (i) { return wins.map(function (w) { var v = valAt(w, times[i]); return { y: finite(v) ? Y(v) : null, key: { idx: 'ink' }, ink: true }; }); },
       html: function (i) {
         var ro = charts.ro, h = ro.title((charts.time.wmd(times[i]) + ' · ' + charts.time.clock(times[i])).toUpperCase());

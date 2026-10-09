@@ -902,6 +902,39 @@
        placed by transform under the individual `scale` (.8 when it is not the hovered series) had its position scaled too
        and sat at 0.8x its coordinates, off its line and left of the hot dot; the readout's .96 pop did the same toward the
        viewport's corner. With translate the scale applies around the part's own centre (or origin) after it is placed. */
+    /* a dot rides its own line from bucket to bucket (item 3: "doesn't follow its line"; WOW-SPEC 3.5): the slide takes the
+       rule's 140 ms and ease, and its keyframes are points of the series' own curve every 2 px (cfg.yAt(k, x), the chart's
+       geometry), so between buckets the dot stays on the line instead of cutting a chord across a peak. The rule, the band
+       and the dots slide as WAAPI animations of `translate` (compositor) that share one start time, so the dots stay on the
+       rule in every frame; a slide retargeted mid-way starts from where the part is now (on the curve). */
+    var GLIDE = 'cubic-bezier(.2,.8,.2,1)', glideCurve = null, glideT = null;
+    function stopGlide(el) { if (el._gl) { try { el._gl.a.cancel(); } catch (error) {} el._gl = null; } }
+    function glide(el, x, y, instant, yAt) {
+      var at = el._at, pos = r1(x) + 'px ' + r1(y) + 'px';
+      el._at = { x: x, y: y };
+      if (el.style.translate !== pos) el.style.translate = pos;
+      if (instant || !at || !on || reduced() || typeof el.animate !== 'function' || (Math.abs(at.x - x) < 0.3 && Math.abs(at.y - y) < 0.3)) { stopGlide(el); return; }
+      var sp = PMU.motion && PMU.motion.speed ? PMU.motion.speed() : 1, dur = 140 * sp, now = performance.now();
+      var x0 = at.x, y0 = at.y, g = el._gl;
+      if (g && now - g.t0 < g.dur) {
+        if (!glideCurve) glideCurve = PMU.motion && PMU.motion.curve ? PMU.motion.curve(GLIDE) : function (v) { return v; };
+        var pr = glideCurve(clamp((now - g.t0) / g.dur, 0, 1)), cx = g.x0 + (g.x1 - g.x0) * pr, cy = yAt ? yAt(cx) : null;
+        x0 = cx; y0 = finite(cy) ? cy : g.y0 + (g.y1 - g.y0) * pr;
+      }
+      stopGlide(el);
+      var n = yAt ? clamp(Math.ceil(Math.abs(x - x0) / 2), 2, 160) : 1, frames = [{ translate: r1(x0) + 'px ' + r1(y0) + 'px' }];
+      for (var j = 1; j < n; j++) {
+        var xj = x0 + (x - x0) * j / n, yj = yAt(xj);
+        if (!finite(yj)) { frames = [frames[0]]; break; }   /* a gap between the buckets: the plain slide */
+        frames.push({ translate: r1(xj) + 'px ' + r1(yj) + 'px' });
+      }
+      frames.push({ translate: pos });
+      try {
+        var a = el.animate(frames, { duration: dur, easing: GLIDE });
+        if (glideT != null) a.startTime = glideT;
+        el._gl = { a: a, t0: now, dur: dur, x0: x0, x1: x, y0: y0, y1: y };
+      } catch (error) { el._gl = null; }
+    }
     function place(i, instant) {
       var card = readoutCard();
       /* reads first: the plot's rect (cached for 120 ms), then the card's size once its words changed */
@@ -922,22 +955,31 @@
         if (b && olds[k] && n && olds[k][0] === n.textContent) rollText(b, olds[k][1], b.textContent);
       });
       last = i;
+      /* one start time for every slide of this move (the rule, the band and each dot land together) */
+      glideT = document.timeline && document.timeline.currentTime != null ? document.timeline.currentTime : null;
       xh.style.height = cfg.pad.h + 'px';
-      xh.style.translate = r1(x) + 'px ' + r1(top) + 'px';
+      glide(xh, x, top, instant, null);
       var bw = Math.max(4, bandW());
       band.style.height = cfg.pad.h + 'px';
       band.style.width = r1(bw) + 'px';
-      band.style.translate = r1(x - bw / 2) + 'px ' + r1(top) + 'px';
+      glide(band, x - bw / 2, top, instant, null);
       var dots = cfg.dots ? cfg.dots(i) : [], nearest = -1, nd = Infinity;
       while (dotEls.length < dots.length) dotEls.push(H('i', 'pmu-xdot', box));
       dotEls.forEach(function (d, k) {
         var p = dots[k];
-        if (!p || !finite(p.y)) { if (d.style.visibility !== 'hidden') d.style.visibility = 'hidden'; return; }
-        if (d.style.visibility) d.style.visibility = '';
+        if (!p || !finite(p.y)) { if (d.style.visibility !== 'hidden') d.style.visibility = 'hidden'; stopGlide(d); d._at = null; return; }
+        /* a dot that comes back after a gap (no reading at the old bucket) has no line to ride: it shows when the rule has
+           nearly arrived (an opacity hold on the same start time), never ahead of the rule */
+        if (d.style.visibility) {
+          d.style.visibility = '';
+          if (!instant && on && !reduced() && typeof d.animate === 'function') {
+            try { var fa = d.animate([{ opacity: 0 }, { opacity: 0, offset: 0.75 }, { opacity: 1 }], { duration: 140 * (PMU.motion && PMU.motion.speed ? PMU.motion.speed() : 1) }); if (glideT != null) fa.startTime = glideT; } catch (error) {}
+          }
+        }
         ['data-tk', 'data-vendor', 'data-series-index', 'data-tone', 'data-dot'].forEach(function (a) { if (d.hasAttribute(a)) d.removeAttribute(a); });
         key(d, p.key);
         if (p.ink) d.setAttribute('data-dot', 'ink');
-        d.style.translate = r1(x) + 'px ' + r1(p.y) + 'px';
+        glide(d, x, p.y, instant, cfg.yAt ? function (xx) { return cfg.yAt(k, xx); } : null);
         if (py >= 0 && Math.abs(p.y - py) < nd) { nd = Math.abs(p.y - py); nearest = k; }
       });
       dotEls.forEach(function (d, k) { d.classList.toggle('is-hot', dots.length < 2 || k === nearest); });
