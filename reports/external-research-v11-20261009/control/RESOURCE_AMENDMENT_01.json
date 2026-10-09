@@ -1,0 +1,102 @@
+{
+  "frozen_at": "2026-10-09T19:32:23.491153+00:00",
+  "scope": "Only six UNSTARTED GLM arms in three matched cells. Both arms same changed allocation; methods remain v1, resource allocation v2. Original queue untouched. Not evidence of measured improvement.",
+  "changes": [
+    {
+      "block": "A-M06-B",
+      "before": {
+        "block_id": "A-M06-B",
+        "phase": "A",
+        "method": "M06",
+        "case": "S12",
+        "route": "glm",
+        "status": "UNSTARTED",
+        "kind": "full-discovery",
+        "allowance_s": 3600,
+        "occupied_ceiling_s": 5400
+      },
+      "reason": "Observed GLM critic/native completion occupied about 15 minutes against a 12-minute stage; preserve total 60 minutes and protected final writing, without scientific prompt tuning or changes to started attempts.",
+      "after": {
+        "block_id": "A-M06-B",
+        "phase": "A",
+        "method": "M06",
+        "case": "S12",
+        "route": "glm",
+        "status": "UNSTARTED",
+        "kind": "full-discovery",
+        "allowance_s": 3600,
+        "occupied_ceiling_s": 5400,
+        "resource_version": "glm-24-18-18-v2",
+        "stage_allowances_s": {
+          "research": 1440,
+          "critic": 1080,
+          "reviser": 1080
+        }
+      }
+    },
+    {
+      "block": "A-M08-A",
+      "before": {
+        "block_id": "A-M08-A",
+        "phase": "A",
+        "method": "M08",
+        "case": "S08",
+        "route": "glm",
+        "status": "UNSTARTED",
+        "kind": "full-discovery",
+        "allowance_s": 3600,
+        "occupied_ceiling_s": 5400
+      },
+      "reason": "Observed GLM critic/native completion occupied about 15 minutes against a 12-minute stage; preserve total 60 minutes and protected final writing, without scientific prompt tuning or changes to started attempts.",
+      "after": {
+        "block_id": "A-M08-A",
+        "phase": "A",
+        "method": "M08",
+        "case": "S08",
+        "route": "glm",
+        "status": "UNSTARTED",
+        "kind": "full-discovery",
+        "allowance_s": 3600,
+        "occupied_ceiling_s": 5400,
+        "resource_version": "glm-24-18-18-v2",
+        "stage_allowances_s": {
+          "research": 1440,
+          "critic": 1080,
+          "reviser": 1080
+        }
+      }
+    },
+    {
+      "block": "A-M11-A",
+      "before": {
+        "block_id": "A-M11-A",
+        "phase": "A",
+        "method": "M11",
+        "case": "S11",
+        "route": "glm",
+        "status": "UNSTARTED",
+        "kind": "full-discovery",
+        "allowance_s": 3600,
+        "occupied_ceiling_s": 5400
+      },
+      "reason": "Observed GLM critic/native completion occupied about 15 minutes against a 12-minute stage; preserve total 60 minutes and protected final writing, without scientific prompt tuning or changes to started attempts.",
+      "after": {
+        "block_id": "A-M11-A",
+        "phase": "A",
+        "method": "M11",
+        "case": "S11",
+        "route": "glm",
+        "status": "UNSTARTED",
+        "kind": "full-discovery",
+        "allowance_s": 3600,
+        "occupied_ceiling_s": 5400,
+        "resource_version": "glm-24-18-18-v2",
+        "stage_allowances_s": {
+          "research": 1440,
+          "critic": 1080,
+          "reviser": 1080
+        }
+      }
+    }
+  ]
+}

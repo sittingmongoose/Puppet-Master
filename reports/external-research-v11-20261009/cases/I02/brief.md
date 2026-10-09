@@ -1,0 +1,11 @@
+# I02
+
+A pediatric hearing clinic lends reusable hearing devices to children who are waiting for fittings or need a short-term replacement. Eight clinicians and two reception staff share a modest annual software budget of $7,500, and the clinic cannot hire a systems administrator. Each loan involves a device identifier, fitting settings, a caregiver contact preference, a return date, and sometimes an interpreter request. Staff currently keep these details in separate appointment and device lists, which makes it hard to know whether a returned device has been cleaned and checked before reassignment. The clinic has occasional network outages but usually has internet at both locations. Children and caregivers need clear, plain-language reminders, and the waiting-room workstation must not expose another family's information. A screen-reader user on staff needs to be able to complete the core workflow without relying on color alone. The director wants a six-month pilot that does not require transferring full clinical records into the new tool. They have not decided who may change fitting notes after a device changes hands, or how long loan history should remain identifiable. A later connection to the appointment system may be useful, but is not part of the approved first-year budget.
+
+Required deliverable obligations (equal in both arms):
+O1 Independently discover useful unfamiliar tools, products and materially different approaches beyond the thin plan.
+O2 Investigate consequential primary source/code behavior and governing defaults, units/types, limits and applicability for selected mechanisms.
+O3 Investigate at least one relevant issue/fix/regression/release or evolution chain; say when evidence is absent/inapplicable.
+O4 Compare every exact P clause after plan reveal; distinguish correction, optional enhancement, user decision, already-covered, rejected and uncertain findings.
+O5 Retain useful alternatives, conditions, original constraints, disagreement and uncertainty in one self-contained coherent final; do not replace text with IDs.
+O6 Propose meaningful discriminating validations and separate executed checks from proposed work. No runtime available is honest; do not pretend proposals ran. Scope is this small product brief, not unlimited production guarantees.

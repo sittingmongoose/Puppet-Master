@@ -1,0 +1,45 @@
+{
+  "frozen_at": "2026-10-09T19:43:13.922593+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I03/brief.md",
+      "sha256": "92d2d5a86726ad51aed8d4cd17f1dee57a4b2ecf124d54614de9545f65fa81ff",
+      "bytes": 2303
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M05-v2.json",
+      "sha256": "828e70c1d9c1304fecc179c4f4bfd6a81186a520e6a174065b3bff7f289b6dd8",
+      "bytes": 1126
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/assignment.md",
+      "sha256": "3e213d2f5e38148ab2817ee19965732406e4bc1c9db1c7ba31ec32507f984399",
+      "bytes": 2976
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/input-map.json",
+      "sha256": "1721b69eb2650a5c02564dfb0aaa15aa25d06b4cce850fe692a3d7c1dae9e80d",
+      "bytes": 679
+    }
+  ],
+  "method": {
+    "id": "M05",
+    "version": "v2",
+    "name": "retained-investigator",
+    "control": "Researcher terminalizes after complete draft, fresh critic, separate fresh reviser.",
+    "treatment": "Original researcher retains ONE native Goal and source context through discovery/draft, waits for independent critic, then resolves criticism and writes complete final in SAME context. Waiting/handoff costs count; no early native completion.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Declared retained context; no artificial new Goal at phase boundary",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080,
+    "handoff_rule": "Original author waits for root mechanical READY.json created only after critic native/T3 terminal completion, containing critique/source-map SHA-256. No science after terminal; no new author Goal.",
+    "adaptation_limit": "Successor to source-positive A-M05-B v1; explicit terminal handoff removes unknown freeze-at-read and may reduce its observed latency saving. Not a replication of the missing receipt."
+  },
+  "resource_version": "retained-terminal-handoff-v2",
+  "stage_allowance_s": 1800,
+  "deadline": "2026-10-09T20:13:13.922593+00:00"
+}

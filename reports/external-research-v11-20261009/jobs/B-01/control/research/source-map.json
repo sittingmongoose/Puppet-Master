@@ -1,0 +1,189 @@
+{
+  "schema": "ER11-public-source-map-v1",
+  "block": "B-01",
+  "arm": "control",
+  "case": "I01",
+  "method": "M13",
+  "stage": "research",
+  "retrieval_completed_by_utc": "2026-10-09T19:42:16Z",
+  "source_id_policy": "IDs are immutable. Any later edition, version, or changed page should receive a new source ID; do not silently rebind.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "PouchDB Conflicts guide",
+      "source_type": "official project documentation (primary)",
+      "url": "https://pouchdb.com/guides/conflicts.html",
+      "version": null,
+      "commit_or_release": null,
+      "version_status": "Rolling documentation page; no product version or source commit displayed.",
+      "locator": "Headings “Immediate conflicts”, “Eventual conflicts”, and “Accountants don’t use erasers”; observed reader lines 12-15, 55-80, 95-115.",
+      "accessed_by_utc": "2026-10-09T19:42:16Z",
+      "access_timestamp_note": "Source retrieval completed no later than this timestamp; exact individual request start times were not instrumented.",
+      "observed_operations": [
+        "web search for official PouchDB conflict guide",
+        "open page",
+        "open at eventual-conflict section"
+      ],
+      "evidence_path": "sources/S01-pouchdb-conflicts.md",
+      "claims_supported": [
+        "PouchDB/CouchDB expose immediate 409 revision conflicts and eventual same-document conflicts.",
+        "For offline same-document divergent revisions, default winner selection is deterministic but arbitrary; losing revisions remain addressable and applications choose handling.",
+        "Append-only delta documents can reduce edit conflicts but do not alone enforce ferry capacity across terminals."
+      ]
+    },
+    {
+      "id": "S02",
+      "title": "PouchDB Replication guide",
+      "source_type": "official project documentation (primary)",
+      "url": "https://pouchdb.com/guides/replication.html",
+      "version": null,
+      "commit_or_release": null,
+      "version_status": "Rolling documentation page; no product version or source commit displayed.",
+      "locator": "Headings “CouchDB sync”, “Setting up sync”, and “Live replication”; observed lines 13-20, 26-37, 68-97.",
+      "accessed_by_utc": "2026-10-09T19:42:16Z",
+      "access_timestamp_note": "Source retrieval completed no later than this timestamp; exact individual request start times were not instrumented.",
+      "observed_operations": [
+        "web search for official PouchDB replication guide",
+        "open page"
+      ],
+      "evidence_path": "sources/S02-pouchdb-replication.md",
+      "claims_supported": [
+        "Local and remote PouchDB databases can replicate bidirectionally.",
+        "Live replication can retry after network errors when configured with live and retry; paused/active states are exposed.",
+        "The guide describes multi-master eventual consistency and a deterministic conflict winner."
+      ]
+    },
+    {
+      "id": "S03",
+      "title": "Firestore Access data offline",
+      "source_type": "official Firebase product documentation (primary)",
+      "url": "https://firebase.google.com/docs/firestore/manage-data/enable-offline?hl=en",
+      "version": null,
+      "commit_or_release": null,
+      "version_status": "Rolling official docs, last updated 2026-10-07 UTC; SDK version is not fixed by the page, examples include Web modular SDK v9 and legacy API.",
+      "locator": "“Access data offline”, “Configure offline persistence”, Web cache examples, and offline queries; observed lines 450-505 and 583-585.",
+      "accessed_by_utc": "2026-10-09T19:42:16Z",
+      "access_timestamp_note": "Source retrieval completed no later than this timestamp; page itself reports last updated 2026-10-07 UTC.",
+      "observed_operations": [
+        "web search for official Firestore offline documentation",
+        "open page with English locale",
+        "find page last-updated marker"
+      ],
+      "evidence_path": "sources/S03-firestore-offline.md",
+      "claims_supported": [
+        "Firestore caches actively used data and syncs local changes on reconnect; multiple changes to the same document use last-write-wins.",
+        "Web persistence is disabled by default; its cache is not automatically cleared between sessions and is supported only in Chrome, Safari, and Firefox.",
+        "Offline queries see cached data only and may return empty results when matching data was never cached; automatic offline-query indexing is disabled by default."
+      ]
+    },
+    {
+      "id": "S04",
+      "title": "Firestore Transactions and batched writes",
+      "source_type": "official Firebase product documentation (primary)",
+      "url": "https://firebase.google.com/docs/firestore/manage-data/transactions",
+      "version": null,
+      "commit_or_release": null,
+      "version_status": "Rolling official docs, last updated 2026-10-07 UTC; SDK version is not fixed by the page.",
+      "locator": "Transaction behavior lines 450-466; transaction time and request limits lines 1335-1340; security rules access-call limit lines 1801-1803.",
+      "accessed_by_utc": "2026-10-09T19:42:16Z",
+      "access_timestamp_note": "Source retrieval completed no later than this timestamp; page itself reports last updated 2026-10-07 UTC.",
+      "observed_operations": [
+        "web search for official Firestore transaction documentation",
+        "open page",
+        "find page last-updated marker"
+      ],
+      "evidence_path": "sources/S04-firestore-transactions.md",
+      "claims_supported": [
+        "Transactions are atomic and retried after concurrent edits, but fail while client is offline.",
+        "A client-side offline queue is therefore not equivalent to an offline capacity reservation transaction.",
+        "Document/rule and transaction limits need workload-specific validation."
+      ]
+    },
+    {
+      "id": "S05",
+      "title": "Firestore pricing",
+      "source_type": "official Firebase product documentation (primary)",
+      "url": "https://firebase.google.com/docs/firestore/pricing?hl=en",
+      "version": null,
+      "commit_or_release": null,
+      "version_status": "Rolling official docs, last updated 2026-10-07 UTC; prices vary by product edition, region, currency, and usage.",
+      "locator": "Free-tier table and billing dimensions; observed lines 475-503 and page footer lines 668-670.",
+      "accessed_by_utc": "2026-10-09T19:42:16Z",
+      "access_timestamp_note": "Source retrieval completed no later than this timestamp; page itself reports last updated 2026-10-07 UTC.",
+      "observed_operations": [
+        "web search for official Firestore billing documentation",
+        "open page with English locale",
+        "find free-tier and last-updated markers"
+      ],
+      "evidence_path": "sources/S05-firestore-pricing.md",
+      "claims_supported": [
+        "Standard Firestore lists daily free quotas of 50,000 reads, 20,000 writes, 20,000 deletes, 1 GiB stored data, and 10 GiB monthly outbound transfer for the qualifying database.",
+        "Paid usage depends on reads, writes, deletes, index reads, storage, and bandwidth; a cost estimate needs region and workload."
+      ]
+    },
+    {
+      "id": "S06",
+      "title": "Hogia BOOKIT product page",
+      "source_type": "vendor product documentation (primary for vendor claims)",
+      "url": "https://www2.hogia.se/int/ferry-system/bookit",
+      "version": null,
+      "commit_or_release": null,
+      "version_status": "Live product page; no release identifier or publication date displayed in the inspected result.",
+      "locator": "“BOOKIT – standard applications”, Booking, Check-in, Quicksales, Reporting, Technology, and API sections in the vendor page.",
+      "accessed_by_utc": "2026-10-09T19:42:16Z",
+      "access_timestamp_note": "Search result exposed the complete vendor page content; direct open returned an internal reader error. This is a search-result observation, not a separately fetched page snapshot.",
+      "observed_operations": [
+        "web search on Hogia official domain for BOOKIT",
+        "open URL attempted (reader returned Internal Error)",
+        "search result for exact official page returned product text"
+      ],
+      "evidence_path": "sources/S06-hogia-bookit.md",
+      "claims_supported": [
+        "Hogia markets BOOKIT as ferry passenger/freight booking software with route/capacity management, check-in, reports, touch-oriented quick sales, and an API.",
+        "The public page gives no evidence for offline conflict semantics, disconnected dual-terminal guarantees, or price fit; those remain vendor questions."
+      ]
+    },
+    {
+      "id": "S07",
+      "title": "PouchDB issue #8581",
+      "source_type": "official project issue tracker (primary)",
+      "url": "https://github.com/apache/pouchdb/issues/8581",
+      "version": null,
+      "commit_or_release": null,
+      "version_status": "Issue opened 2022-12-27; browser/Chrome/IndexedDB environment described; issue page itself is not a release artifact.",
+      "locator": "Issue description lines 178-225; activity and commits lines 178-203 and 290-300 in the GitHub reader.",
+      "accessed_by_utc": "2026-10-09T19:42:16Z",
+      "access_timestamp_note": "Source retrieval completed no later than this timestamp; exact individual request start times were not instrumented.",
+      "observed_operations": [
+        "web search for PouchDB replication regression/fix",
+        "open issue page",
+        "find “pull request” and “Merged” in issue activity"
+      ],
+      "claims_supported": [
+        "A reported cross-window storage event in a Chrome/IndexedDB browser build raised a changesHandler this-binding error; users reported synchronization breakage.",
+        "The report is specific to the issue environment and does not establish a ferry application defect."
+      ]
+    },
+    {
+      "id": "S08",
+      "title": "PouchDB 8.0.1 release",
+      "source_type": "official project release notes (primary)",
+      "url": "https://github.com/apache/pouchdb/releases/tag/8.0.1",
+      "version": "8.0.1",
+      "commit_or_release": "Tag 8.0.1; release page displays short commit fde45b9.",
+      "version_status": "Historical release; release page says the patch fixed a bug introduced by the prior release’s refactor and references #8581/#8450.",
+      "locator": "Release heading and commit lines 152-163; changelog lines 169-190.",
+      "accessed_by_utc": "2026-10-09T19:42:16Z",
+      "access_timestamp_note": "Source retrieval completed no later than this timestamp; page displayed tag and short commit.",
+      "observed_operations": [
+        "web search for PouchDB release regression",
+        "open release page",
+        "find reference to refactor #8450"
+      ],
+      "claims_supported": [
+        "PouchDB 8.0.1 release notes identify a regression from a refactor and a this-binding fix associated with #8581.",
+        "This is evidence to pin versions and test connectivity/status transitions, not evidence that the ferry design will fail."
+      ]
+    }
+  ]
+}

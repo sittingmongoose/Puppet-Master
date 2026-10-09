@@ -1,0 +1,11 @@
+# I01
+
+A two-terminal island ferry operator wants a small tool for vehicle reservations, walk-on passenger counts, and day-of sailing changes. Thirty-six staff cover ticket desks, loading lanes, and a dispatch office; cellular service drops during storms, and the dispatcher sometimes works from a paper manifest for half a shift. The existing reservation ledger is a set of locally maintained sheets, so duplicate vehicle bookings and late accommodation notes are difficult to notice before boarding. Staff need to flag wheelchair-accessible boarding assistance and oversized vehicles without exposing passenger details on a public queue display. The general manager can spend up to $9,000 initially and about $1,800 each year, with no dedicated IT employee. Two terminals must continue operating when they cannot reach one another, but the operator has not decided whether reservations should be centrally authoritative or locally confirmable. Crews use shared tablets with large text enabled, and seasonal desk workers need brief training. They want useful daily reports and a way to leave the system later without losing reservation history. The request is for a practical pilot covering one route first, while preserving a path to a second route if the pilot works.
+
+Required deliverable obligations (equal in both arms):
+O1 Independently discover useful unfamiliar tools, products and materially different approaches beyond the thin plan.
+O2 Investigate consequential primary source/code behavior and governing defaults, units/types, limits and applicability for selected mechanisms.
+O3 Investigate at least one relevant issue/fix/regression/release or evolution chain; say when evidence is absent/inapplicable.
+O4 Compare every exact P clause after plan reveal; distinguish correction, optional enhancement, user decision, already-covered, rejected and uncertain findings.
+O5 Retain useful alternatives, conditions, original constraints, disagreement and uncertainty in one self-contained coherent final; do not replace text with IDs.
+O6 Propose meaningful discriminating validations and separate executed checks from proposed work. No runtime available is honest; do not pretend proposals ran. Scope is this small product brief, not unlimited production guarantees.

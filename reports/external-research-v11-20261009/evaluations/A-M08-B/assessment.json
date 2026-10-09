@@ -1,0 +1,2033 @@
+{
+  "block": "A-M08-B",
+  "case": "S02",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-B/assignment.md",
+      "sha256": "283da9cde63046d879810954c901d907faf9d8e5860c24bca9d4ff3eb4952ab9",
+      "bytes": 2170
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-B/input-map.json",
+      "sha256": "e75d37c5f922012e71f6ba5e8f16e3c4a1ed692fd355a0e626655a08d93b4828",
+      "bytes": 9633
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S02/brief.md",
+      "sha256": "e42d1e70aa37a1339a8820e2953b41812b841d09f6310095eab1e65fb1e84882",
+      "bytes": 1517
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S02/plan-root-only.md",
+      "sha256": "29a9a74bc968d816bb61b8968346b552b8fc75a61ab72b2c5a18e059a7760363",
+      "bytes": 389
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+      "sha256": "bcbace239d72aaf28d63e6cd0a993cad3ed70a3f1a98fb32e82554fb639f7c3c",
+      "bytes": 25135
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/source-map.json",
+      "sha256": "cd5508606a735085f7fd49c8a45e24bf4ca496a64e1c6d1118a4973a0d3b6d2d",
+      "bytes": 27812
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/assignment.md",
+      "sha256": "5a4cdc5903ce3057b5f6066386d4d73c8cc3b5046beaebec0b5376e06b7097c1",
+      "bytes": 2787
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/input-map.json",
+      "sha256": "2faeb397c5c975e961321e1b17e96b9897e0990903265010c67a749766f5aebf",
+      "bytes": 1504
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/critique.md",
+      "sha256": "0a22148698c80ce842c1f585b73e7c23d3e20d44b00938c18eb696fb9ad0c481",
+      "bytes": 16820
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/source-map.json",
+      "sha256": "8d6b09d93728133d0b2511183681cd11f4ad2f52020000d080e380beef7b540f",
+      "bytes": 22800
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/assignment.md",
+      "sha256": "81252062a7505a88ee641d76c144cc138ed523f8b4cf14f37397efd06ec179f4",
+      "bytes": 2524
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/input-map.json",
+      "sha256": "e938935ac4762fcb98e4b8b38e9e3ba0fa72f502edcb08e75e03d45e59c767ed",
+      "bytes": 1180
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/discovery.md",
+      "sha256": "22d68cc2213c212c71e1efe56cf9ef7aa797ca61921f4c721521822a129b9d67",
+      "bytes": 15912
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/draft.md",
+      "sha256": "a574b8746618d6d7d7080947d7186b1c47c2685d24f6ee96d0494836492a70d1",
+      "bytes": 16507
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/source-map.json",
+      "sha256": "0fb655f1490013ebec7cf442565c773e3c520049d213966b2d5b69610d8bf4ed",
+      "bytes": 14888
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/revealed-plan.md",
+      "sha256": "29a9a74bc968d816bb61b8968346b552b8fc75a61ab72b2c5a18e059a7760363",
+      "bytes": 389
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/plan-reveal.json",
+      "sha256": "5b613142a866a4095a63a5dda86c3f4b91298bb5907d5ca46cfc350d7409f6a5",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/assignment.md",
+      "sha256": "89372d36979d34aa085608a0e576973594f895ffde5d706ba9e1013747483625",
+      "bytes": 3000
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/input-map.json",
+      "sha256": "a7c3a7b9c25e3d1403fcf265fda21cce559b369091ffc043e390dcbade6b45cc",
+      "bytes": 634
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+      "sha256": "c877a7e125f6750523207ec78fa218a16fd868a30d4101ec7f0172a538495136",
+      "bytes": 31110
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/source-map.json",
+      "sha256": "0266ab4097b401b4908791d23dec9306924d34481e4b70b7233dfd46f226d1ab",
+      "bytes": 32432
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/assignment.md",
+      "sha256": "49c505cda3c40cbd37959ae8912debeb656e8ef778699007d3ba1fec1fc3cc3a",
+      "bytes": 2935
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/input-map.json",
+      "sha256": "8a491a2cc6c9fc3330019aa808c079dd14c060f0796e0a5197c992a565ab3d38",
+      "bytes": 1526
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/critique.md",
+      "sha256": "dfb66b9914c4bb28a5c62708d11f5798d0afedf95766161461610d2f37e958b1",
+      "bytes": 9784
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/source-map.json",
+      "sha256": "778c22141062bc32bdc4654a03340ddbf7c762e26c8ab246f0cbb4a12b1a6d84",
+      "bytes": 20835
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/assignment.md",
+      "sha256": "9e1242273c383528280f9005b23de19ed91b32b9ae18fde7e6f3398da5f2cfd9",
+      "bytes": 2672
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/input-map.json",
+      "sha256": "cf49f596b7c5c6b8fad31eb739b07338695d49f3f0944710673a1343280c2c4a",
+      "bytes": 1196
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/discovery.md",
+      "sha256": "1d5d91fa5efb40a9ba9c05dea1487afe477f49d64657e3810ef99056ab6cb8bb",
+      "bytes": 19820
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/draft.md",
+      "sha256": "f7ae7186826ef80f0dabb22ac4cb18921269809e2f88ab2570ab3d4235f2c204",
+      "bytes": 24245
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/source-map.json",
+      "sha256": "6419b400d53bcecab5ad731354373cab62a19c4ed42346a6b231bb3670fdbd2d",
+      "bytes": 13067
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/revealed-plan.md",
+      "sha256": "29a9a74bc968d816bb61b8968346b552b8fc75a61ab72b2c5a18e059a7760363",
+      "bytes": 389
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/plan-reveal.json",
+      "sha256": "4a06549be969445ac6b0ad54ebfd3be1ee4b7e2b37f0265eae516398590f129e",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/assignment.md",
+      "sha256": "4d12d513b813601cbeacfa305a080987e467ef876f86f178ea9a2ab68e598733",
+      "bytes": 3150
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/input-map.json",
+      "sha256": "91e992836f53d43e059aff0c6f39669f2f5033671bd25279df51bd5fb77a39a0",
+      "bytes": 640
+    }
+  ],
+  "arms": {
+    "N2": {
+      "actual_arm": "control",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "grade": "PASS_WITH_LIMITATIONS",
+      "candidate_final": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+        "sha256": "bcbace239d72aaf28d63e6cd0a993cad3ed70a3f1a98fb32e82554fb639f7c3c",
+        "bytes": 25135
+      },
+      "material_findings": [],
+      "minor_findings": [
+        {
+          "id": "N2-m01",
+          "type": "SOURCE_NOTE_INCONSISTENCY",
+          "severity": "minor",
+          "candidate_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S04-mukurtu-v4-readme.md",
+            "lines": "4;8"
+          },
+          "related_locators": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/discovery.md",
+              "lines": "13;55"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/draft.md",
+              "lines": "51"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "39;68;72"
+            }
+          ],
+          "original_obligation": "O2/O5",
+          "primary_evidence": [
+            "E05",
+            "E06"
+          ],
+          "reasoning": "The inherited note still says the README declares active development/testing, then contradicts itself in an audit note. The frozen discovery made the same unsupported maturity inference. Draft and final explicitly correct it. This is a traceability inconsistency, not remaining erroneous final selection advice."
+        },
+        {
+          "id": "N2-m02",
+          "type": "SOURCE_LOCATOR_DRIFT",
+          "severity": "minor",
+          "candidate_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S14-whisper-v20230307-changelog.md",
+            "lines": "8"
+          },
+          "related_locators": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/source-map.json",
+              "json_locator": "sources[id=S14].locator"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "15"
+            }
+          ],
+          "original_obligation": "O2/O3/O5",
+          "primary_evidence": [
+            "E15",
+            "E16"
+          ],
+          "reasoning": "The note mentions later #1087 fixes and its map locator names v20230314, absent in its pinned v20230307 file. Later history does exist in a different snapshot. The final relies only on the independently supported #1046→#1052→v20230307 chain, so O3 remains satisfied."
+        }
+      ],
+      "unresolved": [
+        {
+          "scope": "Supplied project inputs",
+          "items": [
+            "language/variety inventory and fluent-review capacity",
+            "source formats/sizes and actual storage",
+            "budget, staff/hosting capacity and public access service target",
+            "valid consent/authorization, retention/destruction agreements and community decisions"
+          ],
+          "classification": "HONEST_EXTERNAL_OR_USER_DECISION",
+          "candidate_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+            "lines": "43;49;55;78"
+          }
+        },
+        {
+          "scope": "Conditional product selection",
+          "items": [
+            "actual Mukurtu supported release/maturity",
+            "OHD eligibility, anonymous-public versus registration behavior for this archive, ingest/export contracts, costs and hosted-build identity",
+            "OHMS current runtime/player compatibility",
+            "every product's secure interval enforcement and propagation"
+          ],
+          "classification": "HONEST_UNVERIFIED_DEPLOYMENT_FIT",
+          "candidate_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+            "lines": "41;68;72–78"
+          }
+        },
+        {
+          "scope": "Proposed operational evidence",
+          "items": [
+            "runtime accuracy/reviewer effort",
+            "editing/round-trip fidelity",
+            "access/withdrawal/cache/security tests",
+            "fixity/backup restore/cost/accessibility measurements"
+          ],
+          "classification": "EXPLICITLY_PROPOSED_NOT_EXECUTED",
+          "candidate_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+            "lines": "88–98"
+          }
+        }
+      ],
+      "axes": [
+        {
+          "axis": "1. Original obligations O1–O6 and explicit constraints",
+          "coverage": "FULL",
+          "judgment": "All O1–O6 and explicit collection constraints are substantively addressed: scale, volunteer editing, multilingual unevenness, low-cost public discovery, preserved source audio, timed excerpts, consent and whole/segment withdrawal. O3 is a real issue/fix/release chain. Public access is treated as a selection constraint rather than silently replaced by registration.",
+          "evidence": [
+            "N2-C01",
+            "N2-C03",
+            "N2-C04",
+            "N2-C05",
+            "N2-C09",
+            "N2-C11",
+            "N2-C12",
+            "N2-C13",
+            "N2-C15"
+          ]
+        },
+        {
+          "axis": "2. Consequential primary facts, defaults, exceptions, units and applicability",
+          "coverage": "FULL",
+          "judgment": "Relevant governing product semantics and pinned behavior were independently checked. Final facts are supported or honestly qualified; two source-note defects remain minor. Recommendations, ethical guidance, release notes and untested deployment capabilities are distinguished.",
+          "evidence": [
+            "N2-C01",
+            "N2-C02",
+            "N2-C03",
+            "N2-C04",
+            "N2-C05",
+            "N2-C06",
+            "N2-C07",
+            "N2-C08",
+            "N2-C09",
+            "N2-C10",
+            "N2-C11",
+            "N2-C12",
+            "N2-C13",
+            "N2-C14",
+            "N2-C15"
+          ]
+        },
+        {
+          "axis": "3. Useful unfamiliar discovery and viable alternatives",
+          "coverage": "FULL",
+          "judgment": "Discovery adds community-protocol CMS, oral-history portal, separate synchronized Viewer/archive, human thematic indexing, selective local/hosted ASR and preservation metadata/packaging. These differ in operating/control/editorial model; conditional eligibility, cost and security are retained. OHD is a useful lead unavailable in the thin plan, not an unsupported all-purpose recommendation.",
+          "evidence": [
+            "N2-C01",
+            "N2-C04",
+            "N2-C08",
+            "N2-C11",
+            "N2-C13"
+          ]
+        },
+        {
+          "axis": "4. Every exact P clause and disposition",
+          "coverage": "FULL",
+          "judgment": "All six exact clauses receive reasoned dispositions. Conventional database search and source/access separation remain viable. Rejection is limited to automatic publication, replacement-only editorial state, sole-flag policy and English-only acceptance, not valid uses of ASR/TXT/database/whole-record controls/WAV/MP3/English smoke tests.",
+          "evidence": [
+            "P1",
+            "P2",
+            "P3",
+            "P4",
+            "P5",
+            "P6"
+          ]
+        },
+        {
+          "axis": "5. Draft→critique→final preservation and fallible criticism",
+          "coverage": "FULL",
+          "judgment": "Supported material findings, conditions, alternatives and uncertainty are carried forward in full prose. The unsupported discovery maturity assertion is appropriately corrected. Each critic item is independently adjudicated below; M4's alleged material gap is overstated because draft/discovery already recognized the limitation and fallback. Minor explanatory compression does not remove a required approach.",
+          "evidence": [
+            "N2-preservation",
+            "N2-critic-M1",
+            "N2-critic-M2",
+            "N2-critic-M3",
+            "N2-critic-M4",
+            "N2-critic-minor1",
+            "N2-critic-minor2",
+            "N2-critic-minor3",
+            "N2-critic-minor4"
+          ]
+        },
+        {
+          "axis": "6. Meaningful proposed versus executed validation",
+          "coverage": "FULL",
+          "judgment": "Seven proposed validation groups use discriminatory samples, rights-negative requests, known content/offsets, export/import comparisons, corrupted bytes and restore oracles. No zero-exit artifact check is used as product validation. Public source inspection is the only executed research; no runtime/security/accuracy claim is fabricated.",
+          "evidence": [
+            "N2-C12",
+            "N2-C15"
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "id": "N2-C01",
+            "subject": "Authorization, review and ASR as optional draft",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "11–17"
+            },
+            "judgment": "Supported and ethically qualified; no legal or product-enforcement claim. Legacy ambiguity and human/index alternatives remain explicit.",
+            "primary_evidence": [
+              "E11",
+              "E32",
+              "E34"
+            ]
+          },
+          {
+            "id": "N2-C02",
+            "subject": "Whisper defaults, units and model limitations",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "15"
+            },
+            "judgment": "Pinned implementation and card support the stated booleans/seconds and limitations. The dependency of silence handling on word timestamps is omitted from the compressed final, but no contrary usage prescription is made.",
+            "primary_evidence": [
+              "E11",
+              "E12"
+            ]
+          },
+          {
+            "id": "N2-C03",
+            "subject": "Whisper issue→fix→release chain",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "15"
+            },
+            "judgment": "Specific #1046→#1052→v20230307 chain is supported. Final denies a universal fix. Source-note later-history drift is minor and separately recorded.",
+            "primary_evidence": [
+              "E13",
+              "E14",
+              "E15"
+            ]
+          },
+          {
+            "id": "N2-C04",
+            "subject": "Editable timed multilingual data, translation and OHD upload limits",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "21–25"
+            },
+            "judgment": "Structured revision requirements are recommendations; documented OHD editing and per-file uploads support the optional route. Export fidelity remains proposed validation.",
+            "primary_evidence": [
+              "E08",
+              "E34"
+            ]
+          },
+          {
+            "id": "N2-C05",
+            "subject": "Search units, language/access filters, passage navigation and public-access boundary",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "29–33"
+            },
+            "judgment": "Rights-aware search is necessary for this brief; a database index remains viable. OHD's registered/archive-granted comparator is not sold as anonymous public search.",
+            "primary_evidence": [
+              "E07",
+              "E09"
+            ]
+          },
+          {
+            "id": "N2-C06",
+            "subject": "Mukurtu defaults and content/media divergence",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "39"
+            },
+            "judgment": "All/Any, default All, and distinct item/media settings are source-supported. No inference of arbitrary within-file controls.",
+            "primary_evidence": [
+              "E01",
+              "E02",
+              "E03"
+            ]
+          },
+          {
+            "id": "N2-C07",
+            "subject": "Mukurtu dependencies, private path and maturity",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "39;68;72"
+            },
+            "judgment": "Deployment facts supported; final correctly leaves code maturity open and limits development status to the manual. Historical discovery/source-note error is not retained as final advice.",
+            "primary_evidence": [
+              "E05",
+              "E06"
+            ]
+          },
+          {
+            "id": "N2-C08",
+            "subject": "OHMS Viewer media/XML separation and cache rule",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "39;74"
+            },
+            "judgment": "Supported limited cache-HTTP protection, installation dependence, separate media hosting and historical-runtime qualification.",
+            "primary_evidence": [
+              "E19",
+              "E20",
+              "E23"
+            ]
+          },
+          {
+            "id": "N2-C09",
+            "subject": "Segment restrictions and fallback",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "37–43"
+            },
+            "judgment": "Policy requirement is distinguished from unverified product capability. Redacted/split access media plus matching text/index or nonpublication is a technically plausible conditional mechanism, not tested security.",
+            "primary_evidence": [
+              "E02",
+              "E03",
+              "E20",
+              "E23"
+            ]
+          },
+          {
+            "id": "N2-C10",
+            "subject": "Withdrawal limits and master disposition",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "43"
+            },
+            "judgment": "Archive-controlled takedown is separated from external copies; retention/destruction depends on agreements and policy, not a guessed universal rule.",
+            "primary_evidence": [
+              "E32"
+            ]
+          },
+          {
+            "id": "N2-C11",
+            "subject": "Source audio, fixity, replicas, BagIt and PREMIS",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "47–49"
+            },
+            "judgment": "Preservation/access distinction and limits of metadata/packaging are sound. No format standard is substituted for backups or access control; source format remains an inventory question.",
+            "primary_evidence": [
+              "E36",
+              "E37"
+            ]
+          },
+          {
+            "id": "N2-C12",
+            "subject": "Multilingual acceptance and human fallback",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "53–55;90"
+            },
+            "judgment": "Disaggregated language/condition evaluation is appropriate. Thresholds and reference availability are acknowledged decisions, not asserted accuracy results.",
+            "primary_evidence": [
+              "E11",
+              "E34"
+            ]
+          },
+          {
+            "id": "N2-C13",
+            "subject": "Conditional product alternatives and version drift",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "72–78"
+            },
+            "judgment": "OHD 1.4.1 versus v2.11.0 is independently confirmed without claiming hosted build identity. Mukurtu/OHD/OHMS/human/ASR routes remain conditional, not proven cheapest or a selected winner.",
+            "primary_evidence": [
+              "E06",
+              "E07",
+              "E08",
+              "E09",
+              "E10",
+              "E19",
+              "E20"
+            ]
+          },
+          {
+            "id": "N2-C14",
+            "subject": "Privacy-aware names, metadata, translations and snippets",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "23;31;63;84"
+            },
+            "judgment": "Release review and controlled identities preserve the public catalog option while addressing disclosures. These are sensible requirements informed by ethics, not automatically available product guarantees.",
+            "primary_evidence": [
+              "E32"
+            ]
+          },
+          {
+            "id": "N2-C15",
+            "subject": "Executed versus proposed validation and low-cost decision",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "78;88–98"
+            },
+            "judgment": "Only source review is claimed executed. Budget/staff/restore/access criteria and seven pilot groups are discriminating; no price, performance, security or restore result is invented.",
+            "primary_evidence": [
+              "E07",
+              "E11",
+              "E20",
+              "E36"
+            ]
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "coverage_definition": "All consequential final claims and applicable source/evolution conclusions, plus preservation-sensitive supported stage findings. Optional unselected mechanisms were checked to the level asserted; not a product deployment certification."
+      },
+      "plan_dispositions": [
+        {
+          "id": "P1",
+          "exact_frozen_clause": "Batch automatic transcription then publish text and audio.",
+          "candidate_disposition": "Correction; ASR optional; authorization gate",
+          "independent_judgment": "Supported. The brief's consent, volunteer correction and multilingual conditions warrant explicit release gates. Batch draft generation is retained where useful.",
+          "evidence": [
+            "N2-C01",
+            "N2-C02",
+            "N2-C03"
+          ]
+        },
+        {
+          "id": "P2",
+          "exact_frozen_clause": "Keep transcript edits as one replacement text file.",
+          "candidate_disposition": "Correction; structured/versioned timed data; TXT optional export",
+          "independent_judgment": "Supported rejection of replacement-only authority. Does not reject text exports or prescribe a proprietary editor. Historical versions must obey restrictions.",
+          "evidence": [
+            "N2-C04",
+            "N2-C14"
+          ]
+        },
+        {
+          "id": "P3",
+          "exact_frozen_clause": "Search full text with a general database search index.",
+          "candidate_disposition": "Correction to searchable scope; general database still viable; implementation decision",
+          "independent_judgment": "Supported. Rights filtering and time/language linkage augment a workable database. No unsupported need for a dedicated search service.",
+          "evidence": [
+            "N2-C05"
+          ]
+        },
+        {
+          "id": "P4",
+          "exact_frozen_clause": "One consent flag hides the public recording.",
+          "candidate_disposition": "Correction plus community/operator decisions; segment enforcement uncertain",
+          "independent_judgment": "Supported in the brief context: one flag may hide a record but cannot represent all required scopes. Policy modelling is not secure delivery; fallback and external-copy limits are explicit.",
+          "evidence": [
+            "N2-C06",
+            "N2-C08",
+            "N2-C09",
+            "N2-C10"
+          ]
+        },
+        {
+          "id": "P5",
+          "exact_frozen_clause": "Keep WAV originals and MP3 listening copies.",
+          "candidate_disposition": "Already-covered separation intent; format qualification and optional preservation controls",
+          "independent_judgment": "Supported. Received originals remain intact; WAV/MP3 are not rejected for appropriate inputs/access needs. Fixity/replica/restore additions do not erase the thin plan's useful intent.",
+          "evidence": [
+            "N2-C11"
+          ]
+        },
+        {
+          "id": "P6",
+          "exact_frozen_clause": "Validate word accuracy on a few English clips.",
+          "candidate_disposition": "Correction; English clips only smoke tests; multilingual pilot/threshold decisions",
+          "independent_judgment": "Supported. English-only clips are insufficient acceptance evidence, not forbidden. Language/script, timing, speakers and editing effort are required for the actual collection.",
+          "evidence": [
+            "N2-C12"
+          ]
+        }
+      ],
+      "critic_treatment": [
+        {
+          "id": "N2-critic-M1",
+          "critic_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/critique.md",
+            "lines": "16–23"
+          },
+          "final_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+            "lines": "11–13;61"
+          },
+          "independent_treatment": "ACCEPT_WITH_SCOPE_QUALIFICATION",
+          "reasoning": "Useful explicit authorization/narrator opportunity strengthens the draft's existing release/consent gate. Do not read the critic as proving absent consent or requiring unavailable narrators to approve every legacy record. The final's ethical/feasible/adjudication qualification is appropriate.",
+          "primary_evidence": [
+            "E32",
+            "E34"
+          ]
+        },
+        {
+          "id": "N2-critic-M2",
+          "critic_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/critique.md",
+            "lines": "25–32"
+          },
+          "final_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+            "lines": "43;62"
+          },
+          "independent_treatment": "ACCEPT",
+          "reasoning": "External-copy limits clarify the brief's withdrawal promise. Final separates archive response, request route/target and external limits; master disposition remains agreement-dependent.",
+          "primary_evidence": [
+            "E32"
+          ]
+        },
+        {
+          "id": "N2-critic-M3",
+          "critic_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/critique.md",
+            "lines": "34–41"
+          },
+          "final_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+            "lines": "23;31;63"
+          },
+          "independent_treatment": "ACCEPT",
+          "reasoning": "Privacy across description, aliases, third parties, translations and snippets is relevant. Final retains carefully reviewed public metadata rather than indiscriminately suppressing catalog discovery.",
+          "primary_evidence": [
+            "E32"
+          ]
+        },
+        {
+          "id": "N2-critic-M4",
+          "critic_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/critique.md",
+            "lines": "43–50"
+          },
+          "final_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+            "lines": "39–41;64"
+          },
+          "independent_treatment": "ACCEPT_REFINEMENT_REJECT_OVERSTATED_MATERIAL_GAP",
+          "reasoning": "Draft P4 already says reviewed evidence does not prove interval enforcement; discovery line 39 already proposes splitting/redacting. The critic supplies clearer adjacent warnings and expanded paths, not evidence of an existing false capability claim. Final accepts it as uncertainty, not a product correction.",
+          "primary_evidence": [
+            "E03",
+            "E20",
+            "E23"
+          ]
+        },
+        {
+          "id": "N2-critic-minor1",
+          "critic_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/critique.md",
+            "lines": "65"
+          },
+          "final_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+            "lines": "65;78;98"
+          },
+          "independent_treatment": "ACCEPT",
+          "reasoning": "Cost ceiling/window, staff time, restore owner and minimum service level operationalize low cost. No current monetary quote is invented.",
+          "primary_evidence": []
+        },
+        {
+          "id": "N2-critic-minor2",
+          "critic_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/critique.md",
+            "lines": "66"
+          },
+          "final_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+            "lines": "66;72;78"
+          },
+          "independent_treatment": "ACCEPT_CONDITIONAL_RANKING",
+          "reasoning": "Community-protocol fit supports a conditional trial preference, not an overall winner. Final retains eligibility/cost/accessibility/operations uncertainties.",
+          "primary_evidence": [
+            "E01",
+            "E03",
+            "E05"
+          ]
+        },
+        {
+          "id": "N2-critic-minor3",
+          "critic_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/critique.md",
+            "lines": "67"
+          },
+          "final_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+            "lines": "49;67;92;96"
+          },
+          "independent_treatment": "ACCEPT",
+          "reasoning": "Restriction-preserving round trips strengthen proposed portability checks; still not executed validation.",
+          "primary_evidence": [
+            "E36",
+            "E37"
+          ]
+        },
+        {
+          "id": "N2-critic-minor4",
+          "critic_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/critique.md",
+            "lines": "68"
+          },
+          "final_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+            "lines": "68;72–74"
+          },
+          "independent_treatment": "UPHOLD_ALREADY_PRESENT_QUALIFICATION",
+          "reasoning": "Correctly separates manual maturity, hosted build identity and historical runtime floor. Draft had already corrected the discovery's maturity inference; the retained contradictory S04 note is minor.",
+          "primary_evidence": [
+            "E05",
+            "E06",
+            "E07",
+            "E10",
+            "E20"
+          ]
+        }
+      ],
+      "preservation_coverage": {
+        "complete": true,
+        "stages": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/discovery.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/draft.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/critique.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md"
+        ],
+        "supported_material_findings_retained": true,
+        "material_loss_found": false,
+        "matrix": [
+          {
+            "subject": "Mukurtu governance, default All, media divergence and deployment caveats",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/discovery.md",
+              "lines": "9–23"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "39;68;72"
+            },
+            "judgment": "Retained; unsupported production-maturity assertion corrected, not preserved as truth."
+          },
+          {
+            "subject": "OHD timed editing/translations, per-file ingest, registered search and build ambiguity",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/discovery.md",
+              "lines": "9–23"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "25;33;73"
+            },
+            "judgment": "Retained as a conditional hosted alternative."
+          },
+          {
+            "subject": "OHMS separate Viewer/media hosting and operator cache protection",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/discovery.md",
+              "lines": "9–23"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "39;74"
+            },
+            "judgment": "Retained with current-runtime and scope cautions."
+          },
+          {
+            "subject": "Whisper unevenness, issue/fix/release, optional ASR and human/index fallback",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/discovery.md",
+              "lines": "25–33"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "15–17;75–76"
+            },
+            "judgment": "Core findings and alternative approaches retained. Previous-context tradeoff/DTW explanation compressed; default/experimental state and pilot settings remain. This is nonmaterial detail loss."
+          },
+          {
+            "subject": "Structured attributed timed multilingual editorial records",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/draft.md",
+              "lines": "17–27"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "19–33;80–86"
+            },
+            "judgment": "Retained in full requirements/workflow prose; TXT remains export."
+          },
+          {
+            "subject": "Segment policy, split/redacted fallback and retention decisions",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/discovery.md",
+              "lines": "35–41"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "35–43;84–86"
+            },
+            "judgment": "Retained and more explicit; no product-capability upgrade."
+          },
+          {
+            "subject": "Original bits, separate derivatives, BagIt/PREMIS and verified replicas",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/discovery.md",
+              "lines": "43–47"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "45–49"
+            },
+            "judgment": "Preservation distinction and non-backup/non-enforcement cautions retained."
+          },
+          {
+            "subject": "Multilingual/error/labor, rights-negative, portability, fixity/restore and cost pilots",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/draft.md",
+              "lines": "67–79"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+              "lines": "88–98"
+            },
+            "judgment": "Unexecuted state preserved; added narrator/privacy/withdrawal-boundary tests are useful refinements."
+          }
+        ],
+        "qualification": "Preservation is semantic and source-grounded, not line equality. Unsupported/stale discovery assertions may be corrected. The two minor inherited source-note defects are reported separately."
+      },
+      "validation_coverage": {
+        "executed_by_candidate_claimed": [
+          "public documentation/source-code/release inspection"
+        ],
+        "executed_by_candidate_independently_proven": "Content/source conclusions were rechecked; candidate's historical tool execution or runtime was not independently observed.",
+        "proposed_only": [
+          "stratified consent-cleared multilingual references and correction-effort comparison",
+          "word/speaker/timing edits and restriction-preserving export/import",
+          "public/authorized negative requests, old links, range/download/seek/caches and whole/segment withdrawal",
+          "source→derivative time mapping",
+          "corrupted-byte BagIt checks and independent restore",
+          "cost/eligibility/runtime/accessibility/operations demonstrations"
+        ],
+        "oracles": "Reviewed references and source audio/known offsets; distinctive forbidden terms/media intervals; authorized versus public audiences; before/after exports; known altered byte and restored originals.",
+        "overclaim_found": false
+      },
+      "grade_limits": [
+        "Research-quality pass for this small brief; no deployed product, accuracy, legal result, security, restore or cost guarantee.",
+        "No current complete quote or budget inventory. Specific low-cost product choice remains contingent; absence of a supplied budget is not evasive deferral.",
+        "Live documentation and hosted behavior can change; immutable code findings are limited to cited snapshots.",
+        "Two inherited source-note/locator defects do not alter final architecture or its valid O3 chain.",
+        "Nonmaterial explanatory compression of Whisper's previous-context tradeoff is disclosed.",
+        "Claim coverage is substantive; source counts, file hashes, critic agreement and output length do not determine the grade."
+      ],
+      "original_obligation_coverage": [
+        {
+          "obligation": "O1",
+          "coverage": "FULL",
+          "judgment": "Distinct community CMS, hosted oral-history portal, Viewer/archive, human indexing and selective ASR approaches are discovered and retained.",
+          "candidate_final_lines": "70–78",
+          "evidence": [
+            "N2-C13"
+          ]
+        },
+        {
+          "obligation": "O2",
+          "coverage": "FULL",
+          "judgment": "Governing access defaults, object boundaries, transcription booleans/seconds, deployment requirements and preservation semantics are investigated at their asserted scope.",
+          "candidate_final_lines": "15;25;33;39;49",
+          "evidence": [
+            "N2-C02",
+            "N2-C04",
+            "N2-C05",
+            "N2-C06",
+            "N2-C07",
+            "N2-C08",
+            "N2-C11"
+          ]
+        },
+        {
+          "obligation": "O3",
+          "coverage": "FULL",
+          "judgment": "Specific timestamp/repetition report, merged corrective PR and frozen release history are traced; follow-up limitations prevent a universal-fix claim.",
+          "candidate_final_lines": "15",
+          "evidence": [
+            "N2-C03"
+          ]
+        },
+        {
+          "obligation": "O4",
+          "coverage": "FULL",
+          "judgment": "Every exact P1–P6 is compared; corrective scope, valid existing intent, optional features, user decisions and product uncertainty are distinguished.",
+          "candidate_final_lines": "9–55",
+          "evidence": [
+            "P1",
+            "P2",
+            "P3",
+            "P4",
+            "P5",
+            "P6"
+          ]
+        },
+        {
+          "obligation": "O5",
+          "coverage": "FULL",
+          "judgment": "Final is self-contained material prose with original constraints, alternatives, conditional ranking, criticism qualifications and retained unknowns.",
+          "candidate_final_lines": "3;59–86",
+          "evidence": [
+            "N2-preservation"
+          ]
+        },
+        {
+          "obligation": "O6",
+          "coverage": "FULL",
+          "judgment": "Seven discriminating groups are proposed; source-only executed status is explicit and thresholds/costs are decisions.",
+          "candidate_final_lines": "88–98",
+          "evidence": [
+            "N2-C15"
+          ]
+        }
+      ],
+      "original_constraint_coverage": [
+        {
+          "constraint": "2,000 hour-long recordings",
+          "locator": "final lines 3;49;78;98",
+          "judgment": "Scale retained; actual formats, storage and cost require inventory."
+        },
+        {
+          "constraint": "Volunteer transcripts and staff word/speaker correction",
+          "locator": "final lines 11;21–25;80–86;92",
+          "judgment": "Attributed review/version/timed-editor requirements and editing validation retained."
+        },
+        {
+          "constraint": "Multilingual speakers",
+          "locator": "final lines 15–17;23;33;53–55;90",
+          "judgment": "No uniform ASR assumption; translation and language-aware retrieval/references are separate."
+        },
+        {
+          "constraint": "Consent restrictions",
+          "locator": "final lines 11–13;35–43;84–86",
+          "judgment": "Authorization, scoped decisions, product limits and privacy release review explicit."
+        },
+        {
+          "constraint": "Low-cost public website",
+          "locator": "final lines 29–33;65;72–78;98",
+          "judgment": "Anonymous versus account access and cost/staff/service criteria remain selection constraints."
+        },
+        {
+          "constraint": "Preserve source audio",
+          "locator": "final lines 17;47–49",
+          "judgment": "Received bits, derivative lineage, replicas and restore retained, subject to agreements."
+        },
+        {
+          "constraint": "Time-linked excerpts",
+          "locator": "final lines 21;29;41;80–86;94",
+          "judgment": "Timed structures/playback mappings with permitted excerpts and redaction offset tests."
+        },
+        {
+          "constraint": "Withdraw whole recording or restricted segment",
+          "locator": "final lines 37–43;84–86;93",
+          "judgment": "Archive versus external limits, range/derivative paths and safe fallback are explicit."
+        }
+      ]
+    },
+    "N1": {
+      "actual_arm": "treatment",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "grade": "PASS_WITH_LIMITATIONS",
+      "candidate_final": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+        "sha256": "c877a7e125f6750523207ec78fa218a16fd868a30d4101ec7f0172a538495136",
+        "bytes": 31110
+      },
+      "material_findings": [],
+      "minor_findings": [
+        {
+          "id": "N1-m01",
+          "type": "RELEASE_LOCATOR_AMBIGUITY",
+          "severity": "minor",
+          "candidate_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S14-whisper-evolution.md",
+            "lines": "5–6"
+          },
+          "related_locators": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/source-map.json",
+              "json_locator": "sources[id=S14].locator"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "88"
+            }
+          ],
+          "original_obligation": "O2/O3/O5",
+          "primary_evidence": [
+            "E16"
+          ],
+          "reasoning": "The note locates timestamp heuristic #1461 in the v20250625 release bullet list, but it is under v20230918 in the cumulative changelog. Final line 88 says the v20250625 changelog includes timestamp improvements, which is defensible as a statement about that file. Treat the attribution/locator ambiguity as minor, not a proven false final release claim. The independent OHMS chain fully meets O3."
+        },
+        {
+          "id": "N1-m02",
+          "type": "BROKEN_RELATIVE_NAVIGATION",
+          "severity": "minor",
+          "candidate_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+            "lines": "6"
+          },
+          "original_obligation": "O5",
+          "primary_evidence": [],
+          "local_evidence": "Read-only existence checks: reviser/discovery.md and reviser/source-map-addendum.json absent. Exact input map instead supplies research/discovery.md; consolidated reviser source-map.json contains the post-reveal sources.",
+          "reasoning": "Two advertised relative links fail in the delivered reviser directory. The full final retains substantive findings and its source map, so this navigation problem does not become a scientific omission. An unlisted draft-v1.md exists but was not opened or assessed."
+        }
+      ],
+      "unresolved": [
+        {
+          "scope": "Supplied project inputs",
+          "items": [
+            "language/script/condition inventory and reviewer availability",
+            "actual original formats and file sizes",
+            "staff, budget and self-hosting capacity",
+            "community access/review/retention agreements and withdrawal policy"
+          ],
+          "classification": "HONEST_EXTERNAL_OR_USER_DECISION",
+          "candidate_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+            "lines": "126–131"
+          }
+        },
+        {
+          "scope": "Conditional product selection",
+          "items": [
+            "Aviary tier, selected monthly/yearly billing basis, storage/egress/exit/retention and exact terms",
+            "current OHMS application/runtime/player deployment and operations",
+            "actual synchronized workflow fit for Mukurtu/Omeka combinations",
+            "secure interval control and withdrawal across every output"
+          ],
+          "classification": "HONEST_UNVERIFIED_DEPLOYMENT_FIT",
+          "candidate_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+            "lines": "56–78;104–106;140"
+          }
+        },
+        {
+          "scope": "Proposed operational evidence",
+          "items": [
+            "language-specific ASR usefulness and reference quality",
+            "editing/history/export fidelity",
+            "timing fixtures and access/withdrawal tests",
+            "measured storage/throughput/fixity/restore/accessibility"
+          ],
+          "classification": "EXPLICITLY_PROPOSED_NOT_EXECUTED",
+          "candidate_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+            "lines": "135–142"
+          }
+        }
+      ],
+      "axes": [
+        {
+          "axis": "1. Original obligations O1–O6 and explicit constraints",
+          "coverage": "FULL",
+          "judgment": "All O1–O6 and original collection constraints are addressed. Scale is made concrete through cost/capacity estimates, without substituting estimates for actual inventory. Volunteer correction, original audio, public timed discovery, multilingual quality, rights and whole/segment withdrawal remain integrated.",
+          "evidence": [
+            "N1-C01",
+            "N1-C02",
+            "N1-C04",
+            "N1-C07",
+            "N1-C09",
+            "N1-C12",
+            "N1-C13",
+            "N1-C15",
+            "N1-C16"
+          ]
+        },
+        {
+          "axis": "2. Consequential primary facts, defaults, exceptions, units and applicability",
+          "coverage": "FULL",
+          "judgment": "Relevant facts, formats, object scopes, vendor boundaries, exact OHMS symbols and applicable release history were independently checked. Pricing/capacity arithmetic was recomputed. Final material conclusions are supported or qualified; cumulative-changelog attribution is a minor locator ambiguity.",
+          "evidence": [
+            "N1-C01",
+            "N1-C02",
+            "N1-C03",
+            "N1-C04",
+            "N1-C05",
+            "N1-C06",
+            "N1-C07",
+            "N1-C08",
+            "N1-C09",
+            "N1-C10",
+            "N1-C11",
+            "N1-C12",
+            "N1-C13",
+            "N1-C14",
+            "N1-C15",
+            "N1-C16"
+          ]
+        },
+        {
+          "axis": "3. Useful unfamiliar discovery and viable alternatives",
+          "coverage": "FULL",
+          "judgment": "Discovery adds oral-history authoring/Viewer separation, managed Aviary integration, community-protocol CMS, general exhibit/catalog CMS, human thematic indexing/selective ASR and preservation packaging/metadata. These are genuinely different editorial/hosting/governance options. Cost and timing findings help choose rather than merely enumerate products.",
+          "evidence": [
+            "N1-C01",
+            "N1-C02",
+            "N1-C04",
+            "N1-C05",
+            "N1-C06",
+            "N1-C09",
+            "N1-C14",
+            "N1-C15"
+          ]
+        },
+        {
+          "axis": "4. Every exact P clause and disposition",
+          "coverage": "FULL",
+          "judgment": "Every P clause has an explicit disposition plus cross-finding optional/user-decision/uncertain classifications. P2 and P4 reject sole-authority/sole-policy readings while preserving valid TXT exports and whole-record flags. General database indexing and preservation/access separation are correctly retained.",
+          "evidence": [
+            "P1",
+            "P2",
+            "P3",
+            "P4",
+            "P5",
+            "P6"
+          ]
+        },
+        {
+          "axis": "5. Draft→critique→final preservation and fallible criticism",
+          "coverage": "FULL",
+          "judgment": "Supported stage findings, product conditions, cost and capacity estimates, exact version-specific timing behavior, source-language distinction, preservation and uncertainty survive in full final prose. Each criticism is assessed below; ASR naming is properly narrowed, while P4 and language criticism mainly refine already-present safeguards. Broken introductory links do not replace the final's material prose.",
+          "evidence": [
+            "N1-preservation",
+            "N1-critic-M1",
+            "N1-critic-M2",
+            "N1-critic-M3",
+            "N1-critic-P2",
+            "N1-critic-minor1",
+            "N1-critic-minor2",
+            "N1-critic-minor3",
+            "N1-critic-minor4"
+          ]
+        },
+        {
+          "axis": "6. Meaningful proposed versus executed validation",
+          "coverage": "FULL",
+          "judgment": "Six proposed groups have intended-context reference/audio oracles and rights-negative paths. Exact 250 ms/two-index-point tests discriminate the inspected OHMS code limitation; altered-byte and restore checks discriminate preservation. Source inspection and arithmetic are executed research operations, not product validation; all runtime checks are explicitly unexecuted.",
+          "evidence": [
+            "N1-C09",
+            "N1-C15",
+            "N1-C16"
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "id": "N1-C01",
+            "subject": "OHMS self-host and managed Aviary alternatives",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "9–15;56–66"
+            },
+            "judgment": "Conditional oral-history routes are viable research leads. Viewer integration is independently supported; creator's application announcement supports investigating self-hosting without proving a current deployment.",
+            "primary_evidence": [
+              "E19",
+              "E20",
+              "E25",
+              "E26"
+            ]
+          },
+          {
+            "id": "N1-C02",
+            "subject": "Aviary editing, speakers, legacy conversion and time units",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "70"
+            },
+            "judgment": "Documented word/speaker/start-time editing, HH:MM:SS entry and millisecond-bearing WebVTT are supported. Legacy conversion/fidelity remains a test, not a lossless promise.",
+            "primary_evidence": [
+              "E26"
+            ]
+          },
+          {
+            "id": "N1-C03",
+            "subject": "Aviary object permissions and uploaded-media assertions",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "72"
+            },
+            "judgment": "Statuses and vendor upload-security claims are correctly distinguished from audited security and per-segment ACLs.",
+            "primary_evidence": [
+              "E27",
+              "E28",
+              "E29"
+            ]
+          },
+          {
+            "id": "N1-C04",
+            "subject": "Aviary pricing and one-pass calculation",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "74"
+            },
+            "judgment": "Displayed rates/caps support 120,000 minutes × $0.04 = $4,800 for one processing pass. It is not a combined transcription/translation/alignment bill or quote; billing period/storage/total cost remain open.",
+            "primary_evidence": [
+              "E30"
+            ]
+          },
+          {
+            "id": "N1-C05",
+            "subject": "Mukurtu object protocols and All/Any",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "78"
+            },
+            "judgment": "Supported asset-level defaults and public-item/private-media possibility. Final specifically avoids presenting this as a synchronized transcript or segment-redaction product.",
+            "primary_evidence": [
+              "E01",
+              "E02",
+              "E03",
+              "E04"
+            ]
+          },
+          {
+            "id": "N1-C06",
+            "subject": "Omeka catalog, media privacy and role scopes",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "82"
+            },
+            "judgment": "Supported item/media and global/site-role distinctions; additional oral-history layer is explicitly needed.",
+            "primary_evidence": [
+              "E31",
+              "E40"
+            ]
+          },
+          {
+            "id": "N1-C07",
+            "subject": "Whisper training, language variation, hallucination, diarization and English translation",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "86;100"
+            },
+            "judgment": "Card/paper support the substantive cautions. Spoken-name transcription is distinguished from identity inference. Family translation capability is valid; turbo's translation exception is a model-selection limit, not a false claim that a selected model translates.",
+            "primary_evidence": [
+              "E11",
+              "E12",
+              "E17",
+              "E18"
+            ]
+          },
+          {
+            "id": "N1-C08",
+            "subject": "Whisper code evolution",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "88"
+            },
+            "judgment": "Security/device/documentation changes are present in v20250625. Timestamp improvement exists in cumulative history under v20230918. Final's file-level wording is defensible; its S14 note/locator blurs release attribution (minor).",
+            "primary_evidence": [
+              "E16"
+            ]
+          },
+          {
+            "id": "N1-C09",
+            "subject": "OHMS subsecond conversion and index mapping",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "94"
+            },
+            "judgment": "Exact pinned symbols confirm dropped fractions, whole-second paths, integer comparison, half-open boundaries and first-match break. Static behavior is not mislabeled runtime execution.",
+            "primary_evidence": [
+              "E24"
+            ]
+          },
+          {
+            "id": "N1-C10",
+            "subject": "OHMS navigation, legacy PDF and cache release trail",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "96"
+            },
+            "judgment": "Primary release notes support this relevant evolution sequence; cache protection is a configured path boundary and the navigation change does not prove millisecond precision.",
+            "primary_evidence": [
+              "E20",
+              "E21",
+              "E22",
+              "E23",
+              "E24"
+            ]
+          },
+          {
+            "id": "N1-C11",
+            "subject": "ASR identities and source-language/translation separation",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "100;118–122"
+            },
+            "judgment": "Appropriate narrower identity safeguard retains ordinary spoken names subject to review. Translation is a derived output, not replacement source-language text.",
+            "primary_evidence": [
+              "E11",
+              "E18"
+            ]
+          },
+          {
+            "id": "N1-C12",
+            "subject": "Segment policy, redacted derivatives, withdrawal and consent/copyright",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "104–106;118–122"
+            },
+            "judgment": "Requirements are not inferred product capabilities. Agreements govern preservation disposition; downloaded public copies cannot be recalled. Prior versions and derivatives remain under rights controls.",
+            "primary_evidence": [
+              "E27",
+              "E28",
+              "E33",
+              "E35"
+            ]
+          },
+          {
+            "id": "N1-C13",
+            "subject": "BWF/LC applicability and original received bits",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "110"
+            },
+            "judgment": "The analog reformatting/native-resolution context is accurately qualified; no universal conversion mandate is inferred.",
+            "primary_evidence": [
+              "E38",
+              "E39"
+            ]
+          },
+          {
+            "id": "N1-C14",
+            "subject": "BagIt and PREMIS scope",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "112"
+            },
+            "judgment": "Packaging/fixity and preservation metadata are useful optional mechanisms; replication, permissions and restores are distinct work.",
+            "primary_evidence": [
+              "E36",
+              "E37"
+            ]
+          },
+          {
+            "id": "N1-C15",
+            "subject": "Capacity arithmetic",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "114"
+            },
+            "judgment": "Independently recomputed decimal results are correct: 4.1472 TB at 96k/24/stereo, 2.0736 TB at 48k/24/stereo, 57.6 GB at 64 kbit/s for 2,000 h. Assumptions/exclusions are explicit; no measured inventory or benchmark.",
+            "primary_evidence": []
+          },
+          {
+            "id": "N1-C16",
+            "subject": "Language/condition protocol and operational validation",
+            "candidate_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "135–142"
+            },
+            "judgment": "Fluent references, script-sensitive WER/CER, disaggregation, feasible coverage and human fallback discriminate ASR usefulness. Source-timing fixtures, rights history, negative access, byte corruption and restore tests are proposed only.",
+            "primary_evidence": [
+              "E11",
+              "E17",
+              "E24",
+              "E26",
+              "E36"
+            ]
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "coverage_definition": "All consequential final claims, cited code/release applicability and preservation-sensitive supported stage findings. Family-level optional ASR was checked for relevant model-selection exceptions. No deployment certification is claimed."
+      },
+      "plan_dispositions": [
+        {
+          "id": "P1",
+          "exact_frozen_clause": "Batch automatic transcription then publish text and audio.",
+          "candidate_disposition": "Correction; consent-cleared optional draft, human review and publication gates",
+          "independent_judgment": "Supported augmentation for this brief. Human transcript/topic-index alternatives remain; ASR and batching are not indiscriminately rejected.",
+          "evidence": [
+            "N1-C07",
+            "N1-C11",
+            "N1-C12"
+          ]
+        },
+        {
+          "id": "P2",
+          "exact_frozen_clause": "Keep transcript edits as one replacement text file.",
+          "candidate_disposition": "Rejected as only authoritative record; structured versions; TXT export retained",
+          "independent_judgment": "Supported in its expressly narrowed scope. One replacement file alone omits the stated editorial/rights history and synchronization model, while plain text remains useful.",
+          "evidence": [
+            "N1-C02",
+            "N1-C12"
+          ]
+        },
+        {
+          "id": "P3",
+          "exact_frozen_clause": "Search full text with a general database search index.",
+          "candidate_disposition": "Correction of scope/linkage; database index viable",
+          "independent_judgment": "Supported. Benchmark conventional full text with language/rights/time linkage. No primary evidence demands a separate service.",
+          "evidence": [
+            "N1-C01",
+            "N1-C12",
+            "N1-C16"
+          ]
+        },
+        {
+          "id": "P4",
+          "exact_frozen_clause": "One consent flag hides the public recording.",
+          "candidate_disposition": "Rejected as sole policy model; whole-record flag remains derived control",
+          "independent_judgment": "Supported. Exact thin clause can handle a whole recording; final preserves that valid use and adds needed interval/derivative decisions. It does not falsely reject Boolean hiding itself.",
+          "evidence": [
+            "N1-C03",
+            "N1-C05",
+            "N1-C06",
+            "N1-C12"
+          ]
+        },
+        {
+          "id": "P5",
+          "exact_frozen_clause": "Keep WAV originals and MP3 listening copies.",
+          "candidate_disposition": "Already-covered source/access intent; contextual format correction and optional preservation additions",
+          "independent_judgment": "Supported. Appropriate WAV/MP3 use remains; LC preferences are not mandates to convert received originals. Packaging/metadata do not replace replicas or restore.",
+          "evidence": [
+            "N1-C13",
+            "N1-C14",
+            "N1-C15"
+          ]
+        },
+        {
+          "id": "P6",
+          "exact_frozen_clause": "Validate word accuracy on a few English clips.",
+          "candidate_disposition": "Correction; language/script/condition references and stakeholder thresholds",
+          "independent_judgment": "Supported. English-only few clips cannot substantiate the brief's multilingual acceptance. Feasible per-stratum coverage and human fallback avoid an unlimited sampling promise.",
+          "evidence": [
+            "N1-C07",
+            "N1-C16"
+          ]
+        }
+      ],
+      "critic_treatment": [
+        {
+          "id": "N1-critic-M1",
+          "critic_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/critique.md",
+            "lines": "12–16"
+          },
+          "final_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+            "lines": "40;100"
+          },
+          "independent_treatment": "ACCEPT_NARROWING",
+          "reasoning": "Draft line 77's absolute naming/identity prohibition conflated recognizing speaker identity with transcribing a spoken name. Primary model-card cautions do not demand suppressing names. Final allows reviewed draft names while prohibiting inferred identity/attributes, preserving privacy.",
+          "primary_evidence": [
+            "E11"
+          ]
+        },
+        {
+          "id": "N1-critic-M2",
+          "critic_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/critique.md",
+            "lines": "18–22"
+          },
+          "final_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+            "lines": "24;41"
+          },
+          "independent_treatment": "ACCEPT_CLARITY_REJECT_MATERIALITY_INFLATION",
+          "reasoning": "The draft P4 row already permitted hiding one whole resource. The final's sole-policy wording is clearer; the critic itself calls this chiefly classification clarity. There was no evidence-backed need to reject a valid whole-record flag.",
+          "primary_evidence": [
+            "E03",
+            "E27",
+            "E28",
+            "E31"
+          ]
+        },
+        {
+          "id": "N1-critic-M3",
+          "critic_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/critique.md",
+            "lines": "24–28"
+          },
+          "final_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+            "lines": "26;42;135"
+          },
+          "independent_treatment": "ACCEPT_OPERATIONAL_REFINEMENT",
+          "reasoning": "Draft lines 26 and 112 already required language/condition differences and normalization. Final improves predeclared feasible sampling, script-sensitive metrics and fluent references; do not claim the original ignored multilingual evaluation.",
+          "primary_evidence": [
+            "E11",
+            "E17"
+          ]
+        },
+        {
+          "id": "N1-critic-P2",
+          "critic_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/critique.md",
+            "lines": "35;56"
+          },
+          "final_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+            "lines": "23;43;118–122;136"
+          },
+          "independent_treatment": "ACCEPT",
+          "reasoning": "Prior-version access and withdrawn text probes operationalize the already-stated rights rule. Final explicitly prevents old versions/history/exports leaking restricted content.",
+          "primary_evidence": [
+            "E26",
+            "E33",
+            "E37"
+          ]
+        },
+        {
+          "id": "N1-critic-minor1",
+          "critic_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/critique.md",
+            "lines": "45;60"
+          },
+          "final_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+            "lines": "44;74;140"
+          },
+          "independent_treatment": "ACCEPT_SCOPE_PRECISION",
+          "reasoning": "Arithmetic is sound and mostly scoped already. Final calls it one pass with service/subscription/exclusion and quote caveats; separate service rates must not be summed into that figure implicitly.",
+          "primary_evidence": [
+            "E30"
+          ]
+        },
+        {
+          "id": "N1-critic-minor2",
+          "critic_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/critique.md",
+            "lines": "61"
+          },
+          "final_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+            "lines": "45;100;118–122"
+          },
+          "independent_treatment": "ACCEPT_CARRY_FORWARD",
+          "reasoning": "Translation separation was already supported analysis; final carries it into the workflow. No assumption of all-model translation or equal multilingual quality.",
+          "primary_evidence": [
+            "E11",
+            "E18"
+          ]
+        },
+        {
+          "id": "N1-critic-minor3",
+          "critic_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/critique.md",
+            "lines": "62"
+          },
+          "final_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+            "lines": "46;104;118–122"
+          },
+          "independent_treatment": "ACCEPT_REQUIREMENT_CAPABILITY_DISTINCTION",
+          "reasoning": "Stable IDs and rights metadata are design requirements. Final does not imply every proposed product has demonstrated those guarantees.",
+          "primary_evidence": [
+            "E24",
+            "E26",
+            "E27"
+          ]
+        },
+        {
+          "id": "N1-critic-minor4",
+          "critic_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/critique.md",
+            "lines": "63"
+          },
+          "final_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+            "lines": "47–49;126–131"
+          },
+          "independent_treatment": "UPHOLD_UNKNOWNS",
+          "reasoning": "Missing inventory, terms, budget and staffing are genuine user/deployment inputs. Final neither fabricates values nor defers the available required source/code research.",
+          "primary_evidence": []
+        },
+        {
+          "id": "N1-critic-positive-checks",
+          "critic_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/critique.md",
+            "lines": "43–47"
+          },
+          "final_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+            "lines": "74;94–96;110–114;142"
+          },
+          "independent_treatment": "INDEPENDENTLY_CONFIRM_WITH_MINOR_S14_QUALIFICATION",
+          "reasoning": "OHMS static timing, release trail, pricing/capacity arithmetic, object scopes and preservation limits are supported. Critic endorsement is not the evidence; the S14 release-bullet ambiguity remains independently identified.",
+          "primary_evidence": [
+            "E16",
+            "E21",
+            "E22",
+            "E23",
+            "E24",
+            "E30",
+            "E36",
+            "E37",
+            "E38"
+          ]
+        }
+      ],
+      "preservation_coverage": {
+        "complete": true,
+        "stages": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/discovery.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/draft.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/critique.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md"
+        ],
+        "supported_material_findings_retained": true,
+        "material_loss_found": false,
+        "matrix": [
+          {
+            "subject": "Separate preservation/editorial/public layers and controlled withdrawal",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/discovery.md",
+              "lines": "10–20"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "9–15;104–106;118–122"
+            },
+            "judgment": "Original constraints and retention/erasure uncertainty retained."
+          },
+          {
+            "subject": "OHMS authoring/Viewer and self-host versus managed route",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/discovery.md",
+              "lines": "24–34;64–72"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "56–74"
+            },
+            "judgment": "Hosting, player integration, commercial/exit and unverified interval controls retained."
+          },
+          {
+            "subject": "Mukurtu community protocols and Omeka public catalog",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/discovery.md",
+              "lines": "36–44"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "76–82"
+            },
+            "judgment": "Distinct optional purposes and need for a timed oral-history layer retained."
+          },
+          {
+            "subject": "Human indexing, selective ASR, uneven language quality and translations",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/discovery.md",
+              "lines": "46–50;70"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "56–58;84–88;100;135"
+            },
+            "judgment": "All material approaches survive; source-language and translation remain separate."
+          },
+          {
+            "subject": "Release-specific OHMS precision/index behavior",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/draft.md",
+              "lines": "69–73"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "92–96;136"
+            },
+            "judgment": "Specific code observation and discriminating fixtures fully retained, not generalized to all releases."
+          },
+          {
+            "subject": "Navigation, legacy PDF and cache-security evolution",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/discovery.md",
+              "lines": "78"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "96"
+            },
+            "judgment": "Valid OHMS chain retained with static/release-only limits; Whisper history qualification reported separately."
+          },
+          {
+            "subject": "Aviary post-reveal pricing and processing estimate",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/draft.md",
+              "lines": "45–51"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "74;140"
+            },
+            "judgment": "Rates, resource caps, billing/storage unknowns and one-pass exclusions retained."
+          },
+          {
+            "subject": "LC context, BagIt/PREMIS and decimal capacity estimates",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/discovery.md",
+              "lines": "57–59"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "110–114"
+            },
+            "judgment": "Contextual preservation intent and estimate assumptions/exclusions retained."
+          },
+          {
+            "subject": "Staff/volunteer corrections, attributed history and public restriction propagation",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/draft.md",
+              "lines": "93–99"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "118–122;136–138"
+            },
+            "judgment": "Rights-following prior versions and explicit history probes strengthen existing model."
+          },
+          {
+            "subject": "Unknown inputs and six proposed discriminatory validation groups",
+            "earlier_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/draft.md",
+              "lines": "101–119"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+              "lines": "126–142"
+            },
+            "judgment": "Unknowns and proposed status preserved, with feasible per-language references and exact source-timing fixtures."
+          }
+        ],
+        "qualification": "Full mapped stages were assessed. Unlisted draft-v1.md/source-map-addendum.json are not inputs and were not used to supply missing science. Final introductory navigation failures remain minor because material prose and mapped consolidated sources are present."
+      },
+      "validation_coverage": {
+        "executed_by_candidate_claimed": [
+          "public documentation and pinned source-code/release inspection",
+          "clearly labeled arithmetic estimates"
+        ],
+        "executed_by_candidate_independently_proven": "Consequential source conclusions and arithmetic were independently rechecked; candidate's historical tool lifecycle or a product runtime was not observed.",
+        "proposed_only": [
+          "predeclared language/condition strata with fluent reference transcripts and feasible review coverage",
+          "script/tokenization-sensitive WER/CER, disaggregated errors/uncertainty and reviewer effort",
+          "word/speaker/timing edits, attributed revisions and rights-following history/export probes",
+          "OHMS subsecond-boundary and two-index-point fixtures",
+          "public/authorized interval and whole-record negative access/withdrawal tests with correct allowed offsets",
+          "known-byte corruption, BagIt fixity, test backup restore and actual cost/storage/runtime/accessibility demonstration"
+        ],
+        "oracles": "Fluent reviewed references/source audio; expected timestamps and multiple index markers; distinctive restricted words/media intervals; public versus authorized identities; independently known corruption and restored original bytes.",
+        "overclaim_found": false
+      },
+      "grade_limits": [
+        "Pass for source-grounded research on the original small brief, not validation of a deployed archive.",
+        "Exact OHMS limitation is v3.10.15-specific; later versions and installed configurations require a pilot.",
+        "Price/capacity figures are assumptions/estimates, not a selected low-cost plan, inventory or quote.",
+        "Whisper family translation support has model-specific exceptions (notably default turbo); no model was selected for translation here.",
+        "Minor S14 release-locator ambiguity and broken introductory relative links reduce traceability, without removing material final prose.",
+        "No claims about actual consent law, security, accuracy, accessibility, withdrawal SLA or backup success are inferred from guidance/proposals.",
+        "Citation volume, critic agreement, arithmetic correctness alone and file checks are not the scientific grade."
+      ],
+      "original_obligation_coverage": [
+        {
+          "obligation": "O1",
+          "coverage": "FULL",
+          "judgment": "OHMS self-host versus managed Aviary, community-protocol CMS, general catalog CMS and human indexing/selective ASR are materially different retained choices.",
+          "candidate_final_lines": "56–88",
+          "evidence": [
+            "N1-C01",
+            "N1-C05",
+            "N1-C06",
+            "N1-C07"
+          ]
+        },
+        {
+          "obligation": "O2",
+          "coverage": "FULL",
+          "judgment": "Exact Viewer symbols/units, editor formats, permission object scopes, vendor claim boundaries, rates and preservation applicability are investigated.",
+          "candidate_final_lines": "68–114",
+          "evidence": [
+            "N1-C02",
+            "N1-C03",
+            "N1-C04",
+            "N1-C09",
+            "N1-C13",
+            "N1-C14"
+          ]
+        },
+        {
+          "obligation": "O3",
+          "coverage": "FULL",
+          "judgment": "Navigation, legacy-PDF and configured cache-access release evolution is independently traced. Static timing is distinguished from a reported navigation fix.",
+          "candidate_final_lines": "94–96",
+          "evidence": [
+            "N1-C09",
+            "N1-C10"
+          ]
+        },
+        {
+          "obligation": "O4",
+          "coverage": "FULL",
+          "judgment": "All exact P1–P6 receive explicit reasoned dispositions and cross-finding optional/user-decision/uncertain categories.",
+          "candidate_final_lines": "19–35",
+          "evidence": [
+            "P1",
+            "P2",
+            "P3",
+            "P4",
+            "P5",
+            "P6"
+          ]
+        },
+        {
+          "obligation": "O5",
+          "coverage": "FULL",
+          "judgment": "Full prose retains original constraints, product options, cost/capacity assumptions, narrowed disagreement and unknown inputs. Two bad introductory links are minor.",
+          "candidate_final_lines": "40–131",
+          "evidence": [
+            "N1-preservation"
+          ]
+        },
+        {
+          "obligation": "O6",
+          "coverage": "FULL",
+          "judgment": "Six meaningful groups use language references and exact timing/access/fixity/restore discriminators; all product tests remain proposals.",
+          "candidate_final_lines": "135–142",
+          "evidence": [
+            "N1-C16"
+          ]
+        }
+      ],
+      "original_constraint_coverage": [
+        {
+          "constraint": "2,000 hour-long recordings",
+          "locator": "final lines 74;114",
+          "judgment": "Correct one-pass and capacity estimates at explicit assumptions; not measured inventory."
+        },
+        {
+          "constraint": "Volunteer transcripts and staff word/speaker correction",
+          "locator": "final lines 23;70;118–122;136",
+          "judgment": "Editable words/speakers/times, attributed review/history and rights validation retained."
+        },
+        {
+          "constraint": "Multilingual speakers",
+          "locator": "final lines 26;86;100;135",
+          "judgment": "Uneven ASR, source-language/translation distinction, fluent references and disaggregation."
+        },
+        {
+          "constraint": "Consent restrictions",
+          "locator": "final lines 24;72;78;104–106;118–122",
+          "judgment": "Scoped decisions and independent derivative/history policies; capability uncertainty retained."
+        },
+        {
+          "constraint": "Low-cost public website",
+          "locator": "final lines 56–58;74;82;126–131;140",
+          "judgment": "Conditional self-host/managed/catalog choices and concrete processing estimate/quote questions."
+        },
+        {
+          "constraint": "Preserve source audio",
+          "locator": "final lines 110–114;118–122;139",
+          "judgment": "Source bits/access copies, contextual LC guidance, fixity/replicas/restore retained."
+        },
+        {
+          "constraint": "Time-linked excerpts",
+          "locator": "final lines 62–70;94–96;118–122;136–137",
+          "judgment": "Timed transcript/index routes plus exact precision limit and offset/oracle tests."
+        },
+        {
+          "constraint": "Withdraw whole recording or restricted segment",
+          "locator": "final lines 104–106;118–122;137–138",
+          "judgment": "Unverified interval capability, redacted alternative, controlled takedown and external-copy limit."
+        }
+      ]
+    }
+  },
+  "method_clues": {
+    "blinding": "PARTIAL",
+    "observed": [
+      "Exact input map exposes N2=control and N1=treatment.",
+      "Candidate paths, headers, stage assignments and method descriptions reveal arm/method; N1 final explicitly names M08 progressive-complete-draft revision."
+    ],
+    "handling": "Each arm was judged independently against the original brief, frozen plan and primary evidence. No reference evaluator/candidate history/campaign was consulted. No claim of full blinding, causal method superiority or statistical independence of the supplied candidate stages is made."
+  },
+  "comparative_quality_eligible": true,
+  "comparative_quality": {
+    "judgment": "Both are full source-grounded research passes with minor limitations; same grade is not an assertion of equal content quality.",
+    "differences": [
+      "N1 adds useful pinned OHMS precision/index behavior, numeric processing-cost and capacity estimates, and a more operational per-language reference protocol.",
+      "N2 adds the distinct Oral-History.Digital option and especially explicit narrator/privacy/withdrawal-boundary workflow and low-cost decision criteria."
+    ],
+    "overall_winner": null,
+    "causal_method_inference": null,
+    "speed_or_cost_winner": null,
+    "reason": "Original-brief obligations are met independently by both. Qualitative differences are reviewable, but one pair and unknown native/billing/latency evidence cannot establish method, speed or cost superiority. No citation-count or critic-agreement scoring was used."
+  },
+  "scope_limits": [
+    "Full review of the exact mapped original S02 brief, exact frozen P1–P6, rubric, both authored final/discovery/draft/critique artifacts, stage input/assignment maps and source indexes. Thirty mapped artifact hashes/byte lengths matched; that establishes input identity, not research quality.",
+    "Consequential and preservation-sensitive claims were independently checked against relevant public primary sources. Bounded inherited notes are treated as claims, not authority; contradictory/incorrect notes are reported.",
+    "No candidate edits, repair, scientific feedback to candidates, Git/canon/config/account changes, executable downloads, product installs, service/browser launches or nested workers.",
+    "No other case, evaluation answer, campaign history, private provider/account internals or premium reference answer was accessed.",
+    "Unlisted candidate draft-v1.md was existence-checked but not read. Its contents and any unlisted revision path are outside this frozen comparison.",
+    "Runtime/archive integration, ASR accuracy, field security, real agreements, accessibility, quotations and storage inventory are not supplied. Honest stated deployment/user unknowns are distinguished from unfinished assessor primary coverage.",
+    "Workspace Plans/00-plans-index.md was read for the supplied AGENTS startup instruction only; it supplied no scientific evidence and no repository file was edited.",
+    "Mutable product documentation/prices were independently observed on 2026-10-09. Immutable snapshot findings remain version-specific.",
+    "Public retrieval failures were recovered for material facts through alternative primary routes. Their failure is not evidence that a capability is absent.",
+    "Scientific artifacts are all saved before native Goal terminal. No scientific work is authorized after terminal; any subsequent message is delivery only."
+  ],
+  "evaluation_started_at": "2026-10-09T19:41:33Z",
+  "evaluation_completed_at": "2026-10-09T19:58:12Z",
+  "timestamp_definition": "Started-at is the observed reviewer native Goal activation time; completed-at is the observed UTC time when scientific judgments were finalized for saving. Prior startup and total end-to-end billing duration were not independently measured. All three required files are written and checked before native terminal.",
+  "observed_source_operations": {
+    "local": [
+      "Read exact evaluation assignment and input map, original brief, frozen plan and rubric.",
+      "Read complete mapped scientific stages and source indexes; inspect declared bounded source notes.",
+      "SHA-256/byte identity verification for all 30 map records, plus frozen-input and bounded-note inventory.",
+      "Read-only relative-link existence checks; no candidate repair."
+    ],
+    "independent_primary": [
+      "Public web search/open/find of official manuals, institutional resources, author paper, issue/PR/release pages and OHA/RFC/LOC documents.",
+      "Direct urllib GET of public immutable/raw Markdown, PHP/Python source text, sample server-rule text and public commit patch; inspected as untrusted data, never executed as downloaded code.",
+      "Independent arithmetic for one-pass pricing and PCM/access-copy scale."
+    ],
+    "retrieval_failures": [
+      {
+        "scope": "Public GitHub REST API for OHD v2.11.0 commit, OHMS v3.10.15 commit, Whisper PR #1052 and OHMS v3.10.12 commit",
+        "result": "HTTP 403 rate-limit responses",
+        "recovery": "Public immutable raw files, release/PR pages and OHD commit patch supplied the consequential facts; no authenticated/private retry."
+      },
+      {
+        "scope": "Official oralhistoryonline.org FAQ/about/documentation attempts",
+        "result": "web retrieval Internal Error",
+        "recovery": "UK Libraries institutional resource, pinned Viewer README/releases and creator's primary integration announcement. No inference of application unavailability from failed fetch."
+      },
+      {
+        "scope": "One guessed Aviary OHMS documentation slug",
+        "result": "web retrieval Internal Error",
+        "recovery": "Exact declared transcript/index/media/access URLs were independently read instead."
+      }
+    ],
+    "source_register": "source-map.json; primary IDs E01–E40. Counts are scope inventory only, not a grade."
+  },
+  "native_and_cost_limits": {
+    "reviewer_lifecycle": "Actual native create_goal and get_goal tools were used; active state was observed. Native completion is performed only after all required science files have been saved and checked. No handwritten Goal receipt was created.",
+    "candidate_final_delivery_source": "Exact evaluation input map records true for both final_delivery and scientific_artifact_available; mapped complete finals exist and match hashes.",
+    "candidate_native_completion": null,
+    "candidate_native_tool_usage": null,
+    "candidate_billing": null,
+    "candidate_elapsed_time": null,
+    "reviewer_billing": null,
+    "reviewer_total_elapsed_including_startup": null,
+    "candidate_speed_or_cost_comparison": null,
+    "interpretation": "Unknown native, timing and billing values remain null, not zero or scientific false. Tool lifecycle evidence for this reviewer is separate from candidate research quality and from host/T3 delivery. No claim about candidate runtime completion is inferred from saved prose."
+  }
+}
+

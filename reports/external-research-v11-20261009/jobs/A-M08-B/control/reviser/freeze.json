@@ -1,0 +1,71 @@
+{
+  "frozen_at": "2026-10-09T19:25:07.170699+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S02/brief.md",
+      "sha256": "e42d1e70aa37a1339a8820e2953b41812b841d09f6310095eab1e65fb1e84882",
+      "bytes": 1517
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M08.json",
+      "sha256": "24c84915012ca6e92a3e5c2753185ae4604e8660d2835f24be7dcc24cc40f5fd",
+      "bytes": 689
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/assignment.md",
+      "sha256": "5a4cdc5903ce3057b5f6066386d4d73c8cc3b5046beaebec0b5376e06b7097c1",
+      "bytes": 2787
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/input-map.json",
+      "sha256": "2faeb397c5c975e961321e1b17e96b9897e0990903265010c67a749766f5aebf",
+      "bytes": 1504
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/draft.md",
+      "sha256": "a574b8746618d6d7d7080947d7186b1c47c2685d24f6ee96d0494836492a70d1",
+      "bytes": 16507
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/discovery.md",
+      "sha256": "22d68cc2213c212c71e1efe56cf9ef7aa797ca61921f4c721521822a129b9d67",
+      "bytes": 15912
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/source-map.json",
+      "sha256": "0fb655f1490013ebec7cf442565c773e3c520049d213966b2d5b69610d8bf4ed",
+      "bytes": 14888
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/revealed-plan.md",
+      "sha256": "29a9a74bc968d816bb61b8968346b552b8fc75a61ab72b2c5a18e059a7760363",
+      "bytes": 389
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/source-map.json",
+      "sha256": "8d6b09d93728133d0b2511183681cd11f4ad2f52020000d080e380beef7b540f",
+      "bytes": 22800
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/critique.md",
+      "sha256": "0a22148698c80ce842c1f585b73e7c23d3e20d44b00938c18eb696fb9ad0c481",
+      "bytes": 16820
+    }
+  ],
+  "method": {
+    "id": "M08",
+    "version": "v1",
+    "name": "progressive-complete-draft",
+    "control": "Investigate then write conventional complete draft; independent critic then separate reviser.",
+    "treatment": "Keep one developing coherent draft covering all obligations as evidence arrives; expand and revise it, retain intermediate versions at meaningful transitions. Spend final reserve on contradiction/preservation review. Same critic/reviser.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Writing schedule intervention, scope unchanged",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T19:39:49.529337+00:00"
+}

@@ -1,0 +1,159 @@
+[
+  {
+    "id": "H01",
+    "url": "https://api.github.com/repos/duckdb/duckdb/issues/13043",
+    "accessed_at": "2026-10-09T19:36:39.206508+00:00",
+    "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+    "response_sha256": "8f1555281255f80c8c305f4e1eae421d16951ad9e8a6c165d50d0e6ac8063f66",
+    "record": {
+      "html_url": "https://github.com/duckdb/duckdb/issues/13043",
+      "title": "[CSV Sniffer] `gzip` compressed, tab delimited file throws odd error",
+      "state": "closed",
+      "created_at": "2024-07-17T19:27:03Z",
+      "body": "### What happens?\n\nWhen attempting to use `read_csv` to read in a gzip compressed, tab-delimited file, I get the error \r\n\r\n> Invalid Input Error: Error when sniffing file \"/my/path/file.gzip\". CSV options could not be auto-detected. Consider setting parser options manually.\r\n\r\nThis is unexpected because the file is parsed as expected (without proper column association) when any other delimiter is used. You can see that it's tab delimited, yet something about setting the delim option to `\\t` breaks the ingest.\r\n\r\nThe issue appears to be with the column header.\r\n\r\nSkipping another row and supplying my own columns works, but is undesirable.\n\n### To Reproduce\n\nUsing the provided file, run `read_csv` without a specified delimiter or other conventional non-tab delimiter\r\n\r\n```\r\nfrom read_csv('test_apple_financial.csv.gz', compression='gzip', header=true, skip=3);\r\n```\r\n\r\nYou'll see the columns and data, all in one column. It's possible to see the data and columns are tab-delimited.\r\n\r\nThen run \r\n\r\n```\r\nfrom read_csv('test_apple_financial.csv.gz', compression='gzip', header=true, skip=3, delim='\\t');\r\n```\r\n\r\nThis will prompt the error. \r\n\r\nThe following will work but is undesirable\r\n\r\n```\r\nfrom read_csv('~/test_apple_financial.csv.gz', compression='gzip', skip=4, columns={\r\n       'Transaction Date': 'varchar',\r\n       'Settlement Date': 'varchar',\r\n       'Apple Identifier': 'varchar',\r\n       'SKU': 'varchar',\r\n       'Title': 'varchar',\r\n       'Developer Name': 'varchar',\r\n       'Product Type Identifier': 'varchar',\r\n       'Country of Sale': 'varchar',\r\n       'Quantity': 'varchar',\r\n       'Partner Share': 'varchar',\r\n       'Extended Partner Share': 'varchar',\r\n       'Partner Share Currency': 'varchar',\r\n       'Customer Price': 'varchar',\r\n       'Customer Currency': 'varchar',\r\n       'Sale or Return': 'varchar',\r\n       'Promo Code': 'varchar',\r\n       'Order Type': 'varchar',\r\n       'Region': 'varchar'\r\n  });\r\n```\r\n\r\n[test_apple_financial.csv.gz](https://github.com/user-attachments/files/16273762/test_apple_financial.csv.gz)\r\n\n\n### OS:\n\nmacOS arm64\n\n### DuckDB Version:\n\n1.0.0\n\n### DuckDB Client:\n\nCLI\n\n### Full Name:\n\nBrandon Freeman\n\n### Affiliation:\n\nHallow\n\n### What is the latest build you tested with? If possible, we recommend testing with the latest nightly build.\n\nI have not tested with any build\n\n### Did you include all relevant data sets for reproducing the issue?\n\nNo - Other reason (please specify in the issue body)\n\n### Did you include all code required to reproduce the issue?\n\n- [X] Yes, I have\n\n### Did you include all relevant configuration (e.g., CPU architecture, Python version, Linux distribution) to reproduce the issue?\n\n- [X] Yes, I have"
+    }
+  },
+  {
+    "id": "H02",
+    "url": "https://api.github.com/repos/duckdb/duckdb/pulls/13083",
+    "accessed_at": "2026-10-09T19:36:39.208269+00:00",
+    "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+    "response_sha256": "625a87e7144a928d96625be337f8160c00eafeb0597e2723ea6a53807bda825e",
+    "record": {
+      "html_url": "https://github.com/duckdb/duckdb/pull/13083",
+      "title": "[CSV Sniffer] Sniffer can now sniff files with extra delimiters",
+      "state": "closed",
+      "created_at": "2024-07-19T14:43:30Z",
+      "merged_at": "2024-07-20T10:04:17Z",
+      "merge_commit_sha": "50bb0a00d3f095a1ecf462d96b54e6be137ecf4c",
+      "body": "This PR makes it possible that the sniffer can correctly sniff files with extra delimiters on the data part of the CSV file, if they don't have any data there.\r\n\r\nFor example\r\n```\r\nVendor Name;Test\r\nStart Date;06/02/2024\r\nEnd Date;06/29/2024\r\nTransaction Date;Settlement;Date\r\n06/19/2024;06/22/2024;1435055555;\t\t\r\n06/14/2024;06/14/2024;1435055555;\t\t\t\r\n```\r\nwill result in a table with header:\r\n```\r\nTransaction Date;Settlement;Date\r\n```\r\n\r\nand data:\r\n```\r\n06/19/2024;06/22/2024;1435055555\t\r\n06/14/2024;06/14/2024;1435055555\r\n```\r\n\r\nHence it will automatically skip the first 3 rows with an unfit number of columns, and it will ignore the extra delimiter on the data part of the file, after the header.\r\n\r\nFix: #13043"
+    }
+  },
+  {
+    "id": "H03",
+    "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v1.1.0",
+    "accessed_at": "2026-10-09T19:36:39.209042+00:00",
+    "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+    "response_sha256": "f810f94d071e7ca62856f3142037e7b32c644a46461a2dd8fa51a6dd1573e8a3",
+    "record": {
+      "html_url": "https://github.com/duckdb/duckdb/releases/tag/v1.1.0",
+      "created_at": "2024-09-08T19:26:28Z",
+      "published_at": "2024-09-09T12:31:47Z",
+      "tag_name": "v1.1.0",
+      "target_commitish": "main",
+      "body_relevant_excerpt": "* [CSV Sniffer] Sniffer can now sniff files with extra delimiters by @pdet in https://github.com/duckdb/duckdb/pull/13083"
+    }
+  },
+  {
+    "id": "H04",
+    "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v1.5.6",
+    "accessed_at": "2026-10-09T19:36:39.214476+00:00",
+    "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+    "response_sha256": "4570d958d198c432a07dec4c1c0b8783a3ee26acdf7354de6d2572b980524288",
+    "record": {
+      "html_url": "https://github.com/duckdb/duckdb/releases/tag/v1.5.6",
+      "created_at": "2026-09-27T18:15:47Z",
+      "published_at": "2026-09-28T13:35:11Z",
+      "tag_name": "v1.5.6",
+      "target_commitish": "069cc9f9b5be802405797faecc284961b07c70ef",
+      "body": "This is a bug fix release for various issues discovered after we released v1.5.5\r\n\r\n## What's Changed\r\n* Use relative includes in unity build sources for cache reuse by @NiclasHaderer in https://github.com/duckdb/duckdb/pull/23972\r\n* bump vortex by @samansmink in https://github.com/duckdb/duckdb/pull/24089\r\n* [variegata] Remove Julia client in favor of duckdb/DuckDB.jl by @evertlammerts in https://github.com/duckdb/duckdb/pull/24127\r\n* [variegata] Replace the C API spec and code generation by @evertlammerts in https://github.com/duckdb/duckdb/pull/24131\r\n* TopNWindowElimination Fixes by @d-justen in https://github.com/duckdb/duckdb/pull/24080\r\n* Fix active query race by @NiclasHaderer in https://github.com/duckdb/duckdb/pull/24123\r\n* Fix UNNEST Pushdown by @d-justen in https://github.com/duckdb/duckdb/pull/24119\r\n* [Parquet][Variant] Don't produce VARIANT metadata with `sorted_strings` set by @Tishj in https://github.com/duckdb/duckdb/pull/23591\r\n* Fix LIMIT pushdown through a volatile projection with an OFFSET by @DinosL in https://github.com/duckdb/duckdb/pull/24240\r\n* Don't push filters on volatile groups through aggregates by @DinosL in https://github.com/duckdb/duckdb/pull/24239\r\n* fix(adbc): return a dense union from ConnectionGetInfo by @eitsupi in https://github.com/duckdb/duckdb/pull/24196\r\n* Backport 24038 by @artjomPlaunov in https://github.com/duckdb/duckdb/pull/24326\r\n* Unify C-API symbol versioning for clients/extensions, stabilize all v1 API's by @Maxxen in https://github.com/duckdb/duckdb/pull/24362\r\n* backport 24332 by @DinosL in https://github.com/duckdb/duckdb/pull/24427\r\n* Fix #24363: Preserve NULLs in Top-N window elimination when ORDER BY expression has no column references by @sdk011 in https://github.com/duckdb/duckdb/pull/24399\r\n* backport 24260 by @artjomPlaunov in https://github.com/duckdb/duckdb/pull/24447\r\n* Fix ICU strptime leaking time zone state between rows by @NiclasHaderer in https://github.com/duckdb/duckdb/pull/24438\r\n* Moved thread-local work outside the global lock in `PhysicalInsert::Combine` by @sebastiaan-dev in https://github.com/duckdb/duckdb/pull/24516\r\n* Bump httpfs by @mlafeldt in https://github.com/duckdb/duckdb/pull/24580\r\n* bump vortex by @samansmink in https://github.com/duckdb/duckdb/pull/24650\r\n* Fix 1.5 release by @smvv in https://github.com/duckdb/duckdb/pull/24687\r\n* Allow duplicates in index in ReplayRowGroupData by @artjomPlaunov in https://github.com/duckdb/duckdb/pull/24744\r\n* Dispatch Go nightly build by @mlafeldt in https://github.com/duckdb/duckdb/pull/24720\r\n* Fix join projection map bug in TopNWindowElimination by @d-justen in https://github.com/duckdb/duckdb/pull/24592\r\n* Fix Go nightly workflow dispatch by @mlafeldt in https://github.com/duckdb/duckdb/pull/24802\r\n* Fix Top-N window elimination for nullable ordering expressions by @matthiasgoergens in https://github.com/duckdb/duckdb/pull/24551\r\n* Backport 23964 & 24336 by @DinosL in https://github.com/duckdb/duckdb/pull/24791\r\n* Fix off-by-one in union type by @Maxxen in https://github.com/duckdb/duckdb/pull/24843\r\n* Fix inner join deduplication in TopNWindowElimination by @d-justen in https://github.com/duckdb/duckdb/pull/24586\r\n* fix geometry row group pruning with nulls/empty (on v1.5) by @Maxxen in https://github.com/duckdb/duckdb/pull/24845\r\n* Backport DuckDB 2.0 API spellings to 1.5 by @JelteF in https://github.com/duckdb/duckdb/pull/24852\r\n* Reserve column_ids.size() in CollectionScanState::Initialize by @jeewonhh in https://github.com/duckdb/duckdb/pull/24888\r\n* Fix pathological scan memory for NULLs trailing an overflow string (#24897) by @mdlavin in https://github.com/duckdb/duckdb/pull/24918\r\n* Use absolute unity build includes on Windows to avoid MSVC MAX_PATH errors by @NiclasHaderer in https://github.com/duckdb/duckdb/pull/24978\r\n* Fix mixed path separators for extension/loader in amalgamation (v1.5 backport) by @mlafeldt in https://github.com/duckdb/duckdb/pull/25026\r\n* Backport #25101: Fix crash in Top-N with LIMIT 0 (#24794) by @RagamuffinCat in https://github.com/duckdb/duckdb/pull/25103\r\n* Track and expose Pipeline's intra-MetaPipeline dependencies by @jeewonhh in https://github.com/duckdb/duckdb/pull/24494\r\n* Bump httpfs by @DinosL in https://github.com/duckdb/duckdb/pull/25202\r\n* Skip top-n window elimination when the limit exceeds the min/max n cap by @AbhinavMir in https://github.com/duckdb/duckdb/pull/24741\r\n* Add v1.5.6 storage by @carlopi in https://github.com/duckdb/duckdb/pull/25208\r\n* TryScanIndex fixes by @artjomPlaunov in https://github.com/duckdb/duckdb/pull/25209\r\n* Backport #22678: avoid per-row DATE->TIMESTAMP casts in comparisons by @peterboncz in https://github.com/duckdb/duckdb/pull/25139\r\n* Harden temp file reads by @carlopi in https://github.com/duckdb/duckdb/pull/25283\r\n* Avoid deduplicating UNION twice by @ywelsch in https://github.com/duckdb/duckdb/pull/25261\r\n* Backport #24878: Always quote identifiers in error messages by @JelteF in https://github.com/duckdb/duckdb/pull/25214\r\n* Fixup TryFlushCachingOperators to avoid doubly emitted chunks by @carlopi in https://github.com/duckdb/duckdb/pull/25331\r\n* Close the main WAL handle before renaming over it during WAL recovery by @carlopi in https://github.com/duckdb/duckdb/pull/25490\r\n* [1.5] Report the real storage version when opening a v2.0+ database file by @DinosL in https://github.com/duckdb/duckdb/pull/25573\r\n* Do not assert on a scan of a row group collection without committed row groups by @bleskes in https://github.com/duckdb/duckdb/pull/25668\r\n* Backport dead node counting fixes to v1.5 by @artjomPlaunov in https://github.com/duckdb/duckdb/pull/25693\r\n* Fix silent truncation of very long integer literals into HUGEINT by @DinosL in https://github.com/duckdb/duckdb/pull/25714\r\n* Auto-rollback failed implicitly-wrapped multi-statements on all paths by @jraymakers in https://github.com/duckdb/duckdb/pull/24065\r\n* Backport #25690: Fix MAX on hive partition column after file pruning by @avakili-voleon in https://github.com/duckdb/duckdb/pull/25766\r\n* Bump scanners for 1.5 by @staticlibs in https://github.com/duckdb/duckdb/pull/25671\r\n* Backport #23958 (Fix TIME_NS read/write with parquet) by @avakili-voleon in https://github.com/duckdb/duckdb/pull/25728\r\n* Fix deprecated CLI highlighting dot commands suggesting .render_color by @DinosL in https://github.com/duckdb/duckdb/pull/25689\r\n* Backport PR #25189: Reject invalid UTF8 from printf formatting by @artjomPlaunov in https://github.com/duckdb/duckdb/pull/25808\r\n* Update vortex extension by @samansmink in https://github.com/duckdb/duckdb/pull/25791\r\n* Backport fix for wrong results from common_subplan with UNION ALL arms sharing a join subtree (#25819) by @Kunal8954 in https://github.com/duckdb/duckdb/pull/25831\r\n* Backport #25660: Use read-only transaction to bind indexes in Checkpoint by @Flogex in https://github.com/duckdb/duckdb/pull/25858\r\n* Backport 22373 by @DinosL in https://github.com/duckdb/duckdb/pull/25844\r\n* Internal #10791: v1.5.6 TimeZone 2026c by @hawkfish in https://github.com/duckdb/duckdb/pull/25745\r\n* Keep the delete blocks of an unchanged table in use without rewriting them by @ywelsch in https://github.com/duckdb/duckdb/pull/25971\r\n* Update MySQL and ODBC scanners in 1.5 by @staticlibs in https://github.com/duckdb/duckdb/pull/25945\r\n* Internal #10927: v1.5.6 TimeZone 2026d by @hawkfish in https://github.com/duckdb/duckdb/pull/26039\r\n* backport 25752 by @DinosL in https://github.com/duckdb/duckdb/pull/26027\r\n* Bump DuckLake for v1.5.6 by @pdet in https://github.com/duckdb/duckdb/pull/26009\r\n* Backport #24557: Resolve partition columns for non-pushdown table functions by @rustyconover in https://github.com/duckdb/duckdb/pull/25998\r\n* Issue #25995: Streaming Window UNIONs by @hawkfish in https://github.com/duckdb/duckdb/pull/26104\r\n* Bump multiple extensions by @maiadegraaf in https://github.com/duckdb/duckdb/pull/26072\r\n* Backport 35ce409e298dc1a8e9dad1b1f83a138a0d12d087 to v1.5-variegata by @carlopi in https://github.com/duckdb/duckdb/pull/26137\r\n* bump iceberg by @Tmonster in https://github.com/duckdb/duckdb/pull/25899\r\n* Bump: ducklake by @maiadegraaf in https://github.com/duckdb/duckdb/pull/26151\r\n* Backport #24194: Add `enable_optimistic_write` setting by @mbrobbel in https://github.com/duckdb/duckdb/pull/26102\r\n* bump delta + unity_catalog extensions for v1.5.6 by @benfleis in https://github.com/duckdb/duckdb/pull/26204\r\n* Bump lance to 291316938c4ab06dc9fec5b92820f496662ef24a by @carlopi in https://github.com/duckdb/duckdb/pull/26203\r\n* Bump vortex to b86c6ab223b53b445ec4c96e74f26dcb616d9c4f by @carlopi in https://github.com/duckdb/duckdb/pull/26202\r\n* [Parquet] Backport of #25891 by @Tishj in https://github.com/duckdb/duckdb/pull/26162\r\n\r\n## New Contributors\r\n* @AbhinavMir made their first contribution in https://github.com/duckdb/duckdb/pull/24741\r\n* @mbrobbel made their first contribution in https://github.com/duckdb/duckdb/pull/26102\r\n\r\n**Full Changelog**: https://github.com/duckdb/duckdb/compare/v1.5.5...v1.5.6\r\n"
+    }
+  },
+  {
+    "id": "H05",
+    "url": "https://api.github.com/repos/tafia/calamine/releases/tags/v0.36.1",
+    "accessed_at": "2026-10-09T19:36:39.397094+00:00",
+    "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+    "response_sha256": "658e774b3ee4dcea45adcaa2ac6cc62f3d936a015e193fe89e319f0a3b3f52f0",
+    "record": {
+      "html_url": "https://github.com/tafia/calamine/releases/tag/v0.36.1",
+      "created_at": "2026-07-27T10:06:04Z",
+      "published_at": "2026-07-27T10:55:02Z",
+      "tag_name": "v0.36.1",
+      "target_commitish": "master",
+      "body": "### Fixed\r\n\r\n- Fixed a regression in 0.36.0 that broke Strict OOXML (ISO/IEC 29500)\r\n  `_rels/.rels` links.\r\n\r\n  [PR #681]: https://github.com/tafia/calamine/pull/681\r\n\r\n- Fixed XLS string handling to preserve empty strings instead of discarding\r\n  them. [PR #679].\r\n\r\n  [PR #679]: https://github.com/tafia/calamine/pull/679\r\n\r\n- Fixed XLSB workbook parsing to consume the body of unhandled workbook-global\r\n  records. A leftover body was misread as the next record id, which either\r\n  silently dropped the worksheet or panicked from an empty buffer. [PR #675].\r\n\r\n  [PR #675]: https://github.com/tafia/calamine/pull/675\r\n\r\n### What's Changed\r\n* Add support for OOXML format by @saks in https://github.com/tafia/calamine/pull/681\r\n* xls: preserve empty strings by @aquasync in https://github.com/tafia/calamine/pull/679\r\n* fix(xlsb): consume unmatched workbook-global record bodies by @momomuchu in https://github.com/tafia/calamine/pull/675\r\n\r\n### New Contributors\r\n* @momomuchu made their first contribution in https://github.com/tafia/calamine/pull/675\r\n\r\n**Full Changelog**: https://github.com/tafia/calamine/compare/v0.36.0...v0.36.1"
+    }
+  },
+  {
+    "id": "H06",
+    "url": "https://api.github.com/repos/OpenRefine/OpenRefine/issues/1908",
+    "accessed_at": "2026-10-09T19:36:39.420026+00:00",
+    "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+    "response_sha256": "fb9b22d713e8dff8f0e91c5e247e43cfa342766042907ddb37674080d350ce42",
+    "record": {
+      "html_url": "https://github.com/OpenRefine/OpenRefine/issues/1908",
+      "title": "Excel dates imported as java.util.Date, not OpenRefine date",
+      "state": "closed",
+      "created_at": "2018-12-15T00:27:18Z",
+      "body": "**Describe the bug**\r\nDate columns from Excel files are imported as text into Refine.\r\n\r\n**To Reproduce**\r\nSteps to reproduce the behavior:\r\n1. Create a new project using an Excel file with dates in it, e.g. the one attached below.\r\n2. The configuration screen for project creation will show the date column in black. Create the project anyway to try to convert it later on.\r\n3. The date is read correctly from the Excel file (December 11th, 2018), but displayed in black, not green, i.e. not recognised as date.\r\n3. Apply Common Transforms > To Date to the \"Date\" column. The date is still stored as text. See screenshot below.\r\n\r\n**Current Results**\r\nWhat results occured or were shown.\r\n\r\n**Expected behavior**\r\nA clear and concise description of what you expected to happen or to show.\r\n\r\n**Screenshots**\r\n<img width=\"544\" alt=\"screenshot 2018-12-15 at 01 15 52\" src=\"https://user-images.githubusercontent.com/17741/50036274-07ac9500-0008-11e9-9b9a-43e63fd81aa0.png\">\r\n\r\n**Desktop (please complete the following information):**\r\n - OS: macOS Mojave\r\n - Browser Version: Safari 12.02\r\n - JRE or JDK Version: 1.8.0_181\r\n\r\n**OpenRefine (please complete the following information):**\r\n - Version 3.1 [b90e413]\r\n\r\n**Datasets**\r\nMinimal file: [Date test.xlsx](https://github.com/OpenRefine/OpenRefine/files/2682052/Date.test.xlsx)\r\n\r\n**Additional context**\r\nThis same file worked fine in Refine 2.8.",
+      "milestone": {
+        "title": "3.5",
+        "due_on": null,
+        "state": "closed"
+      }
+    }
+  },
+  {
+    "id": "H07",
+    "url": "https://api.github.com/repos/OpenRefine/OpenRefine/issues/1908/comments?per_page=100",
+    "accessed_at": "2026-10-09T19:36:39.440055+00:00",
+    "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+    "error": "HTTP Error 403: rate limit exceeded"
+  },
+  {
+    "id": "H08",
+    "url": "https://api.github.com/repos/OpenRefine/OpenRefine/pulls/2909",
+    "accessed_at": "2026-10-09T19:36:39.481536+00:00",
+    "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+    "error": "HTTP Error 403: rate limit exceeded"
+  },
+  {
+    "id": "H09",
+    "url": "https://api.github.com/repos/OpenRefine/OpenRefine/pulls/2909/files",
+    "accessed_at": "2026-10-09T19:36:39.482329+00:00",
+    "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+    "error": "HTTP Error 403: rate limit exceeded"
+  },
+  {
+    "id": "H10",
+    "url": "https://api.github.com/repos/OpenRefine/OpenRefine/releases/tags/3.5.0",
+    "accessed_at": "2026-10-09T19:36:39.528506+00:00",
+    "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+    "error": "HTTP Error 403: rate limit exceeded"
+  },
+  {
+    "id": "H11",
+    "url": "https://api.github.com/repos/OpenRefine/OpenRefine/issues/7042",
+    "accessed_at": "2026-10-09T19:36:39.530447+00:00",
+    "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+    "error": "HTTP Error 403: rate limit exceeded"
+  },
+  {
+    "id": "H12",
+    "url": "https://api.github.com/repos/OpenRefine/OpenRefine/pulls/7703",
+    "accessed_at": "2026-10-09T19:36:39.577014+00:00",
+    "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+    "error": "HTTP Error 403: rate limit exceeded"
+  },
+  {
+    "id": "H13",
+    "url": "https://api.github.com/repos/OpenRefine/OpenRefine/pulls/7703/files",
+    "accessed_at": "2026-10-09T19:36:39.578870+00:00",
+    "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+    "error": "HTTP Error 403: rate limit exceeded"
+  },
+  {
+    "id": "H14",
+    "url": "https://api.github.com/repos/OpenRefine/OpenRefine/releases/tags/3.10.0",
+    "accessed_at": "2026-10-09T19:36:39.585939+00:00",
+    "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+    "error": "HTTP Error 403: rate limit exceeded"
+  },
+  {
+    "id": "H15",
+    "url": "https://api.github.com/repos/frictionlessdata/frictionless-py/releases/tags/v5.20.0",
+    "accessed_at": "2026-10-09T19:36:39.625667+00:00",
+    "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+    "error": "HTTP Error 403: rate limit exceeded"
+  }
+]

@@ -1,0 +1,63 @@
+{
+  "frozen_at": "2026-10-09T19:39:18.656010+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S01/brief.md",
+      "sha256": "1cc2f8f9f6ae1205f1f6152fa412d4b1afb153e1a3bb026def3dd25efaa1484d",
+      "bytes": 1479
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M07.json",
+      "sha256": "d72b00d76072a7cad1ec539cacc5d55d249d27ae95b4db03b6725199d5ee6ec6",
+      "bytes": 725
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/critic/assignment.md",
+      "sha256": "85db45dd8b860c5211067435546fbfd271218a8f3c451d8efae850272143ea6a",
+      "bytes": 2554
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/critic/input-map.json",
+      "sha256": "6ff5c52f41fe2e47878a46d75ef6662aed3f0cafe7c5c890efee56b6f8923bed",
+      "bytes": 1225
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/draft.md",
+      "sha256": "b6d168528240c866df9382b8f8f7279df2247ecf42b782a9c974c0012bbe776a",
+      "bytes": 19043
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/discovery.md",
+      "sha256": "cd59423e2646d1968efd8d4b6c20335cd38a4703de5feb1b68dd8e1026dd9a6f",
+      "bytes": 17559
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/source-map.json",
+      "sha256": "c38d36b3d1901503a121b09e762d6dad67bbc76bcd538433cba60d06cb12b1d2",
+      "bytes": 8704
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/revealed-plan.md",
+      "sha256": "82757a00748f375bd341f03520625ba71db51524f4d51bb8b06aeba1baf0e2e5",
+      "bytes": 383
+    }
+  ],
+  "method": {
+    "id": "M07",
+    "version": "v1",
+    "name": "evidence-on-demand",
+    "control": "Fresh critic/reviser receive conventional draft, source bibliography and complete own-arm captured evidence; may navigate normally.",
+    "treatment": "Same own-arm evidence plus navigable exact-byte source index. Reviewer/reviser retrieve governing context on demand, expand beyond author excerpt to definitions/exceptions/callers. Never treat cache as trusted conclusions; cold capture charged.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Evidence handoff structure; no source removal",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "resource_version": "default-30-12-18-v1",
+  "stage_allowance_s": 720,
+  "deadline": "2026-10-09T19:51:18.656010+00:00"
+}

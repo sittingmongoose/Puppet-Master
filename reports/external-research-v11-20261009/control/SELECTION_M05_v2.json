@@ -1,0 +1,67 @@
+{
+  "locked_at": "2026-10-09T19:43:13.449881+00:00",
+  "decision": "Select retained-author successor using A-M05-B full six-axis both PASS_WITH_LIMITATIONS and observed 28.3% native/T3 delivery advantage. All original stage deadlines met in this pair. Frozen-before-read receipt remains UNKNOWN for v1; do not silently qualify it. Occupied work is higher, affordability unproved. v2 changes only predeclared terminal/hash handoff and is a prospective successor on fresh cases.",
+  "selection_rule": "First B-03 equal60; B-04 starts only after first treatment full-source PASS and locks treatment45/control60. Do not open H inputs.",
+  "method_sha256": "828e70c1d9c1304fecc179c4f4bfd6a81186a520e6a174065b3bff7f289b6dd8",
+  "changes": [
+    {
+      "original": {
+        "block_id": "B-03",
+        "phase": "B",
+        "method": null,
+        "case": "B03",
+        "route": null,
+        "status": "UNSTARTED_RESERVED",
+        "kind": "full-discovery",
+        "allowance_s": 3600,
+        "occupied_ceiling_s": 5400
+      },
+      "selected": {
+        "block_id": "B-03",
+        "phase": "B",
+        "method": "M05",
+        "case": "I03",
+        "route": "luna",
+        "status": "UNSTARTED_SELECTED",
+        "kind": "full-discovery",
+        "allowance_s": 3600,
+        "occupied_ceiling_s": 5400,
+        "method_version": "v2",
+        "method_file": "M05-v2",
+        "terminal_critic_handoff": true,
+        "resource_version": "retained-terminal-handoff-v2",
+        "purpose": "prospective integrated successor; second starts only after B-03 treatment full-source PASS with 45-minute treatment vs60-minute control"
+      }
+    },
+    {
+      "original": {
+        "block_id": "B-04",
+        "phase": "B",
+        "method": null,
+        "case": "B04",
+        "route": null,
+        "status": "UNSTARTED_RESERVED",
+        "kind": "full-discovery",
+        "allowance_s": 3600,
+        "occupied_ceiling_s": 5400
+      },
+      "selected": {
+        "block_id": "B-04",
+        "phase": "B",
+        "method": "M05",
+        "case": "I04",
+        "route": "luna",
+        "status": "UNSTARTED_SELECTED",
+        "kind": "full-discovery",
+        "allowance_s": 3600,
+        "occupied_ceiling_s": 5400,
+        "method_version": "v2",
+        "method_file": "M05-v2",
+        "terminal_critic_handoff": true,
+        "resource_version": "retained-terminal-handoff-v2",
+        "purpose": "prospective integrated successor; second starts only after B-03 treatment full-source PASS with 45-minute treatment vs60-minute control"
+      }
+    }
+  ],
+  "case_contents_opened_at_lock": false
+}

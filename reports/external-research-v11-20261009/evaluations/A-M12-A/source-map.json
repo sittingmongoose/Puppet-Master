@@ -1,0 +1,1548 @@
+{
+  "block": "A-M12-A",
+  "created_at": "2026-10-09T19:47:46.446053+00:00",
+  "sources": [
+    {
+      "id": "E01-rfc8493",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "resolved_url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "accessed_at": "2026-10-09T19:30:18.536476+00:00",
+      "status": 200,
+      "content_type": "text/plain;charset=utf-8",
+      "source_sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E01-rfc8493.txt",
+      "evidence_sha256": "fc37120d4ff73895998b6e4a84da358d7df097b7c294c3de854f409a03a02698",
+      "retained_lines": 666,
+      "source_lines": 1428,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E02-bagit-190",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+      "resolved_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/bagit.py",
+      "accessed_at": "2026-10-09T19:30:18.538798+00:00",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "source_sha256": "1c851d04fb8ebdc28e5ad2ffc484569575a1f3922ed83abccd61edd3ee26f80a",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E02-bagit-190.txt",
+      "evidence_sha256": "5cca4d126a9ec4b0251c8bc0cad824e623f29f110c18daacd27294f59259fc1b",
+      "retained_lines": 572,
+      "source_lines": 1601,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E03-bagit-readme",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/README.rst",
+      "resolved_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/v1.9.0/README.rst",
+      "accessed_at": "2026-10-09T19:30:18.539535+00:00",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "source_sha256": "65572ed3f666e434bdaa5499583d7d505b8e8ccf8b482a7e5dc0f831c3493c7d",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E03-bagit-readme.txt",
+      "evidence_sha256": "0ca918ec43f6229ea1b6cc29c798f4e5cd3ddd5e5c73b0e40f21307d908231cf",
+      "retained_lines": 262,
+      "source_lines": 262,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E04-ocfl",
+      "url": "https://ocfl.io/1.1/spec/",
+      "resolved_url": "https://ocfl.io/1.1/spec/",
+      "accessed_at": "2026-10-09T19:30:18.540370+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "source_sha256": "82bb493ba4c919ead82db7e99adbcc93a54bde73af320059826b26e6df6106ad",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E04-ocfl.txt",
+      "evidence_sha256": "b5e71332716888a73c439c8f4db3bed44667064942e8de49cde428c5e79b86c8",
+      "retained_lines": 986,
+      "source_lines": 2603,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E05-ocfl-codes",
+      "url": "https://ocfl.io/1.1/spec/validation-codes.html",
+      "resolved_url": "https://ocfl.io/1.1/spec/validation-codes.html",
+      "accessed_at": "2026-10-09T19:30:18.541324+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "source_sha256": "fa4473406fbabdfef97906f9ff29283dd1e4761a1960f6f012a3a1499cd6469a",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E05-ocfl-codes.txt",
+      "evidence_sha256": "6b0d2689cd7a37676a9122daa31406b00925fccd12ea5d185a429df127ba51d2",
+      "retained_lines": 102,
+      "source_lines": 382,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E06-clamscan-man",
+      "url": "https://manpages.ubuntu.com/manpages/jammy/man1/clamscan.1.html",
+      "resolved_url": "https://manpages.ubuntu.com/manpages/jammy/man1/clamscan.1.html",
+      "accessed_at": "2026-10-09T19:30:18.542487+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "source_sha256": "eec130e308a4a3608f3112d1243b7539a0ef61c145bc9e1282fed191931e2bfd",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E06-clamscan-man.txt",
+      "evidence_sha256": "16ca062e5f5f05f4144fda0d542e7b5ebf1b867ace29146f0c1c0d40e3d1a99a",
+      "retained_lines": 201,
+      "source_lines": 432,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E07-clamdconf",
+      "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.4.3/etc/clamd.conf.sample",
+      "resolved_url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.4.3/etc/clamd.conf.sample",
+      "accessed_at": "2026-10-09T19:30:18.544813+00:00",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "source_sha256": "e70849884434ab1c9623eb233f83d80c895a65f7e1a123a57e1aaac3893e081f",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E07-clamdconf.txt",
+      "evidence_sha256": "10eda51f62fb6b28eaf7d677b173a5c87c3d552098dab9dcf2c3a1dfaca983f8",
+      "retained_lines": 116,
+      "source_lines": 843,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E08-clam-manager",
+      "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.4.3/clamscan/manager.c",
+      "resolved_url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.4.3/clamscan/manager.c",
+      "accessed_at": "2026-10-09T19:30:18.546004+00:00",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "source_sha256": "b702d98cc11504568f8870101876744cae9466dd055671e739328e2c475f8f47",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E08-clam-manager.txt",
+      "evidence_sha256": "65c6e8901802f35f8d2b9c465dec679fbe679f4fde5397ff6ae63eadb480eda0",
+      "retained_lines": 81,
+      "source_lines": 1698,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E09-clam-pr1039",
+      "url": "https://api.github.com/repos/Cisco-Talos/clamav/pulls/1039",
+      "resolved_url": "https://api.github.com/repos/Cisco-Talos/clamav/pulls/1039",
+      "accessed_at": "2026-10-09T19:30:18.666984+00:00",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "source_sha256": "9ff56eb2d79967d81ac160c24d020486625b20990141bf1fe268a72ec65ec300",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E09-clam-pr1039.txt",
+      "evidence_sha256": "50e9c154ecfab7592773e411fa464320fe03d2132dd2ced9835924d793a1b80e",
+      "retained_lines": 153,
+      "source_lines": 153,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E10-large-archive",
+      "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav-large-archive-scanner/master/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/Cisco-Talos/clamav-large-archive-scanner/master/README.md",
+      "accessed_at": "2026-10-09T19:30:18.685084+00:00",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "source_sha256": "8e2111944661d0e1c1ba264017799d361f3705f6ab2e10de2abc7d8f27084ac6",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E10-large-archive.txt",
+      "evidence_sha256": "3b028d1f368dfa251f5100da50d514e461388224c5f94f1f5ecaea1222b0bd43",
+      "retained_lines": 269,
+      "source_lines": 269,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E11-bagit-release",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/releases/tags/v1.9.0",
+      "resolved_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/releases/tags/v1.9.0",
+      "accessed_at": "2026-10-09T19:30:18.698909+00:00",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "source_sha256": "440f889a816cbae1de6d557161dc43e6494d102f0c2459bc07a1ff5d04b7700e",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E11-bagit-release.txt",
+      "evidence_sha256": "dde61794e96d5477201501f0c4b741e6c7336f33bbed0c36487c48a168019ccd",
+      "retained_lines": 14,
+      "source_lines": 14,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E12-pypi",
+      "url": "https://pypi.org/pypi/bagit/1.9.0/json",
+      "resolved_url": "https://pypi.org/pypi/bagit/1.9.0/json",
+      "accessed_at": "2026-10-09T19:30:18.742868+00:00",
+      "status": 200,
+      "content_type": "application/json",
+      "source_sha256": "7d70903e7327a2f53058d67412fac96f129cb843570776c9c820878f5cf316fe",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E12-pypi.txt",
+      "evidence_sha256": "4942d76e933c995094ed90e7e3df2af320b44a546a1f7b6b2a32202e616066c7",
+      "retained_lines": 24,
+      "source_lines": 24,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E13-minio-readme",
+      "url": "https://raw.githubusercontent.com/minio/minio/RELEASE.2025-04-22T22-12-26Z/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/minio/minio/RELEASE.2025-04-22T22-12-26Z/README.md",
+      "accessed_at": "2026-10-09T19:30:18.744191+00:00",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "source_sha256": "ca12e7476cf63eef64bed780af1da394656233b399070df419af62a0f1b3ce02",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E13-minio-readme.txt",
+      "evidence_sha256": "ad96c960f2f1762272480644f9290467d192514058c2f9da73889ca028d8f26a",
+      "retained_lines": 112,
+      "source_lines": 259,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E14-agpl",
+      "url": "https://www.gnu.org/licenses/agpl-3.0.txt",
+      "resolved_url": "https://www.gnu.org/licenses/agpl-3.0.txt",
+      "accessed_at": "2026-10-09T19:30:18.802559+00:00",
+      "status": 200,
+      "content_type": "text/plain",
+      "source_sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E14-agpl.txt",
+      "evidence_sha256": "f9069d62e77cceeb504ebf185161f13624277d2247e807e26b33ab5dbac6c73b",
+      "retained_lines": 92,
+      "source_lines": 661,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E15-siegfried",
+      "url": "https://raw.githubusercontent.com/richardlehane/siegfried/master/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/richardlehane/siegfried/master/README.md",
+      "accessed_at": "2026-10-09T19:30:18.836588+00:00",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "source_sha256": "de2b8ad6c416dfd1197941e0666e4d5271ed9bb08827c4ceac01d672b6f80b17",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E15-siegfried.txt",
+      "evidence_sha256": "e6fbf55a16c588886f15451f225cac1b9b763cf4b299a93268bf1d4c665ca14f",
+      "retained_lines": 218,
+      "source_lines": 250,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E16-siegfried52",
+      "url": "https://api.github.com/repos/richardlehane/siegfried/issues/52",
+      "resolved_url": "https://api.github.com/repos/richardlehane/siegfried/issues/52",
+      "accessed_at": "2026-10-09T19:30:18.845240+00:00",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "source_sha256": "e0ffe14902bb7ba9f71aa2db121651702dddcd9bad8024e98a2d7ab2c59c8433",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E16-siegfried52.txt",
+      "evidence_sha256": "200f2634d32efb151945e5f3dc2f57605e8f2339d9665417e02104297f32f557",
+      "retained_lines": 14,
+      "source_lines": 14,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E17-archivematica1766",
+      "url": "https://api.github.com/repos/archivematica/issues/issues/1766",
+      "resolved_url": "https://api.github.com/repos/archivematica/issues/issues/1766",
+      "accessed_at": "2026-10-09T19:30:18.847877+00:00",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "source_sha256": "7e8c42fd1a92a40b509f77705968ea326b41f26b7560dfee8d97f1842367b533",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E17-archivematica1766.txt",
+      "evidence_sha256": "ff038f7972714d22b86253336b83f9e8e3d80fa137397a85ce75f32e2d512955",
+      "retained_lines": 14,
+      "source_lines": 14,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E18-archivematica1766-comments",
+      "url": "https://api.github.com/repos/archivematica/issues/issues/1766/comments",
+      "resolved_url": "https://api.github.com/repos/archivematica/issues/issues/1766/comments",
+      "accessed_at": "2026-10-09T19:30:18.859988+00:00",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "source_sha256": "183f8f3921bce04531297791cb21cfa372b565c86bff318a2c5f3f7ef188e431",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E18-archivematica1766-comments.txt",
+      "evidence_sha256": "4bf48d9c1aa7bb85675ffb31199d482fbb768bfec90a57a314866caf1e9f14c8",
+      "retained_lines": 20,
+      "source_lines": 20,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E19-archivematica-transfer",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.16/user-manual/transfer/transfer/",
+      "resolved_url": "https://www.archivematica.org/en/docs/archivematica-1.16/user-manual/transfer/transfer/",
+      "accessed_at": "2026-10-09T19:30:18.931021+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "source_sha256": "0329c6e69fba803355dbd627fe6e1613bf884daf2a3e1482dcdf048f82585bc5",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E19-archivematica-transfer.txt",
+      "evidence_sha256": "50c1eaeb58baa51fb78cfd186333f48ba4e820c86610da7785cb9e7a8cd67424",
+      "retained_lines": 313,
+      "source_lines": 970,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E20-exactly",
+      "url": "https://raw.githubusercontent.com/iish/uk-exactly/master/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/iish/uk-exactly/master/README.md",
+      "accessed_at": "2026-10-09T19:30:18.932101+00:00",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "source_sha256": "295937ef6a5c70f1a5847c1cec6c989fea396bacbd16ed1f79a4e576a18f08e3",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E20-exactly.txt",
+      "evidence_sha256": "75c65f41e90ce59ce9992abd2840875460ea4852be53ee0db283c65c992d2c63",
+      "retained_lines": 46,
+      "source_lines": 46,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E21-swordv3",
+      "url": "https://swordapp.github.io/swordv3/swordv3.html",
+      "resolved_url": "https://swordapp.github.io/swordv3/swordv3.html",
+      "accessed_at": "2026-10-09T19:30:18.932810+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "source_sha256": "597def3929728955be6f3dc86ddb6d60fbd3d1ab0c8b105d8bb0a0861593d5ce",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E21-swordv3.txt",
+      "evidence_sha256": "7ae90f1d8d493eee320235af4644c07f5092cd319ea5b168794b90c8358d2a7a",
+      "retained_lines": 1948,
+      "source_lines": 4301,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E22-openrefine",
+      "url": "https://openrefine.org/docs/manual/running",
+      "resolved_url": "https://openrefine.org/docs/manual/running",
+      "accessed_at": "2026-10-09T19:30:18.973911+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "source_sha256": "d48634f9699598ebda8446b9bc90cc2db32950a0321add3d88abbd96ef330175",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E22-openrefine.txt",
+      "evidence_sha256": "ac8b1a2f2fe8699d7c6c38215741667c13ab01ed734e24ca9c03c5c2a39c20e2",
+      "retained_lines": 184,
+      "source_lines": 754,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E23-clam121-scanners",
+      "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.2.1/libclamav/scanners.c",
+      "resolved_url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.2.1/libclamav/scanners.c",
+      "accessed_at": "2026-10-09T19:32:13.150409+00:00",
+      "status": 200,
+      "source_sha256": "1519bb20bd4c36786b9c7b3f421d7d64b674bf0a826e637222011da03bdd0300",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E23-clam121-scanners.txt",
+      "evidence_sha256": "a3ed33c8db28d92541bfd6d83157718911a64ce06ba12c591003d18372be5e19",
+      "retained_lines": 128,
+      "source_lines": 5841,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E24-clam121-others",
+      "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.2.1/libclamav/others.c",
+      "resolved_url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.2.1/libclamav/others.c",
+      "accessed_at": "2026-10-09T19:32:13.152201+00:00",
+      "status": 200,
+      "source_sha256": "b84a9d4c44d8cb677d75d7e19e7a231f91c7fc73937fa9e18d8c42c733c42c07",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E24-clam121-others.txt",
+      "evidence_sha256": "a41c3f73822326fcd7339a063cc4f5c2ce5e3b4d1d51c675eaf5cfd4fca3530a",
+      "retained_lines": 174,
+      "source_lines": 1969,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E25-clam150-release",
+      "url": "https://api.github.com/repos/Cisco-Talos/clamav/releases/tags/clamav-1.5.0",
+      "resolved_url": "https://api.github.com/repos/Cisco-Talos/clamav/releases/tags/clamav-1.5.0",
+      "accessed_at": "2026-10-09T19:32:13.153424+00:00",
+      "status": 200,
+      "source_sha256": "eec3438e48a7d60049d2edda37854dd71b96bdfa79f687f4ad71ee302bdb00be",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E25-clam150-release.txt",
+      "evidence_sha256": "10c2857904c006249d108e1986bef0b70757f4a175b491288d84070db4cdaef2",
+      "retained_lines": 7,
+      "source_lines": 10,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E26-clam121-release",
+      "url": "https://api.github.com/repos/Cisco-Talos/clamav/releases/tags/clamav-1.2.1",
+      "resolved_url": "https://api.github.com/repos/Cisco-Talos/clamav/releases/tags/clamav-1.2.1",
+      "accessed_at": "2026-10-09T19:32:13.154634+00:00",
+      "status": 200,
+      "source_sha256": "3762f3acee7cf541aadbf6c8186cc5563b5053e3c6b245efb33127aaf73945d1",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E26-clam121-release.txt",
+      "evidence_sha256": "e5c7043f819eb408db654655fc4a8675e971bb70038e95d2a7a42e152e921eac",
+      "retained_lines": 10,
+      "source_lines": 10,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E27-minio-compliance",
+      "url": "https://raw.githubusercontent.com/minio/minio/RELEASE.2025-04-22T22-12-26Z/COMPLIANCE.md",
+      "resolved_url": "https://raw.githubusercontent.com/minio/minio/RELEASE.2025-04-22T22-12-26Z/COMPLIANCE.md",
+      "accessed_at": "2026-10-09T19:32:13.156287+00:00",
+      "status": 200,
+      "source_sha256": "7281d7feb72c127942ea6e78ee19757d7ec2e4167cf84c908851c97cd9a32408",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E27-minio-compliance.txt",
+      "evidence_sha256": "5c138fcdf224dbd812f3f075e5620838fa02b51f3a78d89c4a7742faeaa87da6",
+      "retained_lines": 7,
+      "source_lines": 7,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E28-bagit86",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/86/comments",
+      "resolved_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/86/comments",
+      "accessed_at": "2026-10-09T19:32:13.157669+00:00",
+      "status": 200,
+      "source_sha256": "d6160c9686c894d12480de2ba0e2958aebf889150335ea5a553ac2585d55e944",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E28-bagit86.txt",
+      "evidence_sha256": "002b7d890cb725878bba836cb7a3889d3eca7cfd9bfad56e19b3ae7cfebfe2e7",
+      "retained_lines": 26,
+      "source_lines": 26,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E29-bagit158",
+      "url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/158",
+      "resolved_url": "https://api.github.com/repos/LibraryOfCongress/bagit-python/issues/158",
+      "accessed_at": "2026-10-09T19:32:13.159291+00:00",
+      "status": 200,
+      "source_sha256": "0b400578eb3bbacc51a0919820849dd6d237e075feeadfd65855e00f61a888db",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E29-bagit158.txt",
+      "evidence_sha256": "1463300486a5e9e00cd041cba2b04dca587b9216187118b3894b5beefd107955",
+      "retained_lines": 10,
+      "source_lines": 10,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E30-sf-changelog",
+      "url": "https://raw.githubusercontent.com/richardlehane/siegfried/master/CHANGELOG.md",
+      "resolved_url": "https://raw.githubusercontent.com/richardlehane/siegfried/master/CHANGELOG.md",
+      "accessed_at": "2026-10-09T19:32:13.161115+00:00",
+      "status": 200,
+      "source_sha256": "25d54957d1822041a695c6c5ccc2b3c70170587654478080701dabf9a5eeedf0",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E30-sf-changelog.txt",
+      "evidence_sha256": "978844318c23c6ab6c91830dd934fdaa70e9b60ea094bc893bc8709eb78144e6",
+      "retained_lines": 283,
+      "source_lines": 697,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E31-sf-gettingstarted",
+      "url": "https://raw.githubusercontent.com/wiki/richardlehane/siegfried/Getting-started.md",
+      "resolved_url": "https://raw.githubusercontent.com/wiki/richardlehane/siegfried/Getting-started.md",
+      "accessed_at": "2026-10-09T19:32:13.302810+00:00",
+      "status": 200,
+      "source_sha256": "96c0ba62abbfce47816d76444c36b56bced316861f21825b1981cccde6e5af66",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E31-sf-gettingstarted.txt",
+      "evidence_sha256": "aca23f1141c4009cc0b818ecf27d7715d1c708fed66b3da4c4933f73a9b34039",
+      "retained_lines": 63,
+      "source_lines": 75,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E32-exiftool",
+      "url": "https://exiftool.org/exiftool_pod.html",
+      "resolved_url": "https://exiftool.org/exiftool_pod.html",
+      "accessed_at": "2026-10-09T19:32:13.315891+00:00",
+      "status": 200,
+      "source_sha256": "44057f9a77a814fefa394c69123a8a940bc250da1b1aa396ea730dcc640c1e0f",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E32-exiftool.txt",
+      "evidence_sha256": "45c0a79d774a9da0bc19486e3ff4d35ef5bd86b19eafbbc3d5299e240b293b62",
+      "retained_lines": 873,
+      "source_lines": 3615,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E33-jhove",
+      "url": "https://jhove.openpreservation.org/",
+      "resolved_url": "https://jhove.openpreservation.org/",
+      "accessed_at": "2026-10-09T19:32:13.357335+00:00",
+      "status": 200,
+      "source_sha256": "421ee10ff76c36b61bb2bd49f8600ec216c7a6d65a174a53dac8a9742d84dc06",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E33-jhove.txt",
+      "evidence_sha256": "961d01ea83d377ab6a1651357140df0b8b5e6cd862da678822684259130c9006",
+      "retained_lines": 74,
+      "source_lines": 114,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E34-verapdf",
+      "url": "https://docs.verapdf.org/validation/",
+      "resolved_url": "https://docs.verapdf.org/validation/",
+      "accessed_at": "2026-10-09T19:32:13.358497+00:00",
+      "status": 200,
+      "source_sha256": "053f7cdd982c8afa78f44b0f203bf4d923dce3e4f832c5c7b28abdfc6b8def54",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E34-verapdf.txt",
+      "evidence_sha256": "d3f26dfc5ecd66c921ba66b4bee43aeb95e2a52ba5896e7553898a190c2807a5",
+      "retained_lines": 36,
+      "source_lines": 46,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E35-jpylyzer",
+      "url": "https://jpylyzer.openpreservation.org/",
+      "resolved_url": "https://jpylyzer.openpreservation.org/",
+      "accessed_at": "2026-10-09T19:32:13.359354+00:00",
+      "status": 200,
+      "source_sha256": "bafea5f85da24cccde897d584117aed4d9bdf8b35328d14afa9a4b948401c288",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E35-jpylyzer.txt",
+      "evidence_sha256": "e9b5f7fa426977c2f3eba76824dfcdbd512c2079c3b5e442e5b6c94f471d0310",
+      "retained_lines": 46,
+      "source_lines": 87,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E36-mediaconch",
+      "url": "https://mediaarea.net/MediaConch",
+      "resolved_url": "https://mediaarea.net/MediaConch",
+      "accessed_at": "2026-10-09T19:32:13.359739+00:00",
+      "status": 200,
+      "source_sha256": "362b2f5bd4d5b24586ab029e002ade219e64a69498f7d21d86712593d84f8cbf",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E36-mediaconch.txt",
+      "evidence_sha256": "b5e6bc27f8ebc38d917b5c9d50e628d2cb153cc3846068ac57c7c0cf879632f6",
+      "retained_lines": 32,
+      "source_lines": 150,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E37-dpf",
+      "url": "https://raw.githubusercontent.com/Hiubu/DPFManager/master/README.md",
+      "accessed_at": "2026-10-09T19:32:13.365112+00:00",
+      "error": "HTTP Error 404: Not Found",
+      "operation": "anonymous urllib HTTPS GET"
+    },
+    {
+      "id": "E38-archivematica-indexless",
+      "url": "https://raw.githubusercontent.com/artefactual/archivematica-docs/master/admin-manual/installation-setup/installation/installation.rst",
+      "resolved_url": "https://raw.githubusercontent.com/artefactual/archivematica-docs/master/admin-manual/installation-setup/installation/installation.rst",
+      "accessed_at": "2026-10-09T19:32:13.365469+00:00",
+      "status": 200,
+      "source_sha256": "a219fd24ba7f75270f7652b2988d66bad1074f94821c4223a3a07974ad080072",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E38-archivematica-indexless.txt",
+      "evidence_sha256": "d01ceb060023780d0dc8d1c2116f841464ec5f352931c574a11c7c020dbf8699",
+      "retained_lines": 76,
+      "source_lines": 238,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E39-archivematica-versions",
+      "url": "https://raw.githubusercontent.com/artefactual-labs/am-packbuild/main/tests/archivematica/README.md",
+      "accessed_at": "2026-10-09T19:32:13.410196+00:00",
+      "error": "HTTP Error 404: Not Found",
+      "operation": "anonymous urllib HTTPS GET"
+    },
+    {
+      "id": "E40-fedora",
+      "url": "https://fedorarepository.org/features-2/",
+      "resolved_url": "https://fedorarepository.org/features-2/",
+      "accessed_at": "2026-10-09T19:32:13.428584+00:00",
+      "status": 200,
+      "source_sha256": "3be9a8548083b2844dbf0f87eb53ae8b518f15b87ed140f094fb69da626d8cb3",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E40-fedora.txt",
+      "evidence_sha256": "66e31a5e4ddefdce1bf072b4c00c8ee712c084dd72fba63a4364f8d8d8544c5a",
+      "retained_lines": 37,
+      "source_lines": 128,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E41-seaweed",
+      "url": "https://raw.githubusercontent.com/seaweedfs/seaweedfs/master/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/seaweedfs/seaweedfs/master/README.md",
+      "accessed_at": "2026-10-09T19:32:13.466003+00:00",
+      "status": 200,
+      "source_sha256": "826bcc10ffd27e3c399a867eb1bf3401cb7e400fca2df02ea73ed867c8886a3a",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E41-seaweed.txt",
+      "evidence_sha256": "869b47381835d1ad429d1114f878f768714dfe7f691cf2d09ac3b8947bc3fc71",
+      "retained_lines": 355,
+      "source_lines": 516,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E42-roda",
+      "url": "https://raw.githubusercontent.com/keeps/roda/master/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/keeps/roda/master/README.md",
+      "accessed_at": "2026-10-09T19:32:13.478363+00:00",
+      "status": 200,
+      "source_sha256": "f8646d0b5c43c538b6e2e7426be9c2b62ca69a6695ad4fdcd7cc2cc2bc0780da",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E42-roda.txt",
+      "evidence_sha256": "40bce96047f6015e578fc2d193fd4ff2c4f62964b79ecc8cd7659d23349d1f58",
+      "retained_lines": 171,
+      "source_lines": 269,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E43-bagger",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagger/master/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/LibraryOfCongress/bagger/master/README.md",
+      "accessed_at": "2026-10-09T19:32:13.490560+00:00",
+      "status": 200,
+      "source_sha256": "a6bef489d199163b37f4fc7a05462b35fab203718592fbd1c42b92ffe3d6ae04",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E43-bagger.txt",
+      "evidence_sha256": "92962131159c5d4e47032a0e1abf37ccec74707731c9713e7b0da0437254e543",
+      "retained_lines": 67,
+      "source_lines": 152,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E44-clam-scanning",
+      "url": "https://docs.clamav.net/manual/Usage/Scanning.html",
+      "resolved_url": "https://docs.clamav.net/manual/Usage/Scanning.html",
+      "accessed_at": "2026-10-09T19:32:13.512868+00:00",
+      "status": 200,
+      "source_sha256": "f7a2f2b4b76a8a1e48e89631ffb550284c81f6892badabfb01a4e172c2745d8f",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E44-clam-scanning.txt",
+      "evidence_sha256": "6a106b87c7e38f960601647963207248c2fde87f3db24b9b7cb3f34a87e9f0b7",
+      "retained_lines": 288,
+      "source_lines": 449,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E45-ocfl-changelog",
+      "url": "https://ocfl.io/1.1/spec/change-log.html",
+      "resolved_url": "https://ocfl.io/1.1/spec/change-log.html",
+      "accessed_at": "2026-10-09T19:32:13.526980+00:00",
+      "status": 200,
+      "source_sha256": "261b6b0e847e7caaf321f8c33a3925b08cda6a397f28b044acba53b857429248",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E45-ocfl-changelog.txt",
+      "evidence_sha256": "dce2143cee0340e1f62b53299fa6100c40458292711d6959d5eb804e772bb12e",
+      "retained_lines": 103,
+      "source_lines": 286,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E46-code4lib",
+      "url": "https://journal.code4lib.org/articles/16626",
+      "resolved_url": "https://journal.code4lib.org/articles/16626",
+      "accessed_at": "2026-10-09T19:32:13.566128+00:00",
+      "status": 200,
+      "source_sha256": "4cd7c3bad2623122b68c16fdaf6b914d0e1c1436f9d274b9d47524d7fe5484fc",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E46-code4lib.txt",
+      "evidence_sha256": "581c47acc3e4528b7109ec005a75701967f05e1ff20604882dedd7cfde527fa8",
+      "retained_lines": 75,
+      "source_lines": 180,
+      "operation": "anonymous urllib HTTPS GET; text inspection only; not executed"
+    },
+    {
+      "id": "E47-dpf-official",
+      "url": "https://raw.githubusercontent.com/EasyinnovaSL/DPFManager/master/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/EasyinnovaSL/DPFManager/master/README.md",
+      "accessed_at": "2026-10-09T19:34:49.277108+00:00",
+      "status": 200,
+      "source_sha256": "cc2949b3aeb7a83b51dd236bf8ba585d95680b1b5aad9be2487aa81a548afb22",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E47-dpf-official.txt",
+      "evidence_sha256": "764f67c47961039755a436a7e6135828a1ac07a9c2aa858a1e6004dbe1ae4442",
+      "retained_lines": 16,
+      "source_lines": 64,
+      "operation": "anonymous urllib HTTPS GET; text inspection; PDF parsed in memory with system pdftotext; no candidate runtime execution"
+    },
+    {
+      "id": "E48-am-packbuild",
+      "url": "https://raw.githubusercontent.com/artefactual-labs/am-packbuild/master/tests/archivematica/README.md",
+      "accessed_at": "2026-10-09T19:34:49.279502+00:00",
+      "error": "HTTP Error 404: Not Found",
+      "operation": "anonymous urllib HTTPS GET"
+    },
+    {
+      "id": "E49-am-upgrade",
+      "url": "https://raw.githubusercontent.com/artefactual-labs/ansible-archivematica-upgrade/master/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/artefactual-labs/ansible-archivematica-upgrade/master/README.md",
+      "accessed_at": "2026-10-09T19:34:49.281475+00:00",
+      "status": 200,
+      "source_sha256": "6130f92e88fabba432cf517151939da2faa997e8b6dc416dace7167f89034b25",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E49-am-upgrade.txt",
+      "evidence_sha256": "c456ba12238c9e6b67b0db025ea9ef38bbe8a6d6b26e0b4f3f1fe24358a0bed7",
+      "retained_lines": 263,
+      "source_lines": 371,
+      "operation": "anonymous urllib HTTPS GET; text inspection; PDF parsed in memory with system pdftotext; no candidate runtime execution"
+    },
+    {
+      "id": "E50-fixity-transition",
+      "url": "https://www.weareavp.com/announcing-release-fixity-1-0/",
+      "resolved_url": "https://www.weareavp.com/announcing-release-fixity-1-0/",
+      "accessed_at": "2026-10-09T19:34:49.283316+00:00",
+      "status": 200,
+      "source_sha256": "2fe02c19e77f02c2af5ac8ee3656f6b18c0853263049faed9d6aa05955fbe175",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E50-fixity-transition.txt",
+      "evidence_sha256": "118ed7bf260cd7c2fc00e52e849f8cf929ac9c310bcc0d6ace67f8881dc0afe7",
+      "retained_lines": 113,
+      "source_lines": 555,
+      "operation": "anonymous urllib HTTPS GET; text inspection; PDF parsed in memory with system pdftotext; no candidate runtime execution"
+    },
+    {
+      "id": "E51-nlw-case",
+      "url": "https://www.dpconline.org/blog/wdpd/wdpd2021-mcinnes",
+      "resolved_url": "https://www.dpconline.org/blog/wdpd/wdpd2021-mcinnes",
+      "accessed_at": "2026-10-09T19:34:49.284930+00:00",
+      "status": 200,
+      "source_sha256": "2fd58ad62923aacee1559709d10c4b0743e9df11e6e6da13850d0a6090978616",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E51-nlw-case.txt",
+      "evidence_sha256": "8f0362065e534b0d073255e7409649164750f54cb3edb46a27f831189a33791e",
+      "retained_lines": 33,
+      "source_lines": 610,
+      "operation": "anonymous urllib HTTPS GET; text inspection; PDF parsed in memory with system pdftotext; no candidate runtime execution"
+    },
+    {
+      "id": "E52-premis",
+      "url": "https://www.loc.gov/standards/premis/understandingPREMIS_english_2021.pdf",
+      "resolved_url": "https://www.loc.gov/standards/premis/understandingPREMIS_english_2021.pdf",
+      "accessed_at": "2026-10-09T19:34:49.286456+00:00",
+      "status": 200,
+      "source_sha256": "c96f0f6b1904ac2f9fe321977b6464a7c119652867cc0f916e9acb6bca0484bf",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E52-premis.txt",
+      "evidence_sha256": "7d02081effd9d135c4b47a2aea7d80312249faba43e9a021fa2831ffe7cf0f0e",
+      "retained_lines": 390,
+      "source_lines": 1173,
+      "operation": "anonymous urllib HTTPS GET; text inspection; PDF parsed in memory with system pdftotext; no candidate runtime execution"
+    },
+    {
+      "id": "E53-master-missing",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/master/bagit.py",
+      "accessed_at": "2026-10-09T19:35:59.721646+00:00",
+      "error": "HTTP Error 404: Not Found",
+      "operation": "anonymous urllib HTTPS GET"
+    },
+    {
+      "id": "E54-bagit-main",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/main/bagit.py",
+      "accessed_at": "2026-10-09T19:35:59.774112+00:00",
+      "error": "HTTP Error 404: Not Found",
+      "operation": "anonymous urllib HTTPS GET"
+    },
+    {
+      "id": "E55-bagit-main-readme",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/main/README.rst",
+      "accessed_at": "2026-10-09T19:35:59.863150+00:00",
+      "error": "HTTP Error 404: Not Found",
+      "operation": "anonymous urllib HTTPS GET"
+    },
+    {
+      "id": "E56-bagit-current",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/4bd2713cedbe1f8e634567c20ef0dded9622011d/bagit.py",
+      "accessed_at": "2026-10-09T19:36:20.696135+00:00",
+      "error": "HTTP Error 404: Not Found",
+      "operation": "anonymous urllib HTTPS GET"
+    },
+    {
+      "id": "E57-bagit-head-readme",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/HEAD/README.rst",
+      "accessed_at": "2026-10-09T19:36:20.818578+00:00",
+      "status": 200,
+      "source_sha256": "6a3358837ec4b2b59b8d4031f8f7b06429b63f4c65df82e6a9afb69d770688d5",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E57-bagit-head-readme.txt",
+      "evidence_sha256": "11fdd5882d07de46a5d4434b6a20b521e1d974c2ce730bc82a8ebdfd7f0a363d",
+      "operation": "anonymous urllib HTTPS GET; static read only",
+      "source_lines": 262,
+      "retained_lines": 262
+    },
+    {
+      "id": "E58-bagit-current-module",
+      "url": "https://raw.githubusercontent.com/LibraryOfCongress/bagit-python/4bd2713cedbe1f8e634567c20ef0dded9622011d/src/bagit/__init__.py",
+      "version": "commit 4bd2713cedbe1f8e634567c20ef0dded9622011d",
+      "accessed_at": "2026-10-09T19:36:42.567338+00:00",
+      "status": 200,
+      "source_sha256": "1dba8aab25922060f7602d2c1f6f48ce768639724fbaebe4494bc370f8f13b84",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E58-bagit-current-module.txt",
+      "evidence_sha256": "3f9f33d0805b614efdbbe94c6123a33a2d38dce45441687735b34073eced05ca",
+      "operation": "anonymous urllib HTTPS GET; static read only",
+      "source_lines": 1630,
+      "retained_lines": 943
+    },
+    {
+      "id": "E60-update-faq",
+      "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav-documentation/main/src/faq/faq-cvd.md",
+      "status": 200,
+      "accessed_at": "2026-10-09T19:45:59.390012+00:00",
+      "source_sha256": "70fbc44a143a68dbbf3ff14145a1d88f1dec6606c7101ea7fd261381ebb6e419",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E60-update-faq.txt",
+      "evidence_sha256": "3e924d07d2435d8a0903d7e8ed3457d3a4b58270d2704c7bcdd63affc14ffdb7",
+      "retained_lines": 54,
+      "source_lines": 71,
+      "operation": "anonymous urllib HTTPS GET; source text only; not executed"
+    },
+    {
+      "id": "E61-freshclam-man",
+      "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.5.0/docs/man/freshclam.1.in",
+      "status": 200,
+      "accessed_at": "2026-10-09T19:45:59.391255+00:00",
+      "source_sha256": "671304667b6a42cbdbd8e30111bd8349d85f181b4654d5cc62a8bf1a09e334b0",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E61-freshclam-man.txt",
+      "evidence_sha256": "5dc0cf8d41fb9426205e8d1c29748572d9e60780e64475d99944dbf89816e14f",
+      "retained_lines": 29,
+      "source_lines": 163,
+      "operation": "anonymous urllib HTTPS GET; source text only; not executed"
+    },
+    {
+      "id": "E62-freshclam-faq",
+      "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav-documentation/main/src/faq/faq-freshclam.md",
+      "status": 200,
+      "accessed_at": "2026-10-09T19:46:17.585870+00:00",
+      "source_sha256": "f8e326267e0a561e2c18a497924297bb1cdd77fab889fe33fc95d2fda0d81f52",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E62-freshclam-faq.txt",
+      "evidence_sha256": "aa61011672f9f0b519aa4540200c51ee7c1f125994eea408b9449fd1f73c3cbd",
+      "retained_lines": 46,
+      "source_lines": 136,
+      "operation": "anonymous urllib HTTPS GET; text only; not executed"
+    },
+    {
+      "id": "E63-freshclam-update-code",
+      "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.5.0/libfreshclam/libfreshclam.c",
+      "status": 200,
+      "accessed_at": "2026-10-09T19:46:30.798670+00:00",
+      "source_sha256": "495859a9b0d6a8dd6bd8c8a0f16f22cc744e4a8c60834b5ed00282571b1d3205",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/evidence/E63-freshclam-update-code.txt",
+      "evidence_sha256": "adeab3de5832e6c3b82e53c1f6419b66a0050e0ba8b0ca2d08de8030d9006e83",
+      "retained_lines": 144,
+      "source_lines": 1086,
+      "operation": "anonymous urllib HTTPS GET; source text only; not executed"
+    },
+    {
+      "id": "E64-freshclam-download-code",
+      "url": "https://raw.githubusercontent.com/Cisco-Talos/clamav/clamav-1.5.0/libfreshclam/clamav_utils.c",
+      "error": "HTTP Error 404: Not Found",
+      "accessed_at": "2026-10-09T19:46:30.799908+00:00",
+      "operation": "anonymous urllib HTTPS GET failed"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S12/brief.md",
+      "sha256": "61cf00bb05356a56f0dacd250a18916c8d671b14bfd5b26e10a5869c584b4be2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S12/plan-root-only.md",
+      "sha256": "d2d6337b2348b26a45a6fec16de0d478e11934ea1e263d5d99f6bed5b4b4a954"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/assignment.md",
+      "sha256": "2f41754413cbeecbe682cdd0ecdbe769362856e2c01ac8b961916bf61f64e35b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-A/input-map.json",
+      "sha256": "162fdbe6bae4521f1fe5fb1efcdd7006f7d271cb0c2e159d422989ab5242f626"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/critic/assignment.md",
+      "sha256": "42f42d46148718255cc7cc44c16f11d8acd429b91d68f8ac7d143c585876a219",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/critic/critique.md",
+      "sha256": "ab039d9e347c5ce89eb3b7200861cb97caef69096fb45a1b915e6362868da10a",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/critic/input-map.json",
+      "sha256": "f5aa621f5126c5bbce78ada7c0b5f51168f77aecf04f4f1cc310bd0005885bec",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/critic/source-map.json",
+      "sha256": "9379070f70b06ee83f92f55b4a7f47e36265b5f8665ad5b2b2a2874512eac056",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/critic/sources/evidence.md",
+      "sha256": "96b9961addc47b1ab96ba6bab6a354e6fe3a77fae6a07fe2be8ba793ce54cabb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/critic/sources/index.md",
+      "sha256": "2ae5035a73d740cb3ef640a2e60de8a7bec15bbcc06b7591dbdcbf2b04d5dc78"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/research/assignment.md",
+      "sha256": "1b222a1492ec6e26788d9815c50ad8b5bddaae6b8e1902ecc8a94275712b071a",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/research/discovery.md",
+      "sha256": "bb0552e6b329062a8329dbef2768752dad7b5115a117b8e6a767f3dd299a2b0e",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/research/draft.md",
+      "sha256": "7f4aca85cf9afef5876355ca3ea34e4c0e6258ecc3e22e3609e44df83aa4616f",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/research/input-map.json",
+      "sha256": "9fe2cb6e59b58228e5c8e876e5ce72c1cd74225da1df409d2dfbd1209701fee3",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/research/plan-reveal.json",
+      "sha256": "0053035c49416fad0b891d31a701810344a11b6031e7fed89ce29161ef60911e",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/research/revealed-plan.md",
+      "sha256": "d2d6337b2348b26a45a6fec16de0d478e11934ea1e263d5d99f6bed5b4b4a954",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/research/source-map.json",
+      "sha256": "86da3bf800c9764bfa3aa3882977904c87d3690fedb6c28643d249c2e029a757",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/research/sources/alternatives-deployment.md",
+      "sha256": "ec1994aae213fd9dc86c00ac2476b4d9659692314a684d07af89a71ab3a8b497"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/research/sources/bagit-ocfl.md",
+      "sha256": "0026fd01fca00e8d694b04c44dcbf8d81dfe1093e2db7a59ea6753a345f36505"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/research/sources/index.md",
+      "sha256": "e165e3fa9c8ed8fd8011bdcc189092af1f3ee30af8ed993193c0dc2600992b58"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/research/sources/pipeline-tools.md",
+      "sha256": "13fc85bf7e13cf9c5f1dea660ad0a32150a7573fb3cf62d13307a0bd2dcd51c7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/research/sources/security-fixity-transfer.md",
+      "sha256": "2e0e2699f0e0b1b8780a7d4daa9895392b6e5512241bbd75de032cf1a66cdb58"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/reviser/assignment.md",
+      "sha256": "160dc672e90dab5f54e7137b7dffb7a24ccd917a128d0a99ff0152d7d93de8c6",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/reviser/final.md",
+      "sha256": "e2f251add0d8604d25b9b1ac996080b2f9a4b8be7e2b780e7af0a85d155795cb",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/reviser/input-map.json",
+      "sha256": "19c4e3e2806c2d6f20350e54503742f9e9fe7cc03c7509924ed40dfca515863a",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/reviser/source-map.json",
+      "sha256": "cd3f9188e6ab1f18fd3ed6e0349826a8a238eb2c31834624bb57121bd1b9dcf6",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/reviser/sources/evidence.md",
+      "sha256": "3565601b4283194cd2acf1e120b0e1a24f9247edcd8175c773154a26d0c92ba7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/reviser/sources/index.md",
+      "sha256": "4cdb7a511a1e3250e6f40594c3ee378157285a57759cbff7dfa2fded2ebcfcf4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/critic/assignment.md",
+      "sha256": "bc8c772960f4c899fdc03e79d2886c2664e9982ffc4e81a4900abfd445ff83d3",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/critic/critique.md",
+      "sha256": "e2290ef68a1ebd179c1f83fe6d20c4476e15ce7bc525935088a6511915ae637e",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/critic/input-map.json",
+      "sha256": "bbfd958d5b154f57ff904f102330e4c36e21e6efff70cee70a7f4f8c3e7d2f20",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/critic/source-map.json",
+      "sha256": "30a14f7fe949f5405d82ddf9f47fdb8c6ed0dbe4e0bc6a7712d155c3d955c51e",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/critic/sources/C01-rfc8493-manifest-rule.md",
+      "sha256": "7466770740b05657b0cc50f653acd43dba48bb104df971b14454776abaa423db"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/critic/sources/C02-bagit-python-default.md",
+      "sha256": "ccdf94c82c382115766e069c67a1214ec1c409e7a1590d0f97cc1f579616187a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/critic/sources/C03-bagit-1.9.0-release.md",
+      "sha256": "0952fa463a73506906fe72c5c9603154c18ec5a4fb1faa7245f898547962d876"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/critic/sources/C05-clamav-exit-codes.md",
+      "sha256": "9bb4555d3aeba446ac754a73288f66eb9ecc316b204f02ea59497c9d8956cd1a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/critic/sources/C06-minio-snsd-official.md",
+      "sha256": "7c7e30fa51bd183c01cd996e123a005eff0af72daf92c7794565563bc2c7cc62"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/critic/sources/C07-archivematica-1766.md",
+      "sha256": "3c2655b8dbeacffe95f67b97452dd97509e087220d80da39fab44a34760f7f11"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/critic/sources/index.md",
+      "sha256": "8417d0f3b500195748b042948a4c56c0afbc8eed70ebd9577ab2a74ac9d1ff5e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/assignment.md",
+      "sha256": "5cd554c38286324f2796ac578a301310d6a501241d3d62dbe5837b447e637a7d",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/discovery.md",
+      "sha256": "e36236e8aa042e3dbd9545f7fa529387a7c6450abaeb99cf1fcb80b9ef227bcd",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/draft.md",
+      "sha256": "20930e950acc796332191aafa61b4fec48dba2abab207a57e6d22c77cdeb31de",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/input-map.json",
+      "sha256": "c017bb9a715e249cea8fb55b524df754880aabdc8114e075930c18e47e134787",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/plan-reveal.json",
+      "sha256": "04137bbe1db8e7a07acda112d549257c43d74fbf644f3f54aeada3216d2ef9be",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/revealed-plan.md",
+      "sha256": "d2d6337b2348b26a45a6fec16de0d478e11934ea1e263d5d99f6bed5b4b4a954",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/source-map.json",
+      "sha256": "9b94a25562e234f7c4dd000fdc18aa8228f1c8fc467a029fb7b5fdc291b6871a",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/sources/S01-bagit-rfc-excerpt.md",
+      "sha256": "8ec6bb5acd64090674bde2b737c8b0e5acc631ebed5a276b1aabb899dd09c5d2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/sources/S02-bagit-python-defaults.md",
+      "sha256": "95790f454707a4fbfe370751b7551acd76c564d568b9f9f6d2852aac3858b65b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/sources/S03-issue-chains.md",
+      "sha256": "1c806386a66936a95824113b8789bc42c34a42b1f4a4aebb86b2b39dbb1404e2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/sources/S05-ocfl-layout.md",
+      "sha256": "b84dcf3b2f1b317b408059045e6d792907773c4be04ae0cd7c74da58e77ff8a3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/sources/S06-clamav-gate.md",
+      "sha256": "3b0eebdfe3ccfe43dcf911fcf4ebfe63edd552fec25f134d512854469a3cd06e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/sources/S08-siegfried-pronom.md",
+      "sha256": "4ed524d94f8af7624b77d93e1da6f8fdd128e4236aa0142bf920892c0d3ef10d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/sources/S10-identify-vs-validate.md",
+      "sha256": "a0013a01b7ffa7c7b5cdf09fd2f28c7e1a921525f6fa90d55d70a770ea85ef05"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/sources/S12-exactly-donor.md",
+      "sha256": "22e8ff4db28eb213d37f50542a8d5830aec637c975b4d3f1af2181aff452a7ad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/sources/S13-premis-fixity.md",
+      "sha256": "a985992413a99f68d0c2ccc9cc0f6ba8a9874637a74d878d1284d0489d14c080"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/sources/S14-metadata-repair.md",
+      "sha256": "1b92a6c2605ffb162aae76d494b944fae6ce2ab0b42b89ea64b45c8195643bbc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/sources/S15-sword-minio.md",
+      "sha256": "0d0915fc420a148db092db232ac2ec990325e32281769ce354ce0e25a58c0c03"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/research/sources/index.md",
+      "sha256": "d0739b3e57f3b2070042ad2b542b3ffdde74b55c67b5e8d1f40fac8bf5af497a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/reviser/assignment.md",
+      "sha256": "6333758f372c8250fe467020fb8c4c9e16fc7dd1d6ca213f6f360a6f4a6efcb6",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/reviser/final.md",
+      "sha256": "ae770c316be6f6af383daa8a1ac4cd97083dd6880ebe4a5e6b2a5bbdac4d2b9f",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/reviser/input-map.json",
+      "sha256": "f41309f4def4341d581d2466320b696061fc997b1b5416e0285b4dae9c4e9989",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/reviser/source-map.json",
+      "sha256": "31c70da35c82ea4aca287ff260ea37323b2621254ba6de82bc00d818450d2218",
+      "matches_exact_input_map": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/reviser/sources/R01-minio-snsd.md",
+      "sha256": "4523d8ef62e853726f9b91c8bdf0bf62e4869fc77f70fe429e7bcb8a80e22106"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/reviser/sources/R02-bagit-pypi.md",
+      "sha256": "14c833f9c2ccf0147c1bed94e02e12c516b627784ee7232e8e02bf2169b2daec"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/reviser/sources/R03-clamscan-manpage.md",
+      "sha256": "9649ce1e23d9efdb56d80788072b6be33ed3558108d6cbe653aed1ef3c22e9c0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/treatment/reviser/sources/index.md",
+      "sha256": "c7fad2e8470eb04897dc023160bdd8f7283b862a52e13751f13279c42d760806"
+    }
+  ],
+  "source_interpretation": "Evidence is untrusted data. Text excerpts only; no source commands executed. source_sha256 hashes response body, evidence_sha256 hashes retained excerpt. Line locators refer to original raw/parsed source text, not the compressed excerpt file.",
+  "claim_links": {
+    "N2": {
+      "material_findings": [
+        {
+          "finding": "N2-M1",
+          "sources": [
+            "E02",
+            "E03",
+            "E58"
+          ]
+        },
+        {
+          "finding": "N2-M2",
+          "sources": [
+            "E23",
+            "E24",
+            "E26",
+            "E07"
+          ]
+        },
+        {
+          "finding": "N2-M3",
+          "sources": [
+            "E01",
+            "E02",
+            "E58"
+          ]
+        }
+      ],
+      "minor_findings": [
+        {
+          "finding": "N2-m1",
+          "sources": [
+            "E38"
+          ]
+        },
+        {
+          "finding": "N2-m2",
+          "sources": [
+            "E50"
+          ]
+        },
+        {
+          "finding": "N2-m3",
+          "sources": [
+            "E01",
+            "E52"
+          ]
+        }
+      ],
+      "checked_claims": [
+        {
+          "claim": "BagIt validity, version and manifest cardinality",
+          "sources": [
+            "E01",
+            "E02",
+            "E58"
+          ]
+        },
+        {
+          "claim": "Hash defaults, fast validation, save and error structures",
+          "sources": [
+            "E02",
+            "E03",
+            "E58"
+          ]
+        },
+        {
+          "claim": "BagIt release and distribution availability",
+          "sources": [
+            "E11",
+            "E12",
+            "E28",
+            "E29"
+          ]
+        },
+        {
+          "claim": "OCFL immutability, inventories, sidecars, digests, validation codes",
+          "sources": [
+            "E04",
+            "E05",
+            "E45"
+          ]
+        },
+        {
+          "claim": "ClamAV quarantine defaults, scan limits, return codes and skipped files",
+          "sources": [
+            "E06",
+            "E07",
+            "E08",
+            "E23",
+            "E24",
+            "E44"
+          ]
+        },
+        {
+          "claim": "ClamAV 1.2.1 >2GB alert fix and workaround domain",
+          "sources": [
+            "E09",
+            "E10",
+            "E23",
+            "E24",
+            "E26"
+          ]
+        },
+        {
+          "claim": "ClamAV signature evolution",
+          "sources": [
+            "E25",
+            "E44",
+            "E60",
+            "E61",
+            "E62",
+            "E63"
+          ]
+        },
+        {
+          "claim": "Identification versus format validation",
+          "sources": [
+            "E15",
+            "E16",
+            "E30",
+            "E31",
+            "E33",
+            "E34",
+            "E35",
+            "E36",
+            "E47",
+            "E51"
+          ]
+        },
+        {
+          "claim": "Donor workflow / Exactly compatibility",
+          "sources": [
+            "E20",
+            "E01"
+          ]
+        },
+        {
+          "claim": "Archivematica workflow, lightweight alternative and packaging evolution",
+          "sources": [
+            "E17",
+            "E18",
+            "E19",
+            "E38",
+            "E49"
+          ]
+        },
+        {
+          "claim": "Storage durability and licensing",
+          "sources": [
+            "E13",
+            "E14",
+            "E27",
+            "E41"
+          ]
+        },
+        {
+          "claim": "Existing repository alternative / SWORD",
+          "sources": [
+            "E21",
+            "E40",
+            "E42"
+          ]
+        },
+        {
+          "claim": "Metadata extraction, cleaning and audit",
+          "sources": [
+            "E22",
+            "E32",
+            "E46"
+          ]
+        },
+        {
+          "claim": "Fixity versus provenance / PREMIS",
+          "sources": [
+            "E01",
+            "E52"
+          ]
+        },
+        {
+          "claim": "Fixity/Fixity Pro and legacy bag tools",
+          "sources": [
+            "E43",
+            "E50"
+          ]
+        },
+        {
+          "claim": "Low-cost comparison and commercial leads",
+          "sources": [
+            "E13",
+            "E19",
+            "E38",
+            "E41"
+          ]
+        }
+      ]
+    },
+    "N1": {
+      "material_findings": [
+        {
+          "finding": "N1-M1",
+          "sources": [
+            "E06",
+            "E07",
+            "E08",
+            "E23",
+            "E44"
+          ]
+        },
+        {
+          "finding": "N1-M2",
+          "sources": [
+            "E01",
+            "E02"
+          ]
+        },
+        {
+          "finding": "N1-M3",
+          "sources": [
+            "E01",
+            "E02",
+            "E58"
+          ]
+        },
+        {
+          "finding": "N1-M4",
+          "sources": [
+            "E01",
+            "E02",
+            "E58"
+          ]
+        },
+        {
+          "finding": "N1-M5",
+          "sources": [
+            "E07",
+            "E25",
+            "E44"
+          ]
+        }
+      ],
+      "minor_findings": [
+        {
+          "finding": "N1-m1",
+          "sources": [
+            "E02",
+            "E11",
+            "E58"
+          ]
+        },
+        {
+          "finding": "N1-m2",
+          "sources": [
+            "E14",
+            "E27"
+          ]
+        },
+        {
+          "finding": "N1-m3",
+          "sources": [
+            "E17",
+            "E18",
+            "E49"
+          ]
+        },
+        {
+          "finding": "N1-m4",
+          "sources": [
+            "E01",
+            "E04"
+          ]
+        },
+        {
+          "finding": "N1-m5",
+          "sources": [
+            "E22",
+            "E46"
+          ]
+        },
+        {
+          "finding": "N1-m6",
+          "sources": [
+            "E16",
+            "E30",
+            "E31"
+          ]
+        },
+        {
+          "finding": "N1-m7",
+          "sources": [
+            "E60",
+            "E61",
+            "E62",
+            "E63"
+          ]
+        }
+      ],
+      "checked_claims": [
+        {
+          "claim": "BagIt validity, version and manifest cardinality",
+          "sources": [
+            "E01",
+            "E02",
+            "E58"
+          ]
+        },
+        {
+          "claim": "Hash defaults, fast validation, save and error structures",
+          "sources": [
+            "E02",
+            "E03",
+            "E58"
+          ]
+        },
+        {
+          "claim": "BagIt release and distribution availability",
+          "sources": [
+            "E11",
+            "E12",
+            "E28",
+            "E29"
+          ]
+        },
+        {
+          "claim": "OCFL immutability, inventories, sidecars, digests, validation codes",
+          "sources": [
+            "E04",
+            "E05",
+            "E45"
+          ]
+        },
+        {
+          "claim": "ClamAV quarantine defaults, scan limits, return codes and skipped files",
+          "sources": [
+            "E06",
+            "E07",
+            "E08",
+            "E23",
+            "E24",
+            "E44"
+          ]
+        },
+        {
+          "claim": "ClamAV 1.2.1 >2GB alert fix and workaround domain",
+          "sources": [
+            "E09",
+            "E10",
+            "E23",
+            "E24",
+            "E26"
+          ]
+        },
+        {
+          "claim": "ClamAV signature evolution",
+          "sources": [
+            "E25",
+            "E44",
+            "E60",
+            "E61",
+            "E62",
+            "E63"
+          ]
+        },
+        {
+          "claim": "Identification versus format validation",
+          "sources": [
+            "E15",
+            "E16",
+            "E30",
+            "E31",
+            "E33",
+            "E34",
+            "E35",
+            "E36",
+            "E47",
+            "E51"
+          ]
+        },
+        {
+          "claim": "Donor workflow / Exactly compatibility",
+          "sources": [
+            "E20",
+            "E01"
+          ]
+        },
+        {
+          "claim": "Archivematica workflow, lightweight alternative and packaging evolution",
+          "sources": [
+            "E17",
+            "E18",
+            "E19",
+            "E38",
+            "E49"
+          ]
+        },
+        {
+          "claim": "Storage durability and licensing",
+          "sources": [
+            "E13",
+            "E14",
+            "E27",
+            "E41"
+          ]
+        },
+        {
+          "claim": "Existing repository alternative / SWORD",
+          "sources": [
+            "E21",
+            "E40",
+            "E42"
+          ]
+        },
+        {
+          "claim": "Metadata extraction, cleaning and audit",
+          "sources": [
+            "E22",
+            "E32",
+            "E46"
+          ]
+        },
+        {
+          "claim": "Fixity versus provenance / PREMIS",
+          "sources": [
+            "E01",
+            "E52"
+          ]
+        },
+        {
+          "claim": "Fixity/Fixity Pro and legacy bag tools",
+          "sources": [
+            "E43",
+            "E50"
+          ]
+        },
+        {
+          "claim": "Low-cost comparison and commercial leads",
+          "sources": [
+            "E13",
+            "E19",
+            "E38",
+            "E41"
+          ]
+        }
+      ]
+    }
+  },
+  "failed_additional_operation": {
+    "url": "https://docs.clamav.net/faq/faq-cvd.html",
+    "result": "HTTP 403",
+    "time": "2026-10-09 approximately 19:41 UTC",
+    "used_as_evidence": false
+  }
+}

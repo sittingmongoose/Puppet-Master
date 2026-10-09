@@ -1,0 +1,10 @@
+async function directGlobalView(){
+const unpack=x=>{if(x.structuredContent)return x.structuredContent;try{return JSON.parse(x.content?.find(y=>y.type==="text")?.text??x)}catch{return null;}};
+let ps=[],cursor=null;for(let i=0;i<10;i++){const p=unpack(await tools.mcp__t3_code__t3_project_list({limit:50,...(cursor==null?{}:{cursor})}));if(!p?.projects)return {ok:false,reason:"project enumeration unavailable"};ps.push(...p.projects.map(x=>x.id));cursor=p.nextCursor;if(cursor==null)break;if(i===9)return {ok:false,reason:"project enumeration bound"};}
+const results=await Promise.allSettled(ps.map(async projectId=>{let ts=[],c=null;for(let i=0;i<10;i++){const p=unpack(await tools.mcp__t3_code__t3_thread_list({projectId,includeSubagents:true,limit:50,...(c==null?{}:{cursor:c}),statuses:["running","starting","queued","waiting","preparing"]}));if(!p?.threads)throw new Error("thread enumeration unavailable");ts.push(...p.threads);c=p.nextCursor;if(c==null)return ts;if(i===9)throw new Error("thread enumeration bound");}return ts;}));
+if(results.some(x=>x.status!=="fulfilled"))return {ok:false,reason:"one or more project views unavailable"};
+let check=[],cc=null;for(let i=0;i<10;i++){const p=unpack(await tools.mcp__t3_code__t3_project_list({limit:50,...(cc==null?{}:{cursor:cc})}));if(!p?.projects)return {ok:false,reason:"project recheck unavailable"};check.push(...p.projects.map(x=>x.id));cc=p.nextCursor;if(cc==null)break;if(i===9)return {ok:false,reason:"project recheck bound"};}
+if(JSON.stringify(ps.sort())!==JSON.stringify(check.sort()))return {ok:false,reason:"project snapshot changed"};
+const threads=[...new Map(results.flatMap(x=>x.value).map(t=>[t.threadId,{...t,provider:{instanceId:t.providerInstanceId,model:t.model}}])).values()];
+return {ok:true,data:{threads},page:{nextCursor:null,truncated:false},observedAt:new Date().toISOString(),source:"Direct supported T3 project enumeration and every project thread view; complete pages and project membership recheck."};
+}

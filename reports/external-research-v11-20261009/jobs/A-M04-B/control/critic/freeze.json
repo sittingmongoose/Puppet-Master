@@ -1,0 +1,63 @@
+{
+  "frozen_at": "2026-10-09T19:35:06.156416+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S10/brief.md",
+      "sha256": "17322e03cfaa4aad42ef991cbf666e5ca646cca2439f71b748c8642761ccbbf2",
+      "bytes": 1420
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M04.json",
+      "sha256": "d2f34eb8477398c0d37137ead1d7ddf7a6d575c1578d53376408cc8942814caf",
+      "bytes": 632
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-B/control/critic/assignment.md",
+      "sha256": "3389e7b1e3345d7f7ecc72ccbfdbbbb359fd396f498d34edb424c78bdef55a08",
+      "bytes": 2511
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-B/control/critic/input-map.json",
+      "sha256": "d5e439244f2d6ae86d5cf473eea2519747f535efbeda0ba73a9c5578e3f821ac",
+      "bytes": 1225
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-B/control/research/draft.md",
+      "sha256": "c830072e38e23fa8855f93501757ca77ff3fb7aa70df8a211446bcbda5205c6d",
+      "bytes": 22834
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-B/control/research/discovery.md",
+      "sha256": "4e514241aee4a4fa133f281ece91ca2399338c9778aeca65343f1a46e9347df7",
+      "bytes": 30093
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-B/control/research/source-map.json",
+      "sha256": "305aae8edd78e419a9464ce8cd13f4332faeb290645131996ff7d8b9e3e222bf",
+      "bytes": 11638
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-B/control/research/revealed-plan.md",
+      "sha256": "3f5acb86924c2981486d394c7e57a6578fdafd05ad7345800fda856c84dbf6bf",
+      "bytes": 312
+    }
+  ],
+  "method": {
+    "id": "M04",
+    "version": "v1",
+    "name": "amendment-preservation",
+    "control": "Fresh reviser rewrites complete final after critique, preserving supported findings.",
+    "treatment": "Fresh reviser applies targeted evidence-backed amendments to complete draft, then checks every retained material finding/condition and produces COMPLETE self-contained final. Amendment IDs alone insufficient.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Mixed ER10 amendment hypothesis",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "resource_version": "default-30-12-18-v1",
+  "stage_allowance_s": 720,
+  "deadline": "2026-10-09T19:47:06.156416+00:00"
+}

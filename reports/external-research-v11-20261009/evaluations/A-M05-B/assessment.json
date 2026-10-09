@@ -1,0 +1,3049 @@
+{
+  "block": "A-M05-B",
+  "case": "S11",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-B/assignment.md",
+      "sha256": "bba80b98554dd0c9295171300d9a15889660e2eb2e154d80f8b635dc2fde6b6a",
+      "bytes": 1980
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-B/input-map.json",
+      "sha256": "37772b3586e4652f5f0ec7c8418c0a01d34cf62466b490e24d70a9159395f57d",
+      "bytes": 8653
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S11/brief.md",
+      "sha256": "da5e0032e5ce6e30ca840d7b65d3d1a4104e87dbad54081d3b65ff9bfb059314",
+      "bytes": 1439
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S11/plan-root-only.md",
+      "sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "bytes": 297
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+      "sha256": "0de48c1f5699fa8471ccaa09be48557c87a926b94474f2acfea5d2be1f284bd4",
+      "bytes": 27513
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/source-map.json",
+      "sha256": "8dcd39eac9cbb37c96aec4a19c2712a2f72dcbfe72ac293004f0e6ce5fa54edc",
+      "bytes": 5714
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/assignment.md",
+      "sha256": "929eb663c0cad406c94ea9a1335a5084c690bdaea620cd0d96f6246d5053c83e",
+      "bytes": 2772
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/input-map.json",
+      "sha256": "df0a8777d725c8892c233480b8ee369808287d2db3f9ec266db77a44cf401ca0",
+      "bytes": 1504
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/critic/critique.md",
+      "sha256": "8f7b4ec0469a63ec4ca2a774991d6fb036847d2fdf5e2e61924cc8afb65af0c7",
+      "bytes": 11760
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/critic/source-map.json",
+      "sha256": "2c757be34622b87e1151c08c400ef8618dd014682ca266a836b5360596f145b1",
+      "bytes": 8349
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/critic/assignment.md",
+      "sha256": "ffb788a9cebf707c5c956a4eefb72160773ba49bc71d6aeda387d598d8cc0c80",
+      "bytes": 2509
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/critic/input-map.json",
+      "sha256": "59ea56f12727cba8d692ba3cfb6736f50d4032e30f39431bb654e430b055e573",
+      "bytes": 1180
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/discovery.md",
+      "sha256": "7d0318fd7d03c2693615323b7bd8ed8dafb5a820a3cc07dad678e43b969afed3",
+      "bytes": 18323
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/draft.md",
+      "sha256": "0605360ab4e0eb645465ba0f7135bd17eb7a6a6c403941a50cde336b8c8b569d",
+      "bytes": 19519
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/source-map.json",
+      "sha256": "b73b7075520c22a27b8d8c6a07189626c5fe99317718bee01f031c80207b2e31",
+      "bytes": 12102
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/revealed-plan.md",
+      "sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "bytes": 297
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/plan-reveal.json",
+      "sha256": "1125221511d53c2487f2b5ed41177f71c4dc0741cc58f5c8699bb1d1326581c0",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/assignment.md",
+      "sha256": "9f5ce124ba95482bb177834bd8dbae1d92a8d3dbeb3877a79b6586932dff1b4b",
+      "bytes": 2985
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/input-map.json",
+      "sha256": "45a5db2e104a0d752efa7273bad94a543164976ba93e73d7638c5a8c6f572656",
+      "bytes": 634
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/sources/evidence-notes.md",
+      "sha256": "fd1b0b14652b9f2a6e11cd972c3f1d98dc44a72527b8ecfd50f6c7c0456d3cae",
+      "bytes": 1870
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/sources/index.md",
+      "sha256": "354dc73ea69a1fa1ee68841b71eed65aec2c647fef6a66478966b88b49b1a8da",
+      "bytes": 1007
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/critic/sources/evidence-notes.md",
+      "sha256": "f5d174d715fd3c4f20a3ab8035be7131244a11ec76ba0ab263ae2f18691d007a",
+      "bytes": 2152
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/critic/sources/index.md",
+      "sha256": "a9b900593adc66c254b1935ecc0236b38b48c3c0f4e7d03b618406d94b1060a8",
+      "bytes": 939
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/sources/evidence-notes.md",
+      "sha256": "4e2a53e2a6c7594f630c61197b1e33b995b942d2893174845336953f681d1195",
+      "bytes": 4021
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/sources/index.md",
+      "sha256": "9a011f71290df69eecfe9f4bc402b7466fdb1cb7c504f9b6eddaaf5aab52902a",
+      "bytes": 1619
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic/critique.md",
+      "sha256": "ab56d879c82f3fac176336122d013e383cae5a2631d0eb74a3277209e01b27f5",
+      "bytes": 14262
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic/source-map.json",
+      "sha256": "8ae4a749825c8983475ae836d1c088f17bce9d1698fee97cdbfa7b2cd7a94562",
+      "bytes": 20091
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic/assignment.md",
+      "sha256": "ac1c003eaf02697eee187055e803f5582c7ad75c41ef42f59cbebb10eafda7c5",
+      "bytes": 2671
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic/input-map.json",
+      "sha256": "6a3dd1cd078cb0b70c3ed84e33d67c14207bfad2ce1b3e847e93b35a4029a7da",
+      "bytes": 1196
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/discovery.md",
+      "sha256": "ab1cc84ea47d3698e7b86991f6668bfde93b6e3fb1804e39dc494e22fb49eddd",
+      "bytes": 18888
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/draft.md",
+      "sha256": "584edc7870584f57774a7b12a3bdde09e861e8928b131162597253b25731e80d",
+      "bytes": 21037
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+      "sha256": "f3c71217439f771cfbc92d1cef95f942eaa9068073c5c162906ca6a37a8c6393",
+      "bytes": 21599
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/source-map.json",
+      "sha256": "50a2cce514117208d92beab1adbe87542a6bc8fe804017fbd0c22cff30b0a4f2",
+      "bytes": 18820
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/revealed-plan.md",
+      "sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "bytes": 297
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/plan-reveal.json",
+      "sha256": "faf47547d791fe240907d3d4684d317c56c4333a4e8a3fefb48cbab503f39dc5",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/assignment.md",
+      "sha256": "18d9ffe68031a1521933787d7236e3dba22ada84808c361d16cba8d8f012a065",
+      "bytes": 3689
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/input-map.json",
+      "sha256": "a7be2f0483b7de00e246eece07184a198313579b3d607450cb5b1b11e1a6aa47",
+      "bytes": 640
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic/sources/index.md",
+      "sha256": "a0fdfddc639cb421e5a0a49e1fc2151eee474b5aa4911b5f6826ba10d9610a9f",
+      "bytes": 1070
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic/sources/primary-source-notes.md",
+      "sha256": "a9c58d446e453eba74b8aaeacac1728c522ac66e9c931e45a333f72a7e9610e5",
+      "bytes": 2955
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/sources/index.md",
+      "sha256": "5340b9809437e93bb67958f51d217d4dafbc21c6aaa260ae92df431546ff87fa",
+      "bytes": 3363
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/sources/primary-source-notes.md",
+      "sha256": "c4459c5600fb0e8e25285166b281959c8f1f4c13be18c6b6d7e2d94c51ab2257",
+      "bytes": 21756
+    }
+  ],
+  "arms": {
+    "N2": {
+      "actual_arm": "control",
+      "final_delivery": true,
+      "grade": "PASS_WITH_LIMITATIONS",
+      "material_findings": [],
+      "minor_findings": [
+        {
+          "finding_id": "N2-m1",
+          "type": "MINOR_TYPE_WORDING",
+          "severity": "minor",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+          "candidate_lines": "38,51,62",
+          "candidate_passage": "Publish source-language captions as a captions track and translation text as separate ... subtitles tracks",
+          "original_obligation": "O2,O4: governing type/application semantics",
+          "primary_evidence": [
+            {
+              "source_id": "E04",
+              "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+              "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+              "locator": "Track kind table; srclang/label/default constraints; media controls"
+            }
+          ],
+          "reasoning": "HTML also permits translated captions. Track kind should follow preserved audio information and intended use, rather than translation status alone. The final also says as appropriate, requires sound/speaker preservation and track checks, and supplies no actual translated track; this is overbroad shorthand, not an established material output failure."
+        },
+        {
+          "finding_id": "N2-m2",
+          "type": "MINOR_DISPOSITION_WORDING",
+          "severity": "minor",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+          "candidate_lines": "34,39-43",
+          "candidate_passage": "Reject as a publication or approval rule; Reject as the only validation/release gate",
+          "original_obligation": "O4: exact P3/P6 comparison",
+          "primary_evidence": [
+            {
+              "source_id": "E20",
+              "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+              "version_or_commit": "Informative guidance updated 2024-05-13",
+              "locator": "What Evaluation Tools Can Do and Can Not Do"
+            }
+          ],
+          "original_plan_evidence": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S11/plan-root-only.md",
+          "reasoning": "P3 says generate and P6 says run, not auto-publish or rely solely on a scan. N2 rejects only those stronger readings and preserves automation and scanning. The categorical rejection labels are less exact than N1, but their explicit qualifiers prevent a material rejection of supported draft/scanner scope."
+        }
+      ],
+      "unresolved": [
+        {
+          "kind": "EXTERNAL_PRODUCT_INPUT",
+          "items": [
+            "actual media/cue/content quality and visual information",
+            "source/target languages and fluent review capacity",
+            "conformance level and relevant jurisdiction/rights facts",
+            "host/CMS, roles, budget and target browser/device/AT support"
+          ],
+          "judgment": "Honest missing product facts, not evasion of available research."
+        },
+        {
+          "kind": "EXTERNAL_OR_VERSION_CONDITIONAL",
+          "items": [
+            "selected engine/model terms and data configuration",
+            "Amara exact service terms/retention/roles and selected tier",
+            "exact future deployed player/editor build behavior"
+          ],
+          "judgment": "Unselected options and deployment conditions; no runtime clearance claimed."
+        },
+        {
+          "kind": "OPTIONAL_RELEASE_TAG",
+          "items": [
+            "beta2 inclusion of #778"
+          ],
+          "judgment": "Not asserted or relied on; stable candidate and develop merge facts checked."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "name": "Original obligations and explicit constraints",
+          "coverage": "FULL",
+          "judgment": "PASS",
+          "reasoning": "The complete final addresses the forty-item library, captions, keyboard access, transcripts, translation drafts, controlled corrections, practical tools/formats, timing, rights, evolution evidence and multi-method validation. Stable IDs, per-language states and publication/rollback form a workable small-product model. It leaves language, rights, staff, host and support facts open instead of inventing them. No material original-obligation omission found.",
+          "evidence": [
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+              "candidate_lines": "4-15",
+              "primary_sources": [
+                {
+                  "source_id": "E01",
+                  "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                  "version_or_commit": "W3C Recommendation 2024-12-12",
+                  "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+                },
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E20",
+                  "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+                  "version_or_commit": "Informative guidance updated 2024-05-13",
+                  "locator": "What Evaluation Tools Can Do and Can Not Do"
+                }
+              ]
+            },
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+              "candidate_lines": "38-43",
+              "primary_sources": [
+                {
+                  "source_id": "E01",
+                  "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                  "version_or_commit": "W3C Recommendation 2024-12-12",
+                  "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+                },
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E20",
+                  "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+                  "version_or_commit": "Informative guidance updated 2024-05-13",
+                  "locator": "What Evaluation Tools Can Do and Can Not Do"
+                }
+              ]
+            },
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+              "candidate_lines": "47-90",
+              "primary_sources": [
+                {
+                  "source_id": "E01",
+                  "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                  "version_or_commit": "W3C Recommendation 2024-12-12",
+                  "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+                },
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E20",
+                  "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+                  "version_or_commit": "Informative guidance updated 2024-05-13",
+                  "locator": "What Evaluation Tools Can Do and Can Not Do"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "axis": 2,
+          "name": "Consequential source facts and applicability",
+          "coverage": "FULL",
+          "judgment": "PASS_WITH_MINOR_LIMITATIONS",
+          "reasoning": "Normative semantic, timing/default, software release, provider, local/cloud, rights and scanner claim groups were independently checked. Documentation statements are correctly conditional on exact builds and target use. The translation-kind shorthand is the one minor type caveat. Current public sources corroborate the stable/beta and merged-develop distinctions; no executed runtime, legal clearance or universal user support is inferred.",
+          "evidence": [
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+              "candidate_lines": "11-13",
+              "primary_sources": [
+                {
+                  "source_id": "E01",
+                  "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                  "version_or_commit": "W3C Recommendation 2024-12-12",
+                  "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+                },
+                {
+                  "source_id": "E02",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded",
+                  "version_or_commit": "Informative living guidance; updated 2026-03-09",
+                  "locator": "Intent, existing-audio note, sufficient techniques and advisory H96"
+                },
+                {
+                  "source_id": "E04",
+                  "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                  "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                  "locator": "Track kind table; srclang/label/default constraints; media controls"
+                },
+                {
+                  "source_id": "E05",
+                  "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+                  "version_or_commit": "Candidate Recommendation Draft 2026-05-20",
+                  "locator": "Status; one kind per file; section 4.1 timestamps, cue timing/order/overlap; chapter constraints; MIME registration"
+                },
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E07",
+                  "url": "https://github.com/ableplayer/ableplayer/releases",
+                  "version_or_commit": "Observed v5.0.0 8d235f9 stable 2026-06-21; v5.1.0-beta2 c4f10ab pre-release 2026-10-06",
+                  "locator": "Release labels; tagged v5.0.0 Features and browser target"
+                },
+                {
+                  "source_id": "E08",
+                  "url": "https://github.com/ableplayer/ableplayer/issues/775",
+                  "version_or_commit": "Issue opened 2026-08-12; development-branch report; timeline closure 2026-09-13",
+                  "locator": "Body Version tested; sign.js/initSignLanguage, dataset keys, constructor forms, syncTrackLanguages; timeline Closed with #778; Development sidebar"
+                },
+                {
+                  "source_id": "E09",
+                  "url": "https://github.com/ableplayer/ableplayer/pull/778",
+                  "version_or_commit": "cd617fc merged into develop 2026-09-13",
+                  "locator": "Merge target/event and reported checks"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E11",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.2.0",
+                  "version_or_commit": "v5.2.0 d8e3b8b; build 2026-09-10 08:09:02 UTC",
+                  "locator": "Release build date, platform packages and Change Log link"
+                },
+                {
+                  "source_id": "E12",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/Changelog.txt",
+                  "version_or_commit": "v5.2.0 tag; entries 5.2.0 and 5.1.0",
+                  "locator": "5.2 WebVTT/style/settings and waveform/original reference work; 5.1 local/remote engine entries; 5.0 migration"
+                },
+                {
+                  "source_id": "E14",
+                  "url": "https://support.amara.org/support/solutions/articles/238000-subtitle-options-on-amara",
+                  "version_or_commit": "Search-rendered official article modified 2026-06-12",
+                  "locator": "Upload from video page versus editor; language replacement and complete/export behavior"
+                },
+                {
+                  "source_id": "E15",
+                  "url": "https://support.amara.org/support/solutions/articles/25931-create-a-private-team-on-amara-",
+                  "version_or_commit": "Official support article modified 2024-07-03; search-rendered copy",
+                  "locator": "Team types; privacy option; roles/admission; workflows; import/export; Integrated"
+                },
+                {
+                  "source_id": "E17",
+                  "url": "https://support.google.com/youtube/answer/2734705?hl=en-GB",
+                  "version_or_commit": "Live official help retrieved 2026-10-09",
+                  "locator": "Text/timestamp edits; Duplicate and edit; Publish; download/edit/upload"
+                },
+                {
+                  "source_id": "E18",
+                  "url": "https://dcmp.org/captioningkey/print",
+                  "version_or_commit": "Living guide retrieved 2026-10-09",
+                  "locator": "Quality dimensions; meaningful sounds; caption duration; educational presentation rates"
+                },
+                {
+                  "source_id": "E24",
+                  "url": "https://www.copyright.gov/title17/92chap1.html",
+                  "version_or_commit": "Current Copyright Office compilation; also checked GovInfo 2023 section 106",
+                  "locator": "Sections 101 and 106, subject to sections 107-122"
+                }
+              ]
+            },
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+              "candidate_lines": "23-28",
+              "primary_sources": [
+                {
+                  "source_id": "E01",
+                  "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                  "version_or_commit": "W3C Recommendation 2024-12-12",
+                  "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+                },
+                {
+                  "source_id": "E02",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded",
+                  "version_or_commit": "Informative living guidance; updated 2026-03-09",
+                  "locator": "Intent, existing-audio note, sufficient techniques and advisory H96"
+                },
+                {
+                  "source_id": "E04",
+                  "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                  "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                  "locator": "Track kind table; srclang/label/default constraints; media controls"
+                },
+                {
+                  "source_id": "E05",
+                  "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+                  "version_or_commit": "Candidate Recommendation Draft 2026-05-20",
+                  "locator": "Status; one kind per file; section 4.1 timestamps, cue timing/order/overlap; chapter constraints; MIME registration"
+                },
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E07",
+                  "url": "https://github.com/ableplayer/ableplayer/releases",
+                  "version_or_commit": "Observed v5.0.0 8d235f9 stable 2026-06-21; v5.1.0-beta2 c4f10ab pre-release 2026-10-06",
+                  "locator": "Release labels; tagged v5.0.0 Features and browser target"
+                },
+                {
+                  "source_id": "E08",
+                  "url": "https://github.com/ableplayer/ableplayer/issues/775",
+                  "version_or_commit": "Issue opened 2026-08-12; development-branch report; timeline closure 2026-09-13",
+                  "locator": "Body Version tested; sign.js/initSignLanguage, dataset keys, constructor forms, syncTrackLanguages; timeline Closed with #778; Development sidebar"
+                },
+                {
+                  "source_id": "E09",
+                  "url": "https://github.com/ableplayer/ableplayer/pull/778",
+                  "version_or_commit": "cd617fc merged into develop 2026-09-13",
+                  "locator": "Merge target/event and reported checks"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E11",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.2.0",
+                  "version_or_commit": "v5.2.0 d8e3b8b; build 2026-09-10 08:09:02 UTC",
+                  "locator": "Release build date, platform packages and Change Log link"
+                },
+                {
+                  "source_id": "E12",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/Changelog.txt",
+                  "version_or_commit": "v5.2.0 tag; entries 5.2.0 and 5.1.0",
+                  "locator": "5.2 WebVTT/style/settings and waveform/original reference work; 5.1 local/remote engine entries; 5.0 migration"
+                },
+                {
+                  "source_id": "E14",
+                  "url": "https://support.amara.org/support/solutions/articles/238000-subtitle-options-on-amara",
+                  "version_or_commit": "Search-rendered official article modified 2026-06-12",
+                  "locator": "Upload from video page versus editor; language replacement and complete/export behavior"
+                },
+                {
+                  "source_id": "E15",
+                  "url": "https://support.amara.org/support/solutions/articles/25931-create-a-private-team-on-amara-",
+                  "version_or_commit": "Official support article modified 2024-07-03; search-rendered copy",
+                  "locator": "Team types; privacy option; roles/admission; workflows; import/export; Integrated"
+                },
+                {
+                  "source_id": "E17",
+                  "url": "https://support.google.com/youtube/answer/2734705?hl=en-GB",
+                  "version_or_commit": "Live official help retrieved 2026-10-09",
+                  "locator": "Text/timestamp edits; Duplicate and edit; Publish; download/edit/upload"
+                },
+                {
+                  "source_id": "E18",
+                  "url": "https://dcmp.org/captioningkey/print",
+                  "version_or_commit": "Living guide retrieved 2026-10-09",
+                  "locator": "Quality dimensions; meaningful sounds; caption duration; educational presentation rates"
+                },
+                {
+                  "source_id": "E24",
+                  "url": "https://www.copyright.gov/title17/92chap1.html",
+                  "version_or_commit": "Current Copyright Office compilation; also checked GovInfo 2023 section 106",
+                  "locator": "Sections 101 and 106, subject to sections 107-122"
+                }
+              ]
+            },
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+              "candidate_lines": "38-62",
+              "primary_sources": [
+                {
+                  "source_id": "E01",
+                  "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                  "version_or_commit": "W3C Recommendation 2024-12-12",
+                  "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+                },
+                {
+                  "source_id": "E02",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded",
+                  "version_or_commit": "Informative living guidance; updated 2026-03-09",
+                  "locator": "Intent, existing-audio note, sufficient techniques and advisory H96"
+                },
+                {
+                  "source_id": "E04",
+                  "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                  "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                  "locator": "Track kind table; srclang/label/default constraints; media controls"
+                },
+                {
+                  "source_id": "E05",
+                  "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+                  "version_or_commit": "Candidate Recommendation Draft 2026-05-20",
+                  "locator": "Status; one kind per file; section 4.1 timestamps, cue timing/order/overlap; chapter constraints; MIME registration"
+                },
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E07",
+                  "url": "https://github.com/ableplayer/ableplayer/releases",
+                  "version_or_commit": "Observed v5.0.0 8d235f9 stable 2026-06-21; v5.1.0-beta2 c4f10ab pre-release 2026-10-06",
+                  "locator": "Release labels; tagged v5.0.0 Features and browser target"
+                },
+                {
+                  "source_id": "E08",
+                  "url": "https://github.com/ableplayer/ableplayer/issues/775",
+                  "version_or_commit": "Issue opened 2026-08-12; development-branch report; timeline closure 2026-09-13",
+                  "locator": "Body Version tested; sign.js/initSignLanguage, dataset keys, constructor forms, syncTrackLanguages; timeline Closed with #778; Development sidebar"
+                },
+                {
+                  "source_id": "E09",
+                  "url": "https://github.com/ableplayer/ableplayer/pull/778",
+                  "version_or_commit": "cd617fc merged into develop 2026-09-13",
+                  "locator": "Merge target/event and reported checks"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E11",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.2.0",
+                  "version_or_commit": "v5.2.0 d8e3b8b; build 2026-09-10 08:09:02 UTC",
+                  "locator": "Release build date, platform packages and Change Log link"
+                },
+                {
+                  "source_id": "E12",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/Changelog.txt",
+                  "version_or_commit": "v5.2.0 tag; entries 5.2.0 and 5.1.0",
+                  "locator": "5.2 WebVTT/style/settings and waveform/original reference work; 5.1 local/remote engine entries; 5.0 migration"
+                },
+                {
+                  "source_id": "E14",
+                  "url": "https://support.amara.org/support/solutions/articles/238000-subtitle-options-on-amara",
+                  "version_or_commit": "Search-rendered official article modified 2026-06-12",
+                  "locator": "Upload from video page versus editor; language replacement and complete/export behavior"
+                },
+                {
+                  "source_id": "E15",
+                  "url": "https://support.amara.org/support/solutions/articles/25931-create-a-private-team-on-amara-",
+                  "version_or_commit": "Official support article modified 2024-07-03; search-rendered copy",
+                  "locator": "Team types; privacy option; roles/admission; workflows; import/export; Integrated"
+                },
+                {
+                  "source_id": "E17",
+                  "url": "https://support.google.com/youtube/answer/2734705?hl=en-GB",
+                  "version_or_commit": "Live official help retrieved 2026-10-09",
+                  "locator": "Text/timestamp edits; Duplicate and edit; Publish; download/edit/upload"
+                },
+                {
+                  "source_id": "E18",
+                  "url": "https://dcmp.org/captioningkey/print",
+                  "version_or_commit": "Living guide retrieved 2026-10-09",
+                  "locator": "Quality dimensions; meaningful sounds; caption duration; educational presentation rates"
+                },
+                {
+                  "source_id": "E24",
+                  "url": "https://www.copyright.gov/title17/92chap1.html",
+                  "version_or_commit": "Current Copyright Office compilation; also checked GovInfo 2023 section 106",
+                  "locator": "Sections 101 and 106, subject to sections 107-122"
+                }
+              ]
+            },
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+              "candidate_lines": "69-80",
+              "primary_sources": [
+                {
+                  "source_id": "E01",
+                  "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                  "version_or_commit": "W3C Recommendation 2024-12-12",
+                  "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+                },
+                {
+                  "source_id": "E02",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded",
+                  "version_or_commit": "Informative living guidance; updated 2026-03-09",
+                  "locator": "Intent, existing-audio note, sufficient techniques and advisory H96"
+                },
+                {
+                  "source_id": "E04",
+                  "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                  "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                  "locator": "Track kind table; srclang/label/default constraints; media controls"
+                },
+                {
+                  "source_id": "E05",
+                  "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+                  "version_or_commit": "Candidate Recommendation Draft 2026-05-20",
+                  "locator": "Status; one kind per file; section 4.1 timestamps, cue timing/order/overlap; chapter constraints; MIME registration"
+                },
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E07",
+                  "url": "https://github.com/ableplayer/ableplayer/releases",
+                  "version_or_commit": "Observed v5.0.0 8d235f9 stable 2026-06-21; v5.1.0-beta2 c4f10ab pre-release 2026-10-06",
+                  "locator": "Release labels; tagged v5.0.0 Features and browser target"
+                },
+                {
+                  "source_id": "E08",
+                  "url": "https://github.com/ableplayer/ableplayer/issues/775",
+                  "version_or_commit": "Issue opened 2026-08-12; development-branch report; timeline closure 2026-09-13",
+                  "locator": "Body Version tested; sign.js/initSignLanguage, dataset keys, constructor forms, syncTrackLanguages; timeline Closed with #778; Development sidebar"
+                },
+                {
+                  "source_id": "E09",
+                  "url": "https://github.com/ableplayer/ableplayer/pull/778",
+                  "version_or_commit": "cd617fc merged into develop 2026-09-13",
+                  "locator": "Merge target/event and reported checks"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E11",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.2.0",
+                  "version_or_commit": "v5.2.0 d8e3b8b; build 2026-09-10 08:09:02 UTC",
+                  "locator": "Release build date, platform packages and Change Log link"
+                },
+                {
+                  "source_id": "E12",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/Changelog.txt",
+                  "version_or_commit": "v5.2.0 tag; entries 5.2.0 and 5.1.0",
+                  "locator": "5.2 WebVTT/style/settings and waveform/original reference work; 5.1 local/remote engine entries; 5.0 migration"
+                },
+                {
+                  "source_id": "E14",
+                  "url": "https://support.amara.org/support/solutions/articles/238000-subtitle-options-on-amara",
+                  "version_or_commit": "Search-rendered official article modified 2026-06-12",
+                  "locator": "Upload from video page versus editor; language replacement and complete/export behavior"
+                },
+                {
+                  "source_id": "E15",
+                  "url": "https://support.amara.org/support/solutions/articles/25931-create-a-private-team-on-amara-",
+                  "version_or_commit": "Official support article modified 2024-07-03; search-rendered copy",
+                  "locator": "Team types; privacy option; roles/admission; workflows; import/export; Integrated"
+                },
+                {
+                  "source_id": "E17",
+                  "url": "https://support.google.com/youtube/answer/2734705?hl=en-GB",
+                  "version_or_commit": "Live official help retrieved 2026-10-09",
+                  "locator": "Text/timestamp edits; Duplicate and edit; Publish; download/edit/upload"
+                },
+                {
+                  "source_id": "E18",
+                  "url": "https://dcmp.org/captioningkey/print",
+                  "version_or_commit": "Living guide retrieved 2026-10-09",
+                  "locator": "Quality dimensions; meaningful sounds; caption duration; educational presentation rates"
+                },
+                {
+                  "source_id": "E24",
+                  "url": "https://www.copyright.gov/title17/92chap1.html",
+                  "version_or_commit": "Current Copyright Office compilation; also checked GovInfo 2023 section 106",
+                  "locator": "Sections 101 and 106, subject to sections 107-122"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "axis": 3,
+          "name": "Useful independent discovery and retained alternatives",
+          "coverage": "FULL",
+          "judgment": "PASS",
+          "reasoning": "Discovery is substantively broader than the thin clauses: Able Player/VTS, native controls with a separate transcript, provider media with local text, Subtitle Edit/local versus remote engines, Amara collaboration, YouTube Studio, and conditional format exchange all have mechanisms and adoption conditions. The final retains each material branch. Its usefulness follows the actual catalog/editorial needs, not citation or product counts.",
+          "evidence": [
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+              "candidate_lines": "9-15",
+              "primary_sources": [
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E14",
+                  "url": "https://support.amara.org/support/solutions/articles/238000-subtitle-options-on-amara",
+                  "version_or_commit": "Search-rendered official article modified 2026-06-12",
+                  "locator": "Upload from video page versus editor; language replacement and complete/export behavior"
+                },
+                {
+                  "source_id": "E15",
+                  "url": "https://support.amara.org/support/solutions/articles/25931-create-a-private-team-on-amara-",
+                  "version_or_commit": "Official support article modified 2024-07-03; search-rendered copy",
+                  "locator": "Team types; privacy option; roles/admission; workflows; import/export; Integrated"
+                },
+                {
+                  "source_id": "E17",
+                  "url": "https://support.google.com/youtube/answer/2734705?hl=en-GB",
+                  "version_or_commit": "Live official help retrieved 2026-10-09",
+                  "locator": "Text/timestamp edits; Duplicate and edit; Publish; download/edit/upload"
+                },
+                {
+                  "source_id": "E19",
+                  "url": "https://www.w3.org/TR/2020/REC-ttml-imsc1.2-20200804/",
+                  "version_or_commit": "W3C Recommendation 2020-08-04",
+                  "locator": "Abstract/scope and text/image profiles"
+                }
+              ]
+            },
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+              "candidate_lines": "65-80",
+              "primary_sources": [
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E14",
+                  "url": "https://support.amara.org/support/solutions/articles/238000-subtitle-options-on-amara",
+                  "version_or_commit": "Search-rendered official article modified 2026-06-12",
+                  "locator": "Upload from video page versus editor; language replacement and complete/export behavior"
+                },
+                {
+                  "source_id": "E15",
+                  "url": "https://support.amara.org/support/solutions/articles/25931-create-a-private-team-on-amara-",
+                  "version_or_commit": "Official support article modified 2024-07-03; search-rendered copy",
+                  "locator": "Team types; privacy option; roles/admission; workflows; import/export; Integrated"
+                },
+                {
+                  "source_id": "E17",
+                  "url": "https://support.google.com/youtube/answer/2734705?hl=en-GB",
+                  "version_or_commit": "Live official help retrieved 2026-10-09",
+                  "locator": "Text/timestamp edits; Duplicate and edit; Publish; download/edit/upload"
+                },
+                {
+                  "source_id": "E19",
+                  "url": "https://www.w3.org/TR/2020/REC-ttml-imsc1.2-20200804/",
+                  "version_or_commit": "W3C Recommendation 2020-08-04",
+                  "locator": "Abstract/scope and text/image profiles"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "axis": 4,
+          "name": "All exact plan dispositions",
+          "coverage": "FULL",
+          "judgment": "PASS_WITH_MINOR_LIMITATIONS",
+          "reasoning": "Each P1-P6 clause has been independently compared with the original wording and brief. Native controls and text editing remain viable, MT is retained for drafts, the transcript minimum is preserved, and the scan remains scoped evidence. Some reject/correction labels are stronger than the thin plan literally warrants, but the final restricts them to insufficient interpretations and does not materially erase the original options.",
+          "evidence": [
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+              "candidate_lines": "32-43",
+              "primary_sources": [
+                {
+                  "source_id": "E04",
+                  "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                  "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                  "locator": "Track kind table; srclang/label/default constraints; media controls"
+                },
+                {
+                  "source_id": "E05",
+                  "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+                  "version_or_commit": "Candidate Recommendation Draft 2026-05-20",
+                  "locator": "Status; one kind per file; section 4.1 timestamps, cue timing/order/overlap; chapter constraints; MIME registration"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E20",
+                  "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+                  "version_or_commit": "Informative guidance updated 2024-05-13",
+                  "locator": "What Evaluation Tools Can Do and Can Not Do"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "axis": 5,
+          "name": "Discovery/draft/critique/final preservation and criticism",
+          "coverage": "FULL",
+          "judgment": "PASS",
+          "reasoning": "Every material topic and critic demand was traced through complete prose, not source-ID lists. Standards/delivery qualifications were made explicit, missing S16 provenance was replaced with checked R sources, text editing was preserved, releases were qualified, and attribution/uncertainty survived. The critic is not an oracle: its standards distinctions are valid, but calling the predecessor globally wrong ignores the already explicit discovery qualifications. No material preservation loss found.",
+          "evidence": [
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+              "candidate_lines": "17-30",
+              "primary_sources": [
+                {
+                  "source_id": "E01",
+                  "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                  "version_or_commit": "W3C Recommendation 2024-12-12",
+                  "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+                },
+                {
+                  "source_id": "E02",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded",
+                  "version_or_commit": "Informative living guidance; updated 2026-03-09",
+                  "locator": "Intent, existing-audio note, sufficient techniques and advisory H96"
+                },
+                {
+                  "source_id": "E03",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-or-media-alternative-prerecorded",
+                  "version_or_commit": "Informative living guidance retrieved 2026-10-09",
+                  "locator": "Intent; sequential full auditory/visual alternative and interaction functionality"
+                },
+                {
+                  "source_id": "E04",
+                  "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                  "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                  "locator": "Track kind table; srclang/label/default constraints; media controls"
+                },
+                {
+                  "source_id": "E07",
+                  "url": "https://github.com/ableplayer/ableplayer/releases",
+                  "version_or_commit": "Observed v5.0.0 8d235f9 stable 2026-06-21; v5.1.0-beta2 c4f10ab pre-release 2026-10-06",
+                  "locator": "Release labels; tagged v5.0.0 Features and browser target"
+                },
+                {
+                  "source_id": "E08",
+                  "url": "https://github.com/ableplayer/ableplayer/issues/775",
+                  "version_or_commit": "Issue opened 2026-08-12; development-branch report; timeline closure 2026-09-13",
+                  "locator": "Body Version tested; sign.js/initSignLanguage, dataset keys, constructor forms, syncTrackLanguages; timeline Closed with #778; Development sidebar"
+                },
+                {
+                  "source_id": "E09",
+                  "url": "https://github.com/ableplayer/ableplayer/pull/778",
+                  "version_or_commit": "cd617fc merged into develop 2026-09-13",
+                  "locator": "Merge target/event and reported checks"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                }
+              ]
+            },
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+              "candidate_lines": "38-43",
+              "primary_sources": [
+                {
+                  "source_id": "E01",
+                  "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                  "version_or_commit": "W3C Recommendation 2024-12-12",
+                  "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+                },
+                {
+                  "source_id": "E02",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded",
+                  "version_or_commit": "Informative living guidance; updated 2026-03-09",
+                  "locator": "Intent, existing-audio note, sufficient techniques and advisory H96"
+                },
+                {
+                  "source_id": "E03",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-or-media-alternative-prerecorded",
+                  "version_or_commit": "Informative living guidance retrieved 2026-10-09",
+                  "locator": "Intent; sequential full auditory/visual alternative and interaction functionality"
+                },
+                {
+                  "source_id": "E04",
+                  "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                  "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                  "locator": "Track kind table; srclang/label/default constraints; media controls"
+                },
+                {
+                  "source_id": "E07",
+                  "url": "https://github.com/ableplayer/ableplayer/releases",
+                  "version_or_commit": "Observed v5.0.0 8d235f9 stable 2026-06-21; v5.1.0-beta2 c4f10ab pre-release 2026-10-06",
+                  "locator": "Release labels; tagged v5.0.0 Features and browser target"
+                },
+                {
+                  "source_id": "E08",
+                  "url": "https://github.com/ableplayer/ableplayer/issues/775",
+                  "version_or_commit": "Issue opened 2026-08-12; development-branch report; timeline closure 2026-09-13",
+                  "locator": "Body Version tested; sign.js/initSignLanguage, dataset keys, constructor forms, syncTrackLanguages; timeline Closed with #778; Development sidebar"
+                },
+                {
+                  "source_id": "E09",
+                  "url": "https://github.com/ableplayer/ableplayer/pull/778",
+                  "version_or_commit": "cd617fc merged into develop 2026-09-13",
+                  "locator": "Merge target/event and reported checks"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                }
+              ]
+            },
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+              "candidate_lines": "65-100",
+              "primary_sources": [
+                {
+                  "source_id": "E01",
+                  "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                  "version_or_commit": "W3C Recommendation 2024-12-12",
+                  "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+                },
+                {
+                  "source_id": "E02",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded",
+                  "version_or_commit": "Informative living guidance; updated 2026-03-09",
+                  "locator": "Intent, existing-audio note, sufficient techniques and advisory H96"
+                },
+                {
+                  "source_id": "E03",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-or-media-alternative-prerecorded",
+                  "version_or_commit": "Informative living guidance retrieved 2026-10-09",
+                  "locator": "Intent; sequential full auditory/visual alternative and interaction functionality"
+                },
+                {
+                  "source_id": "E04",
+                  "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                  "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                  "locator": "Track kind table; srclang/label/default constraints; media controls"
+                },
+                {
+                  "source_id": "E07",
+                  "url": "https://github.com/ableplayer/ableplayer/releases",
+                  "version_or_commit": "Observed v5.0.0 8d235f9 stable 2026-06-21; v5.1.0-beta2 c4f10ab pre-release 2026-10-06",
+                  "locator": "Release labels; tagged v5.0.0 Features and browser target"
+                },
+                {
+                  "source_id": "E08",
+                  "url": "https://github.com/ableplayer/ableplayer/issues/775",
+                  "version_or_commit": "Issue opened 2026-08-12; development-branch report; timeline closure 2026-09-13",
+                  "locator": "Body Version tested; sign.js/initSignLanguage, dataset keys, constructor forms, syncTrackLanguages; timeline Closed with #778; Development sidebar"
+                },
+                {
+                  "source_id": "E09",
+                  "url": "https://github.com/ableplayer/ableplayer/pull/778",
+                  "version_or_commit": "cd617fc merged into develop 2026-09-13",
+                  "locator": "Merge target/event and reported checks"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed versus executed validation",
+          "coverage": "FULL",
+          "judgment": "PASS",
+          "reasoning": "The pilot compares actual task outcomes in the declared support matrix, the regression fence discriminates fresh builds from stale bundles, full-media and fluent review test content truth, and track/deployment/description/correction checks have independent observable oracles. Proposals are repeatedly marked unexecuted. Reported issue results and PR checks are attributed, not substituted for own witnesses. No product validation overclaim found.",
+          "evidence": [
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+              "candidate_lines": "82-100",
+              "primary_sources": [
+                {
+                  "source_id": "E05",
+                  "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+                  "version_or_commit": "Candidate Recommendation Draft 2026-05-20",
+                  "locator": "Status; one kind per file; section 4.1 timestamps, cue timing/order/overlap; chapter constraints; MIME registration"
+                },
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E08",
+                  "url": "https://github.com/ableplayer/ableplayer/issues/775",
+                  "version_or_commit": "Issue opened 2026-08-12; development-branch report; timeline closure 2026-09-13",
+                  "locator": "Body Version tested; sign.js/initSignLanguage, dataset keys, constructor forms, syncTrackLanguages; timeline Closed with #778; Development sidebar"
+                },
+                {
+                  "source_id": "E09",
+                  "url": "https://github.com/ableplayer/ableplayer/pull/778",
+                  "version_or_commit": "cd617fc merged into develop 2026-09-13",
+                  "locator": "Merge target/event and reported checks"
+                },
+                {
+                  "source_id": "E18",
+                  "url": "https://dcmp.org/captioningkey/print",
+                  "version_or_commit": "Living guide retrieved 2026-10-09",
+                  "locator": "Quality dimensions; meaningful sounds; caption duration; educational presentation rates"
+                },
+                {
+                  "source_id": "E20",
+                  "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+                  "version_or_commit": "Informative guidance updated 2024-05-13",
+                  "locator": "What Evaluation Tools Can Do and Can Not Do"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "claim_id": "C01",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "4-9,49,57-63",
+            "candidate_passage": "Forty existing recordings ... captions, keyboard-friendly playback, transcripts, translation drafts, and controlled author corrections.",
+            "original_obligation": "O1-O6",
+            "primary_evidence": [],
+            "judgment": "SUPPORTED_SCOPE",
+            "reasoning": "All explicit product constraints are carried into an actionable conditional workflow. Forty is an inventory scope, not an invented effort estimate."
+          },
+          {
+            "claim_id": "C02",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "23-24,42,53,89",
+            "candidate_passage": "A readable transcript is not automatically either a full time-based media alternative or audio description.",
+            "original_obligation": "O2,O4,O5",
+            "primary_evidence": [
+              {
+                "source_id": "E01",
+                "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                "version_or_commit": "W3C Recommendation 2024-12-12",
+                "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+              },
+              {
+                "source_id": "E02",
+                "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded",
+                "version_or_commit": "Informative living guidance; updated 2026-03-09",
+                "locator": "Intent, existing-audio note, sufficient techniques and advisory H96"
+              },
+              {
+                "source_id": "E03",
+                "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-or-media-alternative-prerecorded",
+                "version_or_commit": "Informative living guidance retrieved 2026-10-09",
+                "locator": "Intent; sequential full auditory/visual alternative and interaction functionality"
+              }
+            ],
+            "judgment": "SUPPORTED",
+            "reasoning": "The final resolves the visual-access ambiguity without deciding a conformance target or claiming every recording needs newly produced description."
+          },
+          {
+            "claim_id": "C03",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "38,51",
+            "candidate_passage": "use subtitles for dialogue-only or translated text as appropriate",
+            "original_obligation": "O2,O4",
+            "primary_evidence": [
+              {
+                "source_id": "E04",
+                "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                "locator": "Track kind table; srclang/label/default constraints; media controls"
+              }
+            ],
+            "judgment": "SUPPORTED_WITH_MINOR_WORDING_LIMIT",
+            "reasoning": "Language/kind/label/default metadata are investigated. The source-language/translation shorthand has a content-classification caveat recorded in N2-m1; no supplied track is wrongly classified."
+          },
+          {
+            "claim_id": "C04",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "51,87",
+            "candidate_passage": "Cue start times are nondecreasing ... distinct cues may overlap.",
+            "original_obligation": "O2,O6",
+            "primary_evidence": [
+              {
+                "source_id": "E05",
+                "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+                "version_or_commit": "Candidate Recommendation Draft 2026-05-20",
+                "locator": "Status; one kind per file; section 4.1 timestamps, cue timing/order/overlap; chapter constraints; MIME registration"
+              }
+            ],
+            "judgment": "SUPPORTED",
+            "reasoning": "Timing representation, ordering and permitted overlap are correctly separated from human synchronization review; checks against the final media are additional QA."
+          },
+          {
+            "claim_id": "C05",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "39,70,84",
+            "candidate_passage": "compare native controls plus a structured transcript against a tagged Able Player build",
+            "original_obligation": "O1,O2,O4,O6",
+            "primary_evidence": [
+              {
+                "source_id": "E04",
+                "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                "locator": "Track kind table; srclang/label/default constraints; media controls"
+              },
+              {
+                "source_id": "E06",
+                "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+              }
+            ],
+            "judgment": "SUPPORTED",
+            "reasoning": "Native controls remain a viable alternative. The comparison has the same content/tasks and a target support matrix; no library feature list is a result."
+          },
+          {
+            "claim_id": "C06",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "11,55,69",
+            "candidate_passage": "keyboard and screen-reader controls ... interactive transcripts ... Video Transcript Sorter",
+            "original_obligation": "O1,O2,O5",
+            "primary_evidence": [
+              {
+                "source_id": "E06",
+                "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+              }
+            ],
+            "judgment": "SUPPORTED_DOCUMENTATION_CLAIM",
+            "reasoning": "The specific player and transcript synchronization mechanisms are documented at a stable source commit and appropriately left for deployment testing."
+          },
+          {
+            "claim_id": "C07",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "11,15,69,73",
+            "candidate_passage": "local WebVTT files ... reduced transcript/search/customization features",
+            "original_obligation": "O1,O2",
+            "primary_evidence": [
+              {
+                "source_id": "E06",
+                "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+              }
+            ],
+            "judgment": "SUPPORTED",
+            "reasoning": "The provider/local text split is a useful independent architecture discovery. It does not assume the platform remains available or supplies durable masters."
+          },
+          {
+            "claim_id": "C08",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "11,27,69,80,85",
+            "candidate_passage": "v5.0.0 ... latest stable ... v5.1.0-beta2 ... pre-release",
+            "original_obligation": "O2,O3",
+            "primary_evidence": [
+              {
+                "source_id": "E07",
+                "url": "https://github.com/ableplayer/ableplayer/releases",
+                "version_or_commit": "Observed v5.0.0 8d235f9 stable 2026-06-21; v5.1.0-beta2 c4f10ab pre-release 2026-10-06",
+                "locator": "Release labels; tagged v5.0.0 Features and browser target"
+              }
+            ],
+            "judgment": "SUPPORTED_WITH_HONEST_TAG_LIMIT",
+            "reasoning": "Release/channel distinction is checked. Beta fix inclusion is not established or relied on; pinning the candidate build is an appropriate proposed condition."
+          },
+          {
+            "claim_id": "C09",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "28,85",
+            "candidate_passage": "PR #778 merged commit cd617fc into develop ... not evidence of a later stable release containing the fix",
+            "original_obligation": "O2,O3,O6",
+            "primary_evidence": [
+              {
+                "source_id": "E08",
+                "url": "https://github.com/ableplayer/ableplayer/issues/775",
+                "version_or_commit": "Issue opened 2026-08-12; development-branch report; timeline closure 2026-09-13",
+                "locator": "Body Version tested; sign.js/initSignLanguage, dataset keys, constructor forms, syncTrackLanguages; timeline Closed with #778; Development sidebar"
+              },
+              {
+                "source_id": "E09",
+                "url": "https://github.com/ableplayer/ableplayer/pull/778",
+                "version_or_commit": "cd617fc merged into develop 2026-09-13",
+                "locator": "Merge target/event and reported checks"
+              }
+            ],
+            "judgment": "SUPPORTED_ATTRIBUTED_CHAIN",
+            "reasoning": "Regression causes and fresh-build/stale-bundle applicability support the targeted fence. Reporter results and PR checks are not presented as independent reproduction."
+          },
+          {
+            "claim_id": "C10",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "13,41,61,71",
+            "candidate_passage": "text editor may be the more direct workflow ... substantial timing changes",
+            "original_obligation": "O1,O2,O4",
+            "primary_evidence": [
+              {
+                "source_id": "E10",
+                "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+              },
+              {
+                "source_id": "E11",
+                "url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.2.0",
+                "version_or_commit": "v5.2.0 d8e3b8b; build 2026-09-10 08:09:02 UTC",
+                "locator": "Release build date, platform packages and Change Log link"
+              },
+              {
+                "source_id": "E12",
+                "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/Changelog.txt",
+                "version_or_commit": "v5.2.0 tag; entries 5.2.0 and 5.1.0",
+                "locator": "5.2 WebVTT/style/settings and waveform/original reference work; 5.1 local/remote engine entries; 5.0 migration"
+              }
+            ],
+            "judgment": "SUPPORTED",
+            "reasoning": "The final conditionally chooses a timeline tool for timing work and retains plain-text repairs. It does not turn forty recordings into proof that a specialist editor is mandatory."
+          },
+          {
+            "claim_id": "C11",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "13,62,71,80",
+            "candidate_passage": "local and remote speech-to-text choices; choosing the editor alone does not ensure that recordings stay local",
+            "original_obligation": "O2,O5",
+            "primary_evidence": [
+              {
+                "source_id": "E10",
+                "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+              },
+              {
+                "source_id": "E12",
+                "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/Changelog.txt",
+                "version_or_commit": "v5.2.0 tag; entries 5.2.0 and 5.1.0",
+                "locator": "5.2 WebVTT/style/settings and waveform/original reference work; 5.1 local/remote engine entries; 5.0 migration"
+              }
+            ],
+            "judgment": "SUPPORTED_WITH_CONFIGURATION_LIMIT",
+            "reasoning": "Local/cloud routes and build/OS parity are separated. The final makes no unverified assertion that a selected engine or app stays offline."
+          },
+          {
+            "claim_id": "C12",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "15,62,72,80",
+            "candidate_passage": "whether upload marks a track complete or replaces an existing language",
+            "original_obligation": "O1,O2,O5",
+            "primary_evidence": [
+              {
+                "source_id": "E14",
+                "url": "https://support.amara.org/support/solutions/articles/238000-subtitle-options-on-amara",
+                "version_or_commit": "Search-rendered official article modified 2026-06-12",
+                "locator": "Upload from video page versus editor; language replacement and complete/export behavior"
+              },
+              {
+                "source_id": "E15",
+                "url": "https://support.amara.org/support/solutions/articles/25931-create-a-private-team-on-amara-",
+                "version_or_commit": "Official support article modified 2024-07-03; search-rendered copy",
+                "locator": "Team types; privacy option; roles/admission; workflows; import/export; Integrated"
+              },
+              {
+                "source_id": "E16",
+                "url": "https://support.amara.org/support/solutions/articles/195345-create-captions-and-translations",
+                "version_or_commit": "Live support URL; direct retrieval unavailable",
+                "locator": "Requested editor article"
+              }
+            ],
+            "judgment": "SUPPORTED_CONDITIONAL_ALTERNATIVE",
+            "reasoning": "Official support search rendering independently supports the upload hazard. Exact tier, contractual terms and actual role enforcement remain open because Amara is not selected."
+          },
+          {
+            "claim_id": "C13",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "15,73",
+            "candidate_passage": "YouTube Studio ... integrated caption correction/publish workflow",
+            "original_obligation": "O1,O2",
+            "primary_evidence": [
+              {
+                "source_id": "E17",
+                "url": "https://support.google.com/youtube/answer/2734705?hl=en-GB",
+                "version_or_commit": "Live official help retrieved 2026-10-09",
+                "locator": "Text/timestamp edits; Duplicate and edit; Publish; download/edit/upload"
+              }
+            ],
+            "judgment": "SUPPORTED_DOCUMENTATION_CLAIM",
+            "reasoning": "Official help supports the editor/export route. Platform hosting, embedding consent and durable master ownership remain explicit decisions."
+          },
+          {
+            "claim_id": "C14",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "41,74,87",
+            "candidate_passage": "SRT/TTML input then WebVTT publication ... test representative ... before/after",
+            "original_obligation": "O1,O2,O6",
+            "primary_evidence": [
+              {
+                "source_id": "E05",
+                "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+                "version_or_commit": "Candidate Recommendation Draft 2026-05-20",
+                "locator": "Status; one kind per file; section 4.1 timestamps, cue timing/order/overlap; chapter constraints; MIME registration"
+              },
+              {
+                "source_id": "E10",
+                "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+              },
+              {
+                "source_id": "E19",
+                "url": "https://www.w3.org/TR/2020/REC-ttml-imsc1.2-20200804/",
+                "version_or_commit": "W3C Recommendation 2020-08-04",
+                "locator": "Abstract/scope and text/image profiles"
+              },
+              {
+                "source_id": "E26",
+                "url": "https://www.w3.org/AudioVideo/TT/docs/TTML-Profiles.html",
+                "version_or_commit": "Older explanatory page; not a current implementation guarantee",
+                "locator": "WebVTT versus TTML/profile format overview"
+              }
+            ],
+            "judgment": "SUPPORTED",
+            "reasoning": "Interchange is conditional on a receiving system. Successful conversion is not treated as fidelity evidence; the older profile overview is not used as current support proof."
+          },
+          {
+            "claim_id": "C15",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "60-61,86",
+            "candidate_passage": "waveforms ... listening establishes ... figures only as warning flags",
+            "original_obligation": "O2,O6",
+            "primary_evidence": [
+              {
+                "source_id": "E10",
+                "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+              },
+              {
+                "source_id": "E18",
+                "url": "https://dcmp.org/captioningkey/print",
+                "version_or_commit": "Living guide retrieved 2026-10-09",
+                "locator": "Quality dimensions; meaningful sounds; caption duration; educational presentation rates"
+              }
+            ],
+            "judgment": "SUPPORTED",
+            "reasoning": "Content and audience judgment remain independent of a visualizer or reading-rate threshold. No universal numeric WCAG gate is invented."
+          },
+          {
+            "claim_id": "C16",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "5,38,59,78,90",
+            "candidate_passage": "U.S. statute is only an example ... jurisdiction and exceptions are unknown",
+            "original_obligation": "O2,O5",
+            "primary_evidence": [
+              {
+                "source_id": "E24",
+                "url": "https://www.copyright.gov/title17/92chap1.html",
+                "version_or_commit": "Current Copyright Office compilation; also checked GovInfo 2023 section 106",
+                "locator": "Sections 101 and 106, subject to sections 107-122"
+              },
+              {
+                "source_id": "E25",
+                "url": "https://www.copyright.gov/circs/circ14.pdf",
+                "version_or_commit": "Circular 14, 14.0720; four-page PDF",
+                "locator": "Page 1 derivative-work examples; authorization discussion; obsolete registration-policy notice"
+              }
+            ],
+            "judgment": "SUPPORTED_USE_CONDITIONAL",
+            "reasoning": "A rights/consent inventory is a prudent proposal. The report does not determine actual ownership or assert that every caption draft needs a new license; broader before-processing wording remains an organizational policy proposal."
+          },
+          {
+            "claim_id": "C17",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "49,57-63,90",
+            "candidate_passage": "correction-request route ... draft ... approve ... new revision ... prior revision",
+            "original_obligation": "O1,O5,O6",
+            "primary_evidence": [],
+            "judgment": "SUPPORTED_DESIGN_PROPOSAL",
+            "reasoning": "Controlled author corrections are developed into a modest versioned process with rollback and propagation checks. These are recommendations, not claimed CMS capabilities or executed guarantees."
+          },
+          {
+            "claim_id": "C18",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+            "candidate_lines": "43,82-100",
+            "candidate_passage": "scanner ... not the only validation/release gate ... None of these proposals was run.",
+            "original_obligation": "O4,O6",
+            "primary_evidence": [
+              {
+                "source_id": "E20",
+                "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+                "version_or_commit": "Informative guidance updated 2024-05-13",
+                "locator": "What Evaluation Tools Can Do and Can Not Do"
+              }
+            ],
+            "judgment": "SUPPORTED_WITH_MINOR_DISPOSITION_LIMIT",
+            "reasoning": "The substantive scan boundary and proposed independent oracles are sound. P6 rhetoric is qualified in N2-m2; no execution or conformance overclaim is present."
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "meaning": "All consequential candidate claim/applicability clusters, selected mechanisms, plan dispositions and criticism dependencies were reviewed. Conditional/historical uncertainties have explicit adjudications, not omitted scope. This does not claim every possible fact about every product was investigated."
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "read_artifacts": {
+          "final": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+          "draft": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/draft.md",
+          "discovery": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/discovery.md",
+          "critic": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/critic/critique.md"
+        },
+        "checked_topics": [
+          {
+            "topic": "Portable masters and correction states",
+            "predecessor_locator": "discovery 25,37,61; draft 8,29-37",
+            "final_locator": "final 9,49,57-63",
+            "judgment": "Retained as full prose, including old revisions, review/approval and propagation."
+          },
+          {
+            "topic": "All distinct product/architecture leads",
+            "predecessor_locator": "discovery 14-35,45-51; draft 41-50",
+            "final_locator": "final 11-15,65-74",
+            "judgment": "Able/VTS, native, provider/local text, Subtitle Edit, Amara, YouTube and conditional interchange all remain usable options."
+          },
+          {
+            "topic": "Standards and timing qualifications",
+            "predecessor_locator": "discovery 41-59; draft 20,24,39",
+            "final_locator": "final 23-24,38-42,51-55,89",
+            "judgment": "Preserves overlap and semantic distinctions; adds explicit target-level and description-delivery language."
+          },
+          {
+            "topic": "Rights, workflow and unresolved inputs",
+            "predecessor_locator": "discovery 59-61,75-83; draft 33-37,52-56",
+            "final_locator": "final 59-63,76-80",
+            "judgment": "No jurisdiction, actual rights, host, engine, language or staff certainty is invented."
+          },
+          {
+            "topic": "Validation coverage and reporter boundary",
+            "predecessor_locator": "discovery 63-73; draft 58-74",
+            "final_locator": "final 82-100",
+            "judgment": "All material test families and the no-execution boundary survive."
+          },
+          {
+            "topic": "Critic M1: Level A versus AA",
+            "predecessor_locator": "critic 15-23",
+            "final_locator": "final 23,42,89",
+            "judgment": "Accept the correct normative distinction. The discovery already stated the distinction; this is a final-language clarification, not evidence the whole predecessor research lacked it."
+          },
+          {
+            "topic": "Critic M2: description delivery",
+            "predecessor_locator": "critic 25-31",
+            "final_locator": "final 24,38,53,84,89",
+            "judgment": "Accept the target-stack qualification and fallback. Do not interpret advisory-technique status as a prohibition on a tested synthetic-description implementation."
+          },
+          {
+            "topic": "Critic M3: unresolved S16",
+            "predecessor_locator": "critic 33-39",
+            "final_locator": "final 25,97-99; reviser source map R01-R03",
+            "judgment": "Accept a citation/provenance problem, not a scientific falsehood. Replacement primary records are independently checked; no undeclared supplemental map was read."
+          },
+          {
+            "topic": "Critic editor qualification",
+            "predecessor_locator": "critic 48",
+            "final_locator": "final 13,26,41,71",
+            "judgment": "Accept conditional timing-tool language while preserving plain text."
+          },
+          {
+            "topic": "Critic release and chain cautions",
+            "predecessor_locator": "critic 54-55",
+            "final_locator": "final 11,27-28,69,80,85",
+            "judgment": "Preserved stable/beta labels, merge attribution and unknown tag inclusion."
+          },
+          {
+            "topic": "Critic stage-map/tool-feature cautions",
+            "predecessor_locator": "critic 56-57",
+            "final_locator": "final 29-30,96-100",
+            "judgment": "The evaluator can additionally verify the declared original research map is empty of predecessors/source roots. Final correctly distinguishes stages and documentation from runtime."
+          }
+        ],
+        "material_losses": []
+      },
+      "plan_dispositions": [
+        {
+          "clause": "P1",
+          "exact_text": "Host MP4 files and WebVTT captions.",
+          "candidate_lines": "38",
+          "disposition": "Already covered plus implementation conditions and decisions",
+          "judgment": "Retaining MP4/WebVTT is justified. Track metadata, codec/host choice and independent masters are conditions rather than proof of readiness. Description support is explicitly a pilot question. No unjustified rejection."
+        },
+        {
+          "clause": "P2",
+          "exact_text": "Use the browser default player.",
+          "candidate_lines": "39",
+          "disposition": "Uncertain/user decision; reject only sufficiency as a complete requirement",
+          "judgment": "A native player is kept as a real baseline; the specialist comparison is optional pending observed user tasks. The words browser default do not themselves supply conformance evidence or the correction workflow. No claim native controls inherently fail."
+        },
+        {
+          "clause": "P3",
+          "exact_text": "Generate translations automatically.",
+          "candidate_lines": "40",
+          "disposition": "Retain automation for drafts; reject only auto-approval/publication",
+          "judgment": "This is substantively compatible with the brief. Its headline is rhetorically stronger than the literal clause because generation is not publication; the qualifying text prevents a material false rejection."
+        },
+        {
+          "clause": "P4",
+          "exact_text": "Edit captions in a text editor.",
+          "candidate_lines": "41",
+          "disposition": "Retain text edits; conditionally prefer media-aware timing tools",
+          "judgment": "The final correctly preserves wording repairs to synchronized cues and reserves timeline tools for creation/retiming. Calling the conditional workflow amendment a correction is not a claim that text editing is standards-invalid."
+        },
+        {
+          "clause": "P5",
+          "exact_text": "Publish one transcript per video.",
+          "candidate_lines": "42",
+          "disposition": "Retain requested minimum; conditional visual-access/language enhancements",
+          "judgment": "One readable transcript remains the minimum. Audio description, media alternatives and additional reviewed languages are distinguished rather than treated as automatic consequences of the count clause."
+        },
+        {
+          "clause": "P6",
+          "exact_text": "Run an automated accessibility scanner.",
+          "candidate_lines": "43",
+          "disposition": "Retain scoped scan; reject only sole-gate interpretation",
+          "judgment": "The substance respects the explicit no-single-score constraint. Optional enhancement is a debatable label for a step already in the plan, but it does not require removal or claim the clause actually says sole gate."
+        }
+      ],
+      "grade_limits": [
+        "Research/planning pass only: no production accessibility, caption accuracy, actual rights clearance, browser compatibility or CMS authorization result.",
+        "No material defect remains at the explicit modest-product scope; minor findings are fully recorded and do not disappear into the overall grade.",
+        "Candidate artifact integrity and citation counts are not scientific grades.",
+        "Unknown native lifecycle, usage and billing are separate from complete scientific delivery."
+      ]
+    },
+    "N1": {
+      "actual_arm": "treatment",
+      "final_delivery": true,
+      "grade": "PASS_WITH_LIMITATIONS",
+      "material_findings": [],
+      "minor_findings": [
+        {
+          "finding_id": "N1-m1",
+          "type": "MINOR_INCOMPLETE_EVOLUTION_LOCATOR",
+          "severity": "minor",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+          "candidate_lines": "46",
+          "candidate_passage": "no linked fix branch or pull request was displayed",
+          "original_obligation": "O2,O3: relevant issue/fix/release applicability",
+          "primary_evidence": [
+            {
+              "source_id": "E08",
+              "url": "https://github.com/ableplayer/ableplayer/issues/775",
+              "version_or_commit": "Issue opened 2026-08-12; development-branch report; timeline closure 2026-09-13",
+              "locator": "Body Version tested; sign.js/initSignLanguage, dataset keys, constructor forms, syncTrackLanguages; timeline Closed with #778; Development sidebar"
+            },
+            {
+              "source_id": "E09",
+              "url": "https://github.com/ableplayer/ableplayer/pull/778",
+              "version_or_commit": "cd617fc merged into develop 2026-09-13",
+              "locator": "Merge target/event and reported checks"
+            }
+          ],
+          "reasoning": "An empty Development sidebar is not the whole issue record: the timeline says Closed with #778. The candidate omits that available merge pointer and its source notes overinterpret the sidebar. This weakens fix tracing, but O3 still contains a relevant release-to-development-regression evolution chain, the final does not say no fix exists, and it does not misapply the regression to v5.0.0."
+        },
+        {
+          "finding_id": "N1-m2",
+          "type": "MINOR_SOURCE_METADATA_LIMIT",
+          "severity": "minor",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+          "candidate_lines": "47",
+          "related_candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/source-map.json",
+          "related_locator": "sources S21 and S22",
+          "candidate_passage": "Documentation and release maturity were not aligned clearly enough ... verify ... before a prototype",
+          "original_obligation": "O2,O5: currentness and uncertainty",
+          "primary_evidence": [
+            {
+              "source_id": "E23",
+              "url": "https://github.com/videojs/video.js/releases",
+              "version_or_commit": "Observed video.js v10.0.1 entry 2026-10-06; separate frozen source record says 2026-10-02",
+              "locator": "v10.0.1 release; https://github.com/videojs/v10 README moved/no longer maintained"
+            }
+          ],
+          "reasoning": "Current primary pages show a v10.0.1 entry dated October 6 and a moved/unmaintained v10 repository; the frozen map gives October 2 and near-stable/RC wording not reproduced now. The prior view is not archived, so historical accuracy remains unresolved rather than declared fabricated. The final retains Video.js and selects no version; this metadata weakness is not a consequential wrong dependency recommendation."
+        }
+      ],
+      "unresolved": [
+        {
+          "kind": "EXTERNAL_PRODUCT_INPUT",
+          "items": [
+            "actual media/cue/content quality and visual information",
+            "source/target languages and fluent review capacity",
+            "conformance level and relevant jurisdiction/rights facts",
+            "host/CMS, roles, budget and target browser/device/AT support"
+          ],
+          "judgment": "Honest missing product facts, not evasion of available research."
+        },
+        {
+          "kind": "EXTERNAL_OR_VERSION_CONDITIONAL",
+          "items": [
+            "selected engine/model terms and data configuration",
+            "Amara exact service terms/retention/roles and selected tier",
+            "exact future deployed player/editor build behavior"
+          ],
+          "judgment": "Unselected options and deployment conditions; no runtime clearance claimed."
+        },
+        {
+          "kind": "HISTORICAL_SOURCE_METADATA",
+          "items": [
+            "Video.js historical near-stable/RC wording and release-list date"
+          ],
+          "judgment": "Current primary check completed, historical view not reconstructable; see N1-m2."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "name": "Original obligations and explicit constraints",
+          "coverage": "FULL",
+          "judgment": "PASS",
+          "reasoning": "The full final covers every original required product capability and O1-O6 at the small-site scope. It has a source/revision model, practical playback/editing choices, translation draft/publication distinction, rights inquiry, controlled corrections and validation plan. Language, hosting, staff, audience and conformance choices remain explicit user decisions. No material original-obligation omission found.",
+          "evidence": [
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+              "candidate_lines": "8-26",
+              "primary_sources": [
+                {
+                  "source_id": "E01",
+                  "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                  "version_or_commit": "W3C Recommendation 2024-12-12",
+                  "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+                },
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E20",
+                  "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+                  "version_or_commit": "Informative guidance updated 2024-05-13",
+                  "locator": "What Evaluation Tools Can Do and Can Not Do"
+                }
+              ]
+            },
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+              "candidate_lines": "32-67",
+              "primary_sources": [
+                {
+                  "source_id": "E01",
+                  "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                  "version_or_commit": "W3C Recommendation 2024-12-12",
+                  "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+                },
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E20",
+                  "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+                  "version_or_commit": "Informative guidance updated 2024-05-13",
+                  "locator": "What Evaluation Tools Can Do and Can Not Do"
+                }
+              ]
+            },
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+              "candidate_lines": "69-116",
+              "primary_sources": [
+                {
+                  "source_id": "E01",
+                  "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                  "version_or_commit": "W3C Recommendation 2024-12-12",
+                  "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+                },
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E20",
+                  "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+                  "version_or_commit": "Informative guidance updated 2024-05-13",
+                  "locator": "What Evaluation Tools Can Do and Can Not Do"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "axis": 2,
+          "name": "Consequential source facts and applicability",
+          "coverage": "FULL",
+          "judgment": "PASS_WITH_MINOR_LIMITATIONS",
+          "reasoning": "Stable-tag documentation, normative criteria, units/defaults, provider limits, editor dependencies/licensing, format interchange and use-conditional rights are examined. Source claims are bounded to documentation, release or reporter evidence. The incomplete issue-timeline trace and unrepeatable Video.js historical metadata are recorded separately. Neither causes a wrong stable-player, mandatory-editor, vendor privacy or conformance conclusion.",
+          "evidence": [
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+              "candidate_lines": "32-67",
+              "primary_sources": [
+                {
+                  "source_id": "E01",
+                  "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                  "version_or_commit": "W3C Recommendation 2024-12-12",
+                  "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+                },
+                {
+                  "source_id": "E02",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded",
+                  "version_or_commit": "Informative living guidance; updated 2026-03-09",
+                  "locator": "Intent, existing-audio note, sufficient techniques and advisory H96"
+                },
+                {
+                  "source_id": "E03",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-or-media-alternative-prerecorded",
+                  "version_or_commit": "Informative living guidance retrieved 2026-10-09",
+                  "locator": "Intent; sequential full auditory/visual alternative and interaction functionality"
+                },
+                {
+                  "source_id": "E04",
+                  "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                  "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                  "locator": "Track kind table; srclang/label/default constraints; media controls"
+                },
+                {
+                  "source_id": "E05",
+                  "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+                  "version_or_commit": "Candidate Recommendation Draft 2026-05-20",
+                  "locator": "Status; one kind per file; section 4.1 timestamps, cue timing/order/overlap; chapter constraints; MIME registration"
+                },
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E07",
+                  "url": "https://github.com/ableplayer/ableplayer/releases",
+                  "version_or_commit": "Observed v5.0.0 8d235f9 stable 2026-06-21; v5.1.0-beta2 c4f10ab pre-release 2026-10-06",
+                  "locator": "Release labels; tagged v5.0.0 Features and browser target"
+                },
+                {
+                  "source_id": "E08",
+                  "url": "https://github.com/ableplayer/ableplayer/issues/775",
+                  "version_or_commit": "Issue opened 2026-08-12; development-branch report; timeline closure 2026-09-13",
+                  "locator": "Body Version tested; sign.js/initSignLanguage, dataset keys, constructor forms, syncTrackLanguages; timeline Closed with #778; Development sidebar"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E11",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.2.0",
+                  "version_or_commit": "v5.2.0 d8e3b8b; build 2026-09-10 08:09:02 UTC",
+                  "locator": "Release build date, platform packages and Change Log link"
+                },
+                {
+                  "source_id": "E12",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/Changelog.txt",
+                  "version_or_commit": "v5.2.0 tag; entries 5.2.0 and 5.1.0",
+                  "locator": "5.2 WebVTT/style/settings and waveform/original reference work; 5.1 local/remote engine entries; 5.0 migration"
+                },
+                {
+                  "source_id": "E13",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/LICENSE",
+                  "version_or_commit": "v5.2.0 tag",
+                  "locator": "MIT grant and notice condition"
+                },
+                {
+                  "source_id": "E14",
+                  "url": "https://support.amara.org/support/solutions/articles/238000-subtitle-options-on-amara",
+                  "version_or_commit": "Search-rendered official article modified 2026-06-12",
+                  "locator": "Upload from video page versus editor; language replacement and complete/export behavior"
+                },
+                {
+                  "source_id": "E15",
+                  "url": "https://support.amara.org/support/solutions/articles/25931-create-a-private-team-on-amara-",
+                  "version_or_commit": "Official support article modified 2024-07-03; search-rendered copy",
+                  "locator": "Team types; privacy option; roles/admission; workflows; import/export; Integrated"
+                },
+                {
+                  "source_id": "E18",
+                  "url": "https://dcmp.org/captioningkey/print",
+                  "version_or_commit": "Living guide retrieved 2026-10-09",
+                  "locator": "Quality dimensions; meaningful sounds; caption duration; educational presentation rates"
+                },
+                {
+                  "source_id": "E19",
+                  "url": "https://www.w3.org/TR/2020/REC-ttml-imsc1.2-20200804/",
+                  "version_or_commit": "W3C Recommendation 2020-08-04",
+                  "locator": "Abstract/scope and text/image profiles"
+                },
+                {
+                  "source_id": "E21",
+                  "url": "https://videojs.org/docs/framework/html/guides/captions",
+                  "version_or_commit": "Live HTML-framework documentation retrieved 2026-10-09",
+                  "locator": "WebVTT tracks; asynchronous loading; production CORS/crossorigin troubleshooting"
+                },
+                {
+                  "source_id": "E22",
+                  "url": "https://videojs.org/docs/framework/html/guides/accessibility",
+                  "version_or_commit": "Concept URL redirected to current guide; live documentation",
+                  "locator": "Keyboard/gesture components; confirmed-state announcements; custom controls"
+                },
+                {
+                  "source_id": "E23",
+                  "url": "https://github.com/videojs/video.js/releases",
+                  "version_or_commit": "Observed video.js v10.0.1 entry 2026-10-06; separate frozen source record says 2026-10-02",
+                  "locator": "v10.0.1 release; https://github.com/videojs/v10 README moved/no longer maintained"
+                },
+                {
+                  "source_id": "E24",
+                  "url": "https://www.copyright.gov/title17/92chap1.html",
+                  "version_or_commit": "Current Copyright Office compilation; also checked GovInfo 2023 section 106",
+                  "locator": "Sections 101 and 106, subject to sections 107-122"
+                },
+                {
+                  "source_id": "E25",
+                  "url": "https://www.copyright.gov/circs/circ14.pdf",
+                  "version_or_commit": "Circular 14, 14.0720; four-page PDF",
+                  "locator": "Page 1 derivative-work examples; authorization discussion; obsolete registration-policy notice"
+                }
+              ]
+            },
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+              "candidate_lines": "92-102",
+              "primary_sources": [
+                {
+                  "source_id": "E01",
+                  "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                  "version_or_commit": "W3C Recommendation 2024-12-12",
+                  "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+                },
+                {
+                  "source_id": "E02",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded",
+                  "version_or_commit": "Informative living guidance; updated 2026-03-09",
+                  "locator": "Intent, existing-audio note, sufficient techniques and advisory H96"
+                },
+                {
+                  "source_id": "E03",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-or-media-alternative-prerecorded",
+                  "version_or_commit": "Informative living guidance retrieved 2026-10-09",
+                  "locator": "Intent; sequential full auditory/visual alternative and interaction functionality"
+                },
+                {
+                  "source_id": "E04",
+                  "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                  "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                  "locator": "Track kind table; srclang/label/default constraints; media controls"
+                },
+                {
+                  "source_id": "E05",
+                  "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+                  "version_or_commit": "Candidate Recommendation Draft 2026-05-20",
+                  "locator": "Status; one kind per file; section 4.1 timestamps, cue timing/order/overlap; chapter constraints; MIME registration"
+                },
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E07",
+                  "url": "https://github.com/ableplayer/ableplayer/releases",
+                  "version_or_commit": "Observed v5.0.0 8d235f9 stable 2026-06-21; v5.1.0-beta2 c4f10ab pre-release 2026-10-06",
+                  "locator": "Release labels; tagged v5.0.0 Features and browser target"
+                },
+                {
+                  "source_id": "E08",
+                  "url": "https://github.com/ableplayer/ableplayer/issues/775",
+                  "version_or_commit": "Issue opened 2026-08-12; development-branch report; timeline closure 2026-09-13",
+                  "locator": "Body Version tested; sign.js/initSignLanguage, dataset keys, constructor forms, syncTrackLanguages; timeline Closed with #778; Development sidebar"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E11",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.2.0",
+                  "version_or_commit": "v5.2.0 d8e3b8b; build 2026-09-10 08:09:02 UTC",
+                  "locator": "Release build date, platform packages and Change Log link"
+                },
+                {
+                  "source_id": "E12",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/Changelog.txt",
+                  "version_or_commit": "v5.2.0 tag; entries 5.2.0 and 5.1.0",
+                  "locator": "5.2 WebVTT/style/settings and waveform/original reference work; 5.1 local/remote engine entries; 5.0 migration"
+                },
+                {
+                  "source_id": "E13",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/LICENSE",
+                  "version_or_commit": "v5.2.0 tag",
+                  "locator": "MIT grant and notice condition"
+                },
+                {
+                  "source_id": "E14",
+                  "url": "https://support.amara.org/support/solutions/articles/238000-subtitle-options-on-amara",
+                  "version_or_commit": "Search-rendered official article modified 2026-06-12",
+                  "locator": "Upload from video page versus editor; language replacement and complete/export behavior"
+                },
+                {
+                  "source_id": "E15",
+                  "url": "https://support.amara.org/support/solutions/articles/25931-create-a-private-team-on-amara-",
+                  "version_or_commit": "Official support article modified 2024-07-03; search-rendered copy",
+                  "locator": "Team types; privacy option; roles/admission; workflows; import/export; Integrated"
+                },
+                {
+                  "source_id": "E18",
+                  "url": "https://dcmp.org/captioningkey/print",
+                  "version_or_commit": "Living guide retrieved 2026-10-09",
+                  "locator": "Quality dimensions; meaningful sounds; caption duration; educational presentation rates"
+                },
+                {
+                  "source_id": "E19",
+                  "url": "https://www.w3.org/TR/2020/REC-ttml-imsc1.2-20200804/",
+                  "version_or_commit": "W3C Recommendation 2020-08-04",
+                  "locator": "Abstract/scope and text/image profiles"
+                },
+                {
+                  "source_id": "E21",
+                  "url": "https://videojs.org/docs/framework/html/guides/captions",
+                  "version_or_commit": "Live HTML-framework documentation retrieved 2026-10-09",
+                  "locator": "WebVTT tracks; asynchronous loading; production CORS/crossorigin troubleshooting"
+                },
+                {
+                  "source_id": "E22",
+                  "url": "https://videojs.org/docs/framework/html/guides/accessibility",
+                  "version_or_commit": "Concept URL redirected to current guide; live documentation",
+                  "locator": "Keyboard/gesture components; confirmed-state announcements; custom controls"
+                },
+                {
+                  "source_id": "E23",
+                  "url": "https://github.com/videojs/video.js/releases",
+                  "version_or_commit": "Observed video.js v10.0.1 entry 2026-10-06; separate frozen source record says 2026-10-02",
+                  "locator": "v10.0.1 release; https://github.com/videojs/v10 README moved/no longer maintained"
+                },
+                {
+                  "source_id": "E24",
+                  "url": "https://www.copyright.gov/title17/92chap1.html",
+                  "version_or_commit": "Current Copyright Office compilation; also checked GovInfo 2023 section 106",
+                  "locator": "Sections 101 and 106, subject to sections 107-122"
+                },
+                {
+                  "source_id": "E25",
+                  "url": "https://www.copyright.gov/circs/circ14.pdf",
+                  "version_or_commit": "Circular 14, 14.0720; four-page PDF",
+                  "locator": "Page 1 derivative-work examples; authorization discussion; obsolete registration-policy notice"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "axis": 3,
+          "name": "Useful independent discovery and retained alternatives",
+          "coverage": "FULL",
+          "judgment": "PASS",
+          "reasoning": "The researcher discovers specialist and platform-based mechanisms: Able Player transcript/preference defaults and provider sidecar limits, Subtitle Edit timing/local-cloud paths, Amara teams, modular Video.js, conditional IMSC and DCMP audience guidance. Native controls remain the low-dependency baseline. The final keeps these options and conditions with enough prose to inform a real pilot rather than prescribing every possible feature.",
+          "evidence": [
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+              "candidate_lines": "12",
+              "primary_sources": [
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E12",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/Changelog.txt",
+                  "version_or_commit": "v5.2.0 tag; entries 5.2.0 and 5.1.0",
+                  "locator": "5.2 WebVTT/style/settings and waveform/original reference work; 5.1 local/remote engine entries; 5.0 migration"
+                },
+                {
+                  "source_id": "E14",
+                  "url": "https://support.amara.org/support/solutions/articles/238000-subtitle-options-on-amara",
+                  "version_or_commit": "Search-rendered official article modified 2026-06-12",
+                  "locator": "Upload from video page versus editor; language replacement and complete/export behavior"
+                },
+                {
+                  "source_id": "E15",
+                  "url": "https://support.amara.org/support/solutions/articles/25931-create-a-private-team-on-amara-",
+                  "version_or_commit": "Official support article modified 2024-07-03; search-rendered copy",
+                  "locator": "Team types; privacy option; roles/admission; workflows; import/export; Integrated"
+                },
+                {
+                  "source_id": "E18",
+                  "url": "https://dcmp.org/captioningkey/print",
+                  "version_or_commit": "Living guide retrieved 2026-10-09",
+                  "locator": "Quality dimensions; meaningful sounds; caption duration; educational presentation rates"
+                },
+                {
+                  "source_id": "E19",
+                  "url": "https://www.w3.org/TR/2020/REC-ttml-imsc1.2-20200804/",
+                  "version_or_commit": "W3C Recommendation 2020-08-04",
+                  "locator": "Abstract/scope and text/image profiles"
+                },
+                {
+                  "source_id": "E21",
+                  "url": "https://videojs.org/docs/framework/html/guides/captions",
+                  "version_or_commit": "Live HTML-framework documentation retrieved 2026-10-09",
+                  "locator": "WebVTT tracks; asynchronous loading; production CORS/crossorigin troubleshooting"
+                },
+                {
+                  "source_id": "E22",
+                  "url": "https://videojs.org/docs/framework/html/guides/accessibility",
+                  "version_or_commit": "Concept URL redirected to current guide; live documentation",
+                  "locator": "Keyboard/gesture components; confirmed-state announcements; custom controls"
+                }
+              ]
+            },
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+              "candidate_lines": "36-59",
+              "primary_sources": [
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E12",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/Changelog.txt",
+                  "version_or_commit": "v5.2.0 tag; entries 5.2.0 and 5.1.0",
+                  "locator": "5.2 WebVTT/style/settings and waveform/original reference work; 5.1 local/remote engine entries; 5.0 migration"
+                },
+                {
+                  "source_id": "E14",
+                  "url": "https://support.amara.org/support/solutions/articles/238000-subtitle-options-on-amara",
+                  "version_or_commit": "Search-rendered official article modified 2026-06-12",
+                  "locator": "Upload from video page versus editor; language replacement and complete/export behavior"
+                },
+                {
+                  "source_id": "E15",
+                  "url": "https://support.amara.org/support/solutions/articles/25931-create-a-private-team-on-amara-",
+                  "version_or_commit": "Official support article modified 2024-07-03; search-rendered copy",
+                  "locator": "Team types; privacy option; roles/admission; workflows; import/export; Integrated"
+                },
+                {
+                  "source_id": "E18",
+                  "url": "https://dcmp.org/captioningkey/print",
+                  "version_or_commit": "Living guide retrieved 2026-10-09",
+                  "locator": "Quality dimensions; meaningful sounds; caption duration; educational presentation rates"
+                },
+                {
+                  "source_id": "E19",
+                  "url": "https://www.w3.org/TR/2020/REC-ttml-imsc1.2-20200804/",
+                  "version_or_commit": "W3C Recommendation 2020-08-04",
+                  "locator": "Abstract/scope and text/image profiles"
+                },
+                {
+                  "source_id": "E21",
+                  "url": "https://videojs.org/docs/framework/html/guides/captions",
+                  "version_or_commit": "Live HTML-framework documentation retrieved 2026-10-09",
+                  "locator": "WebVTT tracks; asynchronous loading; production CORS/crossorigin troubleshooting"
+                },
+                {
+                  "source_id": "E22",
+                  "url": "https://videojs.org/docs/framework/html/guides/accessibility",
+                  "version_or_commit": "Concept URL redirected to current guide; live documentation",
+                  "locator": "Keyboard/gesture components; confirmed-state announcements; custom controls"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "axis": 4,
+          "name": "All exact plan dispositions",
+          "coverage": "FULL",
+          "judgment": "PASS",
+          "reasoning": "All six exact clauses are audited. The final accurately distinguishes what the brief already asks for from publication risks or optional improvements: P3 can generate drafts, P4 can edit text, P5 supplies the transcript minimum, and P6 is a retained auxiliary scan. It does not impute a requirement that all translations are public or that a scanner alone certifies the site.",
+          "evidence": [
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+              "candidate_lines": "69-88",
+              "primary_sources": [
+                {
+                  "source_id": "E04",
+                  "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                  "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                  "locator": "Track kind table; srclang/label/default constraints; media controls"
+                },
+                {
+                  "source_id": "E05",
+                  "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+                  "version_or_commit": "Candidate Recommendation Draft 2026-05-20",
+                  "locator": "Status; one kind per file; section 4.1 timestamps, cue timing/order/overlap; chapter constraints; MIME registration"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E20",
+                  "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+                  "version_or_commit": "Informative guidance updated 2024-05-13",
+                  "locator": "What Evaluation Tools Can Do and Can Not Do"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "axis": 5,
+          "name": "Discovery/draft/critique/final preservation and criticism",
+          "coverage": "FULL",
+          "judgment": "PASS",
+          "reasoning": "The final preserves the substantive standards, editor/player alternatives, portability, conditional description/interchange, timing, rights and correction mechanisms. Five principal critic demands and their additional cautions receive explicit responses. Their useful narrowing is accepted without deleting automation, text editing, the original transcript or scanner. Context-specific numbers and minor UI details are compressed, with no material qualification reversed.",
+          "evidence": [
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+              "candidate_lines": "28-88",
+              "primary_sources": [
+                {
+                  "source_id": "E01",
+                  "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                  "version_or_commit": "W3C Recommendation 2024-12-12",
+                  "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+                },
+                {
+                  "source_id": "E02",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded",
+                  "version_or_commit": "Informative living guidance; updated 2026-03-09",
+                  "locator": "Intent, existing-audio note, sufficient techniques and advisory H96"
+                },
+                {
+                  "source_id": "E03",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-or-media-alternative-prerecorded",
+                  "version_or_commit": "Informative living guidance retrieved 2026-10-09",
+                  "locator": "Intent; sequential full auditory/visual alternative and interaction functionality"
+                },
+                {
+                  "source_id": "E04",
+                  "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                  "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                  "locator": "Track kind table; srclang/label/default constraints; media controls"
+                },
+                {
+                  "source_id": "E05",
+                  "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+                  "version_or_commit": "Candidate Recommendation Draft 2026-05-20",
+                  "locator": "Status; one kind per file; section 4.1 timestamps, cue timing/order/overlap; chapter constraints; MIME registration"
+                },
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E18",
+                  "url": "https://dcmp.org/captioningkey/print",
+                  "version_or_commit": "Living guide retrieved 2026-10-09",
+                  "locator": "Quality dimensions; meaningful sounds; caption duration; educational presentation rates"
+                },
+                {
+                  "source_id": "E20",
+                  "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+                  "version_or_commit": "Informative guidance updated 2024-05-13",
+                  "locator": "What Evaluation Tools Can Do and Can Not Do"
+                },
+                {
+                  "source_id": "E24",
+                  "url": "https://www.copyright.gov/title17/92chap1.html",
+                  "version_or_commit": "Current Copyright Office compilation; also checked GovInfo 2023 section 106",
+                  "locator": "Sections 101 and 106, subject to sections 107-122"
+                },
+                {
+                  "source_id": "E25",
+                  "url": "https://www.copyright.gov/circs/circ14.pdf",
+                  "version_or_commit": "Circular 14, 14.0720; four-page PDF",
+                  "locator": "Page 1 derivative-work examples; authorization discussion; obsolete registration-policy notice"
+                }
+              ]
+            },
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+              "candidate_lines": "90-116",
+              "primary_sources": [
+                {
+                  "source_id": "E01",
+                  "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                  "version_or_commit": "W3C Recommendation 2024-12-12",
+                  "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+                },
+                {
+                  "source_id": "E02",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded",
+                  "version_or_commit": "Informative living guidance; updated 2026-03-09",
+                  "locator": "Intent, existing-audio note, sufficient techniques and advisory H96"
+                },
+                {
+                  "source_id": "E03",
+                  "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-or-media-alternative-prerecorded",
+                  "version_or_commit": "Informative living guidance retrieved 2026-10-09",
+                  "locator": "Intent; sequential full auditory/visual alternative and interaction functionality"
+                },
+                {
+                  "source_id": "E04",
+                  "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                  "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                  "locator": "Track kind table; srclang/label/default constraints; media controls"
+                },
+                {
+                  "source_id": "E05",
+                  "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+                  "version_or_commit": "Candidate Recommendation Draft 2026-05-20",
+                  "locator": "Status; one kind per file; section 4.1 timestamps, cue timing/order/overlap; chapter constraints; MIME registration"
+                },
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E10",
+                  "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                  "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                  "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+                },
+                {
+                  "source_id": "E18",
+                  "url": "https://dcmp.org/captioningkey/print",
+                  "version_or_commit": "Living guide retrieved 2026-10-09",
+                  "locator": "Quality dimensions; meaningful sounds; caption duration; educational presentation rates"
+                },
+                {
+                  "source_id": "E20",
+                  "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+                  "version_or_commit": "Informative guidance updated 2024-05-13",
+                  "locator": "What Evaluation Tools Can Do and Can Not Do"
+                },
+                {
+                  "source_id": "E24",
+                  "url": "https://www.copyright.gov/title17/92chap1.html",
+                  "version_or_commit": "Current Copyright Office compilation; also checked GovInfo 2023 section 106",
+                  "locator": "Sections 101 and 106, subject to sections 107-122"
+                },
+                {
+                  "source_id": "E25",
+                  "url": "https://www.copyright.gov/circs/circ14.pdf",
+                  "version_or_commit": "Circular 14, 14.0720; four-page PDF",
+                  "locator": "Page 1 derivative-work examples; authorization discussion; obsolete registration-policy notice"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed versus executed validation",
+          "coverage": "FULL",
+          "judgment": "PASS",
+          "reasoning": "Track structure/deployment, the same-media player comparison, complete published-content/fluent review, visual-access assessment and authorization/rollback have distinct oracles. A pilot cannot substitute for review of each released track. All are explicitly proposals; source-map parsing/unique IDs are expressly mechanical integrity, not product evidence. No runtime proof or unsupported executed witness is claimed.",
+          "evidence": [
+            {
+              "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+              "candidate_lines": "90-102",
+              "primary_sources": [
+                {
+                  "source_id": "E04",
+                  "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                  "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                  "locator": "Track kind table; srclang/label/default constraints; media controls"
+                },
+                {
+                  "source_id": "E05",
+                  "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+                  "version_or_commit": "Candidate Recommendation Draft 2026-05-20",
+                  "locator": "Status; one kind per file; section 4.1 timestamps, cue timing/order/overlap; chapter constraints; MIME registration"
+                },
+                {
+                  "source_id": "E06",
+                  "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                  "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                  "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+                },
+                {
+                  "source_id": "E18",
+                  "url": "https://dcmp.org/captioningkey/print",
+                  "version_or_commit": "Living guide retrieved 2026-10-09",
+                  "locator": "Quality dimensions; meaningful sounds; caption duration; educational presentation rates"
+                },
+                {
+                  "source_id": "E20",
+                  "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+                  "version_or_commit": "Informative guidance updated 2024-05-13",
+                  "locator": "What Evaluation Tools Can Do and Can Not Do"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "claim_id": "T01",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "10-22,63,90-114",
+            "candidate_passage": "forty-video library ... at least one transcript ... review-controlled ... corrections",
+            "original_obligation": "O1-O6",
+            "primary_evidence": [],
+            "judgment": "SUPPORTED_SCOPE",
+            "reasoning": "Captions, keyboard playback, transcripts, translation drafts and controlled corrections all have concrete treatment. Product inputs and staffing are not silently filled in."
+          },
+          {
+            "claim_id": "T02",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "32-36,77",
+            "candidate_passage": "transcript ... not automatically the full media alternative ... target ... each video",
+            "original_obligation": "O2,O4,O5",
+            "primary_evidence": [
+              {
+                "source_id": "E01",
+                "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+                "version_or_commit": "W3C Recommendation 2024-12-12",
+                "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions"
+              },
+              {
+                "source_id": "E02",
+                "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded",
+                "version_or_commit": "Informative living guidance; updated 2026-03-09",
+                "locator": "Intent, existing-audio note, sufficient techniques and advisory H96"
+              },
+              {
+                "source_id": "E03",
+                "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-or-media-alternative-prerecorded",
+                "version_or_commit": "Informative living guidance retrieved 2026-10-09",
+                "locator": "Intent; sequential full auditory/visual alternative and interaction functionality"
+              }
+            ],
+            "judgment": "SUPPORTED",
+            "reasoning": "The final keeps visual-access and ordinary-transcript obligations distinct and makes decisions content/target-dependent rather than imposing universal extra deliverables."
+          },
+          {
+            "claim_id": "T03",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "36,73,92",
+            "candidate_passage": "kind, source language, user-facing label, and default preference",
+            "original_obligation": "O2,O6",
+            "primary_evidence": [
+              {
+                "source_id": "E04",
+                "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                "locator": "Track kind table; srclang/label/default constraints; media controls"
+              }
+            ],
+            "judgment": "SUPPORTED",
+            "reasoning": "Track metadata/default semantics are covered with explicit deployment validation. The discovery also investigates the viewer-preference qualifier and subtitle language requirement."
+          },
+          {
+            "claim_id": "T04",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "36,92",
+            "candidate_passage": "Cue timestamps use seconds and fractional seconds ... cue ordering, positive duration",
+            "original_obligation": "O2,O6",
+            "primary_evidence": [
+              {
+                "source_id": "E05",
+                "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+                "version_or_commit": "Candidate Recommendation Draft 2026-05-20",
+                "locator": "Status; one kind per file; section 4.1 timestamps, cue timing/order/overlap; chapter constraints; MIME registration"
+              }
+            ],
+            "judgment": "SUPPORTED",
+            "reasoning": "The final compresses but does not contradict the discovery timing rules. It proposes structural checks against the exact final media, with parser success explicitly insufficient for semantic access."
+          },
+          {
+            "claim_id": "T05",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "12,44,49,74,94",
+            "candidate_passage": "native browser controls ... sensible comparison baseline",
+            "original_obligation": "O1,O2,O4,O6",
+            "primary_evidence": [
+              {
+                "source_id": "E04",
+                "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+                "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+                "locator": "Track kind table; srclang/label/default constraints; media controls"
+              },
+              {
+                "source_id": "E06",
+                "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+              }
+            ],
+            "judgment": "SUPPORTED",
+            "reasoning": "Native remains a legitimate implementation candidate and is not falsely rejected. The matrix and common task list would discriminate actual usability."
+          },
+          {
+            "claim_id": "T06",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "45",
+            "candidate_passage": "Cue-by-cue transcript keyboard navigation is optional/off by default",
+            "original_obligation": "O2,O5",
+            "primary_evidence": [
+              {
+                "source_id": "E06",
+                "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+              }
+            ],
+            "judgment": "SUPPORTED_PINNED_DOCUMENTATION",
+            "reasoning": "The pinned README independently confirms the unusually useful default and its keyboard burden. Core feature claims remain project claims, not a conformance audit."
+          },
+          {
+            "claim_id": "T07",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "45,57",
+            "candidate_passage": "reduced functionality for some provider-hosted caption tracks compared with local sidecars",
+            "original_obligation": "O1,O2",
+            "primary_evidence": [
+              {
+                "source_id": "E06",
+                "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+                "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+                "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes"
+              }
+            ],
+            "judgment": "SUPPORTED",
+            "reasoning": "The local-text/provider-video alternative remains portable and conditional; no unsupported platform independence is asserted."
+          },
+          {
+            "claim_id": "T08",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "45",
+            "candidate_passage": "v5.0.0 ... ES module and targets ES2022",
+            "original_obligation": "O2,O3",
+            "primary_evidence": [
+              {
+                "source_id": "E07",
+                "url": "https://github.com/ableplayer/ableplayer/releases",
+                "version_or_commit": "Observed v5.0.0 8d235f9 stable 2026-06-21; v5.1.0-beta2 c4f10ab pre-release 2026-10-06",
+                "locator": "Release labels; tagged v5.0.0 Features and browser target"
+              }
+            ],
+            "judgment": "SUPPORTED",
+            "reasoning": "Tagged release notes corroborate the compatibility change. The final correctly treats the actual audience/browser matrix as unknown."
+          },
+          {
+            "claim_id": "T09",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "46",
+            "candidate_passage": "At retrieval ... closed, but no linked fix branch or pull request was displayed.",
+            "original_obligation": "O2,O3",
+            "primary_evidence": [
+              {
+                "source_id": "E08",
+                "url": "https://github.com/ableplayer/ableplayer/issues/775",
+                "version_or_commit": "Issue opened 2026-08-12; development-branch report; timeline closure 2026-09-13",
+                "locator": "Body Version tested; sign.js/initSignLanguage, dataset keys, constructor forms, syncTrackLanguages; timeline Closed with #778; Development sidebar"
+              },
+              {
+                "source_id": "E09",
+                "url": "https://github.com/ableplayer/ableplayer/pull/778",
+                "version_or_commit": "cd617fc merged into develop 2026-09-13",
+                "locator": "Merge target/event and reported checks"
+              }
+            ],
+            "judgment": "MINOR_INCOMPLETE_FIX_TRACE",
+            "reasoning": "The sidebar display is real but the issue timeline links #778. The final undertraces that available fix event. Its stable/develop applicability and practical recommendation remain correct; see N1-m1."
+          },
+          {
+            "claim_id": "T10",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "47",
+            "candidate_passage": "Video.js ... alternative ... release maturity ... not aligned clearly enough",
+            "original_obligation": "O1,O2,O5",
+            "primary_evidence": [
+              {
+                "source_id": "E21",
+                "url": "https://videojs.org/docs/framework/html/guides/captions",
+                "version_or_commit": "Live HTML-framework documentation retrieved 2026-10-09",
+                "locator": "WebVTT tracks; asynchronous loading; production CORS/crossorigin troubleshooting"
+              },
+              {
+                "source_id": "E22",
+                "url": "https://videojs.org/docs/framework/html/guides/accessibility",
+                "version_or_commit": "Concept URL redirected to current guide; live documentation",
+                "locator": "Keyboard/gesture components; confirmed-state announcements; custom controls"
+              },
+              {
+                "source_id": "E23",
+                "url": "https://github.com/videojs/video.js/releases",
+                "version_or_commit": "Observed video.js v10.0.1 entry 2026-10-06; separate frozen source record says 2026-10-02",
+                "locator": "v10.0.1 release; https://github.com/videojs/v10 README moved/no longer maintained"
+              }
+            ],
+            "judgment": "SUPPORTED_ALTERNATIVE_WITH_HISTORICAL_METADATA_LIMIT",
+            "reasoning": "Documentation supports modular player comparison. The frozen near-stable/RC observation is not independently reproducible now; no selected dependency or release claim rests on it."
+          },
+          {
+            "claim_id": "T11",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "53-55",
+            "candidate_passage": "Subtitle Edit v5.2.0 ... waveform ... synchronization ... WebVTT and SRT",
+            "original_obligation": "O1,O2,O4",
+            "primary_evidence": [
+              {
+                "source_id": "E10",
+                "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+                "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+                "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync"
+              },
+              {
+                "source_id": "E11",
+                "url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.2.0",
+                "version_or_commit": "v5.2.0 d8e3b8b; build 2026-09-10 08:09:02 UTC",
+                "locator": "Release build date, platform packages and Change Log link"
+              },
+              {
+                "source_id": "E12",
+                "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/Changelog.txt",
+                "version_or_commit": "v5.2.0 tag; entries 5.2.0 and 5.1.0",
+                "locator": "5.2 WebVTT/style/settings and waveform/original reference work; 5.1 local/remote engine entries; 5.0 migration"
+              }
+            ],
+            "judgment": "SUPPORTED_PINNED_DOCUMENTATION",
+            "reasoning": "The stable-tag FAQ and changelog substantiate the editor comparison, including its FFmpeg condition. The final keeps text-only edits viable."
+          },
+          {
+            "claim_id": "T12",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "53,57",
+            "candidate_passage": "MIT ... optional bundled model and engine terms ... both local and cloud-backed options",
+            "original_obligation": "O2,O5",
+            "primary_evidence": [
+              {
+                "source_id": "E12",
+                "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/Changelog.txt",
+                "version_or_commit": "v5.2.0 tag; entries 5.2.0 and 5.1.0",
+                "locator": "5.2 WebVTT/style/settings and waveform/original reference work; 5.1 local/remote engine entries; 5.0 migration"
+              },
+              {
+                "source_id": "E13",
+                "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/LICENSE",
+                "version_or_commit": "v5.2.0 tag",
+                "locator": "MIT grant and notice condition"
+              }
+            ],
+            "judgment": "SUPPORTED_WITH_ENGINE_LIMIT",
+            "reasoning": "Application license and processing route are correctly separated from optional engine terms and configuration; those unknowns are not disguised as clearance."
+          },
+          {
+            "claim_id": "T13",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "57",
+            "candidate_passage": "Amara ... one editor-help page could not be reopened ... current ... terms were not established",
+            "original_obligation": "O1,O2,O5",
+            "primary_evidence": [
+              {
+                "source_id": "E14",
+                "url": "https://support.amara.org/support/solutions/articles/238000-subtitle-options-on-amara",
+                "version_or_commit": "Search-rendered official article modified 2026-06-12",
+                "locator": "Upload from video page versus editor; language replacement and complete/export behavior"
+              },
+              {
+                "source_id": "E15",
+                "url": "https://support.amara.org/support/solutions/articles/25931-create-a-private-team-on-amara-",
+                "version_or_commit": "Official support article modified 2024-07-03; search-rendered copy",
+                "locator": "Team types; privacy option; roles/admission; workflows; import/export; Integrated"
+              },
+              {
+                "source_id": "E16",
+                "url": "https://support.amara.org/support/solutions/articles/195345-create-captions-and-translations",
+                "version_or_commit": "Live support URL; direct retrieval unavailable",
+                "locator": "Requested editor article"
+              }
+            ],
+            "judgment": "HONESTLY_EXTERNALLY_UNRESOLVED_OPTION",
+            "reasoning": "Official team support supports the collaboration lead. The candid weak-verification disclosure and pre-upload conditions are proportionate for an unselected optional product."
+          },
+          {
+            "claim_id": "T14",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "36",
+            "candidate_passage": "IMSC 1.2 ... interchange alternative where a named partner or richer profile need requires it",
+            "original_obligation": "O1,O2",
+            "primary_evidence": [
+              {
+                "source_id": "E19",
+                "url": "https://www.w3.org/TR/2020/REC-ttml-imsc1.2-20200804/",
+                "version_or_commit": "W3C Recommendation 2020-08-04",
+                "locator": "Abstract/scope and text/image profiles"
+              }
+            ],
+            "judgment": "SUPPORTED",
+            "reasoning": "This is a materially distinct, retained format lead with a suitability condition, not an invented universal production requirement."
+          },
+          {
+            "claim_id": "T15",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "40,88,96",
+            "candidate_passage": "DCMP ... context ... not universal WCAG limits or a single ... score",
+            "original_obligation": "O2,O5,O6",
+            "primary_evidence": [
+              {
+                "source_id": "E18",
+                "url": "https://dcmp.org/captioningkey/print",
+                "version_or_commit": "Living guide retrieved 2026-10-09",
+                "locator": "Quality dimensions; meaningful sounds; caption duration; educational presentation rates"
+              }
+            ],
+            "judgment": "SUPPORTED",
+            "reasoning": "Audience/language quality review survives revision; published tracks receive complete human review, not merely a representative pilot."
+          },
+          {
+            "claim_id": "T16",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "18,65-67,86,98",
+            "candidate_passage": "internal working draft ... publicly distributing ... outside service",
+            "original_obligation": "O2,O4,O5",
+            "primary_evidence": [
+              {
+                "source_id": "E24",
+                "url": "https://www.copyright.gov/title17/92chap1.html",
+                "version_or_commit": "Current Copyright Office compilation; also checked GovInfo 2023 section 106",
+                "locator": "Sections 101 and 106, subject to sections 107-122"
+              },
+              {
+                "source_id": "E25",
+                "url": "https://www.copyright.gov/circs/circ14.pdf",
+                "version_or_commit": "Circular 14, 14.0720; four-page PDF",
+                "locator": "Page 1 derivative-work examples; authorization discussion; obsolete registration-policy notice"
+              }
+            ],
+            "judgment": "SUPPORTED_USE_CONDITIONAL",
+            "reasoning": "The final narrows categorical rights prose into unresolved use-specific facts. It neither presumes an exception nor converts a U.S. example into a worldwide rule."
+          },
+          {
+            "claim_id": "T17",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "63,98",
+            "candidate_passage": "separate reviewer/publisher ... where staffing permits ... equivalent second check",
+            "original_obligation": "O1,O5,O6",
+            "primary_evidence": [],
+            "judgment": "SUPPORTED_DESIGN_PROPOSAL",
+            "reasoning": "The correction/rollback mechanism stays concrete while adapting role separation to an unknown small team. No runtime authorization result is claimed."
+          },
+          {
+            "claim_id": "T18",
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+            "candidate_lines": "16,78,85,90-102",
+            "candidate_passage": "scanner ... one scoped ... all proposed, none executed",
+            "original_obligation": "O4,O6",
+            "primary_evidence": [
+              {
+                "source_id": "E20",
+                "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+                "version_or_commit": "Informative guidance updated 2024-05-13",
+                "locator": "What Evaluation Tools Can Do and Can Not Do"
+              }
+            ],
+            "judgment": "SUPPORTED",
+            "reasoning": "Scan, parser, human content, actual keyboard/AT and permission checks use different oracles. The lone artifact-integrity check is expressly not product validation."
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "meaning": "All consequential candidate claim/applicability clusters, selected mechanisms, plan dispositions and criticism dependencies were reviewed. Conditional/historical uncertainties have explicit adjudications, not omitted scope. This does not claim every possible fact about every product was investigated."
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "read_artifacts": {
+          "final": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+          "draft": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/draft.md",
+          "discovery": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/discovery.md",
+          "critic": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic/critique.md"
+        },
+        "checked_topics": [
+          {
+            "topic": "Standards and track/timing semantics",
+            "predecessor_locator": "discovery 21-37; draft 19-21,55",
+            "final_locator": "final 32-40,73,77,92",
+            "judgment": "Material semantics and target applicability survive. Equal-start/overlap detail is compressed into validity checks, not replaced by a contradictory ban."
+          },
+          {
+            "topic": "Player options and defaults",
+            "predecessor_locator": "discovery 39-51; draft 25-33",
+            "final_locator": "final 12,42-49,74,94",
+            "judgment": "Native/Able/Video.js, extra tab-stop default and provider-local text split remain. Fix-timeline omission is tracked in N1-m1, not attributed to revision loss."
+          },
+          {
+            "topic": "Editor/format/service options",
+            "predecessor_locator": "discovery 33-37,53-57; draft 39,47,70-78",
+            "final_locator": "final 36,53-59,75-76",
+            "judgment": "Subtitle Edit, local/cloud, Amara and IMSC remain conditional practical alternatives. Application-license versus engine-license distinction is retained."
+          },
+          {
+            "topic": "Timing quality and complete review",
+            "predecessor_locator": "discovery 59-67,98-104; draft 90,108-121",
+            "final_locator": "final 40,88,90-102",
+            "judgment": "Context-specific numeric detail is shortened but its non-universal status and complete published-track review survive."
+          },
+          {
+            "topic": "Workflow/rights and user decisions",
+            "predecessor_locator": "discovery 69-92; draft 80-106",
+            "final_locator": "final 61-67,98,104-116",
+            "judgment": "Public submissions cannot directly publish; review, authorized release and rollback remain concrete, with staffing-adapted approval and use-specific rights."
+          },
+          {
+            "topic": "Critic 1: P3 publishing imputation",
+            "predecessor_locator": "critic 9-13",
+            "final_locator": "final 59,75,82",
+            "judgment": "Accept clearer wording. The draft already retained optional machine drafts and rejected only publication; the critic's strongest reading would overstate the original error."
+          },
+          {
+            "topic": "Critic 2: text editor",
+            "predecessor_locator": "critic 15-19",
+            "final_locator": "final 55,76,83",
+            "judgment": "Accept the optional enhancement framing; substantive timing/review requirements are not erased."
+          },
+          {
+            "topic": "Critic 3: transcript count",
+            "predecessor_locator": "critic 21-25",
+            "final_locator": "final 32-34,77,84",
+            "judgment": "Accept already-covered minimum with conditional visual/language enhancements. The draft had already retained the original minimum, so this is not recovery of an absent transcript."
+          },
+          {
+            "topic": "Critic 4: scanner",
+            "predecessor_locator": "critic 27-31",
+            "final_locator": "final 16,78,85,100",
+            "judgment": "Accept scope clarification and direct keyboard testing. The final continues to run a selected scoped scanner, not remove it."
+          },
+          {
+            "topic": "Critic 5: rights",
+            "predecessor_locator": "critic 33-37; research primary-source-notes recommendation 9",
+            "final_locator": "final 18,65-67,86",
+            "judgment": "Accept narrowing of categorical clearance prose. An inventory itself is reasonable; the critic does not establish that the original author explicitly claimed a new license for every internal edit."
+          },
+          {
+            "topic": "Additional cautions",
+            "predecessor_locator": "critic 50-77",
+            "final_locator": "final 63,88,96,104-116",
+            "judgment": "Small-team flexibility, all released-track review, DCMP/scan limits, Amara uncertainty and unresolved product policies are explicitly retained."
+          },
+          {
+            "topic": "Nonmaterial compression",
+            "predecessor_locator": "draft 84,88; discovery 47,67",
+            "final_locator": "final 46,63,88,98",
+            "judgment": "No-autoplay and some detailed UI/numeric/engine examples are not repeated verbatim. They were not mandatory original obligations or independently proved runtime results; removing those details does not remove a material mechanism or qualification."
+          }
+        ],
+        "material_losses": []
+      },
+      "plan_dispositions": [
+        {
+          "clause": "P1",
+          "exact_text": "Host MP4 files and WebVTT captions.",
+          "candidate_lines": "73",
+          "disposition": "Already covered, conditional",
+          "judgment": "The proposed revision/metadata/deployment/rights conditions retain the baseline. No format, hosting or capacity guarantee is invented."
+        },
+        {
+          "clause": "P2",
+          "exact_text": "Use the browser default player.",
+          "candidate_lines": "74",
+          "disposition": "User decision pending support matrix",
+          "judgment": "Retains native controls as a viable baseline and requires the same-task comparison before selection. Appropriate uncertainty, no false accessibility failure."
+        },
+        {
+          "clause": "P3",
+          "exact_text": "Generate translations automatically.",
+          "candidate_lines": "75,82",
+          "disposition": "Ambiguous/user decision; optional internal machine drafts",
+          "judgment": "Precisely preserves the brief's draft request and restricts human publication QA to public release. It does not reject automatic generation."
+        },
+        {
+          "clause": "P4",
+          "exact_text": "Edit captions in a text editor.",
+          "candidate_lines": "76,83",
+          "disposition": "Already covered for text edits; optional timing editor",
+          "judgment": "Accurately avoids a mandatory specialized-tool correction. Valid syntax and final-media timing checks apply whichever tool is used."
+        },
+        {
+          "clause": "P5",
+          "exact_text": "Publish one transcript per video.",
+          "candidate_lines": "77,84",
+          "disposition": "Already covered minimum; conditional enhancements",
+          "judgment": "The source-language minimum survives; other languages, full media alternative and description remain justified content/target decisions rather than universal additions."
+        },
+        {
+          "clause": "P6",
+          "exact_text": "Run an automated accessibility scanner.",
+          "candidate_lines": "78,85",
+          "disposition": "Already covered with scope clarification",
+          "judgment": "Retains a chosen scan with scope/version/findings and supplements it with discriminating human and structural checks. This directly respects the brief's no-single-score constraint."
+        }
+      ],
+      "grade_limits": [
+        "Research/planning pass only: no production accessibility, caption accuracy, actual rights clearance, browser compatibility or CMS authorization result.",
+        "No material defect remains at the explicit modest-product scope; minor findings are fully recorded and do not disappear into the overall grade.",
+        "Candidate artifact integrity and citation counts are not scientific grades.",
+        "Unknown native lifecycle, usage and billing are separate from complete scientific delivery."
+      ]
+    }
+  },
+  "method_clues": {
+    "partial_blinding": true,
+    "description": "Neutral labels were supplied, but paths, front matter and exact stage assignments reveal control separate reviser versus treatment retained author. No candidate history, other case, campaign state or other evaluator answer was used. Methods are disclosed, not a grading signal."
+  },
+  "comparative_quality_eligible": true,
+  "comparative_assessment": "Both finals independently pass at the assigned research/planning scope with minor limitations. N1 interprets the thin clauses more exactly and gives a useful pinned transcript default; N2 traces the merged player fix and release/beta boundary more completely and spells out description delivery. This does not establish equality, a universal winner, faster scientific success, or a cost advantage.",
+  "scope_limits": [
+    "Only the exact original brief, frozen plan, rubric, listed stage artifacts and declared source-root files were used for the scientific candidate review, supplemented by public primary sources.",
+    "The repository Plans index was read only to honor AGENTS instructions; it supplied no experiment evidence and no repository file was changed.",
+    "Both complete finals and every discovery/draft/critique were read in full; truncated tool output portions were re-read in focused ranges.",
+    "No supplied site, media, track, runtime, CMS, target support matrix or qualified user/AT environment exists in the frozen inputs; product validation is not a deliverable requirement here.",
+    "Public-source checks establish standards/documentation/release/report facts, not independently tested software behavior. No executable, package, source application, browser/player/editor, scanner or service was run.",
+    "Historical moving-page views cannot be reconstructed from frozen paraphrase-only source notes. The minor currentness caveats are explicit; no unexamined required claim scope remains.",
+    "No candidate was repaired or contacted, no worker delegated, no account/configuration/Git/canon change made.",
+    "The original deadline remained 2026-10-09T19:44:34.772859+00:00; it was not reset. evaluation_started_at below is the first reliable observed clock after startup, not a measurement of all startup time."
+  ],
+  "evaluation_started_at": "2026-10-09T19:20:18+00:00",
+  "evaluation_completed_at": "2026-10-09T19:36:15.403117+00:00",
+  "observed_source_operations": {
+    "local": "Read and hashed all 42 allowed input/stage/source-note files; verified every input-map declared artifact byte length and SHA-256. Mechanical checks support provenance only.",
+    "public_web": "Direct primary-source opens, focused find/open reads, and official-domain Amara/Able release searches. Actual calls are preserved in the thread tool trace; no citation count used for grading.",
+    "public_terminal": "Retrieved pinned README, FAQ, changelog and licenses, and official HTML as text only. Successful response hashes/access times and redirect-loop failures from the bounded first retrieval batch are saved in retrieval-metadata.json. Further read-only text retrievals are in the tool trace.",
+    "limitations": "An initial text-parsing attempt found bs4 unavailable and read no source; the retry used Python standard library without installation. Amara direct opens/requests failed, so official search-rendered article content was used with explicit limits.",
+    "final_source_check": "After saving the draft assessment, independently read chapter nesting constraints, provider transcript/search/appearance limits and the SE4/SE5 migration qualification. These confirmed existing judgments; no candidate was edited."
+  },
+  "native_and_cost_limits": {
+    "reviewer_native_goal_completion_at_science_save": null,
+    "candidate_native_completion": {
+      "N2": null,
+      "N1": null
+    },
+    "t3_delivery_completion": {
+      "N2": null,
+      "N1": null
+    },
+    "usage": null,
+    "billing": null,
+    "science_delivery": {
+      "N2": true,
+      "N1": true
+    },
+    "note": "Actual native create/get calls observed an active reviewer Goal. Science is saved before the actual update_goal completion call; no handwritten Goal receipt is created. Candidate/T3 lifecycle and usage/billing are not established by prose, paths or artifact checks. Unknown fields remain null."
+  },
+  "bounded_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-B/retrieval-metadata.json",
+      "sha256": "a03dbe7bbf2a10ee4bed3634811dae6f8a70ea068a0c3ccae844caf9a678a080",
+      "purpose": "Bounded primary retrieval metadata, exact successful response hashes/times and failed redirect attempts; source content was not archived or executed."
+    }
+  ]
+}

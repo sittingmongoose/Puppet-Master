@@ -1,0 +1,4259 @@
+{
+  "block": "A-M10-A",
+  "case": "S10",
+  "rubric": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S10/brief.md",
+      "sha256": "17322e03cfaa4aad42ef991cbf666e5ca646cca2439f71b748c8642761ccbbf2",
+      "bytes": 1420,
+      "role": "brief"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S10/plan-root-only.md",
+      "sha256": "3f5acb86924c2981486d394c7e57a6578fdafd05ad7345800fda856c84dbf6bf",
+      "bytes": 312,
+      "role": "frozen_plan"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939,
+      "role": "rubric"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/assignment.md",
+      "sha256": "c767478abb49dba10fcad8f081e2456e8f35e99d358727ba3c29ddaf7e043553",
+      "bytes": 2170,
+      "role": "evaluator_assignment.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/input-map.json",
+      "sha256": "68cbf231fa46421ebdb1c81e702f7a78dae6d6811d76d5bea93bd42d8fcdc6fe",
+      "bytes": 9634,
+      "role": "evaluator_input-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+      "sha256": "a33d8fef4ea748b09610f481247645de4ba14dec2cb78bc16930dcde250746ec",
+      "bytes": 29024,
+      "role": "N2_reviser_final.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/source-map.json",
+      "sha256": "56a56eb6b15b07aa127adafe352f43773f9d94c4f6951a6cc1f3d1698836a93a",
+      "bytes": 47516,
+      "role": "N2_reviser_source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/assignment.md",
+      "sha256": "3bacb70e8920f4a33ff84eb4b1798f7896ce8e9e7ac168b295e3c8bbf06805b7",
+      "bytes": 2837,
+      "role": "N2_reviser_assignment.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/input-map.json",
+      "sha256": "b2bca9bd19056b9450d37e936a3dc5297fdd85c492b3f6e09df0808ca7c9d4a7",
+      "bytes": 1504,
+      "role": "N2_reviser_input-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/critique.md",
+      "sha256": "632e344f97ac4ada876d4dfb164bdd24ca546c6ad7641ca0c1eb053c34486bc4",
+      "bytes": 14186,
+      "role": "N2_critic_critique.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "sha256": "de9ae780f3150c731478f16cfbc81f79fe6e6ca741caecd39e611e4e87f135ab",
+      "bytes": 10230,
+      "role": "N2_critic_source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/assignment.md",
+      "sha256": "7991a2e578d6ae6780c29b0a7982d8bf58e69b065a57fe8c39c03e7a4d6a6b7a",
+      "bytes": 2574,
+      "role": "N2_critic_assignment.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/input-map.json",
+      "sha256": "0bdbd24a43871be3d77f6a685480cc73c0a560b1584726c8555e6bd4e1b18ca1",
+      "bytes": 1180,
+      "role": "N2_critic_input-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/discovery.md",
+      "sha256": "cb49c9c8095cacac7786fadbff7b639db04e5be16bb354728c9032e16320283b",
+      "bytes": 15416,
+      "role": "N2_research_discovery.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/draft.md",
+      "sha256": "aaf2de38bcfa9a9cda75b4c5c4da12817c1c54d893856e98d4e045abf130472c",
+      "bytes": 17895,
+      "role": "N2_research_draft.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "sha256": "79f196b285904c65c883f3a70ffc81207905cc34fd8c20e61242c5391dab9be3",
+      "bytes": 16820,
+      "role": "N2_research_source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/revealed-plan.md",
+      "sha256": "3f5acb86924c2981486d394c7e57a6578fdafd05ad7345800fda856c84dbf6bf",
+      "bytes": 312,
+      "role": "N2_research_revealed-plan.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/plan-reveal.json",
+      "sha256": "62e4fdb06621d3b5741efd476be1a94dba19143b2df0465fb75679d15efff775",
+      "bytes": 276,
+      "role": "N2_research_plan-reveal.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/assignment.md",
+      "sha256": "3dd86c58fb53250ab24aff18d8ebe0176c3e62eef9a7e4fb4ba94e58c090ab42",
+      "bytes": 3050,
+      "role": "N2_research_assignment.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/input-map.json",
+      "sha256": "1a6b7bdb4adffd013515e346beffc711ec6bf581ff457b2d4fee136aa4dcd1bf",
+      "bytes": 634,
+      "role": "N2_research_input-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/sources/README.md",
+      "sha256": "d3e907427f9f59decd619077b67340e8dcbd685e18f8751a482c2964799f9cf7",
+      "bytes": 1415,
+      "role": "N2_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/sources/independent-checks.md",
+      "sha256": "602796858851201da35a3b9d440a72973344a224520bcf3b956453f3c1457cfa",
+      "bytes": 3236,
+      "role": "N2_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources/README.md",
+      "sha256": "00ae7ce7ad359a1577f444a08b83dda81b5cd973d8fe33af35445c2369430d45",
+      "bytes": 887,
+      "role": "N2_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources/primary-checks.md",
+      "sha256": "ead22bcf009c5d715804da852b307fea673d8739bf3a503329ce942ed688ab52",
+      "bytes": 5300,
+      "role": "N2_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources/README.md",
+      "sha256": "20d2d352b26254cfb26cfe4b7d8eb58641189037b30558e7b79a8f33db0414f0",
+      "bytes": 730,
+      "role": "N2_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources/duckdb.md",
+      "sha256": "13f10b419fc38184ee812e18f8a656ebefb0af02c257a379416a55f509ca3b0c",
+      "bytes": 5775,
+      "role": "N2_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources/products.md",
+      "sha256": "728b69adc0fc52632249e9affd1568f3dc47f1734466628db544e7c5a2a782d7",
+      "bytes": 4957,
+      "role": "N2_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources/rust-readers.md",
+      "sha256": "faa496175607e9ab2e5ed03e6430f88b457bfccf3a265ade5c109c6f17f9c9e4",
+      "bytes": 2800,
+      "role": "N2_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+      "sha256": "e9b416622bbc793c3902740bfe5935b898c6c8fe4bc292edfab5a480cc64724f",
+      "bytes": 30870,
+      "role": "N1_reviser_final.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/source-map.json",
+      "sha256": "36a6898e4b153202d369532366cbeae892280682180caeb06868342c5051129c",
+      "bytes": 41125,
+      "role": "N1_reviser_source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/assignment.md",
+      "sha256": "92e507cca753fc9c3ad901d7844ee5e2a9ea4a56b9d248e442515b0ef4d5593d",
+      "bytes": 3266,
+      "role": "N1_reviser_assignment.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/input-map.json",
+      "sha256": "a3f7b38d58584a93682d8274d765c709a1668fbf86490c6ca831ec9444c51c77",
+      "bytes": 1526,
+      "role": "N1_reviser_input-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/critique.md",
+      "sha256": "11f6ac5af16ec116afb3a6477eeeae2aa470c2200d38b91f9091d620e7e97170",
+      "bytes": 20738,
+      "role": "N1_critic_critique.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/source-map.json",
+      "sha256": "877362dc8114ce85e5e3befd003205c459019263c1689d11f72613b2d5a27e77",
+      "bytes": 25128,
+      "role": "N1_critic_source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/assignment.md",
+      "sha256": "3338b83946d087e22cc2cb2256c13aa73a1048a87705fb5bf67e684be01466c3",
+      "bytes": 3003,
+      "role": "N1_critic_assignment.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/input-map.json",
+      "sha256": "d8582062af570ab61bddeaa3db75b3666a6d89aa744f167f9828ea1ce8bb3663",
+      "bytes": 1196,
+      "role": "N1_critic_input-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/discovery.md",
+      "sha256": "66bc2ab4e0226b2b23b7f8a69c1ad7e5d93d048f0b58e5eb94e2549512e264b0",
+      "bytes": 15421,
+      "role": "N1_research_discovery.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/draft.md",
+      "sha256": "c9a128dde1a37e017628657a7ccb645fcba91b68b2ff216022e932e126c7eb67",
+      "bytes": 11934,
+      "role": "N1_research_draft.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json",
+      "sha256": "0b2445f4ec3c58839e751696e18d02154988f4b1619bd318ebb9f7bb745bb044",
+      "bytes": 12317,
+      "role": "N1_research_source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/revealed-plan.md",
+      "sha256": "3f5acb86924c2981486d394c7e57a6578fdafd05ad7345800fda856c84dbf6bf",
+      "bytes": 312,
+      "role": "N1_research_revealed-plan.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/plan-reveal.json",
+      "sha256": "d244522910d27026cb8ccef697169c615fea76ff0b3dc1ce257d24245e9b3122",
+      "bytes": 276,
+      "role": "N1_research_plan-reveal.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/assignment.md",
+      "sha256": "b79caef5ff67d50b4b77d8509b6df794406edcd83d3b3b92dc9a25cd7767ec4d",
+      "bytes": 3481,
+      "role": "N1_research_assignment.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/input-map.json",
+      "sha256": "5510846b884c4021721539e779a40556d747d80a5894e2f4d552a19563c79fe4",
+      "bytes": 640,
+      "role": "N1_research_input-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/sources/index.md",
+      "sha256": "3351cc01da6502459e112dd4cf0c5a2a6e961b0020a2bedffb83041c679ef6e6",
+      "bytes": 11223,
+      "role": "N1_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/sources/observations.md",
+      "sha256": "361b084e0bc29c6b1e7e5880d2c1c019e8946f9db89e4b92e29ed3fdc5c60dc5",
+      "bytes": 7898,
+      "role": "N1_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/sources/index.md",
+      "sha256": "0de6e21c0411d8b6dce96a4d939696709a82b4a0465c3b0a6d4638068d5af418",
+      "bytes": 9529,
+      "role": "N1_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/sources/observations.md",
+      "sha256": "006123c459f0b6c71a66fdee0d60c60388a98f1e0c4043ccd58fadeedce3b827",
+      "bytes": 10343,
+      "role": "N1_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/sources/index.md",
+      "sha256": "ab334e55f1833f3f3235aee8aa8cd06cf806ff34162cd6dbf3d96dbd8f8ee4e7",
+      "bytes": 4991,
+      "role": "N1_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/sources/observations.md",
+      "sha256": "ab334e55f1833f3f3235aee8aa8cd06cf806ff34162cd6dbf3d96dbd8f8ee4e7",
+      "bytes": 4991,
+      "role": "N1_source_note"
+    }
+  ],
+  "arms": {
+    "N2": {
+      "actual_arm": "control",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+      "grade": "PASS_WITH_LIMITATIONS",
+      "material_findings": [],
+      "minor_findings": [
+        {
+          "id": "N2-m1",
+          "type": "EXCESS_UNCERTAINTY_ON_AVAILABLE_TAGGED_DEFAULT",
+          "severity": "minor_research_depth",
+          "original_obligation": [
+            "O2",
+            "O5"
+          ],
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            31,
+            99
+          ],
+          "passage": "The current guide demonstrates a configurable limit_errors control but does not establish a 1,000-error default for a pinned release.",
+          "primary_evidence": [
+            {
+              "id": "E23",
+              "url": "https://framework.frictionlessdata.io/docs/guides/validating-data",
+              "version_or_release": "Frictionless current validation guide; code default checked at tag v5.20.0",
+              "locator": [
+                "limit_errors",
+                "limit_errors",
+                "rowNumber",
+                "rowNumber",
+                "rowNumber",
+                "rowNumber",
+                "fieldNumber",
+                "fieldNumber",
+                "fieldNumber",
+                "fieldNumber",
+                "custom",
+                "custom",
+                "custom",
+                "custom"
+              ]
+            },
+            {
+              "id": "J09",
+              "url": "https://raw.githubusercontent.com/frictionlessdata/frictionless-py/v5.20.0/frictionless/settings.py",
+              "version_or_release": "frictionless-py source tag v5.20.0, settings.DEFAULT_LIMIT_ERRORS",
+              "locator": [
+                "LIMIT_ERRORS",
+                "1000",
+                "1000",
+                "1000",
+                "limit",
+                "limit",
+                "limit"
+              ]
+            },
+            {
+              "id": "J10",
+              "url": "https://raw.githubusercontent.com/frictionlessdata/frictionless-py/v5.20.0/frictionless/resource/resource.py",
+              "version_or_release": "frictionless-py source tag v5.20.0, Resource.validate default/limit logic",
+              "locator": [
+                "limit_errors",
+                "limit_errors",
+                "limit_errors",
+                "DEFAULT_LIMIT_ERRORS"
+              ]
+            },
+            {
+              "id": "K07",
+              "url": "https://github.com/frictionlessdata/frictionless-py/releases/tag/v5.20.0",
+              "version_or_release": "frictionless-py v5.20.0 release HTML datetime 2026-10-08T20:48:01Z",
+              "locator": [
+                "3988672",
+                "release timestamp"
+              ]
+            }
+          ],
+          "reasoning": "The guide alone was insufficient, but tagged v5.20.0 settings and Resource.validate confirm 1000 and actual default binding/partial warning logic. Candidate says unverified rather than false and retains cap disclosure; useful specific detail is underconfidently preserved, not a material false mechanism conclusion."
+        }
+      ],
+      "unresolved": [
+        {
+          "kind": "PRODUCT_DECISION",
+          "issue": "Supported platforms/workbook formats, source stored/display/formula representation and cache/recalculation policy remain unspecified by original brief.",
+          "material_fail": false
+        },
+        {
+          "kind": "PRODUCT_DECISION",
+          "issue": "Null vocabulary, date/locale ambiguity policy, encoding/recovery and permitted transformations/export decisions require owner selection.",
+          "material_fail": false
+        },
+        {
+          "kind": "EXTERNALLY_UNVERIFIED",
+          "issue": "No measured minimum hardware/file envelope, RSS/temp/latency/cancellation, deployment/offline first use, usability or deterministic product recipe replay. No such result is claimed.",
+          "material_fail": false
+        },
+        {
+          "kind": "VERSION_PIN_DEPENDENCY",
+          "issue": "Mutable documentation must be checked against any future selected implementation. The two current DuckDB line-cap pages disagree; no numeric product limit is adopted.",
+          "material_fail": false
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "COMPLETE_ACTUAL_REVIEW",
+          "judgment": "SATISFIED",
+          "reasoning": "Reviewed O1–O6 and every explicit brief constraint: large CSV, occasional workbooks, inference preview, source/identifier retention, understandable rejects, monthly replay and modest-memory investigation. No fabricated thresholds.",
+          "evidence": {
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+            "candidate_lines": [
+              5,
+              15,
+              19,
+              24,
+              34,
+              44,
+              108,
+              116,
+              140
+            ],
+            "primary_sources": [
+              {
+                "id": "E01",
+                "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "default sample",
+                  "cannot jump",
+                  "all columns",
+                  "all columns",
+                  "all columns",
+                  "1000",
+                  "1000"
+                ]
+              },
+              {
+                "id": "E04",
+                "url": "https://duckdb.org/docs/current/core_extensions/excel",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "first sheet",
+                  "empty_as_varchar",
+                  "empty_as_varchar",
+                  "empty_as_varchar",
+                  "ignore_errors",
+                  "first \"data\"",
+                  "stop_at_empty",
+                  ".xls",
+                  ".xls",
+                  ".xls",
+                  ".xls"
+                ]
+              },
+              {
+                "id": "E09",
+                "url": "https://docs.rs/csv/1.4.0/csv/struct.ByteRecord.html",
+                "version_or_release": "csv 1.4.0 versioned API",
+                "locator": [
+                  "raw byte",
+                  "UTF-8",
+                  "UTF-8",
+                  "position",
+                  "position",
+                  "position",
+                  "position"
+                ]
+              },
+              {
+                "id": "E11",
+                "url": "https://docs.rs/calamine/0.36.1/calamine/struct.ExcelDateTime.html",
+                "version_or_release": "calamine 0.36.1 versioned API",
+                "locator": [
+                  "millisecond",
+                  "millisecond",
+                  "millisecond",
+                  "timezone",
+                  "1904",
+                  "1904",
+                  "1904",
+                  "leap"
+                ]
+              },
+              {
+                "id": "E20",
+                "url": "https://openrefine.org/docs/manual/running",
+                "version_or_release": "OpenRefine current unversioned manual",
+                "locator": [
+                  "single cell",
+                  "Extract",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "internet",
+                  "internet",
+                  "internet",
+                  "Java",
+                  "Java",
+                  "Java",
+                  "Java"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "axis": 2,
+          "coverage": "COMPLETE_ACTUAL_REVIEW",
+          "judgment": "SATISFIED_WITH_MINOR_QUALIFICATION",
+          "reasoning": "Checked selected consequential defaults/types/units/domain and release applicability. Frictionless default independently confirmed, while candidate honestly left it unresolved. No material false governing fact found.",
+          "evidence": {
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+            "candidate_lines": [
+              26,
+              27,
+              30,
+              31,
+              34,
+              38,
+              54,
+              60,
+              110,
+              112
+            ],
+            "primary_sources": [
+              {
+                "id": "E01",
+                "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "default sample",
+                  "cannot jump",
+                  "all columns",
+                  "all columns",
+                  "all columns",
+                  "1000",
+                  "1000"
+                ]
+              },
+              {
+                "id": "E02",
+                "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "projection pushdown",
+                  "temporary tables",
+                  "temporary tables",
+                  "multiple errors",
+                  "store_rejects",
+                  "store_rejects",
+                  "store_rejects",
+                  "store_rejects",
+                  "rejects_limit",
+                  "2,097,152"
+                ]
+              },
+              {
+                "id": "E04",
+                "url": "https://duckdb.org/docs/current/core_extensions/excel",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "first sheet",
+                  "empty_as_varchar",
+                  "empty_as_varchar",
+                  "empty_as_varchar",
+                  "ignore_errors",
+                  "first \"data\"",
+                  "stop_at_empty",
+                  ".xls",
+                  ".xls",
+                  ".xls",
+                  ".xls"
+                ]
+              },
+              {
+                "id": "E05",
+                "url": "https://duckdb.org/2024/07/09/memory-management",
+                "version_or_release": "DuckDB official article 2024-07-09; not a release pin",
+                "locator": [
+                  "80%",
+                  "temp_directory",
+                  "temp_directory",
+                  "temp_directory",
+                  "memory_limit",
+                  "spilling",
+                  "spilling",
+                  "spilling",
+                  "spilling"
+                ]
+              },
+              {
+                "id": "E06",
+                "url": "https://duckdb.org/docs/current/guides/performance/oom",
+                "version_or_release": "DuckDB current OOM guidance, mutable",
+                "locator": [
+                  "buffer manager",
+                  "memory_limit"
+                ]
+              },
+              {
+                "id": "E07",
+                "url": "https://docs.rs/csv/1.4.0/csv/struct.ReaderBuilder.html",
+                "version_or_release": "csv 1.4.0 versioned API",
+                "locator": [
+                  "flexible",
+                  "flexible",
+                  "flexible",
+                  "flexible",
+                  "delimiter",
+                  "delimiter",
+                  "delimiter",
+                  "delimiter"
+                ]
+              },
+              {
+                "id": "E09",
+                "url": "https://docs.rs/csv/1.4.0/csv/struct.ByteRecord.html",
+                "version_or_release": "csv 1.4.0 versioned API",
+                "locator": [
+                  "raw byte",
+                  "UTF-8",
+                  "UTF-8",
+                  "position",
+                  "position",
+                  "position",
+                  "position"
+                ]
+              },
+              {
+                "id": "E10",
+                "url": "https://docs.rs/calamine/0.36.1/calamine/enum.Data.html",
+                "version_or_release": "calamine 0.36.1 versioned API",
+                "locator": [
+                  "DateTimeIso",
+                  "DateTimeIso",
+                  "DateTimeIso",
+                  "DurationIso",
+                  "DurationIso",
+                  "DurationIso",
+                  "Empty",
+                  "Empty",
+                  "Empty",
+                  "Empty",
+                  "Float",
+                  "Float",
+                  "Float",
+                  "Float"
+                ]
+              },
+              {
+                "id": "E11",
+                "url": "https://docs.rs/calamine/0.36.1/calamine/struct.ExcelDateTime.html",
+                "version_or_release": "calamine 0.36.1 versioned API",
+                "locator": [
+                  "millisecond",
+                  "millisecond",
+                  "millisecond",
+                  "timezone",
+                  "1904",
+                  "1904",
+                  "1904",
+                  "leap"
+                ]
+              },
+              {
+                "id": "E17",
+                "url": "https://learn.microsoft.com/en-us/power-query/connectors/text-csv",
+                "version_or_release": "Microsoft Learn current Text/CSV; host build unspecified",
+                "locator": [
+                  "200",
+                  "Text",
+                  "Text",
+                  "Text",
+                  "Text",
+                  "line break",
+                  "line break",
+                  "line break",
+                  "line break"
+                ]
+              },
+              {
+                "id": "E18",
+                "url": "https://learn.microsoft.com/en-us/power-query/data-types",
+                "version_or_release": "Microsoft Learn current Data types; Desktop and Online differ",
+                "locator": [
+                  "200",
+                  "operating system",
+                  "locale",
+                  "locale",
+                  "locale"
+                ]
+              },
+              {
+                "id": "E19",
+                "url": "https://learn.microsoft.com/en-us/power-query/data-profiling-tools",
+                "version_or_release": "Microsoft Learn current profiling documentation",
+                "locator": [
+                  "1,000"
+                ]
+              },
+              {
+                "id": "E20",
+                "url": "https://openrefine.org/docs/manual/running",
+                "version_or_release": "OpenRefine current unversioned manual",
+                "locator": [
+                  "single cell",
+                  "Extract",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "internet",
+                  "internet",
+                  "internet",
+                  "Java",
+                  "Java",
+                  "Java",
+                  "Java"
+                ]
+              },
+              {
+                "id": "E22",
+                "url": "https://openrefine.org/docs/manual/exploring",
+                "version_or_release": "OpenRefine current unversioned exploring manual",
+                "locator": [
+                  "UTC",
+                  "UTC",
+                  "ISO",
+                  "date",
+                  "date",
+                  "date"
+                ]
+              },
+              {
+                "id": "E23",
+                "url": "https://framework.frictionlessdata.io/docs/guides/validating-data",
+                "version_or_release": "Frictionless current validation guide; code default checked at tag v5.20.0",
+                "locator": [
+                  "limit_errors",
+                  "limit_errors",
+                  "rowNumber",
+                  "rowNumber",
+                  "rowNumber",
+                  "rowNumber",
+                  "fieldNumber",
+                  "fieldNumber",
+                  "fieldNumber",
+                  "fieldNumber",
+                  "custom",
+                  "custom",
+                  "custom",
+                  "custom"
+                ]
+              },
+              {
+                "id": "E24",
+                "url": "https://framework.frictionlessdata.io/docs/formats/excel.html",
+                "version_or_release": "Frictionless current Excel controls guide",
+                "locator": [
+                  "stringified",
+                  "stringified",
+                  "stringified",
+                  "stringified",
+                  "preserve_formatting",
+                  "preserve_formatting",
+                  "schema",
+                  "schema",
+                  "schema",
+                  "schema"
+                ]
+              },
+              {
+                "id": "J09",
+                "url": "https://raw.githubusercontent.com/frictionlessdata/frictionless-py/v5.20.0/frictionless/settings.py",
+                "version_or_release": "frictionless-py source tag v5.20.0, settings.DEFAULT_LIMIT_ERRORS",
+                "locator": [
+                  "LIMIT_ERRORS",
+                  "1000",
+                  "1000",
+                  "1000",
+                  "limit",
+                  "limit",
+                  "limit"
+                ]
+              },
+              {
+                "id": "J10",
+                "url": "https://raw.githubusercontent.com/frictionlessdata/frictionless-py/v5.20.0/frictionless/resource/resource.py",
+                "version_or_release": "frictionless-py source tag v5.20.0, Resource.validate default/limit logic",
+                "locator": [
+                  "limit_errors",
+                  "limit_errors",
+                  "limit_errors",
+                  "DEFAULT_LIMIT_ERRORS"
+                ]
+              },
+              {
+                "id": "H01",
+                "url": "https://api.github.com/repos/duckdb/duckdb/issues/13043",
+                "version_or_release": "DuckDB issue #13043, reporter 1.0.0/macOS arm64/CLI",
+                "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record"
+              },
+              {
+                "id": "H02",
+                "url": "https://api.github.com/repos/duckdb/duckdb/pulls/13083",
+                "version_or_release": "DuckDB PR #13083, merge 50bb0a00d3f095a1ecf462d96b54e6be137ecf4c, 2024-07-20",
+                "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record"
+              },
+              {
+                "id": "H03",
+                "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v1.1.0",
+                "version_or_release": "DuckDB v1.1.0 published 2024-09-09",
+                "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record"
+              },
+              {
+                "id": "H04",
+                "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v1.5.6",
+                "version_or_release": "DuckDB v1.5.6, 069cc9f9b5be802405797faecc284961b07c70ef, published 2026-09-28",
+                "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record"
+              },
+              {
+                "id": "H05",
+                "url": "https://api.github.com/repos/tafia/calamine/releases/tags/v0.36.1",
+                "version_or_release": "Calamine v0.36.1 published 2026-07-27",
+                "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record"
+              }
+            ]
+          }
+        },
+        {
+          "axis": 3,
+          "coverage": "COMPLETE_ACTUAL_REVIEW",
+          "judgment": "SATISFIED",
+          "reasoning": "Distinct native, SQL, hybrid, product and schema/report approaches retained with implementation boundaries and custom-reader conditional lead. No measured winner asserted.",
+          "evidence": {
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+            "candidate_lines": [
+              24,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              34
+            ],
+            "primary_sources": [
+              {
+                "id": "E01",
+                "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "default sample",
+                  "cannot jump",
+                  "all columns",
+                  "all columns",
+                  "all columns",
+                  "1000",
+                  "1000"
+                ]
+              },
+              {
+                "id": "E04",
+                "url": "https://duckdb.org/docs/current/core_extensions/excel",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "first sheet",
+                  "empty_as_varchar",
+                  "empty_as_varchar",
+                  "empty_as_varchar",
+                  "ignore_errors",
+                  "first \"data\"",
+                  "stop_at_empty",
+                  ".xls",
+                  ".xls",
+                  ".xls",
+                  ".xls"
+                ]
+              },
+              {
+                "id": "E07",
+                "url": "https://docs.rs/csv/1.4.0/csv/struct.ReaderBuilder.html",
+                "version_or_release": "csv 1.4.0 versioned API",
+                "locator": [
+                  "flexible",
+                  "flexible",
+                  "flexible",
+                  "flexible",
+                  "delimiter",
+                  "delimiter",
+                  "delimiter",
+                  "delimiter"
+                ]
+              },
+              {
+                "id": "E10",
+                "url": "https://docs.rs/calamine/0.36.1/calamine/enum.Data.html",
+                "version_or_release": "calamine 0.36.1 versioned API",
+                "locator": [
+                  "DateTimeIso",
+                  "DateTimeIso",
+                  "DateTimeIso",
+                  "DurationIso",
+                  "DurationIso",
+                  "DurationIso",
+                  "Empty",
+                  "Empty",
+                  "Empty",
+                  "Empty",
+                  "Float",
+                  "Float",
+                  "Float",
+                  "Float"
+                ]
+              },
+              {
+                "id": "E20",
+                "url": "https://openrefine.org/docs/manual/running",
+                "version_or_release": "OpenRefine current unversioned manual",
+                "locator": [
+                  "single cell",
+                  "Extract",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "internet",
+                  "internet",
+                  "internet",
+                  "Java",
+                  "Java",
+                  "Java",
+                  "Java"
+                ]
+              },
+              {
+                "id": "E21",
+                "url": "https://openrefine.org/docs/manual/exporting",
+                "version_or_release": "OpenRefine current unversioned export manual",
+                "locator": [
+                  "confidential",
+                  "history",
+                  "history",
+                  "history",
+                  "history",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "operations",
+                  "operations"
+                ]
+              },
+              {
+                "id": "E23",
+                "url": "https://framework.frictionlessdata.io/docs/guides/validating-data",
+                "version_or_release": "Frictionless current validation guide; code default checked at tag v5.20.0",
+                "locator": [
+                  "limit_errors",
+                  "limit_errors",
+                  "rowNumber",
+                  "rowNumber",
+                  "rowNumber",
+                  "rowNumber",
+                  "fieldNumber",
+                  "fieldNumber",
+                  "fieldNumber",
+                  "fieldNumber",
+                  "custom",
+                  "custom",
+                  "custom",
+                  "custom"
+                ]
+              },
+              {
+                "id": "K08",
+                "url": "https://framework.frictionlessdata.io/docs/getting-started.html",
+                "version_or_release": "Frictionless current getting-started guide",
+                "locator": [
+                  "Python",
+                  "Python",
+                  "Python",
+                  "CSV",
+                  "CSV",
+                  "CSV",
+                  "Excel",
+                  "Excel"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "axis": 4,
+          "coverage": "COMPLETE_ACTUAL_REVIEW",
+          "judgment": "SATISFIED",
+          "reasoning": "All exact clauses checked. P1/P4/P5/P6 useful baselines with enhancements; P2 implicit locale correction; P3 missing vocabulary user choice. Corrections expressly conditional on actual stronger defective behavior.",
+          "evidence": {
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+            "candidate_lines": [
+              44,
+              46,
+              52,
+              54,
+              58,
+              60,
+              66,
+              68,
+              74,
+              76,
+              82,
+              84,
+              86
+            ],
+            "primary_sources": [
+              {
+                "id": "E01",
+                "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "default sample",
+                  "cannot jump",
+                  "all columns",
+                  "all columns",
+                  "all columns",
+                  "1000",
+                  "1000"
+                ]
+              },
+              {
+                "id": "E02",
+                "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "projection pushdown",
+                  "temporary tables",
+                  "temporary tables",
+                  "multiple errors",
+                  "store_rejects",
+                  "store_rejects",
+                  "store_rejects",
+                  "store_rejects",
+                  "rejects_limit",
+                  "2,097,152"
+                ]
+              },
+              {
+                "id": "E17",
+                "url": "https://learn.microsoft.com/en-us/power-query/connectors/text-csv",
+                "version_or_release": "Microsoft Learn current Text/CSV; host build unspecified",
+                "locator": [
+                  "200",
+                  "Text",
+                  "Text",
+                  "Text",
+                  "Text",
+                  "line break",
+                  "line break",
+                  "line break",
+                  "line break"
+                ]
+              },
+              {
+                "id": "E18",
+                "url": "https://learn.microsoft.com/en-us/power-query/data-types",
+                "version_or_release": "Microsoft Learn current Data types; Desktop and Online differ",
+                "locator": [
+                  "200",
+                  "operating system",
+                  "locale",
+                  "locale",
+                  "locale"
+                ]
+              },
+              {
+                "id": "E19",
+                "url": "https://learn.microsoft.com/en-us/power-query/data-profiling-tools",
+                "version_or_release": "Microsoft Learn current profiling documentation",
+                "locator": [
+                  "1,000"
+                ]
+              },
+              {
+                "id": "E20",
+                "url": "https://openrefine.org/docs/manual/running",
+                "version_or_release": "OpenRefine current unversioned manual",
+                "locator": [
+                  "single cell",
+                  "Extract",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "internet",
+                  "internet",
+                  "internet",
+                  "Java",
+                  "Java",
+                  "Java",
+                  "Java"
+                ]
+              },
+              {
+                "id": "E25",
+                "url": "https://www.rfc-editor.org/rfc/rfc4180.txt",
+                "version_or_release": "RFC 4180, Informational, October 2005",
+                "locator": [
+                  "line breaks",
+                  "line breaks",
+                  "optional header",
+                  "differences",
+                  "records"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "axis": 5,
+          "coverage": "COMPLETE_ACTUAL_REVIEW",
+          "judgment": "SATISFIED_WITH_MINOR_QUALIFICATION",
+          "reasoning": "Read entire discovery/draft/critique/final. Main mechanisms, conditions, history leads, uncertainty and validation scope survive in full prose. Every criticism explicitly adjudicated. Tagged Frictionless default underconfidently retained rather than wrongly denied.",
+          "evidence": {
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+            "candidate_lines": [
+              24,
+              38,
+              94,
+              96,
+              97,
+              98,
+              99,
+              100,
+              101,
+              102,
+              103,
+              104,
+              110,
+              112,
+              140
+            ],
+            "primary_sources": [
+              {
+                "id": "E02",
+                "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "projection pushdown",
+                  "temporary tables",
+                  "temporary tables",
+                  "multiple errors",
+                  "store_rejects",
+                  "store_rejects",
+                  "store_rejects",
+                  "store_rejects",
+                  "rejects_limit",
+                  "2,097,152"
+                ]
+              },
+              {
+                "id": "E09",
+                "url": "https://docs.rs/csv/1.4.0/csv/struct.ByteRecord.html",
+                "version_or_release": "csv 1.4.0 versioned API",
+                "locator": [
+                  "raw byte",
+                  "UTF-8",
+                  "UTF-8",
+                  "position",
+                  "position",
+                  "position",
+                  "position"
+                ]
+              },
+              {
+                "id": "E20",
+                "url": "https://openrefine.org/docs/manual/running",
+                "version_or_release": "OpenRefine current unversioned manual",
+                "locator": [
+                  "single cell",
+                  "Extract",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "internet",
+                  "internet",
+                  "internet",
+                  "Java",
+                  "Java",
+                  "Java",
+                  "Java"
+                ]
+              },
+              {
+                "id": "J09",
+                "url": "https://raw.githubusercontent.com/frictionlessdata/frictionless-py/v5.20.0/frictionless/settings.py",
+                "version_or_release": "frictionless-py source tag v5.20.0, settings.DEFAULT_LIMIT_ERRORS",
+                "locator": [
+                  "LIMIT_ERRORS",
+                  "1000",
+                  "1000",
+                  "1000",
+                  "limit",
+                  "limit",
+                  "limit"
+                ]
+              },
+              {
+                "id": "J10",
+                "url": "https://raw.githubusercontent.com/frictionlessdata/frictionless-py/v5.20.0/frictionless/resource/resource.py",
+                "version_or_release": "frictionless-py source tag v5.20.0, Resource.validate default/limit logic",
+                "locator": [
+                  "limit_errors",
+                  "limit_errors",
+                  "limit_errors",
+                  "DEFAULT_LIMIT_ERRORS"
+                ]
+              },
+              {
+                "id": "H01",
+                "url": "https://api.github.com/repos/duckdb/duckdb/issues/13043",
+                "version_or_release": "DuckDB issue #13043, reporter 1.0.0/macOS arm64/CLI",
+                "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record"
+              },
+              {
+                "id": "H02",
+                "url": "https://api.github.com/repos/duckdb/duckdb/pulls/13083",
+                "version_or_release": "DuckDB PR #13083, merge 50bb0a00d3f095a1ecf462d96b54e6be137ecf4c, 2024-07-20",
+                "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record"
+              },
+              {
+                "id": "H03",
+                "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v1.1.0",
+                "version_or_release": "DuckDB v1.1.0 published 2024-09-09",
+                "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record"
+              },
+              {
+                "id": "H05",
+                "url": "https://api.github.com/repos/tafia/calamine/releases/tags/v0.36.1",
+                "version_or_release": "Calamine v0.36.1 published 2026-07-27",
+                "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record"
+              }
+            ]
+          }
+        },
+        {
+          "axis": 6,
+          "coverage": "COMPLETE_ACTUAL_REVIEW",
+          "judgment": "SATISFIED_AS_PROPOSALS",
+          "reasoning": "All per-P and catalogue tests considered. Oracles distinguish source/normalized values, late sample misses, locale/null policy, coverage/multiplicity, framing, schema drift, workbook semantics and resource fit. Baseline/conditional scope explicit. No executed runtime claimed.",
+          "evidence": {
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+            "candidate_lines": [
+              50,
+              56,
+              64,
+              72,
+              80,
+              88,
+              116,
+              120,
+              121,
+              122,
+              123,
+              124,
+              125,
+              126,
+              127,
+              131,
+              132,
+              133,
+              134,
+              136
+            ],
+            "primary_sources": [
+              {
+                "id": "E01",
+                "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "default sample",
+                  "cannot jump",
+                  "all columns",
+                  "all columns",
+                  "all columns",
+                  "1000",
+                  "1000"
+                ]
+              },
+              {
+                "id": "E02",
+                "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "projection pushdown",
+                  "temporary tables",
+                  "temporary tables",
+                  "multiple errors",
+                  "store_rejects",
+                  "store_rejects",
+                  "store_rejects",
+                  "store_rejects",
+                  "rejects_limit",
+                  "2,097,152"
+                ]
+              },
+              {
+                "id": "E09",
+                "url": "https://docs.rs/csv/1.4.0/csv/struct.ByteRecord.html",
+                "version_or_release": "csv 1.4.0 versioned API",
+                "locator": [
+                  "raw byte",
+                  "UTF-8",
+                  "UTF-8",
+                  "position",
+                  "position",
+                  "position",
+                  "position"
+                ]
+              },
+              {
+                "id": "E11",
+                "url": "https://docs.rs/calamine/0.36.1/calamine/struct.ExcelDateTime.html",
+                "version_or_release": "calamine 0.36.1 versioned API",
+                "locator": [
+                  "millisecond",
+                  "millisecond",
+                  "millisecond",
+                  "timezone",
+                  "1904",
+                  "1904",
+                  "1904",
+                  "leap"
+                ]
+              },
+              {
+                "id": "E18",
+                "url": "https://learn.microsoft.com/en-us/power-query/data-types",
+                "version_or_release": "Microsoft Learn current Data types; Desktop and Online differ",
+                "locator": [
+                  "200",
+                  "operating system",
+                  "locale",
+                  "locale",
+                  "locale"
+                ]
+              },
+              {
+                "id": "E25",
+                "url": "https://www.rfc-editor.org/rfc/rfc4180.txt",
+                "version_or_release": "RFC 4180, Informational, October 2005",
+                "locator": [
+                  "line breaks",
+                  "line breaks",
+                  "optional header",
+                  "differences",
+                  "records"
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "claim_id": "Q01",
+            "claim": "Sampling, seekability, full-input sampling and all-text/header caveats",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+              "lines": [
+                27,
+                46,
+                48,
+                50
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E01",
+              "E03"
+            ]
+          },
+          {
+            "claim_id": "Q02",
+            "claim": "Reject defaults, temporary lifetime, multiplicity, projection/field coverage and diagnostic schema",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+              "lines": [
+                27,
+                70,
+                86,
+                124
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E02"
+            ]
+          },
+          {
+            "claim_id": "Q04",
+            "claim": "XLSX versus XLS, extension loading, first sheet, range/empty/type defaults and null-producing ignore mode",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+              "lines": [
+                27,
+                38,
+                60
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E04"
+            ]
+          },
+          {
+            "claim_id": "Q05",
+            "claim": "Memory percentage/spill applicability and buffer-manager versus total RSS",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+              "lines": [
+                34,
+                133
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E05",
+              "E06"
+            ]
+          },
+          {
+            "claim_id": "Q06",
+            "claim": "csv headers, width and trim defaults; parsed fields, UTF-8 and byte-record roles",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+              "lines": [
+                15,
+                26,
+                101
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E07",
+              "E08",
+              "E09",
+              "K01",
+              "K09"
+            ]
+          },
+          {
+            "claim_id": "Q07",
+            "claim": "Record-start position granularity, framing uncertainty, logical records versus physical lines",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+              "lines": [
+                70,
+                86,
+                98,
+                125
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "K09",
+              "E25"
+            ]
+          },
+          {
+            "claim_id": "Q08",
+            "claim": "Calamine value kinds, Excel serial epochs/precision/no timezone and workbook representation",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+              "lines": [
+                26,
+                38,
+                127
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E10",
+              "E11",
+              "E13"
+            ]
+          },
+          {
+            "claim_id": "Q12",
+            "claim": "Power Query inference versus profiling scope and explicit versus ambient locale",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+              "lines": [
+                30,
+                46,
+                54,
+                56
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E17",
+              "E18",
+              "E19"
+            ]
+          },
+          {
+            "claim_id": "Q13",
+            "claim": "OpenRefine local workflow, operation reuse exclusions and archive history/privacy",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+              "lines": [
+                29,
+                76,
+                104
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E20",
+              "E21"
+            ]
+          },
+          {
+            "claim_id": "Q14",
+            "claim": "OpenRefine UTC date semantics and scoped historical expectation dispute",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+              "lines": [
+                29,
+                54,
+                112
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E22",
+              "J13"
+            ]
+          },
+          {
+            "claim_id": "Q15",
+            "claim": "Frictionless report structure, Python boundary, Excel stringification/coercion and cap controls",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+              "lines": [
+                31,
+                60,
+                99
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E23",
+              "E24",
+              "K08"
+            ]
+          },
+          {
+            "claim_id": "Q16",
+            "claim": "Frictionless 5.20.0 tagged default, API binding, partial/warning semantics and release context",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+              "lines": [
+                31,
+                99
+              ],
+              "judgment": "DEFAULT_INDEPENDENTLY_CONFIRMED_CANDIDATE_HONESTLY_UNRESOLVED"
+            },
+            "primary_evidence_ids": [
+              "J09",
+              "J10",
+              "K07"
+            ]
+          },
+          {
+            "claim_id": "Q17",
+            "claim": "DuckDB sniffer issue/fix/release chain and later release context",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+              "lines": [
+                110
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "H01",
+              "H02",
+              "H03",
+              "H04"
+            ]
+          },
+          {
+            "claim_id": "Q18",
+            "claim": "Calamine 0.36.1 scoped strict OOXML/XLS/XLSB maintenance history",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+              "lines": [
+                103,
+                112,
+                131
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "H05"
+            ]
+          },
+          {
+            "claim_id": "Q21",
+            "claim": "DuckDB slash-date report without exact engine build, as a proposed test lead",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+              "lines": [
+                112
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "J12"
+            ]
+          },
+          {
+            "claim_id": "Q22",
+            "claim": "Source/identity/recipe/count product proposals distinguished from library facts and runtime guarantees",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+              "lines": [
+                13,
+                15,
+                17,
+                19,
+                20,
+                76,
+                78,
+                86,
+                136,
+                140
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E01",
+              "E02",
+              "E20",
+              "E25"
+            ]
+          },
+          {
+            "claim_id": "Q23",
+            "claim": "Literal P4 failed-row CSV contents versus optional redacted/diagnostic-only payload",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+              "lines": [
+                18,
+                68,
+                70
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E02",
+              "E21",
+              "E25"
+            ]
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "completeness_scope": "Every consequential final conclusion, selected mechanism, all P clauses and material critic change for the original small brief were actually reviewed. Minor example locator explicitly unconfirmed; no whole-library or universal runtime audit implied."
+      },
+      "preservation_coverage": {
+        "coverage": "COMPLETE_ACTUAL_REVIEW",
+        "files_reviewed": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/discovery.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/draft.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/critique.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md"
+        ],
+        "families": [
+          "Implementation mechanisms and products",
+          "Raw source/identifiers",
+          "Sampling/full-file scope",
+          "Locale/date/null",
+          "Reject payload/coverage/framing",
+          "Recipe/monthly/schema/engine drift",
+          "Record/count units",
+          "Workbook fidelity/metadata",
+          "Historical release/issue leads",
+          "Resources/deployment/proposed validation"
+        ],
+        "judgment": "Supported material findings preserved; minor Frictionless default underconfidence",
+        "source_identity_rebinding_found": false,
+        "critic_adjudication": [
+          {
+            "finding": "M1",
+            "disposition": "ACCEPT_WITH_CONDITIONS",
+            "evidence_ids": [
+              "E01",
+              "E17",
+              "E18",
+              "E19"
+            ],
+            "final_lines": [
+              46,
+              54,
+              60,
+              68,
+              76,
+              84
+            ],
+            "reason": "Useful thin clauses are not automatically incorrect; conditional defects distinguished."
+          },
+          {
+            "finding": "M2",
+            "disposition": "ACCEPT",
+            "evidence_ids": [
+              "E02"
+            ],
+            "final_lines": [
+              86
+            ],
+            "reason": "Whole-record outcomes, projected field coverage and issues are different units."
+          },
+          {
+            "finding": "M3",
+            "disposition": "ACCEPT_AS_PRECISION_REFINEMENT",
+            "evidence_ids": [
+              "K09",
+              "E25"
+            ],
+            "final_lines": [
+              98,
+              125
+            ],
+            "reason": "Reliable logical identity depends on established boundaries; draft already partly caveated."
+          },
+          {
+            "finding": "M4",
+            "disposition": "AMEND_AFTER_TAGGED_CODE_CHECK",
+            "evidence_ids": [
+              "E23",
+              "J09",
+              "J10"
+            ],
+            "final_lines": [
+              31,
+              99
+            ],
+            "reason": "Guide alone did not prove default, but tagged 5.20.0 does. Final honest uncertainty not false default conclusion."
+          },
+          {
+            "finding": "M5",
+            "disposition": "ACCEPT",
+            "evidence_ids": [
+              "H05"
+            ],
+            "final_lines": [
+              118,
+              131,
+              132,
+              133,
+              134,
+              136
+            ],
+            "reason": "No brief requirement for every extra format/transform/stress target; baseline/conditional split sound."
+          },
+          {
+            "finding": "Minor raw bytes/date example/mutable docs/release/product qualification",
+            "disposition": "ACCEPT",
+            "evidence_ids": [
+              "E09",
+              "E18",
+              "E20",
+              "J13",
+              "H05"
+            ],
+            "final_lines": [
+              101,
+              102,
+              103,
+              104
+            ],
+            "reason": "Encoding and example distinctions tightened; historical/product limits retained."
+          }
+        ],
+        "full_prose_final": true,
+        "remaining_scope": []
+      },
+      "grade_limits": [
+        "Small product research deliverable; no observed product implementation or runtime assurance",
+        "No source/citation/length/agreement counts or hash checks used as scientific grade",
+        "Product decisions and unexecuted performance/packaging/usability/replay remain open",
+        "Pass does not establish any engine winner or resource threshold"
+      ]
+    },
+    "N1": {
+      "actual_arm": "treatment",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+      "grade": "FAIL",
+      "material_findings": [
+        {
+          "id": "N1-F1",
+          "type": "FALSE_CORRECTION_OR_REJECTION",
+          "related_type": "PRESERVATION_LOSS",
+          "severity": "medium_material",
+          "original_obligation": [
+            "O4",
+            "O5"
+          ],
+          "plan_clause": "P4: Keep failed rows in an error CSV.",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "passages": [
+            {
+              "line": 49,
+              "text": "Make raw offending values or entire failed rows a deliberate privacy choice, with clear export disclosure; the original file remains authoritative for exact bytes."
+            },
+            {
+              "line": 82,
+              "text": "Make inclusion of raw offending values/full failed rows a disclosed privacy choice."
+            },
+            {
+              "line": 106,
+              "text": "The exact error export schema and whether values/full rows are included require a privacy decision."
+            },
+            {
+              "line": 125,
+              "text": "error CSV with and without raw values"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "E02",
+              "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+              "version_or_release": "DuckDB 1.5 current mutable documentation",
+              "locator": [
+                "projection pushdown",
+                "temporary tables",
+                "temporary tables",
+                "multiple errors",
+                "store_rejects",
+                "store_rejects",
+                "store_rejects",
+                "store_rejects",
+                "rejects_limit",
+                "2,097,152"
+              ]
+            },
+            {
+              "id": "E21",
+              "url": "https://openrefine.org/docs/manual/exporting",
+              "version_or_release": "OpenRefine current unversioned export manual",
+              "locator": [
+                "confidential",
+                "history",
+                "history",
+                "history",
+                "history",
+                "JSON",
+                "JSON",
+                "JSON",
+                "JSON",
+                "operations",
+                "operations"
+              ]
+            },
+            {
+              "id": "E25",
+              "url": "https://www.rfc-editor.org/rfc/rfc4180.txt",
+              "version_or_release": "RFC 4180, Informational, October 2005",
+              "locator": [
+                "line breaks",
+                "line breaks",
+                "optional header",
+                "differences",
+                "records"
+              ]
+            }
+          ],
+          "governing_original_source": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S10/plan-root-only.md",
+            "line": 3,
+            "text": "P4: Keep failed rows in an error CSV."
+          },
+          "reasoning": "The mandatory file is restored after criticism, but its failed-row payload is optional. Diagnostics/source locations plus retained source elsewhere do not fulfill the exact failed-row CSV output. The OpenRefine archive privacy warning supports an additional sharing condition, not superseding P4. No owner decision approving that scope change is present. This is a substantive output-content change rather than merely a correction label or missing artifact.",
+          "counterargument_considered": "Privacy/redacted sharing is useful for nonprofits and the immutable source preserves originals locally. Those are credited; neither establishes that a diagnostic-only CSV satisfies the specified placement/content obligation.",
+          "scientific_scope": "Research contract fidelity only; no assertion of observed runtime data loss."
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N1-m1",
+          "type": "FACTUAL_METADATA_ERROR",
+          "severity": "minor",
+          "original_obligation": [
+            "O2",
+            "O3",
+            "O5"
+          ],
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "line": 69,
+          "passage": "tag 3.5.0 was released on 2020-11-07",
+          "primary_evidence": [
+            {
+              "id": "J04",
+              "url": "https://github.com/OpenRefine/OpenRefine/releases/tag/3.5.0",
+              "version_or_release": "OpenRefine 3.5.0 d4209a2, HTML release datetime 2021-11-07T10:05:04Z",
+              "locator": [
+                "relative-time datetime",
+                "d4209a2"
+              ]
+            },
+            {
+              "id": "J01",
+              "url": "https://github.com/OpenRefine/OpenRefine/issues/1908",
+              "version_or_release": "OpenRefine #1908 historical issue/comments; 3.5 versus 3.4 statements",
+              "locator": [
+                "Java 8",
+                "3.5",
+                "3.5",
+                "3.5",
+                "3.4",
+                "3.4"
+              ]
+            },
+            {
+              "id": "J02",
+              "url": "https://github.com/OpenRefine/OpenRefine/pull/2909",
+              "version_or_release": "OpenRefine PR #2909 merged 2020-07-09; OffsetDateTime adaptation",
+              "locator": [
+                "OffsetDateTime",
+                "OffsetDateTime",
+                "OffsetDateTime",
+                "Jul 9, 2020",
+                "Jul 9, 2020",
+                "Jul 9, 2020",
+                "test",
+                "test",
+                "test"
+              ]
+            },
+            {
+              "id": "K05",
+              "url": "https://raw.githubusercontent.com/OpenRefine/OpenRefine/3.5.0/main/src/com/google/refine/importers/ExcelImporter.java",
+              "version_or_release": "OpenRefine source tag 3.5.0, ExcelImporter numeric date branch",
+              "locator": [
+                "toDate"
+              ]
+            }
+          ],
+          "reasoning": "Release HTML datetime is 2021-11-07T10:05:04Z. The July 2020 merge, affected/fixed versions, date-type code change and tagged release inclusion remain supported; this wrong incidental year is not the material FAIL basis."
+        },
+        {
+          "id": "N1-m2",
+          "type": "FALSE_CORRECTION_OR_REJECTION",
+          "severity": "minor_label_calibration",
+          "original_obligation": [
+            "O4"
+          ],
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            79,
+            81,
+            84
+          ],
+          "passage": "Correction, narrowed; Reject as unconditional destructive conversion; Correction with a refined accounting model",
+          "primary_evidence": [
+            {
+              "id": "E01",
+              "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+              "version_or_release": "DuckDB 1.5 current mutable documentation",
+              "locator": [
+                "default sample",
+                "cannot jump",
+                "all columns",
+                "all columns",
+                "all columns",
+                "1000",
+                "1000"
+              ]
+            },
+            {
+              "id": "E17",
+              "url": "https://learn.microsoft.com/en-us/power-query/connectors/text-csv",
+              "version_or_release": "Microsoft Learn current Text/CSV; host build unspecified",
+              "locator": [
+                "200",
+                "Text",
+                "Text",
+                "Text",
+                "Text",
+                "line break",
+                "line break",
+                "line break",
+                "line break"
+              ]
+            },
+            {
+              "id": "E18",
+              "url": "https://learn.microsoft.com/en-us/power-query/data-types",
+              "version_or_release": "Microsoft Learn current Data types; Desktop and Online differ",
+              "locator": [
+                "200",
+                "operating system",
+                "locale",
+                "locale",
+                "locale"
+              ]
+            },
+            {
+              "id": "E25",
+              "url": "https://www.rfc-editor.org/rfc/rfc4180.txt",
+              "version_or_release": "RFC 4180, Informational, October 2005",
+              "locator": [
+                "line breaks",
+                "line breaks",
+                "optional header",
+                "differences",
+                "records"
+              ]
+            }
+          ],
+          "reasoning": "Literal P1/P3/P6 do not require sole-prefix authority, destruction of originals or count-only assurance. Labels assume stronger behaviors, but final text still permits sampled preview, configured null mapping and count checks. No separate material rejection is inferred from labels alone."
+        },
+        {
+          "id": "N1-m3",
+          "type": "UNCONFIRMED_EXAMPLE_LOCATOR",
+          "severity": "minor",
+          "original_obligation": [
+            "O2",
+            "O5"
+          ],
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "line": 35,
+          "passage": "Arrow examples include a 100-row or full scan choice.",
+          "primary_evidence": [
+            {
+              "id": "E14",
+              "url": "https://arrow.apache.org/rust/arrow_csv/reader/index.html",
+              "version_or_release": "Apache Arrow rolling Rust API; pin cross-checked at 59.1.0 in K02/K03",
+              "locator": [
+                "schema",
+                "schema",
+                "schema",
+                "schema",
+                "infer_schema"
+              ]
+            },
+            {
+              "id": "K02",
+              "url": "https://docs.rs/arrow-csv/59.1.0/arrow_csv/reader/struct.Format.html",
+              "version_or_release": "arrow-csv 59.1.0 Format::infer_schema",
+              "locator": [
+                "100",
+                "None",
+                "None",
+                "None",
+                "infer_schema",
+                "infer_schema"
+              ]
+            },
+            {
+              "id": "K03",
+              "url": "https://docs.rs/arrow-csv/59.1.0/arrow_csv/reader/struct.ReaderBuilder.html",
+              "version_or_release": "arrow-csv 59.1.0 ReaderBuilder",
+              "locator": [
+                "59.1.0",
+                "59.1.0",
+                "59.1.0",
+                "validate_header",
+                "projection",
+                "projection",
+                "projection"
+              ]
+            }
+          ],
+          "reasoning": "Reopened rolling reader index did not reproduce the 100-row example. Tagged Format::infer_schema verifies configurable n and None/all-record behavior, and ReaderBuilder verifies batch/projection/header APIs. The capability is supported; example number/locator remains unconfirmed, without governing default or product impact."
+        }
+      ],
+      "unresolved": [
+        {
+          "kind": "PRODUCT_DECISION",
+          "issue": "Supported platforms/workbook formats, source stored/display/formula representation and cache/recalculation policy remain unspecified by original brief.",
+          "material_fail": false
+        },
+        {
+          "kind": "PRODUCT_DECISION",
+          "issue": "Null vocabulary, date/locale ambiguity policy, encoding/recovery and permitted transformations/export decisions require owner selection.",
+          "material_fail": false
+        },
+        {
+          "kind": "EXTERNALLY_UNVERIFIED",
+          "issue": "No measured minimum hardware/file envelope, RSS/temp/latency/cancellation, deployment/offline first use, usability or deterministic product recipe replay. No such result is claimed.",
+          "material_fail": false
+        },
+        {
+          "kind": "VERSION_PIN_DEPENDENCY",
+          "issue": "Mutable documentation must be checked against any future selected implementation. The two current DuckDB line-cap pages disagree; no numeric product limit is adopted.",
+          "material_fail": false
+        },
+        {
+          "kind": "MINOR_LOCATOR_UNCONFIRMED",
+          "issue": "Exact Arrow 100-row example location remains unconfirmed; bounded/all-input API and batch defaults independently checked.",
+          "material_fail": false
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "COMPLETE_ACTUAL_REVIEW",
+          "judgment": "SUBSTANTIALLY_SATISFIED_WITH_MATERIAL_P4_DEFECT",
+          "reasoning": "All obligations and workflow constraints examined. Complete final available and broad useful research credited. Exact failed-row CSV content is weakened, affecting O4/O5; pre-reveal independence separately unverified.",
+          "evidence": {
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+            "candidate_lines": [
+              7,
+              11,
+              31,
+              43,
+              49,
+              61,
+              69,
+              71,
+              79,
+              80,
+              81,
+              82,
+              83,
+              84,
+              106,
+              112,
+              149
+            ],
+            "primary_sources": [
+              {
+                "id": "E01",
+                "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "default sample",
+                  "cannot jump",
+                  "all columns",
+                  "all columns",
+                  "all columns",
+                  "1000",
+                  "1000"
+                ]
+              },
+              {
+                "id": "E04",
+                "url": "https://duckdb.org/docs/current/core_extensions/excel",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "first sheet",
+                  "empty_as_varchar",
+                  "empty_as_varchar",
+                  "empty_as_varchar",
+                  "ignore_errors",
+                  "first \"data\"",
+                  "stop_at_empty",
+                  ".xls",
+                  ".xls",
+                  ".xls",
+                  ".xls"
+                ]
+              },
+              {
+                "id": "E09",
+                "url": "https://docs.rs/csv/1.4.0/csv/struct.ByteRecord.html",
+                "version_or_release": "csv 1.4.0 versioned API",
+                "locator": [
+                  "raw byte",
+                  "UTF-8",
+                  "UTF-8",
+                  "position",
+                  "position",
+                  "position",
+                  "position"
+                ]
+              },
+              {
+                "id": "E12",
+                "url": "https://docs.rs/calamine/0.36.1/calamine/struct.XlsxCellReader.html",
+                "version_or_release": "calamine 0.36.1 versioned API",
+                "locator": [
+                  "same XML stream",
+                  "strings:",
+                  "formats:",
+                  "cached",
+                  "cached",
+                  "formula metadata",
+                  "formula metadata"
+                ]
+              },
+              {
+                "id": "E17",
+                "url": "https://learn.microsoft.com/en-us/power-query/connectors/text-csv",
+                "version_or_release": "Microsoft Learn current Text/CSV; host build unspecified",
+                "locator": [
+                  "200",
+                  "Text",
+                  "Text",
+                  "Text",
+                  "Text",
+                  "line break",
+                  "line break",
+                  "line break",
+                  "line break"
+                ]
+              },
+              {
+                "id": "E18",
+                "url": "https://learn.microsoft.com/en-us/power-query/data-types",
+                "version_or_release": "Microsoft Learn current Data types; Desktop and Online differ",
+                "locator": [
+                  "200",
+                  "operating system",
+                  "locale",
+                  "locale",
+                  "locale"
+                ]
+              },
+              {
+                "id": "E21",
+                "url": "https://openrefine.org/docs/manual/exporting",
+                "version_or_release": "OpenRefine current unversioned export manual",
+                "locator": [
+                  "confidential",
+                  "history",
+                  "history",
+                  "history",
+                  "history",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "operations",
+                  "operations"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "axis": 2,
+          "coverage": "COMPLETE_ACTUAL_REVIEW",
+          "judgment": "SATISFIED_WITH_MINOR_ERRORS",
+          "reasoning": "Primary checks support major reader/engine/product conclusions and applicability limits. Wrong 3.5.0 release year is minor because correct version/fix boundary remains. Arrow example locator unconfirmed while its capability is verified.",
+          "evidence": {
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+            "candidate_lines": [
+              17,
+              18,
+              19,
+              20,
+              21,
+              23,
+              33,
+              35,
+              43,
+              45,
+              61,
+              65,
+              69,
+              71
+            ],
+            "primary_sources": [
+              {
+                "id": "E01",
+                "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "default sample",
+                  "cannot jump",
+                  "all columns",
+                  "all columns",
+                  "all columns",
+                  "1000",
+                  "1000"
+                ]
+              },
+              {
+                "id": "E02",
+                "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "projection pushdown",
+                  "temporary tables",
+                  "temporary tables",
+                  "multiple errors",
+                  "store_rejects",
+                  "store_rejects",
+                  "store_rejects",
+                  "store_rejects",
+                  "rejects_limit",
+                  "2,097,152"
+                ]
+              },
+              {
+                "id": "E04",
+                "url": "https://duckdb.org/docs/current/core_extensions/excel",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "first sheet",
+                  "empty_as_varchar",
+                  "empty_as_varchar",
+                  "empty_as_varchar",
+                  "ignore_errors",
+                  "first \"data\"",
+                  "stop_at_empty",
+                  ".xls",
+                  ".xls",
+                  ".xls",
+                  ".xls"
+                ]
+              },
+              {
+                "id": "E06",
+                "url": "https://duckdb.org/docs/current/guides/performance/oom",
+                "version_or_release": "DuckDB current OOM guidance, mutable",
+                "locator": [
+                  "buffer manager",
+                  "memory_limit"
+                ]
+              },
+              {
+                "id": "E07",
+                "url": "https://docs.rs/csv/1.4.0/csv/struct.ReaderBuilder.html",
+                "version_or_release": "csv 1.4.0 versioned API",
+                "locator": [
+                  "flexible",
+                  "flexible",
+                  "flexible",
+                  "flexible",
+                  "delimiter",
+                  "delimiter",
+                  "delimiter",
+                  "delimiter"
+                ]
+              },
+              {
+                "id": "K09",
+                "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/1.4.0/src/reader.rs",
+                "version_or_release": "rust-csv source tag 1.4.0, ReaderState position comment and ReaderBuilder trim docs",
+                "locator": [
+                  "only observable",
+                  "By default, no trimming"
+                ]
+              },
+              {
+                "id": "E10",
+                "url": "https://docs.rs/calamine/0.36.1/calamine/enum.Data.html",
+                "version_or_release": "calamine 0.36.1 versioned API",
+                "locator": [
+                  "DateTimeIso",
+                  "DateTimeIso",
+                  "DateTimeIso",
+                  "DurationIso",
+                  "DurationIso",
+                  "DurationIso",
+                  "Empty",
+                  "Empty",
+                  "Empty",
+                  "Empty",
+                  "Float",
+                  "Float",
+                  "Float",
+                  "Float"
+                ]
+              },
+              {
+                "id": "E12",
+                "url": "https://docs.rs/calamine/0.36.1/calamine/struct.XlsxCellReader.html",
+                "version_or_release": "calamine 0.36.1 versioned API",
+                "locator": [
+                  "same XML stream",
+                  "strings:",
+                  "formats:",
+                  "cached",
+                  "cached",
+                  "formula metadata",
+                  "formula metadata"
+                ]
+              },
+              {
+                "id": "E13",
+                "url": "https://docs.rs/calamine/0.36.1/calamine/struct.Xlsx.html",
+                "version_or_release": "calamine 0.36.1 versioned API",
+                "locator": [
+                  "has_1904_epoch",
+                  "has_1904_epoch",
+                  "has_1904_epoch",
+                  "worksheet_cells_reader",
+                  "worksheet_cells_reader",
+                  "formula",
+                  "formula",
+                  "formula"
+                ]
+              },
+              {
+                "id": "K02",
+                "url": "https://docs.rs/arrow-csv/59.1.0/arrow_csv/reader/struct.Format.html",
+                "version_or_release": "arrow-csv 59.1.0 Format::infer_schema",
+                "locator": [
+                  "100",
+                  "None",
+                  "None",
+                  "None",
+                  "infer_schema",
+                  "infer_schema"
+                ]
+              },
+              {
+                "id": "K03",
+                "url": "https://docs.rs/arrow-csv/59.1.0/arrow_csv/reader/struct.ReaderBuilder.html",
+                "version_or_release": "arrow-csv 59.1.0 ReaderBuilder",
+                "locator": [
+                  "59.1.0",
+                  "59.1.0",
+                  "59.1.0",
+                  "validate_header",
+                  "projection",
+                  "projection",
+                  "projection"
+                ]
+              },
+              {
+                "id": "E16",
+                "url": "https://docs.rs/polars-io/0.55.2/polars_io/csv/read/struct.CsvReadOptions.html",
+                "version_or_release": "polars-io 0.55.2 versioned API",
+                "locator": [
+                  "very slow",
+                  "with_low_memory",
+                  "with_low_memory",
+                  "low_memory",
+                  "low_memory",
+                  "low_memory",
+                  "infer_schema_length",
+                  "infer_schema_length",
+                  "infer_schema_length",
+                  "infer_schema_length"
+                ]
+              },
+              {
+                "id": "E17",
+                "url": "https://learn.microsoft.com/en-us/power-query/connectors/text-csv",
+                "version_or_release": "Microsoft Learn current Text/CSV; host build unspecified",
+                "locator": [
+                  "200",
+                  "Text",
+                  "Text",
+                  "Text",
+                  "Text",
+                  "line break",
+                  "line break",
+                  "line break",
+                  "line break"
+                ]
+              },
+              {
+                "id": "E18",
+                "url": "https://learn.microsoft.com/en-us/power-query/data-types",
+                "version_or_release": "Microsoft Learn current Data types; Desktop and Online differ",
+                "locator": [
+                  "200",
+                  "operating system",
+                  "locale",
+                  "locale",
+                  "locale"
+                ]
+              },
+              {
+                "id": "J01",
+                "url": "https://github.com/OpenRefine/OpenRefine/issues/1908",
+                "version_or_release": "OpenRefine #1908 historical issue/comments; 3.5 versus 3.4 statements",
+                "locator": [
+                  "Java 8",
+                  "3.5",
+                  "3.5",
+                  "3.5",
+                  "3.4",
+                  "3.4"
+                ]
+              },
+              {
+                "id": "J02",
+                "url": "https://github.com/OpenRefine/OpenRefine/pull/2909",
+                "version_or_release": "OpenRefine PR #2909 merged 2020-07-09; OffsetDateTime adaptation",
+                "locator": [
+                  "OffsetDateTime",
+                  "OffsetDateTime",
+                  "OffsetDateTime",
+                  "Jul 9, 2020",
+                  "Jul 9, 2020",
+                  "Jul 9, 2020",
+                  "test",
+                  "test",
+                  "test"
+                ]
+              },
+              {
+                "id": "J03",
+                "url": "https://github.com/OpenRefine/OpenRefine/pull/2909.diff",
+                "version_or_release": "OpenRefine PR #2909 public diff, read not executed",
+                "locator": [
+                  "OffsetDateTime",
+                  "OffsetDateTime",
+                  "OffsetDateTime",
+                  "ExcelImporterTests",
+                  "ExcelImporterTests",
+                  "ExcelImporterTests",
+                  "Date",
+                  "Date",
+                  "Date"
+                ]
+              },
+              {
+                "id": "J04",
+                "url": "https://github.com/OpenRefine/OpenRefine/releases/tag/3.5.0",
+                "version_or_release": "OpenRefine 3.5.0 d4209a2, HTML release datetime 2021-11-07T10:05:04Z",
+                "locator": [
+                  "relative-time datetime",
+                  "d4209a2"
+                ]
+              },
+              {
+                "id": "J05",
+                "url": "https://github.com/OpenRefine/OpenRefine/issues/7042",
+                "version_or_release": "OpenRefine #7042: 3.7 versus 3.8 quote behavior report",
+                "locator": [
+                  "3.7",
+                  "3.7",
+                  "3.8",
+                  "3.8",
+                  "3.8",
+                  "7703",
+                  "7703",
+                  "7703"
+                ]
+              },
+              {
+                "id": "J06",
+                "url": "https://github.com/OpenRefine/OpenRefine/pull/7703",
+                "version_or_release": "OpenRefine PR #7703 merged 2026-03-13, c32deb2, milestone 3.10.2; no shipped release inferred",
+                "locator": [
+                  "failing",
+                  "Mar 13, 2026",
+                  "Mar 13, 2026",
+                  "Mar 13, 2026",
+                  "c32deb2",
+                  "3.10.2",
+                  "3.10.2",
+                  "confirmed"
+                ]
+              },
+              {
+                "id": "J07",
+                "url": "https://github.com/OpenRefine/OpenRefine/pull/7703.diff",
+                "version_or_release": "OpenRefine #7703 public diff, read not executed",
+                "locator": [
+                  "quote",
+                  "quote",
+                  "quote",
+                  "test",
+                  "test",
+                  "test",
+                  "false",
+                  "false",
+                  "false"
+                ]
+              },
+              {
+                "id": "K05",
+                "url": "https://raw.githubusercontent.com/OpenRefine/OpenRefine/3.5.0/main/src/com/google/refine/importers/ExcelImporter.java",
+                "version_or_release": "OpenRefine source tag 3.5.0, ExcelImporter numeric date branch",
+                "locator": [
+                  "toDate"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "axis": 3,
+          "coverage": "COMPLETE_ACTUAL_REVIEW",
+          "judgment": "SATISFIED",
+          "reasoning": "Distinct Rust reader, typed batch, SQL, DataFrame and analyst product options, location granularity, metadata-heavy workbook memory and recipe evolution leads are useful. No citation-count/benchmark ranking used.",
+          "evidence": {
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+            "candidate_lines": [
+              11,
+              15,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              25,
+              59
+            ],
+            "primary_sources": [
+              {
+                "id": "E07",
+                "url": "https://docs.rs/csv/1.4.0/csv/struct.ReaderBuilder.html",
+                "version_or_release": "csv 1.4.0 versioned API",
+                "locator": [
+                  "flexible",
+                  "flexible",
+                  "flexible",
+                  "flexible",
+                  "delimiter",
+                  "delimiter",
+                  "delimiter",
+                  "delimiter"
+                ]
+              },
+              {
+                "id": "E12",
+                "url": "https://docs.rs/calamine/0.36.1/calamine/struct.XlsxCellReader.html",
+                "version_or_release": "calamine 0.36.1 versioned API",
+                "locator": [
+                  "same XML stream",
+                  "strings:",
+                  "formats:",
+                  "cached",
+                  "cached",
+                  "formula metadata",
+                  "formula metadata"
+                ]
+              },
+              {
+                "id": "K02",
+                "url": "https://docs.rs/arrow-csv/59.1.0/arrow_csv/reader/struct.Format.html",
+                "version_or_release": "arrow-csv 59.1.0 Format::infer_schema",
+                "locator": [
+                  "100",
+                  "None",
+                  "None",
+                  "None",
+                  "infer_schema",
+                  "infer_schema"
+                ]
+              },
+              {
+                "id": "K03",
+                "url": "https://docs.rs/arrow-csv/59.1.0/arrow_csv/reader/struct.ReaderBuilder.html",
+                "version_or_release": "arrow-csv 59.1.0 ReaderBuilder",
+                "locator": [
+                  "59.1.0",
+                  "59.1.0",
+                  "59.1.0",
+                  "validate_header",
+                  "projection",
+                  "projection",
+                  "projection"
+                ]
+              },
+              {
+                "id": "E16",
+                "url": "https://docs.rs/polars-io/0.55.2/polars_io/csv/read/struct.CsvReadOptions.html",
+                "version_or_release": "polars-io 0.55.2 versioned API",
+                "locator": [
+                  "very slow",
+                  "with_low_memory",
+                  "with_low_memory",
+                  "low_memory",
+                  "low_memory",
+                  "low_memory",
+                  "infer_schema_length",
+                  "infer_schema_length",
+                  "infer_schema_length",
+                  "infer_schema_length"
+                ]
+              },
+              {
+                "id": "E20",
+                "url": "https://openrefine.org/docs/manual/running",
+                "version_or_release": "OpenRefine current unversioned manual",
+                "locator": [
+                  "single cell",
+                  "Extract",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "internet",
+                  "internet",
+                  "internet",
+                  "Java",
+                  "Java",
+                  "Java",
+                  "Java"
+                ]
+              },
+              {
+                "id": "E21",
+                "url": "https://openrefine.org/docs/manual/exporting",
+                "version_or_release": "OpenRefine current unversioned export manual",
+                "locator": [
+                  "confidential",
+                  "history",
+                  "history",
+                  "history",
+                  "history",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "operations",
+                  "operations"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "axis": 4,
+          "coverage": "COMPLETE_ACTUAL_REVIEW",
+          "judgment": "MATERIAL_FAIL_P4",
+          "reasoning": "Every P clause actually checked. P1/P3/P6 overstrong labels are minor because valid behavior is retained. P4 has substantive scope loss: restored CSV can omit failed rows, while retained source elsewhere does not satisfy exact specified output.",
+          "evidence": {
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+            "candidate_lines": [
+              79,
+              80,
+              81,
+              82,
+              83,
+              84,
+              90,
+              106,
+              125
+            ],
+            "primary_sources": [
+              {
+                "id": "E01",
+                "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "default sample",
+                  "cannot jump",
+                  "all columns",
+                  "all columns",
+                  "all columns",
+                  "1000",
+                  "1000"
+                ]
+              },
+              {
+                "id": "E02",
+                "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "projection pushdown",
+                  "temporary tables",
+                  "temporary tables",
+                  "multiple errors",
+                  "store_rejects",
+                  "store_rejects",
+                  "store_rejects",
+                  "store_rejects",
+                  "rejects_limit",
+                  "2,097,152"
+                ]
+              },
+              {
+                "id": "E17",
+                "url": "https://learn.microsoft.com/en-us/power-query/connectors/text-csv",
+                "version_or_release": "Microsoft Learn current Text/CSV; host build unspecified",
+                "locator": [
+                  "200",
+                  "Text",
+                  "Text",
+                  "Text",
+                  "Text",
+                  "line break",
+                  "line break",
+                  "line break",
+                  "line break"
+                ]
+              },
+              {
+                "id": "E18",
+                "url": "https://learn.microsoft.com/en-us/power-query/data-types",
+                "version_or_release": "Microsoft Learn current Data types; Desktop and Online differ",
+                "locator": [
+                  "200",
+                  "operating system",
+                  "locale",
+                  "locale",
+                  "locale"
+                ]
+              },
+              {
+                "id": "E21",
+                "url": "https://openrefine.org/docs/manual/exporting",
+                "version_or_release": "OpenRefine current unversioned export manual",
+                "locator": [
+                  "confidential",
+                  "history",
+                  "history",
+                  "history",
+                  "history",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "operations",
+                  "operations"
+                ]
+              },
+              {
+                "id": "E25",
+                "url": "https://www.rfc-editor.org/rfc/rfc4180.txt",
+                "version_or_release": "RFC 4180, Informational, October 2005",
+                "locator": [
+                  "line breaks",
+                  "line breaks",
+                  "optional header",
+                  "differences",
+                  "records"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "axis": 5,
+          "coverage": "COMPLETE_ACTUAL_REVIEW",
+          "judgment": "MATERIAL_FAIL_P4_WITH_OTHER_FINDINGS_PRESERVED",
+          "reasoning": "Full stage text and all critic demands examined. Supported alternatives/qualifications survive; positions, stream limits, compatibility, V9 and quote chain expanded. Critic M1 fixes file existence but weakens payload; final automatically retains this portion. No other material preservation loss found.",
+          "evidence": {
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+            "candidate_lines": [
+              18,
+              33,
+              49,
+              59,
+              69,
+              71,
+              90,
+              91,
+              92,
+              93,
+              94,
+              95,
+              96,
+              102,
+              106,
+              106,
+              118,
+              122,
+              123,
+              126
+            ],
+            "primary_sources": [
+              {
+                "id": "E02",
+                "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "projection pushdown",
+                  "temporary tables",
+                  "temporary tables",
+                  "multiple errors",
+                  "store_rejects",
+                  "store_rejects",
+                  "store_rejects",
+                  "store_rejects",
+                  "rejects_limit",
+                  "2,097,152"
+                ]
+              },
+              {
+                "id": "E12",
+                "url": "https://docs.rs/calamine/0.36.1/calamine/struct.XlsxCellReader.html",
+                "version_or_release": "calamine 0.36.1 versioned API",
+                "locator": [
+                  "same XML stream",
+                  "strings:",
+                  "formats:",
+                  "cached",
+                  "cached",
+                  "formula metadata",
+                  "formula metadata"
+                ]
+              },
+              {
+                "id": "E20",
+                "url": "https://openrefine.org/docs/manual/running",
+                "version_or_release": "OpenRefine current unversioned manual",
+                "locator": [
+                  "single cell",
+                  "Extract",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "internet",
+                  "internet",
+                  "internet",
+                  "Java",
+                  "Java",
+                  "Java",
+                  "Java"
+                ]
+              },
+              {
+                "id": "E21",
+                "url": "https://openrefine.org/docs/manual/exporting",
+                "version_or_release": "OpenRefine current unversioned export manual",
+                "locator": [
+                  "confidential",
+                  "history",
+                  "history",
+                  "history",
+                  "history",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "operations",
+                  "operations"
+                ]
+              },
+              {
+                "id": "J01",
+                "url": "https://github.com/OpenRefine/OpenRefine/issues/1908",
+                "version_or_release": "OpenRefine #1908 historical issue/comments; 3.5 versus 3.4 statements",
+                "locator": [
+                  "Java 8",
+                  "3.5",
+                  "3.5",
+                  "3.5",
+                  "3.4",
+                  "3.4"
+                ]
+              },
+              {
+                "id": "J02",
+                "url": "https://github.com/OpenRefine/OpenRefine/pull/2909",
+                "version_or_release": "OpenRefine PR #2909 merged 2020-07-09; OffsetDateTime adaptation",
+                "locator": [
+                  "OffsetDateTime",
+                  "OffsetDateTime",
+                  "OffsetDateTime",
+                  "Jul 9, 2020",
+                  "Jul 9, 2020",
+                  "Jul 9, 2020",
+                  "test",
+                  "test",
+                  "test"
+                ]
+              },
+              {
+                "id": "J04",
+                "url": "https://github.com/OpenRefine/OpenRefine/releases/tag/3.5.0",
+                "version_or_release": "OpenRefine 3.5.0 d4209a2, HTML release datetime 2021-11-07T10:05:04Z",
+                "locator": [
+                  "relative-time datetime",
+                  "d4209a2"
+                ]
+              },
+              {
+                "id": "J05",
+                "url": "https://github.com/OpenRefine/OpenRefine/issues/7042",
+                "version_or_release": "OpenRefine #7042: 3.7 versus 3.8 quote behavior report",
+                "locator": [
+                  "3.7",
+                  "3.7",
+                  "3.8",
+                  "3.8",
+                  "3.8",
+                  "7703",
+                  "7703",
+                  "7703"
+                ]
+              },
+              {
+                "id": "J06",
+                "url": "https://github.com/OpenRefine/OpenRefine/pull/7703",
+                "version_or_release": "OpenRefine PR #7703 merged 2026-03-13, c32deb2, milestone 3.10.2; no shipped release inferred",
+                "locator": [
+                  "failing",
+                  "Mar 13, 2026",
+                  "Mar 13, 2026",
+                  "Mar 13, 2026",
+                  "c32deb2",
+                  "3.10.2",
+                  "3.10.2",
+                  "confirmed"
+                ]
+              },
+              {
+                "id": "J07",
+                "url": "https://github.com/OpenRefine/OpenRefine/pull/7703.diff",
+                "version_or_release": "OpenRefine #7703 public diff, read not executed",
+                "locator": [
+                  "quote",
+                  "quote",
+                  "quote",
+                  "test",
+                  "test",
+                  "test",
+                  "false",
+                  "false",
+                  "false"
+                ]
+              },
+              {
+                "id": "K09",
+                "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/1.4.0/src/reader.rs",
+                "version_or_release": "rust-csv source tag 1.4.0, ReaderState position comment and ReaderBuilder trim docs",
+                "locator": [
+                  "only observable",
+                  "By default, no trimming"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "axis": 6,
+          "coverage": "COMPLETE_ACTUAL_REVIEW",
+          "judgment": "SATISFIED_AS_PROPOSALS_WITH_P4_ORACLE_CAVEAT",
+          "reasoning": "V1–V9 and per-P risks checked for discrimination. Separate source/parsed/output, late anomalies, two-locale, location/framing, cache/epoch/shared-metadata, drift/upgrades, resource, export and stage-count tests are meaningful. None executed. V8 cannot justify changing original P4 content.",
+          "evidence": {
+            "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+            "candidate_lines": [
+              112,
+              114,
+              117,
+              118,
+              119,
+              121,
+              122,
+              123,
+              124,
+              125,
+              126,
+              149
+            ],
+            "primary_sources": [
+              {
+                "id": "E01",
+                "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "default sample",
+                  "cannot jump",
+                  "all columns",
+                  "all columns",
+                  "all columns",
+                  "1000",
+                  "1000"
+                ]
+              },
+              {
+                "id": "E02",
+                "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+                "version_or_release": "DuckDB 1.5 current mutable documentation",
+                "locator": [
+                  "projection pushdown",
+                  "temporary tables",
+                  "temporary tables",
+                  "multiple errors",
+                  "store_rejects",
+                  "store_rejects",
+                  "store_rejects",
+                  "store_rejects",
+                  "rejects_limit",
+                  "2,097,152"
+                ]
+              },
+              {
+                "id": "E12",
+                "url": "https://docs.rs/calamine/0.36.1/calamine/struct.XlsxCellReader.html",
+                "version_or_release": "calamine 0.36.1 versioned API",
+                "locator": [
+                  "same XML stream",
+                  "strings:",
+                  "formats:",
+                  "cached",
+                  "cached",
+                  "formula metadata",
+                  "formula metadata"
+                ]
+              },
+              {
+                "id": "E18",
+                "url": "https://learn.microsoft.com/en-us/power-query/data-types",
+                "version_or_release": "Microsoft Learn current Data types; Desktop and Online differ",
+                "locator": [
+                  "200",
+                  "operating system",
+                  "locale",
+                  "locale",
+                  "locale"
+                ]
+              },
+              {
+                "id": "E21",
+                "url": "https://openrefine.org/docs/manual/exporting",
+                "version_or_release": "OpenRefine current unversioned export manual",
+                "locator": [
+                  "confidential",
+                  "history",
+                  "history",
+                  "history",
+                  "history",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "JSON",
+                  "operations",
+                  "operations"
+                ]
+              },
+              {
+                "id": "E25",
+                "url": "https://www.rfc-editor.org/rfc/rfc4180.txt",
+                "version_or_release": "RFC 4180, Informational, October 2005",
+                "locator": [
+                  "line breaks",
+                  "line breaks",
+                  "optional header",
+                  "differences",
+                  "records"
+                ]
+              },
+              {
+                "id": "K09",
+                "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/1.4.0/src/reader.rs",
+                "version_or_release": "rust-csv source tag 1.4.0, ReaderState position comment and ReaderBuilder trim docs",
+                "locator": [
+                  "only observable",
+                  "By default, no trimming"
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "claim_id": "Q01",
+            "claim": "Sampling, seekability, full-input sampling and all-text/header caveats",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+              "lines": [
+                20,
+                35,
+                37,
+                79,
+                119
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E01",
+              "E03"
+            ]
+          },
+          {
+            "claim_id": "Q02",
+            "claim": "Reject defaults, temporary lifetime, multiplicity, projection/field coverage and diagnostic schema",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+              "lines": [
+                49,
+                51,
+                118,
+                126
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E02"
+            ]
+          },
+          {
+            "claim_id": "Q03",
+            "claim": "Current CSV line-size documentation discrepancy, not a proved version transition",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+              "lines": [
+                65,
+                121
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E02",
+              "K04"
+            ]
+          },
+          {
+            "claim_id": "Q04",
+            "claim": "XLSX versus XLS, extension loading, first sheet, range/empty/type defaults and null-producing ignore mode",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+              "lines": [
+                20,
+                45
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E04"
+            ]
+          },
+          {
+            "claim_id": "Q05",
+            "claim": "Memory percentage/spill applicability and buffer-manager versus total RSS",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+              "lines": [
+                61,
+                124
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E05",
+              "E06"
+            ]
+          },
+          {
+            "claim_id": "Q06",
+            "claim": "csv headers, width and trim defaults; parsed fields, UTF-8 and byte-record roles",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+              "lines": [
+                17,
+                31,
+                33,
+                92
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E07",
+              "E08",
+              "E09",
+              "K01",
+              "K09"
+            ]
+          },
+          {
+            "claim_id": "Q07",
+            "claim": "Record-start position granularity, framing uncertainty, logical records versus physical lines",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+              "lines": [
+                33,
+                49,
+                51,
+                121,
+                126
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "K09",
+              "E25"
+            ]
+          },
+          {
+            "claim_id": "Q08",
+            "claim": "Calamine value kinds, Excel serial epochs/precision/no timezone and workbook representation",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+              "lines": [
+                18,
+                43,
+                122
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E10",
+              "E11",
+              "E13"
+            ]
+          },
+          {
+            "claim_id": "Q09",
+            "claim": "XLSX stream shared metadata, one advancing stream, formula/cache APIs and no RSS/recalculation proof",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+              "lines": [
+                18,
+                43,
+                93,
+                122
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E12",
+              "E13"
+            ]
+          },
+          {
+            "claim_id": "Q10",
+            "claim": "Arrow typed/schema/batch/projection/header APIs and bounded/all-input inference",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+              "lines": [
+                19,
+                35
+              ],
+              "judgment": "CAPABILITY_SUPPORTED_EXAMPLE_LOCATOR_UNCONFIRMED"
+            },
+            "primary_evidence_ids": [
+              "E14",
+              "E15",
+              "K02",
+              "K03"
+            ]
+          },
+          {
+            "claim_id": "Q11",
+            "claim": "Polars inference length and low-memory/performance tradeoff",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+              "lines": [
+                21,
+                35
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E16"
+            ]
+          },
+          {
+            "claim_id": "Q12",
+            "claim": "Power Query inference versus profiling scope and explicit versus ambient locale",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+              "lines": [
+                23,
+                35,
+                41,
+                80
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E17",
+              "E18",
+              "E19"
+            ]
+          },
+          {
+            "claim_id": "Q13",
+            "claim": "OpenRefine local workflow, operation reuse exclusions and archive history/privacy",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+              "lines": [
+                22,
+                57,
+                59,
+                106,
+                106
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E20",
+              "E21"
+            ]
+          },
+          {
+            "claim_id": "Q19",
+            "claim": "OpenRefine date-type regression diagnosis, test/fix, shipped tag and actual release date",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+              "lines": [
+                69
+              ],
+              "judgment": "MINOR_WRONG_RELEASE_YEAR_WITH_SUPPORTED_CHAIN"
+            },
+            "primary_evidence_ids": [
+              "H06",
+              "J01",
+              "J02",
+              "J03",
+              "J04",
+              "K05"
+            ]
+          },
+          {
+            "claim_id": "Q20",
+            "claim": "OpenRefine quote-option issue, changed test/code, merge/milestone versus shipment",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+              "lines": [
+                71
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "J05",
+              "J06",
+              "J07"
+            ]
+          },
+          {
+            "claim_id": "Q22",
+            "claim": "Source/identity/recipe/count product proposals distinguished from library facts and runtime guarantees",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+              "lines": [
+                9,
+                31,
+                49,
+                51,
+                53,
+                57,
+                59,
+                61,
+                149
+              ],
+              "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+            },
+            "primary_evidence_ids": [
+              "E01",
+              "E02",
+              "E20",
+              "E25"
+            ]
+          },
+          {
+            "claim_id": "Q23",
+            "claim": "Literal P4 failed-row CSV contents versus optional redacted/diagnostic-only payload",
+            "candidate_passage": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+              "lines": [
+                49,
+                82,
+                90,
+                106,
+                125
+              ],
+              "judgment": "MATERIAL_FALSE_REJECTION_OF_OUTPUT_SCOPE"
+            },
+            "primary_evidence_ids": [
+              "E02",
+              "E21",
+              "E25"
+            ]
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "completeness_scope": "Every consequential final conclusion, selected mechanism, all P clauses and material critic change for the original small brief were actually reviewed. Minor example locator explicitly unconfirmed; no whole-library or universal runtime audit implied."
+      },
+      "preservation_coverage": {
+        "coverage": "COMPLETE_ACTUAL_REVIEW",
+        "files_reviewed": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/discovery.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/draft.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/critique.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md"
+        ],
+        "families": [
+          "Implementation mechanisms and products",
+          "Raw source/identifiers",
+          "Sampling/full-file scope",
+          "Locale/date/null",
+          "Reject payload/coverage/framing",
+          "Recipe/monthly/schema/engine drift",
+          "Record/count units",
+          "Workbook fidelity/metadata",
+          "Historical release/issue leads",
+          "Resources/deployment/proposed validation"
+        ],
+        "judgment": "Supported findings broadly preserved, with material P4 output-content weakening",
+        "source_identity_rebinding_found": false,
+        "critic_adjudication": [
+          {
+            "finding": "M1",
+            "disposition": "ACCEPT_FILE_RESTORATION_REJECT_PAYLOAD_WEAKENING",
+            "evidence_ids": [
+              "E02",
+              "E21",
+              "E25"
+            ],
+            "final_lines": [
+              49,
+              82,
+              90,
+              106,
+              125
+            ],
+            "reason": "CSV remains required, but making failed rows optional does not preserve literal P4. Critic fallible."
+          },
+          {
+            "finding": "M2",
+            "disposition": "ACCEPT_REFINEMENT",
+            "evidence_ids": [
+              "E02",
+              "E25"
+            ],
+            "final_lines": [
+              51,
+              53,
+              91,
+              126
+            ],
+            "reason": "Logical record population and initial outcomes now disjoint; physical lines/header and downstream effects separate."
+          },
+          {
+            "finding": "M3",
+            "disposition": "ACCEPT_REFINEMENT",
+            "evidence_ids": [
+              "K09",
+              "E09"
+            ],
+            "final_lines": [
+              33,
+              49,
+              92,
+              118,
+              121
+            ],
+            "reason": "Known record-start granularity operationalized; draft best-offset caveat already useful."
+          },
+          {
+            "finding": "M4",
+            "disposition": "ACCEPT_API_ADDITION_NOT_ALL_PRIOR_WORK_WRONG",
+            "evidence_ids": [
+              "E12"
+            ],
+            "final_lines": [
+              18,
+              93,
+              122
+            ],
+            "reason": "Shared strings/formats and single stream confirmed; existing no-RSS-guarantee caveat preserved."
+          },
+          {
+            "finding": "M5",
+            "disposition": "ACCEPT_AS_ENHANCEMENT_WITH_OWNER_CHOICE",
+            "evidence_ids": [
+              "E20",
+              "E21"
+            ],
+            "final_lines": [
+              59,
+              94,
+              123
+            ],
+            "reason": "Upgrade/migration behavior added as proposal; old-engine retention not inferred as a fact."
+          },
+          {
+            "finding": "m1",
+            "disposition": "ACCEPT_UNCERTAINTY_AMEND_CURRENT_DISCREPANCY_EXPLANATION",
+            "evidence_ids": [
+              "E02",
+              "K04"
+            ],
+            "final_lines": [
+              65,
+              95,
+              121
+            ],
+            "reason": "Different current pages give both values in same review; no timed code transition proved."
+          },
+          {
+            "finding": "O4/O3 refinements",
+            "disposition": "QUALIFY_LABELS_AND_RELEASE_METADATA",
+            "evidence_ids": [
+              "E01",
+              "E17",
+              "J01",
+              "J02",
+              "J04",
+              "J05",
+              "J06",
+              "J07"
+            ],
+            "final_lines": [
+              69,
+              71,
+              79,
+              84,
+              97
+            ],
+            "reason": "Different sample defaults do not prove adequacy; quote chain supported, 3.5 release year wrong and critic missed it."
+          }
+        ],
+        "full_prose_final": true,
+        "remaining_scope": []
+      },
+      "grade_limits": [
+        "Small product research deliverable; no observed product implementation or runtime assurance",
+        "No source/citation/length/agreement counts or hash checks used as scientific grade",
+        "Product decisions and unexecuted performance/packaging/usability/replay remain open",
+        "N1-F1 is the only material FAIL basis; minor metadata/label/locator errors and discovery-freeze deviation are separately qualified"
+      ]
+    }
+  },
+  "method_clues": {
+    "partial_blinding_only": true,
+    "details": "Neutral labels do not hide actual-arm paths or question-queue/method prose; no other candidate/evaluator/campaign content read.",
+    "premium_experiment_only": true
+  },
+  "comparative_quality_eligible": false,
+  "comparative_reason": "N2 passes with limitations and N1 has a material P4 scope defect. No general method/speed/cost winner; useful findings credited independently.",
+  "scope_limits": [
+    "Complete six-axis original-brief assessment, not unlimited production assurance or whole-library source audit",
+    "Minor unconfirmed Arrow example locator isolated; its meaningful capability verified",
+    "Source documents mutable where stated; future binary/release qualification and real product datasets/performance not executed",
+    "Incidental startup filenames and repository-required index read disclosed; no other evaluation/other-case content used",
+    "Original N1 pre-reveal discovery text not in exact map; independence cannot be certified"
+  ],
+  "evaluation_started_at": "2026-10-09T19:34:05+00:00",
+  "evaluation_completed_at": "2026-10-09T19:50:30.236377+00:00",
+  "absolute_deadline": "2026-10-09T19:58:13.679383+00:00",
+  "observed_source_operations": {
+    "local_inputs": "Read exact mapped original brief/plan/rubric, all 30 candidate files and mapped source-root notes; SHA-256/byte identity checks and source-ID URL/version preservation checks. No runtime fixture execution.",
+    "public_primary": "web open/find of public primary documentation/GitHub pages; independent bounded HTTPS retrievals of documentation, tagged source, metadata and PR diffs. No download was executed.",
+    "api_failures": "H07–H15 returned 403 rate-limit errors; corresponding needed issue/PR/release conclusions checked via J/K HTML/raw/diff fallbacks. Initial web API release open returned Internal Error; HTML release datetime succeeded. Some web find calls returned Internal Error or no matches; those were not counted as affirmative evidence.",
+    "writes": "assessment.md, assessment.json, source-map.json and four bounded evidence JSON files only under exact output root.",
+    "incidental_startup_access": "Broad rg filename enumeration returned other-experiment path names; no contents of those cases or evaluations opened or used. Repository-mandated Plans index read, not used as scientific standard.",
+    "nested_agents": false,
+    "runtime_validation_execution": false,
+    "candidate_repair": false,
+    "git_or_canonical_edits": false,
+    "account_or_configuration_changes": false,
+    "executables_or_installers_downloaded": false,
+    "private_provider_internals_accessed": false
+  },
+  "native_and_cost_limits": {
+    "candidate_delivery_flags_source": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/input-map.json",
+    "candidate_native_completion": {
+      "N2": null,
+      "N1": null
+    },
+    "candidate_t3_completion": {
+      "N2": null,
+      "N1": null
+    },
+    "candidate_trustworthy_wall_time_seconds": {
+      "N2": null,
+      "N1": null
+    },
+    "candidate_usage": {
+      "N2": null,
+      "N1": null
+    },
+    "candidate_billing": {
+      "N2": null,
+      "N1": null
+    },
+    "reviewer_lifecycle": "Actual native create_goal and get_goal calls observed active. Required full scientific artifacts are saved before update_goal complete; supported tool history is authoritative. No handcrafted lifecycle receipt JSON.",
+    "reviewer_status_at_scientific_save": "active",
+    "reviewer_terminal_completion_timestamp_at_save": null,
+    "reviewer_supported_goal_aggregate_tokens_snapshot": 197851,
+    "reviewer_supported_goal_aggregate_tokens_snapshot_at": "2026-10-09T19:42:39Z",
+    "goal_token_accounting_limit": "Supported Goal aggregate is a native accounting snapshot, not a provider billing total, per-call usage ledger, cost, or quality metric.",
+    "reviewer_provider_usage": null,
+    "reviewer_billing": null,
+    "timing_limit": "evaluation_started_at is first observed UTC/native activation timestamp, after initial assignment/map startup. Original 25-minute absolute deadline retained, without reset; exact startup timestamp not independently recorded. No candidate timing comparison."
+  },
+  "process_qualifications": {
+    "N1": {
+      "discovery_freeze_integrity": "VIOLATED_OR_UNVERIFIABLE_ORIGINAL_TEXT",
+      "current_discovery_sha256": "66bc2ab4e0226b2b23b7f8a69c1ad7e5d93d048f0b58e5eb94e2549512e264b0",
+      "reveal_record_discovery_sha256": "9359fa3a3dc01352eb96206bff10ed14e9b4ab9484aa44f79fb63b08da529e48",
+      "current_bytes": 15421,
+      "reveal_bytes": 17632,
+      "candidate_disclosure": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/draft.md",
+        "line": 81
+      },
+      "qualification": "Current supplied complete science reviewed; cannot certify original pre-reveal content/method independence. Not a hash-based scientific FAIL."
+    },
+    "N2": {
+      "discovery_freeze_integrity": "MAPPED_REVEAL_HASH_MATCHES_CURRENT_DISCOVERY",
+      "qualification": "Hash identity is not an oracle for scientific discovery quality."
+    }
+  },
+  "claim_coverage_index": [
+    {
+      "id": "Q01",
+      "claim_family": "Sampling, seekability, full-input sampling and all-text/header caveats",
+      "primary_evidence_ids": [
+        "E01",
+        "E03"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            27,
+            46,
+            48,
+            50
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            20,
+            35,
+            37,
+            79,
+            119
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q02",
+      "claim_family": "Reject defaults, temporary lifetime, multiplicity, projection/field coverage and diagnostic schema",
+      "primary_evidence_ids": [
+        "E02"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            27,
+            70,
+            86,
+            124
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            49,
+            51,
+            118,
+            126
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q03",
+      "claim_family": "Current CSV line-size documentation discrepancy, not a proved version transition",
+      "primary_evidence_ids": [
+        "E02",
+        "K04"
+      ],
+      "candidate_passages": {
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            65,
+            121
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q04",
+      "claim_family": "XLSX versus XLS, extension loading, first sheet, range/empty/type defaults and null-producing ignore mode",
+      "primary_evidence_ids": [
+        "E04"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            27,
+            38,
+            60
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            20,
+            45
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q05",
+      "claim_family": "Memory percentage/spill applicability and buffer-manager versus total RSS",
+      "primary_evidence_ids": [
+        "E05",
+        "E06"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            34,
+            133
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            61,
+            124
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q06",
+      "claim_family": "csv headers, width and trim defaults; parsed fields, UTF-8 and byte-record roles",
+      "primary_evidence_ids": [
+        "E07",
+        "E08",
+        "E09",
+        "K01",
+        "K09"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            15,
+            26,
+            101
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            17,
+            31,
+            33,
+            92
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q07",
+      "claim_family": "Record-start position granularity, framing uncertainty, logical records versus physical lines",
+      "primary_evidence_ids": [
+        "K09",
+        "E25"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            70,
+            86,
+            98,
+            125
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            33,
+            49,
+            51,
+            121,
+            126
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q08",
+      "claim_family": "Calamine value kinds, Excel serial epochs/precision/no timezone and workbook representation",
+      "primary_evidence_ids": [
+        "E10",
+        "E11",
+        "E13"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            26,
+            38,
+            127
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            18,
+            43,
+            122
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q09",
+      "claim_family": "XLSX stream shared metadata, one advancing stream, formula/cache APIs and no RSS/recalculation proof",
+      "primary_evidence_ids": [
+        "E12",
+        "E13"
+      ],
+      "candidate_passages": {
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            18,
+            43,
+            93,
+            122
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q10",
+      "claim_family": "Arrow typed/schema/batch/projection/header APIs and bounded/all-input inference",
+      "primary_evidence_ids": [
+        "E14",
+        "E15",
+        "K02",
+        "K03"
+      ],
+      "candidate_passages": {
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            19,
+            35
+          ],
+          "judgment": "CAPABILITY_SUPPORTED_EXAMPLE_LOCATOR_UNCONFIRMED"
+        }
+      }
+    },
+    {
+      "id": "Q11",
+      "claim_family": "Polars inference length and low-memory/performance tradeoff",
+      "primary_evidence_ids": [
+        "E16"
+      ],
+      "candidate_passages": {
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            21,
+            35
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q12",
+      "claim_family": "Power Query inference versus profiling scope and explicit versus ambient locale",
+      "primary_evidence_ids": [
+        "E17",
+        "E18",
+        "E19"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            30,
+            46,
+            54,
+            56
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            23,
+            35,
+            41,
+            80
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q13",
+      "claim_family": "OpenRefine local workflow, operation reuse exclusions and archive history/privacy",
+      "primary_evidence_ids": [
+        "E20",
+        "E21"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            29,
+            76,
+            104
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            22,
+            57,
+            59,
+            106,
+            106
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q14",
+      "claim_family": "OpenRefine UTC date semantics and scoped historical expectation dispute",
+      "primary_evidence_ids": [
+        "E22",
+        "J13"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            29,
+            54,
+            112
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q15",
+      "claim_family": "Frictionless report structure, Python boundary, Excel stringification/coercion and cap controls",
+      "primary_evidence_ids": [
+        "E23",
+        "E24",
+        "K08"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            31,
+            60,
+            99
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q16",
+      "claim_family": "Frictionless 5.20.0 tagged default, API binding, partial/warning semantics and release context",
+      "primary_evidence_ids": [
+        "J09",
+        "J10",
+        "K07"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            31,
+            99
+          ],
+          "judgment": "DEFAULT_INDEPENDENTLY_CONFIRMED_CANDIDATE_HONESTLY_UNRESOLVED"
+        }
+      }
+    },
+    {
+      "id": "Q17",
+      "claim_family": "DuckDB sniffer issue/fix/release chain and later release context",
+      "primary_evidence_ids": [
+        "H01",
+        "H02",
+        "H03",
+        "H04"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            110
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q18",
+      "claim_family": "Calamine 0.36.1 scoped strict OOXML/XLS/XLSB maintenance history",
+      "primary_evidence_ids": [
+        "H05"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            103,
+            112,
+            131
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q19",
+      "claim_family": "OpenRefine date-type regression diagnosis, test/fix, shipped tag and actual release date",
+      "primary_evidence_ids": [
+        "H06",
+        "J01",
+        "J02",
+        "J03",
+        "J04",
+        "K05"
+      ],
+      "candidate_passages": {
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            69
+          ],
+          "judgment": "MINOR_WRONG_RELEASE_YEAR_WITH_SUPPORTED_CHAIN"
+        }
+      }
+    },
+    {
+      "id": "Q20",
+      "claim_family": "OpenRefine quote-option issue, changed test/code, merge/milestone versus shipment",
+      "primary_evidence_ids": [
+        "J05",
+        "J06",
+        "J07"
+      ],
+      "candidate_passages": {
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            71
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q21",
+      "claim_family": "DuckDB slash-date report without exact engine build, as a proposed test lead",
+      "primary_evidence_ids": [
+        "J12"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            112
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q22",
+      "claim_family": "Source/identity/recipe/count product proposals distinguished from library facts and runtime guarantees",
+      "primary_evidence_ids": [
+        "E01",
+        "E02",
+        "E20",
+        "E25"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            13,
+            15,
+            17,
+            19,
+            20,
+            76,
+            78,
+            86,
+            136,
+            140
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            9,
+            31,
+            49,
+            51,
+            53,
+            57,
+            59,
+            61,
+            149
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q23",
+      "claim_family": "Literal P4 failed-row CSV contents versus optional redacted/diagnostic-only payload",
+      "primary_evidence_ids": [
+        "E02",
+        "E21",
+        "E25"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            18,
+            68,
+            70
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            49,
+            82,
+            90,
+            106,
+            125
+          ],
+          "judgment": "MATERIAL_FALSE_REJECTION_OF_OUTPUT_SCOPE"
+        }
+      }
+    }
+  ],
+  "assessment_markdown": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/assessment.md",
+  "source_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/source-map.json"
+}

@@ -1,0 +1,2416 @@
+{
+  "block": "A-M11-B",
+  "case": "S05",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M11-B/assignment.md",
+      "sha256": "6ed25cb5964c335c971dd5b45440d86cc4bc2e0a54714201f64f2107f01c43f8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M11-B/input-map.json",
+      "sha256": "ad9da5a65dec529babc6c249bbd99c255b8b96f41a354ef0e330bd1d8a618c14"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S05/brief.md",
+      "sha256": "552e4eb0e3aeffb3af6a2f4ff134a1abd6e40384823bef785365dfd63c550e35"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S05/plan-root-only.md",
+      "sha256": "422f486c028546be6c5291c5121b59befb143ded6b0afc7858d141e8f60667b1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+      "sha256": "212ac0ab249fea2c34841b41884a2604f851513e70e12e912ec86b85c218a860"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/source-map.json",
+      "sha256": "6a3e7ed4c56d13bd64bb45d0af99265e14ac699d4eecc38f587b1aca91e964d1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/assignment.md",
+      "sha256": "5eaf09171a4d6ec862c8a35669c2c33e46461f827e55d5500c68e709e9d0f6c6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/input-map.json",
+      "sha256": "4c22b773864fc41230aa0926a22ca11cd13b2cc6fe71023bf97f7290f41efd0e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/critique.md",
+      "sha256": "1e5acda161c5a4a0923324833b93ee34ad9175e0d93ad476963cb1606d1d7640"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/source-map.json",
+      "sha256": "4c96b47cf6a011765c2880f0630af568e1fa5550b59db71850988ed7d2ae5c2c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/assignment.md",
+      "sha256": "ac17b23975e212d5f956d42982c0141f4cd744b0d9ff5ae526da875f089a209b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/input-map.json",
+      "sha256": "aeb4945151b7775ba8fdd1eec8d020955266198cf0e094cdb10c1630e58958cf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/discovery.md",
+      "sha256": "112d13bb4afe866ae9ebbe217090db4d23d21f218899f11c6f77a59c70423423"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/draft.md",
+      "sha256": "85326d58c1fd2c693d0f399cb1d946305b1f249c703fd0e6467e1d8dd110d50e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/source-map.json",
+      "sha256": "87a429406347c1b1d05c7951cb092eca5212ec36baa4f514fe41b82f1cf44aea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/revealed-plan.md",
+      "sha256": "422f486c028546be6c5291c5121b59befb143ded6b0afc7858d141e8f60667b1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/plan-reveal.json",
+      "sha256": "3f2bec82ac0cd3f81e6b6df1b97754530ba0afce83329e243e8a087e5b1d9704"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/assignment.md",
+      "sha256": "c8154071e86020233506b5ca74cbfa50d4b818674eb066e5e0c0693c19824fdd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/input-map.json",
+      "sha256": "902e6622598b6bb8bf7f5e68b67f5810b17b1cc83999e86465288c110bbe7954"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/sources/01-meilisearch.md",
+      "sha256": "82b8b874901e7325b24cd6a9c1054f393309428dc52a4bd10fa6c78598d90766"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/sources/02-rights-statements.md",
+      "sha256": "4a1d59e8fb4212a0e77c08c473c6f0691c3e4c7fbaf592b46aea3fe403b37141"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/sources/03-typesense-embedding-fields.md",
+      "sha256": "aef1b653b55cf1086adb66b513b6fb889ccabd6e5cab48a684d7b0025a328679"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/sources/04-openrefine-review.md",
+      "sha256": "548762fc57590ab6af57285a5371988271950f033b14f7125d80ad061d88fd32"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/sources/index.md",
+      "sha256": "37b04a2c5e393ccdab78023ad8f77d6d61ea40d36568ed6519926970c03f05ab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/sources/01-meilisearch-typo-tolerance.md",
+      "sha256": "45a06fb733730111dc7e526386aa8be3f3b5cb02c48079d319fc952daea8da17"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/sources/02-rights-statements.md",
+      "sha256": "eee35fa6be160aad9550d86a22ad5a6464c7700384fbb1f60338c38a7a4a1966"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/sources/03-primary-source-checks.md",
+      "sha256": "3a5a4c0a2ef6a54c80f364f341fe2b2fd75e20f547849c01dc0bb549487f5b82"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/sources/index.md",
+      "sha256": "e0c29bc1fe82993a11caa9c4960cd8cd61c1d9a503d0624033a8120577cdfc72"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/sources/01-search-and-ranking.md",
+      "sha256": "9daaa2629c2d60c9da83d5e465777d823b03ed3ce1ecb514c44f08c7cca5fde8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/sources/02-curation-and-vocabulary.md",
+      "sha256": "d24119705003669f1b044991d9f897dba685781d91641fa61e3d26848c124335"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/sources/03-images-and-access.md",
+      "sha256": "0de0afcfc177ffc07835cf1cdfe0e0a74d0c80f0b6a80b0d14e01cd95983f0fa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/sources/04-evolution-and-regressions.md",
+      "sha256": "1bcafe15ace90d220c95a3626f0d5424a6e9dcc30c52caacb15a416cabc9defd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/sources/index.md",
+      "sha256": "7d6ad48e5ef7235b432a634517e27c8273d7541afc8f925c9f109c9f3a7c5c0a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+      "sha256": "ed4a261d8acaeffd286ff438b0cdcf1147dd251b05f03bc671fa4ea311544c04"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/source-map.json",
+      "sha256": "64d608f2b29b657037b57332d5c7943d793694049880de7284a5af08d311623e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/assignment.md",
+      "sha256": "62cf0ebf13517bd46a5a5430445fdb0838b32ea053eb63f20f55bf7c12f2170f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/input-map.json",
+      "sha256": "c273653f8951bb094b5f81a83a0520a8570fea578d4e87e68a0f71213e64f020"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/critique.md",
+      "sha256": "b70e71504e6b793a938fe9467a381feae9a8bde6497d3b4f7a0d9de17beb5810"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/assignment.md",
+      "sha256": "acbf49f70ac37d87fa8cd3838beccf62f09ad0e93c81d1283b924cafae061faf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/input-map.json",
+      "sha256": "38f2e34a3d145f103f3b44ecafdc6ff5ee138ea4a6e674f3c79d5dd33f325ca5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/discovery.md",
+      "sha256": "8ec018f862625feed149fbb833520d1a8f59dfe72accdfcf91a58aca5e04592b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/draft.md",
+      "sha256": "4f99f30f7900d929fe0410eaad346b7cc958ed6cf3cb4903f1de98dbfa1921d5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/revealed-plan.md",
+      "sha256": "422f486c028546be6c5291c5121b59befb143ded6b0afc7858d141e8f60667b1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/plan-reveal.json",
+      "sha256": "280ce273aaf6287f86503dabff077f077d785b8439616770e577b5790b3f595e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/assignment.md",
+      "sha256": "ea59d7c71d4c5aa9b47f277035cc3d1de2c53b21757230a90f4cbaeb5b6fa7cf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/input-map.json",
+      "sha256": "f550a4012961f911db9ffef507299838df66f9c644a930776bafb69279a8fed3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/sources/01-reviser-verifications.md",
+      "sha256": "0491302cffa4930760ab8655d8a7d0a6e0488e8efdf7c4a0238d73c20053b456"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/sources/index.md",
+      "sha256": "77a1f96eb496b9bb66e6181b7feca611000e2e0add06fec1c09486164570697f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/sources/01-search-and-enrichment.md",
+      "sha256": "728827a3ae28f62cf77da24a7163848c104cfffe56b5d5e2db49c2896e35f581"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/sources/02-image-and-access.md",
+      "sha256": "a6832b79e4156ea05441818b98052aa58a3ba0c9ccf2fd95e5cebd093b21be76"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/sources/03-rights-and-community.md",
+      "sha256": "3c903a6c771aaab36d1ceddf8609604500797f6450c5b08e57562a55f4fe75e9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/sources/04-search-alternatives.md",
+      "sha256": "41685aed4089acf804c297e8b1d344efe16ceef8a81d46c352c99dbbd2c45b81"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/sources/index.md",
+      "sha256": "a047102a11a5089de6763c023f7723532a5b60343b0473dd43da42e720ef5443"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/sources/01-enrichment.md",
+      "sha256": "9613092d02afe7f3288cee4377a00c68d590324831488a60b8eaaf9e55358453"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/sources/02-search.md",
+      "sha256": "1b832791a06f814886e3dd62313bf774a76b6e3e267ed035af03beb1a0de427b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/sources/03-image.md",
+      "sha256": "ccdf51c1fdb4ead47e33ffb42ade10c0b056ed666952db650205a5121da55197"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/sources/04-rights-governance.md",
+      "sha256": "10d14f3175fe73f816093ddec57cc71a189b5f24e848710983ffe95a359213e8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/sources/index.md",
+      "sha256": "33abe9e59bb6bfd5a08ffe9cf0ff20f54e8f0aea22450dccccc5a60d7e0048e9"
+    }
+  ],
+  "arms": {
+    "N2": {
+      "actual_arm": "control",
+      "final_delivery": true,
+      "grade": "FAIL",
+      "material_findings": [
+        {
+          "id": "N2-F1",
+          "type": "MATERIALLY_WRONG",
+          "severity": "medium",
+          "axes": [
+            1,
+            2,
+            5
+          ],
+          "original_obligation": "O2: investigate governing units/types/limits and applicability; O5: preserve correct qualifications.",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+            "line": 54,
+            "passage": "For v0.8.7, standard vector supports at most 2,000 dimensions; HNSW defaults are m=16, ef_construction=64 and ef_search=40.",
+            "passage_kind": "literal_candidate_excerpt"
+          },
+          "predecessor_locators": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/discovery.md",
+              "line": 27,
+              "passage": "| **PostgreSQL FTS + exact vectors first; pgvector ANN only if measured** | Strong baseline if PostgreSQL already stores the catalog; structured record, rights filter and provenance can remain together. GIN is PostgreSQL’s preferred FTS index. pgvector exact nearest-neighbor is default/perfect-recall. | HNSW trades recall for speed; pgvector v0.8.7 HNSW `m=16`, `ef_construction=64`, `ef_search=40`. ANN filters apply after index scan; underfill can occur. `vector` ceiling is 2,000 dims; `halfvec` 4,000. pgvector filtering issue includes a 40k-row case and shows iterative scanning is opt-in/tuning-sensitive. FTS configuration and field weights must be chosen. | Best low-complexity baseline if an existing PostgreSQL catalog is present. First measure exact FTS + exact vector and filters. Add ANN only if query latency needs it and relevant rows still meet recall/count targets. [S06](sources/01-search-and-ranking.md#s06--postgresql-18-preferred-text-search-indexes), [S07](sources/01-search-and-ranking.md#s07--pgvector-readme-at-v087), [S08–S09](sources/04-evolution-and-regressions.md#s08--s09--pgvector-filtered-ann-underfill--v080-iterative-scans--remaining-tuning) |",
+              "evaluator_locator_summary": "vector ceiling is 2,000 dims; halfvec 4,000.",
+              "passage_kind": "exact_candidate_line"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/draft.md",
+              "line": 39,
+              "passage": "For v0.8.7, standard vector supports at most 2,000 dimensions",
+              "passage_kind": "literal_candidate_excerpt"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/critique.md",
+              "line": 8,
+              "passage": "The research draft is unusually careful about exact identifiers, rights-sensitive delivery, versioned behavior, community authority, and what was not tested. Its central dispositions on P1, P3, P4, and P6 are sound. I found no primary-source contradiction in its stated Typesense .7/.3 default, pgvector exact-search baseline and dimensions, Qdrant RRF defaults, OpenRefine human-review caveat, IIIF delivery/auth separation, or the pinned Cantaloupe 5.0.5 HTTP-401 fix (C03–C08; inherited S01–S15). The issues below are mostly overbroad requirements or unmade operating decisions, not reasons to discard the draft.",
+              "evaluator_locator_summary": "I found no primary-source contradiction ... pgvector exact-search baseline and dimensions",
+              "passage_kind": "exact_candidate_line"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "A08",
+              "url": "https://github.com/pgvector/pgvector/blob/v0.8.7/README.md",
+              "version": "v0.8.7",
+              "locator": "Reference > Vector Type (rendered line 883) versus HNSW Supported types (365), IVFFlat Supported types (456), FAQ more than 2,000 dimensions (787)"
+            },
+            {
+              "url": "https://github.com/pgvector/pgvector/blob/v0.8.7/src/vector.h",
+              "version": "v0.8.7",
+              "symbol": "VECTOR_MAX_DIM",
+              "line": 11,
+              "value": 16000
+            },
+            {
+              "url": "https://github.com/pgvector/pgvector/blob/v0.8.7/src/hnsw.h",
+              "version": "v0.8.7",
+              "symbol": "HNSW_MAX_DIM",
+              "line": 33,
+              "value": 2000
+            },
+            {
+              "url": "https://github.com/pgvector/pgvector/blob/v0.8.7/src/ivfflat.h",
+              "version": "v0.8.7",
+              "symbol": "IVFFLAT_MAX_DIM",
+              "line": 37,
+              "value": 2000
+            }
+          ],
+          "reasoning": "The 2,000 figure governs full-precision approximate indexes, not the vector type or the proposed exact-search baseline. The type stores up to 16,000 dimensions. The paragraph explicitly begins with exact search and makes HNSW contingent, so the unqualified type ceiling can incorrectly exclude 2,048/3,072-dimensional representations from an otherwise viable database-first path or suggest needless type/model changes. This is a source-applicability error, not an unknown museum input. Correct HNSW defaults and sound exact-first advice do not make the ceiling true.",
+          "criticism_assessment": "Reject the critic's no-contradiction assurance on dimensions; it repeated the same index/type conflation in C05. Accept its separate writeback and conditional-option refinements where supported.",
+          "repair_performed": false
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N2-m1",
+          "type": "MINOR_LOCATOR_FAILURE",
+          "severity": "low",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+            "line": 44,
+            "passage": "See [S04–S07](sources/01-search-and-ranking.md).",
+            "passage_kind": "literal_candidate_excerpt"
+          },
+          "other_lines": [
+            67,
+            81
+          ],
+          "reasoning": "Three local evidence links point inside the reviser sources directory to absent research-note files (01-search-and-ranking.md, 04-evolution-and-regressions.md, 02-curation-and-vocabulary.md). The final source navigation and inherited maps still identify the real research/critic roots, so evidence remains recoverable and this is not a scientific fail.",
+          "primary_evidence": [
+            "A01",
+            "A03",
+            "A04",
+            "A08",
+            "A21"
+          ]
+        },
+        {
+          "id": "N2-m2",
+          "type": "MINOR_PRESERVATION_COMPRESSION",
+          "severity": "low",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+            "line": 83,
+            "passage": "**Optional path:** run a contained OpenRefine pilot on a catalog copy or approved field export against Getty AAT/TGN/ULAN and a separate local authority where warranted. Reconcile the appropriate column/type, bring in corroborating fields if the service exposes them, inspect candidate judgments and preserve operation history. Test proposal, curator approval, any supported source writeback, export round-trip, recovery and rollback as separate actions. Do not depend on retired Getty XML services or static archived data as if current.",
+            "evaluator_locator_summary": "Optional path ... OpenRefine pilot ... Getty AAT/TGN/ULAN ... Do not depend on retired Getty XML services or static archived data as if current.",
+            "passage_kind": "exact_candidate_line"
+          },
+          "predecessor": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/discovery.md",
+            "line": 17,
+            "passage": "N-Triples full data is refreshed monthly and data is ODC-By 1.0",
+            "passage_kind": "literal_candidate_excerpt"
+          },
+          "reasoning": "The final retains Getty matching, source/version attribution and the retired-service warning, but compresses the specific monthly-refresh and ODC-By 1.0 conditions into general provenance/license checks and upstream notes. This weakens standalone precision for a later Getty adoption; it does not unconditionally clear use or remove attribution, so it is treated as minor for this bounded optional pilot.",
+          "primary_evidence": [
+            {
+              "id": "A03",
+              "url": "https://www.getty.edu/research-conservation/tools-databases/vocabularies/data-services/",
+              "locator": "Linked Open Data; License and Attribution; discontinued formats"
+            }
+          ]
+        },
+        {
+          "id": "N2-m3",
+          "type": "MINOR_NORMATIVE_STRENGTH",
+          "severity": "low",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/discovery.md",
+            "line": 35,
+            "passage": "all traffic and client pages must use HTTPS",
+            "passage_kind": "literal_candidate_excerpt"
+          },
+          "reasoning": "Auth 2.0 makes communication HTTPS mandatory and says clients should run from HTTPS pages. The final says transport is HTTPS rather than repeating the stronger client-page MUST; this is an upstream wording imprecision, not a remaining material final defect.",
+          "primary_evidence": [
+            {
+              "id": "A13",
+              "url": "https://iiif.io/api/auth/2.0/",
+              "locator": "Security wording, line 99"
+            }
+          ]
+        }
+      ],
+      "unresolved": [
+        {
+          "category": "MUSEUM_INPUT",
+          "status": "HONEST_EXTERNAL_DEPENDENCY",
+          "detail": "Authoritative catalogue/database/CMS and APIs, actual source fields, image formats/volume, visitor language/scripts/tasks, traffic/hardware/hosting, budgets and operational capacity are absent."
+        },
+        {
+          "category": "POLICY_DECISION",
+          "status": "HONEST_EXTERNAL_DEPENDENCY",
+          "detail": "Visibility of object existence/identifiers/fields/images/captions/exports, relevant communities and agreements, current policy authority, revocation targets, outage behavior and review/appeal roles require museum/community decisions."
+        },
+        {
+          "category": "ADOPTION_VALIDATION",
+          "status": "PROPOSED_NOT_EXECUTED",
+          "detail": "Target search/image releases and embedding models/providers, actual service terms/rates, data-transfer/retention approval, catalog relevance and denial/cache/correction/export behavior must be validated before adoption. None is claimed proven."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "COMPLETE: original O1-O6 and all explicit museum constraints assessed against the full final.",
+          "judgment": "O1/O3/O4/O6 are met substantively; O2 has N2-F1. O5 substantially preserves useful scope and conditions with minor compression. The final addresses the 40,000-record corpus without turning size into a throughput guarantee; uneven descriptions/no-context rows, non-expert discovery, rights/image/field distinctions, cultural authority, curator review and exports are all explicit. The only identified material final defect is the wrong pgvector type ceiling.",
+          "evidence": {
+            "primary": [
+              "A01",
+              "A02",
+              "A04",
+              "A05",
+              "A08",
+              "A11",
+              "A13",
+              "A14",
+              "A21"
+            ],
+            "candidate": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 5,
+                "passage": "**Scope:** a public visitor search interface over 40,000 local museum catalog records with uneven descriptions, images, changing rights, some culturally restricted material, and curator-transparent corrections/exports. This is a planning deliverable, not implementation, policy approval, security certification, legal advice, or benchmark.  ",
+                "evaluator_locator_summary": "Scope: ... 40,000 ... uneven descriptions ... changing rights ... curator-transparent corrections/exports",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 48,
+                "passage": "Keep empty/no-context rows distinct",
+                "passage_kind": "literal_candidate_excerpt"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 79,
+                "passage": "**Disposition: reject unattended direct-write enrichment; require a review gate, with conditional writeback.** The brief already requires curator-transparent corrections and exports. OpenRefine describes reconciliation as semi-automated and requiring human review; matching defaults are sensitive to text and its iterative workflow is recommended. This supports review before a change, but it does not establish whether the museum’s source system can safely write back. Treat matches as candidates with provenance and service-local score semantics, not truth. Use small batches and inspect ambiguous/high-impact items before approval. After curator approval, write back only if the system supports authorization, actor/decision provenance, versioning or recoverable originals, export visibility, and tested rollback; otherwise retain the separate proposal layer.",
+                "evaluator_locator_summary": "reject unattended ... conditional writeback",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 87,
+                "passage": "**Disposition: ten favorite queries are a useful seed, not sufficient validation.** The brief and plan do not supply the ten query strings, so they cannot be reproduced here. When the curator provides them, retain them exactly as one labeled query slice. A small convenient set cannot represent visitors’ language or expose leakage/false matches. Begin with an agreed field/access model and judged query set, then compare the applicable baseline with one challenger; widen the bake-off only if that result leaves a concrete decision unresolved. Before choosing rank weights, model or threshold, add a held-out set judged by curator and representative non-expert visitors (or otherwise capture their plain-language tasks) across these classes:",
+                "evaluator_locator_summary": "ten ... seed ... held-out",
+                "passage_kind": "exact_candidate_line"
+              }
+            ]
+          }
+        },
+        {
+          "axis": 2,
+          "coverage": "COMPLETE: consequential final facts and their governing source neighborhoods checked, including defaults, types, versions and policy applicability.",
+          "judgment": "Typesense selected-field regeneration, .7/.3 rank weights, cosine distance and optional rerank; Qdrant RRF defaults/version gates/candidate depth; PostgreSQL GIN rechecks; OpenRefine review/score/original-value behavior; Getty maintained/retired routes; IIIF delivery/auth separation; Mukurtu per-media protocols; labels/rights scope and Cantaloupe fix are supported. pgvector exact/default/filter/iterative-scan advice is supported, but its general 2,000-dimension type limit is contradicted by pinned reference and code. Explicit museum-policy/model/provider/hosting unknowns are dependencies, not wrong source claims.",
+          "evidence": {
+            "primary": [
+              "A01",
+              "A02",
+              "A03",
+              "A04",
+              "A05",
+              "A06",
+              "A07",
+              "A08",
+              "A09",
+              "A10",
+              "A11",
+              "A13",
+              "A14",
+              "A15",
+              "A21",
+              "A22",
+              "A23",
+              "A29",
+              "A31"
+            ],
+            "candidate": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 50,
+                "passage": "Evaluate semantic retrieval beside—not instead of—the keyword baseline. In Typesense v30.2, the documented hybrid default gives keyword rank weight 0.7 and vector rank weight 0.3. Cosine vector distance ranges from 0 to 2, with 0 closest; it is not a probability or calibrated confidence. By default, a hit found by only one leg can retain only that leg’s score; enabling rerank_hybrid_matches computes both components at added cost. Indexing/query behavior also depends on model, field triggers, vector count, language, remote inference and retry/timeouts. A built-in ONNX model avoids provider calls but downloads the model and uses local resources; remote embedding services receive text and make retries, cost, network and privacy operational concerns. Capture model name/version, vector dimensions, source fields, language, generation date and replacement strategy so a model update can rebuild and compare rather than mix embeddings silently. Never send restricted or otherwise unapproved text to a provider. Treat each approved field’s embedding and any generated representation as a governed derived copy.",
+                "evaluator_locator_summary": "keyword rank weight 0.7 ... vector ... 0.3",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 54,
+                "passage": "standard vector supports at most 2,000 dimensions",
+                "passage_kind": "literal_candidate_excerpt"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 55,
+                "passage": "2. Typesense offers an integrated search service; Qdrant explicitly fuses named dense/sparse vectors. Qdrant’s current docs describe RRF as equal-weight with k=2 by default; it ranks candidate positions and discards score margins. Prefetch depth and shard placement matter. Weighted RRF is a measured feature in current docs, not an unmeasured default. Use the same judged set if a second architecture is needed.",
+                "evaluator_locator_summary": "RRF ... equal-weight ... k=2",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 67,
+                "passage": "Cantaloupe can be assessed as a IIIF server rather than presumed required. Release records show a 4.1 authorization callback evolution and v5.0.5 fixed an uncaught exception when authorize() returned HTTP 401 (commit 096ffed). That history supports denial-path testing; it does not certify current Cantaloupe or establish IIIF Auth 2.0 support in a chosen version. Pin a release and test version-specific image info, authorization, response, derivative and cache behavior. Current observed releases and notes are in [S14–S15](sources/04-evolution-and-regressions.md).",
+                "evaluator_locator_summary": "v5.0.5 ... HTTP 401 ... does not certify current Cantaloupe",
+                "passage_kind": "exact_candidate_line"
+              }
+            ]
+          }
+        },
+        {
+          "axis": 3,
+          "coverage": "COMPLETE: discovery, mechanism diversity, conditional alternatives and retained optional leads examined.",
+          "judgment": "Useful discovery is not just a product list: database-first exact/FTS versus integrated Typesense versus Qdrant retrieval have different synchronization/operating tradeoffs; OpenRefine with Getty/local authority provides curator-controlled matching; static derivatives versus IIIF and Mukurtu protocol-centered CMS distinguish delivery from governance. Local Contexts and later Meilisearch challenger remain conditional. Their usefulness is supported by mechanisms and constraints, not citation or length counts. No extra product is required merely because a critic found one.",
+          "evidence": {
+            "primary": [
+              "A01",
+              "A03",
+              "A04",
+              "A05",
+              "A07",
+              "A11",
+              "A14",
+              "A15",
+              "A29"
+            ],
+            "candidate": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/discovery.md",
+                "line": 25,
+                "passage": "| Approach | Useful fit | Consequential defaults / costs | Conditional role |",
+                "evaluator_locator_summary": "Approach / fit / defaults / conditional role",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 44,
+                "passage": "Options and conditions",
+                "passage_kind": "literal_candidate_excerpt"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 113,
+                "passage": "Retained alternatives and uncertainty",
+                "passage_kind": "literal_candidate_excerpt"
+              }
+            ]
+          }
+        },
+        {
+          "axis": 4,
+          "coverage": "COMPLETE: all exact P1-P6 clauses and every disposition assessed; per-clause record saved.",
+          "judgment": "Public field correction, selective semantics, conditional representation publication, rejection of nightly-only enforcement, human-reviewed writeback and expanded query evaluation follow the brief and source scopes. No supported plan intent is improperly erased: lexical search, embeddings as an evaluated option, captions/images where permitted, reconciliation jobs, approved source correction and curator favorites remain. Decisions about visibility and failure outcomes are not smuggled in as vendor defaults. N2-F1 affects optional P2 architecture applicability, not the core selective-embedding disposition.",
+          "evidence": {
+            "primary": [
+              "A02",
+              "A04",
+              "A08",
+              "A11",
+              "A13",
+              "A14",
+              "A31"
+            ],
+            "candidate": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 12,
+                "passage": "| P1 | “Index all fields with keyword search.” | **Correction; clarify public/curator role boundary** | Public search uses an approved public-field projection with exact-ID and lexical support. A separately authorized curator workspace may search approved staff-only fields if curators need it; keep its index, facets, counts, suggestions, and endpoints inaccessible to public routes. |",
+                "evaluator_locator_summary": "P1-P6 disposition table",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 71,
+                "passage": "**Disposition: reject the nightly job as the enforcing boundary; retain it as synchronization/cleanup.** A nightly process creates an interval in which changed restrictions can remain searchable and does not control direct object URLs, derivatives, cached snippets, alternate formats, exports, duplicate media keys or a second index. Removing an entire record may also conflict with a policy that permits metadata but restricts media. The museum must define an observable revocation contract: authoritative policy source; maximum acceptable change-to-denial interval on each route; cache/CDN invalidation; and behavior if policy or identity lookup is unavailable. Those bounds and outage choices are policy decisions, not universal technical constants.",
+                "evaluator_locator_summary": "revocation ... policy decisions",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 79,
+                "passage": "conditional writeback",
+                "passage_kind": "literal_candidate_excerpt"
+              }
+            ]
+          }
+        },
+        {
+          "axis": 5,
+          "coverage": "COMPLETE: full discovery and draft, all critic material/minor prose, final and all mapped source notes/indexes compared.",
+          "judgment": "Final preserves the supported lexical/vector alternatives, image/access distinctions, community authority, enrichment/export provenance, current-policy decisions, missing-data qualifications and unexecuted-validation status. It broadens the embedding template appropriately, makes curator search optional, clarifies descriptive rights and revocation contract, and removes the blanket approved-writeback prohibition. Most critic 'material' items were useful clarity/optional additions rather than proof of required omissions; those classifications were independently challenged. Critic agreement failed to catch the pgvector error. Getty's exact refresh/license detail is compressed, and three direct inherited-note paths are broken; source lineage remains available. No material supported option or uncertainty was found silently removed.",
+          "evidence": {
+            "primary": [
+              "A02",
+              "A03",
+              "A04",
+              "A08",
+              "A14",
+              "A21",
+              "A29",
+              "A31"
+            ],
+            "candidate": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/draft.md",
+                "line": 16,
+                "passage": "Reject direct source writes",
+                "passage_kind": "literal_candidate_excerpt"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/critique.md",
+                "line": 30,
+                "passage": "Reject unattended enrichment that overwrites authoritative source values. The stronger claim “reject direct source writes” is broader than the brief or the evidence supports. A curator-approved correction may be written back to the system of record if it provides actor/decision provenance, versioning or a recoverable original, authorization, export visibility, and a tested rollback path. If those guarantees or APIs are absent, use a separate proposal/enrichment layer. The disposition should therefore be: stage proposals; require human approval; allow only controlled, auditable writeback where the source system supports recovery. OpenRefine’s documented semi-automated review workflow supports the approval gate, not a blanket prohibition on approved writeback (C07).",
+                "evaluator_locator_summary": "conditionally permit approved writeback",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 21,
+                "passage": "## Critique disposition: material and minor findings",
+                "evaluator_locator_summary": "Critique disposition ... material and minor",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 143,
+                "passage": "Source navigation",
+                "passage_kind": "literal_candidate_excerpt"
+              }
+            ]
+          }
+        },
+        {
+          "axis": 6,
+          "coverage": "COMPLETE: proposed validations, stated execution and witness applicability assessed independently.",
+          "judgment": "Meaningful proposals use judged visitor/curator query slices and a tuning/held-out split, exact vector ground truth under selective rights/category filters, explicit role x field x media permission oracles, timed revocation including warm caches and outages, original-value/approval/rollback/export checks, and representative image formats. Those discriminate relevant failures. The final says none ran; source lookups do not masquerade as product witnesses. No exit-code-only witness or validation overclaim was found. A supplied museum catalogue/runtime/policy and owner acceptance criteria are still necessary for execution; this is not an O6 omission.",
+          "evidence": {
+            "primary": [
+              "A02",
+              "A04",
+              "A05",
+              "A08",
+              "A13",
+              "A21"
+            ],
+            "candidate": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 126,
+                "passage": "Proposed and not executed",
+                "passage_kind": "literal_candidate_excerpt"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 131,
+                "passage": "3. For any ANN trial, compare output/count/order to exact vector ground truth after each category/rights filter. Record pgvector version, HNSW parameters, iterative-scan mode and caps; include selective/broad filters, 40k scale, latency, shortfall and exact recall. If the first challenger is Qdrant, vary candidate depths and tune RRF weights only on training queries. If Typesense is chosen, test its documented .7/.3 default against any changed alpha on training queries and inspect component scores/timeouts. These are conditional follow-on checks, not a mandated four-engine bake-off.",
+                "evaluator_locator_summary": "compare ... exact vector ground truth",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 132,
+                "passage": "4. Audit the information surface as signed-out visitor, permitted member, disallowed member and authorized staff/export roles against the permission oracle. Cover record fields, search, autosuggest, snippets, result counts/facets, logs/analytics, info.json, image URLs, captions/alt text, preview, manifest, annotation, static/original files, derived/cache/CDN bytes and exports. Assert unauthorized responses omit each explicitly withheld representation while allowed metadata/substitutes remain available and use distinct cache-safe URIs. Change access, measure route-by-route time to denial, invalidate caches, and repeat during policy/identity failure.",
+                "evaluator_locator_summary": "permission oracle ... measure route-by-route ... policy/identity failure",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+                "line": 141,
+                "passage": "- No software, database, query, import, media access-control, accessibility, curator study or performance validation was run. No runtime was available and no qualified witness sandbox was provided. Public documentation and inherited research are not tests of the museum’s configuration.",
+                "evaluator_locator_summary": "No ... validation was run",
+                "passage_kind": "exact_candidate_line"
+              }
+            ]
+          }
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "source_id": "A01",
+            "claims": "v0.2 support and service-defined type/property semantics are documented. This supplies a mechanism and compatibility floor, not curator approval or catalogue writeback guarantees.",
+            "source_url": "https://openrefine.org/docs/technical-reference/reconciliation-api",
+            "version_or_snapshot": "Live manual, updated 2026-06-06; protocol v0.2 / OpenRefine 3.3",
+            "locator": "API versions and label/type/property inputs, published lines 33-52",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A02",
+            "claims": "Human review, service-specific scores, small batches, original string/entity-link coexistence and loss of links in value-only copying are supported. Reconciliation has no configurable request delay; fetching URLs is a different operation.",
+            "source_url": "https://openrefine.org/docs/manual/reconciling/",
+            "version_or_snapshot": "Live manual, observed 2026-10-09",
+            "locator": "Overview/iteration; performance line 63; original cell/link line 72; score/actions lines 87-115",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A03",
+            "claims": "AAT/TGN/ULAN reconciliation and SPARQL, monthly N-Triples, ODC-By 1.0 and retired XML services/static 2026-01-30 archives are documented. Authority matching is not cultural naming authority.",
+            "source_url": "https://www.getty.edu/research-conservation/tools-databases/vocabularies/data-services/",
+            "version_or_snapshot": "Live institutional page, observed 2026-10-09",
+            "locator": "Online Tools, Linked Open Data, attribution, discontinued formats; lines 112-186",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A04",
+            "claims": "Selected fields can be concatenated and regenerate on changes. Keyword/vector rank weights .7/.3, cosine distance 0-2 and optional rerank are supported. Local ONNX and remote provider operations differ. Remote default prose and retry-table terminology are not perfectly aligned; final avoids a precise attempt-count guarantee.",
+            "source_url": "https://typesense.org/docs/30.2/api/vector-search.html",
+            "version_or_snapshot": "Versioned documentation 30.2",
+            "locator": "embed.from lines 170-190; remote parameters 361-376; distance 429-432; hybrid 526-600; HNSW 661-684",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A05",
+            "claims": "RRF defaults k=2 and equal weights, zero-based ranks; candidate prefetch depth and top-level fusion affect available/global results. Weights require evaluation, not guessed superiority.",
+            "source_url": "https://qdrant.tech/documentation/search/hybrid-queries/",
+            "version_or_snapshot": "Live docs; configurable k since 1.16, weighted RRF since 1.17",
+            "locator": "RRF formula/defaults lines 315-354; weighted RRF 703-709; distributed fusion 2231-2234",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A06",
+            "claims": "Native full-text representations, configurations and matching exist. Museum language quality, latency and operating advantage are conditional.",
+            "source_url": "https://www.postgresql.org/docs/18/textsearch-intro.html",
+            "version_or_snapshot": "PostgreSQL 18",
+            "locator": "12.1 Introduction; normalized lexemes, dictionaries, tsvector/tsquery",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A07",
+            "claims": "GIN is preferred for regular text search; it omits weight labels, requiring row rechecks for weight-sensitive queries. This is a genuine database-first alternative.",
+            "source_url": "https://www.postgresql.org/docs/18/textsearch-indexes.html",
+            "version_or_snapshot": "PostgreSQL 18",
+            "locator": "12.9; GIN weight recheck and GiST lossiness",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A08",
+            "claims": "Exact search is default. ANN index limits differ from storage/type capacity: vector type accepts 16,000 dimensions; full-precision HNSW/IVFFlat accept 2,000. HNSW defaults and post-scan filtering/opt-in bounded iterative scans are supported.",
+            "source_url": "https://github.com/pgvector/pgvector/blob/v0.8.7/README.md",
+            "version_or_snapshot": "Pinned tag v0.8.7",
+            "locator": "Indexing/HNSW/IVFFlat versus Reference > Vector Type; rendered lines 323-383, 494-570, 787-789, 881-883",
+            "status": "PARTLY_SUPPORTED_WITH_MATERIAL_CONTRADICTION_N2_F1",
+            "limitations": null
+          },
+          {
+            "source_id": "A09",
+            "claims": "The upgrade/iterative-scan chain and underfill concern are supported; contributor timings are an uncontrolled example. Final does not promote them to museum performance.",
+            "source_url": "https://github.com/pgvector/pgvector/issues/719",
+            "version_or_snapshot": "Historical 0.7.0/0.8.0 discussion; mutable comments",
+            "locator": "Maintainer opt-in clarification lines 523-527; 40k contributor report 538-540",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A10",
+            "claims": "Tag establishes version provenance; the tag page has no substantive iterative-scan release note in the retrieved rendering. Version/function link is independently supplied by pinned README and maintainer discussion.",
+            "source_url": "https://github.com/pgvector/pgvector/releases/tag/v0.8.0",
+            "version_or_snapshot": "v0.8.0 tag, short commit 2627c5f, tagged 2024-10-30",
+            "locator": "Tag metadata; README A08 and maintainer A09 supply iterative-scan behavior",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A11",
+            "claims": "Image delivery, request/profile semantics and pre-generated resources are supported. Standardized delivery does not decide institutional authorization or cultural policy.",
+            "source_url": "https://iiif.io/api/image/3.0/",
+            "version_or_snapshot": "Specification 3.0.0",
+            "locator": "1.1 scope; request URI; image information; profiles; static resources lines 63-90",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A12",
+            "claims": "requiredStatement has mandatory rendering semantics; rights is informative. Presentation interoperability does not replace catalogue search or authoritative policy.",
+            "source_url": "https://iiif.io/api/presentation/3.0/",
+            "version_or_snapshot": "Specification 3.0.0",
+            "locator": "Scope; requiredStatement and rights, lines 201-228",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A13",
+            "claims": "Provider access systems remain authoritative; distinct resource URIs prevent cache confusion. HTTPS communication and image-info probe declaration are supported. Client HTTPS wording is should, whereas communications must use HTTPS.",
+            "source_url": "https://iiif.io/api/auth/2.0/",
+            "version_or_snapshot": "Specification 2.0.0",
+            "locator": "Introduction/resource versions lines 51-62; HTTPS/probe lines 99-106; service flow",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A14",
+            "claims": "v4 media assets require protocols; synced or independent protocols permit public metadata with restricted media. It is a conditional CMS alternative/data-model precedent, not a proven migration fit.",
+            "source_url": "https://docs.mukurtu.org/media/ManageMediaAccessWithProtocols/",
+            "version_or_snapshot": "Current manual distinguishing v3 and v4",
+            "locator": "Media access/sync, lines 248-256",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A15",
+            "claims": "Labels communicate community-specific use and protocol. Their scope supports community participation; no backend byte-denial guarantee follows from a label.",
+            "source_url": "https://localcontexts.org/labels/traditional-knowledge-labels/",
+            "version_or_snapshot": "Live community-governance page",
+            "locator": "Purpose and provenance/protocol/permission categories",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A16",
+            "claims": "Labels are community-controlled; Disclosure/Engagement and Collections Care have different prerequisites. Final N1 correctly preserves the engagement condition. Hub/live versus static freshness and copyright distinctions are supported.",
+            "source_url": "https://localcontexts.org/support/frequently-asked-questions/",
+            "version_or_snapshot": "Live FAQ, updated 2026-09-10",
+            "locator": "Label/Notice distinction; community control; Notice types lines 139-142; Hub/update sections",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A21",
+            "claims": "Release specifically fixes uncaught exceptions for HTTP 401 from pre_authorize/authorize delegates. This is an adequate relevant historical fix chain, not current security proof.",
+            "source_url": "https://github.com/cantaloupe-project/cantaloupe/releases/tag/v5.0.5",
+            "version_or_snapshot": "Pinned release v5.0.5 / short commit 096ffed",
+            "locator": "Release fix line 158",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A22",
+            "claims": "authorize unifies older redirect/authorized callbacks and historical notes reference IIIF Auth 1.0. Neither final incorrectly upgrades that to certified Auth 2.0 support.",
+            "source_url": "https://github.com/cantaloupe-project/cantaloupe/blob/develop/CHANGES.md",
+            "version_or_snapshot": "Mutable develop; top 6.0, historical 4.1/5.0.x entries",
+            "locator": "4.1 delegate evolution lines 390-405; 5.0.5/5.0.6 entries",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A23",
+            "claims": "Release list and development README are distinct. README reports testing Java 21/25/27; it is not a pinned 5.0.7 runtime contract. Finals preserve version/security/support review as a condition.",
+            "source_url": "https://github.com/cantaloupe-project/cantaloupe/releases",
+            "version_or_snapshot": "Mutable release list: 5.0.7 marked latest; short commit 55c60b9",
+            "locator": "5.0.7 latest metadata; README runtime line 221",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A29",
+            "claims": "Length-dependent defaults and per-field/numeric disabling are documented. This supports an optional lexical challenger, not superior performance or museum fit.",
+            "source_url": "https://www.meilisearch.com/blog/typo-tolerance",
+            "version_or_snapshot": "Live first-party article, updated 2026-08-25",
+            "locator": "Threshold defaults lines 25-50; identifiers/numeric controls 64-71",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A31",
+            "claims": "Descriptive copyright/reuse summaries supplement detailed records and licenses; institutional application can be inaccurate. Direct opens failed, but independently retrieved official cached content supports the material scope distinction.",
+            "source_url": "https://rightsstatements.org/en/documentation/faq.html",
+            "version_or_snapshot": "Official FAQ via search-returned cached page, crawled last month",
+            "locator": "General; detailed rights information; reliance/accuracy; statement URI format",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": "Cached official primary content after direct-access failures"
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "scope": "Consequential final assertions plus inherited research/critic conditions bearing on them; static source/code/spec/release check, not execution."
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "reviewed_stages": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/discovery.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/draft.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/critique.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md"
+        ],
+        "scope": "Full material prose, useful mechanisms/options, conditions, original constraints and uncertainty, all criticism responses and proposed/executed distinctions; source maps/indexes/notes used as lineage and independently checked.",
+        "groups": [
+          "Lexical identifiers, public field projection, synonyms/facets and visitor explanations preserved; optional authorized staff scope clarified.",
+          "Typesense, PostgreSQL exact/ANN and Qdrant options preserved with operating conditions; selected-metadata/prose comparison improves the narrow draft. Incorrect type limit propagates and is independently flagged.",
+          "IIIF/static derivatives, Mukurtu and community Labels remain; descriptive rights, delivery and protocol scopes clarified.",
+          "Nightly reconciliation survives while current permission oracle, timed revocation/cache/outage decisions become explicit.",
+          "OpenRefine/Getty/local matching, service-local scores, original values, approval, rollback and export survive; approved source writeback is restored conditionally.",
+          "Query classes, held-out judgments, exact oracles and no-run status preserved. Specific Getty refresh/license detail compressed and three inherited evidence paths broken."
+        ],
+        "criticism_dispositions": [
+          {
+            "id": "M1",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/critique.md",
+              "line": 12,
+              "passage": "### M1 — Keep public search and curator search as separate scopes (P1)",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M1"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+              "line": 25,
+              "passage": "| M1 — public versus curator search | **Accept and clarify.** | The public projection is least-disclosing. A separate curator search over approved staff fields is a product decision; if built, authorize and audit it independently and prevent its counts, facets, suggestions, and endpoints from reaching public routes. The brief does not establish whether curators need this surface. |",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M1"
+            },
+            "evaluator_disposition": "Accept clarification; do not accept that a separate staff-search surface is required.",
+            "reasoning": "Original draft is explicitly about public discovery; blanket staff prohibition is an arguable reading, not a demonstrated obligation failure. Final's separately authorized optional curator scope preserves rather than expands a mandatory requirement.",
+            "evidence": [
+              "A14"
+            ]
+          },
+          {
+            "id": "M2",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/critique.md",
+              "line": 16,
+              "passage": "### M2 — Narrow P2’s “descriptive text only” rule",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M2"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+              "line": 26,
+              "passage": "| M2 — semantic representation | **Accept.** | Replace prose-only embedding as a universal rule with a versioned, deliberately assembled public representation. Compare prose-only and a curated template of approved public title, creator, object type, material, place, date, or reviewed aliases on the same judged set. Keep exact identifiers and policy fields deterministic; no-context rows remain explicit. Typesense 30.2 documents concatenating selected source fields, which establishes mechanism, not which museum fields improve relevance. |",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M2"
+            },
+            "evaluator_disposition": "Accept selective-template refinement; reject automatic superiority/materiality.",
+            "reasoning": "Typesense supports concatenated selected fields. It does not prove richer metadata beats prose for this museum; final retains comparative evaluation and no-context handling.",
+            "evidence": [
+              "A04"
+            ]
+          },
+          {
+            "id": "M3",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/critique.md",
+              "line": 20,
+              "passage": "### M3 — Distinguish copyright/reuse status from delivery authorization (P3/P4)",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M3"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+              "line": 27,
+              "passage": "| M3 — rights/reuse versus delivery and protocol | **Accept.** | Model/link copyright and reuse description, institution delivery policy, and community-defined protocol separately, with authority and review provenance. The distinction is an inference from RightsStatements.org’s stated vocabulary scope, not a claim that the standards prescribe the museum’s access model. Test public metadata with separately restricted caption/media derivatives. |",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M3"
+            },
+            "evaluator_disposition": "Accept explicit data-model separation; largely already covered.",
+            "reasoning": "Draft already separates media metadata/policy and rejects badge-only denial. RightsStatements scope and Mukurtu substantiate the clearer final distinction without prescribing a universal museum schema.",
+            "evidence": [
+              "A14",
+              "A31"
+            ]
+          },
+          {
+            "id": "M4",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/critique.md",
+              "line": 24,
+              "passage": "### M4 — Turn “current policy” into an observable revocation contract (P4)",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M4"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+              "line": 28,
+              "passage": "| M4 — revocation contract | **Accept, leaving values to the museum.** | Name the authoritative policy source, maximum acceptable change-to-denial delay for each route, cache/CDN invalidation behavior, and policy/identity outage behavior. Use a permission oracle per role × record field × media derivative. Assert that withheld representations do not leak while explicitly allowed metadata or substitutes remain available. No universal time bound or outage rule is inferred here. |",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M4"
+            },
+            "evaluator_disposition": "Accept operational specification with owner-set values.",
+            "reasoning": "Revocation source, route interval, cache and outage behavior create measurable acceptance criteria. Missing museum values remain honest dependencies; critic supplies no universal time or outage oracle.",
+            "evidence": [
+              "A13",
+              "A26"
+            ]
+          },
+          {
+            "id": "M5",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/critique.md",
+              "line": 28,
+              "passage": "### M5 — Replace categorical rejection of source writeback with a review gate (P5)",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M5"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+              "line": 29,
+              "passage": "| M5 — approved writeback | **Amend and accept the review gate.** | Reject unattended overwrite, but conditionally allow a curator-approved writeback if the source system provides authorization, provenance, recoverable prior values/versioning, visible exports, and tested rollback. OpenRefine evidence supports human review, not the capabilities of the museum’s source system. If any guarantee is absent, use the separate proposal layer. |",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M5"
+            },
+            "evaluator_disposition": "Accept correction of categorical writeback rejection.",
+            "reasoning": "Human review and original-value retention support staged decisions, not prohibition of all approved source updates. Final conditions approved writeback on genuine system authorization/recovery.",
+            "evidence": [
+              "A02"
+            ]
+          },
+          {
+            "id": "M6",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/critique.md",
+              "line": 32,
+              "passage": "### M6 — Add Meilisearch as a bounded lexical challenger, not a product recommendation",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M6"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+              "line": 30,
+              "passage": "| M6 — Meilisearch | **Accept as a bounded optional challenger, not a recommendation.** | Add one lexical-first proof candidate only if the agreed baseline leaves a decision unresolved. Its first-party article reports configurable typo rules and exact-match controls for numeric tokens/identifier fields; it establishes neither fit nor comparative performance. Check chosen release, license/hosting, field configuration, and data policy before selection. |",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M6"
+            },
+            "evaluator_disposition": "Accept as optional discovery, reject mandatory missing-product defect.",
+            "reasoning": "Typo/identifier controls make a useful lexical challenger. O1 was already met by materially different approaches; no evidence requires Meilisearch or shows it faster/better.",
+            "evidence": [
+              "A29"
+            ]
+          },
+          {
+            "id": "Minor bake-off",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/critique.md",
+              "line": 49,
+              "passage": "- The proposed validation inventory is valuable but risks becoming a one-shot procurement bake-off across too many engines and modalities. For this small brief, first agree a field/access model and judged query set, then compare a baseline plus one challenger. Add further engines only if that result leaves a real decision unresolved.",
+              "evaluator_locator_summary": "Minor bake-off",
+              "passage_kind": "exact_candidate_line"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+              "line": 31,
+              "passage": "| Minor — avoid an unbounded bake-off | **Accept.** | Agree the field/access model and judged queries first; compare the applicable baseline with one challenger, widening only if evidence leaves a concrete choice unresolved. Retain other approaches as conditional alternatives. |",
+              "evaluator_locator_summary": "Minor bake-off",
+              "passage_kind": "exact_candidate_line"
+            },
+            "evaluator_disposition": "Accept bounded sequencing.",
+            "reasoning": "One baseline plus one applicable challenger is proportionate; other useful alternatives remain conditional, not erased.",
+            "evidence": [
+              "A04",
+              "A05",
+              "A08"
+            ]
+          },
+          {
+            "id": "Minor thresholds",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/critique.md",
+              "line": 50,
+              "passage": "- Report p50/p95 and ranking metrics as measurements, but do not imply acceptance thresholds from them. The museum must choose latency, relevance, completeness, accessibility, and revocation targets before a release decision.",
+              "evaluator_locator_summary": "Minor thresholds",
+              "passage_kind": "exact_candidate_line"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+              "line": 32,
+              "passage": "| Minor — do not invent acceptance thresholds | **Accept.** | Report metrics and latency as measurements. The museum must choose relevance, latency, availability, accessibility, and revocation targets before a release decision. |",
+              "evaluator_locator_summary": "Minor thresholds",
+              "passage_kind": "exact_candidate_line"
+            },
+            "evaluator_disposition": "Accept.",
+            "reasoning": "p50/p95 and relevance metrics do not define museum acceptance targets; final explicitly assigns those targets to museum owners.",
+            "evidence": []
+          },
+          {
+            "id": "Minor mutable history",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/critique.md",
+              "line": 51,
+              "passage": "- The source map marks Cantaloupe `develop/CHANGES.md` as mutable and without a captured commit. That caveat is honest; preserve it. For any claim that depends on a later release, prefer an exact release tag/commit. The pinned v5.0.5 source confirms its specific HTTP-401 exception fix only; it does not establish current security or IIIF Auth 2.0 compliance (C08).",
+              "evaluator_locator_summary": "Minor mutable history",
+              "passage_kind": "exact_candidate_line"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+              "line": 33,
+              "passage": "| Minor — mutable Cantaloupe history | **Accept and preserve.** | Keep `develop/CHANGES.md` explicitly mutable/as observed. The pinned v5.0.5 release proves its specific HTTP-401 exception fix only; it does not establish current security or IIIF Auth 2.0 compliance. |",
+              "evaluator_locator_summary": "Minor mutable history",
+              "passage_kind": "exact_candidate_line"
+            },
+            "evaluator_disposition": "Accept.",
+            "reasoning": "Pinned 5.0.5 fix and mutable develop differ. Final makes no current-security or Auth-2 certification claim.",
+            "evidence": [
+              "A21",
+              "A22"
+            ]
+          },
+          {
+            "id": "Minor execution/inventory",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/critique.md",
+              "line": 52,
+              "passage": "- Current online docs are not a compatibility test for a chosen release, model, catalog, role matrix, or deployment. No benchmark or implementation check ran in this review.",
+              "evaluator_locator_summary": "Minor execution/inventory",
+              "passage_kind": "exact_candidate_line"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+              "line": 34,
+              "passage": "| Minor — validation inventory | **Accept with sequencing.** | Start with field/access approval and the permission oracle, then relevance and the highest-risk access, curation, and delivery checks. All proposed validation remains unexecuted here. |",
+              "evaluator_locator_summary": "Minor execution/inventory",
+              "passage_kind": "exact_candidate_line"
+            },
+            "evaluator_disposition": "Accept.",
+            "reasoning": "Final preserves unexecuted status and sequences access approval/oracle before trials. No sandbox run is claimed.",
+            "evidence": [
+              "A02",
+              "A13"
+            ]
+          },
+          {
+            "id": "Critic assurance on pgvector",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/critique.md",
+              "line": 8,
+              "passage": "The research draft is unusually careful about exact identifiers, rights-sensitive delivery, versioned behavior, community authority, and what was not tested. Its central dispositions on P1, P3, P4, and P6 are sound. I found no primary-source contradiction in its stated Typesense .7/.3 default, pgvector exact-search baseline and dimensions, Qdrant RRF defaults, OpenRefine human-review caveat, IIIF delivery/auth separation, or the pinned Cantaloupe 5.0.5 HTTP-401 fix (C03–C08; inherited S01–S15). The issues below are mostly overbroad requirements or unmade operating decisions, not reasons to discard the draft.",
+              "evaluator_locator_summary": "Critic assurance on pgvector",
+              "passage_kind": "exact_candidate_line"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+              "line": 54,
+              "passage": "1. If PostgreSQL is already in use, begin with exact pgvector search on the small corpus and access filters so ground truth/recall is explicit. Add HNSW only if exact query latency measured under realistic filters requires approximation. For v0.8.7, standard vector supports at most 2,000 dimensions; HNSW defaults are m=16, ef_construction=64 and ef_search=40. Approximate filtering happens after the index scan; iterative scans introduced in v0.8.0 are opt-in and bounded. This is a condition, not an implementation detail to hide.",
+              "evaluator_locator_summary": "Critic assurance on pgvector",
+              "passage_kind": "exact_candidate_line"
+            },
+            "evaluator_disposition": "Reject on dimension capacity; accept independently confirmed defaults.",
+            "reasoning": "The critic's C05 repeated ANN supported-type limits as general vector capacity. Pinned type reference and distinct source symbols contradict that assurance; N2-F1 remains in final.",
+            "evidence": [
+              "A08"
+            ]
+          }
+        ],
+        "remaining_scope": []
+      },
+      "original_obligation_coverage": [
+        {
+          "obligation": "O1",
+          "judgment": "MET",
+          "reasoning": "Mechanistically distinct search, authority, static/IIIF and protocol-centered options survive.",
+          "candidate_locator": "final sections P1/P2/P3, Retained alternatives",
+          "evidence": [
+            "A01",
+            "A04",
+            "A05",
+            "A07",
+            "A11",
+            "A14",
+            "A29"
+          ]
+        },
+        {
+          "obligation": "O2",
+          "judgment": "MATERIAL DEFECT",
+          "reasoning": "Most selected mechanisms are correctly grounded, but the pgvector type/index dimensional ceiling is wrong.",
+          "candidate_locator": "final.md:54 (N2-F1)",
+          "evidence": [
+            "A08"
+          ]
+        },
+        {
+          "obligation": "O3",
+          "judgment": "MET",
+          "reasoning": "Cantaloupe callback evolution and pinned 5.0.5 fix remain a relevant bounded history; pgvector issue/0.8.0 chain remains in inherited evidence and validation.",
+          "candidate_locator": "final.md:67; discovery.md:49",
+          "evidence": [
+            "A09",
+            "A10",
+            "A21",
+            "A22"
+          ]
+        },
+        {
+          "obligation": "O4",
+          "judgment": "MET",
+          "reasoning": "Each exact P clause has a reasoned disposition preserving viable intent.",
+          "candidate_locator": "final.md:12-17 and P1-P6 sections",
+          "evidence": []
+        },
+        {
+          "obligation": "O5",
+          "judgment": "SUBSTANTIALLY MET WITH MINOR COMPRESSION",
+          "reasoning": "Full coherent prose retains alternatives, decisions, provenance and uncertainty; Getty specifics and direct note links are minor limits.",
+          "candidate_locator": "final.md:21,98,113,143",
+          "evidence": [
+            "A02",
+            "A03",
+            "A14"
+          ]
+        },
+        {
+          "obligation": "O6",
+          "judgment": "MET",
+          "reasoning": "Independent oracles/discriminating proposals are explicit and no implementation witness is claimed.",
+          "candidate_locator": "final.md:126-141",
+          "evidence": [
+            "A08",
+            "A13",
+            "A21"
+          ]
+        }
+      ],
+      "plan_dispositions": [
+        {
+          "clause": "P1",
+          "exact_clause": "Index all fields with keyword search.",
+          "disposition": "Correction; optional curator-scope decision",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+            "line": 12,
+            "passage": "Public search uses an approved public-field projection with exact-ID and lexical support.",
+            "passage_kind": "literal_candidate_excerpt"
+          },
+          "judgment": "Sound for a public interface with restricted material. Keeps lexical discovery and exact IDs; approved fields, facets and staff-role separation are policy-conditioned. Does not falsely reject staff-only search when separately authorized.",
+          "evidence": [
+            "A04",
+            "A06",
+            "A07",
+            "A14"
+          ]
+        },
+        {
+          "clause": "P2",
+          "exact_clause": "Add embeddings of each entire record for semantic search.",
+          "disposition": "Conditional retention plus correction; user/curator decision",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+            "line": 48,
+            "passage": "**Disposition: conditionally retain semantic retrieval; correct “each entire record”; decide after a lexical baseline.** Lay-language queries may find objects whose catalog wording differs from visitor phrasing, but embedding every field or complete record can mix identifiers, rights metadata, staff notes and heterogeneous descriptions. Prose alone may also omit useful approved title, creator, object type, material, place, date or reviewed-alias context. Construct a public semantic representation from an explicit field allowlist, preserve field/model/version provenance, and compare a prose-only template with one curated public-metadata template on the same judged set. Keep empty/no-context rows distinct; do not synthesize evidence for them. Exact identifiers and access-control decisions remain on deterministic paths. Typesense v30.2 permits concatenation of selected source fields and regenerates vectors when configured source fields change; this confirms the mechanism, not the best museum template.",
+            "evaluator_locator_summary": "Construct a public semantic representation from an explicit field allowlist ... compare a prose-only template with one curated public-metadata template",
+            "passage_kind": "exact_candidate_line"
+          },
+          "judgment": "Supported narrowing of default scope; retains semantic option and deterministic identifiers. Does not claim templates improve relevance without evaluation. Ancillary pgvector dimensional applicability is materially wrong (N2-F1).",
+          "evidence": [
+            "A04",
+            "A05",
+            "A08"
+          ]
+        },
+        {
+          "clause": "P3",
+          "exact_clause": "Publish resized images with their catalog captions.",
+          "disposition": "User/community decision; correction; optional IIIF/static alternatives",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+            "line": 61,
+            "passage": "Rights/reuse description, institution delivery authorization, and community-defined protocol answer different questions",
+            "passage_kind": "literal_candidate_excerpt"
+          },
+          "judgment": "Sound distinction and per-representation policy. Supports public metadata/restricted-media state; resizing/caption is not clearance. IIIF and labels do not substitute for enforcement.",
+          "evidence": [
+            "A11",
+            "A13",
+            "A14",
+            "A15",
+            "A31"
+          ]
+        },
+        {
+          "clause": "P4",
+          "exact_clause": "Restricted records are removed during the nightly index job.",
+          "disposition": "Reject nightly-only enforcement; retain reconciliation",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+            "line": 71,
+            "passage": "The museum must define an observable revocation contract",
+            "passage_kind": "literal_candidate_excerpt"
+          },
+          "judgment": "A nightly-only index job cannot establish current denial across other representations. Current policy/oracle/invalidation/outage behavior is a proposed architecture with owner-set targets, not a claim of an existing museum leak.",
+          "evidence": [
+            "A13",
+            "A14",
+            "A26"
+          ]
+        },
+        {
+          "clause": "P5",
+          "exact_clause": "Enrichment writes directly to source records.",
+          "disposition": "Reject unattended overwrite; conditionally allow reviewed writeback",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+            "line": 79,
+            "passage": "**Disposition: reject unattended direct-write enrichment; require a review gate, with conditional writeback.** The brief already requires curator-transparent corrections and exports. OpenRefine describes reconciliation as semi-automated and requiring human review; matching defaults are sensitive to text and its iterative workflow is recommended. This supports review before a change, but it does not establish whether the museum’s source system can safely write back. Treat matches as candidates with provenance and service-local score semantics, not truth. Use small batches and inspect ambiguous/high-impact items before approval. After curator approval, write back only if the system supports authorization, actor/decision provenance, versioning or recoverable originals, export visibility, and tested rollback; otherwise retain the separate proposal layer.",
+            "evaluator_locator_summary": "After curator approval, write back only if the system supports authorization ... provenance ... recoverable originals ... tested rollback",
+            "passage_kind": "exact_candidate_line"
+          },
+          "judgment": "Sound final correction of the draft's overbroad prohibition. Human review is documented; museum writeback guarantees are properly unresolved rather than assumed.",
+          "evidence": [
+            "A01",
+            "A02",
+            "A03"
+          ]
+        },
+        {
+          "clause": "P6",
+          "exact_clause": "Validate search with the curator's favorite ten queries.",
+          "disposition": "Correction; retain supplied favorites as seed",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/final.md",
+            "line": 87,
+            "passage": "retain them exactly as one labeled query slice",
+            "passage_kind": "literal_candidate_excerpt"
+          },
+          "judgment": "Sound: query strings are absent, and broader visitor/identifier/sparse/access classes plus held-out judging discriminate failure modes. Museum chooses acceptance thresholds.",
+          "evidence": [
+            "A04",
+            "A05",
+            "A08",
+            "A21"
+          ]
+        }
+      ],
+      "grade_limits": [
+        "Source-grounded FAIL for one material type-versus-index applicability error. It is not a wholesale rejection of the otherwise useful planning deliverable.",
+        "Most mechanisms, plan corrections, alternatives, preservation and validation proposals are supported. Critic labels/agreement did not determine grade.",
+        "No model was chosen, but the asserted type ceiling is a consequential option-selection condition, so unknown museum dimensions do not make it merely unresolved. No candidate repair was made."
+      ]
+    },
+    "N1": {
+      "actual_arm": "treatment",
+      "final_delivery": true,
+      "grade": "PASS_WITH_LIMITATIONS",
+      "material_findings": [],
+      "minor_findings": [
+        {
+          "id": "N1-m1",
+          "type": "MINOR_PRESERVATION_COMPRESSION",
+          "severity": "low",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+            "line": 11,
+            "passage": "Rights metadata, community protocols, and technical authorization are separate inputs.",
+            "passage_kind": "literal_candidate_excerpt"
+          },
+          "predecessor": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/discovery.md",
+            "line": 86,
+            "passage": "RightsStatements.org provides machine-readable high-level copyright/re-use descriptors",
+            "passage_kind": "literal_candidate_excerpt"
+          },
+          "reasoning": "The named RightsStatements.org vocabulary lead and detailed API-v2 date are not restated in the final, while descriptive-rights separation and API account/project/freshness conditions survive. Original source evidence remains navigable. This is compression of optional implementation detail, not loss of the functional distinction or an unconditional rights claim.",
+          "primary_evidence": [
+            "A16",
+            "A17",
+            "A31"
+          ]
+        },
+        {
+          "id": "N1-m2",
+          "type": "MINOR_RESPONSE_EXPLICITNESS",
+          "severity": "low",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+            "line": 38,
+            "passage": "The draft’s concern that restricted text could influence retrieval or disclose membership is a **threat hypothesis**, not a demonstrated Meilisearch leak. Open issue #6591 reports a version- and configuration-specific hybrid ranking-score change after adding a null searchable field; it does not report extraction of restricted text and was not reproduced here. Before any adoption, use restricted/public fixtures to test whether schema changes or embedding inputs alter ranking, snippets, membership inference, or other selected visibility outcomes. Review provider data-flow and terms separately. If those conditions are not acceptable, retain keyword-only search or assess local/self-hosted embeddings.",
+            "evaluator_locator_summary": "The draft's concern ... is a threat hypothesis",
+            "passage_kind": "exact_candidate_line"
+          },
+          "reasoning": "The final resolves the critic's material and minor items in substantive sections but does not supply a separate explicit accept/amend/reject ledger for each ID. Evidence and resolutions are recoverable in full prose, and the threshold history is substantively narrowed beyond the critic, so no supported finding is lost.",
+          "primary_evidence": [
+            "A16",
+            "A25",
+            "A27",
+            "A28"
+          ]
+        }
+      ],
+      "unresolved": [
+        {
+          "category": "MUSEUM_INPUT",
+          "status": "HONEST_EXTERNAL_DEPENDENCY",
+          "detail": "Authoritative catalogue/database/CMS and APIs, actual source fields, image formats/volume, visitor language/scripts/tasks, traffic/hardware/hosting, budgets and operational capacity are absent."
+        },
+        {
+          "category": "POLICY_DECISION",
+          "status": "HONEST_EXTERNAL_DEPENDENCY",
+          "detail": "Visibility of object existence/identifiers/fields/images/captions/exports, relevant communities and agreements, current policy authority, revocation targets, outage behavior and review/appeal roles require museum/community decisions."
+        },
+        {
+          "category": "ADOPTION_VALIDATION",
+          "status": "PROPOSED_NOT_EXECUTED",
+          "detail": "Target search/image releases and embedding models/providers, actual service terms/rates, data-transfer/retention approval, catalog relevance and denial/cache/correction/export behavior must be validated before adoption. None is claimed proven."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "COMPLETE: all original O1-O6 and museum constraints assessed, independently of N2's grade.",
+          "judgment": "The final substantively covers unfamiliar discovery and alternatives, consequential source behavior, a confirmed historical issue/fix/release chain, all exact P clauses, coherent full preservation and meaningful proposed validations. It preserves uneven/sparse descriptions, non-expert tasks, curator corrections/exports, image/caption visibility, changing rights and possible culturally governed material. It treats 40,000 records as scope, not proof of engine speed. No material obligation omission was identified for this bounded planning brief.",
+          "evidence": {
+            "primary": [
+              "A01",
+              "A02",
+              "A11",
+              "A12",
+              "A13",
+              "A16",
+              "A20",
+              "A21",
+              "A25",
+              "A27",
+              "A28",
+              "A32"
+            ],
+            "candidate": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 11,
+                "passage": "Begin with a public lexical search over a reviewed, versioned allowlist of fields. Preserve exact identifiers, recognizable collection language, and a curator-facing correction/export trail. Keep semantic retrieval optional until a museum-specific evaluation and data-transfer decision support it; if tested, embed only an explicitly selected template of public, approved text. Decide visibility for images, captions, records, and individual fields with the responsible curators and affected communities. Rights metadata, community protocols, and technical authorization are separate inputs.",
+                "evaluator_locator_summary": "Recommendation ... lexical ... curator-facing correction/export trail",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 17,
+                "passage": "Exact plan-clause dispositions",
+                "passage_kind": "literal_candidate_excerpt"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 64,
+                "passage": "Retain curator-authored searches as one slice, but include visitors who do not know museum vocabulary. Stratify the set by exact ID, common and specialist terms, spelling and name variants, languages and scripts actually in scope, sparse descriptions, ambiguous names, no-result tasks, image-only items, restricted items, and culturally preferred terms where relevant. Curators and visitors should judge task success and top results. Compare lexical baseline, aliases/crosswalks, and any constrained hybrid candidate. Measure exact-ID success, judged top-k usefulness, recall at a selected rank, no-result behavior, latency, facet behavior, accessibility, and leakage against the museum’s approved policy. Set size and stopping criteria from collection risk, available participants, and unresolved failure classes; neither ten queries nor a fixed 50–100 count is a supported universal benchmark.",
+                "evaluator_locator_summary": "non-expert ... sparse descriptions ... judged top-k",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 101,
+                "passage": "The brief’s obligations are covered as follows: **O1** by the retained alternatives table; **O2** by versioned source conditions and operational boundaries; **O3** by the Cantaloupe issue → confirmed fix → 5.0.5 release chain plus separately bounded Meilisearch ranking and threshold history; **O4** by explicit P1–P6 dispositions; **O5** by retaining alternatives, decisions, disagreements, and unknowns; and **O6** by discriminating proposed checks and an explicit statement that none ran.",
+                "evaluator_locator_summary": "O1-O6 coverage",
+                "passage_kind": "exact_candidate_line"
+              }
+            ]
+          }
+        },
+        {
+          "axis": 2,
+          "coverage": "COMPLETE: final consequential facts/source applicability and inherited evidence affecting them checked.",
+          "judgment": "Historical Meilisearch .5 ratio is correctly confined to v1.6; selected template/provider flow, tenant-token update limits, #6591's literal reported version and unconfirmed ranking behavior, and #5274's pagination-specific fix scope are accurately bounded. OpenRefine scores/review/throttling/original values, IIIF static/image/presentation/auth scopes, community Label/Notice prerequisites, Local Contexts account/project constraints, conditional PostgreSQL/Solr mechanisms and Cantaloupe historical denial fix are supported. No standard is misused as museum policy, and no score threshold is made a calibrated relevance guarantee. Supplier terms, museum language/model fit and real access rules remain explicitly unresolved choices.",
+          "evidence": {
+            "primary": [
+              "A01",
+              "A02",
+              "A06",
+              "A07",
+              "A11",
+              "A12",
+              "A13",
+              "A16",
+              "A17",
+              "A19",
+              "A20",
+              "A21",
+              "A23",
+              "A24",
+              "A25",
+              "A26",
+              "A27",
+              "A28",
+              "A30",
+              "A31",
+              "A32"
+            ],
+            "candidate": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 36,
+                "passage": "Reject whole-record embedding as the default. The brief does not identify which text is public, whether remote processing is allowed, what languages matter, or which model/provider and retention terms are acceptable. Meilisearch’s current guide describes a documentTemplate that selects fields and a provider example that sends document text for embedding; it recommends a short template. Its v1.6 article’s 0.5 semanticRatio default is historical and should not be assumed for a later target release. Choose an explicit ratio and pinned engine/model for evaluation. (See [Meilisearch current hybrid-search guide](https://github.com/meilisearch/documentation/blob/main/capabilities/hybrid_search/getting_started.mdx), [v1.6 release article](https://www.meilisearch.com/blog/meilisearch-1-6), and inherited evidence [C03–C06](../critic/sources/01-search-and-enrichment.md).)",
+                "evaluator_locator_summary": "v1.6 ... historical ... explicit ratio",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 38,
+                "passage": "The draft’s concern that restricted text could influence retrieval or disclose membership is a **threat hypothesis**, not a demonstrated Meilisearch leak. Open issue #6591 reports a version- and configuration-specific hybrid ranking-score change after adding a null searchable field; it does not report extraction of restricted text and was not reproduced here. Before any adoption, use restricted/public fixtures to test whether schema changes or embedding inputs alter ranking, snippets, membership inference, or other selected visibility outcomes. Review provider data-flow and terms separately. If those conditions are not acceptable, retain keyword-only search or assess local/self-hosted embeddings.",
+                "evaluator_locator_summary": "threat hypothesis ... not ... demonstrated leak",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 46,
+                "passage": "If Local Contexts applies, do not recommend an unspecified Notice generically. The FAQ distinguishes Disclosure and Engagement Notices, which may be used without community approval, from Collections Care Notices, which are to be used only after engagement with Indigenous community authorities. Labels are community-controlled and customizable; an institution should not author or alter one. A Notice is not a substitute for a community Label. The institution must identify the applicable Notice type and follow its conditions; communities decide whether and when to apply Labels. The Hub distributes Labels and Notices; it is not the museum’s content repository. Any API/static snapshot choice has account, project-visibility, and freshness conditions. See [Local Contexts FAQ](https://localcontexts.org/support/frequently-asked-questions/) and [V02](sources/01-reviser-verifications.md#v02).",
+                "evaluator_locator_summary": "Notice types ... community authority",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 66,
+                "passage": "The Meilisearch rankingScoreThreshold is a tuning parameter, not a calibrated relevance guarantee. Issue #5274 documents a threshold/count limitation on v1.12 and a later fix marked for v1.16.0; a contributor specified that the fix applies to page/hitsPerPage, not limit/offset, and describes accurate totalHits and facet counts for the former starting in v1.16. The issue’s earlier maintainer explanation describes how limit-dependent unscored candidates could overestimate totals and facets. This is historical, version- and pagination-specific evidence; it does not establish a current defect. If the selected UI uses thresholds and exact counts/facets matter, pin the release and test threshold on/off, realistic limits, filters, pagination modes, totalHits, estimatedTotalHits, and facet distributions. Keep result semantics visible in the UI and account for latency if an exhaustive path is considered. See [issue #5274](https://github.com/meilisearch/meilisearch/issues/5274) and [V01](sources/01-reviser-verifications.md#v01).",
+                "evaluator_locator_summary": "page/hitsPerPage ... not limit/offset ... totalHits ... v1.16",
+                "passage_kind": "exact_candidate_line"
+              }
+            ]
+          }
+        },
+        {
+          "axis": 3,
+          "coverage": "COMPLETE: pre-reveal discovery, material approach diversity and added/retained alternatives examined.",
+          "judgment": "OpenRefine with public/local authorities, visitor aliases/facets versus hybrid templates, static versus dynamic interoperable image delivery, community Labels/Notices/CARE and live versus managed static context have distinct uses and costs. Critic-added PostgreSQL versus Solr alternatives are independently source-supported and retained with operating conditions. Local/self-hosted embedding and keyword-only fallbacks survive. The final selects no stack based on count, length or vendor marketing. Those options satisfy O1 even though the final is more concise than discovery.",
+          "evidence": {
+            "primary": [
+              "A02",
+              "A06",
+              "A07",
+              "A11",
+              "A16",
+              "A17",
+              "A19",
+              "A24",
+              "A25",
+              "A32"
+            ],
+            "candidate": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/discovery.md",
+                "line": 27,
+                "passage": "## Entity–relation–entity evidence ledger",
+                "evaluator_locator_summary": "Entity-relation-entity evidence ledger",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/discovery.md",
+                "line": 62,
+                "passage": "Emergent topical communities",
+                "passage_kind": "literal_candidate_excerpt"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/critique.md",
+                "line": 85,
+                "passage": "### Community F — Existing data-store search versus a dedicated index",
+                "evaluator_locator_summary": "Existing data-store ... dedicated index",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 68,
+                "passage": "Retained approaches and alternatives",
+                "passage_kind": "literal_candidate_excerpt"
+              }
+            ]
+          }
+        },
+        {
+          "axis": 4,
+          "coverage": "COMPLETE: exact P1-P6, retained intent, corrections, optional enhancements, rejections, decisions and uncertainties checked.",
+          "judgment": "All six dispositions are justified and proportionate. P2 rejects unapproved whole-record embeddings as a default while preserving an evaluated semantic option. P3 keeps image and caption choices conditional, P4 retains propagation subject to a measured owner decision, P5 authorizes accepted curator commits, P6 preserves favorites as one slice. Public existence/count/substitute questions and fail-closed behavior remain explicit museum choices. No false correction or inappropriate categorical rejection was identified.",
+          "evidence": {
+            "primary": [
+              "A02",
+              "A11",
+              "A12",
+              "A13",
+              "A16",
+              "A25",
+              "A26",
+              "A28"
+            ],
+            "candidate": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 21,
+                "passage": "| **P1 — “Index all fields with keyword search.”** | **Correction; part already covered** | Retain keyword search, replace “all fields” with a reviewed public-discovery allowlist. Decide separately whether a restricted item's existence, neutral identifier, category, count, or substitute may be visible. |",
+                "evaluator_locator_summary": "P1-P6 dispositions",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 73,
+                "passage": "| **Constrained hybrid retrieval** | Local user tasks show lexical search misses useful plain-language descriptions | Requires explicit public template, pinned model/engine/ratio, data-transfer and retention approval, language/ranking evaluation, and cost/operations review. Keyword-only remains a valid fallback. |",
+                "evaluator_locator_summary": "keyword-only ... local/self-hosted",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 54,
+                "passage": "“Fail closed when status is missing or ambiguous” is a defensible sensitive-material default, but it is a **proposed museum policy**, not a vendor or standards default. Ask the museum to choose deny, neutral substitute, or another controlled outcome, with an owner and review path. Likewise, a nightly propagation window is an owner-approved risk decision only if its maximum delay and exposure are measured. The route list in the validation below is a proposed coverage matrix: include only surfaces that exist in the chosen implementation and add any that do.",
+                "evaluator_locator_summary": "proposed museum policy ... owner-approved risk",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 60,
+                "passage": "A proposed staged record should include original and proposed value, stable source record ID, selected authority URI, vocabulary/service and version, match score as reported by that service, reviewer and decision, timestamp, rejected/unmatched/ambiguous status, change history, rollback data, and export provenance. These are design recommendations for museum workflow, not fields mandated by OpenRefine. Pilot by field/entity type. Public reconciliation against Getty ULAN/AAT/TGN or Wikidata and a museum-maintained CSV-backed authority are alternatives; compare remote terms, availability, language/coverage, and handling of local or culturally specific terminology. No authority service was queried and no 40,000-record throughput was measured.",
+                "evaluator_locator_summary": "authorized correction workflow ... staged record",
+                "passage_kind": "exact_candidate_line"
+              }
+            ]
+          }
+        },
+        {
+          "axis": 5,
+          "coverage": "COMPLETE: full draft/discovery/critique/final and mapped evidence roots examined; each material and minor criticism has a saved disposition.",
+          "judgment": "The final preserves public/local enrichment, lexical/hybrid and local/provider choices, static/dynamic images, live/static Local Contexts and governance constraints, source/proposal/reviewer/rollback/export trace, uncertainty and no-run status. It takes the Notice-type correction, labels embedding-leak concerns as hypotheses, replaces unsupported query-count sizing, scopes route lists to actual surfaces and retains version cautions and critic-added alternatives. It improves the threshold-fix scope beyond the critic's broad closure summary using the later primary comment. Separate accept/reject ID labels are sparse, but material prose and evidence supply every resolution. Named rights-vocabulary/API-date detail is compressed without losing the descriptive/technical/community distinction; this is a minor limit, not material option loss.",
+          "evidence": {
+            "primary": [
+              "A02",
+              "A12",
+              "A16",
+              "A17",
+              "A25",
+              "A27",
+              "A28",
+              "A31",
+              "A32"
+            ],
+            "candidate": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/draft.md",
+                "line": 34,
+                "passage": "| **P2: “Add embeddings of each entire record for semantic search.”** | **Rejected as written** | Do not embed every whole record by default. A full-record embedding can combine public and restricted fields and make sensitive content inferable through result selection or rank shifts; it can also dilute short titles and exact identifiers with noisy descriptions. Embedding can involve an external provider and sends configured document text for processing. **Optional enhancement:** test hybrid search using an explicit, approved text template such as selected public title, public description, approved subject terms and safe aliases. Keep exact identifiers and keyword matching strong. Select model/provider, hosting, ratio, freshness and retention only after data-transfer, rights, multilingual, ranking and cost review. |",
+                "evaluator_locator_summary": "whole-record ... sensitive ... inferable",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/critique.md",
+                "line": 100,
+                "passage": "Material findings",
+                "passage_kind": "literal_candidate_excerpt"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 38,
+                "passage": "threat hypothesis",
+                "passage_kind": "literal_candidate_excerpt"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 46,
+                "passage": "If Local Contexts applies, do not recommend an unspecified Notice generically. The FAQ distinguishes Disclosure and Engagement Notices, which may be used without community approval, from Collections Care Notices, which are to be used only after engagement with Indigenous community authorities. Labels are community-controlled and customizable; an institution should not author or alter one. A Notice is not a substitute for a community Label. The institution must identify the applicable Notice type and follow its conditions; communities decide whether and when to apply Labels. The Hub distributes Labels and Notices; it is not the museum’s content repository. Any API/static snapshot choice has account, project-visibility, and freshness conditions. See [Local Contexts FAQ](https://localcontexts.org/support/frequently-asked-questions/) and [V02](sources/01-reviser-verifications.md#v02).",
+                "evaluator_locator_summary": "Collections Care ... engagement",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 66,
+                "passage": "The Meilisearch rankingScoreThreshold is a tuning parameter, not a calibrated relevance guarantee. Issue #5274 documents a threshold/count limitation on v1.12 and a later fix marked for v1.16.0; a contributor specified that the fix applies to page/hitsPerPage, not limit/offset, and describes accurate totalHits and facet counts for the former starting in v1.16. The issue’s earlier maintainer explanation describes how limit-dependent unscored candidates could overestimate totals and facets. This is historical, version- and pagination-specific evidence; it does not establish a current defect. If the selected UI uses thresholds and exact counts/facets matter, pin the release and test threshold on/off, realistic limits, filters, pagination modes, totalHits, estimatedTotalHits, and facet distributions. Keep result semantics visible in the UI and account for latency if an exhaustive path is considered. See [issue #5274](https://github.com/meilisearch/meilisearch/issues/5274) and [V01](sources/01-reviser-verifications.md#v01).",
+                "evaluator_locator_summary": "fix ... only ... pagination",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 68,
+                "passage": "## Retained approaches and alternatives",
+                "evaluator_locator_summary": "alternatives full table",
+                "passage_kind": "exact_candidate_line"
+              }
+            ]
+          }
+        },
+        {
+          "axis": 6,
+          "coverage": "COMPLETE: meaningful proposals versus actual work, release/fixture/oracle discrimination and overclaims checked.",
+          "judgment": "Proposals compare lexical/alias/hybrid configurations on visitor/curator judgments, test public/restricted fixtures across actual surfaces and revocation delay, pin engine/model/template/ratio, discriminate null-field ranking changes and threshold/count semantics across both pagination modes, test Cantaloupe defined denial versus exception with warmed caches, and audit reconciliation false positives, rollback and export. Those are relevant discriminating checks. They remain unexecuted; the candidate claims read-only source inspection and no product/benchmark/API/provider witness. No validation overclaim was identified. Detailed sample sizes, acceptance targets and a formal execution protocol still need museum input; O6 does not require unavailable runtime proof.",
+          "evidence": {
+            "primary": [
+              "A02",
+              "A13",
+              "A20",
+              "A21",
+              "A25",
+              "A27",
+              "A28"
+            ],
+            "candidate": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 84,
+                "passage": "## Proposed validation; none of these checks ran",
+                "evaluator_locator_summary": "Proposed validation; none ... ran",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 88,
+                "passage": "3. **Embedding scope and ranking:** if considered, pin engine/model/template/ratio; verify every embedded field is approved, record provider/data flow and retention terms, and test public/restricted fixtures for ranking effects, output leakage, model/schema changes, and cost/latency. For #6591, compare fixed queries/configurations before and after adding null/sparse searchable fields; classify as reproduced, not reproduced, or inconclusive. No leakage is assumed.",
+                "evaluator_locator_summary": "classify ... reproduced/not reproduced/inconclusive",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 89,
+                "passage": "4. **Thresholded count/facet semantics:** if the chosen Meilisearch release and interface use rankingScoreThreshold, compare threshold on/off under realistic filters, result limits, both page/hitsPerPage and limit/offset modes, and inspect returned IDs, totalHits, estimatedTotalHits, and facets. Assert the UI’s intended count semantics and measure any exhaustive-count latency. Treat #5274 as historical regression context, not a current defect claim.",
+                "evaluator_locator_summary": "both ... pagination ... inspect ... totals/facets",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 90,
+                "passage": "5. **Image authorization and revocation:** for the actual chosen static or IIIF routes, test allowed, missing, expired, and revoked access; image/metadata replacement; direct URLs; warmed caches; and any viewer flow. For Cantaloupe or another server, assert a defined denial response rather than an exception and test the selected release. Verify attribution/required display statements and the museum’s chosen rights/protocol wording.",
+                "evaluator_locator_summary": "defined denial ... exception ... cached copies",
+                "passage_kind": "exact_candidate_line"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+                "line": 99,
+                "passage": "Read-only work actually performed: read this assignment and its exact input map; the mapped brief; all declared research and critic predecessor documents; both declared source roots and indexes; and independently reopened the public primary sources indexed as V01–V08. No museum catalog, account, product/service API, hosted embedding transaction, runtime, benchmark, implementation test, rights decision, or community consultation was available or used. Proposed validations above have not run. Provider usage and billing remain unobserved (null).",
+                "evaluator_locator_summary": "Read-only work ... no ... tests ... billing unobserved",
+                "passage_kind": "exact_candidate_line"
+              }
+            ]
+          }
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "source_id": "A01",
+            "claims": "v0.2 support and service-defined type/property semantics are documented. This supplies a mechanism and compatibility floor, not curator approval or catalogue writeback guarantees.",
+            "source_url": "https://openrefine.org/docs/technical-reference/reconciliation-api",
+            "version_or_snapshot": "Live manual, updated 2026-06-06; protocol v0.2 / OpenRefine 3.3",
+            "locator": "API versions and label/type/property inputs, published lines 33-52",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A02",
+            "claims": "Human review, service-specific scores, small batches, original string/entity-link coexistence and loss of links in value-only copying are supported. Reconciliation has no configurable request delay; fetching URLs is a different operation.",
+            "source_url": "https://openrefine.org/docs/manual/reconciling/",
+            "version_or_snapshot": "Live manual, observed 2026-10-09",
+            "locator": "Overview/iteration; performance line 63; original cell/link line 72; score/actions lines 87-115",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A03",
+            "claims": "AAT/TGN/ULAN reconciliation and SPARQL, monthly N-Triples, ODC-By 1.0 and retired XML services/static 2026-01-30 archives are documented. Authority matching is not cultural naming authority.",
+            "source_url": "https://www.getty.edu/research-conservation/tools-databases/vocabularies/data-services/",
+            "version_or_snapshot": "Live institutional page, observed 2026-10-09",
+            "locator": "Online Tools, Linked Open Data, attribution, discontinued formats; lines 112-186",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A06",
+            "claims": "Native full-text representations, configurations and matching exist. Museum language quality, latency and operating advantage are conditional.",
+            "source_url": "https://www.postgresql.org/docs/18/textsearch-intro.html",
+            "version_or_snapshot": "PostgreSQL 18",
+            "locator": "12.1 Introduction; normalized lexemes, dictionaries, tsvector/tsquery",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A07",
+            "claims": "GIN is preferred for regular text search; it omits weight labels, requiring row rechecks for weight-sensitive queries. This is a genuine database-first alternative.",
+            "source_url": "https://www.postgresql.org/docs/18/textsearch-indexes.html",
+            "version_or_snapshot": "PostgreSQL 18",
+            "locator": "12.9; GIN weight recheck and GiST lossiness",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A11",
+            "claims": "Image delivery, request/profile semantics and pre-generated resources are supported. Standardized delivery does not decide institutional authorization or cultural policy.",
+            "source_url": "https://iiif.io/api/image/3.0/",
+            "version_or_snapshot": "Specification 3.0.0",
+            "locator": "1.1 scope; request URI; image information; profiles; static resources lines 63-90",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A12",
+            "claims": "requiredStatement has mandatory rendering semantics; rights is informative. Presentation interoperability does not replace catalogue search or authoritative policy.",
+            "source_url": "https://iiif.io/api/presentation/3.0/",
+            "version_or_snapshot": "Specification 3.0.0",
+            "locator": "Scope; requiredStatement and rights, lines 201-228",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A13",
+            "claims": "Provider access systems remain authoritative; distinct resource URIs prevent cache confusion. HTTPS communication and image-info probe declaration are supported. Client HTTPS wording is should, whereas communications must use HTTPS.",
+            "source_url": "https://iiif.io/api/auth/2.0/",
+            "version_or_snapshot": "Specification 2.0.0",
+            "locator": "Introduction/resource versions lines 51-62; HTTPS/probe lines 99-106; service flow",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A15",
+            "claims": "Labels communicate community-specific use and protocol. Their scope supports community participation; no backend byte-denial guarantee follows from a label.",
+            "source_url": "https://localcontexts.org/labels/traditional-knowledge-labels/",
+            "version_or_snapshot": "Live community-governance page",
+            "locator": "Purpose and provenance/protocol/permission categories",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A16",
+            "claims": "Labels are community-controlled; Disclosure/Engagement and Collections Care have different prerequisites. Final N1 correctly preserves the engagement condition. Hub/live versus static freshness and copyright distinctions are supported.",
+            "source_url": "https://localcontexts.org/support/frequently-asked-questions/",
+            "version_or_snapshot": "Live FAQ, updated 2026-09-10",
+            "locator": "Label/Notice distinction; community control; Notice types lines 139-142; Hub/update sections",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A17",
+            "claims": "Keys and account/visibility restrictions apply; private projects are inaccessible through this API. Access to Label/Notice metadata does not clear museum media rights.",
+            "source_url": "https://localcontexts.org/support/api-guide/v2/",
+            "version_or_snapshot": "API v2 default since 2025-02-10",
+            "locator": "Project visibility lines 79-81; API key/account table 99-108",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A18",
+            "claims": "Community workflow, integration mapping and prominent display near Indigenous content are supported. API integration and static snapshots retain different freshness/operating dependencies.",
+            "source_url": "https://localcontexts.org/media/integration-partner-guide",
+            "version_or_snapshot": "Publisher PDF, 20 pages; mutable retrieved edition",
+            "locator": "PDF pages 9-11, project/Notice-to-Label workflow and display; lines 248-250",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A19",
+            "claims": "People, purpose and Indigenous authority are governance criteria. This is an optional governance approach, not executable access policy or a rights decision.",
+            "source_url": "https://www.gida-global.org/careprinciples",
+            "version_or_snapshot": "GIDA principles; 2018 workshop provenance",
+            "locator": "Overview/rationale lines 64-68; provenance line 90",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A20",
+            "claims": "Maintainer confirmed the pre_authorize HTTP-401 exception and targeted 5.0.5. The separate request-header concern was not reproduced by that maintainer.",
+            "source_url": "https://github.com/cantaloupe-project/cantaloupe/discussions/536",
+            "version_or_snapshot": "2021-11-22 report on 5.0.3",
+            "locator": "Initial 401 case and maintainer confirmation lines 143-172",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A21",
+            "claims": "Release specifically fixes uncaught exceptions for HTTP 401 from pre_authorize/authorize delegates. This is an adequate relevant historical fix chain, not current security proof.",
+            "source_url": "https://github.com/cantaloupe-project/cantaloupe/releases/tag/v5.0.5",
+            "version_or_snapshot": "Pinned release v5.0.5 / short commit 096ffed",
+            "locator": "Release fix line 158",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A22",
+            "claims": "authorize unifies older redirect/authorized callbacks and historical notes reference IIIF Auth 1.0. Neither final incorrectly upgrades that to certified Auth 2.0 support.",
+            "source_url": "https://github.com/cantaloupe-project/cantaloupe/blob/develop/CHANGES.md",
+            "version_or_snapshot": "Mutable develop; top 6.0, historical 4.1/5.0.x entries",
+            "locator": "4.1 delegate evolution lines 390-405; 5.0.5/5.0.6 entries",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A23",
+            "claims": "Release list and development README are distinct. README reports testing Java 21/25/27; it is not a pinned 5.0.7 runtime contract. Finals preserve version/security/support review as a condition.",
+            "source_url": "https://github.com/cantaloupe-project/cantaloupe/releases",
+            "version_or_snapshot": "Mutable release list: 5.0.7 marked latest; short commit 55c60b9",
+            "locator": "5.0.7 latest metadata; README runtime line 221",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A24",
+            "claims": "Historical semanticRatio range 0-1/default .5 and v1.13 GA transition are supported. N1 explicitly avoids importing the historical default into an unspecified newer release.",
+            "source_url": "https://www.meilisearch.com/blog/meilisearch-1-6",
+            "version_or_snapshot": "v1.6 article, dated 2024-01-16 with later update",
+            "locator": "Experimental/GA note line 27; ratio line 61",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A25",
+            "claims": "Template chooses fields; shown provider example sends text and caches embeddings. Threshold is a tunable score filter; it is not calibrated relevance or authorization.",
+            "source_url": "https://github.com/meilisearch/documentation/blob/main/capabilities/hybrid_search/getting_started.mdx",
+            "version_or_snapshot": "Mutable main documentation",
+            "locator": "Template/provider/cache lines 259-282; threshold 288-296",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A26",
+            "claims": "Tenant filters constrain search; document-stored permission changes require reindexing. Separate access-control index is an option for frequent changes. These controls do not cover unrelated image/export routes.",
+            "source_url": "https://www.meilisearch.com/blog/role-based-access-guide",
+            "version_or_snapshot": "Mutable vendor guide",
+            "locator": "Signed tenant rules and changing permissions lines 64-91",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A27",
+            "claims": "Report concerns ranking-score/configuration sensitivity, not demonstrated private-text extraction. Reported version is preserved literally, not certified as an installed release. No reproduction was performed.",
+            "source_url": "https://github.com/meilisearch/meilisearch/issues/6591",
+            "version_or_snapshot": "Open issue, report opened 2026-08-17; reported version string 1.52",
+            "locator": "Title/status, example and reported configuration lines 129-217",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A28",
+            "claims": "Fix is scoped to page/hitsPerPage and accurate totalHits/facets, not limit/offset or estimatedTotalHits. N1 final is more precise than the critic's general closure wording.",
+            "source_url": "https://github.com/meilisearch/meilisearch/issues/5274",
+            "version_or_snapshot": "Historical v1.12; v1.16.0 milestone/fix",
+            "locator": "Limit-dependent discussion; fix scope comment 2025-08-19, line 485",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A30",
+            "claims": "Deliberate per-field filter/facet features are supported. N1 correctly separates search configuration from authorization.",
+            "source_url": "https://www.meilisearch.com/blog/meilisearch-1-14",
+            "version_or_snapshot": "Versioned v1.14 article",
+            "locator": "Granular filterable attribute settings",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          },
+          {
+            "source_id": "A31",
+            "claims": "Descriptive copyright/reuse summaries supplement detailed records and licenses; institutional application can be inaccurate. Direct opens failed, but independently retrieved official cached content supports the material scope distinction.",
+            "source_url": "https://rightsstatements.org/en/documentation/faq.html",
+            "version_or_snapshot": "Official FAQ via search-returned cached page, crawled last month",
+            "locator": "General; detailed rights information; reliance/accuracy; statement URI format",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": "Cached official primary content after direct-access failures"
+          },
+          {
+            "source_id": "A32",
+            "claims": "Solr has query/filter/facet mechanisms; facet defaults false and analyzed terms differ from literal labels. A separately operated index is a viable conditional alternative, not a measured museum advantage.",
+            "source_url": "https://solr.apache.org/guide/solr/latest/getting-started/searching-in-solr.html",
+            "version_or_snapshot": "Latest guide resolves to Solr 10.0",
+            "locator": "Searching request handlers/filter queries; Faceting lines 39-62",
+            "status": "CHECKED_SUPPORTED_WITH_STATED_APPLICABILITY",
+            "limitations": null
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "scope": "All consequential frozen final claims and inherited applicability conditions; independently retrieved primary evidence, including cached official RightsStatements content."
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "reviewed_stages": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/discovery.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/draft.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/critique.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md"
+        ],
+        "scope": "Full material prose, useful mechanisms/options, conditions, original constraints and uncertainty, all criticism responses and proposed/executed distinctions; source maps/indexes/notes used as lineage and independently checked.",
+        "groups": [
+          "Public lexical/alias/facet and constrained semantic choices preserved with exact identifiers, sparse-language scope and provider/local fallback.",
+          "Public and local authority matching, review/service scores/original link values, curator correction/rollback/export retained.",
+          "Static versus IIIF/Cantaloupe, presentation/rights/auth scopes and historical denial fix retained; latest/develop/runtime differences not overclaimed.",
+          "Community Label/Notice ownership, Notice-category engagement, live/static freshness/account/project conditions and CARE retained.",
+          "Current policy, existence/identifier/count choices and revocation targets retained; fail-closed and route matrix explicitly proposed policy/actual-surface scope.",
+          "Critic threshold/facet lead narrowed to pagination-specific fix, ranking leak claim downgraded to hypothesis, query-count heuristic removed, PostgreSQL/Solr alternatives retained, and all witnesses still proposed."
+        ],
+        "criticism_dispositions": [
+          {
+            "id": "M1",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/critique.md",
+              "line": 102,
+              "passage": "### M1 — Add a pinned-version check for thresholded counts and facets",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M1"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+              "line": 66,
+              "passage": "The Meilisearch rankingScoreThreshold is a tuning parameter, not a calibrated relevance guarantee. Issue #5274 documents a threshold/count limitation on v1.12 and a later fix marked for v1.16.0; a contributor specified that the fix applies to page/hitsPerPage, not limit/offset, and describes accurate totalHits and facet counts for the former starting in v1.16. The issue’s earlier maintainer explanation describes how limit-dependent unscored candidates could overestimate totals and facets. This is historical, version- and pagination-specific evidence; it does not establish a current defect. If the selected UI uses thresholds and exact counts/facets matter, pin the release and test threshold on/off, realistic limits, filters, pagination modes, totalHits, estimatedTotalHits, and facet distributions. Keep result semantics visible in the UI and account for latency if an exhaustive path is considered. See [issue #5274](https://github.com/meilisearch/meilisearch/issues/5274) and [V01](sources/01-reviser-verifications.md#v01).",
+              "evaluator_locator_summary": "M1",
+              "passage_kind": "exact_candidate_line"
+            },
+            "evaluator_disposition": "Accept historical validation lead; narrow the critic's general fix wording.",
+            "reasoning": "Issue #5274's specific later comment restricts the fix to page/hitsPerPage, totalHits/facets. Final preserves that exception and proposes both pagination modes; omission of every possible past bug was not itself automatically material.",
+            "evidence": [
+              "A28"
+            ]
+          },
+          {
+            "id": "M2",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/critique.md",
+              "line": 106,
+              "passage": "### M2 — Distinguish Local Contexts Notice type and conditions",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M2"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+              "line": 46,
+              "passage": "If Local Contexts applies, do not recommend an unspecified Notice generically. The FAQ distinguishes Disclosure and Engagement Notices, which may be used without community approval, from Collections Care Notices, which are to be used only after engagement with Indigenous community authorities. Labels are community-controlled and customizable; an institution should not author or alter one. A Notice is not a substitute for a community Label. The institution must identify the applicable Notice type and follow its conditions; communities decide whether and when to apply Labels. The Hub distributes Labels and Notices; it is not the museum’s content repository. Any API/static snapshot choice has account, project-visibility, and freshness conditions. See [Local Contexts FAQ](https://localcontexts.org/support/frequently-asked-questions/) and [V02](sources/01-reviser-verifications.md#v02).",
+              "evaluator_locator_summary": "M2",
+              "passage_kind": "exact_candidate_line"
+            },
+            "evaluator_disposition": "Accept type-specific Notice refinement.",
+            "reasoning": "FAQ expressly distinguishes Disclosure/Engagement from Collections Care. Final retains community engagement conditions and institutional/community role boundaries.",
+            "evidence": [
+              "A16",
+              "A17"
+            ]
+          },
+          {
+            "id": "M3",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/critique.md",
+              "line": 110,
+              "passage": "### M3 — Keep embedding disclosure/inference claims framed as hypotheses",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M3"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+              "line": 38,
+              "passage": "The draft’s concern that restricted text could influence retrieval or disclose membership is a **threat hypothesis**, not a demonstrated Meilisearch leak. Open issue #6591 reports a version- and configuration-specific hybrid ranking-score change after adding a null searchable field; it does not report extraction of restricted text and was not reproduced here. Before any adoption, use restricted/public fixtures to test whether schema changes or embedding inputs alter ranking, snippets, membership inference, or other selected visibility outcomes. Review provider data-flow and terms separately. If those conditions are not acceptable, retain keyword-only search or assess local/self-hosted embeddings.",
+              "evaluator_locator_summary": "M3",
+              "passage_kind": "exact_candidate_line"
+            },
+            "evaluator_disposition": "Accept evidentiary qualification.",
+            "reasoning": "Selective template/provider data flow is documented. #6591 is a ranking report, not a text-extraction or membership witness; final labels disclosure paths as hypotheses.",
+            "evidence": [
+              "A25",
+              "A27"
+            ]
+          },
+          {
+            "id": "M4",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/critique.md",
+              "line": 116,
+              "passage": "- **M4 — Replace the fixed query-count hint.** The draft labels 50–100 as a starting proposal and says size follows time, so it is not a major defect. Still, no source or collection profile supports that number. Set a small stratified minimum for a pilot and scale from unanswered risk/use cases rather than presenting a numeric benchmark.",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M4"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+              "line": 64,
+              "passage": "Retain curator-authored searches as one slice, but include visitors who do not know museum vocabulary. Stratify the set by exact ID, common and specialist terms, spelling and name variants, languages and scripts actually in scope, sparse descriptions, ambiguous names, no-result tasks, image-only items, restricted items, and culturally preferred terms where relevant. Curators and visitors should judge task success and top results. Compare lexical baseline, aliases/crosswalks, and any constrained hybrid candidate. Measure exact-ID success, judged top-k usefulness, recall at a selected rank, no-result behavior, latency, facet behavior, accessibility, and leakage against the museum’s approved policy. Set size and stopping criteria from collection risk, available participants, and unresolved failure classes; neither ten queries nor a fixed 50–100 count is a supported universal benchmark.",
+              "evaluator_locator_summary": "M4",
+              "passage_kind": "exact_candidate_line"
+            },
+            "evaluator_disposition": "Accept sizing refinement; agree original count was only a heuristic.",
+            "reasoning": "No universal set size follows from this brief. Final uses risk, participants and stopping criteria, preserving broad classes.",
+            "evidence": []
+          },
+          {
+            "id": "M5",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/critique.md",
+              "line": 117,
+              "passage": "- **M5 — Keep time/version attached to mutable “current” claims.** The research draft's v5.0.7 “latest release” statement is correctly snapshot-bound; retain that wording. The Meilisearch main-branch guide and Local Contexts FAQ are mutable and not release contracts. Recheck them when a product decision is made.",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M5"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+              "line": 79,
+              "passage": "| **IIIF with a dynamic server such as Cantaloupe** | Zoom, crop, multi-page objects, or viewer interoperability justify the service | Adds server, cache, authorization, monitoring, release, and staffing work. The documented Cantaloupe 5.0.3 HTTP 401 delegate exception was confirmed by a maintainer and fixed in 5.0.5 release notes. At the 2026-10-09 research/critic source snapshot, v5.0.7 was listed as latest; recheck release/security/support status before adoption. This is a historical denial-path regression chain, not evidence a current build is defective. See [Cantaloupe discussion #536](../critic/sources/02-image-and-access.md#c11), [v5.0.5 notes](https://github.com/cantaloupe-project/cantaloupe/releases/tag/v5.0.5), and [C12–C13](../critic/sources/02-image-and-access.md). |",
+              "evaluator_locator_summary": "M5",
+              "passage_kind": "exact_candidate_line"
+            },
+            "evaluator_disposition": "Accept snapshot/version boundary.",
+            "reasoning": "5.0.7 latest and development/main runtime observations are not release support or security guarantees. Final retains recheck requirement.",
+            "evidence": [
+              "A21",
+              "A23",
+              "A24"
+            ]
+          },
+          {
+            "id": "M6",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/critique.md",
+              "line": 118,
+              "passage": "- **M6 — Bound “all access surfaces.”** Search results, facets, autocomplete, exports, detail routes, IIIF and caches are appropriate threat-model surfaces. Mark them as a proposed coverage matrix; do not imply every named endpoint already exists in the museum's system.",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M6"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+              "line": 54,
+              "passage": "“Fail closed when status is missing or ambiguous” is a defensible sensitive-material default, but it is a **proposed museum policy**, not a vendor or standards default. Ask the museum to choose deny, neutral substitute, or another controlled outcome, with an owner and review path. Likewise, a nightly propagation window is an owner-approved risk decision only if its maximum delay and exposure are measured. The route list in the validation below is a proposed coverage matrix: include only surfaces that exist in the chosen implementation and add any that do.",
+              "evaluator_locator_summary": "M6",
+              "passage_kind": "exact_candidate_line"
+            },
+            "evaluator_disposition": "Accept applicability refinement.",
+            "reasoning": "Only real implementation surfaces belong in the route matrix; the final says to include those that exist and add actual ones. No museum endpoint inventory was supplied.",
+            "evidence": [
+              "A13",
+              "A26"
+            ]
+          },
+          {
+            "id": "M7",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/critique.md",
+              "line": 119,
+              "passage": "- **M7 — Preserve alternative approaches.** Keep static image resources versus dynamic IIIF, local CSV authorities versus public reconciliation, keyword-only versus hybrid retrieval, and API versus managed static Local Contexts data. They fit the brief while the hosting, privacy, staff and policy context remains unknown.",
+              "passage_kind": "exact_candidate_line",
+              "evaluator_locator_summary": "M7"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+              "line": 68,
+              "passage": "## Retained approaches and alternatives",
+              "evaluator_locator_summary": "M7",
+              "passage_kind": "exact_candidate_line"
+            },
+            "evaluator_disposition": "Accept preservation reminder.",
+            "reasoning": "Static/dynamic images, local/public authorities, keyword/hybrid and live/static Local Contexts alternatives all remain full prose/table entries.",
+            "evidence": [
+              "A02",
+              "A11",
+              "A16",
+              "A17"
+            ]
+          },
+          {
+            "id": "Independent lexical extension",
+            "critic": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/critique.md",
+              "line": 85,
+              "passage": "### Community F — Existing data-store search versus a dedicated index",
+              "evaluator_locator_summary": "Independent lexical extension",
+              "passage_kind": "exact_candidate_line"
+            },
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+              "line": 76,
+              "passage": "| **PostgreSQL full-text search** | PostgreSQL already holds the catalogue or a single-store lexical path is a priority | PostgreSQL 18 docs describe normalized tsvector/tsquery, language configurations/dictionaries, ranking, and GIN/GiST; GIN is preferred for regular text search. This does not establish museum language quality, facets, relevance, or performance. Evaluate it against a dedicated engine only if the current database makes it plausible. See [PostgreSQL docs](https://www.postgresql.org/docs/current/textsearch-intro.html) and [V07](sources/01-reviser-verifications.md#v07). |",
+              "evaluator_locator_summary": "Independent lexical extension",
+              "passage_kind": "exact_candidate_line"
+            },
+            "evaluator_disposition": "Accept conditional alternative, not a forced correction.",
+            "reasoning": "PostgreSQL and Solr primary docs support distinct datastore/platform mechanisms. Final preserves their operating conditions without claiming fit/performance.",
+            "evidence": [
+              "A06",
+              "A07",
+              "A32"
+            ]
+          }
+        ],
+        "remaining_scope": []
+      },
+      "original_obligation_coverage": [
+        {
+          "obligation": "O1",
+          "judgment": "MET",
+          "reasoning": "Local/public authorities, lexical/hybrid, static/dynamic, live/static context and database/dedicated-index alternatives have real conditions.",
+          "candidate_locator": "final.md:68-82",
+          "evidence": [
+            "A02",
+            "A06",
+            "A11",
+            "A16",
+            "A32"
+          ]
+        },
+        {
+          "obligation": "O2",
+          "judgment": "MET",
+          "reasoning": "Historical defaults and conditional mechanisms are not promoted to unspecified current-release or museum guarantees.",
+          "candidate_locator": "final.md:36,38,44,46,52,58,66",
+          "evidence": [
+            "A02",
+            "A12",
+            "A16",
+            "A24",
+            "A25",
+            "A26",
+            "A27",
+            "A28"
+          ]
+        },
+        {
+          "obligation": "O3",
+          "judgment": "MET",
+          "reasoning": "Confirmed 5.0.3 denial issue -> targeted fix -> 5.0.5 release is retained; search issues are separately scoped.",
+          "candidate_locator": "final.md:66,79",
+          "evidence": [
+            "A20",
+            "A21",
+            "A28"
+          ]
+        },
+        {
+          "obligation": "O4",
+          "judgment": "MET",
+          "reasoning": "All exact P1-P6 retain reasons, conditional options and policy decisions.",
+          "candidate_locator": "final.md:21-26",
+          "evidence": []
+        },
+        {
+          "obligation": "O5",
+          "judgment": "MET WITH MINOR COMPRESSION",
+          "reasoning": "Full material prose and alternatives survive; the critic's fixes are qualified rather than blindly adopted.",
+          "candidate_locator": "final.md:38,46,54,66,68,95",
+          "evidence": [
+            "A16",
+            "A25",
+            "A27",
+            "A28"
+          ]
+        },
+        {
+          "obligation": "O6",
+          "judgment": "MET",
+          "reasoning": "Relevant fixture/configuration contrasts and museum judgment/oracles are proposed, with unexecuted status clear.",
+          "candidate_locator": "final.md:84-99",
+          "evidence": [
+            "A02",
+            "A13",
+            "A21",
+            "A27",
+            "A28"
+          ]
+        }
+      ],
+      "plan_dispositions": [
+        {
+          "clause": "P1",
+          "exact_clause": "Index all fields with keyword search.",
+          "disposition": "Correction; already-covered keyword intent",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+            "line": 21,
+            "passage": "| **P1 — “Index all fields with keyword search.”** | **Correction; part already covered** | Retain keyword search, replace “all fields” with a reviewed public-discovery allowlist. Decide separately whether a restricted item's existence, neutral identifier, category, count, or substitute may be visible. |",
+            "evaluator_locator_summary": "Retain keyword search, replace all fields with a reviewed public-discovery allowlist.",
+            "passage_kind": "exact_candidate_line"
+          },
+          "judgment": "Sound. Search configuration does not authorize publishing; existence/identifier/count exposure remains a museum decision.",
+          "evidence": [
+            "A26",
+            "A30",
+            "A31"
+          ]
+        },
+        {
+          "clause": "P2",
+          "exact_clause": "Add embeddings of each entire record for semantic search.",
+          "disposition": "Reject as written/default; retain optional constrained hybrid",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+            "line": 36,
+            "passage": "Choose an explicit ratio and pinned engine/model for evaluation.",
+            "passage_kind": "literal_candidate_excerpt"
+          },
+          "judgment": "Justified conditional rejection rather than blanket ban on semantics. Historical ratio is release-scoped; extraction/membership risks are honestly hypotheses, not #6591 proof.",
+          "evidence": [
+            "A24",
+            "A25",
+            "A27"
+          ]
+        },
+        {
+          "clause": "P3",
+          "exact_clause": "Publish resized images with their catalog captions.",
+          "disposition": "User decision; optional delivery alternatives",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+            "line": 44,
+            "passage": "IIIF Image API 3.0 standardizes image requests and permits static pre-generated resources; Presentation API 3.0 describes presentation rather than replacing the catalogue/search layer. Its requiredStatement must be rendered, whereas its rights property is informative and may be rendered. IIIF Authorization Flow 2.0 connects a viewer to an existing access system; it does not choose the museum’s rules. A static derivative path is a valid lower-operations alternative when its access and invalidation behavior meet policy. Use IIIF where deep zoom, compound objects, or viewer interoperability justify its server, profile, monitoring, and authorization work. See inherited evidence [S08–S10](../research/sources/03-image.md) and [C08–C10](../critic/sources/02-image-and-access.md), with this turn’s IIIF check in [V06](sources/01-reviser-verifications.md#v06).",
+            "evaluator_locator_summary": "requiredStatement must be rendered ... rights property is informative",
+            "passage_kind": "exact_candidate_line"
+          },
+          "judgment": "Sound. Retains static/dynamic tradeoff and community authority; Notice conditions and rights-display semantics are accurately specific.",
+          "evidence": [
+            "A11",
+            "A12",
+            "A13",
+            "A16"
+          ]
+        },
+        {
+          "clause": "P4",
+          "exact_clause": "Restricted records are removed during the nightly index job.",
+          "disposition": "Correction; already-covered propagation intent; explicit policy decision",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+            "line": 54,
+            "passage": "“Fail closed when status is missing or ambiguous” is a defensible sensitive-material default, but it is a **proposed museum policy**, not a vendor or standards default. Ask the museum to choose deny, neutral substitute, or another controlled outcome, with an owner and review path. Likewise, a nightly propagation window is an owner-approved risk decision only if its maximum delay and exposure are measured. The route list in the validation below is a proposed coverage matrix: include only surfaces that exist in the chosen implementation and add any that do.",
+            "evaluator_locator_summary": "Fail closed ... proposed museum policy ... nightly propagation window is an owner-approved risk decision only if ... measured",
+            "passage_kind": "exact_candidate_line"
+          },
+          "judgment": "Sound. Does not decree a universal revocation time or falsely attribute fail-closed to a vendor. Conditional acceptance of an owner-approved window preserves the job's useful intent.",
+          "evidence": [
+            "A13",
+            "A26"
+          ]
+        },
+        {
+          "clause": "P5",
+          "exact_clause": "Enrichment writes directly to source records.",
+          "disposition": "Correction; staged review then authorized commit",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+            "line": 60,
+            "passage": "These are design recommendations for museum workflow, not fields mandated by OpenRefine.",
+            "passage_kind": "literal_candidate_excerpt"
+          },
+          "judgment": "Sound. Original values, service-local scores, review status, rollback and export provenance survive; no matching-score threshold masquerades as approval.",
+          "evidence": [
+            "A01",
+            "A02"
+          ]
+        },
+        {
+          "clause": "P6",
+          "exact_clause": "Validate search with the curator's favorite ten queries.",
+          "disposition": "Correction; retain seed and broaden risk-based evaluation",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/final.md",
+            "line": 64,
+            "passage": "neither ten queries nor a fixed 50–100 count is a supported universal benchmark",
+            "passage_kind": "literal_candidate_excerpt"
+          },
+          "judgment": "Sound. Adds pinned threshold-count/facet and null-field checks with pagination conditions; proposed witnesses are not presented as proven results.",
+          "evidence": [
+            "A21",
+            "A25",
+            "A27",
+            "A28"
+          ]
+        }
+      ],
+      "grade_limits": [
+        "Full six-axis review found no remaining material defect in the delivered bounded planning synthesis.",
+        "Pass is not production readiness, current security/support certification, approved policy, legal clearance, benchmark, demonstrated relevance or successful runtime validation.",
+        "Minor optional-detail compression and implicit rather than ID-labelled criticism dispositions are recorded. Target release/model/service terms and real museum authority/access/relevance evidence remain necessary for adoption.",
+        "Primary rights scope is supported via cached official FAQ/documentation after direct failures; no claim is made that direct current-page transport succeeded."
+      ]
+    }
+  },
+  "method_clues": {
+    "partial_blinding": true,
+    "disclosed_clues": [
+      "Exact input map explicitly identifies N2=control and N1=treatment.",
+      "Control assignments specify flat source notes/direct synthesis; treatment assignments and discovery use entity-relation-entity records and emergent communities.",
+      "Stage formats and directory paths expose method. Both are delivered complete finals."
+    ]
+  },
+  "comparative_quality_eligible": false,
+  "comparative_quality_reason": "Rubric permits full-quality comparison only when both arms pass. N2 has a source-grounded material defect; N1 passes with specified limitations. No equivalence, faster-FAIL win or speed/cost inference follows.",
+  "scope_limits": [
+    "Fresh pair assessment used the exact A-M11-B input map, original S05 brief, frozen P1-P6 plan, rubric, complete mapped stages, source maps and declared source roots. No candidate repair, Git/canon mutation, account/config/service changes, downloaded executable or nested workers occurred.",
+    "Partial blinding only: input-map actual-arm labels, paths, assignments, entity/community format and stage contents reveal method. No comparative speed/cost claim is admissible here.",
+    "Boundary deviation disclosed: the first rg file-name enumeration was mistakenly broader than the assigned directory and emitted unrelated experiment/evaluation pathnames. No contents of those cases/evaluations/campaigns were opened or used. The mandatory repository Plans index was read as procedural context under AGENTS.md; it supplied no scientific evidence for this museum assessment.",
+    "All six scientific axes and every plan disposition are actually reviewed; source coverage means consequential frozen planning claims and relevant mechanisms, not full production certification, every code path, every vendor advisory or future releases.",
+    "RightsStatements direct retrieval was blocked; official domain-search returned cached primary FAQ/documentation content, marked crawled last month. This suffices for the descriptive-rights scope judgment; current site state and museum rights decisions are not certified.",
+    "Source release/tag/specification provenance and mutable documentation are kept distinct. Public issues are reports or maintainer-confirmed bounded fixes, not independently executed reproductions. No target runtime/catalogue/user study/policy oracle was supplied.",
+    "evaluation_started_at is the first observed UTC time (19:10:31) after initial startup/input read and native activation; earlier startup time was not separately timestamped. The assignment's absolute 19:34:04.560279 deadline, not that observation, governs."
+  ],
+  "evaluation_started_at": "2026-10-09T19:10:31Z",
+  "evaluation_completed_at": "2026-10-09T19:28:25.153636+00:00",
+  "observed_source_operations": [
+    {
+      "operation": "READ_ONLY_LOCAL_INPUTS",
+      "detail": "Read assignment, exact input map, rubric, original brief/frozen plan; all mapped full discovery/draft/critique/final/assignment/input-map/reveal files; parsed all six candidate source maps and read all declared source indexes/notes. Checked all declared file SHA-256/byte bindings."
+    },
+    {
+      "operation": "READ_ONLY_PRIMARY_WEB",
+      "detail": "Direct open and targeted find/open on the 32 source neighborhoods in source-map.json. Related URLs are official documentation, institution/community publishers and original project issue/discussion/release repositories. Did not use secondary technical claims."
+    },
+    {
+      "operation": "READ_ONLY_PRIMARY_CODE",
+      "detail": "Python urllib fetched v0.8.7 vector.h, hnsw.h and ivfflat.h and printed only relevant definitions plus response hashes. Source was not executed and no executable was downloaded."
+    },
+    {
+      "operation": "ACCESS_FAILURE_AND_BOUNDED_RECOVERY",
+      "detail": "RightsStatements opens failed and direct urllib returned 403; domain-restricted search retrieved official cached FAQ/documentation. A bs4 import failed before any fetch; standard-library retry installed nothing. Unavailable pgvector announcement was replaced by pinned README, tag and maintainer issue evidence."
+    },
+    {
+      "operation": "MECHANICAL_LINK_CHECK",
+      "detail": "Read-only relative-link existence check found three absent research-note paths in N2 final; N1 final relative file targets existed. This contributes only a minor locator finding, not scientific grade."
+    },
+    {
+      "operation": "BOUNDED_OUTPUT_WRITES",
+      "detail": "Authored assessment.md, assessment.json and source-map.json only in the assigned evaluation directory. Frozen candidate files are unchanged."
+    }
+  ],
+  "native_and_cost_limits": {
+    "reviewer_native_goal_activation": "Actual create_goal call succeeded; get_goal observed active before source assessment and again before saving. Supported tool transcript is authoritative; no handwritten Goal receipt/JSON was created.",
+    "reviewer_native_goal_terminal_status_at_science_save": null,
+    "reviewer_native_terminal_sequence": "Save and verify complete science first; then use actual update_goal complete; no scientific work after terminal.",
+    "reviewer_t3_completion": null,
+    "candidate_native_completion": {
+      "N2": null,
+      "N1": null
+    },
+    "candidate_t3_completion": {
+      "N2": null,
+      "N1": null
+    },
+    "candidate_provider_usage": {
+      "N2": null,
+      "N1": null
+    },
+    "candidate_provider_billing": {
+      "N2": null,
+      "N1": null
+    },
+    "reviewer_provider_usage": null,
+    "reviewer_provider_billing": null,
+    "note": "Delivery is evidenced by frozen final artifacts; native/T3 lifecycle and provider usage/billing are separate. Unobserved values stay null, never zero or a scientific failure. Native Goal tool token accounting is not provider billing."
+  }
+}

@@ -1,0 +1,2513 @@
+{
+  "schema": "ER11 reviewer independent source map v1",
+  "block": "A-M01-A",
+  "assignment": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M01-A/assignment.md",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M01-A/input-map.json",
+  "sources": [
+    {
+      "source_id": "E01",
+      "title": "Android offline architecture",
+      "url": "https://developer.android.com/topic/architecture/data-layer/offline-first",
+      "version_or_release": "Rolling Android documentation",
+      "locator": "Model data; lazy writes; WorkManager queue (page lines 125–145, 364–369, 485)",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 12
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 18
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 24
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 26
+        }
+      ],
+      "independent_observation": "Supports local read source, critical local-first writes and persistent queues; the proposed domain outbox is an engineering recommendation, not an implemented guarantee.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 1,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:19:42Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E02",
+      "title": "WorkManager scheduling",
+      "url": "https://developer.android.com/develop/background-work/background-tasks/persistent/getting-started/define-work",
+      "version_or_release": "Rolling Android documentation",
+      "locator": "PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS; constraints; retry/backoff, lines 234–267, 304–305, 327–358",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 26
+        }
+      ],
+      "independent_observation": "15-minute minimum applies to periodic repetition; constraints/system optimizations affect timing; default backoff is EXPONENTIAL/30 seconds, minimum custom delay 10 seconds. Final does not confuse this with a delivery deadline.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 1,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:19:42Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 2,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:19:51Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E03",
+      "title": "Room migrations",
+      "url": "https://developer.android.com/training/data-storage/room/migrating-db-versions",
+      "version_or_release": "Rolling Android documentation",
+      "locator": "Automatic/manual migrations; AutoMigrationSpec; schema export, lines 49–116",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 24
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 26
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 89
+        }
+      ],
+      "independent_observation": "Room migration and rename/delete qualifications support the baseline. Candidate's form-template interpretation and migration tests are proposed domain requirements.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 1,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:19:42Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 2,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:19:51Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 4,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:24Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 10,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:38Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 17,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:26:48Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E04",
+      "title": "CameraX file completion",
+      "url": "https://developer.android.com/media/camera/camerax/take-photo",
+      "version_or_release": "Page last updated 2026-09-24",
+      "locator": "ImageCapture.takePicture; OutputFileOptions; OnImageSavedCallback, lines 132–194",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 28
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 84
+        }
+      ],
+      "independent_observation": "File capture is asynchronous with separate success/error callbacks. An image is not durable merely because capture was requested.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 1,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:19:42Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 2,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:19:51Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E05",
+      "title": "Android file lifecycle",
+      "url": "https://developer.android.com/training/data-storage/app-specific",
+      "version_or_release": "Rolling Android documentation",
+      "locator": "Internal storage; filesDir; cache versus persistent directories; uninstall, lines 50–65",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 28
+        }
+      ],
+      "independent_observation": "Persistent app-specific files differ from cache, are private in internal storage, and are removed on uninstall. Final retains uninstall/gallery policy instead of promising unconditional retention.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 2,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:19:51Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 4,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:24Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E06",
+      "title": "SAF export/import grants",
+      "url": "https://developer.android.com/guide/topics/providers/document-provider",
+      "version_or_release": "Rolling Android documentation",
+      "locator": "ACTION_CREATE_DOCUMENT, ACTION_OPEN_DOCUMENT, ACTION_OPEN_DOCUMENT_TREE; picker control flow, lines 54–61, 83–99",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 28
+        }
+      ],
+      "independent_observation": "User-selected document destinations and access grants support explicit import/export. No capture/export was run.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 2,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:19:51Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 4,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:24Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E07",
+      "title": "CouchDB conflicts",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "version_or_release": "Apache CouchDB 3.5 documentation, rolling stable alias",
+      "locator": "Deterministic winner; conflicts=true; open_revs=all; explicit resolution, lines 55–57, 104–133",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 40
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 54
+        }
+      ],
+      "independent_observation": "Default reads expose a deterministic winning leaf while conflicting leaves remain retrievable. This does not choose a semantically correct inspection answer or provide automatic domain merge.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 3,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:12Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E08",
+      "title": "CouchDB security",
+      "url": "https://docs.couchdb.org/en/stable/api/database/security.html",
+      "version_or_release": "Apache CouchDB 3.5 documentation",
+      "locator": "/{db}/_security members/admins and defaults, lines 12–30",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 40
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 57
+        }
+      ],
+      "independent_observation": "A database member can read all documents; new 3.x databases default to _admin. Explicitly empty membership/security configuration has different open-access behavior. A replication selector cannot constrain direct member reads.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 3,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:12Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E09",
+      "title": "CouchDB filtered replication",
+      "url": "https://docs.couchdb.org/en/stable/replication/replicator.html",
+      "version_or_release": "Apache CouchDB 3.5 documentation",
+      "locator": "Replicator jobs/checkpoints; Selector Objects, lines 410–423; server restart lines 284–291, winning_revs_only exception 480–495",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 40
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 54
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 57
+        }
+      ],
+      "independent_observation": "Selectors determine replication transfer membership. Candidate appropriately requires stronger authorization boundaries and an Android client proof.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 3,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:12Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 4,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:24Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 17,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:26:48Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E10",
+      "title": "CouchDB original issue",
+      "url": "https://github.com/apache/couchdb/issues/5422",
+      "version_or_release": "Issue opened 2025-02-04; CouchDB 3.4.2, SHA prefix 6e5ad2a5c; closed 2025-02-21",
+      "locator": "Reported stub-reuse reproduction and maintainer comments, lines 159–166, 240–245, 329–364",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 73
+        }
+      ],
+      "independent_observation": "The reporter's approximately 1 MB to 2 MB target growth is historical version-specific evidence. Current issue comments explicitly link the fix; closure and comments are mutable tracker data. Different retrieved renderings do not prove actual same-day tracker change.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 3,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:12Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 4,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:24Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 15,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:23:23Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E11",
+      "title": "CouchDB fix PR and diff",
+      "url": "https://github.com/apache/couchdb/pull/5437",
+      "version_or_release": "Merged 2025-02-21; abbreviated merge commit f1799d6",
+      "locator": "PR explanation lines 173–174; merge line 237; files view src/chttpd/src/chttpd_db.erl, db_doc_req/3",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 73
+        }
+      ],
+      "independent_observation": "The replicator already supplies atts_since; the document GET handler needed to carry it to the fabric clustering call, including open_revs. PR diff corroborates that correction. This is code inspection, not executed regression verification.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 3,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:12Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 4,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:24Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW",
+      "additional_primary_urls": [
+        "https://github.com/apache/couchdb/pull/5437/files"
+      ]
+    },
+    {
+      "source_id": "E12",
+      "title": "CouchDB fix release",
+      "url": "https://docs.couchdb.org/en/stable/whatsnew/3.4.html",
+      "version_or_release": "CouchDB 3.4.3 release section, rolling documentation",
+      "locator": "Version 3.4.3 highlights/performance, lines 16–23",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 73
+        }
+      ],
+      "independent_observation": "Release notes list #5437 for atts_since/re-replication and separately #5347 for attachment-size/compaction scheduling. Final correctly separates those mechanisms.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 3,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:12Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 4,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:24Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E13",
+      "title": "CouchDB released source",
+      "url": "https://raw.githubusercontent.com/apache/couchdb/3.4.3/src/chttpd/src/chttpd_db.erl",
+      "version_or_release": "Release tag 3.4.3",
+      "locator": "db_doc_req/3 lines 984–1007: Options2 carries atts_since into fabric:open_revs",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 73
+        }
+      ],
+      "independent_observation": "Independently inspected released code corroborates the documentary fix chain. Full retrieved file SHA-256 845ac34826326ee6d08332d8c71ebc80ce48549dc76f20e790bbcc7cb4fb1019; 104083 bytes. Source was read as text and not executed.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 18,
+          "tool": "exec_command / python3 urllib.request.urlopen",
+          "completed_at_utc": null,
+          "access_window_utc": [
+            "2026-10-09T19:24:06Z",
+            "2026-10-09T19:26:48Z"
+          ]
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "RELEASE_TAG_SOURCE",
+      "retrieved_source_sha256": "845ac34826326ee6d08332d8c71ebc80ce48549dc76f20e790bbcc7cb4fb1019"
+    },
+    {
+      "source_id": "E14",
+      "title": "PowerSync feature maturity",
+      "url": "https://docs.powersync.com/resources/feature-status",
+      "version_or_release": "Rolling table observed 2026-10-09",
+      "locator": "Feature table: Kotlin SDK GA (221), Room Kotlin Beta (233), Kotlin attachment helpers Alpha (237)",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 39
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 74
+        }
+      ],
+      "independent_observation": "These are distinct features. The final's separate Feature Status citation corrects the earlier attachment-only locator.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 5,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:32Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E15",
+      "title": "PowerSync self-hosting",
+      "url": "https://docs.powersync.com/intro/self-hosting",
+      "version_or_release": "Rolling PowerSync documentation",
+      "locator": "Docker and dashboard availability, lines 137–142",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 39
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 92
+        }
+      ],
+      "independent_observation": "Docker self-hosting is documented and the dashboard is unavailable there. Packaging alone does not settle operational simplicity.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 5,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:32Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E16",
+      "title": "PowerSync upload contract",
+      "url": "https://docs.powersync.com/handling-writes/writing-client-changes",
+      "version_or_release": "Rolling PowerSync documentation",
+      "locator": "Backend source writes/checkpoints; PUT/PATCH/DELETE and upload responses, lines 137–175",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 39
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 54
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 57
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 92
+        }
+      ],
+      "independent_observation": "Backend writes must be synchronous for checkpoint consistency. SDK queues do not supply domain authorization/conflict semantics. Docs also warn that 4xx rejection can block the queue; final does not claim ODK's HTTP 409 protocol is PowerSync's error protocol.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 5,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:32Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E17",
+      "title": "PowerSync example conflicts",
+      "url": "https://docs.powersync.com/handling-writes/handling-update-conflicts",
+      "version_or_release": "Rolling PowerSync documentation",
+      "locator": "Idempotence/deduplication; deletes; per-field received ordering, lines 133–144",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 39
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 54
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 76
+        }
+      ],
+      "independent_observation": "Idempotent processing is required; delete-wins and per-field last-received wins are backend guidance, not an automatic universally imposed service policy. Final calls them a simple example.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 5,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:32Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 6,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:43Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E18",
+      "title": "PowerSync auth filtering",
+      "url": "https://docs.powersync.com/sync/streams/parameters",
+      "version_or_release": "Rolling Sync Streams documentation",
+      "locator": "auth.user_id(), signed JWT claims and combining auth/subscription parameters, lines 176–192, 259–272",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 39
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 57
+        }
+      ],
+      "independent_observation": "Auth-constrained subscriptions can limit downloaded rows. Client parameters alone are not authorization; upload/media endpoints remain separate responsibilities.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 5,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:32Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 6,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:43Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E19",
+      "title": "PowerSync attachments",
+      "url": "https://docs.powersync.com/client-sdks/advanced/attachments",
+      "version_or_release": "Rolling docs; Kotlin built-in helper minimum SDK v1.0.0, Alpha",
+      "locator": "External storage/local queue, SDK table, workflow, lines 174–204, 218–229",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 28
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 39
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 74
+        }
+      ],
+      "independent_observation": "Files are outside synced relational rows with independent state; Kotlin helper maturity is Alpha. Candidate retains a pin-and-test condition rather than treating the helper as proven production durability.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 5,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:32Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 6,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:43Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 16,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:23:47Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E20",
+      "title": "PowerSync versioned license",
+      "url": "https://github.com/powersync-ja/powersync-service/blob/v1.23.0/service/LICENSE",
+      "version_or_release": "v1.23.0, FSL-1.1-ALv2",
+      "locator": "Permitted Purpose, Redistribution, future Apache grant, lines 342–381",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 39
+        }
+      ],
+      "independent_observation": "Version-specific text includes internal use, competing-use/redistribution terms and a second-anniversary Apache grant. Final reports source terms and leaves organizational applicability unresolved; this assessment makes no legal fitness conclusion.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 6,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:43Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 8,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:14Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "VERSIONED_TAG_OR_RELEASE_WITH_MUTABLE_GITHUB_RENDERING"
+    },
+    {
+      "source_id": "E21",
+      "title": "PowerSync versioned release",
+      "url": "https://github.com/powersync-ja/powersync-service/releases/tag/v1.23.0",
+      "version_or_release": "v1.23.0, 2026-06-23; short commit c406602",
+      "locator": "Release entry PR #676, lines 130–168",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 39
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 92
+        }
+      ],
+      "independent_observation": "Wildcard-matched Sync Stream parameter queries were fixed to report proper errors. Calling this an upgrade regression test is a proposed test use, not proof that the source established when the defect was introduced. Historical 'latest v1.26.1' is explicitly attributed to q1 and not used as a present deployment recommendation.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 6,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:43Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 8,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:14Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 16,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:23:47Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "VERSIONED_TAG_OR_RELEASE_WITH_MUTABLE_GITHUB_RENDERING"
+    },
+    {
+      "source_id": "E22",
+      "title": "PowerSync SQLite partial sync",
+      "url": "https://docs.powersync.com/sync/streams/overview",
+      "version_or_release": "Rolling Sync Streams documentation",
+      "locator": "Subscription-dependent buckets; materialized client SQLite, lines 167–177",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 39
+        }
+      ],
+      "independent_observation": "Distinct partial-sync mechanism is supported. It does not eliminate the application backend or file storage.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 12,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:22:31Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 13,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:22:52Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E23",
+      "title": "PowerSync Kotlin Android applicability",
+      "url": "https://docs.powersync.com/resources/supported-platforms",
+      "version_or_release": "Rolling platform table",
+      "locator": "Kotlin rows 276–284",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 39
+        }
+      ],
+      "independent_observation": "Kotlin supports Android SDK 23+; separate 'Android native' Kotlin/Native row is unsupported. Candidate proposes ordinary Kotlin Android and does not mistake the native-target row for JVM Android.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 12,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:22:31Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 13,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:22:52Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E24",
+      "title": "ODK Collect offline Android fit",
+      "url": "https://docs.getodk.org/collect-intro/",
+      "version_or_release": "Rolling ODK documentation",
+      "locator": "Overview/question types and devices, lines 125–133",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 41
+        }
+      ],
+      "independent_observation": "Offline forms, saveable answers, location and image types on Android support its form-first benchmark role; not proof of this nonprofit's complete correction workflow.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 7,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:54Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 8,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:14Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E25",
+      "title": "ODK review and portable media join",
+      "url": "https://docs.getodk.org/central-submissions/",
+      "version_or_release": "Current documentation with Central v1.2/v1.3-qualified behavior",
+      "locator": "Missing-media/filtering (187–188), CSV ZIP/repeats/files (203–234), review/activity (293–317)",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 41
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 55
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 56
+        }
+      ],
+      "independent_observation": "Review/comments/history, filtered exports and per-instanceId media folders are documented. Human states alone are not correction routing. 'No automatic routing' is appropriately narrower than saying no state has any side effect.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 7,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:54Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E26",
+      "title": "ODK conditional whole-record updates",
+      "url": "https://docs.getodk.org/central-api-submission-management/",
+      "version_or_release": "Update endpoint introduced in Central v1.2; current docs",
+      "locator": "PUT /v1/projects/{projectId}/forms/{xmlFormId}/submissions/{instanceId}; deprecatedID; lines 587–598",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 54
+        }
+      ],
+      "independent_observation": "Current-version deprecatedID is required or HTTP 409 results; XML entirely replaces data and matching attachments carry over. This is ODK XML semantics, not the proposed JSON or PowerSync protocol.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 7,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:54Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 8,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:14Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 10,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:38Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 14,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:23:00Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E27",
+      "title": "ODK evolution chain",
+      "url": "https://docs.getodk.org/central-api-changelog/",
+      "version_or_release": "v1.2, v1.3, v1.4, later v2026.3.1",
+      "locator": "Review/edit/comments 402–424; diffs/audits 382–401; export/formVersion 366–379; geodata fix 123–127",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 101
+        }
+      ],
+      "independent_observation": "The final's release-history claims are corroborated, including geodata XML-fragment resilience. This meets O3 without a locally executed regression.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 7,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:54Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 8,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:14Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 15,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:23:23Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E28",
+      "title": "ODK self-host and bounded vendor benchmark",
+      "url": "https://docs.getodk.org/central-install/",
+      "version_or_release": "Rolling install guide; benchmark explicitly described as 2018 hardware/configuration context",
+      "locator": "Benchmark and self-host prerequisites, lines 136–164",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 41
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 66
+        }
+      ],
+      "independent_observation": "50-device/5 MB/1–2 per-second attachment trial is documented, and DNS/Linux maintenance prerequisites are real. Candidate says bounded vendor evidence, not a current twelve-device performance estimate.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 7,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:54Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 8,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:14Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E29",
+      "title": "ODK access granularity",
+      "url": "https://docs.getodk.org/central-projects/",
+      "version_or_release": "Rolling ODK Central docs",
+      "locator": "Web User roles and per-App-User form access, lines 119–130, 157–199",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 57
+        }
+      ],
+      "independent_observation": "Form-level assignments illustrate authentication versus authorization but do not establish per-inspection read ACLs. Final relies on separate domain scope decisions.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 7,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:20:54Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 8,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:14Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E30",
+      "title": "Kobo field workflow",
+      "url": "https://support.kobotoolbox.org/data_collection_kobocollect.html",
+      "version_or_release": "Article last updated 2026-07-17",
+      "locator": "Preload/updates, Draft/Finalize/Send options, USB fallback, lines 20–65, 81–91, 137–138",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 42
+        }
+      ],
+      "independent_observation": "Offline capture requires downloaded forms. Ready-to-send versus automatic queue menu depends on Auto send. Final's general workflow and USB alternative are supported, with the coordinator loop left to hands-on investigation.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 11,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:57Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E31",
+      "title": "QFieldCloud package and conflict defaults",
+      "url": "https://docs.qfield.org/reference/qfieldcloud/jobs/",
+      "version_or_release": "Rolling QFieldCloud documentation",
+      "locator": "package job lines 213–228; conflict setting lines 256–273",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 43
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 54
+        }
+      ],
+      "independent_observation": "Offline-edit layers are packaged as GeoPackage. Timestamp Last Wins overwrites overlapping attributes but retains history; manual resolution exists. The final accurately confines this default to QFieldCloud.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 9,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:23Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 10,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:38Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 14,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:23:00Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E32",
+      "title": "Mergin offline formats",
+      "url": "https://merginmaps.com/docs/gis/supported_formats/",
+      "version_or_release": "Rolling Mergin documentation",
+      "locator": "Vector mobile table, lines 266–276",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 43
+        }
+      ],
+      "independent_observation": "GeoPackage is recommended for offline collaborative field work; Shapefile has no collaborative merge, PostGIS/WFS need network. GIS-first remains a task-dependent option.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 11,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:57Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 13,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:22:52Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E33",
+      "title": "Mergin selective media sync",
+      "url": "https://merginmaps.com/docs/manage/selective_sync/",
+      "version_or_release": "Rolling Mergin documentation",
+      "locator": "Behavior/photo example/QGIS setting, lines 255–281",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 43
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 55
+        }
+      ],
+      "independent_observation": "Feature data can arrive without photos on another device; files remain on origin/server and accessible in web/QGIS. This is bandwidth/device storage control, not a security boundary.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 11,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:57Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E34",
+      "title": "Survey123 Inbox and existing photos",
+      "url": "https://doc.arcgis.com/en/survey123/create/connect/prepareforediting.htm",
+      "version_or_release": "Rolling official Survey123 Connect/field app docs",
+      "locator": "Inbox/Sent lines 30–41; Images/allowAdds/limitations lines 114–124",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 44
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 72
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 92
+        }
+      ],
+      "independent_observation": "5,000 is parent-response limit, excluding repeats. Sent blocks redownloading that response to Inbox. Existing images are not fetched via Inbox; offline existing-image editing is unsupported, while new-image adds are enabled by default. Final narrows the limitation correctly.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 9,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:23Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 10,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:38Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 14,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:23:00Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E35",
+      "title": "Survey123 offline state workflow",
+      "url": "https://doc.arcgis.com/en/survey123/capture/mobile/submitsurveyresults.htm",
+      "version_or_release": "Rolling official Survey123 docs",
+      "locator": "Drafts, Save in Outbox/edit/reconnect, lines 7–26",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 44
+        }
+      ],
+      "independent_observation": "Offline completed responses can remain/edit in Outbox and be sent on reconnect. This is distinct from existing-image Inbox editing.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 9,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:23Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 10,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:38Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E36",
+      "title": "Fulcrum scoped export cap",
+      "url": "https://help.fulcrumapp.com/en/articles/73547-how-to-download-or-export-data",
+      "version_or_release": "Article published 2026-01-15",
+      "locator": "Data Downloader 21–36; Exporter 41–55",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 45
+        }
+      ],
+      "independent_observation": "10GB and/or 100,000 media files applies to Data Downloader. Exporter has fewer filters and limited line/polygon support, with faster full history. Offline/self-host/pricing fit is not established by this export source and final says so.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 11,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:57Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 13,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:22:52Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 14,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:23:00Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E37",
+      "title": "PostgreSQL export scope",
+      "url": "https://www.postgresql.org/docs/18/app-pgdump.html",
+      "version_or_release": "PostgreSQL 18 pinned documentation edition",
+      "locator": "Description, lines 25–32",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 38
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 56
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 66
+        }
+      ],
+      "independent_observation": "pg_dump is consistent under concurrent use, handles one database, supports portable script/archive formats, and is generally not the full routine production backup choice. Separately stored media is outside its scope.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 11,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:57Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 13,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:22:52Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 14,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:23:00Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E38",
+      "title": "Android accessibility guidance",
+      "url": "https://developer.android.com/guide/topics/ui/accessibility/index.html",
+      "version_or_release": "Rolling Android developer guidance",
+      "locator": "Getting started/Develop/Test, lines 79–98",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 62
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 90
+        }
+      ],
+      "independent_observation": "Labeling, accessible flows, contrast/touch size, Scanner and other checks support proposed design. No Android conformance or target-device result is claimed.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 12,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:22:31Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E39",
+      "title": "WCAG error identification",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/error-identification",
+      "version_or_release": "WCAG 2.2 SC 3.3.1 informative Understanding document",
+      "locator": "Success criterion and validation limitations, lines 33–68",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 62
+        }
+      ],
+      "independent_observation": "Automatically detected errors must identify the affected item and describe the error in text. Field-inline presentation is candidate design, not an exclusive standard requirement.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 12,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:22:31Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E40",
+      "title": "WCAG target size and units",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum",
+      "version_or_release": "WCAG 2.2 SC 2.5.8 informative Understanding document",
+      "locator": "24×24 CSS pixels and five exceptions, lines 32–41, 60–66",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 62
+        }
+      ],
+      "independent_observation": "Web CSS pixels and exceptions are correctly stated; the final explicitly avoids an Android dp conversion.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 12,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:22:31Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 13,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:22:52Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E41",
+      "title": "HTML localStorage type/concurrency",
+      "url": "https://html.spec.whatwg.org/multipage/webstorage.html",
+      "version_or_release": "HTML Living Standard observed 2026-10-09",
+      "locator": "§12.1 no-locking warning; §12.2.1 DOMString API; §12.2.3 origin getter, lines 81–83, 109–114, 439–447",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 53
+        }
+      ],
+      "independent_observation": "Origin-associated string key/value storage has no guaranteed cross-agent-cluster locking. 'Browser local storage' in P1 is ambiguous; final explicitly leaves IndexedDB/PWA open, so its correction is not a rejection of all browser persistence.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 9,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:23Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E42",
+      "title": "Exact frozen Storage Standard source",
+      "url": "https://github.com/whatwg/storage/blob/23f38d8feaf530b9787822e067a7eb6f953af322/storage.bs",
+      "version_or_release": "Commit 23f38d8feaf530b9787822e067a7eb6f953af322",
+      "locator": "Endpoint recommended quota 1999–2002; localStorage 2044–2048; best-effort 2286; quota 2512–2525; pressure 2547–2558",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 53
+        }
+      ],
+      "independent_observation": "Recommended localStorage quota is 5×2^20 bytes/5 MiB, not a measured universal browser capacity. Overall quota is implementation-defined, local buckets default best-effort, persistent mode needs permission, and pressure can clear best-effort buckets.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 9,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:23Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 10,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:38Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 14,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:23:00Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 15,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:23:23Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 16,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:23:47Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "PINNED_COMMIT",
+      "commit": "23f38d8feaf530b9787822e067a7eb6f953af322"
+    },
+    {
+      "source_id": "E43",
+      "title": "ODK source/component licenses",
+      "url": "https://github.com/getodk/central/blob/master/README.md",
+      "version_or_release": "Mutable master README observed 2026-10-09",
+      "locator": "License section, lines 230–232",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 41
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 75
+        }
+      ],
+      "independent_observation": "Central source is Apache 2.0; installation includes third-party software with respective licenses. Final keeps component/hosting diligence separate and does not assert universal permissive terms.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 11,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:21:57Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 13,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:22:52Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E44",
+      "title": "Android location accuracy units",
+      "url": "https://developer.android.com/reference/android/location/Location#getAccuracy()",
+      "version_or_release": "Rolling Android API reference",
+      "locator": "getAccuracy() float horizontal radius in meters at 68th percentile; hasAccuracy(), lines 1948, 1967, 2246",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 30
+        }
+      ],
+      "independent_observation": "Reported horizontal accuracy in metres is supported, distinct from guaranteed true position. Device/permission/fix freshness requirements remain proposed policy and tests.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 12,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:22:31Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E45",
+      "title": "CouchDB HTTP/document mechanism",
+      "url": "https://docs.couchdb.org/en/stable/intro/overview.html",
+      "version_or_release": "Apache CouchDB 3.5 documentation",
+      "locator": "Document model/HTTP API/MVCC/distributed replication, §1.1; incremental checkpoints/conflicts lines 80–89",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 40
+        }
+      ],
+      "independent_observation": "Confirms this is a materially distinct document/peer replication option, not a drop-in Android store or per-record read ACL.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 15,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:23:23Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 16,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:23:47Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 17,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:26:48Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    },
+    {
+      "source_id": "E46",
+      "title": "CouchDB prior release lineage",
+      "url": "https://docs.couchdb.org/en/stable/whatsnew/3.5.html",
+      "version_or_release": "CouchDB 3.5.2 release section",
+      "locator": "#5777 scheduler metric and #5881 since_seq handling, lines 54–58",
+      "candidate_locators": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+          "line": 73
+        }
+      ],
+      "independent_observation": "Corroborates the predecessor's release references, but absence of issue #5422 from that list cannot establish an unresolved bug. Final uses the earlier release's explicit fix instead.",
+      "verification": "PRIMARY_SOURCE_INDEPENDENTLY_READ",
+      "runtime_executed": false,
+      "observed_operations": [
+        {
+          "batch": 15,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:23:23Z",
+          "access_window_utc": null
+        },
+        {
+          "batch": 16,
+          "tool": "web.run",
+          "completed_at_utc": "2026-10-09T19:23:47Z",
+          "access_window_utc": null
+        }
+      ],
+      "access_timestamp_note": "Operation completion clocks or explicit bounded retrieval window; no fabricated per-page network timestamp.",
+      "source_mutability": "ROLLING_DOCUMENT_OR_MUTABLE_TRACKER_VIEW"
+    }
+  ],
+  "observed_source_operations": [
+    {
+      "batch": 1,
+      "tool": "web.run",
+      "completed_at_utc": "2026-10-09T19:19:42Z",
+      "requests": {
+        "open": [
+          {
+            "ref_id": "https://developer.android.com/topic/architecture/data-layer/offline-first"
+          },
+          {
+            "ref_id": "https://developer.android.com/develop/background-work/background-tasks/persistent/getting-started/define-work"
+          },
+          {
+            "ref_id": "https://developer.android.com/training/data-storage/room/migrating-db-versions"
+          },
+          {
+            "ref_id": "https://developer.android.com/media/camera/camerax/take-photo"
+          }
+        ]
+      },
+      "notes": "Timestamp is clock read after tool batch; cached page crawl time can differ. Only requested primary facts and their context were judged."
+    },
+    {
+      "batch": 2,
+      "tool": "web.run",
+      "completed_at_utc": "2026-10-09T19:19:51Z",
+      "requests": {
+        "find": [
+          {
+            "ref_id": "https://developer.android.com/develop/background-work/background-tasks/persistent/getting-started/define-work",
+            "pattern": "15 minutes"
+          },
+          {
+            "ref_id": "https://developer.android.com/develop/background-work/background-tasks/persistent/getting-started/define-work",
+            "pattern": "30 seconds"
+          },
+          {
+            "ref_id": "https://developer.android.com/training/data-storage/room/migrating-db-versions",
+            "pattern": "delete or rename"
+          },
+          {
+            "ref_id": "https://developer.android.com/media/camera/camerax/take-photo",
+            "pattern": "onImageSaved"
+          }
+        ],
+        "open": [
+          {
+            "ref_id": "https://developer.android.com/training/data-storage/app-specific"
+          },
+          {
+            "ref_id": "https://developer.android.com/guide/topics/providers/document-provider"
+          }
+        ]
+      },
+      "notes": "Timestamp is clock read after tool batch; cached page crawl time can differ. Only requested primary facts and their context were judged."
+    },
+    {
+      "batch": 3,
+      "tool": "web.run",
+      "completed_at_utc": "2026-10-09T19:20:12Z",
+      "requests": {
+        "open": [
+          {
+            "ref_id": "https://docs.couchdb.org/en/stable/api/database/security.html"
+          },
+          {
+            "ref_id": "https://docs.couchdb.org/en/stable/replication/conflicts.html"
+          },
+          {
+            "ref_id": "https://docs.couchdb.org/en/stable/replication/replicator.html"
+          },
+          {
+            "ref_id": "https://docs.couchdb.org/en/stable/whatsnew/3.4.html"
+          },
+          {
+            "ref_id": "https://github.com/apache/couchdb/issues/5422"
+          },
+          {
+            "ref_id": "https://github.com/apache/couchdb/pull/5437"
+          }
+        ]
+      },
+      "notes": "Timestamp is clock read after tool batch; cached page crawl time can differ. Only requested primary facts and their context were judged."
+    },
+    {
+      "batch": 4,
+      "tool": "web.run",
+      "completed_at_utc": "2026-10-09T19:20:24Z",
+      "requests": {
+        "find": [
+          {
+            "ref_id": "https://docs.couchdb.org/en/stable/whatsnew/3.4.html",
+            "pattern": "#5437"
+          },
+          {
+            "ref_id": "https://github.com/apache/couchdb/issues/5422",
+            "pattern": "atts_since"
+          },
+          {
+            "ref_id": "https://github.com/apache/couchdb/pull/5437",
+            "pattern": "Merged"
+          },
+          {
+            "ref_id": "https://docs.couchdb.org/en/stable/replication/replicator.html",
+            "pattern": "Selector Objects"
+          },
+          {
+            "ref_id": "https://developer.android.com/training/data-storage/app-specific",
+            "pattern": "uninstall"
+          },
+          {
+            "ref_id": "https://developer.android.com/guide/topics/providers/document-provider",
+            "pattern": "ACTION_CREATE_DOCUMENT"
+          },
+          {
+            "ref_id": "https://developer.android.com/training/data-storage/room/migrating-db-versions",
+            "pattern": "rename"
+          }
+        ]
+      },
+      "notes": "Timestamp is clock read after tool batch; cached page crawl time can differ. Only requested primary facts and their context were judged."
+    },
+    {
+      "batch": 5,
+      "tool": "web.run",
+      "completed_at_utc": "2026-10-09T19:20:32Z",
+      "requests": {
+        "open": [
+          {
+            "ref_id": "https://docs.powersync.com/resources/feature-status"
+          },
+          {
+            "ref_id": "https://docs.powersync.com/intro/self-hosting"
+          },
+          {
+            "ref_id": "https://docs.powersync.com/handling-writes/writing-client-changes"
+          },
+          {
+            "ref_id": "https://docs.powersync.com/handling-writes/handling-update-conflicts"
+          },
+          {
+            "ref_id": "https://docs.powersync.com/sync/streams/parameters"
+          },
+          {
+            "ref_id": "https://docs.powersync.com/client-sdks/advanced/attachments"
+          }
+        ]
+      },
+      "notes": "Timestamp is clock read after tool batch; cached page crawl time can differ. Only requested primary facts and their context were judged."
+    },
+    {
+      "batch": 6,
+      "tool": "web.run",
+      "completed_at_utc": "2026-10-09T19:20:43Z",
+      "requests": {
+        "open": [
+          {
+            "ref_id": "https://github.com/powersync-ja/powersync-service/blob/v1.23.0/service/LICENSE"
+          },
+          {
+            "ref_id": "https://github.com/powersync-ja/powersync-service/releases/tag/v1.23.0"
+          }
+        ],
+        "find": [
+          {
+            "ref_id": "https://docs.powersync.com/handling-writes/handling-update-conflicts",
+            "pattern": "Delete"
+          },
+          {
+            "ref_id": "https://docs.powersync.com/sync/streams/parameters",
+            "pattern": "auth.user_id"
+          },
+          {
+            "ref_id": "https://docs.powersync.com/client-sdks/advanced/attachments",
+            "pattern": "Kotlin v1.0.0"
+          }
+        ]
+      },
+      "notes": "Timestamp is clock read after tool batch; cached page crawl time can differ. Only requested primary facts and their context were judged."
+    },
+    {
+      "batch": 7,
+      "tool": "web.run",
+      "completed_at_utc": "2026-10-09T19:20:54Z",
+      "requests": {
+        "open": [
+          {
+            "ref_id": "https://docs.getodk.org/central-submissions/"
+          },
+          {
+            "ref_id": "https://docs.getodk.org/central-api-submission-management/"
+          },
+          {
+            "ref_id": "https://docs.getodk.org/central-api-changelog/"
+          },
+          {
+            "ref_id": "https://docs.getodk.org/central-install/"
+          },
+          {
+            "ref_id": "https://docs.getodk.org/central-projects/"
+          },
+          {
+            "ref_id": "https://docs.getodk.org/collect-intro/"
+          }
+        ]
+      },
+      "notes": "Timestamp is clock read after tool batch; cached page crawl time can differ. Only requested primary facts and their context were judged."
+    },
+    {
+      "batch": 8,
+      "tool": "web.run",
+      "completed_at_utc": "2026-10-09T19:21:14Z",
+      "requests": {
+        "find": [
+          {
+            "ref_id": "https://docs.getodk.org/central-api-submission-management/",
+            "pattern": "deprecatedID"
+          },
+          {
+            "ref_id": "https://docs.getodk.org/central-api-changelog/",
+            "pattern": "v1.2"
+          },
+          {
+            "ref_id": "https://docs.getodk.org/central-api-changelog/",
+            "pattern": "v1.3"
+          },
+          {
+            "ref_id": "https://docs.getodk.org/central-api-changelog/",
+            "pattern": "v1.4"
+          },
+          {
+            "ref_id": "https://docs.getodk.org/central-install/",
+            "pattern": "50"
+          },
+          {
+            "ref_id": "https://docs.getodk.org/central-projects/",
+            "pattern": "App User"
+          },
+          {
+            "ref_id": "https://docs.getodk.org/collect-intro/",
+            "pattern": "offline"
+          },
+          {
+            "ref_id": "https://github.com/powersync-ja/powersync-service/blob/v1.23.0/service/LICENSE",
+            "pattern": "Permitted Purpose"
+          },
+          {
+            "ref_id": "https://github.com/powersync-ja/powersync-service/releases/tag/v1.23.0",
+            "pattern": "676"
+          }
+        ]
+      },
+      "notes": "Timestamp is clock read after tool batch; cached page crawl time can differ. Only requested primary facts and their context were judged."
+    },
+    {
+      "batch": 9,
+      "tool": "web.run",
+      "completed_at_utc": "2026-10-09T19:21:23Z",
+      "requests": {
+        "open": [
+          {
+            "ref_id": "https://html.spec.whatwg.org/multipage/webstorage.html"
+          },
+          {
+            "ref_id": "https://github.com/whatwg/storage/blob/23f38d8feaf530b9787822e067a7eb6f953af322/storage.bs"
+          },
+          {
+            "ref_id": "https://doc.arcgis.com/en/survey123/create/connect/prepareforediting.htm"
+          },
+          {
+            "ref_id": "https://doc.arcgis.com/en/survey123/capture/mobile/submitsurveyresults.htm"
+          },
+          {
+            "ref_id": "https://docs.qfield.org/reference/qfieldcloud/jobs/"
+          }
+        ]
+      },
+      "notes": "Timestamp is clock read after tool batch; cached page crawl time can differ. Only requested primary facts and their context were judged."
+    },
+    {
+      "batch": 10,
+      "tool": "web.run",
+      "completed_at_utc": "2026-10-09T19:21:38Z",
+      "requests": {
+        "find": [
+          {
+            "ref_id": "https://github.com/whatwg/storage/blob/23f38d8feaf530b9787822e067a7eb6f953af322/storage.bs",
+            "pattern": "5 ×"
+          },
+          {
+            "ref_id": "https://github.com/whatwg/storage/blob/23f38d8feaf530b9787822e067a7eb6f953af322/storage.bs",
+            "pattern": "best-effort"
+          },
+          {
+            "ref_id": "https://doc.arcgis.com/en/survey123/create/connect/prepareforediting.htm",
+            "pattern": "existing images"
+          },
+          {
+            "ref_id": "https://doc.arcgis.com/en/survey123/create/connect/prepareforediting.htm",
+            "pattern": "5,000"
+          },
+          {
+            "ref_id": "https://docs.qfield.org/reference/qfieldcloud/jobs/",
+            "pattern": "Last Wins"
+          },
+          {
+            "ref_id": "https://docs.getodk.org/central-api-submission-management/",
+            "pattern": "Updating Submission Data"
+          },
+          {
+            "ref_id": "https://developer.android.com/training/data-storage/room/migrating-db-versions",
+            "pattern": "AutoMigrationSpec"
+          }
+        ],
+        "open": [
+          {
+            "ref_id": "https://doc.arcgis.com/en/survey123/capture/mobile/submitsurveyresults.htm",
+            "lineno": 7
+          }
+        ]
+      },
+      "notes": "Timestamp is clock read after tool batch; cached page crawl time can differ. Only requested primary facts and their context were judged."
+    },
+    {
+      "batch": 11,
+      "tool": "web.run",
+      "completed_at_utc": "2026-10-09T19:21:57Z",
+      "requests": {
+        "open": [
+          {
+            "ref_id": "https://support.kobotoolbox.org/data_collection_kobocollect.html"
+          },
+          {
+            "ref_id": "https://merginmaps.com/docs/manage/selective_sync/"
+          },
+          {
+            "ref_id": "https://merginmaps.com/docs/gis/supported_formats/"
+          },
+          {
+            "ref_id": "https://help.fulcrumapp.com/en/articles/73547-how-to-download-or-export-data"
+          },
+          {
+            "ref_id": "https://www.postgresql.org/docs/18/app-pgdump.html"
+          },
+          {
+            "ref_id": "https://github.com/getodk/central/blob/master/README.md"
+          }
+        ]
+      },
+      "notes": "Timestamp is clock read after tool batch; cached page crawl time can differ. Only requested primary facts and their context were judged."
+    },
+    {
+      "batch": 12,
+      "tool": "web.run",
+      "completed_at_utc": "2026-10-09T19:22:31Z",
+      "requests": {
+        "open": [
+          {
+            "ref_id": "https://developer.android.com/guide/topics/ui/accessibility/index.html"
+          },
+          {
+            "ref_id": "https://www.w3.org/WAI/WCAG22/Understanding/error-identification"
+          },
+          {
+            "ref_id": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum"
+          },
+          {
+            "ref_id": "https://developer.android.com/reference/android/location/Location#getAccuracy()"
+          },
+          {
+            "ref_id": "https://docs.powersync.com/sync/streams/overview"
+          },
+          {
+            "ref_id": "https://docs.powersync.com/resources/supported-platforms"
+          },
+          {
+            "ref_id": "https://github.com/apache/couchdb/pull/5437/files"
+          }
+        ]
+      },
+      "notes": "Timestamp is clock read after tool batch; cached page crawl time can differ. Only requested primary facts and their context were judged."
+    },
+    {
+      "batch": 13,
+      "tool": "web.run",
+      "completed_at_utc": "2026-10-09T19:22:52Z",
+      "requests": {
+        "find": [
+          {
+            "ref_id": "https://help.fulcrumapp.com/en/articles/73547-how-to-download-or-export-data",
+            "pattern": "10 GB"
+          },
+          {
+            "ref_id": "https://www.postgresql.org/docs/18/app-pgdump.html",
+            "pattern": "consistent"
+          },
+          {
+            "ref_id": "https://github.com/getodk/central/blob/master/README.md",
+            "pattern": "Apache"
+          },
+          {
+            "ref_id": "https://merginmaps.com/docs/gis/supported_formats/",
+            "pattern": "GeoPackage"
+          },
+          {
+            "ref_id": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum",
+            "pattern": "24 by 24"
+          },
+          {
+            "ref_id": "https://developer.android.com/reference/android/location/Location",
+            "pattern": "68th percentile"
+          },
+          {
+            "ref_id": "https://docs.powersync.com/sync/streams/overview",
+            "pattern": "SQLite"
+          },
+          {
+            "ref_id": "https://docs.powersync.com/resources/supported-platforms",
+            "pattern": "Android"
+          },
+          {
+            "ref_id": "https://github.com/apache/couchdb/pull/5437/files",
+            "pattern": "chttpd_db"
+          }
+        ]
+      },
+      "notes": "Timestamp is clock read after tool batch; cached page crawl time can differ. Only requested primary facts and their context were judged."
+    },
+    {
+      "batch": 14,
+      "tool": "web.run",
+      "completed_at_utc": "2026-10-09T19:23:00Z",
+      "requests": {
+        "open": [
+          {
+            "ref_id": "https://help.fulcrumapp.com/en/articles/73547-how-to-download-or-export-data",
+            "lineno": 7
+          },
+          {
+            "ref_id": "https://github.com/whatwg/storage/blob/23f38d8feaf530b9787822e067a7eb6f953af322/storage.bs",
+            "lineno": 2015
+          },
+          {
+            "ref_id": "https://github.com/apache/couchdb/pull/5437/files",
+            "lineno": 248
+          },
+          {
+            "ref_id": "https://docs.getodk.org/central-api-submission-management/",
+            "lineno": 587
+          },
+          {
+            "ref_id": "https://doc.arcgis.com/en/survey123/create/connect/prepareforediting.htm",
+            "lineno": 114
+          },
+          {
+            "ref_id": "https://www.postgresql.org/docs/18/app-pgdump.html",
+            "lineno": 25
+          },
+          {
+            "ref_id": "https://docs.qfield.org/reference/qfieldcloud/jobs/",
+            "lineno": 210
+          }
+        ]
+      },
+      "notes": "Timestamp is clock read after tool batch; cached page crawl time can differ. Only requested primary facts and their context were judged."
+    },
+    {
+      "batch": 15,
+      "tool": "web.run",
+      "completed_at_utc": "2026-10-09T19:23:23Z",
+      "requests": {
+        "find": [
+          {
+            "ref_id": "https://docs.getodk.org/central-api-changelog/",
+            "pattern": "geodata"
+          },
+          {
+            "ref_id": "https://github.com/whatwg/storage/blob/23f38d8feaf530b9787822e067a7eb6f953af322/storage.bs",
+            "pattern": "recommended quota"
+          },
+          {
+            "ref_id": "https://github.com/apache/couchdb/issues/5422",
+            "pattern": "3.4.2"
+          }
+        ],
+        "open": [
+          {
+            "ref_id": "https://docs.couchdb.org/en/stable/intro/overview.html"
+          },
+          {
+            "ref_id": "https://docs.couchdb.org/en/stable/whatsnew/3.5.html"
+          }
+        ]
+      },
+      "notes": "Timestamp is clock read after tool batch; cached page crawl time can differ. Only requested primary facts and their context were judged."
+    },
+    {
+      "batch": 16,
+      "tool": "web.run",
+      "completed_at_utc": "2026-10-09T19:23:47Z",
+      "requests": {
+        "open": [
+          {
+            "ref_id": "https://github.com/whatwg/storage/blob/23f38d8feaf530b9787822e067a7eb6f953af322/storage.bs",
+            "lineno": 1985
+          },
+          {
+            "ref_id": "https://docs.couchdb.org/en/stable/intro/overview.html",
+            "lineno": 6
+          },
+          {
+            "ref_id": "https://docs.couchdb.org/en/stable/whatsnew/3.5.html",
+            "lineno": 50
+          },
+          {
+            "ref_id": "https://github.com/powersync-ja/powersync-service/releases/tag/v1.23.0",
+            "lineno": 130
+          },
+          {
+            "ref_id": "https://docs.powersync.com/client-sdks/advanced/attachments",
+            "lineno": 172
+          }
+        ]
+      },
+      "notes": "Timestamp is clock read after tool batch; cached page crawl time can differ. Only requested primary facts and their context were judged."
+    },
+    {
+      "batch": 17,
+      "tool": "web.run",
+      "completed_at_utc": "2026-10-09T19:26:48Z",
+      "requests": {
+        "find": [
+          {
+            "ref_id": "https://docs.couchdb.org/en/stable/replication/replicator.html",
+            "pattern": "restart"
+          },
+          {
+            "ref_id": "https://docs.couchdb.org/en/stable/replication/replicator.html",
+            "pattern": "checkpoint"
+          },
+          {
+            "ref_id": "https://docs.couchdb.org/en/stable/intro/overview.html",
+            "pattern": "incremental"
+          },
+          {
+            "ref_id": "https://developer.android.com/training/data-storage/room/migrating-db-versions",
+            "pattern": "exportSchema"
+          }
+        ]
+      },
+      "notes": "Timestamp is clock read after tool batch; cached page crawl time can differ. Only requested primary facts and their context were judged."
+    },
+    {
+      "batch": 18,
+      "tool": "exec_command / python3 urllib.request.urlopen",
+      "access_window_utc": [
+        "2026-10-09T19:24:06Z",
+        "2026-10-09T19:26:48Z"
+      ],
+      "requests": {
+        "open": [
+          {
+            "url": "https://raw.githubusercontent.com/apache/couchdb/3.4.3/src/chttpd/src/chttpd_db.erl"
+          }
+        ]
+      },
+      "result": {
+        "status": "SOURCE_TEXT_READ_ONLY",
+        "bytes": 104083,
+        "sha256": "845ac34826326ee6d08332d8c71ebc80ce48549dc76f20e790bbcc7cb4fb1019",
+        "inspected_symbol": "db_doc_req/3",
+        "inspected_lines": "984–1007; context through 1038"
+      },
+      "notes": "No executable downloaded or source executed; source bytes stayed in memory. Bounded authored observations are in E13."
+    }
+  ],
+  "lookup_notes": [
+    "E IDs are reviewer-owned immutable identifiers, separate from candidate A/C/P/CR/RV inventories.",
+    "Primary statements were independently checked rather than accepted from source-counts or critic agreement.",
+    "No primary document was executed. All runtime validation remains unexecuted.",
+    "Source bodies are not copied wholesale. Bounded authored observations, exact URLs, versions, symbols and candidate locators are preserved here.",
+    "Find operations that returned no exact string (rename, recommended quota, 10 GB) were followed by applicable symbols/full nearby sections (AutoMigrationSpec, endpoint definition, 10GB). No-match is not counted as claim disproof.",
+    "Candidate source inventories were read in full; inherited duplicated inventories were checked for semantic identity, with bounded source-note copies hashed as supplied."
+  ],
+  "remaining_required_primary_review": [],
+  "usage": null,
+  "billing": null,
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M01-A/assignment.md",
+      "sha256": "178ce5f16cadc95a1d23d432f0e3e7101a95e01eaf3fdafa8ab377e70429bcb0",
+      "bytes": 1980
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M01-A/input-map.json",
+      "sha256": "bb36843091c563aef28a76c00ba13d57c3198a69a43ca28f733abdbb822b9572",
+      "bytes": 7704
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S01/brief.md",
+      "sha256": "1cc2f8f9f6ae1205f1f6152fa412d4b1afb153e1a3bb026def3dd25efaa1484d",
+      "bytes": 1479
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S01/plan-root-only.md",
+      "sha256": "82757a00748f375bd341f03520625ba71db51524f4d51bb8b06aeba1baf0e2e5",
+      "bytes": 383
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/final.md",
+      "sha256": "8e3ced6f2db17d5882ecd036f625f3f2677106af1f3245f6a25ba6840d1d7717",
+      "bytes": 31025
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/source-map.json",
+      "sha256": "5d14c8189aed2b886acbe66dc7cb361f9fcf85d5501b33c47b15df7698b2ecfc",
+      "bytes": 67015
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/assignment.md",
+      "sha256": "c40957fb52f2869f7e94daeab2478ebf3230c5b6ab2013a86e147730701847d6",
+      "bytes": 2850
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/input-map.json",
+      "sha256": "1544595130208aeffc6494a7ccf8c1cbed2d7b5762c4d2990401e17875db92e2",
+      "bytes": 2082
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/discovery.md",
+      "sha256": "e933f1d941c838a79f7a9f31b1faf72c6cb2de389559b84b801df3725d91ce36",
+      "bytes": 18578
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/draft.md",
+      "sha256": "0759955d5433144f292395bafadc15402b013ed3557598d1487598cfc25a53ec",
+      "bytes": 15610
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/source-map.json",
+      "sha256": "c97de588fdf9647dc61bc2b12142ca39017febd9f965afdeffe35237e3b27f70",
+      "bytes": 12726
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/revealed-plan.md",
+      "sha256": "82757a00748f375bd341f03520625ba71db51524f4d51bb8b06aeba1baf0e2e5",
+      "bytes": 383
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/plan-reveal.json",
+      "sha256": "31a57502d16769af13b176825bdddf7f849215fde65c005a867ac1d8c4d26c7e",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/assignment.md",
+      "sha256": "39a23c05137bd30ffd3e160f979f9330afe9ac6bc6d3ca822ff38b2d446345fe",
+      "bytes": 3396
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/input-map.json",
+      "sha256": "8566af69a4ecdd16e63ed158e7e1bdbdc31059e1c96af4c3cd1a37448d82f9c5",
+      "bytes": 640
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/discovery.md",
+      "sha256": "6c5d1ebed6715786512ba407a83c69f2a3ab8201756c38affdd06a63aceaef82",
+      "bytes": 19431
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/draft.md",
+      "sha256": "0809c431b86e66efa3f9f7b5577aff4470a634eb0fd6b02b9d60f4d2061de8e6",
+      "bytes": 21754
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/source-map.json",
+      "sha256": "bfc8570f133ab565089d8036758b26437da9f90dac02277d20c63888bf77e3e2",
+      "bytes": 12830
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/revealed-plan.md",
+      "sha256": "82757a00748f375bd341f03520625ba71db51524f4d51bb8b06aeba1baf0e2e5",
+      "bytes": 383
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/plan-reveal.json",
+      "sha256": "3a3f0e9c6241f50f3bfc0a9b51bd49c1ea0627354aacab736dba804fde04c47f",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/assignment.md",
+      "sha256": "b51a82b8970c11827406ad88815521ed0f111fe7a080399f1306745575150143",
+      "bytes": 3348
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/input-map.json",
+      "sha256": "70398b4c10116326a2b3774db893b330cda0e8acefa2582bb55ecbc5ea2f50fa",
+      "bytes": 750
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/critique.md",
+      "sha256": "cf591696adad90d1f75f51f5c334e2508afd14daa9d94abd46c7fd8f4765f8e7",
+      "bytes": 13808
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/source-map.json",
+      "sha256": "56a7fe4da85e31f27523440e25daf33f16a952135ee5238f20933367da80e17c",
+      "bytes": 14732
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/assignment.md",
+      "sha256": "3f59bea0745d4a51516e7b0a74572dee03ed4039585b7025d91d92862018bb66",
+      "bytes": 2587
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/input-map.json",
+      "sha256": "3a13eb626460f21da69b2ae895b2f14baf46b53d036d322fbe6059a941ea9a11",
+      "bytes": 1758
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/treatment/research/assignment.md",
+      "sha256": "4ed2a97e201ce73e42bf5c9dce95450a147124968fa3c750e8f7027b43fab1a7",
+      "bytes": 3055
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/treatment/research/input-map.json",
+      "sha256": "41ac156cff564c09b9236d5437c2d0f14bffc43925c94dee5a9e35c9ea581c33",
+      "bytes": 640
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/sources/index.md",
+      "sha256": "f9b7279bfbd7938b5dd3008ff1b29d1fdb5de98be85fc7c68086791b3d16d907",
+      "bytes": 8049
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/sources/observations.md",
+      "sha256": "62df8d448a05c0c2293272162f44a97410cdf237b251225044589bab3c82caef",
+      "bytes": 3364
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/sources/inherited/maps/critic.json",
+      "sha256": "56a7fe4da85e31f27523440e25daf33f16a952135ee5238f20933367da80e17c",
+      "bytes": 14732
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/sources/inherited/maps/research-q1.json",
+      "sha256": "c97de588fdf9647dc61bc2b12142ca39017febd9f965afdeffe35237e3b27f70",
+      "bytes": 12726
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/sources/inherited/maps/research-q2.json",
+      "sha256": "bfc8570f133ab565089d8036758b26437da9f90dac02277d20c63888bf77e3e2",
+      "bytes": 12830
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/sources/inherited/critic/sources/index.md",
+      "sha256": "2c577ead37d2cadb45b3ef1afe18be1721fb2d9f259334d60914d7298b482b1d",
+      "bytes": 939
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/sources/inherited/critic/sources/observations.md",
+      "sha256": "e303a557d951eeef71431807afca25b680a7e1b5c4d73fa9e7634e1852fd6e63",
+      "bytes": 4957
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/sources/inherited/research-q2/sources/README.md",
+      "sha256": "8eae61cc547021bfc6b4178fe09df4b5f102bcc3d31b5a6039851216a22ff2d2",
+      "bytes": 641
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/sources/inherited/research-q2/sources/source-notes.md",
+      "sha256": "32dc4b46e3cb482e38446626be7aff3d23b20e766e208f2d090d32222f99c22a",
+      "bytes": 11015
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/sources/inherited/research-q1/sources/index.md",
+      "sha256": "774113df5be3dfc22c717a7b4fca01649f98a78bc819edb956ba8c9d67c9a941",
+      "bytes": 774
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/sources/inherited/research-q1/sources/postgresql.md",
+      "sha256": "262c451dccd9787431b273b4ae29d750bb8c5d8b4b499fa2189fa64fb1f76ca7",
+      "bytes": 746
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/sources/inherited/research-q1/sources/android.md",
+      "sha256": "49ba177152de6509a96718affd0e0c5b1d724084665b975c4a54b4b03d911755",
+      "bytes": 3932
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/sources/inherited/research-q1/sources/couchdb.md",
+      "sha256": "4912ab1d2dd70b9e7433a14272ab1d7b9bd9b8facb6454834960fbb69d6cd51f",
+      "bytes": 4047
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/sources/inherited/research-q1/sources/powersync.md",
+      "sha256": "2bfe17ae22350ff067a58744de6184af4f3aa0fe68e5a9c5e010f3f16887135b",
+      "bytes": 5424
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/index.md",
+      "sha256": "774113df5be3dfc22c717a7b4fca01649f98a78bc819edb956ba8c9d67c9a941",
+      "bytes": 774
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/postgresql.md",
+      "sha256": "262c451dccd9787431b273b4ae29d750bb8c5d8b4b499fa2189fa64fb1f76ca7",
+      "bytes": 746
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/android.md",
+      "sha256": "49ba177152de6509a96718affd0e0c5b1d724084665b975c4a54b4b03d911755",
+      "bytes": 3932
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/couchdb.md",
+      "sha256": "4912ab1d2dd70b9e7433a14272ab1d7b9bd9b8facb6454834960fbb69d6cd51f",
+      "bytes": 4047
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/powersync.md",
+      "sha256": "2bfe17ae22350ff067a58744de6184af4f3aa0fe68e5a9c5e010f3f16887135b",
+      "bytes": 5424
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/sources/README.md",
+      "sha256": "8eae61cc547021bfc6b4178fe09df4b5f102bcc3d31b5a6039851216a22ff2d2",
+      "bytes": 641
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/sources/source-notes.md",
+      "sha256": "32dc4b46e3cb482e38446626be7aff3d23b20e766e208f2d090d32222f99c22a",
+      "bytes": 11015
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/sources/index.md",
+      "sha256": "2c577ead37d2cadb45b3ef1afe18be1721fb2d9f259334d60914d7298b482b1d",
+      "bytes": 939
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/sources/observations.md",
+      "sha256": "e303a557d951eeef71431807afca25b680a7e1b5c4d73fa9e7634e1852fd6e63",
+      "bytes": 4957
+    }
+  ],
+  "saved_at_utc": "2026-10-09T19:32:11.710595+00:00",
+  "retrieval_limits": {
+    "failed_url_fetches": [],
+    "no_exact_string_matches": [
+      {
+        "batch": 4,
+        "query": "rename",
+        "resolution": "AutoMigrationSpec and exportSchema primary sections read in batches 10 and 17"
+      },
+      {
+        "batch": 13,
+        "query": "10 GB",
+        "resolution": "Full article read in batch 14; source uses 10GB"
+      },
+      {
+        "batch": 15,
+        "query": "recommended quota",
+        "resolution": "Definition split across source lines 1999–2002 read in batch 16"
+      }
+    ],
+    "per_page_network_timestamps_available": false,
+    "raw_candidate_historical_tool_responses_available": false
+  }
+}

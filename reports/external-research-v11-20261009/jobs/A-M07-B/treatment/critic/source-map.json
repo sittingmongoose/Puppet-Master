@@ -1,0 +1,280 @@
+{
+  "access_note": "Critic re-verification: all 15 captures copied byte-identical from treatment/research/sources and re-verified by SHA-256. IDs S01-S15 immutable, no rebind. No cold re-fetch; no drift observed. Upstream docs mutable; hashes pin these bytes.",
+  "arm": "treatment",
+  "block": "A-M07-B",
+  "case": "S01",
+  "method": "M07 v1 evidence-on-demand",
+  "stage": "critic",
+  "sources": [
+    {
+      "id": "S01",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "title": "Apache CouchDB docs \u2014 Replication and conflict model",
+      "version": "stable (mutable docs; capture-pinned)",
+      "bytes": 79028,
+      "sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5",
+      "captured_file": "sources/S01-couchdb-conflicts.html",
+      "locator": "Section 2.3 Replication and conflict model; winner/view semantics; _conflicts member",
+      "access_timestamp": "2026-10-09T19:49:45Z",
+      "observed_operations": [
+        "cp ../research/sources/S01-couchdb-conflicts.html sources/S01-couchdb-conflicts.html (byte-identical)",
+        "sha256sum verified 18adf909bb47\u2026 == research pin",
+        "on-demand grep/read expansion for critique.md (see sources/index.md locators)"
+      ],
+      "usage_billing": null,
+      "inherited_from": "treatment/research/source-map.json (same bytes+sha256, IDs immutable)"
+    },
+    {
+      "id": "S02",
+      "url": "https://docs.powersync.com/sync/rules/overview.md",
+      "title": "PowerSync docs \u2014 Sync Rules (Legacy) incl. Sync Streams deprecation",
+      "version": "mutable docs; capture-pinned",
+      "bytes": 8599,
+      "sha256": "15973485df9fdf50d5653c86c1bd305ed3e8680aa88db73eba2ec7675eaad112",
+      "captured_file": "sources/S02-powersync-sync-rules.md",
+      "locator": "Sync Rules (Legacy); deprecation notice -> Sync Streams; bucket_definitions; parameters; migrate sync-rules",
+      "access_timestamp": "2026-10-09T19:49:45Z",
+      "observed_operations": [
+        "cp ../research/sources/S02-powersync-sync-rules.md sources/S02-powersync-sync-rules.md (byte-identical)",
+        "sha256sum verified 15973485df9f\u2026 == research pin",
+        "on-demand grep/read expansion for critique.md (see sources/index.md locators)"
+      ],
+      "usage_billing": null,
+      "inherited_from": "treatment/research/source-map.json (same bytes+sha256, IDs immutable)"
+    },
+    {
+      "id": "S03",
+      "url": "https://pocketbase.io/docs/api-rules-and-filters/",
+      "title": "PocketBase docs \u2014 API rules and filters",
+      "version": "docs for v0.40.x era; capture-pinned",
+      "bytes": 48070,
+      "sha256": "2449d93c1e547a0c52587c295ec79650c48089afe2d93616474ed9ec5b867ef7",
+      "captured_file": "sources/S03-pocketbase-api-rules.html",
+      "locator": "API rules: list/view/create/update/delete + manageRule; locked default; filter syntax; 200/400/404/403 mapping",
+      "access_timestamp": "2026-10-09T19:49:45Z",
+      "observed_operations": [
+        "cp ../research/sources/S03-pocketbase-api-rules.html sources/S03-pocketbase-api-rules.html (byte-identical)",
+        "sha256sum verified 2449d93c1e54\u2026 == research pin",
+        "on-demand grep/read expansion for critique.md (see sources/index.md locators)"
+      ],
+      "usage_billing": null,
+      "inherited_from": "treatment/research/source-map.json (same bytes+sha256, IDs immutable)"
+    },
+    {
+      "id": "S04",
+      "url": "https://pocketbase.io/docs/",
+      "title": "PocketBase docs \u2014 Introduction (v0.40.5)",
+      "version": "v0.40.5; capture-pinned",
+      "bytes": 24956,
+      "sha256": "d7c969a8e1cceaf9c7a9451bedc40e03d147c49d71bd3d42fba6cc447c8d5625",
+      "captured_file": "sources/S04-pocketbase-intro.html",
+      "locator": "v0.40.5 downloads (~11-12MB zips); ./pocketbase serve; pre-v1 production warning; changelog pointer",
+      "access_timestamp": "2026-10-09T19:49:45Z",
+      "observed_operations": [
+        "cp ../research/sources/S04-pocketbase-intro.html sources/S04-pocketbase-intro.html (byte-identical)",
+        "sha256sum verified d7c969a8e1cc\u2026 == research pin",
+        "on-demand grep/read expansion for critique.md (see sources/index.md locators)"
+      ],
+      "usage_billing": null,
+      "inherited_from": "treatment/research/source-map.json (same bytes+sha256, IDs immutable)"
+    },
+    {
+      "id": "S05",
+      "url": "https://docs.getodk.org/central-users/",
+      "title": "ODK Docs \u2014 Managing Users in Central",
+      "version": "mutable docs; capture-pinned",
+      "bytes": 56821,
+      "sha256": "8e4f003d13115424e2bb42c7933c7347a9ce520109d063baff0e1e40ae2463dd",
+      "captured_file": "sources/S05-odk-central-users.html",
+      "locator": "Two account types: Web Users (global) vs App Users (per-project); managing app users",
+      "access_timestamp": "2026-10-09T19:49:45Z",
+      "observed_operations": [
+        "cp ../research/sources/S05-odk-central-users.html sources/S05-odk-central-users.html (byte-identical)",
+        "sha256sum verified 8e4f003d1311\u2026 == research pin",
+        "on-demand grep/read expansion for critique.md (see sources/index.md locators)"
+      ],
+      "usage_billing": null,
+      "inherited_from": "treatment/research/source-map.json (same bytes+sha256, IDs immutable)"
+    },
+    {
+      "id": "S06",
+      "url": "https://docs.getodk.org/central-projects/",
+      "title": "ODK Docs \u2014 Managing Projects in Central",
+      "version": "mutable docs; capture-pinned",
+      "bytes": 46278,
+      "sha256": "df0dcf2cbd8ec6b6ef8680fdd329d938d52fdea3a6746da5aca605dc13a89228",
+      "captured_file": "sources/S06-odk-central-projects.html",
+      "locator": "Project-level Form Access tab: per-form per-App-User dropdown",
+      "access_timestamp": "2026-10-09T19:49:45Z",
+      "observed_operations": [
+        "cp ../research/sources/S06-odk-central-projects.html sources/S06-odk-central-projects.html (byte-identical)",
+        "sha256sum verified df0dcf2cbd8e\u2026 == research pin",
+        "on-demand grep/read expansion for critique.md (see sources/index.md locators)"
+      ],
+      "usage_billing": null,
+      "inherited_from": "treatment/research/source-map.json (same bytes+sha256, IDs immutable)"
+    },
+    {
+      "id": "S07",
+      "url": "https://rxdb.info/replication-couchdb.html",
+      "title": "RxDB docs \u2014 Replication with CouchDB",
+      "version": "mutable docs; capture-pinned",
+      "bytes": 70046,
+      "sha256": "2e5be7b6b6c11c3fcefa86545be439340c96ef4ada2edcb97918d1a1be33bb71",
+      "captured_file": "sources/S07-rxdb-couchdb.html",
+      "locator": "replicateCouchDB usage; NOT official protocol (rationale); pros/cons; no attachments; 6-collections limit",
+      "access_timestamp": "2026-10-09T19:49:45Z",
+      "observed_operations": [
+        "cp ../research/sources/S07-rxdb-couchdb.html sources/S07-rxdb-couchdb.html (byte-identical)",
+        "sha256sum verified 2e5be7b6b6c1\u2026 == research pin",
+        "on-demand grep/read expansion for critique.md (see sources/index.md locators)"
+      ],
+      "usage_billing": null,
+      "inherited_from": "treatment/research/source-map.json (same bytes+sha256, IDs immutable)"
+    },
+    {
+      "id": "S08",
+      "url": "https://docs.getodk.org/collect-offline-maps/",
+      "title": "ODK Docs \u2014 Using Offline Maps (Collect)",
+      "version": "mutable docs; capture-pinned",
+      "bytes": 50755,
+      "sha256": "2fb9ba0db7639e2688029818cd841f26b019d01c53f40930308ba24bfa66bc3f",
+      "captured_file": "sources/S08-odk-collect-offline-maps.html",
+      "locator": "Offline layer from device file; MBTiles tile-set format; distribution via sharing/transfer",
+      "access_timestamp": "2026-10-09T19:49:45Z",
+      "observed_operations": [
+        "cp ../research/sources/S08-odk-collect-offline-maps.html sources/S08-odk-collect-offline-maps.html (byte-identical)",
+        "sha256sum verified 2fb9ba0db763\u2026 == research pin",
+        "on-demand grep/read expansion for critique.md (see sources/index.md locators)"
+      ],
+      "usage_billing": null,
+      "inherited_from": "treatment/research/source-map.json (same bytes+sha256, IDs immutable)"
+    },
+    {
+      "id": "S09",
+      "url": "https://www.w3.org/WAI/tutorials/forms/",
+      "title": "W3C WAI \u2014 Forms Tutorial",
+      "version": "mutable tutorials; capture-pinned",
+      "bytes": 43236,
+      "sha256": "c82b6c34a71783f214a7167a5f684377ff1b5e9816c8ad5b711b502ba9b18f94",
+      "captured_file": "sources/S09-w3c-forms.html",
+      "locator": "Forms tutorial hub: labels, grouping, instructions, validation, notifications, multi-page, custom controls",
+      "access_timestamp": "2026-10-09T19:49:45Z",
+      "observed_operations": [
+        "cp ../research/sources/S09-w3c-forms.html sources/S09-w3c-forms.html (byte-identical)",
+        "sha256sum verified c82b6c34a717\u2026 == research pin",
+        "on-demand grep/read expansion for critique.md (see sources/index.md locators)"
+      ],
+      "usage_billing": null,
+      "inherited_from": "treatment/research/source-map.json (same bytes+sha256, IDs immutable)"
+    },
+    {
+      "id": "S10",
+      "url": "https://raw.githubusercontent.com/pocketbase/pocketbase/master/CHANGELOG.md",
+      "title": "PocketBase CHANGELOG.md (master at capture)",
+      "version": "master HEAD at 2026-10-09T19:35:17Z; mutable ref, capture-pinned",
+      "bytes": 6970,
+      "sha256": "2c058c706276c2c2963f83a0c2f0e625bacca5771744f795840190ab4eeb16a9",
+      "captured_file": "sources/S10-pb-changelog.md",
+      "locator": "v0.40.0-v0.40.5: Go 1.27/json-v2 warning; sqlite defensive mode; backup lock fix (#7799)",
+      "access_timestamp": "2026-10-09T19:49:45Z",
+      "observed_operations": [
+        "cp ../research/sources/S10-pb-changelog.md sources/S10-pb-changelog.md (byte-identical)",
+        "sha256sum verified 2c058c706276\u2026 == research pin",
+        "on-demand grep/read expansion for critique.md (see sources/index.md locators)"
+      ],
+      "usage_billing": null,
+      "inherited_from": "treatment/research/source-map.json (same bytes+sha256, IDs immutable)"
+    },
+    {
+      "id": "S11",
+      "url": "https://garagehq.deuxfleurs.fr/documentation/quick-start/",
+      "title": "Garage docs \u2014 Quick start (self-hosted S3)",
+      "version": "mutable docs; capture-pinned",
+      "bytes": 82359,
+      "sha256": "d9b4f5c43429fc2003643ae06787f5de7c4bc2c0134c114683ed37693e3e023d",
+      "captured_file": "sources/S11-garage-quickstart.html",
+      "locator": "Garage positioning: S3 object store reliable outside datacenters; quick-start; s3-compatibility",
+      "access_timestamp": "2026-10-09T19:49:45Z",
+      "observed_operations": [
+        "cp ../research/sources/S11-garage-quickstart.html sources/S11-garage-quickstart.html (byte-identical)",
+        "sha256sum verified d9b4f5c43429\u2026 == research pin",
+        "on-demand grep/read expansion for critique.md (see sources/index.md locators)"
+      ],
+      "usage_billing": null,
+      "inherited_from": "treatment/research/source-map.json (same bytes+sha256, IDs immutable)"
+    },
+    {
+      "id": "S12",
+      "url": "https://www.w3.org/WAI/tutorials/forms/labels/",
+      "title": "W3C WAI \u2014 Labeling Controls",
+      "version": "mutable tutorials; capture-pinned",
+      "bytes": 60135,
+      "sha256": "3f7998acef0c97e7214ff11703df0a015303cbe0a1b09385a5a134c44e271d57",
+      "captured_file": "sources/S12-w3c-labels.html",
+      "locator": "Labeling controls: <label for>; visuallyhidden pattern; header-search/firstname/subscribe examples",
+      "access_timestamp": "2026-10-09T19:49:45Z",
+      "observed_operations": [
+        "cp ../research/sources/S12-w3c-labels.html sources/S12-w3c-labels.html (byte-identical)",
+        "sha256sum verified 3f7998acef0c\u2026 == research pin",
+        "on-demand grep/read expansion for critique.md (see sources/index.md locators)"
+      ],
+      "usage_billing": null,
+      "inherited_from": "treatment/research/source-map.json (same bytes+sha256, IDs immutable)"
+    },
+    {
+      "id": "S13",
+      "url": "https://docs.getodk.org/collect-intro/",
+      "title": "ODK Docs \u2014 ODK Collect intro",
+      "version": "mutable docs; capture-pinned",
+      "bytes": 36497,
+      "sha256": "874bcf642d73fa754d11e993bf5a077cb2d466c30ad0f23febad0ee6d6454e40",
+      "captured_file": "sources/S13-odk-collect-intro.html",
+      "locator": "Collect intro: downloads blank forms; offline capture; offline-maps link",
+      "access_timestamp": "2026-10-09T19:49:45Z",
+      "observed_operations": [
+        "cp ../research/sources/S13-odk-collect-intro.html sources/S13-odk-collect-intro.html (byte-identical)",
+        "sha256sum verified 874bcf642d73\u2026 == research pin",
+        "on-demand grep/read expansion for critique.md (see sources/index.md locators)"
+      ],
+      "usage_billing": null,
+      "inherited_from": "treatment/research/source-map.json (same bytes+sha256, IDs immutable)"
+    },
+    {
+      "id": "S14",
+      "url": "https://automerge.org/",
+      "title": "Automerge homepage \u2014 CRDT sync engine positioning",
+      "version": "mutable homepage; capture-pinned",
+      "bytes": 75701,
+      "sha256": "3dc4930f859f457f42de36620e9c545289a32f4119889383b689ab716a360cc5",
+      "captured_file": "sources/S14-automerge.html",
+      "locator": "Positioning: sync engine for multiplayer apps; works offline; prevents conflicts; fast",
+      "access_timestamp": "2026-10-09T19:49:45Z",
+      "observed_operations": [
+        "cp ../research/sources/S14-automerge.html sources/S14-automerge.html (byte-identical)",
+        "sha256sum verified 3dc4930f859f\u2026 == research pin",
+        "on-demand grep/read expansion for critique.md (see sources/index.md locators)"
+      ],
+      "usage_billing": null,
+      "inherited_from": "treatment/research/source-map.json (same bytes+sha256, IDs immutable)"
+    },
+    {
+      "id": "S15",
+      "url": "https://electric-sql.com/docs/intro",
+      "title": "Electric docs \u2014 Sync intro (Postgres Shapes)",
+      "version": "mutable docs; capture-pinned; note: body is HTML despite .md suffix",
+      "bytes": 71578,
+      "sha256": "014fe345b25f385b4847d22ccc5a581e0b4c72de8e61cb9a0f39e37d723b828e",
+      "captured_file": "sources/S15-electric-intro.md",
+      "locator": "Electric Sync intro: Postgres sync into local clients over HTTP; Shapes",
+      "access_timestamp": "2026-10-09T19:49:45Z",
+      "observed_operations": [
+        "cp ../research/sources/S15-electric-intro.md sources/S15-electric-intro.md (byte-identical)",
+        "sha256sum verified 014fe345b25f\u2026 == research pin",
+        "on-demand grep/read expansion for critique.md (see sources/index.md locators)"
+      ],
+      "usage_billing": null,
+      "inherited_from": "treatment/research/source-map.json (same bytes+sha256, IDs immutable)"
+    }
+  ]
+}

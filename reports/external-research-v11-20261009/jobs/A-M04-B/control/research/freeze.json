@@ -1,0 +1,41 @@
+{
+  "frozen_at": "2026-10-09T19:25:30.428055+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S10/brief.md",
+      "sha256": "17322e03cfaa4aad42ef991cbf666e5ca646cca2439f71b748c8642761ccbbf2",
+      "bytes": 1420
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M04.json",
+      "sha256": "d2f34eb8477398c0d37137ead1d7ddf7a6d575c1578d53376408cc8942814caf",
+      "bytes": 632
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-B/control/research/assignment.md",
+      "sha256": "793bfb485ad52474e19a0719dad36dd7fac8a987c7d27fe34ad2b619febffabc",
+      "bytes": 2987
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-B/control/research/input-map.json",
+      "sha256": "3bdb80ff784c22a6fec1e011e64f2f4bcfbbf53f3ea35ac7911dc2475c541fc4",
+      "bytes": 634
+    }
+  ],
+  "method": {
+    "id": "M04",
+    "version": "v1",
+    "name": "amendment-preservation",
+    "control": "Fresh reviser rewrites complete final after critique, preserving supported findings.",
+    "treatment": "Fresh reviser applies targeted evidence-backed amendments to complete draft, then checks every retained material finding/condition and produces COMPLETE self-contained final. Amendment IDs alone insufficient.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Mixed ER10 amendment hypothesis",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T19:55:30.428055+00:00"
+}

@@ -1,0 +1,2138 @@
+[
+  {
+    "id": "E01",
+    "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+    "accessed_at": "2026-10-09T19:36:16.399142+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "default sample",
+      "cannot jump",
+      "all columns",
+      "all_varchar",
+      "1000"
+    ],
+    "resolved_url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+    "http_status": 200,
+    "response_sha256": "3e9ad6ad6f8856647f0c39f2402684d6c5bff57d2eb4dd813b06872f814d33f4",
+    "text_line_count": 679,
+    "snippets": [
+      {
+        "keyword": "default sample",
+        "extracted_text_lines": [
+          524,
+          527
+        ],
+        "text": "The size of the sample can be modified by setting the sample_size parameter.\nThe default sample size is 20,480 rows.\nSetting the sample_size parameter to -1 means the entire file is read for sampling:\nSELECT * FROM read_csv('my_csv_file.csv', sample_size = -1);"
+      },
+      {
+        "keyword": "cannot jump",
+        "extracted_text_lines": [
+          528,
+          531
+        ],
+        "text": "The way sampling is performed depends on the type of file. If we are reading from a regular file on disk, we will jump into the file and try to sample from different locations in the file.\nIf we are reading from a file in which we cannot jump – such as a .gz compressed CSV file or stdin – samples are taken only from the beginning of the file.\nsniff_csv Function\nIt is possible to run the CSV sniffer as a separate step using the sniff_csv(filename) function, which returns the detected CSV properties as a table with a single row."
+      },
+      {
+        "keyword": "all columns",
+        "extracted_text_lines": [
+          615,
+          618
+        ],
+        "text": "VARCHAR\nEverything can be cast to VARCHAR, therefore, this type has the lowest priority meaning that all columns are converted to VARCHAR as a fallback if they cannot be cast to anything else.\nIn flights.csv the FlightDate column will be cast to a DATE, while the other columns will be cast to VARCHAR.\nThe set of candidate types that should be considered by the CSV reader can be specified explicitly using the auto_type_candidates option. VARCHAR as the fallback type will always be considered as a candidate type whether you specify it or not."
+      },
+      {
+        "keyword": "all columns",
+        "extracted_text_lines": [
+          626,
+          629
+        ],
+        "text": "Even though the set of data types that can be automatically detected may appear quite limited, the CSV reader can be configured to read arbitrarily complex types by using the types-option described in the next section.\nType detection can be entirely disabled by using the all_varchar option. If this is set all columns will remain as VARCHAR (as they originally occur in the CSV file).\nNote that using quote characters vs. no quote characters (e.g., \"42\" and 42) does not make a difference for type detection.\nQuoted fields will not be converted to VARCHAR, instead, the sniffer will try to find the type candidate with the highest priority."
+      },
+      {
+        "keyword": "all columns",
+        "extracted_text_lines": [
+          638,
+          641
+        ],
+        "text": "In files that do not have a header row, the column names are generated as column0, column1, etc.\nNote that headers cannot be detected correctly if all columns are of type VARCHAR – as in this case the system cannot distinguish the header row from the other rows in the file. In this case, the system assumes the file has a header. This can be overridden by setting the header option to false.\nDates and Timestamps\nDuckDB supports the ISO 8601 format by default for timestamps, dates and times. Unfortunately, not all dates and times are formatted using this standard. For that reason, the CSV reader also supports the dateformat and timestampformat options. Using this format the user can specify a format string that specifies how the date or timestamp should be read."
+      },
+      {
+        "keyword": "1000",
+        "extracted_text_lines": [
+          533,
+          536
+        ],
+        "text": "FROM sniff_csv('my_file.csv');\nFROM sniff_csv('my_file.csv', sample_size = 1000);\nColumn name\nDescription"
+      },
+      {
+        "keyword": "1000",
+        "extracted_text_lines": [
+          569,
+          572
+        ],
+        "text": "Arguments used to invoke sniff_csv\nsample_size = 1000\nPrompt\nPrompt ready to be used to read the CSV"
+      }
+    ]
+  },
+  {
+    "id": "E02",
+    "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+    "accessed_at": "2026-10-09T19:36:16.401007+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "projection pushdown",
+      "temporary tables",
+      "multiple errors",
+      "store_rejects",
+      "rejects_limit",
+      "2,097,152"
+    ],
+    "resolved_url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+    "http_status": 200,
+    "response_sha256": "5458a40fb67a5e6eae986f0653f7158b940dcc09caceb5122d682e4a73cb1cd1",
+    "text_line_count": 772,
+    "snippets": [
+      {
+        "keyword": "projection pushdown",
+        "extracted_text_lines": [
+          587,
+          590
+        ],
+        "text": "31\nOne should note that the CSV Parser is affected by the projection pushdown optimization. Hence, if we were to select only the name column, both rows would be considered valid, as the casting error on the age would never occur. For example:\nSELECT name\nFROM read_csv('faulty.csv', columns = {'name': 'VARCHAR', 'age': 'INTEGER'});"
+      },
+      {
+        "keyword": "temporary tables",
+        "extracted_text_lines": [
+          596,
+          599
+        ],
+        "text": "Being able to read faulty CSV files is important, but for many data cleaning operations, it is also necessary to know exactly which lines are corrupted and what errors the parser discovered on them. For scenarios like these, it is possible to use DuckDB's CSV Rejects Table feature.\nBy default, this feature creates two temporary tables.\nreject_scans: Stores information regarding the parameters of the CSV Scanner.\nreject_errors: Stores information regarding each CSV faulty line and in which CSV Scanner they happened."
+      },
+      {
+        "keyword": "temporary tables",
+        "extracted_text_lines": [
+          686,
+          689
+        ],
+        "text": "store_rejects\nIf set to true, any errors in the file will be skipped and stored in the default rejects temporary tables.\nBOOLEAN\nFalse"
+      },
+      {
+        "keyword": "multiple errors",
+        "extracted_text_lines": [
+          599,
+          602
+        ],
+        "text": "reject_errors: Stores information regarding each CSV faulty line and in which CSV Scanner they happened.\nNote that any of the errors described in our Structural Error section will be stored in the rejects tables. Also, if a line has multiple errors, multiple entries will be stored for the same line, one for each error.\nReject Scans\nThe CSV Reject Scans Table returns the following information:"
+      },
+      {
+        "keyword": "store_rejects",
+        "extracted_text_lines": [
+          685,
+          688
+        ],
+        "text": "Default\nstore_rejects\nIf set to true, any errors in the file will be skipped and stored in the default rejects temporary tables.\nBOOLEAN"
+      },
+      {
+        "keyword": "store_rejects",
+        "extracted_text_lines": [
+          701,
+          704
+        ],
+        "text": "0\nTo store the information of the faulty CSV lines in a rejects table, the user must simply set the store_rejects option to true. For example:\nFROM read_csv(\n'faulty.csv',"
+      },
+      {
+        "keyword": "store_rejects",
+        "extracted_text_lines": [
+          705,
+          708
+        ],
+        "text": "columns = {'name': 'VARCHAR', 'age': 'INTEGER'},\nstore_rejects = true\n);\nYou can then query both the reject_scans and reject_errors tables, to retrieve information about the rejected tuples. For example:"
+      },
+      {
+        "keyword": "store_rejects",
+        "extracted_text_lines": [
+          733,
+          736
+        ],
+        "text": "{'name': 'VARCHAR','age': 'INTEGER'}\nstore_rejects=true\nFROM reject_errors;\nOutputs:"
+      },
+      {
+        "keyword": "rejects_limit",
+        "extracted_text_lines": [
+          697,
+          700
+        ],
+        "text": "reject_errors\nrejects_limit\nUpper limit on the number of faulty records from a CSV file that will be recorded in the rejects table. 0 is used when no limit should be applied.\nBIGINT"
+      },
+      {
+        "keyword": "2,097,152",
+        "extracted_text_lines": [
+          525,
+          528
+        ],
+        "text": "UNQUOTED VALUE: Quoted values in CSV lines must always be unquoted at the end; if a quoted value remains quoted throughout, it will cause an error. For example, assuming our scanner uses quote='\"', the line \"pedro\"holanda, 01-01-1992 would present an unquoted value error.\nLINE SIZE OVER MAXIMUM: DuckDB has a parameter that sets the maximum line size a CSV file can have, which by default is set to 2,097,152 bytes. Assuming our scanner is set to max_line_size = 25, the line Pedro Holanda, 01-01-1992 would produce an error, as it exceeds 25 bytes.\nINVALID ENCODING: DuckDB supports UTF-8 strings, UTF-16 and Latin-1 encodings. Lines containing other characters will produce an error. For example, the line pedro\\xff\\xff, 01-01-1992 would be problematic.\nAnatomy of a CSV Error"
+      }
+    ]
+  },
+  {
+    "id": "E03",
+    "url": "https://duckdb.org/docs/current/data/csv/overview",
+    "accessed_at": "2026-10-09T19:36:16.404576+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "max_line_size",
+      "nullstr",
+      "force_not_null",
+      "strict_mode",
+      "encoding"
+    ],
+    "resolved_url": "https://duckdb.org/docs/current/data/csv/overview",
+    "http_status": 200,
+    "response_sha256": "29d28f1025a9dd2a4ec7a00dfae21f36124f816faeeea619bad7fd7413ac5ee8",
+    "text_line_count": 847,
+    "snippets": [
+      {
+        "keyword": "max_line_size",
+        "extracted_text_lines": [
+          574,
+          577
+        ],
+        "text": "BIGINT\n16 * max_line_size\ncolumns\nColumn names and types, as a struct (e.g., {'col1': 'INTEGER', 'col2': 'VARCHAR'}). Using this option disables auto detection of the schema."
+      },
+      {
+        "keyword": "max_line_size",
+        "extracted_text_lines": [
+          639,
+          642
+        ],
+        "text": "false\nmax_line_size or maximum_line_size. Not available in the COPY statement.\nMaximum line size, in bytes.\nBIGINT"
+      },
+      {
+        "keyword": "nullstr",
+        "extracted_text_lines": [
+          659,
+          662
+        ],
+        "text": "false\nnullstr or null\nStrings that represent a NULL value.\nVARCHAR or VARCHAR[]"
+      },
+      {
+        "keyword": "force_not_null",
+        "extracted_text_lines": [
+          623,
+          626
+        ],
+        "text": "10\nforce_not_null\nDo not match values in the specified columns against the NULL string. In the default case where the NULL string is empty, this means that empty values are read as zero-length strings instead of NULLs.\nVARCHAR[]"
+      },
+      {
+        "keyword": "strict_mode",
+        "extracted_text_lines": [
+          699,
+          702
+        ],
+        "text": "false\nstrict_mode\nEnforces the strictness level of the CSV Reader. When set to true, the parser will throw an error upon encountering any issues. When set to false, the parser will attempt to read structurally incorrect files. It is important to note that reading structurally incorrect files can cause ambiguity; therefore, this option should be used with caution.\nBOOL"
+      },
+      {
+        "keyword": "encoding",
+        "extracted_text_lines": [
+          298,
+          301
+        ],
+        "text": "DuckLake\nEncodings\nExcel\nFull Text Search"
+      },
+      {
+        "keyword": "encoding",
+        "extracted_text_lines": [
+          611,
+          614
+        ],
+        "text": "\"\nencoding\nEncoding used by the CSV file. Options are utf-8, utf-16, latin-1. Not available in the COPY statement (which always uses utf-8).\nVARCHAR"
+      },
+      {
+        "keyword": "encoding",
+        "extracted_text_lines": [
+          612,
+          615
+        ],
+        "text": "encoding\nEncoding used by the CSV file. Options are utf-8, utf-16, latin-1. Not available in the COPY statement (which always uses utf-8).\nVARCHAR\nutf-8"
+      },
+      {
+        "keyword": "encoding",
+        "extracted_text_lines": [
+          723,
+          726
+        ],
+        "text": "false\nTip DuckDB's CSV reader supports UTF-8 (default), UTF-16 and Latin-1 encodings.\nFor other encodings, you can either use the encodings extension\nor convert them e.g. using the iconv command-line tool:"
+      }
+    ]
+  },
+  {
+    "id": "E04",
+    "url": "https://duckdb.org/docs/current/core_extensions/excel",
+    "accessed_at": "2026-10-09T19:36:16.406545+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "first sheet",
+      "empty_as_varchar",
+      "ignore_errors",
+      "first \"data\"",
+      "stop_at_empty",
+      ".xls"
+    ],
+    "resolved_url": "https://duckdb.org/docs/current/core_extensions/excel",
+    "http_status": 200,
+    "response_sha256": "8b044ed7159cb47a6655956f8bad3b627502ff2add055d194bf682cb8afad62b",
+    "text_line_count": 649,
+    "snippets": [
+      {
+        "keyword": "first sheet",
+        "extracted_text_lines": [
+          552,
+          555
+        ],
+        "text": "automatically inferred\nThe name of the sheet in the xlsx file to read. Default is the first sheet.\nall_varchar\nBOOLEAN"
+      },
+      {
+        "keyword": "empty_as_varchar",
+        "extracted_text_lines": [
+          569,
+          572
+        ],
+        "text": "Whether to stop reading the file when an empty row is encountered. If an explicit range option is provided, this is false by default, otherwise true.\nempty_as_varchar\nBOOLEAN\nfalse"
+      },
+      {
+        "keyword": "empty_as_varchar",
+        "extracted_text_lines": [
+          589,
+          592
+        ],
+        "text": "Text cells containing TRUE and FALSE are inferred as BOOLEAN.\nEmpty cells are considered to be DOUBLE by default, unless the empty_as_varchar option is set to true, in which case they are typed as VARCHAR.\nIf the all_varchar option is set to true, none of the above applies and all cells are read as VARCHAR.\nWhen no types are specified explicitly, (e.g., when using the read_xlsx function instead of COPY TO ... FROM 'file.xlsx')"
+      },
+      {
+        "keyword": "empty_as_varchar",
+        "extracted_text_lines": [
+          599,
+          602
+        ],
+        "text": "The first row of the range if no header is found or forced\nThis can sometimes lead to issues if the first \"data row\" is not representative of the rest of the sheet (e.g., it contains empty cells) in which case the ignore_errors or empty_as_varchar options can be used to work around this.\nHowever, when the COPY TO ... FROM 'file.xlsx' syntax is used, no type inference is done and the types of the resulting columns are determined by the types of the columns in the table being copied to. All cells will simply be converted by casting from DOUBLE or VARCHAR to the target column type.\nWriting XLSX Files"
+      },
+      {
+        "keyword": "ignore_errors",
+        "extracted_text_lines": [
+          557,
+          560
+        ],
+        "text": "Whether to read all cells as containing VARCHARs.\nignore_errors\nBOOLEAN\nfalse"
+      },
+      {
+        "keyword": "first \"data\"",
+        "extracted_text_lines": [
+          592,
+          595
+        ],
+        "text": "When no types are specified explicitly, (e.g., when using the read_xlsx function instead of COPY TO ... FROM 'file.xlsx')\nthe types of the resulting columns are inferred based on the first \"data\" row in the sheet, that is:\nIf no explicit range is given\nThe first row after the header if a header is found or forced by the header option"
+      },
+      {
+        "keyword": "stop_at_empty",
+        "extracted_text_lines": [
+          565,
+          568
+        ],
+        "text": "The range of cells to read, in spreadsheet notation. For example, A1:B2 reads the cells from A1 to B2. If not specified the resulting range will be inferred as rectangular region of cells between the first row of consecutive non-empty cells and the first empty row spanning the same columns.\nstop_at_empty\nBOOLEAN\nautomatically inferred"
+      },
+      {
+        "keyword": ".xls",
+        "extracted_text_lines": [
+          510,
+          513
+        ],
+        "text": "Excel Extension\nThe excel extension provides functions to format numbers per Excel's formatting rules by wrapping the i18npool library and to read/write Excel (.xlsx) files. However, please note that .xls files are not supported.\nInstalling and Loading\nThe excel extension will be transparently autoloaded on first use from the official extension repository."
+      },
+      {
+        "keyword": ".xls",
+        "extracted_text_lines": [
+          531,
+          534
+        ],
+        "text": "Reading XLSX Files\nReading a .xlsx file is as simple as just SELECTing from it immediately, e.g.:\nSELECT *\nFROM 'test.xlsx';"
+      },
+      {
+        "keyword": ".xls",
+        "extracted_text_lines": [
+          533,
+          536
+        ],
+        "text": "SELECT *\nFROM 'test.xlsx';\na\nb"
+      },
+      {
+        "keyword": ".xls",
+        "extracted_text_lines": [
+          574,
+          577
+        ],
+        "text": "SELECT *\nFROM read_xlsx('test.xlsx', header = true);\na\nb"
+      }
+    ]
+  },
+  {
+    "id": "E05",
+    "url": "https://duckdb.org/2024/07/09/memory-management",
+    "accessed_at": "2026-10-09T19:36:16.407763+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "80%",
+      "temp_directory",
+      "memory_limit",
+      "spilling"
+    ],
+    "resolved_url": "https://duckdb.org/2024/07/09/memory-management",
+    "http_status": 200,
+    "response_sha256": "d60a042f6c1c0b6d18476e4bcd1436820d140d31fd7d0ad48b996f6fbb98957c",
+    "text_line_count": 169,
+    "snippets": [
+      {
+        "keyword": "80%",
+        "extracted_text_lines": [
+          65,
+          68
+        ],
+        "text": "sorting).\nThe memory_limit setting controls how much data DuckDB is allowed to keep in memory. By default, this is set to 80% of the physical RAM of your system (e.g., if your system has 16 GB RAM, this defaults to 12.8 GB). The memory limit can be changed using the following command:\nSET memory_limit = '4GB';\nThe location of the temporary directory can be chosen using the temp_directory setting, and is by default the connected database with a .tmp suffix (e.g., database.db.tmp), or only .tmp if connecting to an in-memory database. The maximum size of the temporary directory can be limited using the max_temp_directory_size setting, which defaults to 90% of the remaining disk space on the drive where the temporary files are stored. These settings can be adjusted as follows:"
+      },
+      {
+        "keyword": "temp_directory",
+        "extracted_text_lines": [
+          67,
+          70
+        ],
+        "text": "SET memory_limit = '4GB';\nThe location of the temporary directory can be chosen using the temp_directory setting, and is by default the connected database with a .tmp suffix (e.g., database.db.tmp), or only .tmp if connecting to an in-memory database. The maximum size of the temporary directory can be limited using the max_temp_directory_size setting, which defaults to 90% of the remaining disk space on the drive where the temporary files are stored. These settings can be adjusted as follows:\nSET temp_directory = '/tmp/duckdb_swap';\nSET max_temp_directory_size = '100GB';"
+      },
+      {
+        "keyword": "temp_directory",
+        "extracted_text_lines": [
+          68,
+          71
+        ],
+        "text": "The location of the temporary directory can be chosen using the temp_directory setting, and is by default the connected database with a .tmp suffix (e.g., database.db.tmp), or only .tmp if connecting to an in-memory database. The maximum size of the temporary directory can be limited using the max_temp_directory_size setting, which defaults to 90% of the remaining disk space on the drive where the temporary files are stored. These settings can be adjusted as follows:\nSET temp_directory = '/tmp/duckdb_swap';\nSET max_temp_directory_size = '100GB';\nIf the memory limit is exceeded and disk spilling cannot be used, either because disk spilling is explicitly disabled, the temporary directory size exceeds the provided limit, or a system limitation means that disk spilling cannot be used for a given query – an out-of-memory error is reported and the query is canceled."
+      },
+      {
+        "keyword": "temp_directory",
+        "extracted_text_lines": [
+          69,
+          72
+        ],
+        "text": "SET temp_directory = '/tmp/duckdb_swap';\nSET max_temp_directory_size = '100GB';\nIf the memory limit is exceeded and disk spilling cannot be used, either because disk spilling is explicitly disabled, the temporary directory size exceeds the provided limit, or a system limitation means that disk spilling cannot be used for a given query – an out-of-memory error is reported and the query is canceled.\nBuffer Manager"
+      },
+      {
+        "keyword": "memory_limit",
+        "extracted_text_lines": [
+          66,
+          69
+        ],
+        "text": "The memory_limit setting controls how much data DuckDB is allowed to keep in memory. By default, this is set to 80% of the physical RAM of your system (e.g., if your system has 16 GB RAM, this defaults to 12.8 GB). The memory limit can be changed using the following command:\nSET memory_limit = '4GB';\nThe location of the temporary directory can be chosen using the temp_directory setting, and is by default the connected database with a .tmp suffix (e.g., database.db.tmp), or only .tmp if connecting to an in-memory database. The maximum size of the temporary directory can be limited using the max_temp_directory_size setting, which defaults to 90% of the remaining disk space on the drive where the temporary files are stored. These settings can be adjusted as follows:\nSET temp_directory = '/tmp/duckdb_swap';"
+      },
+      {
+        "keyword": "spilling",
+        "extracted_text_lines": [
+          46,
+          49
+        ],
+        "text": "Note that nothing needs to be done to enable streaming execution – DuckDB always processes queries in this manner.\nIntermediate Spilling\nWhile streaming execution enables larger-than-memory processing for simple queries, there are many cases where streaming execution alone is not sufficient.\nIn the previous example, streaming execution enabled larger-than-memory processing because the computed aggregate result was very small – as there are very few unique user agents in comparison to the total number of web requests. As a result, the aggregate hash table would always remain small, and never exceed the amount of available memory."
+      },
+      {
+        "keyword": "spilling",
+        "extracted_text_lines": [
+          62,
+          65
+        ],
+        "text": "Computing a complex window over a larger-than-memory table\nDuckDB deals with these scenarios by disk spilling. Larger-than-memory intermediates are (partially) written to disk in the temporary directory when required. While powerful, disk spilling reduces performance – as additional I/O must be performed. For that reason, DuckDB tries to minimize disk spilling. Disk spilling is adaptively used only when the size of the intermediates increases past the memory limit. Even in those scenarios, as much data is kept in memory as possible to maximize performance. The exact way this is done depends on the operators and is detailed in other blog posts\n(aggregation,\nsorting)."
+      },
+      {
+        "keyword": "spilling",
+        "extracted_text_lines": [
+          70,
+          73
+        ],
+        "text": "SET max_temp_directory_size = '100GB';\nIf the memory limit is exceeded and disk spilling cannot be used, either because disk spilling is explicitly disabled, the temporary directory size exceeds the provided limit, or a system limitation means that disk spilling cannot be used for a given query – an out-of-memory error is reported and the query is canceled.\nBuffer Manager\nAnother core component of memory management in DuckDB is the buffer manager. The buffer manager is responsible for caching pages from DuckDB's own persistent storage. Conceptually the buffer manager works in a similar fashion to the intermediate spilling. Pages are kept in memory as much as possible, and evicted from memory when space is required for other data structures. The buffer manager abides by the same memory limit as any intermediate data structures. Pages in the buffer manager can be freed up to make space for intermediate data structures, or vice versa."
+      },
+      {
+        "keyword": "spilling",
+        "extracted_text_lines": [
+          72,
+          75
+        ],
+        "text": "Buffer Manager\nAnother core component of memory management in DuckDB is the buffer manager. The buffer manager is responsible for caching pages from DuckDB's own persistent storage. Conceptually the buffer manager works in a similar fashion to the intermediate spilling. Pages are kept in memory as much as possible, and evicted from memory when space is required for other data structures. The buffer manager abides by the same memory limit as any intermediate data structures. Pages in the buffer manager can be freed up to make space for intermediate data structures, or vice versa.\nThere are two main differences between the buffer manager and intermediate data structures:\nAs the buffer manager caches pages that already exist on disk (in DuckDB's persistent storage) – they do not need to be written to the temporary directory when evicted. Instead, when they are required again, they can be re-read from the attached storage file directly."
+      }
+    ]
+  },
+  {
+    "id": "E06",
+    "url": "https://duckdb.org/docs/current/guides/performance/oom",
+    "accessed_at": "2026-10-09T19:36:16.776985+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "buffer manager",
+      "50",
+      "memory_limit"
+    ],
+    "resolved_url": "https://duckdb.org/docs/current/guides/performance/oom",
+    "http_status": 200,
+    "response_sha256": "8d5e4a4aa67d0e83f954c824f5491d78d346ee8ef56ec53213f6687a957b872a",
+    "text_line_count": 532,
+    "snippets": [
+      {
+        "keyword": "buffer manager",
+        "extracted_text_lines": [
+          512,
+          515
+        ],
+        "text": "Reduce the number of threads using the SET threads = ... command.\nSetting the memory limit lower than the default 80% can help prevent out of memory errors. While this configuration sounds counter-intuitive, it helps because some of DuckDB's operations circumvent the database's buffer manager and thus they can reserve more memory than allowed by the memory limit. If this happens (e.g., DuckDB is killed by the operating system or an OOM reaper process), set the memory limit to just 50-60% of the total system memory by using the SET memory_limit = '...' statement.\nIf your query reads a large amount of data from a file or writes a large amount of data, try setting the preserve_insertion_order option to false: SET preserve_insertion_order = false.\nIn short, try the settings:"
+      },
+      {
+        "keyword": "memory_limit",
+        "extracted_text_lines": [
+          516,
+          519
+        ],
+        "text": "SET threads = lower_than_the_number_of_available_threads;\nSET memory_limit = lower_than_80%_of_system_memory;\nSET preserve_insertion_order = false;\nSchema and Indexes"
+      }
+    ]
+  },
+  {
+    "id": "E07",
+    "url": "https://docs.rs/csv/1.4.0/csv/struct.ReaderBuilder.html",
+    "accessed_at": "2026-10-09T19:36:16.797781+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "headers by default",
+      "flexible",
+      "Trim::None",
+      "not trim",
+      "delimiter"
+    ],
+    "resolved_url": "https://docs.rs/csv/1.4.0/csv/struct.ReaderBuilder.html",
+    "http_status": 200,
+    "response_sha256": "74dd40152a257b89e52173412355bb02bfcecf052f73d7b3a75484acca09bd59",
+    "text_line_count": 587,
+    "snippets": [
+      {
+        "keyword": "flexible",
+        "extracted_text_lines": [
+          63,
+          66
+        ],
+        "text": "escape\nflexible\nfrom_path\nfrom_reader"
+      },
+      {
+        "keyword": "flexible",
+        "extracted_text_lines": [
+          230,
+          233
+        ],
+        "text": "Source\npub fn flexible(&mut self, yes: bool) -> &mut ReaderBuilder\nWhether the number of fields in records is allowed to change or not.\nWhen disabled (which is the default), parsing CSV data will return an"
+      },
+      {
+        "keyword": "flexible",
+        "extracted_text_lines": [
+          236,
+          239
+        ],
+        "text": "When enabled, this error checking is turned off.\n§Example: flexible records enabled\nuse std::error::Error;\nuse csv::ReaderBuilder;"
+      },
+      {
+        "keyword": "flexible",
+        "extracted_text_lines": [
+          246,
+          249
+        ],
+        "text": "let mut rdr = ReaderBuilder::new()\n.flexible(true)\n.from_reader(data.as_bytes());\nif let Some(result) = rdr.records().next() {"
+      },
+      {
+        "keyword": "delimiter",
+        "extracted_text_lines": [
+          60,
+          63
+        ],
+        "text": "comment\ndelimiter\ndouble_quote\nescape"
+      },
+      {
+        "keyword": "delimiter",
+        "extracted_text_lines": [
+          97,
+          100
+        ],
+        "text": "Builds a CSV reader with various configuration knobs.\nThis builder can be used to tweak the field delimiter, record terminator\nand more. Once a CSV Reader is built, its configuration cannot be\nchanged."
+      },
+      {
+        "keyword": "delimiter",
+        "extracted_text_lines": [
+          166,
+          169
+        ],
+        "text": "Source\npub fn delimiter(&mut self, delimiter: u8) -> &mut ReaderBuilder\nThe field delimiter to use when parsing CSV.\nThe default is b','."
+      },
+      {
+        "keyword": "delimiter",
+        "extracted_text_lines": [
+          167,
+          170
+        ],
+        "text": "pub fn delimiter(&mut self, delimiter: u8) -> &mut ReaderBuilder\nThe field delimiter to use when parsing CSV.\nThe default is b','.\n§Example"
+      }
+    ]
+  },
+  {
+    "id": "E08",
+    "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/1.4.0/src/reader.rs",
+    "accessed_at": "2026-10-09T19:36:16.830387+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "finer-grained",
+      "has_headers: true",
+      "flexible: false",
+      "fn position",
+      "UTF-8"
+    ],
+    "resolved_url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/1.4.0/src/reader.rs",
+    "http_status": 200,
+    "response_sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+    "text_line_count": 2484,
+    "snippets": [
+      {
+        "keyword": "has_headers: true",
+        "extracted_text_lines": [
+          40,
+          43
+        ],
+        "text": "flexible: false,\nhas_headers: true,\ntrim: Trim::default(),\nbuilder: Box::new(CoreReaderBuilder::default()),"
+      },
+      {
+        "keyword": "flexible: false",
+        "extracted_text_lines": [
+          39,
+          42
+        ],
+        "text": "capacity: 8 * (1 << 10),\nflexible: false,\nhas_headers: true,\ntrim: Trim::default(),"
+      },
+      {
+        "keyword": "fn position",
+        "extracted_text_lines": [
+          1671,
+          1674
+        ],
+        "text": "/// ```\npub fn position(&self) -> &Position {\n&self.state.cur_pos\n}"
+      },
+      {
+        "keyword": "fn position",
+        "extracted_text_lines": [
+          2434,
+          2437
+        ],
+        "text": "#[test]\nfn positions_no_headers() {\nlet mut rdr = ReaderBuilder::new()\n.has_headers(false)"
+      },
+      {
+        "keyword": "fn position",
+        "extracted_text_lines": [
+          2450,
+          2453
+        ],
+        "text": "#[test]\nfn positions_headers() {\nlet mut rdr = ReaderBuilder::new()\n.has_headers(true)"
+      },
+      {
+        "keyword": "UTF-8",
+        "extracted_text_lines": [
+          678,
+          681
+        ],
+        "text": "/// * When reading CSV data into `String` or `&str` fields (e.g., via a\n/// [`StringRecord`](struct.StringRecord.html)), UTF-8 is strictly\n/// enforced. If CSV data is invalid UTF-8, then an error is returned. If\n/// you want to read invalid UTF-8, then you should use the byte oriented"
+      },
+      {
+        "keyword": "UTF-8",
+        "extracted_text_lines": [
+          679,
+          682
+        ],
+        "text": "/// [`StringRecord`](struct.StringRecord.html)), UTF-8 is strictly\n/// enforced. If CSV data is invalid UTF-8, then an error is returned. If\n/// you want to read invalid UTF-8, then you should use the byte oriented\n/// APIs such as [`ByteRecord`](struct.ByteRecord.html). If you need explicit"
+      },
+      {
+        "keyword": "UTF-8",
+        "extracted_text_lines": [
+          680,
+          683
+        ],
+        "text": "/// enforced. If CSV data is invalid UTF-8, then an error is returned. If\n/// you want to read invalid UTF-8, then you should use the byte oriented\n/// APIs such as [`ByteRecord`](struct.ByteRecord.html). If you need explicit\n/// support for another encoding entirely, then you'll need to use another"
+      },
+      {
+        "keyword": "UTF-8",
+        "extracted_text_lines": [
+          683,
+          686
+        ],
+        "text": "/// support for another encoding entirely, then you'll need to use another\n/// crate to transcode your CSV data to UTF-8 before parsing it.\n/// * When using Serde to deserialize CSV data into Rust types, it is possible\n/// for a number of additional errors to occur. For example, deserializing"
+      }
+    ]
+  },
+  {
+    "id": "E09",
+    "url": "https://docs.rs/csv/1.4.0/csv/struct.ByteRecord.html",
+    "accessed_at": "2026-10-09T19:36:16.921862+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "raw byte",
+      "UTF-8",
+      "position"
+    ],
+    "resolved_url": "https://docs.rs/csv/1.4.0/csv/struct.ByteRecord.html",
+    "http_status": 200,
+    "response_sha256": "959a9776ddb0c75d474314ea8dbb67c3804d3c3dbac57d6203b45db89163f91d",
+    "text_line_count": 559,
+    "snippets": [
+      {
+        "keyword": "raw byte",
+        "extracted_text_lines": [
+          112,
+          115
+        ],
+        "text": "Expand description\nA single CSV record stored as raw bytes.\nA byte record permits reading or writing CSV rows that are not UTF-8.\nIn general, you should prefer using a"
+      },
+      {
+        "keyword": "UTF-8",
+        "extracted_text_lines": [
+          113,
+          116
+        ],
+        "text": "A single CSV record stored as raw bytes.\nA byte record permits reading or writing CSV rows that are not UTF-8.\nIn general, you should prefer using a\nStringRecord"
+      },
+      {
+        "keyword": "UTF-8",
+        "extracted_text_lines": [
+          122,
+          125
+        ],
+        "text": "while still using Serde. For example, if you need to deserialize possibly\ninvalid UTF-8 fields, then you’ll need to first read your record into a\nByteRecord, and then use ByteRecord::deserialize to run Serde. Another\nreason for using the raw record deserialization APIs is if you’re using"
+      },
+      {
+        "keyword": "position",
+        "extracted_text_lines": [
+          65,
+          68
+        ],
+        "text": "len\nposition\npush_field\nrange"
+      },
+      {
+        "keyword": "position",
+        "extracted_text_lines": [
+          68,
+          71
+        ],
+        "text": "range\nset_position\ntrim\ntruncate"
+      },
+      {
+        "keyword": "position",
+        "extracted_text_lines": [
+          127,
+          130
+        ],
+        "text": "Two ByteRecords are compared on the basis of their field data. Any\nposition information associated with the records is ignored.\nImplementations§\nSource§"
+      },
+      {
+        "keyword": "position",
+        "extracted_text_lines": [
+          295,
+          298
+        ],
+        "text": "Source\npub fn position(&self) -> Option<&Position>\nReturn the position of this record, if available.\n§Example"
+      }
+    ]
+  },
+  {
+    "id": "E10",
+    "url": "https://docs.rs/calamine/0.36.1/calamine/enum.Data.html",
+    "accessed_at": "2026-10-09T19:36:17.005193+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "DateTimeIso",
+      "DurationIso",
+      "Empty",
+      "Float"
+    ],
+    "resolved_url": "https://docs.rs/calamine/0.36.1/calamine/enum.Data.html",
+    "http_status": 200,
+    "response_sha256": "105e5ec9204212fb775e82f64a9a8108dda2cefa8b02ede70968010f9898d29b",
+    "text_line_count": 500,
+    "snippets": [
+      {
+        "keyword": "DateTimeIso",
+        "extracted_text_lines": [
+          79,
+          82
+        ],
+        "text": "DateTime\nDateTimeIso\nDurationIso\nEmpty"
+      },
+      {
+        "keyword": "DateTimeIso",
+        "extracted_text_lines": [
+          141,
+          144
+        ],
+        "text": "DateTime(ExcelDateTime),\nDateTimeIso(String),\nDurationIso(String),\nError(CellErrorType),"
+      },
+      {
+        "keyword": "DateTimeIso",
+        "extracted_text_lines": [
+          166,
+          169
+        ],
+        "text": "§\nDateTimeIso(String)\nDate, Time or Date/Time in ISO 8601\n§"
+      },
+      {
+        "keyword": "DurationIso",
+        "extracted_text_lines": [
+          80,
+          83
+        ],
+        "text": "DateTimeIso\nDurationIso\nEmpty\nError"
+      },
+      {
+        "keyword": "DurationIso",
+        "extracted_text_lines": [
+          142,
+          145
+        ],
+        "text": "DateTimeIso(String),\nDurationIso(String),\nError(CellErrorType),\nEmpty,"
+      },
+      {
+        "keyword": "DurationIso",
+        "extracted_text_lines": [
+          169,
+          172
+        ],
+        "text": "§\nDurationIso(String)\nDuration in ISO 8601\n§"
+      },
+      {
+        "keyword": "Empty",
+        "extracted_text_lines": [
+          81,
+          84
+        ],
+        "text": "DurationIso\nEmpty\nError\nFloat"
+      },
+      {
+        "keyword": "Empty",
+        "extracted_text_lines": [
+          144,
+          147
+        ],
+        "text": "Error(CellErrorType),\nEmpty,\n}\nExpand description"
+      },
+      {
+        "keyword": "Empty",
+        "extracted_text_lines": [
+          175,
+          178
+        ],
+        "text": "§\nEmpty\nEmpty cell\nTrait Implementations§"
+      },
+      {
+        "keyword": "Empty",
+        "extracted_text_lines": [
+          176,
+          179
+        ],
+        "text": "Empty\nEmpty cell\nTrait Implementations§\nSource§"
+      },
+      {
+        "keyword": "Float",
+        "extracted_text_lines": [
+          27,
+          30
+        ],
+        "text": "normal\nfast-float2 ^0.2\nnormal\nlog ^0.4"
+      },
+      {
+        "keyword": "Float",
+        "extracted_text_lines": [
+          83,
+          86
+        ],
+        "text": "Error\nFloat\nInt\nString"
+      },
+      {
+        "keyword": "Float",
+        "extracted_text_lines": [
+          137,
+          140
+        ],
+        "text": "Int(i64),\nFloat(f64),\nString(String),\nBool(bool),"
+      },
+      {
+        "keyword": "Float",
+        "extracted_text_lines": [
+          154,
+          157
+        ],
+        "text": "§\nFloat(f64)\nFloat\n§"
+      }
+    ]
+  },
+  {
+    "id": "E11",
+    "url": "https://docs.rs/calamine/0.36.1/calamine/struct.ExcelDateTime.html",
+    "accessed_at": "2026-10-09T19:36:17.030365+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "millisecond",
+      "timezone",
+      "1904",
+      "leap"
+    ],
+    "resolved_url": "https://docs.rs/calamine/0.36.1/calamine/struct.ExcelDateTime.html",
+    "http_status": 200,
+    "response_sha256": "cf92f68c1045799514678374e5ae8c51436409898566a7b00aaf293d00d8c2c8",
+    "text_line_count": 312,
+    "snippets": [
+      {
+        "keyword": "millisecond",
+        "extracted_text_lines": [
+          139,
+          142
+        ],
+        "text": "(usually 1900-01-01) and where the time is a percentage/decimal of the\nmilliseconds in the day. Both the date and time are stored in the same\nf64 value. For example, 2025/10/13 12:00:00 is stored as 45943.5.\nThis function returns a tuple of (year, month, day, hour, minutes,"
+      },
+      {
+        "keyword": "millisecond",
+        "extracted_text_lines": [
+          142,
+          145
+        ],
+        "text": "This function returns a tuple of (year, month, day, hour, minutes,\nseconds, milliseconds). It works for serial dates in both the 1900 and\n1904 epochs.\nThis function always returns a date, even if the serial value is outside"
+      },
+      {
+        "keyword": "millisecond",
+        "extracted_text_lines": [
+          148,
+          151
+        ],
+        "text": "bug.\nExcel only supports millisecond precision and it also doesn’t use or\nencode timezone information in any way.\n§Examples"
+      },
+      {
+        "keyword": "timezone",
+        "extracted_text_lines": [
+          149,
+          152
+        ],
+        "text": "Excel only supports millisecond precision and it also doesn’t use or\nencode timezone information in any way.\n§Examples\nAn example of converting an Excel date/time to standard components."
+      },
+      {
+        "keyword": "1904",
+        "extracted_text_lines": [
+          123,
+          126
+        ],
+        "text": "Source\npub fn new(value: f64, datetime_type: ExcelDateTimeType, is_1904: bool) -> Self\nCreates a new ExcelDateTime\nSource"
+      },
+      {
+        "keyword": "1904",
+        "extracted_text_lines": [
+          143,
+          146
+        ],
+        "text": "seconds, milliseconds). It works for serial dates in both the 1900 and\n1904 epochs.\nThis function always returns a date, even if the serial value is outside\nof Excel’s range of 0.0 <= datetime < 10000.0. It also returns, as"
+      },
+      {
+        "keyword": "1904",
+        "extracted_text_lines": [
+          158,
+          161
+        ],
+        "text": "ExcelDateTimeType::DateTime,\nfalse, // Using 1900 epoch (not 1904).\n);\n// Convert to standard date/time components."
+      },
+      {
+        "keyword": "leap",
+        "extracted_text_lines": [
+          146,
+          149
+        ],
+        "text": "of Excel’s range of 0.0 <= datetime < 10000.0. It also returns, as\nExcel does, the invalid date 1900/02/29 due to the Excel 1900 leap year\nbug.\nExcel only supports millisecond precision and it also doesn’t use or"
+      }
+    ]
+  },
+  {
+    "id": "E12",
+    "url": "https://docs.rs/calamine/0.36.1/calamine/struct.XlsxCellReader.html",
+    "accessed_at": "2026-10-09T19:36:17.059837+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "same XML stream",
+      "strings:",
+      "formats:",
+      "cached",
+      "formula metadata"
+    ],
+    "resolved_url": "https://docs.rs/calamine/0.36.1/calamine/struct.XlsxCellReader.html",
+    "http_status": 200,
+    "response_sha256": "c9f16fdbc4df7f6add4bb04e0727fdcf5185cb11ef57eb89c537365151ce14fc",
+    "text_line_count": 232,
+    "snippets": [
+      {
+        "keyword": "same XML stream",
+        "extracted_text_lines": [
+          110,
+          113
+        ],
+        "text": "An xlsx Cell Iterator.\nThe next_* methods all advance the same XML stream. Use one streaming\nmethod per reader; mixing methods on a single reader will consume cells from\nthe current stream position."
+      },
+      {
+        "keyword": "strings:",
+        "extracted_text_lines": [
+          121,
+          124
+        ],
+        "text": "xml: Reader<BufReader<ZipFile<'a, RS>>>,\nstrings: &'a [String],\nformats: &'a [CellFormat],\nis_1904: bool,"
+      },
+      {
+        "keyword": "formats:",
+        "extracted_text_lines": [
+          122,
+          125
+        ],
+        "text": "strings: &'a [String],\nformats: &'a [CellFormat],\nis_1904: bool,\n) -> Result<Self, XlsxError>"
+      },
+      {
+        "keyword": "cached",
+        "extracted_text_lines": [
+          136,
+          139
+        ],
+        "text": ") -> Result<Option<XlsxCellFormula<'a>>, XlsxError>\nReturn the next cell record, exposing cached/literal value plus expanded\nper-cell formula text. Shared-formula metadata is intentionally not\nexposed through this compatibility-oriented one-pass API; use"
+      },
+      {
+        "keyword": "cached",
+        "extracted_text_lines": [
+          144,
+          147
+        ],
+        "text": ") -> Result<Option<XlsxCellFormulaMetadataRecord<'a>>, XlsxError>\nReturn the next cell record, exposing cached/literal value plus formula\nmetadata. Shared formulas are reported semantically as anchors/derived\nplacements instead of only as expanded text. Derived shared formulas carry"
+      },
+      {
+        "keyword": "formula metadata",
+        "extracted_text_lines": [
+          137,
+          140
+        ],
+        "text": "Return the next cell record, exposing cached/literal value plus expanded\nper-cell formula text. Shared-formula metadata is intentionally not\nexposed through this compatibility-oriented one-pass API; use\nSelf::next_cell_with_formula_metadata when shared-formula metadata is needed."
+      },
+      {
+        "keyword": "formula metadata",
+        "extracted_text_lines": [
+          139,
+          142
+        ],
+        "text": "exposed through this compatibility-oriented one-pass API; use\nSelf::next_cell_with_formula_metadata when shared-formula metadata is needed.\nSource\npub fn next_cell_with_formula_metadata("
+      }
+    ]
+  },
+  {
+    "id": "E13",
+    "url": "https://docs.rs/calamine/0.36.1/calamine/struct.Xlsx.html",
+    "accessed_at": "2026-10-09T19:36:17.139349+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "has_1904_epoch",
+      "worksheet_cells_reader",
+      "formula"
+    ],
+    "resolved_url": "https://docs.rs/calamine/0.36.1/calamine/struct.Xlsx.html",
+    "http_status": 200,
+    "response_sha256": "a440c555fffa57fc1834c32ddd51bf8c2516cb76887037211c0a5722ec659c1f",
+    "text_line_count": 647,
+    "snippets": [
+      {
+        "keyword": "has_1904_epoch",
+        "extracted_text_lines": [
+          77,
+          80
+        ],
+        "text": "Methods\nhas_1904_epoch\nhyperlinks_by_sheet_id\nhyperlinks_by_sheet_name"
+      },
+      {
+        "keyword": "has_1904_epoch",
+        "extracted_text_lines": [
+          121,
+          124
+        ],
+        "text": "Source\npub fn has_1904_epoch(&self) -> bool\nCheck if the workbook uses the 1904 date system.\nReturns true if the workbook uses the 1904 date epoch (used by some older"
+      },
+      {
+        "keyword": "has_1904_epoch",
+        "extracted_text_lines": [
+          129,
+          132
+        ],
+        "text": "let workbook: Xlsx<_> = open_workbook(\"tests/date_1904.xlsx\")?;\nlet is_1904 = workbook.has_1904_epoch();\nprintln!(\"Uses 1904 date system: {}\", is_1904);\nOk(())"
+      },
+      {
+        "keyword": "worksheet_cells_reader",
+        "extracted_text_lines": [
+          89,
+          92
+        ],
+        "text": "table_names_in_sheet\nworksheet_cells_reader\nTrait Implementations\nReader<RS>"
+      },
+      {
+        "keyword": "worksheet_cells_reader",
+        "extracted_text_lines": [
+          490,
+          493
+        ],
+        "text": "Source\npub fn worksheet_cells_reader<'a>(\n&'a mut self,\nname: &str,"
+      },
+      {
+        "keyword": "formula",
+        "extracted_text_lines": [
+          168,
+          171
+        ],
+        "text": "Tables in Excel are a way of grouping a range of cells into a single\nentity that has common formatting or that can be referenced in formulas.\nIn calamine, tables can be read as a Table object and converted to\na data Range for further processing."
+      },
+      {
+        "keyword": "formula",
+        "extracted_text_lines": [
+          518,
+          521
+        ],
+        "text": "Source§\nfn worksheet_formula(&mut self, name: &str) -> Result<Range<String>, XlsxError>\nRead worksheet formula in corresponding worksheet path\nSource§"
+      },
+      {
+        "keyword": "formula",
+        "extracted_text_lines": [
+          519,
+          522
+        ],
+        "text": "fn worksheet_formula(&mut self, name: &str) -> Result<Range<String>, XlsxError>\nRead worksheet formula in corresponding worksheet path\nSource§\nfn worksheets(&mut self) -> Vec<(String, Range<Data>)>"
+      }
+    ]
+  },
+  {
+    "id": "E14",
+    "url": "https://arrow.apache.org/rust/arrow_csv/reader/index.html",
+    "accessed_at": "2026-10-09T19:36:17.211816+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "100",
+      "schema",
+      "infer_schema"
+    ],
+    "resolved_url": "https://arrow.apache.org/rust/arrow_csv/reader/index.html",
+    "http_status": 200,
+    "response_sha256": "265931faf50f1cf20fa41c9969dec73383393deacc530df4b4932dc4182e1b03",
+    "text_line_count": 124,
+    "snippets": [
+      {
+        "keyword": "schema",
+        "extracted_text_lines": [
+          24,
+          27
+        ],
+        "text": "Example:\nlet schema = Schema::new(vec![\nField::new(\"city\", DataType::Utf8, false),\nField::new(\"lat\", DataType::Float64, false),"
+      },
+      {
+        "keyword": "schema",
+        "extracted_text_lines": [
+          30,
+          33
+        ],
+        "text": "let file = File::open(\"test/data/uk_cities.csv\").unwrap();\nlet mut csv = ReaderBuilder::new(Arc::new(schema)).build(file).unwrap();\nlet batch = csv.next().unwrap().unwrap();\n§Example: Numeric calculations on CSV"
+      },
+      {
+        "keyword": "schema",
+        "extracted_text_lines": [
+          40,
+          43
+        ],
+        "text": "let file = File::open(\"test/data/example.csv\").unwrap();\nlet csv_schema = Schema::new(vec![\nField::new(\"c1\", DataType::Int16, true),\nField::new(\"c2\", DataType::Float32, true),"
+      },
+      {
+        "keyword": "schema",
+        "extracted_text_lines": [
+          46,
+          49
+        ],
+        "text": "]);\nlet mut reader = ReaderBuilder::new(Arc::new(csv_schema))\n.with_header(true)\n.build(file)"
+      },
+      {
+        "keyword": "infer_schema",
+        "extracted_text_lines": [
+          120,
+          123
+        ],
+        "text": "Functions§\nbuild_boolean_array 🔒 build_decimal_array 🔒 build_primitive_array 🔒 build_timestamp_array 🔒 build_timestamp_array_impl 🔒 infer_schema_from_filesInfer schema from a list of CSV files by reading through first n records\nwith max_read_records controlling the maximum number of records to read.parse 🔒 Parses a slice of StringRecords into a [RecordBatch]parse_bool 🔒 validate_header 🔒\nType Aliases§"
+      }
+    ]
+  },
+  {
+    "id": "E15",
+    "url": "https://arrow.apache.org/rust/arrow_csv/reader/struct.ReaderBuilder.html",
+    "accessed_at": "2026-10-09T19:36:17.238375+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "1024",
+      "batch_size",
+      "projection",
+      "header"
+    ],
+    "resolved_url": "https://arrow.apache.org/rust/arrow_csv/reader/struct.ReaderBuilder.html",
+    "http_status": 200,
+    "response_sha256": "8ae831bf6d14fa650c83dd877cae9c4cf25a99cfd19761be6fd801bd785c56bc",
+    "text_line_count": 245,
+    "snippets": [
+      {
+        "keyword": "1024",
+        "extracted_text_lines": [
+          71,
+          74
+        ],
+        "text": "Batch size (number of records to load each time)\nThe default batch size when using the ReaderBuilder is 1024 records\n§bounds: Option<(usize, usize)>\nThe bounds over which to scan the reader. None starts from 0 and runs until EOF."
+      },
+      {
+        "keyword": "batch_size",
+        "extracted_text_lines": [
+          5,
+          8
+        ],
+        "text": "Fields\nbatch_size\nbounds\nformat"
+      },
+      {
+        "keyword": "batch_size",
+        "extracted_text_lines": [
+          16,
+          19
+        ],
+        "text": "build_decoder\nwith_batch_size\nwith_bounds\nwith_comment"
+      },
+      {
+        "keyword": "batch_size",
+        "extracted_text_lines": [
+          58,
+          61
+        ],
+        "text": "format: Format,\nbatch_size: usize,\nbounds: Option<(usize, usize)>,\nprojection: Option<Vec<usize>>,"
+      },
+      {
+        "keyword": "batch_size",
+        "extracted_text_lines": [
+          69,
+          72
+        ],
+        "text": "Format of the CSV file\n§batch_size: usize\nBatch size (number of records to load each time)\nThe default batch size when using the ReaderBuilder is 1024 records"
+      },
+      {
+        "keyword": "projection",
+        "extracted_text_lines": [
+          8,
+          11
+        ],
+        "text": "format\nprojection\nschema\nAssociated Functions"
+      },
+      {
+        "keyword": "projection",
+        "extracted_text_lines": [
+          25,
+          28
+        ],
+        "text": "with_null_regex\nwith_projection\nwith_quote\nwith_terminator"
+      },
+      {
+        "keyword": "projection",
+        "extracted_text_lines": [
+          60,
+          63
+        ],
+        "text": "bounds: Option<(usize, usize)>,\nprojection: Option<Vec<usize>>,\n}\nExpand description"
+      },
+      {
+        "keyword": "projection",
+        "extracted_text_lines": [
+          74,
+          77
+        ],
+        "text": "The bounds over which to scan the reader. None starts from 0 and runs until EOF.\n§projection: Option<Vec<usize>>\nOptional projection for which columns to load (zero-based column indices)\nImplementations§"
+      },
+      {
+        "keyword": "header",
+        "extracted_text_lines": [
+          22,
+          25
+        ],
+        "text": "with_format\nwith_header\nwith_header_validation\nwith_null_regex"
+      },
+      {
+        "keyword": "header",
+        "extracted_text_lines": [
+          23,
+          26
+        ],
+        "text": "with_header\nwith_header_validation\nwith_null_regex\nwith_projection"
+      },
+      {
+        "keyword": "header",
+        "extracted_text_lines": [
+          85,
+          88
+        ],
+        "text": "§Example\nlet mut file = File::open(\"test/data/uk_cities_with_headers.csv\").unwrap();\n// Infer the schema with the first 100 records\nlet (schema, _) = Format::default().infer_schema(&mut file, Some(100)).unwrap();"
+      },
+      {
+        "keyword": "header",
+        "extracted_text_lines": [
+          92,
+          95
+        ],
+        "text": "Source\npub fn with_header(self, has_header: bool) -> Self\nSet whether the CSV file has a header\nSource"
+      }
+    ]
+  },
+  {
+    "id": "E16",
+    "url": "https://docs.rs/polars-io/0.55.2/polars_io/csv/read/struct.CsvReadOptions.html",
+    "accessed_at": "2026-10-09T19:36:17.261812+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "Default: 100",
+      "very slow",
+      "with_low_memory",
+      "low_memory",
+      "infer_schema_length"
+    ],
+    "resolved_url": "https://docs.rs/polars-io/0.55.2/polars_io/csv/read/struct.CsvReadOptions.html",
+    "http_status": 200,
+    "response_sha256": "384696ad73c84ac94a8d76389bfe13d24f342567133b9a53cec752c293872211",
+    "text_line_count": 717,
+    "snippets": [
+      {
+        "keyword": "very slow",
+        "extracted_text_lines": [
+          382,
+          385
+        ],
+        "text": "The default is 100 rows.\nSetting to None will do a full table scan, which is very slow.\nSource\npub fn with_infer_schema_files(self, infer_schema_files: NonZeroUsize) -> Self"
+      },
+      {
+        "keyword": "with_low_memory",
+        "extracted_text_lines": [
+          206,
+          209
+        ],
+        "text": "with_infer_schema_length\nwith_low_memory\nwith_n_rows\nwith_n_threads"
+      },
+      {
+        "keyword": "with_low_memory",
+        "extracted_text_lines": [
+          316,
+          319
+        ],
+        "text": "Source\npub fn with_low_memory(self, low_memory: bool) -> Self\nReduce memory consumption at the expense of performance\nSource"
+      },
+      {
+        "keyword": "low_memory",
+        "extracted_text_lines": [
+          179,
+          182
+        ],
+        "text": "infer_schema_length\nlow_memory\nn_rows\nn_threads"
+      },
+      {
+        "keyword": "low_memory",
+        "extracted_text_lines": [
+          271,
+          274
+        ],
+        "text": "pub n_threads: Option<usize>,\npub low_memory: bool,\npub n_rows: Option<usize>,\npub row_index: Option<RowIndex>,"
+      },
+      {
+        "keyword": "low_memory",
+        "extracted_text_lines": [
+          294,
+          297
+        ],
+        "text": "Fields§\n§path: Option<PathBuf>§rechunk: bool§n_threads: Option<usize>§low_memory: bool§n_rows: Option<usize>§row_index: Option<RowIndex>§columns: Option<Arc<[PlSmallStr]>>§projection: Option<Arc<Vec<usize>>>§schema: Option<SchemaRef>§schema_overwrite: Option<SchemaRef>§column_names_overwrite: Option<Buffer<PlSmallStr>>\nOverride the names from the file. This is Python scan_csv(new_columns=...)\n§dtype_overwrite: Option<Arc<Vec<DataType>>>§parse_options: Arc<CsvParseOptions>§has_header: bool§chunk_size: usize§skip_rows: usize"
+      },
+      {
+        "keyword": "infer_schema_length",
+        "extracted_text_lines": [
+          178,
+          181
+        ],
+        "text": "infer_schema_files\ninfer_schema_length\nlow_memory\nn_rows"
+      },
+      {
+        "keyword": "infer_schema_length",
+        "extracted_text_lines": [
+          205,
+          208
+        ],
+        "text": "with_infer_schema_files\nwith_infer_schema_length\nwith_low_memory\nwith_n_rows"
+      },
+      {
+        "keyword": "infer_schema_length",
+        "extracted_text_lines": [
+          286,
+          289
+        ],
+        "text": "pub skip_rows_after_header: usize,\npub infer_schema_length: Option<usize>,\npub infer_schema_files: NonZeroUsize,\npub raise_if_empty: bool,"
+      },
+      {
+        "keyword": "infer_schema_length",
+        "extracted_text_lines": [
+          300,
+          303
+        ],
+        "text": "Skip lines according to newline char (e.g. escaping will be ignored)\n§skip_rows_after_header: usize§infer_schema_length: Option<usize>§infer_schema_files: NonZeroUsize§raise_if_empty: bool§ignore_errors: bool§fields_to_cast: Vec<Field>\nImplementations§\nSource§"
+      }
+    ]
+  },
+  {
+    "id": "E17",
+    "url": "https://learn.microsoft.com/en-us/power-query/connectors/text-csv",
+    "accessed_at": "2026-10-09T19:36:17.317058+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "200",
+      "Text",
+      "entire dataset",
+      "entire data",
+      "line break"
+    ],
+    "resolved_url": "https://learn.microsoft.com/en-us/power-query/connectors/text-csv",
+    "http_status": 200,
+    "response_sha256": "8d60c1631c8f9b051bf670614e7c18f98d43e99b2b7c66ce17838b399fefacd4",
+    "text_line_count": 150,
+    "snippets": [
+      {
+        "keyword": "200",
+        "extracted_text_lines": [
+          71,
+          74
+        ],
+        "text": "Delimiters include colon, comma, equals sign, semicolon, space, tab, a custom delimiter (which can be any string), and a fixed width (splitting up text by some standard number of characters).\nThe final dropdown lets you select how you want to handle data type detection. You can base it on the first 200 rows or on the entire data set. You can also choose to turn off automatic data type detection and instead let all columns default to 'Text.' Warning: if you choose the entire data set, it might cause the initial load of the data in the editor to be slower.\nSince inference can be incorrect, double check settings before loading.\nStructured text"
+      },
+      {
+        "keyword": "Text",
+        "extracted_text_lines": [
+          1,
+          3
+        ],
+        "text": "Power Query Text/CSV connector - Power Query | Microsoft Learn\nSkip to main content\nSkip to Ask Learn chat experience"
+      },
+      {
+        "keyword": "Text",
+        "extracted_text_lines": [
+          22,
+          25
+        ],
+        "text": "Access to this page requires authorization. You can try changing directories.\nText/CSV\nFeedback\nSummarize this article for me"
+      },
+      {
+        "keyword": "Text",
+        "extracted_text_lines": [
+          30,
+          33
+        ],
+        "text": "Connector\nText/CSV\nProducts\nExcelPower BI (semantic models)Power Query Online"
+      },
+      {
+        "keyword": "Text",
+        "extracted_text_lines": [
+          40,
+          43
+        ],
+        "text": "Note\nTo import multiple text/CSV files at once, use a multi-file connector such as the Folder connector or SharePoint Folder connector. For more information, see the Combine files overview.\nSupported capabilities\nImport"
+      },
+      {
+        "keyword": "line break",
+        "extracted_text_lines": [
+          82,
+          85
+        ],
+        "text": "When you edit the source step (in the Applied steps pane of Power Query Desktop), you see a slightly different dialog than when you initially load the file. Depending on how you currently treat the file (as text or CSV), you see a screen with various dropdowns.\nUse the Line breaks dropdown to select if you want to apply line breaks that are inside quotes or not.\nFor example, if you edit the 'structured' sample previously provided, you can add a line break.\nColumn 1 Column 2 Column 3"
+      },
+      {
+        "keyword": "line break",
+        "extracted_text_lines": [
+          83,
+          86
+        ],
+        "text": "Use the Line breaks dropdown to select if you want to apply line breaks that are inside quotes or not.\nFor example, if you edit the 'structured' sample previously provided, you can add a line break.\nColumn 1 Column 2 Column 3\nThis is a string. 1 \"ABC"
+      },
+      {
+        "keyword": "line break",
+        "extracted_text_lines": [
+          88,
+          91
+        ],
+        "text": "This is also a string. 2 \"DEF456\"\nIf you set Line breaks to Ignore quoted line breaks, the sample loads with the second half of the string under the first half in the same column.\nIf you set Line breaks to Apply all line breaks, the sample loads an extra row, with the content after the line breaks being the only content in that row (exact output might depend on structure of the file contents).\nUse the Open file as dropdown to edit what you want to load the file as. This setting is important for troubleshooting. For structured files that aren't technically CSVs (such as a tab separated value file saved as a text file), keep Open file as set to CSV. This setting also determines which dropdowns are available in the rest of the dialog."
+      },
+      {
+        "keyword": "line break",
+        "extracted_text_lines": [
+          89,
+          92
+        ],
+        "text": "If you set Line breaks to Ignore quoted line breaks, the sample loads with the second half of the string under the first half in the same column.\nIf you set Line breaks to Apply all line breaks, the sample loads an extra row, with the content after the line breaks being the only content in that row (exact output might depend on structure of the file contents).\nUse the Open file as dropdown to edit what you want to load the file as. This setting is important for troubleshooting. For structured files that aren't technically CSVs (such as a tab separated value file saved as a text file), keep Open file as set to CSV. This setting also determines which dropdowns are available in the rest of the dialog.\nBy example"
+      }
+    ]
+  },
+  {
+    "id": "E18",
+    "url": "https://learn.microsoft.com/en-us/power-query/data-types",
+    "accessed_at": "2026-10-09T19:36:17.362332+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "200",
+      "operating system",
+      "regional format",
+      "locale",
+      "27"
+    ],
+    "resolved_url": "https://learn.microsoft.com/en-us/power-query/data-types",
+    "http_status": 200,
+    "response_sha256": "ce00d7ac6ea516c161e9b3e6cf38ef7a0f4ecd1abd59a76264b688b38f962d83",
+    "text_line_count": 187,
+    "snippets": [
+      {
+        "keyword": "200",
+        "extracted_text_lines": [
+          86,
+          89
+        ],
+        "text": "Automatic detection of column data type and headers\nThis setting is specifically for unstructured sources. It helps you by automatically inspecting and detecting column types and headers based on the first 200 rows of your table. When this setting is enabled, Power Query automatically adds two steps to your query:\nPromote column headers: Promotes the first row of the table to be the column header.\nChanged type: Converts the values from the Any data type to a data type based on the inspection of the values from each column."
+      },
+      {
+        "keyword": "operating system",
+        "extracted_text_lines": [
+          106,
+          109
+        ],
+        "text": "In Power Query Online, this interpretation is defined in the Project options, under Regional settings.\nIn Power Query Desktop, Power Query automatically recognizes your operating system regional format and uses that to interpret the values for data type conversion. To override this locale configuration, open the query Options window, and in the left pane under Current file, select Regional settings. From here, you can change the locale to the setting you want.\nThis locale setting is important for interpreting text values into a specific data type. For example, imagine that you have your locale set as English (United States), but a column in one of your CSV files has dates formatted in the United Kingdom format of day/month/year.\nWhen you try setting the data type of the Date column to be Date, you get error values."
+      },
+      {
+        "keyword": "locale",
+        "extracted_text_lines": [
+          99,
+          102
+        ],
+        "text": "Current file: On the left pane under Current file, select Data load. On the right pane under Type detection, select whether you want to enable or disable type detection for the current file.\nDocument or project locale\nPower Query handles two distinct components that manage the way that things look and are interpreted:\nLocalization: the component that tells Power Query in what language it should be displayed."
+      },
+      {
+        "keyword": "locale",
+        "extracted_text_lines": [
+          103,
+          106
+        ],
+        "text": "Globalization: the component that handles the formatting of the values, in addition to the interpretation of text values.\nLocale is a single value that holds both the localization and globalization components. Locale is used to interpret text values and convert them into other data types. For example, the locale English (United States) means that the localization is in United States English and the globalization, or format of the value, is based on the standards used in the United States.\nWhen Power Query defines a column data type or converts from one data type to another, it has to interpret the values to be converted before it can transform them to a different data type.\nIn Power Query Online, this interpretation is defined in the Project options, under Regional settings."
+      },
+      {
+        "keyword": "locale",
+        "extracted_text_lines": [
+          107,
+          110
+        ],
+        "text": "In Power Query Desktop, Power Query automatically recognizes your operating system regional format and uses that to interpret the values for data type conversion. To override this locale configuration, open the query Options window, and in the left pane under Current file, select Regional settings. From here, you can change the locale to the setting you want.\nThis locale setting is important for interpreting text values into a specific data type. For example, imagine that you have your locale set as English (United States), but a column in one of your CSV files has dates formatted in the United Kingdom format of day/month/year.\nWhen you try setting the data type of the Date column to be Date, you get error values.\nThese errors occur because the locale being used is trying to interpret the date in the English (United States) format, which is month/day/year. Because there's no month 22 in the calendar, it causes an error."
+      }
+    ]
+  },
+  {
+    "id": "E19",
+    "url": "https://learn.microsoft.com/en-us/power-query/data-profiling-tools",
+    "accessed_at": "2026-10-09T19:36:17.394899+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "1,000",
+      "entire dataset",
+      "entire data"
+    ],
+    "resolved_url": "https://learn.microsoft.com/en-us/power-query/data-profiling-tools",
+    "http_status": 200,
+    "response_sha256": "38d5e207ecf6eb1273b2991af9f30d64289f26721b6b6a67349d3efc8f65fba2",
+    "text_line_count": 93,
+    "snippets": [
+      {
+        "keyword": "1,000",
+        "extracted_text_lines": [
+          34,
+          37
+        ],
+        "text": "Note\nBy default, Power Query performs this data profiling over the first 1,000 rows of your data. To have it operate over the entire data set, select the Column profiling based on top 1000 rows message in the lower-left corner of your editor window to change column profiling to Column profiling based on entire data set.\nColumn quality\nThe column quality feature labels values in rows in five categories:"
+      }
+    ]
+  },
+  {
+    "id": "E20",
+    "url": "https://openrefine.org/docs/manual/running",
+    "accessed_at": "2026-10-09T19:36:17.487508+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "single cell",
+      "Extract",
+      "JSON",
+      "internet",
+      "Java"
+    ],
+    "resolved_url": "https://openrefine.org/docs/manual/running",
+    "http_status": 200,
+    "response_sha256": "d48634f9699598ebda8446b9bc90cc2db32950a0321add3d88abbd96ef330175",
+    "text_line_count": 307,
+    "snippets": [
+      {
+        "keyword": "single cell",
+        "extracted_text_lines": [
+          227,
+          230
+        ],
+        "text": "Move to the second project, go to the Undo/Redo tab, click Apply… and paste in that JSON.\nNot all operations can be extracted. Edits to a single cell, for example, can’t be replicated.\nAdvanced OpenRefine uses​\nRunning OpenRefine's Linux version on a Mac​"
+      },
+      {
+        "keyword": "Extract",
+        "extracted_text_lines": [
+          225,
+          228
+        ],
+        "text": "Operations that you perform in OpenRefine can be reused. For example, a formula you wrote inside one project can be copied and applied to another project later.\nTo reuse one or more operations, first extract it from the project where it was first applied. Click to the Undo/Redo tab and click Extract…. This brings up a box that lists all operations up to the current state (it does not show undone operations). Select the operation or operations you want to extract using the checkboxes on the left, and they will be encoded as JSON on the right. Copy that JSON to the clipboard.\nMove to the second project, go to the Undo/Redo tab, click Apply… and paste in that JSON.\nNot all operations can be extracted. Edits to a single cell, for example, can’t be replicated."
+      },
+      {
+        "keyword": "JSON",
+        "extracted_text_lines": [
+          173,
+          176
+        ],
+        "text": "Display of the reconciliation preview on hovercell-ui.previewMatchedCellsBooleantruefalsev3.2\nValues for the choice of the number of rows to displayui.browsing.pageSizeArray of number (JSON)[ 5, 10, 25, 50 ][ 100, 500, 1000 ]v3.5\nWidth of the panel for facets/historyui.browsing.facetsHistoryPanelWidthNumber (pixel)300500v3.5\nDefault state of the reconciliation automatch optionui.reconciliation.automatchBooleantruefalsev3.8"
+      },
+      {
+        "keyword": "JSON",
+        "extracted_text_lines": [
+          226,
+          229
+        ],
+        "text": "To reuse one or more operations, first extract it from the project where it was first applied. Click to the Undo/Redo tab and click Extract…. This brings up a box that lists all operations up to the current state (it does not show undone operations). Select the operation or operations you want to extract using the checkboxes on the left, and they will be encoded as JSON on the right. Copy that JSON to the clipboard.\nMove to the second project, go to the Undo/Redo tab, click Apply… and paste in that JSON.\nNot all operations can be extracted. Edits to a single cell, for example, can’t be replicated.\nAdvanced OpenRefine uses​"
+      },
+      {
+        "keyword": "JSON",
+        "extracted_text_lines": [
+          251,
+          254
+        ],
+        "text": "A Command Line Interface (CLI) for OpenRefine that enables scripts to automate OpenRefine, by Felix Lohmeier: orcli\nThis project allows OpenRefine to be run from the command line using operations saved in a JSON file: OpenRefine batch processing\nA Python project for applying a JSON file of operations to a data file, outputting the new file, and deleting the temporary project, written by David Huynh and Max Ogden: Python client library for Google Refine\nAnd the same in Ruby: Refine-Ruby"
+      },
+      {
+        "keyword": "internet",
+        "extracted_text_lines": [
+          23,
+          26
+        ],
+        "text": "Starting and exiting​\nOpenRefine does not require internet access to run its basic functions. Once you download and install it, it runs as a small web server on your own computer, and you access that local web server by using your browser.\nYou will see a command line window open when you run OpenRefine. Ignore that window while you work on datasets in your browser.\nNo matter how you start OpenRefine, it will load its interface in your computer’s default browser. If you would like to use another browser instead, start OpenRefine and then point your chosen browser at the home screen: http://127.0.0.1:3333/."
+      },
+      {
+        "keyword": "internet",
+        "extracted_text_lines": [
+          32,
+          35
+        ],
+        "text": "Safari\nWe are aware of some minor rendering and performance issues on other browsers such as Firefox. We don't support Internet Explorer.\nYou can view and work on multiple projects at the same time by simply having multiple tabs or browser windows open. From the Open Project screen, you can right-click on project names and open them in new tabs or windows.\nWindows"
+      },
+      {
+        "keyword": "internet",
+        "extracted_text_lines": [
+          233,
+          236
+        ],
+        "text": "caution\nPlease note that if your machine has an external IP (is exposed to the Internet), you should not do this, or should protect it behind a proxy or firewall, such as nginx. Proceed at your own risk.\nBy default (and for security reasons), OpenRefine only listens to TCP requests coming from localhost (whose interface is 127.0.0.1) on port 3333. If you want to share your OpenRefine instance with colleagues and respond to TCP requests to any IP address of the machine, start it from the command line like these below. Note that you can set either the IP, or the host, or both, but if you set both, you must use the host name to access the web page and the host must resolve to the specified IP. If you use the IP 0.0.0.0, it will bind to all interfaces of your machine, but if you also set the host, than you must use that particular host name. Setting both is more restrictive, but also more secure.\nIn these examples below, mymachine.local is used as the hostname, which must be a valid domain name that either resolve through the DNS server, or that is defined in the hosts file of your machine."
+      },
+      {
+        "keyword": "Java",
+        "extracted_text_lines": [
+          50,
+          53
+        ],
+        "text": "In the Utilities window, start the Terminal application.\nInside the terminal, write this: /Applications/OpenRefine.app/Contents/MacOS/JavaAppLauncher\nTo exit, close all your OpenRefine browser tabs, find the applications called “JavaAppLauncher”, press Command and Q to close it down, and do the same with the Terminal application.\nProblems starting?"
+      },
+      {
+        "keyword": "Java",
+        "extracted_text_lines": [
+          51,
+          54
+        ],
+        "text": "Inside the terminal, write this: /Applications/OpenRefine.app/Contents/MacOS/JavaAppLauncher\nTo exit, close all your OpenRefine browser tabs, find the applications called “JavaAppLauncher”, press Command and Q to close it down, and do the same with the Terminal application.\nProblems starting?\nIf you are using an older version of OpenRefine or are on an older version of MacOS, check our Wiki for solutions to problems with MacOS."
+      },
+      {
+        "keyword": "Java",
+        "extracted_text_lines": [
+          58,
+          61
+        ],
+        "text": "To exit, close all the browser tabs, and then press control and C in the terminal window.\nDid you get a JAVA_HOME error?\n“Error: Could not find the ‘java’ executable at ‘’, are you sure your JAVA_HOME environment variable is pointing to a proper java installation?”\nIf you see this error, you need to install and configure a JDK package, including setting up JAVA_HOME."
+      },
+      {
+        "keyword": "Java",
+        "extracted_text_lines": [
+          59,
+          62
+        ],
+        "text": "Did you get a JAVA_HOME error?\n“Error: Could not find the ‘java’ executable at ‘’, are you sure your JAVA_HOME environment variable is pointing to a proper java installation?”\nIf you see this error, you need to install and configure a JDK package, including setting up JAVA_HOME.\nStarting with modifications​"
+      }
+    ]
+  },
+  {
+    "id": "E21",
+    "url": "https://openrefine.org/docs/manual/exporting",
+    "accessed_at": "2026-10-09T19:36:17.630540+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "confidential",
+      "history",
+      "JSON",
+      "operations"
+    ],
+    "resolved_url": "https://openrefine.org/docs/manual/exporting",
+    "http_status": 200,
+    "response_sha256": "582559b40b66649e2df59a5f31afc3498f733876b18182155d6f188c5222259e",
+    "text_line_count": 126,
+    "snippets": [
+      {
+        "keyword": "confidential",
+        "extracted_text_lines": [
+          80,
+          83
+        ],
+        "text": "caution\nOpenRefine project archives contain confidential data from previous steps, which will still be accessible to anyone who has the archive. If you are hoping to keep your original dataset hidden for privacy reasons, such as using OpenRefine to anonymize information, do not share your project archive.\nTo save your project archive locally: from the Export dropdown, select OpenRefine project archive to file. OpenRefine exports your full project with all of its history. It does not export any current views or applied facets. Existing reconciliation information will be preserved, but the importing computer will need to add the same reconciliation services to keep working with that data.\nOpenRefine exports files in .tar.gz format. You can rename the file when you save it; otherwise it will bear the project name."
+      },
+      {
+        "keyword": "history",
+        "extracted_text_lines": [
+          77,
+          80
+        ],
+        "text": "Export a project​\nYou can share a project in progress with another computer, a colleague, or with someone who wants to check your history. This can be useful for showing that your data cleanup didn’t distort or manipulate the information in any way. Once you have exported a project, another OpenRefine installation can import it as a new project.\nYou can either save it locally or upload it to Google Drive (which requires you to authorize a Google account).\ncaution"
+      },
+      {
+        "keyword": "history",
+        "extracted_text_lines": [
+          81,
+          84
+        ],
+        "text": "OpenRefine project archives contain confidential data from previous steps, which will still be accessible to anyone who has the archive. If you are hoping to keep your original dataset hidden for privacy reasons, such as using OpenRefine to anonymize information, do not share your project archive.\nTo save your project archive locally: from the Export dropdown, select OpenRefine project archive to file. OpenRefine exports your full project with all of its history. It does not export any current views or applied facets. Existing reconciliation information will be preserved, but the importing computer will need to add the same reconciliation services to keep working with that data.\nOpenRefine exports files in .tar.gz format. You can rename the file when you save it; otherwise it will bear the project name.\nTo save your project archive to Google Drive: from the Export dropdown, select OpenRefine project archive to Google Drive.... OpenRefine will not share the link with you, only confirm that the file was uploaded."
+      },
+      {
+        "keyword": "history",
+        "extracted_text_lines": [
+          85,
+          88
+        ],
+        "text": "Export operations​\nYou can save and re-apply the history of any project (all the operations shown in the Undo/Redo tab). This creates JSON that you can save for later reuse on another OpenRefine project.\nEdit this page\nLast updated on Jan 28, 2026 by Thad Guidry"
+      },
+      {
+        "keyword": "history",
+        "extracted_text_lines": [
+          114,
+          117
+        ],
+        "text": "Mission and Vision\nProject history\nProject Roles and Governance\nWho uses OpenRefine"
+      },
+      {
+        "keyword": "JSON",
+        "extracted_text_lines": [
+          35,
+          38
+        ],
+        "text": "SQL statement exporter\nTemplating exporter, which generates JSON by default\nYou can also export reconciled data to Wikidata, or export your Wikidata schema for future use with other OpenRefine projects:\nUpload edits to Wikidata"
+      },
+      {
+        "keyword": "JSON",
+        "extracted_text_lines": [
+          48,
+          51
+        ],
+        "text": "On the Download tab, you can generate a preview of how the first ten rows of your dataset will output. If you do not choose one of the file formats on the right, the Download button will generate a text file. On the Upload tab, you can create a new Google Sheet.\nWith the Option Code tab, you can copy JSON of your current custom settings to reuse on another export, or you can paste in existing JSON settings to apply to the current project.\nSQL exporter​\nThe SQL exporter creates a SQL statement containing the data you’ve exported, which you can use to overwrite or add to an existing database. Choosing Export → SQL exporter will bring up a window with two tabs: one to define what data to output, and another to modify other aspects of the SQL statement, with options to preview and download the statement."
+      },
+      {
+        "keyword": "JSON",
+        "extracted_text_lines": [
+          59,
+          62
+        ],
+        "text": "Templating exporter​\nIf you pick Templating… from the Export dropdown menu, you can “roll your own” exporter. This is useful for formats that we don't support natively yet, or won't support. The Templating exporter generates JSON by default.\nThe Templating Export window allows you to set your own separators, prefix, and suffix to create a complete dataset in the language of your choice. In the Row template section, you can choose which columns to generate from each row by calling them with variables.\nThis can be used to:"
+      },
+      {
+        "keyword": "JSON",
+        "extracted_text_lines": [
+          70,
+          73
+        ],
+        "text": "You can include regular expressions as usual (inside forward slashes, with any GREL function that accepts them). For example, you could output a version of your cells with punctuation removed, using an expression such as\n{{jsonize(cells[\"ColumnName\"].value.replaceChars(\"/[.!?$&,/]/\",\"\"))}}\nYou could also simply output a plain-text document inserting data from your project into sentences: for example, \"In {{cells[\"Year\"].value}} we received {{cells[\"RequestCount\"].value}} requests.\"\nYou can use the shorthand ${ColumnName} (no need for quotes) to insert column values directly. You cannot use this inside an expression, because of the closing curly brace."
+      },
+      {
+        "keyword": "operations",
+        "extracted_text_lines": [
+          84,
+          87
+        ],
+        "text": "To save your project archive to Google Drive: from the Export dropdown, select OpenRefine project archive to Google Drive.... OpenRefine will not share the link with you, only confirm that the file was uploaded.\nExport operations​\nYou can save and re-apply the history of any project (all the operations shown in the Undo/Redo tab). This creates JSON that you can save for later reuse on another OpenRefine project.\nEdit this page"
+      },
+      {
+        "keyword": "operations",
+        "extracted_text_lines": [
+          98,
+          101
+        ],
+        "text": "Export a project\nExport operations\nGet OpenRefine\nDownload"
+      }
+    ]
+  },
+  {
+    "id": "E22",
+    "url": "https://openrefine.org/docs/manual/exploring",
+    "accessed_at": "2026-10-09T19:36:17.673445+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "UTC",
+      "ISO",
+      "date"
+    ],
+    "resolved_url": "https://openrefine.org/docs/manual/exploring",
+    "http_status": 200,
+    "response_sha256": "771bb6c600ce141402175be751c8b2da144a8317aad0551e29e287f918715534",
+    "text_line_count": 134,
+    "snippets": [
+      {
+        "keyword": "UTC",
+        "extracted_text_lines": [
+          40,
+          43
+        ],
+        "text": "boolean (values of “true” or “false”)\ndate (ISO-8601-compliant extended format with time in UTC: YYYY-MM-DDTHH:MM:SSZ)\nOpenRefine recognizes two further data types as a result of its own processes:\nerror"
+      },
+      {
+        "keyword": "UTC",
+        "extracted_text_lines": [
+          50,
+          53
+        ],
+        "text": "A “date” type is created when a column is transformed into dates, when an expression is used to convert cells to dates or when individual cells are set to have the data type “date”.\nDate-formatted data in OpenRefine relies on a number of conversion tools and standards. For something to be considered a date in OpenRefine, it will be converted into the ISO-8601-compliant extended format with time in UTC: YYYY-MM-DDTHH:MM:SSZ.\nWhen you run Edit cells → Common transforms → To date, the following column of strings on the left will transform into the values on the right:\nInput→Output"
+      },
+      {
+        "keyword": "ISO",
+        "extracted_text_lines": [
+          61,
+          64
+        ],
+        "text": "You can do more precise conversion and formatting using expressions and arguments based on the state of your data: see the GREL functions reference section on Date functions for more help.\nYou can convert dates into a more human-readable format when you export your data using the custom tabular exporter. You are given the option to keep your dates in the ISO 8601 format, to output short, medium, long, or full locale formats, or to specify a custom format. This means that you can format your dates into, for example, MM/DD/YY (the US short standard) with or without including the time, after working with ISO-8601-formatted dates in your project.\nThe following table shows some example date and time formatting styles for the U.S. and French locales:\nStyleU.S. LocaleFrench Locale"
+      },
+      {
+        "keyword": "date",
+        "extracted_text_lines": [
+          46,
+          49
+        ],
+        "text": "A “null” data type is a special type that means “this cell has no value.” It’s distinct from cells that have values such as “0” or “false”, or cells that look empty but have whitespace in them, or cells that contain empty strings. When you use type(value), it will show you that the cell’s value is “null” and its type is “undefined.” You can opt to show “null” values, by going to All → View → Show/Hide ‘null’ values in cells.\nChanging a cell's data type is not the same operation as transforming its contents. For example, using a column-wide transform such as Transform → Common transforms → To date may not convert all values successfully, but going to an individual cell, clicking “edit”, and changing the data type can successfully convert text to a date. These operations use different underlying code. Learn more about date formatting and transformations in the next section.\nTo transform data from one type to another, see Transforming data for information on using common tranforms, and see Expressions for information on using toString(), toDate(), and other functions.\nDates​"
+      },
+      {
+        "keyword": "date",
+        "extracted_text_lines": [
+          47,
+          50
+        ],
+        "text": "Changing a cell's data type is not the same operation as transforming its contents. For example, using a column-wide transform such as Transform → Common transforms → To date may not convert all values successfully, but going to an individual cell, clicking “edit”, and changing the data type can successfully convert text to a date. These operations use different underlying code. Learn more about date formatting and transformations in the next section.\nTo transform data from one type to another, see Transforming data for information on using common tranforms, and see Expressions for information on using toString(), toDate(), and other functions.\nDates​\nA “date” type is created when a column is transformed into dates, when an expression is used to convert cells to dates or when individual cells are set to have the data type “date”."
+      },
+      {
+        "keyword": "date",
+        "extracted_text_lines": [
+          48,
+          51
+        ],
+        "text": "To transform data from one type to another, see Transforming data for information on using common tranforms, and see Expressions for information on using toString(), toDate(), and other functions.\nDates​\nA “date” type is created when a column is transformed into dates, when an expression is used to convert cells to dates or when individual cells are set to have the data type “date”.\nDate-formatted data in OpenRefine relies on a number of conversion tools and standards. For something to be considered a date in OpenRefine, it will be converted into the ISO-8601-compliant extended format with time in UTC: YYYY-MM-DDTHH:MM:SSZ."
+      }
+    ]
+  },
+  {
+    "id": "E23",
+    "url": "https://framework.frictionlessdata.io/docs/guides/validating-data",
+    "accessed_at": "2026-10-09T19:36:17.699729+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "limit_errors",
+      "rowNumber",
+      "fieldNumber",
+      "custom"
+    ],
+    "resolved_url": "https://framework.frictionlessdata.io/docs/guides/validating-data",
+    "http_status": 200,
+    "response_sha256": "f91fb6b9925501fc236cd3736701583dc9c3f536842c51fa8b85efb4c27514d8",
+    "text_line_count": 1081,
+    "snippets": [
+      {
+        "keyword": "limit_errors",
+        "extracted_text_lines": [
+          1071,
+          1074
+        ],
+        "text": "Limit Errors\nThis option allows you to limit the amount of errors, and can be used when you need to do a quick check or want to \"fail fast\". For instance, here we use limit_errors to find just the 1st error and add it to our report:\nfrom pprint import pprint\nfrom frictionless import validate"
+      },
+      {
+        "keyword": "limit_errors",
+        "extracted_text_lines": [
+          1074,
+          1077
+        ],
+        "text": "from frictionless import validate\nreport = validate(\"capital-invalid.csv\", limit_errors=1)\npprint(report.flatten([\"rowNumber\", \"fieldNumber\", \"type\"]))\n[[None, 3, 'duplicate-label']]"
+      },
+      {
+        "keyword": "rowNumber",
+        "extracted_text_lines": [
+          212,
+          215
+        ],
+        "text": "'labels': ['id', 'name', 'name'],\n'rowNumbers': [1],\n'label': 'name',\n'fieldName': 'name2',"
+      },
+      {
+        "keyword": "rowNumber",
+        "extracted_text_lines": [
+          228,
+          231
+        ],
+        "text": "'cells': ['8', 'Warsaw'],\n'rowNumber': 10,\n'cell': '',\n'fieldName': 'name2',"
+      },
+      {
+        "keyword": "rowNumber",
+        "extracted_text_lines": [
+          240,
+          243
+        ],
+        "text": "'cells': [],\n'rowNumber': 11},\n{'type': 'type-error',\n'title': 'Type Error',"
+      },
+      {
+        "keyword": "rowNumber",
+        "extracted_text_lines": [
+          251,
+          254
+        ],
+        "text": "'cells': ['x', 'Tokio', 'Japan', 'review'],\n'rowNumber': 12,\n'cell': 'x',\n'fieldName': 'id',"
+      },
+      {
+        "keyword": "fieldNumber",
+        "extracted_text_lines": [
+          215,
+          218
+        ],
+        "text": "'fieldName': 'name2',\n'fieldNumber': 3},\n{'type': 'missing-cell',\n'title': 'Missing Cell',"
+      },
+      {
+        "keyword": "fieldNumber",
+        "extracted_text_lines": [
+          231,
+          234
+        ],
+        "text": "'fieldName': 'name2',\n'fieldNumber': 3},\n{'type': 'blank-row',\n'title': 'Blank Row',"
+      },
+      {
+        "keyword": "fieldNumber",
+        "extracted_text_lines": [
+          254,
+          257
+        ],
+        "text": "'fieldName': 'id',\n'fieldNumber': 1},\n{'type': 'extra-cell',\n'title': 'Extra Cell',"
+      },
+      {
+        "keyword": "fieldNumber",
+        "extracted_text_lines": [
+          270,
+          273
+        ],
+        "text": "'fieldName': '',\n'fieldNumber': 4}]}]}\nValidate Functions\nThe high-level interface for validating data provided by Frictionless is a set of validate functions:"
+      },
+      {
+        "keyword": "custom",
+        "extracted_text_lines": [
+          1007,
+          1010
+        ],
+        "text": "Available Checks\nThere are various validation checks included in the core Frictionless Framework along with an ability to create custom checks. See Validation Checks for a list of available checks.\nPython\nfrom pprint import pprint"
+      },
+      {
+        "keyword": "custom",
+        "extracted_text_lines": [
+          1027,
+          1030
+        ],
+        "text": "Note that only the Baseline Check is enabled by default. Other built-in checks need to be activated as shown below.\nCustom Checks\nThere are many cases when built-in Frictionless checks are not enough. For instance, you might want to create a business logic rule or specific quality requirement for the data. With Frictionless it's very easy to use your own custom checks. Let's see with an example:\nPython"
+      },
+      {
+        "keyword": "custom",
+        "extracted_text_lines": [
+          1028,
+          1031
+        ],
+        "text": "Custom Checks\nThere are many cases when built-in Frictionless checks are not enough. For instance, you might want to create a business logic rule or specific quality requirement for the data. With Frictionless it's very easy to use your own custom checks. Let's see with an example:\nPython\nfrom pprint import pprint"
+      },
+      {
+        "keyword": "custom",
+        "extracted_text_lines": [
+          1044,
+          1047
+        ],
+        "text": "[[3, 1, None, '2 is forbidden!']]\nUsually, it also makes sense to create a custom error for your custom check. The Check class provides other useful methods like validate_header etc. Please read the API Reference for more details.\nLearn more about custom checks in the Check Guide.\nPick/Skip Errors"
+      }
+    ]
+  },
+  {
+    "id": "E24",
+    "url": "https://framework.frictionlessdata.io/docs/formats/excel.html",
+    "accessed_at": "2026-10-09T19:36:17.724330+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "stringified",
+      "preserve_formatting",
+      "schema"
+    ],
+    "resolved_url": "https://framework.frictionlessdata.io/docs/formats/excel.html",
+    "http_status": 200,
+    "response_sha256": "3101592f3c3c62b0d4ad7911c8d514230e07fb36ebd36f702ac92e797631e1b1",
+    "text_line_count": 214,
+    "snippets": [
+      {
+        "keyword": "stringified",
+        "extracted_text_lines": [
+          157,
+          160
+        ],
+        "text": "Signature\n(*, name: Optional[str] = None, title: Optional[str] = None, description: Optional[str] = None, sheet: Union[str, int] = 1, workbook_cache: Optional[Any] = None, fill_merged_cells: bool = False, preserve_formatting: bool = False, adjust_floating_point_error: bool = False, stringified: bool = False) -> None\nParameters\nname"
+      },
+      {
+        "keyword": "stringified",
+        "extracted_text_lines": [
+          175,
+          178
+        ],
+        "text": "(bool)\nstringified\n(bool)\nformats.excelControl.sheet (property)"
+      },
+      {
+        "keyword": "stringified",
+        "extracted_text_lines": [
+          201,
+          204
+        ],
+        "text": "bool\nformats.excelControl.stringified (property)\nStringifies all the cell values. Default value\nis False."
+      },
+      {
+        "keyword": "stringified",
+        "extracted_text_lines": [
+          206,
+          209
+        ],
+        "text": "(either provided or inferred) _after_ the rows are read as strings.\nTo return all cells as strings then both set `stringified=True` and specify a\nschema that defines all fields to be of type string (see #1659).\nSignature"
+      },
+      {
+        "keyword": "preserve_formatting",
+        "extracted_text_lines": [
+          171,
+          174
+        ],
+        "text": "(bool)\npreserve_formatting\n(bool)\nadjust_floating_point_error"
+      },
+      {
+        "keyword": "preserve_formatting",
+        "extracted_text_lines": [
+          191,
+          194
+        ],
+        "text": "bool\nformats.excelControl.preserve_formatting (property)\nIf set to True, it preserves text formatting for numeric and temporal cells. If not set,\nit will return all cell value as string. Default value is False."
+      },
+      {
+        "keyword": "schema",
+        "extracted_text_lines": [
+          28,
+          31
+        ],
+        "text": "Dialect\nSchema\nChecklist\nPipeline"
+      },
+      {
+        "keyword": "schema",
+        "extracted_text_lines": [
+          61,
+          64
+        ],
+        "text": "Json\nJsonSchema\nMarkdown\nOds"
+      },
+      {
+        "keyword": "schema",
+        "extracted_text_lines": [
+          204,
+          207
+        ],
+        "text": "is False.\nNote that a table resource schema will still be applied and types coerced to match the schema\n(either provided or inferred) _after_ the rows are read as strings.\nTo return all cells as strings then both set `stringified=True` and specify a"
+      },
+      {
+        "keyword": "schema",
+        "extracted_text_lines": [
+          207,
+          210
+        ],
+        "text": "To return all cells as strings then both set `stringified=True` and specify a\nschema that defines all fields to be of type string (see #1659).\nSignature\nbool"
+      }
+    ]
+  },
+  {
+    "id": "E25",
+    "url": "https://www.rfc-editor.org/rfc/rfc4180.txt",
+    "accessed_at": "2026-10-09T19:36:17.753255+00:00",
+    "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+    "keywords": [
+      "line breaks",
+      "optional header",
+      "differences",
+      "records"
+    ],
+    "resolved_url": "https://www.rfc-editor.org/rfc/rfc4180.txt",
+    "http_status": 200,
+    "response_sha256": "5d9ec035aa40c0108362cb767c9e2d08c30f7225cb2a4715f484cb13c29b5f21",
+    "text_line_count": 238,
+    "snippets": [
+      {
+        "keyword": "line breaks",
+        "extracted_text_lines": [
+          75,
+          78
+        ],
+        "text": "zzz,yyy,xxx\n6. Fields containing line breaks (CRLF), double quotes, and commas\nshould be enclosed in double-quotes. For example:\n\"aaa\",\"b CRLF"
+      },
+      {
+        "keyword": "line breaks",
+        "extracted_text_lines": [
+          118,
+          121
+        ],
+        "text": "As per section 4.1.1. of RFC 2046 [3], this media type uses CRLF\nto denote line breaks. However, implementors should be aware that\nsome implementations may use other values.\nSecurity considerations:"
+      },
+      {
+        "keyword": "optional header",
+        "extracted_text_lines": [
+          51,
+          54
+        ],
+        "text": "zzz,yyy,xxx\n3. There maybe an optional header line appearing as the first line\nof the file with the same format as normal record lines. This\nheader will contain names corresponding to the fields in the file"
+      },
+      {
+        "keyword": "differences",
+        "extracted_text_lines": [
+          131,
+          134
+        ],
+        "text": "Due to lack of a single specification, there are considerable\ndifferences among implementations. Implementors should \"be\nconservative in what you do, be liberal in what you accept from\nothers\" (RFC 793 [8]) when processing CSV files. An attempt at a"
+      },
+      {
+        "keyword": "records",
+        "extracted_text_lines": [
+          54,
+          57
+        ],
+        "text": "header will contain names corresponding to the fields in the file\nand should contain the same number of fields as the records in\nthe rest of the file (the presence or absence of the header line\nshould be indicated via the optional \"header\" parameter of this"
+      }
+    ]
+  }
+]

@@ -1,0 +1,62 @@
+{
+  "frozen_at": "2026-10-09T19:38:37.980080+00:00",
+  "selection_state": "No optimizer currently satisfies locked promotion criteria. M11 has one full source pass but occupied work exceeds failed control and no eligible speed contrast or measured redundancy saving is established. Other evaluated treatments have material failures/no delivery.",
+  "reason": "Use two unstarted development slots for materially different retained graph/evidence-first bundle on sealed fresh cases; preserve all originals, no replacement of failed arms, same 40-pair envelope. This is development, not locked confirmation.",
+  "method_sha256": "39f1ead2365c6bb7f318f4084fa8fb731068d29f66badaea37f2a83b5fd78b0c",
+  "changes": [
+    {
+      "original": {
+        "block_id": "B-01",
+        "phase": "B",
+        "method": null,
+        "case": "B01",
+        "route": null,
+        "status": "UNSTARTED_RESERVED",
+        "kind": "full-discovery",
+        "allowance_s": 3600,
+        "occupied_ceiling_s": 5400
+      },
+      "successor": {
+        "block_id": "B-01",
+        "phase": "B",
+        "method": "M13",
+        "case": "I01",
+        "route": "luna",
+        "status": "UNSTARTED_DEVELOPMENT",
+        "kind": "full-discovery",
+        "allowance_s": 3600,
+        "occupied_ceiling_s": 5400,
+        "resource_version": "retained60-critic12-v1",
+        "purpose": "prospective development; not promoted integrated/confirmation evidence"
+      }
+    },
+    {
+      "original": {
+        "block_id": "B-02",
+        "phase": "B",
+        "method": null,
+        "case": "B02",
+        "route": null,
+        "status": "UNSTARTED_RESERVED",
+        "kind": "full-discovery",
+        "allowance_s": 3600,
+        "occupied_ceiling_s": 5400
+      },
+      "successor": {
+        "block_id": "B-02",
+        "phase": "B",
+        "method": "M13",
+        "case": "I02",
+        "route": "luna",
+        "status": "UNSTARTED_DEVELOPMENT",
+        "kind": "full-discovery",
+        "allowance_s": 3600,
+        "occupied_ceiling_s": 5400,
+        "resource_version": "retained60-critic12-v1",
+        "purpose": "prospective development; not promoted integrated/confirmation evidence"
+      }
+    }
+  ],
+  "case_manifest_sha256": "301dafa87fb203c69d6e84ea54de57feb28780a8df4ae9eeee1077450a3465d5",
+  "case_contents_opened_by_designer_at_lock": false
+}

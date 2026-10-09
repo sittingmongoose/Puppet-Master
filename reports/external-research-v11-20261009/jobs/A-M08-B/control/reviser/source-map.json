@@ -1,0 +1,611 @@
+{
+  "block": "A-M08-B",
+  "arm": "control",
+  "case": "S02",
+  "method": "M08",
+  "stage": "reviser",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser",
+  "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser",
+  "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S02/brief.md",
+  "source_identity_policy": "S01-S21 retain exact inherited identities, URLs, and versions. Current observations are rechecks only; no ID is silently rebound. Mutable pages are identified and require deployment verification.",
+  "predecessor_source_maps": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/source-map.json",
+      "sha256": "0fb655f1490013ebec7cf442565c773e3c520049d213966b2d5b69610d8bf4ed",
+      "source_ids": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S16",
+        "S17",
+        "S18",
+        "S19",
+        "S20"
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/source-map.json",
+      "sha256": "8d6b09d93728133d0b2511183681cd11f4ad2f52020000d080e380beef7b540f",
+      "source_ids": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S16",
+        "S17",
+        "S18",
+        "S19",
+        "S20",
+        "S21"
+      ]
+    }
+  ],
+  "reviser_primary_source_access_window_utc": [
+    "2026-10-09T19:30:39Z",
+    "2026-10-09T19:37:49Z"
+  ],
+  "sources_directory": "sources/",
+  "sources_index": "sources/README.md",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Mukurtu 4 community and protocol setup",
+      "publisher": "Mukurtu User Manual",
+      "url": "https://docs.mukurtu.org/communities-cultural-protocols-categories/CreateACommunityAndInitialCulturalProtocol/",
+      "version": "Mukurtu 4 manual; page mutable and manual under development",
+      "commit_or_release": null,
+      "locator": "Create a Community and Initial Cultural Protocol; protocol type and membership steps",
+      "accessed_at_utc": "2026-10-09T18:46:13Z",
+      "observed_operations": [
+        "web search",
+        "open"
+      ],
+      "evidence_file": "sources/S01-mukurtu-protocol-setup.md",
+      "drift": "Mutable manual; verify against chosen deployed release."
+    },
+    {
+      "id": "S02",
+      "title": "Mukurtu sharing settings",
+      "publisher": "Mukurtu User Manual",
+      "url": "https://docs.mukurtu.org/communities-cultural-protocols-categories/UnderstandingSharingSettings/",
+      "version": "Mukurtu 4 manual; mutable",
+      "commit_or_release": null,
+      "locator": "Understanding Sharing Settings; All/Any semantics and media warning",
+      "accessed_at_utc": "2026-10-09T18:46:13Z",
+      "observed_operations": [
+        "web search",
+        "open"
+      ],
+      "evidence_file": "sources/S02-mukurtu-sharing-settings.md",
+      "drift": "Mutable manual."
+    },
+    {
+      "id": "S03",
+      "title": "Mukurtu media access with protocols",
+      "publisher": "Mukurtu User Manual",
+      "url": "https://docs.mukurtu.org/media/ManageMediaAccessWithProtocols/",
+      "version": "Mukurtu 4 manual; mutable",
+      "commit_or_release": null,
+      "locator": "Manage Media Access with Cultural Protocols; required protocol and sync toggle",
+      "accessed_at_utc": "2026-10-09T18:46:13Z",
+      "observed_operations": [
+        "web search",
+        "open"
+      ],
+      "evidence_file": "sources/S03-mukurtu-media-access.md",
+      "drift": "Mutable manual."
+    },
+    {
+      "id": "S04",
+      "title": "Mukurtu CMS v4 README",
+      "publisher": "MukurtuCMS",
+      "url": "https://github.com/MukurtuCMS/Mukurtu-CMS/blob/88867a068ef1dfde7b30a60cfe9175c488d9314c/README.md",
+      "version": "Mukurtu CMS v4 development",
+      "commit_or_release": "88867a068ef1dfde7b30a60cfe9175c488d9314c",
+      "locator": "Requirements, private files, install/update sections",
+      "accessed_at_utc": "2026-10-09T18:46:50Z",
+      "observed_operations": [
+        "GitHub public REST API GET commits/main",
+        "open immutable README URL"
+      ],
+      "evidence_file": "sources/S04-mukurtu-v4-readme.md",
+      "drift": "Pinned code commit. The pinned README lists runtime/private-file requirements but does not state release maturity; see supplemental S20 manual status."
+    },
+    {
+      "id": "S05",
+      "title": "Oral-History.Digital software updates",
+      "publisher": "Oral-History.Digital",
+      "url": "https://www.oral-history.digital/en/software/index.html",
+      "version": "Mutable product page; displayed version string 1.4.1 in captured page",
+      "commit_or_release": null,
+      "locator": "Features and release-number section; 2025 and 2026-era page content",
+      "accessed_at_utc": "2026-10-09T18:46:13Z",
+      "observed_operations": [
+        "web search",
+        "open"
+      ],
+      "evidence_file": "sources/S05-ohd-software.md",
+      "drift": "Mutable page. Version string conflicts with linked GitHub release listing v2.11.0; deployed-build mapping unresolved."
+    },
+    {
+      "id": "S06",
+      "title": "Oral-History.Digital transcript upload help",
+      "publisher": "Oral-History.Digital / Freie Universität Berlin",
+      "url": "https://www.oral-history.digital/hilfe-neu/hilfe-erschliessen/ohd_tutorial_6/index.html",
+      "version": "Live German-language help page; mutable; tutorial references 2026",
+      "commit_or_release": null,
+      "locator": "Transcript upload, timecode, edit, translation and bulk upload questions",
+      "accessed_at_utc": "2026-10-09T18:46:13Z",
+      "observed_operations": [
+        "web search",
+        "open German-language page"
+      ],
+      "evidence_file": "sources/S06-ohd-transcripts.md",
+      "drift": "Mutable product help."
+    },
+    {
+      "id": "S07",
+      "title": "Oral-History.Digital cross-archive search help",
+      "publisher": "Oral-History.Digital",
+      "url": "https://www.oral-history.digital/en/hilfe/ohd_tutorial_suche/index.html",
+      "version": "Live English help page; mutable",
+      "commit_or_release": null,
+      "locator": "Full-text search access, filters, languages, result-to-interview behavior",
+      "accessed_at_utc": "2026-10-09T18:46:13Z",
+      "observed_operations": [
+        "web search",
+        "open"
+      ],
+      "evidence_file": "sources/S07-ohd-search.md",
+      "drift": "Mutable product help."
+    },
+    {
+      "id": "S08",
+      "title": "Oral-History.Digital v2.11.0 release",
+      "publisher": "oral-history-digital/ohd",
+      "url": "https://github.com/oral-history-digital/ohd/releases",
+      "version": "v2.11.0",
+      "commit_or_release": "dc81cfa5ffab8819d2f168b5f7fcfe9ab876ede3",
+      "locator": "Release list and v2.11.0 release; immutable tag/commit URL https://github.com/oral-history-digital/ohd/commit/dc81cfa5ffab8819d2f168b5f7fcfe9ab876ede3",
+      "accessed_at_utc": "2026-10-09T18:46:50Z",
+      "observed_operations": [
+        "open release list",
+        "GitHub public REST API GET commits/v2.11.0 at 2026-10-09T18:46:58.928284Z"
+      ],
+      "evidence_file": "sources/S08-ohd-release.md",
+      "drift": "Release tag and commit are immutable; live hosted deployment mapping is unknown."
+    },
+    {
+      "id": "S09",
+      "title": "OHA Archives Principles and Best Practices Complete Manual",
+      "publisher": "Oral History Association",
+      "url": "https://oralhistory.org/wp-content/uploads/2019/11/OHA-Archives-Principles-and-Best-Practices-Complete-Manual.pdf",
+      "version": "Adopted October 2019",
+      "commit_or_release": null,
+      "locator": "PDF page 8 access/release; page 9 transcription; pages 14–15 ownership and access",
+      "accessed_at_utc": "2026-10-09T18:46:13Z",
+      "observed_operations": [
+        "web search",
+        "open PDF",
+        "find consent"
+      ],
+      "evidence_file": "sources/S09-oha-archives-principles.md",
+      "drift": "Fixed PDF edition; check for newer OHA guidance before deployment."
+    },
+    {
+      "id": "S10",
+      "title": "Whisper model card",
+      "publisher": "OpenAI / openai/whisper",
+      "url": "https://github.com/openai/whisper/blob/86098128c0b4f24f0e2aa2994de830614b474227/model-card.md",
+      "version": "Model card at pinned repository commit",
+      "commit_or_release": "86098128c0b4f24f0e2aa2994de830614b474227",
+      "locator": "Model details and performance/limitations",
+      "accessed_at_utc": "2026-10-09T18:46:20Z",
+      "observed_operations": [
+        "open immutable GitHub URL"
+      ],
+      "evidence_file": "sources/S10-whisper-model-card.md",
+      "drift": "Pinned source; model card is tied to repository commit, model weights/releases can evolve separately."
+    },
+    {
+      "id": "S11",
+      "title": "Whisper transcribe.py",
+      "publisher": "OpenAI / openai/whisper",
+      "url": "https://github.com/openai/whisper/blob/86098128c0b4f24f0e2aa2994de830614b474227/whisper/transcribe.py",
+      "version": "Code at pinned repository commit",
+      "commit_or_release": "86098128c0b4f24f0e2aa2994de830614b474227",
+      "locator": "transcribe() parameters lines 1502–1522; CLI flags lines 2335–2360",
+      "accessed_at_utc": "2026-10-09T18:46:20Z",
+      "observed_operations": [
+        "open immutable GitHub URL",
+        "find condition_on_previous_text and word_timestamps"
+      ],
+      "evidence_file": "sources/S11-whisper-transcribe-code.md",
+      "drift": "Pinned code."
+    },
+    {
+      "id": "S12",
+      "title": "Whisper discussion 1046 timestamp regression report",
+      "publisher": "OpenAI / openai/whisper",
+      "url": "https://github.com/openai/whisper/discussions/1046",
+      "version": "Discussion concerning v20230306",
+      "commit_or_release": null,
+      "locator": "Reporter’s same-audio comparison with word timestamps on/off and repeated silent-tail segment",
+      "accessed_at_utc": "2026-10-09T18:46:20Z",
+      "observed_operations": [
+        "open issue URL (redirects to discussion)",
+        "find report text"
+      ],
+      "evidence_file": "sources/S12-whisper-issue-1046.md",
+      "drift": "Immutable discussion record; user report, not a benchmark."
+    },
+    {
+      "id": "S13",
+      "title": "Whisper pull request 1052",
+      "publisher": "OpenAI / openai/whisper",
+      "url": "https://github.com/openai/whisper/pull/1052",
+      "version": "Merged 2023-03-08; five commits",
+      "commit_or_release": "merge commit 919a713 (abbreviated as displayed on PR page)",
+      "locator": "PR merged status, title and follow-up comment about a continuing reproduction",
+      "accessed_at_utc": "2026-10-09T18:46:20Z",
+      "observed_operations": [
+        "open pull request",
+        "find merged status"
+      ],
+      "evidence_file": "sources/S13-whisper-pr-1052.md",
+      "drift": "Immutable PR record; do not infer that all similar failures are fixed."
+    },
+    {
+      "id": "S14",
+      "title": "Whisper v20230307 changelog",
+      "publisher": "OpenAI / openai/whisper",
+      "url": "https://github.com/openai/whisper/blob/26807ec6d3cd9d3ce153d143dc840ea312dc1fad/CHANGELOG.md",
+      "version": "v20230307 release commit",
+      "commit_or_release": "26807ec6d3cd9d3ce153d143dc840ea312dc1fad",
+      "locator": "v20230306, v20230307, v20230314 entries",
+      "accessed_at_utc": "2026-10-09T18:46:20Z",
+      "observed_operations": [
+        "open immutable GitHub URL",
+        "find release history"
+      ],
+      "evidence_file": "sources/S14-whisper-v20230307-changelog.md",
+      "drift": "Pinned release history."
+    },
+    {
+      "id": "S15",
+      "title": "OHMS resources",
+      "publisher": "University of Kentucky Libraries / Nunn Center",
+      "url": "https://libraries.uky.edu/locations/special-collections-research-center/louie-b-nunn-center-oral-history/nunn-center-resources",
+      "version": "Live institutional resources page; mutable",
+      "commit_or_release": null,
+      "locator": "Oral History Metadata Synchronizer resources section",
+      "accessed_at_utc": "2026-10-09T18:46:13Z",
+      "observed_operations": [
+        "web search",
+        "open"
+      ],
+      "evidence_file": "sources/S15-ohms-uky-resources.md",
+      "drift": "Mutable resource page; verify current terms and tool version."
+    },
+    {
+      "id": "S16",
+      "title": "OHMS Viewer README",
+      "publisher": "University of Kentucky Libraries / uklibraries",
+      "url": "https://github.com/uklibraries/ohms-viewer/blob/3343b7884d5e18b5925681d84ea0dab8bb165038/README.md",
+      "version": "v3.10.16 at pinned commit",
+      "commit_or_release": "3343b7884d5e18b5925681d84ea0dab8bb165038",
+      "locator": "requirements, tmpDir, configuration, media-player customization, XML security",
+      "accessed_at_utc": "2026-10-09T18:46:20Z",
+      "observed_operations": [
+        "open immutable GitHub URL",
+        "find XML security"
+      ],
+      "evidence_file": "sources/S16-ohms-viewer-readme.md",
+      "drift": "Pinned code/documentation; deployment and dependencies may change."
+    },
+    {
+      "id": "S17",
+      "title": "OHMS Viewer v3.10.15 security change",
+      "publisher": "University of Kentucky Libraries / uklibraries",
+      "url": "https://github.com/uklibraries/ohms-viewer/commit/ec922b6bd2e94bbbe537aa931e273ce99637ec7d",
+      "version": "v3.10.15",
+      "commit_or_release": "ec922b6bd2e94bbbe537aa931e273ce99637ec7d",
+      "locator": "commit diff adding .htaccess and nginx.cache.conf; README; VERSION.txt",
+      "accessed_at_utc": "2026-10-09T18:46:20Z",
+      "observed_operations": [
+        "open immutable commit URL",
+        "find nginx.cache.conf",
+        "read current release list"
+      ],
+      "evidence_file": "sources/S17-ohms-security-release.md",
+      "drift": "Pinned change; protection requires correct server configuration."
+    },
+    {
+      "id": "S18",
+      "title": "RFC 8493 BagIt File Packaging Format v1.0",
+      "publisher": "RFC Editor",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493",
+      "version": "RFC 8493, October 2018, v1.0",
+      "commit_or_release": "RFC fixed identifier 8493",
+      "locator": "Sections 1.1, 2.1.3–2.4, 3, and Security Considerations",
+      "accessed_at_utc": "2026-10-09T18:46:20Z",
+      "observed_operations": [
+        "open RFC",
+        "find SHA-256/SHA-512 and validity requirements"
+      ],
+      "evidence_file": "sources/S18-rfc8493-bagit.md",
+      "drift": "Fixed RFC; check errata only if implementing a validator."
+    },
+    {
+      "id": "S19",
+      "title": "PREMIS Data Dictionary for Preservation Metadata",
+      "publisher": "Library of Congress",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "version": "PREMIS 3.0",
+      "commit_or_release": "Version 3.0 final PDF",
+      "locator": "PDF pages 58–61 fixity/events; pages 229–237 rights and restriction terms",
+      "accessed_at_utc": "2026-10-09T18:46:20Z",
+      "observed_operations": [
+        "open PDF",
+        "find fixity and termOfRestriction"
+      ],
+      "evidence_file": "sources/S19-premis-3.md",
+      "drift": "Fixed edition; verify current PREMIS edition and local implementation profile before implementation."
+    },
+    {
+      "id": "S20",
+      "title": "Mukurtu 4 User Manual status and support",
+      "publisher": "Mukurtu User Manual",
+      "url": "https://docs.mukurtu.org/",
+      "version": "Mukurtu 4 manual; mutable",
+      "commit_or_release": null,
+      "locator": "Welcome page lines 244–253",
+      "accessed_at_utc": "2026-10-09T18:52:41Z",
+      "observed_operations": [
+        "open official manual home page"
+      ],
+      "evidence_file": "sources/S20-mukurtu-manual-status.md",
+      "drift": "Mutable documentation; states the manual is in development, not that the code itself is a development build."
+    },
+    {
+      "id": "S21",
+      "title": "OHA Principles and Best Practices Complete (2025 edition)",
+      "publisher": "Oral History Association",
+      "url": "https://oralhistory.org/wp-content/uploads/2025/10/2025-OHA-Principles-and-Best-Practices-Complete.pdf",
+      "version": "Official OHA 2025 compiled PDF; core Principles and Best Practices section adopted October 2018, Archiving Oral History section adopted October 2019, and Social Justice Oral History section adopted 2022; no commit or numbered release exposed",
+      "commit_or_release": null,
+      "locator": "Printed pages 10–13 (consent, review/approval, authorization and privacy); 21–22 (withdrawal limits); 35–39 (privacy/access, translation, participatory consent and protections)",
+      "accessed_at_utc": "2026-10-09T19:16:56Z",
+      "observed_operations": [
+        "public web search",
+        "open PDF",
+        "find withdraw",
+        "find transcript/public release",
+        "open relevant PDF page locations"
+      ],
+      "evidence_file": "sources/S21-oha-2025-principles.md",
+      "drift": "OHA-hosted PDF at a fixed URL; URL does not expose a commit or version hash. Identified in filename/title as 2025 edition; retain this exact identity and re-check before implementation."
+    }
+  ],
+  "inherited_independent_rechecks": [
+    {
+      "source_id": "S02",
+      "url": "https://docs.mukurtu.org/communities-cultural-protocols-categories/UnderstandingSharingSettings/",
+      "version_or_commit": "Current mutable Mukurtu 4 manual; version label unchanged from inherited map.",
+      "locator": "Understanding Sharing Settings; All/Any semantics and media warning",
+      "accessed_at_utc": "2026-10-09T19:16:56Z",
+      "observed_operations": [
+        "public web open"
+      ],
+      "observation_summary": "All/Any membership semantics, All default, item/media access mismatch warning.",
+      "evidence_file": "sources/primary-rechecks.md",
+      "identity_note": "Re-observation of inherited source identity; no URL, version or ID rebind."
+    },
+    {
+      "source_id": "S04",
+      "url": "https://github.com/MukurtuCMS/Mukurtu-CMS/blob/88867a068ef1dfde7b30a60cfe9175c488d9314c/README.md",
+      "version_or_commit": "Pinned commit 88867a068ef1dfde7b30a60cfe9175c488d9314c.",
+      "locator": "Requirements, private files, install/update sections",
+      "accessed_at_utc": "2026-10-09T19:16:56Z",
+      "observed_operations": [
+        "public web open"
+      ],
+      "observation_summary": "PHP 8.4; MySQL/MariaDB; private file path outside web root; README does not establish maturity.",
+      "evidence_file": "sources/primary-rechecks.md",
+      "identity_note": "Re-observation of inherited source identity; no URL, version or ID rebind."
+    },
+    {
+      "source_id": "S07",
+      "url": "https://www.oral-history.digital/en/hilfe/ohd_tutorial_suche/index.html",
+      "version_or_commit": "Current mutable OHD English help page.",
+      "locator": "Full-text search access, filters, languages, result-to-interview behavior",
+      "accessed_at_utc": "2026-10-09T19:16:56Z",
+      "observed_operations": [
+        "public web open",
+        "targeted find"
+      ],
+      "observation_summary": "Full-text search requires registration and archive permission; scope includes transcripts, translations and descriptive/index text.",
+      "evidence_file": "sources/primary-rechecks.md",
+      "identity_note": "Re-observation of inherited source identity; no URL, version or ID rebind."
+    },
+    {
+      "source_id": "S10",
+      "url": "https://github.com/openai/whisper/blob/86098128c0b4f24f0e2aa2994de830614b474227/model-card.md",
+      "version_or_commit": "Pinned commit 86098128c0b4f24f0e2aa2994de830614b474227.",
+      "locator": "Model details and performance/limitations",
+      "accessed_at_utc": "2026-10-09T19:16:56Z",
+      "observed_operations": [
+        "public web open",
+        "targeted find"
+      ],
+      "observation_summary": "Diarization/speaker classification not robustly evaluated; context evaluation recommended.",
+      "evidence_file": "sources/primary-rechecks.md",
+      "identity_note": "Re-observation of inherited source identity; no URL, version or ID rebind."
+    },
+    {
+      "source_id": "S11",
+      "url": "https://github.com/openai/whisper/blob/86098128c0b4f24f0e2aa2994de830614b474227/whisper/transcribe.py",
+      "version_or_commit": "Pinned commit 86098128c0b4f24f0e2aa2994de830614b474227.",
+      "locator": "transcribe() parameters lines 1502–1522; CLI flags lines 2335–2360",
+      "accessed_at_utc": "2026-10-09T19:16:56Z",
+      "observed_operations": [
+        "public web open",
+        "targeted find"
+      ],
+      "observation_summary": "Word timestamps false by default and experimental; timing thresholds/clip inputs use seconds; translated word timing warned.",
+      "evidence_file": "sources/primary-rechecks.md",
+      "identity_note": "Re-observation of inherited source identity; no URL, version or ID rebind."
+    },
+    {
+      "source_id": "S13",
+      "url": "https://github.com/openai/whisper/pull/1052",
+      "version_or_commit": "PR #1052; merged 2023-03-08.",
+      "locator": "PR merged status, title and follow-up comment about a continuing reproduction",
+      "accessed_at_utc": "2026-10-09T19:16:56Z",
+      "observed_operations": [
+        "public web open",
+        "targeted find"
+      ],
+      "observation_summary": "Merged corrective PR; visible comment reports repetition persisted in another reproduction.",
+      "evidence_file": "sources/primary-rechecks.md",
+      "identity_note": "Re-observation of inherited source identity; no URL, version or ID rebind."
+    },
+    {
+      "source_id": "S18",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493",
+      "version_or_commit": "RFC 8493, October 2018, BagIt 1.0.",
+      "locator": "Sections 1.1, 2.1.3–2.4, 3, and Security Considerations",
+      "accessed_at_utc": "2026-10-09T19:16:56Z",
+      "observed_operations": [
+        "public web open",
+        "targeted find"
+      ],
+      "observation_summary": "SHA-256/SHA-512 tool support required, SHA-512 default recommended; valid manifests are checked.",
+      "evidence_file": "sources/primary-rechecks.md",
+      "identity_note": "Re-observation of inherited source identity; no URL, version or ID rebind."
+    },
+    {
+      "source_id": "S19",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "version_or_commit": "PREMIS Data Dictionary Version 3.0 final PDF.",
+      "locator": "PDF pages 58–61 fixity/events; pages 229–237 rights and restriction terms",
+      "accessed_at_utc": "2026-10-09T19:16:56Z",
+      "observed_operations": [
+        "public web open",
+        "targeted find"
+      ],
+      "observation_summary": "Digest algorithm/value and fixity check event/outcome represented; metadata model does not enforce web ACLs.",
+      "evidence_file": "sources/primary-rechecks.md",
+      "identity_note": "Re-observation of inherited source identity; no URL, version or ID rebind."
+    }
+  ],
+  "reviser_independent_rechecks": [
+    {
+      "source_id": "S21",
+      "url": "https://oralhistory.org/wp-content/uploads/2025/10/2025-OHA-Principles-and-Best-Practices-Complete.pdf",
+      "version_or_commit": "Official OHA 2025 compiled PDF; component adoption dates retained in inherited record.",
+      "locator": "Printed pp. 10–13, 21–22, 35–39",
+      "accessed_at_utc": "2026-10-09T19:30:39Z",
+      "observed_operations": [
+        "public web open",
+        "targeted find"
+      ],
+      "observation_summary": "Review/authorization, release timing, restrictions, privacy/language, and limits of withdrawal confirmed.",
+      "evidence_file": "sources/reviser-rechecks.md",
+      "identity_note": "Exact inherited source re-observed; no identity rebind."
+    },
+    {
+      "source_id": "S02",
+      "url": "https://docs.mukurtu.org/communities-cultural-protocols-categories/UnderstandingSharingSettings/",
+      "version_or_commit": "Current mutable Mukurtu 4 manual.",
+      "locator": "All/Any semantics, default All, item/media warning",
+      "accessed_at_utc": "2026-10-09T19:30:53Z",
+      "observed_operations": [
+        "public web open",
+        "targeted find"
+      ],
+      "observation_summary": "All requires every assigned protocol, Any one, default is All, and item changes do not automatically update media.",
+      "evidence_file": "sources/reviser-rechecks.md",
+      "identity_note": "Exact inherited source re-observed; no identity rebind."
+    },
+    {
+      "source_id": "S03",
+      "url": "https://docs.mukurtu.org/media/ManageMediaAccessWithProtocols/",
+      "version_or_commit": "Current mutable Mukurtu 4 manual.",
+      "locator": "Manage Media Access with Cultural Protocols",
+      "accessed_at_utc": "2026-10-09T19:30:39Z",
+      "observed_operations": [
+        "public web open"
+      ],
+      "observation_summary": "Media access remains a separate documentation surface; no segment-range claim inferred.",
+      "evidence_file": "sources/reviser-rechecks.md",
+      "identity_note": "Exact inherited source re-observed; no identity rebind."
+    },
+    {
+      "source_id": "S04",
+      "url": "https://github.com/MukurtuCMS/Mukurtu-CMS/blob/88867a068ef1dfde7b30a60cfe9175c488d9314c/README.md",
+      "version_or_commit": "Pinned commit 88867a068ef1dfde7b30a60cfe9175c488d9314c.",
+      "locator": "Requirements and private-file configuration",
+      "accessed_at_utc": "2026-10-09T19:37:49Z",
+      "observed_operations": [
+        "public web open"
+      ],
+      "observation_summary": "Pinned README requirements do not establish release maturity.",
+      "evidence_file": "sources/reviser-rechecks.md",
+      "identity_note": "Exact inherited source re-observed; no identity rebind."
+    },
+    {
+      "source_id": "S16",
+      "url": "https://github.com/uklibraries/ohms-viewer/blob/3343b7884d5e18b5925681d84ea0dab8bb165038/README.md",
+      "version_or_commit": "Pinned commit 3343b7884d5e18b5925681d84ea0dab8bb165038.",
+      "locator": "Requirements, viewer configuration, media hosting",
+      "accessed_at_utc": "2026-10-09T19:30:53Z",
+      "observed_operations": [
+        "public web open"
+      ],
+      "observation_summary": "Viewer is a separate PHP deployment with configured XML and media dependencies.",
+      "evidence_file": "sources/reviser-rechecks.md",
+      "identity_note": "Exact inherited source re-observed; no identity rebind."
+    },
+    {
+      "source_id": "S17",
+      "url": "https://github.com/uklibraries/ohms-viewer/commit/ec922b6bd2e94bbbe537aa931e273ce99637ec7d",
+      "version_or_commit": "Pinned security change ec922b6bd2e94bbbe537aa931e273ce99637ec7d.",
+      "locator": "README, Apache/Nginx cache block, version file",
+      "accessed_at_utc": "2026-10-09T19:30:39Z",
+      "observed_operations": [
+        "public web open",
+        "targeted find"
+      ],
+      "observation_summary": "Direct HTTP access to XML cache requires correct server rule and does not secure external media.",
+      "evidence_file": "sources/reviser-rechecks.md",
+      "identity_note": "Exact inherited source re-observed; no identity rebind."
+    }
+  ],
+  "usage_billing_observed": null,
+  "source_notes_policy": "Bounded notes only; no full source pages or PDFs copied. Product/runtime behavior remains proposed until tested in a qualified sandbox.",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/input-map.json"
+}

@@ -1,0 +1,734 @@
+[
+  {
+    "id": "J01",
+    "url": "https://github.com/OpenRefine/OpenRefine/issues/1908",
+    "accessed_at": "2026-10-09T19:37:19.846841+00:00",
+    "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+    "response_sha256": "b28d21d43eefb2584b353656b0c7855f4def608c655a4c713e87c4f9ea8babb5",
+    "snippets": [
+      {
+        "symbol": "Java 8",
+        "extracted_text_lines": [
+          272,
+          280
+        ],
+        "text": "TIMESTAMP None on Jun 28, 2020\nMember\nMore actions\n@ettorerizza's #1908 (comment) has the critical information. The Excel importer is creating java.util.Date objects instead of OpenRefine dates. The two used to be the same, but the migration to the Java 8 API in 19f98b7 broke this equivalence when the definition of an OpenRefine date changed:\n- if (v instanceof Calendar || v instanceof Date) {\n+ if (v instanceof OffsetDateTime) {\nand the Excel importer wasn't updated.\nTo fix this:\nfirst, create a (failing) test which imports the test file provided above (thank you @dcabo !) and verifies that the cell value is imported as an OpenRefine date"
+      },
+      {
+        "symbol": "3.5",
+        "extracted_text_lines": [
+          120,
+          128
+        ],
+        "text": "Labels\nDifficulty: IntermediateIdentifies moderately challenging issues that require some experience and familiarity with project.Identifies moderately challenging issues that require some experience and familiarity with project.Priority: HighDenotes issues that require urgent attention and may be blocking progress.Denotes issues that require urgent attention and may be blocking progress.Type: BugIssues related to software defects or unexpected behavior, which require resolution.Issues related to software defects or unexpected behavior, which require resolution.XLS(X)About the Excel import / export functionalityAbout the Excel import / export functionalityimportAbout importers in general - add a label for the data format if availableAbout importers in general - add a label for the data format if available\nMilestone\n3.5\nDescription\ndcabo\nopened\nTIMESTAMP None on Dec 15, 2018\nIssue body actions"
+      },
+      {
+        "symbol": "3.5",
+        "extracted_text_lines": [
+          314,
+          322
+        ],
+        "text": "This issue will close once commit 306b541 is merged into the 'master' branch.\n306b541\ntfmorris\nadded this to the  3.5 milestone\nTIMESTAMP None on Jul 17, 2020\ntfmorris commented\nTIMESTAMP None on Aug 9, 2020\ntfmorris\nTIMESTAMP None on Aug 9, 2020"
+      },
+      {
+        "symbol": "3.5",
+        "extracted_text_lines": [
+          335,
+          343
+        ],
+        "text": "TIMESTAMP None on Feb 13, 2021\nMember\nMore actions\nThis fix will go in 3.5, it has not been released in 3.4 sadly.\nHichemDax commented\nTIMESTAMP None on Feb 13, 2021\nHichemDax\nTIMESTAMP None on Feb 13, 2021\nMore actions"
+      },
+      {
+        "symbol": "3.4",
+        "extracted_text_lines": [
+          328,
+          336
+        ],
+        "text": "HichemDax\nTIMESTAMP None on Feb 13, 2021\nMore actions\nIs this bug fixed? I ran into the same issue with 3.4.1\nwetneb commented\nTIMESTAMP None on Feb 13, 2021\nwetneb\nTIMESTAMP None on Feb 13, 2021\nMember"
+      },
+      {
+        "symbol": "3.4",
+        "extracted_text_lines": [
+          335,
+          343
+        ],
+        "text": "TIMESTAMP None on Feb 13, 2021\nMember\nMore actions\nThis fix will go in 3.5, it has not been released in 3.4 sadly.\nHichemDax commented\nTIMESTAMP None on Feb 13, 2021\nHichemDax\nTIMESTAMP None on Feb 13, 2021\nMore actions"
+      }
+    ]
+  },
+  {
+    "id": "J02",
+    "url": "https://github.com/OpenRefine/OpenRefine/pull/2909",
+    "accessed_at": "2026-10-09T19:37:19.848404+00:00",
+    "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+    "response_sha256": "6d1162eb4ec1ff32c2233155d35db11c964caeaee913c2be959d896d787e4ced",
+    "snippets": [
+      {
+        "symbol": "OffsetDateTime",
+        "extracted_text_lines": [
+          126,
+          134
+        ],
+        "text": "Copy link\nCopy Markdown\nMember\nUses the OpenRefine 3.0+ date type of OffsetDateTime instead of the original java.util.Date.\nAlso added date tests which I was too lazy to figure out 8 1/2 years ago when I wrote the tests and added some utility methods to centralize date checking and conversion.\nSorry, something went wrong.\nUh oh!\nThere was an error while loading. Please reload this page.\n👍"
+      },
+      {
+        "symbol": "OffsetDateTime",
+        "extracted_text_lines": [
+          152,
+          160
+        ],
+        "text": "Fix date import - fixes OpenRefine#1908\n…\nc5aed37\nChange from java.util.Date to OpenRefine 3.0+'s OffsetDateTime\nFixes OpenRefine#1908\nCentralize date conversion\n872fd60\nwetneb\nreviewed"
+      },
+      {
+        "symbol": "OffsetDateTime",
+        "extracted_text_lines": [
+          163,
+          171
+        ],
+        "text": "Comment thread\nmain/src/com/google/refine/expr/functions/ToDate.java\nOutdated\npublic static OffsetDateTime toDate(Calendar date) {\nreturn date.toInstant().atOffset(ZoneOffset.UTC);\n}\nwetneb\nTIMESTAMP 2020-07-09T06:13:31Z Jul 9, 2020\nCopy link"
+      },
+      {
+        "symbol": "Jul 9, 2020",
+        "extracted_text_lines": [
+          111,
+          119
+        ],
+        "text": "wetneb merged 6 commits into\nOpenRefine:masterOpenRefine/OpenRefine:masterfrom\ntfmorris:1908-excel-importer-datestfmorris/OpenRefine:1908-excel-importer-datesCopy head branch name to clipboard\nTIMESTAMP None Jul 9, 2020\nConversationCommits6 (6)ChecksFiles changed\nMerged\nFix Excel date import - Fixes #1908#2909\nwetneb merged 6 commits into\nOpenRefine:masterOpenRefine/OpenRefine:masterfrom"
+      },
+      {
+        "symbol": "Jul 9, 2020",
+        "extracted_text_lines": [
+          158,
+          166
+        ],
+        "text": "872fd60\nwetneb\nreviewed\nTIMESTAMP 2020-07-09T06:13:31Z Jul 9, 2020\nView reviewed changes\nComment thread\nmain/src/com/google/refine/expr/functions/ToDate.java\nOutdated\npublic static OffsetDateTime toDate(Calendar date) {"
+      },
+      {
+        "symbol": "Jul 9, 2020",
+        "extracted_text_lines": [
+          167,
+          175
+        ],
+        "text": "return date.toInstant().atOffset(ZoneOffset.UTC);\n}\nwetneb\nTIMESTAMP 2020-07-09T06:13:31Z Jul 9, 2020\nCopy link\nCopy Markdown\nMember\nThere was a problem hiding this comment.\nChoose a reason for hiding this comment"
+      },
+      {
+        "symbol": "test",
+        "extracted_text_lines": [
+          110,
+          118
+        ],
+        "text": "Merged\nwetneb merged 6 commits into\nOpenRefine:masterOpenRefine/OpenRefine:masterfrom\ntfmorris:1908-excel-importer-datestfmorris/OpenRefine:1908-excel-importer-datesCopy head branch name to clipboard\nTIMESTAMP None Jul 9, 2020\nConversationCommits6 (6)ChecksFiles changed\nMerged\nFix Excel date import - Fixes #1908#2909\nwetneb merged 6 commits into"
+      },
+      {
+        "symbol": "test",
+        "extracted_text_lines": [
+          117,
+          125
+        ],
+        "text": "Fix Excel date import - Fixes #1908#2909\nwetneb merged 6 commits into\nOpenRefine:masterOpenRefine/OpenRefine:masterfrom\ntfmorris:1908-excel-importer-datestfmorris/OpenRefine:1908-excel-importer-datesCopy head branch name to clipboard\nTIMESTAMP None\nConversation\ntfmorris\ncommented\nTIMESTAMP 2020-07-08T19:50:55Z Jul 8, 2020"
+      },
+      {
+        "symbol": "test",
+        "extracted_text_lines": [
+          127,
+          135
+        ],
+        "text": "Copy Markdown\nMember\nUses the OpenRefine 3.0+ date type of OffsetDateTime instead of the original java.util.Date.\nAlso added date tests which I was too lazy to figure out 8 1/2 years ago when I wrote the tests and added some utility methods to centralize date checking and conversion.\nSorry, something went wrong.\nUh oh!\nThere was an error while loading. Please reload this page.\n👍\n1"
+      }
+    ]
+  },
+  {
+    "id": "J03",
+    "url": "https://github.com/OpenRefine/OpenRefine/pull/2909.diff",
+    "accessed_at": "2026-10-09T19:37:19.853001+00:00",
+    "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+    "response_sha256": "d26d0366838a5659d546a46414ad9635a491e91cc88b1ad2e57f480cc0606217",
+    "snippets": [
+      {
+        "symbol": "OffsetDateTime",
+        "extracted_text_lines": [
+          61,
+          69
+        ],
+        "text": "import java.util.GregorianCalendar;\nimport java.util.Properties;\nimport java.util.TimeZone;\n@@ -240,6 +241,18 @@ static public Calendar offsetDateTimeToCalendar(OffsetDateTime offsetDateTime) {\nreturn cal;\n}\n+    public static boolean isDate(Object o) {\n+        return o instanceof OffsetDateTime;\n+    }"
+      },
+      {
+        "symbol": "OffsetDateTime",
+        "extracted_text_lines": [
+          65,
+          73
+        ],
+        "text": "return cal;\n}\n+    public static boolean isDate(Object o) {\n+        return o instanceof OffsetDateTime;\n+    }\n+\n+    public static OffsetDateTime toDate(Date date) {\n+        return date.toInstant().atOffset(ZoneOffset.UTC);\n+    }"
+      },
+      {
+        "symbol": "OffsetDateTime",
+        "extracted_text_lines": [
+          68,
+          76
+        ],
+        "text": "+        return o instanceof OffsetDateTime;\n+    }\n+\n+    public static OffsetDateTime toDate(Date date) {\n+        return date.toInstant().atOffset(ZoneOffset.UTC);\n+    }\n+\n+    public static OffsetDateTime toDate(Calendar date) {\n+        return date.toInstant().atOffset(ZoneOffset.UTC);"
+      },
+      {
+        "symbol": "ExcelImporterTests",
+        "extracted_text_lines": [
+          79,
+          87
+        ],
+        "text": "public static ObjectNode evaluateJsonStringToObjectNode(String optionsString) {\ntry {\nJsonNode tree = mapper.readTree(optionsString);\ndiff --git a/main/tests/server/src/com/google/refine/importers/ExcelImporterTests.java b/main/tests/server/src/com/google/refine/importers/ExcelImporterTests.java\nindex df77a30845c0..de92ddc1a75e 100644\n--- a/main/tests/server/src/com/google/refine/importers/ExcelImporterTests.java\n+++ b/main/tests/server/src/com/google/refine/importers/ExcelImporterTests.java\n@@ -36,6 +36,7 @@ SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT\nimport static org.mockito.Mockito.times;"
+      },
+      {
+        "symbol": "ExcelImporterTests",
+        "extracted_text_lines": [
+          81,
+          89
+        ],
+        "text": "JsonNode tree = mapper.readTree(optionsString);\ndiff --git a/main/tests/server/src/com/google/refine/importers/ExcelImporterTests.java b/main/tests/server/src/com/google/refine/importers/ExcelImporterTests.java\nindex df77a30845c0..de92ddc1a75e 100644\n--- a/main/tests/server/src/com/google/refine/importers/ExcelImporterTests.java\n+++ b/main/tests/server/src/com/google/refine/importers/ExcelImporterTests.java\n@@ -36,6 +36,7 @@ SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT\nimport static org.mockito.Mockito.times;\nimport static org.mockito.Mockito.verify;\n+import static org.testng.Assert.assertTrue;"
+      },
+      {
+        "symbol": "ExcelImporterTests",
+        "extracted_text_lines": [
+          82,
+          90
+        ],
+        "text": "diff --git a/main/tests/server/src/com/google/refine/importers/ExcelImporterTests.java b/main/tests/server/src/com/google/refine/importers/ExcelImporterTests.java\nindex df77a30845c0..de92ddc1a75e 100644\n--- a/main/tests/server/src/com/google/refine/importers/ExcelImporterTests.java\n+++ b/main/tests/server/src/com/google/refine/importers/ExcelImporterTests.java\n@@ -36,6 +36,7 @@ SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT\nimport static org.mockito.Mockito.times;\nimport static org.mockito.Mockito.verify;\n+import static org.testng.Assert.assertTrue;\nimport java.io.File;"
+      },
+      {
+        "symbol": "Date",
+        "extracted_text_lines": [
+          1,
+          6
+        ],
+        "text": "diff --git a/main/src/com/google/refine/expr/functions/ToDate.java b/main/src/com/google/refine/expr/functions/ToDate.java\nindex 2466bd676ace..543719eee959 100644\n--- a/main/src/com/google/refine/expr/functions/ToDate.java\n+++ b/main/src/com/google/refine/expr/functions/ToDate.java\n@@ -202,4 +202,5 @@ public String getParams() {\npublic String getReturns() {"
+      },
+      {
+        "symbol": "Date",
+        "extracted_text_lines": [
+          1,
+          8
+        ],
+        "text": "diff --git a/main/src/com/google/refine/expr/functions/ToDate.java b/main/src/com/google/refine/expr/functions/ToDate.java\nindex 2466bd676ace..543719eee959 100644\n--- a/main/src/com/google/refine/expr/functions/ToDate.java\n+++ b/main/src/com/google/refine/expr/functions/ToDate.java\n@@ -202,4 +202,5 @@ public String getParams() {\npublic String getReturns() {\nreturn \"date\";\n}"
+      },
+      {
+        "symbol": "Date",
+        "extracted_text_lines": [
+          1,
+          9
+        ],
+        "text": "diff --git a/main/src/com/google/refine/expr/functions/ToDate.java b/main/src/com/google/refine/expr/functions/ToDate.java\nindex 2466bd676ace..543719eee959 100644\n--- a/main/src/com/google/refine/expr/functions/ToDate.java\n+++ b/main/src/com/google/refine/expr/functions/ToDate.java\n@@ -202,4 +202,5 @@ public String getParams() {\npublic String getReturns() {\nreturn \"date\";\n}\n+"
+      }
+    ]
+  },
+  {
+    "id": "J04",
+    "url": "https://github.com/OpenRefine/OpenRefine/releases/tag/3.5.0",
+    "accessed_at": "2026-10-09T19:37:19.853782+00:00",
+    "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+    "response_sha256": "15c0f6cf86b60c4ec2fe61f6b99c66302b4b34ce1a0c38995f8f95e3bdd231a7",
+    "snippets": [
+      {
+        "symbol": "relative-time datetime",
+        "text": "TIMESTAMP 2021-11-07T10:05:04Z"
+      },
+      {
+        "symbol": "d4209a2",
+        "extracted_text_lines": [
+          127,
+          135
+        ],
+        "text": "to master\nsince this release\n3.5.0\nd4209a2\nThis is the first stable release of the 3.5 series. Please backup your workspace directory before installing and report any problems that you encounter.\nNew features\nWikidata support has been generalized to arbitrary Wikibase instances. (#1640)\nThe cross function now accepts implicit project and column names (#2504)\nThe left panel can be collapsed (#1038)"
+      }
+    ]
+  },
+  {
+    "id": "J05",
+    "url": "https://github.com/OpenRefine/OpenRefine/issues/7042",
+    "accessed_at": "2026-10-09T19:37:20.283312+00:00",
+    "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+    "response_sha256": "d43142f862fb123d65da38d280f89cbcbe7bb33efcf554f7bc78380cc87dc00e",
+    "snippets": [
+      {
+        "symbol": "3.7",
+        "extracted_text_lines": [
+          126,
+          134
+        ],
+        "text": "opened\nTIMESTAMP None on Dec 11, 2024\nIssue body actions\nThe option “Use character ... to enclose cells containing column separators” (ignoreQuoteCharacter) of the new CSV/TSV importer (OpenRefine 3.8) behaves differently than before (OpenRefine 3.7). If I deselect the checkbox, the quotation marks appear in the data, but the assignment to the columns remains unchanged.\nTo Reproduce\nSteps to reproduce the behavior:\nCreate project from clipboard:\na,b,c\n1,\"2,0\""
+      },
+      {
+        "symbol": "3.7",
+        "extracted_text_lines": [
+          136,
+          144
+        ],
+        "text": "$,/,'\nDeselect checkbox \"Use character ... to enclose cells containing column separators\"\nCurrent Results (OpenRefine 3.8)\nPrevious Behavior (OpenRefine 3.7)\nReactions are currently unavailable\nActivity\nfelixlohmeier\nadded\nStatus: Pending ReviewIndicates that the issue or pull request is awaiting review by project maintainers or collaboratorsIndicates that the issue or pull request is awaiting review by project maintainers or collaborators"
+      },
+      {
+        "symbol": "3.8",
+        "extracted_text_lines": [
+          126,
+          134
+        ],
+        "text": "opened\nTIMESTAMP None on Dec 11, 2024\nIssue body actions\nThe option “Use character ... to enclose cells containing column separators” (ignoreQuoteCharacter) of the new CSV/TSV importer (OpenRefine 3.8) behaves differently than before (OpenRefine 3.7). If I deselect the checkbox, the quotation marks appear in the data, but the assignment to the columns remains unchanged.\nTo Reproduce\nSteps to reproduce the behavior:\nCreate project from clipboard:\na,b,c\n1,\"2,0\""
+      },
+      {
+        "symbol": "3.8",
+        "extracted_text_lines": [
+          135,
+          143
+        ],
+        "text": "0,0,0\n$,/,'\nDeselect checkbox \"Use character ... to enclose cells containing column separators\"\nCurrent Results (OpenRefine 3.8)\nPrevious Behavior (OpenRefine 3.7)\nReactions are currently unavailable\nActivity\nfelixlohmeier\nadded"
+      },
+      {
+        "symbol": "3.8",
+        "extracted_text_lines": [
+          159,
+          167
+        ],
+        "text": "TIMESTAMP None on Dec 25, 2024\nContributor\nMore actions\n@felixlohmeier There has been a change in the working in 3.8 version. This is with the adoption of industry standard parser library univocity.\nWorking of the setting \"Use character to enclose cells containing column separators\"\nChecked : Discard the character in the cell value\nUnchecked :Retain the character in the cell value\nsunilnatraj commented\nTIMESTAMP None on Dec 25, 2024"
+      },
+      {
+        "symbol": "7703",
+        "extracted_text_lines": [
+          111,
+          119
+        ],
+        "text": "New issue\nCopy link\nClosed\n#7703\nClosed\nCSV importer no longer ignores quotes entirely when checkbox \"Use character ... to enclose cells containing column separators\" is deselected#7042\n#7703\nCopy link\nAssignees"
+      },
+      {
+        "symbol": "7703",
+        "extracted_text_lines": [
+          114,
+          122
+        ],
+        "text": "#7703\nClosed\nCSV importer no longer ignores quotes entirely when checkbox \"Use character ... to enclose cells containing column separators\" is deselected#7042\n#7703\nCopy link\nAssignees\nLabels\nCSV/TSVAbout the CSV/TSV import or exportAbout the CSV/TSV import or exportType: BugIssues related to software defects or unexpected behavior, which require resolution.Issues related to software defects or unexpected behavior, which require resolution.\nMilestone"
+      },
+      {
+        "symbol": "7703",
+        "extracted_text_lines": [
+          243,
+          251
+        ],
+        "text": "This issue will close once commit 1d845c9 is merged into the 'master' branch.\n1d845c9\ntfmorris\nclosed this as completedin #7703\nTIMESTAMP None on Mar 13, 2026\ntfmorris commented\nTIMESTAMP None on Mar 13, 2026\ntfmorris\nTIMESTAMP None on Mar 13, 2026"
+      }
+    ]
+  },
+  {
+    "id": "J06",
+    "url": "https://github.com/OpenRefine/OpenRefine/pull/7703",
+    "accessed_at": "2026-10-09T19:37:20.370531+00:00",
+    "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+    "response_sha256": "c50f7deeb04571ba25999fa59cccc3422e2dfd174f736cd1aff872643c817176",
+    "snippets": [
+      {
+        "symbol": "failing",
+        "extracted_text_lines": [
+          189,
+          197
+        ],
+        "text": "Pull request overview\nFixes a regression in the separator-based CSV importer where disabling quote processing should make quotes behave like normal characters (so separators inside quotes still split columns), aligning OpenRefine 3.8 behavior with 3.7.\nChanges:\nUpdate the server-side importer test to cover a failing-before case where quotes span a delimiter and would incorrectly affect column splitting.\nIn the CSV parser configuration, disable quoting entirely when processQuotes is false by setting the quote character to NUL ('\\0').\nReviewed changes\nCopilot reviewed 2 out of 2 changed files in this pull request and generated no comments.\nFile\nDescription"
+      },
+      {
+        "symbol": "Mar 13, 2026",
+        "extracted_text_lines": [
+          111,
+          119
+        ],
+        "text": "tfmorris merged 2 commits into\nOpenRefine:masterOpenRefine/OpenRefine:masterfrom\ntfmorris:7042-csv-ignore-quotetfmorris/OpenRefine:7042-csv-ignore-quoteCopy head branch name to clipboard\nTIMESTAMP None Mar 13, 2026\nConversationCommits2 (2)ChecksFiles changed\nMerged\nFix ignore quote setting for CSV importer#7703\ntfmorris merged 2 commits into\nOpenRefine:masterOpenRefine/OpenRefine:masterfrom"
+      },
+      {
+        "symbol": "Mar 13, 2026",
+        "extracted_text_lines": [
+          206,
+          214
+        ],
+        "text": "tfmorris\nadded this to the\n3.10.2 milestone\nTIMESTAMP 2026-03-13T01:03:03Z Mar 13, 2026\nAbbe98\nself-requested a review\nTIMESTAMP 2026-03-13T11:15:00Z March 13, 2026 11:15\nAbbe98\napproved these changes"
+      },
+      {
+        "symbol": "Mar 13, 2026",
+        "extracted_text_lines": [
+          212,
+          220
+        ],
+        "text": "TIMESTAMP 2026-03-13T11:15:00Z March 13, 2026 11:15\nAbbe98\napproved these changes\nTIMESTAMP 2026-03-13T11:15:31Z Mar 13, 2026\nView reviewed changes\nAbbe98\nleft a comment\nCopy link\nCopy Markdown"
+      },
+      {
+        "symbol": "c32deb2",
+        "extracted_text_lines": [
+          239,
+          247
+        ],
+        "text": "Hide details\nView details\ntfmorris\nmerged commit c32deb2\ninto\nOpenRefine:master\nTIMESTAMP 2026-03-13T17:49:25Z Mar 13, 2026\n23 checks passed\nUh oh!"
+      },
+      {
+        "symbol": "3.10.2",
+        "extracted_text_lines": [
+          205,
+          213
+        ],
+        "text": "All reactions\ntfmorris\nadded this to the\n3.10.2 milestone\nTIMESTAMP 2026-03-13T01:03:03Z Mar 13, 2026\nAbbe98\nself-requested a review\nTIMESTAMP 2026-03-13T11:15:00Z March 13, 2026 11:15\nAbbe98"
+      },
+      {
+        "symbol": "3.10.2",
+        "extracted_text_lines": [
+          279,
+          287
+        ],
+        "text": "Projects\nNone yet\nMilestone\n3.10.2\nDevelopment\nSuccessfully merging this pull request may close these issues.\nCSV importer no longer ignores quotes entirely when checkbox \"Use character ... to enclose cells containing column separators\" is deselected\nUh oh!\nThere was an error while loading. Please reload this page."
+      },
+      {
+        "symbol": "confirmed",
+        "extracted_text_lines": [
+          128,
+          136
+        ],
+        "text": "Member\nFixes #7042\nChanges proposed in this pull request:\nAdjust the test to cover the case that should have failed before (and confirmed that it failed without the fix)\nIf quotes are being ignored, set the the quote character to NUL\nSorry, something went wrong.\nUh oh!\nThere was an error while loading. Please reload this page.\nAll reactions"
+      }
+    ]
+  },
+  {
+    "id": "J07",
+    "url": "https://github.com/OpenRefine/OpenRefine/pull/7703.diff",
+    "accessed_at": "2026-10-09T19:37:20.976898+00:00",
+    "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+    "response_sha256": "8d73d63092da6829b9e8bfd1ad4a0d4569688fb038dd7c6c8feb7db92ca87d66",
+    "snippets": [
+      {
+        "symbol": "quote",
+        "extracted_text_lines": [
+          5,
+          13
+        ],
+        "text": "@@ -113,6 +113,8 @@ public void parseOneFile(\n}\nsep = StringEscapeUtils.unescapeJava(sep);\nboolean processQuotes = JSONUtilities.getBoolean(options, \"processQuotes\", true);\n+        // The below was added in 2013 as a backend-only option with no front end support (or tests)\n+        // TODO: Rationalize and either fully support or remove\nboolean strictQuotes = JSONUtilities.getBoolean(options, \"strictQuotes\", false);\n// TODO: Perhaps ask user to declare explicitly if they want TSV or weird CSV with \\t separator hybrid?\n@@ -159,7 +161,7 @@ public void parseOneFile("
+      },
+      {
+        "symbol": "quote",
+        "extracted_text_lines": [
+          8,
+          16
+        ],
+        "text": "boolean processQuotes = JSONUtilities.getBoolean(options, \"processQuotes\", true);\n+        // The below was added in 2013 as a backend-only option with no front end support (or tests)\n+        // TODO: Rationalize and either fully support or remove\nboolean strictQuotes = JSONUtilities.getBoolean(options, \"strictQuotes\", false);\n// TODO: Perhaps ask user to declare explicitly if they want TSV or weird CSV with \\t separator hybrid?\n@@ -159,7 +161,7 @@ public void parseOneFile(\nCsvParserSettings settings = new CsvParserSettings();\nCsvFormat format = settings.getFormat();\nformat.setDelimiter(sep);"
+      },
+      {
+        "symbol": "quote",
+        "extracted_text_lines": [
+          14,
+          22
+        ],
+        "text": "CsvParserSettings settings = new CsvParserSettings();\nCsvFormat format = settings.getFormat();\nformat.setDelimiter(sep);\n-            format.setQuote(quote);\n+            format.setQuote(processQuotes ? quote : '\\0');\nsettings.setMaxColumns(MAX_COLUMNS);\nsettings.setLineSeparatorDetectionEnabled(true);\nsettings.setIgnoreLeadingWhitespaces(false);\ndiff --git a/main/tests/server/src/com/google/refine/importers/SeparatorBasedImporterTests.java b/main/tests/server/src/com/google/refine/importers/SeparatorBasedImporterTests.java"
+      },
+      {
+        "symbol": "test",
+        "extracted_text_lines": [
+          6,
+          14
+        ],
+        "text": "}\nsep = StringEscapeUtils.unescapeJava(sep);\nboolean processQuotes = JSONUtilities.getBoolean(options, \"processQuotes\", true);\n+        // The below was added in 2013 as a backend-only option with no front end support (or tests)\n+        // TODO: Rationalize and either fully support or remove\nboolean strictQuotes = JSONUtilities.getBoolean(options, \"strictQuotes\", false);\n// TODO: Perhaps ask user to declare explicitly if they want TSV or weird CSV with \\t separator hybrid?\n@@ -159,7 +161,7 @@ public void parseOneFile(\nCsvParserSettings settings = new CsvParserSettings();"
+      },
+      {
+        "symbol": "test",
+        "extracted_text_lines": [
+          19,
+          27
+        ],
+        "text": "settings.setMaxColumns(MAX_COLUMNS);\nsettings.setLineSeparatorDetectionEnabled(true);\nsettings.setIgnoreLeadingWhitespaces(false);\ndiff --git a/main/tests/server/src/com/google/refine/importers/SeparatorBasedImporterTests.java b/main/tests/server/src/com/google/refine/importers/SeparatorBasedImporterTests.java\nindex 1936fad095e3..f907eb34b742 100644\n--- a/main/tests/server/src/com/google/refine/importers/SeparatorBasedImporterTests.java\n+++ b/main/tests/server/src/com/google/refine/importers/SeparatorBasedImporterTests.java\n@@ -465,14 +465,14 @@ public void readIgnore3_Header2_Skip2_limit2(String sep) {\npublic void ignoreQuotes(String sep) {"
+      },
+      {
+        "symbol": "test",
+        "extracted_text_lines": [
+          21,
+          29
+        ],
+        "text": "settings.setIgnoreLeadingWhitespaces(false);\ndiff --git a/main/tests/server/src/com/google/refine/importers/SeparatorBasedImporterTests.java b/main/tests/server/src/com/google/refine/importers/SeparatorBasedImporterTests.java\nindex 1936fad095e3..f907eb34b742 100644\n--- a/main/tests/server/src/com/google/refine/importers/SeparatorBasedImporterTests.java\n+++ b/main/tests/server/src/com/google/refine/importers/SeparatorBasedImporterTests.java\n@@ -465,14 +465,14 @@ public void readIgnore3_Header2_Skip2_limit2(String sep) {\npublic void ignoreQuotes(String sep) {\n// create input\nString inputSeparator = sep == null ? \"\\t\" : sep;"
+      },
+      {
+        "symbol": "false",
+        "extracted_text_lines": [
+          8,
+          16
+        ],
+        "text": "boolean processQuotes = JSONUtilities.getBoolean(options, \"processQuotes\", true);\n+        // The below was added in 2013 as a backend-only option with no front end support (or tests)\n+        // TODO: Rationalize and either fully support or remove\nboolean strictQuotes = JSONUtilities.getBoolean(options, \"strictQuotes\", false);\n// TODO: Perhaps ask user to declare explicitly if they want TSV or weird CSV with \\t separator hybrid?\n@@ -159,7 +161,7 @@ public void parseOneFile(\nCsvParserSettings settings = new CsvParserSettings();\nCsvFormat format = settings.getFormat();\nformat.setDelimiter(sep);"
+      },
+      {
+        "symbol": "false",
+        "extracted_text_lines": [
+          18,
+          26
+        ],
+        "text": "+            format.setQuote(processQuotes ? quote : '\\0');\nsettings.setMaxColumns(MAX_COLUMNS);\nsettings.setLineSeparatorDetectionEnabled(true);\nsettings.setIgnoreLeadingWhitespaces(false);\ndiff --git a/main/tests/server/src/com/google/refine/importers/SeparatorBasedImporterTests.java b/main/tests/server/src/com/google/refine/importers/SeparatorBasedImporterTests.java\nindex 1936fad095e3..f907eb34b742 100644\n--- a/main/tests/server/src/com/google/refine/importers/SeparatorBasedImporterTests.java\n+++ b/main/tests/server/src/com/google/refine/importers/SeparatorBasedImporterTests.java\n@@ -465,14 +465,14 @@ public void readIgnore3_Header2_Skip2_limit2(String sep) {"
+      },
+      {
+        "symbol": "false",
+        "extracted_text_lines": [
+          29,
+          37
+        ],
+        "text": "String inputSeparator = sep == null ? \"\\t\" : sep;\n-        String input = \"data1\" + inputSeparator + \"data2\\\"\" + inputSeparator + \"data3\" + inputSeparator + \"data4\";\n+        String input = \"data1\" + inputSeparator + \"\\\"data2\" + inputSeparator + \"data3\\\"\" + inputSeparator + \"data4\";\nprepareOptions(sep, -1, 0, 0, 0, false, true);\nparseOneFile(SUT, new StringReader(input));\nProject expectedProject = createProject(\nnew String[] { numberedColumn(1), numberedColumn(2), numberedColumn(3), numberedColumn(4) },\nnew Serializable[][] {\n-                        { \"data1\", \"data2\\\"\", \"data3\", \"data4\" },"
+      }
+    ]
+  },
+  {
+    "id": "J08",
+    "url": "https://github.com/OpenRefine/OpenRefine/releases/tag/3.10.0",
+    "accessed_at": "2026-10-09T19:37:21.176188+00:00",
+    "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+    "response_sha256": "5610217de57931f97b13f679df3196058824f09e3617bdbf5fbe638a165878a9",
+    "snippets": [
+      {
+        "symbol": "relative-time datetime",
+        "text": "TIMESTAMP 2026-02-26T18:10:09Z"
+      },
+      {
+        "symbol": "457290d",
+        "extracted_text_lines": [
+          127,
+          135
+        ],
+        "text": "to master\nsince this release\n3.10.0\n457290d\nThis is the first stable release of the 3.10 series. Please backup your workspace directory before installing and report any problems that you encounter.\nThe following webinar highlights many of the new features in this release: OpenRefine 3.10 presentation\nFor a complete list of changes, see the following change logs:\nFull Changelog since 3.9.5: 3.9.5...3.10.0\nFull Changelog since beta1: 3.10-beta1...3.10.0"
+      }
+    ]
+  },
+  {
+    "id": "J09",
+    "url": "https://raw.githubusercontent.com/frictionlessdata/frictionless-py/v5.20.0/frictionless/settings.py",
+    "accessed_at": "2026-10-09T19:37:21.386264+00:00",
+    "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+    "response_sha256": "087632ae90163374245a9b0bf2045f26009fb11b2cb108fda144acdb9c157b90",
+    "snippets": [
+      {
+        "symbol": "LIMIT_ERRORS",
+        "extracted_text_lines": [
+          25,
+          33
+        ],
+        "text": "DEFAULT_HEADER_CASE = True\nDEFAULT_FLOAT_NUMBERS = False\nDEFAULT_MISSING_VALUES = [\"\"]\nDEFAULT_LIMIT_ERRORS = 1000\nDEFAULT_LIMIT_MEMORY = 1000\nDEFAULT_BUFFER_SIZE = 100000\nDEFAULT_SAMPLE_SIZE = 100\nDEFAULT_ENCODING_CONFIDENCE = 0.5\nDEFAULT_FIELD_CONFIDENCE = 0.9"
+      },
+      {
+        "symbol": "1000",
+        "extracted_text_lines": [
+          25,
+          33
+        ],
+        "text": "DEFAULT_HEADER_CASE = True\nDEFAULT_FLOAT_NUMBERS = False\nDEFAULT_MISSING_VALUES = [\"\"]\nDEFAULT_LIMIT_ERRORS = 1000\nDEFAULT_LIMIT_MEMORY = 1000\nDEFAULT_BUFFER_SIZE = 100000\nDEFAULT_SAMPLE_SIZE = 100\nDEFAULT_ENCODING_CONFIDENCE = 0.5\nDEFAULT_FIELD_CONFIDENCE = 0.9"
+      },
+      {
+        "symbol": "1000",
+        "extracted_text_lines": [
+          26,
+          34
+        ],
+        "text": "DEFAULT_FLOAT_NUMBERS = False\nDEFAULT_MISSING_VALUES = [\"\"]\nDEFAULT_LIMIT_ERRORS = 1000\nDEFAULT_LIMIT_MEMORY = 1000\nDEFAULT_BUFFER_SIZE = 100000\nDEFAULT_SAMPLE_SIZE = 100\nDEFAULT_ENCODING_CONFIDENCE = 0.5\nDEFAULT_FIELD_CONFIDENCE = 0.9\nDEFAULT_PACKAGE_PROFILE = \"data-package\""
+      },
+      {
+        "symbol": "1000",
+        "extracted_text_lines": [
+          27,
+          35
+        ],
+        "text": "DEFAULT_MISSING_VALUES = [\"\"]\nDEFAULT_LIMIT_ERRORS = 1000\nDEFAULT_LIMIT_MEMORY = 1000\nDEFAULT_BUFFER_SIZE = 100000\nDEFAULT_SAMPLE_SIZE = 100\nDEFAULT_ENCODING_CONFIDENCE = 0.5\nDEFAULT_FIELD_CONFIDENCE = 0.9\nDEFAULT_PACKAGE_PROFILE = \"data-package\"\nDEFAULT_RESOURCE_PROFILE = \"data-resource\""
+      },
+      {
+        "symbol": "limit",
+        "extracted_text_lines": [
+          25,
+          33
+        ],
+        "text": "DEFAULT_HEADER_CASE = True\nDEFAULT_FLOAT_NUMBERS = False\nDEFAULT_MISSING_VALUES = [\"\"]\nDEFAULT_LIMIT_ERRORS = 1000\nDEFAULT_LIMIT_MEMORY = 1000\nDEFAULT_BUFFER_SIZE = 100000\nDEFAULT_SAMPLE_SIZE = 100\nDEFAULT_ENCODING_CONFIDENCE = 0.5\nDEFAULT_FIELD_CONFIDENCE = 0.9"
+      },
+      {
+        "symbol": "limit",
+        "extracted_text_lines": [
+          26,
+          34
+        ],
+        "text": "DEFAULT_FLOAT_NUMBERS = False\nDEFAULT_MISSING_VALUES = [\"\"]\nDEFAULT_LIMIT_ERRORS = 1000\nDEFAULT_LIMIT_MEMORY = 1000\nDEFAULT_BUFFER_SIZE = 100000\nDEFAULT_SAMPLE_SIZE = 100\nDEFAULT_ENCODING_CONFIDENCE = 0.5\nDEFAULT_FIELD_CONFIDENCE = 0.9\nDEFAULT_PACKAGE_PROFILE = \"data-package\""
+      },
+      {
+        "symbol": "limit",
+        "extracted_text_lines": [
+          46,
+          54
+        ],
+        "text": "DEFAULT_FLOAT_NUMBER = False\nDEFAULT_GROUP_CHAR = \"\"\nDEFAULT_DECIMAL_CHAR = \".\"\nDEFAULT_LIST_DELIMITER = \",\"\nDEFAULT_LIST_ITEM_TYPE = \"string\"\nDEFAULT_HTTP_HEADERS = {\"User-Agent\": \"frictionless-py/\" + VERSION}\nDEFAULT_FIELD_CANDIDATES = [\n{\"type\": \"yearmonth\"},\n{\"type\": \"geopoint\"},"
+      }
+    ]
+  },
+  {
+    "id": "J10",
+    "url": "https://raw.githubusercontent.com/frictionlessdata/frictionless-py/v5.20.0/frictionless/resource/resource.py",
+    "accessed_at": "2026-10-09T19:37:21.390185+00:00",
+    "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+    "response_sha256": "0d737b2e4ba5de1c720ff18ee3e838085769b5d56a1ca6774c2a9deafbf26237",
+    "snippets": [
+      {
+        "symbol": "limit_errors",
+        "extracted_text_lines": [
+          503,
+          511
+        ],
+        "text": "on_row: Optional[types.ICallbackFunction] = None,\nparallel: bool = False,\nlimit_rows: Optional[int] = None,\nlimit_errors: int = settings.DEFAULT_LIMIT_ERRORS,\n) -> Report:\n\"\"\"Validate resource\nParameters:\nchecklist: a Checklist object\nname: limit validation to one resource (if applicable)"
+      },
+      {
+        "symbol": "limit_errors",
+        "extracted_text_lines": [
+          512,
+          520
+        ],
+        "text": "on_row: callbacke for every row\nparaller: allow parallel validation (multiprocessing)\nlimit_rows: limit amount of rows to this number\nlimit_errors: limit amount of errors to this number\nReturns:\nReport: validation report\n\"\"\"\n# Create state\npartial = False"
+      },
+      {
+        "symbol": "limit_errors",
+        "extracted_text_lines": [
+          591,
+          599
+        ],
+        "text": "partial = True\nbreak\n# Limit errors\nif limit_errors:\nif len(errors) >= limit_errors:\nerrors = errors[:limit_errors]\nwarning = f\"reached error limit: {limit_errors}\"\nwarnings.append(warning)\npartial = True"
+      },
+      {
+        "symbol": "DEFAULT_LIMIT_ERRORS",
+        "extracted_text_lines": [
+          503,
+          511
+        ],
+        "text": "on_row: Optional[types.ICallbackFunction] = None,\nparallel: bool = False,\nlimit_rows: Optional[int] = None,\nlimit_errors: int = settings.DEFAULT_LIMIT_ERRORS,\n) -> Report:\n\"\"\"Validate resource\nParameters:\nchecklist: a Checklist object\nname: limit validation to one resource (if applicable)"
+      }
+    ]
+  },
+  {
+    "id": "J11",
+    "url": "https://raw.githubusercontent.com/OpenRefine/OpenRefine/3.5.0/main/src/com/google/refine/importers/ExcelImporter.java",
+    "accessed_at": "2026-10-09T19:37:21.541135+00:00",
+    "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+    "response_sha256": "77269337de3f258fbc4e8ba2abd2d52e0004eea73ff1556ea2e41cce0258e603",
+    "snippets": []
+  },
+  {
+    "id": "J12",
+    "url": "https://github.com/duckdb/duckdb/discussions/21249",
+    "accessed_at": "2026-10-09T19:37:21.584026+00:00",
+    "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+    "response_sha256": "f2d817a2b69637f7cf0b6c983c53964843146005c02430b7ff4d9f68e566ac42",
+    "snippets": [
+      {
+        "symbol": "1/27/2025",
+        "extracted_text_lines": [
+          127,
+          135
+        ],
+        "text": "Quote reply\nwillshen99\nTIMESTAMP 2026-03-09T20:51:10Z Mar 9, 2026\nI'm copying a csv file into a duckdb file. All date format in the csv is formatted as %m/%m/%y. I got an error from duckdb: Error when converting column \"cohort_start_date\". Could not convert string \"1/27/2025\" to 'DATE'. The traceback indicating the date type is auto detected as it prints out:\ndate_format =  (Auto-Detected)\nI believe the problem comes from %m/%d/%y is not a date format in auto detection as it lists here:\nduckdb/src/include/duckdb/execution/operator/csv_scanner/sniffer/csv_sniffer.hpp\nLines 179 to 185\nin"
+      },
+      {
+        "symbol": "2026",
+        "extracted_text_lines": [
+          113,
+          121
+        ],
+        "text": "Additional date format for csv auto detection\n#21249\nwillshen99\nTIMESTAMP 2026-03-09T20:51:10Z Mar 9, 2026\n·\n0 comments\nReturn to top\nDiscussion options\nUh oh!"
+      },
+      {
+        "symbol": "2026",
+        "extracted_text_lines": [
+          126,
+          134
+        ],
+        "text": "There was an error while loading. Please reload this page.\nQuote reply\nwillshen99\nTIMESTAMP 2026-03-09T20:51:10Z Mar 9, 2026\nI'm copying a csv file into a duckdb file. All date format in the csv is formatted as %m/%m/%y. I got an error from duckdb: Error when converting column \"cohort_start_date\". Could not convert string \"1/27/2025\" to 'DATE'. The traceback indicating the date type is auto detected as it prints out:\ndate_format =  (Auto-Detected)\nI believe the problem comes from %m/%d/%y is not a date format in auto detection as it lists here:\nduckdb/src/include/duckdb/execution/operator/csv_scanner/sniffer/csv_sniffer.hpp\nLines 179 to 185"
+      },
+      {
+        "symbol": "2026",
+        "extracted_text_lines": [
+          212,
+          220
+        ],
+        "text": "1\nreacted with eyes emoji\nFooter\n© 2026 GitHub, Inc.\nFooter navigation\nTerms\nPrivacy\nSecurity\nStatus"
+      }
+    ]
+  },
+  {
+    "id": "J13",
+    "url": "https://github.com/OpenRefine/OpenRefine/issues/6009",
+    "accessed_at": "2026-10-09T19:37:21.585596+00:00",
+    "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+    "response_sha256": "43e58b0c2deb68932f7ef4f0b7dbdd04429222ba39129508eb38534df319095b",
+    "snippets": [
+      {
+        "symbol": "UTC",
+        "extracted_text_lines": [
+          128,
+          136
+        ],
+        "text": "opened\nTIMESTAMP None on Aug 10, 2023\nIssue body actions\nThe current behavior of interpreting date strings without a timezone as being in UTC was a breaking change introduced in May 2018 without any announcement (as far as I can tell). The fact the tests were changed should have been a red flag that something bad was going on.\nI first discovered this in 2020 and added a ToDo about it to the relevant tests and mentioned it in the comments to #3027, but apparently didn't create an issue, so remedying that now.\nCurrent Results\nAll dates and datetime strings are interpreted as being at UTC when parsed.\nExpected Behavior\nI believe we should go back to the historical and, to me, more logical behavior of interpreting dates as being in the local timezone rather than as being at UTC."
+      },
+      {
+        "symbol": "UTC",
+        "extracted_text_lines": [
+          131,
+          139
+        ],
+        "text": "The current behavior of interpreting date strings without a timezone as being in UTC was a breaking change introduced in May 2018 without any announcement (as far as I can tell). The fact the tests were changed should have been a red flag that something bad was going on.\nI first discovered this in 2020 and added a ToDo about it to the relevant tests and mentioned it in the comments to #3027, but apparently didn't create an issue, so remedying that now.\nCurrent Results\nAll dates and datetime strings are interpreted as being at UTC when parsed.\nExpected Behavior\nI believe we should go back to the historical and, to me, more logical behavior of interpreting dates as being in the local timezone rather than as being at UTC.\nVersions\nOpenRefine <=2.7 - correct\nOpenRefine 3.0+ - broken"
+      },
+      {
+        "symbol": "UTC",
+        "extracted_text_lines": [
+          133,
+          141
+        ],
+        "text": "Current Results\nAll dates and datetime strings are interpreted as being at UTC when parsed.\nExpected Behavior\nI believe we should go back to the historical and, to me, more logical behavior of interpreting dates as being in the local timezone rather than as being at UTC.\nVersions\nOpenRefine <=2.7 - correct\nOpenRefine 3.0+ - broken\nAdditional context\nThis is a second breaking change to undo the first breaking change, which is less than ideal, but I believe it's also more logical to the user to have things interpreted in the local timezone."
+      },
+      {
+        "symbol": "3.0",
+        "extracted_text_lines": [
+          136,
+          144
+        ],
+        "text": "I believe we should go back to the historical and, to me, more logical behavior of interpreting dates as being in the local timezone rather than as being at UTC.\nVersions\nOpenRefine <=2.7 - correct\nOpenRefine 3.0+ - broken\nAdditional context\nThis is a second breaking change to undo the first breaking change, which is less than ideal, but I believe it's also more logical to the user to have things interpreted in the local timezone.\nReactions are currently unavailable\nActivity\ntfmorris"
+      },
+      {
+        "symbol": "local time",
+        "extracted_text_lines": [
+          133,
+          141
+        ],
+        "text": "Current Results\nAll dates and datetime strings are interpreted as being at UTC when parsed.\nExpected Behavior\nI believe we should go back to the historical and, to me, more logical behavior of interpreting dates as being in the local timezone rather than as being at UTC.\nVersions\nOpenRefine <=2.7 - correct\nOpenRefine 3.0+ - broken\nAdditional context\nThis is a second breaking change to undo the first breaking change, which is less than ideal, but I believe it's also more logical to the user to have things interpreted in the local timezone."
+      },
+      {
+        "symbol": "local time",
+        "extracted_text_lines": [
+          138,
+          146
+        ],
+        "text": "OpenRefine <=2.7 - correct\nOpenRefine 3.0+ - broken\nAdditional context\nThis is a second breaking change to undo the first breaking change, which is less than ideal, but I believe it's also more logical to the user to have things interpreted in the local timezone.\nReactions are currently unavailable\nActivity\ntfmorris\nadded\nType: BugIssues related to software defects or unexpected behavior, which require resolution.Issues related to software defects or unexpected behavior, which require resolution."
+      },
+      {
+        "symbol": "local time",
+        "extracted_text_lines": [
+          155,
+          163
+        ],
+        "text": "Member\nMore actions\nI agree this change was not very helpful, I feel like it was mostly motivated by an interest in upgrading to newer Java APIs without much consideration of the user's requirements.\nAs a user, I see more options than \"interpreting in local time\" or \"interpreting in UTC\". There is a third option, which is \"interpreting as a date(time) without clear timezone info\". I think that third option should be the default behaviour for a data cleaning tool, especially for dates (where timezones are even more rarely specified).\nThis phrasing of \"interpreting\" might also be a bit abstract and hard to relate to concrete user workflows, so it's worth trying to pin it down in concrete terms. For instance, when loading a CSV file with datatype auto-detection:\nperson,birthdate\nMaribel,1985-07-04\nFernando,1976-12-22\nJose,1988-03-08"
+      },
+      {
+        "symbol": "360",
+        "extracted_text_lines": [
+          112,
+          120
+        ],
+        "text": "Copy link\nClosed\nOpenRefine/openrefine.org\n#360\nOpenRefine/openrefine.org#360\nClosed\nFix date parsing regression introduced in 2018#6009\nOpenRefine/openrefine.org\n#360"
+      },
+      {
+        "symbol": "360",
+        "extracted_text_lines": [
+          113,
+          121
+        ],
+        "text": "Closed\nOpenRefine/openrefine.org\n#360\nOpenRefine/openrefine.org#360\nClosed\nFix date parsing regression introduced in 2018#6009\nOpenRefine/openrefine.org\n#360\nCopy link"
+      },
+      {
+        "symbol": "360",
+        "extracted_text_lines": [
+          117,
+          125
+        ],
+        "text": "Closed\nFix date parsing regression introduced in 2018#6009\nOpenRefine/openrefine.org\n#360\nCopy link\nLabels\nPriority: MediumRepresents important issues that need to be addressed but are not urgentRepresents important issues that need to be addressed but are not urgentType: BugIssues related to software defects or unexpected behavior, which require resolution.Issues related to software defects or unexpected behavior, which require resolution.grelThe default expression language, GREL, could be improved in many ways!The default expression language, GREL, could be improved in many ways!\nMilestone\n3.9"
+      }
+    ]
+  }
+]

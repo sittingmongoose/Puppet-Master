@@ -1,0 +1,1218 @@
+{
+  "block": "A-M09-A",
+  "kind": "independent reviewer primary evidence",
+  "sources": [
+    {
+      "id": "E01",
+      "url": "https://docs.deno.com/runtime/reference/permissions/",
+      "accessed_at": "2026-10-09T19:36:22.900252+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://docs.deno.com/runtime/reference/permissions/",
+      "bytes": 143010,
+      "response_sha256": "b4ec744f1e64d3a6dee2f49129331cc5308ef4ed5d4459a87fcb32785778ed65",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E01.txt",
+      "evidence_sha256": "53fcc729eaa8784bb7271670d729434dc4ff78f90c1c834101b7e2a10a998d08",
+      "locators": [
+        "no-prompt",
+        "node_modules/",
+        "symbolic link",
+        "run independently",
+        "essentially invalidates",
+        "dynamic libraries are not",
+        "DENO_AUDIT_PERMISSIONS",
+        "localStorage"
+      ]
+    },
+    {
+      "id": "E02",
+      "url": "https://docs.deno.com/runtime/fundamentals/security/",
+      "accessed_at": "2026-10-09T19:36:22.902705+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://docs.deno.com/runtime/fundamentals/security/",
+      "bytes": 104261,
+      "response_sha256": "a482abe32ac3119937abbc46062aaf9898e5b31dc71d8764c10d2aa1b7f21222",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E02.txt",
+      "evidence_sha256": "2be14414b994fb6338d9933075c9f66cccaee3cb1114f9093b4eaad0bb821858",
+      "locators": [
+        "NotCapable",
+        "same thread",
+        "initial static",
+        "allow-run",
+        "allow-ffi"
+      ]
+    },
+    {
+      "id": "E03",
+      "url": "https://raw.githubusercontent.com/bytecodealliance/wasmtime/v49.0.2/crates/wasmtime/src/config.rs",
+      "accessed_at": "2026-10-09T19:36:22.905605+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/bytecodealliance/wasmtime/v49.0.2/crates/wasmtime/src/config.rs",
+      "bytes": 225844,
+      "response_sha256": "2763a78934a53e38e586b5b8de281fab651c7400652c3b05588e1e9d2800d39a",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E03.txt",
+      "evidence_sha256": "52862495c94fa1eb78a0cb5ad18875e98dc1e6e34e2655dafe25971da03f8b5a",
+      "locators": [
+        "pub fn consume_fuel",
+        "pub fn epoch_interruption",
+        "pub fn memory_reservation",
+        "maximum size",
+        "memory_guard_size"
+      ]
+    },
+    {
+      "id": "E04",
+      "url": "https://raw.githubusercontent.com/bytecodealliance/wasmtime/v49.0.2/crates/wasmtime/src/runtime/limits.rs",
+      "accessed_at": "2026-10-09T19:36:22.907756+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/bytecodealliance/wasmtime/v49.0.2/crates/wasmtime/src/runtime/limits.rs",
+      "bytes": 14929,
+      "response_sha256": "07d25368279a57e5767601f8e98c8401452bfe60534570f4d6d1035621ca49ac",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E04.txt",
+      "evidence_sha256": "d349c82fc366f5adf3348c1a24eab964e72c496c648da6ceca773d660deb7f76",
+      "locators": [
+        "pub fn memory_size",
+        "pub fn trap_on_grow_failure",
+        "memory_growing",
+        "size of linear memory"
+      ]
+    },
+    {
+      "id": "E05",
+      "url": "https://docs.wasmtime.dev/api/wasmtime_wasi/struct.WasiCtxBuilder.html",
+      "accessed_at": "2026-10-09T19:36:22.909074+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://docs.wasmtime.dev/api/wasmtime_wasi/struct.WasiCtxBuilder.html",
+      "bytes": 75973,
+      "response_sha256": "cfec4cee5f8b1a5a96adb048d68ccdceec7e56e30cba70ad627ebcbdfbf6f78d",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E05.txt",
+      "evidence_sha256": "485fd0dc42e2fd5e4f49a642229ae92f042d134a40a6b7063e1a445fe501adb8",
+      "locators": [
+        "current defaults",
+        "preopened directory",
+        "outside of files",
+        "socket_addr_check",
+        "wall_clock",
+        "secure_random"
+      ]
+    },
+    {
+      "id": "E06",
+      "url": "https://man7.org/linux/man-pages/man2/openat.2.html",
+      "accessed_at": "2026-10-09T19:36:22.910894+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://man7.org/linux/man-pages/man2/openat.2.html",
+      "bytes": 76506,
+      "response_sha256": "d665489cadb85624d98fae03a8d8d06209030f32735cff8aeba949ad8491c789",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E06.txt",
+      "evidence_sha256": "b3d53a48ee1c8ec70a41624ae3942f1df622b01516432a0c9763259564692604",
+      "locators": [
+        "If pathname is absolute",
+        "If pathname is relative",
+        "O_NOFOLLOW",
+        "openat()"
+      ],
+      "verified_section_locators": [
+        "openat() DESCRIPTION; absolute path ignores dirfd; relative path is based at dirfd; O_NOFOLLOW affects final component only"
+      ]
+    },
+    {
+      "id": "E07",
+      "url": "https://man7.org/linux/man-pages/man2/openat2.2.html",
+      "accessed_at": "2026-10-09T19:36:22.913902+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://man7.org/linux/man-pages/man2/openat2.2.html",
+      "bytes": 27757,
+      "response_sha256": "c80f85bca4a6babd75fadb7f6730cd78a9a00f072df9346a9a20e01e22b28e4a",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E07.txt",
+      "evidence_sha256": "688f478026ec3bcde4a275fec0121c26dc1123cc1ffa676757ca892f302b3274",
+      "locators": [
+        "RESOLVE_BENEATH",
+        "RESOLVE_IN_ROOT",
+        "RESOLVE_NO_SYMLINKS"
+      ],
+      "verified_section_locators": [
+        "openat2(2) DESCRIPTION: RESOLVE_BENEATH, RESOLVE_IN_ROOT, RESOLVE_NO_SYMLINKS"
+      ]
+    },
+    {
+      "id": "E08",
+      "url": "https://raw.githubusercontent.com/WebAssembly/wasi-filesystem/v0.2.0/wit/types.wit",
+      "accessed_at": "2026-10-09T19:36:22.915457+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/WebAssembly/wasi-filesystem/v0.2.0/wit/types.wit",
+      "bytes": 27621,
+      "response_sha256": "f26dadcbcc7b231893c5f0094b729eabeb0643dca182697433fa8ab6ab786d20",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E08.txt",
+      "evidence_sha256": "05407d6af02676cc9aef6ba00acc25c7eedb7c74f3f85bf3263cb5b4d7a3d129",
+      "locators": [
+        "All paths in WASI",
+        "not-permitted",
+        "open-at: func",
+        "result<descriptor"
+      ]
+    },
+    {
+      "id": "E09",
+      "url": "https://code.visualstudio.com/api/extension-guides/web-extensions",
+      "accessed_at": "2026-10-09T19:36:22.998731+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://code.visualstudio.com/api/extension-guides/web-extensions",
+      "bytes": 185232,
+      "response_sha256": "f1de8e3efcd379435d8befc285ee58ec1352a43e2d431c2faf90a2d1fb29ee18",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E09.txt",
+      "evidence_sha256": "e8a9b17ecd212881054ff61d875bdc48fb6f4129d8e44a0c355003317d4c4ce7",
+      "locators": [
+        "full VS Code API",
+        "Cross-Origin",
+        "Creating child processes",
+        "workspace.fs",
+        "single file",
+        "desktop too"
+      ]
+    },
+    {
+      "id": "E10",
+      "url": "https://code.visualstudio.com/api/extension-guides/workspace-trust",
+      "accessed_at": "2026-10-09T19:36:23.014527+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://code.visualstudio.com/api/extension-guides/workspace-trust",
+      "bytes": 63816,
+      "response_sha256": "f8f0c73c7da5806ef092255cc120281b282279da57c67a16dfd92fe9f40a1bb9",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E10.txt",
+      "evidence_sha256": "170321cbcfd9636c55ed7a842a62cdd52d7ad5fd124d6be7f6adcd4d0256684f",
+      "locators": [
+        "untrustedWorkspaces",
+        "does not contribute",
+        "restrictedConfigurations",
+        "isTrusted"
+      ]
+    },
+    {
+      "id": "E11",
+      "url": "https://code.visualstudio.com/api/references/extension-manifest",
+      "accessed_at": "2026-10-09T19:36:23.071089+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://code.visualstudio.com/api/references/extension-manifest",
+      "bytes": 92701,
+      "response_sha256": "baeeb75d6c440687584db56d0ab63048fb581544b210a9dc4e4428e9ebaa307c",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E11.txt",
+      "evidence_sha256": "ad9c963a607d295bdf2b254a72e35b55e11a3bf829780ae55564f5ca4ee7a126",
+      "locators": [
+        "Cannot be",
+        "engines",
+        "activationEvents"
+      ]
+    },
+    {
+      "id": "E12",
+      "url": "https://raw.githubusercontent.com/laverdet/isolated-vm/main/README.md",
+      "accessed_at": "2026-10-09T19:36:23.159797+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/laverdet/isolated-vm/main/README.md",
+      "bytes": 42861,
+      "response_sha256": "3c12906c5cb2e198ee666e7f725a2ce0887d0352d6f923b6930cf2ba81edf051",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E12.txt",
+      "evidence_sha256": "9bce777518fc1a85d4b30b060acb434c4bea823fda7309f13dcb02587167f479",
+      "locators": [
+        "maintenance mode",
+        "memoryLimit",
+        "nanoseconds",
+        "no-node-snapshot",
+        "22.x",
+        "26.x",
+        "onCatastrophicError"
+      ]
+    },
+    {
+      "id": "E13",
+      "url": "https://nodejs.org/api/vm.html",
+      "accessed_at": "2026-10-09T19:36:23.196891+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://nodejs.org/api/vm.html",
+      "bytes": 438967,
+      "response_sha256": "a24340e991c42b67034e04adfd551cf8c7f44760081f529c8a61cd7fd22cdd6a",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E13.txt",
+      "evidence_sha256": "0d2a249058aed59a2cb2ac6229675f7b2ee5bba9c684e338828a093f002f6cc7",
+      "locators": [
+        "not a security mechanism",
+        "Documentation"
+      ]
+    },
+    {
+      "id": "E14",
+      "url": "https://openrefine.org/docs/manual/running",
+      "accessed_at": "2026-10-09T19:36:23.279815+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://openrefine.org/docs/manual/running",
+      "bytes": 82261,
+      "response_sha256": "d48634f9699598ebda8446b9bc90cc2db32950a0321add3d88abbd96ef330175",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E14.txt",
+      "evidence_sha256": "15de03d87f9ed85ce61c09c9f5aa3792488fbb617325dbb1429573990d7da850",
+      "locators": [
+        "five minutes",
+        "step zero",
+        "Not all operations",
+        "greyed",
+        "Extract",
+        "Ctrl",
+        "256",
+        "googleReadTimeOut"
+      ]
+    },
+    {
+      "id": "E15",
+      "url": "https://openrefine.org/docs/manual/exporting",
+      "accessed_at": "2026-10-09T19:36:23.288335+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://openrefine.org/docs/manual/exporting",
+      "bytes": 40180,
+      "response_sha256": "582559b40b66649e2df59a5f31afc3498f733876b18182155d6f188c5222259e",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E15.txt",
+      "evidence_sha256": "11aa26c5c00e74b61aab49890332bd8d053eac8217084ae21fe9e9d60e3bcc51",
+      "locators": [
+        "current view",
+        "confidential data",
+        "history",
+        "tar.gz",
+        "cell.recon",
+        "JSON"
+      ]
+    },
+    {
+      "id": "E16",
+      "url": "https://api.github.com/repos/OpenRefine/OpenRefine/issues/5581",
+      "accessed_at": "2026-10-09T19:36:23.349123+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/OpenRefine/OpenRefine/issues/5581",
+      "bytes": 9240,
+      "response_sha256": "afc1a001d1406e8fc21d092d402b61529b55e9566ddd23bb728c2f779b311c5b",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E16.txt",
+      "evidence_sha256": "62752171840c95c2eef26f1b6139b410f871c9b4e1e98f6a8bc0be1c41ac33dd",
+      "locators": []
+    },
+    {
+      "id": "E17",
+      "url": "https://api.github.com/repos/OpenRefine/OpenRefine/issues/5581/comments",
+      "accessed_at": "2026-10-09T19:36:23.391878+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/OpenRefine/OpenRefine/issues/5581/comments",
+      "bytes": 11341,
+      "response_sha256": "a7950125c38d84ab2b6f737c852229d0c837c07beb641e61d4bcf86d33d72987",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E17.txt",
+      "evidence_sha256": "1269245dfb183bc8f495c338d20c80094697ade56ca4f4ef21ba1b9a6ebf9197",
+      "locators": []
+    },
+    {
+      "id": "E18",
+      "url": "https://api.github.com/repos/OpenRefine/OpenRefine/pulls/5584",
+      "accessed_at": "2026-10-09T19:36:23.457367+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/OpenRefine/OpenRefine/pulls/5584",
+      "bytes": 17982,
+      "response_sha256": "72fa53281b96b0b70f3b19193cadce6e7b5ddfbd73354459591f884745d2ce03",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E18.txt",
+      "evidence_sha256": "24f9e228afd3da4394a86d8ff4b9b656d434b151c695947b43797ac36dff63c4",
+      "locators": []
+    },
+    {
+      "id": "E19",
+      "url": "https://api.github.com/repos/OpenRefine/OpenRefine/releases/tags/3.6.0",
+      "accessed_at": "2026-10-09T19:36:23.468808+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/OpenRefine/OpenRefine/releases/tags/3.6.0",
+      "bytes": 7327,
+      "response_sha256": "2ae69f530a5c22b658c482e363e3edc5510e4c2ac70d7dbf9d6fa794e9d9bad2",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E19.txt",
+      "evidence_sha256": "e5d41e8e74caf86169abaa0b947d4df257301c072dd1dc541364f71ba188a2b6",
+      "locators": []
+    },
+    {
+      "id": "E20",
+      "url": "https://registry.npmjs.org/vm2/latest",
+      "accessed_at": "2026-10-09T19:36:23.618378+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://registry.npmjs.org/vm2/latest",
+      "bytes": 2313,
+      "response_sha256": "1cad1b9d9621cccdb5088bb2d441d21c35a87e6e7c6239b3eadb51a8de837636",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E20.txt",
+      "evidence_sha256": "635fba445836b37f62771bbd1773d847b7a75da3987a734a151f45eed28a3b3a",
+      "locators": []
+    },
+    {
+      "id": "E21",
+      "url": "https://registry.npmjs.org/vm2",
+      "accessed_at": "2026-10-09T19:36:23.631466+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://registry.npmjs.org/vm2",
+      "bytes": 221390,
+      "response_sha256": "5f64604b6e18fde282f3805b6f45535df9ce544557adf59847c43f8a7dd0d5c6",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E21.txt",
+      "evidence_sha256": "784c942f8a77034a9b819d11cd5d12c009caecb89b1f64c8091416a1582e7ede",
+      "locators": [
+        "dist-tags.latest",
+        "time[3.10.2,3.11.5,3.12.1,3.12.2]",
+        "versions[3.9.19].deprecated",
+        "versions[3.12.2].deprecated"
+      ],
+      "extra_operation": "second read-only GET to check four version-scoped deprecation fields"
+    },
+    {
+      "id": "E22",
+      "url": "https://api.github.com/repos/bytecodealliance/wasmtime/releases/latest",
+      "accessed_at": "2026-10-09T19:36:23.637991+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/bytecodealliance/wasmtime/releases/latest",
+      "bytes": 69450,
+      "response_sha256": "6071907647ad162bc9d77126810af3335e50f3d21ef68d39656fbc5f0a1426ab",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E22.txt",
+      "evidence_sha256": "c6eead173116bf0fbeda980e30e31d50096b1bdbcd68401a7c4ff05f543ffcec",
+      "locators": []
+    },
+    {
+      "id": "E23",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "accessed_at": "2026-10-09T19:36:23.745450+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://www.rfc-editor.org/rfc/rfc8493.txt",
+      "bytes": 48783,
+      "response_sha256": "4964147d2e6e16442d4a6dbfbe68178a8f33c3e791c06d68a8b33f51ad821537",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E23.txt",
+      "evidence_sha256": "ec2863cf2c6b0c0bae1678873b0a6296cfc78b0e90317d3ef3b71afdbe0e3903",
+      "locators": [
+        "2.1.1.",
+        "2.1.3.",
+        "A _complete_",
+        "A _valid_",
+        "SHA-512",
+        "fetch.txt"
+      ]
+    },
+    {
+      "id": "E24",
+      "url": "https://v2.tauri.app/security/permissions/",
+      "accessed_at": "2026-10-09T19:36:23.763363+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://v2.tauri.app/security/permissions/",
+      "bytes": 106015,
+      "response_sha256": "5284bfc14ed65ea66a1644eda5205745e79fbef08b22fb01330ac9903a9f4fe1",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E24.txt",
+      "evidence_sha256": "17303188d0fe1045c59a9cb98d5dee900ce0245f51762b091762ec612301118e",
+      "locators": [
+        "explicit privileges",
+        "allow",
+        "deny",
+        "command"
+      ]
+    },
+    {
+      "id": "E25",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-movefileexw",
+      "accessed_at": "2026-10-09T19:36:23.766443+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-movefileexw",
+      "bytes": 63000,
+      "response_sha256": "5304db17246a08a54fd4a81dcea673ccbc7e876c1f23a6dcf1063bef7a9adabf",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E25.txt",
+      "evidence_sha256": "02fcfbd96181be651ac888ce2569ce2ffaf59919c7ebd957d19c5ba1f895f820",
+      "locators": [
+        "MOVEFILE_WRITE_THROUGH",
+        "MOVEFILE_REPLACE_EXISTING"
+      ]
+    },
+    {
+      "id": "E26",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/secauthz/appcontainer-isolation",
+      "accessed_at": "2026-10-09T19:36:23.823608+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://learn.microsoft.com/en-us/windows/win32/secauthz/appcontainer-isolation",
+      "bytes": 49890,
+      "response_sha256": "896de162f63228378b4e2948907bd3aa5a4ab2a7bc55962e1392288902b1f946",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E26.txt",
+      "evidence_sha256": "bba3a883fe2b5c88ab4ad798ca89a16b58aca885001dbf9fc5db075057be2409",
+      "locators": [
+        "capabilities",
+        "File isolation",
+        "Network isolation"
+      ]
+    },
+    {
+      "id": "E27",
+      "url": "https://docs.kernel.org/userspace-api/landlock.html",
+      "accessed_at": "2026-10-09T19:36:23.834878+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://docs.kernel.org/userspace-api/landlock.html",
+      "bytes": 150991,
+      "response_sha256": "b869c18e3d7522ea1358cffb06b507caaabf939292a34f6270f20719e7e02fff",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E27.txt",
+      "evidence_sha256": "4affe759e13c8e4581a89d4bc2b3a94a7ef157823f99a9a7c1b9ddb8e48722e3",
+      "locators": [
+        "Best-effort",
+        "File descriptors",
+        "TRUNCATE",
+        "ABI",
+        "supported"
+      ]
+    },
+    {
+      "id": "E28",
+      "url": "https://raw.githubusercontent.com/LibreCat/Catmandu/master/lib/Catmandu/Fix.pm",
+      "accessed_at": "2026-10-09T19:36:23.846555+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/LibreCat/Catmandu/master/lib/Catmandu/Fix.pm",
+      "bytes": 28728,
+      "response_sha256": "ab8702b8013e96f293a0d841b83657f37b2b8bfd5d2a1cb4b699287210077f05",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E28.txt",
+      "evidence_sha256": "6f0cd65a3fc6bb51fa56bf93e8cdd14e52178913b7c38953f95c7a1fd0897558",
+      "locators": [
+        "Fix script",
+        "every record",
+        "Importer",
+        "upcase",
+        "marc_map"
+      ]
+    },
+    {
+      "id": "E29",
+      "url": "https://docs.wasmtime.dev/cli-options.html",
+      "accessed_at": "2026-10-09T19:36:23.861251+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 200,
+      "final_url": "https://docs.wasmtime.dev/cli-options.html",
+      "bytes": 38189,
+      "response_sha256": "6a790cdf94d22ab9109a6259c8a0f296c9ebee818bb37b897ba2ab7fe7ad099e",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E29.txt",
+      "evidence_sha256": "4c4d1163c2cb080e26604d5fbd1781d06110b090bfabac0043ba4064dfd400d3",
+      "locators": [
+        "must come before",
+        "--dir",
+        "fuel",
+        "--mapdir",
+        "WASI-related",
+        "serve"
+      ]
+    },
+    {
+      "id": "E30",
+      "url": "https://remedio.io/blog/bypassing-vs-code-workspace-trust-with-a-single-link/",
+      "accessed_at": "2026-10-09T19:36:23.885166+00:00",
+      "operation": "independent read-only HTTPS GET; no executable retrieved",
+      "status": 403,
+      "final_url": "https://remedio.io/blog/bypassing-vs-code-workspace-trust-with-a-single-link/",
+      "bytes": 1084,
+      "response_sha256": "877a729bd7a0b5d97fd43d0f440286b608e89f7a777940487b40757605aae42d",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E30.txt",
+      "evidence_sha256": "900f3ddce83b15c982f99ead1e9942a62d4738307d39b9dde391d01ff0a674c7",
+      "locators": [
+        "install",
+        "trust",
+        "support",
+        "patched",
+        "CVE"
+      ]
+    },
+    {
+      "id": "E31",
+      "url": "https://api.github.com/repos/OpenRefine/OpenRefine/releases/tags/3.7.0",
+      "accessed_at": "2026-10-09T19:38:42.373059+00:00",
+      "operation": "independent read-only HTTPS GET; source text never executed",
+      "status": 403,
+      "final_url": "https://api.github.com/repos/OpenRefine/OpenRefine/releases/tags/3.7.0",
+      "bytes": 279,
+      "response_sha256": "8ef2b336028ad55d482d5494627c2a729aa697305c5b2c023501da900e081369",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E31.txt",
+      "evidence_sha256": "00d05ca3292b231d3833f2505e6ffce545c1570d7944ed17e0c3a4330b7de80b",
+      "locators": [
+        "release"
+      ]
+    },
+    {
+      "id": "E32",
+      "url": "https://raw.githubusercontent.com/OpenRefine/OpenRefine/3.10.0/main/src/com/google/refine/operations/cell/MassEditOperation.java",
+      "accessed_at": "2026-10-09T19:38:42.373896+00:00",
+      "operation": "independent read-only HTTPS GET; source text never executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/OpenRefine/OpenRefine/3.10.0/main/src/com/google/refine/operations/cell/MassEditOperation.java",
+      "bytes": 10499,
+      "response_sha256": "1c086f086e400da67b6bc93dd046673281dc8c4e0fe2073db5e6e915688cdb80",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E32.txt",
+      "evidence_sha256": "2ad9689e0d59cd6e6520ddcdde6fe4158624bcb96bdceb4cd26e7475ad0f9608",
+      "locators": [
+        "class Edit",
+        "@JsonProperty(\"from\")",
+        "@JsonProperty(\"to\")",
+        "@JsonProperty(\"edits\")"
+      ],
+      "verified_section_locators": [
+        "OpenRefine 3.10.0 MassEditOperation.Edit lines 74-82; @JsonProperty from/to; getEdits @JsonProperty edits"
+      ]
+    },
+    {
+      "id": "E33",
+      "url": "https://raw.githubusercontent.com/bytecodealliance/wasmtime/v49.0.2/crates/wasi/src/ctx.rs",
+      "accessed_at": "2026-10-09T19:38:42.378482+00:00",
+      "operation": "independent read-only HTTPS GET; source text never executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/bytecodealliance/wasmtime/v49.0.2/crates/wasi/src/ctx.rs",
+      "bytes": 20098,
+      "response_sha256": "5df009b47f9791208f70345259143b87cb9fac6e6abd37560db245dd55f4b07f",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E33.txt",
+      "evidence_sha256": "e3298729d2729f1a1c55628d7c9ba10acab48b5110bbb4c2d1f26d44b0d8b0b7",
+      "locators": [
+        "current defaults",
+        "pub fn new",
+        "pub fn preopened_dir",
+        "pub fn socket_addr_check",
+        "pub fn wall_clock",
+        "pub fn secure_random"
+      ]
+    },
+    {
+      "id": "E34",
+      "url": "https://api.github.com/repos/patriksimek/vm2/security-advisories/GHSA-99p7-6v5w-7xg8",
+      "accessed_at": "2026-10-09T19:38:42.380752+00:00",
+      "operation": "independent read-only HTTPS GET; source text never executed",
+      "status": 403,
+      "final_url": "https://api.github.com/repos/patriksimek/vm2/security-advisories/GHSA-99p7-6v5w-7xg8",
+      "bytes": 279,
+      "response_sha256": "8ef2b336028ad55d482d5494627c2a729aa697305c5b2c023501da900e081369",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E34.txt",
+      "evidence_sha256": "38d63971909d7c3d0b17848864639bb952e5caaaf80d47e484d50a7ca91a0225",
+      "locators": [
+        "advisory"
+      ]
+    },
+    {
+      "id": "E35",
+      "url": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/92xxx/CVE-2026-92948.json",
+      "accessed_at": "2026-10-09T19:38:42.382415+00:00",
+      "operation": "independent read-only HTTPS GET; source text never executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/92xxx/CVE-2026-92948.json",
+      "bytes": 7612,
+      "response_sha256": "443fa00e1a355f3db3fdc4925bde054ddd76bee35e2082b7db3048461d2a6e88",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E35.txt",
+      "evidence_sha256": "107277e10c7e69390a60c62352625d26a09470b8a1d25b65f858f5633433ac23",
+      "locators": [
+        "cve"
+      ]
+    },
+    {
+      "id": "E36",
+      "url": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/92xxx/CVE-2026-92937.json",
+      "accessed_at": "2026-10-09T19:38:42.383554+00:00",
+      "operation": "independent read-only HTTPS GET; source text never executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/92xxx/CVE-2026-92937.json",
+      "bytes": 7830,
+      "response_sha256": "667ac4119e38152f32fa7dfa05c71d048ed86eb1a4016e3976c315bcca34aca0",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E36.txt",
+      "evidence_sha256": "2596ccca95455e94b46595678412fa8a21c0ba469c385b9ccec4beddc62318a9",
+      "locators": [
+        "cve"
+      ]
+    },
+    {
+      "id": "E37",
+      "url": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/92xxx/CVE-2026-92944.json",
+      "accessed_at": "2026-10-09T19:38:42.386647+00:00",
+      "operation": "independent read-only HTTPS GET; source text never executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/92xxx/CVE-2026-92944.json",
+      "bytes": 7606,
+      "response_sha256": "361ddf2c93d4df71e95b0b29dcb0c83f6e611f589355349c2c5eacce99d5322c",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E37.txt",
+      "evidence_sha256": "e7c295355c2390424b7194fe566c5b8315d18bbe27138aa5e27bdfdc565ad168",
+      "locators": [
+        "cve"
+      ]
+    },
+    {
+      "id": "E38",
+      "url": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/92xxx/CVE-2026-92956.json",
+      "accessed_at": "2026-10-09T19:38:42.389275+00:00",
+      "operation": "independent read-only HTTPS GET; source text never executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/92xxx/CVE-2026-92956.json",
+      "bytes": 7378,
+      "response_sha256": "fa07b79185abd0b33623e4561b5901eb60ffb68afd691483faa9bf8c313af73a",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E38.txt",
+      "evidence_sha256": "ac0d87161fd9e1890e7e79e1177b33db589efac34074947f7543ae78cc7b12ec",
+      "locators": [
+        "cve"
+      ]
+    },
+    {
+      "id": "E39",
+      "url": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/100xxx/CVE-2026-100721.json",
+      "accessed_at": "2026-10-09T19:38:42.444224+00:00",
+      "operation": "independent read-only HTTPS GET; source text never executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/100xxx/CVE-2026-100721.json",
+      "bytes": 8013,
+      "response_sha256": "a43423ac54c884a036ba6a0044d12ea995de230dde333fa3f4b0c5811895e800",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E39.txt",
+      "evidence_sha256": "f9cccba787a57c3a1c24073f046390652072c512b1cb930dccd0691286baae03",
+      "locators": [
+        "cve"
+      ]
+    },
+    {
+      "id": "E40",
+      "url": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/93xxx/CVE-2026-93605.json",
+      "accessed_at": "2026-10-09T19:38:42.467109+00:00",
+      "operation": "independent read-only HTTPS GET; source text never executed",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/93xxx/CVE-2026-93605.json",
+      "bytes": 7092,
+      "response_sha256": "212b78ae55b384dd1fde0dd3816d0e4f08b8bcac8208b4a4000a9f669941468e",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E40.txt",
+      "evidence_sha256": "dc323409b97823e1263fa651db7308f549b0c68632765b031fd454ac211f2e9a",
+      "locators": [
+        "cve"
+      ]
+    },
+    {
+      "id": "E41",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+      "accessed_at": "2026-10-09T19:38:42.486295+00:00",
+      "operation": "independent read-only HTTPS GET; source text never executed",
+      "status": 200,
+      "final_url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+      "bytes": 61310,
+      "response_sha256": "d84f5ed3bb974bf217042f0815111a80c0b373088dcf96f104820a928a6d4dcb",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E41.txt",
+      "evidence_sha256": "243933574abbbf1df5154c07007f0a5c09b325e8b913fab58a96de01b1c7b0ce",
+      "locators": [
+        "Security Restrictions",
+        "security limitations",
+        "limits",
+        "restricted token"
+      ]
+    },
+    {
+      "id": "E42",
+      "url": "https://tc39.es/ecma262/multipage/numbers-and-dates.html",
+      "accessed_at": "2026-10-09T19:38:42.492804+00:00",
+      "operation": "independent read-only HTTPS GET; source text never executed",
+      "status": 200,
+      "final_url": "https://tc39.es/ecma262/multipage/numbers-and-dates.html",
+      "bytes": 955532,
+      "response_sha256": "0d15b39183658eb77c2579058706dbebe1a434870eee42c7bbc526261aefb4f2",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E42.txt",
+      "evidence_sha256": "a71a778b06cee31adfeabe27927d6a66fd2b5094bd4c7bffb1e96755a50946a8",
+      "locators": [
+        "20.2.2.27",
+        "random or pseudo-randomly",
+        "current time value"
+      ]
+    },
+    {
+      "id": "E43",
+      "url": "https://github.com/OpenRefine/OpenRefine/wiki/Changes-for-3.2",
+      "accessed_at": "2026-10-09T19:38:42.501527+00:00",
+      "operation": "independent read-only HTTPS GET; source text never executed",
+      "status": 200,
+      "final_url": "https://github.com/OpenRefine/OpenRefine/wiki/Changes-for-3.2",
+      "bytes": 565214,
+      "response_sha256": "4da503b49a246177b507787fd0dfc7322174887519a0ed48bcadfa2ab3dea7f2",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E43.txt",
+      "evidence_sha256": "ea7043a4d50cdec1eff9fb5d46b818b915e70e0ed72902bb8820347c61d5f783",
+      "locators": [
+        "Jackson",
+        "Most extensions",
+        "migrate"
+      ]
+    },
+    {
+      "id": "E44",
+      "url": "https://api.github.com/repos/OpenRefine/OpenRefine/releases/tags/3.10-beta1",
+      "accessed_at": "2026-10-09T19:38:42.505133+00:00",
+      "operation": "independent read-only HTTPS GET; source text never executed",
+      "status": 403,
+      "final_url": "https://api.github.com/repos/OpenRefine/OpenRefine/releases/tags/3.10-beta1",
+      "bytes": 279,
+      "response_sha256": "8ef2b336028ad55d482d5494627c2a729aa697305c5b2c023501da900e081369",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E44.txt",
+      "evidence_sha256": "914ba9fbf31a393d388c03d834e003eff181ff547b3c5f6137e6feaf50f71b7f",
+      "locators": [
+        "release"
+      ]
+    },
+    {
+      "id": "E45",
+      "url": "https://www.zotero.org/support/dev/translators",
+      "accessed_at": "2026-10-09T19:38:42.516994+00:00",
+      "operation": "independent read-only HTTPS GET; source text never executed",
+      "status": 200,
+      "final_url": "https://www.zotero.org/support/dev/translators",
+      "bytes": 55827,
+      "response_sha256": "cc8ff66b1beee838eaca547b5946f3b8f6015d73e751b92ee6caf7e58d0e671c",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E45.txt",
+      "evidence_sha256": "9ea3a95264755f714fab3ee8d2dedefa809f798ee639160b2666ee9cbf972de2",
+      "locators": [
+        "sandbox",
+        "doImport",
+        "doExport",
+        "translator",
+        "Scaffold"
+      ]
+    },
+    {
+      "id": "E46",
+      "url": "https://code.visualstudio.com/api/working-with-extensions/publishing-extension",
+      "accessed_at": "2026-10-09T19:38:42.522626+00:00",
+      "operation": "independent read-only HTTPS GET; source text never executed",
+      "status": 200,
+      "final_url": "https://code.visualstudio.com/api/working-with-extensions/publishing-extension",
+      "bytes": 121252,
+      "response_sha256": "a0ee75b5ce4d49d6edfe5486057755fac2a149718945c4aef89a1e12f3e36af6",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E46.txt",
+      "evidence_sha256": "4891784fdfdd6cad0dab1216fef5c0096e5242902ae1ec30d2294df25064d392",
+      "locators": [
+        "VSIX",
+        "prepublish",
+        "package",
+        "install-extension",
+        "engines"
+      ]
+    },
+    {
+      "id": "E47",
+      "url": "https://github.com/OpenRefine/OpenRefine/wiki/Changes-for-3.7",
+      "accessed_at": "2026-10-09T19:43:33.878485+00:00",
+      "operation": "GET text; bounded primary sections",
+      "status": 200,
+      "final_url": "https://github.com/OpenRefine/OpenRefine/wiki/Changes-for-3.7",
+      "bytes": 566541,
+      "response_sha256": "4bf87a83d756d5b6ae9de0e218e7316f3c262d8fdb452242b36b307580a022ce",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E47.txt",
+      "evidence_sha256": "862d47f415a3aa1a7528401f4b184a59a6655338d5d269d5d308e8bca376ab6a",
+      "locators": [
+        "From 3.7-beta3",
+        "5581"
+      ]
+    },
+    {
+      "id": "E48",
+      "url": "https://github.com/OpenRefine/OpenRefine/releases/tag/3.10-beta1",
+      "accessed_at": "2026-10-09T19:43:34.569084+00:00",
+      "operation": "GET text; bounded primary sections",
+      "status": 200,
+      "final_url": "https://github.com/OpenRefine/OpenRefine/releases/tag/3.10-beta1",
+      "bytes": 422101,
+      "response_sha256": "2290615fd0bff960432c73c681d462fab8290d2dc18d9ac79c21f0e01b2e67dc",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E48.txt",
+      "evidence_sha256": "684a2f98473c227c95eb22c36d649e1f3a94a2f0680216847fd20df5773e4f36",
+      "locators": [
+        "Validate column dependencies",
+        "7095"
+      ]
+    },
+    {
+      "id": "E49",
+      "url": "https://github.com/patriksimek/vm2/security/advisories/GHSA-99p7-6v5w-7xg8",
+      "accessed_at": "2026-10-09T19:43:35.002970+00:00",
+      "operation": "GET text; bounded primary sections",
+      "status": 200,
+      "final_url": "https://github.com/patriksimek/vm2/security/advisories/GHSA-99p7-6v5w-7xg8",
+      "bytes": 190885,
+      "response_sha256": "b63bb3d20349be52da0239bb14532643e7aca6df42392ffb510c7a4466c81106",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E49.txt",
+      "evidence_sha256": "18784defbd59b31496a1e37cb921a209c1a705acb890dbf8c54fd57a3a7ac828",
+      "locators": [
+        "3.10.2",
+        "3.10.0",
+        "Promise"
+      ]
+    },
+    {
+      "id": "E50",
+      "url": "https://tc39.es/ecma262/multipage/numbers-and-dates.html",
+      "accessed_at": "2026-10-09T19:43:35.217072+00:00",
+      "operation": "GET text; bounded primary sections",
+      "status": 200,
+      "final_url": "https://tc39.es/ecma262/multipage/numbers-and-dates.html",
+      "bytes": 955532,
+      "response_sha256": "0d15b39183658eb77c2579058706dbebe1a434870eee42c7bbc526261aefb4f2",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E50.txt",
+      "evidence_sha256": "7996d82c4ef5e7397be65e7640191809a84c240822b5ed482febcf1bf0789c1e",
+      "locators": [
+        "approximately uniform",
+        "random or pseudo-randomly",
+        "current time value"
+      ],
+      "verified_section_locators": [
+        "ECMAScript 21.3.2.28 Math.random: implementation-defined random/pseudorandom sequence"
+      ]
+    },
+    {
+      "id": "E51",
+      "url": "https://raw.githubusercontent.com/bytecodealliance/wasmtime/v49.0.2/crates/wasmtime/src/config.rs",
+      "accessed_at": "2026-10-09T19:44:25.697740+00:00",
+      "operation": "GET stable source; raw line-numbered surrounding method documentation",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/bytecodealliance/wasmtime/v49.0.2/crates/wasmtime/src/config.rs",
+      "bytes": 225844,
+      "response_sha256": "2763a78934a53e38e586b5b8de281fab651c7400652c3b05588e1e9d2800d39a",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E51.txt",
+      "evidence_sha256": "47f6059a9dfb5453c5429d4dc70a56355beac71ba7e847df4b152b1085b9a265",
+      "locators": [
+        "pub fn consume_fuel",
+        "pub fn epoch_interruption",
+        "pub fn memory_reservation("
+      ],
+      "verified_section_locators": [
+        "Wasmtime v49.0.2 Config::consume_fuel line 643; Config::epoch_interruption line 788; Config::memory_reservation lines 1891-1929"
+      ]
+    },
+    {
+      "id": "E52",
+      "url": "https://raw.githubusercontent.com/bytecodealliance/wasmtime/v49.0.2/crates/wasmtime/src/runtime/limits.rs",
+      "accessed_at": "2026-10-09T19:44:25.809462+00:00",
+      "operation": "GET stable source; raw line-numbered surrounding method documentation",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/bytecodealliance/wasmtime/v49.0.2/crates/wasmtime/src/runtime/limits.rs",
+      "bytes": 14929,
+      "response_sha256": "07d25368279a57e5767601f8e98c8401452bfe60534570f4d6d1035621ca49ac",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E52.txt",
+      "evidence_sha256": "a73fda5a923076de865af08ea8a8e906bdf7ff5fc8971deac06e2de638030a5a",
+      "locators": [
+        "pub fn memory_size"
+      ],
+      "verified_section_locators": [
+        "Wasmtime v49.0.2 StoreLimitsBuilder::memory_size lines 230-240: usize bytes, per memory, default unlimited"
+      ]
+    },
+    {
+      "id": "E53",
+      "url": "https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man1/sandbox-exec.1.html",
+      "accessed_at": "2026-10-09T19:44:46.725870+00:00",
+      "operation": "GET Apple archived manual; historical mechanism only",
+      "status": 404,
+      "final_url": "https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man1/sandbox-exec.1.html",
+      "bytes": 82252,
+      "response_sha256": "95eb3037377b39fb284e18b1905ab1d54c8c5a5190741a7381c397200d05c37a",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-A/evidence/E53.txt",
+      "evidence_sha256": "446702d646c3e6bbf00a7dd4730221f36761e0878a32bbf046cc483e22f18fb5",
+      "locators": [
+        "sandbox-exec",
+        "profile",
+        "DEPRECATED"
+      ]
+    }
+  ],
+  "assessment_links": {
+    "N2_material": {
+      "N2-M1": [
+        "E06",
+        "E07",
+        "E08",
+        "E27"
+      ],
+      "N2-M2": [
+        "E03",
+        "E04",
+        "E51",
+        "E52"
+      ],
+      "N2-M3": [
+        "E20",
+        "E21",
+        "E49",
+        "E35",
+        "E36",
+        "E37",
+        "E38",
+        "E39",
+        "E40"
+      ]
+    },
+    "N1_material": {
+      "N1-M1": [
+        "E33",
+        "E50"
+      ],
+      "N1-M2": [
+        "E14",
+        "E15"
+      ],
+      "N1-M3": [
+        "E15",
+        "E32"
+      ],
+      "N1-M4": [
+        "E03",
+        "E04",
+        "E51",
+        "E52"
+      ]
+    }
+  },
+  "applicability": "Stable tagged sources govern their tagged APIs only; mutable docs are access-time facts; HTTP403/404 is an access outcome, not absence of the claimed behavior. Author proposals are distinguished from source facts and executed witnesses in assessment.json.",
+  "frozen_source_artifacts": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/reviser/source-map.json",
+      "sha256": "7701b910a18f5e4aa70c85f22bb054e7b48c13f8bf7c9d0e56ee4a92e8ed2512"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/critic/source-map.json",
+      "sha256": "15ea93ec2ea8b01e75a7b043b7d53b8781b54ec53fb4c07abbf5da50e463acfc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/research/source-map.json",
+      "sha256": "44b5f9e3e3d1e6fc1d295e9b6792ee4f73d96935c6245a74bf3b12c8f7f11883"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/reviser/sources/R01-vm2-registry.md",
+      "sha256": "3e5f14a8fa2f0ca941684631c879a7f4e8b05fb9c82bdfb01a5be011c550b5d9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/reviser/sources/R02-vscode-manifest.md",
+      "sha256": "85d71e8388c2509c68f05db934f8391b548d0e8d38f9bace8bcba1a5ec7a5660"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/reviser/sources/R03-openrefine-3.6.md",
+      "sha256": "66e93698fd2602f0d8e0a9d18a6712db6285a4a3c46dd00bc5947f26d554fab1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/reviser/sources/R04-wasmtime-stable.md",
+      "sha256": "60f0d28176ac53119657f03dd336d37aa24ac3139b44126185a58c5ea7d75f5a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/reviser/sources/index.md",
+      "sha256": "cc1dae238604472a5bc08d67e76b3c3430c2f580b4de31c650e4dbe2176ef540"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/critic/sources/C01-deno-security.md",
+      "sha256": "1151fce68a43bc8d10540526e391cc699e5edfd8ec1d59b5821e424a4e2c34ad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/critic/sources/C02-node-vm.md",
+      "sha256": "0f8beba93b7aef26eccb5edfef0a6943c4f0c9368a0d676f94166ef5d7447fd4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/critic/sources/C03-isolated-vm.md",
+      "sha256": "e71cf816dd6305a0f191ed2e5e2dd46c3936fbaa55dbd73dcca030a9e7d16b76"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/critic/sources/C04-openrefine-history.md",
+      "sha256": "c9be7410b96dc23a3ff8725ad2c373914dddc69db8a3778f202223882d0aeacb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/critic/sources/C05-vscode-manifest.md",
+      "sha256": "b1a70400a71a0f98f99b1eb4d4467671c9c9ecab59848a300ef99f0c335021f6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/critic/sources/C06-tauri-permissions.md",
+      "sha256": "386b1b17d4a768d82fb4cc9a4cbf1e61f8e913f8f437cc2c76c6552a714f52d0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/critic/sources/C07-bagit-rfc8493.md",
+      "sha256": "c80a171943e46e5aef6e60f7807bc0570d5a171520c1c02dc4d61481067fbab2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/critic/sources/C08-wasmtime-cli.md",
+      "sha256": "2ac448997918581b93e1021a9c63ed91e0651023f800f28de4216bd125851a39"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/critic/sources/C09-wasmtime-stable.md",
+      "sha256": "72723f7d512fa1d30bc4865a60127acfba1479ce213d8431b5237f350da98179"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/critic/sources/C10-vm2-registry.md",
+      "sha256": "02587a7f5f665b430c45f67d743fa3f6b28141a1d41231197cf15f1a3a98baf8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/critic/sources/C11-openrefine-3.6.md",
+      "sha256": "21d7b4f5b6cf465258b5e75b487b74c04b14440e67be54769959b4ffc9ea716b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/critic/sources/index.md",
+      "sha256": "d5a0e83981564e5d6adf5e08428006c5aca5b1255e4c50158340934a0647d160"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/research/sources/S01-deno-security.md",
+      "sha256": "6521bec561d4e2487f4480eb5feebaaf2d325d5f5cf3032b90d1518aba331319"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/research/sources/S02-node-vm.md",
+      "sha256": "8a898f3ea5bc91ce9e2cc7e6ecd6081d1052a8f760c104fa49ac7a0eb1fd82d0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/research/sources/S03-isolated-vm.md",
+      "sha256": "a03dbf8aeeaf223623f5cb1a7d8728e926430f909b89e0bc117ae5482cecd4f6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/research/sources/S04-openrefine-history.md",
+      "sha256": "7dea0232bf429693e414db94eaa9427bb8fb05a77e22d6224c8373a1f267e356"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/research/sources/S05-vscode-manifest.md",
+      "sha256": "1ff6ac65d9c195e7f3c0ec7ea0e4b887528ad03e1f9476a2657aa7292a0e8bee"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/research/sources/S06-workspace-trust.md",
+      "sha256": "0723d7e4b0a6cde9b8c833abb3097f2cfd5aa6f53a44063e2811193487e0aa4c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/research/sources/S07-tauri-permissions.md",
+      "sha256": "1015cdcf046e75b8194035b6a7ba733506e90f94a94d096192a32d07a306e03f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/research/sources/S08-bagit-rfc8493.md",
+      "sha256": "4f06eb0a59f111496415ec3a789f69df7fb82d3c3acc12a8055fb94dc65dbdac"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/research/sources/S09-wasmtime-wasi.md",
+      "sha256": "c929bb5c7a03618ddb6234b41f5ddd647a930e80553e62b0b5ac4e28f1cf5271"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/research/sources/S10-vm2-chain.md",
+      "sha256": "fcd5f830babd593bc47a4bc05f4adf214a5aadcbdb0ee3d371aa12809ae2778e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/research/sources/S11-wasmtime-config.md",
+      "sha256": "6249f07f990e110d0bbb81c342e3ccf3bd0bf6b168f6c743b6d1fd9c0ee629fb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/research/sources/S12-openrefine-3.6.md",
+      "sha256": "13ff239114d07379760afd3cedcf62dffa0ec9ec7556c2d6af48e8c30bdaac0d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/research/sources/S13-zotero-translators.md",
+      "sha256": "aa0219199b1659b8dd30a4b582060e3dfccb7085ca3f525b467a1549949ad2ea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/research/sources/S14-cve-records.md",
+      "sha256": "ceb953fc9f5810a372e1f2d93ac367cbeb15d3ef11227ffaa1c64d6b26525a60"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/control/research/sources/index.md",
+      "sha256": "c13094fd6d79a0e74e17e485b62e54acf967cbc85b3837ee8884851c21cfd0e5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/reviser/source-map.json",
+      "sha256": "bfba4b20dc0075f10fc4154f8cb009c1c88656ddcd89e642094322f2741281ea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/critic/source-map.json",
+      "sha256": "839e4d09680885c0df8c1efdbd12a5df14782c42f1a6b41b1b0b024b98dea1f7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/source-map.json",
+      "sha256": "77c241e1fbb693c325469083460b3879cf86de915c3473e39508397f02686c21"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/reviser/sources/index.md",
+      "sha256": "ba90d1476d1f022ea766d6ec09c17c435efb7ec6c08a7ea83addadfc93615756"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/reviser/sources/r01-deno-permissions.md",
+      "sha256": "152a900f4fe782df4f45bdc2b085b64dc1a522718899a29872ea65ddab68820d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/critic/sources/c01-deno-permissions.md",
+      "sha256": "e21083ff95fd0cb3a045aeed8ab267d352aadec992df07e9ccac5cd43fb61098"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/critic/sources/c02-web-extensions.md",
+      "sha256": "13694085a195601807628df715552b1ced2b5b6d3d1c43edb7dad6f22d4c82f0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/critic/sources/c03-issue-5581.md",
+      "sha256": "468b0d22f0c1a500ea7542c9b47bc76736e33892460c0ffe02b54fa98efac6b3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/critic/sources/c04-openrefine-exporting.md",
+      "sha256": "b2907c74d8f80c39ab25ef753b891ed07d07c2d503dd3b9cae62dffc8af1985c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/critic/sources/c05-wasmtime-cli.md",
+      "sha256": "af2a59916866a0cdd30157e6d2e435ab842db03788d7136cd30698f3378e24a6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/critic/sources/index.md",
+      "sha256": "43566d33db4db583f3849ea37df0263d3637e87a2b82cec7650af659c4aee345"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/sources/index.md",
+      "sha256": "064adb18cfdd763ba950ad4b0ae4ddefaea340ffd9dd2a246f1aab8bfbe019b3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/sources/s01-openrefine-running.md",
+      "sha256": "abe83b9f0beb58228cb2a4c32d8c06dfb560fdaf5fbc04e3b6c97b63ac028231"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/sources/s02-openrefine-exporting.md",
+      "sha256": "3b12a2b9d26de57f7d92045685eb9f9e928a8c6b3293aa00dc7953945764a901"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/sources/s03-workspace-trust.md",
+      "sha256": "2a6e44ed7ab9461b89052dbba5013269c012729cfd78e78b8cb1b359fde6fbb6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/sources/s04-web-extensions.md",
+      "sha256": "ecf9d215b16c7d678661b2138c8d7096f0564baa67824634f610f3de71cfa0b3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/sources/s05-extension-anatomy.md",
+      "sha256": "ce7ad53d4b4ba3d58dfc2859a9a2aa4b14e8f0190b3f43feab67dfe96c2e6ef5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/sources/s06-deno-security.md",
+      "sha256": "2bfd5a62786c403a02087a62f5eff02b3c6e93f59b1a7958d50442e1a71fac1d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/sources/s07-deno-permissions.md",
+      "sha256": "b1bc06f991165c2dea0542ce885adadfc75909b962d987f48a511afcce9c8c03"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/sources/s08-wasmtime-cli.md",
+      "sha256": "62a2d3411bfa228c3d08c494b68f589e938dab6e50b02350df927b6d1bc4af69"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/sources/s09-issue-5581.md",
+      "sha256": "403b43cf70ced25bae81f1ab57136f604bb6dfe899943a84b03bf874cca04440"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/sources/s10-catmandu.md",
+      "sha256": "c05ae4d7b9eeafc577bafc8c33808b5af75f9c4c4507d0d3ff094e7332fdfd4c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/sources/s11-openrefine-extensions.md",
+      "sha256": "f11ab4054015da03a021bcf9ecdd59a8dbf0b51861346f3813b912538737ea04"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/sources/s12-vsix-offline.md",
+      "sha256": "27c017125a70a2d60cb2543ede426ad9dea54ac836e45cc2a741a949749dbd51"
+    }
+  ]
+}

@@ -1,0 +1,764 @@
+{
+  "assignment": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/assignment.md",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/input-map.json",
+  "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S10/brief.md",
+  "map_created_at": "2026-10-09T19:24:25Z",
+  "access_timestamp_note": "Direct reviser source checks R01–R08 were reopened and rechecked in one browser batch ending 2026-10-09T19:27:48Z; the clock was sampled immediately after the batch. Inherited source records retain their original access timestamps and operations.",
+  "source_ids_immutable": true,
+  "sources": [
+    {
+      "id": "S01",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "version": "DuckDB docs 1.5 current",
+      "locator": "515–553; 590–653",
+      "ops": [
+        "web search DuckDB inference",
+        "web open URL and inspect sections"
+      ],
+      "title": "S01",
+      "version_or_commit": "DuckDB docs 1.5 current",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search DuckDB inference",
+        "web open URL and inspect sections"
+      ],
+      "evidence": "sources/observations.md#s01",
+      "inherited_evidence": "sources/observations.md#s01",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json"
+    },
+    {
+      "id": "S02",
+      "url": "https://duckdb.org/docs/current/data/csv/overview",
+      "version": "DuckDB docs 1.5 current",
+      "locator": "CSV parameter table",
+      "ops": [
+        "web search defaults",
+        "open URL and inspect parameter table"
+      ],
+      "title": "S02",
+      "version_or_commit": "DuckDB docs 1.5 current",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search defaults",
+        "open URL and inspect parameter table"
+      ],
+      "evidence": "sources/observations.md#s02",
+      "inherited_evidence": "sources/observations.md#s02",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json"
+    },
+    {
+      "id": "S03",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "version": "DuckDB docs 1.5 current",
+      "locator": "530–577; 622–696",
+      "ops": [
+        "web search rejects/line size",
+        "open URL, find reject_errors and inspect schema"
+      ],
+      "title": "S03",
+      "version_or_commit": "DuckDB docs 1.5 current",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search rejects/line size",
+        "open URL, find reject_errors and inspect schema"
+      ],
+      "evidence": "sources/observations.md#s03",
+      "inherited_evidence": "sources/observations.md#s03",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json"
+    },
+    {
+      "id": "S04",
+      "url": "https://duckdb.org/docs/current/guides/file_formats/excel_import",
+      "version": "DuckDB docs 1.5 current",
+      "locator": "515–530; 554–610",
+      "ops": [
+        "web search DuckDB Excel import",
+        "open URL, find XLS, stop_at_empty and types"
+      ],
+      "title": "S04",
+      "version_or_commit": "DuckDB docs 1.5 current",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search DuckDB Excel import",
+        "open URL, find XLS, stop_at_empty and types"
+      ],
+      "evidence": "sources/observations.md#s04",
+      "inherited_evidence": "sources/observations.md#s04",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json"
+    },
+    {
+      "id": "S05",
+      "url": "https://duckdb.org/docs/current/operations_manual/limits ; https://duckdb.org/docs/current/guides/performance/oom",
+      "version": "DuckDB docs 1.5 current",
+      "locator": "Limits 517–527; OOM 515",
+      "ops": [
+        "web search memory/spill",
+        "open both pages and find memory percentages"
+      ],
+      "title": "S05",
+      "version_or_commit": "DuckDB docs 1.5 current",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search memory/spill",
+        "open both pages and find memory percentages"
+      ],
+      "evidence": "sources/observations.md#s05",
+      "inherited_evidence": "sources/observations.md#s05",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json"
+    },
+    {
+      "id": "S06",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.ReaderBuilder.html ; https://docs.rs/csv/1.4.0/csv/struct.Reader.html ; https://docs.rs/crate/csv/1.4.0",
+      "version": "csv 1.4.0, released 2025-10-17",
+      "locator": "ReaderBuilder defaults; read_record/position; crate metadata",
+      "ops": [
+        "web search ReaderBuilder/version",
+        "open docs.rs; later exact open returned Internal Error, earlier result retained"
+      ],
+      "title": "S06",
+      "version_or_commit": "csv 1.4.0, released 2025-10-17",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search ReaderBuilder/version",
+        "open docs.rs; later exact open returned Internal Error, earlier result retained"
+      ],
+      "evidence": "sources/observations.md#s06",
+      "inherited_evidence": "sources/observations.md#s06",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json"
+    },
+    {
+      "id": "S07",
+      "url": "https://arrow.apache.org/rust/arrow_csv/reader/index.html ; https://arrow.apache.org/rust/arrow_csv/reader/struct.ReaderBuilder.html",
+      "version": "arrow_csv API 59.1.0 per official result; latest URL",
+      "locator": "Schema/batch/inference/builder methods",
+      "ops": [
+        "web search Arrow CSV",
+        "open API pages and inspect"
+      ],
+      "title": "S07",
+      "version_or_commit": "arrow_csv API 59.1.0 per official result; latest URL",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search Arrow CSV",
+        "open API pages and inspect"
+      ],
+      "evidence": "sources/observations.md#s07",
+      "inherited_evidence": "sources/observations.md#s07",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json"
+    },
+    {
+      "id": "S08",
+      "url": "https://docs.rs/calamine/0.36.1/calamine/enum.Data.html ; https://docs.rs/calamine/0.36.1/calamine/struct.Xlsx.html ; https://docs.rs/crate/calamine/0.36.1/source/Changelog.md",
+      "version": "calamine 0.36.1, 2026-07-27",
+      "locator": "Data enum 73–140; has_1904_epoch; changelog",
+      "ops": [
+        "web search Calamine values/epoch",
+        "open APIs, find DateTimeIso, search changelog"
+      ],
+      "title": "S08",
+      "version_or_commit": "calamine 0.36.1, 2026-07-27",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search Calamine values/epoch",
+        "open APIs, find DateTimeIso, search changelog"
+      ],
+      "evidence": "sources/observations.md#s08",
+      "inherited_evidence": "sources/observations.md#s08",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json"
+    },
+    {
+      "id": "S09",
+      "url": "https://docs.rs/calamine/0.36.1/calamine/struct.XlsxCellReader.html",
+      "version": "calamine 0.36.1",
+      "locator": "Iterator lines 40–55",
+      "ops": [
+        "web search streaming API",
+        "open API; find iterator section"
+      ],
+      "title": "S09",
+      "version_or_commit": "calamine 0.36.1",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search streaming API",
+        "open API; find iterator section"
+      ],
+      "evidence": "sources/observations.md#s09",
+      "inherited_evidence": "sources/observations.md#s09",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json"
+    },
+    {
+      "id": "S10",
+      "url": "https://learn.microsoft.com/en-us/power-query/connectors/text-csv ; https://learn.microsoft.com/en-us/power-query/data-types",
+      "version": "Current docs, data-types page updated 2026-08-14; build unspecified",
+      "locator": "Sample choices, first-200, regional settings/Using locale, date types",
+      "ops": [
+        "web search locale/type detection",
+        "open canonical English URLs and inspect"
+      ],
+      "title": "S10",
+      "version_or_commit": "Current docs, data-types page updated 2026-08-14; build unspecified",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search locale/type detection",
+        "open canonical English URLs and inspect"
+      ],
+      "evidence": "sources/observations.md#s10",
+      "inherited_evidence": "sources/observations.md#s10",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json"
+    },
+    {
+      "id": "S11",
+      "url": "https://openrefine.org/docs/manual/running ; https://openrefine.org/docs/manual/exporting",
+      "version": "Current unversioned docs; export updated 2026-01-28",
+      "locator": "History 375–401; export 112–130",
+      "ops": [
+        "web search reuse",
+        "open docs and inspect history/archive"
+      ],
+      "title": "S11",
+      "version_or_commit": "Current unversioned docs; export updated 2026-01-28",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search reuse",
+        "open docs and inspect history/archive"
+      ],
+      "evidence": "sources/observations.md#s11",
+      "inherited_evidence": "sources/observations.md#s11",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json"
+    },
+    {
+      "id": "S12",
+      "url": "https://openrefine.org/docs/manual/installing ; https://openrefine.org/docs/technical-reference/architecture-4",
+      "version": "Current unversioned pages, distinct generations",
+      "locator": "Installing 241–250; v4 around 50",
+      "ops": [
+        "web search memory",
+        "open pages and inspect contexts"
+      ],
+      "title": "S12",
+      "version_or_commit": "Current unversioned pages, distinct generations",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search memory",
+        "open pages and inspect contexts"
+      ],
+      "evidence": "sources/observations.md#s12",
+      "inherited_evidence": "sources/observations.md#s12",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json"
+    },
+    {
+      "id": "S13",
+      "url": "https://github.com/OpenRefine/OpenRefine/issues/1908",
+      "version": "Issue against 3.1, compare 2.8/3.1",
+      "locator": "Issue 175–206 and maintainer thread",
+      "ops": [
+        "web search issue",
+        "open issue and inspect versions/analysis"
+      ],
+      "title": "S13",
+      "version_or_commit": "Issue against 3.1, compare 2.8/3.1",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search issue",
+        "open issue and inspect versions/analysis"
+      ],
+      "evidence": "sources/observations.md#s13",
+      "inherited_evidence": "sources/observations.md#s13",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json"
+    },
+    {
+      "id": "S14",
+      "url": "https://github.com/OpenRefine/OpenRefine/pull/2909 ; https://github.com/OpenRefine/OpenRefine/commit/306b541 ; https://github.com/OpenRefine/OpenRefine/commit/c5aed37",
+      "version": "PR merged 2020-07-09; commits 306b541/c5aed37",
+      "locator": "PR 130–205; changed files",
+      "ops": [
+        "open PR/commit URLs",
+        "find OffsetDateTime; inspect test/fix summary"
+      ],
+      "title": "S14",
+      "version_or_commit": "PR merged 2020-07-09; commits 306b541/c5aed37",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "open PR/commit URLs",
+        "find OffsetDateTime; inspect test/fix summary"
+      ],
+      "evidence": "sources/observations.md#s14",
+      "inherited_evidence": "sources/observations.md#s14",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json"
+    },
+    {
+      "id": "S15",
+      "url": "https://github.com/OpenRefine/OpenRefine/releases/tag/3.5.0",
+      "version": "tag 3.5.0, commit d4209a2, released 2020-11-07",
+      "locator": "Release 151–159",
+      "ops": [
+        "web search release relation",
+        "open tag, inspect metadata"
+      ],
+      "title": "S15",
+      "version_or_commit": "tag 3.5.0, commit d4209a2, released 2020-11-07",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search release relation",
+        "open tag, inspect metadata"
+      ],
+      "evidence": "sources/observations.md#s15",
+      "inherited_evidence": "sources/observations.md#s15",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json"
+    },
+    {
+      "id": "S16",
+      "url": "https://github.com/OpenRefine/OpenRefine/issues/7042 ; https://github.com/OpenRefine/OpenRefine/pull/7703",
+      "version": "Issue 2024-12-11, milestone 3.10.2, PR 7703",
+      "locator": "Issue 138–193 and linked PR",
+      "ops": [
+        "web search CSV evolution",
+        "open issue/PR and inspect"
+      ],
+      "title": "S16",
+      "version_or_commit": "Issue 2024-12-11, milestone 3.10.2, PR 7703",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search CSV evolution",
+        "open issue/PR and inspect"
+      ],
+      "evidence": "sources/observations.md#s16",
+      "inherited_evidence": "sources/observations.md#s16",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json"
+    },
+    {
+      "id": "C01",
+      "title": "CSV Auto Detection – DuckDB",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "version": "DuckDB documentation 1.5 current; rolling URL, observed on 2026-10-09",
+      "version_or_commit": "DuckDB documentation 1.5 current; rolling URL, observed on 2026-10-09",
+      "locator": "Sample size lines 523–529; header detection and date ambiguity lines 631–641",
+      "accessed_at": "2026-10-09T19:06:21Z (clock sampled immediately after grouped browser open/find batch)",
+      "observed_operations": [
+        "Open URL; inspect version banner and sampling section",
+        "Find header; inspect header/date sections"
+      ],
+      "ops": [
+        "Open URL; inspect version banner and sampling section",
+        "Find header; inspect header/date sections"
+      ],
+      "evidence": "sources/observations.md#c01",
+      "inherited_evidence": "sources/observations.md#c01",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/source-map.json"
+    },
+    {
+      "id": "C02",
+      "title": "CSV Import – DuckDB",
+      "url": "https://duckdb.org/docs/current/data/csv/overview",
+      "version": "DuckDB documentation 1.5 current; rolling URL, observed on 2026-10-09",
+      "version_or_commit": "DuckDB documentation 1.5 current; rolling URL, observed on 2026-10-09",
+      "locator": "Parameter table lines 576–602; `max_line_size` default line 594",
+      "accessed_at": "2026-10-09T19:06:21Z (clock sampled immediately after grouped browser open/find batch)",
+      "observed_operations": [
+        "Open URL; find `store_rejects`; find `max_line_size` and inspect null/header parameters"
+      ],
+      "ops": [
+        "Open URL; find `store_rejects`; find `max_line_size` and inspect null/header parameters"
+      ],
+      "evidence": "sources/observations.md#c02",
+      "inherited_evidence": "sources/observations.md#c02",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/source-map.json"
+    },
+    {
+      "id": "C03",
+      "title": "Excel Import – DuckDB",
+      "url": "https://duckdb.org/docs/current/guides/file_formats/excel_import",
+      "version": "DuckDB documentation 1.5 current; rolling URL, observed on 2026-10-09",
+      "version_or_commit": "DuckDB documentation 1.5 current; rolling URL, observed on 2026-10-09",
+      "locator": "Empty-row/range behavior lines 554–560; empty-as-varchar/all-varchar/ignore_errors lines 599–610",
+      "accessed_at": "2026-10-09T19:06:21Z (clock sampled immediately after grouped browser open/find batch)",
+      "observed_operations": [
+        "Open URL; find `stop_at_empty`; find `ignore_errors` and inspect surrounding lines"
+      ],
+      "ops": [
+        "Open URL; find `stop_at_empty`; find `ignore_errors` and inspect surrounding lines"
+      ],
+      "evidence": "sources/observations.md#c03",
+      "inherited_evidence": "sources/observations.md#c03",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/source-map.json"
+    },
+    {
+      "id": "C04",
+      "title": "rust-csv 1.4.0 reader source",
+      "url": "https://github.com/BurntSushi/rust-csv/blob/1.4.0/src/reader.rs",
+      "version": "rust-csv source tag 1.4.0 (versioned tag URL)",
+      "version_or_commit": "rust-csv source tag 1.4.0 (versioned tag URL)",
+      "locator": "Builder defaults around lines 2256–2260; unequal-length default 2610–2618; trim behavior 2768–2796; current position granularity 3577–3585; UTF-8/string vs byte APIs 3493–3500",
+      "accessed_at": "2026-10-09T19:06:21Z (clock sampled immediately after grouped browser open/find batch)",
+      "observed_operations": [
+        "Open versioned source; find `has_headers`, `flexible`, `trim`, `position`, `StringRecord`"
+      ],
+      "ops": [
+        "Open versioned source; find `has_headers`, `flexible`, `trim`, `position`, `StringRecord`"
+      ],
+      "evidence": "sources/observations.md#c04",
+      "inherited_evidence": "sources/observations.md#c04",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/source-map.json"
+    },
+    {
+      "id": "C05",
+      "title": "XlsxCellReader in calamine",
+      "url": "https://docs.rs/calamine/0.36.1/calamine/struct.XlsxCellReader.html",
+      "version": "calamine 0.36.1 versioned API docs",
+      "version_or_commit": "calamine 0.36.1 versioned API docs",
+      "locator": "Iterator/one-stream constraint lines 51–55; constructor needs strings/formats lines 66–69; cached/literal formula and metadata methods lines 77–89",
+      "accessed_at": "2026-10-09T19:06:21Z (clock sampled immediately after grouped browser open/find batch)",
+      "observed_operations": [
+        "Open versioned API page; find `formula`, `Iterator`, `formats`; inspect method signatures"
+      ],
+      "ops": [
+        "Open versioned API page; find `formula`, `Iterator`, `formats`; inspect method signatures"
+      ],
+      "evidence": "sources/observations.md#c05",
+      "inherited_evidence": "sources/observations.md#c05",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/source-map.json"
+    },
+    {
+      "id": "C06",
+      "title": "Data types in Power Query",
+      "url": "https://learn.microsoft.com/en-us/power-query/data-types",
+      "version": "Microsoft Learn current page; page updated 2026-08-14 per inherited map, product build unspecified",
+      "version_or_commit": "Microsoft Learn current page; page updated 2026-08-14 per inherited map, product build unspecified",
+      "locator": "Document/project locale and Desktop OS regional settings, US/UK date example, Using locale lines 99–126",
+      "accessed_at": "2026-10-09T19:06:21Z (clock sampled immediately after grouped browser open/find batch)",
+      "observed_operations": [
+        "Open canonical English page; find `regional settings` and `locale`; inspect surrounding date example"
+      ],
+      "ops": [
+        "Open canonical English page; find `regional settings` and `locale`; inspect surrounding date example"
+      ],
+      "evidence": "sources/observations.md#c06",
+      "inherited_evidence": "sources/observations.md#c06",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/source-map.json"
+    },
+    {
+      "id": "C07",
+      "title": "CsvReadOptions in polars_io::csv::read",
+      "url": "https://docs.rs/polars-io/0.55.2/polars_io/csv/read/struct.CsvReadOptions.html",
+      "version": "polars-io 0.55.2 versioned API docs",
+      "version_or_commit": "polars-io 0.55.2 versioned API docs",
+      "locator": "`with_infer_schema_length` default/full-scan caveat lines 254–256; `with_low_memory` tradeoff lines 172–175",
+      "accessed_at": "2026-10-09T19:06:21Z (clock sampled immediately after grouped browser open/find batch)",
+      "observed_operations": [
+        "Open versioned API page; find `infer_schema_length` and `low_memory`"
+      ],
+      "ops": [
+        "Open versioned API page; find `infer_schema_length` and `low_memory`"
+      ],
+      "evidence": "sources/observations.md#c07",
+      "inherited_evidence": "sources/observations.md#c07",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/source-map.json"
+    },
+    {
+      "id": "C08",
+      "title": "Excel dates imported as java.util.Date, not OpenRefine date",
+      "url": "https://github.com/OpenRefine/OpenRefine/issues/1908",
+      "version": "OpenRefine issue #1908; issue concerns 3.1 compared with 2.8",
+      "version_or_commit": "OpenRefine issue #1908; issue concerns 3.1 compared with 2.8",
+      "locator": "Maintainer diagnosis around lines 404–414; Java 8 date-type migration and importer mismatch",
+      "accessed_at": "2026-10-09T19:06:21Z (clock sampled immediately after grouped browser open/find batch)",
+      "observed_operations": [
+        "Open issue; find `Java 8`; inspect reporter/maintainer version and diagnosis thread"
+      ],
+      "ops": [
+        "Open issue; find `Java 8`; inspect reporter/maintainer version and diagnosis thread"
+      ],
+      "evidence": "sources/observations.md#c08",
+      "inherited_evidence": "sources/observations.md#c08",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/source-map.json"
+    },
+    {
+      "id": "C09",
+      "title": "Fix Excel date import - Fixes #1908",
+      "url": "https://github.com/OpenRefine/OpenRefine/pull/2909",
+      "version": "OpenRefine PR #2909, merged 2020-07-09; merge commits include c5aed37",
+      "version_or_commit": "OpenRefine PR #2909, merged 2020-07-09; merge commits include c5aed37",
+      "locator": "Merge/status lines 130–154; OffsetDateTime and added tests lines 159–167; commit list lines 185–205",
+      "accessed_at": "2026-10-09T19:06:39Z (clock sampled immediately after grouped browser open/find batch)",
+      "observed_operations": [
+        "Open PR; inspect merge status, summary, test/fix commits"
+      ],
+      "ops": [
+        "Open PR; inspect merge status, summary, test/fix commits"
+      ],
+      "evidence": "sources/observations.md#c09",
+      "inherited_evidence": "sources/observations.md#c09",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/source-map.json"
+    },
+    {
+      "id": "C10",
+      "title": "OpenRefine v3.5.0 release",
+      "url": "https://github.com/OpenRefine/OpenRefine/releases/tag/3.5.0",
+      "version": "OpenRefine release tag 3.5.0, commit d4209a2, released 2020-11-07",
+      "version_or_commit": "OpenRefine release tag 3.5.0, commit d4209a2, released 2020-11-07",
+      "locator": "Release date, tag and stable release note lines 151–159",
+      "accessed_at": "2026-10-09T19:06:39Z (clock sampled immediately after grouped browser open/find batch)",
+      "observed_operations": [
+        "Open tag; inspect release metadata"
+      ],
+      "ops": [
+        "Open tag; inspect release metadata"
+      ],
+      "evidence": "sources/observations.md#c10",
+      "inherited_evidence": "sources/observations.md#c10",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/source-map.json"
+    },
+    {
+      "id": "C11",
+      "title": "Fix ignore quote setting for CSV importer",
+      "url": "https://github.com/OpenRefine/OpenRefine/pull/7703",
+      "version": "OpenRefine PR #7703 merged 2026-03-13 into master; commit c32deb2; milestone 3.10.2",
+      "version_or_commit": "OpenRefine PR #7703 merged 2026-03-13 into master; commit c32deb2; milestone 3.10.2",
+      "locator": "PR merge/status lines 130–154; regression-test/fix summary lines 165–170 and 218–240; merged commit line 275. The related issue #7042 and its 3.7/3.8 report are source S16.",
+      "accessed_at": "2026-10-09T19:06:21Z (clock sampled immediately after grouped browser open/find batch)",
+      "observed_operations": [
+        "Open PR #7703; inspect merge status, regression test, parser fix, commit and 3.10.2 milestone; use inherited S16 for issue #7042 report"
+      ],
+      "ops": [
+        "Open PR #7703; inspect merge status, regression test, parser fix, commit and 3.10.2 milestone; use inherited S16 for issue #7042 report"
+      ],
+      "evidence": "sources/observations.md#c11",
+      "inherited_evidence": "sources/observations.md#c11",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/source-map.json"
+    },
+    {
+      "id": "C12",
+      "title": "RFC 4180: Common Format and MIME Type for CSV Files",
+      "url": "https://www.rfc-editor.org/rfc/rfc4180",
+      "version": "RFC 4180, Informational, October 2005; IETF RFC Editor record",
+      "version_or_commit": "RFC 4180, Informational, October 2005; IETF RFC Editor record",
+      "locator": "CSV variations caveat and records/optional header lines 138–165; quoted line-break rule and grammar lines 191–215; charset/header and privacy notes 250–274",
+      "accessed_at": "2026-10-09T19:06:21Z (clock sampled immediately after grouped browser open/find batch)",
+      "observed_operations": [
+        "Open RFC Editor record; find `embedded line breaks` and `CRLF`; inspect relevant sections"
+      ],
+      "ops": [
+        "Open RFC Editor record; find `embedded line breaks` and `CRLF`; inspect relevant sections"
+      ],
+      "evidence": "sources/observations.md#c12",
+      "inherited_evidence": "sources/observations.md#c12",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/source-map.json"
+    },
+    {
+      "id": "C13",
+      "title": "Power Query Text/CSV connector",
+      "url": "https://learn.microsoft.com/en-us/power-query/connectors/text-csv",
+      "version": "Microsoft Learn current Text/CSV connector page, updated 2026-06-29, product capabilities vary by host",
+      "version_or_commit": "Microsoft Learn current Text/CSV connector page, updated 2026-06-29, product capabilities vary by host",
+      "locator": "Inference choices and warning lines 103–111; quoted line-break behavior lines 123–146",
+      "accessed_at": "2026-10-09T19:06:39Z (clock sampled immediately after grouped browser open/find batch)",
+      "observed_operations": [
+        "Open canonical English page; inspect data type detection and quoted-line-break settings"
+      ],
+      "ops": [
+        "Open canonical English page; inspect data type detection and quoted-line-break settings"
+      ],
+      "evidence": "sources/observations.md#c13",
+      "inherited_evidence": "sources/observations.md#c13",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/source-map.json"
+    },
+    {
+      "id": "C14",
+      "title": "Exporting your work — OpenRefine",
+      "url": "https://openrefine.org/docs/manual/exporting",
+      "version": "Current OpenRefine manual page; updated 2026-01-28",
+      "version_or_commit": "Current OpenRefine manual page; updated 2026-01-28",
+      "locator": "Project archive/privacy and full history lines 112–126",
+      "accessed_at": "2026-10-09T19:06:39Z (clock sampled immediately after grouped browser open batch)",
+      "observed_operations": [
+        "Open current official manual/exporting page; inspect archive/privacy and export-operations sections"
+      ],
+      "ops": [
+        "Open current official manual/exporting page; inspect archive/privacy and export-operations sections"
+      ],
+      "evidence": "sources/observations.md#c14",
+      "inherited_evidence": "sources/observations.md#c14",
+      "source_map_origin": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/source-map.json"
+    },
+    {
+      "id": "R01",
+      "title": "CSV Import – DuckDB",
+      "url": "https://duckdb.org/docs/current/data/csv/overview",
+      "version": "DuckDB documentation 1.5 current; rolling URL, observed 2026-10-09",
+      "version_or_commit": "DuckDB documentation 1.5 current; rolling URL, observed 2026-10-09",
+      "locator": "Parameter table lines 592–596; max_line_size row reports 2,000,000 bytes",
+      "accessed_at": "2026-10-09T19:27:48Z (clock sampled immediately after the direct source open/find batch)",
+      "observed_operations": [
+        "Opened current CSV import page directly",
+        "Used find for max_line_size and inspected the parameter table"
+      ],
+      "evidence": "sources/observations.md#r01"
+    },
+    {
+      "id": "R02",
+      "title": "Reading Faulty CSV Files – DuckDB",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "version": "DuckDB documentation 1.5 current; rolling URL, observed 2026-10-09",
+      "version_or_commit": "DuckDB documentation 1.5 current; rolling URL, observed 2026-10-09",
+      "locator": "Reject table and example, lines 665–696",
+      "accessed_at": "2026-10-09T19:27:48Z (clock sampled immediately after the direct source open/find batch)",
+      "observed_operations": [
+        "Opened current faulty CSV page directly",
+        "Used find for store_rejects and rejects_table; inspected fields and example"
+      ],
+      "evidence": "sources/observations.md#r02"
+    },
+    {
+      "id": "R03",
+      "title": "rust-csv reader source",
+      "url": "https://github.com/BurntSushi/rust-csv/blob/1.4.0/src/reader.rs",
+      "version": "rust-csv source tag 1.4.0",
+      "version_or_commit": "rust-csv source tag 1.4.0",
+      "locator": "ReaderBuilder defaults around lines 2253–2262; invalid UTF-8 and byte APIs lines 3493–3501; position precision lines 3577–3585",
+      "accessed_at": "2026-10-09T19:27:48Z (clock sampled immediately after the direct source open/find batch)",
+      "observed_operations": [
+        "Opened version-tagged source directly",
+        "Used find for ByteRecord and record positions; opened the relevant source ranges"
+      ],
+      "evidence": "sources/observations.md#r03"
+    },
+    {
+      "id": "R04",
+      "title": "XlsxCellReader in calamine",
+      "url": "https://docs.rs/calamine/0.36.1/calamine/struct.XlsxCellReader.html",
+      "version": "calamine 0.36.1 versioned API docs",
+      "version_or_commit": "calamine 0.36.1 versioned API docs",
+      "locator": "Single-stream note lines 51–55; constructor lines 66–69; formula/cached-value APIs lines 77–89",
+      "accessed_at": "2026-10-09T19:27:48Z (clock sampled immediately after the direct source open/find batch)",
+      "observed_operations": [
+        "Opened versioned API page directly",
+        "Used find for shared strings and formula methods; inspected constructor and streaming behavior"
+      ],
+      "evidence": "sources/observations.md#r04"
+    },
+    {
+      "id": "R05",
+      "title": "RFC 4180: Common Format and MIME Type for CSV Files",
+      "url": "https://www.rfc-editor.org/rfc/rfc4180",
+      "version": "RFC 4180, Informational, October 2005; RFC Editor record",
+      "version_or_commit": "RFC 4180, Informational, October 2005; RFC Editor record",
+      "locator": "CSV variability and optional header §§2–3; quoted line-break rule §2, lines 138–165 and 191–215; final URL redirects to /info/rfc4180/",
+      "accessed_at": "2026-10-09T19:27:48Z (clock sampled immediately after the direct source open/find batch)",
+      "observed_operations": [
+        "Opened the RFC Editor record directly",
+        "Used find for embedded line breaks and record-line wording; inspected header and quoted-field sections"
+      ],
+      "evidence": "sources/observations.md#r05"
+    },
+    {
+      "id": "R06",
+      "title": "Exporting your work – OpenRefine",
+      "url": "https://openrefine.org/docs/manual/exporting",
+      "version": "Current OpenRefine manual; page updated 2026-01-28",
+      "version_or_commit": "Current OpenRefine manual; page updated 2026-01-28",
+      "locator": "Operation-history JSON lines 124–126; archive confidentiality lines 112–119",
+      "accessed_at": "2026-10-09T19:27:48Z (clock sampled immediately after the direct source open/find batch)",
+      "observed_operations": [
+        "Opened current official manual page directly",
+        "Used find for project archives and JSON; inspected privacy and operation-export passages"
+      ],
+      "evidence": "sources/observations.md#r06"
+    },
+    {
+      "id": "R07",
+      "title": "OpenRefine issue #7042: CSV quote-option behavior",
+      "url": "https://github.com/OpenRefine/OpenRefine/issues/7042",
+      "version": "Issue opened 2024-12-11; reported 3.8 behavior differs from 3.7",
+      "version_or_commit": "OpenRefine issue #7042",
+      "locator": "Issue description and version comparison around lines 159–184",
+      "accessed_at": "2026-10-09T19:27:48Z (clock sampled immediately after the direct source open/find batch)",
+      "observed_operations": [
+        "Opened upstream issue directly",
+        "Inspected issue description comparing versions 3.7 and 3.8"
+      ],
+      "evidence": "sources/observations.md#r07"
+    },
+    {
+      "id": "R08",
+      "title": "OpenRefine PR #7703: Fix ignore quote setting",
+      "url": "https://github.com/OpenRefine/OpenRefine/pull/7703",
+      "version": "Merged to master 2026-03-13; commit c32deb2; milestone 3.10.2",
+      "version_or_commit": "OpenRefine PR #7703, merge commit c32deb2",
+      "locator": "Merged status/date lines 130–154; failing-before test and parser configuration lines 165–170, 218–232; milestone and merge commit lines 240 and 275",
+      "accessed_at": "2026-10-09T19:27:48Z (clock sampled immediately after the direct source open/find batch)",
+      "observed_operations": [
+        "Opened upstream PR directly",
+        "Inspected merge status, test/fix summary, milestone, and merged commit"
+      ],
+      "evidence": "sources/observations.md#r08"
+    }
+  ],
+  "source_id_provenance": {
+    "S01–S16": "Preserved from the declared research source-map.json without rebinding.",
+    "C01–C14": "Preserved from the declared critic source-map.json without rebinding.",
+    "R01–R08": "New reviser records for direct checks of consequential corrections and affected evidence."
+  },
+  "method": "M10 v1 question-relevance-reformulation. Three working cards per question were used only to prioritize context; investigation, retained evidence, and output were not capped.",
+  "retrieval_queues": [
+    {
+      "question": "O1 tools/products",
+      "reformulated_question": "Which materially different parsers, workbook readers, typed batch engines, SQL engines, and analyst products protect source distinctions and explain or replay choices?",
+      "status": "Retained Rust csv plus Calamine as a candidate, with Arrow, DuckDB, Polars, OpenRefine, and Power Query as distinct alternatives; no winner or performance fit established."
+    },
+    {
+      "question": "O2 source behavior",
+      "reformulated_question": "Which defaults can silently change headers, types, locale, nulls, source identity, reject detail, or location precision?",
+      "status": "Retained versioned defaults and limits; direct checks R01–R05 verified the line-size discrepancy, reject export fields, CSV location/encoding limits, workbook iterator constraints, and multiline logical records."
+    },
+    {
+      "question": "O3 evolution chain",
+      "reformulated_question": "Can an issue be traced through diagnosis, a test-backed fix, and a release or merge boundary?",
+      "status": "Preserved Excel-date chain S13–S15 and CSV quote-option chain S16/C11/R07–R08; no 3.10.2 release claim."
+    },
+    {
+      "question": "O4 exact plan",
+      "reformulated_question": "For each exact P clause, is the plan covered, wrong, an optional enhancement, a user choice, already covered, or uncertain?",
+      "status": "Adjudicated P1–P6; restored the required P4 CSV output and refined P6 record accounting."
+    },
+    {
+      "question": "O5 nuance",
+      "reformulated_question": "Which points are tool facts, product recommendations, open user decisions, or unmeasured claims?",
+      "status": "Kept candidate status, privacy implications, version drift, user choices, and explicit no-performance/no-runtime limitations."
+    },
+    {
+      "question": "O6 validation",
+      "reformulated_question": "Which fixtures distinguish sample misses, coercion, locale errors, lost rejects, drift, and memory failures?",
+      "status": "Retained V1–V8 with added precision and recipe-compatibility conditions; added V9 for accounting; none executed."
+    },
+    {
+      "question": "Emergent CSV location and counting",
+      "reformulated_question": "What is a logical record and what location precision can this parser prove when quotes span lines or bytes are invalid?",
+      "status": "RFC 4180 and tagged Rust source constrain counting and location claims; preserve unknown locations rather than fabricate cells."
+    },
+    {
+      "question": "Emergent workbook memory",
+      "reformulated_question": "What allocations remain around an XLSX XML iterator, and how do formula modes share the stream?",
+      "status": "Calamine needs shared-string and format data and its methods advance one stream; V5/V7 measure actual memory."
+    },
+    {
+      "question": "Emergent recipe compatibility",
+      "reformulated_question": "Can a saved monthly recipe silently change when parser, locale data, or operation implementations change?",
+      "status": "Require run-version pinning, explicit old-engine replay or reviewed migration/pause, and a golden fixture; exact retention policy remains a user/product decision."
+    },
+    {
+      "question": "Emergent source drift",
+      "reformulated_question": "Does the current DuckDB line-size row resolve the earlier conflicting observation?",
+      "status": "Current rolling page displays 2,000,000 bytes; inherited note reports 2,097,152. Cause/timing remains unknown; do not use either as a product standard."
+    }
+  ],
+  "outputs": [
+    "final.md",
+    "source-map.json",
+    "sources/index.md",
+    "sources/observations.md"
+  ],
+  "usage": null,
+  "billing": null,
+  "usage_billing_note": "Usage and billing were not observable in this assignment and remain null.",
+  "reviser_access_timestamp": "2026-10-09T19:27:48Z"
+}

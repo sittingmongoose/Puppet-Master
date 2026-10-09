@@ -1,0 +1,119 @@
+{
+  "map_version": 1,
+  "case": "S05",
+  "block": "A-M05-A",
+  "arm": "control",
+  "stage": "research",
+  "compiled_utc": "2026-10-09T19:48:00Z",
+  "notes": "Access timestamps are approximate to the minute, observed against the session clock (shell `date -u` read 2026-10-09T19:28:49Z at session start; fetches ran between then and compile time). Source IDs are immutable; redirects are documented inside each entry and in SRC-09; no silent rebind. Usage/billing for all web sources was unobserved: null.",
+  "sources": [
+    {
+      "id": "SRC-01",
+      "title": "SQLite FTS5 documentation",
+      "url": "https://www.sqlite.org/fts5.html",
+      "version": "current SQLite documentation as of access (feature 'contentless_delete' tied to SQLite 3.43.0+); not a pinned release",
+      "locator": "full document; governing-defaults extraction",
+      "access_timestamp": "2026-10-09T19:30:00Z",
+      "observed_operations": ["WebFetch GET", "defaults-extraction prompt"],
+      "status": "retrieved",
+      "evidence_path": "sources/SRC-01-sqlite-fts5.md",
+      "usage_billing": null
+    },
+    {
+      "id": "SRC-02",
+      "title": "pgvector CHANGELOG (raw, master branch)",
+      "url": "https://raw.githubusercontent.com/pgvector/pgvector/master/CHANGELOG.md",
+      "version": "master branch at access; newest entry observed 0.8.7 (2026-10-01); mutable-source drift noted, releases pinned by tag inside evidence",
+      "locator": "release entries 0.5.0 through 0.8.7",
+      "access_timestamp": "2026-10-09T19:36:00Z",
+      "observed_operations": ["WebFetch GET (raw)", "release-chain extraction"],
+      "status": "retrieved",
+      "evidence_path": "sources/SRC-02-pgvector-changelog.md",
+      "usage_billing": null
+    },
+    {
+      "id": "SRC-03",
+      "title": "Meilisearch docs — typo tolerance",
+      "url": "https://www.meilisearch.com/docs/learn/configuration/typo_tolerance",
+      "version": "current docs site at access; no build number exposed on page",
+      "locator": "defaults table and per-word rules section",
+      "access_timestamp": "2026-10-09T19:32:00Z",
+      "observed_operations": ["WebFetch GET", "defaults-extraction prompt"],
+      "status": "retrieved",
+      "evidence_path": "sources/SRC-03-meilisearch-typo.md",
+      "usage_billing": null
+    },
+    {
+      "id": "SRC-04",
+      "title": "IIIF Image API 3.0 specification",
+      "url": "https://iiif.io/api/image/3.0/",
+      "version": "3.0.0 'Orange Blooms' (2020-06-03), stated on page",
+      "locator": "request-URI pattern; region/size/rotation/quality/format sections; conformance profile section",
+      "access_timestamp": "2026-10-09T19:30:00Z",
+      "observed_operations": ["WebFetch GET", "endpoint/defaults prompt"],
+      "status": "retrieved",
+      "evidence_path": "sources/SRC-04-iiif-image-api.md",
+      "usage_billing": null
+    },
+    {
+      "id": "SRC-05",
+      "title": "Mukurtu CMS — home page",
+      "url": "https://mukurtu.org/",
+      "version": "current site at access; software GPLv3 (stated on page)",
+      "locator": "hero/description text; license statement",
+      "access_timestamp": "2026-10-09T19:30:00Z",
+      "observed_operations": ["WebFetch GET", "feature/protocol prompt"],
+      "status": "retrieved",
+      "evidence_path": "sources/SRC-05-mukurtu-home.md",
+      "usage_billing": null
+    },
+    {
+      "id": "SRC-06",
+      "title": "Mukurtu support/documentation index",
+      "url": "https://mukurtu.org/support/",
+      "version": "current site at access",
+      "locator": "article title list (communities/cultural protocols/categories; TK Labels; Media Content Warnings); user-manual link docs.mukurtu.org",
+      "access_timestamp": "2026-10-09T19:38:00Z",
+      "observed_operations": ["301 redirect followed from https://support.mukurtu.org/", "WebFetch GET", "documentation-links prompt"],
+      "status": "retrieved",
+      "evidence_path": "sources/SRC-06-mukurtu-support.md",
+      "usage_billing": null
+    },
+    {
+      "id": "SRC-07",
+      "title": "RightsStatements.org data-model repository",
+      "url": "https://github.com/rightsstatements/data-model",
+      "version": "repo state at access (152 commits observed); SKOS vocabulary in Turtle, CC0 1.0",
+      "locator": "README summary + translation-file listing (InC*, CNE, NKC)",
+      "access_timestamp": "2026-10-09T19:38:00Z",
+      "observed_operations": ["WebFetch GET", "model/identifiers prompt"],
+      "status": "retrieved (repo only; canonical site returned HTTP 526 twice — see SRC-09)",
+      "evidence_path": "sources/SRC-07-rightsstatements-data-model.md",
+      "usage_billing": null
+    },
+    {
+      "id": "SRC-08",
+      "title": "Typesense documentation landing + llms.txt index",
+      "url": "https://typesense.org/docs/ (companion: https://typesense.org/docs/llms.txt)",
+      "version": "docs version 30.2 observed in index URLs",
+      "locator": "llms.txt index lines for search API parameters, ranking-and-relevance, curation, filter_by, vector search",
+      "access_timestamp": "2026-10-09T19:40:00Z",
+      "observed_operations": ["WebFetch GET (landing; overview.html 404)", "WebFetch GET (llms.txt)"],
+      "status": "retrieved (index level only; numeric defaults not obtained — evidence absent)",
+      "evidence_path": "sources/SRC-08-typesense-docs.md",
+      "usage_billing": null
+    },
+    {
+      "id": "SRC-09",
+      "title": "Failed/inaccessible fetch attempts (negative evidence log)",
+      "url": "multiple (pgvector releases page + API, mukurtu.org/features, rightsstatements.org ×2, support.mukurtu.org redirect, openrefine.org reconciling docs)",
+      "version": "n/a",
+      "locator": "per-entry attempts and observed HTTP/error outcomes",
+      "access_timestamp": "2026-10-09T19:29:00Z (window through 19:41:00Z)",
+      "observed_operations": ["WebFetch GET ×8", "error/redirect observation"],
+      "status": "failed-fetches (recorded as data)",
+      "evidence_path": "sources/SRC-09-failed-fetches.md",
+      "usage_billing": null
+    }
+  ]
+}

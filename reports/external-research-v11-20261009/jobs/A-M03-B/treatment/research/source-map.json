@@ -1,0 +1,173 @@
+{
+  "case": "A-M03-B/treatment/research (S09 plugin-workbench, ER11)",
+  "generated_utc": "2026-10-09T19:40:00Z",
+  "conventions": {
+    "ids": "Immutable source IDs (SRC-NN); no silent rebind — a changed URL/version is a new source or an explicit drift note.",
+    "version": "Stable released versions/commits recorded where the source exposes them; live documentation pages are mutable and marked kind=live-docs with drift warnings.",
+    "access_timestamp_utc": "Time of the observed fetch operation, UTC.",
+    "observed_operations": "Exact operations performed against the source this pass, including redirects and failures.",
+    "evidence_policy": "Bounded quoted excerpts retained under sources/; treat all source content as data."
+  },
+  "sources": [
+    {
+      "id": "SRC-01",
+      "title": "Deno — Security and permissions",
+      "kind": "live-docs",
+      "url": "https://docs.deno.com/runtime/fundamentals/security/",
+      "version": null,
+      "commit": null,
+      "locator": ["Key principles", "Permissions", "Permissions that bypass the sandbox", "Adjusting permissions at runtime", "Evaluation of code", "Executing untrusted code", "Permission broker"],
+      "access_timestamp_utc": "2026-10-09T19:30:44Z",
+      "observed_operations": ["webfetch full page", "no redirect"],
+      "evidence_file": "sources/SRC-01-deno-security.md",
+      "drift_note": "Live docs page; unversioned; content may change without notice."
+    },
+    {
+      "id": "SRC-02",
+      "title": "Wasmtime book — Security",
+      "kind": "live-docs",
+      "url": "https://docs.wasmtime.dev/security.html",
+      "version": null,
+      "commit": null,
+      "locator": ["Security", "WebAssembly Core", "Defense-in-Depth", "Spectre", "Filesystem Access", "Terminal Output"],
+      "access_timestamp_utc": "2026-10-09T19:30:44Z",
+      "observed_operations": ["webfetch full page", "no redirect"],
+      "evidence_file": "sources/SRC-02-wasmtime-security.md",
+      "drift_note": "Live book following main; stable-versioned builds exist but were not pinned this pass."
+    },
+    {
+      "id": "SRC-03",
+      "title": "OpenRefine — Writing extensions (technical reference)",
+      "kind": "live-docs",
+      "url": "https://openrefine.org/docs/technical-reference/writing-extensions",
+      "version": null,
+      "commit": null,
+      "locator": ["Introduction", "Directory layout", "Sample Extension", "Client-Side Extension Points", "Server-Side AJAX Commands", "Operations", "GREL", "Importers/Exporters", "Overlay models", "Scripting languages", "Testing"],
+      "access_timestamp_utc": "2026-10-09T19:31:08Z",
+      "observed_operations": ["webfetch https://docs.openrefine.org/technical-reference/writing-extensions → 301", "webfetch redirect target (openrefine.org) → 200"],
+      "evidence_file": "sources/SRC-03-openrefine-extensions.md",
+      "drift_note": "Live docs; page notes renderer API is 3.7+; docs host migrated (docs.openrefine.org → openrefine.org) — redirect recorded."
+    },
+    {
+      "id": "SRC-04",
+      "title": "Figma — How plugins run",
+      "kind": "live-docs",
+      "url": "https://developers.figma.com/docs/plugins/how-plugins-run/",
+      "version": null,
+      "commit": null,
+      "locator": ["Plugin environment", "Network access restrictions", "File loading"],
+      "access_timestamp_utc": "2026-10-09T19:31:37Z",
+      "observed_operations": ["webfetch https://www.figma.com/plugin-docs/how-plugins-run/ → 301", "webfetch redirect target (developers.figma.com) → 200"],
+      "evidence_file": "sources/SRC-04-figma-plugins.md",
+      "drift_note": "Live docs; unversioned."
+    },
+    {
+      "id": "SRC-05",
+      "title": "Zotero 7 for Developers (official migration guide)",
+      "kind": "vendor-docs",
+      "url": "https://www.zotero.org/support/dev/zotero_7_for_developers",
+      "version": "Zotero 7 platform transition (Firefox 60→115); page last updated 2026-05-23 (stated on page)",
+      "commit": null,
+      "locator": ["XUL Overlays → bootstrap.js", "install.rdf → manifest.json", "update.rdf → updates.json", "chrome.manifest → runtime chrome registration", "Localization", "Default Preferences", "Preference Panes", "New plugin APIs", "Zotero Platform", "Feedback channels"],
+      "access_timestamp_utc": "2026-10-09T19:31:37Z",
+      "observed_operations": ["websearch (zotero 7 bootstrap migration)", "webfetch full page"],
+      "evidence_file": "sources/SRC-05-zotero7-dev.md",
+      "drift_note": "Wiki page; 'last updated' recorded; a Zotero 8 for Developers page exists and was not fetched."
+    },
+    {
+      "id": "SRC-06",
+      "title": "OpenRefine releases (GitHub)",
+      "kind": "release-history",
+      "url": "https://github.com/OpenRefine/OpenRefine/releases",
+      "version": "tags 3.9.3, 3.9.4, 3.9.5, 3.10-beta1, 3.10-beta2, 3.10.0, 3.10.1 observed at fetch",
+      "commit": null,
+      "locator": ["release entries 3.10.1 / 3.10.0 / 3.10-beta2 / 3.10-beta1 / 3.9.5 / 3.9.4 / 3.9.3"],
+      "access_timestamp_utc": "2026-10-09T19:31:37Z",
+      "observed_operations": ["webfetch releases listing"],
+      "evidence_file": "sources/SRC-06-openrefine-releases.md",
+      "drift_note": "Dynamic page (newest first); years not displayed for most entries — exact years unverified this pass."
+    },
+    {
+      "id": "SRC-07",
+      "title": "JSONata — Overview",
+      "kind": "live-docs",
+      "url": "https://docs.jsonata.org/overview",
+      "version": null,
+      "commit": null,
+      "locator": ["Introduction", "Implementations of JSONata"],
+      "access_timestamp_utc": "2026-10-09T19:32:19Z",
+      "observed_operations": ["webfetch full page"],
+      "evidence_file": "sources/SRC-07-jsonata-overview.md",
+      "drift_note": "Live docs; port version levels vary by implementation (page states 'varying version levels')."
+    },
+    {
+      "id": "SRC-08",
+      "title": "MarcEdit website (home)",
+      "kind": "product-site",
+      "url": "https://marcedit.reeset.net/",
+      "version": "MarcEdit 7.8 (news posted 2026-07-05; built against .NET 10 LTS); legacy macOS 3.5 still offered",
+      "commit": null,
+      "locator": ["news listing 7.8", "download options (Windows/macOS/Linux)", "plugins and MARCEngine75 COM library"],
+      "access_timestamp_utc": "2026-10-09T19:32:19Z",
+      "observed_operations": ["webfetch home page"],
+      "evidence_file": "sources/SRC-08-marcedit-home.md",
+      "drift_note": "Dynamic product site; news-driven."
+    },
+    {
+      "id": "SRC-09",
+      "title": "QuickJS JavaScript engine manual",
+      "kind": "project-manual",
+      "url": "https://bellard.org/quickjs/quickjs.html",
+      "version": null,
+      "commit": null,
+      "locator": ["3.4.8 Memory handling", "3.4.9 Execution timeout and interrupts", "3.3.2 std module gc()", "4.3.5 garbage collection internals"],
+      "access_timestamp_utc": "2026-10-09T19:32:19Z",
+      "observed_operations": ["webfetch manual (large page; summarized)"],
+      "evidence_file": "sources/SRC-09-quickjs-manual.md",
+      "drift_note": "Live page; engine version not shown in fetched text; upstream activity level unverified this pass."
+    },
+    {
+      "id": "SRC-10",
+      "title": "Extism README (GitHub)",
+      "kind": "repo-readme",
+      "url": "https://github.com/extism/extism",
+      "version": "repo HEAD at fetch; BSD-3-Clause; maintained by Dylibso (~5.8k stars observed)",
+      "commit": null,
+      "locator": ["intro/tagline", "runtime utilities (limiters, timers, host-controlled HTTP)", "Host SDK languages", "PDK languages", "Bindings (XTP)", "release targets"],
+      "access_timestamp_utc": "2026-10-09T19:32:47Z",
+      "observed_operations": ["webfetch https://extism.org/docs/concepts/plugins → HTTP 404", "webfetch repo landing page → 200"],
+      "evidence_file": "sources/SRC-10-extism-readme.md",
+      "drift_note": "README at HEAD; exact commit not pinned this pass. Manifest capability fields (allowed_hosts/allowed_paths/memory) NOT verified from primary docs — unverified, do not rely without re-check. Docs-site 404 recorded."
+    },
+    {
+      "id": "SRC-11",
+      "title": "Wasmtime security advisory GHSA-vqjp-4c8c-hfgg — filesystem sandbox escape",
+      "kind": "security-advisory",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-vqjp-4c8c-hfgg",
+      "version": "affected: '<= 24.0.12, >= 25.0.0, <= 36.0.13, >= 37.0.0, <= 46.0.2, >= 47.0.0, <= 47.0.3'; patched: '24.0.13, 36.0.14, 46.0.3, and 47.0.4' (48.0.0+ unaffected); RustSec-2026-0269; underlying cap-std advisory GHSA-hp8f-xmx4-4qrg; no CVE; CWE-61; CVSS v4 8.8 High; published 2026-08-20",
+      "commit": null,
+      "locator": ["advisory description", "affected versions", "patched versions", "severity", "workarounds", "credit/publication date"],
+      "access_timestamp_utc": "2026-10-09T19:33:10Z",
+      "observed_operations": ["websearch (wasmtime GHSA advisories)", "webfetch advisory page"],
+      "evidence_file": "sources/SRC-11-wasmtime-advisory.md",
+      "drift_note": "Advisory records are append-style; quoted affected/patched strings captured verbatim."
+    },
+    {
+      "id": "SRC-12",
+      "title": "OpenRefine manual — Exporting your work (operation history)",
+      "kind": "live-docs",
+      "url": "https://openrefine.org/docs/manual/exporting",
+      "version": null,
+      "commit": null,
+      "locator": ["Export operations", "Export a project"],
+      "access_timestamp_utc": "2026-10-09T19:33:50Z",
+      "observed_operations": ["webfetch https://openrefine.org/docs/manual/undo-redo → HTTP 404", "webfetch https://docs.openrefine.org/manual/undoredo → HTTP 404", "websearch (openrefine undo redo extract operations json)", "webfetch exporting page → 200"],
+      "evidence_file": "sources/SRC-12-openrefine-exporting.md",
+      "drift_note": "Live docs; unversioned; undo/redo content lives in the exporting page's operation-history section at fetch time."
+    }
+  ],
+  "usage_and_billing": {
+    "status": "unobserved",
+    "note": "Usage/billing unobserved null, per assignment."
+  }
+}

@@ -1,0 +1,707 @@
+{
+  "schema": "er11-independent-assessment-source-map-v1",
+  "block": "A-M05-B",
+  "case": "S11",
+  "assignment": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-B/assignment.md",
+  "exact_input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-B/input-map.json",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-B/assignment.md",
+      "sha256": "bba80b98554dd0c9295171300d9a15889660e2eb2e154d80f8b635dc2fde6b6a",
+      "bytes": 1980
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-B/input-map.json",
+      "sha256": "37772b3586e4652f5f0ec7c8418c0a01d34cf62466b490e24d70a9159395f57d",
+      "bytes": 8653
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S11/brief.md",
+      "sha256": "da5e0032e5ce6e30ca840d7b65d3d1a4104e87dbad54081d3b65ff9bfb059314",
+      "bytes": 1439
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S11/plan-root-only.md",
+      "sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "bytes": 297
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/final.md",
+      "sha256": "0de48c1f5699fa8471ccaa09be48557c87a926b94474f2acfea5d2be1f284bd4",
+      "bytes": 27513
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/source-map.json",
+      "sha256": "8dcd39eac9cbb37c96aec4a19c2712a2f72dcbfe72ac293004f0e6ce5fa54edc",
+      "bytes": 5714
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/assignment.md",
+      "sha256": "929eb663c0cad406c94ea9a1335a5084c690bdaea620cd0d96f6246d5053c83e",
+      "bytes": 2772
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/input-map.json",
+      "sha256": "df0a8777d725c8892c233480b8ee369808287d2db3f9ec266db77a44cf401ca0",
+      "bytes": 1504
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/critic/critique.md",
+      "sha256": "8f7b4ec0469a63ec4ca2a774991d6fb036847d2fdf5e2e61924cc8afb65af0c7",
+      "bytes": 11760
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/critic/source-map.json",
+      "sha256": "2c757be34622b87e1151c08c400ef8618dd014682ca266a836b5360596f145b1",
+      "bytes": 8349
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/critic/assignment.md",
+      "sha256": "ffb788a9cebf707c5c956a4eefb72160773ba49bc71d6aeda387d598d8cc0c80",
+      "bytes": 2509
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/critic/input-map.json",
+      "sha256": "59ea56f12727cba8d692ba3cfb6736f50d4032e30f39431bb654e430b055e573",
+      "bytes": 1180
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/discovery.md",
+      "sha256": "7d0318fd7d03c2693615323b7bd8ed8dafb5a820a3cc07dad678e43b969afed3",
+      "bytes": 18323
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/draft.md",
+      "sha256": "0605360ab4e0eb645465ba0f7135bd17eb7a6a6c403941a50cde336b8c8b569d",
+      "bytes": 19519
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/source-map.json",
+      "sha256": "b73b7075520c22a27b8d8c6a07189626c5fe99317718bee01f031c80207b2e31",
+      "bytes": 12102
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/revealed-plan.md",
+      "sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "bytes": 297
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/plan-reveal.json",
+      "sha256": "1125221511d53c2487f2b5ed41177f71c4dc0741cc58f5c8699bb1d1326581c0",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/assignment.md",
+      "sha256": "9f5ce124ba95482bb177834bd8dbae1d92a8d3dbeb3877a79b6586932dff1b4b",
+      "bytes": 2985
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/input-map.json",
+      "sha256": "45a5db2e104a0d752efa7273bad94a543164976ba93e73d7638c5a8c6f572656",
+      "bytes": 634
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/sources/evidence-notes.md",
+      "sha256": "fd1b0b14652b9f2a6e11cd972c3f1d98dc44a72527b8ecfd50f6c7c0456d3cae",
+      "bytes": 1870
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/reviser/sources/index.md",
+      "sha256": "354dc73ea69a1fa1ee68841b71eed65aec2c647fef6a66478966b88b49b1a8da",
+      "bytes": 1007
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/critic/sources/evidence-notes.md",
+      "sha256": "f5d174d715fd3c4f20a3ab8035be7131244a11ec76ba0ab263ae2f18691d007a",
+      "bytes": 2152
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/critic/sources/index.md",
+      "sha256": "a9b900593adc66c254b1935ecc0236b38b48c3c0f4e7d03b618406d94b1060a8",
+      "bytes": 939
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/sources/evidence-notes.md",
+      "sha256": "4e2a53e2a6c7594f630c61197b1e33b995b942d2893174845336953f681d1195",
+      "bytes": 4021
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/control/research/sources/index.md",
+      "sha256": "9a011f71290df69eecfe9f4bc402b7466fdb1cb7c504f9b6eddaaf5aab52902a",
+      "bytes": 1619
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic/critique.md",
+      "sha256": "ab56d879c82f3fac176336122d013e383cae5a2631d0eb74a3277209e01b27f5",
+      "bytes": 14262
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic/source-map.json",
+      "sha256": "8ae4a749825c8983475ae836d1c088f17bce9d1698fee97cdbfa7b2cd7a94562",
+      "bytes": 20091
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic/assignment.md",
+      "sha256": "ac1c003eaf02697eee187055e803f5582c7ad75c41ef42f59cbebb10eafda7c5",
+      "bytes": 2671
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic/input-map.json",
+      "sha256": "6a3dd1cd078cb0b70c3ed84e33d67c14207bfad2ce1b3e847e93b35a4029a7da",
+      "bytes": 1196
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/discovery.md",
+      "sha256": "ab1cc84ea47d3698e7b86991f6668bfde93b6e3fb1804e39dc494e22fb49eddd",
+      "bytes": 18888
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/draft.md",
+      "sha256": "584edc7870584f57774a7b12a3bdde09e861e8928b131162597253b25731e80d",
+      "bytes": 21037
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/final.md",
+      "sha256": "f3c71217439f771cfbc92d1cef95f942eaa9068073c5c162906ca6a37a8c6393",
+      "bytes": 21599
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/source-map.json",
+      "sha256": "50a2cce514117208d92beab1adbe87542a6bc8fe804017fbd0c22cff30b0a4f2",
+      "bytes": 18820
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/revealed-plan.md",
+      "sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "bytes": 297
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/plan-reveal.json",
+      "sha256": "faf47547d791fe240907d3d4684d317c56c4333a4e8a3fefb48cbab503f39dc5",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/assignment.md",
+      "sha256": "18d9ffe68031a1521933787d7236e3dba22ada84808c361d16cba8d8f012a065",
+      "bytes": 3689
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/input-map.json",
+      "sha256": "a7be2f0483b7de00e246eece07184a198313579b3d607450cb5b1b11e1a6aa47",
+      "bytes": 640
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic/sources/index.md",
+      "sha256": "a0fdfddc639cb421e5a0a49e1fc2151eee474b5aa4911b5f6826ba10d9610a9f",
+      "bytes": 1070
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic/sources/primary-source-notes.md",
+      "sha256": "a9c58d446e453eba74b8aaeacac1728c522ac66e9c931e45a333f72a7e9610e5",
+      "bytes": 2955
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/sources/index.md",
+      "sha256": "5340b9809437e93bb67958f51d217d4dafbc21c6aaa260ae92df431546ff87fa",
+      "bytes": 3363
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/sources/primary-source-notes.md",
+      "sha256": "c4459c5600fb0e8e25285166b281959c8f1f4c13be18c6b6d7e2d94c51ab2257",
+      "bytes": 21756
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "E01",
+      "title": "WCAG 2.2 normative dated Recommendation",
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "version_or_commit": "W3C Recommendation 2024-12-12",
+      "locator": "SC 1.2.2, 1.2.3, 1.2.5; synchronized media and media-alternative-for-text definitions",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "Criterion levels and the Level A/AA distinction support both finals. The labelled-text-media exception was checked; the brief independently asks for captions.",
+      "limits": [
+        "No conformance target or actual video classification supplied."
+      ],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E02",
+      "title": "WAI Understanding 1.2.5",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded",
+      "version_or_commit": "Informative living guidance; updated 2026-03-09",
+      "locator": "Intent, existing-audio note, sufficient techniques and advisory H96",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "Confirms content-dependent description need and distinguishes a described audio/video route from merely declaring a descriptions track.",
+      "limits": [
+        "Informative explanation, not runtime support evidence."
+      ],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E03",
+      "title": "WAI Understanding 1.2.3",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-or-media-alternative-prerecorded",
+      "version_or_commit": "Informative living guidance retrieved 2026-10-09",
+      "locator": "Intent; sequential full auditory/visual alternative and interaction functionality",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "Supports both finals distinguishing an ordinary transcript from a complete media alternative.",
+      "limits": [],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E04",
+      "title": "HTML media/text-track standard",
+      "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+      "version_or_commit": "WHATWG Living Standard retrieved 2026-10-09",
+      "locator": "Track kind table; srclang/label/default constraints; media controls",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "Caption/subtitle kinds depend on content and use, not solely language. Checked the captions/subtitles default group, preference qualifier, description kind and required subtitle language metadata.",
+      "limits": [
+        "Definition of controls/track kind does not prove a selected browser implementation."
+      ],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E05",
+      "title": "WebVTT dated publication",
+      "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+      "version_or_commit": "Candidate Recommendation Draft 2026-05-20",
+      "locator": "Status; one kind per file; section 4.1 timestamps, cue timing/order/overlap; chapter constraints; MIME registration",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "Checked nondecreasing starts, positive own duration, allowed caption overlap, thousandths of seconds and draft status. An against-media-duration check is product QA, not a claim that the syntax standard itself forbids longer cues.",
+      "limits": [
+        "No parser or actual captions exercised."
+      ],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": "2026-10-09T19:23:29.380028+00:00",
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E06",
+      "title": "Able Player pinned README",
+      "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+      "version_or_commit": "v5.0.0 commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+      "locator": "Features; captions; interactive/manual transcript; VTS; extra tab-stop default; YouTube support changes",
+      "observed_operations": [
+        "opened commit-pinned GitHub README",
+        "retrieved raw commit-pinned Markdown as text only",
+        "located and read cited feature/default/provider passages"
+      ],
+      "observation": "Documentation supports the compared capabilities, optional transcript cue navigation and local-track/provider distinction.",
+      "limits": [
+        "Vendor/project capability claims, not independently executed behavior."
+      ],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": "2026-10-09T19:23:29.130459+00:00",
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E07",
+      "title": "Able Player releases and tagged release",
+      "url": "https://github.com/ableplayer/ableplayer/releases",
+      "version_or_commit": "Observed v5.0.0 8d235f9 stable 2026-06-21; v5.1.0-beta2 c4f10ab pre-release 2026-10-06",
+      "locator": "Release labels; tagged v5.0.0 Features and browser target",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "Checked stable/beta labels and v5 ESM/ES 2022 release notes.",
+      "limits": [
+        "Fix inclusion in the beta tag not independently traced; neither final selects the beta or claims it contains #778."
+      ],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E08",
+      "title": "Able Player issue #775",
+      "url": "https://github.com/ableplayer/ableplayer/issues/775",
+      "version_or_commit": "Issue opened 2026-08-12; development-branch report; timeline closure 2026-09-13",
+      "locator": "Body Version tested; sign.js/initSignLanguage, dataset keys, constructor forms, syncTrackLanguages; timeline Closed with #778; Development sidebar",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "The body attributes failures to freshly built develop and distinguishes stable v5.0.0. Timeline links #778 despite an empty Development sidebar. This qualifies N1 final line 46.",
+      "limits": [
+        "Reporter reproduction and counts were not reproduced by evaluator."
+      ],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E09",
+      "title": "Able Player PR #778",
+      "url": "https://github.com/ableplayer/ableplayer/pull/778",
+      "version_or_commit": "cd617fc merged into develop 2026-09-13",
+      "locator": "Merge target/event and reported checks",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "Confirms the merged fix event that N2 preserves. Merge and CI status do not independently establish product behavior or later tag inclusion.",
+      "limits": [],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E10",
+      "title": "Subtitle Edit pinned FAQ",
+      "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+      "version_or_commit": "v5.2.0 tag; release short SHA d8e3b8b",
+      "locator": "Formats; waveform/FFmpeg; spectrogram; speech engines; constant offset and visual/point sync",
+      "observed_operations": [
+        "opened tag-pinned FAQ",
+        "retrieved raw tag-pinned Markdown as text only",
+        "read format, timing, engine and dependency passages"
+      ],
+      "observation": "Supports the editing alternative and dependencies. Text-only editing remains viable for already synchronized cues.",
+      "limits": [],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": "2026-10-09T19:23:29.091922+00:00",
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E11",
+      "title": "Subtitle Edit release",
+      "url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.2.0",
+      "version_or_commit": "v5.2.0 d8e3b8b; build 2026-09-10 08:09:02 UTC",
+      "locator": "Release build date, platform packages and Change Log link",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "Confirms released status and available platform variants; does not prove workload suitability or platform feature parity.",
+      "limits": [],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E12",
+      "title": "Subtitle Edit release-tagged changelog",
+      "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/Changelog.txt",
+      "version_or_commit": "v5.2.0 tag; entries 5.2.0 and 5.1.0",
+      "locator": "5.2 WebVTT/style/settings and waveform/original reference work; 5.1 local/remote engine entries; 5.0 migration",
+      "observed_operations": [
+        "opened tag-pinned changelog",
+        "retrieved raw changelog text without executing source",
+        "read relevant release entries"
+      ],
+      "observation": "Confirms the release evolution and local/remote options underlying both editor recommendations.",
+      "limits": [],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": "2026-10-09T19:23:29.122111+00:00",
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E13",
+      "title": "Subtitle Edit license",
+      "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/LICENSE",
+      "version_or_commit": "v5.2.0 tag",
+      "locator": "MIT grant and notice condition",
+      "observed_operations": [
+        "retrieved raw release-tagged license text",
+        "read grant and notice condition"
+      ],
+      "observation": "Supports N1 application-license statement; optional engine/model licenses remain separately unresolved.",
+      "limits": [],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": "2026-10-09T19:23:29.084438+00:00",
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E14",
+      "title": "Amara subtitle options",
+      "url": "https://support.amara.org/support/solutions/articles/238000-subtitle-options-on-amara",
+      "version_or_commit": "Search-rendered official article modified 2026-06-12",
+      "locator": "Upload from video page versus editor; language replacement and complete/export behavior",
+      "observed_operations": [
+        "direct open returned Internal Error",
+        "direct terminal fetch hit a redirect loop",
+        "searched official article and read returned primary article rendering"
+      ],
+      "observation": "Official search rendering supports N2 upload caveat and portable export workflow.",
+      "limits": [
+        "Direct article unavailable without resolving redirect; no service or account tested."
+      ],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E15",
+      "title": "Amara private team",
+      "url": "https://support.amara.org/support/solutions/articles/25931-create-a-private-team-on-amara-",
+      "version_or_commit": "Official support article modified 2024-07-03; search-rendered copy",
+      "locator": "Team types; privacy option; roles/admission; workflows; import/export; Integrated",
+      "observed_operations": [
+        "direct open returned Internal Error",
+        "direct fetch hit redirect loop",
+        "read official search-rendered article"
+      ],
+      "observation": "Supports a conditional hosted collaboration alternative rather than assuming every plan is private or has identical roles.",
+      "limits": [
+        "Current contractual privacy, retention, role enforcement and pricing not verified."
+      ],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E16",
+      "title": "Amara editor help",
+      "url": "https://support.amara.org/support/solutions/articles/195345-create-captions-and-translations",
+      "version_or_commit": "Live support URL; direct retrieval unavailable",
+      "locator": "Requested editor article",
+      "observed_operations": [
+        "direct open returned Internal Error"
+      ],
+      "observation": "Attempt was unsuccessful; evaluator does not convert inaccessible content into verified behavior.",
+      "limits": [
+        "Editor specifics supported only by frozen notes/other official support rendering; not a selected dependency."
+      ],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E17",
+      "title": "YouTube caption editing help",
+      "url": "https://support.google.com/youtube/answer/2734705?hl=en-GB",
+      "version_or_commit": "Live official help retrieved 2026-10-09",
+      "locator": "Text/timestamp edits; Duplicate and edit; Publish; download/edit/upload",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "Supports N2 alternate authoring route and the continued viability of plain-text file edits.",
+      "limits": [
+        "No actual account, permission, video or provider workflow tested."
+      ],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E18",
+      "title": "DCMP Captioning Key",
+      "url": "https://dcmp.org/captioningkey/print",
+      "version_or_commit": "Living guide retrieved 2026-10-09",
+      "locator": "Quality dimensions; meaningful sounds; caption duration; educational presentation rates",
+      "observed_operations": [
+        "opened official guide",
+        "retrieved HTML as text in memory",
+        "read applicable timing/quality paragraphs"
+      ],
+      "observation": "Checked the 40-frame/6-second guidance and 130/140/160 wpm educational context. Both finals correctly avoid universal WCAG numeric limits.",
+      "limits": [],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": "2026-10-09T19:23:29.299082+00:00",
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E19",
+      "title": "IMSC 1.2",
+      "url": "https://www.w3.org/TR/2020/REC-ttml-imsc1.2-20200804/",
+      "version_or_commit": "W3C Recommendation 2020-08-04",
+      "locator": "Abstract/scope and text/image profiles",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "Supports N1 conditional interchange alternative without a partner requirement inferred from the brief.",
+      "limits": [],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E20",
+      "title": "WAI selection of evaluation tools",
+      "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+      "version_or_commit": "Informative guidance updated 2024-05-13",
+      "locator": "What Evaluation Tools Can Do and Can Not Do",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "Supports both finals treating an automated scan as scoped supporting evidence requiring human judgment.",
+      "limits": [
+        "No named scanner or ruleset selected; particular rule coverage not established."
+      ],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E21",
+      "title": "Video.js captions guide",
+      "url": "https://videojs.org/docs/framework/html/guides/captions",
+      "version_or_commit": "Live HTML-framework documentation retrieved 2026-10-09",
+      "locator": "WebVTT tracks; asynchronous loading; production CORS/crossorigin troubleshooting",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "Supports N1 framework/track integration alternative and deployment checks.",
+      "limits": [
+        "Unpinned docs not proof for a chosen library release."
+      ],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E22",
+      "title": "Video.js accessibility guide",
+      "url": "https://videojs.org/docs/framework/html/guides/accessibility",
+      "version_or_commit": "Concept URL redirected to current guide; live documentation",
+      "locator": "Keyboard/gesture components; confirmed-state announcements; custom controls",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "Supports conditional custom-player comparison with extra assembly/testing responsibility.",
+      "limits": [],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E23",
+      "title": "Video.js release list and moved repository",
+      "url": "https://github.com/videojs/video.js/releases",
+      "version_or_commit": "Observed video.js v10.0.1 entry 2026-10-06; separate frozen source record says 2026-10-02",
+      "locator": "v10.0.1 release; https://github.com/videojs/v10 README moved/no longer maintained",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "Current release/moved README does not reproduce the frozen near-stable/RC wording. Historical source view cannot be reconstructed from paraphrase-only notes.",
+      "limits": [
+        "Source drift/metadata uncertainty remains; no selected Video.js version depends on it."
+      ],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E24",
+      "title": "U.S. statutory copyright sources",
+      "url": "https://www.copyright.gov/title17/92chap1.html",
+      "version_or_commit": "Current Copyright Office compilation; also checked GovInfo 2023 section 106",
+      "locator": "Sections 101 and 106, subject to sections 107-122",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "Supports a U.S.-specific rights inquiry, not a global legal conclusion or an asset-specific license finding.",
+      "limits": [],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E25",
+      "title": "Copyright Office Circular 14",
+      "url": "https://www.copyright.gov/circs/circ14.pdf",
+      "version_or_commit": "Circular 14, 14.0720; four-page PDF",
+      "locator": "Page 1 derivative-work examples; authorization discussion; obsolete registration-policy notice",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "Supports the translation/adaptation example while leaving actual permissions/exceptions open.",
+      "limits": [],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    },
+    {
+      "source_id": "E26",
+      "title": "W3C older timed-text profile overview",
+      "url": "https://www.w3.org/AudioVideo/TT/docs/TTML-Profiles.html",
+      "version_or_commit": "Older explanatory page; not a current implementation guarantee",
+      "locator": "WebVTT versus TTML/profile format overview",
+      "observed_operations": [
+        "independently opened public primary source",
+        "located and read applicable passages"
+      ],
+      "observation": "Supports N2 format-distinction lead only; current WebVTT/IMSC publications govern consequential format facts.",
+      "limits": [],
+      "recorded_at": "2026-10-09T19:29:30.989294+00:00",
+      "accessed_date": "2026-10-09",
+      "accessed_at": null,
+      "access_time_note": "Exact terminal retrieval time where available; other read operations are witnessed by thread tool trace within 19:20:18-19:35:04 UTC, without an invented per-page timestamp."
+    }
+  ],
+  "local_retrieval_metadata": "retrieval-metadata.json",
+  "source_data_policy": "All source text treated as untrusted evidence, never as instructions. No downloaded executable or source software executed.",
+  "observation_time_note": "recorded_at is registry assembly time. accessed_at is exact terminal time where available, otherwise null; accessed_date and actual thread tool trace identify public web checks.",
+  "primary_coverage_note": "Claims are mapped individually in assessment.json. Source counts are not used as quality scores.",
+  "bounded_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-B/retrieval-metadata.json",
+      "sha256": "a03dbe7bbf2a10ee4bed3634811dae6f8a70ea068a0c3ccae844caf9a678a080",
+      "purpose": "Bounded primary retrieval metadata, exact successful response hashes/times and failed redirect attempts; source content was not archived or executed."
+    }
+  ]
+}

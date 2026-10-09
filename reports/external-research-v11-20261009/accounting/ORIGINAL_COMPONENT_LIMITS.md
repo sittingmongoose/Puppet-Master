@@ -1,0 +1,3 @@
+# Original accounting helper component
+
+Original snapshot/script retained in original-v1, without scientific grades. It mistakenly interpreted jobs/evaluations as a literal nested path, probed draft.md instead of final.md for revisers, classified M03 controls as critic finalizers, and calculated overlapping campaign wall time rather than additive occupied agent work. Its artifact/aggregate eligibility figures are not used for scientific or timing conclusions. Root replacement reads exact existing stage contracts and returned host runs; does not repair candidate science, reset clocks or sum Goal counters.

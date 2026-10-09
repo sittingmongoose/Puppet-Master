@@ -1,0 +1,1322 @@
+{
+  "block": "A-M11-B",
+  "case": "S05",
+  "source_authority": "Primary facts/specifications/releases govern. Candidate source maps are lineage, not independent verification.",
+  "independent_primary_sources": [
+    {
+      "id": "A01",
+      "title": "OpenRefine reconciliation API",
+      "url": "https://openrefine.org/docs/technical-reference/reconciliation-api",
+      "version_or_snapshot": "Live manual, updated 2026-06-06; protocol v0.2 / OpenRefine 3.3",
+      "locator": "API versions and label/type/property inputs, published lines 33-52",
+      "independent_observation": "v0.2 support and service-defined type/property semantics are documented. This supplies a mechanism and compatibility floor, not curator approval or catalogue writeback guarantees.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A02",
+      "title": "OpenRefine reconciling manual",
+      "url": "https://openrefine.org/docs/manual/reconciling/",
+      "version_or_snapshot": "Live manual, observed 2026-10-09",
+      "locator": "Overview/iteration; performance line 63; original cell/link line 72; score/actions lines 87-115",
+      "independent_observation": "Human review, service-specific scores, small batches, original string/entity-link coexistence and loss of links in value-only copying are supported. Reconciliation has no configurable request delay; fetching URLs is a different operation.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A03",
+      "title": "Getty Vocabularies data and services",
+      "url": "https://www.getty.edu/research-conservation/tools-databases/vocabularies/data-services/",
+      "version_or_snapshot": "Live institutional page, observed 2026-10-09",
+      "locator": "Online Tools, Linked Open Data, attribution, discontinued formats; lines 112-186",
+      "independent_observation": "AAT/TGN/ULAN reconciliation and SPARQL, monthly N-Triples, ODC-By 1.0 and retired XML services/static 2026-01-30 archives are documented. Authority matching is not cultural naming authority.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A04",
+      "title": "Typesense vector search",
+      "url": "https://typesense.org/docs/30.2/api/vector-search.html",
+      "version_or_snapshot": "Versioned documentation 30.2",
+      "locator": "embed.from lines 170-190; remote parameters 361-376; distance 429-432; hybrid 526-600; HNSW 661-684",
+      "independent_observation": "Selected fields can be concatenated and regenerate on changes. Keyword/vector rank weights .7/.3, cosine distance 0-2 and optional rerank are supported. Local ONNX and remote provider operations differ. Remote default prose and retry-table terminology are not perfectly aligned; final avoids a precise attempt-count guarantee.",
+      "arms": [
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A05",
+      "title": "Qdrant hybrid queries",
+      "url": "https://qdrant.tech/documentation/search/hybrid-queries/",
+      "version_or_snapshot": "Live docs; configurable k since 1.16, weighted RRF since 1.17",
+      "locator": "RRF formula/defaults lines 315-354; weighted RRF 703-709; distributed fusion 2231-2234",
+      "independent_observation": "RRF defaults k=2 and equal weights, zero-based ranks; candidate prefetch depth and top-level fusion affect available/global results. Weights require evaluation, not guessed superiority.",
+      "arms": [
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A06",
+      "title": "PostgreSQL full-text search",
+      "url": "https://www.postgresql.org/docs/18/textsearch-intro.html",
+      "version_or_snapshot": "PostgreSQL 18",
+      "locator": "12.1 Introduction; normalized lexemes, dictionaries, tsvector/tsquery",
+      "independent_observation": "Native full-text representations, configurations and matching exist. Museum language quality, latency and operating advantage are conditional.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A07",
+      "title": "PostgreSQL text-search indexes",
+      "url": "https://www.postgresql.org/docs/18/textsearch-indexes.html",
+      "version_or_snapshot": "PostgreSQL 18",
+      "locator": "12.9; GIN weight recheck and GiST lossiness",
+      "independent_observation": "GIN is preferred for regular text search; it omits weight labels, requiring row rechecks for weight-sensitive queries. This is a genuine database-first alternative.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A08",
+      "title": "pgvector README",
+      "url": "https://github.com/pgvector/pgvector/blob/v0.8.7/README.md",
+      "version_or_snapshot": "Pinned tag v0.8.7",
+      "locator": "Indexing/HNSW/IVFFlat versus Reference > Vector Type; rendered lines 323-383, 494-570, 787-789, 881-883",
+      "independent_observation": "Exact search is default. ANN index limits differ from storage/type capacity: vector type accepts 16,000 dimensions; full-precision HNSW/IVFFlat accept 2,000. HNSW defaults and post-scan filtering/opt-in bounded iterative scans are supported.",
+      "arms": [
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A09",
+      "title": "pgvector filtering issue",
+      "url": "https://github.com/pgvector/pgvector/issues/719",
+      "version_or_snapshot": "Historical 0.7.0/0.8.0 discussion; mutable comments",
+      "locator": "Maintainer opt-in clarification lines 523-527; 40k contributor report 538-540",
+      "independent_observation": "The upgrade/iterative-scan chain and underfill concern are supported; contributor timings are an uncontrolled example. Final does not promote them to museum performance.",
+      "arms": [
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A10",
+      "title": "pgvector 0.8.0 tag",
+      "url": "https://github.com/pgvector/pgvector/releases/tag/v0.8.0",
+      "version_or_snapshot": "v0.8.0 tag, short commit 2627c5f, tagged 2024-10-30",
+      "locator": "Tag metadata; README A08 and maintainer A09 supply iterative-scan behavior",
+      "independent_observation": "Tag establishes version provenance; the tag page has no substantive iterative-scan release note in the retrieved rendering. Version/function link is independently supplied by pinned README and maintainer discussion.",
+      "arms": [
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A11",
+      "title": "IIIF Image API",
+      "url": "https://iiif.io/api/image/3.0/",
+      "version_or_snapshot": "Specification 3.0.0",
+      "locator": "1.1 scope; request URI; image information; profiles; static resources lines 63-90",
+      "independent_observation": "Image delivery, request/profile semantics and pre-generated resources are supported. Standardized delivery does not decide institutional authorization or cultural policy.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A12",
+      "title": "IIIF Presentation API",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "version_or_snapshot": "Specification 3.0.0",
+      "locator": "Scope; requiredStatement and rights, lines 201-228",
+      "independent_observation": "requiredStatement has mandatory rendering semantics; rights is informative. Presentation interoperability does not replace catalogue search or authoritative policy.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A13",
+      "title": "IIIF Authorization Flow",
+      "url": "https://iiif.io/api/auth/2.0/",
+      "version_or_snapshot": "Specification 2.0.0",
+      "locator": "Introduction/resource versions lines 51-62; HTTPS/probe lines 99-106; service flow",
+      "independent_observation": "Provider access systems remain authoritative; distinct resource URIs prevent cache confusion. HTTPS communication and image-info probe declaration are supported. Client HTTPS wording is should, whereas communications must use HTTPS.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A14",
+      "title": "Mukurtu media protocols",
+      "url": "https://docs.mukurtu.org/media/ManageMediaAccessWithProtocols/",
+      "version_or_snapshot": "Current manual distinguishing v3 and v4",
+      "locator": "Media access/sync, lines 248-256",
+      "independent_observation": "v4 media assets require protocols; synced or independent protocols permit public metadata with restricted media. It is a conditional CMS alternative/data-model precedent, not a proven migration fit.",
+      "arms": [
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A15",
+      "title": "Local Contexts TK Labels",
+      "url": "https://localcontexts.org/labels/traditional-knowledge-labels/",
+      "version_or_snapshot": "Live community-governance page",
+      "locator": "Purpose and provenance/protocol/permission categories",
+      "independent_observation": "Labels communicate community-specific use and protocol. Their scope supports community participation; no backend byte-denial guarantee follows from a label.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A16",
+      "title": "Local Contexts FAQ",
+      "url": "https://localcontexts.org/support/frequently-asked-questions/",
+      "version_or_snapshot": "Live FAQ, updated 2026-09-10",
+      "locator": "Label/Notice distinction; community control; Notice types lines 139-142; Hub/update sections",
+      "independent_observation": "Labels are community-controlled; Disclosure/Engagement and Collections Care have different prerequisites. Final N1 correctly preserves the engagement condition. Hub/live versus static freshness and copyright distinctions are supported.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A17",
+      "title": "Local Contexts API",
+      "url": "https://localcontexts.org/support/api-guide/v2/",
+      "version_or_snapshot": "API v2 default since 2025-02-10",
+      "locator": "Project visibility lines 79-81; API key/account table 99-108",
+      "independent_observation": "Keys and account/visibility restrictions apply; private projects are inaccessible through this API. Access to Label/Notice metadata does not clear museum media rights.",
+      "arms": [
+        "N1"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A18",
+      "title": "Local Contexts integration guide",
+      "url": "https://localcontexts.org/media/integration-partner-guide",
+      "version_or_snapshot": "Publisher PDF, 20 pages; mutable retrieved edition",
+      "locator": "PDF pages 9-11, project/Notice-to-Label workflow and display; lines 248-250",
+      "independent_observation": "Community workflow, integration mapping and prominent display near Indigenous content are supported. API integration and static snapshots retain different freshness/operating dependencies.",
+      "arms": [
+        "N1"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A19",
+      "title": "CARE Principles",
+      "url": "https://www.gida-global.org/careprinciples",
+      "version_or_snapshot": "GIDA principles; 2018 workshop provenance",
+      "locator": "Overview/rationale lines 64-68; provenance line 90",
+      "independent_observation": "People, purpose and Indigenous authority are governance criteria. This is an optional governance approach, not executable access policy or a rights decision.",
+      "arms": [
+        "N1"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A20",
+      "title": "Cantaloupe denial report",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/discussions/536",
+      "version_or_snapshot": "2021-11-22 report on 5.0.3",
+      "locator": "Initial 401 case and maintainer confirmation lines 143-172",
+      "independent_observation": "Maintainer confirmed the pre_authorize HTTP-401 exception and targeted 5.0.5. The separate request-header concern was not reproduced by that maintainer.",
+      "arms": [
+        "N1"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A21",
+      "title": "Cantaloupe 5.0.5",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/releases/tag/v5.0.5",
+      "version_or_snapshot": "Pinned release v5.0.5 / short commit 096ffed",
+      "locator": "Release fix line 158",
+      "independent_observation": "Release specifically fixes uncaught exceptions for HTTP 401 from pre_authorize/authorize delegates. This is an adequate relevant historical fix chain, not current security proof.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A22",
+      "title": "Cantaloupe development history",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/blob/develop/CHANGES.md",
+      "version_or_snapshot": "Mutable develop; top 6.0, historical 4.1/5.0.x entries",
+      "locator": "4.1 delegate evolution lines 390-405; 5.0.5/5.0.6 entries",
+      "independent_observation": "authorize unifies older redirect/authorized callbacks and historical notes reference IIIF Auth 1.0. Neither final incorrectly upgrades that to certified Auth 2.0 support.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A23",
+      "title": "Cantaloupe releases and README",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/releases",
+      "version_or_snapshot": "Mutable release list: 5.0.7 marked latest; short commit 55c60b9",
+      "locator": "5.0.7 latest metadata; README runtime line 221",
+      "independent_observation": "Release list and development README are distinct. README reports testing Java 21/25/27; it is not a pinned 5.0.7 runtime contract. Finals preserve version/security/support review as a condition.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false,
+      "additional_urls": [
+        "https://github.com/cantaloupe-project/cantaloupe"
+      ]
+    },
+    {
+      "id": "A24",
+      "title": "Meilisearch hybrid history",
+      "url": "https://www.meilisearch.com/blog/meilisearch-1-6",
+      "version_or_snapshot": "v1.6 article, dated 2024-01-16 with later update",
+      "locator": "Experimental/GA note line 27; ratio line 61",
+      "independent_observation": "Historical semanticRatio range 0-1/default .5 and v1.13 GA transition are supported. N1 explicitly avoids importing the historical default into an unspecified newer release.",
+      "arms": [
+        "N1"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A25",
+      "title": "Meilisearch hybrid guide",
+      "url": "https://github.com/meilisearch/documentation/blob/main/capabilities/hybrid_search/getting_started.mdx",
+      "version_or_snapshot": "Mutable main documentation",
+      "locator": "Template/provider/cache lines 259-282; threshold 288-296",
+      "independent_observation": "Template chooses fields; shown provider example sends text and caches embeddings. Threshold is a tunable score filter; it is not calibrated relevance or authorization.",
+      "arms": [
+        "N1"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A26",
+      "title": "Meilisearch access guide",
+      "url": "https://www.meilisearch.com/blog/role-based-access-guide",
+      "version_or_snapshot": "Mutable vendor guide",
+      "locator": "Signed tenant rules and changing permissions lines 64-91",
+      "independent_observation": "Tenant filters constrain search; document-stored permission changes require reindexing. Separate access-control index is an option for frequent changes. These controls do not cover unrelated image/export routes.",
+      "arms": [
+        "N1"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A27",
+      "title": "Meilisearch null-field issue",
+      "url": "https://github.com/meilisearch/meilisearch/issues/6591",
+      "version_or_snapshot": "Open issue, report opened 2026-08-17; reported version string 1.52",
+      "locator": "Title/status, example and reported configuration lines 129-217",
+      "independent_observation": "Report concerns ranking-score/configuration sensitivity, not demonstrated private-text extraction. Reported version is preserved literally, not certified as an installed release. No reproduction was performed.",
+      "arms": [
+        "N1"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A28",
+      "title": "Meilisearch threshold issue",
+      "url": "https://github.com/meilisearch/meilisearch/issues/5274",
+      "version_or_snapshot": "Historical v1.12; v1.16.0 milestone/fix",
+      "locator": "Limit-dependent discussion; fix scope comment 2025-08-19, line 485",
+      "independent_observation": "Fix is scoped to page/hitsPerPage and accurate totalHits/facets, not limit/offset or estimatedTotalHits. N1 final is more precise than the critic's general closure wording.",
+      "arms": [
+        "N1"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A29",
+      "title": "Meilisearch typo tolerance",
+      "url": "https://www.meilisearch.com/blog/typo-tolerance",
+      "version_or_snapshot": "Live first-party article, updated 2026-08-25",
+      "locator": "Threshold defaults lines 25-50; identifiers/numeric controls 64-71",
+      "independent_observation": "Length-dependent defaults and per-field/numeric disabling are documented. This supports an optional lexical challenger, not superior performance or museum fit.",
+      "arms": [
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A30",
+      "title": "Meilisearch filterable attributes",
+      "url": "https://www.meilisearch.com/blog/meilisearch-1-14",
+      "version_or_snapshot": "Versioned v1.14 article",
+      "locator": "Granular filterable attribute settings",
+      "independent_observation": "Deliberate per-field filter/facet features are supported. N1 correctly separates search configuration from authorization.",
+      "arms": [
+        "N1"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false
+    },
+    {
+      "id": "A31",
+      "title": "RightsStatements.org scope",
+      "url": "https://rightsstatements.org/en/documentation/faq.html",
+      "version_or_snapshot": "Official FAQ via search-returned cached page, crawled last month",
+      "locator": "General; detailed rights information; reliance/accuracy; statement URI format",
+      "independent_observation": "Descriptive copyright/reuse summaries supplement detailed records and licenses; institutional application can be inaccurate. Direct opens failed, but independently retrieved official cached content supports the material scope distinction.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false,
+      "additional_urls": [
+        "https://rightsstatements.org/en/documentation/",
+        "https://rightsstatements.org/en/about.html"
+      ]
+    },
+    {
+      "id": "A32",
+      "title": "Apache Solr search and faceting",
+      "url": "https://solr.apache.org/guide/solr/latest/getting-started/searching-in-solr.html",
+      "version_or_snapshot": "Latest guide resolves to Solr 10.0",
+      "locator": "Searching request handlers/filter queries; Faceting lines 39-62",
+      "independent_observation": "Solr has query/filter/facet mechanisms; facet defaults false and analyzed terms differ from literal labels. A separately operated index is a viable conditional alternative, not a measured museum advantage.",
+      "arms": [
+        "N1"
+      ],
+      "retrieval": "Independently examined in this active reviewer session via primary web open/find/targeted open; exact per-request transport timestamps are not exposed. Tool transcript establishes ordering; versions and cached crawl limits are explicit.",
+      "runtime_executed": false,
+      "additional_urls": [
+        "https://solr.apache.org/guide/solr/latest/query-guide/faceting.html"
+      ]
+    }
+  ],
+  "primary_code_checks": [
+    {
+      "url": "https://raw.githubusercontent.com/pgvector/pgvector/v0.8.7/src/vector.h",
+      "version": "v0.8.7",
+      "symbol": "VECTOR_MAX_DIM",
+      "line": 11,
+      "value": 16000,
+      "response_sha256": "a67272ea44553d174968f575a91da71dfe82b8278ec2c70d51e37c154e2f0049",
+      "method": "Python urllib read-only fetch; printed only matching definitions; source not executed."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/pgvector/pgvector/v0.8.7/src/hnsw.h",
+      "version": "v0.8.7",
+      "symbol": "HNSW_MAX_DIM",
+      "line": 33,
+      "value": 2000,
+      "response_sha256": "c57af43d484ac0406bee00a7092f655f53c4b14f05f76c3a289baa34bdaf9647",
+      "method": "Python urllib read-only fetch; printed only matching definitions; source not executed."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/pgvector/pgvector/v0.8.7/src/ivfflat.h",
+      "version": "v0.8.7",
+      "symbol": "IVFFLAT_MAX_DIM",
+      "line": 37,
+      "value": 2000,
+      "response_sha256": "be00dd3383cc4921fa3e252c16b7bf1f6e418f32b8c8b08f2a0070cb76af399b",
+      "method": "Python urllib read-only fetch; printed only matching definitions; source not executed."
+    }
+  ],
+  "access_limits": [
+    "RightsStatements exact About/FAQ opens returned Internal Error; Python direct requests returned HTTP 403. Official FAQ/documentation content was independently retrieved via domain-restricted search, with a cached crawl age of last month. No current rights adjudication inferred.",
+    "PostgreSQL pgvector-0.8.0 announcement URL was unavailable; release tag metadata, pinned README and maintainer issue discussion establish the historical version/mechanism chain.",
+    "Some web find patterns returned no match; relevant sections were inspected through targeted opens or alternate exact terms. No absence finding was inferred from a failed text match.",
+    "An initial Python text-parser attempt failed because bs4 is not installed; it made no requests. Retried with the standard library; no package was installed."
+  ],
+  "usage_or_billing": null,
+  "candidate_source_bindings": [
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/source-map.json",
+      "map_sha256": "6a3e7ed4c56d13bd64bb45d0af99265e14ac699d4eecc38f587b1aca91e964d1",
+      "source_id": "R01",
+      "url": "https://www.meilisearch.com/blog/typo-tolerance",
+      "version": "First-party live article; author identified as Meilisearch developer advocate; page says updated 2026-08-25.",
+      "locator": "Default typo thresholds and configuration lines 22-50; identifier example lines 64-71; ranking and FAQ lines 86-97.",
+      "evidence_file": "sources/01-meilisearch.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/source-map.json",
+      "map_sha256": "6a3e7ed4c56d13bd64bb45d0af99265e14ac699d4eecc38f587b1aca91e964d1",
+      "source_id": "R02",
+      "url": "https://rightsstatements.org/en/about.html",
+      "version": "Official live page observed 2026-10-09; no release or commit shown.",
+      "locator": "Heading ‘Providing standardised interoperable rights and reuse information’, lines 33-37.",
+      "evidence_file": "sources/02-rights-statements.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/source-map.json",
+      "map_sha256": "6a3e7ed4c56d13bd64bb45d0af99265e14ac699d4eecc38f587b1aca91e964d1",
+      "source_id": "R03",
+      "url": "https://typesense.org/docs/30.2/api/vector-search.html",
+      "version": "Versioned documentation 30.2; page observed 2026-10-09.",
+      "locator": "Selected embedding source fields and concatenation lines 175-184; selected vector/query mechanics also covered in inherited C03 and S04 notes.",
+      "evidence_file": "sources/03-typesense-embedding-fields.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/source-map.json",
+      "map_sha256": "6a3e7ed4c56d13bd64bb45d0af99265e14ac699d4eecc38f587b1aca91e964d1",
+      "source_id": "R04",
+      "url": "https://openrefine.org/docs/manual/reconciling/",
+      "version": "Official live manual observed 2026-10-09; no software release pinned on the page.",
+      "locator": "Overview and review/iteration caveat lines 23-38; matching decisions and original value handling lines 63-73.",
+      "evidence_file": "sources/04-openrefine-review.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/source-map.json",
+      "map_sha256": "4c96b47cf6a011765c2880f0630af568e1fa5550b59db71850988ed7d2ae5c2c",
+      "source_id": "C01",
+      "url": "https://www.meilisearch.com/blog/typo-tolerance",
+      "version": "First-party live article; author identified as Meilisearch developer advocate; page says updated 2026-08-25.",
+      "locator": "Defaults/configuration lines 22-50; identifier example lines 64-71; ranking/FAQ lines 86-97.",
+      "evidence_file": "sources/01-meilisearch-typo-tolerance.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/source-map.json",
+      "map_sha256": "4c96b47cf6a011765c2880f0630af568e1fa5550b59db71850988ed7d2ae5c2c",
+      "source_id": "C02",
+      "url": "https://rightsstatements.org/en/about.html",
+      "version": "Official live page observed 2026-10-09; no release/commit shown.",
+      "locator": "Heading ‘Providing standardised interoperable rights and reuse information’, lines 33-37.",
+      "evidence_file": "sources/02-rights-statements.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/source-map.json",
+      "map_sha256": "4c96b47cf6a011765c2880f0630af568e1fa5550b59db71850988ed7d2ae5c2c",
+      "source_id": "C03",
+      "url": "https://typesense.org/docs/30.2/api/vector-search.html",
+      "version": "Versioned documentation 30.2; page observed 2026-10-09.",
+      "locator": "Selected embedding fields lines 175-190; remote defaults 356-376; vector distance/k 422-433; hybrid fusion/default weights 526-575.",
+      "evidence_file": "sources/03-primary-source-checks.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/source-map.json",
+      "map_sha256": "4c96b47cf6a011765c2880f0630af568e1fa5550b59db71850988ed7d2ae5c2c",
+      "source_id": "C04",
+      "url": "https://qdrant.tech/documentation/search/hybrid-queries/",
+      "version": "Official live documentation observed 2026-10-09; release floors on page include configurable RRF k v1.16 and weighted RRF v1.17.",
+      "locator": "RRF formula/default k and weights lines 315-354; configurable k lines 558-568; weighted RRF lines 695-701.",
+      "evidence_file": "sources/03-primary-source-checks.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/source-map.json",
+      "map_sha256": "4c96b47cf6a011765c2880f0630af568e1fa5550b59db71850988ed7d2ae5c2c",
+      "source_id": "C05",
+      "url": "https://github.com/pgvector/pgvector/blob/v0.8.7/README.md",
+      "version": "Version-pinned repository tag v0.8.7; tag used as immutable reference.",
+      "locator": "Exact versus approximate search, dimension limits and HNSW defaults, lines 323-385.",
+      "evidence_file": "sources/03-primary-source-checks.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/source-map.json",
+      "map_sha256": "4c96b47cf6a011765c2880f0630af568e1fa5550b59db71850988ed7d2ae5c2c",
+      "source_id": "C06a",
+      "url": "https://iiif.io/api/image/3.0/",
+      "version": "IIIF Image API 3.0.0 specification.",
+      "locator": "Image information request and `info.json` properties, lines 277-305; scope/delivery noted in inherited S10 evidence.",
+      "evidence_file": "sources/03-primary-source-checks.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/source-map.json",
+      "map_sha256": "4c96b47cf6a011765c2880f0630af568e1fa5550b59db71850988ed7d2ae5c2c",
+      "source_id": "C06b",
+      "url": "https://iiif.io/api/auth/2.0/",
+      "version": "IIIF Authorization Flow API 2.0.0 specification.",
+      "locator": "Auth service profile/HTTPS requirements and interaction patterns, lines 164-220; additional scope in inherited S11 evidence.",
+      "evidence_file": "sources/03-primary-source-checks.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/source-map.json",
+      "map_sha256": "4c96b47cf6a011765c2880f0630af568e1fa5550b59db71850988ed7d2ae5c2c",
+      "source_id": "C07",
+      "url": "https://openrefine.org/docs/manual/reconciling/",
+      "version": "Official live manual observed 2026-10-09; no release/commit shown.",
+      "locator": "Overview, semi-automated/human-review and iterative-workflow text, lines 23-38.",
+      "evidence_file": "sources/03-primary-source-checks.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/source-map.json",
+      "map_sha256": "4c96b47cf6a011765c2880f0630af568e1fa5550b59db71850988ed7d2ae5c2c",
+      "source_id": "C08",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/releases/tag/v5.0.5",
+      "version": "Pinned release tag v5.0.5; release record identifies commit 096ffed.",
+      "locator": "Release and fix statement, lines 150-159.",
+      "evidence_file": "sources/03-primary-source-checks.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/source-map.json",
+      "map_sha256": "87a429406347c1b1d05c7951cb092eca5212ec36baa4f514fe41b82f1cf44aea",
+      "source_id": "S01",
+      "url": "https://openrefine.org/docs/technical-reference/reconciliation-api",
+      "version": "Official live technical-reference page; page says last updated 2026-06-06. Protocol v0.2 is current stable and supported since OpenRefine 3.3.",
+      "locator": "Headings ‘Reconciliation API’ and ‘API versions supported by OpenRefine’; web-open lines 31-58.",
+      "evidence_file": "sources/02-curation-and-vocabulary.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/source-map.json",
+      "map_sha256": "87a429406347c1b1d05c7951cb092eca5212ec36baa4f514fe41b82f1cf44aea",
+      "source_id": "S02",
+      "url": "https://openrefine.org/docs/manual/reconciling/",
+      "version": "Official live manual, observed 2026-10-09; no software release pinned on page.",
+      "locator": "Overview, working iteratively, and actions; web-open lines 23-38 and additional manual text on candidate scoring/actions.",
+      "evidence_file": "sources/02-curation-and-vocabulary.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/source-map.json",
+      "map_sha256": "87a429406347c1b1d05c7951cb092eca5212ec36baa4f514fe41b82f1cf44aea",
+      "source_id": "S03",
+      "url": "https://www.getty.edu/research-conservation/tools-databases/vocabularies/data-services/",
+      "version": "Official live service page observed 2026-10-09. AAT, TGN, ULAN; monthly refresh statement; ODC-By 1.0 license. No page release/commit.",
+      "locator": "Online Tools, Linked Open Data Formats, Licensing and Citations, Archived Data and Services; web-open lines 113-188.",
+      "evidence_file": "sources/02-curation-and-vocabulary.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/source-map.json",
+      "map_sha256": "87a429406347c1b1d05c7951cb092eca5212ec36baa4f514fe41b82f1cf44aea",
+      "source_id": "S04",
+      "url": "https://typesense.org/docs/30.2/api/vector-search.html",
+      "version": "Versioned API documentation 30.2; page reports last updated 2026-07-30.",
+      "locator": "Embedding/indexing sections; remote embedding parameters; nearest-neighbor/vector distance; hybrid search, alpha, reranking, threshold, HNSW parameters; web-open lines 124-192 and 356-437, web-find lines 519-727.",
+      "evidence_file": "sources/01-search-and-ranking.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/source-map.json",
+      "map_sha256": "87a429406347c1b1d05c7951cb092eca5212ec36baa4f514fe41b82f1cf44aea",
+      "source_id": "S05",
+      "url": "https://qdrant.tech/documentation/search/hybrid-queries/",
+      "version": "Official live documentation observed 2026-10-09; relevant release floors stated in page: query API v1.10, configurable RRF k v1.16, weighted RRF v1.17.",
+      "locator": "Hybrid/multi-stage queries; RRF defaults; weighted RRF; DBSF and choosing fusion; distributed collections. Web-open lines 289-355, 558-715, 1092 onward.",
+      "evidence_file": "sources/01-search-and-ranking.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/source-map.json",
+      "map_sha256": "87a429406347c1b1d05c7951cb092eca5212ec36baa4f514fe41b82f1cf44aea",
+      "source_id": "S06",
+      "url": "https://www.postgresql.org/docs/18/textsearch-indexes.html",
+      "version": "PostgreSQL 18 official documentation.",
+      "locator": "Section 12.9 ‘Preferred Index Types for Text Search’; GIN versus GiST properties.",
+      "evidence_file": "sources/01-search-and-ranking.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/source-map.json",
+      "map_sha256": "87a429406347c1b1d05c7951cb092eca5212ec36baa4f514fe41b82f1cf44aea",
+      "source_id": "S07",
+      "url": "https://github.com/pgvector/pgvector/blob/v0.8.7/README.md",
+      "version": "Version-pinned repository tag v0.8.7; short tag commit was not exposed on this README view. Tag is the immutable version reference used here.",
+      "locator": "Indexing; HNSW and IVFFlat defaults/types; filtering; iterative scans. Web-open lines 323-415, 523-560.",
+      "evidence_file": "sources/01-search-and-ranking.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/source-map.json",
+      "map_sha256": "87a429406347c1b1d05c7951cb092eca5212ec36baa4f514fe41b82f1cf44aea",
+      "source_id": "S08",
+      "url": "https://github.com/pgvector/pgvector/issues/719",
+      "version": "Issue opened against pgvector 0.7.0; mutable GitHub discussion snapshot observed 2026-10-09. Comments disclose tests on 0.8.0 and a 40k-record vector/sparse case; issue was marked completed 2025-02-20.",
+      "locator": "Issue body and maintenance discussion, comments at Nov 26-29 2024 and Feb 4-20 2025; web-open lines 180-258, 421-447, 525-540, 968.",
+      "evidence_file": "sources/04-evolution-and-regressions.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/source-map.json",
+      "map_sha256": "87a429406347c1b1d05c7951cb092eca5212ec36baa4f514fe41b82f1cf44aea",
+      "source_id": "S09",
+      "url": "https://github.com/pgvector/pgvector/releases/tag/v0.8.0",
+      "version": "Release tag v0.8.0; commit 2627c5f (release record); tagged 2024-10-30.",
+      "locator": "Release record lines 130-179; PostgreSQL release announcement ‘pgvector 0.8.0 Released’ lines 19-35.",
+      "evidence_file": "sources/04-evolution-and-regressions.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/source-map.json",
+      "map_sha256": "87a429406347c1b1d05c7951cb092eca5212ec36baa4f514fe41b82f1cf44aea",
+      "source_id": "S10",
+      "url": "https://iiif.io/api/image/3.0/",
+      "version": "IIIF Image API 3.0.0, latest stable version stated by specification.",
+      "locator": "Introduction/scope; image request parameters; info.json and profile/capability; rights/service properties; access/scope and server response sections. Web-open around lines 286-302 and broader specification text.",
+      "evidence_file": "sources/03-images-and-access.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/source-map.json",
+      "map_sha256": "87a429406347c1b1d05c7951cb092eca5212ec36baa4f514fe41b82f1cf44aea",
+      "source_id": "S11",
+      "url": "https://iiif.io/api/auth/2.0/",
+      "version": "IIIF Authorization Flow API 2.0.0, latest stable version stated by specification.",
+      "locator": "Introduction/security; service declaration for access-controlled image info; HTTPS; probe/token; tiered access/substitute resources. Web-open lines 181-250 and 2.x service sections; searched and opened tiered-access section.",
+      "evidence_file": "sources/03-images-and-access.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/source-map.json",
+      "map_sha256": "87a429406347c1b1d05c7951cb092eca5212ec36baa4f514fe41b82f1cf44aea",
+      "source_id": "S12",
+      "url": "https://docs.mukurtu.org/media/ManageMediaAccessWithProtocols/",
+      "version": "Official current user manual; page explicitly contrasts Mukurtu v3 and v4. Web page observed 2026-10-09; no commit/release hash.",
+      "locator": "User roles and Sync protocols with content, especially lines 253-256.",
+      "evidence_file": "sources/03-images-and-access.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/source-map.json",
+      "map_sha256": "87a429406347c1b1d05c7951cb092eca5212ec36baa4f514fe41b82f1cf44aea",
+      "source_id": "S13",
+      "url": "https://localcontexts.org/labels/traditional-knowledge-labels/",
+      "version": "Official live page observed 2026-10-09; page footer copyright 2010-2026; no version/commit.",
+      "locator": "Scope and purpose; provenance, protocol and permission labels; web-open lines 5-54.",
+      "evidence_file": "sources/03-images-and-access.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/source-map.json",
+      "map_sha256": "87a429406347c1b1d05c7951cb092eca5212ec36baa4f514fe41b82f1cf44aea",
+      "source_id": "S14",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/releases/tag/v5.0.5",
+      "version": "Version tag v5.0.5; commit 096ffed (release record); release entry dated Dec 15 in project release sequence.",
+      "locator": "Release note: uncaught exception when delegates returned HTTP 401 from pre_authorize()/authorize(); web-open lines 129-159.",
+      "evidence_file": "sources/04-evolution-and-regressions.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N2",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/source-map.json",
+      "map_sha256": "87a429406347c1b1d05c7951cb092eca5212ec36baa4f514fe41b82f1cf44aea",
+      "source_id": "S15",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/blob/develop/CHANGES.md",
+      "version": "Mutable develop branch as observed 2026-10-09; exact branch commit was not exposed in the page view. Release entry checked against v5.0.5 tag and later releases.",
+      "locator": "v4.1 authorization delegate change, v5.0.5 401 response exception fix, v5.0.6/v5.0.7 entries; web-open around lines 399-407, 5.0.5-5.0.6, plus v5.0.7 release record.",
+      "evidence_file": "sources/04-evolution-and-regressions.md",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/source-map.json",
+      "map_sha256": "64d608f2b29b657037b57332d5c7943d793694049880de7284a5af08d311623e",
+      "source_id": "V01",
+      "url": "https://github.com/meilisearch/meilisearch/issues/5274",
+      "version": "Issue opened 2025-01-23; report states Meilisearch v1.12; closed and listed under v1.16.0 solved-issues milestone at access.",
+      "locator": "Status/version and issue report around lines 128-208; fix-scope comment around lines 476-485.",
+      "evidence_file": "sources/01-reviser-verifications.md#v01",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/source-map.json",
+      "map_sha256": "64d608f2b29b657037b57332d5c7943d793694049880de7284a5af08d311623e",
+      "source_id": "V02",
+      "url": "https://localcontexts.org/support/frequently-asked-questions/",
+      "version": "Live FAQ; page reports last updated 2026-09-10.",
+      "locator": "Label/Notice distinction and copyright relationship around lines 91-99; ownership around 108-114; Notice conditions around 139-142.",
+      "evidence_file": "sources/01-reviser-verifications.md#v02",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/source-map.json",
+      "map_sha256": "64d608f2b29b657037b57332d5c7943d793694049880de7284a5af08d311623e",
+      "source_id": "V03",
+      "url": "https://github.com/meilisearch/documentation/blob/main/capabilities/hybrid_search/getting_started.mdx",
+      "version": "Mutable documentation main branch; no commit pinned.",
+      "locator": "Document template around lines 259-274; batch/cache, hybrid query, and rankingScoreThreshold around lines 276-296.",
+      "evidence_file": "sources/01-reviser-verifications.md#v03",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/source-map.json",
+      "map_sha256": "64d608f2b29b657037b57332d5c7943d793694049880de7284a5af08d311623e",
+      "source_id": "V04",
+      "url": "https://github.com/meilisearch/meilisearch/issues/6591",
+      "version": "Issue opened 2026-08-17; body reports Meilisearch 1.52; Open at access.",
+      "locator": "Title/status, reported version, and report/reproduction around lines 129-155.",
+      "evidence_file": "sources/01-reviser-verifications.md#v04",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/source-map.json",
+      "map_sha256": "64d608f2b29b657037b57332d5c7943d793694049880de7284a5af08d311623e",
+      "source_id": "V05",
+      "url": "https://openrefine.org/docs/manual/reconciling",
+      "version": "Live current manual; no OpenRefine version pinned.",
+      "locator": "Human review and iterative process around lines 25-47; candidate decisions and cell preservation around lines 64-78; performance notes in the same manual.",
+      "evidence_file": "sources/01-reviser-verifications.md#v05",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/source-map.json",
+      "map_sha256": "64d608f2b29b657037b57332d5c7943d793694049880de7284a5af08d311623e",
+      "source_id": "V06",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "version": "IIIF Presentation API 3.0.0; no repository commit exposed by the published specification.",
+      "locator": "requiredStatement and rights properties around lines 203-228.",
+      "evidence_file": "sources/01-reviser-verifications.md#v06",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/source-map.json",
+      "map_sha256": "64d608f2b29b657037b57332d5c7943d793694049880de7284a5af08d311623e",
+      "source_id": "V07",
+      "url": "https://www.postgresql.org/docs/current/textsearch-intro.html",
+      "version": "Current documentation resolved to PostgreSQL 18 at access; documentation only, not a pinned/running database.",
+      "locator": "Introduction §12.1, including preprocessing and tsvector/tsquery; preferred index types §12.9.",
+      "evidence_file": "sources/01-reviser-verifications.md#v07",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/source-map.json",
+      "map_sha256": "64d608f2b29b657037b57332d5c7943d793694049880de7284a5af08d311623e",
+      "source_id": "V08",
+      "url": "https://solr.apache.org/guide/solr/latest/getting-started/searching-in-solr.html",
+      "version": "Official latest guide resolved to Apache Solr 10.0 at access; not a deployed build or pinned commit.",
+      "locator": "Searching: request handlers, parsers, and filter queries; Faceting: field-term analysis and facet parameters/defaults.",
+      "evidence_file": "sources/01-reviser-verifications.md#v08",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C01",
+      "url": "https://openrefine.org/docs/technical-reference/reconciliation-api",
+      "version": "Live documentation, updated 2026-06-06; API v0.2 current stable, supported since OpenRefine 3.3",
+      "locator": "API versions and matching inputs, lines 31-58",
+      "evidence_file": "sources/01-search-and-enrichment.md#c01",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C02",
+      "url": "https://openrefine.org/docs/manual/reconciling",
+      "version": "Live manual page; no product version pinned",
+      "locator": "Overview, service behavior, batch/performance notes, decisions and cell preservation, lines 23-80 and 97-110",
+      "evidence_file": "sources/01-search-and-enrichment.md#c02",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C03",
+      "url": "https://www.meilisearch.com/blog/meilisearch-1-6",
+      "version": "Versioned release article dated 2024-01-16; v1.6",
+      "locator": "Hybrid search, embedder options, documentTemplate, semanticRatio and status history, lines 25-55 and hybrid-query section",
+      "evidence_file": "sources/01-search-and-enrichment.md#c03",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C04",
+      "url": "https://github.com/meilisearch/documentation/blob/main/capabilities/hybrid_search/getting_started.mdx",
+      "version": "Mutable main branch documentation; no commit pinned; inspected 2026-10-09",
+      "locator": "Embedder/provider, template, batch/cache and rankingScoreThreshold sections, lines 198-296",
+      "evidence_file": "sources/01-search-and-enrichment.md#c04",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C05",
+      "url": "https://www.meilisearch.com/blog/role-based-access-guide",
+      "version": "Live vendor guide; no engine version or commit pinned",
+      "locator": "Tenant token/filter behavior and permission changes, lines 64-91",
+      "evidence_file": "sources/01-search-and-enrichment.md#c05",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C06",
+      "url": "https://github.com/meilisearch/meilisearch/issues/6591",
+      "version": "Opened 2026-08-17; issue body reports Meilisearch 1.52; Open at access",
+      "locator": "Issue status and report/reproduction, lines 129-180",
+      "evidence_file": "sources/01-search-and-enrichment.md#c06",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C07",
+      "url": "https://github.com/meilisearch/meilisearch/issues/5274",
+      "version": "Opened 2025-01-23; body reports v1.12; closed and linked under v1.16.0 solved-issues milestone",
+      "locator": "Issue status/milestone, report, and maintainer explanation, lines 128-208",
+      "evidence_file": "sources/01-search-and-enrichment.md#c07",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C08",
+      "url": "https://iiif.io/api/image/3.0/",
+      "version": "Specification 3.0.0; page identifies latest stable version",
+      "locator": "Status/scope, request syntax, static resources, profile and authentication/security sections",
+      "evidence_file": "sources/02-image-and-access.md#c08",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C09",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "version": "Specification 3.0.0; current stable page",
+      "locator": "requiredStatement and rights properties, lines 203-228; scope/Manifest description",
+      "evidence_file": "sources/02-image-and-access.md#c09",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C10",
+      "url": "https://iiif.io/api/auth/2.0/",
+      "version": "Specification 2.0.0; page identifies latest stable version",
+      "locator": "Status/introduction, access/token/probe services and security notes",
+      "evidence_file": "sources/02-image-and-access.md#c10",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C11",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/discussions/536",
+      "version": "Discussion dated 2021-11-22; reporter used Cantaloupe 5.0.3",
+      "locator": "Reporter 401 case and maintainer response, lines 143-172",
+      "evidence_file": "sources/02-image-and-access.md#c11",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C12",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/releases/tag/v5.0.5",
+      "version": "Cantaloupe v5.0.5; commit 096ffed; released 2021-12-15",
+      "locator": "Release notes, lines 150-160",
+      "evidence_file": "sources/02-image-and-access.md#c12",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C13",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/releases",
+      "version": "Mutable release list; v5.0.7 marked Latest at access; short tag commit 55c60b9",
+      "locator": "Release list and v5.0.7 release metadata/notes",
+      "evidence_file": "sources/02-image-and-access.md#c13",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C14",
+      "url": "https://rightsstatements.org/en/documentation/faq.html",
+      "version": "Current FAQ; 12 URI-based statements; vocabulary URI version 1.0",
+      "locator": "Purpose, high-level summary, detailed-record relationship and accuracy caveat",
+      "evidence_file": "sources/03-rights-and-community.md#c14",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C15",
+      "url": "https://localcontexts.org/support/frequently-asked-questions/",
+      "version": "Live FAQ; mutable page; inspected 2026-10-09",
+      "locator": "Label/Notice and copyright distinction, lines 91-126; Notice category conditions, lines 139-142",
+      "evidence_file": "sources/03-rights-and-community.md#c15",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C16",
+      "url": "https://localcontexts.org/support/api-guide/v2/",
+      "version": "API v2; guide states default since 2025-02-10; live guide",
+      "locator": "Project visibility/API access and update behavior, lines 60-104 and access table",
+      "evidence_file": "sources/03-rights-and-community.md#c16",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C17",
+      "url": "https://www.gida-global.org/careprinciples",
+      "version": "Current GIDA page; principles drafted at 2018 workshop; no software version",
+      "locator": "Overview and rationale, lines 64-67 and linked principles materials",
+      "evidence_file": "sources/03-rights-and-community.md#c17",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C18",
+      "url": "https://www.postgresql.org/docs/current/textsearch-intro.html",
+      "version": "PostgreSQL 18 current documentation; current page lists supported versions 18 through 14",
+      "locator": "§12.1 document construction, normalization/configurations, tsvector/tsquery; §12.9 GIN/GiST index tradeoffs",
+      "evidence_file": "sources/04-search-alternatives.md#c18",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "map_sha256": "6b48646091cbfdf215ba9c88595f74e49373d52d0a28c4ae5c5ba87519a367ff",
+      "source_id": "C19",
+      "url": "https://solr.apache.org/guide/solr/latest/getting-started/searching-in-solr.html",
+      "version": "Official mutable latest guide resolved to Apache Solr 10.0 at access; not pinned to a deployed build",
+      "locator": "Query/filter/faceting overview in Searching in Solr and general facet parameters in the Faceting guide",
+      "evidence_file": "sources/04-search-alternatives.md#c19",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S01",
+      "url": "https://openrefine.org/docs/technical-reference/reconciliation-api",
+      "version": "Current manual; API v0.2; supported since OpenRefine 3.3; page last updated 2026-06-06",
+      "locator": "Main function, candidate inputs, supported protocol versions; §§ API versions and create service.",
+      "evidence_file": "sources/01-enrichment.md#s01",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S02",
+      "url": "https://openrefine.org/docs/manual/reconciling",
+      "version": "Current manual page; no software version pinned",
+      "locator": "Overview, sources, Getty example, human review, local CSV service and rate/performance constraints.",
+      "evidence_file": "sources/01-enrichment.md#s02",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S03",
+      "url": "https://www.meilisearch.com/blog/meilisearch-1-6",
+      "version": "Meilisearch v1.6 release article",
+      "locator": "Hybrid search; semanticRatio range/default; embedder requirement; vector API breaking change.",
+      "evidence_file": "sources/02-search.md#s03",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S04",
+      "url": "https://github.com/meilisearch/documentation/blob/main/capabilities/hybrid_search/getting_started.mdx",
+      "version": "Mutable main branch docs; no commit pinned",
+      "locator": "Embedder configuration, batch/cached embeddings, hybrid query and weak-result caution.",
+      "evidence_file": "sources/02-search.md#s04",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S05",
+      "url": "https://www.meilisearch.com/blog/role-based-access-guide",
+      "version": "Current vendor guide; no engine version pinned",
+      "locator": "Tenant tokens, filters, permission updates/reindexing and access-control-index alternative.",
+      "evidence_file": "sources/02-search.md#s05",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S06",
+      "url": "https://github.com/meilisearch/meilisearch/issues/6591",
+      "version": "Issue opened 2026-08-17; issue body reports Meilisearch 1.52; Open with no activity at direct-page access",
+      "locator": "Issue description and reproduction, lines 129–217; direct page showed Open.",
+      "evidence_file": "sources/02-search.md#s06",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S07",
+      "url": "https://www.meilisearch.com/blog/meilisearch-1-14",
+      "version": "Meilisearch v1.14 release article",
+      "locator": "Filterable-attribute controls and typed field examples.",
+      "evidence_file": "sources/02-search.md#s07",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S08",
+      "url": "https://iiif.io/api/image/3.0/",
+      "version": "IIIF Image API 3.0.0; latest stable at access",
+      "locator": "Status/scope; URI request syntax; Image Information; rights; compliance profiles; authentication/security.",
+      "evidence_file": "sources/03-image.md#s08",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S09",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "version": "IIIF Presentation API 3.0.0; latest stable at access",
+      "locator": "Scope; requiredStatement and rights properties; Manifest; authentication.",
+      "evidence_file": "sources/03-image.md#s09",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S10",
+      "url": "https://iiif.io/api/auth/2.0/",
+      "version": "IIIF Authorization Flow API 2.0.0",
+      "locator": "Scope, service flow, probe/access/token, HTTPS/security notes.",
+      "evidence_file": "sources/03-image.md#s10",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S11",
+      "url": "https://github.com/IIIF/guides/blob/main/guide_for_implementers.md",
+      "version": "Mutable main branch guide; no commit pinned",
+      "locator": "Image API implementation choices and community guidance for servers/shims.",
+      "evidence_file": "sources/03-image.md#s11",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S12",
+      "url": "https://github.com/cantaloupe-project/cantaloupe",
+      "version": "Mutable main branch README; no commit pinned",
+      "locator": "Project overview, Java compatibility statement, build/run/test and release process.",
+      "evidence_file": "sources/03-image.md#s12",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S13",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/discussions/536",
+      "version": "Discussion dated 2021-11-22; reporter used Cantaloupe 5.0.3",
+      "locator": "401 delegate report; maintainer confirmation and targeted 5.0.5 fix.",
+      "evidence_file": "sources/03-image.md#s13",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S14",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/releases/tag/v5.0.5",
+      "version": "Release v5.0.5; release commit short hash 096ffed",
+      "locator": "Release notes record fix for uncaught exception on HTTP 401 from delegates.",
+      "evidence_file": "sources/03-image.md#s14",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S15",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/releases",
+      "version": "v5.0.7 listed Latest at access; commit short hash 55c60b9",
+      "locator": "Release list/status and v5.0.7 notes including security dependency updates.",
+      "evidence_file": "sources/03-image.md#s15",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S16",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/blob/develop/CHANGES.md",
+      "version": "Mutable develop branch; current top section 6.0; no commit pinned",
+      "locator": "Current development notes and versioned 5.0.5/5.0.3 entries; separate from release.",
+      "evidence_file": "sources/03-image.md#s16",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S17",
+      "url": "https://rightsstatements.org/en/documentation/faq.html",
+      "version": "Current FAQ; 12 linked-data statements, URI vocabulary version 1.0",
+      "locator": "Purpose, rights-status distinction, high-level nature, accuracy caveat and URI pattern.",
+      "evidence_file": "sources/04-rights-governance.md#s17",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S18",
+      "url": "https://localcontexts.org/support/frequently-asked-questions/",
+      "version": "Live FAQ; last updated 2026-09-10",
+      "locator": "Label vs Notice; relation to copyright; community control; Hub and updates.",
+      "evidence_file": "sources/04-rights-governance.md#s18",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S19",
+      "url": "https://localcontexts.org/support/api-guide/v2/",
+      "version": "API v2; documented default since 2025-02-10",
+      "locator": "Project visibility, access by account/API key, API connection prerequisites.",
+      "evidence_file": "sources/04-rights-governance.md#s19",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S20",
+      "url": "https://localcontexts.org/media/integration-partner-guide",
+      "version": "Guide last updated 2025-01-17; 20-page PDF",
+      "locator": "Hub project workflow, Label/Notice replacement, display location and integration details.",
+      "evidence_file": "sources/04-rights-governance.md#s20",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    },
+    {
+      "arm": "N1",
+      "candidate_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "map_sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "source_id": "S21",
+      "url": "https://www.gida-global.org/careprinciples?trk=article-ssr-frontend-pulse_little-text-block",
+      "version": "Current GIDA page; principles drafted 2018; no software version",
+      "locator": "Overview and rationale; collective benefit, authority, responsibility, ethics and scope.",
+      "evidence_file": "sources/04-rights-governance.md#s21",
+      "status": "candidate-authored lineage; independent evaluator checks above govern"
+    }
+  ],
+  "evaluation_recorded_at": "2026-10-09T19:28:25.153636+00:00"
+}

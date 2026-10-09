@@ -1,0 +1,1116 @@
+{
+  "block": "A-M09-B",
+  "evaluation_started_at": "2026-10-09T19:29:50Z",
+  "evaluation_completed_at": "2026-10-09T19:46:31.324267+00:00",
+  "source_handling": "Source text treated as untrusted data. Only primary-source content informs technical facts; unrelated search results ignored. Downloaded code was read/parsed in memory and never executed or saved as executable.",
+  "frozen_input_manifest": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S03/brief.md",
+      "sha256": "2a61c01e944a06f96cfb299eaa2cc94b7ec5cf31349d35f45c8902bc228c327e",
+      "bytes": 1436
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S03/plan-root-only.md",
+      "sha256": "2c0df4f2acff82294fc57884cc9be66006f719350436b570bbd044d84e1d5df4",
+      "bytes": 345
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-B/assignment.md",
+      "sha256": "0f48455fd8f212bbcf902e56c26d947741fffe613e0cecfd2eccd778395be60a",
+      "bytes": 2170
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-B/input-map.json",
+      "sha256": "cef089f73ec6fce3d9e86cf6225478d82c59de53c6cd706162b272b3db9bd57e",
+      "bytes": 9631
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/critic/assignment.md",
+      "sha256": "e8f0935f9db9b1ca8664aa30f56e657587842c6bf77eb791d3893ac4ad6bfea5",
+      "bytes": 2557
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/critic/critique.md",
+      "sha256": "38e355ec023ca4bdc66c0802d6fa7a97fa984064aedff1aa31a8b4927e33a616",
+      "bytes": 10168
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/critic/input-map.json",
+      "sha256": "eb2e6b8a89c732ca94db78ce901f0a4439c8f392c08362eb79d25bfb4545c336",
+      "bytes": 1179
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/critic/source-map.json",
+      "sha256": "c5b6eaaba5d1fc0e69d83e1e78ce309544980945b62f9e567511c456c954ef9e",
+      "bytes": 8627
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/critic/sources/INDEX.md",
+      "sha256": "e006b287c0f46864acd3bed4e6d551fa33a020e53624871ccb4432a4dbda57bd",
+      "bytes": 2688
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/critic/sources/S03-recheck-jupyter-resource-usage.md",
+      "sha256": "5d140a047a479824c73c6139fdaf61f7e86a31ed17fb54cf54f682ad653603c8",
+      "bytes": 1096
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/critic/sources/S08-recheck-nbval.md",
+      "sha256": "4b5972a75f1911ae04fc94fe13822856cca33327d75229c82ad6e496e9e1249b",
+      "bytes": 1315
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/assignment.md",
+      "sha256": "672f9178a331789687695d2ff0d3b4b41b1ec18e8e387e12c85ff7bc25cda2a2",
+      "bytes": 3033
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/discovery.md",
+      "sha256": "49f2be8bebdf1b503daacf60ab098bf5770273199393bd076949dd82f69075a0",
+      "bytes": 14362
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/draft.md",
+      "sha256": "50b0750917536ca27b4e704be0d65e2e2b622e0c2cf35c47526fa29224826e6e",
+      "bytes": 13610
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/input-map.json",
+      "sha256": "b44fad251484d851035db84cf7b9d0a33196d80bf1f549c60d81de66878e981a",
+      "bytes": 633
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/plan-reveal.json",
+      "sha256": "ff2edfca172047f3513a5dc3b9e532e8067b0d8f40cbef06e8721a041cc37e4b",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/revealed-plan.md",
+      "sha256": "2c0df4f2acff82294fc57884cc9be66006f719350436b570bbd044d84e1d5df4",
+      "bytes": 345
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/source-map.json",
+      "sha256": "bbd79e3e6f68504c04d4dd68f762e3b09d3f2509fa8b997a51be041f20adde00",
+      "bytes": 7041
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/sources/S01-repo2docker.md",
+      "sha256": "03bde72f1f2de2319c3b83fe3a4878602a5f71b26a23a9c153d4955bef45d72f",
+      "bytes": 916
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/sources/S02-renv.md",
+      "sha256": "6095a0523b74dc6bc29264ed801f230c296f899064472c79564320f9c9b1400d",
+      "bytes": 1058
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/sources/S03-jupyter-resource-usage.md",
+      "sha256": "66e293e83c2153b096644a0bf11fd73afad9f7f29a51c3a392c612ca97dcd3c5",
+      "bytes": 981
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/sources/S04-nbdime.md",
+      "sha256": "fa125a18c5d0eac9360e5b97739c821291efd71a0834c7789ee73f2af0c4daf8",
+      "bytes": 1006
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/sources/S05-jupyterlite.md",
+      "sha256": "a3718d9f1b8f5e9f7261438764727e2951c432e7783d4453f1406063cdaea630",
+      "bytes": 1074
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/sources/S06-webr.md",
+      "sha256": "5dfb3f4498800256fced745d52fc9e834214e159980f1777d5630cc3f63b3b93",
+      "bytes": 904
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/sources/S07-papermill.md",
+      "sha256": "bfce81c889d288a9b77800d18ac2892781e7808a8bce61b61b3822cee87e321e",
+      "bytes": 542
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/sources/S08-nbval.md",
+      "sha256": "7eb29d788c5189883837b0027d902418158a5bc8e17ef0288eb6cca11f6772fc",
+      "bytes": 903
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/sources/S09-kubespawner.md",
+      "sha256": "8c2a964d2b3eb7867a04e77e36656d9b0ba0e7f842b9f40d35c82c46e111269e",
+      "bytes": 812
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/sources/S10-reviewnb.md",
+      "sha256": "fe2b95328e4e4cf5c742c785d5db538a9c6ecbb9d5a1cdbe29bd856b2e2c17ea",
+      "bytes": 831
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/sources/S11-jupytext.md",
+      "sha256": "87319e6f887a76d44fdc9394696f938306f8f065900ec559c20c747635463b67",
+      "bytes": 1003
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/sources/S12-repo2docker-releases.md",
+      "sha256": "6a058ac27a0d838fd42d0c15444669feb2ee7c3ac73c7e54d762805b4dcba884",
+      "bytes": 1379
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/sources/S13-noworkflow.md",
+      "sha256": "b53b4f549af2134774a86ccdcb49928cb258d79b0e7ec0823d3014cb499636d2",
+      "bytes": 1230
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/sources/index.md",
+      "sha256": "2487c8eab34476ad999bc47d24ee49c7535ce06b1c304ad5cb048d9129137701",
+      "bytes": 2132
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/reviser/assignment.md",
+      "sha256": "db2a4490dbe0c8d0c72e49cf346ee7657994dfb461276d0694c808e966f3cf8e",
+      "bytes": 2820
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/reviser/final.md",
+      "sha256": "a08d56637f0b0742384d6962692fc0b9dc24398eba3028c14d415b959a37e9b1",
+      "bytes": 31959
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/reviser/input-map.json",
+      "sha256": "4100d41ecf5dfedb079bad1b54f783f1215abe484809cdc748386b149ccf4058",
+      "bytes": 1503
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/reviser/source-map.json",
+      "sha256": "bdb261cac370d483adee1eb0c8d734765b89860a2498a27205e4c882cecfaa60",
+      "bytes": 11492
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/reviser/sources/INDEX.md",
+      "sha256": "415afcd5f4283883a616da94a415e5e7ae25dec368378d4401ccc5f7f9d89189",
+      "bytes": 2929
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/reviser/sources/reviser-checks.md",
+      "sha256": "dfb4179ed1eba882d7a75f8ad77b911887db959f0b9c6065edbc0a08b347c2d4",
+      "bytes": 2816
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/assignment.md",
+      "sha256": "28a6cd8d594990d51b7f2c1f7e64a732641aff85bac14552304d08dfb8895c87",
+      "bytes": 2940
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/critique.md",
+      "sha256": "691c6fbd348a73dc47409cfe104709bb92bb7e843edaab47bd5e53da3a9f9b65",
+      "bytes": 21712
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/input-map.json",
+      "sha256": "9d8d3caa8e356d831e5375551352c24b88f55377237bdd9a81662f51502a9542",
+      "bytes": 1195
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/source-map.json",
+      "sha256": "f7eeb675cf33cdb41fff4fb92b641a74c7cf6d449c7eba79aaeb08846d8da851",
+      "bytes": 16121
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/sources/INDEX.md",
+      "sha256": "41ff1f67bab9c270a15e636ddef78509f0847fb67fe19b12e3c385e5c1651a14",
+      "bytes": 3124
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/sources/S01-reviewnb.md",
+      "sha256": "0809bfa2c821ec877139fa160952f5b5dc1705fff465ac07fb75d7e69f540313",
+      "bytes": 1186
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/sources/S02-nbdime.md",
+      "sha256": "a238a54c10a1f163644af798f9babf61192f797a7674164704b5ac66672e4ac4",
+      "bytes": 558
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/sources/S03-nbgrader.md",
+      "sha256": "4db246108a971f921c32bacd30b22549dc4fd8c57edb53aaa4d27fdfe4dd7808",
+      "bytes": 872
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/sources/S04-repo2docker-config.md",
+      "sha256": "e34b350ad44d660d283b29d2773c717a4788f1e4ada3a7f9abc2745e2f4a885c",
+      "bytes": 954
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/sources/S05-repo2docker-usage.md",
+      "sha256": "7a0bfea30d273c123171091ae867b7c714a4af297f61b1642c0f9519b40428e1",
+      "bytes": 508
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/sources/S06-nbconvert-execute.md",
+      "sha256": "15836f6e2635bee8ca1ad134c97dc6746b75b204fe580fe6aa5ae43bbd0d3046",
+      "bytes": 684
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/sources/S07-renv.md",
+      "sha256": "f2d21d28b437261180aeebad92eccf8e5ec480a7ff825579fd7c1268fb452cf6",
+      "bytes": 833
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/sources/S08-CVE-2021-32798-GHSA.md",
+      "sha256": "b9c2c63f29e63e05867e999a50c6be331c4f972233da24820e2f93a74747ae32",
+      "bytes": 714
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/sources/S09-jupyter-blog-cves.md",
+      "sha256": "ba5c1d367a98247c25424c68a05f791353dbe9cea6b3cf37c2c001a80843b124",
+      "bytes": 771
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/sources/S10-wholetale.md",
+      "sha256": "bdea18783531f318d36b123c29a368ad12e12d37b4fe96375682d4b147f881d3",
+      "bytes": 558
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/sources/S11-renku-sessions.md",
+      "sha256": "c4d88ed8d17c5f9aa1d5ed6768f3181d2831020313daa4e6f000ff169acb6651",
+      "bytes": 971
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/sources/S12-mybinder-docs.md",
+      "sha256": "daefc167baaf5acd5605549c0e76c637b7370f5d3f84a15e9dd62d69dd16a55a",
+      "bytes": 731
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/sources/S13-codeocean-403.md",
+      "sha256": "69450d2d1160a5a7abd53b32ca1b158626710220bc26165102c8b104c471a291",
+      "bytes": 597
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/assignment.md",
+      "sha256": "7d6221a18374869de392ccaa5e1a1b8e7a14dd6b93dfd82a10776c37efef1a9c",
+      "bytes": 3418
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/discovery.md",
+      "sha256": "b40894b4d7601b018b50da306365c2880499f51b644cc7c3399e21436273a5c1",
+      "bytes": 18000
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/draft.md",
+      "sha256": "9acca6c370643004644c0346ab6c2662e8f3cc04ed6e7cb8b7edecb1e53d04d9",
+      "bytes": 19452
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/input-map.json",
+      "sha256": "d871fab9e10c9050593586834b9e43c7366fe9c2e556c887ae8a9e29a182d7aa",
+      "bytes": 639
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/plan-reveal.json",
+      "sha256": "0fea4fb1e6b41fdac993aa44ea0ce7b65d64012f5a8558bbe4fe82cce26caa50",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/revealed-plan.md",
+      "sha256": "2c0df4f2acff82294fc57884cc9be66006f719350436b570bbd044d84e1d5df4",
+      "bytes": 345
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/source-map.json",
+      "sha256": "ad053378ebc53eeb8a04d863c0654b3317aa666a9ae608761e47059937371565",
+      "bytes": 7769
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/sources/INDEX.md",
+      "sha256": "4d7fe3d02e16cb56c549b6655896b47a4e40156553fd1769a549b705eef9eb2b",
+      "bytes": 3048
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/sources/S01-reviewnb.md",
+      "sha256": "0809bfa2c821ec877139fa160952f5b5dc1705fff465ac07fb75d7e69f540313",
+      "bytes": 1186
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/sources/S02-nbdime.md",
+      "sha256": "a238a54c10a1f163644af798f9babf61192f797a7674164704b5ac66672e4ac4",
+      "bytes": 558
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/sources/S03-nbgrader.md",
+      "sha256": "4db246108a971f921c32bacd30b22549dc4fd8c57edb53aaa4d27fdfe4dd7808",
+      "bytes": 872
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/sources/S04-repo2docker-config.md",
+      "sha256": "e34b350ad44d660d283b29d2773c717a4788f1e4ada3a7f9abc2745e2f4a885c",
+      "bytes": 954
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/sources/S05-repo2docker-usage.md",
+      "sha256": "7a0bfea30d273c123171091ae867b7c714a4af297f61b1642c0f9519b40428e1",
+      "bytes": 508
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/sources/S06-nbconvert-execute.md",
+      "sha256": "15836f6e2635bee8ca1ad134c97dc6746b75b204fe580fe6aa5ae43bbd0d3046",
+      "bytes": 684
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/sources/S07-renv.md",
+      "sha256": "f2d21d28b437261180aeebad92eccf8e5ec480a7ff825579fd7c1268fb452cf6",
+      "bytes": 833
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/sources/S08-CVE-2021-32798-GHSA.md",
+      "sha256": "b9c2c63f29e63e05867e999a50c6be331c4f972233da24820e2f93a74747ae32",
+      "bytes": 714
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/sources/S09-jupyter-blog-cves.md",
+      "sha256": "ba5c1d367a98247c25424c68a05f791353dbe9cea6b3cf37c2c001a80843b124",
+      "bytes": 771
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/sources/S10-wholetale.md",
+      "sha256": "bdea18783531f318d36b123c29a368ad12e12d37b4fe96375682d4b147f881d3",
+      "bytes": 558
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/sources/S11-renku-sessions.md",
+      "sha256": "c4d88ed8d17c5f9aa1d5ed6768f3181d2831020313daa4e6f000ff169acb6651",
+      "bytes": 971
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/sources/S12-mybinder-docs.md",
+      "sha256": "daefc167baaf5acd5605549c0e76c637b7370f5d3f84a15e9dd62d69dd16a55a",
+      "bytes": 731
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/sources/S13-codeocean-403.md",
+      "sha256": "69450d2d1160a5a7abd53b32ca1b158626710220bc26165102c8b104c471a291",
+      "bytes": 597
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/assignment.md",
+      "sha256": "a6900c959db241c7a7cc0e326564ef47fc3c2a59f94922e4e8dc7b0644b69b97",
+      "bytes": 3203
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/final.md",
+      "sha256": "3db679bc7a6debcde16142a7b84866509096afb19323092fa633f2eb1ced82d2",
+      "bytes": 32595
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/input-map.json",
+      "sha256": "dc7c78771f88ae49b9a318579a155a690dd6ebb218f3f51a50d23bef08c51fd0",
+      "bytes": 1525
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/source-map.json",
+      "sha256": "a9ee37c3c8da8f302cf332f31edff66f7a04eb5b00736ac51fb4f2013e6db2ea",
+      "bytes": 17974
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/sources/INDEX.md",
+      "sha256": "ab0d55b26d178662a7d0b308b18cf8ceea8385e15706b9fb436e3c68fcc4d3e2",
+      "bytes": 3321
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/sources/S01-reviewnb.md",
+      "sha256": "0809bfa2c821ec877139fa160952f5b5dc1705fff465ac07fb75d7e69f540313",
+      "bytes": 1186
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/sources/S02-nbdime.md",
+      "sha256": "a238a54c10a1f163644af798f9babf61192f797a7674164704b5ac66672e4ac4",
+      "bytes": 558
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/sources/S03-nbgrader.md",
+      "sha256": "4db246108a971f921c32bacd30b22549dc4fd8c57edb53aaa4d27fdfe4dd7808",
+      "bytes": 872
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/sources/S04-repo2docker-config.md",
+      "sha256": "e34b350ad44d660d283b29d2773c717a4788f1e4ada3a7f9abc2745e2f4a885c",
+      "bytes": 954
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/sources/S05-repo2docker-usage.md",
+      "sha256": "7a0bfea30d273c123171091ae867b7c714a4af297f61b1642c0f9519b40428e1",
+      "bytes": 508
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/sources/S06-nbconvert-execute.md",
+      "sha256": "15836f6e2635bee8ca1ad134c97dc6746b75b204fe580fe6aa5ae43bbd0d3046",
+      "bytes": 684
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/sources/S07-renv.md",
+      "sha256": "f2d21d28b437261180aeebad92eccf8e5ec480a7ff825579fd7c1268fb452cf6",
+      "bytes": 833
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/sources/S08-CVE-2021-32798-GHSA.md",
+      "sha256": "b9c2c63f29e63e05867e999a50c6be331c4f972233da24820e2f93a74747ae32",
+      "bytes": 714
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/sources/S09-jupyter-blog-cves.md",
+      "sha256": "ba5c1d367a98247c25424c68a05f791353dbe9cea6b3cf37c2c001a80843b124",
+      "bytes": 771
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/sources/S10-wholetale.md",
+      "sha256": "bdea18783531f318d36b123c29a368ad12e12d37b4fe96375682d4b147f881d3",
+      "bytes": 558
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/sources/S11-renku-sessions.md",
+      "sha256": "c4d88ed8d17c5f9aa1d5ed6768f3181d2831020313daa4e6f000ff169acb6651",
+      "bytes": 971
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/sources/S12-mybinder-docs.md",
+      "sha256": "daefc167baaf5acd5605549c0e76c637b7370f5d3f84a15e9dd62d69dd16a55a",
+      "bytes": 731
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/sources/S13-codeocean-403.md",
+      "sha256": "69450d2d1160a5a7abd53b32ca1b158626710220bc26165102c8b104c471a291",
+      "bytes": 597
+    }
+  ],
+  "independent_primary_sources": [
+    {
+      "id": "R01",
+      "title": "repo2docker configuration",
+      "url": "https://repo2docker.readthedocs.io/en/latest/configuration/",
+      "version_or_scope": "2026.4.1.dev62+gebcc59388; mutable latest docs",
+      "locator": "Supported configuration files; Dockerfile override; configuration priority",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R02",
+      "title": "repo2docker research configuration",
+      "url": "https://repo2docker.readthedocs.io/en/latest/configuration/research/",
+      "version_or_scope": "2026.4.1.dev62+gebcc59388",
+      "locator": "environment.yml; install.R; DESCRIPTION",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R03",
+      "title": "repo2docker system configuration",
+      "url": "https://repo2docker.readthedocs.io/en/latest/configuration/system/",
+      "version_or_scope": "2026.4.1.dev62+gebcc59388",
+      "locator": "runtime.txt; default.nix; apt.txt; Dockerfile",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R04",
+      "title": "repo2docker source providers",
+      "url": "https://repo2docker.readthedocs.io/en/latest/use/repository/",
+      "version_or_scope": "2026.4.1.dev62+gebcc59388",
+      "locator": "Source providers; repository subdirectories",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R05",
+      "title": "repo2docker release history",
+      "url": "https://github.com/jupyterhub/repo2docker/releases",
+      "version_or_scope": "2023.06.0, 2024.07.0, 2025.08.0, 2025.12.0, 2026.04.0",
+      "locator": "Release entries: MRAN retirement; builder/runtime/package-provider changes",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R06",
+      "title": "repo2docker changelog",
+      "url": "https://repo2docker.readthedocs.io/en/latest/changelog.html",
+      "version_or_scope": "2026.4.1.dev62+gebcc59388",
+      "locator": "Release notes",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R07",
+      "title": "renv introduction",
+      "url": "https://rstudio.github.io/renv/articles/renv.html",
+      "version_or_scope": "Current project-maintained vignette, mutable",
+      "locator": "Lockfile structure; snapshot/restore; reproducibility caveats",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R08",
+      "title": "nbdime overview",
+      "url": "https://nbdime.readthedocs.io/en/latest/",
+      "version_or_scope": "4.0.4 documentation",
+      "locator": "Semantic notebook diff/merge; output rendering; counters",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R09",
+      "title": "nbdime VCS integration",
+      "url": "https://nbdime.readthedocs.io/en/latest/vcs.html",
+      "version_or_scope": "4.0.4 documentation",
+      "locator": "Git drivers and refs; command-line integration",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R10",
+      "title": "nbdime diff format",
+      "url": "https://nbdime.readthedocs.io/en/latest/diffing.html",
+      "version_or_scope": "4.0.4 documentation",
+      "locator": "Sequence operations; JSON Patch move/copy/test are not used",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R11",
+      "title": "ReviewNB product and FAQ",
+      "url": "https://www.reviewnb.com/",
+      "version_or_scope": "Live vendor primary page, 2026-10-09",
+      "locator": "Features, pricing, platform support, access permissions, comment storage",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R12",
+      "title": "ReviewNB documentation",
+      "url": "https://docs.reviewnb.com/",
+      "version_or_scope": "0.2.12 documentation",
+      "locator": "Notebook code review and cell-level conversations",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R13",
+      "title": "ReviewNB self-hosting",
+      "url": "https://docs.reviewnb.com/self-hosting/overview.html",
+      "version_or_scope": "0.2.12 documentation",
+      "locator": "Self-hosted distribution and GitHub integration",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R14",
+      "title": "Jupytext README",
+      "url": "https://github.com/mwouts/jupytext",
+      "version_or_scope": "Mutable default-branch README; redirects to project repository",
+      "locator": "Paired inputs/metadata; outputs in ipynb; concurrent edits",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R15",
+      "title": "jupyter-resource-usage README",
+      "url": "https://github.com/jupyter-server/jupyter-resource-usage",
+      "version_or_scope": "Mutable default-branch README; compatibility boundary 1.0.0",
+      "locator": "Display versus enforcement; memory accounting; MEM_LIMIT/CPU_LIMIT",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R16",
+      "title": "KubeSpawner trait reference",
+      "url": "https://jupyterhub-kubespawner.readthedocs.io/en/latest/spawner.html",
+      "version_or_scope": "Mutable latest API documentation",
+      "locator": "cpu/mem guarantee and limit; extra_resource traits; LocalProcessSpawner caveat",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R17",
+      "title": "Papermill documentation",
+      "url": "https://papermill.readthedocs.io/en/latest/",
+      "version_or_scope": "2.7.0 documentation",
+      "locator": "Parameterized notebook execution; language translators; Python requirement",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R18",
+      "title": "nbval documentation",
+      "url": "https://nbval.readthedocs.io/en/latest/",
+      "version_or_scope": "0.11.0 documentation",
+      "locator": "Strict/lax output checks; skipping; tags; Figures; sanitizing; xdist",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R19",
+      "title": "Released nbval plugin",
+      "url": "https://raw.githubusercontent.com/computationalmodelling/nbval/0.11.0/nbval/plugin.py",
+      "version_or_scope": "0.11.0 released tag",
+      "locator": "IPyNbFile.skip_compare, lines 235 and 246; IPyNbCell.compare_outputs",
+      "operation": "Independent HTTPS GET; ast.parse and static declaration inspection; no source execution",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R20",
+      "title": "JupyterLite documentation",
+      "url": "https://jupyterlite.readthedocs.io/en/latest/",
+      "version_or_scope": "0.9.0-alpha.2 header; support table still names 0.7.0/0.6.0",
+      "locator": "Browser execution, kernels, static hosting, supported release table",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R21",
+      "title": "Pyodide package loading",
+      "url": "https://pyodide.org/en/stable/usage/loading-packages.html",
+      "version_or_scope": "314.0.7 documentation",
+      "locator": "micropip installation of Emscripten/wasm32 binary wheels and pure Python wheels",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R22",
+      "title": "Pyodide bundled packages",
+      "url": "https://pyodide.org/en/stable/usage/packages-in-pyodide.html",
+      "version_or_scope": "314.0.7 documentation",
+      "locator": "Scientific package catalog, including NumPy/SciPy and compiled package ports",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R23",
+      "title": "webR documentation",
+      "url": "https://docs.r-wasm.org/webr/latest/",
+      "version_or_scope": "0.6.1-dev header; mutable development docs",
+      "locator": "Browser R; packages; API instability; mobile memory caveats",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R24",
+      "title": "webR filesystem mounting",
+      "url": "https://docs.r-wasm.org/webr/latest/mounting.html",
+      "version_or_scope": "Latest webR development docs",
+      "locator": "Filesystem images; WORKERFS; browser storage versus Node filesystem",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R25",
+      "title": "noWorkflow README",
+      "url": "https://github.com/gems-uff/noworkflow",
+      "version_or_scope": "Mutable default-branch README",
+      "locator": "Python trials/provenance; notebook magic; pip drift; dev visualization server",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R26",
+      "title": "nbconvert execution tutorial",
+      "url": "https://nbconvert.readthedocs.io/en/latest/execute_api.html",
+      "version_or_scope": "7.17.1 documentation",
+      "locator": "Timeout prose; execution errors; Widget state section",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R27",
+      "title": "nbconvert configuration reference",
+      "url": "https://nbconvert.readthedocs.io/en/latest/config_options.html",
+      "version_or_scope": "7.17.1 documentation",
+      "locator": "ExecutePreprocessor.timeout, lines 3970-3976; kernel_name; error/skip/widget traits",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R28",
+      "title": "Released nbconvert execution preprocessor",
+      "url": "https://raw.githubusercontent.com/jupyter/nbconvert/v7.17.1/nbconvert/preprocessors/execute.py",
+      "version_or_scope": "v7.17.1 released tag",
+      "locator": "ExecutePreprocessor, line 38; NotebookClient inheritance; no timeout override",
+      "operation": "Independent HTTPS GET; ast.parse and static declaration inspection; no source execution",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R29",
+      "title": "Released nbclient implementation",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/v0.10.4/nbclient/client.py",
+      "version_or_scope": "v0.10.4 released tag",
+      "locator": "NotebookClient.timeout line 65; allow_errors line 138; force_raise_errors line 164; skip_cells_with_tag line 182; _check_raise_for_error",
+      "operation": "Independent HTTPS GET; ast.parse; repeat GET with identical SHA-256; no source execution",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R30",
+      "title": "Notebook security advisory",
+      "url": "https://github.com/advisories/GHSA-hwvq-6gjx-j797",
+      "version_or_scope": "CVE-2021-32798; patched Notebook 5.7.11/6.4.1",
+      "locator": "Affected/patched versions; special element injection; historical impact",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R31",
+      "title": "Coordinated Jupyter security release",
+      "url": "https://blog.jupyter.org/posts/2021/cve-2021-32797-and-cve-2021-32798-remote-code-execution/",
+      "version_or_scope": "2021-08-09 announcement; patches on PyPI 2021-08-05",
+      "locator": "Notebook/JupyterLab fixes and trust bypass",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R32",
+      "title": "mybinder.org usage guidelines",
+      "url": "https://mybinder.readthedocs.io/en/latest/about/user-guidelines.html",
+      "version_or_scope": "Binder 0.1b docs; public mybinder.org deployment policy, mutable",
+      "locator": "Resources available; session duration; security/privacy; self-hosted BinderHub distinction",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R33",
+      "title": "Whole Tale export/run guide",
+      "url": "https://wholetale.readthedocs.io/en/stable/users_guide/export_run.html",
+      "version_or_scope": "1.2.0.0 stable docs",
+      "locator": "BagIt export; manifests; fetch.txt; local Docker execution",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R34",
+      "title": "Whole Tale official site",
+      "url": "https://wholetale.org/",
+      "version_or_scope": "Live project site",
+      "locator": "Environment/data/narrative research package purpose",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R35",
+      "title": "Renku session basics",
+      "url": "https://docs.renkulab.io/en/0.19.1/topic-guides/session-basics.html",
+      "version_or_scope": "URL-pinned 0.19.1 documentation",
+      "locator": "Docker sessions; autosave; session resources; environment images",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R36",
+      "title": "Plotly interactive HTML export",
+      "url": "https://plotly.com/python/interactive-html-export/",
+      "version_or_scope": "Current first-party Python documentation",
+      "locator": "write_html; interactive browser figures; self-contained file default",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R37",
+      "title": "CoCalc software",
+      "url": "https://doc.cocalc.com/software.html",
+      "version_or_scope": "Current first-party service documentation",
+      "locator": "Python and R software availability; configurable environments",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R38",
+      "title": "CoCalc project settings",
+      "url": "https://doc.cocalc.com/project-settings.html",
+      "version_or_scope": "Current first-party service documentation",
+      "locator": "Project resources/settings; category applicability check only",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R39",
+      "title": "nbgrader assignment workflow",
+      "url": "https://nbgrader.readthedocs.io/en/stable/user_guide/creating_and_grading_assignments.html",
+      "version_or_scope": "0.9.6 header at reviewer access; candidate capture labeled 0.9.5",
+      "locator": "Generate/release/collect; automatic and manual grading; metadata",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R40",
+      "title": "nbgrader metadata schema",
+      "url": "https://nbgrader.readthedocs.io/en/latest/contributor_guide/metadata.html",
+      "version_or_scope": "0.9.6 header; schema versions 1/2",
+      "locator": "grade_id and checksum; cell metadata used by validate/autograde",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R41",
+      "title": "nbgrader advanced topics",
+      "url": "https://nbgrader.readthedocs.io/en/stable/user_guide/advanced.html",
+      "version_or_scope": "0.9.6 documentation",
+      "locator": "Advanced workflow scope",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R42",
+      "title": "Docker Engine security",
+      "url": "https://docs.docker.com/engine/security/",
+      "version_or_scope": "Current first-party Engine security documentation",
+      "locator": "Namespaces versus cgroups; daemon/mount configuration; nonprivileged users",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R43",
+      "title": "JupyterLite offline archive",
+      "url": "https://jupyterlite.readthedocs.io/en/stable/howto/configure/advanced/offline.html",
+      "version_or_scope": "0.8.5 header at access; mutable stable docs",
+      "locator": "Xeus assets preinstalled; Pyodide CDN default and self-hosted distribution requirement",
+      "operation": "Independent web.open of primary documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R44",
+      "title": "JupyterLite Xeus kernels",
+      "url": "https://jupyterlite-xeus.readthedocs.io/en/latest/index.html",
+      "version_or_scope": "Latest extension docs; v4.0.0a11 behavior mentioned",
+      "locator": "WASM kernels including R; bundled scientific packages; environment.yml",
+      "operation": "Independent web.search retrieval of primary documentation excerpt",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R45",
+      "title": "JupyterLite kernel quickstart",
+      "url": "https://jupyterlite.readthedocs.io/en/latest/quickstart/using.html",
+      "version_or_scope": "0.9.0-alpha.2 documentation",
+      "locator": "Pyodide, Xeus Python/R; browser-local file storage",
+      "operation": "Independent web.search retrieval of primary documentation excerpt",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R46",
+      "title": "R WebAssembly release announcement",
+      "url": "https://blog.jupyter.org/posts/2025/r-in-the-browser-announcing-our-webassembly/",
+      "version_or_scope": "2025-02-28 first-party announcement",
+      "locator": "R in emscripten-forge and Xeus-R in JupyterLite",
+      "operation": "Independent web.search retrieval of primary announcement excerpt",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R47",
+      "title": "JupyterLite package limitations",
+      "url": "https://jupyterlite.readthedocs.io/en/stable/troubleshooting.html",
+      "version_or_scope": "0.8.6 header in search result",
+      "locator": "Native extensions need WASM compilation; system/thread/filesystem compatibility",
+      "operation": "Independent web.search retrieval of primary documentation excerpt",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:30:00Z/2026-10-09T19:39:00Z"
+    },
+    {
+      "id": "R48",
+      "title": "Papermill language translators",
+      "url": "https://papermill.readthedocs.io/en/latest/reference/papermill-translators.html",
+      "version_or_scope": "2.7.0 documentation",
+      "locator": "PythonTranslator, RTranslator, JuliaTranslator, ScalaTranslator; parameter translation API",
+      "operation": "Independent web.search and web.open of first-party API reference",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:45:00Z/2026-10-09T19:46:00Z"
+    },
+    {
+      "id": "R49",
+      "title": "Renku knowledge graph",
+      "url": "https://docs.renkulab.io/en/0.19.1/topic-guides/knowledge-graph.html",
+      "version_or_scope": "URL-pinned 0.19.1 documentation",
+      "locator": "Generation, activation, file lineage and private-project metadata query scope",
+      "operation": "Independent web.open of first-party version-pinned documentation",
+      "result": "retrieved and inspected",
+      "accessed_at": null,
+      "access_window_utc": "2026-10-09T19:45:00Z/2026-10-09T19:46:00Z"
+    }
+  ],
+  "bounded_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-B/evidence/released-code-checks.json",
+      "sha256": "e00b027a006e5c6e49cfe30cfb4f63770eaf8900897d64c001b00f257cb3c20e",
+      "purpose": "Released declaration/filter inspection only; not tool execution."
+    }
+  ],
+  "observed_source_operations": {
+    "frozen_read_scope": "Assignment, exact input map, rubric, original brief/plan, all 30 exact mapped stage files and all source-root files; final freeze identity rechecked. No unmapped adjudication notes read.",
+    "mapped_file_hash_verification": {
+      "count": 30,
+      "all_match": true,
+      "interpretation": "Input identity only, not scientific validation."
+    },
+    "frozen_manifest_files": 96,
+    "primary_operations": "Independent web.open/search/find and text inspections; three released-source HTTPS GETs with static AST inspection and one identical-hash repeat. Full primary URL/locator registry in source-map.json. Final targeted reference pass independently corroborated Papermill translators and version-pinned Renku KG lineage; locators R48/R49 added.",
+    "executed_scientific_runtime": [],
+    "static_evidence_artifact": {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-B/evidence/released-code-checks.json",
+      "sha256": "e00b027a006e5c6e49cfe30cfb4f63770eaf8900897d64c001b00f257cb3c20e",
+      "purpose": "Released declaration/filter inspection only; not tool execution."
+    },
+    "failed_or_redirected_source_operations": [
+      {
+        "url": "https://raw.githubusercontent.com/computationalmodelling/nbval/v0.11.0/nbval/plugin.py",
+        "result": "Wrong tag spelling failed; correct 0.11.0 tag retrieved."
+      },
+      {
+        "url": "https://nbdime.readthedocs.io/en/latest/diff_format.html",
+        "result": "Failed guessed locator; diffing.html retrieved."
+      },
+      {
+        "url": "https://wholetale.readthedocs.io/en/latest/",
+        "result": "Web fetch failed; stable export/run primary page and official site retrieved."
+      },
+      {
+        "url": "https://xeus-python.readthedocs.io/en/latest/xeus-python-jupyterlite.html",
+        "result": "Internal Error; official Xeus/JupyterLite primary excerpts retrieved."
+      },
+      {
+        "url": "https://docs.reviewnb.com/self-hosting/faq.html",
+        "result": "Guessed FAQ locator not available; overview and vendor FAQ inspected."
+      },
+      {
+        "url": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M09-B/rubric.md",
+        "result": "Incorrect local basename absent; exact map rubric evaluations/RUBRIC.md read."
+      },
+      {
+        "url": "https://docs.renkulab.io/en/0.19.1/topic-guides/provenance.html",
+        "result": "Internal Error at guessed provenance locator; exact-version knowledge-graph primary page successfully retrieved."
+      }
+    ]
+  },
+  "retrieval_timestamp_note": "Except the exact HTTPS GET timestamps in bounded evidence, individual web timestamps were not instrumented. The recorded retrieval window is approximate; accessed_at is null rather than fabricated.",
+  "finding_source_links": {
+    "N2-F01": [
+      "R18",
+      "R19"
+    ],
+    "N2-F02": [
+      "R21",
+      "R22",
+      "R47"
+    ],
+    "N1-F01": [
+      "R26",
+      "R27",
+      "R28",
+      "R29"
+    ],
+    "N1-F02": [
+      "R32",
+      "R16",
+      "R42"
+    ],
+    "N1-F03": [
+      "R26",
+      "R36"
+    ],
+    "N1-F04": [
+      "R02",
+      "R07",
+      "R33"
+    ]
+  },
+  "native_usage_billing": null,
+  "preservation_scope": "Complete frozen discovery/draft/critique/final and their mapped source indexes/extracts; unmapped adjudication paths not inspected."
+}

@@ -1,0 +1,390 @@
+[
+  {
+    "id": "K01",
+    "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/1.4.0/src/reader.rs",
+    "accessed_at": "2026-10-09T19:38:45.025413+00:00",
+    "operation": "public HTTPS GET; exact tagged source or API documentation inspection",
+    "response_sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+    "snippets": [
+      {
+        "symbol": "pub fn position",
+        "extracted_text_lines": [
+          1665,
+          1681
+        ],
+        "text": "///     // record.\n///     assert_eq!(pos.byte(), 51);\n///     assert_eq!(pos.line(), 3);\n///     assert_eq!(pos.record(), 2);\n///     Ok(())\n/// }\n/// ```\npub fn position(&self) -> &Position {\n&self.state.cur_pos\n}\n/// Returns true if and only if this reader has been exhausted.\n///\n/// When this returns true, no more records can be read from this reader\n/// (unless it has been seeked to another position).\n///\n/// # Example\n///"
+      },
+      {
+        "symbol": "trim: Trim::default()",
+        "extracted_text_lines": [
+          35,
+          51
+        ],
+        "text": "}\nimpl Default for ReaderBuilder {\nfn default() -> ReaderBuilder {\nReaderBuilder {\ncapacity: 8 * (1 << 10),\nflexible: false,\nhas_headers: true,\ntrim: Trim::default(),\nbuilder: Box::new(CoreReaderBuilder::default()),\n}\n}\n}\nimpl ReaderBuilder {\n/// Create a new builder for configuring CSV parsing.\n///\n/// To convert a builder into a reader, call one of the methods starting\n/// with `from_`."
+      },
+      {
+        "symbol": "pub fn has_headers",
+        "extracted_text_lines": [
+          211,
+          227
+        ],
+        "text": "///     } else {\n///         return Err(From::from(\n///             \"expected at least two records but got one\"))\n///     }\n///     Ok(())\n/// }\n/// ```\npub fn has_headers(&mut self, yes: bool) -> &mut ReaderBuilder {\nself.has_headers = yes;\nself\n}\n/// Whether the number of fields in records is allowed to change or not.\n///\n/// When disabled (which is the default), parsing CSV data will return an\n/// error if a record is found with a number of fields different from the\n/// number of fields in a previous record.\n///"
+      },
+      {
+        "symbol": "pub fn has_headers",
+        "extracted_text_lines": [
+          1700,
+          1716
+        ],
+        "text": "/// }\n/// ```\npub fn is_done(&self) -> bool {\nself.state.eof != ReaderEofState::NotEof\n}\n/// Returns true if and only if this reader has been configured to\n/// interpret the first record as a header record.\npub fn has_headers(&self) -> bool {\nself.state.has_headers\n}\n/// Returns a reference to the underlying reader.\npub fn get_ref(&self) -> &R {\nself.rdr.get_ref()\n}\n/// Returns a mutable reference to the underlying reader.\npub fn get_mut(&mut self) -> &mut R {\nself.rdr.get_mut()"
+      },
+      {
+        "symbol": "pub fn trim",
+        "extracted_text_lines": [
+          342,
+          358
+        ],
+        "text": "///     assert_eq!(records, vec![\n///         vec![\"Boston\", \"United States\", \"4628910\"],\n///         vec![\"Concord\", \"United States\", \"42695\"],\n///     ]);\n///     Ok(())\n/// }\n/// ```\npub fn trim(&mut self, trim: Trim) -> &mut ReaderBuilder {\nself.trim = trim;\nself\n}\n/// The record terminator to use when parsing CSV.\n///\n/// A record terminator can be any single byte. The default is a special\n/// value, `Terminator::CRLF`, which treats any occurrence of `\\r`, `\\n`\n/// or `\\r\\n` as a single record terminator.\n///"
+      },
+      {
+        "symbol": "granular",
+        "extracted_text_lines": [
+          718,
+          734
+        ],
+        "text": "flexible: bool,\ntrim: Trim,\n/// The number of fields in the first record parsed.\nfirst_field_count: Option<u64>,\n/// The current position of the parser.\n///\n/// Note that this position is only observable by callers at the start\n/// of a record. More granular positions are not supported.\ncur_pos: Position,\n/// Whether the first record has been read or not.\nfirst: bool,\n/// Whether the reader has been seeked or not.\nseeked: bool,\n/// Whether EOF of the underlying reader has been reached or not.\n///\n/// IO errors on the underlying reader will be considered as an EOF for\n/// subsequent read attempts, as it would be incorrect to keep on trying"
+      }
+    ]
+  },
+  {
+    "id": "K02",
+    "url": "https://docs.rs/arrow-csv/59.1.0/arrow_csv/reader/struct.Format.html",
+    "accessed_at": "2026-10-09T19:38:45.104474+00:00",
+    "operation": "public HTTPS GET; exact tagged source or API documentation inspection",
+    "response_sha256": "d95aeee9d8b2ae6aa16f8e6bc9822b5abe62b1a096373be32e01e7c21e8b4571",
+    "snippets": [
+      {
+        "symbol": "100",
+        "extracted_text_lines": [
+          38,
+          54
+        ],
+        "text": "futures ^0.3\ndev\ntempfile ^3.3\ndev\ntokio ^1.27\ndev\nVersions\n100%\nof the crate is documented\nGo to latest version\nPlatform\nx86_64-unknown-linux-gnu\nFeature flags\ndocs.rs\nAbout docs.rs\nBadges\nBuilds"
+      },
+      {
+        "symbol": "None",
+        "extracted_text_lines": [
+          119,
+          135
+        ],
+        "text": "Sourcepub fn with_header_validation(self, validate_header: bool) -> Self\nSpecify whether to validate the CSV header against the schema, defaults to false\nWhen true, the first row gets validated against the schema before any data is read\nOnly applies when Self::with_header is set to true\nSourcepub fn with_delimiter(self, delimiter: u8) -> Self\nSpecify a custom delimiter character, defaults to comma ','\nSourcepub fn with_escape(self, escape: u8) -> Self\nSpecify an escape character, defaults to None\nSourcepub fn with_quote(self, quote: u8) -> Self\nSpecify a custom quote character, defaults to double quote '\"'\nSourcepub fn with_terminator(self, terminator: u8) -> Self\nSpecify a custom terminator character, defaults to CRLF\nSourcepub fn with_comment(self, comment: u8) -> Self\nSpecify a comment character, defaults to None\nLines starting with this character will be ignored\nSourcepub fn with_null_regex(self, null_regex: Regex) -> Self\nProvide a regex to match null values, defaults to ^$"
+      },
+      {
+        "symbol": "None",
+        "extracted_text_lines": [
+          125,
+          141
+        ],
+        "text": "Sourcepub fn with_escape(self, escape: u8) -> Self\nSpecify an escape character, defaults to None\nSourcepub fn with_quote(self, quote: u8) -> Self\nSpecify a custom quote character, defaults to double quote '\"'\nSourcepub fn with_terminator(self, terminator: u8) -> Self\nSpecify a custom terminator character, defaults to CRLF\nSourcepub fn with_comment(self, comment: u8) -> Self\nSpecify a comment character, defaults to None\nLines starting with this character will be ignored\nSourcepub fn with_null_regex(self, null_regex: Regex) -> Self\nProvide a regex to match null values, defaults to ^$\nSourcepub fn with_truncated_rows(self, allow: bool) -> Self\nWhether to allow truncated rows when parsing.\nBy default this is set to false and will error if the CSV rows have different lengths.\nWhen set to true then it will allow records with less than the expected number of columns\nand fill the missing columns with nulls. If the record’s schema is not nullable, then it\nwill still return an error."
+      },
+      {
+        "symbol": "None",
+        "extracted_text_lines": [
+          141,
+          157
+        ],
+        "text": "will still return an error.\nSourcepub fn infer_schema<R: Read>(\n&self,\nreader: R,\nmax_records: Option<usize>,\n) -> Result<(Schema, usize), ArrowError>\nInfer schema of CSV records from the provided reader\nIf max_records is None, all records will be read, otherwise up to max_records\nrecords are read to infer the schema\nReturns inferred schema and number of records read\nTrait Implementations§\nSource§\nimpl Clone for Format\nSource§fn clone(&self) -> Format\nReturns a duplicate of the value. Read more\n1.0.0 (const: unstable) · Source§fn clone_from(&mut self, source: &Self)\nPerforms copy-assignment from source. Read more"
+      },
+      {
+        "symbol": "infer_schema",
+        "extracted_text_lines": [
+          66,
+          82
+        ],
+        "text": "The Cargo Guide\nClippy Documentation\nSkip to main content\nFormat\narrow_csv59.1.0\nFormat\nMethods\ninfer_schema\nwith_comment\nwith_delimiter\nwith_escape\nwith_header\nwith_header_validation\nwith_null_regex\nwith_quote\nwith_terminator\nwith_truncated_rows"
+      },
+      {
+        "symbol": "infer_schema",
+        "extracted_text_lines": [
+          135,
+          151
+        ],
+        "text": "Provide a regex to match null values, defaults to ^$\nSourcepub fn with_truncated_rows(self, allow: bool) -> Self\nWhether to allow truncated rows when parsing.\nBy default this is set to false and will error if the CSV rows have different lengths.\nWhen set to true then it will allow records with less than the expected number of columns\nand fill the missing columns with nulls. If the record’s schema is not nullable, then it\nwill still return an error.\nSourcepub fn infer_schema<R: Read>(\n&self,\nreader: R,\nmax_records: Option<usize>,\n) -> Result<(Schema, usize), ArrowError>\nInfer schema of CSV records from the provided reader\nIf max_records is None, all records will be read, otherwise up to max_records\nrecords are read to infer the schema\nReturns inferred schema and number of records read\nTrait Implementations§"
+      }
+    ]
+  },
+  {
+    "id": "K03",
+    "url": "https://docs.rs/arrow-csv/59.1.0/arrow_csv/reader/struct.ReaderBuilder.html",
+    "accessed_at": "2026-10-09T19:38:45.401067+00:00",
+    "operation": "public HTTPS GET; exact tagged source or API documentation inspection",
+    "response_sha256": "e381ede184cce2d84662742ca25832fbeb8ecd678fb059a33a1ccda21f854475",
+    "snippets": [
+      {
+        "symbol": "59.1.0",
+        "extracted_text_lines": [
+          1,
+          12
+        ],
+        "text": "ReaderBuilder in arrow_csv::reader - Rust\nDocs.rs\narrow-csv-59.1.0\narrow-csv 59.1.0\nDocs.rs crate page\nApache-2.0\n07 July 2026\nLinks\nHomepage\nRepository\ncrates.io\nSource"
+      },
+      {
+        "symbol": "59.1.0",
+        "extracted_text_lines": [
+          1,
+          13
+        ],
+        "text": "ReaderBuilder in arrow_csv::reader - Rust\nDocs.rs\narrow-csv-59.1.0\narrow-csv 59.1.0\nDocs.rs crate page\nApache-2.0\n07 July 2026\nLinks\nHomepage\nRepository\ncrates.io\nSource\nOwners"
+      },
+      {
+        "symbol": "59.1.0",
+        "extracted_text_lines": [
+          13,
+          29
+        ],
+        "text": "Owners\nkou\nxhochy\nnevi-me\nalamb\ntustvold\nDependencies\narrow-array ^59.1.0\nnormal\narrow-cast ^59.1.0\nnormal\narrow-schema ^59.1.0\nnormal\nchrono ^0.4.40\nnormal\ncsv ^1.1\nnormal"
+      },
+      {
+        "symbol": "validate_header",
+        "extracted_text_lines": [
+          126,
+          142
+        ],
+        "text": "// Infer the schema with the first 100 records\nlet (schema, _) = Format::default().infer_schema(&mut file, Some(100)).unwrap();\nfile.rewind().unwrap();\n// create a builder\nReaderBuilder::new(Arc::new(schema)).build(file).unwrap();\nSourcepub fn with_header(self, has_header: bool) -> Self\nSet whether the CSV file has a header\nSourcepub fn with_header_validation(self, validate_header: bool) -> Self\nSet whether to validate the CSV header against the schema\nThis option only applies when Self::with_header is set to true, and defaults to false\nSourcepub fn with_format(self, format: Format) -> Self\nOverrides the Format of this ReaderBuilder\nSourcepub fn with_delimiter(self, delimiter: u8) -> Self\nSet the CSV file’s column delimiter as a byte character\nSourcepub fn with_escape(self, escape: u8) -> Self\nSet the given character as the CSV file’s escape character\nSourcepub fn with_quote(self, quote: u8) -> Self"
+      },
+      {
+        "symbol": "projection",
+        "extracted_text_lines": [
+          80,
+          96
+        ],
+        "text": "with_comment\nwith_delimiter\nwith_escape\nwith_format\nwith_header\nwith_header_validation\nwith_null_regex\nwith_projection\nwith_quote\nwith_terminator\nwith_truncated_rows\nTrait Implementations\nDebug\nAuto Trait Implementations\nFreeze\nRefUnwindSafe\nSend"
+      },
+      {
+        "symbol": "projection",
+        "extracted_text_lines": [
+          148,
+          164
+        ],
+        "text": "Sourcepub fn with_null_regex(self, null_regex: Regex) -> Self\nProvide a regex to match null values, defaults to ^$\nSourcepub fn with_batch_size(self, batch_size: usize) -> Self\nSet the batch size (number of records to load at one time)\nSourcepub fn with_bounds(self, start: usize, end: usize) -> Self\nSet the bounds over which to scan the reader.\nstart and end are line numbers.\nSourcepub fn with_projection(self, projection: Vec<usize>) -> Self\nSet the reader’s column projection\nSourcepub fn with_truncated_rows(self, allow: bool) -> Self\nWhether to allow truncated rows when parsing.\nBy default this is set to false and will error if the CSV rows have different lengths.\nWhen set to true then it will allow records with less than the expected number of columns\nand fill the missing columns with nulls. If the record’s schema is not nullable, then it\nwill still return an error.\nSourcepub fn build<R: Read>(self, reader: R) -> Result<Reader<R>, ArrowError>\nCreate a new Reader from a non-buffered reader"
+      },
+      {
+        "symbol": "projection",
+        "extracted_text_lines": [
+          149,
+          165
+        ],
+        "text": "Provide a regex to match null values, defaults to ^$\nSourcepub fn with_batch_size(self, batch_size: usize) -> Self\nSet the batch size (number of records to load at one time)\nSourcepub fn with_bounds(self, start: usize, end: usize) -> Self\nSet the bounds over which to scan the reader.\nstart and end are line numbers.\nSourcepub fn with_projection(self, projection: Vec<usize>) -> Self\nSet the reader’s column projection\nSourcepub fn with_truncated_rows(self, allow: bool) -> Self\nWhether to allow truncated rows when parsing.\nBy default this is set to false and will error if the CSV rows have different lengths.\nWhen set to true then it will allow records with less than the expected number of columns\nand fill the missing columns with nulls. If the record’s schema is not nullable, then it\nwill still return an error.\nSourcepub fn build<R: Read>(self, reader: R) -> Result<Reader<R>, ArrowError>\nCreate a new Reader from a non-buffered reader\nIf R: BufRead consider using Self::build_buffered to avoid unnecessary additional"
+      }
+    ]
+  },
+  {
+    "id": "K04",
+    "url": "https://duckdb.org/docs/current/data/csv/overview",
+    "accessed_at": "2026-10-09T19:38:45.662153+00:00",
+    "operation": "public HTTPS GET; exact tagged source or API documentation inspection",
+    "response_sha256": "29d28f1025a9dd2a4ec7a00dfae21f36124f816faeeea619bad7fd7413ac5ee8",
+    "snippets": [
+      {
+        "symbol": "max_line_size or",
+        "extracted_text_lines": [
+          633,
+          649
+        ],
+        "text": "Interpret the path as a Hive partitioned path.\nBOOL\n(auto-detected)\nignore_errors\nIgnore any parsing errors encountered.\nBOOL\nfalse\nmax_line_size or maximum_line_size. Not available in the COPY statement.\nMaximum line size, in bytes.\nBIGINT\n2000000\nnames or column_names\nColumn names, as a list. See example.\nVARCHAR[]\n(empty)\nnew_line\nNew line character(s). Options are '\\r','\\n', or '\\r\\n'. The CSV parser only distinguishes between single-character and double-character line delimiters. Therefore, it does not differentiate between '\\r' and '\\n'."
+      },
+      {
+        "symbol": "force_not_null",
+        "extracted_text_lines": [
+          617,
+          633
+        ],
+        "text": "Add path of the containing file to each row, as a string column named filename. Relative or absolute paths are returned depending on the path or glob pattern provided to read_csv, not just filenames. Since DuckDB v1.3.0, the filename column is added automatically as a virtual column and this option is only kept for compatibility reasons.\nBOOL\nfalse\nfiles_to_sniff\nNumber of files used by the CSV sniffer to detect the schema when reading multiple files. Set to -1 to sniff all files.\nBIGINT\n10\nforce_not_null\nDo not match values in the specified columns against the NULL string. In the default case where the NULL string is empty, this means that empty values are read as zero-length strings instead of NULLs.\nVARCHAR[]\n[]\nheader\nFirst line of each file contains the column names.\nBOOL\nfalse\nhive_partitioning\nInterpret the path as a Hive partitioned path."
+      },
+      {
+        "symbol": "nullstr",
+        "extracted_text_lines": [
+          653,
+          669
+        ],
+        "text": "Normalize column names. This removes any non-alphanumeric characters from them. Column names that are reserved SQL keywords are prefixed with an underscore character (_).\nBOOL\nfalse\nnull_padding\nPad the remaining columns on the right with NULL values when a line lacks columns.\nBOOL\nfalse\nnullstr or null\nStrings that represent a NULL value.\nVARCHAR or VARCHAR[]\n(empty)\nparallel\nUse the parallel CSV reader.\nBOOL\ntrue\nquote\nString used to quote values."
+      },
+      {
+        "symbol": "encoding",
+        "extracted_text_lines": [
+          292,
+          308
+        ],
+        "text": "Overview\nAutoComplete\nAvro\nAWS\nAzure\nDelta\nDuckLake\nEncodings\nExcel\nFull Text Search\nhttpfs (HTTP and S3)\nOverview\nHTTP(S) Support\nHugging Face\nS3 API Support\nLegacy Authentication Scheme for S3 API\nIceberg"
+      },
+      {
+        "symbol": "encoding",
+        "extracted_text_lines": [
+          605,
+          621
+        ],
+        "text": "Alias for delim; only available in the COPY statement.\nVARCHAR\n,\nescape\nString used to escape the quote character within quoted values.\nVARCHAR\n\"\nencoding\nEncoding used by the CSV file. Options are utf-8, utf-16, latin-1. Not available in the COPY statement (which always uses utf-8).\nVARCHAR\nutf-8\nfilename\nAdd path of the containing file to each row, as a string column named filename. Relative or absolute paths are returned depending on the path or glob pattern provided to read_csv, not just filenames. Since DuckDB v1.3.0, the filename column is added automatically as a virtual column and this option is only kept for compatibility reasons.\nBOOL\nfalse\nfiles_to_sniff\nNumber of files used by the CSV sniffer to detect the schema when reading multiple files. Set to -1 to sniff all files."
+      },
+      {
+        "symbol": "encoding",
+        "extracted_text_lines": [
+          606,
+          622
+        ],
+        "text": "VARCHAR\n,\nescape\nString used to escape the quote character within quoted values.\nVARCHAR\n\"\nencoding\nEncoding used by the CSV file. Options are utf-8, utf-16, latin-1. Not available in the COPY statement (which always uses utf-8).\nVARCHAR\nutf-8\nfilename\nAdd path of the containing file to each row, as a string column named filename. Relative or absolute paths are returned depending on the path or glob pattern provided to read_csv, not just filenames. Since DuckDB v1.3.0, the filename column is added automatically as a virtual column and this option is only kept for compatibility reasons.\nBOOL\nfalse\nfiles_to_sniff\nNumber of files used by the CSV sniffer to detect the schema when reading multiple files. Set to -1 to sniff all files.\nBIGINT"
+      }
+    ]
+  },
+  {
+    "id": "K05",
+    "url": "https://raw.githubusercontent.com/OpenRefine/OpenRefine/3.5.0/main/src/com/google/refine/importers/ExcelImporter.java",
+    "accessed_at": "2026-10-09T19:38:45.812225+00:00",
+    "operation": "public HTTPS GET; exact tagged source or API documentation inspection",
+    "response_sha256": "77269337de3f258fbc4e8ba2abd2d52e0004eea73ff1556ea2e41cce0258e603",
+    "snippets": [
+      {
+        "symbol": "toDate",
+        "extracted_text_lines": [
+          211,
+          227
+        ],
+        "text": "}\nSerializable value = null;\nif (cellType.equals(CellType.BOOLEAN)) {\nvalue = cell.getBooleanCellValue();\n} else if (cellType.equals(CellType.NUMERIC)) {\ndouble d = cell.getNumericCellValue();\nif (DateUtil.isCellDateFormatted(cell)) {\nvalue = ParsingUtilities.toDate(DateUtil.getJavaDate(d));\n// TODO: If we had a time datatype, we could use something like the following\n// to distinguish times from dates (although Excel doesn't really make the distinction)\n// Another alternative would be to look for values < 0.60\n//                String format = cell.getCellStyle().getDataFormatString();\n//                if (!format.contains(\"d\") && !format.contains(\"m\") && !format.contains(\"y\") ) {\n//                    // It's just a time\n//                }\n} else {\nvalue = d;"
+      }
+    ]
+  },
+  {
+    "id": "K06",
+    "url": "https://raw.githubusercontent.com/OpenRefine/OpenRefine/3.4.1/main/src/com/google/refine/importers/ExcelImporter.java",
+    "accessed_at": "2026-10-09T19:38:45.855768+00:00",
+    "operation": "public HTTPS GET; exact tagged source or API documentation inspection",
+    "response_sha256": "a4bef49351b13ff8c0801ff97791dcd13b37f9cc4591fd3c5e792932cd1c625c",
+    "snippets": []
+  },
+  {
+    "id": "K07",
+    "url": "https://github.com/frictionlessdata/frictionless-py/releases/tag/v5.20.0",
+    "accessed_at": "2026-10-09T19:38:45.981431+00:00",
+    "operation": "public HTTPS GET; exact tagged source or API documentation inspection",
+    "response_sha256": "32be876fee61c32a1660567dd5306b2d7fd2904c6958638a18951e13a7879222",
+    "snippets": [
+      {
+        "symbol": "3988672",
+        "extracted_text_lines": [
+          124,
+          140
+        ],
+        "text": "TIMESTAMP 2026-10-08T20:48:01Z\n08 Oct 20:48\n·\n1 commit\nto main\nsince this release\nv5.20.0\n3988672\nfix(security): profile references ($ref) are now resolved by frictionless\ninstead of jsonschema: remote references go through system.http_session (injectable,\n10 seconds timeout), non-http(s) schemes are refused, relative references\nresolve from the profile location, and error messages no longer disclose the\ncontent of referenced documents\n(#1832)\nfix(security): fix command injection vulnerability in frictionless explore\ncommand\n(#1820)"
+      },
+      {
+        "symbol": "release timestamp",
+        "text": "TIMESTAMP 2026-10-08T20:48:01Z"
+      }
+    ]
+  },
+  {
+    "id": "K08",
+    "url": "https://framework.frictionlessdata.io/docs/getting-started.html",
+    "accessed_at": "2026-10-09T19:38:46.565074+00:00",
+    "operation": "public HTTPS GET; exact tagged source or API documentation inspection",
+    "response_sha256": "22fb255df9fb13ba84631238df3bb2199635debf19187160edfbb4661c2456a9",
+    "snippets": [
+      {
+        "symbol": "Python",
+        "extracted_text_lines": [
+          16,
+          32
+        ],
+        "text": "Extract\nIndex\nList\nPublish\nQuery\nScript\nValidate\nWorking in Python\nActions\nCatalog\nPackage\nResource\nDialect\nSchema\nChecklist\nPipeline\nDetector"
+      },
+      {
+        "symbol": "Python",
+        "extracted_text_lines": [
+          119,
+          135
+        ],
+        "text": "Universe\nBlog\nEdit page  in  Livemark\n(2026-10-08 21:15)\nGetting Started\nLet's get started with Frictionless! We will learn how to install and use the framework. The simple example below will showcase the framework's basic functionality.\nInstallation\nThe framework requires Python3.8+. Versioning follows the SemVer Standard.\nCLI\npip install frictionless\npip install frictionless[sql] # to install a core plugin (optional)\npip install 'frictionless[sql]' # for zsh shell\nThe framework supports CSV, Excel, and JSON formats by default. The second command above installs a plugin for SQL support. There are plugins for SQL, Pandas, HTML, and others (all supported plugins are listed in the \"File Formats\" and schemes in \"File Schemes\" menu). Usually, you don't need to think about it in advance–frictionless will display a useful error message about a missing plugin with installation instructions.\nTroubleshooting\nDid you have an error installing Frictionless? Here are some dependencies and common errors:\npip: command not found. Please see the pip docs for help installing pip.\nInstalling Python help (Mac)"
+      },
+      {
+        "symbol": "Python",
+        "extracted_text_lines": [
+          128,
+          144
+        ],
+        "text": "pip install frictionless\npip install frictionless[sql] # to install a core plugin (optional)\npip install 'frictionless[sql]' # for zsh shell\nThe framework supports CSV, Excel, and JSON formats by default. The second command above installs a plugin for SQL support. There are plugins for SQL, Pandas, HTML, and others (all supported plugins are listed in the \"File Formats\" and schemes in \"File Schemes\" menu). Usually, you don't need to think about it in advance–frictionless will display a useful error message about a missing plugin with installation instructions.\nTroubleshooting\nDid you have an error installing Frictionless? Here are some dependencies and common errors:\npip: command not found. Please see the pip docs for help installing pip.\nInstalling Python help (Mac)\nInstalling Python help (Windows)\nStill having a problem? Ask us for help on our Discord chat or open an issue. We're happy to help!\nUsage\nThe framework can be used:\nas a Python library\nas a command-line interface\nFor instance, both examples below do the same thing:\nCLI\nPython"
+      },
+      {
+        "symbol": "CSV",
+        "extracted_text_lines": [
+          48,
+          64
+        ],
+        "text": "Aws\nBuffer\nLocal\nMultipart\nRemote\nStream\nData Formats\nCsv\nErd\nExcel\nGsheets\nHtml\nInline\nJson\nJsonSchema\nMarkdown\nOds"
+      },
+      {
+        "symbol": "CSV",
+        "extracted_text_lines": [
+          124,
+          140
+        ],
+        "text": "Let's get started with Frictionless! We will learn how to install and use the framework. The simple example below will showcase the framework's basic functionality.\nInstallation\nThe framework requires Python3.8+. Versioning follows the SemVer Standard.\nCLI\npip install frictionless\npip install frictionless[sql] # to install a core plugin (optional)\npip install 'frictionless[sql]' # for zsh shell\nThe framework supports CSV, Excel, and JSON formats by default. The second command above installs a plugin for SQL support. There are plugins for SQL, Pandas, HTML, and others (all supported plugins are listed in the \"File Formats\" and schemes in \"File Schemes\" menu). Usually, you don't need to think about it in advance–frictionless will display a useful error message about a missing plugin with installation instructions.\nTroubleshooting\nDid you have an error installing Frictionless? Here are some dependencies and common errors:\npip: command not found. Please see the pip docs for help installing pip.\nInstalling Python help (Mac)\nInstalling Python help (Windows)\nStill having a problem? Ask us for help on our Discord chat or open an issue. We're happy to help!\nUsage\nThe framework can be used:\nas a Python library"
+      },
+      {
+        "symbol": "CSV",
+        "extracted_text_lines": [
+          138,
+          154
+        ],
+        "text": "Usage\nThe framework can be used:\nas a Python library\nas a command-line interface\nFor instance, both examples below do the same thing:\nCLI\nPython\nfrictionless extract data/table.csv\nfrom frictionless import extract\nrows = extract('data/table.csv')\nThe interfaces are as much alike as possible regarding naming conventions and\nthe way you interact with them. Usually, it's straightforward to translate,\nfor instance, Python code to a command-line call. Frictionless provides code\ncompletion for Python and the command-line, which should help to get useful\nhints in real time.\nArguments conform to the following naming convention:\nfor Python interfaces, they are snake_cased, e.g. missing_values"
+      },
+      {
+        "symbol": "Excel",
+        "extracted_text_lines": [
+          50,
+          66
+        ],
+        "text": "Local\nMultipart\nRemote\nStream\nData Formats\nCsv\nErd\nExcel\nGsheets\nHtml\nInline\nJson\nJsonSchema\nMarkdown\nOds\nPandas\nParquet"
+      },
+      {
+        "symbol": "Excel",
+        "extracted_text_lines": [
+          124,
+          140
+        ],
+        "text": "Let's get started with Frictionless! We will learn how to install and use the framework. The simple example below will showcase the framework's basic functionality.\nInstallation\nThe framework requires Python3.8+. Versioning follows the SemVer Standard.\nCLI\npip install frictionless\npip install frictionless[sql] # to install a core plugin (optional)\npip install 'frictionless[sql]' # for zsh shell\nThe framework supports CSV, Excel, and JSON formats by default. The second command above installs a plugin for SQL support. There are plugins for SQL, Pandas, HTML, and others (all supported plugins are listed in the \"File Formats\" and schemes in \"File Schemes\" menu). Usually, you don't need to think about it in advance–frictionless will display a useful error message about a missing plugin with installation instructions.\nTroubleshooting\nDid you have an error installing Frictionless? Here are some dependencies and common errors:\npip: command not found. Please see the pip docs for help installing pip.\nInstalling Python help (Mac)\nInstalling Python help (Windows)\nStill having a problem? Ask us for help on our Discord chat or open an issue. We're happy to help!\nUsage\nThe framework can be used:\nas a Python library"
+      }
+    ]
+  },
+  {
+    "id": "K09",
+    "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/1.4.0/src/reader.rs",
+    "accessed_at": "2026-10-09T19:40:33.011391+00:00",
+    "operation": "public tagged Rust source GET, comments/default implementation inspection",
+    "response_sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+    "snippets": [
+      {
+        "symbol": "only observable",
+        "source_lines": [
+          742,
+          752
+        ],
+        "text": "    /// The number of fields in the first record parsed.\n    first_field_count: Option<u64>,\n    /// The current position of the parser.\n    ///\n    /// Note that this position is only observable by callers at the start\n    /// of a record. More granular positions are not supported.\n    cur_pos: Position,\n    /// Whether the first record has been read or not.\n    first: bool,\n    /// Whether the reader has been seeked or not.\n    seeked: bool,"
+      },
+      {
+        "symbol": "By default, no trimming",
+        "source_lines": [
+          312,
+          322
+        ],
+        "text": "    }\n\n    /// Whether fields are trimmed of leading and trailing whitespace or not.\n    ///\n    /// By default, no trimming is performed. This method permits one to\n    /// override that behavior and choose one of the following options:\n    ///\n    /// 1. `Trim::Headers` trims only header values.\n    /// 2. `Trim::Fields` trims only non-header or \"field\" values.\n    /// 3. `Trim::All` trims both header and non-header values.\n    ///"
+      }
+    ]
+  },
+  {
+    "id": "K10",
+    "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/1.4.0/src/lib.rs",
+    "accessed_at": "2026-10-09T19:40:33.122112+00:00",
+    "operation": "public tagged Rust source GET, comments/default implementation inspection",
+    "response_sha256": "cb4a4b10c6e89542c5bb0810c780730fa711149da108770070567ca23bc8591e",
+    "snippets": []
+  }
+]

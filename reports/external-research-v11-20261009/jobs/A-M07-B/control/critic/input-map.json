@@ -1,0 +1,24 @@
+{
+  "block": "A-M07-B",
+  "arm": "control",
+  "case": "S01",
+  "method": "M07",
+  "stage": "critic",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/critic",
+  "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S01/brief.md",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/revealed-plan.md"
+  ],
+  "source_roots": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/sources"
+  ],
+  "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/critic",
+  "deadline": "2026-10-09T19:51:18.656010+00:00",
+  "arm_deadline": "2026-10-09T20:30:16.202878+00:00",
+  "native_route": "muse",
+  "evidence_kind": "full-discovery",
+  "resource_version": "default-30-12-18-v1"
+}

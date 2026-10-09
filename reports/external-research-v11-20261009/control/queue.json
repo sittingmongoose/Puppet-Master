@@ -135,7 +135,13 @@
     "status": "UNSTARTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "resource_version": "glm-24-18-18-v2",
+    "stage_allowances_s": {
+      "research": 1440,
+      "critic": 1080,
+      "reviser": 1080
+    }
   },
   {
     "block_id": "A-M07-A",
@@ -168,7 +174,13 @@
     "status": "UNSTARTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "resource_version": "glm-24-18-18-v2",
+    "stage_allowances_s": {
+      "research": 1440,
+      "critic": 1080,
+      "reviser": 1080
+    }
   },
   {
     "block_id": "A-M08-B",
@@ -236,7 +248,13 @@
     "status": "UNSTARTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "resource_version": "glm-24-18-18-v2",
+    "stage_allowances_s": {
+      "research": 1440,
+      "critic": 1080,
+      "reviser": 1080
+    }
   },
   {
     "block_id": "A-M11-B",
@@ -276,46 +294,60 @@
   {
     "block_id": "B-01",
     "phase": "B",
-    "method": null,
-    "case": "B01",
-    "route": null,
-    "status": "UNSTARTED_RESERVED",
+    "method": "M13",
+    "case": "I01",
+    "route": "luna",
+    "status": "UNSTARTED_DEVELOPMENT",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "resource_version": "retained60-critic12-v1",
+    "purpose": "prospective development; not promoted integrated/confirmation evidence"
   },
   {
     "block_id": "B-02",
     "phase": "B",
-    "method": null,
-    "case": "B02",
-    "route": null,
-    "status": "UNSTARTED_RESERVED",
+    "method": "M13",
+    "case": "I02",
+    "route": "luna",
+    "status": "UNSTARTED_DEVELOPMENT",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "resource_version": "retained60-critic12-v1",
+    "purpose": "prospective development; not promoted integrated/confirmation evidence"
   },
   {
     "block_id": "B-03",
     "phase": "B",
-    "method": null,
-    "case": "B03",
-    "route": null,
-    "status": "UNSTARTED_RESERVED",
+    "method": "M05",
+    "case": "I03",
+    "route": "luna",
+    "status": "UNSTARTED_SELECTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "method_version": "v2",
+    "method_file": "M05-v2",
+    "terminal_critic_handoff": true,
+    "resource_version": "retained-terminal-handoff-v2",
+    "purpose": "prospective integrated successor; second starts only after B-03 treatment full-source PASS with 45-minute treatment vs60-minute control"
   },
   {
     "block_id": "B-04",
     "phase": "B",
-    "method": null,
-    "case": "B04",
-    "route": null,
-    "status": "UNSTARTED_RESERVED",
+    "method": "M05",
+    "case": "I04",
+    "route": "luna",
+    "status": "UNSTARTED_SELECTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "occupied_ceiling_s": 5400,
+    "method_version": "v2",
+    "method_file": "M05-v2",
+    "terminal_critic_handoff": true,
+    "resource_version": "retained-terminal-handoff-v2",
+    "purpose": "prospective integrated successor; second starts only after B-03 treatment full-source PASS with 45-minute treatment vs60-minute control"
   },
   {
     "block_id": "B-05",

@@ -1,0 +1,2013 @@
+{
+  "block": "A-M08-B",
+  "evaluation": "Fresh independent source-grounded assessment",
+  "frozen_input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-B/input-map.json",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-B/assignment.md",
+      "sha256": "283da9cde63046d879810954c901d907faf9d8e5860c24bca9d4ff3eb4952ab9",
+      "bytes": 2170
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M08-B/input-map.json",
+      "sha256": "e75d37c5f922012e71f6ba5e8f16e3c4a1ed692fd355a0e626655a08d93b4828",
+      "bytes": 9633
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S02/brief.md",
+      "sha256": "e42d1e70aa37a1339a8820e2953b41812b841d09f6310095eab1e65fb1e84882",
+      "bytes": 1517
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S02/plan-root-only.md",
+      "sha256": "29a9a74bc968d816bb61b8968346b552b8fc75a61ab72b2c5a18e059a7760363",
+      "bytes": 389
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+      "sha256": "bcbace239d72aaf28d63e6cd0a993cad3ed70a3f1a98fb32e82554fb639f7c3c",
+      "bytes": 25135
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/source-map.json",
+      "sha256": "cd5508606a735085f7fd49c8a45e24bf4ca496a64e1c6d1118a4973a0d3b6d2d",
+      "bytes": 27812
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/assignment.md",
+      "sha256": "5a4cdc5903ce3057b5f6066386d4d73c8cc3b5046beaebec0b5376e06b7097c1",
+      "bytes": 2787
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/input-map.json",
+      "sha256": "2faeb397c5c975e961321e1b17e96b9897e0990903265010c67a749766f5aebf",
+      "bytes": 1504
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/critique.md",
+      "sha256": "0a22148698c80ce842c1f585b73e7c23d3e20d44b00938c18eb696fb9ad0c481",
+      "bytes": 16820
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/source-map.json",
+      "sha256": "8d6b09d93728133d0b2511183681cd11f4ad2f52020000d080e380beef7b540f",
+      "bytes": 22800
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/assignment.md",
+      "sha256": "81252062a7505a88ee641d76c144cc138ed523f8b4cf14f37397efd06ec179f4",
+      "bytes": 2524
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/input-map.json",
+      "sha256": "e938935ac4762fcb98e4b8b38e9e3ba0fa72f502edcb08e75e03d45e59c767ed",
+      "bytes": 1180
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/discovery.md",
+      "sha256": "22d68cc2213c212c71e1efe56cf9ef7aa797ca61921f4c721521822a129b9d67",
+      "bytes": 15912
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/draft.md",
+      "sha256": "a574b8746618d6d7d7080947d7186b1c47c2685d24f6ee96d0494836492a70d1",
+      "bytes": 16507
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/source-map.json",
+      "sha256": "0fb655f1490013ebec7cf442565c773e3c520049d213966b2d5b69610d8bf4ed",
+      "bytes": 14888
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/revealed-plan.md",
+      "sha256": "29a9a74bc968d816bb61b8968346b552b8fc75a61ab72b2c5a18e059a7760363",
+      "bytes": 389
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/plan-reveal.json",
+      "sha256": "5b613142a866a4095a63a5dda86c3f4b91298bb5907d5ca46cfc350d7409f6a5",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/assignment.md",
+      "sha256": "89372d36979d34aa085608a0e576973594f895ffde5d706ba9e1013747483625",
+      "bytes": 3000
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/input-map.json",
+      "sha256": "a7c3a7b9c25e3d1403fcf265fda21cce559b369091ffc043e390dcbade6b45cc",
+      "bytes": 634
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+      "sha256": "c877a7e125f6750523207ec78fa218a16fd868a30d4101ec7f0172a538495136",
+      "bytes": 31110
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/source-map.json",
+      "sha256": "0266ab4097b401b4908791d23dec9306924d34481e4b70b7233dfd46f226d1ab",
+      "bytes": 32432
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/assignment.md",
+      "sha256": "49c505cda3c40cbd37959ae8912debeb656e8ef778699007d3ba1fec1fc3cc3a",
+      "bytes": 2935
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/input-map.json",
+      "sha256": "8a491a2cc6c9fc3330019aa808c079dd14c060f0796e0a5197c992a565ab3d38",
+      "bytes": 1526
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/critique.md",
+      "sha256": "dfb66b9914c4bb28a5c62708d11f5798d0afedf95766161461610d2f37e958b1",
+      "bytes": 9784
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/source-map.json",
+      "sha256": "778c22141062bc32bdc4654a03340ddbf7c762e26c8ab246f0cbb4a12b1a6d84",
+      "bytes": 20835
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/assignment.md",
+      "sha256": "9e1242273c383528280f9005b23de19ed91b32b9ae18fde7e6f3398da5f2cfd9",
+      "bytes": 2672
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/input-map.json",
+      "sha256": "cf49f596b7c5c6b8fad31eb739b07338695d49f3f0944710673a1343280c2c4a",
+      "bytes": 1196
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/discovery.md",
+      "sha256": "1d5d91fa5efb40a9ba9c05dea1487afe477f49d64657e3810ef99056ab6cb8bb",
+      "bytes": 19820
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/draft.md",
+      "sha256": "f7ae7186826ef80f0dabb22ac4cb18921269809e2f88ab2570ab3d4235f2c204",
+      "bytes": 24245
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/source-map.json",
+      "sha256": "6419b400d53bcecab5ad731354373cab62a19c4ed42346a6b231bb3670fdbd2d",
+      "bytes": 13067
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/revealed-plan.md",
+      "sha256": "29a9a74bc968d816bb61b8968346b552b8fc75a61ab72b2c5a18e059a7760363",
+      "bytes": 389
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/plan-reveal.json",
+      "sha256": "4a06549be969445ac6b0ad54ebfd3be1ee4b7e2b37f0265eae516398590f129e",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/assignment.md",
+      "sha256": "4d12d513b813601cbeacfa305a080987e467ef876f86f178ea9a2ab68e598733",
+      "bytes": 3150
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/input-map.json",
+      "sha256": "91e992836f53d43e059aff0c6f39669f2f5033671bd25279df51bd5fb77a39a0",
+      "bytes": 640
+    }
+  ],
+  "mapped_hash_checks": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/source-map.json",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/assignment.md",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/input-map.json",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/critique.md",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/source-map.json",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/assignment.md",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/input-map.json",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/discovery.md",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/draft.md",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/source-map.json",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/revealed-plan.md",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/plan-reveal.json",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/assignment.md",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/input-map.json",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/source-map.json",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/assignment.md",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/input-map.json",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/critique.md",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/source-map.json",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/assignment.md",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/input-map.json",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/discovery.md",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/draft.md",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/source-map.json",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/revealed-plan.md",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/plan-reveal.json",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/assignment.md",
+      "matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/input-map.json",
+      "matched": true
+    }
+  ],
+  "bounded_source_note_inventory": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/README.md",
+      "sha256": "592a674a59bd11422157f389320c7a68b37a5cd9619c399d726abc433e8ce94c",
+      "bytes": 1927
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S01-mukurtu-protocol-setup.md",
+      "sha256": "aff97e25befeab5c2e7443f460864ec0c81968ca7d683a2fecaf0de256e1d406",
+      "bytes": 1149
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S02-mukurtu-sharing-settings.md",
+      "sha256": "4b12b359287528846ff440bc499ce8c74e2066808789f3ed80419fd361b977f3",
+      "bytes": 1057
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S03-mukurtu-media-access.md",
+      "sha256": "ae76e7665ab02b19dcabb56dcb9fa5f631b5eb4656b7a395d13229f76837fda2",
+      "bytes": 945
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S04-mukurtu-v4-readme.md",
+      "sha256": "736e75384ac3291b68f3365d622fa454b71330e6619d5a16d0505491afe37511",
+      "bytes": 1421
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S05-ohd-software.md",
+      "sha256": "4023588d624801ddb15e4d5fa6786a359ab8dfb57aaee8523e63ff16fb2e097a",
+      "bytes": 1375
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S06-ohd-transcripts.md",
+      "sha256": "903b189f03621f21202591812eb463c1ed8b3e4c7ceed56c52719c4f1e512598",
+      "bytes": 1213
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S07-ohd-search.md",
+      "sha256": "5b63bd3fbe7ed94ea5fc18d34251affa1472e9673ac6d6a131cecb47855e1aac",
+      "bytes": 1153
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S08-ohd-release.md",
+      "sha256": "6a8b37594e0b79b55b2cf30e202ee75f547f73ef0da2800b9b78e6c54c314049",
+      "bytes": 863
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S09-oha-archives-principles.md",
+      "sha256": "20c8b1d8066f8d4a40ef83c2bb2d51301633a4e836cb398f0e857b57d02310f7",
+      "bytes": 1356
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S10-whisper-model-card.md",
+      "sha256": "8fc16a73b72fa0ed82d6f235f398bc8f0ece002269f64399a856c3076aee499e",
+      "bytes": 1032
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S11-whisper-transcribe-code.md",
+      "sha256": "305977353ab6f7677435fde1df7c2e19181572d9fcd54c28753de01ba47048de",
+      "bytes": 1189
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S12-whisper-issue-1046.md",
+      "sha256": "e6f33bcf043987246dcd6263c874211b9a4f20faf95efc1cd8e052093961b59f",
+      "bytes": 589
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S13-whisper-pr-1052.md",
+      "sha256": "dc93b48ba4ea61d3a998d28d724b718249ceac8a449452509c50804bf83b698f",
+      "bytes": 587
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S14-whisper-v20230307-changelog.md",
+      "sha256": "5f32c3422081ee3ca6746dee4d581e630877b290db5e9732b59c0ac2eb8b6f19",
+      "bytes": 789
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S15-ohms-uky-resources.md",
+      "sha256": "b5f6c113f6ae6a5570f4ed46d8a0a48ff2dca5b656a240f4813d016c52945ae5",
+      "bytes": 763
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S16-ohms-viewer-readme.md",
+      "sha256": "82783421e1585681bfadf5b710836092857bc481b10c0fdc8580e05e95b508de",
+      "bytes": 1319
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S17-ohms-security-release.md",
+      "sha256": "6acbdbd7b81c5a43630111972f60d3ca597b0cf6447d0176e6c462a20c8fd0ea",
+      "bytes": 866
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S18-rfc8493-bagit.md",
+      "sha256": "dd8d1c451cef7c327286c4407bb7b1cf56d91d093b62e8e5e48e5bd37d0633fd",
+      "bytes": 999
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S19-premis-3.md",
+      "sha256": "245a1f595137832b0107137c5f2ea9d5f105dddce09f11e6dfc41a9a39f5eacf",
+      "bytes": 1059
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S20-mukurtu-manual-status.md",
+      "sha256": "18cf161921f33a2c98477ced484123cd816690eac6ed2a4663c239bbc5157565",
+      "bytes": 910
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/S21-oha-2025-principles.md",
+      "sha256": "dcee74a1d39d7f6e02739b9363d52aba0829109fae4ea61784a85a635802170a",
+      "bytes": 2871
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/sources/reviser-rechecks.md",
+      "sha256": "3dc32eef788037cd477e4cd045baef5f5a93e44a66026e59e1bb9cbd1bda6ee0",
+      "bytes": 2431
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/sources/README.md",
+      "sha256": "b67e444a479cab7614400e7bfd005af8619ba72a4043d3bcfe110cff9539b145",
+      "bytes": 742
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/sources/S21-oha-2025-principles.md",
+      "sha256": "dcee74a1d39d7f6e02739b9363d52aba0829109fae4ea61784a85a635802170a",
+      "bytes": 2871
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/critic/sources/primary-rechecks.md",
+      "sha256": "7543d23187f19bd877d88f7dc70bce53bf641cad4e6c56ea28e2375c6a0979ce",
+      "bytes": 3540
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/README.md",
+      "sha256": "646ec684182ea663626e35b722dc812d49c9c8c5f3099e7e94cd0ea1a99cd947",
+      "bytes": 1715
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S01-mukurtu-protocol-setup.md",
+      "sha256": "aff97e25befeab5c2e7443f460864ec0c81968ca7d683a2fecaf0de256e1d406",
+      "bytes": 1149
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S02-mukurtu-sharing-settings.md",
+      "sha256": "4b12b359287528846ff440bc499ce8c74e2066808789f3ed80419fd361b977f3",
+      "bytes": 1057
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S03-mukurtu-media-access.md",
+      "sha256": "ae76e7665ab02b19dcabb56dcb9fa5f631b5eb4656b7a395d13229f76837fda2",
+      "bytes": 945
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S04-mukurtu-v4-readme.md",
+      "sha256": "736e75384ac3291b68f3365d622fa454b71330e6619d5a16d0505491afe37511",
+      "bytes": 1421
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S05-ohd-software.md",
+      "sha256": "4023588d624801ddb15e4d5fa6786a359ab8dfb57aaee8523e63ff16fb2e097a",
+      "bytes": 1375
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S06-ohd-transcripts.md",
+      "sha256": "903b189f03621f21202591812eb463c1ed8b3e4c7ceed56c52719c4f1e512598",
+      "bytes": 1213
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S07-ohd-search.md",
+      "sha256": "5b63bd3fbe7ed94ea5fc18d34251affa1472e9673ac6d6a131cecb47855e1aac",
+      "bytes": 1153
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S08-ohd-release.md",
+      "sha256": "6a8b37594e0b79b55b2cf30e202ee75f547f73ef0da2800b9b78e6c54c314049",
+      "bytes": 863
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S09-oha-archives-principles.md",
+      "sha256": "20c8b1d8066f8d4a40ef83c2bb2d51301633a4e836cb398f0e857b57d02310f7",
+      "bytes": 1356
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S10-whisper-model-card.md",
+      "sha256": "8fc16a73b72fa0ed82d6f235f398bc8f0ece002269f64399a856c3076aee499e",
+      "bytes": 1032
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S11-whisper-transcribe-code.md",
+      "sha256": "305977353ab6f7677435fde1df7c2e19181572d9fcd54c28753de01ba47048de",
+      "bytes": 1189
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S12-whisper-issue-1046.md",
+      "sha256": "e6f33bcf043987246dcd6263c874211b9a4f20faf95efc1cd8e052093961b59f",
+      "bytes": 589
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S13-whisper-pr-1052.md",
+      "sha256": "dc93b48ba4ea61d3a998d28d724b718249ceac8a449452509c50804bf83b698f",
+      "bytes": 587
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S14-whisper-v20230307-changelog.md",
+      "sha256": "5f32c3422081ee3ca6746dee4d581e630877b290db5e9732b59c0ac2eb8b6f19",
+      "bytes": 789
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S15-ohms-uky-resources.md",
+      "sha256": "b5f6c113f6ae6a5570f4ed46d8a0a48ff2dca5b656a240f4813d016c52945ae5",
+      "bytes": 763
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S16-ohms-viewer-readme.md",
+      "sha256": "82783421e1585681bfadf5b710836092857bc481b10c0fdc8580e05e95b508de",
+      "bytes": 1319
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S17-ohms-security-release.md",
+      "sha256": "6acbdbd7b81c5a43630111972f60d3ca597b0cf6447d0176e6c462a20c8fd0ea",
+      "bytes": 866
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S18-rfc8493-bagit.md",
+      "sha256": "dd8d1c451cef7c327286c4407bb7b1cf56d91d093b62e8e5e48e5bd37d0633fd",
+      "bytes": 999
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S19-premis-3.md",
+      "sha256": "245a1f595137832b0107137c5f2ea9d5f105dddce09f11e6dfc41a9a39f5eacf",
+      "bytes": 1059
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/research/sources/S20-mukurtu-manual-status.md",
+      "sha256": "18cf161921f33a2c98477ced484123cd816690eac6ed2a4663c239bbc5157565",
+      "bytes": 910
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/README.md",
+      "sha256": "c53a2b94d749ea89b38be5ae4b3dd07ab1a28eb3cbfb85397703ecfae45f4b38",
+      "bytes": 1573
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S02-ohms-resource.md",
+      "sha256": "7d3b22c5a5e101693c7fb44b69f9c6691c1600b7ed48e9e5e8d8c57a4f1eb8fa",
+      "bytes": 860
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S03-ohms-v31015.md",
+      "sha256": "a26705b36fc54960b9a5c85130ce8b391e918b1433783d7941d2c10ea57ee409",
+      "bytes": 910
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S04-ohms-v31012.md",
+      "sha256": "74966d7b31a57fe89671428783b18349ad6123c9b31e7ffc29be66394d29f501",
+      "bytes": 753
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S05-ohms-viewer-readme.md",
+      "sha256": "b376e7fa25b0cccfed23510fae56722cc4a3d10cde63a8c0d86bb40d076731b2",
+      "bytes": 843
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S06-aviary-transcripts.md",
+      "sha256": "999a397643e25de745bd2f1dc92aad6296515a3e0dcdb4299e181bf06171d40c",
+      "bytes": 1054
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S07-aviary-indexes.md",
+      "sha256": "a9175228e82578d7fe5e4fe9661994bad97445a3949737739eb6b808337586e5",
+      "bytes": 765
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S08-aviary-media.md",
+      "sha256": "b30720ee55af0943f5de92db1576a663abb95cf272052a72208b81936965325e",
+      "bytes": 985
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S09-mukurtu-protocols.md",
+      "sha256": "ed8e35e38f6f46e7bfa5b842a34ae691ae26cab939e122faa6aaeec3853c5fa7",
+      "bytes": 995
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S10-mukurtu-audio.md",
+      "sha256": "7644c66b2350d13e99ac29d22879f9814848e67ae0064943897d7bf2aaf09964",
+      "bytes": 751
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S11-omeka-media.md",
+      "sha256": "a2e16e4d4fe7e036182ef784955a902a2f731ed4887a3c5984dc2a23c1b8bf3b",
+      "bytes": 775
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S12-whisper.md",
+      "sha256": "80fd9bfc0ec73d97c5cc09a8f3d7f723bc4cfff38381e78ddfef52e124720a8a",
+      "bytes": 1236
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S13-whisper-paper.md",
+      "sha256": "d6e80bf58c618e5c7a41f65f9aa39122e1a00324eb5e831fee024a0aa0fc67b0",
+      "bytes": 762
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S14-whisper-evolution.md",
+      "sha256": "830c9b9d067e8ee26626f32fbc061aa206d0cc46d7e7cde17dbb238bf2efd635",
+      "bytes": 750
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S15-oha.md",
+      "sha256": "3e4cf01651348b154b285d657256c1d04d421ed8c43f2c78561928da52a4631e",
+      "bytes": 1270
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S16-loc-audio.md",
+      "sha256": "e1200c76a92537868ffc721bd403a33ade507ea92ff15cb33656db38930d0594",
+      "bytes": 917
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S17-bagit.md",
+      "sha256": "e9f8080bda45987ffeace37eebcdf04aa5d86ad6beaeec77a0e9710700805a42",
+      "bytes": 642
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S18-premis.md",
+      "sha256": "1242e80f45c2d43c27e2421a43097aed68353a8a830a97c2ac9207c39a19db69",
+      "bytes": 821
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S19-aviary-pricing.md",
+      "sha256": "f4919b514e22d85a7599aa76934b75b5da298289f83c0669bb3466afb2169b87",
+      "bytes": 1207
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S20-ohms-timestamp-code.md",
+      "sha256": "c684b942e38f60f12eb887af0ca42aa395aa36776a1b920c294be143c7a21f50",
+      "bytes": 1230
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/S21-ohms-v31014.md",
+      "sha256": "559be8f42a69016007897bc77ecfb9450610c6f131bcf82c983ea8b51892decd",
+      "bytes": 685
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/critic-primary-checks.md",
+      "sha256": "a39b8f99a0ef4ed729972ec762583c5d684a7c4c2de7eb30aedbb9b07fe0d44a",
+      "bytes": 5508
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/sources/evidence/reviser-primary-checks.md",
+      "sha256": "6137f66228b5110ec32c7f814f390b7f705caa201f02ec07aa8ae8a8401d69d2",
+      "bytes": 5319
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/sources/README.md",
+      "sha256": "30ab5779f559324d4ef50d203edd4202d47b9767dd75547b7350fd07cf63eabb",
+      "bytes": 720
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/critic/sources/evidence/critic-primary-checks.md",
+      "sha256": "a39b8f99a0ef4ed729972ec762583c5d684a7c4c2de7eb30aedbb9b07fe0d44a",
+      "bytes": 5508
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/README.md",
+      "sha256": "0ffd2b2b8364f4c68d336a5cbfcc531ce6213a8e2087e5239b05618b68f55660",
+      "bytes": 3636
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S02-ohms-resource.md",
+      "sha256": "7d3b22c5a5e101693c7fb44b69f9c6691c1600b7ed48e9e5e8d8c57a4f1eb8fa",
+      "bytes": 860
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S03-ohms-v31015.md",
+      "sha256": "a26705b36fc54960b9a5c85130ce8b391e918b1433783d7941d2c10ea57ee409",
+      "bytes": 910
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S04-ohms-v31012.md",
+      "sha256": "74966d7b31a57fe89671428783b18349ad6123c9b31e7ffc29be66394d29f501",
+      "bytes": 753
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S05-ohms-viewer-readme.md",
+      "sha256": "b376e7fa25b0cccfed23510fae56722cc4a3d10cde63a8c0d86bb40d076731b2",
+      "bytes": 843
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S06-aviary-transcripts.md",
+      "sha256": "999a397643e25de745bd2f1dc92aad6296515a3e0dcdb4299e181bf06171d40c",
+      "bytes": 1054
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S07-aviary-indexes.md",
+      "sha256": "a9175228e82578d7fe5e4fe9661994bad97445a3949737739eb6b808337586e5",
+      "bytes": 765
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S08-aviary-media.md",
+      "sha256": "b30720ee55af0943f5de92db1576a663abb95cf272052a72208b81936965325e",
+      "bytes": 985
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S09-mukurtu-protocols.md",
+      "sha256": "ed8e35e38f6f46e7bfa5b842a34ae691ae26cab939e122faa6aaeec3853c5fa7",
+      "bytes": 995
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S10-mukurtu-audio.md",
+      "sha256": "7644c66b2350d13e99ac29d22879f9814848e67ae0064943897d7bf2aaf09964",
+      "bytes": 751
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S11-omeka-media.md",
+      "sha256": "a2e16e4d4fe7e036182ef784955a902a2f731ed4887a3c5984dc2a23c1b8bf3b",
+      "bytes": 775
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S12-whisper.md",
+      "sha256": "80fd9bfc0ec73d97c5cc09a8f3d7f723bc4cfff38381e78ddfef52e124720a8a",
+      "bytes": 1236
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S13-whisper-paper.md",
+      "sha256": "d6e80bf58c618e5c7a41f65f9aa39122e1a00324eb5e831fee024a0aa0fc67b0",
+      "bytes": 762
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S14-whisper-evolution.md",
+      "sha256": "830c9b9d067e8ee26626f32fbc061aa206d0cc46d7e7cde17dbb238bf2efd635",
+      "bytes": 750
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S15-oha.md",
+      "sha256": "3e4cf01651348b154b285d657256c1d04d421ed8c43f2c78561928da52a4631e",
+      "bytes": 1270
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S16-loc-audio.md",
+      "sha256": "e1200c76a92537868ffc721bd403a33ade507ea92ff15cb33656db38930d0594",
+      "bytes": 917
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S17-bagit.md",
+      "sha256": "e9f8080bda45987ffeace37eebcdf04aa5d86ad6beaeec77a0e9710700805a42",
+      "bytes": 642
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S18-premis.md",
+      "sha256": "1242e80f45c2d43c27e2421a43097aed68353a8a830a97c2ac9207c39a19db69",
+      "bytes": 821
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S19-aviary-pricing.md",
+      "sha256": "f4919b514e22d85a7599aa76934b75b5da298289f83c0669bb3466afb2169b87",
+      "bytes": 1207
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S20-ohms-timestamp-code.md",
+      "sha256": "c684b942e38f60f12eb887af0ca42aa395aa36776a1b920c294be143c7a21f50",
+      "bytes": 1230
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/sources/evidence/S21-ohms-v31014.md",
+      "sha256": "559be8f42a69016007897bc77ecfb9450610c6f131bcf82c983ea8b51892decd",
+      "bytes": 685
+    }
+  ],
+  "inventory_qualification": "Hashes preserve source lineage/identity and do not establish truth, executed operations, source completeness or scientific quality.",
+  "independent_primary_sources": [
+    {
+      "id": "E01",
+      "title": "Mukurtu community/protocol setup",
+      "urls": [
+        "https://docs.mukurtu.org/communities-cultural-protocols-categories/CreateACommunityAndInitialCulturalProtocol/"
+      ],
+      "locator": "Create a Community / initial protocol steps; open and strict types",
+      "observation": "Open/strict and protocol membership distinctions support conditional community governance. These are object policies; no reviewed interval security guarantee.",
+      "arms": [
+        "N2",
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Mutable Mukurtu 4 manual"
+    },
+    {
+      "id": "E02",
+      "title": "Mukurtu sharing settings",
+      "urls": [
+        "https://docs.mukurtu.org/communities-cultural-protocols-categories/UnderstandingSharingSettings/"
+      ],
+      "locator": "All/Any descriptions; default; content/media warning",
+      "observation": "All requires every assigned protocol and is default; Any requires one. Changing content settings does not automatically change media.",
+      "arms": [
+        "N2",
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Mutable Mukurtu 4 manual"
+    },
+    {
+      "id": "E03",
+      "title": "Mukurtu media access",
+      "urls": [
+        "https://docs.mukurtu.org/media/ManageMediaAccessWithProtocols/"
+      ],
+      "locator": "Required protocols; sync; public content/private media example",
+      "observation": "Media requires protocol assignment in v4; content and asset settings can differ. This supports explicit asset checks rather than an inferred segment ACL.",
+      "arms": [
+        "N2",
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Mutable Mukurtu 4 manual"
+    },
+    {
+      "id": "E04",
+      "title": "Mukurtu audio uploads",
+      "urls": [
+        "https://docs.mukurtu.org/media/ByTypeMediaUpload/Audio/"
+      ],
+      "locator": "Protocol selection and All/Any; transcription field",
+      "observation": "Confirms asset sharing defaults. The small transcription field is not evidence of hour-long synchronized transcript editing; neither final treats it as that facility.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Mutable Mukurtu 4 manual"
+    },
+    {
+      "id": "E05",
+      "title": "Mukurtu pinned deployment README",
+      "urls": [
+        "https://raw.githubusercontent.com/MukurtuCMS/Mukurtu-CMS/88867a068ef1dfde7b30a60cfe9175c488d9314c/README.md"
+      ],
+      "locator": "Raw lines 8–19 requirements; 49–60 private files; 75–121 updates",
+      "observation": "PHP 8.4 support, supported MySQL/MariaDB and private-path requirements are present. The README does not assert production maturity or active-development/testing-only status.",
+      "arms": [
+        "N2"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "urllib public raw GET; complete text read; relevant line extraction; SHA-256"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "commit 88867a068ef1dfde7b30a60cfe9175c488d9314c",
+      "sha256": "0d418ecb7458e7c3f9c54609a089bae75d1cc4d6f2eca61f7876628a1699ba8b",
+      "bytes": 7658
+    },
+    {
+      "id": "E06",
+      "title": "Mukurtu manual status",
+      "urls": [
+        "https://docs.mukurtu.org/"
+      ],
+      "locator": "Welcome/status passage",
+      "observation": "Development status expressly concerns the manual. It cannot establish code release maturity.",
+      "arms": [
+        "N2"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Mutable manual home"
+    },
+    {
+      "id": "E07",
+      "title": "Oral-History.Digital software",
+      "urls": [
+        "https://www.oral-history.digital/en/software/index.html"
+      ],
+      "locator": "Feature/update sections; displayed current-version label",
+      "observation": "Editing, translations, access states and hosted ASR are relevant leads. The observed page labels 1.4.1; this does not identify the current hosted build.",
+      "arms": [
+        "N2"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Mutable product page observed 2026-10-09"
+    },
+    {
+      "id": "E08",
+      "title": "Oral-History.Digital transcript help",
+      "urls": [
+        "https://www.oral-history.digital/hilfe-neu/hilfe-erschliessen/ohd_tutorial_6/index.html"
+      ],
+      "locator": "Upload/edit/translation/export questions; bulk-upload answer",
+      "observation": "Help describes per-media-file transcript uploads, timed editing and export; transcript bulk upload is described as preparation. Scope is this workflow, not every media ingest feature.",
+      "arms": [
+        "N2"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Mutable German-language official help"
+    },
+    {
+      "id": "E09",
+      "title": "Oral-History.Digital search help",
+      "urls": [
+        "https://www.oral-history.digital/en/hilfe/ohd_tutorial_suche/index.html"
+      ],
+      "locator": "Full-text access; searchable fields; passage result links",
+      "observation": "Registered archive access and transcript/translation/index searching support a comparator. They do not establish anonymous public full-text access for this project.",
+      "arms": [
+        "N2"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Mutable official help"
+    },
+    {
+      "id": "E10",
+      "title": "Oral-History.Digital release identity",
+      "urls": [
+        "https://github.com/oral-history-digital/ohd/releases/tag/v2.11.0",
+        "https://github.com/oral-history-digital/ohd/commit/dc81cfa5ffab8819d2f168b5f7fcfe9ab876ede3.patch"
+      ],
+      "locator": "Release tag; patch header and package version",
+      "observation": "Public patch confirms full commit dc81cfa5ffab8819d2f168b5f7fcfe9ab876ede3 and version 2.11.0. Hosted deployment mapping remains unknown.",
+      "arms": [
+        "N2"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "web release page open",
+        "urllib public immutable commit .patch GET; inspected header and version change"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "v2.11.0",
+      "patch_sha256": "c819e4678e067b2dc75708120137058412f1e389ed89799499fbeb3c09c90147"
+    },
+    {
+      "id": "E11",
+      "title": "Whisper model cards",
+      "urls": [
+        "https://raw.githubusercontent.com/openai/whisper/86098128c0b4f24f0e2aa2994de830614b474227/model-card.md",
+        "https://raw.githubusercontent.com/openai/whisper/v20250625/model-card.md"
+      ],
+      "locator": "Model details; training data; performance/limitations; intended use",
+      "observation": "Both inspected snapshots are byte-identical. They support uneven language/accent performance and hallucination/diarization cautions. They do not prohibit ordinary transcription of spoken proper names.",
+      "arms": [
+        "N2",
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent raw GET of both snapshots; complete text inspection; SHA-256 comparison"
+      ],
+      "access_date_utc": "2026-10-09",
+      "versions": [
+        "86098128c0b4f24f0e2aa2994de830614b474227",
+        "v20250625"
+      ],
+      "sha256": "3c2dc15e0c4bf2f1067db8530b1ecd6675abb431c4bc09fad3bc4453434f3333",
+      "bytes": 7307
+    },
+    {
+      "id": "E12",
+      "title": "Whisper transcription implementation",
+      "urls": [
+        "https://raw.githubusercontent.com/openai/whisper/86098128c0b4f24f0e2aa2994de830614b474227/whisper/transcribe.py",
+        "https://raw.githubusercontent.com/openai/whisper/v20250625/whisper/transcribe.py"
+      ],
+      "locator": "transcribe() parameters raw lines 47–54; parameter docs 86–120; CLI word_timestamps",
+      "observation": "Previous-context default True and word-timestamp default False are confirmed. Clip/silence thresholds use seconds. Code capability does not guarantee correct words, speakers or archive-specific timing.",
+      "arms": [
+        "N2",
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public raw GET; exact parameter, documentation and CLI inspection; SHA-256"
+      ],
+      "access_date_utc": "2026-10-09",
+      "versions": [
+        "86098128c0b4f24f0e2aa2994de830614b474227",
+        "v20250625"
+      ],
+      "snapshot_hashes": {
+        "86098128c0b4f24f0e2aa2994de830614b474227": "176f5ab30e961bec2a7872f5701a1f5bf3cbfc77946e50512f0f0cf00a1ceacf",
+        "v20250625": "848b82877500d6fb8f0b91bee7a08ac67ef670a113591d11b494848d263ad0f6"
+      }
+    },
+    {
+      "id": "E13",
+      "title": "Whisper repetition/timestamp report",
+      "urls": [
+        "https://github.com/openai/whisper/discussions/1046"
+      ],
+      "locator": "Original v20230306 same-audio word-timestamp comparison; maintainer explanation",
+      "observation": "Report describes a specific tail repetition case. It is primary issue evidence, not a representative accuracy benchmark.",
+      "arms": [
+        "N2"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Discussion #1046 concerning v20230306"
+    },
+    {
+      "id": "E14",
+      "title": "Whisper corrective PR",
+      "urls": [
+        "https://github.com/openai/whisper/pull/1052"
+      ],
+      "locator": "Merged status; five commits; maintainer/follow-up discussion",
+      "observation": "Merge and targeted correction are recorded; follow-up reproduction cautions against a universal-fix conclusion. Release applicability is checked separately.",
+      "arms": [
+        "N2"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "PR #1052, merged 2023-03-08; displayed merge short SHA 919a713"
+    },
+    {
+      "id": "E15",
+      "title": "Whisper historical changelog",
+      "urls": [
+        "https://raw.githubusercontent.com/openai/whisper/26807ec6d3cd9d3ce153d143dc840ea312dc1fad/CHANGELOG.md"
+      ],
+      "locator": "Raw v20230307 and v20230306 headings",
+      "observation": "This frozen file records #1046/#1052 under v20230307 and earlier timestamp work. It contains no v20230314/#1087 entry; N2's retained source-note later-entry statement exceeds this snapshot.",
+      "arms": [
+        "N2"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent raw GET; complete changelog inspection; SHA-256"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "commit 26807ec6d3cd9d3ce153d143dc840ea312dc1fad",
+      "sha256": "8b7763c711d88606c8899e12097f155d7ac3a411321cdd1695fc7fefb1c95e24",
+      "bytes": 2183
+    },
+    {
+      "id": "E16",
+      "title": "Whisper changelog at v20250625",
+      "urls": [
+        "https://raw.githubusercontent.com/openai/whisper/v20250625/CHANGELOG.md"
+      ],
+      "locator": "Raw lines 3–7 latest release; lines 55–62 v20230918/#1461; older release headings",
+      "observation": "Latest release records load hardening, DTW-device and translation-documentation changes. Timestamp heuristic #1461 belongs to v20230918 in the same file. Final line 88 can mean file contents, but the S14 release-bullet locator is imprecise.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent raw GET; release-by-release inspection; SHA-256"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "v20250625 snapshot containing cumulative history",
+      "sha256": "6a06724bcbbc6cae804ad4a0c05eea27e0e0637cc69a6fb30e757a994f0962af",
+      "bytes": 9024
+    },
+    {
+      "id": "E17",
+      "title": "Whisper original research paper",
+      "urls": [
+        "https://arxiv.org/abs/2212.04356v1",
+        "https://arxiv.org/html/2212.04356v1"
+      ],
+      "locator": "Sections 3.4, 3.8 and 4.5; multilingual and long-form evaluation",
+      "observation": "Benchmark variation and long-form decoding challenges justify local stratified evaluation. Results are not calibrated to the proposed oral-history collection.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "arXiv 2212.04356v1"
+    },
+    {
+      "id": "E18",
+      "title": "Whisper translation model exception",
+      "urls": [
+        "https://raw.githubusercontent.com/openai/whisper/v20250625/README.md"
+      ],
+      "locator": "Raw lines 88 and 102; translation model guidance",
+      "observation": "The default turbo model is not trained for translation. Family-level English-translation support is valid, but a translation pilot must choose a suitable multilingual model; no final selected turbo for translation.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent raw GET; exception inspection; SHA-256"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "v20250625",
+      "sha256": "38c180c2a8d8ba628a3e131ad42bf06c8a51bb681efb30fbe28d5a0f4b65f288",
+      "bytes": 8246
+    },
+    {
+      "id": "E19",
+      "title": "UK Libraries OHMS resources",
+      "urls": [
+        "https://libraries.uky.edu/locations/special-collections-research-center/louie-b-nunn-center-oral-history/nunn-center-resources"
+      ],
+      "locator": "OHMS description/account and Viewer links",
+      "observation": "Institutional description supports synchronized search and indexing as an oral-history lead, not a service-level or security guarantee.",
+      "arms": [
+        "N2",
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Mutable institutional page"
+    },
+    {
+      "id": "E20",
+      "title": "OHMS Viewer pinned READMEs",
+      "urls": [
+        "https://raw.githubusercontent.com/uklibraries/ohms-viewer/3343b7884d5e18b5925681d84ea0dab8bb165038/README.md",
+        "https://raw.githubusercontent.com/uklibraries/ohms-viewer/ec922b6bd2e94bbbe537aa931e273ce99637ec7d/README.md"
+      ],
+      "locator": "Requirements; tmpDir; cache protection; PHP/JavaScript player customization and alignment QA",
+      "observation": "Both inspected READMEs are byte-identical. They separate XML cache/Viewer/media integration, contain historical runtime guidance and require operator-specific configuration; neither proves current deployment security.",
+      "arms": [
+        "N2",
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent raw GET of both snapshots; relevant requirements/player/cache sections; SHA-256"
+      ],
+      "access_date_utc": "2026-10-09",
+      "versions": [
+        "v3.10.16 / 3343b7884d5e18b5925681d84ea0dab8bb165038",
+        "v3.10.15 / ec922b6bd2e94bbbe537aa931e273ce99637ec7d"
+      ],
+      "sha256": "7a0bff85e5c58a7657880dfb7e1e43e2d98b57a7e3aaf4bc1144eba83d42e06e",
+      "bytes": 12287
+    },
+    {
+      "id": "E21",
+      "title": "OHMS Viewer navigation release",
+      "urls": [
+        "https://github.com/uklibraries/ohms-viewer/releases/tag/v3.10.12"
+      ],
+      "locator": "Release note and commit link",
+      "observation": "Navigation/segment-linking fix is a documented evolution event; it does not establish fractional-second precision.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "v3.10.12; commit 093ff8384a47cde906183d4c4cb9b03bef2c6c9d"
+    },
+    {
+      "id": "E22",
+      "title": "OHMS Viewer legacy-PDF release",
+      "urls": [
+        "https://github.com/uklibraries/ohms-viewer/releases/tag/v3.10.14"
+      ],
+      "locator": "Release fix for legacy transcript without timecode PDF export",
+      "observation": "Reported legacy-data correction supports format evolution; root cause and all possible legacy variants are not proven by the note.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "v3.10.14; displayed short commit bb1d8e5"
+    },
+    {
+      "id": "E23",
+      "title": "OHMS Viewer cache security release",
+      "urls": [
+        "https://github.com/uklibraries/ohms-viewer/releases/tag/v3.10.15",
+        "https://raw.githubusercontent.com/uklibraries/ohms-viewer/ec922b6bd2e94bbbe537aa931e273ce99637ec7d/.htaccess",
+        "https://raw.githubusercontent.com/uklibraries/ohms-viewer/ec922b6bd2e94bbbe537aa931e273ce99637ec7d/nginx.cache.conf"
+      ],
+      "locator": "Release note; Apache rewrite rule; Nginx cache location block",
+      "observation": "Sample rules deny direct HTTP access to the configured cache path. Operator installation/path matching is required; external media and every derivative are outside that limited claim.",
+      "arms": [
+        "N2",
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "web release open",
+        "public raw sample-rule GET and text inspection; not executed"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "v3.10.15; ec922b6bd2e94bbbe537aa931e273ce99637ec7d"
+    },
+    {
+      "id": "E24",
+      "title": "OHMS Viewer exact transcript implementation",
+      "urls": [
+        "https://raw.githubusercontent.com/uklibraries/ohms-viewer/ec922b6bd2e94bbbe537aa931e273ce99637ec7d/app/Ohms/Transcript.php"
+      ],
+      "locator": "mapIndexSegmentWithTranscript raw lines 202–223; formatTranscriptVtt 226 onward; split_and_convert_time 632–653",
+      "observation": "Parsed millisecond additions are commented out. Integer index times use a half-open interval and stop after the first match for a cue. This statically supports N1's version-scoped limits; runtime was not executed.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public raw GET; source-path/symbol inspection; SHA-256; no PHP execution"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "v3.10.15; ec922b6bd2e94bbbe537aa931e273ce99637ec7d",
+      "sha256": "ee8fbb8d1171659c82f21089eb02fb5c7f6398ef64d781efba9de4917a816a77",
+      "bytes": 33563
+    },
+    {
+      "id": "E25",
+      "title": "OHMS creator's integration announcement",
+      "urls": [
+        "https://digitalomnium.com/announcement-integrating-ohms-and-aviary/"
+      ],
+      "locator": "Douglas Boyd announcement, application open-source/local-hosting passage",
+      "observation": "Creator describes application open-sourcing and local OHMS/Aviary hosting after integration. This supports investigating a self-host route; it is not an independently verified current installation or support contract.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Published 2023-08-21; page updated 2024-11-07",
+      "source_role": "First-party creator statement; used only for qualified route viability"
+    },
+    {
+      "id": "E26",
+      "title": "Aviary transcript module",
+      "urls": [
+        "https://coda.aviaryplatform.com/7-transcript-module-172"
+      ],
+      "locator": "New/legacy standards; editing sections 7.5–7.7; conversion; WebVTT format",
+      "observation": "Editing words/speakers/start times and exports is documented. Legacy conversion is necessary for newer editing and can use heuristic timing; round-trip fidelity is not established.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Mutable vendor guide"
+    },
+    {
+      "id": "E27",
+      "title": "Aviary indexes",
+      "urls": [
+        "https://coda.aviaryplatform.com/indexes-221"
+      ],
+      "locator": "Segment fields and index Public setting",
+      "observation": "Timed index fields and index-object visibility are documented. They do not establish independent restrictions for arbitrary individual segments.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Mutable vendor guide"
+    },
+    {
+      "id": "E28",
+      "title": "Aviary media",
+      "urls": [
+        "https://coda.aviaryplatform.com/media-files-285"
+      ],
+      "locator": "Storage/security and resource/media/transcript/index status passages",
+      "observation": "Uploaded media security and lease expiry are vendor assertions. External embedded hosts are a different boundary; final claims are scoped to uploads.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Mutable vendor guide; not security audit"
+    },
+    {
+      "id": "E29",
+      "title": "Aviary permission/access requests",
+      "urls": [
+        "https://coda.aviaryplatform.com/permissions-and-access-requests-255"
+      ],
+      "locator": "Permission groups; access approval/expiry",
+      "observation": "Audience groups and access requests are documented. Calendar-duration access expiry must not be mistaken for media-interval authorization.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Mutable vendor guide"
+    },
+    {
+      "id": "E30",
+      "title": "Aviary pricing",
+      "urls": [
+        "https://www.aviaryplatform.com/pricing"
+      ],
+      "locator": "Plan/resource table; automated service rates; free OHMS limits; estimate disclaimer",
+      "observation": "Displayed processing rate supports a one-pass estimate; tier limits and subscription amounts are visible. Selected monthly/yearly basis and storage volume are not resolved from the retrieved table.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Live pricing observed 2026-10-09; not quote"
+    },
+    {
+      "id": "E31",
+      "title": "Omeka S media permissions",
+      "urls": [
+        "https://omeka.org/s/docs/user-manual/content/media/"
+      ],
+      "locator": "Public/private item and media; roles/properties distinction",
+      "observation": "Public items can have private media; private items constrain attached media. This supports a catalog option, not a built-in synchronized oral-history editor or interval-security promise.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Mutable official manual"
+    },
+    {
+      "id": "E32",
+      "title": "OHA compiled practice/ethics guidance",
+      "urls": [
+        "https://oralhistory.org/wp-content/uploads/2025/10/2025-OHA-Principles-and-Best-Practices-Complete.pdf"
+      ],
+      "locator": "PDF zero-based pages 11–12 authorization/privacy; 21–22 withdrawal limits; 34–35 translation/third parties",
+      "observation": "Supports qualified narrator review, formal public authorization and disclosure/withdrawal cautions. Compilation retains older section adoption dates. Professional guidance is not a universal legal rule.",
+      "arms": [
+        "N2"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "2025 compilation including 2018/2019/2022 adopted sections"
+    },
+    {
+      "id": "E33",
+      "title": "OHA ethics statement",
+      "urls": [
+        "https://oralhistory.org/wp-content/uploads/2025/12/2025-OHA-PrinciplesBP_Statement-on-Ethics.pdf"
+      ],
+      "locator": "PDF zero-based pages 2–3: review where possible, public authorization and redaction",
+      "observation": "Supports release-care requirements with conditional review and documented authorization. Does not settle jurisdiction-specific consent, copyright or erasure obligations.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "2025 hosted statement"
+    },
+    {
+      "id": "E34",
+      "title": "OHA archives manual",
+      "urls": [
+        "https://oralhistory.org/wp-content/uploads/2019/11/OHA-Archives-Principles-and-Best-Practices-Complete-Manual.pdf"
+      ],
+      "locator": "Transcription paragraph PDF page 9; access and rights guidance",
+      "observation": "ASR is a rough draft requiring review; human transcription, indexing and catalog description are viable alternatives. Archives must adopt their actual access/rights workflow.",
+      "arms": [
+        "N2",
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Adopted October 2019"
+    },
+    {
+      "id": "E35",
+      "title": "OHA glossary",
+      "urls": [
+        "https://oralhistory.org/best-practices-glossary/"
+      ],
+      "locator": "Rolling consent, copyright and index entries",
+      "observation": "Ongoing consent and copyright are distinct concepts; neither resolves the project's absent agreements. Supports the finals' separation of rights decisions.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Mutable official glossary"
+    },
+    {
+      "id": "E36",
+      "title": "BagIt specification",
+      "urls": [
+        "https://www.rfc-editor.org/rfc/rfc8493"
+      ],
+      "locator": "RFC 8493 §§2.4 and 3",
+      "observation": "Mandatory implementation support includes SHA-256/512; SHA-512 is a recommended default for new bags. Validity involves manifests and verified payload checksums, not replication or access enforcement.",
+      "arms": [
+        "N2",
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "RFC 8493, BagIt 1.0, October 2018"
+    },
+    {
+      "id": "E37",
+      "title": "PREMIS preservation metadata",
+      "urls": [
+        "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+        "https://loc.gov/standards/premis/v3/"
+      ],
+      "locator": "3.0 dictionary 1.5.2 fixity; Event/outcome; 4.1.7 rightsGranted/termOfRestriction; official model page",
+      "observation": "Metadata supports object, event, rights and agent records, including fixity and restriction terms. It does not execute checks, store replicas or enforce permissions.",
+      "arms": [
+        "N2",
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "PREMIS 3.0"
+    },
+    {
+      "id": "E38",
+      "title": "Library of Congress BWF guidance",
+      "urls": [
+        "https://wwws.loc.gov/preservation/digital/formats/fdd/fdd000357.shtml"
+      ],
+      "locator": "Preference and archival analog reformatting context",
+      "observation": "BWF/LPCM guidance is contextual preservation guidance, not a requirement to replace every received born-digital original.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Official BWF format description, observed 2026-10-09"
+    },
+    {
+      "id": "E39",
+      "title": "Library of Congress audio recommended formats",
+      "urls": [
+        "https://www.loc.gov/preservation/resources/rfs/audio.html"
+      ],
+      "locator": "Media-independent audio; native resolution and WAVE metadata preferences",
+      "observation": "Native resolution guidance supports avoiding arbitrary upsampling. Format preference does not erase received-source provenance.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "independent public primary retrieval and relevant passage inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Mutable Recommended Formats Statement"
+    },
+    {
+      "id": "E40",
+      "title": "Omeka S users and roles",
+      "urls": [
+        "https://omeka.org/s/docs/user-manual/admin/users/"
+      ],
+      "locator": "User-role list and distinction from site roles, lines 5–32",
+      "observation": "The official list has six global roles and separates site permissions. N1 retains the distinction without falsely assigning site privileges to a global role.",
+      "arms": [
+        "N1"
+      ],
+      "independently_checked": true,
+      "operations": [
+        "web open; role list and site-role distinction inspection"
+      ],
+      "access_date_utc": "2026-10-09",
+      "version": "Mutable official user manual"
+    }
+  ],
+  "arm_claim_crosswalk": {
+    "N2": [
+      {
+        "id": "N2-C01",
+        "subject": "Authorization, review and ASR as optional draft",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+          "lines": "11–17"
+        },
+        "judgment": "Supported and ethically qualified; no legal or product-enforcement claim. Legacy ambiguity and human/index alternatives remain explicit.",
+        "primary_evidence": [
+          "E11",
+          "E32",
+          "E34"
+        ]
+      },
+      {
+        "id": "N2-C02",
+        "subject": "Whisper defaults, units and model limitations",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+          "lines": "15"
+        },
+        "judgment": "Pinned implementation and card support the stated booleans/seconds and limitations. The dependency of silence handling on word timestamps is omitted from the compressed final, but no contrary usage prescription is made.",
+        "primary_evidence": [
+          "E11",
+          "E12"
+        ]
+      },
+      {
+        "id": "N2-C03",
+        "subject": "Whisper issue→fix→release chain",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+          "lines": "15"
+        },
+        "judgment": "Specific #1046→#1052→v20230307 chain is supported. Final denies a universal fix. Source-note later-history drift is minor and separately recorded.",
+        "primary_evidence": [
+          "E13",
+          "E14",
+          "E15"
+        ]
+      },
+      {
+        "id": "N2-C04",
+        "subject": "Editable timed multilingual data, translation and OHD upload limits",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+          "lines": "21–25"
+        },
+        "judgment": "Structured revision requirements are recommendations; documented OHD editing and per-file uploads support the optional route. Export fidelity remains proposed validation.",
+        "primary_evidence": [
+          "E08",
+          "E34"
+        ]
+      },
+      {
+        "id": "N2-C05",
+        "subject": "Search units, language/access filters, passage navigation and public-access boundary",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+          "lines": "29–33"
+        },
+        "judgment": "Rights-aware search is necessary for this brief; a database index remains viable. OHD's registered/archive-granted comparator is not sold as anonymous public search.",
+        "primary_evidence": [
+          "E07",
+          "E09"
+        ]
+      },
+      {
+        "id": "N2-C06",
+        "subject": "Mukurtu defaults and content/media divergence",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+          "lines": "39"
+        },
+        "judgment": "All/Any, default All, and distinct item/media settings are source-supported. No inference of arbitrary within-file controls.",
+        "primary_evidence": [
+          "E01",
+          "E02",
+          "E03"
+        ]
+      },
+      {
+        "id": "N2-C07",
+        "subject": "Mukurtu dependencies, private path and maturity",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+          "lines": "39;68;72"
+        },
+        "judgment": "Deployment facts supported; final correctly leaves code maturity open and limits development status to the manual. Historical discovery/source-note error is not retained as final advice.",
+        "primary_evidence": [
+          "E05",
+          "E06"
+        ]
+      },
+      {
+        "id": "N2-C08",
+        "subject": "OHMS Viewer media/XML separation and cache rule",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+          "lines": "39;74"
+        },
+        "judgment": "Supported limited cache-HTTP protection, installation dependence, separate media hosting and historical-runtime qualification.",
+        "primary_evidence": [
+          "E19",
+          "E20",
+          "E23"
+        ]
+      },
+      {
+        "id": "N2-C09",
+        "subject": "Segment restrictions and fallback",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+          "lines": "37–43"
+        },
+        "judgment": "Policy requirement is distinguished from unverified product capability. Redacted/split access media plus matching text/index or nonpublication is a technically plausible conditional mechanism, not tested security.",
+        "primary_evidence": [
+          "E02",
+          "E03",
+          "E20",
+          "E23"
+        ]
+      },
+      {
+        "id": "N2-C10",
+        "subject": "Withdrawal limits and master disposition",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+          "lines": "43"
+        },
+        "judgment": "Archive-controlled takedown is separated from external copies; retention/destruction depends on agreements and policy, not a guessed universal rule.",
+        "primary_evidence": [
+          "E32"
+        ]
+      },
+      {
+        "id": "N2-C11",
+        "subject": "Source audio, fixity, replicas, BagIt and PREMIS",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+          "lines": "47–49"
+        },
+        "judgment": "Preservation/access distinction and limits of metadata/packaging are sound. No format standard is substituted for backups or access control; source format remains an inventory question.",
+        "primary_evidence": [
+          "E36",
+          "E37"
+        ]
+      },
+      {
+        "id": "N2-C12",
+        "subject": "Multilingual acceptance and human fallback",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+          "lines": "53–55;90"
+        },
+        "judgment": "Disaggregated language/condition evaluation is appropriate. Thresholds and reference availability are acknowledged decisions, not asserted accuracy results.",
+        "primary_evidence": [
+          "E11",
+          "E34"
+        ]
+      },
+      {
+        "id": "N2-C13",
+        "subject": "Conditional product alternatives and version drift",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+          "lines": "72–78"
+        },
+        "judgment": "OHD 1.4.1 versus v2.11.0 is independently confirmed without claiming hosted build identity. Mukurtu/OHD/OHMS/human/ASR routes remain conditional, not proven cheapest or a selected winner.",
+        "primary_evidence": [
+          "E06",
+          "E07",
+          "E08",
+          "E09",
+          "E10",
+          "E19",
+          "E20"
+        ]
+      },
+      {
+        "id": "N2-C14",
+        "subject": "Privacy-aware names, metadata, translations and snippets",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+          "lines": "23;31;63;84"
+        },
+        "judgment": "Release review and controlled identities preserve the public catalog option while addressing disclosures. These are sensible requirements informed by ethics, not automatically available product guarantees.",
+        "primary_evidence": [
+          "E32"
+        ]
+      },
+      {
+        "id": "N2-C15",
+        "subject": "Executed versus proposed validation and low-cost decision",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/control/reviser/final.md",
+          "lines": "78;88–98"
+        },
+        "judgment": "Only source review is claimed executed. Budget/staff/restore/access criteria and seven pilot groups are discriminating; no price, performance, security or restore result is invented.",
+        "primary_evidence": [
+          "E07",
+          "E11",
+          "E20",
+          "E36"
+        ]
+      }
+    ],
+    "N1": [
+      {
+        "id": "N1-C01",
+        "subject": "OHMS self-host and managed Aviary alternatives",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+          "lines": "9–15;56–66"
+        },
+        "judgment": "Conditional oral-history routes are viable research leads. Viewer integration is independently supported; creator's application announcement supports investigating self-hosting without proving a current deployment.",
+        "primary_evidence": [
+          "E19",
+          "E20",
+          "E25",
+          "E26"
+        ]
+      },
+      {
+        "id": "N1-C02",
+        "subject": "Aviary editing, speakers, legacy conversion and time units",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+          "lines": "70"
+        },
+        "judgment": "Documented word/speaker/start-time editing, HH:MM:SS entry and millisecond-bearing WebVTT are supported. Legacy conversion/fidelity remains a test, not a lossless promise.",
+        "primary_evidence": [
+          "E26"
+        ]
+      },
+      {
+        "id": "N1-C03",
+        "subject": "Aviary object permissions and uploaded-media assertions",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+          "lines": "72"
+        },
+        "judgment": "Statuses and vendor upload-security claims are correctly distinguished from audited security and per-segment ACLs.",
+        "primary_evidence": [
+          "E27",
+          "E28",
+          "E29"
+        ]
+      },
+      {
+        "id": "N1-C04",
+        "subject": "Aviary pricing and one-pass calculation",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+          "lines": "74"
+        },
+        "judgment": "Displayed rates/caps support 120,000 minutes × $0.04 = $4,800 for one processing pass. It is not a combined transcription/translation/alignment bill or quote; billing period/storage/total cost remain open.",
+        "primary_evidence": [
+          "E30"
+        ]
+      },
+      {
+        "id": "N1-C05",
+        "subject": "Mukurtu object protocols and All/Any",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+          "lines": "78"
+        },
+        "judgment": "Supported asset-level defaults and public-item/private-media possibility. Final specifically avoids presenting this as a synchronized transcript or segment-redaction product.",
+        "primary_evidence": [
+          "E01",
+          "E02",
+          "E03",
+          "E04"
+        ]
+      },
+      {
+        "id": "N1-C06",
+        "subject": "Omeka catalog, media privacy and role scopes",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+          "lines": "82"
+        },
+        "judgment": "Supported item/media and global/site-role distinctions; additional oral-history layer is explicitly needed.",
+        "primary_evidence": [
+          "E31",
+          "E40"
+        ]
+      },
+      {
+        "id": "N1-C07",
+        "subject": "Whisper training, language variation, hallucination, diarization and English translation",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+          "lines": "86;100"
+        },
+        "judgment": "Card/paper support the substantive cautions. Spoken-name transcription is distinguished from identity inference. Family translation capability is valid; turbo's translation exception is a model-selection limit, not a false claim that a selected model translates.",
+        "primary_evidence": [
+          "E11",
+          "E12",
+          "E17",
+          "E18"
+        ]
+      },
+      {
+        "id": "N1-C08",
+        "subject": "Whisper code evolution",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+          "lines": "88"
+        },
+        "judgment": "Security/device/documentation changes are present in v20250625. Timestamp improvement exists in cumulative history under v20230918. Final's file-level wording is defensible; its S14 note/locator blurs release attribution (minor).",
+        "primary_evidence": [
+          "E16"
+        ]
+      },
+      {
+        "id": "N1-C09",
+        "subject": "OHMS subsecond conversion and index mapping",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+          "lines": "94"
+        },
+        "judgment": "Exact pinned symbols confirm dropped fractions, whole-second paths, integer comparison, half-open boundaries and first-match break. Static behavior is not mislabeled runtime execution.",
+        "primary_evidence": [
+          "E24"
+        ]
+      },
+      {
+        "id": "N1-C10",
+        "subject": "OHMS navigation, legacy PDF and cache release trail",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+          "lines": "96"
+        },
+        "judgment": "Primary release notes support this relevant evolution sequence; cache protection is a configured path boundary and the navigation change does not prove millisecond precision.",
+        "primary_evidence": [
+          "E20",
+          "E21",
+          "E22",
+          "E23",
+          "E24"
+        ]
+      },
+      {
+        "id": "N1-C11",
+        "subject": "ASR identities and source-language/translation separation",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+          "lines": "100;118–122"
+        },
+        "judgment": "Appropriate narrower identity safeguard retains ordinary spoken names subject to review. Translation is a derived output, not replacement source-language text.",
+        "primary_evidence": [
+          "E11",
+          "E18"
+        ]
+      },
+      {
+        "id": "N1-C12",
+        "subject": "Segment policy, redacted derivatives, withdrawal and consent/copyright",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+          "lines": "104–106;118–122"
+        },
+        "judgment": "Requirements are not inferred product capabilities. Agreements govern preservation disposition; downloaded public copies cannot be recalled. Prior versions and derivatives remain under rights controls.",
+        "primary_evidence": [
+          "E27",
+          "E28",
+          "E33",
+          "E35"
+        ]
+      },
+      {
+        "id": "N1-C13",
+        "subject": "BWF/LC applicability and original received bits",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+          "lines": "110"
+        },
+        "judgment": "The analog reformatting/native-resolution context is accurately qualified; no universal conversion mandate is inferred.",
+        "primary_evidence": [
+          "E38",
+          "E39"
+        ]
+      },
+      {
+        "id": "N1-C14",
+        "subject": "BagIt and PREMIS scope",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+          "lines": "112"
+        },
+        "judgment": "Packaging/fixity and preservation metadata are useful optional mechanisms; replication, permissions and restores are distinct work.",
+        "primary_evidence": [
+          "E36",
+          "E37"
+        ]
+      },
+      {
+        "id": "N1-C15",
+        "subject": "Capacity arithmetic",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+          "lines": "114"
+        },
+        "judgment": "Independently recomputed decimal results are correct: 4.1472 TB at 96k/24/stereo, 2.0736 TB at 48k/24/stereo, 57.6 GB at 64 kbit/s for 2,000 h. Assumptions/exclusions are explicit; no measured inventory or benchmark.",
+        "primary_evidence": []
+      },
+      {
+        "id": "N1-C16",
+        "subject": "Language/condition protocol and operational validation",
+        "candidate_locator": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/reviser/final.md",
+          "lines": "135–142"
+        },
+        "judgment": "Fluent references, script-sensitive WER/CER, disaggregation, feasible coverage and human fallback discriminate ASR usefulness. Source-timing fixtures, rights history, negative access, byte corruption and restore tests are proposed only.",
+        "primary_evidence": [
+          "E11",
+          "E17",
+          "E24",
+          "E26",
+          "E36"
+        ]
+      }
+    ]
+  },
+  "source_identity_policy": "Exact pinned commit/tag URLs for implementation assertions; mutable manuals/prices scoped to observation date; issuer/creator/author material only for supported relevant facts. Candidate and critic source notes are untrusted secondary records.",
+  "observed_source_operations": {
+    "local": [
+      "Read exact evaluation assignment and input map, original brief, frozen plan and rubric.",
+      "Read complete mapped scientific stages and source indexes; inspect declared bounded source notes.",
+      "SHA-256/byte identity verification for all 30 map records, plus frozen-input and bounded-note inventory.",
+      "Read-only relative-link existence checks; no candidate repair."
+    ],
+    "independent_primary": [
+      "Public web search/open/find of official manuals, institutional resources, author paper, issue/PR/release pages and OHA/RFC/LOC documents.",
+      "Direct urllib GET of public immutable/raw Markdown, PHP/Python source text, sample server-rule text and public commit patch; inspected as untrusted data, never executed as downloaded code.",
+      "Independent arithmetic for one-pass pricing and PCM/access-copy scale."
+    ],
+    "retrieval_failures": [
+      {
+        "scope": "Public GitHub REST API for OHD v2.11.0 commit, OHMS v3.10.15 commit, Whisper PR #1052 and OHMS v3.10.12 commit",
+        "result": "HTTP 403 rate-limit responses",
+        "recovery": "Public immutable raw files, release/PR pages and OHD commit patch supplied the consequential facts; no authenticated/private retry."
+      },
+      {
+        "scope": "Official oralhistoryonline.org FAQ/about/documentation attempts",
+        "result": "web retrieval Internal Error",
+        "recovery": "UK Libraries institutional resource, pinned Viewer README/releases and creator's primary integration announcement. No inference of application unavailability from failed fetch."
+      },
+      {
+        "scope": "One guessed Aviary OHMS documentation slug",
+        "result": "web retrieval Internal Error",
+        "recovery": "Exact declared transcript/index/media/access URLs were independently read instead."
+      }
+    ],
+    "source_register": "source-map.json; primary IDs E01–E40. Counts are scope inventory only, not a grade."
+  },
+  "source_failures_affecting_remaining_material_scope": [],
+  "complete_for_assessed_claims": true,
+  "unresolved_is_not_unread_scope": "Deployment facts, user policies, contract quotes and proposed runtime/security/accuracy experiments remain unknown as the candidates say; these were not represented as independently established.",
+  "access_window": {
+    "start": "2026-10-09T19:41:33Z",
+    "end": "2026-10-09T19:58:12Z"
+  },
+  "retained_evidence_policy": "This register records bounded observations, exact URLs, symbols and available independently computed hashes. No full copyrighted web/PDF text, raw campaign captures or downloaded executable was saved."
+}
+

@@ -1,0 +1,26 @@
+{
+  "block": "A-M09-A",
+  "arm": "treatment",
+  "case": "S09",
+  "method": "M09",
+  "stage": "reviser",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/reviser",
+  "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S09/brief.md",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/revealed-plan.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/critic/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/critic/critique.md"
+  ],
+  "source_roots": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/research/sources",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/critic/sources"
+  ],
+  "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-A/treatment/reviser",
+  "deadline": "2026-10-09T19:45:38.898420+00:00",
+  "arm_deadline": "2026-10-09T20:08:53.336694+00:00",
+  "native_route": "muse",
+  "evidence_kind": "full-discovery"
+}

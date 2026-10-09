@@ -1,0 +1,24 @@
+{
+  "block": "B-01",
+  "arm": "control",
+  "case": "I01",
+  "method": "M13",
+  "stage": "critic",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic",
+  "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I01/brief.md",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/revealed-plan.md"
+  ],
+  "source_roots": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/sources"
+  ],
+  "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic",
+  "deadline": "2026-10-09T20:03:19.153286+00:00",
+  "arm_deadline": "2026-10-09T20:38:38.420717+00:00",
+  "native_route": "luna",
+  "evidence_kind": "full-discovery",
+  "resource_version": "retained60-critic12-v1"
+}

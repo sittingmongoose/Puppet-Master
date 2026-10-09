@@ -1,0 +1,66 @@
+{
+  "frozen_at": "2026-10-09T19:57:05.579454+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I01/brief.md",
+      "sha256": "592bc98c89079b760e398cfc1dbd890e7d6c34832506c01c34b0642b46cc1491",
+      "bytes": 2274
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M13.json",
+      "sha256": "39f1ead2365c6bb7f318f4084fa8fb731068d29f66badaea37f2a83b5fd78b0c",
+      "bytes": 1999
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/critic/assignment.md",
+      "sha256": "910ccbc1429139e4e4b97dca2288bd4475429a22644cc7bd24e4e987e2d81f7f",
+      "bytes": 3417
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/critic/input-map.json",
+      "sha256": "24eff2d202fcaddbce7a303b9f7f0b7a2056075b88d04f3f8eca505ae8b0ed40",
+      "bytes": 1220
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/research/draft.md",
+      "sha256": "7db3c3dc28c6189fb27fa7c54d1cc2caa9db1546d161007ece1f1ba72389b86e",
+      "bytes": 19785
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/research/discovery.md",
+      "sha256": "488912ba31bd215d3e70a12b3ff0d5f480b05d214f816a7f9c1f74e3ea7ee976",
+      "bytes": 24924
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/research/source-map.json",
+      "sha256": "7205dbc49f999e8b8f1e06ea99dc23fa9a64000524335bc32d702579495deedb",
+      "bytes": 15048
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/research/revealed-plan.md",
+      "sha256": "2ccbf1363896275e86ba3c6c03ff9985924c731b620c6f4ae06b13e0f6672b5a",
+      "bytes": 664
+    }
+  ],
+  "method": {
+    "id": "M13",
+    "version": "v1",
+    "name": "retained-graph-author-with-evidence-first-critic",
+    "control": "Competent conventional full investigator, fresh independent critic, fresh complete reviser under default 30/12/18 stages and 60-minute whole envelope.",
+    "treatment": "Investigate full brief independently and maintain source-backed relation/condition/release graph and community prose in sources/index.md while producing one complete discovery and draft. Preserve full discovery and alternatives. Original investigator remains in ONE native Goal through final writing. A fresh critic derives consequential facts from brief and public primary sources before opening draft, then challenges the complete draft and exact plan. Investigator adjudicates every criticism against governing source context, explicitly distinguishes necessary corrections from optional product choices, and authors the full self-contained final in its retained context. Critic agreement is not authority; source indexes or IDs cannot replace substantive final prose. No premium assistance, extra agents or reduced obligations.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Prospective development bundle from M11 source-positive graph recipe, M05 context retention and M06 independent evidence-first challenge. Not an isolated topology effect.",
+    "primary_methodology": "https://arxiv.org/abs/2404.16130",
+    "novelty": "Integrated bundle: keep source graph with original investigator across complete draft and final; fresh critic derives facts independently before reading draft; final author waits for terminal frozen critique handoff.",
+    "adaptation_limit": "Manual bounded integrated recipe; no GraphRAG system/training implementation, no prior benchmark gain claim; scope and budget unchanged. Performance and quality must be measured on fresh cases.",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "resource_version": "retained60-critic12-v1",
+  "stage_allowance_s": 720,
+  "deadline": "2026-10-09T20:09:05.579454+00:00"
+}

@@ -1,0 +1,1657 @@
+{
+  "block": "A-M12-B",
+  "case": "S06",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/assignment.md",
+      "sha256": "ff7fafaac0af05a272025b86aecb1dcd2ccf43b77b9efb0fc4053d4e962a6d6f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/input-map.json",
+      "sha256": "3451a1d3c404a87527b6d9181e93203904429c096ff625a6ceb5403388036635"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S06/brief.md",
+      "sha256": "4c4e4dd878bb0d77ecbbdcbc86993acdae4f9e52f019466d518bd9139e9f2de6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S06/plan-root-only.md",
+      "sha256": "323cdef9d3d765ff0e060c6772f62b1280cf5cfa6cec1fc1e0162badd50b5c62"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+      "sha256": "084dceeeea18b2bb913b6f62fd4788f857c5848fb98e2c96f4fa5a26e1b6d47d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/source-map.json",
+      "sha256": "2d931be8e650ddb4fbcc2f702b3df0f4de3981bdad2cd7ff725703b36bab45b3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/assignment.md",
+      "sha256": "1891ae48d64e6932c670d8337b32d877eef2f8b32b703f406aecc2fed235333d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/input-map.json",
+      "sha256": "9166c3fa380c77ae2e25b8ca8782180ebf6d7bcd2e4e14674af1e547183ae0d7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/critique.md",
+      "sha256": "2a085536319b2f84ff60715a81889f9184c0e3897b1cbad5b73b1bca43a7d561"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/source-map.json",
+      "sha256": "5c27e74c70ce0b5abb44f6784ea310ee5754fc5224537dc8281230939b45adbd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/assignment.md",
+      "sha256": "16da751ac8d35425a0739893294261383d268c8fd855af6928f19012698c7a48"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/input-map.json",
+      "sha256": "d5bd16741f879b9ca940603d24190b9c8f18461ba482e69c177591ab7ba9d6ff"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/discovery.md",
+      "sha256": "598fbc58889a3c75ab934d824a8ddb2c0d38c4500af8776a1e647e6c91222cee"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/draft.md",
+      "sha256": "cff97ab1ca83f7f49fb6ec6b29142bdc88758238b9ee4a17619521c744785c16"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/source-map.json",
+      "sha256": "3426631fa470b31afa598bdcb375785ac7576cf85438223334ba2bd578c5ce22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/revealed-plan.md",
+      "sha256": "323cdef9d3d765ff0e060c6772f62b1280cf5cfa6cec1fc1e0162badd50b5c62"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/plan-reveal.json",
+      "sha256": "dab066e07c98b90dde8c53e8b0f475f7c3a904e8b4583e89abff9d00e0f42820"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/assignment.md",
+      "sha256": "999acd27e647f4e5289d736350a2058215ecbb41cceb72934904bcdf29556772"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/input-map.json",
+      "sha256": "dfe9da518517f00fd89a3c4a1cdb4f720555bbb5a3eeb0c810ce063952ead9c4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/sources/index.md",
+      "sha256": "e6b906450e0096d1f120c67a5897e9d23b811852ec6e79b5c4c52a3709a8d237"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/sources/S05-S09-delivery-and-platforms-excerpts.md",
+      "sha256": "3a57381e30732ad8c0bac6a726eb47eb3ef201a290eebf808517facf85744bfa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/sources/S10-S15-transport-spec-and-alternatives-excerpts.md",
+      "sha256": "5e6c83a22a14a06c85678e96b50b91e2abde87e05ff00d8bf5f71acb25297c0a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/sources/S01-S04-storage-transport-alerting-excerpts.md",
+      "sha256": "a6f43e4f0aedc9c351bd6dae5c7f9c647ca5b9278d7ad0c589ce435fb6a252bc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/sources/critic-audit-excerpts.md",
+      "sha256": "ab5c8c46e039633ad931891474e1389787331385009451e88747bd8cdc120a88"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/sources/index.md",
+      "sha256": "94dfe59dd26bcdaa80d3e5cdc90e9805549c12d301535231d5bc9a2ddbfc3f02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/sources/critic-audit-excerpts.md",
+      "sha256": "ab5c8c46e039633ad931891474e1389787331385009451e88747bd8cdc120a88"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/sources/S05-S09-delivery-and-platforms-excerpts.md",
+      "sha256": "3a57381e30732ad8c0bac6a726eb47eb3ef201a290eebf808517facf85744bfa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/sources/S10-S15-transport-spec-and-alternatives-excerpts.md",
+      "sha256": "5e6c83a22a14a06c85678e96b50b91e2abde87e05ff00d8bf5f71acb25297c0a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/sources/S01-S04-storage-transport-alerting-excerpts.md",
+      "sha256": "a6f43e4f0aedc9c351bd6dae5c7f9c647ca5b9278d7ad0c589ce435fb6a252bc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/treatment/research/assignment.md",
+      "sha256": "b9d81cf5eb5527ba5768a255ed9f89c70d498e7149b7f81d7d8bbd89ce1a105a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/treatment/research/input-map.json",
+      "sha256": "cfb3f616cb8730581fc505837f2f1ebb1b542558f3ac9f162107729a5ff5a50a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/treatment/research/sources/index.md",
+      "sha256": "4f423346586546e193b3bb5b600e68d3f2dbe13b5222f8d74ffc1ed538a8aa82"
+    }
+  ],
+  "arms": {
+    "N2": {
+      "actual_arm": "control",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "grade": "FAIL",
+      "material_findings": [
+        {
+          "id": "M1",
+          "type": "MATERIALLY_INCOMPLETE",
+          "additional_types": [
+            "PRESERVATION_LOSS"
+          ],
+          "severity": "high",
+          "title": "The prescribed Telegraf persistence change omits the required client identity and end-to-end QoS conditions",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+            "line_start": 74,
+            "line_end": 95,
+            "passage": "- **Duplicates are designed in.** MQTT QoS 1 (\"at least once\") manufactures duplicates;\n  Telegraf's `qos` defaults to 0 (lossy), and its doc says \"with QoS 1 or 2, you should\n  enable persistent_session to allow resuming unacknowledged messages\";\n  `max_undelivered_messages` caps unwritten messages at 1000. Duplicate handling is\n  therefore a required, explicit design choice. Storage models differ and are **not\n  equivalent**: VictoriaMetrics `-dedup.minScrapeInterval` thins per interval and\n  tie-breaks equal timestamps to \"the sample with the biggest value\"; QuestDB\n  `DEDUP ENABLE UPSERT KEYS(ts, gauge_id)` does key-based upsert (WAL table +\n  designated timestamp required; \"If keys match, compares the full row content\" —\n  identical rows skip the write, differing rows are replaced). Only key/upsert preserves\n  a retransmitted *corrected smaller* reading; VM's biggest-value tie-break shadows it.\n- **Out-of-order/late.** Late-but-newer-timestamped data is stored by VM\n  (\"stores all the ingested samples to disk even if -dedup.minScrapeInterval … is set\");\n  dedup applies at merge/query time. ThingsBoard is the one fetched source stating the\n  alarm-timestamp choice explicitly (telemetry time, not processing time) — operationally\n  right for triage, but dashboards can show alarms \"in the past\" after backlog drain.\n  Mosquitto `max_inflight_messages = 1` trades throughput for strict per-client ordering.\n- **Outage recovery — the defaults trap.** Mosquitto `persistence` **defaults to\n  false** (queued QoS 1/2 messages die with the broker), `autosave_interval` 1800 s,\n  per-client `max_queued_messages` 1000; Telegraf `persistent_session` false and\n  `max_undelivered_messages` 1000. Every default in the discovered chain is tuned for\n  lossy ephemeral telemetry; all four must be explicitly overridden for durable triage.",
+            "locator_summary": "Telegraf qos defaults to 0; enable persistent_session; all four defaults must be explicitly overridden for durable triage."
+          },
+          "additional_candidate_locators": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+              "line_start": 121,
+              "line_end": 126,
+              "passage": "**Disposition: already-covered as architecture, with corrections and one user\ndecision.** Both shapes satisfy the clause: compose-your-own (Mosquitto →\nVictoriaMetrics/QuestDB) and integrated (ThingsBoard CE); SCADA platforms cover\nModbus-adjacent fleets. Corrections carried into the design: enable Mosquitto\n`persistence`, raise `max_queued_messages`, configure Telegraf `persistent_session`,\nand override the undelivered cap (§3 defaults trap). **Per-engine dedup conditions",
+              "locator_summary": "enable Mosquitto persistence, raise max_queued_messages, configure Telegraf persistent_session, and override the undelivered cap"
+            }
+          ],
+          "original_obligations": [
+            "O2",
+            "O5",
+            "outage recovery",
+            "P1"
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "E02",
+              "url": "https://raw.githubusercontent.com/influxdata/telegraf/master/plugins/inputs/mqtt_consumer/README.md",
+              "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+              "section_or_symbol": "persistent_session/client_id/qos configuration comments",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E02.txt"
+            },
+            {
+              "source_id": "E03",
+              "url": "https://raw.githubusercontent.com/influxdata/telegraf/v1.36.1/plugins/inputs/mqtt_consumer/mqtt_consumer.go",
+              "version_or_commit": "Telegraf v1.36.1; release published 2025-09-09 (E26)",
+              "section_or_symbol": "MQTTConsumer.Init; createOpts; onDelivered",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E03.txt"
+            },
+            {
+              "source_id": "E20",
+              "url": "https://raw.githubusercontent.com/influxdata/telegraf/v1.36.1/plugins/inputs/mqtt_consumer/README.md",
+              "version_or_commit": "Telegraf v1.36.1",
+              "section_or_symbol": "persistent_session/client_id publishing and subscription QoS conditions",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E20.txt"
+            }
+          ],
+          "frozen_evidence_locator": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/sources/S01-S04-storage-transport-alerting-excerpts.md",
+            "line_start": 41,
+            "line_end": 45,
+            "passage": "## S06 — Telegraf mqtt_consumer input README, master (accessed 18:35Z; commit unpinned)\n\n- `qos` default `# qos = 0`; semantics: \"0 = at most once\", \"1 = at least once\", \"2 = exactly once\". QoS 1 admits duplicates.\n- `persistent_session` default `# persistent_session = false`; \"disables clearing of the client session on connection\"; requires `client_id`; \"with QoS 1 or 2, you should enable persistent_session to allow resuming unacknowledged messages.\"\n- `max_undelivered_messages = 1000` (default): limits \"read from the broker that have not been written by an output\".",
+            "locator_summary": "persistent_session ... requires client_id"
+          },
+          "reasoning": "This is an incomplete operational correction, not a demand for a full deployment recipe. The final expressly prescribes enabling persistent_session but never states client_id. In both the independently fetched master implementation and released v1.36.1, Init returns an error when persistent_session is true and ClientID is empty. The README also requires QoS 1 or 2 at the consumer and publisher to receive offline messages. Mentioning the lossy QoS-0 default elsewhere does not state those conditions. The frozen source excerpt already contained the client_id dependency; neither the critic nor final carries it into the correction. Applying the named changes alone can prevent startup or leave recovery ineffective.",
+          "scientific_status": "source-grounded; no runtime failure is claimed to have been executed"
+        },
+        {
+          "id": "M2",
+          "type": "MATERIALLY_WRONG",
+          "additional_types": [
+            "UNSUPPORTED_CONSEQUENTIAL"
+          ],
+          "severity": "high",
+          "title": "The webhook dedup/join key cannot distinguish recurring occurrences of the same alert",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+            "line_start": 199,
+            "line_end": 201,
+            "passage": "**Amended-in (F10): a webhook-fed custom ack table needs delivery-level dedup —\nAlertmanager re-notifies on the repeat_interval cadence, so the join key is\ngroupKey + fingerprint + status, not the ack event ID alone.** Alertmanager alone does",
+            "locator_summary": "the join key is groupKey + fingerprint + status, not the ack event ID alone"
+          },
+          "additional_candidate_locators": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+              "line_start": 310,
+              "line_end": 310,
+              "passage": "| F10 | P4 | **accept → amend** | S04 repeat semantics imply webhook re-delivery; table dedup extended to groupKey + fingerprint + status. |",
+              "locator_summary": "table dedup extended to groupKey + fingerprint + status"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/critique.md",
+              "line_start": 91,
+              "line_end": 95,
+              "passage": "- **F10 (minor, P4): webhook redelivery dedup for the custom ack table is implied but\n  not stated.** The draft requires idempotent operator-sync replay but does not say\n  that Alertmanager webhooks re-send on repeat_interval (S04), so the webhook-fed table\n  needs delivery-level dedup too (groupKey + fingerprint + status, not just ack event\n  ID).",
+              "locator_summary": "F10 requires groupKey + fingerprint + status"
+            }
+          ],
+          "original_obligations": [
+            "O2",
+            "O5",
+            "acknowledgement history",
+            "duplicates",
+            "P4"
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "E04",
+              "url": "https://prometheus.io/docs/alerting/latest/configuration/",
+              "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+              "section_or_symbol": "webhook_config groupKey, alerts.fingerprint, startsAt, endsAt",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E04.txt"
+            },
+            {
+              "source_id": "E06",
+              "url": "https://raw.githubusercontent.com/prometheus/alertmanager/v0.28.1/dispatch/dispatch.go",
+              "version_or_commit": "Alertmanager v0.28.1",
+              "section_or_symbol": "aggrGroup.GroupKey",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E06.txt"
+            },
+            {
+              "source_id": "E18",
+              "url": "https://raw.githubusercontent.com/prometheus/common/v0.61.0/model/alert.go",
+              "version_or_commit": "prometheus/common v0.61.0; exact dependency of Alertmanager v0.28.1 (E30)",
+              "section_or_symbol": "model.Alert.Fingerprint",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E18.txt"
+            },
+            {
+              "source_id": "E30",
+              "url": "https://raw.githubusercontent.com/prometheus/alertmanager/v0.28.1/go.mod",
+              "version_or_commit": "Alertmanager v0.28.1 go.mod",
+              "section_or_symbol": "prometheus/common v0.61.0 dependency",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E30.txt"
+            }
+          ],
+          "reasoning": "The tuple identifies a routing group, label-defined alert and firing/resolved state. Released Alertmanager GroupKey derives from routeKey and grouping labels; the fingerprint derives solely from the alert label set. Neither includes occurrence time. Two HighPressure alerts for the same gauge and route, separated by clearing, have the same firing tuple although startsAt differs. Using the stated tuple for delivery-level dedup or as the only audit join identity can collapse a new incident into an earlier acknowledged one. Webhook-repeat handling is needed, but F10 introduced a consequentially insufficient key and the final accepted it without a source check of identity scope. This counterexample follows from the primary identity functions; it is an analytical counterexample, not an executed backend test.",
+          "scientific_status": "source-grounded static identity counterexample"
+        },
+        {
+          "id": "M3",
+          "type": "FALSE_CORRECTION_OR_REJECTION",
+          "additional_types": [
+            "MATERIALLY_WRONG"
+          ],
+          "severity": "moderate",
+          "title": "All-four-defaults-must-change conflates broker queue loss with Telegraf flow control",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+            "line_start": 91,
+            "line_end": 95,
+            "passage": "- **Outage recovery — the defaults trap.** Mosquitto `persistence` **defaults to\n  false** (queued QoS 1/2 messages die with the broker), `autosave_interval` 1800 s,\n  per-client `max_queued_messages` 1000; Telegraf `persistent_session` false and\n  `max_undelivered_messages` 1000. Every default in the discovered chain is tuned for\n  lossy ephemeral telemetry; all four must be explicitly overridden for durable triage.",
+            "locator_summary": "Every default in the discovered chain is tuned for lossy ephemeral telemetry; all four must be explicitly overridden for durable triage."
+          },
+          "additional_candidate_locators": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+              "line_start": 124,
+              "line_end": 126,
+              "passage": "Modbus-adjacent fleets. Corrections carried into the design: enable Mosquitto\n`persistence`, raise `max_queued_messages`, configure Telegraf `persistent_session`,\nand override the undelivered cap (§3 defaults trap). **Per-engine dedup conditions",
+              "locator_summary": "raise max_queued_messages ... override the undelivered cap"
+            }
+          ],
+          "original_obligations": [
+            "O2",
+            "O4",
+            "modest self-hosted budget",
+            "outage recovery",
+            "P1"
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "E01",
+              "url": "https://mosquitto.org/man/mosquitto-conf-5.html",
+              "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+              "section_or_symbol": "max_queued_messages; max_queued_bytes; persistence",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E01.txt"
+            },
+            {
+              "source_id": "E03",
+              "url": "https://raw.githubusercontent.com/influxdata/telegraf/v1.36.1/plugins/inputs/mqtt_consumer/mqtt_consumer.go",
+              "version_or_commit": "Telegraf v1.36.1; release published 2025-09-09 (E26)",
+              "section_or_symbol": "Start creates bounded semaphore; onMessage blocks on semaphore; onDelivered releases slot",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E03.txt"
+            },
+            {
+              "source_id": "E02",
+              "url": "https://raw.githubusercontent.com/influxdata/telegraf/master/plugins/inputs/mqtt_consumer/README.md",
+              "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+              "section_or_symbol": "max_undelivered_messages relation to metric_batch_size",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E02.txt"
+            }
+          ],
+          "reasoning": "The Mosquitto queue limit can drop later messages when its queue fills, so capacity sizing is relevant. Telegraf max_undelivered_messages is a bound on outstanding tracked delivery, with semaphore backpressure rather than an instruction to discard every reading above 1000. The default is not inherently an ephemeral/lossy mode. Its README warns that too low a value can prevent flushing and too high a value affects batching. Whether either cap needs increasing depends on reporting cadence, outage duration, batching and memory; none is given for the 120-gauge fleet. Explicit persistence/session/QoS choices are justified, but mandatory changes to both caps, including the expressly prescribed broker-queue increase, are not a source-supported correction to P1. This matters to reliability and the stated modest budget, rather than merely wording.",
+          "scientific_status": "behavior and applicability checked in released code plus docs"
+        },
+        {
+          "id": "M4",
+          "type": "MATERIALLY_INCOMPLETE",
+          "severity": "moderate",
+          "title": "The selected primary store's retention default is absent from the one-year investigation",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+            "line_start": 211,
+            "line_end": 227,
+            "passage": "### P5: \"Keep data for a year.\"\n\n**Disposition: already-covered for telemetry by the P1 storage choices, with\ncorrections and user decisions.** Corrections: (1) the clause covers telemetry only by\nimplication — ack/audit history has its own retention requirement and should live as\nlong or longer; (2) \"keep\" must state resolution — raw year vs downsampled year; (3)\nThingsBoard's telemetry TTL default was not captured in fetched sources and must be\nconfigured explicitly whichever platform is chosen. **Wording correction (F7):** no\nsizing adjective stands in this final — whether a year of 120 gauges fits the budget\nbox is exactly what proposed V7 measures; no fetched source quantifies bytes/sample\nfor these engines, and no sizing claim is made. Conditions: retention policy must\nstate its interaction with dedup/downsampling (VM's `-dedup.minScrapeInterval=D`\nequivalence to `-downsampling.period=0s:D`); late backfills near the retention\nboundary. Alternatives retained: raw-then-downsample tiering; QuestDB + cold copies;\nThingsBoard with configured TTL + PostgreSQL. User decisions: retention resolution;\nack-log retention period; regulatory duties for water utilities (out of scope,\nflagged). Validation: proposed V7, honestly labeled synthetic.",
+            "locator_summary": "already-covered for telemetry by the P1 storage choices ... retention resolution ... ThingsBoard TTL default was not captured"
+          },
+          "original_obligations": [
+            "O2",
+            "O4",
+            "P5"
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "E09",
+              "url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/",
+              "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+              "section_or_symbol": "Starting VictoriaMetrics: retentionPeriod default; Retention: backfill acceptance and unit suffixes",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E09.txt"
+            },
+            {
+              "source_id": "E22",
+              "url": "https://thingsboard.io/docs/recipes/configure-telemetry-ttl/",
+              "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+              "section_or_symbol": "PostgreSQL SQL_TTL_TS_TS_KEY_VALUE_TTL and cleanup interval",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E22.txt"
+            }
+          ],
+          "reasoning": "VictoriaMetrics is a primary recommended P1 option, yet the final never investigates or states its retentionPeriod default of one month (31 days), or qualifies P5's already-covered statement on setting a one-year policy. The primary docs explicitly expose that governing default and the y/month duration convention. One-year capacity is not the same as one-year default behavior. The final discusses resolution and sizing and admits missing ThingsBoard TTL evidence, but it leaves the selected store's central default unexamined. This is an O2 research omission directly on an exact P clause, not a requirement to produce sizing numbers or a complete implementation. ThingsBoard/PostgreSQL's default 0 seconds (never expire) is also available in a dedicated primary retention recipe, illustrating that the unresolved TTL question is researchable rather than externally unknowable.",
+          "scientific_status": "source-grounded omission; no configured system or actual data loss observed"
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "m1",
+          "type": "APPLICABILITY_QUALIFICATION_LOSS",
+          "severity": "minor",
+          "title": "resolve_timeout is accurately quoted but loses its governing exception",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+            "line_start": 96,
+            "line_end": 99,
+            "passage": "- **Alert noise and ack mechanics.** Alertmanager defaults `group_wait` 30s,\n  `group_interval` 5m, `repeat_interval` 4h, `resolve_timeout` 5m; `group_by` with the\n  special value `'...'` \"effectively disables aggregation entirely\"; webhook payloads\n  carry a `groupKey`. Alertmanager has silences, **not** per-user ack history — ack-as-audit",
+            "locator_summary": "Alertmanager defaults ... resolve_timeout 5m"
+          },
+          "additional_candidate_locators": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+              "line_start": 150,
+              "line_end": 152,
+              "passage": "show alarms keying to telemetry time; (2) noise control needs deliberate tuning of the\nAlertmanager defaults (30s/5m/4h/5m) for a triage cadence, with hysteresis or severity\nbands against flapping; (3) 120 gauges can alarm at once — grouping via `group_by` and",
+              "locator_summary": "noise control needs deliberate tuning of the Alertmanager defaults (30s/5m/4h/5m)"
+            }
+          ],
+          "original_obligations": [
+            "O2",
+            "O5",
+            "P2"
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "E04",
+              "url": "https://prometheus.io/docs/alerting/latest/configuration/",
+              "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+              "section_or_symbol": "global.resolve_timeout",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E04.txt"
+            },
+            {
+              "source_id": "E38",
+              "url": "https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/v1.107.0/app/vmalert/rule/alerting.go",
+              "version_or_commit": "VictoriaMetrics v1.107.0",
+              "section_or_symbol": "AlertingRule.alertsToSend sets End",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E38.txt"
+            },
+            {
+              "source_id": "E40",
+              "url": "https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/v1.107.0/app/vmalert/notifier/alertmanager_request.qtpl",
+              "version_or_commit": "VictoriaMetrics v1.107.0",
+              "section_or_symbol": "writeamRequest emits endsAt when End is nonzero",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E40.txt"
+            }
+          ],
+          "reasoning": "resolve_timeout governs alerts without EndsAt and has no effect on Prometheus alerts that include EndsAt. The retained S04 excerpt states this exception, but the final groups the 5m value with universally relevant triage tuning. Released vmalert also supplies End/endsAt. I do not elevate this alone to material failure because the final does not explicitly claim that 5m controls expiry for every selected producer."
+        },
+        {
+          "id": "m2",
+          "type": "PRESERVATION_LOSS",
+          "severity": "minor",
+          "title": "VM ingestion-time dedup alternative and several source qualifications disappear from final prose",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+            "line_start": 74,
+            "line_end": 89,
+            "passage": "- **Duplicates are designed in.** MQTT QoS 1 (\"at least once\") manufactures duplicates;\n  Telegraf's `qos` defaults to 0 (lossy), and its doc says \"with QoS 1 or 2, you should\n  enable persistent_session to allow resuming unacknowledged messages\";\n  `max_undelivered_messages` caps unwritten messages at 1000. Duplicate handling is\n  therefore a required, explicit design choice. Storage models differ and are **not\n  equivalent**: VictoriaMetrics `-dedup.minScrapeInterval` thins per interval and\n  tie-breaks equal timestamps to \"the sample with the biggest value\"; QuestDB\n  `DEDUP ENABLE UPSERT KEYS(ts, gauge_id)` does key-based upsert (WAL table +\n  designated timestamp required; \"If keys match, compares the full row content\" —\n  identical rows skip the write, differing rows are replaced). Only key/upsert preserves\n  a retransmitted *corrected smaller* reading; VM's biggest-value tie-break shadows it.\n- **Out-of-order/late.** Late-but-newer-timestamped data is stored by VM\n  (\"stores all the ingested samples to disk even if -dedup.minScrapeInterval … is set\");\n  dedup applies at merge/query time. ThingsBoard is the one fetched source stating the\n  alarm-timestamp choice explicitly (telemetry time, not processing time) — operationally\n  right for triage, but dashboards can show alarms \"in the past\" after backlog drain.",
+            "locator_summary": "storage models and merge/query-time dedup"
+          },
+          "additional_candidate_locators": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/discovery.md",
+              "line_start": 26,
+              "line_end": 26,
+              "passage": "- Storage (VictoriaMetrics S01): with `-dedup.minScrapeInterval` set to a positive duration, VM \"leaves a single raw sample with the biggest timestamp for each time series per each -dedup.minScrapeInterval discrete interval\"; equal timestamps tie-break to \"the sample with the biggest value\", \"Numerical values are preferred over stale markers\", and identical label sets are required. Dedup applies at merge/query time; ingestion-time dedup exists separately via `-streamAggr.dedupInterval`. *Applicability caution:* the biggest-value tie-break is scrape-oriented; a gauge retransmitting a corrected reading with the same timestamp could be shadowed by an earlier larger value — verify against payload semantics before relying on it.",
+              "locator_summary": "ingestion-time dedup exists separately via -streamAggr.dedupInterval"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/draft.md",
+              "line_start": 51,
+              "line_end": 51,
+              "passage": "Uncertainty: whether the plan's author intended zero-fill only for display continuity; if so the correction is wording-level, but the audit-facing record must still keep gaps.",
+              "locator_summary": "zero-fill only for display continuity; audit-facing record must still keep gaps"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/discovery.md",
+              "line_start": 36,
+              "line_end": 36,
+              "passage": "- Mosquitto `persistence` **defaults to false** (memory only): queued QoS 1/2 messages are lost on broker restart unless persistence is enabled; `autosave_interval` default 1800 s bounds the disk-write cadence even when enabled. Per-client offline queue `max_queued_messages` \"Defaults to 1000. Set to 0 for no maximum (not recommended)\". Persistent sessions (\"clean session false\") are retained \"never\" by default (`persistent_client_expiration` unset) — 120 gauge sessions with stale subscriptions can accumulate indefinitely.",
+              "locator_summary": "persistent_client_expiration unset means sessions never expire"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/discovery.md",
+              "line_start": 69,
+              "line_end": 69,
+              "passage": "4. **Sparkplug reorder discriminator:** replay a Sparkplug stream with one dropped seq; measure whether a configurable reordering timeout yields REBIRTH and resync vs silent gap. Discriminates S10's mechanism against plain-MQTT behavior.",
+              "locator_summary": "Sparkplug dropped-sequence/reordering-timeout validation proposal"
+            }
+          ],
+          "original_obligations": [
+            "O5"
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "E09",
+              "url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/",
+              "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+              "section_or_symbol": "Deduplication: streamAggr.dedupInterval and permanence after background merges",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E09.txt"
+            },
+            {
+              "source_id": "E01",
+              "url": "https://mosquitto.org/man/mosquitto-conf-5.html",
+              "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+              "section_or_symbol": "persistent_client_expiration",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E01.txt"
+            }
+          ],
+          "reasoning": "The final preserves the principal VM-versus-QuestDB decision but omits the separately discovered VM ingestion-time option, the persistent-client-expiration housekeeping caveat, the draft's explicit display-only interpretation of P3, and discovery's Sparkplug dropped-sequence runtime proposal. These are genuine bounded preservation losses. They do not erase the coherent main alternatives and are not independently used as material fail triggers."
+        },
+        {
+          "id": "m3",
+          "type": "UNSUPPORTED_CONFIDENCE_OR_SCOPE_RATIONALE",
+          "severity": "minor",
+          "title": "The claimed ban on a Sparkplug PDF was not in the mapped assignment",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+            "line_start": 53,
+            "line_end": 57,
+            "passage": "4. **Sequence-numbered transport (Sparkplug 3.0).** Per-edge-node sequence numbers\n   0–255 with wraparound, birth/death certificates, and a host reordering timeout after\n   which a gap or bdSeq mismatch triggers REBIRTH resync — converts silent loss and\n   disorder into a detectable state. **Standing: hypothesis, not verified mechanism**\n   (clause-level wording was never read from the spec PDF, which was excluded; see F3).",
+            "locator_summary": "clause-level wording was never read ... PDF ... excluded"
+          },
+          "additional_candidate_locators": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/critique.md",
+              "line_start": 151,
+              "line_end": 157,
+              "passage": "## Invalid critic demands (stated so they are not silently obeyed)\n\n1. Demanding executed V1–V7 results now would be invalid: no runtime was available to\n   either arm; the assignment itself says honesty about non-execution is required.\n2. Demanding clause-level Sparkplug verification would conflict with the no-binary-\n   downloads rule unless a non-PDF clause source is found; absence of verification is\n   the honest state (F3), not negligence to be repaired by assertion.",
+              "locator_summary": "demanding clause-level verification would conflict with the no-binary-downloads rule"
+            }
+          ],
+          "original_obligations": [
+            "O1",
+            "O2",
+            "O5"
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "E29",
+              "url": "https://raw.githubusercontent.com/eclipse-sparkplug/sparkplug/8b76877131203e88eaa9f5415e6a55f1a8470d74/specification/src/main/asciidoc/chapters/Sparkplug_5_Operational_Behavior.adoc",
+              "version_or_commit": "Sparkplug v3.0.0, tag commit 8b76877131203e88eaa9f5415e6a55f1a8470d74 (E25)",
+              "section_or_symbol": "v3.0.0 operational_behavior_host_message_reordering and NBIRTH seq rules",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E29.txt"
+            }
+          ],
+          "reasoning": "The actual mapped research/critic assignments prohibit downloaded executables/installers, not public PDF documents. A tagged primary AsciiDoc source is available in any case. Keeping Sparkplug as a qualified optional lead is honest and acceptable; the invented prohibition is not evidence of external unavailability. The primary specification confirms wrapping seq and conditional timeout/rebirth, while leaving host processing choices and bdSeq birth/death matching distinct. No core selected-path correction relies on adoption, so this does not itself cause FAIL."
+        },
+        {
+          "id": "m4",
+          "type": "PROPOSED_VALIDATION_LIMIT",
+          "severity": "minor",
+          "title": "V2 needs a crash-versus-graceful-stop distinction to measure autosave loss windows",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+            "line_start": 271,
+            "line_end": 273,
+            "passage": "- **V2** Broker restart with `persistence` true vs false; 100 QoS-1 messages published\n  while the consumer is down; count redelivered. Discriminates the defaults trap (S02)\n  and measures autosave loss windows.",
+            "locator_summary": "Broker restart ... measures autosave loss windows"
+          },
+          "original_obligations": [
+            "O6",
+            "outage recovery"
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "E01",
+              "url": "https://mosquitto.org/man/mosquitto-conf-5.html",
+              "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+              "section_or_symbol": "persistence writes on close and autosave_interval periodically",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E01.txt"
+            }
+          ],
+          "reasoning": "The comparison can expose persistence false versus true. A graceful broker restart saves at shutdown; it does not by itself measure the unsaved crash window. Established durable subscription, matching publisher/subscriber QoS, controlled stop mode and timing, and message identity are also needed for a discriminating oracle. All work is clearly proposed, so this is not an executed-validation overclaim."
+        },
+        {
+          "id": "m5",
+          "type": "APPLICABILITY_LIMIT",
+          "severity": "minor",
+          "title": "Grouping is supported; a pipeline-down diagnosis is an additional inference",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+            "line_start": 176,
+            "line_end": 179,
+            "passage": "(unverified in fetched sources — uncertain). **Amended-in (F6): per-gauge staleness\nmust correlate — broker or gateway death would otherwise fire 120 STALE alarms at\nonce; the alert layer groups them into one \"pipeline down\" incident, distinguishing\ninfrastructure failure from per-gauge device failure.** Conditions: per-gauge",
+            "locator_summary": "alert layer groups them into one pipeline down incident, distinguishing infrastructure failure from per-gauge device failure"
+          },
+          "original_obligations": [
+            "O2",
+            "O4",
+            "understandable alerts",
+            "P3"
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "E04",
+              "url": "https://prometheus.io/docs/alerting/latest/configuration/",
+              "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+              "section_or_symbol": "route grouping and inhibit_rules",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E04.txt"
+            },
+            {
+              "source_id": "E06",
+              "url": "https://raw.githubusercontent.com/prometheus/alertmanager/v0.28.1/dispatch/dispatch.go",
+              "version_or_commit": "Alertmanager v0.28.1",
+              "section_or_symbol": "getGroupLabels and aggrGroup grouping",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E06.txt"
+            }
+          ],
+          "reasoning": "group_by can batch compatible stale alerts. It does not establish their cause or create a new pipeline-health signal. A selected grouping scope and independent pipeline/gateway condition are unspecified. I treat this as an underspecified prospective product rule, not as proof that the candidate claimed an implemented root-cause classifier."
+        },
+        {
+          "id": "m6",
+          "type": "APPLICABILITY_LIMIT",
+          "severity": "minor",
+          "title": "Optional tiered downsampling and SMS/voice need budget/edition conditions",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+            "line_start": 224,
+            "line_end": 225,
+            "passage": "boundary. Alternatives retained: raw-then-downsample tiering; QuestDB + cold copies;\nThingsBoard with configured TTL + PostgreSQL. User decisions: retention resolution;",
+            "locator_summary": "raw-then-downsample tiering ... ThingsBoard with configured TTL + PostgreSQL"
+          },
+          "additional_candidate_locators": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+              "line_start": 67,
+              "line_end": 70,
+              "passage": "7. **Delivery-leg finds.** ntfy (self-hosted push; 4,096-byte message cap, 3-hour\n   attachment expiry shape the templates) and GoAlert (active Apache-2.0\n   escalation/on-call with SMS/voice; README does not document dedup or ack-history —\n   caveat retained, verify in its docs before adoption).",
+              "locator_summary": "GoAlert escalation/on-call with SMS/voice"
+            }
+          ],
+          "original_obligations": [
+            "O1",
+            "O2",
+            "O5",
+            "modest self-hosted budget"
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "E33",
+              "url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/",
+              "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+              "section_or_symbol": "Downsampling: enterprise binaries/free trial; gauge loss within intervals",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E33.txt"
+            },
+            {
+              "source_id": "E35",
+              "url": "https://raw.githubusercontent.com/target/goalert/master/docs/getting-started.md",
+              "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+              "section_or_symbol": "Twilio configuration: external notification provider for SMS/voice",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E35.txt"
+            }
+          ],
+          "reasoning": "VM age-tiered downsampling is an enterprise feature, unlike ordinary interval dedup; it also drops intermediate gauge changes. GoAlert can be self-hosted while its SMS/voice leg relies on an external provider. The final leaves these as options and does not promise free license/communication costs; missing conditions weaken their comparison but do not invalidate the primary lean-stack option."
+        },
+        {
+          "id": "m7",
+          "type": "UNSUPPORTED_DESCRIPTOR",
+          "severity": "minor",
+          "title": "QuestDB constraints alone do not establish a recent narrowing evolution chain",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+            "line_start": 108,
+            "line_end": 110,
+            "passage": "  material — held as alternative only. (4) QuestDB dedup is recent and\n  narrowing: WAL-only, forward-only, designated-timestamp required, introducing version\n  not stated — absence of stated limits is itself a finding.",
+            "locator_summary": "QuestDB dedup is recent and narrowing ... introducing version not stated"
+          },
+          "original_obligations": [
+            "O3"
+          ],
+          "primary_evidence": [
+            {
+              "source_id": "E08",
+              "url": "https://questdb.com/docs/concepts/deduplication/",
+              "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+              "section_or_symbol": "Requirements/Configuration",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E08.txt"
+            }
+          ],
+          "reasoning": "The requirements support current applicability, not an independently demonstrated sequence of narrowing releases. The documented Mosquitto 1.x-to-2.0 change already satisfies O3, so this weak descriptor does not leave the evolution obligation unfulfilled."
+        }
+      ],
+      "unresolved": [
+        {
+          "subject": "runtime behavior and actual storage/notification resource use",
+          "status": "not executed; product work, not unfinished source assessment",
+          "remaining_scope": "No qualified deployed candidate environment or witnesses in the frozen input. All V1-V8 remain proposed."
+        },
+        {
+          "subject": "optional products/features and physical deployment",
+          "status": "candidate-qualified unknowns",
+          "remaining_scope": "Actual gauge firmware/protocol support, cadence, clock quality, exact GoAlert ack/audit model, FUXA/Rapid module alarm fit, InfluxDB 3 write semantics, final ThingsBoard edition/version choice and regulatory duties are not established. Optional lead unknowns do not erase complete assessment of the supplied claim dispositions."
+        },
+        {
+          "subject": "mutable documents versus selected deployment version",
+          "status": "release selection unresolved",
+          "remaining_scope": "Candidate mostly uses unpinned docs/master. Reviewer checks explicit released behavior where consequences depend on code, plus current primary documents close in time; no assertion of universal release equivalence."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "FULL: original brief, O1-O6, all explicit constraints and both delivery states inspected",
+          "judgment": "Control substantially addresses discovery, products/mechanisms, release behavior, outages, expansion, all P clauses and proposed checks. O2 has consequential omissions M1/M4; O4 has the unsupported mandatory cap correction M3; O5 inherits M2 and bounded preservation losses. Small-product scope is respected; no safety-control system or unrestricted guarantees are demanded.",
+          "evidence": [
+            "original brief",
+            "final lines 21-115,117-292",
+            "M1-M4",
+            "plan_dispositions",
+            "validation_coverage"
+          ]
+        },
+        {
+          "axis": 2,
+          "coverage": "FULL relevant primary-claim coverage for the complete control final; current docs and stable released code independently read",
+          "judgment": "FAIL: M1-M4 are consequential dependencies/defaults/identity/application errors or omissions. Main duplicate/upsert, alarm-history, dead-man, Mosquitto migration, and retired-product findings are supported. Exact source uncertainty is distinguished from wrong claims and reviewer source limits.",
+          "evidence": [
+            "C01",
+            "C02",
+            "C03",
+            "C04",
+            "C05",
+            "C06",
+            "C07",
+            "C08",
+            "C09",
+            "C10",
+            "C11",
+            "C12",
+            "C13",
+            "C14",
+            "C15",
+            "C16",
+            "C17",
+            "C18",
+            "C19",
+            "M1-M4",
+            "m1,m3,m5,m6"
+          ]
+        },
+        {
+          "axis": 3,
+          "coverage": "FULL: all discovered product/mechanism families, optional leads and meaningful differences examined",
+          "judgment": "Useful unfamiliar discovery is present: integrated IoT versus composed time-series/alert stack, SCADA pathways, absence layer, protocol-state hypothesis, push/on-call layers and lifecycle dead end. These are product/mechanism alternatives, not citation-count evidence. Conditional firmware/protocol and audit-feature caveats are appropriate; edition/delivery-cost conditions and one lost ingestion-time option weaken comparison.",
+          "evidence": [
+            "final 36-70,243-261",
+            "C04-C07,C11-C16",
+            "m2,m3,m6"
+          ]
+        },
+        {
+          "axis": 4,
+          "coverage": "FULL: every exact P1-P6 clause and all stated vocabulary dispositions independently reviewed",
+          "judgment": "P3 numeric zero-fill rejection and P6 smoke-test retention/extra validation are justified. P1 architecture survives but M1/M3 weaken its corrections; P4 gains invalid tuple M2; P5 default coverage is incomplete M4. P2 timestamp clarification is justified; hysteresis/severity is a useful policy option, not a proven mandatory rejection of one fixed threshold. No wholesale unsupported rejection of MQTT, thresholding, local-first ack, a year horizon or static-input replay is inferred.",
+          "evidence": [
+            "plan_dispositions",
+            "M1-M4",
+            "E01,E03,E04,E07,E08,E09,E13,E18"
+          ]
+        },
+        {
+          "axis": 5,
+          "coverage": "FULL: complete discovery→draft→critique→final comparison and each F1-F13 verdict checked against source and text",
+          "judgment": "Most supported authored findings, alternatives, constraints and uncertainty are preserved. M1 source dependency and m1 exception disappear; m2 records other bounded prose losses. F10 is invalid in its key sufficiency; F1/F3/F4/F9 need reviewer qualifications. The final is coherent prose rather than an ID-only shell, but all-accepted criticism does not make it scientifically correct.",
+          "evidence": [
+            "preservation_coverage",
+            "F1-F13",
+            "M1,M2",
+            "m1-m3"
+          ]
+        },
+        {
+          "axis": 6,
+          "coverage": "FULL: every V1-V8 and additional source proposal inspected; executed-versus-proposed statement checked against available artifacts",
+          "judgment": "No executed runtime witness or validation overclaim found. Proposals contain real discriminators and proposed oracles; V2 crash/stop qualification is missing and V6 misses recurrence. HTTP retrieval, file reads/greps/hashes and text comparison are scientific source operations, not deployed-system tests. No runtime was present in the frozen assessment input; absence is treated honestly.",
+          "evidence": [
+            "validation_coverage",
+            "final 9-14,263-292",
+            "m4",
+            "M2",
+            "E01,E03,E07,E08,E09,E18"
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "claim_id": "C01",
+            "claim": "MQTT duplicate delivery versus application event identity; application measurement time is separate from transport",
+            "evidence": [
+              {
+                "source_id": "E23",
+                "url": "https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html",
+                "version_or_commit": "OASIS MQTT 3.1.1, OASIS Standard 29 October 2014",
+                "section_or_symbol": "QoS 1 delivery; PUBLISH payload; section 4.6 ordering",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E23.txt"
+              }
+            ],
+            "judgment": "supported with scope: MQTT provides ordered-topic guarantees; it does not solve late measurement ordering or application duplicates"
+          },
+          {
+            "claim_id": "C02",
+            "claim": "Mosquitto persistence false, autosave 1800 seconds, queue 1000, inflight 20/1",
+            "evidence": [
+              {
+                "source_id": "E01",
+                "url": "https://mosquitto.org/man/mosquitto-conf-5.html",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "General Options",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E01.txt"
+              }
+            ],
+            "judgment": "numeric defaults supported; queue/session/stop-mode qualifications evaluated"
+          },
+          {
+            "claim_id": "C03",
+            "claim": "Telegraf QoS 0, persistent_session false, max_undelivered_messages 1000",
+            "evidence": [
+              {
+                "source_id": "E02",
+                "url": "https://raw.githubusercontent.com/influxdata/telegraf/master/plugins/inputs/mqtt_consumer/README.md",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "Configuration",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E02.txt"
+              },
+              {
+                "source_id": "E20",
+                "url": "https://raw.githubusercontent.com/influxdata/telegraf/v1.36.1/plugins/inputs/mqtt_consumer/README.md",
+                "version_or_commit": "Telegraf v1.36.1",
+                "section_or_symbol": "v1.36.1 Configuration",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E20.txt"
+              }
+            ],
+            "judgment": "defaults supported; stable identity/QoS dependency missing (M1), flow-control interpretation wrong (M3)"
+          },
+          {
+            "claim_id": "C04",
+            "claim": "VM greatest timestamp per discrete interval, greatest value on exact ties, equal label sets, numeric over stale, merge/query-time and ingestion-time variants",
+            "evidence": [
+              {
+                "source_id": "E09",
+                "url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "Deduplication",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E09.txt"
+              },
+              {
+                "source_id": "E32",
+                "url": "https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/v1.107.0/app/victoria-metrics/main.go",
+                "version_or_commit": "VictoriaMetrics v1.107.0",
+                "section_or_symbol": "minScrapeInterval default 0",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E32.txt"
+              }
+            ],
+            "judgment": "main comparison supported; smaller corrected-value counterexample is relevant; final loses ingestion-time alternative (m2); default externally checkable"
+          },
+          {
+            "claim_id": "C05",
+            "claim": "QuestDB full-row compare/upsert, WAL, designated timestamp in keys, late enablement affects new inserts only",
+            "evidence": [
+              {
+                "source_id": "E08",
+                "url": "https://questdb.com/docs/concepts/deduplication/",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "How it works; Requirements; Enable on existing table",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E08.txt"
+              }
+            ],
+            "judgment": "supported; final repairs the before-first-data overstatement"
+          },
+          {
+            "claim_id": "C06",
+            "claim": "ThingsBoard alarm start time, ack time/user, automatic comments, clear retains history, active originator/type uniqueness and severity upgrade",
+            "evidence": [
+              {
+                "source_id": "E07",
+                "url": "https://thingsboard.io/docs/user-guide/alarms/",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "Alarm Properties; Alarm States; Alarm Comments; Acknowledge and Clear",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E07.txt"
+              }
+            ],
+            "judgment": "supported as documented features; start-time property does not prove a last-value/out-of-order rule implementation"
+          },
+          {
+            "claim_id": "C07",
+            "claim": "Healthchecks dead-man Period/Grace and self-hosted open-source stack",
+            "evidence": [
+              {
+                "source_id": "E13",
+                "url": "https://raw.githubusercontent.com/healthchecks/healthchecks/master/README.md",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "Introduction and Period/Grace",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E13.txt"
+              }
+            ],
+            "judgment": "supported; HTTP-ping mechanism needs an adapter/placement decision for gauge telemetry, retained as a pattern"
+          },
+          {
+            "claim_id": "C08",
+            "claim": "Alertmanager routing/grouping defaults and ... aggregation exception",
+            "evidence": [
+              {
+                "source_id": "E04",
+                "url": "https://prometheus.io/docs/alerting/latest/configuration/",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "route defaults and global.resolve_timeout",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E04.txt"
+              },
+              {
+                "source_id": "E21",
+                "url": "https://docs.victoriametrics.com/victoriametrics/vmalert/",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "vmalert Rules",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E21.txt"
+              }
+            ],
+            "judgment": "main routing behavior supported; evaluator versus router correction valid; resolve_timeout exception lost (m1)"
+          },
+          {
+            "claim_id": "C09",
+            "claim": "Alertmanager webhook repetitions, groupKey and fingerprint as audit dedup identities",
+            "evidence": [
+              {
+                "source_id": "E04",
+                "url": "https://prometheus.io/docs/alerting/latest/configuration/",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "repeat_interval and webhook payload",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E04.txt"
+              },
+              {
+                "source_id": "E06",
+                "url": "https://raw.githubusercontent.com/prometheus/alertmanager/v0.28.1/dispatch/dispatch.go",
+                "version_or_commit": "Alertmanager v0.28.1",
+                "section_or_symbol": "GroupKey",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E06.txt"
+              },
+              {
+                "source_id": "E18",
+                "url": "https://raw.githubusercontent.com/prometheus/common/v0.61.0/model/alert.go",
+                "version_or_commit": "prometheus/common v0.61.0; exact dependency of Alertmanager v0.28.1 (E30)",
+                "section_or_symbol": "Fingerprint",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E18.txt"
+              }
+            ],
+            "judgment": "repeat handling supported; occurrence collision refutes stated sufficiency (M2)"
+          },
+          {
+            "claim_id": "C10",
+            "claim": "Mosquitto 2.0 release changes loopback and configured-listener anonymous-auth defaults",
+            "evidence": [
+              {
+                "source_id": "E10",
+                "url": "https://mosquitto.org/blog/2020/12/version-2-0-0-released/",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "2020-12-03 Breaking changes",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E10.txt"
+              }
+            ],
+            "judgment": "supported evolution chain; explicit listener/security choice applies to remote gauges"
+          },
+          {
+            "claim_id": "C11",
+            "claim": "Grafana OnCall maintenance, README archive and GitHub read-only dates; successor cloud product",
+            "evidence": [
+              {
+                "source_id": "E11",
+                "url": "https://github.com/grafana-cold-storage/oncall",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "repository archive banner and README",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E11.txt"
+              }
+            ],
+            "judgment": "three distinct documented dates supported; rejecting a retired base for a new project is justified"
+          },
+          {
+            "claim_id": "C12",
+            "claim": "ntfy message size and attachment conversion/expiry; rate/cache uncertainties",
+            "evidence": [
+              {
+                "source_id": "E12",
+                "url": "https://docs.ntfy.sh/publish/",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "Attach local file and Limitations",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E12.txt"
+              },
+              {
+                "source_id": "E28",
+                "url": "https://docs.ntfy.sh/config/",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "server configuration limits/cache",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E28.txt"
+              }
+            ],
+            "judgment": "4096-byte and default 3-hour facts supported; defaults configurable; rate limit exists in publish docs, so not externally unknowable"
+          },
+          {
+            "claim_id": "C13",
+            "claim": "InfluxDB 3 Core GA April 2025, licenses, legacy branches; unresolved duplication semantics",
+            "evidence": [
+              {
+                "source_id": "E14",
+                "url": "https://github.com/influxdata/influxdb",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "Project Status; Other Versions; License",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E14.txt"
+              }
+            ],
+            "judgment": "product/evolution facts supported; holding unverified write semantics as optional is appropriate, not a resolved selection"
+          },
+          {
+            "claim_id": "C14",
+            "claim": "FUXA MIT/protocols/SQLite-Influx historian; Rapid SCADA v6 Apache standard and component family",
+            "evidence": [
+              {
+                "source_id": "E15",
+                "url": "https://raw.githubusercontent.com/frangoteam/FUXA/master/README.md",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "Features and License",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E15.txt"
+              },
+              {
+                "source_id": "E16",
+                "url": "https://raw.githubusercontent.com/RapidScada/scada-v6/master/README.md",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "License and module extensibility",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E16.txt"
+              },
+              {
+                "source_id": "E34",
+                "url": "https://github.com/RapidScada/scada-v6",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "repository component directories",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E34.txt"
+              }
+            ],
+            "judgment": "discovery supported; FUXA alarms and Rapid module licensing/function specifics remain qualified, not proven stack equivalence"
+          },
+          {
+            "claim_id": "C15",
+            "claim": "GoAlert on-call/escalation/SMS/voice and self-hosted alternative",
+            "evidence": [
+              {
+                "source_id": "E17",
+                "url": "https://raw.githubusercontent.com/target/goalert/master/README.md",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "README",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E17.txt"
+              },
+              {
+                "source_id": "E35",
+                "url": "https://raw.githubusercontent.com/target/goalert/master/docs/getting-started.md",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "Getting Started/Twilio",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E35.txt"
+              }
+            ],
+            "judgment": "useful supported lead; user/history specifics not proven; SMS/voice external-provider condition absent (m6)"
+          },
+          {
+            "claim_id": "C16",
+            "claim": "Sparkplug 3.0 sequence wrap, conditional reorder timeout/rebirth, birth/death correlation",
+            "evidence": [
+              {
+                "source_id": "E29",
+                "url": "https://raw.githubusercontent.com/eclipse-sparkplug/sparkplug/8b76877131203e88eaa9f5415e6a55f1a8470d74/specification/src/main/asciidoc/chapters/Sparkplug_5_Operational_Behavior.adoc",
+                "version_or_commit": "Sparkplug v3.0.0, tag commit 8b76877131203e88eaa9f5415e6a55f1a8470d74 (E25)",
+                "section_or_symbol": "tagged operational behavior clauses",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E29.txt"
+              },
+              {
+                "source_id": "E25",
+                "url": "https://api.github.com/repos/eclipse-sparkplug/sparkplug/tags?per_page=30",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "v3.0.0 tag mapping",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E25.txt"
+              }
+            ],
+            "judgment": "main optional lead supported after reviewer check; application-specific host behavior remains conditional; candidate qualification honest, asserted PDF prohibition invalid"
+          },
+          {
+            "claim_id": "C17",
+            "claim": "One-year retention, raw/downsample conditions, backfill boundary and sizing",
+            "evidence": [
+              {
+                "source_id": "E09",
+                "url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "Starting VictoriaMetrics; Retention; resource sizing",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E09.txt"
+              },
+              {
+                "source_id": "E22",
+                "url": "https://thingsboard.io/docs/recipes/configure-telemetry-ttl/",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "PostgreSQL TTL",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E22.txt"
+              },
+              {
+                "source_id": "E33",
+                "url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "Downsampling",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E33.txt"
+              }
+            ],
+            "judgment": "P5 capability supported; selected-engine default unexamined (M4); tiered option requires edition condition (m6); no universal bytes/sample asserted"
+          },
+          {
+            "claim_id": "C18",
+            "claim": "Clock discipline and gateway stamping as event-time design conditions",
+            "evidence": [
+              {
+                "source_id": "E23",
+                "url": "https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html",
+                "version_or_commit": "OASIS MQTT 3.1.1, OASIS Standard 29 October 2014",
+                "section_or_symbol": "PUBLISH payload opaque to transport",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E23.txt"
+              },
+              {
+                "source_id": "E07",
+                "url": "https://thingsboard.io/docs/user-guide/alarms/",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "Start Time",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E07.txt"
+              }
+            ],
+            "judgment": "sound engineering inference, not a protocol requirement that all physical gauges must implement NTP; alternate gateway stamping retained"
+          },
+          {
+            "claim_id": "C19",
+            "claim": "Every P disposition and every validation V1-V8",
+            "evidence": [
+              {
+                "source_id": "E01",
+                "url": "https://mosquitto.org/man/mosquitto-conf-5.html",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "persistence shutdown behavior",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E01.txt"
+              },
+              {
+                "source_id": "E08",
+                "url": "https://questdb.com/docs/concepts/deduplication/",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "upsert semantics",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E08.txt"
+              },
+              {
+                "source_id": "E09",
+                "url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "dedup and retention",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E09.txt"
+              },
+              {
+                "source_id": "E07",
+                "url": "https://thingsboard.io/docs/user-guide/alarms/",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "alarm properties/history",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E07.txt"
+              },
+              {
+                "source_id": "E04",
+                "url": "https://prometheus.io/docs/alerting/latest/configuration/",
+                "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+                "section_or_symbol": "route/webhook behavior",
+                "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E04.txt"
+              }
+            ],
+            "judgment": "reviewed individually below; no runtime results available or inferred from retrieval/exit status"
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "meaning_of_complete": "Every consequential final proposition, exact plan disposition, declared uncertainty, material discovery/preservation transition and V1-V8 proposal was reviewed. This is completeness of assessment scope, not completion of proposed engineering validation or every optional product investigation."
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "review_scope": "Read entire discovery, draft, critique, final, all three source maps and every mapped source-root file. Checked all F1-F13 treatments and V1-V8 text, not merely IDs.",
+        "retained_supported_findings": [
+          "modest self-hosted 120-gauge operational-triage constraints",
+          "late/out-of-order/duplicate input properties",
+          "lean stack versus integrated IoT versus SCADA approaches",
+          "VM-versus-QuestDB correction/upsert distinction",
+          "ThingsBoard acknowledgement/history primitives",
+          "dead-man absence mechanisms",
+          "GoAlert/ntfy delivery leads",
+          "OnCall retirement and Mosquitto release chain",
+          "Sparkplug/InfluxDB optional-lead uncertainty",
+          "all six exact P clauses with named dispositions",
+          "audit/retention/conflict/units/cadence/channel user decisions",
+          "V1-V7 plus added QuestDB V8, all proposed"
+        ],
+        "changes_and_losses": [
+          "F4 QuestDB overcondition corrected; F8 evaluator/router wording corrected; F7 unsupported sizing adjective removed",
+          "F1 timestamp condition clarified although critic total-absence premise was overstated",
+          "F10 introduced insufficient webhook tuple (M2)",
+          "retained-source client_id dependency did not reach final correction (M1)",
+          "retained-source resolve_timeout exception did not reach final triage tuning (m1)",
+          "ingestion-time VM option, session-expiration housekeeping, display-only zero-fill uncertainty and Sparkplug runtime proposal omitted (m2)"
+        ],
+        "criticisms": [
+          {
+            "criticism_id": "F1",
+            "reviewer_verdict": "partly accept, reject literal total-absence premise",
+            "locators": "critic 26-37; draft 91-93; final 301",
+            "reasoning": "Payload measurement time should be explicit at the ingest boundary. But the draft already required the CSV schema to carry device ID, telemetry timestamp and value and described payload-aware replay. Thus never explicit anywhere is overstated. The final clarification is useful; a full scientific grade should not rely on the critic's faulty universal premise.",
+            "evidence_ids": [
+              "E23",
+              "E02"
+            ]
+          },
+          {
+            "criticism_id": "F2",
+            "reviewer_verdict": "accept with qualification",
+            "locators": "critic 38-44; final 183-185,302",
+            "reasoning": "Clock error affects event-time ordering and staleness windows. No clock handling was in the predecessor. Gateway stamping is a retained alternative; NTP on every physical sensor is not an externally mandated product requirement.",
+            "evidence_ids": [
+              "E23",
+              "E07"
+            ]
+          },
+          {
+            "criticism_id": "F3",
+            "reviewer_verdict": "accept retained qualification; reject claimed retrieval prohibition",
+            "locators": "critic 45-52,155-157; final 53-57,303",
+            "reasoning": "Honest optional-lead confidence is correct. The assignment bans executable/installers, not PDF evidence. Public tagged AsciiDoc directly supports the conditional mechanism, so verification was feasible without a binary.",
+            "evidence_ids": [
+              "E29",
+              "E25"
+            ]
+          },
+          {
+            "criticism_id": "F4",
+            "reviewer_verdict": "accept QuestDB amendment; reject implication VM needs before-first-data",
+            "locators": "critic 53-60; draft 13; final 127-132,304",
+            "reasoning": "QuestDB enables on an existing table but does not retroactively dedup existing rows. VM query/merge dedup applies to already stored data. The final's engine-specific wording is better than both the draft common condition and critic's suggestion VM was closer to requiring early enablement.",
+            "evidence_ids": [
+              "E08",
+              "E09"
+            ]
+          },
+          {
+            "criticism_id": "F5",
+            "reviewer_verdict": "accept as useful additional discriminator",
+            "locators": "critic 61-68; final 285-287,305",
+            "reasoning": "V1 tests VM greatest-value tie breaking. V8 tests QuestDB keyed replacement of a smaller corrected value. This strengthens the decision without implying every optional product needs a full suite.",
+            "evidence_ids": [
+              "E08",
+              "E09"
+            ]
+          },
+          {
+            "criticism_id": "F6",
+            "reviewer_verdict": "accept correlation/noise concern, qualify causal inference",
+            "locators": "critic 72-77; final 176-179,306",
+            "reasoning": "A shared outage can produce many stale signals. Group batching is supported; concluding one pipeline-down cause is a further product rule requiring pipeline evidence and scope, not a property of group_by.",
+            "evidence_ids": [
+              "E04",
+              "E06"
+            ]
+          },
+          {
+            "criticism_id": "F7",
+            "reviewer_verdict": "accept",
+            "locators": "critic 78-82; draft 75; final 218-227,307",
+            "reasoning": "No cadence or resource measurements justify a year is modest. The final removes that phrase and keeps synthetic sizing proposed. The reviewer does not demand fabricated bytes/sample.",
+            "evidence_ids": [
+              "E09"
+            ]
+          },
+          {
+            "criticism_id": "F8",
+            "reviewer_verdict": "accept",
+            "locators": "critic 83-86; final 154-158,308",
+            "reasoning": "vmalert/Prometheus evaluate expressions; Alertmanager routes/groups. The final corrects the loose naming.",
+            "evidence_ids": [
+              "E04",
+              "E21"
+            ]
+          },
+          {
+            "criticism_id": "F9",
+            "reviewer_verdict": "accept historical verification distinction, reject epistemic promotion of critic non-fetch",
+            "locators": "critic 87-90; final 157-158,309",
+            "reasoning": "The sentence exists both in the frozen research excerpt and independently fetched primary configuration. Critic not re-capturing it does not make the behavior unsupported. Retaining the caveat is harmless; evidence agreement/count is not a validity oracle.",
+            "evidence_ids": [
+              "E04"
+            ]
+          },
+          {
+            "criticism_id": "F10",
+            "reviewer_verdict": "accept repeat-delivery concern, reject sufficient-key amendment",
+            "locators": "critic 91-95; final 199-201,310",
+            "reasoning": "Repeat notifications need handling, but groupKey+fingerprint+status omits incident occurrence and collapses recurrence. The source functions refute sufficiency; accepting this critic proposal introduced M2.",
+            "evidence_ids": [
+              "E04",
+              "E06",
+              "E18",
+              "E30"
+            ]
+          },
+          {
+            "criticism_id": "F11",
+            "reviewer_verdict": "accept retained alternative-specific uncertainty",
+            "locators": "critic 96-97; final 68-70,204-206,311",
+            "reasoning": "README supports on-call/escalations, not a fully researched acknowledgement history/conflict model. The final keeps that caveat, so optional GoAlert uncertainty is not itself a material failure.",
+            "evidence_ids": [
+              "E17",
+              "E35"
+            ]
+          },
+          {
+            "criticism_id": "F12",
+            "reviewer_verdict": "accept scope/user-decision treatment; reject evidence-absence as universal security restriction",
+            "locators": "critic 98-101; final 137-142,312",
+            "reasoning": "TLS choices need not be completely specified for this brief. Absence in retained excerpts is not absence of primary documentation: the Mosquitto man page and Telegraf README contain TLS/auth material. The final makes no unsupported specific posture recommendation.",
+            "evidence_ids": [
+              "E01",
+              "E02"
+            ]
+          },
+          {
+            "criticism_id": "F13",
+            "reviewer_verdict": "accept",
+            "locators": "critic 102-106; final 62-66,313",
+            "reasoning": "README maintenance 2025-03-11/archive 2026-03-24 and GitHub read-only banner June 5 2026 are separate documented events. Excluding a retired product for a new dashboard is a justified planning decision.",
+            "evidence_ids": [
+              "E11"
+            ]
+          }
+        ],
+        "conclusion": "Most discovery and draft content survives in coherent self-contained prose. The all-accepted critic ledger does not establish scientific validity; some critic premises were overstated and F10 introduced a material defect."
+      },
+      "plan_dispositions": [
+        {
+          "clause": "P1",
+          "exact_text": "Ingest MQTT readings into a time-series database.",
+          "candidate_disposition": "already-covered architecture + corrections + user decisions",
+          "candidate_lines": "119-142",
+          "review": "Architecture and two primary database alternatives fit. QuestDB late-enablement condition is correctly repaired. Persistence is a justified concern; proposed Telegraf changes omit required identity/QoS (M1), mandatory cap changes are not justified (M3). Timestamp/units/device identifiers are appropriate conditions. TLS choice may remain a user decision for this brief; complete security hardening is not required. Sparkplug/InfluxDB/gauge firmware stay qualified.",
+          "evidence_ids": [
+            "E01",
+            "E02",
+            "E03",
+            "E08",
+            "E09",
+            "E10",
+            "E20",
+            "E23",
+            "E29"
+          ]
+        },
+        {
+          "clause": "P2",
+          "exact_text": "Alert when the latest reading exceeds one fixed threshold.",
+          "candidate_disposition": "correction as sole mechanism; core already-covered; user decisions",
+          "candidate_lines": "144-163",
+          "review": "Timestamp-governed latest and notification-noise investigation fit the late/disordered data brief. Keeping threshold baseline is correct. Hysteresis/severity bands are useful optional policy choices rather than evidence that a single threshold is inherently unintelligible. Alertmanager is correctly made the router, not evaluator. ThingsBoard start-time semantics do not establish current latest-value handling; the stated event-time design and future replay remain proposals. Timeout exception omitted (m1).",
+          "evidence_ids": [
+            "E04",
+            "E07",
+            "E21",
+            "E38",
+            "E40"
+          ]
+        },
+        {
+          "clause": "P3",
+          "exact_text": "Missing readings count as zero.",
+          "candidate_disposition": "rejected as written; stale/unreachable correction",
+          "candidate_lines": "165-187",
+          "review": "Sound rejection of fabricated measurement data: an observed zero and absent reading are distinct, including under late backfill. ThingsBoard inactivity and Healthchecks Period/Grace give relevant mechanisms. The draft display-only qualification disappears (m2). Grouping is a relevant noise tool, but not proof of pipeline cause (m5). Grace/suppression and clock choices remain conditions/user decisions. No demand to reinstate numeric zero-fill is justified.",
+          "evidence_ids": [
+            "E07",
+            "E13",
+            "E23",
+            "E04",
+            "E06"
+          ]
+        },
+        {
+          "clause": "P4",
+          "exact_text": "Clients acknowledge an alert locally then sync.",
+          "candidate_disposition": "correction for audit/conflicts; platform primitives; user decisions; device-client reading uncertain",
+          "candidate_lines": "189-209",
+          "review": "The operator-client reading, persistent server audit, offline replay and concurrency/escalation decisions are relevant and retained. ThingsBoard primitives are supported; GoAlert history caveat remains. Alertmanager silences alone do not implement per-incident operator ack history. The added dedup/join identity is materially insufficient for recurrence (M2); V6 does not include that case. Acknowledgement notes and handover are optional enhancements, not required control-plane changes.",
+          "evidence_ids": [
+            "E07",
+            "E04",
+            "E06",
+            "E18",
+            "E17"
+          ]
+        },
+        {
+          "clause": "P5",
+          "exact_text": "Keep data for a year.",
+          "candidate_disposition": "already-covered telemetry; audit/resolution corrections and user decisions",
+          "candidate_lines": "211-227",
+          "review": "Keeping the requested horizon and distinguishing telemetry resolution from acknowledgement history are useful. No unsupported sizing assertion survives. However capability is confused with default coverage: selected VM defaults to one month and the investigation does not state its one-year configuration condition (M4). TB/PostgreSQL TTL is researchable. Tiered downsampling needs an edition and gauge-information-loss qualification (m6). Unknown sampling cadence/resource size/regulatory duties can honestly remain unknown.",
+          "evidence_ids": [
+            "E09",
+            "E22",
+            "E33"
+          ]
+        },
+        {
+          "clause": "P6",
+          "exact_text": "Validate with a static sample CSV.",
+          "candidate_disposition": "retain as smoke test; correction/reject sufficiency",
+          "candidate_lines": "229-241,263-292",
+          "review": "The exact clause is not wholesale rejected: replay can retain a static input file while changing order/delays and asserting pathologies. Dynamic transport/outage and ack cases provide legitimate extra coverage; a static CSV can itself encode duplicates/disorder, as the final recognizes. V8 adds a relevant QuestDB counterpart. V2 needs stop-mode/session prerequisites (m4). No executed runtime validation is claimed.",
+          "evidence_ids": [
+            "E01",
+            "E03",
+            "E08",
+            "E09",
+            "E07",
+            "E04"
+          ]
+        }
+      ],
+      "validation_coverage": [
+        {
+          "id": "V1",
+          "candidate_lines": "268-270",
+          "executed": false,
+          "judgment": "meaningful",
+          "reasoning": "A smaller corrected retransmit with identical timestamp and labels discriminates VM maximum-value tie break from last-write semantics. Ensure no confounding later timestamp in the same interval and query the retained raw winner, not an unrelated aggregation.",
+          "evidence_ids": [
+            "E09"
+          ]
+        },
+        {
+          "id": "V2",
+          "candidate_lines": "271-273",
+          "executed": false,
+          "judgment": "meaningful base comparison; incompletely specified crash-window claim",
+          "reasoning": "Persistence true/false under established durable QoS subscription can discriminate restart retention. Graceful restart writes the database on exit, so loss-window measurement needs a controlled unclean stop and known save timing (m4/M1).",
+          "evidence_ids": [
+            "E01",
+            "E03",
+            "E20"
+          ]
+        },
+        {
+          "id": "V3",
+          "candidate_lines": "274-276",
+          "executed": false,
+          "judgment": "meaningful but narrow",
+          "reasoning": "A delayed known telemetry timestamp versus known processing time can discriminate documented Start Time. It does not alone prove that an older reading cannot change the current threshold alarm or latest telemetry; final P6 additionally proposes ordered/disordered/gap replay.",
+          "evidence_ids": [
+            "E07"
+          ]
+        },
+        {
+          "id": "V4",
+          "candidate_lines": "277-278",
+          "executed": false,
+          "judgment": "useful proposed policy test",
+          "reasoning": "Threshold oscillation and grouped-notification timing can discriminate suppression policies. No universal oracle for operator-appropriate thresholds exists before user cadence/severity decisions. resolve_timeout needs its producer exception (m1).",
+          "evidence_ids": [
+            "E04",
+            "E21"
+          ]
+        },
+        {
+          "id": "V5",
+          "candidate_lines": "279-280",
+          "executed": false,
+          "judgment": "meaningful with an explicit missing-state oracle",
+          "reasoning": "Absence/inactivity can be discriminated from value-only rules after the appropriate grace and query-staleness window. Silent threshold behavior depends on configured rule semantics. The final P6 also requires actual-zero versus gap and late-true-reading expected outcomes; zero-fill could trigger a separate low-value alarm, so observing only threshold silence is not universal proof.",
+          "evidence_ids": [
+            "E07",
+            "E13",
+            "E09"
+          ]
+        },
+        {
+          "id": "V6",
+          "candidate_lines": "281-282",
+          "executed": false,
+          "judgment": "meaningful proposed ack conflict/audit test; recurrence not covered",
+          "reasoning": "Concurrent attempts and escalation exercise user-selected conflict policy and audit persistence through clear. One winner/both attempts is a proposed policy oracle, not a documented universal ThingsBoard promise. It does not discriminate the recurring-alert key collision (M2).",
+          "evidence_ids": [
+            "E07",
+            "E06",
+            "E18"
+          ]
+        },
+        {
+          "id": "V7",
+          "candidate_lines": "283-284",
+          "executed": false,
+          "judgment": "meaningful bounded sizing proposal",
+          "reasoning": "Synthetic workload bytes/query latency can compare resolution/dedup settings. It is not proof of year-long behavior or production size; reporting cadence, value entropy, retention boundary and storage overhead matter. No runtime or universal resource guarantee is required.",
+          "evidence_ids": [
+            "E09",
+            "E22",
+            "E33"
+          ]
+        },
+        {
+          "id": "V8",
+          "candidate_lines": "285-287",
+          "executed": false,
+          "judgment": "meaningful",
+          "reasoning": "Same (ts,gauge_id) key with a corrected smaller value discriminates QuestDB replacement from VM maximum-value tie break, after ensuring a WAL table and enabled dedup and read visibility.",
+          "evidence_ids": [
+            "E08",
+            "E09"
+          ]
+        },
+        {
+          "id": "additional_source_checks",
+          "candidate_lines": "289-292",
+          "executed": false,
+          "judgment": "research proposals, not runtime validations",
+          "reasoning": "Primary Alertmanager text and tagged non-PDF Sparkplug clauses were available to the reviewer; GoAlert ack/audit feature research remains optional for a nonselected lead.",
+          "evidence_ids": [
+            "E04",
+            "E29",
+            "E17"
+          ]
+        }
+      ],
+      "grade_limits": [
+        "Source-grounded FAIL for the authored final; assessment covers the complete frozen counterpart.",
+        "No deployed-system correctness, actual default configuration, performance, lifecycle or runtime outcome inferred.",
+        "Delivery is true as supplied by the exact map; upstream native/timing/billing claims are not independently verified.",
+        "No candidate repair. Defect explanations and counterexamples are assessment findings only."
+      ]
+    },
+    "N1": {
+      "actual_arm": "treatment",
+      "final_delivery": false,
+      "scientific_artifact_available": false,
+      "grade": null,
+      "delivery_grade": "NO_DELIVERY",
+      "material_findings": [],
+      "minor_findings": [],
+      "unresolved": [
+        {
+          "subject": "absent authored scientific content",
+          "remaining_scope": "All O1-O6, P1-P6, consequential source facts/discovery/options, preservation and validations have no candidate artifact to assess. No unseen activity inferred."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "NO_AUTHORED_SCIENTIFIC_ARTIFACT: exact mapped assignment/input map and empty source index inspected",
+          "judgment": "NOT_ASSESSABLE: no discovery, draft, critique or final supplied; no scientific merits or fail inferred from nondelivery",
+          "evidence": [
+            "input-map.json arms.N1 scientific_artifact_available=false, final=null, final_delivery=false",
+            "treatment/research/sources/index.md has no source entries"
+          ]
+        },
+        {
+          "axis": 2,
+          "coverage": "NO_AUTHORED_SCIENTIFIC_ARTIFACT: exact mapped assignment/input map and empty source index inspected",
+          "judgment": "NOT_ASSESSABLE: no discovery, draft, critique or final supplied; no scientific merits or fail inferred from nondelivery",
+          "evidence": [
+            "input-map.json arms.N1 scientific_artifact_available=false, final=null, final_delivery=false",
+            "treatment/research/sources/index.md has no source entries"
+          ]
+        },
+        {
+          "axis": 3,
+          "coverage": "NO_AUTHORED_SCIENTIFIC_ARTIFACT: exact mapped assignment/input map and empty source index inspected",
+          "judgment": "NOT_ASSESSABLE: no discovery, draft, critique or final supplied; no scientific merits or fail inferred from nondelivery",
+          "evidence": [
+            "input-map.json arms.N1 scientific_artifact_available=false, final=null, final_delivery=false",
+            "treatment/research/sources/index.md has no source entries"
+          ]
+        },
+        {
+          "axis": 4,
+          "coverage": "NO_AUTHORED_SCIENTIFIC_ARTIFACT: exact mapped assignment/input map and empty source index inspected",
+          "judgment": "NOT_ASSESSABLE: no discovery, draft, critique or final supplied; no scientific merits or fail inferred from nondelivery",
+          "evidence": [
+            "input-map.json arms.N1 scientific_artifact_available=false, final=null, final_delivery=false",
+            "treatment/research/sources/index.md has no source entries"
+          ]
+        },
+        {
+          "axis": 5,
+          "coverage": "NO_AUTHORED_SCIENTIFIC_ARTIFACT: exact mapped assignment/input map and empty source index inspected",
+          "judgment": "NOT_ASSESSABLE: no discovery, draft, critique or final supplied; no scientific merits or fail inferred from nondelivery",
+          "evidence": [
+            "input-map.json arms.N1 scientific_artifact_available=false, final=null, final_delivery=false",
+            "treatment/research/sources/index.md has no source entries"
+          ]
+        },
+        {
+          "axis": 6,
+          "coverage": "NO_AUTHORED_SCIENTIFIC_ARTIFACT: exact mapped assignment/input map and empty source index inspected",
+          "judgment": "NOT_ASSESSABLE: no discovery, draft, critique or final supplied; no scientific merits or fail inferred from nondelivery",
+          "evidence": [
+            "input-map.json arms.N1 scientific_artifact_available=false, final=null, final_delivery=false",
+            "treatment/research/sources/index.md has no source entries"
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [],
+        "remaining_claims": [
+          "No final or complete scientific stages are present; every scientific axis remains ungradable."
+        ],
+        "complete": false
+      },
+      "preservation_coverage": {
+        "complete": false,
+        "review_scope": "No discovery/draft/critique/final in the exact map. Source index inspected and empty.",
+        "criticisms": [],
+        "conclusion": "No content from which to infer scientific merit, preservation or deterioration."
+      },
+      "grade_limits": [
+        "Scientific quality null; nondelivery is separately recorded as NO_DELIVERY.",
+        "No conversion of unknown native completion, timing or billing to zero or scientific failure."
+      ]
+    }
+  },
+  "method_clues": {
+    "blinding": "partial only",
+    "details": [
+      "Neutral N1/N2 labels used, but exact map exposes actual_arm and stage paths.",
+      "Control final headers expose method M12 and sources expose researcher/critic/reviser stage roles.",
+      "Treatment assignment contains the adaptive evidence-state-branching recipe; its mere presence is not scientific performance evidence."
+    ]
+  },
+  "comparative_quality_eligible": false,
+  "comparative_reason": "Control has identified material defects; treatment has no scientific final. There are not two full-quality passes and no eligible quality/speed comparison or methodological winner.",
+  "scope_limits": [
+    "Only exact assignment/map, S06 original brief/frozen plan, rubric, mapped same-block stage files and allowed source roots inspected for candidate science.",
+    "No campaign, other case/evaluation, private provider internals or candidate repair; no delegated workers, account/config changes, downloaded executable, Git/canon mutation or service startup.",
+    "Initial repository context inspection was limited to required Plans index and git status, not used as scientific evidence.",
+    "Reviewer uses independently retrieved primary documents/code/release metadata. Mutable redirects and release applicability are explicit.",
+    "All material control review scope completed. Treatment science cannot be assessed because the exact input declares it absent."
+  ],
+  "evaluation_started_at": "2026-10-09T19:29:54+00:00",
+  "evaluation_started_at_basis": "First observed UTC tool/Goal activation time. Assignment/map startup read preceded this clock observation; exact earlier startup timestamp is unavailable. The fixed assignment deadline includes startup.",
+  "evaluation_completed_at": "2026-10-09T19:42:22.470396+00:00",
+  "observed_source_operations": {
+    "candidate_inputs": "Full reads; line-locator inspection; source-index/excerpt inspection; SHA-256/byte checks of every mapped file and hashing of permitted source-root files. Mapped digests all match.",
+    "independent_primary_retrieval": "HTTP GET and normalized text/code reading; web tool open/find/search for official primary evidence; explicit tags/releases and code dependencies checked. Full responses were not treated as runtime witnesses. Bounded semantic evidence notes retained with response hashes.",
+    "additional_public_operation": {
+      "url": "https://api.github.com/repos/VictoriaMetrics/VictoriaMetrics/contents/app/vmalert/notifier?ref=v1.107.0",
+      "operation": "HTTP GET directory listing to locate released alertmanager_request.qtpl; no code executed"
+    },
+    "runtime_witnesses_executed": []
+  },
+  "native_and_cost_limits": {
+    "reviewer_native": "One actual create_goal call followed by get_goal, status active observed. Scientific artifacts saved before terminal update_goal; lifecycle receipts remain tool/host-owned, no handwritten Goal JSON.",
+    "reviewer_native_terminal_in_saved_science": null,
+    "candidate_native_completion": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_T3_completion": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_timing": {
+      "N1": null,
+      "N2": null
+    },
+    "usage": {
+      "N1": null,
+      "N2": null,
+      "reviewer": null
+    },
+    "billing": {
+      "N1": null,
+      "N2": null,
+      "reviewer": null
+    },
+    "qualification": "The exact map is authoritative for final delivery/artifact availability. Candidate source-map lifecycle prose and critic overrun notes are authored claims, not verified native/cost receipts. No speed or cost winner inferred."
+  }
+}

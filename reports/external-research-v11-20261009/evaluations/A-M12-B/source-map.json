@@ -1,0 +1,1688 @@
+{
+  "block": "A-M12-B",
+  "case": "S06",
+  "generated_at": "2026-10-09T19:42:22.470396+00:00",
+  "source_policy": "Exact candidate inputs frozen and treated as untrusted evidence; independent public primary evidence governs. Source IDs are evaluator-local E01-E40, not candidate S IDs. No silent rebinding; requested/effective URLs and original response hashes distinguish redirects and mutable editions.",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/assignment.md",
+      "sha256": "ff7fafaac0af05a272025b86aecb1dcd2ccf43b77b9efb0fc4053d4e962a6d6f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/input-map.json",
+      "sha256": "3451a1d3c404a87527b6d9181e93203904429c096ff625a6ceb5403388036635"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S06/brief.md",
+      "sha256": "4c4e4dd878bb0d77ecbbdcbc86993acdae4f9e52f019466d518bd9139e9f2de6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S06/plan-root-only.md",
+      "sha256": "323cdef9d3d765ff0e060c6772f62b1280cf5cfa6cec1fc1e0162badd50b5c62"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/final.md",
+      "sha256": "084dceeeea18b2bb913b6f62fd4788f857c5848fb98e2c96f4fa5a26e1b6d47d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/source-map.json",
+      "sha256": "2d931be8e650ddb4fbcc2f702b3df0f4de3981bdad2cd7ff725703b36bab45b3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/assignment.md",
+      "sha256": "1891ae48d64e6932c670d8337b32d877eef2f8b32b703f406aecc2fed235333d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/input-map.json",
+      "sha256": "9166c3fa380c77ae2e25b8ca8782180ebf6d7bcd2e4e14674af1e547183ae0d7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/critique.md",
+      "sha256": "2a085536319b2f84ff60715a81889f9184c0e3897b1cbad5b73b1bca43a7d561"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/source-map.json",
+      "sha256": "5c27e74c70ce0b5abb44f6784ea310ee5754fc5224537dc8281230939b45adbd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/assignment.md",
+      "sha256": "16da751ac8d35425a0739893294261383d268c8fd855af6928f19012698c7a48"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/input-map.json",
+      "sha256": "d5bd16741f879b9ca940603d24190b9c8f18461ba482e69c177591ab7ba9d6ff"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/discovery.md",
+      "sha256": "598fbc58889a3c75ab934d824a8ddb2c0d38c4500af8776a1e647e6c91222cee"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/draft.md",
+      "sha256": "cff97ab1ca83f7f49fb6ec6b29142bdc88758238b9ee4a17619521c744785c16"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/source-map.json",
+      "sha256": "3426631fa470b31afa598bdcb375785ac7576cf85438223334ba2bd578c5ce22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/revealed-plan.md",
+      "sha256": "323cdef9d3d765ff0e060c6772f62b1280cf5cfa6cec1fc1e0162badd50b5c62"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/plan-reveal.json",
+      "sha256": "dab066e07c98b90dde8c53e8b0f475f7c3a904e8b4583e89abff9d00e0f42820"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/assignment.md",
+      "sha256": "999acd27e647f4e5289d736350a2058215ecbb41cceb72934904bcdf29556772"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/input-map.json",
+      "sha256": "dfe9da518517f00fd89a3c4a1cdb4f720555bbb5a3eeb0c810ce063952ead9c4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/sources/index.md",
+      "sha256": "e6b906450e0096d1f120c67a5897e9d23b811852ec6e79b5c4c52a3709a8d237"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/sources/S05-S09-delivery-and-platforms-excerpts.md",
+      "sha256": "3a57381e30732ad8c0bac6a726eb47eb3ef201a290eebf808517facf85744bfa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/sources/S10-S15-transport-spec-and-alternatives-excerpts.md",
+      "sha256": "5e6c83a22a14a06c85678e96b50b91e2abde87e05ff00d8bf5f71acb25297c0a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/sources/S01-S04-storage-transport-alerting-excerpts.md",
+      "sha256": "a6f43e4f0aedc9c351bd6dae5c7f9c647ca5b9278d7ad0c589ce435fb6a252bc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/sources/critic-audit-excerpts.md",
+      "sha256": "ab5c8c46e039633ad931891474e1389787331385009451e88747bd8cdc120a88"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/sources/index.md",
+      "sha256": "94dfe59dd26bcdaa80d3e5cdc90e9805549c12d301535231d5bc9a2ddbfc3f02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/sources/critic-audit-excerpts.md",
+      "sha256": "ab5c8c46e039633ad931891474e1389787331385009451e88747bd8cdc120a88"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/sources/S05-S09-delivery-and-platforms-excerpts.md",
+      "sha256": "3a57381e30732ad8c0bac6a726eb47eb3ef201a290eebf808517facf85744bfa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/sources/S10-S15-transport-spec-and-alternatives-excerpts.md",
+      "sha256": "5e6c83a22a14a06c85678e96b50b91e2abde87e05ff00d8bf5f71acb25297c0a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/sources/S01-S04-storage-transport-alerting-excerpts.md",
+      "sha256": "a6f43e4f0aedc9c351bd6dae5c7f9c647ca5b9278d7ad0c589ce435fb6a252bc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/treatment/research/assignment.md",
+      "sha256": "b9d81cf5eb5527ba5768a255ed9f89c70d498e7149b7f81d7d8bbd89ce1a105a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/treatment/research/input-map.json",
+      "sha256": "cfb3f616cb8730581fc505837f2f1ebb1b542558f3ac9f162107729a5ff5a50a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/treatment/research/sources/index.md",
+      "sha256": "4f423346586546e193b3bb5b600e68d3f2dbe13b5222f8d74ffc1ed538a8aa82"
+    }
+  ],
+  "primary_sources": [
+    {
+      "id": "E01",
+      "requested_url": "https://mosquitto.org/man/mosquitto-conf-5.html",
+      "accessed_at": "2026-10-09T19:31:16.096538+00:00",
+      "terms": [
+        "persistence",
+        "autosave_interval",
+        "max_queued_messages",
+        "max_inflight_messages",
+        "allow_anonymous",
+        "max_queued_bytes",
+        "clientid"
+      ],
+      "status": 200,
+      "effective_url": "https://mosquitto.org/man/mosquitto-conf-5.html",
+      "response_sha256": "8518d0708f32f9a929749a8350787c003e3f55f1bc97485367e6da76e04886d3",
+      "response_bytes": 124573,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E01.txt",
+      "retained_sha256": "fdeb17ce043c20b4ae86e1c1a6f752070495aee8e79e7a5e077aad777d779b7d",
+      "matched_lines": 321,
+      "total_text_lines": 1896,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E02",
+      "requested_url": "https://raw.githubusercontent.com/influxdata/telegraf/master/plugins/inputs/mqtt_consumer/README.md",
+      "accessed_at": "2026-10-09T19:31:16.097555+00:00",
+      "terms": [
+        "max_undelivered_messages",
+        "persistent_session",
+        "client_id",
+        "qos =",
+        "tracking metrics"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/influxdata/telegraf/master/plugins/inputs/mqtt_consumer/README.md",
+      "response_sha256": "6ac86eeeecc94cec2922a4f833347a977aafdd4b19a2c2959d05d7f8b232bd6c",
+      "response_bytes": 10368,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E02.txt",
+      "retained_sha256": "bbf25532fece60a6ddbd925f6df6a08eb399eb080fac5ec96e6da8132d46a421",
+      "matched_lines": 51,
+      "total_text_lines": 227,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E03",
+      "requested_url": "https://raw.githubusercontent.com/influxdata/telegraf/v1.36.1/plugins/inputs/mqtt_consumer/mqtt_consumer.go",
+      "accessed_at": "2026-10-09T19:31:16.098074+00:00",
+      "terms": [
+        "MaxUndeliveredMessages",
+        "PersistentSession",
+        "SetClientID",
+        "ClientID",
+        "SetCleanSession",
+        "SetAutoAckDisabled",
+        "tracking",
+        "sem",
+        "Delivery"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/influxdata/telegraf/v1.36.1/plugins/inputs/mqtt_consumer/mqtt_consumer.go",
+      "response_sha256": "87a3f2b9522877905579308344853e4d64e04f59aba0459ea4fb4b4423803e4e",
+      "response_bytes": 10255,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E03.txt",
+      "retained_sha256": "07e53be80deec4e5c153dcced04b396fb2945380599fa9395455394acbdeaf13",
+      "matched_lines": 173,
+      "total_text_lines": 330,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Telegraf v1.36.1; release published 2025-09-09 (E26)",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E04",
+      "requested_url": "https://prometheus.io/docs/alerting/latest/configuration/",
+      "accessed_at": "2026-10-09T19:31:16.103831+00:00",
+      "terms": [
+        "resolve_timeout",
+        "group_wait",
+        "group_interval",
+        "repeat_interval",
+        "groupKey",
+        "fingerprint",
+        "startsAt",
+        "inhibit_rules"
+      ],
+      "status": 200,
+      "effective_url": "https://prometheus.io/docs/alerting/latest/configuration/",
+      "response_sha256": "cf14703ce9f8d6dd7eb9e0e3b8a7bc68dea98ec26bdadcfccad27e3c1285ef0a",
+      "response_bytes": 1287164,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E04.txt",
+      "retained_sha256": "f6a0e09c750310fa31228c01e95ff4f0cc0c68515391a7fd867271e10b3f40fc",
+      "matched_lines": 150,
+      "total_text_lines": 1753,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E05",
+      "requested_url": "https://raw.githubusercontent.com/prometheus/alertmanager/v0.28.1/types/types.go",
+      "accessed_at": "2026-10-09T19:31:16.106500+00:00",
+      "terms": [
+        "Fingerprint",
+        "Alert struct",
+        "StartsAt",
+        "EndsAt"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/prometheus/alertmanager/v0.28.1/types/types.go",
+      "response_sha256": "abdab65f67d0ea9cda87478e72f2a7bbc2ce29b72500b4efde267f2e16ce1fba",
+      "response_bytes": 16451,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E05.txt",
+      "retained_sha256": "9d57268e8db9dc14bf4e340e08e8c8ae1390df020b31f5e71d14187943430403",
+      "matched_lines": 222,
+      "total_text_lines": 473,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Alertmanager v0.28.1; release published 2025-03-07 (E27)",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E06",
+      "requested_url": "https://raw.githubusercontent.com/prometheus/alertmanager/v0.28.1/dispatch/dispatch.go",
+      "accessed_at": "2026-10-09T19:31:16.108998+00:00",
+      "terms": [
+        "GroupKey",
+        "groupKey",
+        "fingerprint",
+        "aggrGroup",
+        "Fingerprint()"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/prometheus/alertmanager/v0.28.1/dispatch/dispatch.go",
+      "response_sha256": "bec97ab91e3d7c47f60091271dde4c18a69a327e40b4e57ec646dc50810861b1",
+      "response_bytes": 14489,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E06.txt",
+      "retained_sha256": "47f1305271cafbb362b0823a493d9031e05654db6989bda9aab7711b87a4b892",
+      "matched_lines": 263,
+      "total_text_lines": 463,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Alertmanager v0.28.1",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E07",
+      "requested_url": "https://thingsboard.io/docs/user-guide/alarms/",
+      "accessed_at": "2026-10-09T19:31:16.222536+00:00",
+      "terms": [
+        "Start Time",
+        "End Time",
+        "acknowledg",
+        "inactivity",
+        "alarm rules",
+        "Comments",
+        "Clearing",
+        "severity",
+        "uniquely"
+      ],
+      "status": 200,
+      "effective_url": "https://thingsboard.io/docs/user-guide/alarms/",
+      "response_sha256": "3920cb8356d25adbdb7e0a635e77a2e623808e234e047f934d74f645f17ad4a7",
+      "response_bytes": 534886,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E07.txt",
+      "retained_sha256": "b6cffca7f9b96d984f460c286a980e04a769b731220815c3ea28ae7310f60d2a",
+      "matched_lines": 188,
+      "total_text_lines": 1001,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E08",
+      "requested_url": "https://questdb.com/docs/concept/deduplication/",
+      "accessed_at": "2026-10-09T19:31:16.269259+00:00",
+      "terms": [
+        "Deduplication",
+        "new inserts",
+        "WAL",
+        "timestamp",
+        "keys",
+        "row"
+      ],
+      "status": 200,
+      "effective_url": "https://questdb.com/docs/concepts/deduplication/",
+      "response_sha256": "711082b94ed2b509194cff13ec84b604b333d3fc0f437724491bced0db1392f1",
+      "response_bytes": 46608,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E08.txt",
+      "retained_sha256": "ab129776e88ab5d17af613fa6070a424d74f6216872277b45843d83cc493efce",
+      "matched_lines": 125,
+      "total_text_lines": 141,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E09",
+      "requested_url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/",
+      "accessed_at": "2026-10-09T19:31:16.273686+00:00",
+      "terms": [
+        "dedup.minScrapeInterval",
+        "biggest value",
+        "streamAggr.dedupInterval",
+        "retentionPeriod",
+        "downsampling.period=0s"
+      ],
+      "status": 200,
+      "effective_url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/",
+      "response_sha256": "631bcd7ab8ae2dd3f5101267a567272ef6fff55e458b452b7db05bdf994c8424",
+      "response_bytes": 950760,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E09.txt",
+      "retained_sha256": "f0ce3e9e31471ebcaced45d1f2afd24f4f1eed131567fdf92291b040bc420bc7",
+      "matched_lines": 259,
+      "total_text_lines": 4197,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E10",
+      "requested_url": "https://mosquitto.org/blog/2020/12/version-2-0-0-released/",
+      "accessed_at": "2026-10-09T19:31:16.289127+00:00",
+      "terms": [
+        "loopback",
+        "allow_anonymous",
+        "listener",
+        "2.0"
+      ],
+      "status": 200,
+      "effective_url": "https://mosquitto.org/blog/2020/12/version-2-0-0-released/",
+      "response_sha256": "0b87a65f6466062c4ef9e08d8ca4cc6da316c9832d6a6b39a2b6d44b876c5248",
+      "response_bytes": 22718,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E10.txt",
+      "retained_sha256": "c1aa2512834a86108f390fdcbfb145beeed1292f0ed27e9b22ad1367f65f5101",
+      "matched_lines": 86,
+      "total_text_lines": 223,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E11",
+      "requested_url": "https://github.com/grafana/oncall",
+      "accessed_at": "2026-10-09T19:31:16.509008+00:00",
+      "terms": [
+        "archived",
+        "2025-03-11",
+        "2026-03-24",
+        "maintenance",
+        "Cloud IRM"
+      ],
+      "status": 200,
+      "effective_url": "https://github.com/grafana-cold-storage/oncall",
+      "response_sha256": "b07ae6e1f1e42b135778926afc6596391d84b8aa1a12d734317851e8c56837da",
+      "response_bytes": 357482,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E11.txt",
+      "retained_sha256": "8a898b555e36fe9c5ae7e5af6bd3226c570d60c0a96bc78dce1b3db7d700c50e",
+      "matched_lines": 24,
+      "total_text_lines": 327,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E12",
+      "requested_url": "https://docs.ntfy.sh/publish/",
+      "accessed_at": "2026-10-09T19:31:16.580075+00:00",
+      "terms": [
+        "4,096",
+        "4096",
+        "3 hours",
+        "15 MB",
+        "attachment expiry"
+      ],
+      "status": 200,
+      "effective_url": "https://docs.ntfy.sh/publish/",
+      "response_sha256": "2149e7d82cdbd3f68a4bc0b87bff49f05bc16ff37db4ad616c6a8e3e695033c7",
+      "response_bytes": 533401,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E12.txt",
+      "retained_sha256": "787a6c8454dd8ecc3d8523cad0dccbc15cbaf40bdc5ffee5991bf7d778e281e6",
+      "matched_lines": 28,
+      "total_text_lines": 3047,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E13",
+      "requested_url": "https://raw.githubusercontent.com/healthchecks/healthchecks/master/README.md",
+      "accessed_at": "2026-10-09T19:31:16.601071+00:00",
+      "terms": [
+        "Period",
+        "Grace",
+        "self-host",
+        "pings",
+        "Django",
+        "BSD"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/healthchecks/healthchecks/master/README.md",
+      "response_sha256": "9aec059ba8746628a8b3ba13b3304678995338cfda68bc6fcd56de5602014d81",
+      "response_bytes": 25377,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E13.txt",
+      "retained_sha256": "dc96f4da44d8fafb74241235cb5aaa39dd9fa7fb3dac7c77a2f85a8fc2aadc14",
+      "matched_lines": 124,
+      "total_text_lines": 459,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E14",
+      "requested_url": "https://github.com/influxdata/influxdb",
+      "accessed_at": "2026-10-09T19:31:16.712035+00:00",
+      "terms": [
+        "April 2025",
+        "MIT",
+        "Apache",
+        "main-2.x",
+        "master-1.x",
+        "generally available"
+      ],
+      "status": 200,
+      "effective_url": "https://github.com/influxdata/influxdb",
+      "response_sha256": "75d173df805f991b14e3b9fb3df543de6c2de157d9c906e335e168b72de91feb",
+      "response_bytes": 408060,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E14.txt",
+      "retained_sha256": "7d2fc630f93842eeb2644f9d399c77242dc95637d8a43a99659a32c84f0b70b7",
+      "matched_lines": 120,
+      "total_text_lines": 367,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E15",
+      "requested_url": "https://raw.githubusercontent.com/frangoteam/FUXA/master/README.md",
+      "accessed_at": "2026-10-09T19:31:16.735301+00:00",
+      "terms": [
+        "MIT",
+        "Modbus",
+        "MQTT",
+        "historian",
+        "SQLite",
+        "Influx",
+        "alarm",
+        "Pro"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/frangoteam/FUXA/master/README.md",
+      "response_sha256": "9f22a892d5d523217b1d3da7910510a97645fdbbc17c7d8298ad4ca916b871aa",
+      "response_bytes": 9318,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E15.txt",
+      "retained_sha256": "64c70a8b512a12ceb0381663ec7d338cfe1416c6e5ee2ed7ff31e8c5a736eb20",
+      "matched_lines": 95,
+      "total_text_lines": 169,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E16",
+      "requested_url": "https://raw.githubusercontent.com/RapidScada/scada-v6/master/README.md",
+      "accessed_at": "2026-10-09T19:31:17.013323+00:00",
+      "terms": [
+        "Apache",
+        "ScadaComm",
+        "ScadaServer",
+        "ScadaWeb",
+        "module",
+        "industrial"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/RapidScada/scada-v6/master/README.md",
+      "response_sha256": "5c725c66a7b4026214891878edff63753bf03088b7eb30616eaea96044b4aabd",
+      "response_bytes": 1886,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E16.txt",
+      "retained_sha256": "93b94a66a9b6bee46b3e5303a8cb544bbd3e361294e3c48b8e0cf178c8f3d5f9",
+      "matched_lines": 19,
+      "total_text_lines": 19,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E17",
+      "requested_url": "https://raw.githubusercontent.com/target/goalert/master/README.md",
+      "accessed_at": "2026-10-09T19:31:17.055591+00:00",
+      "terms": [
+        "Apache",
+        "self-host",
+        "escalat",
+        "SMS",
+        "voice",
+        "Alertmanager",
+        "acknowledge",
+        "audit"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/target/goalert/master/README.md",
+      "response_sha256": "65662e89f6deabf0527752d4ac7780b0185066bee65a207d0250dc1584cd7eef",
+      "response_bytes": 2769,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E17.txt",
+      "retained_sha256": "b9d56df29b9978b9ae022b23769c3a929271f258bd2d345b66c35803ab9e604b",
+      "matched_lines": 12,
+      "total_text_lines": 31,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E18",
+      "requested_url": "https://raw.githubusercontent.com/prometheus/common/v0.61.0/model/alert.go",
+      "accessed_at": "2026-10-09T19:32:30.856618+00:00",
+      "terms": [
+        "Fingerprint",
+        "Labels",
+        "StartsAt",
+        "EndsAt"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/prometheus/common/v0.61.0/model/alert.go",
+      "response_sha256": "1a02c7c8bfd7444b2a669eb8fef739b7f73eb81ee69513fe4b70b9fb967a9cb0",
+      "response_bytes": 4369,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E18.txt",
+      "retained_sha256": "98b5c6ec45a4a87a08af4a57ca20df0ed3280fc7ef2d0b04611314f8ad021c79",
+      "matched_lines": 76,
+      "total_text_lines": 140,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "prometheus/common v0.61.0; exact dependency of Alertmanager v0.28.1 (E30)",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E19",
+      "requested_url": "https://raw.githubusercontent.com/influxdata/telegraf/master/plugins/inputs/mqtt_consumer/mqtt_consumer.go",
+      "accessed_at": "2026-10-09T19:32:30.857806+00:00",
+      "terms": [
+        "persistent_session requires client_id",
+        "MaxUndeliveredMessages",
+        "onDelivered",
+        "onMessage",
+        "SetCleanSession",
+        "SetAutoAckDisabled"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/influxdata/telegraf/master/plugins/inputs/mqtt_consumer/mqtt_consumer.go",
+      "response_sha256": "832cc89513d70ddec3461cfa84efffd2dadab28736a50eeb412ea23aa9e4bda8",
+      "response_bytes": 10234,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E19.txt",
+      "retained_sha256": "836aba1c51030b2b0a8ecd60f685ae440b4b8613b3801b0a9bd5c7fa80a0b867",
+      "matched_lines": 108,
+      "total_text_lines": 323,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E20",
+      "requested_url": "https://raw.githubusercontent.com/influxdata/telegraf/v1.36.1/plugins/inputs/mqtt_consumer/README.md",
+      "accessed_at": "2026-10-09T19:32:30.863763+00:00",
+      "terms": [
+        "persistent_session",
+        "client_id",
+        "qos =",
+        "max_undelivered_messages"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/influxdata/telegraf/v1.36.1/plugins/inputs/mqtt_consumer/README.md",
+      "response_sha256": "0508ad45bfb1db1832847c6567689c207ac205417acfe2cc67dab07898b5ab5b",
+      "response_bytes": 9768,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E20.txt",
+      "retained_sha256": "f504ffa7076fe14e3d9d3b9d45bc5dbafa937a8648f7ec813861700d7e256c99",
+      "matched_lines": 32,
+      "total_text_lines": 218,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Telegraf v1.36.1",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E21",
+      "requested_url": "https://docs.victoriametrics.com/victoriametrics/vmalert/",
+      "accessed_at": "2026-10-09T19:32:30.866101+00:00",
+      "terms": [
+        "EndsAt",
+        "resolveDuration",
+        "send notifications",
+        "lookback",
+        "latest"
+      ],
+      "status": 200,
+      "effective_url": "https://docs.victoriametrics.com/victoriametrics/vmalert/",
+      "response_sha256": "a3ffe2a24a3131986ec26a06886b46706e7d69b7d3fe6d1a85d27879953e06c8",
+      "response_bytes": 681609,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E21.txt",
+      "retained_sha256": "78cbc2547b527135b9d13459a4cd1bf3475f5c82b9eaf63c3ce7e103710d3e24",
+      "matched_lines": 112,
+      "total_text_lines": 2422,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E22",
+      "requested_url": "https://thingsboard.io/docs/recipes/configure-telemetry-ttl/",
+      "accessed_at": "2026-10-09T19:32:30.868834+00:00",
+      "terms": [
+        "SQL_TTL",
+        "seconds",
+        "0",
+        "Cassandra"
+      ],
+      "status": 200,
+      "effective_url": "https://thingsboard.io/docs/recipes/configure-telemetry-ttl/",
+      "response_sha256": "18ec90a9726bde8eb800d8355ddb51cb4b2c2b1a33ffc598369f78c73031cb83",
+      "response_bytes": 498722,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E22.txt",
+      "retained_sha256": "c5ef3803b950d1ff2dfa13e440a58fc2f2d86ea009dcd723978f57049d121676",
+      "matched_lines": 91,
+      "total_text_lines": 898,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E23",
+      "requested_url": "https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html",
+      "accessed_at": "2026-10-09T19:32:30.870498+00:00",
+      "terms": [
+        "4.6 Message ordering",
+        "MQTT-4.6.0-6",
+        "MQTT-4.3.2",
+        "Packet Identifier",
+        "Application Message",
+        "2.3.3 Payload",
+        "Clean Session",
+        "QoS 1"
+      ],
+      "status": 200,
+      "effective_url": "https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html",
+      "response_sha256": "b3e883758e548212d8e44c8bc9f83074aae0efa06ac2b592e3596e51fbdb8639",
+      "response_bytes": 935820,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E23.txt",
+      "retained_sha256": "d7059bd8030f5bea05776cd2475415f5be49e2ce9ca9f57345e099a003a5ede2",
+      "matched_lines": 1156,
+      "total_text_lines": 5249,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "OASIS MQTT 3.1.1, OASIS Standard 29 October 2014",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E24",
+      "requested_url": "https://raw.githubusercontent.com/eclipse-sparkplug/sparkplug/master/specification/src/main/asciidoc/chapters/Sparkplug_5_Operational_Behavior.adoc",
+      "accessed_at": "2026-10-09T19:32:31.008589+00:00",
+      "terms": [
+        "reordering",
+        "Reorder Timeout",
+        "tck-id-operational-behavior-host-reordering",
+        "255",
+        "bdSeq",
+        "rebirth"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/eclipse-sparkplug/sparkplug/master/specification/src/main/asciidoc/chapters/Sparkplug_5_Operational_Behavior.adoc",
+      "response_sha256": "7c7772189ec538e9b01b9020fa47a465333d98b905a6910e53800eb920c3d58a",
+      "response_bytes": 78634,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E24.txt",
+      "retained_sha256": "487534c91159e9fd1adb0ffe53e832b2f96eac672bcc408c4209b260b83deffd",
+      "matched_lines": 213,
+      "total_text_lines": 874,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E25",
+      "requested_url": "https://api.github.com/repos/eclipse-sparkplug/sparkplug/tags?per_page=30",
+      "accessed_at": "2026-10-09T19:32:31.018136+00:00",
+      "terms": [
+        "name",
+        "sha"
+      ],
+      "status": 200,
+      "effective_url": "https://api.github.com/repos/eclipse-sparkplug/sparkplug/tags?per_page=30",
+      "response_sha256": "2ebc7c1b5b2402468294653b368e5007bc1a89e6d30643c281d7cbd70fc4e0a5",
+      "response_bytes": 907,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E25.txt",
+      "retained_sha256": "dd22759304018310af47ed627011587bdf542f1c30c2431d98e41eb9e17a2cc7",
+      "matched_lines": 1,
+      "total_text_lines": 1,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E26",
+      "requested_url": "https://api.github.com/repos/influxdata/telegraf/releases/tags/v1.36.1",
+      "accessed_at": "2026-10-09T19:32:31.022811+00:00",
+      "terms": [
+        "tag_name",
+        "published_at",
+        "created_at",
+        "name"
+      ],
+      "status": 200,
+      "effective_url": "https://api.github.com/repos/influxdata/telegraf/releases/tags/v1.36.1",
+      "response_sha256": "ea3654c6e1661e247e52b3c61f8ad9bb4b8dd70e4f618642b8211d0a22551b11",
+      "response_bytes": 10343,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E26.txt",
+      "retained_sha256": "d855bcc67144aaeb0601ea7e105d16a981f35ea59bb64ccbf47339f61109cb0c",
+      "matched_lines": 1,
+      "total_text_lines": 1,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E27",
+      "requested_url": "https://api.github.com/repos/prometheus/alertmanager/releases/tags/v0.28.1",
+      "accessed_at": "2026-10-09T19:32:31.244137+00:00",
+      "terms": [
+        "tag_name",
+        "published_at",
+        "created_at",
+        "name"
+      ],
+      "status": 200,
+      "effective_url": "https://api.github.com/repos/prometheus/alertmanager/releases/tags/v0.28.1",
+      "response_sha256": "fb38d3fa2c75b4fbab0050856bd7fd2bbc1a9a2adf5abfdeb0f1803fd70c3501",
+      "response_bytes": 60554,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E27.txt",
+      "retained_sha256": "b5ffbe5551da290a01293913ad3bdb5a7052ac143d76f12d30d0fb71a52c8407",
+      "matched_lines": 1,
+      "total_text_lines": 1,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E28",
+      "requested_url": "https://docs.ntfy.sh/config/",
+      "accessed_at": "2026-10-09T19:32:31.249268+00:00",
+      "terms": [
+        "visitor-request-limit-burst",
+        "visitor-request-limit-replenish",
+        "cache-duration",
+        "attachment-expiry-duration"
+      ],
+      "status": 200,
+      "effective_url": "https://docs.ntfy.sh/config/",
+      "response_sha256": "1f9c12d83bb60b53ed9d5509c556b7ae25294a09550080462d05885baed8ea1e",
+      "response_bytes": 249153,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E28.txt",
+      "retained_sha256": "d03bfee905bb795ae6eeee4ffb0df3233a940fcb47c742903662416e17dc2245",
+      "matched_lines": 130,
+      "total_text_lines": 1508,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E29",
+      "requested_url": "https://raw.githubusercontent.com/eclipse-sparkplug/sparkplug/8b76877131203e88eaa9f5415e6a55f1a8470d74/specification/src/main/asciidoc/chapters/Sparkplug_5_Operational_Behavior.adoc",
+      "accessed_at": "2026-10-09T19:33:35.585671+00:00",
+      "terms": [
+        "host-reordering",
+        "Reorder Timeout",
+        "255",
+        "bdSeq number allows",
+        "will be set to a STALE",
+        "rebirth-action"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/eclipse-sparkplug/sparkplug/8b76877131203e88eaa9f5415e6a55f1a8470d74/specification/src/main/asciidoc/chapters/Sparkplug_5_Operational_Behavior.adoc",
+      "response_sha256": "7c7772189ec538e9b01b9020fa47a465333d98b905a6910e53800eb920c3d58a",
+      "response_bytes": 78634,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E29.txt",
+      "retained_sha256": "067b418173c4bda7bf3839c0ec17072074d641eaf822845e8386fcaec455a9f3",
+      "matched_lines": 106,
+      "total_text_lines": 874,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Sparkplug v3.0.0, tag commit 8b76877131203e88eaa9f5415e6a55f1a8470d74 (E25)",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E30",
+      "requested_url": "https://raw.githubusercontent.com/prometheus/alertmanager/v0.28.1/go.mod",
+      "accessed_at": "2026-10-09T19:33:35.586412+00:00",
+      "terms": [
+        "prometheus/common"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/prometheus/alertmanager/v0.28.1/go.mod",
+      "response_sha256": "4dc6eee63a83570f1da577b1fea1f6f5dfd3b7e9c1a5581ee8ca7f7cdf90651e",
+      "response_bytes": 4300,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E30.txt",
+      "retained_sha256": "d178f0e9aae5be55f297e42a2b5bdd3c91cf429b2d41d7fbfc9d3641652fd07d",
+      "matched_lines": 11,
+      "total_text_lines": 99,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Alertmanager v0.28.1 go.mod",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E31",
+      "requested_url": "https://raw.githubusercontent.com/influxdata/telegraf/v1.36.1/plugins/inputs/mqtt_consumer/mqtt_consumer_test.go",
+      "accessed_at": "2026-10-09T19:33:35.587137+00:00",
+      "terms": [
+        "persistent_session",
+        "client_id",
+        "TestMQTTConsumerInit",
+        "MaxUndeliveredMessages"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/influxdata/telegraf/v1.36.1/plugins/inputs/mqtt_consumer/mqtt_consumer_test.go",
+      "response_sha256": "3bc398efe6b7bf6734e00520d5522e4a2e8c1de9035ff44ef8bf2111972be768",
+      "response_bytes": 27311,
+      "matched_lines": 50,
+      "total_text_lines": 928,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Telegraf v1.36.1 tests, read as source only",
+      "retention_note": "Auxiliary code/test search produced no distinct necessary finding; scratch extraction removed."
+    },
+    {
+      "id": "E32",
+      "requested_url": "https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/v1.107.0/app/victoria-metrics/main.go",
+      "accessed_at": "2026-10-09T19:33:35.594273+00:00",
+      "terms": [
+        "retentionPeriod",
+        "dedup.minScrapeInterval"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/v1.107.0/app/victoria-metrics/main.go",
+      "response_sha256": "1ac18bcc49a508f9b0b079d879b457fd6a44b8b0483ff2fe999be5f2234490c6",
+      "response_bytes": 6160,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E32.txt",
+      "retained_sha256": "7edc9d0ff7d72263a3e07b97ec4d7843ac7da97d913a461fe0d752416e061395",
+      "matched_lines": 11,
+      "total_text_lines": 137,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "VictoriaMetrics v1.107.0",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E33",
+      "requested_url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/",
+      "accessed_at": "2026-10-09T19:33:35.596169+00:00",
+      "terms": [
+        "Downsampling",
+        "enterprise binaries",
+        "enterprise version",
+        "-retentionPeriod=1y"
+      ],
+      "status": 200,
+      "effective_url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/",
+      "response_sha256": "631bcd7ab8ae2dd3f5101267a567272ef6fff55e458b452b7db05bdf994c8424",
+      "response_bytes": 950760,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E33.txt",
+      "retained_sha256": "620d3ffbce6ddd3d316318131213e906f891039209b8e4a29f2c107bd4058814",
+      "matched_lines": 259,
+      "total_text_lines": 4197,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E34",
+      "requested_url": "https://github.com/RapidScada/scada-v6",
+      "accessed_at": "2026-10-09T19:33:35.732091+00:00",
+      "terms": [
+        "ScadaComm",
+        "ScadaServer",
+        "ScadaWeb"
+      ],
+      "status": 200,
+      "effective_url": "https://github.com/RapidScada/scada-v6",
+      "response_sha256": "958a04ded3e20b7c7f64fcae2bca7e995200d2c8d5dad965cdce3b16d6dfcf24",
+      "response_bytes": 284137,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E34.txt",
+      "retained_sha256": "900826a7e3867a3fa2111da82198f3fb7f66d5978af91ae5d0879e453e79951b",
+      "matched_lines": 21,
+      "total_text_lines": 231,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E35",
+      "requested_url": "https://raw.githubusercontent.com/target/goalert/master/docs/getting-started.md",
+      "accessed_at": "2026-10-09T19:33:35.744125+00:00",
+      "terms": [
+        "Alertmanager",
+        "Twilio",
+        "SMS",
+        "voice",
+        "acknowledge"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/target/goalert/master/docs/getting-started.md",
+      "response_sha256": "486fa9f852114da2bbcd6add3a2433860b156a44af34b8eb10d6c5b580aa039f",
+      "response_bytes": 27487,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E35.txt",
+      "retained_sha256": "a6ef86ae70711121fdf633740024363f40567763b9eb7bbdcea15c51e7c37caa",
+      "matched_lines": 35,
+      "total_text_lines": 212,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E36",
+      "requested_url": "https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/v1.107.0/app/vmalert/notifier/alert.go",
+      "accessed_at": "2026-10-09T19:34:15.002298+00:00",
+      "terms": [
+        "EndsAt",
+        "Start",
+        "end",
+        "Alert struct"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/v1.107.0/app/vmalert/notifier/alert.go",
+      "response_sha256": "0a449f19d0c836df64555dd3e3178955d0b72bb944eb202e5b26380968f29dd1",
+      "response_bytes": 5923,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E36.txt",
+      "retained_sha256": "c5adf4e208ace349847c9d21f75eadd6cc32b1f5b2e1758d89adc58ab4d97204",
+      "matched_lines": 66,
+      "total_text_lines": 182,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "VictoriaMetrics v1.107.0",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E37",
+      "requested_url": "https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/v1.107.0/app/vmalert/notifier/alertmanager.go",
+      "accessed_at": "2026-10-09T19:34:15.003543+00:00",
+      "terms": [
+        "end",
+        "EndsAt",
+        "Marshal",
+        "Alert"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/v1.107.0/app/vmalert/notifier/alertmanager.go",
+      "response_sha256": "43fa39a07f40538990f1c975c8826c79a057979c5fe1c423229319fe3e0fc7ce",
+      "response_bytes": 4771,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E37.txt",
+      "retained_sha256": "0be50bc5c5d3bfcc5186aeef3d4e67525b4267d751a7f520905398fc0d5a3c5a",
+      "matched_lines": 109,
+      "total_text_lines": 149,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "VictoriaMetrics v1.107.0",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E38",
+      "requested_url": "https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/v1.107.0/app/vmalert/rule/alerting.go",
+      "accessed_at": "2026-10-09T19:34:15.008665+00:00",
+      "terms": [
+        "EndsAt",
+        "resolveDuration",
+        "ResolvedAt",
+        "Resolved",
+        "notifier.Alert"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/v1.107.0/app/vmalert/rule/alerting.go",
+      "response_sha256": "d9f7159fccf794092b9464a683e24f9ca486add486c561ce205aeebb5d72db63",
+      "response_bytes": 25152,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E38.txt",
+      "retained_sha256": "6a74cb665aa42b12e5492ba598a530e837f91918a8e13584d38d56fa7d755e13",
+      "matched_lines": 228,
+      "total_text_lines": 721,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "VictoriaMetrics v1.107.0",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    },
+    {
+      "id": "E39",
+      "requested_url": "https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/v1.107.0/lib/storage/storage.go",
+      "accessed_at": "2026-10-09T19:34:15.010769+00:00",
+      "terms": [
+        "dedup.minScrapeInterval",
+        "minScrapeInterval"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/v1.107.0/lib/storage/storage.go",
+      "response_sha256": "76df0c4701892697b552b8cbc26bf447f7048fc0db90c418b36a9400979addfe",
+      "response_bytes": 87761,
+      "matched_lines": 0,
+      "total_text_lines": 2390,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "VictoriaMetrics v1.107.0",
+      "retention_note": "Auxiliary code/test search produced no distinct necessary finding; scratch extraction removed."
+    },
+    {
+      "id": "E40",
+      "requested_url": "https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/v1.107.0/app/vmalert/notifier/alertmanager_request.qtpl",
+      "accessed_at": "2026-10-09T19:35:09.836809+00:00",
+      "terms": [
+        "endsAt",
+        "startsAt",
+        "End",
+        "Start"
+      ],
+      "status": 200,
+      "effective_url": "https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/v1.107.0/app/vmalert/notifier/alertmanager_request.qtpl",
+      "response_sha256": "dad8164b8410b64c0105f78265eacd15e82294ca5d5adf22255a331e062cf492",
+      "response_bytes": 1102,
+      "retained_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E40.txt",
+      "retained_sha256": "6ade9eed261da19045b7b73b331c4a32363932ecbd2400ffc0b74e1fe71e6e93",
+      "matched_lines": 29,
+      "total_text_lines": 35,
+      "operations": "HTTP GET; text/HTML parsing; bounded term-context extraction; no runtime execution",
+      "version_or_commit": "VictoriaMetrics v1.107.0",
+      "retention_note": "Raw extraction replaced by bounded semantic notes; fetched response hash retained. No full raw source capture remains."
+    }
+  ],
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim": "MQTT duplicate delivery versus application event identity; application measurement time is separate from transport",
+      "evidence": [
+        {
+          "source_id": "E23",
+          "url": "https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html",
+          "version_or_commit": "OASIS MQTT 3.1.1, OASIS Standard 29 October 2014",
+          "section_or_symbol": "QoS 1 delivery; PUBLISH payload; section 4.6 ordering",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E23.txt"
+        }
+      ],
+      "judgment": "supported with scope: MQTT provides ordered-topic guarantees; it does not solve late measurement ordering or application duplicates"
+    },
+    {
+      "claim_id": "C02",
+      "claim": "Mosquitto persistence false, autosave 1800 seconds, queue 1000, inflight 20/1",
+      "evidence": [
+        {
+          "source_id": "E01",
+          "url": "https://mosquitto.org/man/mosquitto-conf-5.html",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "General Options",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E01.txt"
+        }
+      ],
+      "judgment": "numeric defaults supported; queue/session/stop-mode qualifications evaluated"
+    },
+    {
+      "claim_id": "C03",
+      "claim": "Telegraf QoS 0, persistent_session false, max_undelivered_messages 1000",
+      "evidence": [
+        {
+          "source_id": "E02",
+          "url": "https://raw.githubusercontent.com/influxdata/telegraf/master/plugins/inputs/mqtt_consumer/README.md",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "Configuration",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E02.txt"
+        },
+        {
+          "source_id": "E20",
+          "url": "https://raw.githubusercontent.com/influxdata/telegraf/v1.36.1/plugins/inputs/mqtt_consumer/README.md",
+          "version_or_commit": "Telegraf v1.36.1",
+          "section_or_symbol": "v1.36.1 Configuration",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E20.txt"
+        }
+      ],
+      "judgment": "defaults supported; stable identity/QoS dependency missing (M1), flow-control interpretation wrong (M3)"
+    },
+    {
+      "claim_id": "C04",
+      "claim": "VM greatest timestamp per discrete interval, greatest value on exact ties, equal label sets, numeric over stale, merge/query-time and ingestion-time variants",
+      "evidence": [
+        {
+          "source_id": "E09",
+          "url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "Deduplication",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E09.txt"
+        },
+        {
+          "source_id": "E32",
+          "url": "https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/v1.107.0/app/victoria-metrics/main.go",
+          "version_or_commit": "VictoriaMetrics v1.107.0",
+          "section_or_symbol": "minScrapeInterval default 0",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E32.txt"
+        }
+      ],
+      "judgment": "main comparison supported; smaller corrected-value counterexample is relevant; final loses ingestion-time alternative (m2); default externally checkable"
+    },
+    {
+      "claim_id": "C05",
+      "claim": "QuestDB full-row compare/upsert, WAL, designated timestamp in keys, late enablement affects new inserts only",
+      "evidence": [
+        {
+          "source_id": "E08",
+          "url": "https://questdb.com/docs/concepts/deduplication/",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "How it works; Requirements; Enable on existing table",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E08.txt"
+        }
+      ],
+      "judgment": "supported; final repairs the before-first-data overstatement"
+    },
+    {
+      "claim_id": "C06",
+      "claim": "ThingsBoard alarm start time, ack time/user, automatic comments, clear retains history, active originator/type uniqueness and severity upgrade",
+      "evidence": [
+        {
+          "source_id": "E07",
+          "url": "https://thingsboard.io/docs/user-guide/alarms/",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "Alarm Properties; Alarm States; Alarm Comments; Acknowledge and Clear",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E07.txt"
+        }
+      ],
+      "judgment": "supported as documented features; start-time property does not prove a last-value/out-of-order rule implementation"
+    },
+    {
+      "claim_id": "C07",
+      "claim": "Healthchecks dead-man Period/Grace and self-hosted open-source stack",
+      "evidence": [
+        {
+          "source_id": "E13",
+          "url": "https://raw.githubusercontent.com/healthchecks/healthchecks/master/README.md",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "Introduction and Period/Grace",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E13.txt"
+        }
+      ],
+      "judgment": "supported; HTTP-ping mechanism needs an adapter/placement decision for gauge telemetry, retained as a pattern"
+    },
+    {
+      "claim_id": "C08",
+      "claim": "Alertmanager routing/grouping defaults and ... aggregation exception",
+      "evidence": [
+        {
+          "source_id": "E04",
+          "url": "https://prometheus.io/docs/alerting/latest/configuration/",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "route defaults and global.resolve_timeout",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E04.txt"
+        },
+        {
+          "source_id": "E21",
+          "url": "https://docs.victoriametrics.com/victoriametrics/vmalert/",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "vmalert Rules",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E21.txt"
+        }
+      ],
+      "judgment": "main routing behavior supported; evaluator versus router correction valid; resolve_timeout exception lost (m1)"
+    },
+    {
+      "claim_id": "C09",
+      "claim": "Alertmanager webhook repetitions, groupKey and fingerprint as audit dedup identities",
+      "evidence": [
+        {
+          "source_id": "E04",
+          "url": "https://prometheus.io/docs/alerting/latest/configuration/",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "repeat_interval and webhook payload",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E04.txt"
+        },
+        {
+          "source_id": "E06",
+          "url": "https://raw.githubusercontent.com/prometheus/alertmanager/v0.28.1/dispatch/dispatch.go",
+          "version_or_commit": "Alertmanager v0.28.1",
+          "section_or_symbol": "GroupKey",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E06.txt"
+        },
+        {
+          "source_id": "E18",
+          "url": "https://raw.githubusercontent.com/prometheus/common/v0.61.0/model/alert.go",
+          "version_or_commit": "prometheus/common v0.61.0; exact dependency of Alertmanager v0.28.1 (E30)",
+          "section_or_symbol": "Fingerprint",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E18.txt"
+        }
+      ],
+      "judgment": "repeat handling supported; occurrence collision refutes stated sufficiency (M2)"
+    },
+    {
+      "claim_id": "C10",
+      "claim": "Mosquitto 2.0 release changes loopback and configured-listener anonymous-auth defaults",
+      "evidence": [
+        {
+          "source_id": "E10",
+          "url": "https://mosquitto.org/blog/2020/12/version-2-0-0-released/",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "2020-12-03 Breaking changes",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E10.txt"
+        }
+      ],
+      "judgment": "supported evolution chain; explicit listener/security choice applies to remote gauges"
+    },
+    {
+      "claim_id": "C11",
+      "claim": "Grafana OnCall maintenance, README archive and GitHub read-only dates; successor cloud product",
+      "evidence": [
+        {
+          "source_id": "E11",
+          "url": "https://github.com/grafana-cold-storage/oncall",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "repository archive banner and README",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E11.txt"
+        }
+      ],
+      "judgment": "three distinct documented dates supported; rejecting a retired base for a new project is justified"
+    },
+    {
+      "claim_id": "C12",
+      "claim": "ntfy message size and attachment conversion/expiry; rate/cache uncertainties",
+      "evidence": [
+        {
+          "source_id": "E12",
+          "url": "https://docs.ntfy.sh/publish/",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "Attach local file and Limitations",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E12.txt"
+        },
+        {
+          "source_id": "E28",
+          "url": "https://docs.ntfy.sh/config/",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "server configuration limits/cache",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E28.txt"
+        }
+      ],
+      "judgment": "4096-byte and default 3-hour facts supported; defaults configurable; rate limit exists in publish docs, so not externally unknowable"
+    },
+    {
+      "claim_id": "C13",
+      "claim": "InfluxDB 3 Core GA April 2025, licenses, legacy branches; unresolved duplication semantics",
+      "evidence": [
+        {
+          "source_id": "E14",
+          "url": "https://github.com/influxdata/influxdb",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "Project Status; Other Versions; License",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E14.txt"
+        }
+      ],
+      "judgment": "product/evolution facts supported; holding unverified write semantics as optional is appropriate, not a resolved selection"
+    },
+    {
+      "claim_id": "C14",
+      "claim": "FUXA MIT/protocols/SQLite-Influx historian; Rapid SCADA v6 Apache standard and component family",
+      "evidence": [
+        {
+          "source_id": "E15",
+          "url": "https://raw.githubusercontent.com/frangoteam/FUXA/master/README.md",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "Features and License",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E15.txt"
+        },
+        {
+          "source_id": "E16",
+          "url": "https://raw.githubusercontent.com/RapidScada/scada-v6/master/README.md",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "License and module extensibility",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E16.txt"
+        },
+        {
+          "source_id": "E34",
+          "url": "https://github.com/RapidScada/scada-v6",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "repository component directories",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E34.txt"
+        }
+      ],
+      "judgment": "discovery supported; FUXA alarms and Rapid module licensing/function specifics remain qualified, not proven stack equivalence"
+    },
+    {
+      "claim_id": "C15",
+      "claim": "GoAlert on-call/escalation/SMS/voice and self-hosted alternative",
+      "evidence": [
+        {
+          "source_id": "E17",
+          "url": "https://raw.githubusercontent.com/target/goalert/master/README.md",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "README",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E17.txt"
+        },
+        {
+          "source_id": "E35",
+          "url": "https://raw.githubusercontent.com/target/goalert/master/docs/getting-started.md",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "Getting Started/Twilio",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E35.txt"
+        }
+      ],
+      "judgment": "useful supported lead; user/history specifics not proven; SMS/voice external-provider condition absent (m6)"
+    },
+    {
+      "claim_id": "C16",
+      "claim": "Sparkplug 3.0 sequence wrap, conditional reorder timeout/rebirth, birth/death correlation",
+      "evidence": [
+        {
+          "source_id": "E29",
+          "url": "https://raw.githubusercontent.com/eclipse-sparkplug/sparkplug/8b76877131203e88eaa9f5415e6a55f1a8470d74/specification/src/main/asciidoc/chapters/Sparkplug_5_Operational_Behavior.adoc",
+          "version_or_commit": "Sparkplug v3.0.0, tag commit 8b76877131203e88eaa9f5415e6a55f1a8470d74 (E25)",
+          "section_or_symbol": "tagged operational behavior clauses",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E29.txt"
+        },
+        {
+          "source_id": "E25",
+          "url": "https://api.github.com/repos/eclipse-sparkplug/sparkplug/tags?per_page=30",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "v3.0.0 tag mapping",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E25.txt"
+        }
+      ],
+      "judgment": "main optional lead supported after reviewer check; application-specific host behavior remains conditional; candidate qualification honest, asserted PDF prohibition invalid"
+    },
+    {
+      "claim_id": "C17",
+      "claim": "One-year retention, raw/downsample conditions, backfill boundary and sizing",
+      "evidence": [
+        {
+          "source_id": "E09",
+          "url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "Starting VictoriaMetrics; Retention; resource sizing",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E09.txt"
+        },
+        {
+          "source_id": "E22",
+          "url": "https://thingsboard.io/docs/recipes/configure-telemetry-ttl/",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "PostgreSQL TTL",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E22.txt"
+        },
+        {
+          "source_id": "E33",
+          "url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "Downsampling",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E33.txt"
+        }
+      ],
+      "judgment": "P5 capability supported; selected-engine default unexamined (M4); tiered option requires edition condition (m6); no universal bytes/sample asserted"
+    },
+    {
+      "claim_id": "C18",
+      "claim": "Clock discipline and gateway stamping as event-time design conditions",
+      "evidence": [
+        {
+          "source_id": "E23",
+          "url": "https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html",
+          "version_or_commit": "OASIS MQTT 3.1.1, OASIS Standard 29 October 2014",
+          "section_or_symbol": "PUBLISH payload opaque to transport",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E23.txt"
+        },
+        {
+          "source_id": "E07",
+          "url": "https://thingsboard.io/docs/user-guide/alarms/",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "Start Time",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E07.txt"
+        }
+      ],
+      "judgment": "sound engineering inference, not a protocol requirement that all physical gauges must implement NTP; alternate gateway stamping retained"
+    },
+    {
+      "claim_id": "C19",
+      "claim": "Every P disposition and every validation V1-V8",
+      "evidence": [
+        {
+          "source_id": "E01",
+          "url": "https://mosquitto.org/man/mosquitto-conf-5.html",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "persistence shutdown behavior",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E01.txt"
+        },
+        {
+          "source_id": "E08",
+          "url": "https://questdb.com/docs/concepts/deduplication/",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "upsert semantics",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E08.txt"
+        },
+        {
+          "source_id": "E09",
+          "url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "dedup and retention",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E09.txt"
+        },
+        {
+          "source_id": "E07",
+          "url": "https://thingsboard.io/docs/user-guide/alarms/",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "alarm properties/history",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E07.txt"
+        },
+        {
+          "source_id": "E04",
+          "url": "https://prometheus.io/docs/alerting/latest/configuration/",
+          "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+          "section_or_symbol": "route/webhook behavior",
+          "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E04.txt"
+        }
+      ],
+      "judgment": "reviewed individually below; no runtime results available or inferred from retrieval/exit status"
+    }
+  ],
+  "material_finding_source_links": {
+    "M1": [
+      {
+        "source_id": "E02",
+        "url": "https://raw.githubusercontent.com/influxdata/telegraf/master/plugins/inputs/mqtt_consumer/README.md",
+        "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+        "section_or_symbol": "persistent_session/client_id/qos configuration comments",
+        "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E02.txt"
+      },
+      {
+        "source_id": "E03",
+        "url": "https://raw.githubusercontent.com/influxdata/telegraf/v1.36.1/plugins/inputs/mqtt_consumer/mqtt_consumer.go",
+        "version_or_commit": "Telegraf v1.36.1; release published 2025-09-09 (E26)",
+        "section_or_symbol": "MQTTConsumer.Init; createOpts; onDelivered",
+        "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E03.txt"
+      },
+      {
+        "source_id": "E20",
+        "url": "https://raw.githubusercontent.com/influxdata/telegraf/v1.36.1/plugins/inputs/mqtt_consumer/README.md",
+        "version_or_commit": "Telegraf v1.36.1",
+        "section_or_symbol": "persistent_session/client_id publishing and subscription QoS conditions",
+        "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E20.txt"
+      }
+    ],
+    "M2": [
+      {
+        "source_id": "E04",
+        "url": "https://prometheus.io/docs/alerting/latest/configuration/",
+        "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+        "section_or_symbol": "webhook_config groupKey, alerts.fingerprint, startsAt, endsAt",
+        "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E04.txt"
+      },
+      {
+        "source_id": "E06",
+        "url": "https://raw.githubusercontent.com/prometheus/alertmanager/v0.28.1/dispatch/dispatch.go",
+        "version_or_commit": "Alertmanager v0.28.1",
+        "section_or_symbol": "aggrGroup.GroupKey",
+        "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E06.txt"
+      },
+      {
+        "source_id": "E18",
+        "url": "https://raw.githubusercontent.com/prometheus/common/v0.61.0/model/alert.go",
+        "version_or_commit": "prometheus/common v0.61.0; exact dependency of Alertmanager v0.28.1 (E30)",
+        "section_or_symbol": "model.Alert.Fingerprint",
+        "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E18.txt"
+      },
+      {
+        "source_id": "E30",
+        "url": "https://raw.githubusercontent.com/prometheus/alertmanager/v0.28.1/go.mod",
+        "version_or_commit": "Alertmanager v0.28.1 go.mod",
+        "section_or_symbol": "prometheus/common v0.61.0 dependency",
+        "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E30.txt"
+      }
+    ],
+    "M3": [
+      {
+        "source_id": "E01",
+        "url": "https://mosquitto.org/man/mosquitto-conf-5.html",
+        "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+        "section_or_symbol": "max_queued_messages; max_queued_bytes; persistence",
+        "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E01.txt"
+      },
+      {
+        "source_id": "E03",
+        "url": "https://raw.githubusercontent.com/influxdata/telegraf/v1.36.1/plugins/inputs/mqtt_consumer/mqtt_consumer.go",
+        "version_or_commit": "Telegraf v1.36.1; release published 2025-09-09 (E26)",
+        "section_or_symbol": "Start creates bounded semaphore; onMessage blocks on semaphore; onDelivered releases slot",
+        "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E03.txt"
+      },
+      {
+        "source_id": "E02",
+        "url": "https://raw.githubusercontent.com/influxdata/telegraf/master/plugins/inputs/mqtt_consumer/README.md",
+        "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+        "section_or_symbol": "max_undelivered_messages relation to metric_batch_size",
+        "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E02.txt"
+      }
+    ],
+    "M4": [
+      {
+        "source_id": "E09",
+        "url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/",
+        "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+        "section_or_symbol": "Starting VictoriaMetrics: retentionPeriod default; Retention: backfill acceptance and unit suffixes",
+        "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E09.txt"
+      },
+      {
+        "source_id": "E22",
+        "url": "https://thingsboard.io/docs/recipes/configure-telemetry-ttl/",
+        "version_or_commit": "Mutable public document/branch captured independently on 2026-10-09; response digest identifies the fetched edition, not a release pin",
+        "section_or_symbol": "PostgreSQL SQL_TTL_TS_TS_KEY_VALUE_TTL and cleanup interval",
+        "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M12-B/evidence/E22.txt"
+      }
+    ]
+  },
+  "critic_adjudication": [
+    {
+      "criticism_id": "F1",
+      "reviewer_verdict": "partly accept, reject literal total-absence premise",
+      "locators": "critic 26-37; draft 91-93; final 301",
+      "reasoning": "Payload measurement time should be explicit at the ingest boundary. But the draft already required the CSV schema to carry device ID, telemetry timestamp and value and described payload-aware replay. Thus never explicit anywhere is overstated. The final clarification is useful; a full scientific grade should not rely on the critic's faulty universal premise.",
+      "evidence_ids": [
+        "E23",
+        "E02"
+      ]
+    },
+    {
+      "criticism_id": "F2",
+      "reviewer_verdict": "accept with qualification",
+      "locators": "critic 38-44; final 183-185,302",
+      "reasoning": "Clock error affects event-time ordering and staleness windows. No clock handling was in the predecessor. Gateway stamping is a retained alternative; NTP on every physical sensor is not an externally mandated product requirement.",
+      "evidence_ids": [
+        "E23",
+        "E07"
+      ]
+    },
+    {
+      "criticism_id": "F3",
+      "reviewer_verdict": "accept retained qualification; reject claimed retrieval prohibition",
+      "locators": "critic 45-52,155-157; final 53-57,303",
+      "reasoning": "Honest optional-lead confidence is correct. The assignment bans executable/installers, not PDF evidence. Public tagged AsciiDoc directly supports the conditional mechanism, so verification was feasible without a binary.",
+      "evidence_ids": [
+        "E29",
+        "E25"
+      ]
+    },
+    {
+      "criticism_id": "F4",
+      "reviewer_verdict": "accept QuestDB amendment; reject implication VM needs before-first-data",
+      "locators": "critic 53-60; draft 13; final 127-132,304",
+      "reasoning": "QuestDB enables on an existing table but does not retroactively dedup existing rows. VM query/merge dedup applies to already stored data. The final's engine-specific wording is better than both the draft common condition and critic's suggestion VM was closer to requiring early enablement.",
+      "evidence_ids": [
+        "E08",
+        "E09"
+      ]
+    },
+    {
+      "criticism_id": "F5",
+      "reviewer_verdict": "accept as useful additional discriminator",
+      "locators": "critic 61-68; final 285-287,305",
+      "reasoning": "V1 tests VM greatest-value tie breaking. V8 tests QuestDB keyed replacement of a smaller corrected value. This strengthens the decision without implying every optional product needs a full suite.",
+      "evidence_ids": [
+        "E08",
+        "E09"
+      ]
+    },
+    {
+      "criticism_id": "F6",
+      "reviewer_verdict": "accept correlation/noise concern, qualify causal inference",
+      "locators": "critic 72-77; final 176-179,306",
+      "reasoning": "A shared outage can produce many stale signals. Group batching is supported; concluding one pipeline-down cause is a further product rule requiring pipeline evidence and scope, not a property of group_by.",
+      "evidence_ids": [
+        "E04",
+        "E06"
+      ]
+    },
+    {
+      "criticism_id": "F7",
+      "reviewer_verdict": "accept",
+      "locators": "critic 78-82; draft 75; final 218-227,307",
+      "reasoning": "No cadence or resource measurements justify a year is modest. The final removes that phrase and keeps synthetic sizing proposed. The reviewer does not demand fabricated bytes/sample.",
+      "evidence_ids": [
+        "E09"
+      ]
+    },
+    {
+      "criticism_id": "F8",
+      "reviewer_verdict": "accept",
+      "locators": "critic 83-86; final 154-158,308",
+      "reasoning": "vmalert/Prometheus evaluate expressions; Alertmanager routes/groups. The final corrects the loose naming.",
+      "evidence_ids": [
+        "E04",
+        "E21"
+      ]
+    },
+    {
+      "criticism_id": "F9",
+      "reviewer_verdict": "accept historical verification distinction, reject epistemic promotion of critic non-fetch",
+      "locators": "critic 87-90; final 157-158,309",
+      "reasoning": "The sentence exists both in the frozen research excerpt and independently fetched primary configuration. Critic not re-capturing it does not make the behavior unsupported. Retaining the caveat is harmless; evidence agreement/count is not a validity oracle.",
+      "evidence_ids": [
+        "E04"
+      ]
+    },
+    {
+      "criticism_id": "F10",
+      "reviewer_verdict": "accept repeat-delivery concern, reject sufficient-key amendment",
+      "locators": "critic 91-95; final 199-201,310",
+      "reasoning": "Repeat notifications need handling, but groupKey+fingerprint+status omits incident occurrence and collapses recurrence. The source functions refute sufficiency; accepting this critic proposal introduced M2.",
+      "evidence_ids": [
+        "E04",
+        "E06",
+        "E18",
+        "E30"
+      ]
+    },
+    {
+      "criticism_id": "F11",
+      "reviewer_verdict": "accept retained alternative-specific uncertainty",
+      "locators": "critic 96-97; final 68-70,204-206,311",
+      "reasoning": "README supports on-call/escalations, not a fully researched acknowledgement history/conflict model. The final keeps that caveat, so optional GoAlert uncertainty is not itself a material failure.",
+      "evidence_ids": [
+        "E17",
+        "E35"
+      ]
+    },
+    {
+      "criticism_id": "F12",
+      "reviewer_verdict": "accept scope/user-decision treatment; reject evidence-absence as universal security restriction",
+      "locators": "critic 98-101; final 137-142,312",
+      "reasoning": "TLS choices need not be completely specified for this brief. Absence in retained excerpts is not absence of primary documentation: the Mosquitto man page and Telegraf README contain TLS/auth material. The final makes no unsupported specific posture recommendation.",
+      "evidence_ids": [
+        "E01",
+        "E02"
+      ]
+    },
+    {
+      "criticism_id": "F13",
+      "reviewer_verdict": "accept",
+      "locators": "critic 102-106; final 62-66,313",
+      "reasoning": "README maintenance 2025-03-11/archive 2026-03-24 and GitHub read-only banner June 5 2026 are separate documented events. Excluding a retired product for a new dashboard is a justified planning decision.",
+      "evidence_ids": [
+        "E11"
+      ]
+    }
+  ],
+  "source_operations": {
+    "candidate_inputs": "Full reads; line-locator inspection; source-index/excerpt inspection; SHA-256/byte checks of every mapped file and hashing of permitted source-root files. Mapped digests all match.",
+    "independent_primary_retrieval": "HTTP GET and normalized text/code reading; web tool open/find/search for official primary evidence; explicit tags/releases and code dependencies checked. Full responses were not treated as runtime witnesses. Bounded semantic evidence notes retained with response hashes.",
+    "additional_public_operation": {
+      "url": "https://api.github.com/repos/VictoriaMetrics/VictoriaMetrics/contents/app/vmalert/notifier?ref=v1.107.0",
+      "operation": "HTTP GET directory listing to locate released alertmanager_request.qtpl; no code executed"
+    },
+    "runtime_witnesses_executed": []
+  },
+  "limitations": [
+    "Only exact assignment/map, S06 original brief/frozen plan, rubric, mapped same-block stage files and allowed source roots inspected for candidate science.",
+    "No campaign, other case/evaluation, private provider internals or candidate repair; no delegated workers, account/config changes, downloaded executable, Git/canon mutation or service startup.",
+    "Initial repository context inspection was limited to required Plans index and git status, not used as scientific evidence.",
+    "Reviewer uses independently retrieved primary documents/code/release metadata. Mutable redirects and release applicability are explicit.",
+    "All material control review scope completed. Treatment science cannot be assessed because the exact input declares it absent.",
+    "Response digests identify observed content. Semantic notes preserve the checked conclusions; no runtime, all-version, or deployed-system guarantees are inferred."
+  ]
+}

@@ -1,0 +1,2064 @@
+{
+  "schema": "ER11 independent source assessment source map v1",
+  "block": "A-M07-A",
+  "case": "S07",
+  "assignment_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-A/assignment.md",
+  "input_map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-A/input-map.json",
+  "evaluation_started_at": "2026-10-09T19:40:32Z",
+  "evaluation_completed_at": "2026-10-09T19:58:21Z",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-A/assignment.md",
+      "sha256": "f9f66e90f13e41be3c500637ebc0aca88ac18c7b5991c5a65ec1f263fbd77aed",
+      "bytes": 2170
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-A/input-map.json",
+      "sha256": "ef230c4870447ed6e2eba26effc023d5d38cacf70157840306a051bbc59f6075",
+      "bytes": 9633
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S07/brief.md",
+      "sha256": "11201a686d012432b0c60757835ab1e0f959b2fdcccd661911f0cac5c3c3bd7a",
+      "bytes": 1426
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S07/plan-root-only.md",
+      "sha256": "906fbabc0e9c4996064d210148f2784a1e161d38cce2f54aea992f2d4f7f7ee6",
+      "bytes": 331
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+      "sha256": "b6361ef6a3c2fdc45129e7349ca2c2409c6810ecc3340e6a662811440c9667e2",
+      "bytes": 25454
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/source-map.json",
+      "sha256": "236861c3593007117ab221f3905db9c8d9baba276e7bb235918bdcb8b6399267",
+      "bytes": 28860
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/assignment.md",
+      "sha256": "3b1980d75eeca6fcf6d2fc7e125e6d976c11eb664fb5ce2022e07881a0ed9b21",
+      "bytes": 2817
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/input-map.json",
+      "sha256": "1173fa27976725af10909670b0cd4ad9776457de67469b2db9542bbe395757b4",
+      "bytes": 1504
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/critic/critique.md",
+      "sha256": "758942d662676feb6d73acbd50cdbc86cc5f8802e6b06572eb6be44b32894944",
+      "bytes": 18482
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/critic/source-map.json",
+      "sha256": "eeeb89be47332f6759bf6799c7460ea7666ef6c8007bc46a2441a7b469180625",
+      "bytes": 23617
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/critic/assignment.md",
+      "sha256": "9e2da6c2a0540323ee54295378e0a0dd4264893679666f3d9c16e426e0f8c141",
+      "bytes": 2554
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/critic/input-map.json",
+      "sha256": "7c67cb72c2f9b353fb0d3a3e948c285f77ba3a0c563a14a825d9dcbe72b5f0ff",
+      "bytes": 1180
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/discovery.md",
+      "sha256": "b8252f291d9d644c61d6f4bd228917a230d6af4e60cd1977d65505277c936a2c",
+      "bytes": 20773
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/draft.md",
+      "sha256": "882fdf2c4fdc6366bd51a4570243c01ae9ac355e8fe55a4daff816e87983dce5",
+      "bytes": 17471
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/source-map.json",
+      "sha256": "d46362f463a7c2c15009c34fa1f15f16cef256f4a27a220fe0040e0daac423f8",
+      "bytes": 18011
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/revealed-plan.md",
+      "sha256": "906fbabc0e9c4996064d210148f2784a1e161d38cce2f54aea992f2d4f7f7ee6",
+      "bytes": 331
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/plan-reveal.json",
+      "sha256": "5099573b4760dd21ec4584de95e1a9e178ba31313f8aaf5d1d7fffa7edaad003",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/assignment.md",
+      "sha256": "a1cd637001c6ba71d2e6ee37a361a79887a32095998b5952f10f74b9446dd1f8",
+      "bytes": 3030
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/input-map.json",
+      "sha256": "0cb7de2292fd2c90e0c4838dfb29ac8972caa91946f109897072120c620322a7",
+      "bytes": 634
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/sources/index.md",
+      "sha256": "c4adf23e6ded9c8d41ad324b895d6923c97f0261298a74349eb1aa1158c07151",
+      "bytes": 1622
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/sources/evidence-notes.md",
+      "sha256": "71679ad2fbd1231cc73759177b100ca897cc0aa91cbe8c194ef17eded6e88afa",
+      "bytes": 29098
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/critic/sources/index.md",
+      "sha256": "d7cb36bf8b8774ac18a2f0219fdfc75223b9aceedbe7a92c31b915302e728f2b",
+      "bytes": 1773
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/critic/sources/evidence-notes.md",
+      "sha256": "1d646be8cdaa95701c7975cadcad9c726ac94ad52e9926ebff22748e72593b0e",
+      "bytes": 8518
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/sources/index.md",
+      "sha256": "8817112516207c7d667d8ace48e0ac92b053b136fc8d638430203fe49cb5ecaf",
+      "bytes": 1632
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/sources/evidence-notes.md",
+      "sha256": "da3177b4cda712c0ed9df824c66644d8c5a2223eb74d1936cd452c849e0ce519",
+      "bytes": 14897
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+      "sha256": "6e2906b1a2cd61787cbd2617ebafddfc36a722ab50d25c8c3aaffaea83013f1a",
+      "bytes": 29262
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/source-map.json",
+      "sha256": "07dbd3757d98fbbb0a173cb7a2f1bd8f96ecd5cd28d3de1ef1726dfdfc37db60",
+      "bytes": 30822
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/assignment.md",
+      "sha256": "71fef31ffe57d8a7d59f0727d770d21ca4085c687d32db9bd85ed966fc331016",
+      "bytes": 2934
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/input-map.json",
+      "sha256": "b336c648b1aa074a7a217d5a61b363a8d6a3caafebaf9e587a80aea504543e98",
+      "bytes": 1526
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/critique.md",
+      "sha256": "95425764662e2c7206684025c79e80c465b516633cd97626abdd147cfee7054d",
+      "bytes": 14621
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/source-map.json",
+      "sha256": "da30e2178fab4374ede1286af0b89cd623d6e0cdfab6339bfe30c135efe48263",
+      "bytes": 11267
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/assignment.md",
+      "sha256": "062a91bd00026876bc3a918ac2eb131ac8f128cc980c3f846cb706ffb5a28bb1",
+      "bytes": 2671
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/input-map.json",
+      "sha256": "d89e5399fdaf728e8f6c2055d6843d09f546dbe2531ae61d8be6f379d060aed9",
+      "bytes": 1196
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/discovery.md",
+      "sha256": "0e54d8edcfd9d05c01014f9e79173cdf68e6e879629a76d7e966528735b8d761",
+      "bytes": 20241
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/draft.md",
+      "sha256": "5a526c9cc6a1ee7dc4413430a7ed4738708b6cdaded8a64709aeb482ba692e35",
+      "bytes": 21453
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/source-map.json",
+      "sha256": "2d18708cb3a696d7329e62d848f4f026d0667b06e147f58c815949a67adde91e",
+      "bytes": 9021
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/revealed-plan.md",
+      "sha256": "906fbabc0e9c4996064d210148f2784a1e161d38cce2f54aea992f2d4f7f7ee6",
+      "bytes": 331
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/plan-reveal.json",
+      "sha256": "9202197acc9b795b0c2c03449165aeadf76b9b5241ee22f30fd87358fdddc3ef",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/assignment.md",
+      "sha256": "7beb975ea9f2ffa11d4ca64d2f804e6932bf7bfee6d06e3102505c16f98f3e5f",
+      "bytes": 3149
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/input-map.json",
+      "sha256": "0bf712d7b0da9da47555671d35e0f267d12b6d93516cdb7d325fb04e44a4cffa",
+      "bytes": 640
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/sources/R05-docusaurus-pr-10875.md",
+      "sha256": "fa70d906c9960a3a80aa8c4648a3bc968bf9839e7c173fde72fad952593c3a15",
+      "bytes": 1243
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/sources/index.md",
+      "sha256": "26b4e8c845db1c3a68975a9a916d531fe715e49e53b5eb4193778f645ebb3891",
+      "bytes": 2175
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/sources/R04-typesense-search-30.1.md",
+      "sha256": "f4813b248c2bbe91442211a01dcada4916acfc3fcbfa95fc39b423d30929b9e9",
+      "bytes": 1345
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/sources/R06-docusaurus-v3.8.0-release.md",
+      "sha256": "0493218cafce7f300cfaab71694a2cf2c1b513b43bc56c0718401e35e049d073",
+      "bytes": 1068
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/sources/R01-docusaurus-versioning.md",
+      "sha256": "8a51187f775e833f1a2abb5ce26f67f06d55c21ba386d3db4e6f277246c050f0",
+      "bytes": 1420
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/sources/R02-docusaurus-multi-instance.md",
+      "sha256": "889c4b5e16979729f9663daf161e15f4884fd063c92db73b15e9099384b970b9",
+      "bytes": 1364
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/sources/R03-antora-version-sorting.md",
+      "sha256": "9452b547df440a9d550d7d9c2b1b2f94ca8ed383ad90c6d5f660d9520d4d9f55",
+      "bytes": 1440
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/sources/exact-excerpts.json",
+      "sha256": "867260016b2b97f105d24187e0ff842f6d1dd23aaa37004d764b626efc9cb161",
+      "bytes": 3200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/sources/index.md",
+      "sha256": "f9a9997fce0a6b46a95d0cad19e42fa0d8858ef037379a90e235da5511f44483",
+      "bytes": 2028
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/sources/Q06-docusaurus-v3.8.0-release.md",
+      "sha256": "f6d011b5e8860f5342a71c24eadf353bab3689202e2d72fece0f8e735b601000",
+      "bytes": 927
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/sources/Q02-docusaurus-multi-instance.md",
+      "sha256": "f9fb43b2c6ecb40ebf7ebd57e6bac27251e1216bdb9b126380e594c4242b4ef7",
+      "bytes": 1421
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/sources/Q04-typesense-search-30.1.md",
+      "sha256": "4970a5bed780be270709295236abd84486069b4f72167da88a33389f1727dcbc",
+      "bytes": 1504
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/sources/Q03-antora-version-sorting.md",
+      "sha256": "000179650b1ecf8e1c0d7c760279a1f002c3f6db73c893d73ac4dc79be953c2a",
+      "bytes": 1415
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/sources/exact-excerpts.json",
+      "sha256": "6a04246b98c7ad95385daed6a758772dae84943209ea61cc0c412d2a1e149d96",
+      "bytes": 3182
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/sources/Q01-docusaurus-versioning.md",
+      "sha256": "896f9fa525bcd85db8fa5c5fadf4f23df3a42a1b1749f588046843da899af60a",
+      "bytes": 1501
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/sources/Q05-docusaurus-pr-10875.md",
+      "sha256": "af483c0d115e2fe2699b6f160daa0224b12e4d88f0c2e38201bc43ba08486fc2",
+      "bytes": 1203
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S06-antora-origin-metadata.md",
+      "sha256": "a20e8fa26db4f130b3ada2f681548b48e2863e04a59efa3b888e7d948db05047",
+      "bytes": 1138
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/index.md",
+      "sha256": "6b821e6b0f253e2883d92d15a92d45f2f8db6fde680a70e5e572e0992f07ea09",
+      "bytes": 3917
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S11-docusaurus-i18n-version-fix.md",
+      "sha256": "3dd95b7f35995d2af85b3a95dabc36b47555e0315591e41eab84608de5e468d4",
+      "bytes": 1421
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S05-antora-distributed-versions.md",
+      "sha256": "8e483f00aa6d6c0eec4974d514c0ea66f29f74a96b602c4d77d55bbbc87e2d90",
+      "bytes": 1386
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S07-docsearch-records-and-facets.md",
+      "sha256": "6b287e84d5205408b26a86daab34d115ea1c5bce10515dbcbc08ba120533963b",
+      "bytes": 1756
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S09-backstage-techdocs-source.md",
+      "sha256": "cfc6a56cee0302193783a7f72627ad17e231c8ea35287705ba89c622a0f7c385",
+      "bytes": 1552
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S12-docusaurus-380-release.md",
+      "sha256": "a272e502ce1f07a3a90275e2587050cb28737c24b78ec196349bb8bd20e27e7d",
+      "bytes": 794
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S08-typesense-search-30.1.md",
+      "sha256": "7bd05b7a245652ff6a03f3212908d871eaa64389bf654d538256f70ed96ba7db",
+      "bytes": 1861
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S10-backstage-techdocs-cicd.md",
+      "sha256": "6c290cd2c344c195276b54b3b7112511e1651fce2ff866966e521fc30588f113",
+      "bytes": 1459
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S01-docusaurus-versioning.md",
+      "sha256": "2e84993a21c23a949aeff5c3841cb3ecd83329125f1d4febda4421014e5e4d68",
+      "bytes": 1988
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/exact-excerpts.json",
+      "sha256": "8d658f82a7c493f71aabf595409af5a101f7f73b87f444ba04e9e2d2fd5482b2",
+      "bytes": 9910
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S02-docusaurus-i18n-introduction.md",
+      "sha256": "c533a961b7110059e7458f06a460a3b04d96ebdb0413ab148027a7dbf3253a73",
+      "bytes": 1646
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S03-docusaurus-i18n-tutorial.md",
+      "sha256": "93cfc4ea671d7fd6a10564d1affdd8e7cf6e8862f74d5a566b88d2bae3baf0d8",
+      "bytes": 1372
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S04-antora-descriptor.md",
+      "sha256": "11df198254153fc07686f2ff3d03ef9145f0b1ba93c4b2d91d70601e594b4a18",
+      "bytes": 1406
+    }
+  ],
+  "sources": [
+    {
+      "id": "E01",
+      "url": "https://docusaurus.io/docs/versioning",
+      "version": "Docusaurus docs 3.10.2",
+      "source_commit": null,
+      "locator": "Terminology; Tagging; Updating/Deleting; Configuring; Recommended practices",
+      "observation": "Current and latest describe different concepts and may align; lastVersion='current' is supported. CLI copies docs/sidebar/version metadata; copied folders remain editable/deletable. Active-version count guidance is advice, not a hard product limit.",
+      "observed_operations": [
+        "web open/find; full relevant sections inspected"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E02",
+      "url": "https://docusaurus.io/docs/docs-multi-instance",
+      "version": "Docusaurus docs 3.10.2",
+      "source_commit": null,
+      "locator": "Use-cases; Versioned paths; Tagging new versions",
+      "observation": "Separate plugin instances can have independent release lifecycles and version paths/commands. The docs warn about rebuilding very large instances together. Independent Git staging and compatible product releases are not supplied by this feature.",
+      "observed_operations": [
+        "web open/find"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E03",
+      "url": "https://docusaurus.io/docs/i18n/introduction",
+      "version": "Docusaurus docs 3.10.2",
+      "source_commit": null,
+      "locator": "Goals/non-goals; Translation files/location",
+      "observation": "Locale files are organized by locale/plugin; Markdown/MDX translations retain whole-document context. Automatic locale detection and translation SaaS are non-goals.",
+      "observed_operations": [
+        "web open/find"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E04",
+      "url": "https://docusaurus.io/docs/i18n/tutorial",
+      "version": "Docusaurus docs 3.10.2",
+      "source_commit": null,
+      "locator": "Translate docs; explicit heading IDs; deployment",
+      "observation": "Translated headings can change generated anchors; explicit heading IDs are recommended. Locale builds/routes do not establish translation completeness or release compatibility.",
+      "observed_operations": [
+        "web open/find"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E05",
+      "url": "https://docs.antora.org/antora/3.1/component-version-descriptor/",
+      "version": "Antora 3.1 docs",
+      "source_commit": null,
+      "locator": "Required/optional keys",
+      "observation": "name/version identify a component version; version can be inherited from the playbook or mapped from a ref. display_version is presentation metadata. The descriptor identifies the modules content root.",
+      "observed_operations": [
+        "web open/find"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E06",
+      "url": "https://docs.antora.org/antora/3.1/distributed-component-version/",
+      "version": "Antora 3.1 docs",
+      "source_commit": null,
+      "locator": "Distributed roots; optional keys; Conflicting files",
+      "observation": "Matching component versions can aggregate multiple repositories. Duplicate optional configuration may be unpredictable; duplicate resource IDs fail. This does not establish a compatible multi-codebase product release.",
+      "observed_operations": [
+        "web open/find; independent urllib read"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": "fd51758f6cf2ca1a1cb8eb24a88746c9e59a1c69d8535cb391f2731a0c0d4c68"
+    },
+    {
+      "id": "E07",
+      "url": "https://docs.antora.org/antora/3.1/how-component-versions-are-sorted/",
+      "version": "Antora 3.1 docs",
+      "source_commit": null,
+      "locator": "Sorting rules; Latest component version",
+      "observation": "Unversioned precedes named and semantic versions; named values sort reverse alphabetically and semantic values descending. Latest normally excludes prereleases, with all-prerelease/unversioned exceptions. Missing cross-component version coordinates can resolve through latest.",
+      "observed_operations": [
+        "web open/find"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E08",
+      "url": "https://docs.antora.org/antora/3.1/page/intrinsic-attributes/",
+      "version": "Antora 3.1 docs",
+      "source_commit": null,
+      "locator": "Intrinsic page attributes; page-origin-refhash",
+      "observation": "Origin attributes expose repository/ref/path/edit context. page-origin-refhash is documented as SHA-1 or '(worktree)', rather than a passage digest.",
+      "observed_operations": [
+        "web open/find"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E09",
+      "url": "https://typesense.org/docs/30.1/api/search.html",
+      "version": "Typesense API 30.1",
+      "source_commit": null,
+      "locator": "Query/filter/pagination/facet parameters; filter_curated_hits",
+      "observation": "q/query_by are required for the documented text-search interface; searchable fields are string/string[]. := is full-value string filtering; : is word matching. Prefix and numeric/alphanumeric typo defaults are enabled. Ordinary per_page defaults to 10 with maximum 250 hits or groups; facet_query changes the omitted per_page default to 0. filter_curated_hits defaults false, so curation/pinned results need an explicit scope policy. API facts alone do not prove corpus relevance or authorization.",
+      "observed_operations": [
+        "web open/find; governing exceptions inspected"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E10",
+      "url": "https://docsearch.algolia.com/docs/required-configuration/",
+      "version": "Rolling DocSearch docs; updated 2026-08-06; record schema v3/frontend v5",
+      "source_commit": null,
+      "locator": "recordProps; metadata tags; attributesForFaceting",
+      "observation": "Heading anchors and per-record language/version tags are documented. Version tokens follow SemVer or alphanumeric rules, facets are case-insensitive, and v5 offers up to five controls. Crawler record format and UI package version differ.",
+      "observed_operations": [
+        "web open/find"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E11",
+      "url": "https://backstage.io/docs/features/techdocs/creating-and-publishing/",
+      "version": "Rolling Backstage feature docs; package release unspecified",
+      "source_commit": null,
+      "locator": "Artifacts; techdocs-ref; symlink rule",
+      "observation": "Markdown/MkDocs inputs associate with catalog entities through backstage.io/techdocs-ref. Symlinks must remain inside the complete source tree. These primitives do not supply the brief's entire release/citation/review contract.",
+      "observed_operations": [
+        "web open"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E12",
+      "url": "https://backstage.io/docs/features/techdocs/getting-started/",
+      "version": "Rolling Backstage feature docs; package release unspecified",
+      "source_commit": null,
+      "locator": "Setting configuration; generation; publisher",
+      "observation": "Quickstart builder/generator/publisher defaults are local/docker/local. Recommended CI generation and external storage allow external-builder read-only serving. The current guide also distinguishes new and old frontend systems.",
+      "observed_operations": [
+        "web open"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E13",
+      "url": "https://backstage.io/docs/features/techdocs/configuring-ci-cd/",
+      "version": "Rolling Backstage feature docs; package release unspecified",
+      "source_commit": null,
+      "locator": "generate; publish; etag; skip-if-unchanged",
+      "observation": "CI generates static site output and publishes to external storage; etag supports output change detection and skipped uploads. That value is not an exact passage identity or a product-release manifest.",
+      "observed_operations": [
+        "web open"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E14",
+      "url": "https://github.com/backstage/backstage/issues/12259",
+      "version": "Opened 2022-06-25; closed not planned 2023-08-11",
+      "source_commit": null,
+      "locator": "Issue request/status and closure",
+      "observation": "The per-entity multiple-version request is historical and was closed as stale/not planned. It is not a current exhaustive capability census or an implemented storage design.",
+      "observed_operations": [
+        "web open/find"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E15",
+      "url": "https://docs.readthedocs.com/platform/stable/versions.html",
+      "version": "Rolling RTD stable documentation",
+      "source_commit": null,
+      "locator": "Git refs; states; stable/latest; root routes",
+      "observation": "latest starts at the default branch; stable follows the documented stable-version/tag-preference rule. New refs are inactive, deactivation deletes artifacts, and hidden does not mean private. Public/private controls are Business hosting features. Root default can be changed.",
+      "observed_operations": [
+        "web open"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E16",
+      "url": "https://docs.readthedocs.com/platform/latest/localization.html",
+      "version": "Rolling RTD latest documentation",
+      "source_commit": null,
+      "locator": "Multiple translations",
+      "observation": "Each language uses a separate project linked as a translation of a parent. Language/version routes are documented; this is not cross-repository release coordination.",
+      "observed_operations": [
+        "web open"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E17",
+      "url": "https://docs.readthedocs.com/platform/latest/server-side-search/syntax.html",
+      "version": "Rolling RTD latest documentation; search API V3/global-search applicability",
+      "source_commit": null,
+      "locator": "project/subprojects; Permissions; Limitations",
+      "observation": "A child lacking the requested subprojects version uses its default. Inaccessible/nonexistent versions are omitted; query ceiling is 100 projects and last specified version wins for a duplicated project. Syntax is specifically API V3/global search, with exact-phrase support.",
+      "observed_operations": [
+        "web open"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E18",
+      "url": "https://github.com/facebook/docusaurus/issues/11112",
+      "version": "Reported Docusaurus 3.7.0; open/external on inspection",
+      "source_commit": null,
+      "locator": "Reproduction; environment; status",
+      "observation": "Reporter describes localized numeric-version root-page static-serving 404. Dev-server/nonnumeric changes alter the reproduction. This is not proof of a current 3.10.2 defect, and the inspected issue does not establish a fix.",
+      "observed_operations": [
+        "web open/find"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E19",
+      "url": "https://github.com/facebook/docusaurus/issues/2651",
+      "version": "2020 v2 i18n proposal; closed",
+      "source_commit": null,
+      "locator": "Proposal and historic concerns",
+      "observation": "Historical translation-design evolution is genuine; current Docusaurus implementation/performance cannot be inferred solely from that issue.",
+      "observed_operations": [
+        "web open/find"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E20",
+      "url": "https://gitbook.com/docs/guides/editing-and-publishing-documentation/import-or-migrate-your-content-to-gitbook-with-git-sync",
+      "version": "Rolling GitBook docs; release/commit unspecified",
+      "source_commit": null,
+      "locator": "Repository/section mapping; initial direction; ongoing sync",
+      "observation": "Folders/repositories map to sections. Initial synchronization can import or export; ongoing synchronization is bidirectional. This provides a documented source/export seam but not fidelity, ACL or immutable-release guarantees.",
+      "observed_operations": [
+        "web open/find"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E21",
+      "url": "https://gitbook.com/docs/getting-started/import",
+      "version": "Rolling GitBook docs; release/commit unspecified",
+      "source_commit": null,
+      "locator": "Import defaults/limits; Git Sync; Export content",
+      "observation": "Exact URL succeeded in this review. AI refinement defaults on and can be disabled. UI limits are 20 pages and 20 files per import; Git Sync supports up to 5000 Markdown pages. Markdown export uses Git Sync, with unsupported blocks represented as HTML; PDF export also exists. This independently checks the candidate's dated migration leads.",
+      "observed_operations": [
+        "web open"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E22",
+      "url": "https://gitbook.com/docs/guides/content-organization-and-localization/localize-your-docs-with-variants-in-gitbook",
+      "version": "Rolling GitBook docs; release/commit unspecified",
+      "source_commit": null,
+      "locator": "Dedicated spaces; variants; language dropdown",
+      "observation": "Exact URL succeeded here. Localized content can live in dedicated spaces connected as variants; commands/code may need to stay untranslated. This confirms the useful human-managed alternative without treating translation equivalence as proven.",
+      "observed_operations": [
+        "web open"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E23",
+      "url": "https://gitbook.com/docs/gitbook-agent/translations",
+      "version": "Rolling GitBook docs; release/commit unspecified",
+      "source_commit": null,
+      "locator": "Continuous updates; slugs; glossary; editability",
+      "observation": "Generated translations update changed source pages, fixed slugs affect URL stability, output is currently uneditable, and glossary changes retrigger full translation. The workflow is billable. No user-specific cost was inferred.",
+      "observed_operations": [
+        "web open"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E24",
+      "url": "https://gitbook.com/docs/changelog/2025-product-updates",
+      "version": "Unavailable through this exact web open",
+      "source_commit": null,
+      "locator": "Exact URL open",
+      "observation": "Exact original URL returned '(400) Timeout fetching'. This access failure is not negative product evidence and is not silently rebound.",
+      "observed_operations": [
+        "web open failed"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "ACCESS_FAILED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E25",
+      "url": "https://gitbook.com/docs/changelog/2025-product-updates.md",
+      "version": "Public Markdown representation of 2025 changelog",
+      "source_commit": null,
+      "locator": "2025-11-04 breadcrumbs/variants; 2025-11-11 publication fix; search-scope update",
+      "observation": "Explicit .md URL succeeded. Breadcrumbs have a three-item cap and omit translation variants; language/version selectors coexist. Translation-publication fix belongs to the 2025-11-11 update, not the Nov 4 entry. Historical search scope includes current and other sections' defaults while excluding language variants.",
+      "observed_operations": [
+        "web open/find; independent urllib read"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": "523738e380eae3935c8345982c0ef6372fd0efc85826d92127763c0d4d32a4a4"
+    },
+    {
+      "id": "E26",
+      "url": "https://gitbook.com/docs/guides/editing-and-publishing-documentation/complete-guide-to-publishing-docs-gitbook",
+      "version": "Unavailable through this exact web open",
+      "source_commit": null,
+      "locator": "Exact URL open",
+      "observation": "Exact original URL returned an internal fetch error. The separate explicit Markdown URL was recorded under a distinct source identity.",
+      "observed_operations": [
+        "web open failed"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "ACCESS_FAILED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E27",
+      "url": "https://gitbook.com/docs/guides/editing-and-publishing-documentation/complete-guide-to-publishing-docs-gitbook.md",
+      "version": "Public Markdown representation of rolling publishing guide",
+      "source_commit": null,
+      "locator": "Audience settings and publishing",
+      "observation": "Site structure uses spaces/sections/variants. Publication defaults to public and public sites default to search-engine indexing. Audience can instead use share links or authenticated access; some publishing controls require upgraded plans.",
+      "observed_operations": [
+        "web open/find"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E28",
+      "url": "https://swimm.io/blog/swimm-native-integrations",
+      "version": "Vendor post dated 2022-06-28; beta at publication",
+      "source_commit": null,
+      "locator": "IDE and PR integration sections",
+      "observation": "Historical post describes Markdown-in-repository documentation, IDE code links and PR drift checks, with minor auto-updates and larger manual changes. It does not establish present-day portal, multilingual, release or export fitness.",
+      "observed_operations": [
+        "web open/find"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E29",
+      "url": "https://github.com/facebook/docusaurus/pull/10875",
+      "version": "Merged 2025-01-31; short merge SHA 3b72bb4",
+      "source_commit": null,
+      "locator": "Motivation; author test plan; merge",
+      "observation": "PR describes a missing localized version resource and an author-reported localized-site check. Merge and added-test records are visible. They are source/history evidence, not this team's runtime result.",
+      "observed_operations": [
+        "web open/find"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E30",
+      "url": "https://github.com/facebook/docusaurus/pull/10875/files",
+      "version": "PR merged 2025-01-31",
+      "source_commit": null,
+      "locator": "cliDocsVersionCommand; getPluginDirPathLocalized; CLI test file",
+      "observation": "Diff shows copying localized current.json only outside the default locale when present, otherwise warning/skipping. The GitHub render lists a changed test but labels it binary; the test was checked independently at the merge revision.",
+      "observed_operations": [
+        "web open/find"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E31",
+      "url": "https://github.com/facebook/docusaurus/releases/tag/v3.8.0",
+      "version": "Docusaurus v3.8.0; notes date 2025-05-26; short tag SHA 948d63c",
+      "source_commit": null,
+      "locator": "docs-plugin fixes; #10875",
+      "observation": "Release notes list the localized version-resource fix. The notes' date differs from the GitHub publication timestamp; neither changes release inclusion or proves deployed-team applicability.",
+      "observed_operations": [
+        "web open/find"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E32",
+      "url": "https://raw.githubusercontent.com/facebook/docusaurus/3b72bb4/packages/docusaurus-plugin-content-docs/src/__tests__/cli.test.ts",
+      "version": "Merge revision 3b72bb4",
+      "source_commit": "3b72bb43db800edffcf8f8b0adda4fffcbd50fa4",
+      "locator": "Lines 201-210; copyMock expectation",
+      "observation": "The test checks the expected source/destination copy call for localized current.json. This is a discriminating unit assertion for the sidecar action; it is not an independently executed filesystem or end-to-end translation test.",
+      "observed_operations": [
+        "urllib read-only source inspection"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": "fc67110f3b2b91be34264b09d84c5549a2c588d62c26b661ee037d52051a44a9"
+    },
+    {
+      "id": "E33",
+      "url": "https://raw.githubusercontent.com/facebook/docusaurus/v3.8.0/packages/docusaurus-plugin-content-docs/src/cli.ts",
+      "version": "Docusaurus release tag v3.8.0",
+      "source_commit": null,
+      "locator": "cliDocsVersionCommand lines 128-143",
+      "observation": "Release-tag source contains the non-default-locale guarded present/absent sidecar behavior, independently corroborating the code-to-release link.",
+      "observed_operations": [
+        "urllib read-only source inspection"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": "6dfc9b069ae0d2e8eefd3820761f8392f2a45fee1bbfbe10edf4f27ef9d928a5"
+    },
+    {
+      "id": "E34",
+      "url": "https://api.github.com/repos/facebook/docusaurus/pulls/10875",
+      "version": "Public GitHub API metadata",
+      "source_commit": "3b72bb43db800edffcf8f8b0adda4fffcbd50fa4",
+      "locator": "merged_at; merge_commit_sha",
+      "observation": "merged_at is 2025-01-31T11:50:14Z; full merge SHA is 3b72bb43db800edffcf8f8b0adda4fffcbd50fa4.",
+      "observed_operations": [
+        "urllib public metadata read"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": "b3b9e2f37268f5dd01a61429bc5d6e7afeba7684f07fb1145087fac977acb1a8"
+    },
+    {
+      "id": "E35",
+      "url": "https://api.github.com/repos/facebook/docusaurus/releases/tags/v3.8.0",
+      "version": "Public GitHub API metadata",
+      "source_commit": null,
+      "locator": "published_at; tag_name",
+      "observation": "published_at is 2025-05-27T10:08:00Z, while the release notes carry May 26. Candidate final wording about notes date is supportable; predecessor 'released May 26' is imprecise.",
+      "observed_operations": [
+        "urllib public metadata read"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": "ae74c3b676bc29072273ccec35da6879c4c152d67d7c20fe3c47b18068830119"
+    },
+    {
+      "id": "E36",
+      "url": "https://docsearch.algolia.com/docs/who-can-apply/",
+      "version": "Rolling official program eligibility docs",
+      "source_commit": null,
+      "locator": "Who can apply; application process",
+      "observation": "Managed free DocSearch program targets public technical documentation/blogs. Company approval to send confidential content off-site does not itself satisfy that public-site eligibility requirement.",
+      "observed_operations": [
+        "web open/find; independent urllib read"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": "08c94b6c85f28a10127c0c523cedcd50867a5b821440b004fbf28f1ea5708f75"
+    },
+    {
+      "id": "E37",
+      "url": "https://support.algolia.com/hc/en-us/articles/14007867484817-In-regards-to-my-DocSearch-application-what-is-considered-as-a-private-network",
+      "version": "Official support article updated 2025-10-20",
+      "source_commit": null,
+      "locator": "Public availability and private-network requirements",
+      "observation": "Official program support excludes sites requiring authentication or on private networks. web retrieval succeeded; independent urllib returned HTTP 403. This restriction is program-specific, not proof that every paid Algolia/custom-index configuration is impossible.",
+      "observed_operations": [
+        "web open/find; urllib denied"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E38",
+      "url": "https://docsearch.algolia.com/docs/docsearch-program/",
+      "version": "Rolling official program docs; updated 2026-08-06",
+      "source_commit": null,
+      "locator": "Upgrade options; new Algolia application",
+      "observation": "Program docs distinguish the managed program from a new Algolia application, self-hosted crawler/API client, and separate plan discussions. Those routes were not investigated by the candidate; their private-corpus suitability is not assumed.",
+      "observed_operations": [
+        "web open/find"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": null
+    },
+    {
+      "id": "E39",
+      "url": "https://github.com/facebook/docusaurus/pull/10875.diff",
+      "version": "Public PR diff; redirected to patch-diff.githubusercontent.com",
+      "source_commit": null,
+      "locator": "cli.ts and versions/files.ts changes",
+      "observation": "Independent plain diff confirms the sidecar-copy implementation. Raw diff still labels cli.test.ts binary, so merge-revision raw source was needed to inspect its assertion.",
+      "observed_operations": [
+        "urllib read-only diff inspection"
+      ],
+      "access_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "status": "CHECKED",
+      "raw_source_sha256": "532a859b666f81d661eb43858ba1b621677f1a099a51ac9bf28940bb60a75c88"
+    }
+  ],
+  "claim_source_links": {
+    "N2": [
+      {
+        "claim_id": "N2-C01",
+        "claim": "Backstage source linkage and build/publish defaults",
+        "judgment": "SUPPORTED_WITH_SCOPE",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 95,
+            "passage": "- **Backstage TechDocs:** Catalog entity annotations (`backstage.io/techdocs-ref`) link a service/component to Markdown docs. The quickstart defaults are local backend build, Docker/MkDocs generation, and local publishing; the guide recommends CI generation and storage-backed static output for its recommended setup, with external builder serving read-only artifacts. This is a strong ownership/catalog shell if already adopted. Add a version-aware release/citation layer explicitly. The closed 2022 issue requesting multiple versions per entity is historical evidence, not proof about all present-day extensions.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E11",
+          "E12",
+          "E13"
+        ]
+      },
+      {
+        "claim_id": "N2-C02",
+        "claim": "Backstage versioning history",
+        "judgment": "SUPPORTED_HISTORICAL",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 67,
+            "passage": "Docusaurus versions are copied snapshots and its docs warn about increasing maintenance/build cost. Read the Docs deletes artifacts when a version is deactivated; a hidden version is not private. Therefore retention, visibility, permission, and citation continuity must be tested against the chosen product. Backstage issue #12259 is a historical request for per-entity versions, closed as not planned at inspection; it is a status signal, not proof that no current plugin or workaround exists. I accept the critic's clarification that storage location and default archive search behavior are unresolved user choices.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 95,
+            "passage": "- **Backstage TechDocs:** Catalog entity annotations (`backstage.io/techdocs-ref`) link a service/component to Markdown docs. The quickstart defaults are local backend build, Docker/MkDocs generation, and local publishing; the guide recommends CI generation and storage-backed static output for its recommended setup, with external builder serving read-only artifacts. This is a strong ownership/catalog shell if already adopted. Add a version-aware release/citation layer explicitly. The closed 2022 issue requesting multiple versions per entity is historical evidence, not proof about all present-day extensions.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E14"
+        ]
+      },
+      {
+        "claim_id": "N2-C03",
+        "claim": "Docusaurus versioned copies and locale trees",
+        "judgment": "SUPPORTED",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 67,
+            "passage": "Docusaurus versions are copied snapshots and its docs warn about increasing maintenance/build cost. Read the Docs deletes artifacts when a version is deactivated; a hidden version is not private. Therefore retention, visibility, permission, and citation continuity must be tested against the chosen product. Backstage issue #12259 is a historical request for per-entity versions, closed as not planned at inspection; it is a status signal, not proof that no current plugin or workaround exists. I accept the critic's clarification that storage location and default archive search behavior are unresolved user choices.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 96,
+            "passage": "- **Docusaurus:** Versioned docs are copied snapshots, and current versus latest can differ; locale content has an explicit filesystem structure. It suits repository-native docs when snapshot and translation workflows are acceptable. The team must cut snapshots, map three-repo releases, and build the citation/search layer. The reported Docusaurus 3.7.0 bug concerns static serving of a localized root `index.mdx` at a numeric version and remained open/external in the checked issue record; it is not evidence of a current 3.10.2 defect, and no fix was verified. Include it as a narrow regression case if trialed.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E01",
+          "E03",
+          "E04"
+        ]
+      },
+      {
+        "claim_id": "N2-C04",
+        "claim": "Docusaurus localized numeric root-page issue",
+        "judgment": "SUPPORTED_NARROW_HISTORY",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 96,
+            "passage": "- **Docusaurus:** Versioned docs are copied snapshots, and current versus latest can differ; locale content has an explicit filesystem structure. It suits repository-native docs when snapshot and translation workflows are acceptable. The team must cut snapshots, map three-repo releases, and build the citation/search layer. The reported Docusaurus 3.7.0 bug concerns static serving of a localized root `index.mdx` at a numeric version and remained open/external in the checked issue record; it is not evidence of a current 3.10.2 defect, and no fix was verified. Include it as a narrow regression case if trialed.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 127,
+            "passage": "7. **Candidate-specific trials:** Docusaurus: build/serve the narrow S04 localized numeric-version root-page case. Read the Docs: verify child default fallback and version resolution. GitBook: test variant/locale identity beyond breadcrumbs, search scope, sync conflicts, importer changes, fixed slugs, and translation publication. TechDocs: test history and cross-repo release resolution in the proposed added layer. Set denominators, thresholds, and blinded adjudication before scoring.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E18",
+          "E19"
+        ]
+      },
+      {
+        "claim_id": "N2-C05",
+        "claim": "Read the Docs version aliases/states/retention",
+        "judgment": "SUPPORTED",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 67,
+            "passage": "Docusaurus versions are copied snapshots and its docs warn about increasing maintenance/build cost. Read the Docs deletes artifacts when a version is deactivated; a hidden version is not private. Therefore retention, visibility, permission, and citation continuity must be tested against the chosen product. Backstage issue #12259 is a historical request for per-entity versions, closed as not planned at inspection; it is a status signal, not proof that no current plugin or workaround exists. I accept the critic's clarification that storage location and default archive search behavior are unresolved user choices.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 97,
+            "passage": "- **Read the Docs:** Git branches/tags become versions; `latest` normally follows the repository default branch, while `stable` follows its documented stable-semver rule. Versions begin inactive; deactivation deletes artifacts. Each language is a separate project linked to a parent. Search supports project/version filters, permissions, exact phrases, and up to 100 projects, but not multiple versions of one project in one query. Crucially, `subprojects:project/version` uses a child's default version when that child lacks the requested version. The portal must detect the resolved child version/commit and fail closed or label it as an alternative. Set the root default to the chosen shipped-release identity rather than inheriting `latest` by accident.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E15"
+        ]
+      },
+      {
+        "claim_id": "N2-C06",
+        "claim": "Read the Docs multilingual project model and filtered search",
+        "judgment": "SUPPORTED_WITH_MINOR_INTERFACE_QUALIFICATION",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 39,
+            "passage": "A proposed passage record can retain repo, immutable commit, product/component release mapping, locale and translation provenance/freshness, path and heading/locator, exact source text or span, content digest, access scope, and index-build time. This registry and metadata schema are design recommendations, not vendor requirements. Read the Docs demonstrates project/version filters, a 100-project query ceiling, and a limitation on querying multiple versions of one project at once; that documents one search interface's behavior, not a universal index architecture.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 97,
+            "passage": "- **Read the Docs:** Git branches/tags become versions; `latest` normally follows the repository default branch, while `stable` follows its documented stable-semver rule. Versions begin inactive; deactivation deletes artifacts. Each language is a separate project linked to a parent. Search supports project/version filters, permissions, exact phrases, and up to 100 projects, but not multiple versions of one project in one query. Crucially, `subprojects:project/version` uses a child's default version when that child lacks the requested version. The portal must detect the resolved child version/commit and fail closed or label it as an alternative. Set the root default to the chosen shipped-release identity rather than inheriting `latest` by accident.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 121,
+            "passage": "1. **Three-repo release resolution:** Create an approved synthetic release tuple with distinct commits in three repos; make one child project lack the requested version. Verify it is reported missing rather than silently inherited from its default. Include a main commit that is newer but unreleased.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E16",
+          "E17"
+        ]
+      },
+      {
+        "claim_id": "N2-C07",
+        "claim": "GitBook source mapping, variants and publishing",
+        "judgment": "SUPPORTED_CONDITIONAL_OPTION",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 98,
+            "passage": "- **GitBook:** A hosted site can assemble spaces and Git-synced repository folders into sections and language/release variants. The 2025 changelog captured by the research/critic stage describes simultaneous language and version selectors, search result breadcrumbs capped at three and omitting translation variants, plus a fix for published content failing to update after translation generation. The latter is useful release-history evidence, not a service guarantee. Current publishing docs confirm a spaces/sections/variants model and audience settings; tenant access, plans, data boundaries, and sync need testing. Importer limits/AI refinement and detailed language-variant setup are based on earlier captures: exact importer and variants URLs failed to reopen in both critic/reviser checks. Do not use the captured 20-page/20-asset UI limit or 5,000-page Git Sync limit, importer transformation defaults, or detailed scope settings as a current migration commitment until the exact pages or vendor confirm them. Do not silently substitute a nearby URL. Translation automation is a distinct paid workflow whose captured docs state that output cannot currently be edited and glossary changes trigger retranslation; owners must choose it or human-authored language spaces deliberately.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 105,
+            "passage": "Keep the source repository and Git history authoritative where feasible, even if the portal renders derived HTML or a hosted site. Before migration, inventory formats, assets, code blocks, anchors, redirects, locale mapping, release metadata, access scope, and source history. Convert representative material on a staging branch, compare source and imported text/structure/links, and preserve a rollback path. Verify export back to the chosen canonical format and whether citations remain resolvable after a page move or retirement. Git Sync appears a plausible bulk Markdown path from the earlier GitBook capture, but its current page limits and import transformations were not confirmed by the repeated exact-URL opens; verify them before sizing a migration. No export guarantee is asserted for Swimm or any other product here.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E20",
+          "E22",
+          "E27"
+        ]
+      },
+      {
+        "claim_id": "N2-C08",
+        "claim": "GitBook migration/import/export limits and transformations",
+        "judgment": "SUPPORTED_PROVISIONAL_CANDIDATE; CURRENTLY_RECONFIRMED_BY_REVIEWER",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 98,
+            "passage": "- **GitBook:** A hosted site can assemble spaces and Git-synced repository folders into sections and language/release variants. The 2025 changelog captured by the research/critic stage describes simultaneous language and version selectors, search result breadcrumbs capped at three and omitting translation variants, plus a fix for published content failing to update after translation generation. The latter is useful release-history evidence, not a service guarantee. Current publishing docs confirm a spaces/sections/variants model and audience settings; tenant access, plans, data boundaries, and sync need testing. Importer limits/AI refinement and detailed language-variant setup are based on earlier captures: exact importer and variants URLs failed to reopen in both critic/reviser checks. Do not use the captured 20-page/20-asset UI limit or 5,000-page Git Sync limit, importer transformation defaults, or detailed scope settings as a current migration commitment until the exact pages or vendor confirm them. Do not silently substitute a nearby URL. Translation automation is a distinct paid workflow whose captured docs state that output cannot currently be edited and glossary changes trigger retranslation; owners must choose it or human-authored language spaces deliberately.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 105,
+            "passage": "Keep the source repository and Git history authoritative where feasible, even if the portal renders derived HTML or a hosted site. Before migration, inventory formats, assets, code blocks, anchors, redirects, locale mapping, release metadata, access scope, and source history. Convert representative material on a staging branch, compare source and imported text/structure/links, and preserve a rollback path. Verify export back to the chosen canonical format and whether citations remain resolvable after a page move or retirement. Git Sync appears a plausible bulk Markdown path from the earlier GitBook capture, but its current page limits and import transformations were not confirmed by the repeated exact-URL opens; verify them before sizing a migration. No export guarantee is asserted for Swimm or any other product here.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 126,
+            "passage": "6. **Migration/export:** Compare representative Markdown/HTML/RST with images, nested headings, links, code fences, redirects, locales, and release metadata; verify content, URL, history, anchors, export, and rollback. Confirm current GitBook importer/AI/Git Sync controls directly before relying on the captured figures.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E20",
+          "E21"
+        ]
+      },
+      {
+        "claim_id": "N2-C09",
+        "claim": "GitBook breadcrumbs, search scope and publication-fix history",
+        "judgment": "SUPPORTED_DATED; MINOR_NOTEBOOK_DATE_IMPRECISION",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 49,
+            "passage": "The reviewed product docs do not establish this full answer-level citation contract. The captured GitBook 2025 update says search-result breadcrumbs show up to three items and omit translation variants. Thus breadcrumbs cannot serve as the locale identity or pinned citation; show locale in context/result metadata. The exact changelog URL timed out during this reviser's direct re-open, so I accept the critic's finding based on its dated direct capture and keep this behavior marked for reconfirmation in a GitBook trial. Detailed GitBook search-scope rules also remain provisional because the relevant captured page section could not be re-opened.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 98,
+            "passage": "- **GitBook:** A hosted site can assemble spaces and Git-synced repository folders into sections and language/release variants. The 2025 changelog captured by the research/critic stage describes simultaneous language and version selectors, search result breadcrumbs capped at three and omitting translation variants, plus a fix for published content failing to update after translation generation. The latter is useful release-history evidence, not a service guarantee. Current publishing docs confirm a spaces/sections/variants model and audience settings; tenant access, plans, data boundaries, and sync need testing. Importer limits/AI refinement and detailed language-variant setup are based on earlier captures: exact importer and variants URLs failed to reopen in both critic/reviser checks. Do not use the captured 20-page/20-asset UI limit or 5,000-page Git Sync limit, importer transformation defaults, or detailed scope settings as a current migration commitment until the exact pages or vendor confirm them. Do not silently substitute a nearby URL. Translation automation is a distinct paid workflow whose captured docs state that output cannot currently be edited and glossary changes trigger retranslation; owners must choose it or human-authored language spaces deliberately.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 127,
+            "passage": "7. **Candidate-specific trials:** Docusaurus: build/serve the narrow S04 localized numeric-version root-page case. Read the Docs: verify child default fallback and version resolution. GitBook: test variant/locale identity beyond breadcrumbs, search scope, sync conflicts, importer changes, fixed slugs, and translation publication. TechDocs: test history and cross-repo release resolution in the proposed added layer. Set denominators, thresholds, and blinded adjudication before scoring.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E24",
+          "E25"
+        ]
+      },
+      {
+        "claim_id": "N2-C10",
+        "claim": "GitBook automated translation conditions",
+        "judgment": "SUPPORTED",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 57,
+            "passage": "This workflow is a proposed product design; the reviewed candidate documentation does not establish a ready-made contradiction-pair review queue. The Swimm vendor post describes IDE/code links and PR checks that could be useful as a supplement, but it was published 2022-06-28 and said the platform was then “currently in beta.” Treat its automatic minor-update claims as historical vendor evidence requiring current verification, not an adoption guarantee. GitBook's captured current translation documentation describes generated translations that update with source changes and currently cannot be edited; that is a separate generated-locale path requiring an explicit policy decision, not authority to rewrite the original language source.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 98,
+            "passage": "- **GitBook:** A hosted site can assemble spaces and Git-synced repository folders into sections and language/release variants. The 2025 changelog captured by the research/critic stage describes simultaneous language and version selectors, search result breadcrumbs capped at three and omitting translation variants, plus a fix for published content failing to update after translation generation. The latter is useful release-history evidence, not a service guarantee. Current publishing docs confirm a spaces/sections/variants model and audience settings; tenant access, plans, data boundaries, and sync need testing. Importer limits/AI refinement and detailed language-variant setup are based on earlier captures: exact importer and variants URLs failed to reopen in both critic/reviser checks. Do not use the captured 20-page/20-asset UI limit or 5,000-page Git Sync limit, importer transformation defaults, or detailed scope settings as a current migration commitment until the exact pages or vendor confirm them. Do not silently substitute a nearby URL. Translation automation is a distinct paid workflow whose captured docs state that output cannot currently be edited and glossary changes trigger retranslation; owners must choose it or human-authored language spaces deliberately.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E23"
+        ]
+      },
+      {
+        "claim_id": "N2-C11",
+        "claim": "Swimm code/doc and PR maintenance lead",
+        "judgment": "SUPPORTED_HISTORICAL_OPTION",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 99,
+            "passage": "- **Swimm:** The 2022-06-28 vendor post describes repository Markdown links from IDE code locations, GitHub PR checks, automatic minor updates, and manual approval/modification for substantive changes. The same post says the product was then in beta. This is a code-maintenance/onboarding lead that might supplement a portal. Current status and behavior, release retrieval, localization, export, and source-change controls are unverified; do not shortlist it as satisfying the portal brief without new primary evidence.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E28"
+        ]
+      },
+      {
+        "claim_id": "N2-C12",
+        "claim": "Release tuples, exact passages, authorization and contradiction queue",
+        "judgment": "DESIGN_INFERENCE_EXPLICITLY_LABELED",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 10,
+            "passage": "A workable product-independent shape is a catalog of released documentation snapshots plus a search and review layer. Each release record should resolve to exact repository commits (a tuple where codebases release independently); search should resolve the requested release and language before returning evidence; citations should identify the immutable source and exact supporting text; and contradiction candidates should enter a human review flow that cannot write source files. This is a recommended design inferred from the brief, not a behavior established by the product sources. A nightly job can be valid if it ingests immutable promoted refs or an approved release manifest and reconciles missed updates. An event-triggered pipeline is another option, not a requirement.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 29,
+            "passage": "A nightly crawl of a *mutable development main alone* cannot guarantee that the retrieved snapshot represents a released version. Main may contain unreleased changes, and three repositories may ship independently. The material requirement is to capture immutable promoted refs and map every supported product/component release to the exact repository commits (or equivalent release evidence). Polling nightly, ingesting release/build events, or combining both with reconciliation are implementation choices. If a repository's protected main is itself the approved release snapshot, document that rule and its commit identity. A separate main preview can remain searchable when clearly labeled.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 37,
+            "passage": "The brief requires relevant released-version retrieval and exact passages; it does not require vector embeddings or one physical index. A unified logical search surface may use a filtered vector collection, separate partitions, lexical search, hybrid lexical/semantic retrieval, or a combination. Before any passage can affect ranking, answer generation, or citation selection, the system needs a reliable scope for repository/codebase, resolved release/commit, locale, and access. A single physical index is acceptable only if the implementation actually enforces that scope; the same applies to snippets and contradiction pairs so inaccessible text is not exposed.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 47,
+            "passage": "Resolve and display release and locale context before retrieval. Return exact supporting passage text with a citation pinned to repository, commit, release, language, path, and a stable span or content identity. A mutable `main`/`latest` URL or heading anchor alone can move or change. If the product synthesizes an answer, associate factual claims with their exact source passage(s), show material disagreement and applicability conditions, and ask for clarification or abstain when release or locale is ambiguous or evidence is absent. Five results can be a configurable default if testing supports it; a fixed count does not establish relevance or citation quality.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 87,
+            "passage": "Keep the authoritative material in repositories where practical and create a catalog mapping source documents and passage spans to release tuples and locales. Resolve release and locale before ranking. Search can combine exact/lexical and semantic modes if useful, but exact phrases and source passages need to stay verifiable. Store the original passage, commit and digest so the display can show the matched text and a pinned source. If translated text is shown, retain its source-language link and translation revision/freshness; label any fallback rather than implying a translation exists. Access checks must cover ranking, counts, snippets, links, citations, and contradiction pairs, not only page rendering.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 91,
+            "passage": "Treat apparent disagreement as a candidate evidence pair. Group by topic/entity, then compare only after considering release, codebase, language, date, product configuration, and applicability. Differences across these dimensions may be intentional. Show each exact passage with its identity and conditions. The review queue may offer “intentional,” “superseded,” “needs owner,” and “propose correction” outcomes. Detection and indexing remain read-only; an accepted correction goes through a human-reviewed source change and a new release/build path. No reviewed source establishes a complete built-in workflow with these safeguards, which is a scoped observation rather than a market-wide absence claim.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E01",
+          "E15",
+          "E17",
+          "E25"
+        ]
+      },
+      {
+        "claim_id": "N2-C13",
+        "claim": "Validation/execution and scientific limits",
+        "judgment": "NO_VALIDATION_OVERCLAIM",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 75,
+            "passage": "Predeclare denominators and pass/fail thresholds with maintainers for correct release/commit, correct locale, exact source-span match (a resolvable citation to the wrong revision/span fails), retrieval recall/precision, false contradiction rate, and unauthorized disclosure. Blinded maintainer adjudication can reduce familiarity bias. Ten remains a smoke-test sample size, not a threshold established by any source. No such acceptance suite was executed.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 119,
+            "passage": "## Validation plan — proposed, not executed",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 129,
+            "passage": "**Execution record for this reviser:** Read the exact assignment, input map, brief, full declared draft/discovery/revealed plan/critique, both source maps, and all declared source indexes/evidence notes. Independently reopened the exact Read the Docs search syntax and versions pages, Docusaurus versioning page, and Swimm post; recorded their observed scope/date/status in the reviser source map. Attempts to reopen the exact GitBook changelog, importer, and language-variants URLs timed out; these are recorded as failed access, not evidence. No application, browser runtime, benchmark, user account, migration, or tenant test ran.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+            "line": 135,
+            "passage": "Product documentation establishes only what was published and inspected, not a tenant's plan entitlement, deployment suitability, access/security posture, multilingual quality, search quality, performance, service guarantees, or export behavior. Backstage and Read the Docs pages are rolling; GitBook importer and variant details depend on captures that could not be refreshed; the changelog's search-scope detail also needs a successful current re-open. A direct request failure is not negative evidence, and no failed URL was rebound to another page. The current source map preserves exact URLs, available product/doc versions, commit availability, locators, original access times, and recheck outcomes. Product choice and policy decisions remain open pending an actual bounded proof of concept.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E18",
+          "E21",
+          "E22",
+          "E24",
+          "E28"
+        ]
+      }
+    ],
+    "N1": [
+      {
+        "claim_id": "N1-C01",
+        "claim": "Antora descriptor/distributed assembly",
+        "judgment": "SUPPORTED_WITH_CONDITIONS",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 10,
+            "passage": "Antora remains the strongest first pilot when content should remain distributed among the three repositories and the existing docs fit its component/module structure. Its component/version and origin model suits assembly from pinned repositories. Docusaurus is a meaningful alternative alongside Antora: one site can host separate docs plugin instances with independent version lifecycles, one per codebase if useful. A build would still need to stage or fetch each repository at a pinned ref and supply the release manifest; Docusaurus multi-instance does not itself coordinate Git sources or a cross-repository product release. Test build size and locale/version routing; the Docusaurus guide recommends distinct sites if each docs instance is very large. Use a central Docusaurus docs tree instead if that is already the natural authoring model. Backstage TechDocs is most attractive if the group already operates Backstage or needs its catalog and owner navigation; its reviewed docs do not establish the release-aware search, exact passage citation, or contradiction workflow required here.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 48,
+            "passage": "Antora’s implicit latest is also unsuitable as a product-release selector. It sorts named versions before semantic versions (named versions in reverse alphabetical order and semantic versions in descending order), then selects the first sorted version that is not a prerelease. If all versions are prereleases, it selects the first prerelease; an unversioned component is always latest or latest prerelease. When a cross-component resource reference lacks a version coordinate, Antora uses latest to resolve it. Use explicit component refs or the compatibility manifest for query and citation identity. Antora’s origin ref hash is SHA-1 (and can be the marker “(worktree)” for local content); it identifies a source ref, not an exact passage digest. Retain a separate content digest.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 94,
+            "passage": "| **Antora + Typesense or DocSearch adapter** | Keep docs in the three codebases and compose pinned component versions into a site. | Strong distributed component/version and source-origin mapping. Named versions sort before semantic versions; implicit latest has all-prerelease, unversioned and unresolved-cross-reference edge cases. A shared Antora component version still needs compatible release mapping. Duplicate resource IDs fail; duplicated optional descriptor settings can be unpredictable. Validate formats, locale conventions and explicit ref selection. |",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E05",
+          "E06"
+        ]
+      },
+      {
+        "claim_id": "N1-C02",
+        "claim": "Antora version ordering and latest/cross-reference exceptions",
+        "judgment": "SUPPORTED",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 48,
+            "passage": "Antora’s implicit latest is also unsuitable as a product-release selector. It sorts named versions before semantic versions (named versions in reverse alphabetical order and semantic versions in descending order), then selects the first sorted version that is not a prerelease. If all versions are prereleases, it selects the first prerelease; an unversioned component is always latest or latest prerelease. When a cross-component resource reference lacks a version coordinate, Antora uses latest to resolve it. Use explicit component refs or the compatibility manifest for query and citation identity. Antora’s origin ref hash is SHA-1 (and can be the marker “(worktree)” for local content); it identifies a source ref, not an exact passage digest. Retain a separate content digest.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 94,
+            "passage": "| **Antora + Typesense or DocSearch adapter** | Keep docs in the three codebases and compose pinned component versions into a site. | Strong distributed component/version and source-origin mapping. Named versions sort before semantic versions; implicit latest has all-prerelease, unversioned and unresolved-cross-reference edge cases. A shared Antora component version still needs compatible release mapping. Duplicate resource IDs fail; duplicated optional descriptor settings can be unpredictable. Validate formats, locale conventions and explicit ref selection. |",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 131,
+            "passage": "4. **Antora selection and source mapping.** If selected, test named, semantic, prerelease and unversioned component values, including the all-prerelease case. Verify how unresolved cross-component references use latest; assert that search and citations use the explicitly selected ref/compatibility tuple rather than that implicit alias. Test distributed roots with duplicate IDs and optional descriptor keys.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E07"
+        ]
+      },
+      {
+        "claim_id": "N1-C03",
+        "claim": "Antora origin metadata type",
+        "judgment": "SUPPORTED",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 48,
+            "passage": "Antora’s implicit latest is also unsuitable as a product-release selector. It sorts named versions before semantic versions (named versions in reverse alphabetical order and semantic versions in descending order), then selects the first sorted version that is not a prerelease. If all versions are prereleases, it selects the first prerelease; an unversioned component is always latest or latest prerelease. When a cross-component resource reference lacks a version coordinate, Antora uses latest to resolve it. Use explicit component refs or the compatibility manifest for query and citation identity. Antora’s origin ref hash is SHA-1 (and can be the marker “(worktree)” for local content); it identifies a source ref, not an exact passage digest. Retain a separate content digest.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E08"
+        ]
+      },
+      {
+        "claim_id": "N1-C04",
+        "claim": "Docusaurus version/copies and localized anchor semantics",
+        "judgment": "SUPPORTED; CRITIC_SEVERITY_QUALIFIED",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 96,
+            "passage": "| **Docusaurus consolidated docs tree + search adapter** | Central Markdown authoring and one site are already preferred. | Version routes and locale builds are supported. “Current” and “latest” are separate concepts but may be aligned by configuration for a maintained release. The version CLI copies files into editable/removable folders; it is not an immutable archive guarantee. Use explicit heading IDs for translated docs. Avoid needless patch snapshots; the guide recommends keeping the actively built set small. |",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 129,
+            "passage": "2. **Locale and citation fidelity.** Include current, stale, missing and untranslated pages. Test no silent locale fallback. Under one documented extraction/canonicalization rule, compare displayed quotes to source bytes; verify explicit anchors, commit-pinned links and digests. Mutate a source and ensure an old citation becomes stale rather than rebinding.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 130,
+            "passage": "3. **Docusaurus versioning and instance behavior.** If selected, test both aligned and split current/latest configuration, a released frozen ref, current preview, three plugin instances with independent lifecycles, and expected locale/version routes. Test per-instance content roots and build size. Reproduce PR 10875’s existing and absent localized current.json cases on the exact package version; separately compare translation/page inventory and freshness.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E01",
+          "E03",
+          "E04"
+        ]
+      },
+      {
+        "claim_id": "N1-C05",
+        "claim": "Docusaurus multi-instance mechanism and scale limit",
+        "judgment": "SUPPORTED_OPTION",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 10,
+            "passage": "Antora remains the strongest first pilot when content should remain distributed among the three repositories and the existing docs fit its component/module structure. Its component/version and origin model suits assembly from pinned repositories. Docusaurus is a meaningful alternative alongside Antora: one site can host separate docs plugin instances with independent version lifecycles, one per codebase if useful. A build would still need to stage or fetch each repository at a pinned ref and supply the release manifest; Docusaurus multi-instance does not itself coordinate Git sources or a cross-repository product release. Test build size and locale/version routing; the Docusaurus guide recommends distinct sites if each docs instance is very large. Use a central Docusaurus docs tree instead if that is already the natural authoring model. Backstage TechDocs is most attractive if the group already operates Backstage or needs its catalog and owner navigation; its reviewed docs do not establish the release-aware search, exact passage citation, or contradiction workflow required here.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 95,
+            "passage": "| **Docusaurus multi-instance + search adapter** | One static site is useful, while each codebase needs its own docs set and version lifecycle. | Docusaurus 3.10.2 documents distinct plugin instances, separate versioned-doc paths and per-instance version commands. CI must stage/pin the source repositories and create the compatibility manifest; plugin instances do not provide cross-repository release coordination or the required search/citation/access behavior. Measure total rebuild cost; separate sites may fit very large docs sets better. |",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 130,
+            "passage": "3. **Docusaurus versioning and instance behavior.** If selected, test both aligned and split current/latest configuration, a released frozen ref, current preview, three plugin instances with independent lifecycles, and expected locale/version routes. Test per-instance content roots and build size. Reproduce PR 10875’s existing and absent localized current.json cases on the exact package version; separately compare translation/page inventory and freshness.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E02"
+        ]
+      },
+      {
+        "claim_id": "N1-C06",
+        "claim": "Backstage source/static publication and etag",
+        "judgment": "SUPPORTED",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 97,
+            "passage": "| **Backstage TechDocs + added release-aware index** | Backstage already exists and catalog ownership/navigation is valuable. | Docs associate with catalog entities, and CI can generate static output and publish it to object storage. A generated etag is a change-detection value, not an exact passage hash or release identity. Release routing, access filtering, search and contradiction review remain to be designed and checked. A symlink escaping the docs source tree is rejected. |",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E11",
+          "E13"
+        ]
+      },
+      {
+        "claim_id": "N1-C07",
+        "claim": "Typesense query/filter/schema/default/unit semantics",
+        "judgment": "SUPPORTED_ORDINARY_INTERFACE; CONDITIONAL_EXCEPTION_MISSING",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 74,
+            "passage": "Typesense 30.1 requires q and query_by; query_by fields must be string or string-array schema fields. filter_by can restrict fields, and := performs full-value string equality while : is word-level partial matching. The API docs describe one-based pages, per_page default 10 and maximum 250, prefix matching defaulting on, and numerical and alphanumerical typo tolerance defaulting on. Facet strategy defaults to automatic and max_facet_values defaults to 10. Use exact filters over canonical release, locale, status and access fields; query text containing a version number is not a pin. Also test filter escaping and actual schema behavior. These API behaviors do not prove relevance, permission safety or performance for this corpus.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 99,
+            "passage": "| **Self-hosted Typesense** | Keeping the index inside the organization is a priority and an operator is available. | Exact filters, facets and string search are documented. The 30.1 API defaults require care with technical identifiers and version-like tokens. This research does not measure multilingual relevance, operations, throughput, latency or resource cost. |",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 132,
+            "passage": "5. **Retrieval and presentation.** On a reviewed multilingual technical set, include API identifiers, config keys, numeric defaults, exact spans, no-evidence questions and release/locale negatives. Compare lexical, vector and hybrid retrieval on the same data; predeclare recall, ranking, citation and leakage thresholds. Check Typesense’s actual schema, exact filter escaping, prefix/typo behavior and authorization boundary. Treat top-five as an interface choice and verify it does not hide needed evidence.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E09"
+        ]
+      },
+      {
+        "claim_id": "N1-C08",
+        "claim": "DocSearch metadata, versions/facets/anchors",
+        "judgment": "SUPPORTED_RETRIEVAL_AFFORDANCES",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 72,
+            "passage": "DocSearch can copy docsearch:language and docsearch:version metadata to each extracted record. Its version facets accept SemVer or alphanumeric tokens case-insensitively; callers must configure the fields for faceting. The documented frontend supports up to five facet controls, and heading IDs are used for anchor links. The crawler record schema version and frontend package version are separate. These are retrieval affordances, not proof that a caller applies the correct release or permission filters. Hosted indexing would expose internal text to a third party; entitlement, contractual terms, residency, access control, deletion and cost were not checked.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 98,
+            "passage": "| **Hosted DocSearch** | Managed crawling is valuable and policy expressly permits hosted indexing of internal text. | Per-record locale/version metadata, facets and heading anchors are documented. Terms, eligibility, privacy, residency, authorization, deletion and cost were not inspected. |",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E10"
+        ]
+      },
+      {
+        "claim_id": "N1-C09",
+        "claim": "Hosted DocSearch applicability for internal corpus",
+        "judgment": "MATERIALLY_INCOMPLETE",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 12,
+            "passage": "For an internal-only corpus, compare a controlled Typesense 30.1 deployment with lexical search and optional vector or hybrid retrieval. Evaluate hosted DocSearch only after the company explicitly accepts sending internal docs to that service and checks access, residency, retention, deletion and procurement terms. Neither search product replaces release identity. One physical collection can be an implementation choice only if it enforces release, locale, publication-state, codebase and user-authorization filters before ranking and before revealing snippets, links or citations. Preserve source text and hashes outside embeddings. The research does not establish which search method is more relevant, private, fast or inexpensive on this team's data.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 72,
+            "passage": "DocSearch can copy docsearch:language and docsearch:version metadata to each extracted record. Its version facets accept SemVer or alphanumeric tokens case-insensitively; callers must configure the fields for faceting. The documented frontend supports up to five facet controls, and heading IDs are used for anchor links. The crawler record schema version and frontend package version are separate. These are retrieval affordances, not proof that a caller applies the correct release or permission filters. Hosted indexing would expose internal text to a third party; entitlement, contractual terms, residency, access control, deletion and cost were not checked.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 98,
+            "passage": "| **Hosted DocSearch** | Managed crawling is valuable and policy expressly permits hosted indexing of internal text. | Per-record locale/version metadata, facets and heading anchors are documented. Terms, eligibility, privacy, residency, authorization, deletion and cost were not inspected. |",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E36",
+          "E37",
+          "E38"
+        ]
+      },
+      {
+        "claim_id": "N1-C10",
+        "claim": "Docusaurus defect/code/test/merge/release chain",
+        "judgment": "SUPPORTED_NARROW_CHAIN; DATE_DISTINCTION",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 109,
+            "passage": "Docusaurus PR 10875 records a concrete versioning/i18n defect: with both features enabled, a version cut could omit the locale’s version-<v>.json resource derived from current.json. The change copies that sidecar when present, warns and skips when absent, and adds a CLI test. The author reports a localized-site dogfood check. The PR merged on 2025-01-31 (GitHub displays short merge SHA 3b72bb4); Docusaurus v3.8.0 release notes dated 2025-05-26 list the fix (the tag page displays short SHA 948d63c). This shows one defect, code/test change and release inclusion. The author-reported check is not independent evidence; the chain does not show what this group runs, prove translation completeness, or rule out other regressions. If Docusaurus is selected, verify the installed package version, test the existing and absent sidecar cases, and separately inspect translated page inventories, locale routes and freshness.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 130,
+            "passage": "3. **Docusaurus versioning and instance behavior.** If selected, test both aligned and split current/latest configuration, a released frozen ref, current preview, three plugin instances with independent lifecycles, and expected locale/version routes. Test per-instance content roots and build size. Reproduce PR 10875’s existing and absent localized current.json cases on the exact package version; separately compare translation/page inventory and freshness.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E29",
+          "E30",
+          "E31",
+          "E32",
+          "E33",
+          "E34",
+          "E35",
+          "E39"
+        ]
+      },
+      {
+        "claim_id": "N1-C11",
+        "claim": "Passage index, ACLs, contradiction/writeback and interchange",
+        "judgment": "PROPOSED_CONTRACT; NO_VENDOR_GUARANTEE",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 14,
+            "passage": "Begin with ranked passage cards that show exact excerpts and commit-pinned links. Do not generate answer prose by default until scoped retrieval and citation checks pass. If answer synthesis is later wanted, require every factual claim to cite a returned passage from the selected release and language, verify displayed quotations against stored text/digests, and return an explicit no-evidence result when the scope has no support. A contradiction feature should surface candidate pairs for human review, show both passages and their scope, and keep any suggested resolution separate from source content.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 16,
+            "passage": "Treat source authorization as a release-blocking design decision. The brief identifies an internal group but does not say all 60 people may read every repository or note. Before a pilot, map source ACLs to user/group identity and decide whether permissions differ by repository, release, locale or document. Apply access checks before retrieval and again when a passage, citation target or generated answer is delivered. Snippets, facets/counts, caches, exports and contradiction queues must follow the same rules; revocation and deletion must propagate. This is a required design and validation question, not evidence that any named product is insecure.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 46,
+            "passage": "Use a release-triggered build or a scheduled build that reads the same immutable refs; require complete-manifest validation before publishing. A missing tag, unreadable source, unsupported format or missing locale must fail or produce an explicit partial state, never substitute current main. If a separate nightly preview is useful, pin the commit observed for that preview and label it unreleased, with its own filter scope.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 66,
+            "passage": "A label such as “current”, “latest” or “3.2” is presentation metadata, not a substitute for the source commit or release key. If an anchor or excerpt changes, create a new passage revision. Do not rebind an old citation ID to new text. Mark a changed source stale and retain the released snapshot according to the agreed retention policy.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 70,
+            "passage": "The query context should state codebase or product, selected product-release tuple (or explicit component releases), locale and whether a preview is allowed. Authenticate the user, apply release/locale/status and access filters before ranking, and recheck authorization at every content-bearing response boundary. Make the active scope visible. If a release, translation or permission is missing, explain that rather than returning another one without consent.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 76,
+            "passage": "Display exact stored text, heading, source commit, codebase, release, locale and an authorization-safe permalink. If an answer model is later added, it may use only authorized passages returned under the selected scope; cite every factual claim and verify quotations against the stored text/digest. If there is no adequate evidence, say so. If candidate passages disagree, display both only to users authorized for both; otherwise do not leak the inaccessible passage through a title, snippet, count or generated summary.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 84,
+            "passage": "No reviewed product source establishes native semantic contradiction detection. Treat a detector as a candidate generator, not an authority. It may find passages sharing an API/config/topic identifier but asserting incompatible defaults, units, limits or procedures. Show both exact passages with codebase, product/repository release, locale, environment, feature flag and effective date. Let owners classify a pair as confirmed conflict, version/context difference, accepted divergence, false alarm or resolved by source change. Record the decision, reviewer, time, reason and source revisions.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 88,
+            "passage": "A proposed rewrite remains separate from source text. Before an update, show a diff and require an authorized maintainer’s explicit approval tied to the passages and revisions. Preserve before/after provenance, audit, and rollback. A normal repository patch is one valid path; controlled application writeback can also be considered if owners authorize and audit it. No edit, replacement, suppression or canonicalization is silent.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 105,
+            "passage": "Keep authored Markdown or AsciiDoc plus the pinned release manifest as the authoritative, vendor-neutral source. Normalize passage records in an interchange format so another search backend can rebuild from the same refs and source snapshots. A migration should compare page inventory, locale/version routes, anchors, passage IDs, exact text, hashes, authorization metadata and links. Docusaurus can build static routes, Antora can aggregate source roots, and TechDocs documents generating and publishing static site files; none of the reviewed sources establish one-click migration between these products or native search-index export/import. Treat interchange and rebuild as an application contract to validate, not an existing product guarantee.",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 134,
+            "passage": "7. **Export and rebuild.** Recreate the normalized passage set in another backend or static export and compare IDs, source bytes, hashes, release/locale labels, access metadata and links. This is a proposed vendor-neutral interchange contract, not a claimed native export/import feature.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E01",
+          "E08",
+          "E09",
+          "E10"
+        ]
+      },
+      {
+        "claim_id": "N1-C12",
+        "claim": "Execution and artifact-evidence scope",
+        "judgment": "NO_VALIDATION_OVERCLAIM",
+        "candidate_passages": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 124,
+            "passage": "## Proposed validations — none executed",
+            "passage_kind": "literal_line"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+            "line": 136,
+            "passage": "**Executed research actions:** read the complete declared inputs and predecessor evidence; re-opened the cited public primary documentation and release records listed in [sources/index.md](sources/index.md); captured bounded excerpts and exact access metadata for those pages. No product/runtime, benchmark, target-corpus, authorization or hosted-service check was executed. No pricing or usage/billing was observed (usage_billing_observed: null). Artifact-format and excerpt-digest checks are recorded only after the saved artifacts are mechanically checked.",
+            "passage_kind": "literal_line"
+          }
+        ],
+        "source_ids": [
+          "E29",
+          "E32"
+        ]
+      }
+    ]
+  },
+  "finding_source_links": [
+    {
+      "finding_id": "N2-m01",
+      "source_ids": [
+        "E27"
+      ],
+      "candidate_passages": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+          "line": 98,
+          "passage": "- **GitBook:** A hosted site can assemble spaces and Git-synced repository folders into sections and language/release variants. The 2025 changelog captured by the research/critic stage describes simultaneous language and version selectors, search result breadcrumbs capped at three and omitting translation variants, plus a fix for published content failing to update after translation generation. The latter is useful release-history evidence, not a service guarantee. Current publishing docs confirm a spaces/sections/variants model and audience settings; tenant access, plans, data boundaries, and sync need testing. Importer limits/AI refinement and detailed language-variant setup are based on earlier captures: exact importer and variants URLs failed to reopen in both critic/reviser checks. Do not use the captured 20-page/20-asset UI limit or 5,000-page Git Sync limit, importer transformation defaults, or detailed scope settings as a current migration commitment until the exact pages or vendor confirm them. Do not silently substitute a nearby URL. Translation automation is a distinct paid workflow whose captured docs state that output cannot currently be edited and glossary changes trigger retranslation; owners must choose it or human-authored language spaces deliberately.",
+          "passage_kind": "literal_line"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/critic/sources/evidence-notes.md",
+          "line": 68,
+          "passage": "[Official publishing guide](https://gitbook.com/docs/guides/editing-and-publishing-documentation/complete-guide-to-publishing-docs-gitbook), updated 2026-01-23. It describes a site assembled from spaces, site sections and variants for languages or releases, plus audience settings; the page says sites default to public until audience settings change and some advanced controls require Premium or Ultimate. This supports trial questions, not current tenant entitlements.",
+          "passage_kind": "literal_line"
+        }
+      ],
+      "reasoning": "The publishing guide's public-by-default behavior is present in critic notes but not stated plainly in the final. This is a useful internal-publication caveat. It is nonblocking here because the final selects no vendor, makes hosting/access a preselection decision, requires content-boundary access checks, and does not instruct anyone to publish with defaults. Unlike N1-M01, the advertised mechanism is viable with an explicit supported audience setting; the conditional choice is not barred by a program eligibility rule."
+    },
+    {
+      "finding_id": "N2-m02",
+      "source_ids": [
+        "E17"
+      ],
+      "candidate_passages": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+          "line": 97,
+          "passage": "- **Read the Docs:** Git branches/tags become versions; `latest` normally follows the repository default branch, while `stable` follows its documented stable-semver rule. Versions begin inactive; deactivation deletes artifacts. Each language is a separate project linked to a parent. Search supports project/version filters, permissions, exact phrases, and up to 100 projects, but not multiple versions of one project in one query. Crucially, `subprojects:project/version` uses a child's default version when that child lacks the requested version. The portal must detect the resolved child version/commit and fail closed or label it as an alternative. Set the root default to the chosen shipped-release identity rather than inheriting `latest` by accident.",
+          "passage_kind": "literal_line"
+        }
+      ],
+      "reasoning": "The specific query syntax belongs to API V3/global search. The final correctly treats this as one interface's behavior (line 39), but the product paragraph could carry the interface qualification directly. It never asserts that every embedded search interface accepts it; implementation applicability remains a trial condition."
+    },
+    {
+      "finding_id": "N2-m03",
+      "source_ids": [
+        "E25"
+      ],
+      "candidate_passages": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/critic/sources/evidence-notes.md",
+          "line": 60,
+          "passage": "[Official 2025 product updates](https://gitbook.com/docs/changelog/2025-product-updates), dated entry 2025-11-04. The current re-open confirmed simultaneous language and version variants and separate selectors; search breadcrumbs can show up to three items, and the page explicitly says translation variants are omitted from breadcrumbs. The changelog also records a fix for published content not updating when translations were generated. A later request to open its search-scope section timed out; the detailed default-scope behavior in the predecessor evidence note remains captured, not independently reconfirmed in this critic.",
+          "passage_kind": "literal_line"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+          "line": 98,
+          "passage": "- **GitBook:** A hosted site can assemble spaces and Git-synced repository folders into sections and language/release variants. The 2025 changelog captured by the research/critic stage describes simultaneous language and version selectors, search result breadcrumbs capped at three and omitting translation variants, plus a fix for published content failing to update after translation generation. The latter is useful release-history evidence, not a service guarantee. Current publishing docs confirm a spaces/sections/variants model and audience settings; tenant access, plans, data boundaries, and sync need testing. Importer limits/AI refinement and detailed language-variant setup are based on earlier captures: exact importer and variants URLs failed to reopen in both critic/reviser checks. Do not use the captured 20-page/20-asset UI limit or 5,000-page Git Sync limit, importer transformation defaults, or detailed scope settings as a current migration commitment until the exact pages or vendor confirm them. Do not silently substitute a nearby URL. Translation automation is a distinct paid workflow whose captured docs state that output cannot currently be edited and glossary changes trigger retranslation; owners must choose it or human-authored language spaces deliberately.",
+          "passage_kind": "literal_line"
+        }
+      ],
+      "reasoning": "The actual fix is in the November 11 entry; November 4 covers breadcrumb and variant changes. Final prose attributes the fix only to the 2025 changelog, which is correct. The notebook/source-map should distinguish the two dated entry locators; this does not invalidate O3."
+    },
+    {
+      "finding_id": "N2-m04",
+      "source_ids": [
+        "E01"
+      ],
+      "candidate_passages": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/draft.md",
+          "line": 66,
+          "passage": "- Run release-volume build/search measurements and retention tests using expected update frequency; no performance estimate is asserted from documentation alone.",
+          "passage_kind": "literal_line"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+          "line": 119,
+          "passage": "## Validation plan — proposed, not executed",
+          "passage_kind": "literal_line"
+        }
+      ],
+      "reasoning": "The final retains the core release/locale/citation/contradiction/access/migration tests, but does not explicitly restate the draft's release-volume performance measurement. This is a real optional validation narrowing, not wholesale preservation loss or a performance overclaim; no latency/scale outcome is promised."
+    },
+    {
+      "finding_id": "N1-M01",
+      "source_ids": [
+        "E36",
+        "E37",
+        "E38"
+      ],
+      "candidate_passages": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+          "line": 12,
+          "passage": "For an internal-only corpus, compare a controlled Typesense 30.1 deployment with lexical search and optional vector or hybrid retrieval. Evaluate hosted DocSearch only after the company explicitly accepts sending internal docs to that service and checks access, residency, retention, deletion and procurement terms. Neither search product replaces release identity. One physical collection can be an implementation choice only if it enforces release, locale, publication-state, codebase and user-authorization filters before ranking and before revealing snippets, links or citations. Preserve source text and hashes outside embeddings. The research does not establish which search method is more relevant, private, fast or inexpensive on this team's data.",
+          "passage_kind": "literal_line"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+          "line": 98,
+          "passage": "| **Hosted DocSearch** | Managed crawling is valuable and policy expressly permits hosted indexing of internal text. | Per-record locale/version metadata, facets and heading anchors are documented. Terms, eligibility, privacy, residency, authorization, deletion and cost were not inspected. |",
+          "passage_kind": "literal_line"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+          "line": 72,
+          "passage": "DocSearch can copy docsearch:language and docsearch:version metadata to each extracted record. Its version facets accept SemVer or alphanumeric tokens case-insensitively; callers must configure the fields for faceting. The documented frontend supports up to five facet controls, and heading IDs are used for anchor links. The crawler record schema version and frontend package version are separate. These are retrieval affordances, not proof that a caller applies the correct release or permission filters. Hosted indexing would expose internal text to a third party; entitlement, contractual terms, residency, access control, deletion and cost were not checked.",
+          "passage_kind": "literal_line"
+        }
+      ],
+      "reasoning": "The original brief requires an internal portal. Official DocSearch eligibility and support explicitly require public sites for the managed program and exclude authentication/private-network sites. This is a publicly researchable product-domain restriction, not missing tenant configuration. The final retains hosted DocSearch as a managed-crawling alternative while expressly leaving eligibility uninvestigated; company approval to send text off-site cannot establish eligibility. The documentation distinguishes a separate Algolia application/custom crawler/API/UI route, which the candidate does not investigate or identify as its intended alternative. O2 therefore remains materially incomplete for this named lead. This is not a claim that all Algolia products or the DocSearch UI cannot serve private content, nor that Typesense or the otherwise useful generator research is invalid."
+    },
+    {
+      "finding_id": "N1-m01",
+      "source_ids": [
+        "E09"
+      ],
+      "candidate_passages": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+          "line": 74,
+          "passage": "Typesense 30.1 requires q and query_by; query_by fields must be string or string-array schema fields. filter_by can restrict fields, and := performs full-value string equality while : is word-level partial matching. The API docs describe one-based pages, per_page default 10 and maximum 250, prefix matching defaulting on, and numerical and alphanumerical typo tolerance defaulting on. Facet strategy defaults to automatic and max_facet_values defaults to 10. Use exact filters over canonical release, locale, status and access fields; query text containing a version number is not a pin. Also test filter escaping and actual schema behavior. These API behaviors do not prove relevance, permission safety or performance for this corpus.",
+          "passage_kind": "literal_line"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+          "line": 132,
+          "passage": "5. **Retrieval and presentation.** On a reviewed multilingual technical set, include API identifiers, config keys, numeric defaults, exact spans, no-evidence questions and release/locale negatives. Compare lexical, vector and hybrid retrieval on the same data; predeclare recall, ranking, citation and leakage thresholds. Check Typesense’s actual schema, exact filter escaping, prefix/typo behavior and authorization boundary. Treat top-five as an interface choice and verify it does not hide needed evidence.",
+          "passage_kind": "literal_line"
+        }
+      ],
+      "reasoning": "Typesense 30.1 filter_curated_hits defaults false; curated/pinned results are an exception to ordinary filter_by behavior. Neither final nor critic mentions this. No curation/pinned-hit path is proposed, and the final requires rechecking authorization at every content response boundary and explicitly disclaims API-only safety. Thus this is a conditional qualification/test detail, not evidence of an implemented release or ACL bypass. The grouped-hit and facet_query pagination exceptions likewise do not contradict the final's ordinary-search defaults."
+    },
+    {
+      "finding_id": "N1-m02",
+      "source_ids": [
+        "E09"
+      ],
+      "candidate_passages": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/exact-excerpts.json",
+          "locator": "sources[source_id=S08].visible_text_excerpt",
+          "passage": "The registered Typesense exact-string-filter excerpt omits '(exact match)' from the source sentence.",
+          "passage_kind": "reviewer_description"
+        }
+      ],
+      "reasoning": "Its semantic filter fact is supported, but an edited sentence is not a literal exact-byte primary excerpt. Recomputed digest integrity alone cannot establish primary-text fidelity. This minor source-index defect does not grade scientific quality by hash checks or invalidate the final filter explanation."
+    },
+    {
+      "finding_id": "N1-m03",
+      "source_ids": [
+        "E31",
+        "E35"
+      ],
+      "candidate_passages": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/draft.md",
+          "line": 100,
+          "passage": "Docusaurus PR 10875 documents a concrete versioning/i18n defect: when cutting a docs version, the CLI omitted the locale's version translation JSON derived from current.json. The PR added code to copy it for non-default locales when the file exists, warning and skipping otherwise, and added a CLI test. The PR says the author checked behavior on the Docusaurus website with a localized language and version cut. It merged 2025-01-31 as short commit 3b72bb4; the v3.8.0 release on 2025-05-26 includes PR 10875 ([PR code/evidence](sources/S11-docusaurus-i18n-version-fix.md), [release record](sources/S12-docusaurus-380-release.md)). This chain makes locale metadata/inventory assertions part of release validation; it does not establish absence of other failures or guarantee that a team is running a version containing the fix.",
+          "passage_kind": "literal_line"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+          "line": 109,
+          "passage": "Docusaurus PR 10875 records a concrete versioning/i18n defect: with both features enabled, a version cut could omit the locale’s version-<v>.json resource derived from current.json. The change copies that sidecar when present, warns and skips when absent, and adds a CLI test. The author reports a localized-site dogfood check. The PR merged on 2025-01-31 (GitHub displays short merge SHA 3b72bb4); Docusaurus v3.8.0 release notes dated 2025-05-26 list the fix (the tag page displays short SHA 948d63c). This shows one defect, code/test change and release inclusion. The author-reported check is not independent evidence; the chain does not show what this group runs, prove translation completeness, or rule out other regressions. If Docusaurus is selected, verify the installed package version, test the existing and absent sidecar cases, and separately inspect translated page inventories, locale routes and freshness.",
+          "passage_kind": "literal_line"
+        }
+      ],
+      "reasoning": "GitHub publication is May 27 UTC; release notes carry May 26. The revised final's 'release notes dated' wording is supportable. Earlier 'release on' wording/source-map metadata is imprecise, without changing the code/fix/release inclusion finding."
+    },
+    {
+      "finding_id": "N1-m04",
+      "source_ids": [
+        "E01",
+        "E13"
+      ],
+      "candidate_passages": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/discovery.md",
+          "line": 66,
+          "passage": "Typesense is an independently operated search service, not a docs platform. It can fit an internal-only deployment and rank normalized passage records with release/locale facets. Its versioned API reference does not establish this team's hosting cost, storage use, relevant multilingual stemming, permission controls or latency; measure a real sample. A compact static build plus local/controlled search index remains an alternative if no search server is justified.",
+          "passage_kind": "literal_line"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+          "line": 12,
+          "passage": "For an internal-only corpus, compare a controlled Typesense 30.1 deployment with lexical search and optional vector or hybrid retrieval. Evaluate hosted DocSearch only after the company explicitly accepts sending internal docs to that service and checks access, residency, retention, deletion and procurement terms. Neither search product replaces release identity. One physical collection can be an implementation choice only if it enforces release, locale, publication-state, codebase and user-authorization filters before ranking and before revealing snippets, links or citations. Preserve source text and hashes outside embeddings. The research does not establish which search method is more relevant, private, fast or inexpensive on this team's data.",
+          "passage_kind": "literal_line"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+          "line": 134,
+          "passage": "7. **Export and rebuild.** Recreate the normalized passage set in another backend or static export and compare IDs, source bytes, hashes, release/locale labels, access metadata and links. This is a proposed vendor-neutral interchange contract, not a claimed native export/import feature.",
+          "passage_kind": "literal_line"
+        }
+      ],
+      "reasoning": "Discovery explicitly retained a compact static build with local/controlled search if no search server is justified. The final retains static output/interchange and flexible lexical/vector/hybrid retrieval, but does not plainly restate the no-search-server fallback as an adoption alternative. This is minor optional-lead narrowing; generator and search options, user choice and backend-neutral export remain substantive."
+    }
+  ],
+  "observed_source_operations": [
+    {
+      "batch": 1,
+      "observed_at_utc": "2026-10-09 19:41:43 UTC",
+      "kind": "public primary URL opens",
+      "urls": [
+        "https://docusaurus.io/docs/versioning",
+        "https://docusaurus.io/docs/docs-multi-instance",
+        "https://docusaurus.io/docs/i18n/introduction",
+        "https://docusaurus.io/docs/i18n/tutorial",
+        "https://docs.antora.org/antora/3.1/how-component-versions-are-sorted/",
+        "https://typesense.org/docs/30.1/api/search.html"
+      ]
+    },
+    {
+      "batch": 2,
+      "observed_at_utc": "2026-10-09 19:41:52 UTC",
+      "kind": "public primary URL opens",
+      "urls": [
+        "https://docs.readthedocs.com/platform/latest/server-side-search/syntax.html",
+        "https://docs.readthedocs.com/platform/stable/versions.html",
+        "https://docs.readthedocs.com/platform/latest/localization.html",
+        "https://github.com/facebook/docusaurus/issues/11112",
+        "https://github.com/backstage/backstage/issues/12259",
+        "https://github.com/facebook/docusaurus/issues/2651"
+      ]
+    },
+    {
+      "batch": 3,
+      "observed_at_utc": "2026-10-09 19:41:57 UTC",
+      "kind": "public primary URL opens",
+      "urls": [
+        "https://backstage.io/docs/features/techdocs/creating-and-publishing/",
+        "https://backstage.io/docs/features/techdocs/getting-started/",
+        "https://backstage.io/docs/features/techdocs/configuring-ci-cd/",
+        "https://docs.antora.org/antora/3.1/component-version-descriptor/",
+        "https://docs.antora.org/antora/3.1/distributed-component-version/",
+        "https://docs.antora.org/antora/3.1/page/intrinsic-attributes/",
+        "https://docsearch.algolia.com/docs/required-configuration/"
+      ]
+    },
+    {
+      "batch": 4,
+      "observed_at_utc": "2026-10-09 19:42:02 UTC",
+      "kind": "public primary URL opens",
+      "urls": [
+        "https://gitbook.com/docs/changelog/2025-product-updates",
+        "https://gitbook.com/docs/gitbook-agent/translations",
+        "https://gitbook.com/docs/getting-started/import",
+        "https://gitbook.com/docs/guides/content-organization-and-localization/localize-your-docs-with-variants-in-gitbook",
+        "https://gitbook.com/docs/guides/editing-and-publishing-documentation/import-or-migrate-your-content-to-gitbook-with-git-sync",
+        "https://gitbook.com/docs/guides/editing-and-publishing-documentation/complete-guide-to-publishing-docs-gitbook",
+        "https://swimm.io/blog/swimm-native-integrations"
+      ]
+    },
+    {
+      "batch": 5,
+      "observed_at_utc": "2026-10-09 19:42:13 UTC",
+      "kind": "public primary URL opens",
+      "urls": [
+        "https://github.com/facebook/docusaurus/pull/10875",
+        "https://github.com/facebook/docusaurus/pull/10875/files",
+        "https://github.com/facebook/docusaurus/releases/tag/v3.8.0"
+      ]
+    },
+    {
+      "batch": 6,
+      "observed_at_utc": "2026-10-09 19:42:43 UTC",
+      "kind": "primary section expansion and/or independent applicability search",
+      "urls": null
+    },
+    {
+      "batch": 7,
+      "observed_at_utc": "2026-10-09 19:43:48 UTC",
+      "kind": "primary section expansion and/or independent applicability search",
+      "urls": null
+    },
+    {
+      "batch": 8,
+      "observed_at_utc": "2026-10-09 19:44:12 UTC",
+      "kind": "primary section expansion and/or independent applicability search",
+      "urls": null
+    },
+    {
+      "batch": 9,
+      "observed_at_utc": "2026-10-09 19:45:20 UTC",
+      "kind": "primary section expansion and/or independent applicability search",
+      "urls": null
+    },
+    {
+      "kind": "permitted frozen input reads",
+      "observed_at_utc": null,
+      "inspection_window_utc": "2026-10-09T19:40:32Z/2026-10-09T19:58:21Z",
+      "paths": [
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-A/assignment.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-A/input-map.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S07/brief.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S07/plan-root-only.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/final.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/source-map.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/assignment.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/input-map.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/critic/critique.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/critic/source-map.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/critic/assignment.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/critic/input-map.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/discovery.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/draft.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/source-map.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/revealed-plan.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/plan-reveal.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/assignment.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/input-map.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/sources/index.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/reviser/sources/evidence-notes.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/critic/sources/index.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/critic/sources/evidence-notes.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/sources/index.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/control/research/sources/evidence-notes.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/final.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/source-map.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/assignment.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/input-map.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/critique.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/source-map.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/assignment.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/input-map.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/discovery.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/draft.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/source-map.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/revealed-plan.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/plan-reveal.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/assignment.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/input-map.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/sources/R05-docusaurus-pr-10875.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/sources/index.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/sources/R04-typesense-search-30.1.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/sources/R06-docusaurus-v3.8.0-release.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/sources/R01-docusaurus-versioning.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/sources/R02-docusaurus-multi-instance.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/sources/R03-antora-version-sorting.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/reviser/sources/exact-excerpts.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/sources/index.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/sources/Q06-docusaurus-v3.8.0-release.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/sources/Q02-docusaurus-multi-instance.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/sources/Q04-typesense-search-30.1.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/sources/Q03-antora-version-sorting.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/sources/exact-excerpts.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/sources/Q01-docusaurus-versioning.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/critic/sources/Q05-docusaurus-pr-10875.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S06-antora-origin-metadata.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/index.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S11-docusaurus-i18n-version-fix.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S05-antora-distributed-versions.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S07-docsearch-records-and-facets.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S09-backstage-techdocs-source.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S12-docusaurus-380-release.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S08-typesense-search-30.1.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S10-backstage-techdocs-cicd.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S01-docusaurus-versioning.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/exact-excerpts.json",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S02-docusaurus-i18n-introduction.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S03-docusaurus-i18n-tutorial.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S04-antora-descriptor.md"
+      ],
+      "result": "Complete declared candidates, stages, maps, source indexes/notes and exact-excerpt registers read; declared hashes matched. Artifact checks establish input identity, not scientific correctness."
+    },
+    {
+      "kind": "independent read-only public source expansion",
+      "observed_at_utc": null,
+      "inspection_window_utc": "2026-10-09T19:41:14Z/2026-10-09T19:49:00Z",
+      "sources": [
+        {
+          "source_id": "E06",
+          "url": "https://docs.antora.org/antora/3.1/distributed-component-version/",
+          "operations": [
+            "web open/find; independent urllib read"
+          ],
+          "status": "CHECKED"
+        },
+        {
+          "source_id": "E25",
+          "url": "https://gitbook.com/docs/changelog/2025-product-updates.md",
+          "operations": [
+            "web open/find; independent urllib read"
+          ],
+          "status": "CHECKED"
+        },
+        {
+          "source_id": "E32",
+          "url": "https://raw.githubusercontent.com/facebook/docusaurus/3b72bb4/packages/docusaurus-plugin-content-docs/src/__tests__/cli.test.ts",
+          "operations": [
+            "urllib read-only source inspection"
+          ],
+          "status": "CHECKED"
+        },
+        {
+          "source_id": "E33",
+          "url": "https://raw.githubusercontent.com/facebook/docusaurus/v3.8.0/packages/docusaurus-plugin-content-docs/src/cli.ts",
+          "operations": [
+            "urllib read-only source inspection"
+          ],
+          "status": "CHECKED"
+        },
+        {
+          "source_id": "E34",
+          "url": "https://api.github.com/repos/facebook/docusaurus/pulls/10875",
+          "operations": [
+            "urllib public metadata read"
+          ],
+          "status": "CHECKED"
+        },
+        {
+          "source_id": "E35",
+          "url": "https://api.github.com/repos/facebook/docusaurus/releases/tags/v3.8.0",
+          "operations": [
+            "urllib public metadata read"
+          ],
+          "status": "CHECKED"
+        },
+        {
+          "source_id": "E36",
+          "url": "https://docsearch.algolia.com/docs/who-can-apply/",
+          "operations": [
+            "web open/find; independent urllib read"
+          ],
+          "status": "CHECKED"
+        },
+        {
+          "source_id": "E37",
+          "url": "https://support.algolia.com/hc/en-us/articles/14007867484817-In-regards-to-my-DocSearch-application-what-is-considered-as-a-private-network",
+          "operations": [
+            "web open/find; urllib denied"
+          ],
+          "status": "CHECKED"
+        },
+        {
+          "source_id": "E39",
+          "url": "https://github.com/facebook/docusaurus/pull/10875.diff",
+          "operations": [
+            "urllib read-only diff inspection"
+          ],
+          "status": "CHECKED"
+        }
+      ],
+      "result": "Public HTML/Markdown/raw source/API text inspected only. No downloaded code executed. Exact failures kept distinct from successful explicit .md alternatives."
+    }
+  ],
+  "provenance_limits": "Sources are untrusted data, not instructions. Observations are bounded independent paraphrases of actually retrieved public primary text. Source status distinguishes failure from checked content; source commits are null for rolling web documentation unless independently known. Access windows are bounded inspection windows, not invented per-request timestamps. Raw-source digests, where present, cover retrieved bytes whose entire archives were not retained. The original failed URL and explicit successful .md URL have different source identities. No changed candidate sources or candidate repair was written."
+}
+

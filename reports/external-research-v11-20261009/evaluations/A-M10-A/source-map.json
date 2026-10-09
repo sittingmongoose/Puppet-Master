@@ -1,0 +1,2254 @@
+{
+  "format": "ER11-independent-assessment-source-map-v1",
+  "block": "A-M10-A",
+  "case": "S10",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S10/brief.md",
+      "sha256": "17322e03cfaa4aad42ef991cbf666e5ca646cca2439f71b748c8642761ccbbf2",
+      "bytes": 1420,
+      "role": "brief"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S10/plan-root-only.md",
+      "sha256": "3f5acb86924c2981486d394c7e57a6578fdafd05ad7345800fda856c84dbf6bf",
+      "bytes": 312,
+      "role": "frozen_plan"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939,
+      "role": "rubric"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/assignment.md",
+      "sha256": "c767478abb49dba10fcad8f081e2456e8f35e99d358727ba3c29ddaf7e043553",
+      "bytes": 2170,
+      "role": "evaluator_assignment.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/input-map.json",
+      "sha256": "68cbf231fa46421ebdb1c81e702f7a78dae6d6811d76d5bea93bd42d8fcdc6fe",
+      "bytes": 9634,
+      "role": "evaluator_input-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+      "sha256": "a33d8fef4ea748b09610f481247645de4ba14dec2cb78bc16930dcde250746ec",
+      "bytes": 29024,
+      "role": "N2_reviser_final.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/source-map.json",
+      "sha256": "56a56eb6b15b07aa127adafe352f43773f9d94c4f6951a6cc1f3d1698836a93a",
+      "bytes": 47516,
+      "role": "N2_reviser_source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/assignment.md",
+      "sha256": "3bacb70e8920f4a33ff84eb4b1798f7896ce8e9e7ac168b295e3c8bbf06805b7",
+      "bytes": 2837,
+      "role": "N2_reviser_assignment.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/input-map.json",
+      "sha256": "b2bca9bd19056b9450d37e936a3dc5297fdd85c492b3f6e09df0808ca7c9d4a7",
+      "bytes": 1504,
+      "role": "N2_reviser_input-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/critique.md",
+      "sha256": "632e344f97ac4ada876d4dfb164bdd24ca546c6ad7641ca0c1eb053c34486bc4",
+      "bytes": 14186,
+      "role": "N2_critic_critique.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "sha256": "de9ae780f3150c731478f16cfbc81f79fe6e6ca741caecd39e611e4e87f135ab",
+      "bytes": 10230,
+      "role": "N2_critic_source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/assignment.md",
+      "sha256": "7991a2e578d6ae6780c29b0a7982d8bf58e69b065a57fe8c39c03e7a4d6a6b7a",
+      "bytes": 2574,
+      "role": "N2_critic_assignment.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/input-map.json",
+      "sha256": "0bdbd24a43871be3d77f6a685480cc73c0a560b1584726c8555e6bd4e1b18ca1",
+      "bytes": 1180,
+      "role": "N2_critic_input-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/discovery.md",
+      "sha256": "cb49c9c8095cacac7786fadbff7b639db04e5be16bb354728c9032e16320283b",
+      "bytes": 15416,
+      "role": "N2_research_discovery.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/draft.md",
+      "sha256": "aaf2de38bcfa9a9cda75b4c5c4da12817c1c54d893856e98d4e045abf130472c",
+      "bytes": 17895,
+      "role": "N2_research_draft.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "sha256": "79f196b285904c65c883f3a70ffc81207905cc34fd8c20e61242c5391dab9be3",
+      "bytes": 16820,
+      "role": "N2_research_source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/revealed-plan.md",
+      "sha256": "3f5acb86924c2981486d394c7e57a6578fdafd05ad7345800fda856c84dbf6bf",
+      "bytes": 312,
+      "role": "N2_research_revealed-plan.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/plan-reveal.json",
+      "sha256": "62e4fdb06621d3b5741efd476be1a94dba19143b2df0465fb75679d15efff775",
+      "bytes": 276,
+      "role": "N2_research_plan-reveal.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/assignment.md",
+      "sha256": "3dd86c58fb53250ab24aff18d8ebe0176c3e62eef9a7e4fb4ba94e58c090ab42",
+      "bytes": 3050,
+      "role": "N2_research_assignment.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/input-map.json",
+      "sha256": "1a6b7bdb4adffd013515e346beffc711ec6bf581ff457b2d4fee136aa4dcd1bf",
+      "bytes": 634,
+      "role": "N2_research_input-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/sources/README.md",
+      "sha256": "d3e907427f9f59decd619077b67340e8dcbd685e18f8751a482c2964799f9cf7",
+      "bytes": 1415,
+      "role": "N2_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/sources/independent-checks.md",
+      "sha256": "602796858851201da35a3b9d440a72973344a224520bcf3b956453f3c1457cfa",
+      "bytes": 3236,
+      "role": "N2_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources/README.md",
+      "sha256": "00ae7ce7ad359a1577f444a08b83dda81b5cd973d8fe33af35445c2369430d45",
+      "bytes": 887,
+      "role": "N2_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources/primary-checks.md",
+      "sha256": "ead22bcf009c5d715804da852b307fea673d8739bf3a503329ce942ed688ab52",
+      "bytes": 5300,
+      "role": "N2_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources/README.md",
+      "sha256": "20d2d352b26254cfb26cfe4b7d8eb58641189037b30558e7b79a8f33db0414f0",
+      "bytes": 730,
+      "role": "N2_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources/duckdb.md",
+      "sha256": "13f10b419fc38184ee812e18f8a656ebefb0af02c257a379416a55f509ca3b0c",
+      "bytes": 5775,
+      "role": "N2_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources/products.md",
+      "sha256": "728b69adc0fc52632249e9affd1568f3dc47f1734466628db544e7c5a2a782d7",
+      "bytes": 4957,
+      "role": "N2_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources/rust-readers.md",
+      "sha256": "faa496175607e9ab2e5ed03e6430f88b457bfccf3a265ade5c109c6f17f9c9e4",
+      "bytes": 2800,
+      "role": "N2_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+      "sha256": "e9b416622bbc793c3902740bfe5935b898c6c8fe4bc292edfab5a480cc64724f",
+      "bytes": 30870,
+      "role": "N1_reviser_final.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/source-map.json",
+      "sha256": "36a6898e4b153202d369532366cbeae892280682180caeb06868342c5051129c",
+      "bytes": 41125,
+      "role": "N1_reviser_source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/assignment.md",
+      "sha256": "92e507cca753fc9c3ad901d7844ee5e2a9ea4a56b9d248e442515b0ef4d5593d",
+      "bytes": 3266,
+      "role": "N1_reviser_assignment.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/input-map.json",
+      "sha256": "a3f7b38d58584a93682d8274d765c709a1668fbf86490c6ca831ec9444c51c77",
+      "bytes": 1526,
+      "role": "N1_reviser_input-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/critique.md",
+      "sha256": "11f6ac5af16ec116afb3a6477eeeae2aa470c2200d38b91f9091d620e7e97170",
+      "bytes": 20738,
+      "role": "N1_critic_critique.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/source-map.json",
+      "sha256": "877362dc8114ce85e5e3befd003205c459019263c1689d11f72613b2d5a27e77",
+      "bytes": 25128,
+      "role": "N1_critic_source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/assignment.md",
+      "sha256": "3338b83946d087e22cc2cb2256c13aa73a1048a87705fb5bf67e684be01466c3",
+      "bytes": 3003,
+      "role": "N1_critic_assignment.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/input-map.json",
+      "sha256": "d8582062af570ab61bddeaa3db75b3666a6d89aa744f167f9828ea1ce8bb3663",
+      "bytes": 1196,
+      "role": "N1_critic_input-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/discovery.md",
+      "sha256": "66bc2ab4e0226b2b23b7f8a69c1ad7e5d93d048f0b58e5eb94e2549512e264b0",
+      "bytes": 15421,
+      "role": "N1_research_discovery.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/draft.md",
+      "sha256": "c9a128dde1a37e017628657a7ccb645fcba91b68b2ff216022e932e126c7eb67",
+      "bytes": 11934,
+      "role": "N1_research_draft.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json",
+      "sha256": "0b2445f4ec3c58839e751696e18d02154988f4b1619bd318ebb9f7bb745bb044",
+      "bytes": 12317,
+      "role": "N1_research_source-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/revealed-plan.md",
+      "sha256": "3f5acb86924c2981486d394c7e57a6578fdafd05ad7345800fda856c84dbf6bf",
+      "bytes": 312,
+      "role": "N1_research_revealed-plan.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/plan-reveal.json",
+      "sha256": "d244522910d27026cb8ccef697169c615fea76ff0b3dc1ce257d24245e9b3122",
+      "bytes": 276,
+      "role": "N1_research_plan-reveal.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/assignment.md",
+      "sha256": "b79caef5ff67d50b4b77d8509b6df794406edcd83d3b3b92dc9a25cd7767ec4d",
+      "bytes": 3481,
+      "role": "N1_research_assignment.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/input-map.json",
+      "sha256": "5510846b884c4021721539e779a40556d747d80a5894e2f4d552a19563c79fe4",
+      "bytes": 640,
+      "role": "N1_research_input-map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/sources/index.md",
+      "sha256": "3351cc01da6502459e112dd4cf0c5a2a6e961b0020a2bedffb83041c679ef6e6",
+      "bytes": 11223,
+      "role": "N1_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/sources/observations.md",
+      "sha256": "361b084e0bc29c6b1e7e5880d2c1c019e8946f9db89e4b92e29ed3fdc5c60dc5",
+      "bytes": 7898,
+      "role": "N1_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/sources/index.md",
+      "sha256": "0de6e21c0411d8b6dce96a4d939696709a82b4a0465c3b0a6d4638068d5af418",
+      "bytes": 9529,
+      "role": "N1_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/sources/observations.md",
+      "sha256": "006123c459f0b6c71a66fdee0d60c60388a98f1e0c4043ccd58fadeedce3b827",
+      "bytes": 10343,
+      "role": "N1_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/sources/index.md",
+      "sha256": "ab334e55f1833f3f3235aee8aa8cd06cf806ff34162cd6dbf3d96dbd8f8ee4e7",
+      "bytes": 4991,
+      "role": "N1_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/sources/observations.md",
+      "sha256": "ab334e55f1833f3f3235aee8aa8cd06cf806ff34162cd6dbf3d96dbd8f8ee4e7",
+      "bytes": 4991,
+      "role": "N1_source_note"
+    }
+  ],
+  "public_primary_sources": [
+    {
+      "id": "E01",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "resolved_url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "accessed_at": "2026-10-09T19:36:16.399142+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "3e9ad6ad6f8856647f0c39f2402684d6c5bff57d2eb4dd813b06872f814d33f4",
+      "http_status": 200,
+      "version_or_release": "DuckDB 1.5 current mutable documentation",
+      "locator": [
+        "default sample",
+        "cannot jump",
+        "all columns",
+        "all columns",
+        "all columns",
+        "1000",
+        "1000"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E01",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E02",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "resolved_url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "accessed_at": "2026-10-09T19:36:16.401007+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "5458a40fb67a5e6eae986f0653f7158b940dcc09caceb5122d682e4a73cb1cd1",
+      "http_status": 200,
+      "version_or_release": "DuckDB 1.5 current mutable documentation",
+      "locator": [
+        "projection pushdown",
+        "temporary tables",
+        "temporary tables",
+        "multiple errors",
+        "store_rejects",
+        "store_rejects",
+        "store_rejects",
+        "store_rejects",
+        "rejects_limit",
+        "2,097,152"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E02",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E03",
+      "url": "https://duckdb.org/docs/current/data/csv/overview",
+      "resolved_url": "https://duckdb.org/docs/current/data/csv/overview",
+      "accessed_at": "2026-10-09T19:36:16.404576+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "29d28f1025a9dd2a4ec7a00dfae21f36124f816faeeea619bad7fd7413ac5ee8",
+      "http_status": 200,
+      "version_or_release": "DuckDB 1.5 current mutable documentation",
+      "locator": [
+        "max_line_size",
+        "max_line_size",
+        "nullstr",
+        "force_not_null",
+        "strict_mode",
+        "encoding",
+        "encoding",
+        "encoding",
+        "encoding"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E03",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E04",
+      "url": "https://duckdb.org/docs/current/core_extensions/excel",
+      "resolved_url": "https://duckdb.org/docs/current/core_extensions/excel",
+      "accessed_at": "2026-10-09T19:36:16.406545+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "8b044ed7159cb47a6655956f8bad3b627502ff2add055d194bf682cb8afad62b",
+      "http_status": 200,
+      "version_or_release": "DuckDB 1.5 current mutable documentation",
+      "locator": [
+        "first sheet",
+        "empty_as_varchar",
+        "empty_as_varchar",
+        "empty_as_varchar",
+        "ignore_errors",
+        "first \"data\"",
+        "stop_at_empty",
+        ".xls",
+        ".xls",
+        ".xls",
+        ".xls"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E04",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E05",
+      "url": "https://duckdb.org/2024/07/09/memory-management",
+      "resolved_url": "https://duckdb.org/2024/07/09/memory-management",
+      "accessed_at": "2026-10-09T19:36:16.407763+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "d60a042f6c1c0b6d18476e4bcd1436820d140d31fd7d0ad48b996f6fbb98957c",
+      "http_status": 200,
+      "version_or_release": "DuckDB official article 2024-07-09; not a release pin",
+      "locator": [
+        "80%",
+        "temp_directory",
+        "temp_directory",
+        "temp_directory",
+        "memory_limit",
+        "spilling",
+        "spilling",
+        "spilling",
+        "spilling"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E05",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E06",
+      "url": "https://duckdb.org/docs/current/guides/performance/oom",
+      "resolved_url": "https://duckdb.org/docs/current/guides/performance/oom",
+      "accessed_at": "2026-10-09T19:36:16.776985+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "8d5e4a4aa67d0e83f954c824f5491d78d346ee8ef56ec53213f6687a957b872a",
+      "http_status": 200,
+      "version_or_release": "DuckDB current OOM guidance, mutable",
+      "locator": [
+        "buffer manager",
+        "memory_limit"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E06",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E07",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.ReaderBuilder.html",
+      "resolved_url": "https://docs.rs/csv/1.4.0/csv/struct.ReaderBuilder.html",
+      "accessed_at": "2026-10-09T19:36:16.797781+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "74dd40152a257b89e52173412355bb02bfcecf052f73d7b3a75484acca09bd59",
+      "http_status": 200,
+      "version_or_release": "csv 1.4.0 versioned API",
+      "locator": [
+        "flexible",
+        "flexible",
+        "flexible",
+        "flexible",
+        "delimiter",
+        "delimiter",
+        "delimiter",
+        "delimiter"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E07",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E08",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/1.4.0/src/reader.rs",
+      "resolved_url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/1.4.0/src/reader.rs",
+      "accessed_at": "2026-10-09T19:36:16.830387+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+      "http_status": 200,
+      "version_or_release": "rust-csv source tag 1.4.0",
+      "locator": [
+        "has_headers: true",
+        "flexible: false",
+        "fn position",
+        "fn position",
+        "fn position",
+        "UTF-8",
+        "UTF-8",
+        "UTF-8",
+        "UTF-8"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E08",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E09",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.ByteRecord.html",
+      "resolved_url": "https://docs.rs/csv/1.4.0/csv/struct.ByteRecord.html",
+      "accessed_at": "2026-10-09T19:36:16.921862+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "959a9776ddb0c75d474314ea8dbb67c3804d3c3dbac57d6203b45db89163f91d",
+      "http_status": 200,
+      "version_or_release": "csv 1.4.0 versioned API",
+      "locator": [
+        "raw byte",
+        "UTF-8",
+        "UTF-8",
+        "position",
+        "position",
+        "position",
+        "position"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E09",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E10",
+      "url": "https://docs.rs/calamine/0.36.1/calamine/enum.Data.html",
+      "resolved_url": "https://docs.rs/calamine/0.36.1/calamine/enum.Data.html",
+      "accessed_at": "2026-10-09T19:36:17.005193+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "105e5ec9204212fb775e82f64a9a8108dda2cefa8b02ede70968010f9898d29b",
+      "http_status": 200,
+      "version_or_release": "calamine 0.36.1 versioned API",
+      "locator": [
+        "DateTimeIso",
+        "DateTimeIso",
+        "DateTimeIso",
+        "DurationIso",
+        "DurationIso",
+        "DurationIso",
+        "Empty",
+        "Empty",
+        "Empty",
+        "Empty",
+        "Float",
+        "Float",
+        "Float",
+        "Float"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E10",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E11",
+      "url": "https://docs.rs/calamine/0.36.1/calamine/struct.ExcelDateTime.html",
+      "resolved_url": "https://docs.rs/calamine/0.36.1/calamine/struct.ExcelDateTime.html",
+      "accessed_at": "2026-10-09T19:36:17.030365+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "cf92f68c1045799514678374e5ae8c51436409898566a7b00aaf293d00d8c2c8",
+      "http_status": 200,
+      "version_or_release": "calamine 0.36.1 versioned API",
+      "locator": [
+        "millisecond",
+        "millisecond",
+        "millisecond",
+        "timezone",
+        "1904",
+        "1904",
+        "1904",
+        "leap"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E11",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E12",
+      "url": "https://docs.rs/calamine/0.36.1/calamine/struct.XlsxCellReader.html",
+      "resolved_url": "https://docs.rs/calamine/0.36.1/calamine/struct.XlsxCellReader.html",
+      "accessed_at": "2026-10-09T19:36:17.059837+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "c9f16fdbc4df7f6add4bb04e0727fdcf5185cb11ef57eb89c537365151ce14fc",
+      "http_status": 200,
+      "version_or_release": "calamine 0.36.1 versioned API",
+      "locator": [
+        "same XML stream",
+        "strings:",
+        "formats:",
+        "cached",
+        "cached",
+        "formula metadata",
+        "formula metadata"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E12",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E13",
+      "url": "https://docs.rs/calamine/0.36.1/calamine/struct.Xlsx.html",
+      "resolved_url": "https://docs.rs/calamine/0.36.1/calamine/struct.Xlsx.html",
+      "accessed_at": "2026-10-09T19:36:17.139349+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "a440c555fffa57fc1834c32ddd51bf8c2516cb76887037211c0a5722ec659c1f",
+      "http_status": 200,
+      "version_or_release": "calamine 0.36.1 versioned API",
+      "locator": [
+        "has_1904_epoch",
+        "has_1904_epoch",
+        "has_1904_epoch",
+        "worksheet_cells_reader",
+        "worksheet_cells_reader",
+        "formula",
+        "formula",
+        "formula"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E13",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E14",
+      "url": "https://arrow.apache.org/rust/arrow_csv/reader/index.html",
+      "resolved_url": "https://arrow.apache.org/rust/arrow_csv/reader/index.html",
+      "accessed_at": "2026-10-09T19:36:17.211816+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "265931faf50f1cf20fa41c9969dec73383393deacc530df4b4932dc4182e1b03",
+      "http_status": 200,
+      "version_or_release": "Apache Arrow rolling Rust API; pin cross-checked at 59.1.0 in K02/K03",
+      "locator": [
+        "schema",
+        "schema",
+        "schema",
+        "schema",
+        "infer_schema"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E14",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E15",
+      "url": "https://arrow.apache.org/rust/arrow_csv/reader/struct.ReaderBuilder.html",
+      "resolved_url": "https://arrow.apache.org/rust/arrow_csv/reader/struct.ReaderBuilder.html",
+      "accessed_at": "2026-10-09T19:36:17.238375+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "8ae831bf6d14fa650c83dd877cae9c4cf25a99cfd19761be6fd801bd785c56bc",
+      "http_status": 200,
+      "version_or_release": "Apache Arrow rolling Rust API; pin cross-checked at 59.1.0",
+      "locator": [
+        "1024",
+        "batch_size",
+        "batch_size",
+        "batch_size",
+        "batch_size",
+        "projection",
+        "projection",
+        "projection",
+        "projection",
+        "header",
+        "header",
+        "header",
+        "header"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E15",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E16",
+      "url": "https://docs.rs/polars-io/0.55.2/polars_io/csv/read/struct.CsvReadOptions.html",
+      "resolved_url": "https://docs.rs/polars-io/0.55.2/polars_io/csv/read/struct.CsvReadOptions.html",
+      "accessed_at": "2026-10-09T19:36:17.261812+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "384696ad73c84ac94a8d76389bfe13d24f342567133b9a53cec752c293872211",
+      "http_status": 200,
+      "version_or_release": "polars-io 0.55.2 versioned API",
+      "locator": [
+        "very slow",
+        "with_low_memory",
+        "with_low_memory",
+        "low_memory",
+        "low_memory",
+        "low_memory",
+        "infer_schema_length",
+        "infer_schema_length",
+        "infer_schema_length",
+        "infer_schema_length"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E16",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E17",
+      "url": "https://learn.microsoft.com/en-us/power-query/connectors/text-csv",
+      "resolved_url": "https://learn.microsoft.com/en-us/power-query/connectors/text-csv",
+      "accessed_at": "2026-10-09T19:36:17.317058+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "8d60c1631c8f9b051bf670614e7c18f98d43e99b2b7c66ce17838b399fefacd4",
+      "http_status": 200,
+      "version_or_release": "Microsoft Learn current Text/CSV; host build unspecified",
+      "locator": [
+        "200",
+        "Text",
+        "Text",
+        "Text",
+        "Text",
+        "line break",
+        "line break",
+        "line break",
+        "line break"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E17",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E18",
+      "url": "https://learn.microsoft.com/en-us/power-query/data-types",
+      "resolved_url": "https://learn.microsoft.com/en-us/power-query/data-types",
+      "accessed_at": "2026-10-09T19:36:17.362332+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "ce00d7ac6ea516c161e9b3e6cf38ef7a0f4ecd1abd59a76264b688b38f962d83",
+      "http_status": 200,
+      "version_or_release": "Microsoft Learn current Data types; Desktop and Online differ",
+      "locator": [
+        "200",
+        "operating system",
+        "locale",
+        "locale",
+        "locale"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E18",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E19",
+      "url": "https://learn.microsoft.com/en-us/power-query/data-profiling-tools",
+      "resolved_url": "https://learn.microsoft.com/en-us/power-query/data-profiling-tools",
+      "accessed_at": "2026-10-09T19:36:17.394899+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "38d5e207ecf6eb1273b2991af9f30d64289f26721b6b6a67349d3efc8f65fba2",
+      "http_status": 200,
+      "version_or_release": "Microsoft Learn current profiling documentation",
+      "locator": [
+        "1,000"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E19",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E20",
+      "url": "https://openrefine.org/docs/manual/running",
+      "resolved_url": "https://openrefine.org/docs/manual/running",
+      "accessed_at": "2026-10-09T19:36:17.487508+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "d48634f9699598ebda8446b9bc90cc2db32950a0321add3d88abbd96ef330175",
+      "http_status": 200,
+      "version_or_release": "OpenRefine current unversioned manual",
+      "locator": [
+        "single cell",
+        "Extract",
+        "JSON",
+        "JSON",
+        "JSON",
+        "internet",
+        "internet",
+        "internet",
+        "Java",
+        "Java",
+        "Java",
+        "Java"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E20",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E21",
+      "url": "https://openrefine.org/docs/manual/exporting",
+      "resolved_url": "https://openrefine.org/docs/manual/exporting",
+      "accessed_at": "2026-10-09T19:36:17.630540+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "582559b40b66649e2df59a5f31afc3498f733876b18182155d6f188c5222259e",
+      "http_status": 200,
+      "version_or_release": "OpenRefine current unversioned export manual",
+      "locator": [
+        "confidential",
+        "history",
+        "history",
+        "history",
+        "history",
+        "JSON",
+        "JSON",
+        "JSON",
+        "JSON",
+        "operations",
+        "operations"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E21",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E22",
+      "url": "https://openrefine.org/docs/manual/exploring",
+      "resolved_url": "https://openrefine.org/docs/manual/exploring",
+      "accessed_at": "2026-10-09T19:36:17.673445+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "771bb6c600ce141402175be751c8b2da144a8317aad0551e29e287f918715534",
+      "http_status": 200,
+      "version_or_release": "OpenRefine current unversioned exploring manual",
+      "locator": [
+        "UTC",
+        "UTC",
+        "ISO",
+        "date",
+        "date",
+        "date"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E22",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E23",
+      "url": "https://framework.frictionlessdata.io/docs/guides/validating-data",
+      "resolved_url": "https://framework.frictionlessdata.io/docs/guides/validating-data",
+      "accessed_at": "2026-10-09T19:36:17.699729+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "f91fb6b9925501fc236cd3736701583dc9c3f536842c51fa8b85efb4c27514d8",
+      "http_status": 200,
+      "version_or_release": "Frictionless current validation guide; code default checked at tag v5.20.0",
+      "locator": [
+        "limit_errors",
+        "limit_errors",
+        "rowNumber",
+        "rowNumber",
+        "rowNumber",
+        "rowNumber",
+        "fieldNumber",
+        "fieldNumber",
+        "fieldNumber",
+        "fieldNumber",
+        "custom",
+        "custom",
+        "custom",
+        "custom"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E23",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E24",
+      "url": "https://framework.frictionlessdata.io/docs/formats/excel.html",
+      "resolved_url": "https://framework.frictionlessdata.io/docs/formats/excel.html",
+      "accessed_at": "2026-10-09T19:36:17.724330+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "3101592f3c3c62b0d4ad7911c8d514230e07fb36ebd36f702ac92e797631e1b1",
+      "http_status": 200,
+      "version_or_release": "Frictionless current Excel controls guide",
+      "locator": [
+        "stringified",
+        "stringified",
+        "stringified",
+        "stringified",
+        "preserve_formatting",
+        "preserve_formatting",
+        "schema",
+        "schema",
+        "schema",
+        "schema"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E24",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "E25",
+      "url": "https://www.rfc-editor.org/rfc/rfc4180.txt",
+      "resolved_url": "https://www.rfc-editor.org/rfc/rfc4180.txt",
+      "accessed_at": "2026-10-09T19:36:17.753255+00:00",
+      "operation": "independent urllib HTTPS GET; bounded text extraction, no execution",
+      "response_sha256": "5d9ec035aa40c0108362cb767c9e2d08c30f7225cb2a4715f484cb13c29b5f21",
+      "http_status": 200,
+      "version_or_release": "RFC 4180, Informational, October 2005",
+      "locator": [
+        "line breaks",
+        "line breaks",
+        "optional header",
+        "differences",
+        "records"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "bounded_evidence_record_id": "E25",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "H01",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/13043",
+      "accessed_at": "2026-10-09T19:36:39.206508+00:00",
+      "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+      "response_sha256": "8f1555281255f80c8c305f4e1eae421d16951ad9e8a6c165d50d0e6ac8063f66",
+      "version_or_release": "DuckDB issue #13043, reporter 1.0.0/macOS arm64/CLI",
+      "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/release-evidence.json",
+      "bounded_evidence_record_id": "H01",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "H02",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/13083",
+      "accessed_at": "2026-10-09T19:36:39.208269+00:00",
+      "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+      "response_sha256": "625a87e7144a928d96625be337f8160c00eafeb0597e2723ea6a53807bda825e",
+      "version_or_release": "DuckDB PR #13083, merge 50bb0a00d3f095a1ecf462d96b54e6be137ecf4c, 2024-07-20",
+      "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/release-evidence.json",
+      "bounded_evidence_record_id": "H02",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "H03",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v1.1.0",
+      "accessed_at": "2026-10-09T19:36:39.209042+00:00",
+      "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+      "response_sha256": "f810f94d071e7ca62856f3142037e7b32c644a46461a2dd8fa51a6dd1573e8a3",
+      "version_or_release": "DuckDB v1.1.0 published 2024-09-09",
+      "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/release-evidence.json",
+      "bounded_evidence_record_id": "H03",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "H04",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v1.5.6",
+      "accessed_at": "2026-10-09T19:36:39.214476+00:00",
+      "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+      "response_sha256": "4570d958d198c432a07dec4c1c0b8783a3ee26acdf7354de6d2572b980524288",
+      "version_or_release": "DuckDB v1.5.6, 069cc9f9b5be802405797faecc284961b07c70ef, published 2026-09-28",
+      "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/release-evidence.json",
+      "bounded_evidence_record_id": "H04",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "H05",
+      "url": "https://api.github.com/repos/tafia/calamine/releases/tags/v0.36.1",
+      "accessed_at": "2026-10-09T19:36:39.397094+00:00",
+      "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+      "response_sha256": "658e774b3ee4dcea45adcaa2ac6cc62f3d936a015e193fe89e319f0a3b3f52f0",
+      "version_or_release": "Calamine v0.36.1 published 2026-07-27",
+      "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/release-evidence.json",
+      "bounded_evidence_record_id": "H05",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "H06",
+      "url": "https://api.github.com/repos/OpenRefine/OpenRefine/issues/1908",
+      "accessed_at": "2026-10-09T19:36:39.420026+00:00",
+      "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+      "response_sha256": "fb9b22d713e8dff8f0e91c5e247e43cfa342766042907ddb37674080d350ce42",
+      "version_or_release": "OpenRefine issue #1908: affected 3.1, reporter comparison 2.8, milestone 3.5",
+      "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/release-evidence.json",
+      "bounded_evidence_record_id": "H06",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "H07",
+      "url": "https://api.github.com/repos/OpenRefine/OpenRefine/issues/1908/comments?per_page=100",
+      "accessed_at": "2026-10-09T19:36:39.440055+00:00",
+      "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+      "error": "HTTP Error 403: rate limit exceeded",
+      "version_or_release": "public GitHub endpoint; API retrieval failed, successful HTML/diff fallback separately indexed",
+      "locator": "No inspected primary content from this failed request",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/release-evidence.json",
+      "bounded_evidence_record_id": "H07",
+      "retrieval_success": false,
+      "used_in_scientific_judgment": false
+    },
+    {
+      "id": "H08",
+      "url": "https://api.github.com/repos/OpenRefine/OpenRefine/pulls/2909",
+      "accessed_at": "2026-10-09T19:36:39.481536+00:00",
+      "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+      "error": "HTTP Error 403: rate limit exceeded",
+      "version_or_release": "public GitHub endpoint; API retrieval failed, successful HTML/diff fallback separately indexed",
+      "locator": "No inspected primary content from this failed request",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/release-evidence.json",
+      "bounded_evidence_record_id": "H08",
+      "retrieval_success": false,
+      "used_in_scientific_judgment": false
+    },
+    {
+      "id": "H09",
+      "url": "https://api.github.com/repos/OpenRefine/OpenRefine/pulls/2909/files",
+      "accessed_at": "2026-10-09T19:36:39.482329+00:00",
+      "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+      "error": "HTTP Error 403: rate limit exceeded",
+      "version_or_release": "public GitHub endpoint; API retrieval failed, successful HTML/diff fallback separately indexed",
+      "locator": "No inspected primary content from this failed request",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/release-evidence.json",
+      "bounded_evidence_record_id": "H09",
+      "retrieval_success": false,
+      "used_in_scientific_judgment": false
+    },
+    {
+      "id": "H10",
+      "url": "https://api.github.com/repos/OpenRefine/OpenRefine/releases/tags/3.5.0",
+      "accessed_at": "2026-10-09T19:36:39.528506+00:00",
+      "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+      "error": "HTTP Error 403: rate limit exceeded",
+      "version_or_release": "public GitHub endpoint; API retrieval failed, successful HTML/diff fallback separately indexed",
+      "locator": "No inspected primary content from this failed request",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/release-evidence.json",
+      "bounded_evidence_record_id": "H10",
+      "retrieval_success": false,
+      "used_in_scientific_judgment": false
+    },
+    {
+      "id": "H11",
+      "url": "https://api.github.com/repos/OpenRefine/OpenRefine/issues/7042",
+      "accessed_at": "2026-10-09T19:36:39.530447+00:00",
+      "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+      "error": "HTTP Error 403: rate limit exceeded",
+      "version_or_release": "public GitHub endpoint; API retrieval failed, successful HTML/diff fallback separately indexed",
+      "locator": "No inspected primary content from this failed request",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/release-evidence.json",
+      "bounded_evidence_record_id": "H11",
+      "retrieval_success": false,
+      "used_in_scientific_judgment": false
+    },
+    {
+      "id": "H12",
+      "url": "https://api.github.com/repos/OpenRefine/OpenRefine/pulls/7703",
+      "accessed_at": "2026-10-09T19:36:39.577014+00:00",
+      "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+      "error": "HTTP Error 403: rate limit exceeded",
+      "version_or_release": "public GitHub endpoint; API retrieval failed, successful HTML/diff fallback separately indexed",
+      "locator": "No inspected primary content from this failed request",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/release-evidence.json",
+      "bounded_evidence_record_id": "H12",
+      "retrieval_success": false,
+      "used_in_scientific_judgment": false
+    },
+    {
+      "id": "H13",
+      "url": "https://api.github.com/repos/OpenRefine/OpenRefine/pulls/7703/files",
+      "accessed_at": "2026-10-09T19:36:39.578870+00:00",
+      "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+      "error": "HTTP Error 403: rate limit exceeded",
+      "version_or_release": "public GitHub endpoint; API retrieval failed, successful HTML/diff fallback separately indexed",
+      "locator": "No inspected primary content from this failed request",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/release-evidence.json",
+      "bounded_evidence_record_id": "H13",
+      "retrieval_success": false,
+      "used_in_scientific_judgment": false
+    },
+    {
+      "id": "H14",
+      "url": "https://api.github.com/repos/OpenRefine/OpenRefine/releases/tags/3.10.0",
+      "accessed_at": "2026-10-09T19:36:39.585939+00:00",
+      "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+      "error": "HTTP Error 403: rate limit exceeded",
+      "version_or_release": "public GitHub endpoint; API retrieval failed, successful HTML/diff fallback separately indexed",
+      "locator": "No inspected primary content from this failed request",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/release-evidence.json",
+      "bounded_evidence_record_id": "H14",
+      "retrieval_success": false,
+      "used_in_scientific_judgment": false
+    },
+    {
+      "id": "H15",
+      "url": "https://api.github.com/repos/frictionlessdata/frictionless-py/releases/tags/v5.20.0",
+      "accessed_at": "2026-10-09T19:36:39.625667+00:00",
+      "operation": "unauthenticated public GitHub API GET, metadata/body/patch inspection only",
+      "error": "HTTP Error 403: rate limit exceeded",
+      "version_or_release": "public GitHub endpoint; API retrieval failed, successful HTML/diff fallback separately indexed",
+      "locator": "No inspected primary content from this failed request",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/release-evidence.json",
+      "bounded_evidence_record_id": "H15",
+      "retrieval_success": false,
+      "used_in_scientific_judgment": false
+    },
+    {
+      "id": "J01",
+      "url": "https://github.com/OpenRefine/OpenRefine/issues/1908",
+      "accessed_at": "2026-10-09T19:37:19.846841+00:00",
+      "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+      "response_sha256": "b28d21d43eefb2584b353656b0c7855f4def608c655a4c713e87c4f9ea8babb5",
+      "version_or_release": "OpenRefine #1908 historical issue/comments; 3.5 versus 3.4 statements",
+      "locator": [
+        "Java 8",
+        "3.5",
+        "3.5",
+        "3.5",
+        "3.4",
+        "3.4"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/history-code-evidence.json",
+      "bounded_evidence_record_id": "J01",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "J02",
+      "url": "https://github.com/OpenRefine/OpenRefine/pull/2909",
+      "accessed_at": "2026-10-09T19:37:19.848404+00:00",
+      "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+      "response_sha256": "6d1162eb4ec1ff32c2233155d35db11c964caeaee913c2be959d896d787e4ced",
+      "version_or_release": "OpenRefine PR #2909 merged 2020-07-09; OffsetDateTime adaptation",
+      "locator": [
+        "OffsetDateTime",
+        "OffsetDateTime",
+        "OffsetDateTime",
+        "Jul 9, 2020",
+        "Jul 9, 2020",
+        "Jul 9, 2020",
+        "test",
+        "test",
+        "test"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/history-code-evidence.json",
+      "bounded_evidence_record_id": "J02",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "J03",
+      "url": "https://github.com/OpenRefine/OpenRefine/pull/2909.diff",
+      "accessed_at": "2026-10-09T19:37:19.853001+00:00",
+      "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+      "response_sha256": "d26d0366838a5659d546a46414ad9635a491e91cc88b1ad2e57f480cc0606217",
+      "version_or_release": "OpenRefine PR #2909 public diff, read not executed",
+      "locator": [
+        "OffsetDateTime",
+        "OffsetDateTime",
+        "OffsetDateTime",
+        "ExcelImporterTests",
+        "ExcelImporterTests",
+        "ExcelImporterTests",
+        "Date",
+        "Date",
+        "Date"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/history-code-evidence.json",
+      "bounded_evidence_record_id": "J03",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "J04",
+      "url": "https://github.com/OpenRefine/OpenRefine/releases/tag/3.5.0",
+      "accessed_at": "2026-10-09T19:37:19.853782+00:00",
+      "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+      "response_sha256": "15c0f6cf86b60c4ec2fe61f6b99c66302b4b34ce1a0c38995f8f95e3bdd231a7",
+      "version_or_release": "OpenRefine 3.5.0 d4209a2, HTML release datetime 2021-11-07T10:05:04Z",
+      "locator": [
+        "relative-time datetime",
+        "d4209a2"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/history-code-evidence.json",
+      "bounded_evidence_record_id": "J04",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "J05",
+      "url": "https://github.com/OpenRefine/OpenRefine/issues/7042",
+      "accessed_at": "2026-10-09T19:37:20.283312+00:00",
+      "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+      "response_sha256": "d43142f862fb123d65da38d280f89cbcbe7bb33efcf554f7bc78380cc87dc00e",
+      "version_or_release": "OpenRefine #7042: 3.7 versus 3.8 quote behavior report",
+      "locator": [
+        "3.7",
+        "3.7",
+        "3.8",
+        "3.8",
+        "3.8",
+        "7703",
+        "7703",
+        "7703"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/history-code-evidence.json",
+      "bounded_evidence_record_id": "J05",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "J06",
+      "url": "https://github.com/OpenRefine/OpenRefine/pull/7703",
+      "accessed_at": "2026-10-09T19:37:20.370531+00:00",
+      "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+      "response_sha256": "c50f7deeb04571ba25999fa59cccc3422e2dfd174f736cd1aff872643c817176",
+      "version_or_release": "OpenRefine PR #7703 merged 2026-03-13, c32deb2, milestone 3.10.2; no shipped release inferred",
+      "locator": [
+        "failing",
+        "Mar 13, 2026",
+        "Mar 13, 2026",
+        "Mar 13, 2026",
+        "c32deb2",
+        "3.10.2",
+        "3.10.2",
+        "confirmed"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/history-code-evidence.json",
+      "bounded_evidence_record_id": "J06",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "J07",
+      "url": "https://github.com/OpenRefine/OpenRefine/pull/7703.diff",
+      "accessed_at": "2026-10-09T19:37:20.976898+00:00",
+      "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+      "response_sha256": "8d73d63092da6829b9e8bfd1ad4a0d4569688fb038dd7c6c8feb7db92ca87d66",
+      "version_or_release": "OpenRefine #7703 public diff, read not executed",
+      "locator": [
+        "quote",
+        "quote",
+        "quote",
+        "test",
+        "test",
+        "test",
+        "false",
+        "false",
+        "false"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/history-code-evidence.json",
+      "bounded_evidence_record_id": "J07",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "J08",
+      "url": "https://github.com/OpenRefine/OpenRefine/releases/tag/3.10.0",
+      "accessed_at": "2026-10-09T19:37:21.176188+00:00",
+      "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+      "response_sha256": "5610217de57931f97b13f679df3196058824f09e3617bdbf5fbe638a165878a9",
+      "version_or_release": "OpenRefine 3.10.0 457290d, published 2026-02-26",
+      "locator": [
+        "relative-time datetime",
+        "457290d"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/history-code-evidence.json",
+      "bounded_evidence_record_id": "J08",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": false
+    },
+    {
+      "id": "J09",
+      "url": "https://raw.githubusercontent.com/frictionlessdata/frictionless-py/v5.20.0/frictionless/settings.py",
+      "accessed_at": "2026-10-09T19:37:21.386264+00:00",
+      "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+      "response_sha256": "087632ae90163374245a9b0bf2045f26009fb11b2cb108fda144acdb9c157b90",
+      "version_or_release": "frictionless-py source tag v5.20.0, settings.DEFAULT_LIMIT_ERRORS",
+      "locator": [
+        "LIMIT_ERRORS",
+        "1000",
+        "1000",
+        "1000",
+        "limit",
+        "limit",
+        "limit"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/history-code-evidence.json",
+      "bounded_evidence_record_id": "J09",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "J10",
+      "url": "https://raw.githubusercontent.com/frictionlessdata/frictionless-py/v5.20.0/frictionless/resource/resource.py",
+      "accessed_at": "2026-10-09T19:37:21.390185+00:00",
+      "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+      "response_sha256": "0d737b2e4ba5de1c720ff18ee3e838085769b5d56a1ca6774c2a9deafbf26237",
+      "version_or_release": "frictionless-py source tag v5.20.0, Resource.validate default/limit logic",
+      "locator": [
+        "limit_errors",
+        "limit_errors",
+        "limit_errors",
+        "DEFAULT_LIMIT_ERRORS"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/history-code-evidence.json",
+      "bounded_evidence_record_id": "J10",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "J11",
+      "url": "https://raw.githubusercontent.com/OpenRefine/OpenRefine/3.5.0/main/src/com/google/refine/importers/ExcelImporter.java",
+      "accessed_at": "2026-10-09T19:37:21.541135+00:00",
+      "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+      "response_sha256": "77269337de3f258fbc4e8ba2abd2d52e0004eea73ff1556ea2e41cce0258e603",
+      "version_or_release": "OpenRefine source tag 3.5.0, ExcelImporter",
+      "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/history-code-evidence.json",
+      "bounded_evidence_record_id": "J11",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": false
+    },
+    {
+      "id": "J12",
+      "url": "https://github.com/duckdb/duckdb/discussions/21249",
+      "accessed_at": "2026-10-09T19:37:21.584026+00:00",
+      "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+      "response_sha256": "f2d817a2b69637f7cf0b6c983c53964843146005c02430b7ff4d9f68e566ac42",
+      "version_or_release": "DuckDB discussion #21249, 2026-03-09, no exact engine build",
+      "locator": [
+        "1/27/2025",
+        "2026",
+        "2026",
+        "2026"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/history-code-evidence.json",
+      "bounded_evidence_record_id": "J12",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "J13",
+      "url": "https://github.com/OpenRefine/OpenRefine/issues/6009",
+      "accessed_at": "2026-10-09T19:37:21.585596+00:00",
+      "operation": "public HTTPS GET; source/diff/HTML text inspection only",
+      "response_sha256": "43e58b0c2deb68932f7ef4f0b7dbdd04429222ba39129508eb38534df319095b",
+      "version_or_release": "OpenRefine issue #6009, historical 3.0+ expectation dispute",
+      "locator": [
+        "UTC",
+        "UTC",
+        "UTC",
+        "3.0",
+        "local time",
+        "local time",
+        "local time",
+        "360",
+        "360",
+        "360"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/history-code-evidence.json",
+      "bounded_evidence_record_id": "J13",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "K01",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/1.4.0/src/reader.rs",
+      "accessed_at": "2026-10-09T19:38:45.025413+00:00",
+      "operation": "public HTTPS GET; exact tagged source or API documentation inspection",
+      "response_sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+      "version_or_release": "rust-csv source tag 1.4.0, ReaderBuilder/Reader",
+      "locator": [
+        "pub fn position",
+        "trim: Trim::default()",
+        "pub fn has_headers",
+        "pub fn has_headers",
+        "pub fn trim",
+        "granular"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/targeted-evidence.json",
+      "bounded_evidence_record_id": "K01",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "K02",
+      "url": "https://docs.rs/arrow-csv/59.1.0/arrow_csv/reader/struct.Format.html",
+      "accessed_at": "2026-10-09T19:38:45.104474+00:00",
+      "operation": "public HTTPS GET; exact tagged source or API documentation inspection",
+      "response_sha256": "d95aeee9d8b2ae6aa16f8e6bc9822b5abe62b1a096373be32e01e7c21e8b4571",
+      "version_or_release": "arrow-csv 59.1.0 Format::infer_schema",
+      "locator": [
+        "100",
+        "None",
+        "None",
+        "None",
+        "infer_schema",
+        "infer_schema"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/targeted-evidence.json",
+      "bounded_evidence_record_id": "K02",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "K03",
+      "url": "https://docs.rs/arrow-csv/59.1.0/arrow_csv/reader/struct.ReaderBuilder.html",
+      "accessed_at": "2026-10-09T19:38:45.401067+00:00",
+      "operation": "public HTTPS GET; exact tagged source or API documentation inspection",
+      "response_sha256": "e381ede184cce2d84662742ca25832fbeb8ecd678fb059a33a1ccda21f854475",
+      "version_or_release": "arrow-csv 59.1.0 ReaderBuilder",
+      "locator": [
+        "59.1.0",
+        "59.1.0",
+        "59.1.0",
+        "validate_header",
+        "projection",
+        "projection",
+        "projection"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/targeted-evidence.json",
+      "bounded_evidence_record_id": "K03",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "K04",
+      "url": "https://duckdb.org/docs/current/data/csv/overview",
+      "accessed_at": "2026-10-09T19:38:45.662153+00:00",
+      "operation": "public HTTPS GET; exact tagged source or API documentation inspection",
+      "response_sha256": "29d28f1025a9dd2a4ec7a00dfae21f36124f816faeeea619bad7fd7413ac5ee8",
+      "version_or_release": "DuckDB 1.5 current mutable CSV overview",
+      "locator": [
+        "max_line_size or",
+        "force_not_null",
+        "nullstr",
+        "encoding",
+        "encoding",
+        "encoding"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/targeted-evidence.json",
+      "bounded_evidence_record_id": "K04",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "K05",
+      "url": "https://raw.githubusercontent.com/OpenRefine/OpenRefine/3.5.0/main/src/com/google/refine/importers/ExcelImporter.java",
+      "accessed_at": "2026-10-09T19:38:45.812225+00:00",
+      "operation": "public HTTPS GET; exact tagged source or API documentation inspection",
+      "response_sha256": "77269337de3f258fbc4e8ba2abd2d52e0004eea73ff1556ea2e41cce0258e603",
+      "version_or_release": "OpenRefine source tag 3.5.0, ExcelImporter numeric date branch",
+      "locator": [
+        "toDate"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/targeted-evidence.json",
+      "bounded_evidence_record_id": "K05",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "K06",
+      "url": "https://raw.githubusercontent.com/OpenRefine/OpenRefine/3.4.1/main/src/com/google/refine/importers/ExcelImporter.java",
+      "accessed_at": "2026-10-09T19:38:45.855768+00:00",
+      "operation": "public HTTPS GET; exact tagged source or API documentation inspection",
+      "response_sha256": "a4bef49351b13ff8c0801ff97791dcd13b37f9cc4591fd3c5e792932cd1c625c",
+      "version_or_release": "OpenRefine source tag 3.4.1, ExcelImporter comparison",
+      "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/targeted-evidence.json",
+      "bounded_evidence_record_id": "K06",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": false
+    },
+    {
+      "id": "K07",
+      "url": "https://github.com/frictionlessdata/frictionless-py/releases/tag/v5.20.0",
+      "accessed_at": "2026-10-09T19:38:45.981431+00:00",
+      "operation": "public HTTPS GET; exact tagged source or API documentation inspection",
+      "response_sha256": "32be876fee61c32a1660567dd5306b2d7fd2904c6958638a18951e13a7879222",
+      "version_or_release": "frictionless-py v5.20.0 release HTML datetime 2026-10-08T20:48:01Z",
+      "locator": [
+        "3988672",
+        "release timestamp"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/targeted-evidence.json",
+      "bounded_evidence_record_id": "K07",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "K08",
+      "url": "https://framework.frictionlessdata.io/docs/getting-started.html",
+      "accessed_at": "2026-10-09T19:38:46.565074+00:00",
+      "operation": "public HTTPS GET; exact tagged source or API documentation inspection",
+      "response_sha256": "22fb255df9fb13ba84631238df3bb2199635debf19187160edfbb4661c2456a9",
+      "version_or_release": "Frictionless current getting-started guide",
+      "locator": [
+        "Python",
+        "Python",
+        "Python",
+        "CSV",
+        "CSV",
+        "CSV",
+        "Excel",
+        "Excel"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/targeted-evidence.json",
+      "bounded_evidence_record_id": "K08",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "K09",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/1.4.0/src/reader.rs",
+      "accessed_at": "2026-10-09T19:40:33.011391+00:00",
+      "operation": "public tagged Rust source GET, comments/default implementation inspection",
+      "response_sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+      "version_or_release": "rust-csv source tag 1.4.0, ReaderState position comment and ReaderBuilder trim docs",
+      "locator": [
+        "only observable",
+        "By default, no trimming"
+      ],
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/targeted-evidence.json",
+      "bounded_evidence_record_id": "K09",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": true
+    },
+    {
+      "id": "K10",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/1.4.0/src/lib.rs",
+      "accessed_at": "2026-10-09T19:40:33.122112+00:00",
+      "operation": "public tagged Rust source GET, comments/default implementation inspection",
+      "response_sha256": "cb4a4b10c6e89542c5bb0810c780730fa711149da108770070567ca23bc8591e",
+      "version_or_release": "rust-csv source tag 1.4.0 lib.rs; requested pattern not found; not affirmative evidence",
+      "locator": "GitHub API release/issue/PR metadata and relevant body; inspect record",
+      "bounded_evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/targeted-evidence.json",
+      "bounded_evidence_record_id": "K10",
+      "retrieval_success": true,
+      "used_in_scientific_judgment": false
+    }
+  ],
+  "bounded_evidence_files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/primary-evidence.json",
+      "sha256": "48650ea6e55ecc733f3978943c9ce1d528ef08a0c9191e9d33f0032e54bae69b",
+      "bytes": 103334,
+      "kind": "bounded permitted public primary text/code/metadata; never executed"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/release-evidence.json",
+      "sha256": "1fb24d43fc83733130bc34407914e88f5b1e59eaf5798f18d9589dead1a13ae3",
+      "bytes": 22358,
+      "kind": "bounded permitted public primary text/code/metadata; never executed"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/history-code-evidence.json",
+      "sha256": "eaebb041d51a96d5ce8ab171fe0e5e1ec0989c9885606a3644b73200845e0920",
+      "bytes": 46531,
+      "kind": "bounded permitted public primary text/code/metadata; never executed"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-A/targeted-evidence.json",
+      "sha256": "0d970f17da5de5bd0de8a83c5b05fd9df8d8d5179f30aea141cb046abefc0a40",
+      "bytes": 31754,
+      "kind": "bounded permitted public primary text/code/metadata; never executed"
+    }
+  ],
+  "claim_coverage_index": [
+    {
+      "id": "Q01",
+      "claim_family": "Sampling, seekability, full-input sampling and all-text/header caveats",
+      "primary_evidence_ids": [
+        "E01",
+        "E03"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            27,
+            46,
+            48,
+            50
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            20,
+            35,
+            37,
+            79,
+            119
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q02",
+      "claim_family": "Reject defaults, temporary lifetime, multiplicity, projection/field coverage and diagnostic schema",
+      "primary_evidence_ids": [
+        "E02"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            27,
+            70,
+            86,
+            124
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            49,
+            51,
+            118,
+            126
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q03",
+      "claim_family": "Current CSV line-size documentation discrepancy, not a proved version transition",
+      "primary_evidence_ids": [
+        "E02",
+        "K04"
+      ],
+      "candidate_passages": {
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            65,
+            121
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q04",
+      "claim_family": "XLSX versus XLS, extension loading, first sheet, range/empty/type defaults and null-producing ignore mode",
+      "primary_evidence_ids": [
+        "E04"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            27,
+            38,
+            60
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            20,
+            45
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q05",
+      "claim_family": "Memory percentage/spill applicability and buffer-manager versus total RSS",
+      "primary_evidence_ids": [
+        "E05",
+        "E06"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            34,
+            133
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            61,
+            124
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q06",
+      "claim_family": "csv headers, width and trim defaults; parsed fields, UTF-8 and byte-record roles",
+      "primary_evidence_ids": [
+        "E07",
+        "E08",
+        "E09",
+        "K01",
+        "K09"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            15,
+            26,
+            101
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            17,
+            31,
+            33,
+            92
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q07",
+      "claim_family": "Record-start position granularity, framing uncertainty, logical records versus physical lines",
+      "primary_evidence_ids": [
+        "K09",
+        "E25"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            70,
+            86,
+            98,
+            125
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            33,
+            49,
+            51,
+            121,
+            126
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q08",
+      "claim_family": "Calamine value kinds, Excel serial epochs/precision/no timezone and workbook representation",
+      "primary_evidence_ids": [
+        "E10",
+        "E11",
+        "E13"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            26,
+            38,
+            127
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            18,
+            43,
+            122
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q09",
+      "claim_family": "XLSX stream shared metadata, one advancing stream, formula/cache APIs and no RSS/recalculation proof",
+      "primary_evidence_ids": [
+        "E12",
+        "E13"
+      ],
+      "candidate_passages": {
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            18,
+            43,
+            93,
+            122
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q10",
+      "claim_family": "Arrow typed/schema/batch/projection/header APIs and bounded/all-input inference",
+      "primary_evidence_ids": [
+        "E14",
+        "E15",
+        "K02",
+        "K03"
+      ],
+      "candidate_passages": {
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            19,
+            35
+          ],
+          "judgment": "CAPABILITY_SUPPORTED_EXAMPLE_LOCATOR_UNCONFIRMED"
+        }
+      }
+    },
+    {
+      "id": "Q11",
+      "claim_family": "Polars inference length and low-memory/performance tradeoff",
+      "primary_evidence_ids": [
+        "E16"
+      ],
+      "candidate_passages": {
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            21,
+            35
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q12",
+      "claim_family": "Power Query inference versus profiling scope and explicit versus ambient locale",
+      "primary_evidence_ids": [
+        "E17",
+        "E18",
+        "E19"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            30,
+            46,
+            54,
+            56
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            23,
+            35,
+            41,
+            80
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q13",
+      "claim_family": "OpenRefine local workflow, operation reuse exclusions and archive history/privacy",
+      "primary_evidence_ids": [
+        "E20",
+        "E21"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            29,
+            76,
+            104
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            22,
+            57,
+            59,
+            106,
+            106
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q14",
+      "claim_family": "OpenRefine UTC date semantics and scoped historical expectation dispute",
+      "primary_evidence_ids": [
+        "E22",
+        "J13"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            29,
+            54,
+            112
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q15",
+      "claim_family": "Frictionless report structure, Python boundary, Excel stringification/coercion and cap controls",
+      "primary_evidence_ids": [
+        "E23",
+        "E24",
+        "K08"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            31,
+            60,
+            99
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q16",
+      "claim_family": "Frictionless 5.20.0 tagged default, API binding, partial/warning semantics and release context",
+      "primary_evidence_ids": [
+        "J09",
+        "J10",
+        "K07"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            31,
+            99
+          ],
+          "judgment": "DEFAULT_INDEPENDENTLY_CONFIRMED_CANDIDATE_HONESTLY_UNRESOLVED"
+        }
+      }
+    },
+    {
+      "id": "Q17",
+      "claim_family": "DuckDB sniffer issue/fix/release chain and later release context",
+      "primary_evidence_ids": [
+        "H01",
+        "H02",
+        "H03",
+        "H04"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            110
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q18",
+      "claim_family": "Calamine 0.36.1 scoped strict OOXML/XLS/XLSB maintenance history",
+      "primary_evidence_ids": [
+        "H05"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            103,
+            112,
+            131
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q19",
+      "claim_family": "OpenRefine date-type regression diagnosis, test/fix, shipped tag and actual release date",
+      "primary_evidence_ids": [
+        "H06",
+        "J01",
+        "J02",
+        "J03",
+        "J04",
+        "K05"
+      ],
+      "candidate_passages": {
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            69
+          ],
+          "judgment": "MINOR_WRONG_RELEASE_YEAR_WITH_SUPPORTED_CHAIN"
+        }
+      }
+    },
+    {
+      "id": "Q20",
+      "claim_family": "OpenRefine quote-option issue, changed test/code, merge/milestone versus shipment",
+      "primary_evidence_ids": [
+        "J05",
+        "J06",
+        "J07"
+      ],
+      "candidate_passages": {
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            71
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q21",
+      "claim_family": "DuckDB slash-date report without exact engine build, as a proposed test lead",
+      "primary_evidence_ids": [
+        "J12"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            112
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q22",
+      "claim_family": "Source/identity/recipe/count product proposals distinguished from library facts and runtime guarantees",
+      "primary_evidence_ids": [
+        "E01",
+        "E02",
+        "E20",
+        "E25"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            13,
+            15,
+            17,
+            19,
+            20,
+            76,
+            78,
+            86,
+            136,
+            140
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            9,
+            31,
+            49,
+            51,
+            53,
+            57,
+            59,
+            61,
+            149
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        }
+      }
+    },
+    {
+      "id": "Q23",
+      "claim_family": "Literal P4 failed-row CSV contents versus optional redacted/diagnostic-only payload",
+      "primary_evidence_ids": [
+        "E02",
+        "E21",
+        "E25"
+      ],
+      "candidate_passages": {
+        "N2": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/final.md",
+          "lines": [
+            18,
+            68,
+            70
+          ],
+          "judgment": "SUPPORTED_WITH_STATED_APPLICABILITY_LIMITS"
+        },
+        "N1": {
+          "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/final.md",
+          "lines": [
+            49,
+            82,
+            90,
+            106,
+            125
+          ],
+          "judgment": "MATERIAL_FALSE_REJECTION_OF_OUTPUT_SCOPE"
+        }
+      }
+    }
+  ],
+  "material_findings_primary_links": {
+    "N1-F1": [
+      {
+        "id": "E02",
+        "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+        "version_or_release": "DuckDB 1.5 current mutable documentation",
+        "locator": [
+          "projection pushdown",
+          "temporary tables",
+          "temporary tables",
+          "multiple errors",
+          "store_rejects",
+          "store_rejects",
+          "store_rejects",
+          "store_rejects",
+          "rejects_limit",
+          "2,097,152"
+        ]
+      },
+      {
+        "id": "E21",
+        "url": "https://openrefine.org/docs/manual/exporting",
+        "version_or_release": "OpenRefine current unversioned export manual",
+        "locator": [
+          "confidential",
+          "history",
+          "history",
+          "history",
+          "history",
+          "JSON",
+          "JSON",
+          "JSON",
+          "JSON",
+          "operations",
+          "operations"
+        ]
+      },
+      {
+        "id": "E25",
+        "url": "https://www.rfc-editor.org/rfc/rfc4180.txt",
+        "version_or_release": "RFC 4180, Informational, October 2005",
+        "locator": [
+          "line breaks",
+          "line breaks",
+          "optional header",
+          "differences",
+          "records"
+        ]
+      }
+    ]
+  },
+  "original_requirement_authority": {
+    "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S10/brief.md",
+    "frozen_plan": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S10/plan-root-only.md",
+    "rubric": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md"
+  },
+  "candidate_source_maps": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser/source-map.json",
+      "sha256": "56a56eb6b15b07aa127adafe352f43773f9d94c4f6951a6cc1f3d1698836a93a",
+      "role": "N2_reviser"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "sha256": "de9ae780f3150c731478f16cfbc81f79fe6e6ca741caecd39e611e4e87f135ab",
+      "role": "N2_critic"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "sha256": "79f196b285904c65c883f3a70ffc81207905cc34fd8c20e61242c5391dab9be3",
+      "role": "N2_research"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/reviser/source-map.json",
+      "sha256": "36a6898e4b153202d369532366cbeae892280682180caeb06868342c5051129c",
+      "role": "N1_reviser"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/critic/source-map.json",
+      "sha256": "877362dc8114ce85e5e3befd003205c459019263c1689d11f72613b2d5a27e77",
+      "role": "N1_critic"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/source-map.json",
+      "sha256": "0b2445f4ec3c58839e751696e18d02154988f4b1619bd318ebb9f7bb745bb044",
+      "role": "N1_research"
+    }
+  ],
+  "source_preservation_check": "Inherited candidate URL and version identities unchanged in each reviser map; no source count used as grade.",
+  "observed_source_operations": {
+    "local_inputs": "Read exact mapped original brief/plan/rubric, all 30 candidate files and mapped source-root notes; SHA-256/byte identity checks and source-ID URL/version preservation checks. No runtime fixture execution.",
+    "public_primary": "web open/find of public primary documentation/GitHub pages; independent bounded HTTPS retrievals of documentation, tagged source, metadata and PR diffs. No download was executed.",
+    "api_failures": "H07–H15 returned 403 rate-limit errors; corresponding needed issue/PR/release conclusions checked via J/K HTML/raw/diff fallbacks. Initial web API release open returned Internal Error; HTML release datetime succeeded. Some web find calls returned Internal Error or no matches; those were not counted as affirmative evidence.",
+    "writes": "assessment.md, assessment.json, source-map.json and four bounded evidence JSON files only under exact output root.",
+    "incidental_startup_access": "Broad rg filename enumeration returned other-experiment path names; no contents of those cases or evaluations opened or used. Repository-mandated Plans index read, not used as scientific standard.",
+    "nested_agents": false,
+    "runtime_validation_execution": false,
+    "candidate_repair": false,
+    "git_or_canonical_edits": false,
+    "account_or_configuration_changes": false,
+    "executables_or_installers_downloaded": false,
+    "private_provider_internals_accessed": false
+  },
+  "scope_and_drift_limits": [
+    "Complete six-axis original-brief assessment, not unlimited production assurance or whole-library source audit",
+    "Minor unconfirmed Arrow example locator isolated; its meaningful capability verified",
+    "Source documents mutable where stated; future binary/release qualification and real product datasets/performance not executed",
+    "Incidental startup filenames and repository-required index read disclosed; no other evaluation/other-case content used",
+    "Original N1 pre-reveal discovery text not in exact map; independence cannot be certified"
+  ],
+  "evaluation_started_at": "2026-10-09T19:34:05+00:00",
+  "evaluation_completed_at": "2026-10-09T19:50:30.244204+00:00",
+  "usage_and_billing": {
+    "candidate_usage": null,
+    "candidate_billing": null,
+    "reviewer_provider_usage": null,
+    "reviewer_billing": null
+  },
+  "lifecycle_authority": "Supported create/get/update Goal tool history; no synthesized Goal receipt; reviewer active while this science is written."
+}

@@ -1,0 +1,17 @@
+{
+  "id": "M05",
+  "version": "v2",
+  "name": "retained-investigator",
+  "control": "Researcher terminalizes after complete draft, fresh critic, separate fresh reviser.",
+  "treatment": "Original researcher retains ONE native Goal and source context through discovery/draft, waits for independent critic, then resolves criticism and writes complete final in SAME context. Waiting/handoff costs count; no early native completion.",
+  "evidence_kind": "full-discovery",
+  "lineage": "Declared retained context; no artificial new Goal at phase boundary",
+  "wall_ceiling_s": 3600,
+  "occupied_ceiling_s": 5400,
+  "max_parallel_agents": 2,
+  "research_s": 1800,
+  "critic_s": 720,
+  "reviser_s": 1080,
+  "handoff_rule": "Original author waits for root mechanical READY.json created only after critic native/T3 terminal completion, containing critique/source-map SHA-256. No science after terminal; no new author Goal.",
+  "adaptation_limit": "Successor to source-positive A-M05-B v1; explicit terminal handoff removes unknown freeze-at-read and may reduce its observed latency saving. Not a replication of the missing receipt."
+}

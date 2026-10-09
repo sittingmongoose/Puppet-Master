@@ -1,0 +1,178 @@
+[
+  {
+    "id": "able-readme",
+    "url": "https://raw.githubusercontent.com/ableplayer/ableplayer/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+    "final_url": "https://raw.githubusercontent.com/ableplayer/ableplayer/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+    "status": 200,
+    "bytes": 53570,
+    "sha256": "2ad633a45f88902b13aa4d2ea79f6f21b658431959acfd9996c8afb7c3bf90b9",
+    "accessed_at": "2026-10-09T19:23:29.130459+00:00",
+    "patterns": [
+      {
+        "pattern": "tab stops",
+        "found": true
+      },
+      {
+        "pattern": "data-transcript",
+        "found": true
+      },
+      {
+        "pattern": "VTS",
+        "found": true
+      },
+      {
+        "pattern": "2021",
+        "found": true
+      },
+      {
+        "pattern": "locally",
+        "found": true
+      }
+    ]
+  },
+  {
+    "id": "se-faq",
+    "url": "https://raw.githubusercontent.com/SubtitleEdit/subtitleedit/v5.2.0/docs/faq.md",
+    "final_url": "https://raw.githubusercontent.com/SubtitleEdit/subtitleedit/v5.2.0/docs/faq.md",
+    "status": 200,
+    "bytes": 8099,
+    "sha256": "32ee5825f4b685892608a17726f44cd2f97587e711754ac8b81af532a54e0e94",
+    "accessed_at": "2026-10-09T19:23:29.091922+00:00",
+    "patterns": [
+      {
+        "pattern": "waveform",
+        "found": true
+      },
+      {
+        "pattern": "WebVTT",
+        "found": true
+      },
+      {
+        "pattern": "Whisper",
+        "found": true
+      },
+      {
+        "pattern": "synchronization",
+        "found": true
+      },
+      {
+        "pattern": "FFmpeg",
+        "found": true
+      }
+    ]
+  },
+  {
+    "id": "se-changelog",
+    "url": "https://raw.githubusercontent.com/SubtitleEdit/subtitleedit/v5.2.0/Changelog.txt",
+    "final_url": "https://raw.githubusercontent.com/SubtitleEdit/subtitleedit/v5.2.0/Changelog.txt",
+    "status": 200,
+    "bytes": 56505,
+    "sha256": "925c45f9f004759f937a572839f1891ca2903bc5e102e1a5cfebd078ecfd2241",
+    "accessed_at": "2026-10-09T19:23:29.122111+00:00",
+    "patterns": [
+      {
+        "pattern": "5.2.0",
+        "found": true
+      },
+      {
+        "pattern": "5.1.0",
+        "found": true
+      },
+      {
+        "pattern": "WebVTT",
+        "found": true
+      },
+      {
+        "pattern": "waveform",
+        "found": true
+      }
+    ]
+  },
+  {
+    "id": "se-license",
+    "url": "https://raw.githubusercontent.com/SubtitleEdit/subtitleedit/v5.2.0/LICENSE",
+    "final_url": "https://raw.githubusercontent.com/SubtitleEdit/subtitleedit/v5.2.0/LICENSE",
+    "status": 200,
+    "bytes": 1071,
+    "sha256": "1bc4dcdb06d5507eacf67399674a5a6fa0f5f5270d15eefd7b4b2040319ceba0",
+    "accessed_at": "2026-10-09T19:23:29.084438+00:00",
+    "patterns": [
+      {
+        "pattern": "MIT License",
+        "found": true
+      }
+    ]
+  },
+  {
+    "id": "amara-upload",
+    "url": "https://support.amara.org/support/solutions/articles/238000-subtitle-options-on-amara",
+    "error": "HTTP Error 302: The HTTP server returned a redirect error that would lead to an infinite loop.\nThe last 30x error message was:\nFound",
+    "accessed_at": "2026-10-09T19:23:31.321411+00:00",
+    "patterns": []
+  },
+  {
+    "id": "amara-private",
+    "url": "https://support.amara.org/support/solutions/articles/25931-create-a-private-team-on-amara-",
+    "error": "HTTP Error 302: The HTTP server returned a redirect error that would lead to an infinite loop.\nThe last 30x error message was:\nFound",
+    "accessed_at": "2026-10-09T19:23:31.401884+00:00",
+    "patterns": []
+  },
+  {
+    "id": "dcmp",
+    "url": "https://dcmp.org/captioningkey/print",
+    "final_url": "https://dcmp.org/captioningkey/print",
+    "status": 200,
+    "bytes": 104460,
+    "sha256": "1b082e7415a249f70c0b78c914f69882cdc80f52b1830aa9c28aa200ca61f003",
+    "accessed_at": "2026-10-09T19:23:29.299082+00:00",
+    "patterns": [
+      {
+        "pattern": "40 frames",
+        "found": true
+      },
+      {
+        "pattern": "130",
+        "found": true
+      },
+      {
+        "pattern": "140",
+        "found": true
+      },
+      {
+        "pattern": "160",
+        "found": true
+      }
+    ]
+  },
+  {
+    "id": "webvtt",
+    "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+    "final_url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+    "status": 200,
+    "bytes": 834970,
+    "sha256": "1fd10e09adc72c7545671eadec72282124699b5192d3dff9028020dfa785d154",
+    "accessed_at": "2026-10-09T19:23:29.380028+00:00",
+    "patterns": [
+      {
+        "pattern": "greater than or equal",
+        "found": true
+      },
+      {
+        "pattern": "overlap",
+        "found": true
+      },
+      {
+        "pattern": "greater than the start",
+        "found": true
+      },
+      {
+        "pattern": "millisecond",
+        "found": false
+      },
+      {
+        "pattern": "one kind",
+        "found": true
+      }
+    ]
+  }
+]

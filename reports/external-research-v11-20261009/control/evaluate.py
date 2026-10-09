@@ -9,7 +9,7 @@ now=datetime.datetime.now(datetime.timezone.utc); deadline=now+datetime.timedelt
 arms={}
 for a in ('control','treatment'):
  root=R/'jobs'/b/a
- stage='research' if q['method']=='M05' and a=='treatment' else 'critic-finalizer' if q['method']=='M03' and a=='treatment' else 'reviser'
+ stage='research' if q['method'] in ('M05','M13') and a=='treatment' else 'critic-finalizer' if q['method']=='M03' and a=='treatment' else 'reviser'
  final=root/stage/'final.md';result=root/stage/'task-result.json'
  delivered=final.exists() and result.exists() and json.loads(result.read_text()).get('status')=='completed'
  terminal=result.exists() and json.loads(result.read_text()).get('status') in ('completed','interrupted','cancelled','failed')

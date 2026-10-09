@@ -1,0 +1,119 @@
+{
+  "map_version": 1,
+  "case": "S05",
+  "block": "A-M05-A",
+  "arm": "control",
+  "stage": "critic",
+  "compiled_utc": "2026-10-09T19:56:00Z",
+  "notes": "Critic-stage independent verification sources; IDs SRC-C01..C09 are immutable within this stage and distinct from the research stage's SRC-01..09 (which were read, not re-fetched except as noted). Access timestamps approximate to the minute; session clock read 2026-10-09T19:50:23Z before the first fetch, last fetch completed before 19:56Z. Mutable drift: pgvector CHANGELOG and rightsstatements data-model TTL were fetched at branch master (moving targets) — pinned by newest observed entry/date inside the evidence; Typesense docs pinned at versioned path 30.2. No silent rebind: only documented redirect is none (all fetched URLs returned directly); the research stage's redirects (SRC-06/SRC-09) were not re-walked except the OpenRefine retry at the post-301 URL. Usage/billing for all web sources unobserved: null. Failures are recorded as data (SRC-C09).",
+  "sources": [
+    {
+      "id": "SRC-C01",
+      "title": "SQLite FTS5 documentation (independent re-fetch)",
+      "url": "https://www.sqlite.org/fts5.html",
+      "version": "current SQLite documentation as of access; not a pinned release",
+      "locator": "tokenizer options; rank/bm25 section; external-content and contentless tables; limits",
+      "access_timestamp": "2026-10-09T19:51:00Z",
+      "observed_operations": ["WebFetch GET", "defaults-verification prompt (8 items)"],
+      "status": "retrieved",
+      "evidence_path": "notes/verification-verdicts.md (C1/C2)",
+      "usage_billing": null
+    },
+    {
+      "id": "SRC-C02",
+      "title": "Meilisearch API settings reference — typoTolerance object",
+      "url": "https://www.meilisearch.com/docs/reference/api/settings",
+      "version": "current docs site at access",
+      "locator": "typoTolerance settings object defaults and constraints",
+      "access_timestamp": "2026-10-09T19:51:00Z",
+      "observed_operations": ["WebFetch GET", "settings-defaults prompt"],
+      "status": "retrieved",
+      "evidence_path": "notes/verification-verdicts.md (C3, m5)",
+      "usage_billing": null
+    },
+    {
+      "id": "SRC-C03",
+      "title": "pgvector CHANGELOG (raw, master branch) — verbatim re-fetch",
+      "url": "https://raw.githubusercontent.com/pgvector/pgvector/master/CHANGELOG.md",
+      "version": "master branch at access; newest entry observed 0.8.7 (2026-10-01); mutable-source drift noted",
+      "locator": "release headers 0.5.0–0.8.7 and quoted bullet lines",
+      "access_timestamp": "2026-10-09T19:50:00Z",
+      "observed_operations": ["WebFetch GET (raw)", "verbatim-quote prompt"],
+      "status": "retrieved",
+      "evidence_path": "notes/verification-verdicts.md (C4/C10)",
+      "usage_billing": null
+    },
+    {
+      "id": "SRC-C04",
+      "title": "IIIF Image API 3.0 specification — independent re-fetch",
+      "url": "https://iiif.io/api/image/3.0/",
+      "version": "3.0.0 'Orange Blooms' (2020-06-03), stated on page",
+      "locator": "request-URI pattern; size/quality error behavior; conformance profiles; optional technical properties; CORS",
+      "access_timestamp": "2026-10-09T19:51:00Z",
+      "observed_operations": ["WebFetch GET", "spec-verification prompt (7 items)"],
+      "status": "retrieved",
+      "evidence_path": "notes/verification-verdicts.md (C5)",
+      "usage_billing": null
+    },
+    {
+      "id": "SRC-C05",
+      "title": "Mukurtu CMS home page — independent re-fetch",
+      "url": "https://mukurtu.org/",
+      "version": "current site at access",
+      "locator": "license statement (GPLv3); maintainer (WSU CDSC); project description",
+      "access_timestamp": "2026-10-09T19:52:00Z",
+      "observed_operations": ["WebFetch GET", "license/maintainer prompt"],
+      "status": "retrieved",
+      "evidence_path": "notes/verification-verdicts.md (C6)",
+      "usage_billing": null
+    },
+    {
+      "id": "SRC-C06",
+      "title": "Mukurtu support/documentation index — independent re-fetch",
+      "url": "https://mukurtu.org/support/",
+      "version": "current site at access",
+      "locator": "article-title listing (protocols/communities/categories; media access; duplicate/community records; TK Labels; content warnings); docs.mukurtu.org link",
+      "access_timestamp": "2026-10-09T19:52:00Z",
+      "observed_operations": ["WebFetch GET", "article-titles prompt"],
+      "status": "retrieved",
+      "evidence_path": "notes/verification-verdicts.md (C6)",
+      "usage_billing": null
+    },
+    {
+      "id": "SRC-C07",
+      "title": "RightsStatements.org data-model — rights-statements.ttl at master",
+      "url": "https://raw.githubusercontent.com/rightsstatements/data-model/master/rights-statements.ttl",
+      "version": "master branch at access; mutable-source drift noted; statement set pinned by enumeration in evidence",
+      "locator": "full statement enumeration (12 statements: InC, InC-OW-EU, InC-RUU, InC-EDU, InC-NC, NoC-NC, NoC-CR, NoC-OKLR, NoC-US, NKC, CNE, UND)",
+      "access_timestamp": "2026-10-09T19:50:00Z",
+      "observed_operations": ["WebFetch GET", "statement-count/enumeration prompt"],
+      "status": "retrieved",
+      "evidence_path": "notes/verification-verdicts.md (C7)",
+      "usage_billing": null
+    },
+    {
+      "id": "SRC-C08",
+      "title": "Typesense docs 30.2 — search API parameters reference",
+      "url": "https://typesense.org/docs/30.2/api/search.md",
+      "version": "docs version 30.2 (versioned path)",
+      "locator": "typo-tolerance search parameters (num_typos, min_len_1typo, min_len_2typo, typo_tokens_threshold)",
+      "access_timestamp": "2026-10-09T19:51:00Z",
+      "observed_operations": ["WebFetch GET", "parameter-defaults prompt"],
+      "status": "retrieved",
+      "evidence_path": "notes/verification-verdicts.md (C8)",
+      "usage_billing": null
+    },
+    {
+      "id": "SRC-C09",
+      "title": "OpenRefine reconciling manual — independent retry (negative evidence)",
+      "url": "https://openrefine.org/docs/manual/reconciling",
+      "version": "n/a (page not retrieved)",
+      "locator": "whole page (unretrieved)",
+      "access_timestamp": "2026-10-09T19:50:00Z",
+      "observed_operations": ["WebFetch GET", "reconciliation-mechanics prompt"],
+      "status": "failed-fetch (content-filter/system error; same failure class as research SRC-09 entry 6)",
+      "evidence_path": "notes/verification-verdicts.md (C9)",
+      "usage_billing": null
+    }
+  ]
+}

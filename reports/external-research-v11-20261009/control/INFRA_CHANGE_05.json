@@ -1,0 +1,12 @@
+{
+  "locked_at": "2026-10-09T20:11:21.416Z",
+  "scope": "Resource gate only; no scientific prompt/method/budget/output changes.",
+  "failure": "Global app bridge repeatedly returned upstream_unavailable / Subscription ended: upstream connection dropped / ping-timeout.",
+  "repair": "Direct supported t3_project_list over all registered projects with complete pagination, then t3_thread_list includeSubagents for every returned project, complete pagination, and project-membership recheck. Deduplicate exact thread IDs; count all visible constrained provider instances, all roles. Incomplete pages/errors/membership change blocks dispatch. No server/config/account changes or replacement Goal system.",
+  "limits": "Sequential non-atomic read snapshots, as with previous global tool. No private provider internals or scientific thread contents read.",
+  "requested_caps": {
+    "muse": 5,
+    "zcode": 3
+  },
+  "after_scoring_changes": "Operational read transport only; original time/handoff delay retained."
+}

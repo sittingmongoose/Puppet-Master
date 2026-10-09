@@ -1,0 +1,4515 @@
+{
+  "block": "A-M02-B",
+  "case": "S08",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M02-B/assignment.md",
+      "sha256": "0ffd353b3748d9bb076d4a4792576f66454f1dc51a9a0dade41d4e6408631e1b",
+      "bytes": 1980,
+      "role": "reviewer assignment",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M02-B/input-map.json",
+      "sha256": "9483ccf2caaaef978e6c4551ae736c36b9a7e975eea85425e18674f73aaba9be",
+      "bytes": 9544,
+      "role": "exact input binding",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+      "sha256": "cc962dde020c6c859e7149db1adcdc9b9872bc02c7f7d8566fea32bf8c5e73cf",
+      "bytes": 1453,
+      "role": "brief",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/plan-root-only.md",
+      "sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c",
+      "bytes": 312,
+      "role": "frozen_plan",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939,
+      "role": "rubric",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+      "sha256": "d9004158d5bc646163a0cb665ca235d572762c9d7b5188138bfc3785f495abcf",
+      "bytes": 40073,
+      "role": "N2 frozen stage",
+      "expected_sha256": "d9004158d5bc646163a0cb665ca235d572762c9d7b5188138bfc3785f495abcf",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/source-map.json",
+      "sha256": "78e085b4ec108149b3eb025810f5368d9c03cc05c2ede12dae91c4705de8d23e",
+      "bytes": 42607,
+      "role": "N2 frozen stage",
+      "expected_sha256": "78e085b4ec108149b3eb025810f5368d9c03cc05c2ede12dae91c4705de8d23e",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/assignment.md",
+      "sha256": "0e899a760e09ac57a21431d231e0bc8218725cfdd3f72ec5ea3d780916c060fe",
+      "bytes": 2793,
+      "role": "N2 frozen stage",
+      "expected_sha256": "0e899a760e09ac57a21431d231e0bc8218725cfdd3f72ec5ea3d780916c060fe",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/input-map.json",
+      "sha256": "78028fb58700b2891094812365f903c2374aa6e59d2bf7aaf221d4ffbbf2194e",
+      "bytes": 1504,
+      "role": "N2 frozen stage",
+      "expected_sha256": "78028fb58700b2891094812365f903c2374aa6e59d2bf7aaf221d4ffbbf2194e",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/critic/critique.md",
+      "sha256": "336bf62fae9f153bf4a704af1409587dcbfdc4d6d9f2ad6c582c882d3de24972",
+      "bytes": 13605,
+      "role": "N2 frozen stage",
+      "expected_sha256": "336bf62fae9f153bf4a704af1409587dcbfdc4d6d9f2ad6c582c882d3de24972",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/critic/source-map.json",
+      "sha256": "fa96ce61a7c7c66fe2640a81e1c923be6d8e3026e9678da220d4a3353b4e89c4",
+      "bytes": 16351,
+      "role": "N2 frozen stage",
+      "expected_sha256": "fa96ce61a7c7c66fe2640a81e1c923be6d8e3026e9678da220d4a3353b4e89c4",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/critic/assignment.md",
+      "sha256": "d52315e491b17f20eecaa2141e7ab0469d1d81cc1d4bcadea58a4af87cc8b69c",
+      "bytes": 2530,
+      "role": "N2 frozen stage",
+      "expected_sha256": "d52315e491b17f20eecaa2141e7ab0469d1d81cc1d4bcadea58a4af87cc8b69c",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/critic/input-map.json",
+      "sha256": "f1415e77f80760b92e4f8625e8e5535dec29b3994e31dfe49e6b7aa339102ff8",
+      "bytes": 1180,
+      "role": "N2 frozen stage",
+      "expected_sha256": "f1415e77f80760b92e4f8625e8e5535dec29b3994e31dfe49e6b7aa339102ff8",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/discovery.md",
+      "sha256": "ad0bd90a99a66059d7db9e2f8e405675474c64edfca8cfcbc0d85c8b29ec7528",
+      "bytes": 14349,
+      "role": "N2 frozen stage",
+      "expected_sha256": "ad0bd90a99a66059d7db9e2f8e405675474c64edfca8cfcbc0d85c8b29ec7528",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/draft.md",
+      "sha256": "953e849f7d502cc79eca606a70c3f5466023602668ac4ce71f0c830e348bda29",
+      "bytes": 33133,
+      "role": "N2 frozen stage",
+      "expected_sha256": "953e849f7d502cc79eca606a70c3f5466023602668ac4ce71f0c830e348bda29",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/source-map.json",
+      "sha256": "23c130bd9d2fee223d0062d2cc538a920dc81fa38e70a68e07604962e098e7a5",
+      "bytes": 18703,
+      "role": "N2 frozen stage",
+      "expected_sha256": "23c130bd9d2fee223d0062d2cc538a920dc81fa38e70a68e07604962e098e7a5",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/revealed-plan.md",
+      "sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c",
+      "bytes": 312,
+      "role": "N2 frozen stage",
+      "expected_sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/plan-reveal.json",
+      "sha256": "e6b576100f0a4a03b47f2f88d6d20f4193592ee762d91d63d768c9f5b4174e81",
+      "bytes": 276,
+      "role": "N2 frozen stage",
+      "expected_sha256": "e6b576100f0a4a03b47f2f88d6d20f4193592ee762d91d63d768c9f5b4174e81",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/assignment.md",
+      "sha256": "d98439bf6bb52f83e070bb8d7f768c97229c1cd6033d70d0241101d4e327b2bf",
+      "bytes": 3006,
+      "role": "N2 frozen stage",
+      "expected_sha256": "d98439bf6bb52f83e070bb8d7f768c97229c1cd6033d70d0241101d4e327b2bf",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/input-map.json",
+      "sha256": "9d92689268725131e8598505292a636d2bd6eb79ed9d4e09ad49ac3ab08aab83",
+      "bytes": 634,
+      "role": "N2 frozen stage",
+      "expected_sha256": "9d92689268725131e8598505292a636d2bd6eb79ed9d4e09ad49ac3ab08aab83",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/sources/accessibility.md",
+      "sha256": "37a86317fac5dad8c183ce5bb86c2b78efcf36400db783f9026d09be945396ff",
+      "bytes": 1056,
+      "role": "N2 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/sources/critic-solvers.md",
+      "sha256": "945cbfc1f59ced1c075c8cdd8b4b6483a3e5bf03c45c6a085e0921965b784c32",
+      "bytes": 4976,
+      "role": "N2 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/sources/critic-standards.md",
+      "sha256": "ed9dfa5e15a710b3ba1e1435d39c8d03530fead79513c85d6ef8303df6d87920",
+      "bytes": 1934,
+      "role": "N2 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/sources/critic-vendors.md",
+      "sha256": "03fa5ab86916fea2029a871dc319952267af92329ce469f236a2b0d00c07475c",
+      "bytes": 5622,
+      "role": "N2 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/sources/index.md",
+      "sha256": "9f516b767b36548dd93959cd121450460e3e32619014dfe5eb73a82dbc68ee00",
+      "bytes": 1195,
+      "role": "N2 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/sources/optimization.md",
+      "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc",
+      "bytes": 7804,
+      "role": "N2 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/sources/products.md",
+      "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e",
+      "bytes": 7159,
+      "role": "N2 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/sources/timezones.md",
+      "sha256": "03e5ca1802dee74c7fd8ab8b9bfcde0d9a5b04d87116b350210e148e93f0dc44",
+      "bytes": 1547,
+      "role": "N2 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/critic/sources/index.md",
+      "sha256": "85dc11478734f568e847dbf00743a424d8c115f64171183e5a57429c57445a02",
+      "bytes": 909,
+      "role": "N2 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/critic/sources/solvers.md",
+      "sha256": "945cbfc1f59ced1c075c8cdd8b4b6483a3e5bf03c45c6a085e0921965b784c32",
+      "bytes": 4976,
+      "role": "N2 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/critic/sources/standards.md",
+      "sha256": "ed9dfa5e15a710b3ba1e1435d39c8d03530fead79513c85d6ef8303df6d87920",
+      "bytes": 1934,
+      "role": "N2 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/critic/sources/vendors.md",
+      "sha256": "03fa5ab86916fea2029a871dc319952267af92329ce469f236a2b0d00c07475c",
+      "bytes": 5622,
+      "role": "N2 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/sources/accessibility.md",
+      "sha256": "37a86317fac5dad8c183ce5bb86c2b78efcf36400db783f9026d09be945396ff",
+      "bytes": 1056,
+      "role": "N2 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/sources/index.md",
+      "sha256": "2d1a6a8cf941e116bfd990f4f2bebbe0594d32a72ca516e8e914b27d7169e245",
+      "bytes": 874,
+      "role": "N2 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/sources/optimization.md",
+      "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc",
+      "bytes": 7804,
+      "role": "N2 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/sources/products.md",
+      "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e",
+      "bytes": 7159,
+      "role": "N2 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/sources/timezones.md",
+      "sha256": "03e5ca1802dee74c7fd8ab8b9bfcde0d9a5b04d87116b350210e148e93f0dc44",
+      "bytes": 1547,
+      "role": "N2 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+      "sha256": "ca8bac0c261bc6bee53c266f252b87c43b8e0352878c1e429b953caa3542dd05",
+      "bytes": 41478,
+      "role": "N1 frozen stage",
+      "expected_sha256": "ca8bac0c261bc6bee53c266f252b87c43b8e0352878c1e429b953caa3542dd05",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/source-map.json",
+      "sha256": "10e6de015abe03b20cf8dba544c53d3aeda88462c4845ddfca09bf5b93b618be",
+      "bytes": 59763,
+      "role": "N1 frozen stage",
+      "expected_sha256": "10e6de015abe03b20cf8dba544c53d3aeda88462c4845ddfca09bf5b93b618be",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/assignment.md",
+      "sha256": "a6f4749c54f3c94774e824641a11afa171e288feb19d710f530e900803b89d50",
+      "bytes": 2954,
+      "role": "N1 frozen stage",
+      "expected_sha256": "a6f4749c54f3c94774e824641a11afa171e288feb19d710f530e900803b89d50",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/input-map.json",
+      "sha256": "7034df35e6d72ccc60246155b912f89a2aed743b8c40045bbb0c10b24970dee1",
+      "bytes": 1526,
+      "role": "N1 frozen stage",
+      "expected_sha256": "7034df35e6d72ccc60246155b912f89a2aed743b8c40045bbb0c10b24970dee1",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/critique.md",
+      "sha256": "8717c6d95d6ae5921a91e630d3c5720734d362f46228df00722830d58bd62f3e",
+      "bytes": 13180,
+      "role": "N1 frozen stage",
+      "expected_sha256": "8717c6d95d6ae5921a91e630d3c5720734d362f46228df00722830d58bd62f3e",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/source-map.json",
+      "sha256": "00cc8f59caf8230ac66a48e3ac2990186e23de1f4537ed4c483c54cd5405030b",
+      "bytes": 17153,
+      "role": "N1 frozen stage",
+      "expected_sha256": "00cc8f59caf8230ac66a48e3ac2990186e23de1f4537ed4c483c54cd5405030b",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/assignment.md",
+      "sha256": "091d7b6215f9a3459b056f2ba2242ef83bf48e449af21e5ef07f1b536f5ada3a",
+      "bytes": 2691,
+      "role": "N1 frozen stage",
+      "expected_sha256": "091d7b6215f9a3459b056f2ba2242ef83bf48e449af21e5ef07f1b536f5ada3a",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/input-map.json",
+      "sha256": "af0746730ab1362583aaf7db96e03dd659826c55f667f068b648d851779305ad",
+      "bytes": 1196,
+      "role": "N1 frozen stage",
+      "expected_sha256": "af0746730ab1362583aaf7db96e03dd659826c55f667f068b648d851779305ad",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/discovery.md",
+      "sha256": "50372bd6f796bdeede2ad5867bdf66e9e078f3ca89d26b969cc4e0512e6bab6e",
+      "bytes": 22950,
+      "role": "N1 frozen stage",
+      "expected_sha256": "50372bd6f796bdeede2ad5867bdf66e9e078f3ca89d26b969cc4e0512e6bab6e",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/draft.md",
+      "sha256": "c75e6a8c4283edca7a9214824c0ba4b55f98c4b50f9f9fb6152a90c44a14c455",
+      "bytes": 24776,
+      "role": "N1 frozen stage",
+      "expected_sha256": "c75e6a8c4283edca7a9214824c0ba4b55f98c4b50f9f9fb6152a90c44a14c455",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/source-map.json",
+      "sha256": "8d0ec7468d69c4e7f1846631a316f8c25528a263aee5de339d31720851583410",
+      "bytes": 22997,
+      "role": "N1 frozen stage",
+      "expected_sha256": "8d0ec7468d69c4e7f1846631a316f8c25528a263aee5de339d31720851583410",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/revealed-plan.md",
+      "sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c",
+      "bytes": 312,
+      "role": "N1 frozen stage",
+      "expected_sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/plan-reveal.json",
+      "sha256": "700e04e8b79de44440eaef36b92b7c8dc0c4217310b708bab92b783acb625d73",
+      "bytes": 276,
+      "role": "N1 frozen stage",
+      "expected_sha256": "700e04e8b79de44440eaef36b92b7c8dc0c4217310b708bab92b783acb625d73",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/assignment.md",
+      "sha256": "c00b412edb672987845801c273aaf20961ab346dd4f88f766a250c79b4a9e5ba",
+      "bytes": 3169,
+      "role": "N1 frozen stage",
+      "expected_sha256": "c00b412edb672987845801c273aaf20961ab346dd4f88f766a250c79b4a9e5ba",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/input-map.json",
+      "sha256": "bbfc993228d7c34405a0ac1cdaa8b412d45eeb6b8849d0766b0e8f7ca5822373",
+      "bytes": 640,
+      "role": "N1 frozen stage",
+      "expected_sha256": "bbfc993228d7c34405a0ac1cdaa8b412d45eeb6b8849d0766b0e8f7ca5822373",
+      "hash_match": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/C01-ortools-v9.15-source.md",
+      "sha256": "e2029118d2558ea04cac32f0d481dff6fa294e8e1aa281345c31321bb1ceed7c",
+      "bytes": 1037,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/C02-google-workforce-rest.md",
+      "sha256": "e5566e9db71d46e86e3795dc754da512e2acf413dd4b22d828d8ee5e5ea10df6",
+      "bytes": 1237,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/C03-google-datetime.md",
+      "sha256": "f70724fd887fe1fe2a899f314ae53723e25ffcfbf46f5df195876d3b3d774158",
+      "bytes": 979,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/C04-better-impact-scheduling.md",
+      "sha256": "644084cb396c3aed2649d8704d8716e3819aa08fa25ab4ff4113109486fff2ee",
+      "bytes": 1009,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/C05-better-impact-activities.md",
+      "sha256": "866f2827546b3c3c6fae0d90eb38fbd601604ad8fe8c874efe2add1efcdf5429",
+      "bytes": 946,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/C06-volunteerlocal-jobs-shifts.md",
+      "sha256": "78a0dd4e1ee2c53445974556a1ab68b87722acbd73516aa6b63f7f3dc5832d20",
+      "bytes": 853,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/C07-timefold-fairness.md",
+      "sha256": "2d72516c49f3674172ba64ad745259dd6815c4947d603135198cd4d0aa390ea6",
+      "bytes": 983,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/C08-timefold-replanning.md",
+      "sha256": "ba13f3e2892764246556d5014123d31b688ddf6558dc60622c9714b952556fd5",
+      "bytes": 742,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/C09-timefold-pr-2596.md",
+      "sha256": "4d7b2f0e103c3e9a70bbb0b9838cbb968739fd398ccdba14d8611051deb388d5",
+      "bytes": 864,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/C10-timefold-releases.md",
+      "sha256": "1aeac20fa0a0ad3955b06c332098ddba42c2f45070efc03f787f11851fe5032f",
+      "bytes": 754,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/C11-google-workforce-overview.md",
+      "sha256": "9a12a4115b62e68386ced9e2b87eb5a416446cff1441b412a4052bd42a8f6f3e",
+      "bytes": 844,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/README.md",
+      "sha256": "8241604af3acd78b9b8d7e8a0e901a1515f4ebc2d7a5165ce5bd669144fdc5dd",
+      "bytes": 10962,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S01-better-impact-activities.md",
+      "sha256": "712cf65513648cc1252b55a9bf7de7faff67cf77d82137d8e5603fa302442a4d",
+      "bytes": 1374,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S02-better-impact-scheduling.md",
+      "sha256": "3c29bad8d7c258316f70e905617e8b9de1dd51ed4989c1ce8366c64ac638ef3b",
+      "bytes": 1170,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S03-better-impact-profiles.md",
+      "sha256": "830d4ed8bef5da4f43f0be13bfe9b0aec9733cdec0e12666b7e2a7cabd5f8c5e",
+      "bytes": 941,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S04-better-impact-import.md",
+      "sha256": "1bf54d045f877395a3c9d6c55625da4f68e021eb9a6f37e9804f2849674d7c15",
+      "bytes": 1075,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S05-better-impact-release.md",
+      "sha256": "b0b600a8ef9d67edd618503c4fd1126ea9ba264a25550896a4c7314d119c7b45",
+      "bytes": 824,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S06-better-impact-plan-and-self-schedule.md",
+      "sha256": "8824586f783f82cd618676e1f9a4f1d532342dd00554a3af260cae170c64ca84",
+      "bytes": 831,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S07-volunteerlocal-jobs-shifts.md",
+      "sha256": "55daf9375d2f9d63c59eccc37d07aef329cd09c1c92a48f627f5b265f4c97d36",
+      "bytes": 905,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S08-volunteerlocal-reminders.md",
+      "sha256": "5db74e3cd362015b61da3349d0d81d00e4c2330a8dd9af4a4166581bf9090fad",
+      "bytes": 793,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S09-volunteerlocal-mobile.md",
+      "sha256": "9047445a6cec6042903f7edcb37dbe3cd751cbd7a32073935c44e0aacdc388b4",
+      "bytes": 670,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S10-volunteerlocal-no-password.md",
+      "sha256": "fe1584b73b547569bae767fe2a5b740448d1ad655903a0af5c635554b16992b9",
+      "bytes": 796,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S11-ortools-employee-scheduling-docs.md",
+      "sha256": "84f531d5ab6535e4c07aeb43ba8ad57f8bfdda43ba086cc90e71dfabddd9b2ac",
+      "bytes": 967,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S12-ortools-v9.15-source.md",
+      "sha256": "46a3c3279be65f38b0166633f680144833a90785419ca078766c42d8a6b0c0e5",
+      "bytes": 1208,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S13-ortools-v9.15-release.md",
+      "sha256": "11a7b1a29d3bf4b8b3df997560daf80dabcc4aff19c526bf700c2814306eee23",
+      "bytes": 657,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S14-google-workforce-overview.md",
+      "sha256": "3d4ecf4abef9566ef60b23642bf98cf66b97f4e500e54fb75c628ccc8a50292a",
+      "bytes": 952,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S15-google-workforce-rest.md",
+      "sha256": "c84a6cb38ab215c7756b5f70d365bb86a5646c0a01c147bc95c940b44a230eef",
+      "bytes": 1339,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S16-google-datetime.md",
+      "sha256": "7f3d85894aaa3783a428b379633012be53800bdb544b92148c81f2adbde94bf9",
+      "bytes": 881,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S17-timefold-fairness.md",
+      "sha256": "71fa70433644ca68a5dc028b01d51b980da60d1d48abc08610ee0464868eebe5",
+      "bytes": 1245,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S18-timefold-replanning.md",
+      "sha256": "f82f77317425a2191b3808109835526f349491ea2c9806bb13a437c793b3d67c",
+      "bytes": 899,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S19-timefold-managed-fairness.md",
+      "sha256": "6aa2cc2dbb93d4d157a10d61ba2fe2af3832acb500f034bad241e951ae452627",
+      "bytes": 964,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S20-timefold-pr-2596.md",
+      "sha256": "4d4406b70dccb72ca717a75ab790516e30cab4ecfe0270fc068a42ed952e65ea",
+      "bytes": 1191,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/S21-timefold-releases.md",
+      "sha256": "9f4748f2366082a991bce1fe59e73a33cdaa68ffb91782f4fa604622654d66c9",
+      "bytes": 798,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/V01-google-workforce-rest.md",
+      "sha256": "266da7e29253c35dcfe3e02697ec76effc1e7d5a6f316c4a4029d628f5e463b5",
+      "bytes": 1569,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/V02-google-datetime.md",
+      "sha256": "485239887027460c099982f94a3247f2e9fc6449bf47c598fe110c09717c9373",
+      "bytes": 1260,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/V03-better-impact-activities.md",
+      "sha256": "315323b7e2bb9c49cfcde84d6668a7ae503ed5d748aa098938eed0a33cf77fc0",
+      "bytes": 1453,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/V04-better-impact-scheduling.md",
+      "sha256": "7b957e05a9a73d0e0e215559ede2945e7fead3796beb2b39a7852c4210ff4d53",
+      "bytes": 1355,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/V05-timefold-pr-2596.md",
+      "sha256": "224cd18a66992590ec508062c1f089202199f34248271fcf72a869ab7fe389b1",
+      "bytes": 1158,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/V06-timefold-releases.md",
+      "sha256": "ca21d361b3a59a957561a9e32955ac5535e96cdcaf3c85ae3b94212543569475",
+      "bytes": 930,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/V07-wcag22.md",
+      "sha256": "bba31ddf91fa5f6a8aa382f0206744022377a9eed6b5669fb9f70860db8e3ce6",
+      "bytes": 1108,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C01-ortools-v9.15-source.md",
+      "sha256": "e2029118d2558ea04cac32f0d481dff6fa294e8e1aa281345c31321bb1ceed7c",
+      "bytes": 1037,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C02-google-workforce-rest.md",
+      "sha256": "e5566e9db71d46e86e3795dc754da512e2acf413dd4b22d828d8ee5e5ea10df6",
+      "bytes": 1237,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C03-google-datetime.md",
+      "sha256": "f70724fd887fe1fe2a899f314ae53723e25ffcfbf46f5df195876d3b3d774158",
+      "bytes": 979,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C04-better-impact-scheduling.md",
+      "sha256": "644084cb396c3aed2649d8704d8716e3819aa08fa25ab4ff4113109486fff2ee",
+      "bytes": 1009,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C05-better-impact-activities.md",
+      "sha256": "866f2827546b3c3c6fae0d90eb38fbd601604ad8fe8c874efe2add1efcdf5429",
+      "bytes": 946,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C06-volunteerlocal-jobs-shifts.md",
+      "sha256": "78a0dd4e1ee2c53445974556a1ab68b87722acbd73516aa6b63f7f3dc5832d20",
+      "bytes": 853,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C07-timefold-fairness.md",
+      "sha256": "2d72516c49f3674172ba64ad745259dd6815c4947d603135198cd4d0aa390ea6",
+      "bytes": 983,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C08-timefold-replanning.md",
+      "sha256": "ba13f3e2892764246556d5014123d31b688ddf6558dc60622c9714b952556fd5",
+      "bytes": 742,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C09-timefold-pr-2596.md",
+      "sha256": "4d7b2f0e103c3e9a70bbb0b9838cbb968739fd398ccdba14d8611051deb388d5",
+      "bytes": 864,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C10-timefold-releases.md",
+      "sha256": "1aeac20fa0a0ad3955b06c332098ddba42c2f45070efc03f787f11851fe5032f",
+      "bytes": 754,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C11-google-workforce-overview.md",
+      "sha256": "9a12a4115b62e68386ced9e2b87eb5a416446cff1441b412a4052bd42a8f6f3e",
+      "bytes": 844,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/README.md",
+      "sha256": "6e06e74e68b5a0f5a0039c2abf81dc6a0f1c8f1912bdb0564b864aa9c067b3f5",
+      "bytes": 1528,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/README.md",
+      "sha256": "049cb6c0d27cfdb02ce19756251ac8100f55a2beb873cc81e81d7073a676248d",
+      "bytes": 5477,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S01-better-impact-activities.md",
+      "sha256": "712cf65513648cc1252b55a9bf7de7faff67cf77d82137d8e5603fa302442a4d",
+      "bytes": 1374,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S02-better-impact-scheduling.md",
+      "sha256": "3c29bad8d7c258316f70e905617e8b9de1dd51ed4989c1ce8366c64ac638ef3b",
+      "bytes": 1170,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S03-better-impact-profiles.md",
+      "sha256": "830d4ed8bef5da4f43f0be13bfe9b0aec9733cdec0e12666b7e2a7cabd5f8c5e",
+      "bytes": 941,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S04-better-impact-import.md",
+      "sha256": "1bf54d045f877395a3c9d6c55625da4f68e021eb9a6f37e9804f2849674d7c15",
+      "bytes": 1075,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S05-better-impact-release.md",
+      "sha256": "b0b600a8ef9d67edd618503c4fd1126ea9ba264a25550896a4c7314d119c7b45",
+      "bytes": 824,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S06-better-impact-plan-and-self-schedule.md",
+      "sha256": "8824586f783f82cd618676e1f9a4f1d532342dd00554a3af260cae170c64ca84",
+      "bytes": 831,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S07-volunteerlocal-jobs-shifts.md",
+      "sha256": "55daf9375d2f9d63c59eccc37d07aef329cd09c1c92a48f627f5b265f4c97d36",
+      "bytes": 905,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S08-volunteerlocal-reminders.md",
+      "sha256": "5db74e3cd362015b61da3349d0d81d00e4c2330a8dd9af4a4166581bf9090fad",
+      "bytes": 793,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S09-volunteerlocal-mobile.md",
+      "sha256": "9047445a6cec6042903f7edcb37dbe3cd751cbd7a32073935c44e0aacdc388b4",
+      "bytes": 670,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S10-volunteerlocal-no-password.md",
+      "sha256": "fe1584b73b547569bae767fe2a5b740448d1ad655903a0af5c635554b16992b9",
+      "bytes": 796,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S11-ortools-employee-scheduling-docs.md",
+      "sha256": "84f531d5ab6535e4c07aeb43ba8ad57f8bfdda43ba086cc90e71dfabddd9b2ac",
+      "bytes": 967,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S12-ortools-v9.15-source.md",
+      "sha256": "46a3c3279be65f38b0166633f680144833a90785419ca078766c42d8a6b0c0e5",
+      "bytes": 1208,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S13-ortools-v9.15-release.md",
+      "sha256": "11a7b1a29d3bf4b8b3df997560daf80dabcc4aff19c526bf700c2814306eee23",
+      "bytes": 657,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S14-google-workforce-overview.md",
+      "sha256": "3d4ecf4abef9566ef60b23642bf98cf66b97f4e500e54fb75c628ccc8a50292a",
+      "bytes": 952,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S15-google-workforce-rest.md",
+      "sha256": "c84a6cb38ab215c7756b5f70d365bb86a5646c0a01c147bc95c940b44a230eef",
+      "bytes": 1339,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S16-google-datetime.md",
+      "sha256": "7f3d85894aaa3783a428b379633012be53800bdb544b92148c81f2adbde94bf9",
+      "bytes": 881,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S17-timefold-fairness.md",
+      "sha256": "71fa70433644ca68a5dc028b01d51b980da60d1d48abc08610ee0464868eebe5",
+      "bytes": 1245,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S18-timefold-replanning.md",
+      "sha256": "f82f77317425a2191b3808109835526f349491ea2c9806bb13a437c793b3d67c",
+      "bytes": 899,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S19-timefold-managed-fairness.md",
+      "sha256": "6aa2cc2dbb93d4d157a10d61ba2fe2af3832acb500f034bad241e951ae452627",
+      "bytes": 964,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S20-timefold-pr-2596.md",
+      "sha256": "4d4406b70dccb72ca717a75ab790516e30cab4ecfe0270fc068a42ed952e65ea",
+      "bytes": 1191,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S21-timefold-releases.md",
+      "sha256": "9f4748f2366082a991bce1fe59e73a33cdaa68ffb91782f4fa604622654d66c9",
+      "bytes": 798,
+      "role": "N1 source note/index",
+      "expected_sha256": null,
+      "hash_match": null
+    }
+  ],
+  "arms": {
+    "N2": {
+      "actual_arm": "control",
+      "final_delivery": true,
+      "grade": "FAIL",
+      "grade_basis": "Independent material recurrence finding N2-F01; other axes and available evidence were reviewed fully. This is not a score inferred from citations, agreement, or hashes.",
+      "material_findings": [
+        {
+          "id": "N2-F01",
+          "type": "MATERIALLY_WRONG",
+          "related_types": [
+            "FALSE_CORRECTION_OR_REJECTION"
+          ],
+          "severity": "Material: central recurrence capability and vendor applicability are mischaracterized; this blocks full quality.",
+          "title": "Volgistics opening recurrence is incorrectly characterized as undocumented",
+          "candidate_evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                10,
+                40
+              ]
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                71
+              ]
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/critic/critique.md",
+              "lines": [
+                23,
+                25,
+                27
+              ]
+            }
+          ],
+          "decisive_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "line": 10,
+              "passage": "the vendor pages do not establish whether administrators can create or change recurring openings."
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "line": 40,
+              "passage": "the cited pages do not establish recurrence or exception semantics for an opening/template"
+            }
+          ],
+          "original_obligation": "Brief line3 recurring shifts/predictable coverage and selected-product investigation; O2 source behavior/applicability, O4 exact P1 comparison, O5 evidence-backed critique treatment. P1 says generate recurring shifts from a weekly template.",
+          "primary_evidence": [
+            "E13",
+            "E14",
+            "E15",
+            "E16"
+          ],
+          "reasoning": "The cited Schedule Overview itself documents ongoing weekday/day-of-month openings, their duration and needed headcount. Its coordinator restriction is role-specific. The linked Add Openings guide specifies weekly patterns and dated calendar appearance, while Edit Opening specifies past/future propagation and independent volunteer entries. The critic's narrow distinction between recurring entries and openings is correct; the final broadens it into an unsupported absence of administrator opening recurrence and change behavior. This is consequential available research, not honest unknown account configuration.",
+          "qualification": "This finding does not establish first-class holiday exceptions, stable IDs, a future-only edit feature, exact permissions in a paid account, or complete suitability. Those remain legitimate trial questions. P1 is retained rather than wrongly rejected wholesale; the defect lies in evidence characterization and criticism uptake.",
+          "primary_sources": [
+            {
+              "id": "E13",
+              "title": "Volgistics Schedule Overview",
+              "url": "https://www.volgistics.com/help/schedule/schedule-overview/",
+              "version": "Mutable help guide",
+              "locator": "Openings (rendered lines 190–193); coordinator permissions (253–260)",
+              "observation": "Documents ongoing weekday/day-of-month openings, finite or indefinite duration, and needed headcount. Coordinators' inability to create/change openings is a role restriction, not absence of administrator opening functionality.",
+              "access_basis": "Independently retrieved during this assessment; vendor/rolling pages are observed documentation, not a configured-account test."
+            },
+            {
+              "id": "E14",
+              "title": "Volgistics Add Schedule Openings",
+              "url": "https://www.volgistics.com/help/schedule/add-schedule-openings/",
+              "version": "Mutable help guide",
+              "locator": "Add an Opening; Example 2: Recurring shift (rendered lines 170–186, 204–219)",
+              "observation": "Ongoing openings repeat on selected weekday/frequency patterns with start/end scope. The explicit weekly example appears on all selected calendar dates; it is an opening, separate from a volunteer assignment.",
+              "access_basis": "Independently retrieved during this assessment; vendor/rolling pages are observed documentation, not a configured-account test."
+            },
+            {
+              "id": "E15",
+              "title": "Volgistics Edit a Schedule Opening",
+              "url": "https://www.volgistics.com/help/schedule/edit-a-schedule-opening/",
+              "version": "Mutable help guide",
+              "locator": "Tips for Working with Openings; Change Times; Change Days (rendered lines 148–181)",
+              "observation": "Editing opening times affects related slots on past and future dates. Opening and entry are independent; changing opening weekdays can leave a volunteer entry scheduled without a matching opening.",
+              "access_basis": "Independently retrieved during this assessment; vendor/rolling pages are observed documentation, not a configured-account test."
+            },
+            {
+              "id": "E16",
+              "title": "Volgistics Edit/Remove Schedule Entry",
+              "url": "https://www.volgistics.com/help/schedule/edit-a-schedule-entry-or-remove-a-scheduled-volunteer/",
+              "version": "Mutable help guide",
+              "locator": "Regular entry; one-date change; end date; remove scope",
+              "observation": "Regular volunteer entries repeat independently. A one-date time change removes/re-adds that dated entry; ending dates preserve past entries. This is not proof of first-class opening exceptions.",
+              "access_basis": "Independently retrieved during this assessment; vendor/rolling pages are observed documentation, not a configured-account test."
+            }
+          ]
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N2-m01",
+          "type": "Disposition precision",
+          "candidate_evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                71,
+                75,
+                76
+              ]
+            }
+          ],
+          "reasoning": "P1's added timezone/exception/history semantics and P6's larger matrix are mainly elaborations beyond a thin plan; 'correction' can overstate what the original sentence asserted. The final retains both original capabilities and makes decisions/conditions explicit, so this wording is not an independent material rejection."
+        }
+      ],
+      "unresolved": [
+        {
+          "kind": "External product inputs",
+          "detail": "Actual vendor plan/quote, account configuration, target tasks, data terms, end-to-end import/reminder/accessibility and live series exceptions were not exercised. These honest unknowns are not treated as reviewer gaps or factual failures."
+        },
+        {
+          "kind": "User policy",
+          "detail": "Staffing minimum versus target, availability versus acceptance, fairness cohort/metric/weights, peer-name audience, channels, template horizon and published-change policy remain food-bank decisions."
+        },
+        {
+          "kind": "Empirical applicability",
+          "detail": "No 180-volunteer dataset or runtime target; no optimizer quality/latency, independent source regression rerun, or compliance/delivery result established."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "name": "Original obligations and explicit constraints",
+          "coverage": {
+            "status": "FULL",
+            "obligations": [
+              "O1",
+              "O2",
+              "O3",
+              "O4",
+              "O5",
+              "O6"
+            ],
+            "constraints": [
+              "180 volunteers",
+              "changing availability",
+              "recurring shifts",
+              "predictable coverage",
+              "mobile access",
+              "accessible reminders",
+              "privacy-limited sharing",
+              "occasional imported rosters",
+              "no invented law",
+              "no equal availability"
+            ]
+          },
+          "judgment": "Original scope is addressed throughout; central available recurrence investigation fails O2 and affects O4/O5. Other constraints/options are retained; production guarantees are not invented as grading requirements.",
+          "evidence": [
+            "obligation_review",
+            "N2-F01",
+            "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/discovery.md",
+            "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md"
+          ]
+        },
+        {
+          "axis": 2,
+          "name": "Consequential primary facts, defaults, units, versions and applicability",
+          "coverage": {
+            "status": "FULL for relevant consequential claim clusters",
+            "checked_claim_ids": [
+              "N2-C01",
+              "N2-C02",
+              "N2-C03",
+              "N2-C04",
+              "N2-C05",
+              "N2-C06",
+              "N2-C07",
+              "N2-C08",
+              "N2-C09",
+              "N2-C10",
+              "N2-C11",
+              "N2-C12",
+              "N2-C13",
+              "N2-C14",
+              "N2-C15",
+              "N2-C16",
+              "N2-C17",
+              "N2-C18",
+              "N2-C19",
+              "N2-C20",
+              "N2-C21"
+            ],
+            "remaining_claim_ids": []
+          },
+          "judgment": "Material recurrence defect N2-F01. Other selected product defaults, solver semantics, fairness mechanisms, standards and release applicability are supported or explicitly externally unresolved. See claim-by-claim checks rather than source-count inference.",
+          "evidence": [
+            "N2-C01",
+            "N2-C02",
+            "N2-C03",
+            "N2-C04",
+            "N2-C05",
+            "N2-C06",
+            "N2-C07",
+            "N2-C08",
+            "N2-C09",
+            "N2-C10",
+            "N2-C11",
+            "N2-C12",
+            "N2-C13",
+            "N2-C14",
+            "N2-C15",
+            "N2-C16",
+            "N2-C17",
+            "N2-C18",
+            "N2-C19",
+            "N2-C20",
+            "N2-C21"
+          ]
+        },
+        {
+          "axis": 3,
+          "name": "Meaningful unfamiliar discovery and optional alternatives",
+          "coverage": {
+            "status": "FULL",
+            "stages": [
+              "discovery",
+              "draft",
+              "final"
+            ],
+            "options": [
+              "Better Impact",
+              "Volgistics",
+              "coordinator allocation",
+              "self-signup",
+              "CP-SAT",
+              "open-source Timefold",
+              "managed Timefold API",
+              "multiple fairness measures"
+            ]
+          },
+          "judgment": "Substantive different product/workflow/mechanism routes survive with tradeoffs and policy choices. Roster size does not force optimization. Recurrence understatement/omission is accounted under F01, without erasing the useful discovery.",
+          "evidence": [
+            "preservation_coverage",
+            "clause_review",
+            "primary_coverage.checked_claims"
+          ]
+        },
+        {
+          "axis": 4,
+          "name": "Every exact plan clause and disposition",
+          "coverage": {
+            "status": "FULL",
+            "clauses": [
+              "P1",
+              "P2",
+              "P3",
+              "P4",
+              "P5",
+              "P6"
+            ]
+          },
+          "judgment": "All six clauses are independently adjudicated. P2/P4 rejection responds to the brief; P3 retention and P6 enlargement are reasonable; P5 preserves intended local civil time with qualified representation. P1 is retained but its product evidence is defective. Added semantics are not treated as facts asserted by the thin plan.",
+          "evidence": [
+            "clause_review",
+            "N2-F01"
+          ]
+        },
+        {
+          "axis": 5,
+          "name": "Draft/critique/final preservation and fallible criticism",
+          "coverage": {
+            "status": "FULL",
+            "stages": [
+              "complete discovery",
+              "complete draft",
+              "complete critique",
+              "complete final",
+              "stage source maps",
+              "stage source indexes/notes"
+            ],
+            "critic_items": [
+              "M01",
+              "m01",
+              "m02",
+              "m03",
+              "m04"
+            ],
+            "unread_stage_scope": []
+          },
+          "judgment": "Full prose retains supported options/constraints and most critique refinements. Narrow recurrence criticism is valid; final's broadening creates F01.",
+          "evidence": [
+            "criticism_review",
+            "preservation_coverage",
+            "N2-F01",
+            "N2-m01"
+          ]
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed versus executed validation",
+          "coverage": {
+            "status": "FULL",
+            "matrix": "all rows and surrounding execution statements read",
+            "independent_oracles": "source semantics checked where claimed; selected-policy acceptance outcomes remain proposals"
+          },
+          "judgment": "Proposed tests discriminate consequential failures and policies; none is claimed executed. Versioned source regression assertions support an implementation/evolution chain without establishing target behavior or a runtime witness.",
+          "evidence": [
+            "validation_review",
+            "E16",
+            "E22",
+            "E29",
+            "E39",
+            "E40"
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "id": "N2-C01",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                10,
+                40,
+                71
+              ]
+            },
+            "statement": "Volgistics recurrence/object applicability and claimed lack of documented opening recurrence.",
+            "judgment": "MATERIAL DEFECT N2-F01: the entry/opening distinction is sound, but the blanket absence claim contradicts the cited overview and related opening guides.",
+            "primary_evidence": [
+              "E13",
+              "E14",
+              "E15",
+              "E16"
+            ]
+          },
+          {
+            "id": "N2-C02",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                39,
+                87
+              ]
+            },
+            "statement": "Better Impact recurring signup, mobile access and communications.",
+            "judgment": "Supported as vendor-described capability; coordinator browser versus volunteer app correctly separated. Actual reminders, consent and target accessibility remain untested.",
+            "primary_evidence": [
+              "E07",
+              "E08"
+            ]
+          },
+          {
+            "id": "N2-C03",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                40,
+                42,
+                81
+              ]
+            },
+            "statement": "Volgistics self-scheduling is optional, disabled initially, service/configuration gated.",
+            "judgment": "Supported. Optional controls and workflow are distinguished from an optimizer and from guaranteed coverage.",
+            "primary_evidence": [
+              "E17",
+              "E18"
+            ]
+          },
+          {
+            "id": "N2-C04",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                45,
+                53
+              ]
+            },
+            "statement": "Managed Timefold weights/default levels.",
+            "judgment": "Supported for 1.35.x; defaults 1 and cap 10^12 are scoped to this managed model rather than all Timefold.",
+            "primary_evidence": [
+              "E30"
+            ]
+          },
+          {
+            "id": "N2-C05",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                45,
+                61,
+                63
+              ]
+            },
+            "statement": "Managed Timefold FTE range, precision, tag defaults, 100*SD metric, cohort/window.",
+            "judgment": "Supported. Employee FTE and eligibility/history assumptions are explicitly not imposed on unequal-availability volunteers.",
+            "primary_evidence": [
+              "E29"
+            ]
+          },
+          {
+            "id": "N2-C06",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                13,
+                43,
+                51
+              ]
+            },
+            "statement": "OR-Tools Boolean assignment and exactly-one including Off.",
+            "judgment": "Supported by pinned code; distinction from employee documentation's at-most-one work shift is made explicit.",
+            "primary_evidence": [
+              "E21",
+              "E22",
+              "E23"
+            ]
+          },
+          {
+            "id": "N2-C07",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                43,
+                51,
+                53
+              ]
+            },
+            "statement": "Demand as lower bound/excess penalty, hard/soft boundaries and feasible/optimal.",
+            "judgment": "Supported by sample. Proposal to select hard eligibility and staffing policy is not presented as the sample's universal/default rule.",
+            "primary_evidence": [
+              "E22"
+            ]
+          },
+          {
+            "id": "N2-C08",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                44,
+                57,
+                65
+              ]
+            },
+            "statement": "Timefold shift-count fairness, zero-assignment cohort and decimal scoring.",
+            "judgment": "Supported by implementation patch; example tests demonstrate an implemented score, not an independently executed witness or appropriate volunteer policy.",
+            "primary_evidence": [
+              "E31",
+              "E32",
+              "E33"
+            ]
+          },
+          {
+            "id": "N2-C09",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                14,
+                65
+              ]
+            },
+            "statement": "Issue492→PR517→required Solver PR980/cast patch/v1.13 milestone evolution.",
+            "judgment": "Supported by public linked records and code. Milestone is accurately bounded, not claimed as proof of a deployed production incident.",
+            "primary_evidence": [
+              "E31",
+              "E32",
+              "E33",
+              "E34",
+              "E35"
+            ]
+          },
+          {
+            "id": "N2-C10",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                11,
+                12,
+                75,
+                119
+              ]
+            },
+            "statement": "RFC floating/zoned, repeated-hour, gap DATE-TIME versus RRULE gap, interchange scope.",
+            "judgment": "Supported and materially more precise than the draft. The RFC does not prescribe application tzdb or the food bank's gap policy.",
+            "primary_evidence": [
+              "E39"
+            ]
+          },
+          {
+            "id": "N2-C11",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                40,
+                74,
+                89,
+                121
+              ]
+            },
+            "statement": "Volgistics peer-name hiding and configurable sharing.",
+            "judgment": "Supported; filled status can remain visible. Final does not incorrectly import Better Impact's non-override rule into Volgistics.",
+            "primary_evidence": [
+              "E19"
+            ]
+          },
+          {
+            "id": "N2-C12",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                40,
+                41,
+                73
+              ]
+            },
+            "statement": "Coordinator schedule-entry rights and group/assignment scope.",
+            "judgment": "Supported as configurable coordinator rights; should not be generalized to administrator inability to configure openings (N2-F01).",
+            "primary_evidence": [
+              "E13"
+            ]
+          },
+          {
+            "id": "N2-C13",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                71
+              ]
+            },
+            "statement": "Volgistics regular volunteer entry ending dates and one-date remove/re-add.",
+            "judgment": "Supported for the entry object. Properly retained as an illustration with bounded applicability.",
+            "primary_evidence": [
+              "E16"
+            ]
+          },
+          {
+            "id": "N2-C14",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                81
+              ]
+            },
+            "statement": "Volgistics caps and 1–12 month/fixed-date booking window.",
+            "judgment": "Supported; caps do not restrict operator/coordinator assignment and are offered as optional enhancement.",
+            "primary_evidence": [
+              "E18"
+            ]
+          },
+          {
+            "id": "N2-C15",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                91,
+                124
+              ]
+            },
+            "statement": "WCAG2.2AA proposed web target, keyboard/reflow/touch checks and separate messages.",
+            "judgment": "Supported in web scope, with exceptions and chosen target distinguished from legal mandate, SMS conformance or completed audit.",
+            "primary_evidence": [
+              "E40"
+            ]
+          },
+          {
+            "id": "N2-C16",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                95
+              ]
+            },
+            "statement": "Better Impact XLSX/UserData, ordered columns, regional dates and fees.",
+            "judgment": "Supported. Import/update fitness correctly left subject to the actual staff-assisted process and quote.",
+            "primary_evidence": [
+              "E04"
+            ]
+          },
+          {
+            "id": "N2-C17",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                95
+              ]
+            },
+            "statement": "Volgistics new-record import, pending receipt, mapping preview/warnings.",
+            "judgment": "Supported by import guide. Generic staged-update proposal is not misrepresented as built-in update behavior.",
+            "primary_evidence": [
+              "E20"
+            ]
+          },
+          {
+            "id": "N2-C18",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                72,
+                73,
+                74
+              ]
+            },
+            "statement": "Hybrid workflow, alphabetical-order risk, swap/audit and audience-limited roster policy.",
+            "judgment": "Brief-grounded proposals/inferences, not measured product outcomes. No equal-availability or statutory premise. Alphabetical priority conflicts with the requested fairness investigation but can remain a bounded tie-break.",
+            "primary_evidence": []
+          },
+          {
+            "id": "N2-C19",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                57,
+                58,
+                59,
+                60,
+                61,
+                63
+              ]
+            },
+            "statement": "Count/minutes/opportunity-normalized/preferences/coverage-first fairness alternatives.",
+            "judgment": "Meaningful optional mechanisms with cohort/window/denominator decisions preserved. No claim that unequal totals alone establish inequity; zero-load treatment matters as shown by the source implementation.",
+            "primary_evidence": [
+              "E29",
+              "E33"
+            ]
+          },
+          {
+            "id": "N2-C20",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                106
+              ]
+            },
+            "statement": "Identity/date/consent import staging, source of truth, batches and retention.",
+            "judgment": "Proposed operating requirements, not executed import guarantees. Fits occasional import scope without asserting a legal retention period.",
+            "primary_evidence": [
+              "E04",
+              "E20"
+            ]
+          },
+          {
+            "id": "N2-C21",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+              "lines": [
+                114,
+                115,
+                116,
+                117,
+                118,
+                119,
+                120,
+                121,
+                122,
+                123,
+                124,
+                125,
+                135
+              ]
+            },
+            "statement": "Validation discriminates shortage, preference, series edit, DST, swap, privacy, reminders, import and accessibility.",
+            "judgment": "Meaningful proposed tests; no observed results promoted to proof. Vendor comparison uses identical synthetic scenarios and records configuration/manual workarounds.",
+            "primary_evidence": [
+              "E13",
+              "E16",
+              "E22",
+              "E29",
+              "E39",
+              "E40"
+            ]
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "completion_definition": "All consequential claim clusters, negative applicability claims, source defaults/units/domain, evolution chain and per-P conclusions in the complete supplied artifacts were reviewed. Complete means relevant assessment evidence, not exhaustive vendor catalog research or live account certification.",
+        "external_validation_remaining": "Trials and execution proposed by candidates remain external validation work, not unreviewed scientific claims."
+      },
+      "preservation_coverage": {
+        "coverage": "Complete reading of discovery, draft, critique, final, stage source maps/indexes, and all unique source-note bodies; duplicated inherited notes verified byte-identical.",
+        "transitions": [
+          {
+            "topic": "Products and operating approaches",
+            "judgment": "Preserved",
+            "detail": "Both suites, coordinator management, self-signup, CP-SAT, open-source Solver and distinct hosted model remain substantive alternatives (final37–47). Volgistics opening scope is newly over-narrowed (F01)."
+          },
+          {
+            "topic": "Hard/soft model and changing availability",
+            "judgment": "Preserved and clarified",
+            "detail": "Availability versus preference/commitment, skills, coverage shortages, source applicability and Off modeling survive (24–29,51–53,72)."
+          },
+          {
+            "topic": "Fairness alternatives",
+            "judgment": "Preserved",
+            "detail": "Count, duration, opportunity-normalization, preference and coverage-first measures retain cohort/window/unequal-availability caveats (57–65)."
+          },
+          {
+            "topic": "Evolution evidence",
+            "judgment": "Preserved",
+            "detail": "Issue, implementation and required cast fix remain a bounded public evolution chain, without production/performance inference (14,65)."
+          },
+          {
+            "topic": "Recurrence and timestamp conditions",
+            "judgment": "Mixed",
+            "detail": "Opening versus volunteer-entry distinction improves precision, and RFC gap/fold/recurrence distinction is repaired. False wider absence claim enters final10/40; P1 remains retained."
+          },
+          {
+            "topic": "Mobile, reminders, accessibility and privacy",
+            "judgment": "Preserved",
+            "detail": "App versus coordinator browser, audience controls, opt-in/channel decisions and optional web target remain prose and test cases (87–91,121–124)."
+          },
+          {
+            "topic": "Imports",
+            "judgment": "Preserved",
+            "detail": "Vendor restrictions plus proposed identity/date/consent staging, batch history and repeated-import decisions survive (95–106,123)."
+          },
+          {
+            "topic": "Validation, decisions and unknowns",
+            "judgment": "Preserved",
+            "detail": "Original smoke week and discriminator matrix are retained; all tests remain proposals and unknown pricing/data/policy inputs stay unresolved (108–135)."
+          }
+        ],
+        "material_loss_or_distortion": [
+          "N2-F01"
+        ],
+        "unread_stage_scope": []
+      },
+      "obligation_review": [
+        {
+          "id": "O1",
+          "judgment": "Satisfied",
+          "evidence": [
+            "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/discovery.md",
+            "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md"
+          ],
+          "reasoning": "Suite products, coordinator management, self-signup, custom CP-SAT, open-source Timefold and managed Timefold API are materially distinct options; no roster-size-implies-optimizer premise."
+        },
+        {
+          "id": "O2",
+          "judgment": "Material defect",
+          "evidence": [
+            "N2-F01",
+            "N2-C01"
+          ],
+          "reasoning": "Relevant units/defaults/domain and version checks were substantially performed, but central available recurrence evidence is mischaracterized or omitted. General uncertainty does not excuse that specific available research."
+        },
+        {
+          "id": "O3",
+          "judgment": "Satisfied with static-source limits",
+          "evidence": [
+            "E31",
+            "E32",
+            "E33",
+            "E34",
+            "E35"
+          ],
+          "reasoning": "Issue→quickstart fairness implementation/tests→required load-balance cast fix and v1.13 milestone is real, with non-production and policy limits preserved."
+        },
+        {
+          "id": "O4",
+          "judgment": "All six clauses covered; P1 evidence defect",
+          "evidence": [
+            "clause_review",
+            "N2-F01"
+          ],
+          "reasoning": "Every exact P sentence is retained in the candidate comparison. Retention, rejection, enhancement, open decisions and uncertainty are distinguished in substance. P1 source characterization remains defective; no wholesale false rejection of weekly recurrence is inferred."
+        },
+        {
+          "id": "O5",
+          "judgment": "Broad preservation with one false broadening",
+          "evidence": [
+            "preservation_coverage",
+            "criticism_review",
+            "N2-F01"
+          ],
+          "reasoning": "Final is full standalone prose, not an ID list. Supported alternatives, uneven availability, privacy/reminder/import/mobile conditions and most critic qualifications remain visible. The recurrence evidence/criticism issue prevents full quality; remaining preservation details are itemized."
+        },
+        {
+          "id": "O6",
+          "judgment": "Satisfied; proposals not executed",
+          "evidence": [
+            "validation_review"
+          ],
+          "reasoning": "Synthetic scenarios distinguish policy, constraint and product behaviors. Literature/code inspection is separated from runtime, imports, message delivery and accessibility results. No execution was required or fabricated."
+        }
+      ],
+      "clause_review": [
+        {
+          "clause": "P1",
+          "exact_text": "Generate recurring shifts from a weekly template.",
+          "candidate_lines": [
+            71
+          ],
+          "disposition": "Correction; recurrence retained; horizon/template-update decisions open",
+          "judgment": "Retention is appropriate; timezone/exceptions are enhancements to the thin requirement. Entry-specific warning is valid, but opening recurrence absence is materially false (N2-F01).",
+          "primary_evidence": [
+            "E13",
+            "E14",
+            "E15",
+            "E16"
+          ]
+        },
+        {
+          "clause": "P2",
+          "exact_text": "Assign the first available volunteer alphabetically.",
+          "candidate_lines": [
+            72
+          ],
+          "disposition": "Reject production alphabetical allocation; optional tie-break",
+          "judgment": "Reasoned policy correction, not a claim that all name-order outcomes were measured. Uneven opportunity, skills, preferences and history are investigated; no equal-availability assumption.",
+          "primary_evidence": [
+            "E22",
+            "E29",
+            "E33"
+          ]
+        },
+        {
+          "clause": "P3",
+          "exact_text": "Allow coordinators to swap names.",
+          "candidate_lines": [
+            73
+          ],
+          "disposition": "Retain with checks/audit/notifications; volunteer swaps open",
+          "judgment": "Legitimate elaboration of coordinator intervention. Bounded vendor permissions support the role model; atomicity/consent/history are proposed acceptance conditions, not established vendor behavior.",
+          "primary_evidence": [
+            "E13"
+          ]
+        },
+        {
+          "clause": "P4",
+          "exact_text": "Email everyone the full roster.",
+          "candidate_lines": [
+            74
+          ],
+          "disposition": "Reject default full-roster email; audience/name policy decision",
+          "judgment": "Direct response to privacy-limited sharing. Peer name hiding is correctly used as an alternative example, not a legal mandate or universal access guarantee.",
+          "primary_evidence": [
+            "E19",
+            "E07"
+          ]
+        },
+        {
+          "clause": "P5",
+          "exact_text": "Use local wall-clock timestamps.",
+          "candidate_lines": [
+            75
+          ],
+          "disposition": "Conditional correction of unzoned fixed timestamps; preserve civil recurrence with zone",
+          "judgment": "Avoids treating all local times as wrong. RFC gap/fold/recurrence distinction is accurate; interchange, application zone database and operational coverage policy remain separate.",
+          "primary_evidence": [
+            "E39"
+          ]
+        },
+        {
+          "clause": "P6",
+          "exact_text": "Test one ordinary week.",
+          "candidate_lines": [
+            76,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120,
+            121,
+            122,
+            123,
+            124,
+            125
+          ],
+          "disposition": "Retain ordinary week as smoke test; enhance coverage",
+          "judgment": "Appropriate enhancement for explicit brief constraints; does not claim original P6 forbids further tests or that the matrix has run.",
+          "primary_evidence": [
+            "E22",
+            "E29",
+            "E39",
+            "E40"
+          ]
+        }
+      ],
+      "criticism_review": [
+        {
+          "id": "M01",
+          "critic_lines": [
+            18,
+            20,
+            23,
+            25,
+            27
+          ],
+          "final_lines": [
+            10,
+            40,
+            71,
+            127
+          ],
+          "judgment": "Accept narrow object/permission distinction; reject the final's broader absence claim",
+          "reasoning": "Regular volunteer entries are not opening templates and the one-date remove/re-add workaround proves no first-class opening exception. Coordinator opening restrictions are real. But the cited overview documents recurring openings; administrator recurrence/change is not absent research. Final over-broadening is N2-F01.",
+          "evidence": [
+            "E13",
+            "E14",
+            "E15",
+            "E16"
+          ]
+        },
+        {
+          "id": "m01",
+          "critic_lines": [
+            31,
+            33,
+            35
+          ],
+          "final_lines": [
+            11,
+            75,
+            119
+          ],
+          "judgment": "Accept precision/conditional scope",
+          "reasoning": "Fixed unzoned time differs from intended civil recurrence. Gap DATE-TIME and recurrence-generated gap have different RFC semantics, now explicitly preserved.",
+          "evidence": [
+            "E39"
+          ]
+        },
+        {
+          "id": "m02",
+          "critic_lines": [
+            37,
+            39
+          ],
+          "final_lines": [
+            12,
+            75,
+            119
+          ],
+          "judgment": "Accept standards-scope clarification",
+          "reasoning": "RFC TZID/interchange is not an application's mandated IANA database policy; receiving-calendar validation stays conditional.",
+          "evidence": [
+            "E39"
+          ]
+        },
+        {
+          "id": "m03",
+          "critic_lines": [
+            41,
+            43
+          ],
+          "final_lines": [
+            13,
+            51
+          ],
+          "judgment": "Accept example precision",
+          "reasoning": "Pinned OR-Tools sample includes Off in exactly-one; minimum work demand is separate. It is not a rule that every volunteer works each day.",
+          "evidence": [
+            "E22"
+          ]
+        },
+        {
+          "id": "m04",
+          "critic_lines": [
+            45,
+            47,
+            49
+          ],
+          "final_lines": [
+            14,
+            65
+          ],
+          "judgment": "Retain supported chain and boundaries",
+          "reasoning": "Issue/merged quickstart/cast fix links and patches support the evolution. No runtime, production incident or universal fairness policy is inferred.",
+          "evidence": [
+            "E31",
+            "E32",
+            "E33",
+            "E34",
+            "E35"
+          ]
+        }
+      ],
+      "validation_review": {
+        "candidate_lines": [
+          108,
+          110,
+          114,
+          115,
+          116,
+          117,
+          118,
+          119,
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          127,
+          135
+        ],
+        "proposed": "Ordinary week, scarce qualified coverage, absence/preference/overlap, unequal-opportunity fairness, series change/exception/history, distinct DST inputs, swap/cancellation, scoped roster privacy, channel opt-out/timing/content, invalid/duplicate import, accessible mobile tasks, identical vendor scenarios.",
+        "executed": "Only document/source/code/release inspection is claimed. No candidate runtime, trial, solver, import, API, delivery, performance or accessibility witness.",
+        "discrimination": "Shortages must show gaps rather than forced invalid assignments; preferences and hard absences differ; policy/cohort changes expose fairness denominator effects; one-date edits must not mutate neighbors; audience and consent variation reveal disclosure failures. RFC provides a primary oracle for the two different gap input types. Import tests include no/multiple identity matches rather than successful rows only.",
+        "judgment": "Meaningful proposed validation, no validation overclaim. Most expected results depend on selected product policy and correctly remain acceptance proposals. Source inspection establishes mechanisms, not system behavior.",
+        "primary_evidence": [
+          "E16",
+          "E22",
+          "E29",
+          "E39",
+          "E40"
+        ],
+        "execution_limit": "No runnable target/data/account supplied; the brief explicitly accepts honest no-runtime evidence. No test is upgraded because source code or JSON parses."
+      },
+      "grade_limits": [
+        "Static independent assessment against the original small brief and frozen plan.",
+        "Vendor documentation is mutable and has no captured software deployment release; live behavior remains unverified.",
+        "Material finding is specific; other supported work is not erased by FAIL.",
+        "No scalar quality equality, ranking, speed win, runtime result or cost comparison follows from this grade."
+      ]
+    },
+    "N1": {
+      "actual_arm": "treatment",
+      "final_delivery": true,
+      "grade": "FAIL",
+      "grade_basis": "Independent material recurrence finding N1-F01; other axes and available evidence were reviewed fully. This is not a score inferred from citations, agreement, or hashes.",
+      "material_findings": [
+        {
+          "id": "N1-F01",
+          "type": "MATERIALLY_INCOMPLETE",
+          "related_types": [
+            "FALSE_CORRECTION_OR_REJECTION"
+          ],
+          "severity": "Material: directly relevant, available weekly-template and created-shift update evidence is omitted in the core P1 adjudication.",
+          "title": "Enterprise template discussion omits documented Weekly Shift Templates and their update boundary",
+          "candidate_evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                47,
+                124,
+                135,
+                154
+              ]
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/critique.md",
+              "lines": [
+                18,
+                20,
+                22,
+                24
+              ]
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/V03-better-impact-activities.md",
+              "lines": [
+                5,
+                7,
+                8
+              ]
+            }
+          ],
+          "decisive_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "line": 47,
+              "passage": "they do not establish automatic weekly occurrence expansion from a reusable template, nor exception or published-occurrence update semantics."
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "line": 124,
+              "passage": "Automatic expansion, exceptions, and published-occurrence edits remain unverified; those are capability checks and proposed requirements."
+            }
+          ],
+          "original_obligation": "Brief line3 recurring shifts and competing-product investigation; O2 governing behavior/limits, O4 exact P1, O5 supported critique/preservation. Frozen P1 requires generation from a weekly template, not perpetual autonomous expansion.",
+          "primary_evidence": [
+            "E01"
+          ],
+          "reasoning": "The same primary Activities guide has a separate Activity Shifts and Templates section: reusable daily/weekly/monthly Shift Templates, every-X-weeks pattern and Add Multiple Shifts using an existing template. It also states template edits do not change shifts already created, and documents individual/bulk shift edits with existing-signup handling. The final/critic/reviser verification inspect the Enterprise Activity Template object and defer core template-generation/update investigation without reporting these directly relevant documented mechanics. The valid Enterprise-versus-recurrence distinction cannot support leaving these available P1 facts out of the final.",
+          "qualification": "The source is an administrator-triggered workflow; it does not prove an indefinitely extending unattended scheduler, holiday exceptions, identity preservation, actual tier availability or every update choice. If 'automatic' is read narrowly as autonomous continuous expansion, that narrow absence claim may stand. FAIL is based on the omitted documented weekly-template workflow and non-propagation boundary, not a claim that the guide proves unlimited autonomous operation. One underlying omission is counted once.",
+          "primary_sources": [
+            {
+              "id": "E01",
+              "title": "Better Impact Activities",
+              "url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+              "version": "Mutable vendor guide observed 2026-10-09",
+              "locator": "Enterprise Activity Templates; Activity Shifts and Templates → Shift Templates/Create Daily–Weekly/Edit Templates/Add Multiple Shifts/Edit Scheduled Shifts; Backup List",
+              "observation": "Weekly Shift Templates define days/times and every-X-weeks recurrence; Add Multiple Shifts applies an existing template. Editing a template leaves created shifts unchanged. Individual/bulk shift edits address existing signups. Enterprise Activity Templates are a different object. Backup-list filling requires manual notification/assignment.",
+              "access_basis": "Independently retrieved during this assessment; vendor/rolling pages are observed documentation, not a configured-account test."
+            }
+          ]
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N1-m01",
+          "type": "Preservation compression",
+          "candidate_evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/discovery.md",
+              "lines": [
+                21,
+                23,
+                29
+              ]
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/draft.md",
+              "lines": [
+                118
+              ]
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                15,
+                16,
+                29,
+                154
+              ]
+            }
+          ],
+          "primary_evidence": [
+            "E01",
+            "E02",
+            "E05"
+          ],
+          "reasoning": "The final's generic per-shift/plan checks lose the concrete no per-shift leader/location/note and no volunteer signup-count cap findings, the auto-confirm-on default, and Growth/Impact versus Foundation distinction. These are source-supported discovery constraints. I classify the compression as minor here because the final neither asserts these capabilities nor selects a tier, and explicitly retains fit/configuration checks; it reduces self-contained usefulness but is not an independent grade trigger."
+        },
+        {
+          "id": "N1-m02",
+          "type": "Version locator",
+          "candidate_evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources/V07-wcag22.md",
+              "lines": [
+                3,
+                4,
+                5
+              ]
+            }
+          ],
+          "primary_evidence": [
+            "E40"
+          ],
+          "reasoning": "V07 labels the latest WCAG22 alias as the 2023-10-05 publication. The independently opened alias resolves to the 2024-12-12 Recommendation. The color/link criteria cited remain supported and scoped; this is a reproducibility locator defect, not invented compliance."
+        },
+        {
+          "id": "N1-m03",
+          "type": "Citation locator",
+          "candidate_evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                15,
+                154
+              ]
+            }
+          ],
+          "primary_evidence": [
+            "E01",
+            "E02"
+          ],
+          "reasoning": "Line15 attaches only Scheduling S02 to a sentence containing manual waitlist notification/assignment. That behavior is explicit in Activities S01's Backup List section; final line154 also includes S01. The factual conclusion is supported, but the local citation is imprecise."
+        }
+      ],
+      "unresolved": [
+        {
+          "kind": "External product inputs",
+          "detail": "Actual vendor plan/quote, account configuration, target tasks, data terms, end-to-end import/reminder/accessibility and live series exceptions were not exercised. These honest unknowns are not treated as reviewer gaps or factual failures."
+        },
+        {
+          "kind": "User policy",
+          "detail": "Staffing minimum versus target, availability versus acceptance, fairness cohort/metric/weights, peer-name audience, channels, template horizon and published-change policy remain food-bank decisions."
+        },
+        {
+          "kind": "Empirical applicability",
+          "detail": "No 180-volunteer dataset or runtime target; no optimizer quality/latency, independent source regression rerun, or compliance/delivery result established."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "name": "Original obligations and explicit constraints",
+          "coverage": {
+            "status": "FULL",
+            "obligations": [
+              "O1",
+              "O2",
+              "O3",
+              "O4",
+              "O5",
+              "O6"
+            ],
+            "constraints": [
+              "180 volunteers",
+              "changing availability",
+              "recurring shifts",
+              "predictable coverage",
+              "mobile access",
+              "accessible reminders",
+              "privacy-limited sharing",
+              "occasional imported rosters",
+              "no invented law",
+              "no equal availability"
+            ]
+          },
+          "judgment": "Original scope is addressed throughout; central available recurrence investigation fails O2 and affects O4/O5. Other constraints/options are retained; production guarantees are not invented as grading requirements.",
+          "evidence": [
+            "obligation_review",
+            "N1-F01",
+            "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/discovery.md",
+            "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md"
+          ]
+        },
+        {
+          "axis": 2,
+          "name": "Consequential primary facts, defaults, units, versions and applicability",
+          "coverage": {
+            "status": "FULL for relevant consequential claim clusters",
+            "checked_claim_ids": [
+              "N1-C01",
+              "N1-C02",
+              "N1-C03",
+              "N1-C04",
+              "N1-C05",
+              "N1-C06",
+              "N1-C07",
+              "N1-C08",
+              "N1-C09",
+              "N1-C10",
+              "N1-C11",
+              "N1-C12",
+              "N1-C13",
+              "N1-C14",
+              "N1-C15",
+              "N1-C16",
+              "N1-C17",
+              "N1-C18",
+              "N1-C19",
+              "N1-C20",
+              "N1-C21",
+              "N1-C22"
+            ],
+            "remaining_claim_ids": []
+          },
+          "judgment": "Material recurrence defect N1-F01. Other selected product defaults, solver semantics, fairness mechanisms, standards and release applicability are supported or explicitly externally unresolved. See claim-by-claim checks rather than source-count inference.",
+          "evidence": [
+            "N1-C01",
+            "N1-C02",
+            "N1-C03",
+            "N1-C04",
+            "N1-C05",
+            "N1-C06",
+            "N1-C07",
+            "N1-C08",
+            "N1-C09",
+            "N1-C10",
+            "N1-C11",
+            "N1-C12",
+            "N1-C13",
+            "N1-C14",
+            "N1-C15",
+            "N1-C16",
+            "N1-C17",
+            "N1-C18",
+            "N1-C19",
+            "N1-C20",
+            "N1-C21",
+            "N1-C22"
+          ]
+        },
+        {
+          "axis": 3,
+          "name": "Meaningful unfamiliar discovery and optional alternatives",
+          "coverage": {
+            "status": "FULL",
+            "stages": [
+              "discovery",
+              "draft",
+              "final"
+            ],
+            "options": [
+              "Better Impact",
+              "VolunteerLocal",
+              "CP-SAT",
+              "restricted Google API",
+              "custom Timefold",
+              "managed Timefold",
+              "no fairness automation",
+              "multiple fairness measures"
+            ]
+          },
+          "judgment": "Substantive different product/workflow/mechanism routes survive with tradeoffs and policy choices. Roster size does not force optimization. Recurrence understatement/omission is accounted under F01, without erasing the useful discovery.",
+          "evidence": [
+            "preservation_coverage",
+            "clause_review",
+            "primary_coverage.checked_claims"
+          ]
+        },
+        {
+          "axis": 4,
+          "name": "Every exact plan clause and disposition",
+          "coverage": {
+            "status": "FULL",
+            "clauses": [
+              "P1",
+              "P2",
+              "P3",
+              "P4",
+              "P5",
+              "P6"
+            ]
+          },
+          "judgment": "All six clauses are independently adjudicated. P2/P4 rejection responds to the brief; P3 retention and P6 enlargement are reasonable; P5 preserves intended local civil time with qualified representation. P1 is retained but its product evidence is defective. Added semantics are not treated as facts asserted by the thin plan.",
+          "evidence": [
+            "clause_review",
+            "N1-F01"
+          ]
+        },
+        {
+          "axis": 5,
+          "name": "Draft/critique/final preservation and fallible criticism",
+          "coverage": {
+            "status": "FULL",
+            "stages": [
+              "complete discovery",
+              "complete draft",
+              "complete critique",
+              "complete final",
+              "stage source maps",
+              "stage source indexes/notes"
+            ],
+            "critic_items": [
+              "M1",
+              "M2",
+              "M3",
+              "M4",
+              "M5",
+              "M6"
+            ],
+            "unread_stage_scope": []
+          },
+          "judgment": "Full prose preserves/expands fairness and workflow options; M2–M6 are supported refinements or retained evidence, not proof the draft had six independent defects. M1 misses Shift Template evidence; minor concrete constraint compression is separately recorded.",
+          "evidence": [
+            "criticism_review",
+            "preservation_coverage",
+            "N1-F01",
+            "N1-m01",
+            "N1-m02",
+            "N1-m03"
+          ]
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed versus executed validation",
+          "coverage": {
+            "status": "FULL",
+            "matrix": "all rows and surrounding execution statements read",
+            "independent_oracles": "source semantics checked where claimed; selected-policy acceptance outcomes remain proposals"
+          },
+          "judgment": "Proposed tests discriminate consequential failures and policies; none is claimed executed. Versioned source regression assertions support an implementation/evolution chain without establishing target behavior or a runtime witness.",
+          "evidence": [
+            "validation_review",
+            "E01",
+            "E25",
+            "E26",
+            "E27",
+            "E28",
+            "E36",
+            "E40"
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "id": "N1-C01",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                16,
+                47,
+                124,
+                135,
+                154
+              ]
+            },
+            "statement": "Better Impact recurrence/template generation and change semantics characterized as unestablished.",
+            "judgment": "MATERIAL DEFECT N1-F01: Enterprise Activity Templates are correctly distinguished, but the same guide's Weekly Shift Templates, Add Multiple Shifts and non-propagating template edit behavior are omitted.",
+            "primary_evidence": [
+              "E01"
+            ]
+          },
+          {
+            "id": "N1-C02",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                15,
+                29,
+                154
+              ]
+            },
+            "statement": "Better Impact signup/assignment/confirmation, overlap override and manual waitlist.",
+            "judgment": "Supported. Manual backup-list behavior is established by Activities even though final line15 points only to Scheduling; see minor locator N1-m03. Auto-confirm default is lost from final (N1-m01).",
+            "primary_evidence": [
+              "E01",
+              "E02"
+            ]
+          },
+          {
+            "id": "N1-C03",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                15,
+                90,
+                92,
+                94,
+                126
+              ]
+            },
+            "statement": "Better Impact volunteer roster anonymity and administrator limitation.",
+            "judgment": "Supported within peer-name setting; broader authenticated access/forwarding controls remain unknown. Full-roster email rejection is tied to the brief, not an invented law.",
+            "primary_evidence": [
+              "E02"
+            ]
+          },
+          {
+            "id": "N1-C04",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                23,
+                29,
+                154
+              ]
+            },
+            "statement": "General Availability and visibility are not universal hard assignment constraints.",
+            "judgment": "Supported; available profile fields alone do not establish accepted commitment or hard feasibility. Chosen constraint semantics remain a decision.",
+            "primary_evidence": [
+              "E01",
+              "E03"
+            ]
+          },
+          {
+            "id": "N1-C05",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                39,
+                164
+              ]
+            },
+            "statement": "Better Impact XLSX/UserData/ordered columns/region dates/import fee caveats.",
+            "judgment": "Supported; real import/update process and pricing remain untested. Occasional rather than frequent import is the brief requirement.",
+            "primary_evidence": [
+              "E04"
+            ]
+          },
+          {
+            "id": "N1-C06",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                16,
+                29,
+                154
+              ]
+            },
+            "statement": "Better Impact feature tiers and per-shift model limits.",
+            "judgment": "Final acknowledges limits but compresses concrete supported restrictions and plan distinction to generic checks; recorded separately as minor preservation loss N1-m01.",
+            "primary_evidence": [
+              "E01",
+              "E05"
+            ]
+          },
+          {
+            "id": "N1-C07",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                39,
+                164
+              ]
+            },
+            "statement": "February2026 accessibility release claim, not audit.",
+            "judgment": "Supported by dated release; final does not assert WCAG compliance. Scheduled-email feature remains an optional discovery lead, not an obligation to implement timed outgoing campaigns.",
+            "primary_evidence": [
+              "E06"
+            ]
+          },
+          {
+            "id": "N1-C08",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                31,
+                49,
+                156
+              ]
+            },
+            "statement": "VolunteerLocal jobs/shift forms, qualifications and event orientation; no documented weekly recurrence.",
+            "judgment": "Supported within reviewed feature page. The absence claim is page-bounded and does not declare no such feature exists anywhere.",
+            "primary_evidence": [
+              "E09"
+            ]
+          },
+          {
+            "id": "N1-C09",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                31,
+                156
+              ]
+            },
+            "statement": "VolunteerLocal optional mobile app, email/SMS reminders and no-password special links.",
+            "judgment": "Supported feature claims, appropriately separated from unverified security/accessibility/import fit. Mobile control options are documented.",
+            "primary_evidence": [
+              "E10",
+              "E11",
+              "E12"
+            ]
+          },
+          {
+            "id": "N1-C10",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                17,
+                35,
+                160
+              ]
+            },
+            "statement": "Google employee-service domain, trusted testers/API key.",
+            "judgment": "Supported; no account access or API use claimed.",
+            "primary_evidence": [
+              "E24"
+            ]
+          },
+          {
+            "id": "N1-C11",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                35,
+                125,
+                139,
+                140
+              ]
+            },
+            "statement": "Google default priorities, explicit mandatory mapping, non-feasible/empty status handling.",
+            "judgment": "Supported by REST v1. Hard rules must be chosen and serialized explicitly. Low/medium defaults are not volunteer policy.",
+            "primary_evidence": [
+              "E25"
+            ]
+          },
+          {
+            "id": "N1-C12",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                17,
+                35
+              ]
+            },
+            "statement": "Google integer minutes/counts, [start,end), default one-minute non-hard timeout.",
+            "judgment": "Supported for scheduling fields; resource-usage quantities are distinct, and final does not claim all API quantities are integers.",
+            "primary_evidence": [
+              "E25"
+            ]
+          },
+          {
+            "id": "N1-C13",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                102,
+                104,
+                106,
+                127,
+                136
+              ]
+            },
+            "statement": "Civil recurrence, zone/instant representation and tzdb update decision.",
+            "judgment": "Supported by DateTime/TimeZone documentation. Published versus future update policy is a proposed product choice, not dictated by Google.",
+            "primary_evidence": [
+              "E26"
+            ]
+          },
+          {
+            "id": "N1-C14",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                18,
+                33,
+                158
+              ]
+            },
+            "statement": "OR-Tools v9.15 Boolean/fixed/sequence/weekly sum/request/coverage/integer objective patterns.",
+            "judgment": "Supported by pinned example and official documentation. Not called a benchmark or deployed solution for 180 volunteers.",
+            "primary_evidence": [
+              "E21",
+              "E22",
+              "E23"
+            ]
+          },
+          {
+            "id": "N1-C15",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                27,
+                33
+              ]
+            },
+            "statement": "Fairness score dimensionless, six decimals, same-dataset comparison and precision-aware scoring.",
+            "judgment": "Supported by Solver fairness docs. Scaled integer retuning is preserved; load measure/cohort choice is not outsourced to a score.",
+            "primary_evidence": [
+              "E27"
+            ]
+          },
+          {
+            "id": "N1-C16",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                19,
+                27,
+                37,
+                160
+              ]
+            },
+            "statement": "Timefold managed FTE-adjusted minutes versus custom Solver library.",
+            "judgment": "Supported distinction. Managed model's metric is not a volunteer fairness default.",
+            "primary_evidence": [
+              "E29",
+              "E30"
+            ]
+          },
+          {
+            "id": "N1-C17",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                37,
+                82,
+                142
+              ]
+            },
+            "statement": "Pinning versus soft change penalty for published commitments.",
+            "judgment": "Supported by replanning docs; policy for releasing commitments remains explicit. Pinning itself is not a guarantee of full system history or user consent.",
+            "primary_evidence": [
+              "E28"
+            ]
+          },
+          {
+            "id": "N1-C18",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                129,
+                168,
+                170
+              ]
+            },
+            "statement": "Timefold2596 stale cached score, three overloads/regression/exception path/custom applicability.",
+            "judgment": "Supported by actual diff and tests, not just PR summary. No independent execution claimed.",
+            "primary_evidence": [
+              "E36"
+            ]
+          },
+          {
+            "id": "N1-C19",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                168,
+                170
+              ]
+            },
+            "statement": "2596→98bb88e→v2.6.0/7b8284c and separate v2.7.1/04d17fc large-dataset fix.",
+            "judgment": "Supported by releases and public API timestamps. No inference that 180 volunteers triggers the separate performance issue.",
+            "primary_evidence": [
+              "E37",
+              "E38"
+            ]
+          },
+          {
+            "id": "N1-C20",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                128,
+                145,
+                146
+              ]
+            },
+            "statement": "Reminder accessibility oracle, linked HTML criteria, SMS content distinction.",
+            "judgment": "Supported web references; content checks are proposed and do not invent a legal mandate or claim SMS WCAG conformance.",
+            "primary_evidence": [
+              "E40"
+            ]
+          },
+          {
+            "id": "N1-C21",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                23,
+                25,
+                27,
+                57,
+                59,
+                61,
+                63,
+                65,
+                67,
+                69,
+                71,
+                76,
+                78,
+                80,
+                96,
+                98,
+                162
+              ]
+            },
+            "statement": "Unequal opportunity/count/hours/effort/capacity/undesirable-work policies; alphabetical rejection; coordinator baseline; swap and audience choices.",
+            "judgment": "Brief-grounded inference and proposed options. Alternatives include no fairness optimization, and availability is distinct from acceptance. No equal-availability premise.",
+            "primary_evidence": []
+          },
+          {
+            "id": "N1-C22",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+              "lines": [
+                135,
+                136,
+                137,
+                138,
+                139,
+                140,
+                141,
+                142,
+                143,
+                144,
+                145,
+                146,
+                147,
+                148,
+                175,
+                179,
+                182
+              ]
+            },
+            "statement": "Validation matrix and execution claims.",
+            "judgment": "Fourteen meaningful proposed cases discriminate policy and configuration. Research retrieval is correctly separate from runtime, delivery, privacy, import, accessibility or performance proof.",
+            "primary_evidence": [
+              "E01",
+              "E02",
+              "E25",
+              "E26",
+              "E27",
+              "E28",
+              "E36",
+              "E40"
+            ]
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "completion_definition": "All consequential claim clusters, negative applicability claims, source defaults/units/domain, evolution chain and per-P conclusions in the complete supplied artifacts were reviewed. Complete means relevant assessment evidence, not exhaustive vendor catalog research or live account certification.",
+        "external_validation_remaining": "Trials and execution proposed by candidates remain external validation work, not unreviewed scientific claims."
+      },
+      "preservation_coverage": {
+        "coverage": "Complete reading of discovery, draft, critique, final, all six assigned stage inputs and source maps/indexes, and all unique source-note bodies; inherited duplicate notes verified byte-identical.",
+        "transitions": [
+          {
+            "topic": "Product and implementation options",
+            "judgment": "Preserved/expanded",
+            "detail": "Suite signup, event/job product, CP-SAT, restricted API, custom/managed Solver and no-automation pilot appear in full prose (29–37,152–164)."
+          },
+          {
+            "topic": "Hard/soft mapping and availability/consent",
+            "judgment": "Preserved and sharpened",
+            "detail": "Explicit mandatory serialization and status checks connect existing API defaults to chosen hard policy. Availability does not equal accepted commitment (23–35,55–71)."
+          },
+          {
+            "topic": "Fairness options and precision",
+            "judgment": "Preserved",
+            "detail": "Discovery's counts/hours/effort/opportunity/undesirable work and no-optimizer routes are expanded beyond the thinner draft. Dataset precision, tiny denominator, zero assignments and retuning remain explicit (27,33,162)."
+          },
+          {
+            "topic": "Vendor constraints/defaults",
+            "judgment": "Minor compression",
+            "detail": "Exact per-shift restrictions, auto-confirm default and tier names disappear into generic capability/configuration checks (N1-m01); no contrary capability is asserted."
+          },
+          {
+            "topic": "Recurrence and critiques",
+            "judgment": "Material omission in adjudication",
+            "detail": "Enterprise distinction is introduced as a corrective premise while available Shift Template creation/non-propagation evidence is unreported (F01). Stable IDs and broader exceptions correctly remain proposals."
+          },
+          {
+            "topic": "Published changes and zones",
+            "judgment": "Preserved/expanded",
+            "detail": "Pinning versus cost, atomic swaps and confirmation survive; future tzdb/site-zone decisions and tests are added (37,74–84,100–108,127,136,142)."
+          },
+          {
+            "topic": "Privacy, mobile, imports and reminders",
+            "judgment": "Preserved/expanded",
+            "detail": "Peer anonymity, channel/link unknowns and import format/cost caveats remain; actual email/SMS audience/content checks are added alongside mobile web checks (31,39,86–98,143–147,164)."
+          },
+          {
+            "topic": "Evolution, validation and limitations",
+            "judgment": "Preserved",
+            "detail": "Custom score fix/release chain, separate performance release and lack of independent reproduction persist; all fourteen rows are proposed, not run (129–182)."
+          }
+        ],
+        "material_loss_or_distortion": [
+          "N1-F01"
+        ],
+        "unread_stage_scope": []
+      },
+      "obligation_review": [
+        {
+          "id": "O1",
+          "judgment": "Satisfied",
+          "evidence": [
+            "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/discovery.md",
+            "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md"
+          ],
+          "reasoning": "Better Impact, event/job-oriented VolunteerLocal, CP-SAT, restricted Google hosted API, custom/managed Timefold and no-optimization pilot are useful unfamiliar alternatives."
+        },
+        {
+          "id": "O2",
+          "judgment": "Material defect",
+          "evidence": [
+            "N1-F01",
+            "N1-C01"
+          ],
+          "reasoning": "Relevant units/defaults/domain and version checks were substantially performed, but central available recurrence evidence is mischaracterized or omitted. General uncertainty does not excuse that specific available research."
+        },
+        {
+          "id": "O3",
+          "judgment": "Satisfied with static-source limits",
+          "evidence": [
+            "E36",
+            "E37",
+            "E38"
+          ],
+          "reasoning": "Custom temporary-score restoration fix/tests→merged revision→v2.6.0 release and separate v2.7.1 performance change are supported and conditionally applicable."
+        },
+        {
+          "id": "O4",
+          "judgment": "All six clauses covered; P1 evidence defect",
+          "evidence": [
+            "clause_review",
+            "N1-F01"
+          ],
+          "reasoning": "Every exact P sentence is retained in the candidate comparison. Retention, rejection, enhancement, open decisions and uncertainty are distinguished in substance. P1 source characterization remains defective; no wholesale false rejection of weekly recurrence is inferred."
+        },
+        {
+          "id": "O5",
+          "judgment": "Broad preservation with core recurrence omission and minor compression",
+          "evidence": [
+            "preservation_coverage",
+            "criticism_review",
+            "N1-F01"
+          ],
+          "reasoning": "Final is full standalone prose, not an ID list. Supported alternatives, uneven availability, privacy/reminder/import/mobile conditions and most critic qualifications remain visible. The recurrence evidence/criticism issue prevents full quality; remaining preservation details are itemized."
+        },
+        {
+          "id": "O6",
+          "judgment": "Satisfied; proposals not executed",
+          "evidence": [
+            "validation_review"
+          ],
+          "reasoning": "Synthetic scenarios distinguish policy, constraint and product behaviors. Literature/code inspection is separated from runtime, imports, message delivery and accessibility results. No execution was required or fabricated."
+        }
+      ],
+      "clause_review": [
+        {
+          "clause": "P1",
+          "exact_text": "Generate recurring shifts from a weekly template.",
+          "candidate_lines": [
+            43,
+            45,
+            47,
+            49,
+            51,
+            53
+          ],
+          "disposition": "Retain candidate workflow; semantics and capability checks",
+          "judgment": "No unjustified wholesale rejection. Material available evidence is omitted (N1-F01); a hypothetical perpetual autonomous generator is not the frozen requirement.",
+          "primary_evidence": [
+            "E01",
+            "E09"
+          ]
+        },
+        {
+          "clause": "P2",
+          "exact_text": "Assign the first available volunteer alphabetically.",
+          "candidate_lines": [
+            55,
+            57,
+            59,
+            61,
+            63,
+            65,
+            67,
+            69,
+            71
+          ],
+          "disposition": "Reject alphabetical allocation; retain bounded tie-breaking possibilities; choose policy",
+          "judgment": "Reasoned fairness/coverage response. Explicit mandatory mapping fixes real default-policy risk, while availability versus consent and no optimization remain valid alternatives.",
+          "primary_evidence": [
+            "E22",
+            "E25",
+            "E27",
+            "E29"
+          ]
+        },
+        {
+          "clause": "P3",
+          "exact_text": "Allow coordinators to swap names.",
+          "candidate_lines": [
+            74,
+            76,
+            78,
+            80,
+            82,
+            84
+          ],
+          "disposition": "Retain; revalidate, accept/commit atomically, notify; overrides open",
+          "judgment": "Appropriate safeguards and decisions, supported as design proposals. Pinning versus change cost is correctly separated.",
+          "primary_evidence": [
+            "E02",
+            "E28"
+          ]
+        },
+        {
+          "clause": "P4",
+          "exact_text": "Email everyone the full roster.",
+          "candidate_lines": [
+            86,
+            88,
+            90,
+            92,
+            94,
+            96,
+            98
+          ],
+          "disposition": "Reject unconditional full-roster email; decide same-shift/broader audiences",
+          "judgment": "Privacy-limited sharing retained without invented law; anonymity control does not prove complete authentication/forwarding safety.",
+          "primary_evidence": [
+            "E02",
+            "E12"
+          ]
+        },
+        {
+          "clause": "P5",
+          "exact_text": "Use local wall-clock timestamps.",
+          "candidate_lines": [
+            100,
+            102,
+            104,
+            106,
+            108
+          ],
+          "disposition": "Revise representation; preserve local recurrence plus zone/instant; update policy open",
+          "judgment": "Correct conditional enhancement. Named civil rule and occurrence instant solve different purposes; future zone-rule changes legitimately require a product decision.",
+          "primary_evidence": [
+            "E26"
+          ]
+        },
+        {
+          "clause": "P6",
+          "exact_text": "Test one ordinary week.",
+          "candidate_lines": [
+            110,
+            112,
+            114,
+            116,
+            118
+          ],
+          "disposition": "Keep ordinary-week smoke; add discriminating cases",
+          "judgment": "Supported expanded validation, not an empirical promise or inappropriate rejection of ordinary testing.",
+          "primary_evidence": [
+            "E25",
+            "E26",
+            "E27",
+            "E40"
+          ]
+        }
+      ],
+      "criticism_review": [
+        {
+          "id": "M1",
+          "critic_lines": [
+            18,
+            20,
+            22,
+            24
+          ],
+          "final_lines": [
+            47,
+            124,
+            135
+          ],
+          "judgment": "Partially accept distinction; reject omission of available Shift Template evidence",
+          "reasoning": "Enterprise Activity Templates are distinct and do not alone prove recurrence. However, the same guide directly documents Weekly Shift Templates, multi-shift creation and non-propagating template edits. Frozen P1 does not demand perpetual unattended expansion. N1-F01 is a source omission rather than a blanket claim that every exception behavior is documented.",
+          "evidence": [
+            "E01",
+            "E09"
+          ]
+        },
+        {
+          "id": "M2",
+          "critic_lines": [
+            26,
+            28
+          ],
+          "final_lines": [
+            35,
+            125,
+            139,
+            140
+          ],
+          "judgment": "Accept explicit implementation mapping; defaults already present in draft",
+          "reasoning": "Default medium/low fields can soften intended hard policy; final explicitly sets mandatory and rejects unsuccessful/empty output. This is a useful connection, not proof that draft incorrectly stated defaults or that a solver was run.",
+          "evidence": [
+            "E25"
+          ]
+        },
+        {
+          "id": "M3",
+          "final_lines": [
+            90,
+            92,
+            94,
+            96,
+            98,
+            126,
+            143,
+            144
+          ],
+          "judgment": "Accept finer audience distinction as refinement",
+          "reasoning": "Rejecting unconditional broad email is appropriate. Same-shift peers, coordinators and wider audiences are separate user decisions; source privacy control is accurately limited to peer-name visibility.",
+          "evidence": [
+            "E02",
+            "E12"
+          ]
+        },
+        {
+          "id": "M4",
+          "final_lines": [
+            102,
+            104,
+            106,
+            127,
+            136
+          ],
+          "judgment": "Accept missing policy/test case as enhancement",
+          "reasoning": "DateTime explicitly warns that stored future civil dates may be affected by zone changes. It does not dictate published/unpublished handling; final preserves the decision and proposes a discriminator.",
+          "evidence": [
+            "E26"
+          ]
+        },
+        {
+          "id": "M5",
+          "final_lines": [
+            128,
+            144,
+            145,
+            146
+          ],
+          "judgment": "Accept actual-message oracle and scope",
+          "reasoning": "Brief explicitly requires accessible reminders. Final inspects actual message content/actions rather than only a web screen and keeps HTML criteria separate from SMS content and law.",
+          "evidence": [
+            "E40"
+          ]
+        },
+        {
+          "id": "M6",
+          "final_lines": [
+            129,
+            168,
+            170
+          ],
+          "judgment": "Retain supported chain with applicability limits",
+          "reasoning": "Actual diff/test assertions and release inclusion support the score-restoration defect and change; custom-path scope and independent-reproduction absence are accurately retained.",
+          "evidence": [
+            "E36",
+            "E37",
+            "E38"
+          ]
+        }
+      ],
+      "validation_review": {
+        "candidate_lines": [
+          131,
+          135,
+          136,
+          137,
+          138,
+          139,
+          140,
+          141,
+          142,
+          143,
+          144,
+          145,
+          146,
+          147,
+          148,
+          150,
+          175,
+          179,
+          182
+        ],
+        "proposed": "Fourteen rows cover recurrence; DST/zone updates; eligibility; overlap/capacity; name-order/mandatory serialization; shortage/status; swap; pinning/stability; audiences/links; reminder privacy; actual reminder accessibility; mobile/assistive tasks; bad imports; fairness cohort diagnostics.",
+        "executed": "Literature/source inspection only. The candidate explicitly denies solver output, trial, import, integration, accessibility and delivery tests.",
+        "discrimination": "Serialized hard-rule priorities and empty/non-feasible response handling distinguish default softening from chosen hard policy. Unequal-availability and reordered-name cases reveal policy dependence. Swaps test ineligibility and unaccepted offers; forwarded links/shared devices probe audience assumptions. Reminder content is examined separately from portal UI. Source regression assertions distinguish temporary score from restored value/score, including failure path, but are not independently rerun.",
+        "judgment": "Meaningful proposals with explicit oracles; no validation overclaim. Recurrence test framing inherits F01's available-research omission, but unexecuted live-product questions themselves remain honest.",
+        "primary_evidence": [
+          "E01",
+          "E25",
+          "E26",
+          "E27",
+          "E28",
+          "E36",
+          "E40"
+        ],
+        "execution_limit": "No target application/account/data is available. Static regression inspection does not establish a deployment, 180-volunteer latency or accessibility conformance."
+      },
+      "grade_limits": [
+        "Static independent assessment against the original small brief and frozen plan.",
+        "Vendor documentation is mutable and has no captured software deployment release; live behavior remains unverified.",
+        "Material finding is specific; other supported work is not erased by FAIL.",
+        "No scalar quality equality, ranking, speed win, runtime result or cost comparison follows from this grade."
+      ]
+    }
+  },
+  "method_clues": {
+    "blinding": "Partial only",
+    "neutral_to_actual": {
+      "N2": "control",
+      "N1": "treatment"
+    },
+    "observed": "Paths and stage labels expose actual arms; treatment research draft explicitly identifies M02 progressive retrieval. I did not treat method labels, source counts, native claims or critic agreement as evidence of correctness.",
+    "independence": "Fresh review of original obligations and primary sources. No premium reference, other evaluation, nested reviewer or candidate feedback."
+  },
+  "comparative_quality_eligible": false,
+  "comparative_conclusion": "Two independent failures do not establish equal quality. No comparative speed/cost winner or ranking is assigned.",
+  "scope_limits": [
+    "Only the exact assigned S08 original brief/frozen plan, two A-M02-B frozen arms and declared source roots, rubric and reviewer assignment/map were used as candidate evidence. No campaign, other case/evaluation or provider-private data was read.",
+    "All complete stage prose and unique note bodies were read; inherited duplicate notes were verified identical. Hash validation protects provenance and is not a scientific quality test.",
+    "Initial mandatory workspace orientation read Plans/00-plans-index.md and a read-only git status; neither was used as scientific evidence. No repository, Git, account, configuration or service mutation occurred.",
+    "No candidate repair, scientific feedback, worker, browser trial, solver execution, application/API account operation or downloaded executable.",
+    "Public help/marketing, official documentation, source patches/diffs, issue/PR records and releases were independently retrieved. No content instruction from sources was followed.",
+    "Mutable-page observations cannot certify future contents or configured behavior. Release dates were checked through public GitHub API in addition to release/PR pages.",
+    "Relevant primary assessment coverage is complete; live/product/runtime validation remains unperformed and explicitly bounded. No full quality pass is claimed.",
+    "Both grades are FAIL on separately demonstrated defects. Comparative quality eligibility is false; neither equality nor a faster-FAIL winner is inferred."
+  ],
+  "evaluation_started_at": "2026-10-09T19:26:18Z",
+  "evaluation_started_at_basis": "First retained authoritative native activation timestamp. Startup assignment/input reading began earlier; that exact earlier wall-clock start is not retained. Deadline includes startup.",
+  "evaluation_completed_at": "2026-10-09T19:43:24Z",
+  "evaluation_completed_at_basis": "Scientific judgments finalized before artifact serialization, mechanical read-back and native completion.",
+  "observed_source_operations": [
+    {
+      "retrieval_batch": 1,
+      "url": "https://developers.google.com/optimization/service/reference/rest/v1/scheduling/solveShiftScheduling",
+      "operation": {
+        "type": "open",
+        "target_url": "https://developers.google.com/optimization/service/reference/rest/v1/scheduling/solveShiftScheduling",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 1,
+      "url": "https://developers.google.com/optimization/service/reference/rest/v1/DateTime",
+      "operation": {
+        "type": "open",
+        "target_url": "https://developers.google.com/optimization/service/reference/rest/v1/DateTime",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 1,
+      "url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/employee-resource-constraints/fairness/balance-time-worked",
+      "operation": {
+        "type": "open",
+        "target_url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/employee-resource-constraints/fairness/balance-time-worked",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 1,
+      "url": "https://www.volgistics.com/help/schedule/edit-a-schedule-entry-or-remove-a-scheduled-volunteer/",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volgistics.com/help/schedule/edit-a-schedule-entry-or-remove-a-scheduled-volunteer/",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 2,
+      "url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/employee-resource-constraints/fairness/balance-time-worked",
+      "operation": {
+        "type": "find",
+        "target_url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/employee-resource-constraints/fairness/balance-time-worked",
+        "pattern": "0.001"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 2,
+      "url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/employee-resource-constraints/fairness/balance-time-worked",
+      "operation": {
+        "type": "find",
+        "target_url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/employee-resource-constraints/fairness/balance-time-worked",
+        "pattern": "standard deviation"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 2,
+      "url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/employee-resource-constraints/fairness/balance-time-worked",
+      "operation": {
+        "type": "find",
+        "target_url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/employee-resource-constraints/fairness/balance-time-worked",
+        "pattern": "ALL"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 2,
+      "url": "https://www.volgistics.com/help/schedule/edit-a-schedule-entry-or-remove-a-scheduled-volunteer/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volgistics.com/help/schedule/edit-a-schedule-entry-or-remove-a-scheduled-volunteer/",
+        "pattern": "Regular"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 2,
+      "url": "https://developers.google.com/optimization/service/reference/rest/v1/DateTime",
+      "operation": {
+        "type": "find",
+        "target_url": "https://developers.google.com/optimization/service/reference/rest/v1/DateTime",
+        "pattern": "time"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 3,
+      "url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+      "operation": {
+        "type": "open",
+        "target_url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 3,
+      "url": "https://support.betterimpact.com/en/articles/13192494-comprehensive-guide-to-scheduling",
+      "operation": {
+        "type": "open",
+        "target_url": "https://support.betterimpact.com/en/articles/13192494-comprehensive-guide-to-scheduling",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 3,
+      "url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/load-balancing-and-fairness",
+      "operation": {
+        "type": "open",
+        "target_url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/load-balancing-and-fairness",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 3,
+      "url": "https://github.com/TimefoldAI/timefold-solver/pull/2596",
+      "operation": {
+        "type": "open",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/pull/2596",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 4,
+      "url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/user-guide/constraints",
+      "operation": {
+        "type": "open",
+        "target_url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/user-guide/constraints",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 4,
+      "url": "https://www.rfc-editor.org/rfc/rfc5545.html",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.rfc-editor.org/rfc/rfc5545.html",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 4,
+      "url": "https://support.betterimpact.com/en/articles/13192494-comprehensive-guide-to-scheduling",
+      "operation": {
+        "type": "find",
+        "target_url": "https://support.betterimpact.com/en/articles/13192494-comprehensive-guide-to-scheduling",
+        "pattern": "waitlist"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 4,
+      "url": "https://support.betterimpact.com/en/articles/13192494-comprehensive-guide-to-scheduling",
+      "operation": {
+        "type": "find",
+        "target_url": "https://support.betterimpact.com/en/articles/13192494-comprehensive-guide-to-scheduling",
+        "pattern": "override"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 4,
+      "url": "https://support.betterimpact.com/en/articles/13192494-comprehensive-guide-to-scheduling",
+      "operation": {
+        "type": "find",
+        "target_url": "https://support.betterimpact.com/en/articles/13192494-comprehensive-guide-to-scheduling",
+        "pattern": "default"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 4,
+      "url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/load-balancing-and-fairness",
+      "operation": {
+        "type": "find",
+        "target_url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/load-balancing-and-fairness",
+        "pattern": "dimensionless"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 4,
+      "url": "https://github.com/TimefoldAI/timefold-solver/pull/2596",
+      "operation": {
+        "type": "find",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/pull/2596",
+        "pattern": "custom"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 5,
+      "url": "https://raw.githubusercontent.com/google/or-tools/551ad10d94835c99e5e1e684500d3db398c0e345/examples/python/shift_scheduling_sat.py",
+      "operation": {
+        "type": "open",
+        "target_url": "https://raw.githubusercontent.com/google/or-tools/551ad10d94835c99e5e1e684500d3db398c0e345/examples/python/shift_scheduling_sat.py",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 5,
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts/commit/77b1c335ce47c2026ba2873a646582cfbc091d58.patch",
+      "operation": {
+        "type": "open",
+        "target_url": "https://github.com/TimefoldAI/timefold-quickstarts/commit/77b1c335ce47c2026ba2873a646582cfbc091d58.patch",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 5,
+      "url": "https://github.com/TimefoldAI/timefold-solver/commit/d6546cc9720df0578c67ec91956ca7a46eaf36c8.patch",
+      "operation": {
+        "type": "open",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/commit/d6546cc9720df0578c67ec91956ca7a46eaf36c8.patch",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 5,
+      "url": "https://github.com/TimefoldAI/timefold-solver/pull/2596/files",
+      "operation": {
+        "type": "open",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/pull/2596/files",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 6,
+      "url": "https://www.volgistics.com/help/schedule/schedule-overview/",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volgistics.com/help/schedule/schedule-overview/",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 6,
+      "url": "https://www.volgistics.com/help/schedule/getting-started-with-self-scheduling/",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volgistics.com/help/schedule/getting-started-with-self-scheduling/",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 6,
+      "url": "https://www.volgistics.com/help/schedule/self-scheduling-settings-for-vicnet-and-victouch/",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volgistics.com/help/schedule/self-scheduling-settings-for-vicnet-and-victouch/",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 6,
+      "url": "https://www.volgistics.com/help/vicnet-portal/volunteer-privacy-settings/",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volgistics.com/help/vicnet-portal/volunteer-privacy-settings/",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 6,
+      "url": "https://www.volgistics.com/help/volunteer-records/import-volunteer-records/",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volgistics.com/help/volunteer-records/import-volunteer-records/",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 6,
+      "url": "https://support.betterimpact.com/en/articles/8368729-importing-user-profiles",
+      "operation": {
+        "type": "open",
+        "target_url": "https://support.betterimpact.com/en/articles/8368729-importing-user-profiles",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 7,
+      "url": "https://www.volgistics.com/help/schedule/add-schedule-openings/",
+      "operation": {
+        "type": "click",
+        "target_url": "https://www.volgistics.com/help/schedule/add-schedule-openings/"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 7,
+      "url": "https://www.volgistics.com/help/schedule/edit-a-schedule-opening/",
+      "operation": {
+        "type": "click",
+        "target_url": "https://www.volgistics.com/help/schedule/edit-a-schedule-opening/"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 7,
+      "url": "https://www.volgistics.com/help/schedule/schedule-overview/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volgistics.com/help/schedule/schedule-overview/",
+        "pattern": "Coordinators cannot"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 7,
+      "url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+      "operation": {
+        "type": "find",
+        "target_url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+        "pattern": "Recurring Pattern"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 7,
+      "url": "https://support.betterimpact.com/en/articles/13192494-comprehensive-guide-to-scheduling",
+      "operation": {
+        "type": "find",
+        "target_url": "https://support.betterimpact.com/en/articles/13192494-comprehensive-guide-to-scheduling",
+        "pattern": "waiting list"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 8,
+      "url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+      "operation": {
+        "type": "find",
+        "target_url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+        "pattern": "Shift Templates"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 8,
+      "url": "https://support.betterimpact.com/en/articles/13192494-comprehensive-guide-to-scheduling",
+      "operation": {
+        "type": "find",
+        "target_url": "https://support.betterimpact.com/en/articles/13192494-comprehensive-guide-to-scheduling",
+        "pattern": "Wait"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 8,
+      "url": "https://www.volgistics.com/help/schedule/add-schedule-openings/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volgistics.com/help/schedule/add-schedule-openings/",
+        "pattern": "Regular"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 8,
+      "url": "https://www.volgistics.com/help/schedule/edit-a-schedule-opening/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volgistics.com/help/schedule/edit-a-schedule-opening/",
+        "pattern": "regular"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 8,
+      "url": "https://www.volgistics.com/help/schedule/schedule-overview/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volgistics.com/help/schedule/schedule-overview/",
+        "pattern": "not able"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 9,
+      "url": "https://www.volgistics.com/help/schedule/getting-started-with-self-scheduling/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volgistics.com/help/schedule/getting-started-with-self-scheduling/",
+        "pattern": "default"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 9,
+      "url": "https://www.volgistics.com/help/schedule/self-scheduling-settings-for-vicnet-and-victouch/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volgistics.com/help/schedule/self-scheduling-settings-for-vicnet-and-victouch/",
+        "pattern": "12"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 9,
+      "url": "https://www.volgistics.com/help/vicnet-portal/volunteer-privacy-settings/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volgistics.com/help/vicnet-portal/volunteer-privacy-settings/",
+        "pattern": "filled"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 9,
+      "url": "https://www.volgistics.com/help/volunteer-records/import-volunteer-records/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volgistics.com/help/volunteer-records/import-volunteer-records/",
+        "pattern": "existing"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 9,
+      "url": "https://support.betterimpact.com/en/articles/8368729-importing-user-profiles",
+      "operation": {
+        "type": "find",
+        "target_url": "https://support.betterimpact.com/en/articles/8368729-importing-user-profiles",
+        "pattern": "UserData"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 9,
+      "url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/user-guide/constraints",
+      "operation": {
+        "type": "find",
+        "target_url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/user-guide/constraints",
+        "pattern": "1,000,000,000,000"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 10,
+      "url": "https://www.betterimpact.com/solutions-volunteer-impact?hsCtaAttrib=171143047728",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.betterimpact.com/solutions-volunteer-impact?hsCtaAttrib=171143047728",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 10,
+      "url": "https://siteguide.betterimpact.com/en/articles/9893058-navigating-the-app-and-mobile-interface",
+      "operation": {
+        "type": "open",
+        "target_url": "https://siteguide.betterimpact.com/en/articles/9893058-navigating-the-app-and-mobile-interface",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 10,
+      "url": "https://support.betterimpact.com/en/articles/12585658-comprehensive-guide-to-user-profiles",
+      "operation": {
+        "type": "open",
+        "target_url": "https://support.betterimpact.com/en/articles/12585658-comprehensive-guide-to-user-profiles",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 10,
+      "url": "https://www.volunteerlocal.com/features/jobs-shifts",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volunteerlocal.com/features/jobs-shifts",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 10,
+      "url": "https://www.volunteerlocal.com/features/reminders",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volunteerlocal.com/features/reminders",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 10,
+      "url": "https://www.volunteerlocal.com/features/mobile-app",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volunteerlocal.com/features/mobile-app",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 10,
+      "url": "https://www.volunteerlocal.com/features/no-password-required",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volunteerlocal.com/features/no-password-required",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 11,
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts/issues/492",
+      "operation": {
+        "type": "open",
+        "target_url": "https://github.com/TimefoldAI/timefold-quickstarts/issues/492",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 11,
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts/pull/517",
+      "operation": {
+        "type": "open",
+        "target_url": "https://github.com/TimefoldAI/timefold-quickstarts/pull/517",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 11,
+      "url": "https://github.com/TimefoldAI/timefold-solver/pull/980",
+      "operation": {
+        "type": "open",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/pull/980",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 11,
+      "url": "https://github.com/TimefoldAI/timefold-solver/releases/tag/v2.6.0",
+      "operation": {
+        "type": "open",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/releases/tag/v2.6.0",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 11,
+      "url": "https://github.com/TimefoldAI/timefold-solver/releases/tag/v2.7.1",
+      "operation": {
+        "type": "open",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/releases/tag/v2.7.1",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 11,
+      "url": "https://github.com/google/or-tools/releases/tag/v9.15",
+      "operation": {
+        "type": "open",
+        "target_url": "https://github.com/google/or-tools/releases/tag/v9.15",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 11,
+      "url": "https://developers.google.com/optimization/service/scheduling/workforce_scheduling",
+      "operation": {
+        "type": "open",
+        "target_url": "https://developers.google.com/optimization/service/scheduling/workforce_scheduling",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 12,
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts/pull/517",
+      "operation": {
+        "type": "find",
+        "target_url": "https://github.com/TimefoldAI/timefold-quickstarts/pull/517",
+        "pattern": "merged"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 12,
+      "url": "https://github.com/TimefoldAI/timefold-solver/pull/980",
+      "operation": {
+        "type": "find",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/pull/980",
+        "pattern": "Required"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 12,
+      "url": "https://github.com/TimefoldAI/timefold-solver/releases/tag/v2.6.0",
+      "operation": {
+        "type": "find",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/releases/tag/v2.6.0",
+        "pattern": "2596"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 12,
+      "url": "https://github.com/TimefoldAI/timefold-solver/releases/tag/v2.7.1",
+      "operation": {
+        "type": "find",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/releases/tag/v2.7.1",
+        "pattern": "regression"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 12,
+      "url": "https://github.com/google/or-tools/releases/tag/v9.15",
+      "operation": {
+        "type": "find",
+        "target_url": "https://github.com/google/or-tools/releases/tag/v9.15",
+        "pattern": "551ad10"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 12,
+      "url": "https://developers.google.com/optimization/service/scheduling/workforce_scheduling",
+      "operation": {
+        "type": "find",
+        "target_url": "https://developers.google.com/optimization/service/scheduling/workforce_scheduling",
+        "pattern": "trusted"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 12,
+      "url": "https://www.rfc-editor.org/rfc/rfc5545.html",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.rfc-editor.org/rfc/rfc5545.html",
+        "pattern": "time BEFORE"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 12,
+      "url": "https://www.rfc-editor.org/rfc/rfc5545.html",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.rfc-editor.org/rfc/rfc5545.html",
+        "pattern": "MUST be ignored"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 13,
+      "url": "https://support.betterimpact.com/en/articles/13716052-february-2026-4x13-update",
+      "operation": {
+        "type": "open",
+        "target_url": "https://support.betterimpact.com/en/articles/13716052-february-2026-4x13-update",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 13,
+      "url": "https://www.betterimpact.com/how-we-help/volunteer-scheduling-software-features",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.betterimpact.com/how-we-help/volunteer-scheduling-software-features",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 13,
+      "url": "https://docs.timefold.ai/timefold-solver/latest/responding-to-change/non-disruptive-replanning",
+      "operation": {
+        "type": "open",
+        "target_url": "https://docs.timefold.ai/timefold-solver/latest/responding-to-change/non-disruptive-replanning",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 13,
+      "url": "https://developers.google.com/optimization/scheduling/employee_scheduling?hl=en",
+      "operation": {
+        "type": "open",
+        "target_url": "https://developers.google.com/optimization/scheduling/employee_scheduling?hl=en",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 13,
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 13,
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.w3.org/TR/WCAG22/",
+        "lineno": null
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 14,
+      "url": "https://www.volgistics.com/help/schedule/self-scheduling-settings-for-vicnet-and-victouch/",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volgistics.com/help/schedule/self-scheduling-settings-for-vicnet-and-victouch/",
+        "lineno": 252
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 14,
+      "url": "https://www.volgistics.com/help/volunteer-records/import-volunteer-records/",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volgistics.com/help/volunteer-records/import-volunteer-records/",
+        "lineno": 140
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 14,
+      "url": "https://siteguide.betterimpact.com/en/articles/9893058-navigating-the-app-and-mobile-interface",
+      "operation": {
+        "type": "open",
+        "target_url": "https://siteguide.betterimpact.com/en/articles/9893058-navigating-the-app-and-mobile-interface",
+        "lineno": 30
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 14,
+      "url": "https://www.volunteerlocal.com/features/jobs-shifts",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volunteerlocal.com/features/jobs-shifts",
+        "lineno": 135
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 14,
+      "url": "https://www.volunteerlocal.com/features/reminders",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volunteerlocal.com/features/reminders",
+        "lineno": 125
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 14,
+      "url": "https://www.volunteerlocal.com/features/mobile-app",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volunteerlocal.com/features/mobile-app",
+        "lineno": 130
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 14,
+      "url": "https://www.volunteerlocal.com/features/no-password-required",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volunteerlocal.com/features/no-password-required",
+        "lineno": 130
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 15,
+      "url": "https://www.volunteerlocal.com/features/jobs-shifts",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volunteerlocal.com/features/jobs-shifts",
+        "pattern": "Shifts Layer"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 15,
+      "url": "https://www.volunteerlocal.com/features/reminders",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volunteerlocal.com/features/reminders",
+        "pattern": "minutes"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 15,
+      "url": "https://www.volunteerlocal.com/features/mobile-app",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volunteerlocal.com/features/mobile-app",
+        "pattern": "optional"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 15,
+      "url": "https://www.volunteerlocal.com/features/no-password-required",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volunteerlocal.com/features/no-password-required",
+        "pattern": "special"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 15,
+      "url": "https://support.betterimpact.com/en/articles/12585658-comprehensive-guide-to-user-profiles",
+      "operation": {
+        "type": "find",
+        "target_url": "https://support.betterimpact.com/en/articles/12585658-comprehensive-guide-to-user-profiles",
+        "pattern": "General Availability"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 15,
+      "url": "https://www.volgistics.com/help/schedule/self-scheduling-settings-for-vicnet-and-victouch/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volgistics.com/help/schedule/self-scheduling-settings-for-vicnet-and-victouch/",
+        "pattern": "12 months"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 16,
+      "url": "https://github.com/TimefoldAI/timefold-solver/pull/2596/files",
+      "operation": {
+        "type": "find",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/pull/2596/files",
+        "pattern": "finally"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 16,
+      "url": "https://github.com/TimefoldAI/timefold-solver/pull/2596/files",
+      "operation": {
+        "type": "find",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/pull/2596/files",
+        "pattern": "executeTemporary"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 16,
+      "url": "https://developers.google.com/optimization/scheduling/employee_scheduling?hl=en",
+      "operation": {
+        "type": "find",
+        "target_url": "https://developers.google.com/optimization/scheduling/employee_scheduling?hl=en",
+        "pattern": "exactly_one"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 16,
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+        "pattern": "24 by 24"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 16,
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.w3.org/TR/WCAG22/",
+        "pattern": "12 December 2024"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 16,
+      "url": "https://www.rfc-editor.org/rfc/rfc5545.html",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.rfc-editor.org/rfc/rfc5545.html",
+        "pattern": "first occurrence"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 16,
+      "url": "https://www.volgistics.com/help/schedule/self-scheduling-settings-for-vicnet-and-victouch/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volgistics.com/help/schedule/self-scheduling-settings-for-vicnet-and-victouch/",
+        "pattern": "months"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 16,
+      "url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+      "operation": {
+        "type": "find",
+        "target_url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+        "pattern": "Backups"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 17,
+      "url": "https://www.volgistics.com/help/schedule/add-schedule-openings/",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volgistics.com/help/schedule/add-schedule-openings/",
+        "lineno": 140
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 17,
+      "url": "https://www.volgistics.com/help/schedule/edit-a-schedule-opening/",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volgistics.com/help/schedule/edit-a-schedule-opening/",
+        "lineno": 145
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 17,
+      "url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+      "operation": {
+        "type": "open",
+        "target_url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+        "lineno": 1021
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 17,
+      "url": "https://github.com/TimefoldAI/timefold-solver/commit/d6546cc9720df0578c67ec91956ca7a46eaf36c8.patch",
+      "operation": {
+        "type": "open",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/commit/d6546cc9720df0578c67ec91956ca7a46eaf36c8.patch",
+        "lineno": 0
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 17,
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts/commit/77b1c335ce47c2026ba2873a646582cfbc091d58.patch",
+      "operation": {
+        "type": "open",
+        "target_url": "https://github.com/TimefoldAI/timefold-quickstarts/commit/77b1c335ce47c2026ba2873a646582cfbc091d58.patch",
+        "lineno": 180
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 17,
+      "url": "https://www.volunteerlocal.com/features/mobile-app",
+      "operation": {
+        "type": "open",
+        "target_url": "https://www.volunteerlocal.com/features/mobile-app",
+        "lineno": 0
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 17,
+      "url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+      "operation": {
+        "type": "find",
+        "target_url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+        "pattern": "backup"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 17,
+      "url": "https://developers.google.com/optimization/scheduling/employee_scheduling?hl=en",
+      "operation": {
+        "type": "find",
+        "target_url": "https://developers.google.com/optimization/scheduling/employee_scheduling?hl=en",
+        "pattern": "add_exactly_one"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 17,
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+        "pattern": "1.4.10 Reflow"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 17,
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.w3.org/TR/WCAG22/",
+        "pattern": "1.4.1 Use of Color"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 18,
+      "url": "https://www.volgistics.com/help/schedule/add-schedule-openings/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volgistics.com/help/schedule/add-schedule-openings/",
+        "pattern": "Recurring shift"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 18,
+      "url": "https://www.volgistics.com/help/schedule/add-schedule-openings/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volgistics.com/help/schedule/add-schedule-openings/",
+        "pattern": "Repeat"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 18,
+      "url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+      "operation": {
+        "type": "find",
+        "target_url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+        "pattern": "Add Multiple Shifts"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 18,
+      "url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+      "operation": {
+        "type": "find",
+        "target_url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+        "pattern": "Editing a template"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 18,
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts/commit/77b1c335ce47c2026ba2873a646582cfbc091d58.patch",
+      "operation": {
+        "type": "find",
+        "target_url": "https://github.com/TimefoldAI/timefold-quickstarts/commit/77b1c335ce47c2026ba2873a646582cfbc091d58.patch",
+        "pattern": "balanceShiftCount"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 18,
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts/commit/77b1c335ce47c2026ba2873a646582cfbc091d58.patch",
+      "operation": {
+        "type": "find",
+        "target_url": "https://github.com/TimefoldAI/timefold-quickstarts/commit/77b1c335ce47c2026ba2873a646582cfbc091d58.patch",
+        "pattern": "including"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 18,
+      "url": "https://github.com/TimefoldAI/timefold-solver/commit/d6546cc9720df0578c67ec91956ca7a46eaf36c8.patch",
+      "operation": {
+        "type": "find",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/commit/d6546cc9720df0578c67ec91956ca7a46eaf36c8.patch",
+        "pattern": "long"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 18,
+      "url": "https://www.volunteerlocal.com/features/mobile-app",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volunteerlocal.com/features/mobile-app",
+        "pattern": "iOS"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 19,
+      "url": "https://github.com/TimefoldAI/timefold-solver/pull/980",
+      "operation": {
+        "type": "find",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/pull/980",
+        "pattern": "v1.13.0"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 19,
+      "url": "https://github.com/TimefoldAI/timefold-solver/releases/tag/v2.6.0",
+      "operation": {
+        "type": "find",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/releases/tag/v2.6.0",
+        "pattern": "Sep 1"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 19,
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+        "pattern": "Success Criterion 2.1.1 Keyboard"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 19,
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.w3.org/TR/WCAG22/",
+        "pattern": "Success Criterion 2.4.4 Link Purpose"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 19,
+      "url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+      "operation": {
+        "type": "find",
+        "target_url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+        "pattern": "Set Interval to Daily or Weekly"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 19,
+      "url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/employee-resource-constraints/fairness/balance-time-worked",
+      "operation": {
+        "type": "find",
+        "target_url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/employee-resource-constraints/fairness/balance-time-worked",
+        "pattern": "1.000"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 20,
+      "url": "https://github.com/TimefoldAI/timefold-solver/releases/tag/v2.6.0",
+      "operation": {
+        "type": "find",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/releases/tag/v2.6.0",
+        "pattern": "2026"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 20,
+      "url": "https://github.com/TimefoldAI/timefold-solver/releases/tag/v2.7.1",
+      "operation": {
+        "type": "find",
+        "target_url": "https://github.com/TimefoldAI/timefold-solver/releases/tag/v2.7.1",
+        "pattern": "04d17fc"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 20,
+      "url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+      "operation": {
+        "type": "find",
+        "target_url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+        "pattern": "Recurrence frequency"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 20,
+      "url": "https://www.volgistics.com/help/schedule/edit-a-schedule-opening/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volgistics.com/help/schedule/edit-a-schedule-opening/",
+        "pattern": "past and future"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 20,
+      "url": "https://support.betterimpact.com/en/articles/13192494-comprehensive-guide-to-scheduling",
+      "operation": {
+        "type": "find",
+        "target_url": "https://support.betterimpact.com/en/articles/13192494-comprehensive-guide-to-scheduling",
+        "pattern": "Auto-confirm"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 21,
+      "url": "https://developers.google.com/optimization/service/reference/rest/v1/DateTime",
+      "operation": {
+        "type": "find",
+        "target_url": "https://developers.google.com/optimization/service/reference/rest/v1/DateTime",
+        "pattern": "version"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 21,
+      "url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+      "operation": {
+        "type": "find",
+        "target_url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+        "pattern": "Recurrence (every X weeks)"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 21,
+      "url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/employee-resource-constraints/fairness/balance-time-worked",
+      "operation": {
+        "type": "find",
+        "target_url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/employee-resource-constraints/fairness/balance-time-worked",
+        "pattern": "100"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "retrieval_batch": 21,
+      "url": "https://www.volgistics.com/help/volunteer-records/import-volunteer-records/",
+      "operation": {
+        "type": "find",
+        "target_url": "https://www.volgistics.com/help/volunteer-records/import-volunteer-records/",
+        "pattern": "mapping"
+      },
+      "outcome": "returned primary text"
+    },
+    {
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts/commit/77b1c335ce47c2026ba2873a646582cfbc091d58.patch",
+      "operation": "Python urllib read of public patch; inspected relevant functions/zero-load cohort and patch structure",
+      "outcome": "read text only; no file downloaded/executed"
+    },
+    {
+      "url": "https://github.com/TimefoldAI/timefold-solver/commit/d6546cc9720df0578c67ec91956ca7a46eaf36c8.patch",
+      "operation": "Python urllib read of full public short patch",
+      "outcome": "read text only; no source imported/executed"
+    },
+    {
+      "url": "https://api.github.com/repos/TimefoldAI/timefold-solver/releases/tags/v2.6.0",
+      "operation": "Read public GitHub JSON metadata to verify published/merged timestamps and merge commit",
+      "outcome": "metadata returned; no authentication or mutation"
+    },
+    {
+      "url": "https://api.github.com/repos/TimefoldAI/timefold-solver/releases/tags/v2.7.1",
+      "operation": "Read public GitHub JSON metadata to verify published/merged timestamps and merge commit",
+      "outcome": "metadata returned; no authentication or mutation"
+    },
+    {
+      "url": "https://api.github.com/repos/TimefoldAI/timefold-solver/pulls/2596",
+      "operation": "Read public GitHub JSON metadata to verify published/merged timestamps and merge commit",
+      "outcome": "metadata returned; no authentication or mutation"
+    }
+  ],
+  "native_and_cost_limits": {
+    "reviewer_goal_activation": "Actual supported create_goal and get_goal were called and active was observed before independent source work. No R9, ledger or handwritten Goal receipt was used.",
+    "assessment_save_order": "All required assessment artifacts are to be fully saved and read back before supported update_goal complete. Completion itself is host lifecycle data and is not a scientific test.",
+    "reviewer_native_completion": null,
+    "t3_completion": null,
+    "reviewer_usage": null,
+    "reviewer_billing": null,
+    "candidate_usage": null,
+    "candidate_billing": null,
+    "provider_identity": "Current runtime identifies gpt-6.1-sol/xhigh. Independent private billing and hidden provider identity were not inspected.",
+    "candidate_native_status": "Candidate prose makes lifecycle claims; these are not independently authenticated from private host state and do not contribute to quality grade."
+  }
+}
