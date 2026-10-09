@@ -11765,6 +11765,58 @@ owner_hints:
   - Plans/Settings_System.md
 ```
 
+### DL-160 - The To-Do Navigation Line Loses Its Last Item Button
+
+```yaml
+plan_unit_id: DL-160
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-160 records the owner's decision of 2026-10-09. The Last item button is removed from the To-Do panel's navigation
+  line, which keeps the visible count, "N visible of M items", and Expand all and nothing else (F3-593). The button
+  jumped the list to the final item and selected it, and nothing takes its place. The search field still finds any
+  title or exact ID, and the list reaches its final item by scrolling after Expand all has opened every parent. No
+  command, wiring entry, setting or To-Do state changes: the button never had a command ID, so the UI command catalog,
+  Commands_System and the Wiring Matrix hold no row for it and none is retired.
+gui_related: true
+gui_classification_reason: Records the owner's removal of one control from the To-Do panel's navigation line in Activity Detail.
+split_recommended: false
+depends_on: [DL-147]
+unblocks: [F3-593]
+acceptance_criteria:
+  - "The To-Do navigation line holds the visible count and Expand all only, and no Last item control exists in the panel (F3-593)."
+  - "No command, wiring row, setting or To-Do state is added or retired by this change."
+  - "The removal is recorded with its date, 2026-10-09."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: todo_navigation_control_drift
+reasoning_tier: high
+context_scope: todo_navigation_line_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Decision_Log.md
+  - Plans/00-plans-index.md
+  - Concepts/chat-assistant-concepts/5.6 Pro/todos.js
+  - Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (To-Dos section; concept lineage only)"
+preserved_exact_tokens:
+  - "DL-160"
+  - "Expand all"
+  - "visible of"
+negative_constraints:
+  - "Do not add a replacement for the Last item button to the To-Do navigation line."
+  - "Do not add a command, wiring row or setting for the removed button."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
 ## Migration Coverage
 
 Original hash: `f2e60f840d40385942aad5a8875a8243bc33fcfa07959d008e3fe231cc4023f7`.
