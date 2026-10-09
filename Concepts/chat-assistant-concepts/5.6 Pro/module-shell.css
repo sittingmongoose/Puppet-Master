@@ -754,7 +754,10 @@ body.pm56-reduced .live-agent-row > .agent-mark, body.pm56-reduced .agent-lane >
 .pmx-sheet .pmx-plate-fit[data-fit="full"] > .pmx-plate[data-mode="full"],
 .pmx-sheet .pmx-plate-fit[data-fit="compact"] > .pmx-plate[data-mode="compact"],
 .pmx-sheet .pmx-plate-fit[data-fit="lean"] > .pmx-plate[data-mode="lean"],
-.pmx-sheet .pmx-plate-fit[data-fit="strip"] > .pmx-plate[data-mode="strip"]{display:block;}
+.pmx-sheet .pmx-plate-fit[data-fit="strip"] > .pmx-plate[data-mode="strip"],
+.pmx-sheet .pmx-plate-fit[data-fit="wrap"] > .pmx-plate[data-mode="wrap"]{display:block;}
+/* the cast's wrap is drawn at two widths (576, then 500); only the one the runtime picked shows */
+.pmx-sheet .pmx-plate-fit > .pmx-plate[data-mode="wrap"]:not([data-pick]){display:none;}
 .pmx-sheet .pmx-plate-fit[data-fit="caption"] > .pmx-plate[data-mode="caption"], .pmx-sheet .pmx-plate-fit:not([data-fit]) > .pmx-plate[data-mode="caption"]:last-child{display:flex;}
 /* a caption that wraps (retro at 1024 x 768) grows its plate and the slot with it: 8 px of floor above and below its
    text, never squeezed (J-2) */
@@ -902,6 +905,12 @@ body[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
 .pmx-stop[data-state="now"] .pmx-stop-label{color:var(--text);font-weight:600;}
 .pmx-track-now{min-width:0;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .pmx-track-now b{color:var(--text);font-weight:600;}
+/* a wrapping track (8 or more stops, 2026-10-09): the dots take the card's width and wrap down onto more rows, 10 px
+   joins between them (20 rounds fit two rows of a 360 px card); the words keep a whole row under them */
+.pmx-track[data-wrap]{flex-wrap:wrap;height:auto;min-height:20px;row-gap:4px;}
+.pmx-track[data-wrap] > .pmx-track-line{flex:1 1 100%;min-width:0;flex-wrap:wrap;row-gap:8px;padding:6px 0;}
+.pmx-track[data-wrap] > .pmx-track-now{flex:1 1 100%;}
+.pmx-track[data-wrap] .pmx-track-line .pmx-stop + .pmx-stop::before{width:10px;margin:0 2px;}
 
 /* C5/C6 lanes: two lines, a fixed height (J-2: 6 px between the text and the lane's hairlines, so 49 px) */
 .pmx-lanes{display:flex;flex-direction:column;min-width:0;}
@@ -1311,9 +1320,9 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
 }
 /* closing (STORM-A): a track of 6 or more stops keeps its M form up to 720 px (each label beside its dot needs ~700) */
 @container pmxrun (min-width: 520px) and (max-width: 719.98px){
-  .pmx-track:is([data-n="6"], [data-n="7"], [data-n="8"], [data-n="9"], [data-n="10"]) .pmx-stop-label{display:none;}
-  .pmx-track:is([data-n="6"], [data-n="7"], [data-n="8"], [data-n="9"], [data-n="10"]) .pmx-track-now{display:block;flex:1 1 auto;}
-  .pmx-track:is([data-n="6"], [data-n="7"], [data-n="8"], [data-n="9"], [data-n="10"]) .pmx-track-line .pmx-stop + .pmx-stop::before{width:22px;margin:0 3px;}
+  .pmx-track[data-long] .pmx-stop-label{display:none;}
+  .pmx-track[data-long] .pmx-track-now{display:block;flex:1 1 auto;}
+  .pmx-track[data-long] .pmx-track-line .pmx-stop + .pmx-stop::before{width:22px;margin:0 3px;}
 }
 /* R-21: the run title shows only on a card of 640 px or more (at 591 it left the headline nothing) */
 @container pmxrun (min-width: 640px){ .pmx-receipt .pmx-receipt-title{display:block;} }
@@ -1390,6 +1399,9 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
   /* one scrolling column has height to spare: the plate slot shows the richest mode that fits the width at its
      natural height (the runtime reads --pmx-fit-free) */
   .pmx-sheet .pmx-plate-fit{--pmx-fit-free:1;flex:none;height:auto;max-height:none;}
+  /* 2026-10-09 (Jared: "it pushes the graph out of view"): while its question is on screen the plate stays at the top
+     of the scrolling body and the roster's rows pass under it, on the sheet's own colour (8 px above and below) */
+  .pmx-sheet .pmx-q-body > .pmx-plate-fit{position:sticky;top:8px;z-index:2;background:var(--pmx-sheet-bg);box-shadow:0 -8px 0 var(--pmx-sheet-bg),0 8px 0 var(--pmx-sheet-bg);}
   .pmx-sheet .pmx-plate-fit > .pmx-plate:not([data-mode="caption"]){height:var(--pmx-plate-h);}
   /* one column has the width back: the roster's model and persona columns return to their full widths (the 1024
      rule narrowed them, which cut "Implementer" and the model names at 900 and 700) */

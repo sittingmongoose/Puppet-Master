@@ -501,7 +501,7 @@ export const SHEETS = [
   { id: 'sheet-crew-3', which: 'crew', helpers: 3, common: true, canon: ['Crew', 'Wonderer', 'Grill Me'], title: 'Crew sheet, 3 helpers (full plate)' },
   { id: 'sheet-crew-4', which: 'crew', helpers: 4, common: true, rosterScrollAfterYield: ['1280x800'], canon: ['Crew', 'Wonderer', 'Grill Me'], title: 'Crew sheet, 4 helpers (compact plate)' },
   { id: 'sheet-crew-5', which: 'crew', helpers: 5, common: true, rosterScrollAfterYield: ['1280x800'], canon: ['Crew', 'Wonderer', 'Grill Me'], title: 'Crew sheet, 5 helpers (strip plate)' },
-  { id: 'sheet-crew-8', which: 'crew', helpers: 8, common: false, rosterMayScroll: true, canon: ['Crew', 'Wonderer', 'Grill Me'], title: 'Crew sheet, 8 helpers (caption plate, roster scrolls)' },
+  { id: 'sheet-crew-8', which: 'crew', helpers: 8, common: false, rosterMayScroll: true, canon: ['Crew', 'Wonderer', 'Grill Me'], title: 'Crew sheet, 8 helpers (wrapped plate on two rows, roster scrolls)' },
   { id: 'sheet-crew-advanced', which: 'crew', helpers: 3, advanced: true, refusal: true, saved: true, common: true, canon: ['Crew'], title: 'Crew sheet: Advanced page, refusal, saved default' },
   { id: 'sheet-std', which: 'std', common: true, canon: ['Back Seat Driver'], title: 'Standard sheet: switch, words, checks, tabs, stepper, disabled reason, sheet guide' },
   { id: 'sheet-confirm', which: 'confirm', common: true, title: 'Standard sheet in its confirmation state (A20)' },
