@@ -610,9 +610,10 @@
       if (o.chapterMove && F.enabled('wipe')) F.wipe(pane, dir === 'back' ? { dir: 'back' } : undefined);
       else if (dir !== 'open') F.slice(layer.querySelector('.o55-scroll'));
     }
-    /* 2. the title types on, with its typing ticks under the screen change (the cold open's release ticks first) */
+    /* 2. the title types on, with its typing ticks under the screen change (the cold open's release ticks first; its
+       title was laid out untyped at the release and types on its cue, screen()) */
     if (dir === 'open' && o.cold) play('tap');
-    if (h) F.decode(h, { sound: true });
+    if (h && !o.typed) F.decode(h, { sound: true });
     /* 3. the moment: the cold open's release, the act card, Ready's curtain, or the rail and Pod */
     const claim = o.claim;
     if (dir === 'open') {
@@ -623,7 +624,11 @@
         railWalk();
         const sd = O55.sound.context ? O55.sound.context() : {};
         later(90, () => play('chapter', { chapter: pr.current, depth: cold.kind === 'start' ? 0 : (sd && sd.depth) || 0, intensity: 0.4 }));
-        layer.querySelectorAll('.o55-promise > li').forEach((li, i) => later(440 + 80 * i, () => play('phase', { step: i })));
+        /* each row's tick is timed from the one before it: set at once, a late timer fired the next one as little as
+           61 ms after it and RATE dropped it (fv check 1). h0's hello waits for the last (openGate). */
+        const rows = layer.querySelectorAll('.o55-promise > li').length;
+        const tick = (i) => later(i ? 80 : 440, () => { play('phase', { step: i }); if (i + 1 < rows) tick(i + 1); else if (cold.rowsIn) later(100, cold.rowsIn); });
+        if (rows) tick(0); else if (cold.rowsIn) cold.rowsIn();
         if (cold.kind === 'resume') { const st = stageEl(); if (st && O55.art.peek) later(160, () => O55.art.peek(st)); later(900, () => say(line('pod.resumed'))); }
         else later(1000, () => podScreen(def));
       } else later(760, () => podScreen(def));
@@ -759,7 +764,12 @@
         layer.setAttribute('data-o55nw-cold', cold.kind);
         const st = stageEl(), tr = troupe();
         if (cold.asleep && tr && tr.wake && st) {
-          tr.wake(st, { at: { slit: log.stamps[0], link: log.stamps[1], takeup: log.stamps[2], boot: log.stamps[3] } }).then(() => { cold.asleep = false; });
+          /* h0's first hello comes after the promise rows' last tick (100 ms after it, draw()), or on its own beat (1170
+             after the take-up) if that is later. On its own clock alone it came before the rows' ticks at 1x, where
+             the release lands late (fv check 1). It waits at most 2.6 s after the take-up. */
+          const rows = new Promise((res) => { cold.rowsIn = res; });
+          const hello = log.stamps[2].then(() => Promise.race([Promise.all([M.delay(1170), rows]), M.delay(2600)]));
+          tr.wake(st, { at: { slit: log.stamps[0], link: log.stamps[1], takeup: log.stamps[2], boot: log.stamps[3], hello } }).then(() => { cold.asleep = false; });
         } else cold.asleep = false;
         /* Pod hops into its corner at the last stamp (silent) */
         log.stamps[lines.length - 1].then(() => { if (R.cold === cold && !cold.snapped) podIn({ hops: 6, ms: 360 }); });
@@ -863,21 +873,37 @@
          effects' measurements then read a finished layout instead of forcing it again in the middle of it (films M1).
          Nothing shows early: the entrance's blocks are still unseen for their first steps. */
       const t = token, o = { claim, cold, chapterMove: dir !== 'open' && !!prevChapter && prevChapter !== pr.current };
-      const go = () => { if (t === token && layer.isConnected && !layer.classList.contains('o55-out') && shown() && painted()) draw(layer, dir, def, pr, F, o); };
+      const live = () => t === token && layer.isConnected && !layer.classList.contains('o55-out') && shown() && painted();
+      const go = () => { if (live()) draw(layer, dir, def, pr, F, o); };
       /* the cold open's release only. The rule is painted on one long frame: the line holds, then WELCOME is up.
          A double rAF still runs at the start of that paint, so tap, the welcome chord and the title were heard
          over the frozen line. The next frame arrives late, and that is the frame where the rule is already up;
          they start then (the chord's beat after it stays on the motion clock). Counting frames and playing on the
          third one fired at the start of the long paint whenever that paint was the third frame. A fast release
-         has no late frame, so the fifth stands in for it. Every other screen still starts on the next frame. */
+         has no late frame, so the fifth stands in for it. Every other screen still starts on the next frame.
+         The screen's start state goes up now, in the release's own task, so that long frame (the first to show the
+         screen) shows the entrance unstarted, not the finished pane: the title laid out untyped, its typing waiting
+         for the cue, and the entrance's blocks held at their first step (data-o55nw-cue) so they step in from the
+         cue with the rows' ticks. The entrance classes go back on first: the opening held this screen longer than
+         the entrance's settle fallback (60-ui-core.js transition, 2.6 s), which had taken them off a screen nobody
+         had seen, so at 1x the rows and the subtitle came up whole (fv check 1). */
       if (cold) {
+        if (!layer.classList.contains('o55-entering')) {
+          layer.classList.add('o55-entering', 'o55-in-open');
+          M.settled(layer, { fallback: 2600 }).then(() => layer.classList.remove('o55-entering', 'o55-in-open'));
+        }
+        layer.setAttribute('data-o55nw-cue', '');
+        let cue = null;
+        const h = layer.querySelector('#o55-h');
+        if (h) { F.decode(h, { sound: true, at: new Promise((res) => { cue = res; }) }); o.typed = true; }
+        const start = (on) => { layer.removeAttribute('data-o55nw-cue'); if (cue) cue(on); if (on) go(); else if (cold.rowsIn) cold.rowsIn(); };
         let last = performance.now(), n = 0;
         const step = (now) => {
-          if (!(t === token && layer.isConnected && !layer.classList.contains('o55-out') && shown() && painted())) return;
+          if (!live()) { start(false); return; }
           n += 1;
           const late = now - last > 100;
           last = now;
-          if (late || n >= 5) { go(); return; }
+          if (late || n >= 5) { start(true); return; }
           M.real.raf(step);
         };
         M.real.raf(step);
