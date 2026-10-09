@@ -1,21 +1,30 @@
 #!/usr/bin/env python3
-"""Build Concepts/UsageTestPMConcept7.html: TestOpus5.5PmConcept.html with the redesigned Usage page (review copy).
+"""Build the Usage page: the review copy Concepts/UsageTestPMConcept7.html while it exists, opus-5.5 build.py afterwards.
 
 Usage:
-  python3 Concepts/usage-redesign/tools/build_usage.py          # build and write Concepts/UsageTestPMConcept7.html
-  python3 Concepts/usage-redesign/tools/build_usage.py --check  # rebuild in memory and verify the written file and guards
+  python3 Concepts/usage-redesign/tools/build_usage.py              # review mode: write Concepts/UsageTestPMConcept7.html
+                                                                    # published mode: build.py --out <tmp>/usage-pm7/PMConcept7.html
+  python3 Concepts/usage-redesign/tools/build_usage.py --out PATH   # published mode only: build.py --out PATH
+  python3 Concepts/usage-redesign/tools/build_usage.py --check      # review mode: rebuild in memory, verify the review copy
+                                                                    # and guards; published mode: build.py --check
 
-The input is opus-5.5 build.build_text(usage=False) (the exact bytes of TestOpus5.5PmConcept.html before the publish,
-base pin enforced there). build.py applies the same layer to the same text at its step 2b, so the review copy's Usage
-band equals the published page's. The layer itself is tools/usage_layer.py. The output is generated: never hand-edit it.
-This review copy is retired at the publish (Jared, 2026-10-09: "the UsageTestPMConcept7.html will go away"); from then on
-a private build is opus-5.5 build.py --out PATH.
+Two modes, chosen by whether the review copy exists (usage_boot.mjs chooses the same way):
+- Review mode (until the publish): the input is opus-5.5 build.build_text(usage=False), the exact bytes of
+  TestOpus5.5PmConcept.html before the publish (base pin enforced there). build.py applies the same layer to the same
+  text at its step 2b, so the review copy's Usage band equals the published page's. --check accepts the committed
+  TestOpus5.5PmConcept.html either without Usage (before the publish) or with it (a working tree where
+  build.py --publish-pm7 ran), as long as it equals a fresh build of that kind.
+- Published mode (the review copy is gone: Jared, 2026-10-09, "the UsageTestPMConcept7.html will go away"): a thin
+  wrapper around opus-5.5 build.py, the one publish path. It never writes the review copy again.
+The layer itself is tools/usage_layer.py. Every output is generated: never hand-edit it.
 """
 from __future__ import annotations
 
 import hashlib
 import json
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parent
@@ -45,6 +54,10 @@ def build_page() -> tuple[str, dict, bool]:
     # the same layer here, so until the publish its input is still the committed TestOpus5.5PmConcept.html
     base = build.build_text(usage=False)
     input_current = INPUT_FILE.exists() and INPUT_FILE.read_bytes() == base.encode('utf-8')
+    if not input_current and INPUT_FILE.exists() and usage_layer.BODY_START.encode('utf-8') in INPUT_FILE.read_bytes():
+        # a working tree where build.py --publish-pm7 ran: the published page carries Usage, and is current when it
+        # equals a fresh full build (build.py --check compares PMConcept7.html with the same bytes)
+        input_current = INPUT_FILE.read_bytes() == build.build_text().encode('utf-8')
     text, notes = usage_layer.apply(base, build.need)
     text = build.replace_once(text, OLD_TITLE, NEW_TITLE, 'usage test title')
     return HEADER + text, notes, input_current
@@ -77,7 +90,34 @@ def report(text: str, notes: dict) -> dict:
             'roster': notes.get('roster'), 'app_patches': notes.get('app patches')}
 
 
+def published_mode() -> int:
+    """The review copy is gone: delegate to opus-5.5 build.py (--check, or a private --out build). Never write the review
+    copy or either published page from here."""
+    build_py = OPUS_TOOLS / 'build.py'
+    if '--check' in sys.argv:
+        args = ['--check']
+    else:
+        out = Path(tempfile.gettempdir()) / 'usage-pm7' / 'PMConcept7.html'
+        if '--out' in sys.argv:
+            i = sys.argv.index('--out')
+            if i + 1 >= len(sys.argv):
+                print('--out needs a path', file=sys.stderr)
+                return 2
+            out = Path(sys.argv[i + 1]).expanduser()
+        out.resolve().parent.mkdir(parents=True, exist_ok=True)
+        args = ['--out', str(out)]
+    print(f'build_usage: {TARGET.name} is retired (published mode); running opus-5.5 build.py {" ".join(args)}',
+          file=sys.stderr)
+    return subprocess.run([sys.executable, str(build_py), *args]).returncode
+
+
 def main() -> int:
+    if not TARGET.exists():
+        return published_mode()
+    if '--out' in sys.argv:
+        print('--out is for published mode (after the review copy is retired); in review mode use opus-5.5 '
+              'build.py --out PATH for a private build of the publish candidate', file=sys.stderr)
+        return 2
     check = '--check' in sys.argv
     try:
         text, notes, input_current = build_page()
@@ -86,15 +126,14 @@ def main() -> int:
         return 2
     problems = problems_for(text)
     if not input_current:
-        message = 'Concepts/Onboarding concepts/TestOpus5.5PmConcept.html differs from a fresh opus-5.5 build (run its build.py)'
+        message = ('Concepts/Onboarding concepts/TestOpus5.5PmConcept.html differs from a fresh opus-5.5 build, with or '
+                   'without Usage: run opus-5.5 build.py --publish-pm7, or restore both published pages with git checkout')
         if check:
             problems.append(message)
         else:
             print('WARNING:', message, file=sys.stderr)
     if check:
-        if not TARGET.exists():
-            problems.append('Concepts/UsageTestPMConcept7.html is missing; run build_usage.py')
-        elif TARGET.read_bytes() != text.encode('utf-8'):
+        if TARGET.read_bytes() != text.encode('utf-8'):
             problems.append('Concepts/UsageTestPMConcept7.html is stale or hand-edited; run build_usage.py')
         for p in problems:
             print('CHECK:', p)

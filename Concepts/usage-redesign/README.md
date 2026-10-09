@@ -1,13 +1,22 @@
 # Usage redesign
 
-The redesigned Usage page of the Puppet Master concept. It is published in `Concepts/PMConcept7.html` (and the same bytes
-in `Concepts/Onboarding concepts/TestOpus5.5PmConcept.html`) by `Concepts/onboarding/opus-5.5/tools/build.py`, whose step
-2b calls `tools/usage_layer.py` here to replace the base's old Prism Usage page with the page in `src/`. Never hand-edit
-the Usage page inside either built page: change `src/` or `tools/usage_layer.py` and rebuild.
+The redesigned Usage page of the Puppet Master concept. `Concepts/onboarding/opus-5.5/tools/build.py` is its publish
+path: its step 2b calls `tools/usage_layer.py` here to replace the base's old Prism Usage page with the page in `src/`,
+and `--publish-pm7` writes the result to `Concepts/PMConcept7.html` (and the same bytes to
+`Concepts/Onboarding concepts/TestOpus5.5PmConcept.html`). Never hand-edit the Usage page inside a built page: change
+`src/` or `tools/usage_layer.py` and rebuild.
 
 Jared approved the redesign on 2026-10-09 and asked for it in PMConcept7 ("So the UsageTestPMConcept7.html will go away
-after you finish"). The review copy `Concepts/UsageTestPMConcept7.html` and its generator `tools/build_usage.py` were
-retired at that publish: a private build is now `build.py --out <path>`, the one build path.
+after you finish"). Two stages, so check which one your checkout is in:
+- **Before the publish** (the committed `Concepts/PMConcept7.html` has no `<!-- USAGE:BODY:START -->`): the review copy
+  `Concepts/UsageTestPMConcept7.html` still exists and `tools/build_usage.py` writes it; that is the lanes' loop. A
+  working tree where `build.py --publish-pm7` ran has the new page in both published pages; never commit them before
+  the publish.
+- **After the publish** (one coordinator commit, run from `FINAL-PUBLISH.md` in
+  `~/PM-Experiments/usage-pm7-20261009/lanes/a-port/`): both published pages carry the new Usage page and the review
+  copy is deleted. That deletion is the only one under `Concepts/` and rests on Jared's instruction above.
+  `tools/build_usage.py` stays: without the review copy it is a thin wrapper around `build.py` (`--check`, or a private
+  `--out` build) and never writes the review copy again.
 
 Status: WOW round, polish round 2 integrated (2026-10-02). The design is
 `~/PM-Experiments/usage-redesign-20261001/design/final/DESIGN-SPEC.md` with `DESIGN-SPEC-ATLAS.md` (wins over it),
@@ -24,8 +33,12 @@ Concepts/usage-redesign/
   README.md
   tools/usage_layer.py    apply(text, need) -> (text, notes), lint(), syntax_check(text), REMOVED, KEPT: opus-5.5
                           build.py calls it at step 2b (apply), in lint_sources() (lint) and syntax_check()/check()
-  tools/usage_boot.mjs    headless boot check of the published page (or a private build) against a reference build
-                          without the Usage layer (build.py --out <path> --no-usage)
+  tools/build_usage.py    review mode (while Concepts/UsageTestPMConcept7.html exists): writes and --checks the review
+                          copy from build_text(usage=False) + the layer; published mode (once it is gone): build.py
+                          --check, or build.py --out PATH (default <tmp>/usage-pm7/PMConcept7.html)
+  tools/usage_boot.mjs    headless boot check: the review copy against its input while the review copy exists, else the
+                          published page (or --page, a private build) against a reference build without the Usage layer
+                          (build.py --out <path> --no-usage)
   tools/boards.py         default boards of all 13 rooms -> src/js/62-boards-data.js (and --md BOARDS.md); --check validates
   src/markup.html         the #panel-usage markup (root: <div class="pmu-shell" id="pmuApp">), ARCHITECTURE section 5
   src/copy.json           shell strings; src/copy.d/*.json one file per owner (merged; a key in two files fails the build)
@@ -61,23 +74,41 @@ them. New class names use the `pmu-` namespace: the old `pm7u-` rules that stay 
 
 ## Commands
 
-Run from the worktree root.
+Run from the worktree root. Both stages:
 
 ```
-python3 Concepts/onboarding/opus-5.5/tools/build.py --out /tmp/u/page.html   # private build: lint, node --check, write only that path
-python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7            # publish: TestOpus5.5PmConcept.html and PMConcept7.html
-python3 Concepts/onboarding/opus-5.5/tools/build.py --check                  # lint, syntax, markers, old references gone, outside
-                                                                            # contracts kept, both published pages byte-current
+python3 Concepts/onboarding/opus-5.5/tools/build.py --out /tmp/u/page.html   # private build of the publish candidate: lint,
+                                                                            # node --check, write only that path
 python3 Concepts/usage-redesign/tools/boards.py --check                      # the generated default boards are current
-node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir>                  # boot check of Concepts/PMConcept7.html
 node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir> --page /tmp/u/page.html   # boot check of a private build
 ```
 
-The dev loop: change `src/` (or `tools/usage_layer.py`), make a private build with `--out`, boot-check it with
-`usage_boot.mjs --page`, look at it on the GPU (the P1000 VM), then publish with `--publish-pm7` and run `--check`.
+Before the publish (review copy present):
+
+```
+python3 Concepts/usage-redesign/tools/build_usage.py           # write Concepts/UsageTestPMConcept7.html (never commit it on a lane branch)
+python3 Concepts/usage-redesign/tools/build_usage.py --check   # review copy current, guards hold, TestOpus current with or without Usage
+python3 Concepts/onboarding/opus-5.5/tools/build.py --check    # fails on the two published-page staleness lines until
+                                                               # --publish-pm7 runs in the working tree (do not commit them)
+node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir>    # boot check of the review copy
+```
+
+After the publish (review copy gone):
+
+```
+python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7   # publish: TestOpus5.5PmConcept.html and PMConcept7.html
+python3 Concepts/onboarding/opus-5.5/tools/build.py --check         # lint, syntax, markers, old references gone, outside
+                                                                    # contracts kept, both published pages byte-current
+python3 Concepts/usage-redesign/tools/build_usage.py [--check | --out PATH]   # the same through the wrapper
+node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir>         # boot check of Concepts/PMConcept7.html
+```
+
+The dev loop after the publish: change `src/` (or `tools/usage_layer.py`), make a private build with `--out`,
+boot-check it with `usage_boot.mjs --page`, look at it on the GPU (the P1000 VM), then publish with `--publish-pm7` and
+run `--check`.
 `build.py` enforces the base pin (`BASE_SHA256`). Each build lints `src/` (`usage_layer.lint()`, which also runs the
 build's page-wide universal-selector lint over the Usage CSS) and runs `node --check` on `pm-usage-js`,
-`pm4-settings-js` and `pm-o55-js`. `usage_boot.mjs` makes its reference page itself (`build.py --out
+`pm4-settings-js` and `pm-o55-js`. In published mode `usage_boot.mjs` makes its reference page itself (`build.py --out
 <out-dir>/reference-no-usage.html --no-usage`: the same sources with the old Prism Usage page) and writes
 `<out-dir>/usage-boot.json`; it also takes `[page-under-test] [reference-page]` as plain arguments. Keep `<out-dir>`
 outside the repository (for example under `~/PM-Experiments/`). The boot check takes no screenshots and deletes its

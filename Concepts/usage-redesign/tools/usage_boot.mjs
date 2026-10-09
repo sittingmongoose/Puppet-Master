@@ -11,7 +11,8 @@
  * Concepts/PMConcept7.html (or --page) against a fresh private reference build without the Usage layer
  * (build.py --out <out-dir>/reference-no-usage.html --no-usage, the same sources with the old page). It is the default
  * once the review copy Concepts/UsageTestPMConcept7.html is gone; while it exists, the default is that review copy
- * against its input, Concepts/Onboarding concepts/TestOpus5.5PmConcept.html.
+ * against its input, Concepts/Onboarding concepts/TestOpus5.5PmConcept.html (or against the --no-usage reference build
+ * when build.py --publish-pm7 has already put the new Usage page into TestOpus in this working tree).
  * Writes <out-dir>/usage-boot.json (never into the repository), prints the summary, exits 1 when a check fails.
  * Each browser gets a private profile that chrome.mjs deletes on close. No screenshots. */
 import { launch, sleep } from '../../onboarding/opus-5.5/tools/chrome.mjs';
@@ -29,21 +30,29 @@ const published = args.includes('--published') || !!pageArg; if (args.includes('
 const out = resolve(args[0] || '/tmp/usage-boot');
 mkdirSync(out, { recursive: true });
 const reviewCopy = join(concepts, 'UsageTestPMConcept7.html');
-let pages;
-if (args[1] && !published) {
-  pages = { base: resolve(args[2] || join(concepts, 'Onboarding concepts', 'TestOpus5.5PmConcept.html')), usage: resolve(args[1]) };
-} else if (!published && existsSync(reviewCopy)) {
-  pages = { base: join(concepts, 'Onboarding concepts', 'TestOpus5.5PmConcept.html'), usage: reviewCopy };
-} else {
-  const usage = resolve(pageArg || join(concepts, 'PMConcept7.html'));
-  if (!readFileSync(usage, 'utf8').includes('<!-- USAGE:BODY:START -->')) {
-    console.error(`${usage} has no Usage band (<!-- USAGE:BODY:START -->): publish with opus-5.5 build.py --publish-pm7 first`);
-    process.exit(2);
-  }
+const testOpus = join(concepts, 'Onboarding concepts', 'TestOpus5.5PmConcept.html');
+const USAGE_MARK = '<!-- USAGE:BODY:START -->';
+/* the old-page reference: a fresh build.py --out <out-dir>/reference-no-usage.html --no-usage */
+const referenceBuild = () => {
   const base = join(out, 'reference-no-usage.html');
   const r = spawnSync('python3', [join(concepts, 'onboarding', 'opus-5.5', 'tools', 'build.py'), '--out', base, '--no-usage'], { encoding: 'utf8' });
   if (r.status !== 0) { console.error('reference build failed:', (r.stderr || '') + (r.stdout || '')); process.exit(2); }
-  pages = { base, usage };
+  return base;
+};
+let pages;
+if (args[1] && !published) {
+  pages = { base: resolve(args[2] || testOpus), usage: resolve(args[1]) };
+} else if (!published && existsSync(reviewCopy)) {
+  /* review copy against its input; if build.py --publish-pm7 ran in this working tree, TestOpus already carries the new
+   * Usage page and is no old-page reference, so use the --no-usage build instead */
+  pages = { base: readFileSync(testOpus, 'utf8').includes(USAGE_MARK) ? referenceBuild() : testOpus, usage: reviewCopy };
+} else {
+  const usage = resolve(pageArg || join(concepts, 'PMConcept7.html'));
+  if (!readFileSync(usage, 'utf8').includes(USAGE_MARK)) {
+    console.error(`${usage} has no Usage band (${USAGE_MARK}): publish with opus-5.5 build.py --publish-pm7 first`);
+    process.exit(2);
+  }
+  pages = { base: referenceBuild(), usage };
 }
 console.error(`usage_boot: page ${pages.usage} against reference ${pages.base}`);
 const THEMES = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light'];
