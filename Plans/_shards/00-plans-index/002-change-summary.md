@@ -2,14 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L13-L128
+Source lines: L13-L130
 
-Source SHA256: `7f390a7cd214c1c6e512a1f73a417220e8b9167bf52ac5af2d48926d0fd62a66`
+Source SHA256: `23a5357c84d69cc47ddc2e9346b6e87a3b857e02864dec8c6953feb19ea64d97`
 
 ---
 
 ## Change Summary
 
+- 2026-10-09: Owner request DL-161, PMConcept7 carries its own fonts (`Plans/Decision_Log.md#DL-161`): PMConcept7 embeds Inter, Poppins with Nunito, and IBM Plex Mono at the weights and italics its looks use, with Gelasio standing in for Georgia, its symbols drawn as SVG and built in as PM Symbols, and form controls in the look's face (F3-430 amended), and shares its Inter, Poppins and IBM Plex Mono files byte for byte with the 5.6 Pro chat concept (DR-050).
+  ContractRef: ContractName:Plans/Decision_Log.md#DL-161, ContractName:Plans/FinalGUISpec.md#F3-430, ContractName:Plans/DRY_Rules.md#DR-050
 - 2026-10-09: Owner decision DL-158 on long answers in the questions card (`Plans/Decision_Log.md#DL-158`): the Ask Card grows with its content up to the room above the composer, then scrolls its body with Back, Skip, Next or Submit and close in reach; long text and web addresses wrap; option and question descriptions show; Something else and the note grow as typed; review keeps answers whole; a card whose content fits is unchanged (`Plans/FinalGUISpec.md#F3-609`; `Plans/assistant-chat-design.md` section 7.4 gains one rule pointing at it).
   ContractRef: ContractName:Plans/Decision_Log.md#DL-158, ContractName:Plans/FinalGUISpec.md#F3-609
 - 2026-10-09: Owner decision DL-154 on keeping the collaboration graphs in view as teams and rounds grow, recorded in plain words (`Plans/Decision_Log.md#DL-154`): a setup sheet's cast plate never yields past the leanest drawing that fits its width and draws a team too wide for one row as the wrap, two or three rows with a fork from the lead and a join to You, with the roster scrolling instead and the plate staying at the top of a narrow one-column sheet (`Plans/FinalGUISpec.md#F3-601`); a run card's track shows every Chat Room round up to 20 and wraps a long track down with its words on their own row (`#F3-602`); one plate fit rule, one cast grammar with its wrap and one track primitive carry it (`Plans/DRY_Rules.md#DR-045`). Consumers updated: `Plans/FinalGUISpec.md#F3-566` and `#F3-595`, `Plans/DRY_Rules.md#DR-044`. No command, settings key or wiring row changes.

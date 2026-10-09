@@ -106,7 +106,7 @@ def copy_json() -> dict:
     return data
 
 
-# Embedded font files (src/settings/nier/fonts) are inlined by settings_layer.py, never read as text.
+# Embedded font files (src/fonts, src/settings/nier/fonts) are inlined by settings_layer.inline_fonts, never read as text.
 BINARY_SUFFIXES = {'.woff2', '.woff', '.ttf', '.otf'}
 
 # Page-wide universal tails. A selector that starts at html (or :root, or body) with an attribute or class, and whose
@@ -307,6 +307,7 @@ def lint_sources() -> list[str]:
     problems.extend(duplicate_keys())
     # NieR Mode's token tables are generated from the theme JSON; stale tables or a stray colour literal fail here.
     problems.extend(nier_palette.check())
+    problems.extend(settings_layer.web_font_checks(SRC))
     # The scene SVGs are drawn by nier_scene_art.py and composed into kit.d/21-nier-scenes.js by nier_scenes.py.
     if nier_scene_art.main(['--check']) != 0:
         problems.append('NieR scene SVGs are stale; run tools/nier_scene_art.py --write')
@@ -614,7 +615,7 @@ def build_text() -> str:
     text = replace_once(text, LAYOUT_ANCHOR, LAYOUT_EXPOSE + LAYOUT_ANCHOR, 'layout restore exposure')
 
     # 3. Splice the O55 modules.
-    css = read_parts(SRC / 'css', '.css')
+    css = settings_layer.inline_fonts(read_parts(SRC / 'css', '.css'), SRC / 'fonts')
     js = read_parts(SRC / 'js', '.js')
     copy = json.dumps(copy_json(), ensure_ascii=False, separators=(',', ':'))
     head_block = f'<!-- O55:CSS:START -->\n<style id="pm-o55-css">\n{css}\n</style>\n<!-- O55:CSS:END -->\n'

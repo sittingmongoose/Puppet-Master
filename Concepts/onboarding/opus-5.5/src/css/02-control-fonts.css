@@ -1,0 +1,5 @@
+/* Form controls take the look's face. Chrome gives button, input, select and textarea a font of their own (Arial or
+   Liberation Sans for the first three, monospace for textarea) instead of the page's, so in Basic, Retro and NieR Mode,
+   whose rules do not reset it, controls such as the activity bar toggle drew in Arial. :where() keeps this at zero
+   specificity: it replaces only that browser default, and every rule that names a face for a control still wins. */
+:where(button, input, select, textarea, optgroup) { font-family: inherit; }

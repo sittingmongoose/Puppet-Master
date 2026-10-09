@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3476-L12071
+Source lines: L3510-L12158
 
-Source SHA256: `00a7952e444f64e01aa0ae24635a0aea6c137f7204cb412e5caec31181e1a89c`
+Source SHA256: `7def4e82703338f3baacffc544a4432bb37b0ca347d0fc9402ed0a56b3af97d5`
 
 ---
 
@@ -8390,6 +8390,59 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
+```
+
+### DL-161 - PMConcept7 Carries Its Own Fonts
+
+```yaml
+plan_unit_id: DL-161
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-161 records the owner request of 2026-10-09 that PMConcept7 have all its fonts built in. PMConcept7 embeds
+  Inter, Poppins with Nunito behind it, and IBM Plex Mono, at the weights and italics its looks use, as Latin woff2
+  data, and Gelasio stands in under the name Georgia for the info-badge glyph because Georgia cannot be embedded
+  (F3-430). Its Inter, Poppins and IBM Plex Mono files are the 5.6 Pro chat concept's, byte for byte (DR-050).
+  Orbitron, Rajdhani and JetBrains Mono are not embedded because no text draws in them, and platform font names
+  stay the computer's. The page's symbol characters are PM Symbols, drawn for Puppet Master as SVG and embedded
+  beside every text face for those characters only, and form controls take the look's face (F3-430).
+gui_related: true
+gui_classification_reason: Records an owner request on the concepts' fonts.
+split_recommended: false
+depends_on: [F3-430]
+unblocks: [DR-050]
+acceptance_criteria:
+  - "Every theme face PMConcept7 draws in Basic, Glass, Friendly and Retro comes from embedded data."
+  - "Every symbol character the page uses draws from PM Symbols in every look."
+  - "The owner's request is recorded in plain words with its source hashes."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: theme_token_drift
+reasoning_tier: standard
+context_scope: concept_web_fonts
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/proof-after.json, SHA-256 bfda89d92f00e53a7ad8dec195de68ff5ef1774443e4fb70868ce32bc061a82a"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/symbols-proof.json, SHA-256 e0f74c7c89eb6d80a7f48776822310df03989c1cf4e9d421cfe962af30f8ceae"
+preserved_exact_tokens:
+  - "DL-161"
+  - "Gelasio"
+  - "Georgia"
+  - "PM Symbols"
+negative_constraints:
+  - "Do not load a concept font from the network."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
 ```
 
 ### DL-158 - The Ask Card Fits Long Answers
