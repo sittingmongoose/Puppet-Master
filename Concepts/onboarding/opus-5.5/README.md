@@ -401,7 +401,7 @@ becomes in Slint:
 M1a (landed): the whole onboarding works end to end in pilot art. M2: the Guided Tour, t1–t5 passing with zero
 network requests and unchanged usage counters, reviewed in all eight themes, at 760 and 390 px, and on slow-motion
 films. 2026-10-08: the NieR showpiece pass landed (the NieR checkbox and Adjust where a look is chosen, the NieR
-window, the hero moments, the NieR tour, the NieR puppets, the sound pass and library); canon in DL-145, F3-590,
-F3-591 and SSYS-043. Next: the onboarding review at the same depth and more, including a full logic audit (does every
+window, the hero moments, the NieR tour, the NieR puppets, the sound pass and library); canon in DL-152, F3-598,
+F3-599 and SSYS-043. Next: the onboarding review at the same depth and more, including a full logic audit (does every
 path work, is the order right, does what is shown and offered follow from earlier choices), then art, motion and
 sound polish, `REPORT.md`, `RESEARCH.md` and the hub wrapper.
