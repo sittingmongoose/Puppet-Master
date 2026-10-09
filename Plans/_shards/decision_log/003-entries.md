@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L3439
+Source lines: L13-L3468
 
-Source SHA256: `3f702503f405988cacc1d2cda9deb0306107695daa419d57ef331d4c034d0186`
+Source SHA256: `00a7952e444f64e01aa0ae24635a0aea6c137f7204cb412e5caec31181e1a89c`
 
 ---
 
@@ -3372,6 +3372,35 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-597, ContractName:Plans/Final
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-onb-20261007/JARED-REQUEST-20261007.md`, SHA-256 `416638453431ef6bac2b4a8066560214c4fa3bcd8e0663cf778fba89bc63e652`.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-082, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/Settings_System.md#SSYS-043
+
+### DL-158: The Ask Card fits long answers
+
+**Question:** What should the questions card (the Ask Card) do when the answers are much longer?
+
+**Why it came up:** Jared liked the reworked questions card and asked what happens when the answers are much longer: does it adjust its size and still look good? It did not. The card grew without limit: a long review pushed Submit and the composer off the screen, a long web address ran out past the edge of its row, the Something else answer was one line that hid what did not fit, and the note scrolled inside a fixed box.
+
+**What you get:**
+- The card grows and shrinks with what it holds, up to the room above the message box, and leaves a strip of the conversation in view under the chat header.
+- Past that, the card's own body scrolls; Back, Skip, Next or Submit and the close button stay where they are and can always be clicked. A faint fade shows there is more, and a thin line sits above the buttons while the body scrolls.
+- Long questions, options, descriptions and answers wrap, and a long web address breaks inside its row instead of running off it.
+- Options can have a description under their name, and a question can have one under it.
+- Something else and the note grow as you type, and review shows every answer whole, line breaks included.
+- Short questionnaires look exactly as before.
+
+**What it costs:**
+- With very long content the user scrolls inside the card to see all of it, and the conversation behind it shows only a strip until the card is closed.
+
+**Options considered:** None were offered; Jared asked for the card to adjust and still look good, and the brief asked for it to grow up to the screen and keep its buttons in reach. Cutting long answers short was not considered, because the answers are the user's own words.
+
+**What the owner decided** (in plain words):
+- 2026-10-09, in his request: the questions card should adjust its size when the answers are much longer, and still look good.
+
+**What the spec now says:**
+1. **The Ask Card fits long answers** (`Plans/FinalGUISpec.md#F3-609`), adding to its look (`Plans/FinalGUISpec.md#F3-596`). The questionnaire's behaviour stays with `Plans/assistant-chat-design.md` section 7.4.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-questionnaire-long-answers-20261009/JARED_REQUEST.md`, SHA-256 `b1b1280a6dac4c2b1afed428e91c817bba1c2e7c360bfdae59b3bdec34cacf52` (the owner request).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-609, ContractName:Plans/FinalGUISpec.md#F3-596
 
 ### DL-154: A collaboration setup sheet's graph stays in view as helpers and rounds are added
 

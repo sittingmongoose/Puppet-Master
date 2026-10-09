@@ -101,6 +101,15 @@
     }
     return parts.join(' · ');
   }
+  /* Options arrive as plain strings (the fixture's legacy shape) or as the canonical `{id, label, description?}`
+     (Plans/Tools.md). The answer stays the label either way, so answerText() and the review read the same text. */
+  function optLabel(o) {
+    if (o && typeof o === 'object') return String(o.label != null ? o.label : (o.id != null ? o.id : ''));
+    return String(o == null ? '' : o);
+  }
+  function optDesc(o) {
+    return (o && typeof o === 'object' && o.description) ? String(o.description) : '';
+  }
   function answeredCount(qs) {
     var n = 0;
     for (var i = 0; i < qs.length; i++) if (hasAnswer(qs[i])) n++;
@@ -176,10 +185,11 @@
         kind: q.type,
         action: q.type === 'choice' ? 'answer-choice' : 'answer-multi',
         options: (q.options || []).slice(0, 4).map(function (o) {
+          var label = optLabel(o);
           return {
-            value: o, label: o, hint: '',
-            selected: q.type === 'choice' ? q.answer === o
-              : (Array.isArray(q.answer) && q.answer.indexOf(o) >= 0)
+            value: label, label: label, hint: optDesc(o),
+            selected: q.type === 'choice' ? q.answer === label
+              : (Array.isArray(q.answer) && q.answer.indexOf(label) >= 0)
           };
         })
       };
@@ -215,6 +225,7 @@
       subtitle: (flow && flow.note) || '',
       meta: [{ text: ans + '/' + qs.length + ' answered', tone: ans === qs.length ? 'ok' : '' }],
       prompt: q.prompt,
+      description: q.description || '',
       required: !!q.required,
       note: q.why || '',
       input: input,
@@ -521,6 +532,17 @@
     var i = s.lastIndexOf('/');
     return i >= 0 ? s.slice(i + 1) : s;
   }
+  /* The @-file sprout opens above its field. Inside the Ask Card's scrolling body (item 5) a field near the top of
+     the visible body has no room above, where the sprout would be cut off by the body's edge, so it opens below
+     instead. Read from the field as it is on screen now, before the render that opens the sprout. */
+  var MENTION_ROOM = 190;
+  function mentionDown() {
+    var body = document.querySelector('.qs-ask .qs-ask-body');
+    var field = body && body.querySelector('[data-input="question-other"]');
+    if (!body || !field) return false;
+    var line = field.closest('.qs-other-line, .qs-ask-note-well') || field;
+    return line.getBoundingClientRect().top - body.getBoundingClientRect().top < MENTION_ROOM;
+  }
   function otherRow(ctx, m, style) {
     if (m.type !== 'question') return '';
     var kind = (m.input && m.input.kind) || '';
@@ -539,7 +561,7 @@
         + '" title="' + ctx.esc(label) + '">@' + ctx.esc(label) + '<span aria-hidden="true">×</span></button>';
     }).join('');
     var sprout = mention
-      ? '<div class="qs-mention" role="listbox" data-k="qs-mention">' + (paths.length ? paths.map(function (p) {
+      ? '<div class="qs-mention' + (style === 'ask' && mentionDown() ? ' is-down' : '') + '" role="listbox" data-k="qs-mention">' + (paths.length ? paths.map(function (p) {
           return '<button type="button" class="qs-mention-item" role="option" data-action="qs-mention-pick" data-path="'
             + ctx.esc(p) + '">' + ctx.esc(p) + '</button>';
         }).join('') : '<span class="qs-mention-empty">No matching files</span>') + '</div>'
@@ -563,8 +585,14 @@
       + '<div class="qs-other-field">'
       + '<div class="qs-other-line">'
       + chips
-      + '<input type="text" class="qs-other-input" data-input="question-other" data-k="qs-text:question-other" placeholder="'
-      + ctx.esc(OTHER_PLACEHOLDER) + '" value="' + ctx.esc(other) + '" autocomplete="off" spellcheck="false">'
+      /* item 5: on the Ask Card the answer is a one-row textarea that grows with what is typed (questions.css
+         field-sizing, autoSizeFields() where that is missing), so a long answer stays readable instead of scrolling
+         sideways out of a one-line input */
+      + (style === 'ask'
+        ? '<textarea class="qs-other-input" rows="1" data-input="question-other" data-k="qs-text:question-other" placeholder="'
+          + ctx.esc(OTHER_PLACEHOLDER) + '" autocomplete="off" spellcheck="false">' + ctx.esc(other) + '</textarea>'
+        : '<input type="text" class="qs-other-input" data-input="question-other" data-k="qs-text:question-other" placeholder="'
+          + ctx.esc(OTHER_PLACEHOLDER) + '" value="' + ctx.esc(other) + '" autocomplete="off" spellcheck="false">')
       + '<button type="button" class="icon-button qs-attach" data-action="qs-attach" title="Attach a file" aria-label="Attach a file">'
       + iconOf(ctx, 'attach', 16) + '</button>'
       + '</div>'
@@ -587,7 +615,7 @@
         + '" title="' + ctx.esc(label) + '">@' + ctx.esc(label) + '<span aria-hidden="true">×</span></button>';
     }).join('');
     var sprout = mention
-      ? '<div class="qs-mention" role="listbox" data-k="qs-mention">' + (paths.length ? paths.map(function (p) {
+      ? '<div class="qs-mention' + (mentionDown() ? ' is-down' : '') + '" role="listbox" data-k="qs-mention">' + (paths.length ? paths.map(function (p) {
           return '<button type="button" class="qs-mention-item" role="option" data-action="qs-mention-pick" data-path="'
             + ctx.esc(p) + '">' + ctx.esc(p) + '</button>';
         }).join('') : '<span class="qs-mention-empty">No matching files</span>') + '</div>'
@@ -684,7 +712,11 @@
           + '<span class="qs-ask-mark qs-ask-mark-' + (multi ? 'check' : 'radio') + (o.selected ? ' is-on' : '')
           + '" aria-hidden="true"></span>'
           + optNum(i)
-          + '<span class="qs-ask-opt-label">' + ctx.esc(o.label) + '</span></button>';
+          + (o.hint
+            ? '<span class="qs-ask-opt-copy"><span class="qs-ask-opt-label">' + ctx.esc(o.label) + '</span>'
+              + '<span class="qs-ask-opt-desc">' + ctx.esc(o.hint) + '</span></span>'
+            : '<span class="qs-ask-opt-label">' + ctx.esc(o.label) + '</span>')
+          + '</button>';
       }).join('') + '</div>';
     } else {
       body = '<div class="choice-grid qs-grid" data-k="qs-opts">' + opts.map(function (o, i) {
@@ -1015,7 +1047,9 @@
     var N = window.PM56_NEON;
     var mark = (N && N.status) ? '<span class="qs-ask-glyph" aria-hidden="true">' + N.status('waiting', 16, 'nx-still') + '</span>' : '';
     return '<div class="qs-prompt qs-ask-title' + (mark ? ' has-glyph' : '') + '" data-k="qs-prompt">' + mark + ctx.esc(m.prompt)
-      + (m.required ? '<span class="qs-req" title="Required">*</span>' : '') + '</div>';
+      + (m.required ? '<span class="qs-req" title="Required">*</span>' : '') + '</div>'
+      /* the question's own description (Tools.md QuestionItem `description?`), when it has one */
+      + (m.description ? '<p class="qs-ask-desc" data-k="qs-ask-desc">' + ctx.esc(m.description) + '</p>' : '');
   }
   function take8(ctx, m) {
     if (m.type !== 'question') return take0(ctx, m);
@@ -1037,11 +1071,17 @@
     var next = idx === last
       ? { a: 'submit-questionnaire', label: 'Submit', kind: 'primary' }
       : { a: 'next-question', label: 'Next', kind: 'primary' };
-    return '<section class="decision-surface qs qs-ask" data-qs="8" data-k="qs:8">'
+    var st = qsState(ctx);
+    return '<section class="decision-surface qs qs-ask' + (st.bodyScroll ? ' is-scroll' : '') + '" data-qs="8" data-k="qs:8">'
       + '<button type="button" class="qs-ask-x" data-action="close-decision" title="Close and return later; answers are preserved" aria-label="Close decision">'
       + iconOf(ctx, 'close', 12) + '</button>'
       + '<div class="qs-ask-row">'
+      /* item 5: the body scrolls inside the card once the card reaches the room above the composer; the spine and
+         the footer stay put. Keyed per question, so every question opens at its top; data-scroll-key puts it in
+         app.js's captureScroll/restoreScroll, so a re-render (an answer picked, a work tick) keeps the reader's place. */
+      + '<div class="qs-ask-body' + askEdges + '" data-k="qs-ask-body:' + ctx.esc(m.key) + '" data-scroll-key="qs-ask-body:' + ctx.esc(m.key) + '">'
       + reel(ctx, m, askTitle(ctx, m) + sub + inputHtml(ctx, m, 'ask'))
+      + '</div>'
       + askSpine(ctx, m)
       + '</div>'
       + '<div class="qs-ask-foot" data-k="qs-ask-foot">'
@@ -1378,6 +1418,10 @@
     var q = (ctx.state.questions || [])[ctx.state.questionIndex | 0];
     if (!q) return;
     var v = t.value;
+    if (t.closest && t.closest('.qs-ask')) {
+      autoSizeField(t);
+      requestAnimationFrame(syncAskBody);
+    }
     var hadPreset = q.type === 'choice' && String(q.answer || '').trim();
     q.other = v;
     if (q.type === 'choice') q.answer = '';
@@ -1444,6 +1488,77 @@
       : shell.getBoundingClientRect().height;
     if (!(h > 0)) h = 44;
     stage.style.setProperty('--decision-h', Math.round(h) + 'px');
+  }
+  /* ---- Item 5 (2026-10-09): the Ask Card fits its content, up to the room above the composer ----
+     --qs-ask-room is the chat stage's height less its header, Context Lens and composer rows, published on the root;
+     questions.css caps the card at that room less a strip of transcript, and past the cap the body scrolls inside
+     the card with the footer in reach. It is measured here rather than read from app.js's --chat-dock-h: a render
+     rewrites the stage's style attribute, and for that instant the composer variable is gone, the cap lifts and the
+     body's scroll snaps to its top. A ResizeObserver on the stage and the composer (a typed message grows the
+     composer) re-measures, as do window resizes and each render syncMorph sees: no loop, no new MutationObserver. */
+  var askRO = null, askRoObserved = [];
+  function watchAskRoom(stage, comp) {
+    if (!window.ResizeObserver) return;
+    if (!askRO) askRO = new ResizeObserver(function () { fitAskRoom(); syncAskBody(); });
+    if (askRoObserved[0] === stage && askRoObserved[1] === comp) return;
+    askRO.disconnect();
+    askRoObserved = [stage, comp];
+    askRO.observe(stage);
+    if (comp) askRO.observe(comp);
+  }
+  function fitAskRoom() {
+    var stage = document.querySelector('.chat-stage');
+    if (!stage) return;
+    var used = 0, comp = null;
+    for (var i = 0; i < stage.children.length; i++) {
+      var c = stage.children[i];
+      if (c.classList.contains('chat-header') || c.classList.contains('lens-dock')) used += c.offsetHeight;
+      else if (c.classList.contains('composer')) { comp = c; used += c.offsetHeight; }
+    }
+    watchAskRoom(stage, comp);
+    /* on the root, not the stage, for the same reason as above */
+    var root = document.documentElement;
+    var v = Math.max(0, stage.clientHeight - used) + 'px';
+    if (root.style.getPropertyValue('--qs-ask-room') !== v) root.style.setProperty('--qs-ask-room', v);
+  }
+  /* The body's scroll state, as classes the CSS draws from: .is-scroll on the card (the footer's hairline, the edge
+     fades), .at-start / .at-end on the body (no fade at an edge the content already rests on). */
+  var askEdges = ' at-start';   /* the last edges read, so a render paints them too and a work tick cannot strip them */
+  function askBodyEdges(body) {
+    var start = body.scrollTop <= 1, end = body.scrollTop + body.clientHeight >= body.scrollHeight - 1;
+    body.classList.toggle('at-start', start);
+    body.classList.toggle('at-end', end);
+    askEdges = (start ? ' at-start' : '') + (end ? ' at-end' : '');
+  }
+  function syncAskBody() {
+    var card = document.querySelector('.decision-host .qs-ask');
+    var body = card && card.querySelector('.qs-ask-body');
+    if (!body) return;
+    var scroll = body.scrollHeight > body.clientHeight + 1;
+    card.classList.toggle('is-scroll', scroll);
+    askBodyEdges(body);
+    var ctx = window.PM56_EXT && window.PM56_EXT.ctx && window.PM56_EXT.ctx({});
+    if (ctx) qsState(ctx).bodyScroll = scroll;
+    /* a sprout that opened below its field (mentionDown) is scrolled into the body's view once, as it appears */
+    var sprout = body.querySelector('.qs-mention.is-down');
+    if (sprout && !sprout.__qsShown) {
+      sprout.__qsShown = true;
+      var over = sprout.getBoundingClientRect().bottom - body.getBoundingClientRect().bottom + 8;
+      if (over > 0) body.scrollTop += over;
+    }
+  }
+  /* The Ask Card's text fields grow with their text through CSS field-sizing; where an engine lacks it, the same
+     growth is set here from scrollHeight (on render and on input). */
+  var FIELD_SIZING = !!(window.CSS && CSS.supports && CSS.supports('field-sizing', 'content'));
+  function autoSizeField(t) {
+    if (FIELD_SIZING || !t || t.tagName !== 'TEXTAREA') return;
+    t.style.height = 'auto';
+    t.style.height = t.scrollHeight + 'px';
+  }
+  function autoSizeFields() {
+    if (FIELD_SIZING) return;
+    var list = document.querySelectorAll('.qs-ask textarea.qs-other-input');
+    for (var i = 0; i < list.length; i++) autoSizeField(list[i]);
   }
   function trackAskDock(shell, flag, ms) {
     var start = performance.now();
@@ -1548,6 +1663,7 @@
       shell.__qsOpening = false;
       setAskDock(shell);
       snapSpineThumb();
+      syncAskBody();
     }
     setTimeout(finishOpen, 560);
     playAnim(shell, [
@@ -1694,6 +1810,7 @@
       shell.__qsH = next;
       shell.__qsSpringing = false;
       setAskDock(shell);
+      syncAskBody();
     };
   }
   function spineThumbTop(spine, thumb) {
@@ -1756,6 +1873,11 @@
   function syncMorph() {
     var shell = document.querySelector('.decision-host .qs-shell');
     if (!shell) return;
+    if (shell.getAttribute('data-take') === '8') {
+      fitAskRoom();
+      autoSizeFields();
+      syncAskBody();
+    }
     if (shell.classList.contains('qs-will-open') && !shell.__qsOpening) playOpen(shell);
     else {
       var ctx = window.PM56_EXT && window.PM56_EXT.ctx && window.PM56_EXT.ctx({});
@@ -1777,6 +1899,16 @@
     new MutationObserver(function () { requestAnimationFrame(syncMorph); }).observe(document.documentElement, {
       childList: true, subtree: true, attributes: true, attributeFilter: ['data-phase']
     });
+    window.addEventListener('resize', function () {
+      if (!document.querySelector('.decision-host .qs-ask')) return;
+      fitAskRoom();
+      syncAskBody();
+    });
+    /* scroll does not bubble; one capturing listener reads the Ask Card body's edges as it scrolls */
+    document.addEventListener('scroll', function (e) {
+      var t = e.target;
+      if (t && t.classList && t.classList.contains('qs-ask-body')) askBodyEdges(t);
+    }, { capture: true, passive: true });
     requestAnimationFrame(syncMorph);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindMorph);

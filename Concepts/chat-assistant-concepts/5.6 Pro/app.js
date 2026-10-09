@@ -3590,7 +3590,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
       'Live turns':['Live reply','Live agent turn','Trouble mid-turn','Long agent turn'],
       'Work lifecycle':['Start complete work','Multi-orbit turn','Pause work','Step work','Complete work','Reset work','Show work history','Live subagents','Blocked subagent','Conflict mediation','Crew coordination'],
       'Every Working Animation state':D.workSteps.map(x=>`Work · ${x.label}`),
-      'Questions and decisions':['Prepare questions','Open questionnaire','Queue questionnaire','Plan approval','Plan revision','Plan cancellation','Permission request','Permission denial','Conflict resolution','Cancel and return'],
+      'Questions and decisions':['Prepare questions','Open questionnaire','Long answers questionnaire','Queue questionnaire','Plan approval','Plan revision','Plan cancellation','Permission request','Permission denial','Conflict resolution','Cancel and return'],
       'Artifacts':['Mermaid artifact','Interactive dashboard','Data explorer','Architecture map','Interactive quiz','Periodic table','Flowchart','Interactive chart','Generated image','Test evidence','Document artifact','Deep Plan artifact','Artifact stale','Artifact failure'],
       'Capabilities':['BSD intervention','BSD silent check','BSD timeout','BSD unavailable','BSD quota limited','Context Focus','Context Mute','Subcompact preview','Subcompact applied','Subcompact cancelled','ELI5 receipt','Goal replanning','Goal paused','Goal blocked'],
       'Thread and message states':['Plain text conversation','Queued Message Demo','Archived threads','Cross-thread search','Long response','Message details','Edit and branch','Restore from point','Draft history','New message anchor'],
@@ -4128,6 +4128,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
     'No models':()=>{switchThread('no-models');addReceipt('model-unavailable','No configured model is reachable','Every account is unauthenticated, quota-limited, or offline.');openMenu('model','model');},
 
     'Open questionnaire':()=>{switchThread('questions');state.questionIndex=0;state.decision={type:'question'};renderApp();},
+    /* Item 5 (2026-10-09): the deployment questionnaire written long (D.longQuestions), to judge the Ask Card's fit. */
+    'Long answers questionnaire':()=>{switchThread('questions');state.questions=clone(D.longQuestions);state.questionIndex=0;state.decision={type:'question'};renderApp();},
     'Queue questionnaire':()=>{switchThread('questions');state.decision=null;state.questionQueue+=1;addReceipt('question-receipt','Questionnaire queued','It waits in the transcript and can be resumed without losing the draft.');},
     'Cancel and return':()=>{switchThread('questions');state.decision=null;addReceipt('question-receipt','Questionnaire cancelled','The explicit cancellation is recorded. Existing answers remain in thread history.');},
 

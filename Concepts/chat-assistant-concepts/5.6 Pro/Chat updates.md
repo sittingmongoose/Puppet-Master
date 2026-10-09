@@ -726,6 +726,28 @@ button shadow) and the selection lands in stepped frames. Reduced motion (all
 three routes) ends every Ask Card motion at its end state: no morph, cascade,
 reel, row press, spine travel or selection pop.
 
+**Long answers** (2026-10-09). The Ask Card grows and shrinks with what it holds,
+up to the room above the composer: it stops short of the chat header, leaving a
+48px strip of transcript under it, and the composer never moves off screen.
+Past that the card's body scrolls inside the card (the page and the transcript
+never scroll with it), while the close button, the spine and the footer
+(**Back**, **Skip**, **Next** / **Submit**) stay in place and in reach. A body
+that scrolls fades at the edge its content runs past, and the footer takes a
+hairline above it. Each question opens at its top; picking an answer keeps the
+place you scrolled to. The cap follows the window and the composer's height.
+Long prompts, labels, descriptions and answers wrap, and a long unbroken word or
+URL breaks inside its row: nothing scrolls or clips sideways. An option can carry
+a description (the canonical `{label, description}` option shape), shown muted
+under its label; a question's own description sits under its title. Rows that
+wrap keep their radio or check and number on the first line. **Something else**
+is a field that grows line by line as you type, and the optional note grows with
+its text from its resting height, so neither scrolls inside itself. Review keeps a
+long answer whole, line breaks included. The @-file list opens below its field
+when the body has no room above it. Under NieR a description on the menu cursor
+is paper, like its label. Short questionnaires look exactly as before. Demo
+Studio → Questions and decisions → **Long answers questionnaire** opens the
+deployment questionnaire written long to see all of this.
+
 ## Overlay menus
 
 - Clicking the same trigger **closes** an open menu (persona, model, mode,
