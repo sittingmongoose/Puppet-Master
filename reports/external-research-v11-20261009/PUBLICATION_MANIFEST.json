@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-10-09T23:01:41.331759+00:00",
+  "snapshot_at": "2026-10-09T23:03:36.544335+00:00",
   "export_rules": "Complete terminal-authored stages verbatim except explicit private-email and unapproved private provider-instance label redactions. Raw captures/corpora/private transcripts/machine state excluded. Source and published SHA-256 distinguish redaction. Current evaluators show assignment only until terminal. Native metadata lifecycle receipts are supported host observations, not synthesized worker JSON.",
   "files": [
     {
@@ -49,6 +49,20 @@
       "source_sha256": "ff8685693d33d4d138ce9877170e7109b3ff8c0cb11f76e08089ef806f207e04",
       "published_sha256": "ff8685693d33d4d138ce9877170e7109b3ff8c0cb11f76e08089ef806f207e04",
       "bytes": 2586,
+      "redacted": false
+    },
+    {
+      "path": "control/PUBLICATION_CLEANUP.json",
+      "source_sha256": "b59188ad529a26e7ffb7ce54df4b145e09e6d6426791e580ff9ec2e0d4eb7c58",
+      "published_sha256": "b59188ad529a26e7ffb7ce54df4b145e09e6d6426791e580ff9ec2e0d4eb7c58",
+      "bytes": 1378,
+      "redacted": false
+    },
+    {
+      "path": "control/ROOT_GOAL_TERMINAL.json",
+      "source_sha256": "801779ec464a423b671b42b92386936c7002f8708a79fe7554c11b535d0b88e1",
+      "published_sha256": "801779ec464a423b671b42b92386936c7002f8708a79fe7554c11b535d0b88e1",
+      "bytes": 4063,
       "redacted": false
     },
     {
@@ -732,9 +746,9 @@
     },
     {
       "path": "control/ROOT_GOAL_LATEST.json",
-      "source_sha256": "54a7d826cb68786d5b1fbd68adb9b6e1c09c18a86ece9b5258e1e3dbf5c6b074",
-      "published_sha256": "54a7d826cb68786d5b1fbd68adb9b6e1c09c18a86ece9b5258e1e3dbf5c6b074",
-      "bytes": 1462,
+      "source_sha256": "d8af3ba6704399c4806f9ae2c15ed82aff635f2e296295f80fb37e4c18182a0a",
+      "published_sha256": "d8af3ba6704399c4806f9ae2c15ed82aff635f2e296295f80fb37e4c18182a0a",
+      "bytes": 1423,
       "redacted": false
     },
     {
@@ -18024,32 +18038,32 @@
     },
     {
       "path": "README.md",
-      "source_sha256": "1960dcb2106d9ff4ca1f51a6fa10f7ad05c289d7b1179505e5c1d0f72bc45b99",
-      "published_sha256": "1960dcb2106d9ff4ca1f51a6fa10f7ad05c289d7b1179505e5c1d0f72bc45b99",
-      "bytes": 7101,
+      "source_sha256": "6136d6935f32ee9e57f694c82db1a41a2169135a46a91abce22c8c2f00bb8df9",
+      "published_sha256": "6136d6935f32ee9e57f694c82db1a41a2169135a46a91abce22c8c2f00bb8df9",
+      "bytes": 7336,
       "redacted": false,
       "scope": "Root-generated compact public artifact or retained prior publication"
     },
     {
       "path": "final/CLEANUP.md",
-      "source_sha256": "eb6b524eff97fd1e692431bcb2a284b2f5032c59c98858f6dc1732af75181be8",
-      "published_sha256": "eb6b524eff97fd1e692431bcb2a284b2f5032c59c98858f6dc1732af75181be8",
-      "bytes": 4727,
+      "source_sha256": "84493600f969aa3d07af4c3cfeb03a54b4552f50258a8d904857a20741159f88",
+      "published_sha256": "84493600f969aa3d07af4c3cfeb03a54b4552f50258a8d904857a20741159f88",
+      "bytes": 4724,
       "redacted": false,
       "scope": "Root-generated compact public artifact or retained prior publication"
     },
     {
       "path": "final/FINAL_CLOSEOUT.md",
-      "source_sha256": "8c15336e887557c4b20daf0a9bc69374bad33d4082c83bd7103ccd0c97dbc506",
-      "published_sha256": "8c15336e887557c4b20daf0a9bc69374bad33d4082c83bd7103ccd0c97dbc506",
-      "bytes": 3462,
+      "source_sha256": "fdc079c2660e6ef7565dc28261746b6d06998742b632333c6eda9d37b7478a74",
+      "published_sha256": "fdc079c2660e6ef7565dc28261746b6d06998742b632333c6eda9d37b7478a74",
+      "bytes": 3666,
       "redacted": false,
       "scope": "Root-generated compact public artifact or retained prior publication"
     },
     {
       "path": "tables/ARMS.json",
-      "source_sha256": "cf27ece87ae348d60767c8aa2d69094a8f15980dec7e39a03cacf4d81c9813a5",
-      "published_sha256": "cf27ece87ae348d60767c8aa2d69094a8f15980dec7e39a03cacf4d81c9813a5",
+      "source_sha256": "3581f7bc1e40e8bd47fe7f61e6e879406f024ef5d108584f293bc7704387775d",
+      "published_sha256": "3581f7bc1e40e8bd47fe7f61e6e879406f024ef5d108584f293bc7704387775d",
       "bytes": 41977,
       "redacted": false,
       "scope": "Root-generated compact public artifact or retained prior publication"

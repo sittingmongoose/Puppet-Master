@@ -1,0 +1,45 @@
+{
+  "observed_at": "2026-10-09 23:03:35 UTC",
+  "native_completion_result": {
+    "goal": {
+      "threadId": "01a121df-560e-7250-982c-469a04197f2a",
+      "objective": "Execute ER11 external-research workflow experiments to completion under the saved brief at /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/BRIEF.md. Preserve ER10 closed results. Freeze and run a finite program up to 40 paired blocks/80 arms across requested Gmail Codex Luna Max/priority, Muse Code 1.3 Contributor Max (5 simultaneous), and zcode GLM 5.3 Flash Max (3 simultaneous), with genuine external discovery, fresh methods, independent primary-source assessment, honest native Goal/delivery/time/usage qualification, and no scientific steering or hidden replacements. Advance screening/integration/held-out confirmation by prospective rules without asking to continue. Publish compact complete evidence and reusable runnable recipes on this research branch to GitHub after substantive cohorts; independently verify actual immutable GitHub files. Do not edit product canon, governance, or main. Close and settle only owned work, safely clean disposable resources after verification, preserve explicit exceptions. Finish with measured usable improvements or concrete failure mechanisms, no manufactured win.",
+      "status": "complete",
+      "tokensUsed": 2208208,
+      "timeUsedSeconds": 17277,
+      "createdAt": 1791569702,
+      "updatedAt": 1791586979
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+  },
+  "post_completion_readback": {
+    "goal": {
+      "threadId": "01a121df-560e-7250-982c-469a04197f2a",
+      "objective": "Execute ER11 external-research workflow experiments to completion under the saved brief at /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/BRIEF.md. Preserve ER10 closed results. Freeze and run a finite program up to 40 paired blocks/80 arms across requested Gmail Codex Luna Max/priority, Muse Code 1.3 Contributor Max (5 simultaneous), and zcode GLM 5.3 Flash Max (3 simultaneous), with genuine external discovery, fresh methods, independent primary-source assessment, honest native Goal/delivery/time/usage qualification, and no scientific steering or hidden replacements. Advance screening/integration/held-out confirmation by prospective rules without asking to continue. Publish compact complete evidence and reusable runnable recipes on this research branch to GitHub after substantive cohorts; independently verify actual immutable GitHub files. Do not edit product canon, governance, or main. Close and settle only owned work, safely clean disposable resources after verification, preserve explicit exceptions. Finish with measured usable improvements or concrete failure mechanisms, no manufactured win.",
+      "status": "complete",
+      "tokensUsed": 2208208,
+      "timeUsedSeconds": 17277,
+      "createdAt": 1791569702,
+      "updatedAt": 1791586979
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "scope": "Root native Goal counters only; not campaign tokens, billing or subscription consumption. Scientific/cleanup publication verified before completion. After completion only mechanical delivery/accounting.",
+  "root_t3_settlement_request": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"settlesWhenTurnEnds\":true}"
+      }
+    ],
+    "structuredContent": {
+      "settlesWhenTurnEnds": true
+    },
+    "isError": false
+  },
+  "root_t3_settlement_idempotency_key": "er11-116bb1e4-root-final-settle-20261009-32o97oyya0s",
+  "root_t3_thread_id": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+  "root_t3_settlement_scope": "Requested settle at normal turn end; not claimed already settled during active root turn."
+}

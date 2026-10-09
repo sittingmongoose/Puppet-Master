@@ -1,0 +1,35 @@
+{
+  "verified_at": "2026-10-09T23:02:26.156421+00:00",
+  "commit": "f2aefcd34413389295c875418ed11c689e90d678",
+  "github_ref_actual": "f2aefcd34413389295c875418ed11c689e90d678",
+  "verification": "Actual GitHub ref and complete immutable cleanup, archive-hash receipt, closeout and manifest retrieved; byte equality verified independently of NAS push.",
+  "files": [
+    {
+      "path": "final/CLEANUP.md",
+      "sha256": "eb6b524eff97fd1e692431bcb2a284b2f5032c59c98858f6dc1732af75181be8",
+      "bytes": 4727,
+      "actual_github_content_matches": true
+    },
+    {
+      "path": "control/CLEANUP_RESULT.json",
+      "sha256": "97a47ba87ae568154912c71663c68f54a70a18b9248ec79fcc034a066ba5b58a",
+      "bytes": 12276,
+      "actual_github_content_matches": true
+    },
+    {
+      "path": "final/FINAL_CLOSEOUT.md",
+      "sha256": "8c15336e887557c4b20daf0a9bc69374bad33d4082c83bd7103ccd0c97dbc506",
+      "bytes": 3462,
+      "actual_github_content_matches": true
+    },
+    {
+      "path": "PUBLICATION_MANIFEST.json",
+      "sha256": "8d8454bbddc6d0b5409da7208b6916c7d1c03cd2c06e55f78a4c1d806036b61c",
+      "bytes": 781052,
+      "actual_github_content_matches": true
+    }
+  ],
+  "owned_cleanup": "COMPLETE_WITH_EXPLICIT_RETENTION_EXCEPTIONS",
+  "root_goal_at_verification": "ACTIVE; completion follows this receipt",
+  "no_scientific_changes_since_final_freeze": true
+}
