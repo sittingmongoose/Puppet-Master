@@ -42,6 +42,9 @@ html[data-o55-nier-parts~="headers"] #panel-usage .pmu-cardhead { background-ima
   background-position: left 6px bottom 0, right 6px bottom 0, center calc(100% - 2px); background-repeat: no-repeat; }
 html[data-o55-nier-parts~="headers"] #panel-usage .pmu-insphead { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 html[data-o55-nier-parts~="headers"] #panel-usage .pmu-insphead :is(.pmu-inspsub, .pmu-iconbtn, .pmu-seg button) { color: var(--o55-nier-on-ink); }
+/* the band's title in the card titles' tracked capitals, behind the square bullet of the app's ink bands (lane f-nier) */
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-insphead h3 { position: relative; padding-left: 13px; text-transform: uppercase; letter-spacing: .08em; }
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-insphead h3::before { content: ""; position: absolute; left: 0; top: 50%; width: 5px; height: 5px; margin-top: -3px; background: var(--o55-nier-on-ink); }
 html[data-o55-nier-parts~="headers"] #panel-usage .pmu-colhead { background: rgba(var(--o55-nier-ink-rgb), .05); border-top-color: transparent;
   border-bottom: 1px solid var(--o55-nier-ink); }
 html[data-o55-nier-parts~="headers"] #panel-usage .pmu-mhead strong { text-transform: uppercase; letter-spacing: .08em; }
@@ -143,12 +146,12 @@ html[data-o55-nier-parts~="cursor"] #panel-usage :is(.pmu-navbtn.o55np-cur-over,
   padding: 1px 5px; background: var(--o55-nier-on-ink); color: var(--o55-nier-ink) !important; -webkit-text-fill-color: currentColor; }
 
 /* ---- YoRHa headers [headers]: the rail's brand and the stage head as the onboarding window's header draws them
-   (11-window-nier.css .o55-head, .o55-eyebrow): the brand title in main's tracking for the Usage brand (14-nier-parts.css
-   :83), an ink rule with square caps under the brand with the machine glyphs riding it [glyphs], a mono section label
+   (11-window-nier.css .o55-head, .o55-eyebrow): an ink rule with square caps under the brand (its title and the Live
+   control keep their row: a wider tracking pushed STANDBY onto a second line) with the machine glyphs riding it
+   [glyphs], a mono section label
    with the room's place among the 13 above the rooms (Settings' CHAPTERS, the window's SETUP 01/05), and the stage head
    ruled like the window's header. The head's buttons are the window's square hairline boxes that fill with ink. ---- */
-html[data-o55-nier-parts~="headers"] #panel-usage .pmu-brand h1 { letter-spacing: .12em; font-weight: 600; }
-html[data-o55-nier-parts~="headers"] #panel-usage .pmu-brand { flex-wrap: wrap; row-gap: 2px; padding: 0 2px 10px;
+html[data-o55-nier-parts~="headers"] #panel-usage .pmu-brand { padding-bottom: 10px;
   background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left 2px bottom 0 / 5px 5px no-repeat,
     linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right 2px bottom 0 / 5px 5px no-repeat,
     linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) center bottom 2px / calc(100% - 16px) 1px no-repeat; }
