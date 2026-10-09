@@ -60,7 +60,7 @@ function applyChips(root, animate) {
     if (el._dSeen === word) return;                                                // nothing changed since the last pass
     const changed = el._dSeen != null;
     const st = stateOfChip(el, word);
-    const shown = capFirst(word);
+    const shown = metaWords(capFirst(word));                                        // "In use · 3 containers", not "3 ctr"
     if (shown !== word) setOwnText(host, shown);
     el._dSeen = shown;
     if (el.getAttribute('data-d-st') !== st) setAttr(el, 'data-d-st', st);

@@ -696,7 +696,9 @@
 [data-rail-skin="d"] #panel-files .fm-chunks .add { color: var(--d-ok) !important; } [data-rail-skin="d"] #panel-files .fm-chunks .del { color: var(--d-fail) !important; }
 [data-rail-skin="d"] #panel-files .fm-chunks .meta { color: var(--d-text-3) !important; font-family: var(--body-font); }
 [data-rail-skin="d"] #panel-files .fm-cacts { display: flex !important; flex-wrap: wrap; gap: 6px !important; margin-top: 4px; }
-[data-rail-skin="d"] #panel-files .fm-changeitem > .sh-accb, [data-rail-skin="d"] #panel-files .fm-openitem > .sh-accb { padding-left: calc(var(--d-pad) + 18px) !important; }
+/* an open item's facts start under its name: 24 px for Changed (the letter's 9 px column), past the dot and icon for Open */
+[data-rail-skin="d"] #panel-files .fm-changeitem > .sh-accb { padding-left: calc(var(--d-pad) + 13px) !important; }
+[data-rail-skin="d"] #panel-files .fm-openitem > .sh-accb { padding-left: calc(var(--d-pad) + 18px) !important; }
 
 /* Changed and Open rows read on two lines: the file, then its folder; nothing is cut to a single letter */
 [data-rail-skin="d"] #panel-files .fm-changerow {

@@ -44,7 +44,9 @@
 §F .fm-chunks .add { color: var(--d-ok) !important; } §F .fm-chunks .del { color: var(--d-fail) !important; }
 §F .fm-chunks .meta { color: var(--d-text-3) !important; font-family: var(--body-font); }
 §F .fm-cacts { display: flex !important; flex-wrap: wrap; gap: 6px !important; margin-top: 4px; }
-§F .fm-changeitem > .sh-accb, §F .fm-openitem > .sh-accb { padding-left: calc(var(--d-pad) + 18px) !important; }
+/* an open item's facts start under its name: 24 px for Changed (the letter's 9 px column), past the dot and icon for Open */
+§F .fm-changeitem > .sh-accb { padding-left: calc(var(--d-pad) + 13px) !important; }
+§F .fm-openitem > .sh-accb { padding-left: calc(var(--d-pad) + 18px) !important; }
 
 /* Changed and Open rows read on two lines: the file, then its folder; nothing is cut to a single letter */
 §F .fm-changerow {
