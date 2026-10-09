@@ -16,7 +16,7 @@ const out = resolve(process.argv[2] || '/tmp/usage-boot');
 mkdirSync(out, { recursive: true });
 /* page under test and reference page: by default the review copy against its input; after the publish (README,
  * Proposal B) pass PMConcept7.html and a copy of the pre-publish TestOpus5.5PmConcept.html */
-const pages = { base: resolve(process.argv[4] || join(concepts, 'TestOpus5.5PmConcept.html')),
+const pages = { base: resolve(process.argv[4] || join(concepts, 'Onboarding concepts', 'TestOpus5.5PmConcept.html')),
   usage: resolve(process.argv[3] || join(concepts, 'UsageTestPMConcept7.html')) };
 const THEMES = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light'];
 /* the same error in both pages carries a different file and line; compare the message only */
