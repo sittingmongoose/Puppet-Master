@@ -1,0 +1,15 @@
+{
+ "settingsRows": {
+  "onboarding": "Run Onboarding Again",
+  "onboardingMeta": "Go through the first-time setup again; the Guided Tour starts over too",
+  "tourAt": "Pick up at step {n} of {total}",
+  "tourOpen": "The tour is open now",
+  "tourNone": "No tour to pick up",
+  "restart": "Start the Guided Tour over",
+  "restartMeta": "From the first step, with a local example"
+ },
+ "tour": {
+  "resumeFresh": "The Guided Tour couldn’t pick up where it stopped, so your layout is back as it was and the tour starts from the beginning.",
+  "resumeFreshLost": "The Guided Tour couldn’t pick up where it stopped, so it starts from the beginning. Your layout from before it couldn’t be put back; Settings › Window & panels › Reset Home layout puts the panels back in their default places."
+ }
+}
