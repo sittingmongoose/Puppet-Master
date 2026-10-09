@@ -1452,6 +1452,11 @@ child sub-To-Dos; every leaf carries a bounded expected outcome.
   rows its measured height shows. Expand carets point **right** when collapsed
   and **down** when expanded. Two demo To-Dos on Query Performance carry an
   owner (Query Analyzer and Schema Reviewer).
+- The **navigation line** above the list holds the visible count (`N visible of
+  M items`) and **Expand all**, and nothing else. There is no Last item control
+  (removed 2026-10-09, DL-160). The search field finds any title or exact ID,
+  and the list scrolls to its final item; **Expand all** opens every parent
+  first.
 - There is **no verification status** anywhere user-visible; validation, when
   needed, is its own To-Do. There is **no separate Done section and no source
   grouping** — completed items stay inline, in place, struck through.

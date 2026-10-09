@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40509-L41095
+Source lines: L40509-L41099
 
-Source SHA256: `f53b691e46c27e09fd2db732b918c0650a0f8b9516dd9b49d708c869ab1be25a`
+Source SHA256: `58941d4ebe9ae7d599f3e617ef8f5dca6182162d0a28d17cb4f4a0d576df6dac`
 
 ---
 
@@ -222,8 +222,10 @@ canonical_text: >-
   as the row's status word and the selected item's Open work. A row's full title, full assignment and waiting or
   blocker reason show in its hover tag (F3-523) and in the selected detail. The selected detail keeps its header with
   Close details, the Expected well, the dependency or waiting line, Open work when the item has a work binding
-  (cmd.chat.todos.open_work) and its source links. The list fills the panel's height below its search and navigation
-  line and puts its scrollbar at the panel's edge with no dead gutter. Subagents (DL-147; behaviour ACD-485): rows,
+  (cmd.chat.todos.open_work) and its source links. The navigation line above the list holds the visible count
+  (`N visible of M items`) and Expand all, and nothing else; the Last item control is retired (DL-160). The list fills
+  the panel's height below its search and navigation line and puts its scrollbar at the panel's edge with no dead
+  gutter. Subagents (DL-147; behaviour ACD-485): rows,
   the Subagents preview and the detail card underline the agent's model. Clicking a row selects it and opens the
   agent's read-only live transcript, and the detail card's button reads Open live transcript. That transcript is drawn
   in the chat's Turn Stage presentation (ACD-469, F3-562), set close like a live feed: the turn mark, the spine
@@ -240,11 +242,12 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the Goal, To-Dos and Subagents Activity Detail presentation and the subagent live transcript's look.
 split_recommended: false
-depends_on: [DL-147, GRS-055, TDR-007, TDR-011, ACD-485, ACD-469, ACD-473, F3-580, F3-585]
+depends_on: [DL-147, GRS-055, TDR-007, TDR-011, ACD-485, ACD-469, ACD-473, F3-580, F3-585, DL-160]
 unblocks: []
 acceptance_criteria:
   - "Goal Activity Detail renders one control row with Cancel Goal alone at the far edge and an Objective history footer; no View Goal route or Ask for a replacement control exists."
   - "Every To-Do row is one line with no button, shows an explicit assignment only when one exists, and Open work appears only in the selected detail."
+  - "The To-Do navigation line holds the visible count and Expand all only, and no Last item control exists in the panel (DL-160)."
   - "A subagent's live transcript renders in the Turn Stage presentation with no composer, only Copy, More details and Expand or Collapse on messages, and each stretch of work as one collapsed row with a count."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
@@ -282,12 +285,13 @@ compatibility_only_notes: []
 stale_retired_dispositions:
   - "For the To-Do rows only, the native card presentation of F3-542 and F3-580 is replaced by one-line checklist rows (DL-147); the panel keeps its native frame."
   - "The Goal panel's View Goal route and its Ask for a replacement control are retired (DL-147); the agent-proposed replacement path is not."
+  - "The To-Do navigation line's Last item control is retired (DL-160); the visible count and Expand all stay."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-147, ContractName:Plans/Goal_Runtime_System.md#GRS-055, ContractName:Plans/ToDo_Runtime.md#TDR-011, ContractName:Plans/assistant-chat-design.md#ACD-485, ContractName:Plans/FinalGUISpec.md#F3-580
+ContractRef: ContractName:Plans/Decision_Log.md#DL-147, ContractName:Plans/Goal_Runtime_System.md#GRS-055, ContractName:Plans/ToDo_Runtime.md#TDR-011, ContractName:Plans/assistant-chat-design.md#ACD-485, ContractName:Plans/FinalGUISpec.md#F3-580, ContractName:Plans/Decision_Log.md#DL-160
 
 ### F3-594 — Agents Are Puppets
 

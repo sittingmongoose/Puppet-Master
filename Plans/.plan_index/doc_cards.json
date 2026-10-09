@@ -74,7 +74,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6040,
+      "line_count": 6042,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "2ff7580d4f1b1cc698a1a96963e473d333bf519ebf85fea0b1b4afbec4052536",
+      "sha256": "f17cc030f560ed09f66880037a6e7adbea0da990b69c3c9c37a163eff92b5ec9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -5616,13 +5616,15 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 55,
-        "True": 85
+        "True": 86
       },
-      "heading_count": 287,
+      "heading_count": 288,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
         "AGENTS.md",
+        "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md",
+        "Concepts/chat-assistant-concepts/5.6 Pro/todos.js",
         "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py",
         "Plans/00-plans-index.md",
         "Plans/Architecture_Invariants.md",
@@ -5713,9 +5715,9 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 11794,
+      "line_count": 11846,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 140,
+      "plan_unit_count": 141,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5856,7 +5858,8 @@
         "DL-149",
         "DL-150",
         "DL-151",
-        "DL-152"
+        "DL-152",
+        "DL-160"
       ],
       "reasoning_tiers": [
         "high",
@@ -5988,6 +5991,7 @@
         "terminology_drift",
         "theme_motion_drift",
         "theme_token_drift",
+        "todo_navigation_control_drift",
         "unbindable_vote_promise",
         "unbounded_or_dishonest_parent_adjacency_in_a_bounded_page",
         "unbounded_review_loop_or_suppressed_finding",
@@ -6001,15 +6005,15 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "e3792b33109db9b96f0cef6bee55b0369c15407a43e5af00569dad39f487fd8c",
+      "sha256": "a0e3b111ee3f07aa9ea8c92ff889dbe9d015818c6aa5fcc707335fabbcec19a8",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 140
+        "accepted": 141
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 51,
+        "decision": 52,
         "requirement": 88
       },
       "validation_surfaces": [
@@ -7530,7 +7534,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 41346,
+      "line_count": 41350,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 599,
       "plan_unit_ids": [
@@ -8265,7 +8269,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "f53b691e46c27e09fd2db732b918c0650a0f8b9516dd9b49d708c869ab1be25a",
+      "sha256": "58941d4ebe9ae7d599f3e617ef8f5dca6182162d0a28d17cb4f4a0d576df6dac",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 598,
@@ -20611,7 +20615,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-09T02:49:17Z",
+  "generated_at_utc": "2026-10-09T17:38:58Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20620,12 +20624,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3560,
-      "True": 3403
+      "True": 3404
     },
-    "plan_unit_count": 6963,
+    "plan_unit_count": 6964,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6771,
+      "accepted": 6772,
       "retired": 182,
       "superseded": 10
     },
@@ -20658,7 +20662,7 @@
       "contract": 5,
       "contract_requirement": 2,
       "data_contract": 8,
-      "decision": 74,
+      "decision": 75,
       "deferred_enhancement": 8,
       "delta_contract": 1,
       "derived_control_policy": 1,
