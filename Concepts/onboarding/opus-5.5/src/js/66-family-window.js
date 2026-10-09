@@ -637,12 +637,19 @@
   /* each family's finale: the emblem held back from the first frame (fill: backwards), and what it does at the bows and
      the rise */
   const FINALE = {
-    /* Basic: the APPROVED stamp presses onto the READY sign (on the narrow band, beside h2's head) */
-    basic(p, svg, em, els, cc) {
-      const s = em('stamp');
-      s.forEach((el) => { el.classList.add('o55fm-stamp'); p.anim(el, [{ transform: 'scale(1.8)', opacity: 0 }, { transform: 'scale(0.94)', opacity: 1, offset: 0.7 }, { transform: 'scale(1)', opacity: 1 }], { duration: 160, delay: cc.rise + 80, easing: 'cubic-bezier(0.3, 0, 0.8, 0.15)', fill: 'backwards' }); });
-      p.end(() => s.forEach((el) => el.classList.remove('o55fm-stamp')));
-      return { rise() { p.at(240, () => play('land', { voice: 0, pan: 0 })); } };
+    /* Basic: approved for build. The draftsman's rubber stamp, drawn in plan, comes down on the drawing: corner marks
+       draw on where it will land as the last helper bows, the stamp glides in from above the sheet and hovers there
+       (its face's outline dashed over it, the drafting sign of an edge hidden from view), lifts a little in the rest,
+       and strikes on the resolving chord with its felt thump. The grid under it brightens once, two press lines spread
+       from its edges, and it lifts away up and to the right, uncovering a big APPROVED impression with today's date
+       across the middle of the sheet (on the narrow band, beside h2's head). Measured: nothing overshoots. */
+    basic(p, svg, em, els, cc, o) {
+      const s = em('stamp'), C = cc.rise + 30;
+      /* (the impression is made at the contact, under the stamp) */
+      s.forEach((el) => p.anim(el, IN, { duration: 1, delay: C, fill: 'backwards' }));
+      const it = s[0] && s[0].closest('.o55-it'), st = o && o.st;
+      if (it && st) basicStamp(p, st, svg, it, C);
+      return { rise() { p.at(C - cc.rise, () => play('land', { voice: 0, pan: 0 })); } };
     },
     /* Friendly: bravo. Three big paper roses are thrown from the house, from in front of the stage lip, large as they
        pass the audience, turn over in the air and land across the boards; the troupe steps back a beat as they land */
@@ -695,6 +702,80 @@
       return { rise() { for (let i = 1; i <= 8; i++) p.at(420 + i * 90, () => { tally(svg, i / 8, false); play('phase', { step: i }); }); } };
     }
   };
+  /* Basic's stamp at work, over the impression's place (its item's translate, scale and turn, in the scene's units):
+     the corner marks, the press lines, the stamp and its dashed hidden outline in a stage overlay, the grid's
+     brightening in the drawing itself, under the troupe, and the sheet's jolt under the blow; all of it goes with the
+     call. C: the contact (call ms). It is all made on the motion clock just before it plays, its timings counted from
+     then (made with the call, its animations would start only after Ready's heavy first frames, behind its sounds) */
+  function basicStamp(p, st, svg, it, C) {
+    const t0 = C - 340, D = (t) => t - t0;
+    p.at(t0, () => {
+      if (!st.isConnected || !svg.isConnected) return;
+      const tf = it.style.transform || '', num = (re, v) => { const m = re.exec(tf); return m ? +m[1] : v; };
+      const X = num(/translate\(\s*(-?[\d.]+)px/, 240), Y = num(/translate\([^,]+,\s*(-?[\d.]+)px/, 266), k = num(/scale\(\s*([\d.]+)\)/, 1), r = num(/rotate\(\s*(-?[\d.]+)deg/, 0);
+      const vb = svg.getAttribute('viewBox') || '0 0 480 600', V = vbFull(vb), L = makeLayer(st, 'basic', vb, famCtx('basic', st)), pal = L.ctx.pal;
+      const w = 200, h = 58, MW = 106, MH = 35, face = `x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" rx="5"`;
+      /* the corner marks, framing the place on the paper wide enough to stay in view around the hovering stamp */
+      const marks = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([sx, sy]) => { const x = sx * (w / 2 + 34), y = sy * (h / 2 + 19);
+        return `<path data-k="mark" d="M${x} ${y - sy * 16}V${y}H${x - sx * 16}" fill="none" stroke="${pal.ink}" stroke-width="1.3" stroke-linecap="round" pathLength="1"/>`; }).join('');
+      const press = [0, 1].map(() => `<rect data-k="press" ${face} fill="none" stroke="${pal.ink}" stroke-width="1.2" opacity="0"/>`).join('');
+      /* the stamp in plan: its mount with chamfered edges, the label, a registration mark, the knob and its centre lines */
+      const ch = (sx, sy) => `M${sx * (MW - 2)} ${sy * (MH - 2)}L${sx * 93} ${sy * 23}`;
+      const tool = `<g data-k="tool"><rect x="${-MW}" y="${-MH}" width="${2 * MW}" height="${2 * MH}" rx="7" fill="${pal.paper}"/>`
+        + `<rect x="${-MW}" y="${-MH}" width="${2 * MW}" height="${2 * MH}" rx="7" fill="${pal.fill2}" stroke="${pal.ink}" stroke-width="1.6"/>`
+        + `<rect x="-93" y="-23" width="186" height="46" rx="3" fill="${pal.paper}" stroke="${pal.ink2}" stroke-width="0.8"/>`
+        + `<path d="${ch(-1, -1)}${ch(1, -1)}${ch(1, 1)}${ch(-1, 1)}" fill="none" stroke="${pal.ink2}" stroke-width="0.8"/>`
+        + txt('basic', -57, 3, T('call.basic.stamp'), 8.5, { fill: pal.ink2, w: 700, ls: 1.4 })
+        + `<circle cx="57" cy="0" r="5" fill="none" stroke="${pal.ink2}" stroke-width="0.8"/><path d="M48 0H66M57 -9V9" stroke="${pal.ink2}" stroke-width="0.8"/>`
+        + `<circle r="19" fill="${pal.paper}" stroke="${pal.ink}" stroke-width="1.5"/><circle r="11" fill="${pal.fill2}" stroke="${pal.ink}" stroke-width="1.1"/>`
+        + `<path d="M-32 0H32M0 -30V30" fill="none" stroke="${pal.ink2}" stroke-width="0.65" stroke-dasharray="8 2.5 1.5 2.5"/></g>`;
+      const hidden = `<rect data-k="hidden" ${face} fill="none" stroke="${pal.ink}" stroke-width="1" stroke-dasharray="5 3.5" opacity="0"/>`;
+      L.root.innerHTML = `<g transform="translate(${X} ${Y}) scale(${k}) rotate(${r})">${marks}${press}${tool}${hidden}</g>`;
+      /* the grid under the stamp, brightened in an ellipse about it: the sheet's own 20-unit lines, each faded toward its
+         ends and dimmer away from the middle (gradient fills; no mask) */
+      const RX = 150 * k, RY = 92 * k, u = 'o55fm-bgrid-' + (pal.dark ? 'd' : 'l'), a = pal.dark ? 0.62 : 0.5;
+      let lines = '';
+      for (let x = Math.ceil((X - RX) / 20) * 20; x <= X + RX; x += 20) { const q = 1 - ((x - X) / RX) ** 2; if (q <= 0.04) continue; const hh = RY * Math.sqrt(q), lw = x % 100 ? 0.9 : 1.3;
+        lines += `<rect x="${(x - lw / 2).toFixed(2)}" y="${(Y - hh).toFixed(1)}" width="${lw}" height="${(2 * hh).toFixed(1)}" fill="url(#${u}-v)" opacity="${q.toFixed(2)}"/>`; }
+      for (let y = Math.ceil((Y - RY) / 20) * 20; y <= Y + RY; y += 20) { const q = 1 - ((y - Y) / RY) ** 2; if (q <= 0.04) continue; const hw = RX * Math.sqrt(q), lw = y % 100 ? 0.9 : 1.3;
+        lines += `<rect x="${(X - hw).toFixed(1)}" y="${(y - lw / 2).toFixed(2)}" width="${(2 * hw).toFixed(1)}" height="${lw}" fill="url(#${u}-h)" opacity="${q.toFixed(2)}"/>`; }
+      const stop = (o2) => `<stop offset="0" stop-color="${pal.ink}" stop-opacity="0"/><stop offset="0.5" stop-color="${pal.ink}" stop-opacity="${o2}"/><stop offset="1" stop-color="${pal.ink}" stop-opacity="0"/>`;
+      const grid = document.createElementNS(NS, 'g');
+      grid.setAttribute('class', 'o55fm-gridup'); grid.setAttribute('aria-hidden', 'true'); grid.setAttribute('opacity', '0');
+      grid.innerHTML = `<defs><linearGradient id="${u}-v" x1="0" y1="0" x2="0" y2="1">${stop(a)}</linearGradient><linearGradient id="${u}-h" x1="0" y1="0" x2="1" y2="0">${stop(a)}</linearGradient></defs>${lines}`;
+      const back = svg.querySelector('.o55-sl-back');
+      if (back) back.insertBefore(grid, back.firstChild);
+      p.end(() => { L.div.remove(); grid.remove(); });
+      /* the beats: the marks at C-300, the stamp in from C-310 to its hover at C-150, lifted a little to C-85, the strike
+         to C, the press and its give, the lift from C+170, gone by C+500 */
+      const s0 = D(C - 310), s1 = D(C + 500), span = s1 - s0, at = (t) => (D(t) - s0) / span;
+      /* (from above the view, wherever the band or the slice puts its top) */
+      const ty0 = Math.min(-170, (V.y - Y) / k - 120), tx0 = -70;
+      parts(L, 'mark').forEach((m) => { p.anim(m, DRAW, { duration: 220, delay: D(C - 300), easing: 'cubic-bezier(0.45, 0, 0.2, 1)', fill: 'backwards' }); p.anim(m, OUT, { duration: 140, delay: D(C), fill: 'forwards' }); });
+      p.at(D(C - 290), () => play('phase', { step: 0 }));
+      const hid = part(L, 'hidden');
+      p.anim(hid, [{ opacity: 0 }, { opacity: 0.9 }], { duration: 200, delay: D(C - 240), fill: 'forwards' });
+      p.anim(hid, [{ opacity: 0.9 }, { opacity: 0 }], { duration: 90, delay: D(C), fill: 'forwards' });
+      const tl = part(L, 'tool');
+      p.anim(tl, [
+        { offset: 0, transform: `translate(${tx0}px, ${ty0.toFixed(1)}px) scale(1.5)`, easing: 'cubic-bezier(0.2, 0, 0, 1)' },
+        { offset: at(C - 150), transform: 'translate(0px, 0px) scale(1.22)', easing: 'cubic-bezier(0.2, 0, 0, 1)' },
+        { offset: at(C - 85), transform: 'translate(0px, 0px) scale(1.3)', easing: 'cubic-bezier(0.55, 0, 1, 0.45)' },
+        { offset: at(C), transform: 'translate(0px, 0px) scale(1)', easing: 'cubic-bezier(0.2, 0, 0, 1)' },
+        { offset: at(C + 40), transform: 'translate(0px, 0px) scale(0.988)', easing: 'cubic-bezier(0.2, 0, 0, 1)' },
+        { offset: at(C + 170), transform: 'translate(0px, 0px) scale(1)', easing: 'cubic-bezier(0.45, 0, 0.2, 1)' },
+        { offset: 1, transform: `translate(64px, ${Math.min(-200, ty0 * 0.7).toFixed(1)}px) scale(1.45)` }], { duration: span, delay: s0, fill: 'both' });
+      p.anim(tl, OUT, { duration: 150, delay: D(C + 340), fill: 'forwards' });
+      p.at(D(C - 300), () => play('move', { step: 1 }));
+      p.at(D(C + 170), () => play('move', { step: 2 }));
+      /* the blow: two press lines spread from the face's edges and fade (one way), the grid brightens once and settles
+         back, and the sheet gives under it, 1.5 px down and back, no bounce */
+      parts(L, 'press').forEach((el, i) => p.anim(el, [{ transform: 'scale(1.02)', opacity: 0.9 }, { transform: `scale(${i ? 1.36 : 1.22})`, opacity: 0 }], { duration: 320 + i * 60, delay: D(C) + i * 40, easing: 'cubic-bezier(0.2, 0, 0, 1)' }));
+      p.anim(grid, [{ opacity: 0, easing: 'linear' }, { opacity: 1, offset: 0.08, easing: 'cubic-bezier(0.3, 0, 0.4, 1)' }, { opacity: 0 }], { duration: 820, delay: D(C) - 10 });
+      const wrap = svg.closest('.o55-scene-wrap');
+      if (wrap) p.anim(wrap, [{ transform: 'translateY(0px)', easing: 'cubic-bezier(0.3, 0, 0.6, 1)' }, { transform: 'translateY(1.5px)', offset: 0.22, easing: 'cubic-bezier(0.2, 0, 0, 1)' }, { transform: 'translateY(0px)' }], { duration: 230, delay: D(C), composite: 'add' });
+    });
+  }
   /* Glass's sparkle at the rise: light motes rise off each spotlight's pool, in an overlay over the stage (in the
      scene's own units) that goes with the call */
   function glassMotes(p, st, svg, sp) {
@@ -722,15 +803,17 @@
 
   /* the emblems in Ready's composition (asked for by 57-scenes-journey.js for the four families). On the narrow
      window's band (ctx.band: about y 318..434 of the scene at 760 px, the troupe's heads and shoulders) each emblem is
-     placed where the band shows it: Basic's stamp above h2's head, Retro's ALL CLEAR across the band's top with the
+     placed where the band shows it: Basic's stamp beside h2's head, above its pointing arm, Retro's ALL CLEAR across the band's top with the
      arrow by h2's head, Friendly's roses along the band's foot between the troupe (the third below h2's pointing hand). */
   A.famCall = {
     /* Basic's Ready drawing inks its troupe faster when its curtain call is about to play (14-family-moments.css
        .o55fm-inkfast), so the first bow comes after every head is drawn; asked by the composition, after claimSting */
     inkFast(ctx) { const R = runState(); return ctx.family === 'basic' && !!R.claim && R.claim.kind === 'call' && R.claim.f === 'basic' && !calm(); },
     emblems(ctx) {
-      const f = ctx.family, m = A.metrics(f), floor = m.floor, sign = m.signY || 64, nar = !!ctx.band;
-      if (f === 'basic') return [{ key: 'fm-stamp', prop: 'fmStamp', x: nar ? 404 : 318, y: nar ? 343 : sign + 34, r: -7, layer: 'front' }];
+      const f = ctx.family, m = A.metrics(f), floor = m.floor, nar = !!ctx.band;
+      /* (Basic's impression across the middle of the sheet, between the control bar and the heads, its word gap on h1's
+         string; on the band, half size above h2's pointing arm, clear of h2's head and string) */
+      if (f === 'basic') return [{ key: 'fm-stamp', prop: 'fmStamp', x: nar ? 420 : 240, y: nar ? 344 : 266, s: nar ? 0.5 : 1, r: nar ? -5 : -6, layer: 'front' }];
       if (f === 'friendly') return (nar ? [[184, 420], [296, 424], [372, 428]] : [[148, floor + 44], [262, floor + 50], [374, floor + 44]]).map(([x, y], i) => ({ key: 'fm-rose' + i, prop: 'fmRose', x, y, s: nar ? 2 : 3.5, r: (nar ? [-60, 40, 70] : [-70, 18, 74])[i], layer: 'front', opts: { v: i } }));
       if (f === 'glass') return [-1, 0, 1].map((s, i) => ({ key: 'fm-spot' + i, prop: 'fmSpot', x: 240 + s * 112, y: floor + 4, layer: 'back', opts: { v: i, top: 30 - floor, tint: ['lav', 'pink', 'mint'][i] } }));
       /* (on the band ALL CLEAR sits just inside its top, about y 318, clear of h1's crown through its one-step hop, with
@@ -742,10 +825,16 @@
   /* the emblems' drawings, in each family's materials */
   function addProps() {
     const F = A.families;
+    /* Basic's impression: ink on the drawing (the strings and the grid show through it), a worn double border, the
+       word, and today's date under a rule */
     if (F.basic && !F.basic.props.fmStamp) F.basic.props.fmStamp = (ctx) => {
-      const p = ctx.pal, w = 92;
-      return `<g><rect x="${-w / 2}" y="-13" width="${w}" height="26" rx="3" fill="${p.paper}"/><rect x="${-w / 2}" y="-13" width="${w}" height="26" rx="3" fill="${p.accentFill}" stroke="${p.accent}" stroke-width="2"/><rect x="${-w / 2 + 3}" y="-10" width="${w - 6}" height="20" rx="2" fill="none" stroke="${p.accent}" stroke-width="0.8"/>`
-        + txt('basic', 0, 4.2, T('call.basic.stamp'), 11, { fill: p.accent, w: 800, ls: 2.4 }) + '</g>';
+      const p = ctx.pal, w = 200, h = 58;
+      let date = '';
+      try { date = new Intl.DateTimeFormat(undefined, { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date()); } catch (_) {}
+      return `<g><rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" rx="5" fill="${p.accentFill}" stroke="${p.accent}" stroke-width="2.8" stroke-dasharray="84 1.6 132 2.2 58 1.4 101 2 120 2.8"/>`
+        + `<rect x="${-w / 2 + 5.5}" y="${-h / 2 + 5.5}" width="${w - 11}" height="${h - 11}" rx="2.5" fill="none" stroke="${p.accent}" stroke-width="1.1"/>`
+        + txt('basic', 2, 1.5, T('call.basic.stamp'), 23, { fill: p.accent, w: 800, ls: 4 })
+        + `<path d="M-64 8H64" stroke="${p.accent}" stroke-width="0.8"/>` + txt('basic', 0, 17.5, date, 7, { fill: p.accent, w: 700, ls: 1.8 }) + '</g>';
     };
     if (F.friendly && !F.friendly.props.fmRose) F.friendly.props.fmRose = (ctx, item) => {
       const p = ctx.pal, c = [p.peach, p.lilac, p.sky][((item.opts || {}).v || 0) % 3];
