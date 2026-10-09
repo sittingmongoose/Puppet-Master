@@ -803,8 +803,9 @@
 
   /* the emblems in Ready's composition (asked for by 57-scenes-journey.js for the four families). On the narrow
      window's band (ctx.band: about y 318..434 of the scene at 760 px, the troupe's heads and shoulders) each emblem is
-     placed where the band shows it: Basic's stamp beside h2's head, above its pointing arm, Retro's ALL CLEAR across the band's top with the
-     arrow by h2's head, Friendly's roses along the band's foot between the troupe (the third below h2's pointing hand). */
+     placed where the band shows it: Basic's stamp beside h2's head, above its pointing arm, Retro's ALL CLEAR across
+     the band's top with the arrow by h2's head, Friendly's roses along the band's foot between the troupe (the third
+     below h2's pointing hand). */
   A.famCall = {
     /* Basic's Ready drawing inks its troupe faster when its curtain call is about to play (14-family-moments.css
        .o55fm-inkfast), so the first bow comes after every head is drawn; asked by the composition, after claimSting */
