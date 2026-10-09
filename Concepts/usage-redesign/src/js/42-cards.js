@@ -342,6 +342,7 @@
           }
         } catch (error) { console.error('[pm-usage] render ' + id, error); body.innerHTML = '<div class="pmu-todo">' + esc(id) + '</div>'; }
       });
+      refitSoon(card);
     },
     /* the same tier at a new pixel size (a resize within the tier, a dock drag): kind.resize when the kind has one */
     resizeBody: function (card, tier) {
@@ -354,6 +355,7 @@
         body._pmuCtx = ctx; body._pmuSize = ctx.size.w + 'x' + ctx.size.h + '@' + tier.bw + 'x' + tier.bh;
         try { kind.resize(body, ctx); } catch (error) { console.error('[pm-usage] resize ' + id, error); }
       });
+      refitSoon(card);
     },
     updateAll: function (cards, reason) {
       cards.forEach(function (card) { PMU.cards.update(card, reason); });
@@ -368,6 +370,7 @@
         if (kind && kind.update) { try { body._pmuCtx = ctx; kind.update(body, ctx); } catch (error) { console.error('[pm-usage] update ' + id, error); } }
         else if (kind) PMU.cards.renderBody(card, tier, false);
       });
+      refitSoon(card);
     },
     empty: function (room) {
       var el = document.createElement('div');
@@ -385,9 +388,100 @@
     sizeName: sizeName
   };
 
+  /* ---- the head's room for its actions (Jared's note 6b, 2026-10-09) ----
+     The tools cluster shows at the head's top right on hover and on keyboard focus. It never covers the title or the
+     head tools and always fits in the head. Entering a card reads its head once, as it rests, and picks the widest form
+     of the cluster that leaves the whole title where it is: all four tools, grip and menu, or the menu alone (it holds
+     size, configure, details, move, resize, tidy and hide). The head tools slide exactly clear of it. Where even the
+     menu alone does not fit beside the title, the title yields the room: it ends in an ellipsis on the lines it has at
+     rest, so the head never grows and the body never moves; the full title stays in its hover tag, the card menu's
+     title and Details. Only the head is restyled (the body is contain: strict), once per entered card. */
+  var FOLDS = [['full', 4], ['pair', 2], ['menu', 1]], TOOL_GAP = 8;
+  var fitT = null;
+  function fitTools(card) {
+    if (!card || card._pmuLeaving || card.hasAttribute('data-leaving')) return;
+    var form = card.getAttribute('data-head'); if (form === 'band') return;
+    var head = card.querySelector(':scope > .pmu-cardhead'), tools = head && head.querySelector(':scope > .pmu-cardtools');
+    var titles = head && head.querySelector(':scope > .pmu-cardtitles'), title = titles && titles.querySelector('.pmu-cardtitle');
+    if (!tools || !title) return;
+    var ht = head.querySelector(':scope > .pmu-headtools');
+    /* the head as it rests: no room taken, no clamp (the hover styles read these two only) */
+    head.style.removeProperty('--pmu-head-room'); head.removeAttribute('data-title-lines');
+    var hw = head.offsetWidth; if (!hw) return;
+    var hb = head.getBoundingClientRect(), k = hb.width ? hw / hb.width : 1;   /* a card still entering may be scaled */
+    var tcs = getComputedStyle(tools), btn = parseFloat(getComputedStyle(tools.lastElementChild).width) || 24;
+    var right = hw - (parseFloat(tcs.right) || 6), pad = (parseFloat(tcs.paddingLeft) || 2) * 2;
+    var tl = titles.offsetLeft, tr = tl + titles.offsetWidth, tb = title.getBoundingClientRect();
+    var rg = document.createRange(); rg.selectNodeContents(title);
+    var textR = tl, tops = [];
+    Array.prototype.forEach.call(rg.getClientRects(), function (r) {
+      if (r.width < 0.5 || r.bottom <= tb.top + 0.5 || r.top >= tb.bottom - 0.5) return;   /* a clamped line is not shown */
+      textR = Math.max(textR, (Math.min(r.right, tb.right) - hb.left) * k);
+      if (!tops.some(function (t) { return Math.abs(t - r.top) < 3; })) tops.push(r.top);
+    });
+    var htW = ht && ht.firstChild && getComputedStyle(ht).display !== 'none' ? ht.offsetWidth : 0, htR = htW ? ht.offsetLeft + htW : 0;
+    var pick = null;
+    for (var i = 0; i < FOLDS.length; i++) {
+      var left = right - (FOLDS[i][1] * btn + (FOLDS[i][1] - 1) + pad);
+      var slide = htW ? Math.max(0, htR - (left - TOOL_GAP)) : 0;
+      var limit = (htW ? Math.min(htR - htW - slide, left) : left) - TOOL_GAP;
+      pick = { fold: FOLDS[i][0], slide: slide, limit: limit };
+      if (textR <= limit + 0.5) break;
+    }
+    var yieldTitle = textR > pick.limit + 0.5;
+    var room = Math.max(0, Math.ceil(tr - pick.limit));
+    head.style.setProperty('--pmu-head-room', room + 'px');
+    head.style.setProperty('--pmu-head-slide', (pick.slide ? -Math.ceil(pick.slide) : 0) + 'px');
+    if (tools.getAttribute('data-fold') !== pick.fold) tools.setAttribute('data-fold', pick.fold);
+    if (yieldTitle) { head.style.setProperty('--pmu-title-lines', String(Math.max(1, tops.length))); head.setAttribute('data-title-lines', ''); }
+    card._pmuFitOn = true;
+  }
+  /* the clamp of a yielding title goes once the title has its room back (its margin returns 300 after leaving: the
+     cluster fades 140, then the head tools slide back 160) */
+  function unfitSoon(card) {
+    if (!card || !card._pmuFitOn) return;
+    setTimeout(function () {
+      if (card.matches(':hover') || card.matches(':focus-visible')) return;
+      var head = card.querySelector(':scope > .pmu-cardhead');
+      if (head && head.hasAttribute('data-tools-on')) return;
+      if (head) head.removeAttribute('data-title-lines');
+      card._pmuFitOn = false;
+    }, 340 * M.speed());
+  }
+  /* a card whose head changes while it shows its tools (a resize from its own size menu, a live update) is fitted again */
+  function refitSoon(card) {
+    if (!card || !card._pmuFitOn) return;
+    if (fitT) cancelAnimationFrame(fitT);
+    fitT = requestAnimationFrame(function () { fitT = null; if (card.isConnected && (card.matches(':hover') || card.matches(':focus-visible'))) fitTools(card); });
+  }
+  var M = PMU.motion;
+
   /* tool clicks (delegated on the board) */
   /* delegated on the scroll pane: the board element is swapped on a room change (the old one leaves as the ghost) */
   var boardEl = document.getElementById('pmuScroll') || document.getElementById('pmuBoard');
+  if (boardEl) {
+    boardEl.addEventListener('pointerover', function (event) {
+      var card = event.target.closest && event.target.closest('.pmu-card');
+      if (!card || card.contains(event.relatedTarget) || card.parentNode !== document.getElementById('pmuBoard')) return;
+      try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); }
+    });
+    boardEl.addEventListener('pointerout', function (event) {
+      var card = event.target.closest && event.target.closest('.pmu-card');
+      if (card && !card.contains(event.relatedTarget)) unfitSoon(card);
+    });
+    boardEl.addEventListener('focusin', function (event) {
+      var card = event.target.closest && event.target.closest('.pmu-card'); if (!card) return;
+      var inTools = !!event.target.closest('.pmu-cardtools'), head = card.querySelector(':scope > .pmu-cardhead');
+      if (head && inTools !== head.hasAttribute('data-tools-on')) head.toggleAttribute('data-tools-on', inTools);
+      if (inTools || event.target === card) { try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); } }
+    });
+    boardEl.addEventListener('focusout', function (event) {
+      var card = event.target.closest && event.target.closest('.pmu-card'); if (!card) return;
+      if (card.contains(event.relatedTarget) && event.relatedTarget.closest('.pmu-cardtools')) return;
+      var head = card.querySelector(':scope > .pmu-cardhead'); if (head) head.removeAttribute('data-tools-on');
+      unfitSoon(card);
+    });
+  }
   if (boardEl) boardEl.addEventListener('click', function (event) {
     var tool = event.target.closest('.pmu-cardtools [data-tool]');
     if (!tool) return;
