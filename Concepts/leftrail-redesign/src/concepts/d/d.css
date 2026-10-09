@@ -1788,6 +1788,440 @@
 [data-rail-skin="d"][data-motion="reduced"] :is(#panel-run, #bottomDebugHost) *, [data-rail-skin="d"][data-reduced-motion="1"] :is(#panel-run, #bottomDebugHost) * { transition: none !important; animation: none !important; }
 @media (prefers-reduced-motion: reduce) { [data-rail-skin="d"] :is(#panel-run, #bottomDebugHost) * { transition: none !important; animation: none !important; } }
 
+/* ---- 13. Actions & pipelines (#panel-git, lane E) --------------------------------------------------------------------
+   Same geometry as Files / Source / Docker. The automation service is a field under the header; runs are flat rows in
+   their shelf (name on line 1, run number · ref · age and the state word on line 2, the failure line under it); jobs
+   carry the shared glyph family; the dispatch form is a section of its workflow row, not a box in a box; the provider
+   views of the other services are the same cards as Source's publish card. */
+
+/* the service field and the two facts: one chrome plate under the header */
+[data-rail-skin="d"] #panel-git .pm7-automation-context {
+  display: grid !important; gap: 5px !important; padding: 0 6px 7px !important; border: 0 !important; z-index: 5;
+  background-color: var(--d-chrome) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
+}
+[data-rail-skin="d"][data-theme^="glass"] #panel-git .pm7-automation-context { -webkit-backdrop-filter: none; backdrop-filter: none; }
+[data-rail-skin="d"] #panel-git .pm7-automation-context-main { display: grid !important; gap: 3px !important; min-width: 0; }
+[data-rail-skin="d"] #panel-git .pm7-automation-context-main > .pm7-context-title {
+  font: 500 var(--d-fs-meta)/1.3 var(--body-font) !important; color: var(--d-text-3) !important; letter-spacing: 0; text-transform: none;
+}
+[data-rail-skin="d"] #panel-git .pm7-automation-select.d-hidden { display: none !important; }
+[data-rail-skin="d"] #panel-git .d-e-service { font-family: var(--body-font) !important; font-size: var(--d-fs-name) !important; font-weight: 600 !important; padding: 4px 8px !important; }
+/* the menus this panel opens (service, dispatch ref and inputs) set their items in the rail's face: the item is a
+   <button>, which takes the browser's default font unless told otherwise (the shared menu stylesheet does not yet) */
+[data-rail-skin="d"] .pmr-menu:is([data-pmr-menu="d-e-service"], [data-pmr-menu^="d-shDisp"]) .pmr-mi { font-family: inherit; }
+[data-rail-skin="d"] #panel-git .d-e-service > .d-select-v { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+[data-rail-skin="d"] #panel-git .pm7-automation-common { display: grid !important; grid-template-columns: max-content minmax(0, 1fr); gap: 1px 8px !important; align-items: baseline; padding: 0 1px; }
+[data-rail-skin="d"] #panel-git .pm7-automation-fact { display: contents !important; }
+[data-rail-skin="d"] #panel-git .pm7-automation-fact > small {
+  display: block; font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text-3) !important;
+}
+[data-rail-skin="d"] #panel-git .pm7-automation-fact > strong {
+  display: block; margin: 0 !important; min-width: 0; font: 500 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-2) !important;
+  white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere;
+}
+[data-rail-skin="d"] #panel-git .pm7-automation-fact > strong.sh-mono { font-family: var(--mono-font) !important; font-size: var(--d-fs-mono) !important; }
+/* the shell hides the GitHub tabs and list while another service's view shows; keep that under the skin */
+[data-rail-skin="d"] #panel-git:not([data-automation-service="github"]) > .pm-segtab { display: none !important; }
+
+/* the banner's status is a phrase now ("4 passed · 2 failed · 1 running"): it may take a second line */
+[data-rail-skin="d"] #panel-git .sh-banner > .sh-bstatus { white-space: normal !important; align-items: flex-start !important; }
+[data-rail-skin="d"] #panel-git .sh-banner > .sh-bstatus > .d-gl { margin-top: 2px; }
+
+/* ---- run and workflow rows: flat in their shelf, highlights concentric with it ---- */
+[data-rail-skin="d"] #panel-git .sh-run {
+  position: relative; width: auto !important; margin: 0 0 2px !important; padding: 0 !important; overflow: clip;
+  border: 0 !important; border-radius: var(--d-r) !important; background: transparent !important; box-shadow: none !important;
+  transition: background-color var(--d-t2) var(--d-ease);
+}
+[data-rail-skin="d"] #panel-git .sh-run:last-child { margin-bottom: 0 !important; }
+[data-rail-skin="d"] #panel-git .sh-run.open { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-open), transparent) !important; }
+[data-rail-skin="d"] #panel-git .sh-run-h {
+  display: grid !important; grid-template-columns: 9px minmax(0, 1fr) auto; grid-template-areas: "chev name name" "chev meta state";
+  column-gap: var(--d-gap); row-gap: 1px; align-items: center;
+  min-height: var(--d-row-h); margin: 0 !important; padding: 4px var(--d-pad) !important;
+  border-radius: var(--d-r) !important; background: transparent; box-shadow: none !important; transform: none !important;
+  transition: background-color var(--d-t1) var(--d-ease);
+}
+[data-rail-skin="d"] #panel-git .sh-run-h:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+[data-rail-skin="d"] #panel-git .sh-run.open > .sh-run-h { border-radius: var(--d-r) var(--d-r) 0 0 !important; }
+[data-rail-skin="d"] #panel-git .sh-run-h:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+[data-rail-skin="d"] #panel-git .sh-run-h > .sh-accchev { grid-area: chev; align-self: start; width: 9px !important; height: 9px !important; margin-top: 4px; color: var(--d-text-3) !important; flex: none; }
+/* the run's state is its word on line 2 (glyph + word); the shell's colour dot repeats it, so it goes */
+[data-rail-skin="d"] #panel-git .sh-run-h > .sh-dot { display: none !important; }
+[data-rail-skin="d"] #panel-git .sh-run-h > .sh-main { display: contents !important; }
+[data-rail-skin="d"] #panel-git .sh-run-h .sh-name { grid-area: name; min-width: 0; }
+[data-rail-skin="d"] #panel-git .sh-run-h .sh-name > .sh-nm-txt { white-space: normal !important; overflow: visible !important; overflow-wrap: anywhere; text-overflow: clip !important; text-wrap: pretty; }
+[data-rail-skin="d"] #panel-git .sh-run-h .sh-meta { grid-area: meta; min-width: 0; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere; }
+/* fact lines wrap between their parts (JS keeps a ref or a count whole), in even lines, so an age or a word is never
+   left alone on a line (Chrome's text-wrap: pretty leaves "2h" alone there; balance does not) */
+[data-rail-skin="d"] #panel-git :is(.sh-run-h .sh-meta, .sh-kv > .sh-v:not(.sh-mono), .pm7-post-kv > dd:not(.sh-mono), .pm7-automation-run-copy > small) { text-wrap: balance; }
+[data-rail-skin="d"] #panel-git .sh-run-h > .pm-chip { grid-area: state; justify-self: end; margin-left: 8px; max-width: none !important; }
+/* when the facts would wrap beside the state word, the state goes under them (measured, JS) */
+[data-rail-skin="d"] #panel-git .sh-run-h[data-d-stack] { grid-template-areas: "chev name name" "chev meta meta" "chev state state"; }
+[data-rail-skin="d"] #panel-git .sh-run-h[data-d-stack] > .pm-chip { justify-self: start; margin-left: 0; }
+/* the failure stays visible while the row is closed (failure-first), under the name, never cut */
+[data-rail-skin="d"] #panel-git .sh-runfail {
+  margin: 0 !important; padding: 0 var(--d-pad) 6px calc(var(--d-pad) + 9px + var(--d-gap)) !important;
+  font: 400 var(--d-fs-small)/1.4 var(--mono-font) !important; color: var(--d-fail) !important;
+  white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere; text-wrap: pretty;
+}
+/* the open body: no padding of its own (a closed body is zero high), its rows start under the name */
+[data-rail-skin="d"] #panel-git .sh-run > .sh-accb { padding: 0 var(--d-pad) 0 calc(var(--d-pad) + 9px + var(--d-gap)) !important; }
+[data-rail-skin="d"] #panel-git .sh-run > .sh-accb > .pm-acc-inner > :first-child { margin-top: 1px !important; }
+[data-rail-skin="d"] #panel-git .sh-run > .sh-accb > .pm-acc-inner > :last-child { margin-bottom: 9px !important; }
+/* jobs: glyph, name, duration; the step and the log under the job they belong to */
+[data-rail-skin="d"] #panel-git .sh-job { display: flex !important; align-items: center !important; gap: 6px !important; padding: 3px 0 !important; min-height: 22px; }
+[data-rail-skin="d"] #panel-git .sh-job > .sh-dot { display: none !important; }
+[data-rail-skin="d"] #panel-git .sh-jname { font: 500 var(--d-fs-label)/1.35 var(--body-font) !important; color: var(--d-text) !important; }
+[data-rail-skin="d"] #panel-git .sh-jdur { font: 400 var(--d-fs-small)/1.35 var(--mono-font) !important; color: var(--d-text-3) !important; font-variant-numeric: tabular-nums; }
+[data-rail-skin="d"] #panel-git .sh-jstep {
+  padding: 0 0 4px 18px !important; font: 400 var(--d-fs-small)/1.4 var(--mono-font) !important; color: var(--d-fail) !important;
+  white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere;
+}
+[data-rail-skin="d"] #panel-git .sh-jstep.muted { color: var(--d-text-3) !important; }
+[data-rail-skin="d"] #panel-git .sh-log {
+  margin: 2px 0 6px !important; padding: 6px 7px !important; border-radius: var(--d-r) !important;
+  background: color-mix(in srgb, var(--d-fail) 8%, transparent) !important; border: 1px solid color-mix(in srgb, var(--d-fail) 16%, transparent);
+  font: 400 var(--d-fs-small)/1.45 var(--mono-font) !important; color: var(--d-text-2) !important;
+}
+[data-rail-skin="d"] #panel-git .sh-log > div { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere; }
+[data-rail-skin="d"] #panel-git .sh-log > .fail { color: var(--d-fail) !important; }
+/* run artifacts: a small labelled list, each one a row with its own hover */
+[data-rail-skin="d"] #panel-git .sh-arth { margin: 6px 0 2px !important; padding: 0 !important; font: 600 var(--d-fs-label)/1.35 var(--body-font) !important; letter-spacing: 0 !important; color: var(--d-text-2) !important; }
+[data-rail-skin="d"] #panel-git .sh-art {
+  margin: 0 0 0 -5px !important; width: calc(100% + 10px) !important; padding: 3px 5px !important; border-radius: var(--d-r) !important;
+  font: 400 var(--d-fs-small)/1.4 var(--mono-font) !important; color: var(--d-text) !important; transition: background-color var(--d-t1) var(--d-ease);
+}
+[data-rail-skin="d"] #panel-git .sh-art[data-demo-action] { cursor: pointer; }
+[data-rail-skin="d"] #panel-git .sh-art:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+[data-rail-skin="d"] #panel-git .sh-art.expired { color: var(--d-text-3) !important; }
+[data-rail-skin="d"] #panel-git .sh-art.expired:hover { background: none !important; }
+[data-rail-skin="d"] #panel-git .sh-art > .sh-jname { font: inherit !important; color: inherit !important; }
+[data-rail-skin="d"] #panel-git .sh-run .sh-kv { padding: 3px 0 !important; }
+/* a run's actions fill their rows instead of leaving a ragged edge */
+[data-rail-skin="d"] #panel-git .sh-run .sh-acts > .pm-btn { flex: 1 1 auto; }
+
+/* ---- workflows: the dispatch form is a section of the open row ---- */
+[data-rail-skin="d"] #panel-git .pm-footnote.d-e-note { display: flex !important; align-items: flex-start; gap: 6px; padding: 4px var(--d-pad) 6px !important; color: var(--d-text-2) !important; }
+[data-rail-skin="d"] #panel-git .pm-footnote.d-e-note > .d-gl { margin-top: 2px; }
+[data-rail-skin="d"] #panel-git .sh-run .pm-footnote { padding: 3px 0 2px !important; }
+[data-rail-skin="d"] #panel-git .sh-dispform {
+  display: flex !important; flex-direction: column; gap: 6px !important; width: auto !important;
+  margin: 6px 0 0 !important; padding: 8px 0 0 !important; border: 0 !important; border-top: 1px solid var(--d-line) !important; border-radius: 0 !important; background: none !important;
+}
+[data-rail-skin="d"] #panel-git .sh-dfk { font: 600 var(--d-fs-label)/1.3 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text) !important; }
+[data-rail-skin="d"] #panel-git .sh-dfrow { display: grid !important; grid-template-columns: 58px minmax(0, 1fr); column-gap: 6px !important; align-items: center; }
+[data-rail-skin="d"] #panel-git .sh-dfrow > .sh-k { min-width: 0 !important; font: 400 var(--d-fs-meta)/1.3 var(--body-font) !important; color: var(--d-text-3) !important; }
+[data-rail-skin="d"] #panel-git .sh-scope .pm6-tb-menu-trigger {
+  display: flex !important; align-items: center; gap: 6px !important; width: 100%; min-height: 26px; padding: 3px 7px !important;
+  border: 1px solid var(--d-ctl-line) !important; border-radius: var(--d-r) !important; background: var(--d-ctl-bg) !important; box-shadow: none !important;
+  font: 500 var(--d-fs-meta)/1.25 var(--mono-font) !important; color: var(--d-text) !important; text-align: left; cursor: pointer;
+  transition: background-color var(--d-t1) var(--d-ease), border-color var(--d-t1) var(--d-ease);
+}
+[data-rail-skin="d"] #panel-git .sh-scope .pm6-tb-menu-trigger:hover, [data-rail-skin="d"] #panel-git .sh-scope .pm6-tb-menu-trigger.is-menu-open { background: var(--d-press) !important; border-color: var(--d-line-2) !important; }
+[data-rail-skin="d"] #panel-git .sh-scope .pm6-tb-menu-trigger > .pm-ico { width: 12px !important; height: 12px !important; flex: none; color: var(--d-text-3); }
+[data-rail-skin="d"] #panel-git .sh-scope .pm6-tb-menu-trigger > .pm-ico:last-child { margin-left: auto; transition: transform var(--d-t2) var(--d-spring); }
+[data-rail-skin="d"] #panel-git .sh-scope .pm6-tb-menu-trigger.is-menu-open > .pm-ico:last-child { transform: rotate(180deg); }
+[data-rail-skin="d"] #panel-git .sh-scope .pm6-tb-menu-label { flex: 1 1 auto; min-width: 0; font: inherit !important; color: inherit !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+[data-rail-skin="d"] #panel-git .sh-chk { gap: 6px !important; font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-2) !important; }
+[data-rail-skin="d"] #panel-git .sh-chk input { accent-color: var(--accent-primary) !important; width: 13px !important; height: 13px !important; }
+[data-rail-skin="d"] #panel-git .sh-dispform .sh-acts { margin-top: 2px !important; }
+[data-rail-skin="d"] #panel-git .d-e-reason { display: flex; align-items: flex-start; gap: 6px; font: 400 var(--d-fs-meta)/1.4 var(--body-font); color: var(--d-text-2); }
+[data-rail-skin="d"] #panel-git .d-e-reason > .d-gl { margin-top: 2px; }
+/* the workflow file is a link */
+[data-rail-skin="d"] #panel-git .sh-kv > .sh-v[data-demo-action] { color: var(--accent-primary) !important; cursor: pointer; }
+[data-rail-skin="d"] #panel-git .sh-kv > .sh-v[data-demo-action]:hover { text-decoration: underline; text-underline-offset: 2px; }
+/* ids and paths keep both ends (middle truncation, JS); phrases wrap */
+[data-rail-skin="d"] #panel-git .sh-kv > .sh-v.sh-mono:not(.d-wrap) { white-space: nowrap !important; overflow: hidden !important; overflow-wrap: normal; }
+
+/* ---- settings: grouped facts, secret names with their state ---- */
+/* a head whose label the shared fit leaves cut by under a pixel stacks its summary the same way (lane attribute, JS) */
+[data-rail-skin="d"] #panel-git .sh-shelf > .sh-head[data-d-e-stack] { flex-wrap: wrap; row-gap: 1px; padding-top: 7px !important; padding-bottom: 8px !important; }
+[data-rail-skin="d"] #panel-git .sh-head[data-d-e-stack] > .sh-hcount {
+  order: 9; flex: 1 1 100%; margin-left: var(--d-e-stack-x, 24px) !important; white-space: normal; overflow-wrap: anywhere;
+  color: var(--d-text-2) !important; text-align: left;
+}
+[data-rail-skin="d"] #panel-git .sh-head > .sh-hcount[data-d-st] { display: inline-flex !important; align-items: center; gap: 4px; }
+[data-rail-skin="d"] #panel-git .sh-head > .sh-hcount[data-d-st="live"], [data-rail-skin="d"] #panel-git .sh-head > .sh-hcount[data-d-st="ok"] { color: var(--d-ok) !important; }
+[data-rail-skin="d"] #panel-git .sh-grp {
+  margin: 0 !important; padding: 7px var(--d-pad) 2px !important; font: 600 var(--d-fs-label)/1.3 var(--body-font) !important;
+  letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text-2) !important;
+}
+[data-rail-skin="d"] #panel-git .sh-grp:first-child { padding-top: 3px !important; }
+[data-rail-skin="d"] #panel-git .sh-kvwrap {
+  display: grid !important; grid-template-columns: minmax(0, 1fr) auto; column-gap: 8px !important; align-items: center;
+  padding: 3px var(--d-pad) !important; min-height: 22px;
+}
+[data-rail-skin="d"] #panel-git .sh-kvwrap > .sh-k.sh-mono { white-space: nowrap !important; overflow: hidden !important; overflow-wrap: normal !important; word-break: normal !important; }
+[data-rail-skin="d"] #panel-git .sh-kvwrap > .pm-chip { justify-self: end; }
+[data-rail-skin="d"] #panel-git .sh-shelf > .sh-body > .pm-note { margin: 4px 0 6px !important; }
+[data-rail-skin="d"] #panel-git .sh-shelf > .sh-body > .pm-btn { white-space: normal !important; text-align: center; text-wrap: balance; }
+[data-rail-skin="d"] #panel-git .pm-empty {
+  margin: 0 !important; padding: 6px var(--d-pad) 7px !important; border: 0 !important; border-radius: 0 !important; background: none !important;
+  font: 400 var(--d-fs-meta)/1.45 var(--body-font) !important; color: var(--d-text-3) !important;
+}
+
+/* ---- the other services: the shell's provider view, as cards like Source's publish card ---- */
+[data-rail-skin="d"] #panel-git .pm7-automation-provider-view { padding: 0 var(--d-gx) 12px !important; gap: var(--d-g) !important; }
+[data-rail-skin="d"] #panel-git .pm7-post-card {
+  padding: 7px 7px 8px !important; border-radius: var(--d-R) !important; box-shadow: none !important; min-width: 0;
+  border: 1px solid var(--d-line) !important; background: color-mix(in srgb, var(--surface-elevated) 70%, transparent) !important;
+  container-type: inline-size;
+}
+[data-rail-skin="d"] #panel-git .pm7-post-card-head { display: grid !important; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "title state" "sub sub"; column-gap: 10px; row-gap: 2px; margin: 0 0 8px !important; align-items: baseline; }
+[data-rail-skin="d"] #panel-git .pm7-post-card-head > div { display: contents; }
+[data-rail-skin="d"] #panel-git .pm7-post-card-title {
+  grid-area: title; min-width: 0; font: var(--d-w-label) var(--d-fs-name)/1.3 var(--body-font) !important;
+  letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text) !important;
+}
+[data-rail-skin="d"] #panel-git .pm7-post-card-head > .pm7-post-state { grid-area: state; justify-self: end; }
+[data-rail-skin="d"] #panel-git .pm7-post-card-subtitle { grid-area: sub; margin: 0 !important; font: 400 var(--d-fs-small)/1.4 var(--body-font) !important; color: var(--d-text-3) !important; }
+@container (max-width: 250px) {
+  [data-rail-skin="d"] #panel-git .pm7-post-card-head { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "state" "sub"; }
+  [data-rail-skin="d"] #panel-git .pm7-post-card-head > .pm7-post-state { justify-self: start; }
+}
+[data-rail-skin="d"] #panel-git .pm7-post-kv { display: grid !important; grid-template-columns: minmax(70px, max-content) minmax(0, 1fr) !important; gap: 3px 8px !important; margin: 0; font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; }
+[data-rail-skin="d"] #panel-git .pm7-post-kv dt { color: var(--d-text-3) !important; }
+[data-rail-skin="d"] #panel-git .pm7-post-kv dd { color: var(--d-text-2) !important; margin: 0; overflow-wrap: anywhere; }
+[data-rail-skin="d"] #panel-git .pm7-post-kv dd.sh-mono { font-family: var(--mono-font) !important; font-size: var(--d-fs-small) !important; }
+@container (max-width: 210px) {
+  [data-rail-skin="d"] #panel-git .pm7-post-kv { grid-template-columns: minmax(0, 1fr) !important; row-gap: 0 !important; }
+  [data-rail-skin="d"] #panel-git .pm7-post-kv dd { margin-bottom: 4px; }
+}
+[data-rail-skin="d"] #panel-git .pm7-post-actions { display: flex !important; flex-wrap: wrap; gap: 6px !important; margin-top: 10px !important; }
+[data-rail-skin="d"] #panel-git .pm7-post-actions .pm-btn { flex: 1 1 auto; padding: 4px 8px !important; font-size: var(--d-fs-meta) !important; }
+[data-rail-skin="d"] #panel-git .pm7-automation-run {
+  display: grid !important; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "copy state"; column-gap: 8px !important; align-items: start;
+  padding: 6px 0 !important; border-top: 1px solid var(--d-line) !important;
+}
+[data-rail-skin="d"] #panel-git .pm7-automation-run > .dot { display: none !important; }
+[data-rail-skin="d"] #panel-git .pm7-automation-run-copy { grid-area: copy; }
+[data-rail-skin="d"] #panel-git .pm7-automation-run > .pm-chip { grid-area: state; margin-top: 1px; }
+[data-rail-skin="d"] #panel-git .pm7-automation-run-copy > strong { font: 500 var(--d-fs-name)/1.35 var(--body-font) !important; color: var(--d-text) !important; white-space: normal !important; overflow: visible !important; }
+[data-rail-skin="d"] #panel-git .pm7-automation-run-copy > small {
+  margin-top: 1px !important; font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-3) !important;
+  white-space: normal !important; overflow: visible !important; text-overflow: clip !important;
+}
+
+/* ---- state words take their state colour (glyph and word) ---- */
+[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state)[data-d-st="ok"], [data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state)[data-d-st="live"] { color: var(--d-ok) !important; }
+[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state)[data-d-st="run"] { color: var(--d-run) !important; }
+[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state):is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]) { color: var(--d-warn) !important; }
+[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state):is([data-d-st="fail"], [data-d-st="blocked"]) { color: var(--d-fail) !important; }
+[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state):is([data-d-st="pending"], [data-d-st="info"]) { color: var(--d-pend) !important; }
+[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state):is([data-d-st="idle"], [data-d-st="unknown"]) { color: var(--d-idle) !important; }
+[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state)[data-d-st="conflict"] { color: var(--d-conflict) !important; }
+
+/* ---- families and modes ---- */
+[data-rail-skin="d"][data-theme^="retro"] #panel-git .sh-log { box-shadow: 2px 2px 0 color-mix(in srgb, var(--d-fail) 30%, transparent); }
+[data-rail-skin="d"][data-o55-nier="on"] #panel-git .sh-log { background: transparent !important; border-color: var(--d-line-2); }
+[data-rail-skin="d"][data-o55-nier="on"] #panel-git .pm7-post-card { background: transparent !important; border-color: var(--d-line-2) !important; }
+[data-rail-skin="d"][data-o55-nier="on"][data-o55-nier-parts~="headers"] #panel-git :is(.sh-hlabel, .sh-title, .pm7-post-card-title, .sh-dfk, .sh-grp) {
+  text-transform: uppercase !important; letter-spacing: .14em !important;
+}
+[data-rail-skin="d"][data-motion="reduced"] #panel-git *, [data-rail-skin="d"][data-reduced-motion="1"] #panel-git * { transition: none !important; animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  [data-rail-skin="d"] #panel-git * { transition: none !important; animation: none !important; }
+}
+
+/* ---- 14. Runtime artifacts (#panel-artifacts, lane E) ----------------------------------------------------------------
+   Each receipt card keeps its coloured box (today's structure) and is drawn like a shelf: the box is the only box, its
+   identity row sits one inset from the edge with the inner radius, so the hover fill is concentric with the card. The
+   row reads the label on line 1 (the whole width is its room), the family · age and the state word on line 2, the way
+   a run row in Actions & pipelines reads; what the card holds when open is a quiet stack of facts and small text
+   buttons. The Investigation shelf lists its trail as words, not tags. */
+
+/* the sort line: what the list is, how many, and the order (a chat-style dropdown) */
+[data-rail-skin="d"] #panel-artifacts .sh-sortrow { display: flex !important; flex-wrap: wrap; align-items: center; gap: 4px 6px !important; padding: 0 2px var(--d-g) !important; min-width: 0; }
+[data-rail-skin="d"] #panel-artifacts .sh-sortrow > .sh-sortlab { font: 600 var(--d-fs-label)/1.3 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text) !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-sortrow > .pm-chip { font: 500 var(--d-fs-meta)/1.3 var(--body-font) !important; color: var(--d-text-3) !important; font-variant-numeric: tabular-nums; }
+[data-rail-skin="d"] #panel-artifacts .sh-sortrow .pm6-tb-menu-wrap { margin-left: auto; flex: none; min-width: 0; }
+[data-rail-skin="d"] #panel-artifacts .sh-sortrow .pm6-tb-menu-trigger {
+  display: inline-flex !important; align-items: center; gap: 5px !important; min-height: 26px; padding: 2px 6px 2px 8px !important;
+  border: 1px solid var(--d-ctl-line) !important; border-radius: var(--d-r) !important; background: var(--d-ctl-bg) !important; box-shadow: none !important;
+  font: 500 var(--d-fs-meta)/1.25 var(--body-font) !important; color: var(--d-text) !important; cursor: pointer;
+  transition: background-color var(--d-t1) var(--d-ease), border-color var(--d-t1) var(--d-ease);
+}
+[data-rail-skin="d"] #panel-artifacts .sh-sortrow .pm6-tb-menu-trigger:hover, [data-rail-skin="d"] #panel-artifacts .sh-sortrow .pm6-tb-menu-trigger.is-menu-open { background: var(--d-press) !important; border-color: var(--d-line-2) !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-sortrow .pm6-tb-menu-trigger > .pm-ico { width: 12px !important; height: 12px !important; color: var(--d-text-3); transition: transform var(--d-t2) var(--d-spring); }
+[data-rail-skin="d"] #panel-artifacts .sh-sortrow .pm6-tb-menu-trigger.is-menu-open > .pm-ico { transform: rotate(180deg); }
+[data-rail-skin="d"] #panel-artifacts .sh-sortrow .pm6-tb-menu-label { font: inherit !important; color: inherit !important; }
+/* the sort menu's items in the rail's face (see the same rule for the Actions menus in section 13) */
+[data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-shArtSort"] .pmr-mi { font-family: inherit; }
+
+/* ---- the card: a shelf-like box ---- */
+[data-rail-skin="d"] #panel-artifacts .sh-card {
+  position: relative; margin: 0 0 var(--d-g) !important; padding: 0 !important; cursor: default;
+  border-radius: var(--d-R) !important; overflow: clip !important; box-shadow: none !important; transform: none !important;
+  background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-fill), var(--surface)) !important;
+  border: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-line), transparent) !important;
+}
+[data-rail-skin="d"][data-theme^="glass"] #panel-artifacts .sh-card { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-fill), transparent) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08) !important; }
+[data-rail-skin="d"][data-theme^="friendly"] #panel-artifacts .sh-card { box-shadow: 0 1px 2px rgba(0, 0, 0, .10), 0 4px 14px -8px color-mix(in srgb, var(--cat, var(--accent-blue)) 40%, transparent) !important; }
+[data-rail-skin="d"][data-theme^="friendly"][data-theme$="-light"] #panel-artifacts .sh-card { box-shadow: 0 1px 2px rgba(80, 60, 110, .06), 0 6px 16px -10px color-mix(in srgb, var(--cat, var(--accent-blue)) 45%, transparent) !important; }
+[data-rail-skin="d"][data-theme^="retro"] #panel-artifacts .sh-card { box-shadow: 2px 2px 0 color-mix(in srgb, var(--cat, var(--accent-blue)) 38%, transparent) !important; }
+[data-rail-skin="d"][data-o55-nier="on"] #panel-artifacts .sh-card { border-color: var(--d-line-2) !important; box-shadow: none !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-card:hover { transform: none !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-card.expired { opacity: .72 !important; }
+/* the identity row: the label, then family · age and the state word */
+[data-rail-skin="d"] #panel-artifacts .sh-card > .sh-r1 {
+  display: grid !important; grid-template-columns: calc(9px + var(--d-gap)) minmax(0, max-content) auto minmax(0, 1fr) auto;
+  grid-template-areas: "chev label label label label" "chev fam age . state"; column-gap: 0 !important; row-gap: 1px; align-items: center;
+  min-height: 0; margin: var(--d-in) !important; padding: 4px var(--d-pad) !important; cursor: pointer;
+  border-radius: var(--d-r) !important; background: transparent; transition: background-color var(--d-t1) var(--d-ease);
+}
+[data-rail-skin="d"] #panel-artifacts .sh-card > .sh-r1:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-card.open > .sh-r1 { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-open), transparent); }
+[data-rail-skin="d"] #panel-artifacts .sh-card > .sh-r1:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+[data-rail-skin="d"] #panel-artifacts .sh-r1 > .sh-accchev { grid-area: chev; align-self: start; justify-self: start; width: 9px !important; height: 9px !important; margin-top: 4px; color: var(--d-text-3) !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-r1 > .sh-rlabel {
+  grid-area: label; min-width: 0; font: 600 var(--d-fs-name)/var(--d-lh) var(--body-font) !important; color: var(--d-text) !important;
+  white-space: normal !important; overflow: visible !important; overflow-wrap: anywhere; text-overflow: clip !important; text-wrap: pretty;
+}
+/* the family is the card's kind: always shown (the shell hides it below 250 px), a word, not a tag */
+[data-rail-skin="d"] #panel-artifacts .sh-card .sh-r1 > .sh-fam {
+  grid-area: fam; display: block !important; min-width: 0; margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: none !important;
+  font: 500 var(--d-fs-meta)/1.35 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text-2) !important;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+[data-rail-skin="d"] #panel-artifacts .sh-r1 > .pm-chip { grid-area: state; justify-self: end; margin-left: 8px; }
+[data-rail-skin="d"] #panel-artifacts .sh-r1 > .sh-age {
+  grid-area: age; align-self: center; justify-self: start; display: inline-flex !important; align-items: baseline; gap: 0 !important; margin: 0 !important;
+  font: 400 var(--d-fs-small)/1.35 var(--mono-font) !important; color: var(--d-text-3) !important; font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+[data-rail-skin="d"] #panel-artifacts .sh-r1 > .sh-age::before { content: '\00B7'; margin: 0 5px; font-family: var(--body-font); color: var(--d-text-3); }
+[data-rail-skin="d"] #panel-artifacts .sh-r1 > .sh-age > :is(.dot, .d-gl) { display: none !important; }
+/* when family · age and the state word do not fit on one line, the state goes under them (measured, JS) */
+[data-rail-skin="d"] #panel-artifacts .sh-card > .sh-r1[data-d-stack] { grid-template-areas: "chev label label label label" "chev fam age . ." "chev state state state state"; }
+[data-rail-skin="d"] #panel-artifacts .sh-card > .sh-r1[data-d-stack] > .pm-chip { justify-self: start; margin-left: 0; }
+/* lines that stay visible on a closed card: the failing test, the live stream */
+[data-rail-skin="d"] #panel-artifacts .sh-card > :is(.sh-logline, .sh-liveline) {
+  margin: 0 0 7px !important; padding: 0 calc(var(--d-in) + var(--d-pad)) 0 calc(var(--d-in) + var(--d-pad) + 9px + var(--d-gap)) !important;
+}
+[data-rail-skin="d"] #panel-artifacts .sh-card > .sh-logline {
+  font: 400 var(--d-fs-small)/1.4 var(--mono-font) !important; color: var(--d-fail) !important;
+  white-space: normal !important; overflow-wrap: anywhere; text-overflow: clip !important;
+  display: -webkit-box !important; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+[data-rail-skin="d"] #panel-artifacts .sh-card.open > .sh-logline { display: block !important; -webkit-line-clamp: none; }
+[data-rail-skin="d"] #panel-artifacts .sh-card > .sh-liveline { display: flex !important; align-items: center; gap: 6px !important; font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-2) !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-liveline > span:not(.d-gl) { min-width: 0; }
+[data-rail-skin="d"] #panel-artifacts .sh-liveline > .pm-minibtn { margin-left: auto !important; }
+
+/* ---- an open card: a quiet stack of facts, small text buttons at the end ---- */
+[data-rail-skin="d"] #panel-artifacts .sh-card > .sh-accb { padding: 0 calc(var(--d-in) + var(--d-pad)) 0 calc(var(--d-in) + var(--d-pad) + 9px + var(--d-gap)) !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-card > .sh-accb > .pm-acc-inner { display: flex; flex-direction: column; gap: 5px; }
+/* the accordion grows its body from zero height: a fact never shrinks to fit the body mid-open (the thumbnail would
+   grow out of nothing and push the facts down) */
+[data-rail-skin="d"] #panel-artifacts .sh-card > .sh-accb > .pm-acc-inner > * { flex-shrink: 0; }
+[data-rail-skin="d"] #panel-artifacts .sh-card > .sh-accb > .pm-acc-inner > :first-child { margin-top: 2px !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-card > .sh-accb > .pm-acc-inner > :last-child { margin-bottom: 9px !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-card .sh-accb > .pm-acc-inner > * { margin-top: 0 !important; padding-left: 0 !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-prev {
+  font: 400 var(--d-fs-small)/1.45 var(--mono-font) !important; color: var(--d-text-2) !important;
+  white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere;
+}
+[data-rail-skin="d"] #panel-artifacts .sh-rmeta {
+  font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-3) !important;
+  white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere;
+}
+/* fact lines wrap between their parts (JS keeps a ref or a count whole), in even lines, so an age or a word is never
+   left alone on a line (Chrome's text-wrap: pretty leaves "2h" alone there; balance does not) */
+[data-rail-skin="d"] #panel-artifacts :is(.sh-rmeta, .sh-liveline > span, .sh-time, .sh-retn, .sh-row.flat > .sh-meta, .sh-kv > .sh-v:not(.sh-mono)) { text-wrap: balance; }
+[data-rail-skin="d"] #panel-artifacts .sh-thumb { height: 56px; border-radius: var(--d-r) !important; border: 1px solid var(--d-line) !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-vals { display: flex !important; flex-wrap: wrap; align-items: baseline; gap: 4px 14px !important; margin: 0 !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-val { display: inline-flex !important; flex-direction: row !important; align-items: baseline; gap: 4px; }
+[data-rail-skin="d"] #panel-artifacts .sh-valn { font: 600 var(--d-fs-title)/1.2 var(--mono-font) !important; color: var(--d-text) !important; font-variant-numeric: tabular-nums; }
+[data-rail-skin="d"] #panel-artifacts .sh-valn.ok { color: var(--d-ok) !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-valn.err { color: var(--d-fail) !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-valk { margin: 0 !important; font: 400 var(--d-fs-meta)/1.3 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text-3) !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-recrow { display: flex !important; align-items: center; gap: 8px !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-play {
+  width: 26px !important; height: 26px !important; flex: none; padding: 0; border-radius: var(--d-r) !important;
+  border: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) 40%, transparent) !important;
+  background: color-mix(in srgb, var(--cat, var(--accent-blue)) 14%, transparent) !important; color: var(--cat, var(--accent-blue)) !important;
+  transition: background-color var(--d-t1) var(--d-ease);
+}
+[data-rail-skin="d"] #panel-artifacts .sh-play:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) 24%, transparent) !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-ticks {
+  height: 10px !important; border-radius: min(var(--d-r), 2px) !important; border: 1px solid var(--d-line) !important;
+  background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--cat, var(--accent-blue)) 55%, transparent) 0 2px, transparent 2px 7px) !important;
+}
+[data-rail-skin="d"] #panel-artifacts .sh-idrow { margin: 0 !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-time { display: flex !important; align-items: center; gap: 0 !important; font: 400 var(--d-fs-small)/1.35 var(--mono-font) !important; color: var(--d-text-3) !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-time > :is(.dot, .d-gl) { display: none !important; }
+/* retention: the sentence wraps in its column, the Pin button keeps its place at the end */
+[data-rail-skin="d"] #panel-artifacts .sh-retn { display: grid !important; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 8px !important; font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-3) !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-retn > .pm-minibtn { justify-self: end; margin: 0 !important; }
+/* the action strip: separated from the facts by a hairline; buttons carry words, so they size to them */
+[data-rail-skin="d"] #panel-artifacts .sh-prov {
+  display: flex !important; flex-wrap: wrap; align-items: center; gap: 4px 6px !important;
+  margin-top: 1px !important; padding-top: 6px !important; border-top: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) 22%, transparent) !important;
+}
+[data-rail-skin="d"] #panel-artifacts .sh-prov .pm-minibtn {
+  width: auto !important; min-width: 0; height: 24px !important; padding: 0 7px !important; gap: 4px; display: inline-flex !important; align-items: center;
+  border-radius: var(--d-rs) !important; font: 600 var(--d-fs-small)/1 var(--body-font) !important; color: var(--d-text-2) !important; white-space: nowrap;
+}
+[data-rail-skin="d"] #panel-artifacts .sh-prov .pm-minibtn svg, [data-rail-skin="d"] #panel-artifacts .sh-prov .pm-minibtn .pm-ico,
+[data-rail-skin="d"] #panel-artifacts .sh-liveline .pm-minibtn svg, [data-rail-skin="d"] #panel-artifacts .sh-retn .pm-minibtn svg { width: 12px !important; height: 12px !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-liveline .pm-minibtn, [data-rail-skin="d"] #panel-artifacts .sh-retn .pm-minibtn, [data-rail-skin="d"] #panel-artifacts .sh-idrow .pm-minibtn { height: 24px !important; }
+[data-rail-skin="d"] #panel-artifacts .pm-chip[data-d-st="token"] { color: var(--d-text-3) !important; font-weight: 500 !important; }
+[data-rail-skin="d"] #panel-artifacts .pm-chip[data-d-st="token"] > .d-gl { display: none !important; }
+
+/* a run still producing its artifact */
+[data-rail-skin="d"] #panel-artifacts .sh-scroll > .pm-empty {
+  display: flex; align-items: flex-start; gap: 6px; margin: 0 0 var(--d-g) !important; padding: 7px calc(var(--d-in) + var(--d-pad)) !important;
+  border: 1px dashed var(--d-line-2) !important; border-radius: var(--d-R) !important; background: none !important;
+  font: 400 var(--d-fs-meta)/1.45 var(--body-font) !important; color: var(--d-text-2) !important;
+}
+[data-rail-skin="d"] #panel-artifacts .sh-scroll > .pm-empty > .d-gl { margin-top: 2px; }
+
+/* ---- Investigation: the head states the outcome; the facts are words; each step a row ---- */
+[data-rail-skin="d"] #panel-artifacts .sh-head > .pm-chip { margin-left: auto; }
+/* the facts sit apart by space, not by separators, so a wrapped line never ends on a dangling dot */
+[data-rail-skin="d"] #panel-artifacts .sh-chiprow { display: flex !important; flex-wrap: wrap; gap: 2px 12px !important; margin: 0 !important; padding: 4px var(--d-pad) 4px !important; }
+[data-rail-skin="d"] #panel-artifacts .sh-chiprow > .pm-chip { font: 500 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-2) !important; }
+/* a step reads like every other row: its word on line 1, what it is on line 2 */
+[data-rail-skin="d"] #panel-artifacts .sh-shelf .sh-row.flat {
+  display: grid !important; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "fam badge" "meta meta"; column-gap: 6px; row-gap: 1px; align-items: baseline;
+  min-height: 0; padding: 4px var(--d-pad) !important; border-radius: var(--d-r) !important; transform: none !important;
+  transition: background-color var(--d-t1) var(--d-ease);
+}
+[data-rail-skin="d"] #panel-artifacts .sh-shelf .sh-row.flat[data-demo-action] { cursor: pointer; }
+[data-rail-skin="d"] #panel-artifacts .sh-shelf .sh-row.flat[data-demo-action]:hover {
+  transform: none !important; background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important;
+}
+[data-rail-skin="d"] #panel-artifacts .sh-row.flat > .sh-fam {
+  grid-area: fam; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: none !important;
+  font: 600 var(--d-fs-label)/1.35 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text) !important;
+}
+[data-rail-skin="d"] #panel-artifacts .sh-row.flat > .sh-grpbadge {
+  grid-area: badge; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: none !important;
+  font: 500 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-2) !important;
+}
+[data-rail-skin="d"] #panel-artifacts .sh-row.flat > .sh-grpbadge::before { content: '\00B7'; margin-right: 6px; color: var(--d-text-3); }
+[data-rail-skin="d"] #panel-artifacts .sh-row.flat > .sh-meta {
+  grid-area: meta; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere;
+}
+
+/* ---- state words take their state colour (glyph and word) ---- */
+[data-rail-skin="d"] #panel-artifacts .pm-chip[data-d-st="ok"], [data-rail-skin="d"] #panel-artifacts .pm-chip[data-d-st="live"] { color: var(--d-ok) !important; }
+[data-rail-skin="d"] #panel-artifacts .pm-chip[data-d-st="run"] { color: var(--d-run) !important; }
+[data-rail-skin="d"] #panel-artifacts .pm-chip:is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]) { color: var(--d-warn) !important; }
+[data-rail-skin="d"] #panel-artifacts .pm-chip:is([data-d-st="fail"], [data-d-st="blocked"]) { color: var(--d-fail) !important; }
+[data-rail-skin="d"] #panel-artifacts .pm-chip:is([data-d-st="pending"], [data-d-st="info"]) { color: var(--d-pend) !important; }
+[data-rail-skin="d"] #panel-artifacts .pm-chip:is([data-d-st="idle"], [data-d-st="unknown"]) { color: var(--d-idle) !important; }
+
+/* ---- families and modes ---- */
+[data-rail-skin="d"][data-o55-nier="on"][data-o55-nier-parts~="headers"] #panel-artifacts :is(.sh-hlabel, .sh-title, .sh-sortlab) {
+  text-transform: uppercase !important; letter-spacing: .14em !important;
+}
+[data-rail-skin="d"][data-motion="reduced"] #panel-artifacts *, [data-rail-skin="d"][data-reduced-motion="1"] #panel-artifacts * { transition: none !important; animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  [data-rail-skin="d"] #panel-artifacts * { transition: none !important; animation: none !important; }
+}
+
 /* ---- 10. Activity bar: one tile marks the open panel and glides to the next ---------------------------------------
    The tile (.d-abind, placed by JS) is the size of an icon's symbol box, so hover and active are the same box. The
    chat and home toggles keep their own colour state (they are switches, not the open panel). */
