@@ -814,7 +814,25 @@
          effects' measurements then read a finished layout instead of forcing it again in the middle of it (films M1).
          Nothing shows early: the entrance's blocks are still unseen for their first steps. */
       const t = token, o = { claim, cold, chapterMove: dir !== 'open' && !!prevChapter && prevChapter !== pr.current };
-      M.real.raf(() => { if (t === token && layer.isConnected && !layer.classList.contains('o55-out') && shown() && painted()) draw(layer, dir, def, pr, F, o); });
+      const go = () => { if (t === token && layer.isConnected && !layer.classList.contains('o55-out') && shown() && painted()) draw(layer, dir, def, pr, F, o); };
+      /* the cold open's release only. The rule is painted on one long frame: the line holds, then WELCOME is up.
+         A double rAF still runs at the start of that paint, so tap, the welcome chord and the title were heard
+         over the frozen line. The next frame arrives late, and that is the frame where the rule is already up;
+         they start then (the chord's beat after it stays on the motion clock). Counting frames and playing on the
+         third one fired at the start of the long paint whenever that paint was the third frame. A fast release
+         has no late frame, so the fifth stands in for it. Every other screen still starts on the next frame. */
+      if (cold) {
+        let last = performance.now(), n = 0;
+        const step = (now) => {
+          if (!(t === token && layer.isConnected && !layer.classList.contains('o55-out') && shown() && painted())) return;
+          n += 1;
+          const late = now - last > 100;
+          last = now;
+          if (late || n >= 5) { go(); return; }
+          M.real.raf(step);
+        };
+        M.real.raf(step);
+      } else M.real.raf(go);
       return true;
     },
 

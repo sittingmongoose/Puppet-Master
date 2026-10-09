@@ -93,6 +93,11 @@
      The art's own reader stays the fallback when the pack is missing. */
   const TOK_FIELDS = ['bg', 'surface', 'text', 'text2', 'muted', 'border', 'blue', 'magenta', 'lime', 'orange', 'warn', 'error', 'primary', 'raised', 'onInk'];
   const tokSnaps = new Map();
+  /* The pack is one read, but that read while the click's scrim is coming down (the opening's syncTheme, before the
+     window is held) leaves the new window's paint until the cold open lets the screen go: about half a second with
+     no frame at 1600, both NieR themes. Until the first screen has been presented, a miss uses the art's own reader.
+     A hit is free, so a later look change still pays one read. */
+  let packReady = false;
   const PREVIEW_OK = /^(dark|light)$/;
   function tokenOwner(el) {
     const root = document.documentElement;
@@ -122,6 +127,8 @@
     el = el || (S.root && S.root.querySelector('.o55-stage')) || root;
     const owner = tokenOwner(el), key = tokenKey(owner), hit = tokSnaps.get(key);
     if (hit) return Object.assign({}, hit);
+    /* a miss on a held screen would style it before it is shown and hand that paint to the release frame */
+    if (!packReady || (el.closest && el.closest('.o55-hold'))) return null;
     if (tokSnaps.size > 40) tokSnaps.clear();
     const raw = (getComputedStyle(el).getPropertyValue('--o55-tokpack') || '').trim();
     const parts = raw.split('|').map((s) => s.trim().replace(/^["']|["']$/g, ''));
@@ -137,6 +144,12 @@
     const nodes = [S.root.querySelector('.o55-stage') || document.documentElement];
     S.root.querySelectorAll('[data-theme], [data-o55-nier-preview]').forEach((n) => nodes.push(n));
     nodes.forEach((n) => { if (n) readStageTokens(n); });
+  }
+  /* after the screen's own frame has been presented, not in the task that shows it */
+  function armStageTokens() {
+    const warm = () => { packReady = true; warmStageTokens(); };
+    if (packReady) { warm(); return; }
+    O55.motion.real.raf(() => O55.motion.real.raf(warm));
   }
   (function hookStageTokens() {
     const art = O55.art;
@@ -383,7 +396,7 @@
     const focusHeading = () => O55.motion.after(60, () => { const a = document.activeElement; if (h && S.open && !(a && a !== layer && layer.contains(a))) h.focus({ preventScroll: true }); });
     U.announce(O55.stages.progress(S, def).announce + '. ' + (val(def.title) || ''), S.root.querySelector('.o55-win'));
     def.mounted && def.mounted(S, layer, true);
-    if (!hold) { leave(); focusHeading(); skin('screen', layer, dir); return; }
+    if (!hold) { leave(); focusHeading(); skin('screen', layer, dir); armStageTokens(); return; }
     O55.motion.release(() => {
       S.root.classList.remove('o55-hold');
       if (dir === 'open') checkSolid(); /* the opening is the window's busiest motion: measured while it plays */
@@ -401,6 +414,12 @@
         if (gate) releaseStage(); /* a gate shown early (a key, a press, the cap) shows the stage with it */
         if (!layer.isConnected || layer.classList.contains('o55-out')) return;
         layer.classList.remove('o55-hold');
+        /* The pack read is one style pass. Doing it in the same frames as this release made that
+           paint the long one (about a third of a second, and the cold open's tap played at the
+           start of it, over the frozen line). This screen already has its colours from the art's
+           own cache. The pack is read once the release has been up for a moment, so a later look
+           change still pays one read and this frame does not. */
+        O55.motion.real.setTimeout(armStageTokens, 1600);
         leave();
         if (byKey) { const pri = layer.querySelector('.o55-primary'); O55.motion.after(0, () => { if (S.open && pri && pri.isConnected) pri.focus({ preventScroll: true }); }); }
         else focusHeading();
