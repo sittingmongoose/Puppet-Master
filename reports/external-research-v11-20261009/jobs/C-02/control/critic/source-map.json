@@ -1,0 +1,177 @@
+{
+  "case": "H02",
+  "block": "C-02",
+  "arm": "control",
+  "method": "M16",
+  "stage": "critic",
+  "research_scope": "Full independent review of the exact H02 brief, complete declared own-arm predecessor artifacts, and the ten immutable public primary sources in the predecessor inventory; no new external sources or source IDs",
+  "source_lineage": "../research/source-map.json",
+  "captured_utc": "2026-10-09T21:49:18Z",
+  "access_timestamp_note": "Per-request completion timestamps are not exposed by the browser tool. Each source page was opened during this UTC window; accessed_utc records the immediate post-batch clock checkpoint, not an asserted per-request second. The original research access timestamps/operations remain in the lineage map.",
+  "usage_billing_observed": null,
+  "sources": [
+    {
+      "id": "S01",
+      "title": "ABALOBI MONITOR",
+      "url": "https://abalobi.org/monitor/",
+      "kind": "official product page",
+      "version_or_state": "Mutable current product page; no tagged version or commit exposed",
+      "commit": null,
+      "locator": "Current recheck: lines 33-38, 58-68, 137-163; offline-compatible multilingual landing features and organization/site data-placement constraints",
+      "accessed_utc": "2026-10-09T21:49:18Z",
+      "observed_operations": [
+        "direct open of official URL",
+        "inspect key features and registration/setup text"
+      ],
+      "evidence": "../research/sources/S01-abalobi-monitor.md",
+      "critic_recheck_evidence": "sources/recheck-notes.md#s01"
+    },
+    {
+      "id": "S02",
+      "title": "ODK Collect Form Audit Log",
+      "url": "https://docs.getodk.org/form-audit-log/",
+      "kind": "official product documentation",
+      "version_or_state": "Current docs page as observed; documentation version/commit not exposed; mutable",
+      "commit": null,
+      "locator": "Current recheck: lines 199-235, 241-320; change tracking, identity prompt, event schema, timestamp derivation and known limitations",
+      "accessed_utc": "2026-10-09T21:49:18Z",
+      "observed_operations": [
+        "direct open of official URL",
+        "inspect change tracking, identity and timestamp sections"
+      ],
+      "evidence": "../research/sources/S02-odk-audit-log.md",
+      "critic_recheck_evidence": "sources/recheck-notes.md#s02"
+    },
+    {
+      "id": "S03",
+      "title": "Managing Submissions in Central",
+      "url": "https://docs.getodk.org/central-submissions/",
+      "kind": "official product documentation",
+      "version_or_state": "Current docs page as observed; describes multiple Central generations; mutable; no commit exposed",
+      "commit": null,
+      "locator": "Current recheck: lines 121-136, 208-241, 291-312; offline capture recommendation, exports, review states and submission links",
+      "accessed_utc": "2026-10-09T21:49:18Z",
+      "observed_operations": [
+        "direct open of official URL",
+        "inspect offline recommendation, export and review sections"
+      ],
+      "evidence": "../research/sources/S03-odk-central-submissions.md",
+      "critic_recheck_evidence": "sources/recheck-notes.md#s03"
+    },
+    {
+      "id": "S04",
+      "title": "ODK Question Types",
+      "url": "https://docs.getodk.org/form-question-types/",
+      "kind": "official product documentation",
+      "version_or_state": "Current docs page as observed; mutable; no commit exposed",
+      "commit": null,
+      "locator": "Current recheck: lines 305-367; integer and decimal widget types and limits",
+      "accessed_utc": "2026-10-09T21:49:18Z",
+      "observed_operations": [
+        "direct open of official URL",
+        "inspect integer and decimal widget sections"
+      ],
+      "evidence": "../research/sources/S04-odk-question-types.md",
+      "critic_recheck_evidence": "sources/recheck-notes.md#s04"
+    },
+    {
+      "id": "S05",
+      "title": "With Entity access by owner only, Entity not deleted in Collect if deleted in Central while Collect is offline",
+      "url": "https://github.com/getodk/collect/issues/6768",
+      "kind": "official project issue",
+      "version_or_state": "Issue #6768 opened 2025-06-12; currently closed by #6910; issue content mutable",
+      "commit": null,
+      "locator": "Current recheck: lines 128-172; issue state, offline owner-only reproduction and unchanged-hash explanation",
+      "accessed_utc": "2026-10-09T21:49:18Z",
+      "observed_operations": [
+        "direct open of official issue URL",
+        "inspect current state and reproduction/diagnosis"
+      ],
+      "evidence": "../research/sources/S05-collect-issue-6768.md",
+      "critic_recheck_evidence": "sources/recheck-notes.md#s05"
+    },
+    {
+      "id": "S06",
+      "title": "Use integrity URL to clean up offline entities when hash is unchanged",
+      "url": "https://github.com/getodk/collect/pull/6910",
+      "kind": "official project pull request",
+      "version_or_state": "PR #6910 merged 2025-10-17; rendered short merge hash a93c629; full SHA not captured",
+      "commit": "a93c629 (short hash as rendered; full hash not independently captured)",
+      "locator": "Current recheck: lines 129-177, 344-388; design decision, reported regression cases, Android verification and merge",
+      "accessed_utc": "2026-10-09T21:49:18Z",
+      "observed_operations": [
+        "direct open of official pull-request URL",
+        "inspect design, verification and merge sections"
+      ],
+      "evidence": "../research/sources/S06-collect-pr-6910.md",
+      "critic_recheck_evidence": "sources/recheck-notes.md#s06"
+    },
+    {
+      "id": "S07",
+      "title": "Missing events in audit log after validating answers in a field-list group when finalized",
+      "url": "https://github.com/getodk/collect/issues/5550",
+      "kind": "official project issue",
+      "version_or_state": "Issue #5550 opened 2023-04-14; currently Open; mutable issue state",
+      "commit": "1f9155c (master version named by reporter, not defect/fix commit)",
+      "locator": "Current recheck: lines 129-196; Open state, reported versions and deferred-validation field-list reproduction",
+      "accessed_utc": "2026-10-09T21:49:18Z",
+      "observed_operations": [
+        "direct open of official issue URL",
+        "inspect status and reported reproduction"
+      ],
+      "evidence": "../research/sources/S07-collect-issue-5550.md",
+      "critic_recheck_evidence": "sources/recheck-notes.md#s07"
+    },
+    {
+      "id": "S08",
+      "title": "EPCIS Standard 2.0.1",
+      "url": "https://ref.gs1.org/standards/epcis/2.0.1/",
+      "kind": "official GS1 standard PDF",
+      "version_or_state": "Stable 2.0.1 endpoint; PDF identifies Release 2.0, ratified June 2022; 229 pages",
+      "commit": null,
+      "locator": "Current recheck: PDF title/version pp.1-2; quantity/UOM \u00a77.3.3.1; disposition \u00a77.3.6.2 pp.60-62",
+      "accessed_utc": "2026-10-09T21:49:18Z",
+      "observed_operations": [
+        "direct open of official PDF endpoint",
+        "inspect PDF version and quantity/disposition sections"
+      ],
+      "evidence": "../research/sources/S08-gs1-epcis-201.md",
+      "critic_recheck_evidence": "sources/recheck-notes.md#s08"
+    },
+    {
+      "id": "S09",
+      "title": "FDA Food Traceability Final Rule page",
+      "url": "https://www.fda.gov/food/food-safety-modernization-act-fsma/fsma-final-rule-requirements-additional-traceability-records-certain-foods",
+      "kind": "official regulator page",
+      "version_or_state": "Mutable FDA page as observed 2026-10-09; upper current text and lower stale compliance-date sentence differ",
+      "commit": null,
+      "locator": "Current recheck: lines 79-101; FTL applicability, original date, proposed extension/non-enforcement direction and lower stale date sentence",
+      "accessed_utc": "2026-10-09T21:49:18Z",
+      "observed_operations": [
+        "direct open of official URL",
+        "find Jan 20 2026 and July 20 2028 text",
+        "inspect applicability and date sections"
+      ],
+      "evidence": "../research/sources/S09-fda-food-traceability-rule.md",
+      "critic_recheck_evidence": "sources/recheck-notes.md#s09"
+    },
+    {
+      "id": "S10",
+      "title": "farmOS Field Kit v1",
+      "url": "https://v1.farmos.org/guide/app/",
+      "kind": "official product guide",
+      "version_or_state": "Legacy v1 docs; page labels v1 a proof of concept without major feature updates; mutable/old",
+      "commit": null,
+      "locator": "Current recheck: lines 57-68; offline log sync, proof-of-concept and server requirements",
+      "accessed_utc": "2026-10-09T21:49:18Z",
+      "observed_operations": [
+        "direct open of official URL",
+        "inspect offline and release/maintenance sections"
+      ],
+      "evidence": "../research/sources/S10-farmos-field-kit.md",
+      "critic_recheck_evidence": "sources/recheck-notes.md#s10"
+    }
+  ],
+  "access_window_start_utc": "2026-10-09T21:47:57Z",
+  "access_window_end_utc": "2026-10-09T21:49:18Z"
+}

@@ -1,0 +1,22 @@
+{
+  "verified_at": "2026-10-09T21:49:17.175575+00:00",
+  "commit": "58d3481045bd825376b608f7c695dc33a875650f",
+  "github_ref": "research/external-research-v11-20261009",
+  "github_ref_actual": "58d3481045bd825376b608f7c695dc33a875650f",
+  "verification": "Actual GitHub API ref plus independent web immutable README and M15 retirement readback; NAS push alone not used.",
+  "critical_files": [
+    "README.md",
+    "control/SELECTION_M15_RETIREMENT.json"
+  ],
+  "author_and_committer_verified_public_noreply": true,
+  "snapshot": {
+    "started": 66,
+    "delivered": 50,
+    "paired_assessments": 28,
+    "full_source_assessments": 49,
+    "source_pass": 13,
+    "source_fail": 36,
+    "no_complete_final_quality_null": 7
+  },
+  "status": "INTERMEDIATE; B07, two GLM finals and M16 budget comparison still executing; no optimization qualified."
+}

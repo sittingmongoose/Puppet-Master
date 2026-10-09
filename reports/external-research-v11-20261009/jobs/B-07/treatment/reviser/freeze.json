@@ -1,0 +1,108 @@
+{
+  "frozen_at": "2026-10-09T21:38:14.490582+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I07/brief.md",
+      "sha256": "e2c0f99132caf5bc7e509651bb078b602f5f6f9ef6b217777daaa2e679689cbd",
+      "bytes": 2277
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M15.json",
+      "sha256": "545471cd3c57f48f076890b9ee9ae4fe741f1566742d36f0f77b865e6baa4aed",
+      "bytes": 2611
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/assignment.md",
+      "sha256": "2c641b3adcdedc686113dd7b155f545718a58b54464fcdaf42e54dec93f1ef88",
+      "bytes": 3597
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/input-map.json",
+      "sha256": "571955da9f28050efb6a3de88ea1eef51f011830eae470f32725a9a4dbc202ad",
+      "bytes": 1994
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/draft.md",
+      "sha256": "b7a34f0499e91e826b391d198867f31eb9d9deca242e1e94bf7d455abcdf4f32",
+      "bytes": 24854
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/discovery.md",
+      "sha256": "b2b8908dab488715bb6efed318de92d565cd99210f143475b35b050147168ae0",
+      "bytes": 19080
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/source-map.json",
+      "sha256": "223cc93e1315b554e29878c58c461f0f3912f7d2924add8c4374b4dcca7998cf",
+      "bytes": 21024
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/revealed-plan.md",
+      "sha256": "dee05cfa57badf5d2fa98859d53ea2f9e04c5c2fd2fc38b41913dda5b4205193",
+      "bytes": 565
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/verification-questions.md",
+      "sha256": "99adf649dd1eef018f36bfe186b209b615a64257c6a380bef644cc41f50e9b01",
+      "bytes": 562
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier/source-map.json",
+      "sha256": "c2f715e2ed17eb25a2e617bf6f471f88e8e6b87a16332a09636bfcb58fd4ab16",
+      "bytes": 14940
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier/verification.md",
+      "sha256": "437029bfd8b7844c0e723a60865d65be1654d2ef630012a241ad646f23d7f74d",
+      "bytes": 16146
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/critic/source-map.json",
+      "sha256": "fae5e0bc0b1319c4a8713bfbe09a4644bee623960f5a27ad70d6a31aeacb10c6",
+      "bytes": 12232
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/critic/critique.md",
+      "sha256": "78c0bb09871c35a939e41461e09da04d76083a911780d98eef5595611d8696c3",
+      "bytes": 25962
+    }
+  ],
+  "method": {
+    "id": "M15",
+    "version": "v1",
+    "name": "fresh-factored-verification-with-full-criticism",
+    "control": "Competent full investigator, fresh independent full critic, fresh full reviser. Same model/provider and75-minute whole ceiling as treatment.",
+    "treatment": "Investigator does the same full external-discovery job, then writes verification-questions.md with three neutral answer-free consequential questions selected from its complete draft. A fresh verifier reads only those questions, original brief and released plan; independently researches primary sources without draft/author sources. It runs in parallel with a separate fresh full critic. Fresh full reviser adjudicates both complete packages with primary evidence and preserves full output. Four contexts, no nested agents; factored verification is extra charged work, not premium evaluation.",
+    "evidence_kind": "full-discovery",
+    "locked_at": "2026-10-09T20:58:26.494227+00:00",
+    "wall_ceiling_s": 4500,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "stage_allowances_s": {
+      "research": 1800,
+      "critic": 1200,
+      "verifier": 900,
+      "reviser": 1500
+    },
+    "method_effect": "Added independent factored context and neutral-question handoff; not an isolated prompt effect. Matched provider per block, Luna on I07 and Muse on I08.",
+    "lineage": "Prospective successor from observed false critic corrections, not a repair of M05/M13/M14 originals. Adaptation of independent verification-answer separation in CoVe; no benchmark/model/training reproduction. No further novelty credit needed for original four new recipes.",
+    "source": [
+      {
+        "url": "https://arxiv.org/abs/2309.11495v2",
+        "version": "v2, 2023-09-25",
+        "accessed_at": "2026-10-09T20:58:26.494227+00:00",
+        "observed": "Primary abstract describes draft, verification questions, independent answers and final verified response. Its benchmark gains do not establish a full external-discovery planning gain."
+      },
+      {
+        "url": "https://aclanthology.org/2024.findings-acl.212/",
+        "version": "ACL Findings2024 published paper",
+        "accessed_at": "2026-10-09T20:58:26.494227+00:00",
+        "observed": "Primary bibliographic record and abstract."
+      }
+    ],
+    "selection": "Two development blocks only. Retire from promotion if either treatment has a material source failure or the required independent-answer barrier fails. Confirmation may be considered only after both treatment full-source passes, >=20% strict eligible both-PASS delivery gain, complete runnable recipe and no known regression. No holdout opened now."
+  },
+  "resource_version": "75-30-parallel20+15-25-v1",
+  "stage_allowance_s": 1500,
+  "deadline": "2026-10-09T22:03:14.490582+00:00"
+}

@@ -1,0 +1,781 @@
+{
+  "schema": "ER11-independent-source-map-v1",
+  "case": "I07",
+  "block": "B-07",
+  "arm": "treatment",
+  "method": "M15",
+  "stage": "reviser",
+  "resource_version": "75-30-parallel20+15-25-v1",
+  "scope": "Full revised scientific planning result. Read only the exact assignment/input map, original brief, declared research/verifier/critic predecessors and their declared source-root indexes, plus independently selected public primary sources. No parent, counterpart, evaluator, campaign/history, or other-arm materials were read.",
+  "inputs_read": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/assignment.md",
+      "sha256": "2c641b3adcdedc686113dd7b155f545718a58b54464fcdaf42e54dec93f1ef88",
+      "role": "Exact assignment"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/input-map.json",
+      "sha256": "571955da9f28050efb6a3de88ea1eef51f011830eae470f32725a9a4dbc202ad",
+      "role": "Exact input map"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I07/brief.md",
+      "sha256": "e2c0f99132caf5bc7e509651bb078b602f5f6f9ef6b217777daaa2e679689cbd",
+      "role": "Original brief"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/draft.md",
+      "sha256": "b7a34f0499e91e826b391d198867f31eb9d9deca242e1e94bf7d455abcdf4f32",
+      "role": "Full research draft"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/discovery.md",
+      "sha256": "b2b8908dab488715bb6efed318de92d565cd99210f143475b35b050147168ae0",
+      "role": "Full pre-reveal discovery"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/source-map.json",
+      "sha256": "223cc93e1315b554e29878c58c461f0f3912f7d2924add8c4374b4dcca7998cf",
+      "role": "Research source map"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/revealed-plan.md",
+      "sha256": "dee05cfa57badf5d2fa98859d53ea2f9e04c5c2fd2fc38b41913dda5b4205193",
+      "role": "Exact released plan"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/verification-questions.md",
+      "sha256": "99adf649dd1eef018f36bfe186b209b615a64257c6a380bef644cc41f50e9b01",
+      "role": "Three verification questions"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/sources/index.md",
+      "sha256": "d74f2110e47ed0572ec17981dafebd58c738ef478c8db14964e4c2a1e3751d7d",
+      "role": "Research source-root evidence index"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier/verification.md",
+      "sha256": "437029bfd8b7844c0e723a60865d65be1654d2ef630012a241ad646f23d7f74d",
+      "role": "Full frozen verification"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier/source-map.json",
+      "sha256": "c2f715e2ed17eb25a2e617bf6f471f88e8e6b87a16332a09636bfcb58fd4ab16",
+      "role": "Full frozen verification source map"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier/sources/index.md",
+      "sha256": "306c9049d5deac1683e922eeecab824c9b78de0c0833b4db2b5035bc76d1ecad",
+      "role": "Verifier source-root evidence index"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/critic/critique.md",
+      "sha256": "78c0bb09871c35a939e41461e09da04d76083a911780d98eef5595611d8696c3",
+      "role": "Full critic package"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/critic/source-map.json",
+      "sha256": "fae5e0bc0b1319c4a8713bfbe09a4644bee623960f5a27ad70d6a31aeacb10c6",
+      "role": "Critic source map"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/critic/sources/index.md",
+      "sha256": "d6603f7f2154b16ee215bd1192aaad2bc324a0753dc337713f8e10c385658e4d",
+      "role": "Critic source-root evidence index"
+    }
+  ],
+  "external_source_selection": "Public primary pages from Skedda, The Food Corridor, Spacebring, FDA, W3C, PostgreSQL, FullCalendar, and the Skedda feature announcement; direct-opened canonical URLs and targeted sections.",
+  "retrieval_record": {
+    "access_batches": [
+      {
+        "batch_id": "B1",
+        "access_timestamp_utc": "2026-10-09T21:42:52Z",
+        "source_ids": [
+          "R01",
+          "R02",
+          "R03",
+          "R04",
+          "R05",
+          "R06",
+          "R07",
+          "R08"
+        ],
+        "timestamp_semantics": "Clock read immediately after the batch; public reader did not expose per-request fetch timestamps."
+      },
+      {
+        "batch_id": "B2",
+        "access_timestamp_utc": "2026-10-09T21:43:00Z",
+        "source_ids": [
+          "R09",
+          "R10",
+          "R11",
+          "R12",
+          "R13",
+          "R14",
+          "R15",
+          "R16"
+        ],
+        "timestamp_semantics": "Clock read immediately after the batch; public reader did not expose per-request fetch timestamps."
+      },
+      {
+        "batch_id": "B3",
+        "access_timestamp_utc": "2026-10-09T21:43:08Z",
+        "source_ids": [
+          "R17",
+          "R18",
+          "R19",
+          "R20",
+          "R21",
+          "R22",
+          "R23",
+          "R24",
+          "R25",
+          "R26",
+          "R27"
+        ],
+        "timestamp_semantics": "Clock read immediately after the batch; public reader did not expose per-request fetch timestamps."
+      }
+    ],
+    "operations": [
+      "Direct-opened canonical public source URLs in three bounded batches.",
+      "Used targeted open/find operations for source sections on approval states, buffer exceptions, visibility/export, currency, FDA status/commissary, WCAG criteria, PostgreSQL range/RLS defaults, and issue/fix evidence.",
+      "No vendor account was logged in; no product/runtime, database, accessibility, wet-hand, export, or budget test was executed."
+    ],
+    "search_queries_observed": []
+  },
+  "sources": [
+    {
+      "id": "R01",
+      "title": "Booking Requests & Approvals",
+      "publisher": "Skedda Support",
+      "url": "https://support.skedda.com/en/articles/11774950-booking-requests-approvals",
+      "version_or_release": "Article dated 2026-07-07; no product build or source commit exposed.",
+      "commit": null,
+      "locator": "Overview, submission, admin approval, Outlook sync, FAQs on conflicts/edits/custom admins; web lines 19-31, 43-52, 76-88, 115-150.",
+      "accessed_at": "2026-10-09T21:42:52Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B1",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened canonical Skedda support URL.",
+        "Inspected pending/confirmed state, conflicting request behavior, edits, rule scope, plan gating, and admin exceptions."
+      ],
+      "evidence_path": "sources/index.md#r01"
+    },
+    {
+      "id": "R02",
+      "title": "Buffer time",
+      "publisher": "Skedda Support",
+      "url": "https://support.skedda.com/en/articles/3653032-buffer-time",
+      "version_or_release": "Article dated 2025-03-04; no product build or source commit exposed.",
+      "commit": null,
+      "locator": "Create-rule, visibility, time granularity, and FAQ on symmetric before/after buffers and system-user exceptions; web lines 19, 27-52.",
+      "accessed_at": "2026-10-09T21:42:52Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B1",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened canonical Skedda support URL.",
+        "Inspected buffer duration, symmetry, rule update scope, minimum granularity, and system-user exception."
+      ],
+      "evidence_path": "sources/index.md#r02"
+    },
+    {
+      "id": "R03",
+      "title": "User Access Levels / Types: Regular and System Users",
+      "publisher": "Skedda Support",
+      "url": "https://support.skedda.com/en/articles/2218760-user-access-levels-types-regular-and-system-users",
+      "version_or_release": "Article dated 2024-10-13; no product build or source commit exposed.",
+      "commit": null,
+      "locator": "System User types and Booking Admin/System Admin/Owner permissions; web lines 19-32, 44-61.",
+      "accessed_at": "2026-10-09T21:42:52Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B1",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r03"
+    },
+    {
+      "id": "R04",
+      "title": "Booking and Visit Data Retention",
+      "publisher": "Skedda Support",
+      "url": "https://support.skedda.com/en/articles/5707504-booking-and-visit-data-retention",
+      "version_or_release": "Article dated 2025-03-04; no product build or source commit exposed.",
+      "commit": null,
+      "locator": "Retention period, plan qualification, unsupported period, recurring series, and export FAQ; web lines 12-33, 41-52.",
+      "accessed_at": "2026-10-09T21:42:52Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B1",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r04"
+    },
+    {
+      "id": "R05",
+      "title": "What does a food business account look like?",
+      "publisher": "The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/1812934-what-does-a-food-business-account-look-like",
+      "version_or_release": "Article dated 2023-06-07; no application build or source commit exposed.",
+      "commit": null,
+      "locator": "Bookings, calendar/Daily View, Reports, Community, profile, account; web lines 20-23, 24-27, 40-56.",
+      "accessed_at": "2026-10-09T21:42:52Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B1",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r05"
+    },
+    {
+      "id": "R06",
+      "title": "How do I digitally sign-in/out at my kitchen?",
+      "publisher": "The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/1414030-how-do-i-digitally-sign-in-out-at-my-kitchen",
+      "version_or_release": "Article dated 2026-04-24; no application build or source commit exposed.",
+      "commit": null,
+      "locator": "PIN, phone/kitchen sign-in station, clock-in/out, optional cleanliness/equipment concern notes; web lines 19-48.",
+      "accessed_at": "2026-10-09T21:42:52Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B1",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r06"
+    },
+    {
+      "id": "R07",
+      "title": "What is Digital Sign-In / Sign-Out?",
+      "publisher": "The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/1413890-what-is-digital-sign-in-sign-out",
+      "version_or_release": "Article dated 2022-09-23; no application build or source commit exposed.",
+      "commit": null,
+      "locator": "Account-linked four-digit PIN, sign-in methods, kitchen view/add/edit/reconciliation; web lines 15-34.",
+      "accessed_at": "2026-10-09T21:42:52Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B1",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r07"
+    },
+    {
+      "id": "R08",
+      "title": "What Information is in the Reporting Tab?",
+      "publisher": "The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/2322739-what-information-is-in-the-reporting-tab",
+      "version_or_release": "Mutable live article displayed as updated over three weeks before access; exact revision/build not exposed.",
+      "commit": null,
+      "locator": "CSV filters, current-year All Bookings, equipment/space reports, sign-in reports; web lines 35-51, 65-72, 82-89.",
+      "accessed_at": "2026-10-09T21:42:52Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B1",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r08"
+    },
+    {
+      "id": "R09",
+      "title": "I'm leaving my kitchen — what happens to my account and charges?",
+      "publisher": "The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/14695452-i-m-leaving-my-kitchen-what-happens-to-my-account-and-charges",
+      "version_or_release": "Article dated 2026-04-21; no application build or source commit exposed.",
+      "commit": null,
+      "locator": "Inactive vs fully deleted, retained invoices, booking history, reports; web lines 41-57.",
+      "accessed_at": "2026-10-09T21:43:00Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B2",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r09"
+    },
+    {
+      "id": "R10",
+      "title": "Pricing",
+      "publisher": "Spacebring",
+      "url": "https://www.spacebring.com/pricing",
+      "version_or_release": "Mutable live page; no effective date or product build exposed.",
+      "commit": null,
+      "locator": "Business plan display $178/month; six-month minimum; 100 monthly active users; add-ons; currency footnote says billing currency Euro; web lines 65-91, 187-224, 578-580.",
+      "accessed_at": "2026-10-09T21:43:00Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B2",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r10"
+    },
+    {
+      "id": "R11",
+      "title": "Food Code 2026",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/food/fda-food-code/food-code-2026",
+      "version_or_release": "FDA Food Code 2026 landing page; page observed as served at access.",
+      "commit": null,
+      "locator": "Model status, adoption audience, and equivalent-alternative statement; web lines 71-78.",
+      "accessed_at": "2026-10-09T21:43:00Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B2",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r11"
+    },
+    {
+      "id": "R12",
+      "title": "FDA Food Code 2026",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/media/194741/download",
+      "version_or_release": "Versioned FDA Food Code 2026 edition, 732-page PDF.",
+      "commit": null,
+      "locator": "Preface model/adoption status, PDF pages 7-8 and 12; Annex 3 commissary, PDF page 347; extracted lines 153-180, 350-356, 14237-14275.",
+      "accessed_at": "2026-10-09T21:43:00Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B2",
+      "mutable_source": false,
+      "observed_operations": [
+        "Direct-opened official FDA PDF.",
+        "Searched for model/adoption status and commissary; inspected the Preface and Annex 3 locators."
+      ],
+      "evidence_path": "sources/index.md#r12"
+    },
+    {
+      "id": "R13",
+      "title": "Web Content Accessibility Guidelines 2.2",
+      "publisher": "W3C",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "version_or_release": "W3C Recommendation dated 2024-12-12; WCAG 2.2, SC 2.5.7 and 2.5.8, Level AA.",
+      "commit": null,
+      "locator": "Normative criteria for single-pointer alternative to dragging and 24x24 CSS-pixel minimum target with exceptions; web lines 1129-1164.",
+      "accessed_at": "2026-10-09T21:43:00Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B2",
+      "mutable_source": false,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r13"
+    },
+    {
+      "id": "R14",
+      "title": "Understanding Success Criterion 2.5.7: Dragging Movements",
+      "publisher": "WAI/W3C",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html",
+      "version_or_release": "WCAG 2.2 supporting guidance; current page observed 2026-10-09.",
+      "commit": null,
+      "locator": "Intent, single-pointer alternative, and distinction from keyboard access; web lines 30-72.",
+      "accessed_at": "2026-10-09T21:43:00Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B2",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r14"
+    },
+    {
+      "id": "R15",
+      "title": "PostgreSQL 18: Range Types",
+      "publisher": "PostgreSQL Global Development Group",
+      "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+      "version_or_release": "Versioned PostgreSQL 18 documentation.",
+      "commit": null,
+      "locator": "tstzrange built-in type, two-argument [) bounds, exclusion constraint with equality and overlap; sections 8.17.1, 8.17.6, 8.17.10; web lines 34-49, 121-133, 191-229.",
+      "accessed_at": "2026-10-09T21:43:00Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B2",
+      "mutable_source": false,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r15"
+    },
+    {
+      "id": "R16",
+      "title": "PostgreSQL 18: Row Security Policies",
+      "publisher": "PostgreSQL Global Development Group",
+      "url": "https://www.postgresql.org/docs/18/ddl-rowsecurity.html",
+      "version_or_release": "Versioned PostgreSQL 18 documentation.",
+      "commit": null,
+      "locator": "RLS defaults, default deny, owner/superuser/BYPASSRLS exceptions, permissive-policy OR; web lines 20-40 and 156-159.",
+      "accessed_at": "2026-10-09T21:43:00Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B2",
+      "mutable_source": false,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r16"
+    },
+    {
+      "id": "R17",
+      "title": "Access and Visibility",
+      "publisher": "Skedda Support",
+      "url": "https://support.skedda.com/en/articles/105728-access-and-visibility",
+      "version_or_release": "Article dated 2026-04-20; no product build or source commit exposed.",
+      "commit": null,
+      "locator": "Venue access, default regular-user visibility, system-user visibility, most-generous matching rule; web lines 25-61.",
+      "accessed_at": "2026-10-09T21:43:08Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B3",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r17"
+    },
+    {
+      "id": "R18",
+      "title": "Export or print booking data",
+      "publisher": "Skedda Support",
+      "url": "https://support.skedda.com/en/articles/105786-export-or-print-booking-data",
+      "version_or_release": "Article dated 2026-09-08; no product build or source commit exposed.",
+      "commit": null,
+      "locator": "List-view XLSX/CSV, export fields, regular-user limits, tablet/mobile limitation; web lines 13-73, 96-104.",
+      "accessed_at": "2026-10-09T21:43:08Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B3",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r18"
+    },
+    {
+      "id": "R19",
+      "title": "Skedda Pricing",
+      "publisher": "Skedda",
+      "url": "https://www.skedda.com/pricing",
+      "version_or_release": "Mutable live page; current U.S./Canada page, no effective date or build stated.",
+      "commit": null,
+      "locator": "Plus starts $249/month, priced per space, billed annually; U.S./Canada plan section and feature matrix; web lines 8-21.",
+      "accessed_at": "2026-10-09T21:43:08Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B3",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r19"
+    },
+    {
+      "id": "R20",
+      "title": "Pricing",
+      "publisher": "The Food Corridor",
+      "url": "https://www.thefoodcorridor.com/pricing/",
+      "version_or_release": "Mutable live vendor pricing/feature page; no effective date or build stated.",
+      "commit": null,
+      "locator": "Pricing and feature sections; numerical snapshot claims in final cite the earlier immutable research:S06 capture.",
+      "accessed_at": "2026-10-09T21:43:08Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B3",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened current pricing/feature page.",
+        "Used as a current page re-open; did not treat it as a durable offer or replace the research:S06 snapshot."
+      ],
+      "evidence_path": "sources/index.md#r20"
+    },
+    {
+      "id": "R21",
+      "title": "How do I book in my kitchen?",
+      "publisher": "The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/1413904-how-do-i-book-in-my-kitchen",
+      "version_or_release": "Article dated 2023-11-21; no application build or source commit exposed.",
+      "commit": null,
+      "locator": "Schedule visibility, booking creation, distinct equipment range, approval workflow; web sections Bookings and equipment/time selection.",
+      "accessed_at": "2026-10-09T21:43:08Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B3",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r21"
+    },
+    {
+      "id": "R22",
+      "title": "Shared kitchen management software",
+      "publisher": "Spacebring",
+      "url": "https://www.spacebring.com/solutions/shared-kitchen-management-software",
+      "version_or_release": "Mutable live product page; no date/build stated.",
+      "commit": null,
+      "locator": "Shared-kitchen room/equipment booking, member self-service, preparation time, rules, membership approval; page sections and web extraction lines 84-90, 135-154 in earlier source capture.",
+      "accessed_at": "2026-10-09T21:43:08Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B3",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r22"
+    },
+    {
+      "id": "R23",
+      "title": "eventOverlap",
+      "publisher": "FullCalendar Docs",
+      "url": "https://fullcalendar.io/docs/eventOverlap",
+      "version_or_release": "Current docs identify FullCalendar v7.1.1 released 2026-10-06.",
+      "commit": null,
+      "locator": "Event Dragging & Resizing definition, drag/resize scope, default true, version footer; web lines 84-104, 116.",
+      "accessed_at": "2026-10-09T21:43:08Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B3",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r23"
+    },
+    {
+      "id": "R24",
+      "title": "Events in dayGridDay view overlapping when eventOrderStrict: true, issue 6393",
+      "publisher": "FullCalendar GitHub repository",
+      "url": "https://github.com/fullcalendar/fullcalendar/issues/6393",
+      "version_or_release": "Issue opened 2021-06-23; reports FullCalendar 5.8.0; milestone v5.9.0.",
+      "commit": null,
+      "locator": "Issue description, reported version, confirmed/event-rendering labels, milestone, fix closure; web lines 129-174, 251-272, 311-325.",
+      "accessed_at": "2026-10-09T21:43:08Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B3",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r24"
+    },
+    {
+      "id": "R25",
+      "title": "FullCalendar fix commit for issue 6393",
+      "publisher": "FullCalendar GitHub repository",
+      "url": "https://github.com/fullcalendar/fullcalendar/commit/6acf6b2",
+      "version_or_release": "Fix commit abbreviated SHA 6acf6b2; official repository commit.",
+      "commit": "6acf6b2",
+      "locator": "Commit message and changed-file tree for seg-hierarchy.ts and event-placement.ts; web lines 129-145, 156-175.",
+      "accessed_at": "2026-10-09T21:43:08Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B3",
+      "mutable_source": false,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r25"
+    },
+    {
+      "id": "R26",
+      "title": "Release v5.9.0",
+      "publisher": "FullCalendar GitHub repository",
+      "url": "https://github.com/fullcalendar/fullcalendar/releases/tag/v5.9.0",
+      "version_or_release": "FullCalendar v5.9.0 release dated 2021-07-28; release commit 620efb5e9c023f229a22af31e10b8b810fa5b2ba.",
+      "commit": "620efb5e9c023f229a22af31e10b8b810fa5b2ba",
+      "locator": "Tagged release notes list issue 6393 rendering fix; release page and full tag commit.",
+      "accessed_at": "2026-10-09T21:43:08Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B3",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r26"
+    },
+    {
+      "id": "R27",
+      "title": "Skedda Launches Booking Approvals",
+      "publisher": "Skedda",
+      "url": "https://www.skedda.com/blog/booking-approvals",
+      "version_or_release": "Article published 2026-01-22 and updated 2026-06-29; no product build/commit stated.",
+      "commit": null,
+      "locator": "Publication/update dates, request-first workflow and feature update; article sections and web extraction lines 2-23, 33-47, 68-74.",
+      "accessed_at": "2026-10-09T21:43:08Z",
+      "timestamp_semantics": "Access timestamp is the recorded completion time of the batch that directly opened this canonical URL; the reader did not expose per-request fetch timestamps.",
+      "batch_id": "B3",
+      "mutable_source": true,
+      "observed_operations": [
+        "Direct-opened the canonical URL in the public web reader.",
+        "Inspected the locator recorded here."
+      ],
+      "evidence_path": "sources/index.md#r27"
+    }
+  ],
+  "source_lineage": {
+    "policy": "Original source IDs are immutable within each predecessor map. Namespaced references such as research:S21 and critic:C13 preserve both map origin and source ID; they are not renamed as reviser R IDs. Existing null access timestamps remain null.",
+    "maps": [
+      {
+        "origin": "research",
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/source-map.json",
+        "sha256": "223cc93e1315b554e29878c58c461f0f3912f7d2924add8c4374b4dcca7998cf",
+        "ids": "S01-S26"
+      },
+      {
+        "origin": "verifier",
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier/source-map.json",
+        "sha256": "c2f715e2ed17eb25a2e617bf6f471f88e8e6b87a16332a09636bfcb58fd4ab16",
+        "ids": "S01-S11"
+      },
+      {
+        "origin": "critic",
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/critic/source-map.json",
+        "sha256": "fae5e0bc0b1319c4a8713bfbe09a4644bee623960f5a27ad70d6a31aeacb10c6",
+        "ids": "C01-C15"
+      }
+    ],
+    "inherited_sources": [
+      {
+        "source_ref": "research:S06",
+        "map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/source-map.json",
+        "original_id": "S06",
+        "title": "Pricing | The Food Corridor",
+        "url": "https://www.thefoodcorridor.com/pricing/",
+        "version_or_release": "Live pricing page captured 2026-10-09; no effective date or build.",
+        "commit": null,
+        "locator": "USD plans, platform fee, onboarding and transaction-fee conditions; original source map locator lines 90-150, 165-198, 220-225, 279-290.",
+        "accessed_at": "2026-10-09T21:05:14Z",
+        "observed_operations": [
+          "Research-stage official vendor page search/open and plan/fee inspection."
+        ],
+        "preservation_note": "Original source ID and observation remain unchanged; numerical cost claims in final refer to this snapshot, not a current offer."
+      },
+      {
+        "source_ref": "research:S07",
+        "map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/source-map.json",
+        "original_id": "S07",
+        "title": "How do I book in my kitchen? | The Food Corridor Help Center",
+        "url": "https://help.thefoodcorridor.com/en/articles/1413904-how-do-i-book-in-my-kitchen",
+        "version_or_release": "Article dated 2023-11-21; no product build stated.",
+        "commit": null,
+        "locator": "Food-business account flow, occupancy, equipment range, recurring bookings, submitted state; research source map lines 11-46.",
+        "accessed_at": "2026-10-09T21:02:11Z",
+        "observed_operations": [
+          "Research-stage official help page search/open and workflow inspection."
+        ],
+        "preservation_note": "Original ID preserved; reviser also independently observed the source as R21."
+      },
+      {
+        "source_ref": "research:S21",
+        "map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/source-map.json",
+        "original_id": "S21",
+        "title": "Pricing | Spacebring",
+        "url": "https://www.spacebring.com/pricing",
+        "version_or_release": "Mutable live pricing; original researcher recorded Euro-billed page state; no effective date/build.",
+        "commit": null,
+        "locator": "Business plan commitment, active-user counting, currency, mobile/API options.",
+        "accessed_at": "2026-10-09T21:16:49Z",
+        "observed_operations": [
+          "Research-stage web search/open and pricing-page inspection."
+        ],
+        "preservation_note": "Original source ID and observation remain unchanged. Independent current observation R10 shows local dollar display and a Euro billing-currency footnote."
+      },
+      {
+        "source_ref": "research:S24",
+        "map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/source-map.json",
+        "original_id": "S24",
+        "title": "What does a food business account look like? | The Food Corridor",
+        "url": "https://help.thefoodcorridor.com/en/articles/1812934-what-does-a-food-business-account-look-like",
+        "version_or_release": "Article dated 2023-06-07.",
+        "commit": null,
+        "locator": "Bookings, Calendars, Community, Reports; original verifier-observed account behavior.",
+        "accessed_at": null,
+        "access_date": "2026-10-09",
+        "access_time_precision": "Original verifier reported date only; per-fetch time unavailable.",
+        "observed_operations": [
+          "Verifier independently searched/fetched the public help article."
+        ],
+        "preservation_note": "Null access timestamp intentionally preserved; reviser captured a separate observation as R05."
+      },
+      {
+        "source_ref": "research:S25",
+        "map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/source-map.json",
+        "original_id": "S25",
+        "title": "How do I delete my account? | The Food Corridor",
+        "url": "https://help.thefoodcorridor.com/en/articles/1935331-how-do-i-delete-my-account",
+        "version_or_release": "Article dated 2020-06-22.",
+        "commit": null,
+        "locator": "Leaving-kitchen/inactive-account access to past invoices and reports.",
+        "accessed_at": null,
+        "access_date": "2026-10-09",
+        "access_time_precision": "Original verifier reported date only; per-fetch time unavailable.",
+        "observed_operations": [
+          "Verifier independently searched/fetched the public help article."
+        ],
+        "preservation_note": "Null access timestamp intentionally preserved; reviser separately opened newer inactive-account page R09."
+      },
+      {
+        "source_ref": "research:S26",
+        "map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/source-map.json",
+        "original_id": "S26",
+        "title": "What is digital sign-in/sign-out? | The Food Corridor",
+        "url": "https://help.thefoodcorridor.com/en/articles/1413890-what-is-digital-sign-in-sign-out",
+        "version_or_release": "Article dated 2022-09-23.",
+        "commit": null,
+        "locator": "Client PIN and sign-in station; verifier observed PIN is account-level, not individual identity.",
+        "accessed_at": null,
+        "access_date": "2026-10-09",
+        "access_time_precision": "Original verifier reported date only; per-fetch time unavailable.",
+        "observed_operations": [
+          "Verifier independently searched/fetched the public help article."
+        ],
+        "preservation_note": "Null access timestamp intentionally preserved; reviser captured a separate observation as R07."
+      },
+      {
+        "source_ref": "critic:C13",
+        "map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/critic/source-map.json",
+        "original_id": "C13",
+        "title": "Pricing | Spacebring",
+        "url": "https://www.spacebring.com/pricing",
+        "version_or_release": "Mutable live pricing; critic observed USD local display, six-month commitment; no effective date/build.",
+        "commit": null,
+        "locator": "Business plan price/term, active-user count, mobile/API add-ons.",
+        "accessed_at": "2026-10-09T21:32:52Z",
+        "observed_operations": [
+          "Critic opened official pricing page and inspected rendered currency, Business term, user count, add-ons."
+        ],
+        "preservation_note": "Original snapshot retained as distinct. Current R10 also displays USD locally and states Euro billing in footnote."
+      }
+    ]
+  },
+  "mutable_source_policy": "Vendor help/product/pricing pages are observations of published statements at the recorded access batches. Preserve prior IDs and snapshots; never silently rebind or overwrite. Recheck current plan, region/currency, retention, role behavior, and price with a dated quote and live demonstration.",
+  "billing_and_model_usage": {
+    "usage": null,
+    "billing": null,
+    "reason": "Usage and billing were not observable in the permitted materials or public-source checks."
+  },
+  "execution_boundary": {
+    "runtime_checks": "Not executed; validations in final.md are proposals.",
+    "native_goal_receipt": "Native goal lifecycle is recorded by supported tool calls in the thread transcript; no handwritten receipt JSON is substituted.",
+    "t3_completion": "UNKNOWN"
+  }
+}

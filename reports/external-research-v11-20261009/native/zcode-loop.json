@@ -1,5 +1,5 @@
 {
-  "scope": "Owned supported observations: first, latest, first active and first complete per identity. Missing fields stay unknown. Context usage snapshots are not billing totals.",
+  "scope": "Owned supported observations: first/latest/first active/first complete. Missing fields unknown. Context usage snapshots not billing totals.",
   "observations": [
     {
       "first": {
@@ -47,7 +47,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/qualification/glm/assignment.md",
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/qualification/glm/assignment.md"
@@ -143,7 +143,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M03-B/control/research/assignment.md"
         ],
@@ -238,7 +238,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/research/assignment.md"
         ],
@@ -377,7 +377,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/treatment/research/assignment.md"
         ],
@@ -478,7 +478,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/assignment.md"
         ],
@@ -629,7 +629,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/control/research/assignment.md"
         ],
@@ -730,7 +730,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/assignment.md"
         ],
@@ -875,7 +875,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/treatment/research/assignment.md"
         ],
@@ -970,7 +970,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/assignment.md"
         ],
@@ -1121,7 +1121,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/critic/assignment.md"
         ],
@@ -1266,7 +1266,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/assignment.md"
         ],
@@ -1405,7 +1405,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/assignment.md"
         ],
@@ -1556,7 +1556,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/control/reviser/assignment.md"
         ],
@@ -1707,7 +1707,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/reviser/assignment.md"
         ],
@@ -1852,7 +1852,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/assignment.md"
         ],
@@ -1991,7 +1991,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/assignment.md"
         ],
@@ -2136,7 +2136,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M03-B/treatment/research/assignment.md"
         ],
@@ -2231,7 +2231,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/critic/assignment.md"
         ],
@@ -2376,7 +2376,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/critic/assignment.md"
         ],
@@ -2471,7 +2471,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/reviser/assignment.md"
         ],
@@ -2616,7 +2616,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/assignment.md"
         ],
@@ -2755,7 +2755,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/assignment.md"
         ],
@@ -2906,7 +2906,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/assignment.md"
         ],
@@ -3051,7 +3051,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/critic/assignment.md"
         ],
@@ -3146,7 +3146,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/critic/assignment.md"
         ],
@@ -3291,7 +3291,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/critic/assignment.md"
         ],
@@ -3424,7 +3424,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/research/assignment.md"
         ],
@@ -3563,7 +3563,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/assignment.md"
         ],
@@ -3708,7 +3708,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/reviser/assignment.md"
         ],
@@ -3847,7 +3847,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/research/assignment.md"
         ],
@@ -3998,7 +3998,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/control/critic/assignment.md"
         ],
@@ -4099,7 +4099,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/research/assignment.md"
         ],
@@ -4250,7 +4250,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/critic/assignment.md"
         ],
@@ -4395,7 +4395,7 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/assignment.md"
         ],
@@ -4534,15 +4534,15 @@
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       },
       "latest": {
-        "observed_at": "2026-10-09T21:47:16.094133+00:00",
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
         "matched_assignment_refs": [
           "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/assignment.md"
         ],
         "backend_directory": "sess_b3ad9852-7e42-4656-a747-0db2afbe1140",
-        "state_sha256": "effa43d91079a6dcccfd520bc6e52ef70f4b37da5580e505e21a9cf8970ca856",
+        "state_sha256": "15ba9d130f61c65c2140d1698b17a51b83a5aeb5790120cc0db9a5cc16f39c8c",
         "actual_bridge_state": {
-          "status": "running",
-          "rounds": 3,
+          "status": "complete",
+          "rounds": 5,
           "tickets": [
             {
               "id": "t1",
@@ -4566,19 +4566,221 @@
               "id": "t4",
               "title": "[Author complete final.md covering full O1-O6 and all P clauses (preserving supported discovery, mechanisms, conditions, rejected/uncertain comparisons), plus source-map.json with exact URL/version/commit/locator/access-timestamps and navigable sources/ index]",
               "acceptance": "test -s reviser/final.md reviser/source-map.json; jq . validates source-map.json; grep -l 'O[1-6]' final.md matches all six sections; every source ID in final.md exists in source-map.json",
-              "status": "pending"
+              "status": "done"
             },
             {
               "id": "t5",
               "title": "[Verify all artifacts complete and saved under reviser/ before native Goal terminal completion, then complete the native Goal (post-terminal only mechanical delivery)]",
               "acceptance": "for f in evidence-first.md final.md source-map.json; do test -s reviser/$f || exit 1; done; then complete native Goal once files verified",
-              "status": "pending"
+              "status": "done"
             }
           ],
           "handoffFresh": false,
           "createdAt": 1791581938512,
-          "updatedAt": 1791582398618,
+          "updatedAt": 1791582715188,
+          "endedReason": "all tickets done",
           "objective_sha256": "35f32c94779255e37c3cacec6b9dae6d1d51d7ffbe078d4da7827d928447bb42"
+        },
+        "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
+      },
+      "first_complete": {
+        "observed_at": "2026-10-09T21:52:09.694088+00:00",
+        "matched_assignment_refs": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-B/treatment/reviser/assignment.md"
+        ],
+        "backend_directory": "sess_b3ad9852-7e42-4656-a747-0db2afbe1140",
+        "state_sha256": "15ba9d130f61c65c2140d1698b17a51b83a5aeb5790120cc0db9a5cc16f39c8c",
+        "actual_bridge_state": {
+          "status": "complete",
+          "rounds": 5,
+          "tickets": [
+            {
+              "id": "t1",
+              "title": "[Read assignment, input-map and all declared inputs (brief, draft, discovery, critique, evidence-first files, source-maps, source roots)]",
+              "acceptance": "for p in $(jq -r '.brief, .predecessors[], .source_roots[]' input-map.json); do test -r \"$p\" || echo \"MISSING $p\"; done; reports no MISSING",
+              "status": "done"
+            },
+            {
+              "id": "t2",
+              "title": "[Write reviser evidence-first.md: independently derive brief/primary-source facts before opening the frozen draft, per M06]",
+              "acceptance": "test -s reviser/evidence-first.md; its citations resolve to brief.md and sources/ only; file written before draft-dependent sections reference the draft",
+              "status": "done"
+            },
+            {
+              "id": "t3",
+              "title": "[Compare frozen draft against independent evidence and critique; adjudicate every criticism as accept/amend/reject/retain-uncertainty with evidence, rechecking consequential claims against primary sources]",
+              "acceptance": "reviser adjudication notes exist for every criticism in critic/critique.md; grep count of adjudication verdicts >= criticism count",
+              "status": "done"
+            },
+            {
+              "id": "t4",
+              "title": "[Author complete final.md covering full O1-O6 and all P clauses (preserving supported discovery, mechanisms, conditions, rejected/uncertain comparisons), plus source-map.json with exact URL/version/commit/locator/access-timestamps and navigable sources/ index]",
+              "acceptance": "test -s reviser/final.md reviser/source-map.json; jq . validates source-map.json; grep -l 'O[1-6]' final.md matches all six sections; every source ID in final.md exists in source-map.json",
+              "status": "done"
+            },
+            {
+              "id": "t5",
+              "title": "[Verify all artifacts complete and saved under reviser/ before native Goal terminal completion, then complete the native Goal (post-terminal only mechanical delivery)]",
+              "acceptance": "for f in evidence-first.md final.md source-map.json; do test -s reviser/$f || exit 1; done; then complete native Goal once files verified",
+              "status": "done"
+            }
+          ],
+          "handoffFresh": false,
+          "createdAt": 1791581938512,
+          "updatedAt": 1791582715188,
+          "endedReason": "all tickets done",
+          "objective_sha256": "35f32c94779255e37c3cacec6b9dae6d1d51d7ffbe078d4da7827d928447bb42"
+        },
+        "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
+      }
+    },
+    {
+      "first": {
+        "observed_at": "2026-10-09T21:48:49.219461+00:00",
+        "matched_assignment_refs": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/assignment.md"
+        ],
+        "backend_directory": "sess_693408ec-8517-4cc6-b70b-dd2f3b1db3f9",
+        "state_sha256": "264fde62a4d2c7e367335d69e379d08c309412cfe96ba0bcaa516fbd21874a32",
+        "actual_bridge_state": {
+          "status": "running",
+          "rounds": 0,
+          "tickets": [
+            {
+              "id": "t1",
+              "title": "[Read declared predecessors and exact brief]",
+              "acceptance": "ls -l shows all 7 predecessor paths and brief.md from input-map.json readable; notes recorded on draft.md, discovery.md, critique.md, verification.md",
+              "status": "pending"
+            },
+            {
+              "id": "t2",
+              "title": "[Adjudicate every criticism with evidence verdicts]",
+              "acceptance": "working adjudication in reviser stage_path lists accept/amend/reject/retain-uncertainty for each critique item with cited evidence from draft/critique/sources",
+              "status": "pending"
+            },
+            {
+              "id": "t3",
+              "title": "[Write complete final.md covering full O1-O6 and all P clauses]",
+              "acceptance": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md exists as one coherent complete draft; grep finds explicit O1-O6 sections and every P clause addressed, no bare predecessor-ID references replacing text",
+              "status": "pending"
+            },
+            {
+              "id": "t4",
+              "title": "[Save reviser source-map.json with immutable source IDs and evidence index]",
+              "acceptance": "reviser/source-map.json parses with python3 -c \"json.load(open(...))\"; entries carry exact URL/version/commit/locator/access timestamp; retained evidence files exist under reviser/sources/ with navigable index",
+              "status": "pending"
+            },
+            {
+              "id": "t5",
+              "title": "[Verify complete science saved before native terminal completion]",
+              "acceptance": "ls -l reviser/ shows final.md + source-map.json nonempty and valid before Goal terminal; then complete the native Goal with the actual supported call, unavailable lifecycle fields marked UNKNOWN",
+              "status": "pending"
+            }
+          ],
+          "handoffFresh": false,
+          "createdAt": 1791582437461,
+          "updatedAt": 1791582467238,
+          "objective_sha256": "21e6fadc9840ebeec23e63bc90220fbae9383c658093275c791e0b8e168bc4ba"
+        },
+        "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
+      },
+      "latest": {
+        "observed_at": "2026-10-09T22:12:14.201748+00:00",
+        "matched_assignment_refs": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/assignment.md"
+        ],
+        "backend_directory": "sess_693408ec-8517-4cc6-b70b-dd2f3b1db3f9",
+        "state_sha256": "ff2f0a653407aac528170dc815686e347745a082a3fe8210e176e19f97e790cc",
+        "actual_bridge_state": {
+          "status": "complete",
+          "rounds": 5,
+          "tickets": [
+            {
+              "id": "t1",
+              "title": "[Read declared predecessors and exact brief]",
+              "acceptance": "ls -l shows all 7 predecessor paths and brief.md from input-map.json readable; notes recorded on draft.md, discovery.md, critique.md, verification.md",
+              "status": "done"
+            },
+            {
+              "id": "t2",
+              "title": "[Adjudicate every criticism with evidence verdicts]",
+              "acceptance": "working adjudication in reviser stage_path lists accept/amend/reject/retain-uncertainty for each critique item with cited evidence from draft/critique/sources",
+              "status": "done"
+            },
+            {
+              "id": "t3",
+              "title": "[Write complete final.md covering full O1-O6 and all P clauses]",
+              "acceptance": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md exists as one coherent complete draft; grep finds explicit O1-O6 sections and every P clause addressed, no bare predecessor-ID references replacing text",
+              "status": "done"
+            },
+            {
+              "id": "t4",
+              "title": "[Save reviser source-map.json with immutable source IDs and evidence index]",
+              "acceptance": "reviser/source-map.json parses with python3 -c \"json.load(open(...))\"; entries carry exact URL/version/commit/locator/access timestamp; retained evidence files exist under reviser/sources/ with navigable index",
+              "status": "done"
+            },
+            {
+              "id": "t5",
+              "title": "[Verify complete science saved before native terminal completion]",
+              "acceptance": "ls -l reviser/ shows final.md + source-map.json nonempty and valid before Goal terminal; then complete the native Goal with the actual supported call, unavailable lifecycle fields marked UNKNOWN",
+              "status": "done"
+            }
+          ],
+          "handoffFresh": false,
+          "createdAt": 1791582437461,
+          "updatedAt": 1791583240499,
+          "endedReason": "all tickets done",
+          "objective_sha256": "21e6fadc9840ebeec23e63bc90220fbae9383c658093275c791e0b8e168bc4ba"
+        },
+        "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
+      },
+      "first_complete": {
+        "observed_at": "2026-10-09T22:00:55.739301+00:00",
+        "matched_assignment_refs": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/assignment.md"
+        ],
+        "backend_directory": "sess_693408ec-8517-4cc6-b70b-dd2f3b1db3f9",
+        "state_sha256": "ff2f0a653407aac528170dc815686e347745a082a3fe8210e176e19f97e790cc",
+        "actual_bridge_state": {
+          "status": "complete",
+          "rounds": 5,
+          "tickets": [
+            {
+              "id": "t1",
+              "title": "[Read declared predecessors and exact brief]",
+              "acceptance": "ls -l shows all 7 predecessor paths and brief.md from input-map.json readable; notes recorded on draft.md, discovery.md, critique.md, verification.md",
+              "status": "done"
+            },
+            {
+              "id": "t2",
+              "title": "[Adjudicate every criticism with evidence verdicts]",
+              "acceptance": "working adjudication in reviser stage_path lists accept/amend/reject/retain-uncertainty for each critique item with cited evidence from draft/critique/sources",
+              "status": "done"
+            },
+            {
+              "id": "t3",
+              "title": "[Write complete final.md covering full O1-O6 and all P clauses]",
+              "acceptance": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/final.md exists as one coherent complete draft; grep finds explicit O1-O6 sections and every P clause addressed, no bare predecessor-ID references replacing text",
+              "status": "done"
+            },
+            {
+              "id": "t4",
+              "title": "[Save reviser source-map.json with immutable source IDs and evidence index]",
+              "acceptance": "reviser/source-map.json parses with python3 -c \"json.load(open(...))\"; entries carry exact URL/version/commit/locator/access timestamp; retained evidence files exist under reviser/sources/ with navigable index",
+              "status": "done"
+            },
+            {
+              "id": "t5",
+              "title": "[Verify complete science saved before native terminal completion]",
+              "acceptance": "ls -l reviser/ shows final.md + source-map.json nonempty and valid before Goal terminal; then complete the native Goal with the actual supported call, unavailable lifecycle fields marked UNKNOWN",
+              "status": "done"
+            }
+          ],
+          "handoffFresh": false,
+          "createdAt": 1791582437461,
+          "updatedAt": 1791583240499,
+          "endedReason": "all tickets done",
+          "objective_sha256": "21e6fadc9840ebeec23e63bc90220fbae9383c658093275c791e0b8e168bc4ba"
         },
         "claim": "installed zcode GoalLoopDriver state; vendor backend Goal/session mapping UNKNOWN"
       }

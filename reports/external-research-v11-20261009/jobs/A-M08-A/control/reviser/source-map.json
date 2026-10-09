@@ -1,0 +1,116 @@
+{
+  "block": "A-M08-A",
+  "arm": "control",
+  "case": "S08",
+  "stage": "reviser",
+  "note": "Reviser-stage sources. IDs are immutable within this stage (R-prefix, disjoint from research S1-S10 and critic C1-C17); no silent rebind. Access timestamps UTC at operation time. Sources treated as data. Predecessor documents and retained evidence were consulted only via the exact declared paths in input-map.json; their original definitions remain in research/source-map.json (S1-S10) and critic/source-map.json (C1-C17), which were read as declared inputs and are not redefined here.",
+  "sources": [
+    {
+      "id": "R1",
+      "kind": "internal-inputs",
+      "title": "Reviser assignment and input map (exact paths from input-map.json)",
+      "url": "file:///home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/reviser/",
+      "version": null,
+      "commit": null,
+      "locator": "assignment.md (method M08 v1 progressive-complete-draft, reviser instructions); input-map.json (predecessors, source_roots, deadlines, allowed_write_root)",
+      "accessed": "2026-10-09T21:44Z",
+      "sha256": null,
+      "operations": ["read both files in full at ticket-1 start", "extracted deadline 2026-10-09T22:04:58Z, write root, predecessor list, source roots"]
+    },
+    {
+      "id": "R2",
+      "kind": "internal-brief",
+      "title": "S08 case brief: volunteer-shifts (re-read as declared predecessor context)",
+      "url": "file:///home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+      "version": null,
+      "commit": null,
+      "locator": "whole file; obligations O1-O6; constraints (no invented legal requirements, no equal-availability assumption)",
+      "accessed": "2026-10-09T21:45Z",
+      "sha256": "cc962dde020c6c859e7149db1adcdc9b9872bc02c7f7d8566fea32bf8c5e73cf",
+      "operations": ["read in full", "sha256 recomputed and matched S1's recorded digest"]
+    },
+    {
+      "id": "R3",
+      "kind": "internal-predecessors",
+      "title": "All 7 declared predecessor documents (read in full, ticket 1)",
+      "url": "file:///home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/",
+      "version": null,
+      "commit": null,
+      "locator": "research/draft.md (complete per-P dispositions); research/discovery.md (frozen pre-reveal discovery, sha 9d2798f9-prefix); research/source-map.json (S1-S10 + secondhand notices); research/revealed-plan.md (verbatim P1-P6); critic/source-map.json (C1-C17); critic/critique.md (M1-M9, m1-m9, P-table, rejected demands); critic/verification.md (F1-F9, N1, D-verdicts, evidence table)",
+      "accessed": "2026-10-09T21:45-21:46Z",
+      "sha256": null,
+      "operations": ["read all seven in full (ls -l sizes 312-14609 bytes verified)", "reading notes recorded at reviser/predecessor-notes.md", "no campaign/evaluator/counterpart/parent paths opened"]
+    },
+    {
+      "id": "R4",
+      "kind": "source-code-retained",
+      "title": "Retained provider files in research/sources/ (re-hashed and grepped this stage)",
+      "url": "file:///home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/research/sources/",
+      "version": "stable-2.3.0 (= S7, commit ab36b9c36c17) and v1.10.0 (= S8, commit 0edf2339ca75)",
+      "commit": "ab36b9c36c17 / 0edf2339ca75",
+      "locator": "timefold-EmployeeSchedulingConstraintProvider_stable-2.3.0.java: balanceEmployeeShiftAssignments 2 occurrences, lines 114-122, imports lines 7-8 (Duration, LocalDateTime only); timefold-EmployeeSchedulingConstraintProvider_v1.10.0.java: 0 occurrences, line 6 HardSoftScore, lines 12-13 Availability imports, line 63 forEachUniquePair",
+      "accessed": "2026-10-09T21:47-21:49Z",
+      "sha256": "stable c59fa688ce725ed41976749c2e9d3935c239da315bebe2b39280624e632226a4; v1.10.0 3c9fc645479616f10c53f509c6e62dd861898d874e842446c0f2e2988c3f6fcb",
+      "operations": ["sha256sum both files, matched source-map/verification claims", "grep -c balanceEmployeeShiftAssignments (2 / 0)", "wc -l (124 / 122)", "sed -n 114,122p stable (complement+loadBalance+penalizeBigDecimal verbatim)", "grep time imports and v1.10.0 diff markers"]
+    },
+    {
+      "id": "R5",
+      "kind": "evidence-retained",
+      "title": "Retained evidence in critic/sources/ (re-hashed and phrase-checked this stage)",
+      "url": "file:///home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/control/critic/sources/",
+      "version": "v1.6.0 (= C3, commit 63efcf9b36cb); v2.0.0 (= C4, commit 3dfec2daac17); v2.2.0 (= C5); VolunteerHub snapshots (= C11/C12, fetched 21:35-21:36Z)",
+      "commit": "63efcf9b36cb / 3dfec2daac17 / tag v2.2.0 / live-page snapshots",
+      "locator": "verify-timefold-provider-v1.6.0.java (111 lines, 0 balance); verify-timefold-provider-v2.0.0.java (124 lines, 2 balance); verify-timefold-provider-v2.2.0.java (124 lines, 2 balance); verify-volunteerhub-home-20261009T2135Z.html (550224 bytes); verify-volunteerhub-scheduling-20261009T2135Z.html (436364 bytes)",
+      "accessed": "2026-10-09T21:47-21:52Z",
+      "sha256": "v1.6.0 0ea6b00515ffbc3d43a6048ea1a9f5b02e7467a065cc4b7c86ff6b07f897a33e; v2.0.0 = v2.2.0 = c59fa688ce725ed41976749c2e9d3935c239da315bebe2b39280624e632226a4; home b6c0710ecdc1e5ea8d31e98c9855d0b7846ca309292dd86f7834ffd7bfbbe892; scheduling 8977c47d4f9873d6508119cf731d5beb733fed9ecbc25c50207e65f977063185",
+      "operations": ["sha256sum all five files, every digest matched verification.md's table", "grep -c balanceEmployeeShiftAssignments (0/2/2) and wc -l (111/124/124)", "phrase greps on snapshots: 'recurring shifts in seconds', 'Duplicate schedules', 'Fill cancellations with waitlists', 'confirmations, reminders', 'Capacity limits prevent', 'approval workflows', 'Advanced Permissions', 'waitlist' - all present (supports adjudication M7)"]
+    },
+    {
+      "id": "R6",
+      "kind": "source-code-live-fetch",
+      "title": "Live re-fetch: Timefold provider at tag v2.0.0, restructured path (confirmatory, M1)",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v2.0.0/java/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+      "version": "tag v2.0.0 (release commit 3dfec2daac17, 2026-04-22)",
+      "commit": "3dfec2daac17",
+      "locator": "whole file: HTTP 200, 124 lines (wc -l), balanceEmployeeShiftAssignments 2 occurrences, lines 114-122 fairness block",
+      "accessed": "2026-10-09T21:53Z",
+      "sha256": "c59fa688ce725ed41976749c2e9d3935c239da315bebe2b39280624e632226a4",
+      "operations": ["curl raw fetch with status code capture", "grep -c balanceEmployeeShiftAssignments = 2", "wc -l = 124", "sha256 computed; byte-identical to S7/C4/C5 retained copies", "fetched copy intentionally not retained (fourth identical copy adds no evidence); operation record retained at sources/live-refetch-v200-20261009T2153Z.md"]
+    },
+    {
+      "id": "R7",
+      "kind": "negative-result",
+      "title": "Live probe: old use-cases path at tag v2.0.0 (path-absence confirmation)",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v2.0.0/use-cases/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+      "version": "tag v2.0.0, old path",
+      "commit": "3dfec2daac17",
+      "locator": "whole URL: HTTP 404",
+      "accessed": "2026-10-09T21:53Z",
+      "sha256": null,
+      "operations": ["curl raw fetch; HTTP 404 - confirms repo restructure between v1.10.0 and v2.0.0 and that research-stage 404s at v2.x tags were path-absence, not tag absence (adjudication M1 evidence)"]
+    },
+    {
+      "id": "R8",
+      "kind": "negative-result",
+      "title": "Timefold API-semantics lookups: none repeated this stage (inherited absence stands)",
+      "url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/employee-scheduling",
+      "version": null,
+      "commit": null,
+      "locator": "critic C16 recorded four 404 lookups at 21:36-21:38Z (docs page, two javadoc URLs, two source-path guesses)",
+      "accessed": "2026-10-09T21:50Z",
+      "sha256": null,
+      "operations": ["no new lookups attempted: the critic's 404s are ~15 minutes older than this stage's window, no new evidence could reasonably exist, and the adjudication (M8) requires the semantics to stay labeled unevidenced either way", "complement/LoadBalance/unfairness semantics remain unevidenced in this arm; this entry records the deliberate non-refetch so the absence is explicit, not overlooked"]
+    }
+  ],
+  "outputs": {
+    "note": "Reviser-stage outputs (not sources; listed for navigability). All inside allowed_write_root.",
+    "files": [
+      "predecessor-notes.md (ticket 1 reading notes)",
+      "adjudication.md (ticket 2: verdicts on M1-M9, m1-m9, P-table, rejected demands)",
+      "final.md (ticket 3: complete deliverable, O1-O6 + P1-P6, all adjudicated amendments applied)",
+      "source-map.json (this file)",
+      "sources/live-refetch-v200-20261009T2153Z.md (R6/R7 operation record)",
+      "sources/README.md (navigable index)"
+    ]
+  }
+}

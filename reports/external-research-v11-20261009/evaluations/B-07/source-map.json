@@ -1,0 +1,1130 @@
+{
+  "block": "B-07",
+  "case": "I07",
+  "purpose": "Independent evaluator primary checks; not candidate repair or a substituted candidate source index",
+  "access_window": {
+    "start": "2026-10-09T21:54:34Z",
+    "end": "2026-10-09T22:04:51.607791+00:00",
+    "basis": "Public primary retrieval occurred after observed native activation and before this source map’s first save. Window endpoints are bounded orchestration markers, not individual HTTP timestamps; per-request times are null."
+  },
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-07/assignment.md",
+      "sha256": "d848eb97d23760505ff23fe3b3800ff693b1852dad920cefe429d6afe152ce9d",
+      "bytes": 2164,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-07/input-map.json",
+      "sha256": "14d8d3a5283702d37943a7cd9e506a4cabe261a970b5de46e7279470607251f4",
+      "bytes": 11177,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I07/brief.md",
+      "sha256": "e2c0f99132caf5bc7e509651bb078b602f5f6f9ef6b217777daaa2e679689cbd",
+      "bytes": 2277,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I07/plan-root-only.md",
+      "sha256": "dee05cfa57badf5d2fa98859d53ea2f9e04c5c2fd2fc38b41913dda5b4205193",
+      "bytes": 565,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/reviser/final.md",
+      "sha256": "a2015df337502f70edeb8a35d0d0e456487721c67e30bb4d24914fb53ac76b58",
+      "bytes": 33066,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/reviser/source-map.json",
+      "sha256": "34a5afbbbcfc63685f63d7ebb30c19386f543aeb597e44ec07e898d503127892",
+      "bytes": 37203,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/reviser/assignment.md",
+      "sha256": "904fac6028adb24b64381e24ba8df9c554c7aaa2df46637dee588f11556a8325",
+      "bytes": 2849,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/reviser/input-map.json",
+      "sha256": "edf5ee312f05678d965a46ae014dfd0c8c7d72e909997a8dfba17563bc4cea41",
+      "bytes": 1628,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic/critique.md",
+      "sha256": "58ae1379fdf439850bed94c353968123992c8b05f6e111a35cc7f3d816ac9b1d",
+      "bytes": 11620,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic/source-map.json",
+      "sha256": "6acb213c7104b0aa2e6098e7ca1ec63ef4ac439e57d4ef16ff65321d6c3f1e5d",
+      "bytes": 28082,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic/assignment.md",
+      "sha256": "e3db932d75b4b3042e30e748646124aeb3872ea4d2d3ed16bafba6eac9ead0cc",
+      "bytes": 2586,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic/input-map.json",
+      "sha256": "f4db96abc8eb78db046f5ac7ba2e6b8b1d8852f149476dbb530c5aabcf3ed2b4",
+      "bytes": 1313,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/discovery.md",
+      "sha256": "061e11f8d26ba540d6b91932b1afee960d45ebecb5e31e948faa2dc237aadfaa",
+      "bytes": 20469,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/draft.md",
+      "sha256": "8691fb895b1fdc05084bde14faa6ea28c256677b438bae14d7744b114fa8260a",
+      "bytes": 21378,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/critique.md",
+      "sha256": "aba4e2ea18af7b05fb9f648ab042bc97b9284019db40b21b536d8e7a4933714d",
+      "bytes": 6980,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/source-map.json",
+      "sha256": "8a662cca59816e20676a794612fc81fc9df2e620fbc730116bdf38326c16b6f0",
+      "bytes": 26361,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/revealed-plan.md",
+      "sha256": "dee05cfa57badf5d2fa98859d53ea2f9e04c5c2fd2fc38b41913dda5b4205193",
+      "bytes": 565,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/plan-reveal.json",
+      "sha256": "1a19ad6f54536854cbcc0a939c844e0324f60f73befb58844ae150bf8bdf4433",
+      "bytes": 276,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/assignment.md",
+      "sha256": "a5a9ef6d37681262a41f1582701bf886c015baf31e49b70001ad43e82f13b609",
+      "bytes": 3059,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/input-map.json",
+      "sha256": "3ecb21de95ac2c842601dde301b58ee7302e4956db74e5de49c5be407b2fde7a",
+      "bytes": 676,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/reviser/sources/index.md",
+      "sha256": "badfc0056c7cfea75920b8f388f3d05e666a9b268ed13d640142972dfc08776d",
+      "bytes": 3290,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/reviser/sources/evidence-notes.md",
+      "sha256": "30bd9be6a9d0085c04220a7a878cd396b909a94598053484c3f4bf7cca709dc8",
+      "bytes": 13602,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic/sources/index.md",
+      "sha256": "4baf5ba1ba4abebe0750cb08160094b70a73dc6365a77cc9f5bbbd937fec7f9a",
+      "bytes": 979,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic/sources/evidence-notes.md",
+      "sha256": "032a871422a5a0c5a2ee08b517b4a35ea7c844558aa441f3dc3dc1a68f694346",
+      "bytes": 9633,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/sources/index.md",
+      "sha256": "b5d42ece4e1a6412b42e26924708f9ba16913ae83a5133bf3a50c38b1ec33f16",
+      "bytes": 3704,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/sources/evidence-notes.md",
+      "sha256": "2bcb9d621dd24edde067295cc70ac72bd6bbd606f5870918a0d27083854725ca",
+      "bytes": 9541,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/sources/source-access-log.json",
+      "sha256": "712ff64964c1468c2e5ceb0196c4e95bda6f1037bc6db2e811df402718c82b59",
+      "bytes": 6864,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/final.md",
+      "sha256": "e5c4f1ea9573fe3c4f61dbe2d6904de9fface6b525f01a3c12ee52a59235bbd9",
+      "bytes": 39299,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/source-map.json",
+      "sha256": "ee2dd9f7243cf86da649523ccb4fe2a365b6d52a46e236d16e62cca549a46a71",
+      "bytes": 41410,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/assignment.md",
+      "sha256": "2c641b3adcdedc686113dd7b155f545718a58b54464fcdaf42e54dec93f1ef88",
+      "bytes": 3597,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/input-map.json",
+      "sha256": "571955da9f28050efb6a3de88ea1eef51f011830eae470f32725a9a4dbc202ad",
+      "bytes": 1994,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/critic/critique.md",
+      "sha256": "78c0bb09871c35a939e41461e09da04d76083a911780d98eef5595611d8696c3",
+      "bytes": 25962,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/critic/source-map.json",
+      "sha256": "fae5e0bc0b1319c4a8713bfbe09a4644bee623960f5a27ad70d6a31aeacb10c6",
+      "bytes": 12232,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/critic/assignment.md",
+      "sha256": "9d9c89258e2cd8819c7cc76bb432241c28908c0b7f9960269b7f406830c8f2d4",
+      "bytes": 3042,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/critic/input-map.json",
+      "sha256": "3868e9ed7f16faf2c7c7894f73f3d9949d055e52af6aeda81cd98437c25bb567",
+      "bytes": 1449,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/discovery.md",
+      "sha256": "b2b8908dab488715bb6efed318de92d565cd99210f143475b35b050147168ae0",
+      "bytes": 19080,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/draft.md",
+      "sha256": "b7a34f0499e91e826b391d198867f31eb9d9deca242e1e94bf7d455abcdf4f32",
+      "bytes": 24854,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/source-map.json",
+      "sha256": "223cc93e1315b554e29878c58c461f0f3912f7d2924add8c4374b4dcca7998cf",
+      "bytes": 21024,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/verification-questions.md",
+      "sha256": "99adf649dd1eef018f36bfe186b209b615a64257c6a380bef644cc41f50e9b01",
+      "bytes": 562,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/revealed-plan.md",
+      "sha256": "dee05cfa57badf5d2fa98859d53ea2f9e04c5c2fd2fc38b41913dda5b4205193",
+      "bytes": 565,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/plan-reveal.json",
+      "sha256": "7f2fdc5acf33b526e1ceb43986a9793d818565857ed7726d334af34c2424e989",
+      "bytes": 276,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/assignment.md",
+      "sha256": "89c416142537544bdcd8b0df6d5239b81baec35b52b194a4600a3314278a77fe",
+      "bytes": 4108,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/input-map.json",
+      "sha256": "16e88cf80f61ff7e1237215b0fa4d9d7d9e515666288fd60043a8740c1d6ed50",
+      "bytes": 682,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier/source-map.json",
+      "sha256": "c2f715e2ed17eb25a2e617bf6f471f88e8e6b87a16332a09636bfcb58fd4ab16",
+      "bytes": 14940,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier/verification.md",
+      "sha256": "437029bfd8b7844c0e723a60865d65be1654d2ef630012a241ad646f23d7f74d",
+      "bytes": 16146,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier/assignment.md",
+      "sha256": "e845fcd467905e2e6cac29534740a4c353afe15a635aae65132f0ba351d3fec2",
+      "bytes": 3420,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier/input-map.json",
+      "sha256": "07bf389c573695bf99685f797cb500d4de17e271d5664f09fda163fdd728a6d2",
+      "bytes": 919,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/sources/index.md",
+      "sha256": "559de5e9f6e64cfc48ae4abc2b8bfb72dfd35c91108ee5b059b8d39ad6d0980c",
+      "bytes": 15569,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/critic/sources/index.md",
+      "sha256": "d6603f7f2154b16ee215bd1192aaad2bc324a0753dc337713f8e10c385658e4d",
+      "bytes": 9163,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/sources/index.md",
+      "sha256": "d74f2110e47ed0572ec17981dafebd58c738ef478c8db14964e4c2a1e3751d7d",
+      "bytes": 16036,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier/sources/index.md",
+      "sha256": "306c9049d5deac1683e922eeecab824c9b78de0c0833b4db2b5035bc76d1ecad",
+      "bytes": 9115,
+      "role": "permitted source-root supporting evidence"
+    }
+  ],
+  "primary_sources": [
+    {
+      "id": "E01",
+      "title": "The Food Corridor product overview",
+      "url": "https://www.thefoodcorridor.com/",
+      "version_or_page_date": "mutable vendor page",
+      "locator": "Kitchen-management and scheduling sections",
+      "checked_fact": "Kitchen-specific hosted scheduling, equipment, billing and onboarding are advertised. This establishes a relevant alternative, not verified product fit.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E02",
+      "title": "The Food Corridor signup plan selector",
+      "url": "https://app.thefoodcorridor.com/en/signup",
+      "version_or_page_date": "mutable selector observed 2026-10-09",
+      "locator": "Select Your Plan / All Plans Include, lines 34–101",
+      "checked_fact": "Starter: $129/month, at most five clients. Annual: $206/month billed annually, unlimited clients; displayed fees 2% ACH or 4% card, and first-month-free promotion. Currency selector not changed.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E03",
+      "title": "The Food Corridor equipment reservation help",
+      "url": "https://help.thefoodcorridor.com/en/articles/1414032-how-do-i-reserve-equipment",
+      "version_or_page_date": "2023-03-29",
+      "locator": "Steps 1–9",
+      "checked_fact": "Equipment can occupy all or part of a room booking, with separate equipment time ranges. Documentation does not settle race safety or post-use signoff.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E04",
+      "title": "The Food Corridor food-business account",
+      "url": "https://help.thefoodcorridor.com/en/articles/1812934-what-does-a-food-business-account-look-like",
+      "version_or_page_date": "2023-06-07",
+      "locator": "Calendars / Reporting / Community / Business Profile",
+      "checked_fact": "Documents account PIN, occupancy view, own reports, Community messaging, and business-profile fields. Does not establish exact cross-tenant visibility of the protected fields.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E05",
+      "title": "The Food Corridor onboarding checklist uses",
+      "url": "https://help.thefoodcorridor.com/en/articles/8880860-can-i-use-onboarding-flows-for-more-than-new-clients",
+      "version_or_page_date": "2024-02-05",
+      "locator": "Ensure Kitchen Hygiene",
+      "checked_fact": "Monthly cleaning/deep-cleaning checklist examples are documented; per-booking tenant-defined equipment signoff and complete export are not demonstrated.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E06",
+      "title": "The Food Corridor booking approval",
+      "url": "https://help.thefoodcorridor.com/en/articles/1413916-how-can-i-approve-bookings",
+      "version_or_page_date": "2023-03-28",
+      "locator": "Submitted Bookings / Individual Calendars / Auto Approve",
+      "checked_fact": "Submitted Bookings covers the next 30 days. Farther-ahead approvals use Individual Calendars. Per-client auto-approval is available; it does not resolve missing-signoff sanctions.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E07",
+      "title": "The Food Corridor reporting",
+      "url": "https://help.thefoodcorridor.com/en/articles/2322739-what-information-is-in-the-reporting-tab",
+      "version_or_page_date": "mutable article observed 2026-10-09",
+      "locator": "CSV filtering / All Bookings, lines 49–72",
+      "checked_fact": "Kitchen reports have client/date filtering and CSV download; All Bookings is current-year. These facts do not establish complete tenant cleaning-attestation archives.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E08",
+      "title": "The Food Corridor tenant digital sign-in/out",
+      "url": "https://help.thefoodcorridor.com/en/articles/1414030-how-do-i-digitally-sign-in-out-at-my-kitchen",
+      "version_or_page_date": "2026-04-24",
+      "locator": "PIN and cleanliness/equipment concern notes",
+      "checked_fact": "Attendance PIN and concern notes are documented, rather than an individual cleaning-completion attestation.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E09",
+      "title": "The Food Corridor admin digital sign-in/out",
+      "url": "https://help.thefoodcorridor.com/en/articles/1413890-what-is-digital-sign-in-sign-out",
+      "version_or_page_date": "2022-09-23",
+      "locator": "Client PIN / manager attendance editing / invoices",
+      "checked_fact": "PIN identifies a client account; managers can edit attendance; invoice hours are bookings rather than actual attendance. No individual-signoff guarantee follows.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E10",
+      "title": "The Food Corridor inactive accounts",
+      "url": "https://help.thefoodcorridor.com/en/articles/14695452-i-m-leaving-my-kitchen-what-happens-to-my-account-and-charges",
+      "version_or_page_date": "2026-04-21",
+      "locator": "Inactive versus deleted, lines 45–46",
+      "checked_fact": "Inactivation preserves account access, invoices, booking history and reports. Format, complete signoff export and retention duration remain unspecified.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E11",
+      "title": "The Food Corridor older account deletion help",
+      "url": "https://help.thefoodcorridor.com/en/articles/1935331-how-do-i-delete-my-account",
+      "version_or_page_date": "2020-06-22",
+      "locator": "Inactive client history access",
+      "checked_fact": "Older guidance supports past invoice/report access, not complete annual export. The newer inactive-account article is separately checked.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E12",
+      "title": "The Food Corridor view-only permissions",
+      "url": "https://help.thefoodcorridor.com/en/articles/1530570-can-a-kitchen-admin-have-view-only-permissions",
+      "version_or_page_date": "2020-05-20",
+      "locator": "View-only role guidance",
+      "checked_fact": "Older view-only/client calendar guidance is a documented lead; it does not settle current precise private field visibility.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E13",
+      "title": "The Food Corridor tenant booking",
+      "url": "https://help.thefoodcorridor.com/en/articles/1413904-how-do-i-book-in-my-kitchen",
+      "version_or_page_date": "2023-11-21",
+      "locator": "Create booking / daily view / equipment",
+      "checked_fact": "Direct booking creation and equipment-range selection accompany calendar interaction. Their existence does not demonstrate accessibility.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E14",
+      "title": "The Food Corridor pricing FAQ",
+      "url": "https://www.thefoodcorridor.com/pricing/",
+      "version_or_page_date": "mutable vendor page",
+      "locator": "Onboarding Flows / onboarding calls / transaction FAQ",
+      "checked_fact": "Checklist add-on tiers, additional onboarding-call charge and payment-fee qualifications require a scoped quote. Included payment processing must not be double-counted.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E15",
+      "title": "Skedda buffer time",
+      "url": "https://support.skedda.com/en/articles/3653032-buffer-time",
+      "version_or_page_date": "2025-03-04",
+      "locator": "Rules and FAQ, lines 19–52",
+      "checked_fact": "Per-space granularity; minimum 15 minutes; largest conflicting rule; future bookings only; system override. Equal before/after buffers may overlap each other, so interbooking separation differs from summing two buffers.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E16",
+      "title": "Skedda access and visibility",
+      "url": "https://support.skedda.com/en/articles/105728-access-and-visibility",
+      "version_or_page_date": "2026-04-20",
+      "locator": "Venue access / content visibility",
+      "checked_fact": "Private access requires login. With no content rules, regular users see time/date/space; system users see booking details. Most generous matching visibility rule applies.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E17",
+      "title": "Skedda custom fields",
+      "url": "https://support.skedda.com/en/articles/2934389-custom-fields",
+      "version_or_page_date": "2025-03-04",
+      "locator": "Field collection / propagation / inclusion",
+      "checked_fact": "Fields are collected at booking creation and propagate to multiple outputs; required/admin-only/holder-visible configurations exist. These do not prove later equipment-use signoff.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E18",
+      "title": "Skedda exports",
+      "url": "https://support.skedda.com/en/articles/105786-export-or-print-booking-data",
+      "version_or_page_date": "2026-09-08",
+      "locator": "List-view export / FAQ",
+      "checked_fact": "System-user List view exports CSV/XLSX; ordinary users lack equivalent filters; tablet view lacks export controls. A secure tenant-specific delivered extract remains possible.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E19",
+      "title": "Skedda booking/visit retention",
+      "url": "https://support.skedda.com/en/articles/5707504-booking-and-visit-data-retention",
+      "version_or_page_date": "2025-03-04",
+      "locator": "Data retention period setting / recurrence / export FAQ, lines 25–42",
+      "checked_fact": "New accounts default to one-year retention with periodic automatic deletion. Plan changes do not reset the configured period; unsupported extended retention prevents new bookings. Longer retention and external periodic exports are conditional options.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E20",
+      "title": "Skedda booking requests and approvals",
+      "url": "https://support.skedda.com/en/articles/11774950-booking-requests-approvals",
+      "version_or_page_date": "2026-07-07",
+      "locator": "Plan availability / pending requests / editing / custom admins",
+      "checked_fact": "Premier Skedda or Advanced AllBooked required. Pending requests coexist without reserving space. Approved-booking editing and custom-admin exceptions apply; certain Outlook edits return a booking to pending. Multi-space Outlook-sync restrictions also exist.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E21",
+      "title": "Skedda system-user roles",
+      "url": "https://support.skedda.com/en/articles/2218760-user-access-levels-types-regular-and-system-users",
+      "version_or_page_date": "2024-10-13",
+      "locator": "Booking administrator / system administrator / owner",
+      "checked_fact": "System roles have broad powers and ordinary-policy exceptions. Administrator tests are necessary rather than assuming tenant rules govern all writers.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E22",
+      "title": "Skedda US/Canada pricing",
+      "url": "https://www.skedda.com/pricing",
+      "version_or_page_date": "mutable pricing observed 2026-10-09",
+      "locator": "United States & Canada, Plus/Premier, lines 8–57",
+      "checked_fact": "Plus starts at $249/month billed annually with 35 spaces included; Premier starts at $349/month with 45. Pricing depends on space count, but $249 is not the displayed charge for each individual space.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E23",
+      "title": "Skedda corroborating vendor pricing description",
+      "url": "https://www.skedda.com/insights/best-archie-alternatives",
+      "version_or_page_date": "mutable vendor publication observed 2026-10-09",
+      "locator": "Featured Skedda pricing, line 97",
+      "checked_fact": "Vendor corroborates Plus $249/month including 35 spaces and Premier $349/month including 45. No kitchen-specific quote is supplied.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E24",
+      "title": "Skedda approvals feature evolution",
+      "url": "https://www.skedda.com/blog/booking-approvals",
+      "version_or_page_date": "published 2026-01-22; updated 2026-06-29",
+      "locator": "Publication/update dates; approvals feature",
+      "checked_fact": "Feature evolution leads into the July support guide; it is not a verified booking-race defect or regression.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E25",
+      "title": "Spacebring pricing",
+      "url": "https://www.spacebring.com/pricing",
+      "version_or_page_date": "mutable vendor page observed 2026-10-09",
+      "locator": "Business price / MAU / footnote, including line 578",
+      "checked_fact": "Page displays $178/month, six-month term and 100 MAU; footnote specifies Euro billing. Local display and billing currency can coexist. Add-ons and actual kitchen quote remain conditional.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E26",
+      "title": "Spacebring shared-kitchen solution",
+      "url": "https://www.spacebring.com/solutions/shared-kitchen-management-software",
+      "version_or_page_date": "mutable vendor page observed 2026-10-09",
+      "locator": "Shared equipment / preparation-time section",
+      "checked_fact": "Markets shared-kitchen room/equipment booking and preparation time per room. Does not establish independent cleanup duration, exact conflicts or tenant signoff/export.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E27",
+      "title": "WCAG 2.2 Recommendation",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "version_or_page_date": "current Recommendation 2024-12-12; initially published 2023-10-05",
+      "locator": "SC 2.1.1, 2.5.7, 2.5.8, 4.1.2, 4.1.3",
+      "checked_fact": "Keyboard/name-role/status criteria apply; 2.5.7 requires a single-pointer non-drag alternative with exceptions; 2.5.8 uses 24 CSS-pixel targets with exceptions. Neither proves wet-hand or complete screen-reader usability.",
+      "arms": [
+        "N1",
+        "N2"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E28",
+      "title": "WAI dragging-movements explanation",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html",
+      "version_or_page_date": "mutable WAI informative explanation",
+      "locator": "Single-pointer alternative and keyboard distinction",
+      "checked_fact": "Keyboard accessibility and non-drag pointer operation are separate checks; explanatory document is informative.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E29",
+      "title": "FDA Food Code 2026 publication",
+      "url": "https://www.fda.gov/food/fda-food-code/food-code-2026",
+      "version_or_page_date": "2026 edition",
+      "locator": "Model code / adoption explanation",
+      "checked_fact": "Food Code is a model for jurisdictional adoption, rather than automatically governing this unspecified kitchen.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E30",
+      "title": "FDA Food Code 2026 full text",
+      "url": "https://www.fda.gov/media/194741/download",
+      "version_or_page_date": "2026 edition",
+      "locator": "Preface status/adoption; Annex 3 PDF page 347 (printed 268)",
+      "checked_fact": "Commissary discussion distinguishes direct-consumer food-establishment activity from supplying businesses/food-processing situations. Regulatory authority determines suitability; jurisdiction and sales channel are unknown.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E31",
+      "title": "PostgreSQL range types",
+      "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+      "version_or_page_date": "PostgreSQL 18",
+      "locator": "Sections 8.17.1, 8.17.6, 8.17.10",
+      "checked_fact": "tstzrange and default half-open constructors support exclusive-resource overlap constraints via GiST with resource equality and range overlap. Capacity sharing, row validity and multi-resource transaction semantics need additional modeling.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E32",
+      "title": "PostgreSQL row security",
+      "url": "https://www.postgresql.org/docs/18/ddl-rowsecurity.html",
+      "version_or_page_date": "PostgreSQL 18",
+      "locator": "Section 5.9",
+      "checked_fact": "RLS requires enabling; enabled tables with no policies deny ordinary access. Owner/FORCE, superuser/BYPASSRLS and permissive-policy OR exceptions are material. This is not complete application privacy.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E33",
+      "title": "FullCalendar overlap option",
+      "url": "https://fullcalendar.io/docs/eventOverlap",
+      "version_or_page_date": "current docs footer v7.1.1, 2026-10-06",
+      "locator": "eventOverlap description/default",
+      "checked_fact": "Default true governs interactive drag/resize overlap; it is not persisted booking conflict protection.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E34",
+      "title": "FullCalendar issue 6393",
+      "url": "https://github.com/fullcalendar/fullcalendar/issues/6393",
+      "version_or_page_date": "opened 2021-06-23; affected v5.8",
+      "locator": "DayGrid eventOrderStrict report and 5.9 milestone",
+      "checked_fact": "Confirmed display/event-ordering defect; not a database double-booking defect.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E35",
+      "title": "FullCalendar fix",
+      "url": "https://github.com/fullcalendar/fullcalendar/commit/6acf6b2",
+      "version_or_page_date": "fix commit 6acf6b2",
+      "locator": "seg-hierarchy.ts / event-placement.ts",
+      "checked_fact": "Code changes event placement/rendering and references issue 6393. Reviewer inspected source, without executing a regression.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E36",
+      "title": "FullCalendar release 5.9.0",
+      "url": "https://github.com/fullcalendar/fullcalendar/releases/tag/v5.9.0",
+      "version_or_page_date": "2021-07-28; release commit displayed 620efb5",
+      "locator": "Release notes issue 6393",
+      "checked_fact": "Release records the event-rendering fix. Tag-page display independently confirms short commit; candidate full hash is not separately rehashed.",
+      "arms": [
+        "N1"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E37",
+      "title": "LibreBooking administration",
+      "url": "https://librebooking.readthedocs.io/en/latest/ADMINISTRATION.html",
+      "version_or_page_date": "guide labeled 7.0.0; mutable latest route",
+      "locator": "Schedule and Resource Configuration / Public Access",
+      "checked_fact": "Exclusive by default; concurrency applies schedule-wide and disables Schedule View. Resource capacity means participants, not simultaneous reservations. Defaults include no duration limits, approval off, auto-permission and admin usage exemptions; public URLs become available to copy.",
+      "arms": [
+        "N2"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E38",
+      "title": "LibreBooking v7 release",
+      "url": "https://github.com/LibreBooking/librebooking/releases/tag/v7.0.0",
+      "version_or_page_date": "2026-10-06; 422b4b0223335d18c7d5f005ffcdd93719575c20",
+      "locator": "Release/tag identity",
+      "checked_fact": "v7.0.0 is the observed release endpoint; pinned code below uses its immutable commit.",
+      "arms": [
+        "N2"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E39",
+      "title": "LibreBooking mutable README",
+      "url": "https://github.com/LibreBooking/librebooking",
+      "version_or_page_date": "develop README observed 2026-10-09",
+      "locator": "Security notices / Manual Installation",
+      "checked_fact": "Announces Oct 13 high-impact release and pre-v7 admin takeover issue. Does not establish v7 affected by undisclosed issue. Lists PHP 8.2+, Apache 2.4+, MySQL 8/MariaDB 10.6+.",
+      "arms": [
+        "N2"
+      ],
+      "operation": "web open and read-only raw README retrieval",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false,
+      "additional_urls": [
+        "https://raw.githubusercontent.com/LibreBooking/librebooking/develop/README.md"
+      ]
+    },
+    {
+      "id": "E40",
+      "title": "LibreBooking issue 1008",
+      "url": "https://github.com/LibreBooking/librebooking/issues/1008",
+      "version_or_page_date": "opened 2026-02-14; closed via PR 1140",
+      "locator": "BufferItem::Id recursion report",
+      "checked_fact": "Reported recursive buffer ID and stack overflow, addressed by the linked PR; applicability is list-item rendering identity.",
+      "arms": [
+        "N2"
+      ],
+      "operation": "web primary-page open",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E41",
+      "title": "LibreBooking PR 1140",
+      "url": "https://github.com/LibreBooking/librebooking/pull/1140",
+      "version_or_page_date": "merged 2026-03-13T05:35:59Z",
+      "locator": "PR and https://api.github.com/repos/LibreBooking/librebooking/pulls/1140",
+      "checked_fact": "PR head is 4bc0cf5dd17b5cbacae2fd4540800f04ea371c1e; API merge_commit_sha is b1394612e9e5311d0b6662cffa8e2e528667d6c3. Candidate reverses the merge label.",
+      "arms": [
+        "N2"
+      ],
+      "operation": "web open and read-only GitHub REST JSON",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false,
+      "additional_urls": [
+        "https://api.github.com/repos/LibreBooking/librebooking/pulls/1140"
+      ]
+    },
+    {
+      "id": "E42",
+      "title": "LibreBooking fix and head commits",
+      "url": "https://github.com/LibreBooking/librebooking/commit/b1394612e9e5311d0b6662cffa8e2e528667d6c3",
+      "version_or_page_date": "b1394612e9e5311d0b6662cffa8e2e528667d6c3; head 4bc0cf5dd17b5cbacae2fd4540800f04ea371c1e",
+      "locator": "REST commits endpoint for both SHAs / BufferItem::Id",
+      "checked_fact": "Both commits carry wrapped-ID delegation and begin/end-ID assertions. Head has one parent and earlier timestamp; source content supports the fix despite incorrect merge terminology.",
+      "arms": [
+        "N2"
+      ],
+      "operation": "web open and read-only GitHub REST JSON",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false,
+      "additional_urls": [
+        "https://api.github.com/repos/LibreBooking/librebooking/commits/b1394612e9e5311d0b6662cffa8e2e528667d6c3",
+        "https://api.github.com/repos/LibreBooking/librebooking/commits/4bc0cf5dd17b5cbacae2fd4540800f04ea371c1e"
+      ]
+    },
+    {
+      "id": "E43",
+      "title": "LibreBooking v4.3 release",
+      "url": "https://github.com/LibreBooking/librebooking/releases/tag/v4.3.0",
+      "version_or_page_date": "2026-04-03; displayed b29842c",
+      "locator": "Release notes buffer-ID recursion fix",
+      "checked_fact": "Release notes include the fix. Compare API reports the v7 commit ahead of b1394612, supporting ancestry.",
+      "arms": [
+        "N2"
+      ],
+      "operation": "web open and read-only GitHub compare REST JSON",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false,
+      "additional_urls": [
+        "https://api.github.com/repos/LibreBooking/librebooking/compare/b1394612e9e5311d0b6662cffa8e2e528667d6c3...422b4b0223335d18c7d5f005ffcdd93719575c20"
+      ]
+    },
+    {
+      "id": "E44",
+      "title": "LibreBooking pinned reservation list item",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/lib/Application/Schedule/ReservationListItem.php",
+      "version_or_page_date": "v7.0.0 immutable commit",
+      "locator": "BufferItem::Id lines 377–379; buffer constructors 337–342",
+      "checked_fact": "Buffer ID delegates to the wrapped reservation. Before/after list items subtract/add the interval respectively; this rendering code is not a database conflict oracle.",
+      "arms": [
+        "N2"
+      ],
+      "operation": "read-only urllib retrieval and text inspection",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E45",
+      "title": "LibreBooking pinned regression source",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/tests/Application/Schedule/ReservationListingTest.php",
+      "version_or_page_date": "v7.0.0 immutable commit",
+      "locator": "testBufferItemIdUsesWrappedReservationId, lines 153–164",
+      "checked_fact": "Fixture passes 3600 and expects begin/end IDs derived from reservation 42. Reviewer did not run this test.",
+      "arms": [
+        "N2"
+      ],
+      "operation": "read-only urllib retrieval and text inspection",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E46",
+      "title": "LibreBooking governing buffer argument",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/Domain/ReservationItemView.php",
+      "version_or_page_date": "v7.0.0 immutable commit",
+      "locator": "WithBufferTime lines 809–815; GetBufferTime 853–855; BufferedTimes 861–871",
+      "checked_fact": "WithBufferTime documents an integer seconds argument and stores bufferSeconds. BufferedTimes subtracts/adds the same interval at start/end. This resolves fixture units, rather than proving any UI input unit.",
+      "arms": [
+        "N2"
+      ],
+      "operation": "read-only urllib retrieval and text inspection",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false
+    },
+    {
+      "id": "E47",
+      "title": "LibreBooking interval implementation",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/lib/Common/TimeInterval.php",
+      "version_or_page_date": "v7.0.0 immutable commit",
+      "locator": "constructor lines 11–18; Parse lines 24–43",
+      "checked_fact": "Integer parsing uses total seconds; formatted strings have a separate days/hours/minutes path. TestReservationItemView inherits the relevant method without override.",
+      "arms": [
+        "N2"
+      ],
+      "operation": "read-only urllib retrieval and text inspection",
+      "access_date": "2026-10-09",
+      "request_timestamp": null,
+      "response_timestamp": null,
+      "runtime_executed": false,
+      "additional_urls": [
+        "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/tests/fakes/TestReservationItemView.php"
+      ]
+    }
+  ],
+  "source_limits": [
+    "Mutable vendor pages establish current published behavior, not a deployed product acceptance result.",
+    "Immutable LibreBooking code and versioned PostgreSQL documentation were inspected, not executed.",
+    "GitHub release/issue evidence does not prove a live kitchen scheduler safe.",
+    "Official FDA model-code text supports applicability boundaries, not legal advice or a jurisdictional adoption finding."
+  ],
+  "operations": {
+    "local": "Read exact input map, assignments, rubric, original brief and plan, all mapped scientific stages and source indexes/maps. Recomputed every mapped byte length and SHA-256. Read supporting notes in only the authorized source roots.",
+    "web": "Independent official vendor, W3C, FDA, PostgreSQL, FullCalendar and LibreBooking primary searches/opens/finds. Read-only GitHub REST/raw-text retrievals for code provenance, units and ancestry.",
+    "not_executed": [
+      "Product demos",
+      "Database/code witnesses",
+      "Candidate regression tests",
+      "Concurrency trials",
+      "Privacy/export trials",
+      "Assistive-technology or wet-hand sessions",
+      "Deployments",
+      "Human studies"
+    ],
+    "timestamp_detail": "Per-operation exact request/response times unknown; no synthetic timestamps assigned."
+  },
+  "assessment_science_freeze_at": "2026-10-09T22:10:55.268194+00:00"
+}

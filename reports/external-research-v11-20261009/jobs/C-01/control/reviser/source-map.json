@@ -1,0 +1,655 @@
+{
+  "schema_version": "er11-source-map-v1",
+  "block": "C-01",
+  "case": "H01",
+  "arm": "control",
+  "method": "M16",
+  "stage": "reviser",
+  "resource_version": "budget-75vs60-v1",
+  "evidence_kind": "full-discovery",
+  "native_route": "luna",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/reviser",
+  "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/reviser",
+  "deadline": "2026-10-09T22:29:47.095813+00:00",
+  "arm_deadline": "2026-10-09T22:52:32.734901+00:00",
+  "local_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/reviser/assignment.md",
+      "role": "exact assignment",
+      "observed_operation": "Read directly; followed its restrictions, M16 requirements, output requirements, and deadline."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/reviser/input-map.json",
+      "role": "exact input map",
+      "observed_operation": "Read directly; used its exact declared brief, predecessor list, source roots, write root, route and resource version."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/H01/brief.md",
+      "role": "exact H01 brief",
+      "observed_operation": "Read the exact brief and O1-O6 obligations."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/draft.md",
+      "role": "complete research draft",
+      "observed_operation": "Read in full and carried its scoped recommendation, comparisons, all P dispositions, checks and limits into the complete revision."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/discovery.md",
+      "role": "research discovery",
+      "observed_operation": "Read in full and retained its mechanisms, alternatives, optional leads, choices and validation scope."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/source-map.json",
+      "role": "research source map",
+      "observed_operation": "Read directly to preserve original source IDs, exact URLs, versions/commits, locators, original timestamps and observed operations."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/revealed-plan.md",
+      "role": "exact revealed P plan",
+      "observed_operation": "Read all six exact P clauses and preserved them in final.md."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/critic/source-map.json",
+      "role": "critic source map",
+      "observed_operation": "Read directly to preserve critic reinspection lineage and adjudicate each material finding."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/critic/critique.md",
+      "role": "complete independent critique",
+      "observed_operation": "Read in full; evaluated M-01 through M-04, all P-clause challenges, minor findings and completeness review."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/sources/index.md",
+      "role": "research source index",
+      "observed_operation": "Read to navigate the declared source inventory and bounded evidence."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/sources/evidence.md",
+      "role": "research bounded evidence",
+      "observed_operation": "Read to identify evidence supporting inherited draft claims and public source locators."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/critic/sources/index.md",
+      "role": "critic source index",
+      "observed_operation": "Read to navigate the critic reinspection records."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/critic/sources/evidence.md",
+      "role": "critic bounded evidence",
+      "observed_operation": "Read to evaluate each critique against retained evidence before independently reopening consequential sources."
+    }
+  ],
+  "declared_predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/revealed-plan.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/critic/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/critic/critique.md"
+  ],
+  "declared_source_roots": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/research/sources",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/control/critic/sources"
+  ],
+  "source_policy": "Used only the exact assignment/input map/brief, declared own-arm research and critic predecessors/source roots, and the same declared public primary-source inventory. All inherited source IDs, exact URLs, versions/commits and original timestamps remain unchanged. Reviser direct reinspections are added on those same IDs with their own timestamps; no source was silently rebound and no new public source ID was introduced. No campaign, parent, counterpart, evaluator, history, private provider material or unrelated source was read.",
+  "usage_billing_observed": null,
+  "runtime_checks": {
+    "product_instances_used": false,
+    "customer_data_used": false,
+    "billing_or_usage_metering_observed": null,
+    "behavioral_tests_executed": [],
+    "proposed_validation_is_not_execution": true
+  },
+  "method_execution": {
+    "full_external_discovery_in_this_stage": "Not repeated; the exact declared research discovery and full draft were read and retained as prior M16 investigator outputs.",
+    "independent_full_critic": "Not performed in this reviser context; the complete declared critic output and its source evidence were read and every material and minor finding was explicitly adjudicated. The critic artifact records its separate context and evidence lineage.",
+    "fresh_complete_reviser": "Performed in this reviser context. final.md is a single coherent complete answer covering O1-O6 and P1-P6, with every critic finding adjudicated and the full research scope preserved.",
+    "native_goal": {
+      "actual_supported_call": "create_goal",
+      "goal_thread_id": "01a122b2-8aa6-72b0-924a-f5886b6af883",
+      "created_at_epoch_from_tool_result": 1791583509,
+      "status_observed_active_before_science_save": true,
+      "terminal_status_at_science_save": "active",
+      "science_saved_before_native_terminal_completion": true,
+      "t3_thread_completion": "UNKNOWN; not exposed by this native Goal call"
+    },
+    "source_reinspection_completed_by_utc": "2026-10-09T22:07:04Z",
+    "revisers_source_ids_reinspected": [
+      "BR01",
+      "BR02",
+      "NC01",
+      "NC02",
+      "NC03",
+      "PA02",
+      "PA11"
+    ],
+    "source_fetch_discrepancy": "NC03: critic reinspection recorded no WCAG statement; reviser open outputs contained one, while one find operation did not. No source change timestamp/history was exposed; see sources/evidence.md#nc03.",
+    "usage_billing": null
+  },
+  "evidence_files": [
+    {
+      "path": "sources/evidence.md",
+      "content": "Bounded paraphrased evidence indexed by inherited immutable source IDs, with reviser reinspection and the NC03 discrepancy explicitly recorded."
+    },
+    {
+      "path": "sources/index.md",
+      "content": "Navigable source-ID index into evidence.md."
+    },
+    {
+      "path": "final.md",
+      "content": "Complete scientific answer with full findings, critique dispositions, exact P clauses, validation proposals, and execution status."
+    }
+  ],
+  "sources": [
+    {
+      "id": "PA01",
+      "title": "Passare Manage overview",
+      "organization": "Passare",
+      "url": "https://www.passare.com/manage",
+      "version_or_commit": "Live product page; copyright 2026; no application build identifier",
+      "locator": "Shareable calendar, notes/checklists, user settings and product summary",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Public-web search",
+        "Opened official vendor page"
+      ],
+      "retained_evidence": "sources/evidence.md#pa01",
+      "mutable": true,
+      "evidence_note": "Vendor product positioning only; not independent verification or a price quote.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_fetch_returned_404",
+        "result": "The original URL was re-opened and returned 404; no alternate page was substituted.",
+        "retained_evidence": "sources/evidence.md#pa01"
+      }
+    },
+    {
+      "id": "PA02",
+      "title": "Passare Calendar support",
+      "organization": "Passare",
+      "url": "https://support.passare.com/calendar",
+      "version_or_commit": "Live support page; copyright 2025; no product build identifier",
+      "locator": "Calendar overview; Event settings; Participants; Manage Calendar",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Opened official support page"
+      ],
+      "retained_evidence": "sources/evidence.md#pa02",
+      "mutable": true,
+      "evidence_note": "Calendar/event flags, fields, participant availability and notifications described; hard resource conflict prevention not established.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_inspected_calendar_sections",
+        "result": "Reconfirmed event popover fields, private/public flags, participants, personal-calendar connection, and print option; no hard resource conflict guarantee found.",
+        "retained_evidence": "sources/evidence.md#pa02"
+      },
+      "reviser_reinspection": {
+        "completed_by_utc": "2026-10-09T22:07:04Z",
+        "observed_operations": [
+          "Opened exact official support URL with public web tool"
+        ],
+        "locator": "Calendar overview; event popover fields; personal-calendar connection; print; event settings; participants and notifications",
+        "result": "Reconfirmed popover can expose decedent information, location, date, participants, notes, and associated events; documented personal-calendar connection and print; case events include location/providers and participant availability and update notices. No hard resource-conflict guarantee was stated."
+      }
+    },
+    {
+      "id": "PA03",
+      "title": "Passare event types",
+      "organization": "Passare",
+      "url": "https://support.passare.com/event-types?hsLang=en",
+      "version_or_commit": "Live support page; copyright 2025",
+      "locator": "Add an event; Default participants; Funeral options",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Opened official support page"
+      ],
+      "retained_evidence": "sources/evidence.md#pa03",
+      "mutable": true,
+      "evidence_note": "Event-type defaults and funeral-specific flags are vendor-documented behavior.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_inspected_event_type_sections",
+        "result": "Reconfirmed private/public setting, event duration, funeral flags, venue/provider categories, and default participant roles.",
+        "retained_evidence": "sources/evidence.md#pa03"
+      }
+    },
+    {
+      "id": "PA04",
+      "title": "Passare roles and permissions",
+      "organization": "Passare",
+      "url": "https://support.passare.com/roles-permissions",
+      "version_or_commit": "Live support page; copyright 2025",
+      "locator": "Create new roles; Manage user roles; Mobile-only users",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Opened official support page"
+      ],
+      "retained_evidence": "sources/evidence.md#pa04",
+      "mutable": true,
+      "evidence_note": "Area-level role/read-only documentation; exact field-level privacy still needs vendor demonstration.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_inspected_role_sections",
+        "result": "Reconfirmed area permissions, read-only controls, and web/mobile scope; exact H01 field matrix remains unknown.",
+        "retained_evidence": "sources/evidence.md#pa04"
+      }
+    },
+    {
+      "id": "PA05",
+      "title": "Passare checklists",
+      "organization": "Passare",
+      "url": "https://support.passare.com/create-checklists",
+      "version_or_commit": "Live support page; copyright 2025",
+      "locator": "Checklist editing, recording and viewing",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Opened official support page"
+      ],
+      "retained_evidence": "sources/evidence.md#pa05",
+      "mutable": true,
+      "evidence_note": "Internal versus Planning Center checklist visibility is selectable.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_inspected_checklist_sections",
+        "result": "Reconfirmed internal/Planning Center visibility and checklist recording options.",
+        "retained_evidence": "sources/evidence.md#pa05"
+      }
+    },
+    {
+      "id": "PA06",
+      "title": "Passare Planning Center getting started and internet requirements",
+      "organization": "Passare",
+      "url": "https://support.passare.com/getting-started-with-the-planning-center",
+      "version_or_commit": "Live support page; copyright 2025",
+      "locator": "Invite the family; Logging in; Collect information; Plan a meaningful service",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Opened official support page"
+      ],
+      "retained_evidence": "sources/evidence.md#pa06",
+      "mutable": true,
+      "evidence_note": "Family invitation and features documented; source explicitly requires internet.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_searched_internet_requirement",
+        "result": "Reconfirmed family invitation/sign-in and explicit family internet requirement.",
+        "retained_evidence": "sources/evidence.md#pa06"
+      }
+    },
+    {
+      "id": "PA07",
+      "title": "Passare Planning Center roles",
+      "organization": "Passare",
+      "url": "https://support.passare.com/assign-planning-center-roles",
+      "version_or_commit": "Live support page; copyright 2025",
+      "locator": "Planning Center roles; Assign roles within Planning Center",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Opened official support page"
+      ],
+      "retained_evidence": "sources/evidence.md#pa07",
+      "mutable": true,
+      "evidence_note": "Viewer, Contributor, Editor; Editor default/full access and at least one Editor required.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_searched_editor_role",
+        "result": "Reconfirmed Viewer/Contributor/Editor, Editor default/full Planning Center access, and one-Editor-per-case requirement.",
+        "retained_evidence": "sources/evidence.md#pa07"
+      }
+    },
+    {
+      "id": "PA08",
+      "title": "Passare sharing scheduled events with Planning Center",
+      "organization": "Passare",
+      "url": "https://support.passare.com/how-to-schedule-share-events-with-the-planning-center?hsLang=en",
+      "version_or_commit": "Live support page; copyright 2025",
+      "locator": "Add events in Passare; View events in the Planning Center",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Followed official support link",
+        "Opened official support page"
+      ],
+      "retained_evidence": "sources/evidence.md#pa08",
+      "mutable": true,
+      "evidence_note": "Family schedule viewing documented; family editing of the staff schedule is not established.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_searched_event_display",
+        "result": "Reconfirmed scheduled arrangement/service events appear in family Events widget; no family staff-calendar editing claim found.",
+        "retained_evidence": "sources/evidence.md#pa08"
+      }
+    },
+    {
+      "id": "PA09",
+      "title": "Passare tasks",
+      "organization": "Passare",
+      "url": "https://support.passare.com/manage-tasks",
+      "version_or_commit": "Live support page; copyright 2025",
+      "locator": "Create a task; Task reminders; Managing tasks",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Opened official support page"
+      ],
+      "retained_evidence": "sources/evidence.md#pa09",
+      "mutable": true,
+      "evidence_note": "Case/checklist task ownership, due date/time, reminders, completion and comments documented.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_searched_due_date",
+        "result": "Reconfirmed task due date/time, owners, reminders, overdue status, comments, and completion.",
+        "retained_evidence": "sources/evidence.md#pa09"
+      }
+    },
+    {
+      "id": "PA10",
+      "title": "Passare case export",
+      "organization": "Passare",
+      "url": "https://support.passare.com/how-to-export-cases",
+      "version_or_commit": "Live support page; copyright 2025",
+      "locator": "Export information",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Opened official support page"
+      ],
+      "retained_evidence": "sources/evidence.md#pa10",
+      "mutable": true,
+      "evidence_note": "Selected export categories include event information, payments, goods/services, exported separately to CSV; completeness is not guaranteed.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_searched_csv",
+        "result": "Reconfirmed category-by-category CSV export.",
+        "retained_evidence": "sources/evidence.md#pa10"
+      }
+    },
+    {
+      "id": "PA11",
+      "title": "Passare 2026 release notes",
+      "organization": "Passare",
+      "url": "https://support.passare.com/2026-release-notes",
+      "version_or_commit": "Dated entries; no product build ID shown",
+      "locator": "2026-07-07 Calendar and Participant updates; 2026-05-15 Event participants",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Opened official release notes"
+      ],
+      "retained_evidence": "sources/evidence.md#pa11",
+      "mutable": true,
+      "evidence_note": "Dated vendor descriptions; deployment version and export completeness unverified.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_inspected_release_notes",
+        "result": "Reconfirmed July 7 2026 Case ID notifications, participant export, and service-type role defaults; current page contains later entries and no deployment build ID.",
+        "retained_evidence": "sources/evidence.md#pa11"
+      },
+      "reviser_reinspection": {
+        "completed_by_utc": "2026-10-09T22:07:04Z",
+        "observed_operations": [
+          "Opened exact official release-notes URL",
+          "Searched the opened page for participant export"
+        ],
+        "locator": "2026-07-07 Calendar and Participant updates; 2026-05-15 Event participants",
+        "result": "Reconfirmed the July 7 entry: Case ID in case-event notifications, participants in event exports, and configurable role defaults per service type. The dated vendor notes provide no deployment build identifier."
+      }
+    },
+    {
+      "id": "NC01",
+      "title": "Nextcloud Calendar user manual",
+      "organization": "Nextcloud",
+      "url": "https://docs.nextcloud.com/server/stable/user_manual/en/groupware/calendar.html",
+      "version_or_commit": "Nextcloud Server 35 User Manual",
+      "locator": "Edit/Export/Delete Calendar; Sharing calendars; event .ics export; Appointments",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Opened official versioned user manual"
+      ],
+      "retained_evidence": "sources/evidence.md#nc01",
+      "mutable": true,
+      "evidence_note": "Read/write calendar sharing, event CRUD and .ics exports described.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_searched_write_access",
+        "result": "Reconfirmed writable calendar shares allow event create/edit/delete and the manual documents .ics export.",
+        "retained_evidence": "sources/evidence.md#nc01"
+      },
+      "reviser_reinspection": {
+        "completed_by_utc": "2026-10-09T22:07:04Z",
+        "observed_operations": [
+          "Opened exact official Server 35 manual URL"
+        ],
+        "locator": "Exporting calendars; sharing calendars",
+        "result": "Reconfirmed read-only versus writable calendar shares; writable sharees can create, edit, and delete events; .ics export is documented. Does not establish case-field privacy or a full case archive."
+      }
+    },
+    {
+      "id": "NC02",
+      "title": "Nextcloud Calendar administration manual",
+      "organization": "Nextcloud",
+      "url": "https://docs.nextcloud.com/server/stable/admin_manual/groupware/calendar.html",
+      "version_or_commit": "Nextcloud Server 35 Administration Manual",
+      "locator": "Hide export buttons; Resources and rooms; Sync tokens/data retention",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Opened official versioned administration manual"
+      ],
+      "retained_evidence": "sources/evidence.md#nc02",
+      "mutable": true,
+      "evidence_note": "Admin export controls, external room/resource backend and CalDAV change-token behavior; does not establish browser offline editing or merge safety.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_inspected_sync_resources_and_trash",
+        "result": "Reconfirmed 10,000 sync-token entries default; offline-client differential sync; backend-provided rooms/resources with one-at-a-time scheduling and delayed visibility; 30-day calendar/event/task trash purge.",
+        "retained_evidence": "sources/evidence.md#nc02"
+      },
+      "reviser_reinspection": {
+        "completed_by_utc": "2026-10-09T22:07:04Z",
+        "observed_operations": [
+          "Opened exact official Server 35 administration manual URL",
+          "Searched page for the 30-day default"
+        ],
+        "locator": "Resources and rooms; Trash bin; Data retention / Sync tokens",
+        "result": "Reconfirmed app-provided resource backend requirement, one-at-a-time room/resource booking, delayed resource discovery; 30-day default trash purge for calendars/events/tasks configurable in seconds; 10,000 sync-token default and differential-sync purpose for offline clients. No browser offline or conflict-merge proof."
+      }
+    },
+    {
+      "id": "NC03",
+      "title": "Nextcloud accessibility user manual",
+      "organization": "Nextcloud",
+      "url": "https://docs.nextcloud.com/server/stable/user_manual/en/universal_access.html",
+      "version_or_commit": "Nextcloud Server 35 User Manual",
+      "locator": "Navigating via keyboard; Included themes",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Opened official versioned user manual"
+      ],
+      "retained_evidence": "sources/evidence.md#nc03",
+      "mutable": true,
+      "evidence_note": "Vendor accessibility claims; calendar/task workflow was not independently tested.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_inspected_keyboard_accessibility_and_contrast",
+        "result": "Reconfirmed generic keyboard controls and themes; linked page does not establish WCAG 2.1 AA/AAA or workflow conformance.",
+        "retained_evidence": "sources/evidence.md#nc03"
+      },
+      "reviser_reinspection": {
+        "completed_by_utc": "2026-10-09T22:07:04Z",
+        "observed_operations": [
+          "Opened exact official Server 35 manual URL twice",
+          "Searched an opened result for WCAG; search returned no match despite the open output containing the text"
+        ],
+        "locator": "Universal access overview; Navigating via keyboard; Included themes",
+        "result": "Both direct open outputs stated a general WCAG 2.1 AA aim and high-contrast theme even at AAA, plus generic keyboard/assistive-software language and keyboard controls. The critic source-map records that its earlier same-URL inspection did not find the standards statement. Current reviser open output and same-response find operation conflict; mutable-page drift versus extraction inconsistency cannot be distinguished. No product-specific Calendar conformance was established."
+      }
+    },
+    {
+      "id": "NC04",
+      "title": "Nextcloud Calendar issue #2572",
+      "organization": "Nextcloud",
+      "url": "https://github.com/nextcloud/calendar/issues/2572",
+      "version_or_commit": "Opened 2020-09-09 against Calendar 2.0.4 / Server 19.0.2; closed 2026-06-04",
+      "locator": "Issue reproduction, discussion and close record",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Opened official repository issue"
+      ],
+      "retained_evidence": "sources/evidence.md#nc04",
+      "mutable": true,
+      "evidence_note": "Historical import-picker issue involving event/task components; not a current defect claim.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_inspected_issue_body_discussion_close",
+        "result": "Reconfirmed historical event/task component import issue against old versions and closure via #7876.",
+        "retained_evidence": "sources/evidence.md#nc04"
+      }
+    },
+    {
+      "id": "NC05",
+      "title": "Nextcloud Calendar fix PR #7876",
+      "organization": "Nextcloud",
+      "url": "https://github.com/nextcloud/calendar/pull/7876",
+      "version_or_commit": "Merged 2026-06-04",
+      "locator": "PR summary and merge record",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Followed issue's official PR link",
+        "Opened official pull request"
+      ],
+      "retained_evidence": "sources/evidence.md#nc05",
+      "mutable": true,
+      "evidence_note": "Picker disables unsupported calendars and explains why; underlying component support is distinct.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_inspected_pr_summary_merge",
+        "result": "Reconfirmed picker shows unsupported calendars disabled with an explanation; PR merge is dated June 4 2026.",
+        "retained_evidence": "sources/evidence.md#nc05"
+      }
+    },
+    {
+      "id": "NC06",
+      "title": "Nextcloud Calendar merge commit for PR #7876",
+      "organization": "Nextcloud",
+      "url": "https://github.com/nextcloud/calendar/commit/02fb072fee39e83746b09582481f63c87505f14b",
+      "version_or_commit": "02fb072fee39e83746b09582481f63c87505f14b",
+      "locator": "Commit message; import picker/store and unit tests",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "metadata_api_accessed_at_utc": "2026-10-09T21:44:07Z",
+      "metadata_api_url": "https://api.github.com/repos/nextcloud/calendar/commits/02fb072",
+      "observed_operations": [
+        "Opened immutable commit page",
+        "Queried public GitHub commit metadata API for full SHA"
+      ],
+      "retained_evidence": "sources/evidence.md#nc06",
+      "mutable": false,
+      "evidence_note": "Immutable full-SHA merge commit; API confirms full SHA.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_full_sha_commit_url",
+        "result": "Reconfirmed the exact immutable merge commit and its picker/store diff.",
+        "retained_evidence": "sources/evidence.md#nc06"
+      }
+    },
+    {
+      "id": "NC07",
+      "title": "Nextcloud Calendar changelog",
+      "organization": "Nextcloud",
+      "url": "https://github.com/nextcloud/calendar/blob/main/CHANGELOG.md",
+      "version_or_commit": "Calendar 6.6.0 entry dated 2026-07-28; main branch is mutable",
+      "locator": "6.6.0 bug-fix section",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Opened official repository changelog"
+      ],
+      "retained_evidence": "sources/evidence.md#nc07",
+      "mutable": true,
+      "evidence_note": "Release notes list accessibility, component support closing #2572 and import-picker work.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_searched_6_6_0_issue_references",
+        "result": "Reconfirmed mutable changelog entries for 6.6.0, picker closure of #2572, and supported component types.",
+        "retained_evidence": "sources/evidence.md#nc07"
+      }
+    },
+    {
+      "id": "NC08",
+      "title": "Nextcloud Calendar ACL code commit",
+      "organization": "Nextcloud",
+      "url": "https://github.com/nextcloud/calendar/commit/ea4d703419d9a7b7fc467071c760d7541af7af14",
+      "version_or_commit": "ea4d703419d9a7b7fc467071c760d7541af7af14",
+      "locator": "Calendar model ACL properties, shareability logic and unit tests",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "metadata_api_accessed_at_utc": "2026-10-09T21:44:07Z",
+      "metadata_api_url": "https://api.github.com/repos/nextcloud/calendar/commits/ea4d703",
+      "observed_operations": [
+        "Opened immutable commit page",
+        "Queried public GitHub commit metadata API for full SHA"
+      ],
+      "retained_evidence": "sources/evidence.md#nc08",
+      "mutable": false,
+      "evidence_note": "Immutable commit separates create, modify and delete ACL capabilities; UI calendar ACL is not case-field privacy.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_full_sha_commit_url_and_searched_acl_fields",
+        "result": "Reconfirmed separate create/modify/delete DAV privilege mapping and tests.",
+        "retained_evidence": "sources/evidence.md#nc08"
+      }
+    },
+    {
+      "id": "BR01",
+      "title": "Baserow hosted pricing",
+      "organization": "Baserow",
+      "url": "https://baserow.io/pricing?version=hosted",
+      "version_or_commit": "Live hosted pricing page; mutable",
+      "locator": "Advanced rate; role permissions and audit log inclusions",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Opened official pricing page"
+      ],
+      "retained_evidence": "sources/evidence.md#br01",
+      "mutable": true,
+      "evidence_note": "Advanced $18/user/month billed yearly or $22 monthly; six yearly seats total $1,296 before tax/other costs.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_searched_price_and_history",
+        "result": "Reconfirmed Advanced at $18/user/month billed yearly, $22 monthly, and 180-day Advanced row-change history.",
+        "retained_evidence": "sources/evidence.md#br01"
+      },
+      "reviser_reinspection": {
+        "completed_by_utc": "2026-10-09T22:07:04Z",
+        "observed_operations": [
+          "Opened exact official hosted pricing URL"
+        ],
+        "locator": "Advanced rate; Advanced row change history",
+        "result": "Reconfirmed Advanced at $18 per user/month billed yearly or $22 monthly and 180-day row-change history. Six annual-rate seats calculate to $1,296/year before tax and other costs. Mutable pricing/history details are not a business retention policy or a complete backup."
+      }
+    },
+    {
+      "id": "BR02",
+      "title": "Baserow restricted view permissions",
+      "organization": "Baserow",
+      "url": "https://baserow.io/user-docs/view-level-permissions",
+      "version_or_commit": "Live user documentation; copyright 2026",
+      "locator": "Permission hierarchy; restricted view setup; security troubleshooting",
+      "accessed_at_utc": "2026-10-09T21:43:32Z",
+      "observed_operations": [
+        "Opened official user documentation"
+      ],
+      "retained_evidence": "sources/evidence.md#br02",
+      "mutable": true,
+      "evidence_note": "Restricted views control visible rows/fields/export; broader table/database access can expose other views.",
+      "critic_reinspection": {
+        "completed_by_utc": "2026-10-09T21:55:07Z",
+        "observed_operation": "opened_exact_url_and_inspected_restricted_view_rules",
+        "result": "Reconfirmed visible row/field/export restriction and warning that broader table access can bypass restricted views.",
+        "retained_evidence": "sources/evidence.md#br02"
+      },
+      "reviser_reinspection": {
+        "completed_by_utc": "2026-10-09T22:07:04Z",
+        "observed_operations": [
+          "Opened exact official user-documentation URL",
+          "Searched the page for broader permissions, Editor, and export behavior"
+        ],
+        "locator": "Troubleshooting restricted views; restricted-view export FAQ",
+        "result": "Reconfirmed restricted-view exports include only visible rows/fields; a broader table Editor may switch to an unrestricted collaborative view, so broader access must be removed or limited for restricted views to provide true security."
+      }
+    }
+  ]
+}

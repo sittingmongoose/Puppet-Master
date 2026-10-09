@@ -1,0 +1,2296 @@
+{
+  "schema": "ER11 independent assessment contract v1",
+  "block": "B-07",
+  "case": "I07",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-07/assignment.md",
+      "sha256": "d848eb97d23760505ff23fe3b3800ff693b1852dad920cefe429d6afe152ce9d",
+      "bytes": 2164,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-07/input-map.json",
+      "sha256": "14d8d3a5283702d37943a7cd9e506a4cabe261a970b5de46e7279470607251f4",
+      "bytes": 11177,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I07/brief.md",
+      "sha256": "e2c0f99132caf5bc7e509651bb078b602f5f6f9ef6b217777daaa2e679689cbd",
+      "bytes": 2277,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I07/plan-root-only.md",
+      "sha256": "dee05cfa57badf5d2fa98859d53ea2f9e04c5c2fd2fc38b41913dda5b4205193",
+      "bytes": 565,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/reviser/final.md",
+      "sha256": "a2015df337502f70edeb8a35d0d0e456487721c67e30bb4d24914fb53ac76b58",
+      "bytes": 33066,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/reviser/source-map.json",
+      "sha256": "34a5afbbbcfc63685f63d7ebb30c19386f543aeb597e44ec07e898d503127892",
+      "bytes": 37203,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/reviser/assignment.md",
+      "sha256": "904fac6028adb24b64381e24ba8df9c554c7aaa2df46637dee588f11556a8325",
+      "bytes": 2849,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/reviser/input-map.json",
+      "sha256": "edf5ee312f05678d965a46ae014dfd0c8c7d72e909997a8dfba17563bc4cea41",
+      "bytes": 1628,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic/critique.md",
+      "sha256": "58ae1379fdf439850bed94c353968123992c8b05f6e111a35cc7f3d816ac9b1d",
+      "bytes": 11620,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic/source-map.json",
+      "sha256": "6acb213c7104b0aa2e6098e7ca1ec63ef4ac439e57d4ef16ff65321d6c3f1e5d",
+      "bytes": 28082,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic/assignment.md",
+      "sha256": "e3db932d75b4b3042e30e748646124aeb3872ea4d2d3ed16bafba6eac9ead0cc",
+      "bytes": 2586,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic/input-map.json",
+      "sha256": "f4db96abc8eb78db046f5ac7ba2e6b8b1d8852f149476dbb530c5aabcf3ed2b4",
+      "bytes": 1313,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/discovery.md",
+      "sha256": "061e11f8d26ba540d6b91932b1afee960d45ebecb5e31e948faa2dc237aadfaa",
+      "bytes": 20469,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/draft.md",
+      "sha256": "8691fb895b1fdc05084bde14faa6ea28c256677b438bae14d7744b114fa8260a",
+      "bytes": 21378,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/critique.md",
+      "sha256": "aba4e2ea18af7b05fb9f648ab042bc97b9284019db40b21b536d8e7a4933714d",
+      "bytes": 6980,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/source-map.json",
+      "sha256": "8a662cca59816e20676a794612fc81fc9df2e620fbc730116bdf38326c16b6f0",
+      "bytes": 26361,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/revealed-plan.md",
+      "sha256": "dee05cfa57badf5d2fa98859d53ea2f9e04c5c2fd2fc38b41913dda5b4205193",
+      "bytes": 565,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/plan-reveal.json",
+      "sha256": "1a19ad6f54536854cbcc0a939c844e0324f60f73befb58844ae150bf8bdf4433",
+      "bytes": 276,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/assignment.md",
+      "sha256": "a5a9ef6d37681262a41f1582701bf886c015baf31e49b70001ad43e82f13b609",
+      "bytes": 3059,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/input-map.json",
+      "sha256": "3ecb21de95ac2c842601dde301b58ee7302e4956db74e5de49c5be407b2fde7a",
+      "bytes": 676,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/reviser/sources/index.md",
+      "sha256": "badfc0056c7cfea75920b8f388f3d05e666a9b268ed13d640142972dfc08776d",
+      "bytes": 3290,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/reviser/sources/evidence-notes.md",
+      "sha256": "30bd9be6a9d0085c04220a7a878cd396b909a94598053484c3f4bf7cca709dc8",
+      "bytes": 13602,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic/sources/index.md",
+      "sha256": "4baf5ba1ba4abebe0750cb08160094b70a73dc6365a77cc9f5bbbd937fec7f9a",
+      "bytes": 979,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic/sources/evidence-notes.md",
+      "sha256": "032a871422a5a0c5a2ee08b517b4a35ea7c844558aa441f3dc3dc1a68f694346",
+      "bytes": 9633,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/sources/index.md",
+      "sha256": "b5d42ece4e1a6412b42e26924708f9ba16913ae83a5133bf3a50c38b1ec33f16",
+      "bytes": 3704,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/sources/evidence-notes.md",
+      "sha256": "2bcb9d621dd24edde067295cc70ac72bd6bbd606f5870918a0d27083854725ca",
+      "bytes": 9541,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/sources/source-access-log.json",
+      "sha256": "712ff64964c1468c2e5ceb0196c4e95bda6f1037bc6db2e811df402718c82b59",
+      "bytes": 6864,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/final.md",
+      "sha256": "e5c4f1ea9573fe3c4f61dbe2d6904de9fface6b525f01a3c12ee52a59235bbd9",
+      "bytes": 39299,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/source-map.json",
+      "sha256": "ee2dd9f7243cf86da649523ccb4fe2a365b6d52a46e236d16e62cca549a46a71",
+      "bytes": 41410,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/assignment.md",
+      "sha256": "2c641b3adcdedc686113dd7b155f545718a58b54464fcdaf42e54dec93f1ef88",
+      "bytes": 3597,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/input-map.json",
+      "sha256": "571955da9f28050efb6a3de88ea1eef51f011830eae470f32725a9a4dbc202ad",
+      "bytes": 1994,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/critic/critique.md",
+      "sha256": "78c0bb09871c35a939e41461e09da04d76083a911780d98eef5595611d8696c3",
+      "bytes": 25962,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/critic/source-map.json",
+      "sha256": "fae5e0bc0b1319c4a8713bfbe09a4644bee623960f5a27ad70d6a31aeacb10c6",
+      "bytes": 12232,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/critic/assignment.md",
+      "sha256": "9d9c89258e2cd8819c7cc76bb432241c28908c0b7f9960269b7f406830c8f2d4",
+      "bytes": 3042,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/critic/input-map.json",
+      "sha256": "3868e9ed7f16faf2c7c7894f73f3d9949d055e52af6aeda81cd98437c25bb567",
+      "bytes": 1449,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/discovery.md",
+      "sha256": "b2b8908dab488715bb6efed318de92d565cd99210f143475b35b050147168ae0",
+      "bytes": 19080,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/draft.md",
+      "sha256": "b7a34f0499e91e826b391d198867f31eb9d9deca242e1e94bf7d455abcdf4f32",
+      "bytes": 24854,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/source-map.json",
+      "sha256": "223cc93e1315b554e29878c58c461f0f3912f7d2924add8c4374b4dcca7998cf",
+      "bytes": 21024,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/verification-questions.md",
+      "sha256": "99adf649dd1eef018f36bfe186b209b615a64257c6a380bef644cc41f50e9b01",
+      "bytes": 562,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/revealed-plan.md",
+      "sha256": "dee05cfa57badf5d2fa98859d53ea2f9e04c5c2fd2fc38b41913dda5b4205193",
+      "bytes": 565,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/plan-reveal.json",
+      "sha256": "7f2fdc5acf33b526e1ceb43986a9793d818565857ed7726d334af34c2424e989",
+      "bytes": 276,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/assignment.md",
+      "sha256": "89c416142537544bdcd8b0df6d5239b81baec35b52b194a4600a3314278a77fe",
+      "bytes": 4108,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/input-map.json",
+      "sha256": "16e88cf80f61ff7e1237215b0fa4d9d7d9e515666288fd60043a8740c1d6ed50",
+      "bytes": 682,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier/source-map.json",
+      "sha256": "c2f715e2ed17eb25a2e617bf6f471f88e8e6b87a16332a09636bfcb58fd4ab16",
+      "bytes": 14940,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier/verification.md",
+      "sha256": "437029bfd8b7844c0e723a60865d65be1654d2ef630012a241ad646f23d7f74d",
+      "bytes": 16146,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier/assignment.md",
+      "sha256": "e845fcd467905e2e6cac29534740a4c353afe15a635aae65132f0ba351d3fec2",
+      "bytes": 3420,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier/input-map.json",
+      "sha256": "07bf389c573695bf99685f797cb500d4de17e271d5664f09fda163fdd728a6d2",
+      "bytes": 919,
+      "role": "explicit input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/sources/index.md",
+      "sha256": "559de5e9f6e64cfc48ae4abc2b8bfb72dfd35c91108ee5b059b8d39ad6d0980c",
+      "bytes": 15569,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/critic/sources/index.md",
+      "sha256": "d6603f7f2154b16ee215bd1192aaad2bc324a0753dc337713f8e10c385658e4d",
+      "bytes": 9163,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/sources/index.md",
+      "sha256": "d74f2110e47ed0572ec17981dafebd58c738ef478c8db14964e4c2a1e3751d7d",
+      "bytes": 16036,
+      "role": "permitted source-root supporting evidence"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier/sources/index.md",
+      "sha256": "306c9049d5deac1683e922eeecab824c9b78de0c0833b4db2b5035bc76d1ecad",
+      "bytes": 9115,
+      "role": "permitted source-root supporting evidence"
+    }
+  ],
+  "input_integrity": "All 36 input-map file byte lengths and SHA-256 values match; additional authorized source-root files and brief/plan/rubric/assignment/map are separately hashed. Integrity is scope/provenance, not a scientific grade.",
+  "arms": {
+    "N2": {
+      "actual_arm": "control",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "final_artifact": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/reviser/final.md",
+      "grade": "FAIL",
+      "grade_basis": [
+        "N2-M1"
+      ],
+      "material_findings": [
+        {
+          "id": "N2-M1",
+          "type": "MATERIALLY_INCOMPLETE",
+          "severity": "material",
+          "title": "Public retention default is left out of the annual-export assessment",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/reviser/final.md",
+            "lines": [
+              42,
+              69,
+              89,
+              118,
+              123
+            ],
+            "passages": [
+              {
+                "line": 42,
+                "text": "Skedda is a general hosted scheduler with documented visibility controls. With private access, tenants log in; booking access can be tag-limited. If no content-visibility rules are set, regular users see other bookings as date/time/space, while system users see holders, titles, and custom fields [SK-02]. Custom booking fields can be required, conditional, holder-visible or admin-only; the documented fields are collected at booking creation and can surface in emails, exports, printouts, popovers, searches, scheduler views, and integrations [SK-03]. A required field at booking time is not a post-use signoff or an append-only correction history. System users can filter and export booking rows to XLSX/CSV, but the cited help does not give ordinary users the equivalent report/export filters or prove an individual tenant's year-end export of later handoff records [SK-04]."
+              },
+              {
+                "line": 69,
+                "text": "- **Skedda confidentiality/export:** private login and tagged booking access can limit who books; default regular-user visibility without content rules still reveals date/time/space, and system users see detailed booking fields [SK-02]. Booking fields can have broad propagation surfaces [SK-03]. Do not make tenants system users by accident or treat hidden UI as authorization. System-user CSV/XLSX export is not tenant self-export proof [SK-04]."
+              },
+              {
+                "line": 89,
+                "text": "6. **Export and record control:** define contents, timezone, format, requester, retention/deletion, and paper-to-digital relationship. Require each tenant's own year-end records; do not rely only on manager exports."
+              },
+              {
+                "line": 118,
+                "text": "6. Export one tenant's simulated year and compare its own bookings, equipment and signoffs, timestamps/timezone, amendments and cancelled states, encoding, and cross-tenant exclusion. Tenant-owned year-end export is required. Attachments, restore/round-trip, and deleted-state behavior are optional portability investigations unless the kitchen adopts them as requirements."
+              },
+              {
+                "line": 123,
+                "text": "11. Obtain written quotes and decide the budget horizon, payment-fee base, hardware, implementation, onboarding, tax, support, hosting, retention and contingency. For self-hosted trials, confirm current release/advisory, supported stack, tenant access, named patch/backup owner, and recovery plan."
+              }
+            ]
+          },
+          "original_obligation": "O2 governing defaults/limits for selected mechanisms; O5 retain consequential conditions; original brief requires each tenant’s own year-end records.",
+          "primary_evidence": [
+            {
+              "source_id": "E19",
+              "url": "https://support.skedda.com/en/articles/5707504-booking-and-visit-data-retention",
+              "version_or_page_date": "2025-03-04",
+              "locator": "Data retention period setting / recurrence / export FAQ, lines 25–42"
+            },
+            {
+              "source_id": "E18",
+              "url": "https://support.skedda.com/en/articles/105786-export-or-print-booking-data",
+              "version_or_page_date": "2026-09-08",
+              "locator": "List-view export / FAQ"
+            }
+          ],
+          "reasoning": "The final retains Skedda as a scheduler alternative and treats its export uncertainty chiefly as role and record-scope questions. Retention is left as a future definition/quote item. Its published automatic-deletion default and retention-plan interaction are available primary research, not an unknowable kitchen input. Those facts change whether a full annual record remains available when export is delivered and whether a retention configuration can prevent future bookings. A simulated-year export without the time/deletion boundary can pass while missing that risk. This is a concrete O2 omission linked to the requested outcome, not a demand for a production guarantee, a finding that Skedda cannot work, or proof that every year-end export necessarily loses records. Generic future retention work does not discharge research into the published default.",
+          "independently_checked_primary_fact": "New Skedda accounts default to one-year booking/visit retention with periodic automatic deletion. Changing plan does not reset the setting; an unsupported extended period prevents new bookings. The documented external-export option requires a retention/export strategy."
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N2-m1",
+          "type": "research_gap_and_preservation",
+          "severity": "minor",
+          "title": "The buffer fixture unit is unnecessarily left unresolved",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/reviser/final.md",
+            "lines": [
+              50,
+              76
+            ],
+            "passages": [
+              {
+                "line": 50,
+                "text": "For P1, the guide says resources cannot be double-booked by default. Concurrent reservations can be enabled at schedule level, but that applies to every resource on that schedule and removes Schedule View. The guide also reports no default maximum capacity, no default minimum/maximum duration, approval off, new-user resource access on, and administrator exemption from usage constraints. An administrator may therefore bypass ordinary limits. These are configuration starting points, not a tenant privacy design or a universal rule that each kitchen resource must be exclusive [LB-01; RV-03]. Configure space and equipment capacity separately where needed and test administrator behavior. The guide describes buffer time as a minimum separation but does not give its units or direction in the cited section. Do not implement a production rule from that incomplete description."
+              },
+              {
+                "line": 76,
+                "text": "LibreBooking issue #1008, opened 2026-02-14, reported recursive BufferItem::Id() behavior that could cause a stack overflow. PR #1140 merged on 2026-03-13; fix commit b1394612e9e5311d0b6662cffa8e2e528667d6c3 delegates ID construction to the wrapped reservation item and adds before/after ID assertions. Merge commit 4bc0cf5dd17b5cbacae2fd4540800f04ea371c1e includes the fix; v4.3.0 release notes dated 2026-04-03 list it. Pinned v7.0.0 code retains the wrapped-item delegation [LB-03]. The v7.0.0 regression test calls WithBufferTime(3600) and asserts generated begin/end IDs. The inspected excerpt does not state the unit; do not reinterpret 3600 as seconds [LB-05]."
+              }
+            ]
+          },
+          "original_obligation": "O2 governing units/types; O5 supported discovery and criticism adjudication.",
+          "primary_evidence": [
+            {
+              "source_id": "E45",
+              "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/tests/Application/Schedule/ReservationListingTest.php",
+              "version_or_page_date": "v7.0.0 immutable commit",
+              "locator": "testBufferItemIdUsesWrappedReservationId, lines 153–164"
+            },
+            {
+              "source_id": "E46",
+              "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/Domain/ReservationItemView.php",
+              "version_or_page_date": "v7.0.0 immutable commit",
+              "locator": "WithBufferTime lines 809–815; GetBufferTime 853–855; BufferedTimes 861–871"
+            },
+            {
+              "source_id": "E47",
+              "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/lib/Common/TimeInterval.php",
+              "version_or_page_date": "v7.0.0 immutable commit",
+              "locator": "constructor lines 11–18; Parse lines 24–43"
+            }
+          ],
+          "reasoning": "The test excerpt alone does not spell out the unit, so the narrow statement about that excerpt is accurate. The governing method and integer interval parser at the same release do resolve it. The post-critic retreat from the discovery’s seconds description reflects incomplete tracing rather than contrary evidence. The method also establishes before/after direction at the domain level. This is an avoidable source-research gap, not a demonstrated wrong implementation: no production buffer parameter is selected, no UI unit is inferred, and the ID test is correctly limited to its purpose."
+        },
+        {
+          "id": "N2-m2",
+          "type": "provenance_wording",
+          "severity": "minor",
+          "title": "PR head is labeled a merge commit",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/reviser/final.md",
+            "lines": [
+              76
+            ],
+            "passages": [
+              {
+                "line": 76,
+                "text": "LibreBooking issue #1008, opened 2026-02-14, reported recursive BufferItem::Id() behavior that could cause a stack overflow. PR #1140 merged on 2026-03-13; fix commit b1394612e9e5311d0b6662cffa8e2e528667d6c3 delegates ID construction to the wrapped reservation item and adds before/after ID assertions. Merge commit 4bc0cf5dd17b5cbacae2fd4540800f04ea371c1e includes the fix; v4.3.0 release notes dated 2026-04-03 list it. Pinned v7.0.0 code retains the wrapped-item delegation [LB-03]. The v7.0.0 regression test calls WithBufferTime(3600) and asserts generated begin/end IDs. The inspected excerpt does not state the unit; do not reinterpret 3600 as seconds [LB-05]."
+              }
+            ]
+          },
+          "original_obligation": "O3 accurate issue/fix/release chain.",
+          "primary_evidence": [
+            {
+              "source_id": "E41",
+              "url": "https://github.com/LibreBooking/librebooking/pull/1140",
+              "version_or_page_date": "merged 2026-03-13T05:35:59Z",
+              "locator": "PR and https://api.github.com/repos/LibreBooking/librebooking/pulls/1140"
+            },
+            {
+              "source_id": "E42",
+              "url": "https://github.com/LibreBooking/librebooking/commit/b1394612e9e5311d0b6662cffa8e2e528667d6c3",
+              "version_or_page_date": "b1394612e9e5311d0b6662cffa8e2e528667d6c3; head 4bc0cf5dd17b5cbacae2fd4540800f04ea371c1e",
+              "locator": "REST commits endpoint for both SHAs / BufferItem::Id"
+            },
+            {
+              "source_id": "E43",
+              "url": "https://github.com/LibreBooking/librebooking/releases/tag/v4.3.0",
+              "version_or_page_date": "2026-04-03; displayed b29842c",
+              "locator": "Release notes buffer-ID recursion fix"
+            }
+          ],
+          "reasoning": "The GitHub PR API names b1394612 as merge_commit_sha and 4bc0cf5 as the head. Both contain the relevant change, and the release/pinned-code chain remains independently supported. The wrong merge label is a provenance error rather than an invalidation of O3."
+        },
+        {
+          "id": "N2-m3",
+          "type": "mechanism_qualification",
+          "severity": "minor",
+          "title": "Symmetric buffer summary omits permitted overlap between buffers",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/reviser/final.md",
+            "lines": [
+              44,
+              68
+            ],
+            "passages": [
+              {
+                "line": 44,
+                "text": "The buffer model is consequential: it derives duration from configured time granularity with a documented 15-minute minimum; conflicting rules resolve to the maximum; rules affect only later-created bookings; and equal time is reserved before and after the booking. Ordinary users cannot book into the buffer, while system users can override it [SK-01]. This may fit only if the kitchen chooses a symmetric gap and accepts its capacity effects. It fits poorly if setup and cleanup are one-sided or equipment-specific. A separate tenant-owned log must independently establish per-use signoff, tenant access isolation, correction behavior and year-end export. This path offers documented schedule-visibility controls at the cost of another workflow, identity boundary, integration, and export to validate."
+              },
+              {
+                "line": 68,
+                "text": "- **Skedda buffers:** per-space rules derive from configured granularity; 15 minutes is the documented minimum; only new bookings receive a newly configured rule; maximum conflicting rule wins; the interval is symmetric; ordinary users are blocked but system users can override [SK-01]. This mechanism is not an automatic fit for asymmetric or equipment-specific setup/cleanup."
+              }
+            ]
+          },
+          "original_obligation": "O2 limits of a selected buffer mechanism; original setup/cleanup access collisions.",
+          "primary_evidence": [
+            {
+              "source_id": "E15",
+              "url": "https://support.skedda.com/en/articles/3653032-buffer-time",
+              "version_or_page_date": "2025-03-04",
+              "locator": "Rules and FAQ, lines 19–52"
+            }
+          ],
+          "reasoning": "The documented symmetry, granularity, rule conflict and elevated-role exceptions are retained accurately. Buffer-to-buffer overlap is a further relevant limit: treating two padding periods as exclusive occupied resources would overstate that mechanism. The final proposes independent resource/phase tests and does not explicitly assert exclusive buffer ownership, so this omission is recorded below the material threshold."
+        }
+      ],
+      "unresolved": [
+        "Budget horizon, currency/locale quote, fees/payment volumes and implementation/support scope.",
+        "Actual vendor tenant-private signoff workflow, record completeness, role visibility and safely delivered annual archive.",
+        "Runtime confirmation/atomicity, edit and administrator behavior in the chosen product and configuration.",
+        "Actual wet-hand device and named screen-reader/browser task performance.",
+        "Board policy for missing-signoff restrictions, authority, procedures, occupancy visibility and accepted optional record fields.",
+        "Operational paper/digital authority and reconciliation workflow.",
+        "LibreBooking future advisory details and operational self-hosting/security ownership."
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "complete for the frozen artifact pair and consequential published claims within the original small-brief scope",
+          "judgment": "material O2 omission; other original outcomes retained",
+          "evidence": {
+            "candidate_final_lines": [
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              24,
+              60,
+              95,
+              113,
+              118
+            ],
+            "primary_source_ids": [
+              "E01",
+              "E03",
+              "E04",
+              "E15",
+              "E19",
+              "E27",
+              "E37"
+            ],
+            "assessment": "Checked O1–O6 and every explicit constraint. The final keeps twenty businesses, three coordinators, six pilot tenants, the budget ambiguity, resource access phases, allergen/tenant-safety boundary, named privacy fields, wet tablet, screen-reader administration, internet/paper transition, annual tenant records and unresolved board choices. Batch handoffs survive as private optional references without requiring sensitive business details. N2-M1 concerns available research relevant to the annual record requirement; this is not an absent final or a broad failure to preserve the brief."
+          }
+        },
+        {
+          "axis": 2,
+          "coverage": "complete for the frozen artifact pair and consequential published claims within the original small-brief scope",
+          "judgment": "FAIL: N2-M1",
+          "evidence": {
+            "candidate_final_lines": [
+              28,
+              30,
+              32,
+              34,
+              36,
+              42,
+              44,
+              50,
+              52,
+              54,
+              64,
+              68,
+              69,
+              76
+            ],
+            "primary_source_ids": [
+              "E01",
+              "E02",
+              "E03",
+              "E04",
+              "E05",
+              "E06",
+              "E07",
+              "E08",
+              "E15",
+              "E16",
+              "E17",
+              "E18",
+              "E19",
+              "E27",
+              "E37",
+              "E38",
+              "E39",
+              "E44",
+              "E45",
+              "E46",
+              "E47"
+            ],
+            "assessment": "Independently checked the selected kitchen SaaS, hosted scheduler and LibreBooking facts, prices, defaults, feature distinctions, administrator exceptions, units, release and security applicability. Most are bounded accurately: checklist/attendance/booking field are not a per-use signoff; manager reports do not prove a full tenant archive; potential profile exposure is not a proved breach; the pending advisory is not a known v7 exposure. The public retention condition is omitted. Pinned code resolves the secondary unit gap. Product fit and configuration results remain genuine unresolved demo/quote matters rather than false negatives."
+          }
+        },
+        {
+          "axis": 3,
+          "coverage": "complete for the frozen artifact pair and consequential published claims within the original small-brief scope",
+          "judgment": "useful discovery demonstrated",
+          "evidence": {
+            "candidate_final_lines": [
+              26,
+              28,
+              38,
+              40,
+              46,
+              58,
+              60,
+              95
+            ],
+            "primary_source_ids": [
+              "E01",
+              "E03",
+              "E05",
+              "E15",
+              "E17",
+              "E37",
+              "E39"
+            ],
+            "assessment": "Food Corridor is a kitchen-domain suite; Skedda plus a separate tenant-owned record is a different hosted composition; LibreBooking introduces self-hosting and patch/backup ownership; a small custom path is conditional on an owned estimate. The record/export link and optional private batch pointer address handoff without requiring recipes. Tradeoffs and uncertainty survive. No grade is assigned by tool, source or prose counts."
+          }
+        },
+        {
+          "axis": 4,
+          "coverage": "complete for the frozen artifact pair and consequential published claims within the original small-brief scope",
+          "judgment": "all P1–P6 dispositions examined; no material false rejection",
+          "evidence": {
+            "candidate_final_lines": [
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              20
+            ],
+            "primary_source_ids": [
+              "E03",
+              "E04",
+              "E05",
+              "E15",
+              "E27",
+              "E37"
+            ],
+            "assessment": "Exact clauses are preserved in the table. P1’s correction is an acceptance elaboration from the collision goal, not evidence that the plan omitted phases. P2’s named scope is already covered; additional surfaces and occupancy are options/questions. P3’s per-use tenant-defined linkage and archive scope are distinguished from optional fields. P4 elaborates both accessibility environments and paper provenance. P5 and P6 stay board decisions with real alternatives. No P clause is rejected; rejecting central safety authority or silent sanctions does not reject the plan. The P1 correction label is broader than the literal wording warrants but its prose makes the meaning clear."
+          }
+        },
+        {
+          "axis": 5,
+          "coverage": "complete for the frozen artifact pair and consequential published claims within the original small-brief scope",
+          "judgment": "substantive preservation succeeds with bounded unit-tracing loss",
+          "evidence": {
+            "candidate_final_lines": [
+              127,
+              133,
+              134,
+              135,
+              136,
+              137,
+              138,
+              139,
+              140,
+              141,
+              142,
+              143,
+              144,
+              150,
+              151,
+              152,
+              153,
+              154,
+              155,
+              156
+            ],
+            "primary_source_ids": [
+              "E02",
+              "E04",
+              "E15",
+              "E37",
+              "E41",
+              "E44",
+              "E45",
+              "E46",
+              "E47"
+            ],
+            "assessment": "Read full discovery, draft, first critique and fresh critic against the final. Product alternatives, conditional costs, private handoff pointer, billing-versus-occupancy distinction, role/privacy caveats, two P5/P6 branches, paper timing and validation status survive as prose. The critic’s narrowing of mandatory record extras is legitimate; broader fields remain proposed rather than deleted. Profile fields and exclusive/concurrent defaults are supported additions, not proof of a breach or universal exclusivity. The post-critic unit retraction is not supported by the governing code trace (N2-m1). Timestamp reform is metadata qualification, not scientific proof."
+          }
+        },
+        {
+          "axis": 6,
+          "coverage": "complete for the frozen artifact pair and consequential published claims within the original small-brief scope",
+          "judgment": "meaningful proposals; no validation overclaim",
+          "evidence": {
+            "candidate_final_lines": [
+              7,
+              109,
+              111,
+              113,
+              114,
+              115,
+              116,
+              117,
+              118,
+              119,
+              120,
+              121,
+              122,
+              123
+            ],
+            "primary_source_ids": [
+              "E03",
+              "E15",
+              "E18",
+              "E19",
+              "E27",
+              "E37",
+              "E45"
+            ],
+            "assessment": "Concurrent exclusive-versus-capacity allocation, edits/DST/rule changes/overrides, tenant-A/B channels, two equipment procedures, annual record comparison, each board alternative, actual wet-tablet versus screen-reader tasks and paper idempotence have discriminating outcomes. Only document inspection and hashing are claimed executed. No runtime test or independent executable oracle ran; none is called passed. The missing retention-boundary specificity relates to N2-M1, without turning proposed export tests into executed proof."
+          }
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "source_id": "E01",
+            "claim": "The Food Corridor product overview — Kitchen-management and scheduling sections",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E01].checked_fact"
+          },
+          {
+            "source_id": "E02",
+            "claim": "The Food Corridor signup plan selector — Select Your Plan / All Plans Include, lines 34–101",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E02].checked_fact"
+          },
+          {
+            "source_id": "E03",
+            "claim": "The Food Corridor equipment reservation help — Steps 1–9",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E03].checked_fact"
+          },
+          {
+            "source_id": "E04",
+            "claim": "The Food Corridor food-business account — Calendars / Reporting / Community / Business Profile",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E04].checked_fact"
+          },
+          {
+            "source_id": "E05",
+            "claim": "The Food Corridor onboarding checklist uses — Ensure Kitchen Hygiene",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E05].checked_fact"
+          },
+          {
+            "source_id": "E06",
+            "claim": "The Food Corridor booking approval — Submitted Bookings / Individual Calendars / Auto Approve",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E06].checked_fact"
+          },
+          {
+            "source_id": "E07",
+            "claim": "The Food Corridor reporting — CSV filtering / All Bookings, lines 49–72",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E07].checked_fact"
+          },
+          {
+            "source_id": "E08",
+            "claim": "The Food Corridor tenant digital sign-in/out — PIN and cleanliness/equipment concern notes",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E08].checked_fact"
+          },
+          {
+            "source_id": "E15",
+            "claim": "Skedda buffer time — Rules and FAQ, lines 19–52",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E15].checked_fact"
+          },
+          {
+            "source_id": "E16",
+            "claim": "Skedda access and visibility — Venue access / content visibility",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E16].checked_fact"
+          },
+          {
+            "source_id": "E17",
+            "claim": "Skedda custom fields — Field collection / propagation / inclusion",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E17].checked_fact"
+          },
+          {
+            "source_id": "E18",
+            "claim": "Skedda exports — List-view export / FAQ",
+            "status": "independently checked; see findings for candidate mismatch",
+            "checked_assertion_ref": "source-map.json primary_sources[E18].checked_fact"
+          },
+          {
+            "source_id": "E19",
+            "claim": "Skedda booking/visit retention — Data retention period setting / recurrence / export FAQ, lines 25–42",
+            "status": "independently checked; see findings for candidate mismatch",
+            "checked_assertion_ref": "source-map.json primary_sources[E19].checked_fact"
+          },
+          {
+            "source_id": "E27",
+            "claim": "WCAG 2.2 Recommendation — SC 2.1.1, 2.5.7, 2.5.8, 4.1.2, 4.1.3",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E27].checked_fact"
+          },
+          {
+            "source_id": "E37",
+            "claim": "LibreBooking administration — Schedule and Resource Configuration / Public Access",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E37].checked_fact"
+          },
+          {
+            "source_id": "E38",
+            "claim": "LibreBooking v7 release — Release/tag identity",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E38].checked_fact"
+          },
+          {
+            "source_id": "E39",
+            "claim": "LibreBooking mutable README — Security notices / Manual Installation",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E39].checked_fact"
+          },
+          {
+            "source_id": "E40",
+            "claim": "LibreBooking issue 1008 — BufferItem::Id recursion report",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E40].checked_fact"
+          },
+          {
+            "source_id": "E41",
+            "claim": "LibreBooking PR 1140 — PR and https://api.github.com/repos/LibreBooking/librebooking/pulls/1140",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E41].checked_fact"
+          },
+          {
+            "source_id": "E42",
+            "claim": "LibreBooking fix and head commits — REST commits endpoint for both SHAs / BufferItem::Id",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E42].checked_fact"
+          },
+          {
+            "source_id": "E43",
+            "claim": "LibreBooking v4.3 release — Release notes buffer-ID recursion fix",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E43].checked_fact"
+          },
+          {
+            "source_id": "E44",
+            "claim": "LibreBooking pinned reservation list item — BufferItem::Id lines 377–379; buffer constructors 337–342",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E44].checked_fact"
+          },
+          {
+            "source_id": "E45",
+            "claim": "LibreBooking pinned regression source — testBufferItemIdUsesWrappedReservationId, lines 153–164",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E45].checked_fact"
+          },
+          {
+            "source_id": "E46",
+            "claim": "LibreBooking governing buffer argument — WithBufferTime lines 809–815; GetBufferTime 853–855; BufferedTimes 861–871",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E46].checked_fact"
+          },
+          {
+            "source_id": "E47",
+            "claim": "LibreBooking interval implementation — constructor lines 11–18; Parse lines 24–43",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E47].checked_fact"
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "definition": "Complete coverage of consequential asserted published mechanisms and applicability conclusions within the original bounded brief, including independently detecting available-source omissions. This does not mean every possible tool/feature was researched or unresolved product acceptance was executed."
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "stages": [
+          "discovery",
+          "draft",
+          "research critique",
+          "independent critic",
+          "reviser final"
+        ],
+        "criticism_adjudications": [
+          {
+            "criticism": "research 1",
+            "adjudication": "accept scoped enhancement",
+            "reason": "Optional private batch/handoff reference preserves the opening handoff goal without sensitive shared production records.",
+            "final_lines": [
+              15,
+              60,
+              133
+            ],
+            "primary_source_ids": [
+              "E03",
+              "E04"
+            ]
+          },
+          {
+            "criticism": "research 2",
+            "adjudication": "accept scope boundary",
+            "reason": "Minimization protects shared surfaces; final also clarifies that tenant-private business records are not forbidden.",
+            "final_lines": [
+              14,
+              134
+            ],
+            "primary_source_ids": [
+              "E04",
+              "E16"
+            ]
+          },
+          {
+            "criticism": "research 3",
+            "adjudication": "accept",
+            "reason": "Resource occupancy is distinct from production/billing; half-open intervals and ownership remain proposals/decisions.",
+            "final_lines": [
+              13,
+              135
+            ],
+            "primary_source_ids": [
+              "E03",
+              "E15"
+            ]
+          },
+          {
+            "criticism": "research 4",
+            "adjudication": "accept",
+            "reason": "Demo lead is not product selection; list-rate arithmetic is not invoice, budget fit or a full quote.",
+            "final_lines": [
+              32,
+              38,
+              72,
+              136
+            ],
+            "primary_source_ids": [
+              "E02"
+            ]
+          },
+          {
+            "criticism": "research 5",
+            "adjudication": "accept qualification",
+            "reason": "Profile/calendar/Community are potential surfaces; the docs do not prove a breach of named fields.",
+            "final_lines": [
+              36,
+              69,
+              137
+            ],
+            "primary_source_ids": [
+              "E04",
+              "E16"
+            ]
+          },
+          {
+            "criticism": "research 6",
+            "adjudication": "accept",
+            "reason": "PIN attendance, monthly checklists and booking-time fields are not interchangeable with tenant per-use signoff.",
+            "final_lines": [
+              34,
+              42,
+              138
+            ],
+            "primary_source_ids": [
+              "E04",
+              "E05",
+              "E08",
+              "E17"
+            ]
+          },
+          {
+            "criticism": "research 7",
+            "adjudication": "accept metadata limitation",
+            "reason": "Observation brackets are distinguished from server timestamps; unavailable original timing remains unknown. Does not validate scientific behavior.",
+            "final_lines": [
+              139
+            ],
+            "primary_source_ids": []
+          },
+          {
+            "criticism": "research 8",
+            "adjudication": "accept scope; minor provenance error remains",
+            "reason": "Buffer-ID fix is narrow; future undisclosed advisory does not prove v7 affected. Wrong merge label is N2-m2.",
+            "final_lines": [
+              54,
+              76,
+              78,
+              140
+            ],
+            "primary_source_ids": [
+              "E39",
+              "E40",
+              "E41",
+              "E42",
+              "E43",
+              "E44"
+            ]
+          },
+          {
+            "criticism": "research 9",
+            "adjudication": "accept",
+            "reason": "WCAG target reference does not prove wet-hand operation or screen-reader completion.",
+            "final_lines": [
+              16,
+              121,
+              141
+            ],
+            "primary_source_ids": [
+              "E27"
+            ]
+          },
+          {
+            "criticism": "research 10",
+            "adjudication": "accept",
+            "reason": "Original paper time and later digital time remain different; paper transition is not claimed offline product support.",
+            "final_lines": [
+              122,
+              142
+            ],
+            "primary_source_ids": []
+          },
+          {
+            "criticism": "research 11",
+            "adjudication": "accept",
+            "reason": "Approval features do not decide missing-signoff sanctions; P5/P6 remain open.",
+            "final_lines": [
+              17,
+              18,
+              143
+            ],
+            "primary_source_ids": [
+              "E06"
+            ]
+          },
+          {
+            "criticism": "research 12",
+            "adjudication": "accept",
+            "reason": "No runtime/human/export/accessibility result is invented.",
+            "final_lines": [
+              109,
+              144
+            ],
+            "primary_source_ids": []
+          },
+          {
+            "criticism": "post-critic units",
+            "adjudication": "partially reject the inference",
+            "reason": "The isolated excerpt lacks a unit label, but governing pinned code supports seconds. Deferral fails to trace the method; record as N2-m1.",
+            "final_lines": [
+              50,
+              76
+            ],
+            "primary_source_ids": [
+              "E45",
+              "E46",
+              "E47"
+            ]
+          },
+          {
+            "criticism": "critic M1",
+            "adjudication": "accept narrowing, not a demand to remove useful design",
+            "reason": "Required case scope is tenant-defined per-use record and own annual records; richer metadata, attachments and restore may be options. These remain available in final prose.",
+            "final_lines": [
+              15,
+              117,
+              118,
+              150
+            ],
+            "primary_source_ids": [
+              "E03",
+              "E05"
+            ]
+          },
+          {
+            "criticism": "critic M2",
+            "adjudication": "accept factual addition; do not adopt inflated severity",
+            "reason": "Known profile fields sharpen a pre-existing privacy gate. Their omission alone was not proof of a named-field leak or an independent product failure.",
+            "final_lines": [
+              36,
+              116,
+              151
+            ],
+            "primary_source_ids": [
+              "E04"
+            ]
+          },
+          {
+            "criticism": "critic M3",
+            "adjudication": "accept",
+            "reason": "Exclusive default plus schedule-wide concurrency and lost Schedule View are documented and useful. Administrator usage exemptions do not establish bypass of every double-book constraint.",
+            "final_lines": [
+              50,
+              152
+            ],
+            "primary_source_ids": [
+              "E37"
+            ]
+          },
+          {
+            "criticism": "critic minor 1",
+            "adjudication": "accept",
+            "reason": "Twelve-month arithmetic and first-month promotion are separate from an invoice.",
+            "final_lines": [
+              32,
+              153
+            ],
+            "primary_source_ids": [
+              "E02"
+            ]
+          },
+          {
+            "criticism": "critic minor 2",
+            "adjudication": "accept",
+            "reason": "Public URLs are available to copy, not necessarily automatically broadcast.",
+            "final_lines": [
+              52,
+              154
+            ],
+            "primary_source_ids": [
+              "E37"
+            ]
+          },
+          {
+            "criticism": "critic minor 3",
+            "adjudication": "accept",
+            "reason": "One successful booking is the exclusive-resource oracle; capacity-limited resources need a different declared-policy oracle.",
+            "final_lines": [
+              113,
+              155
+            ],
+            "primary_source_ids": [
+              "E37"
+            ]
+          },
+          {
+            "criticism": "critic minor 4",
+            "adjudication": "accept",
+            "reason": "Restore is optional portability work beyond required tenant year-end export.",
+            "final_lines": [
+              118,
+              156
+            ],
+            "primary_source_ids": [
+              "E18"
+            ]
+          }
+        ],
+        "remaining_review_scope": [],
+        "bounded_losses": [
+          "N2-m1"
+        ]
+      },
+      "grade_limits": [
+        "FAIL identifies this arm’s own material defect; it is not an absence of useful discovery or a finding that all proposals are invalid.",
+        "Product demonstrations, code/database witnesses and human acceptance sessions are outside executed evidence and explicitly proposed.",
+        "Unknown delivery/native/billing is not graded as false or zero.",
+        "A full scientific review is not proof of deployability, legal compliance or food-safety effectiveness."
+      ]
+    },
+    "N1": {
+      "actual_arm": "treatment",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "final_artifact": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/final.md",
+      "grade": "FAIL",
+      "grade_basis": [
+        "N1-M1"
+      ],
+      "material_findings": [
+        {
+          "id": "N1-M1",
+          "type": "MATERIALLY_WRONG",
+          "severity": "material",
+          "title": "Skedda price is assigned the wrong unit",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/final.md",
+            "lines": [
+              45
+            ],
+            "passages": [
+              {
+                "line": 45,
+                "text": "Skedda's public pricing is regional and priced by spaces, with feature and retention differences by product/plan; the current U.S./Canada page shows pricing beginning at $249 per month per space, billed annually. A final worksheet should compare all candidates on the same horizon and count rooms and equipment resources explicitly. [R19]"
+              }
+            ]
+          },
+          "original_obligation": "O2 units/limits and consequential primary facts; O5 coherent conditions; original $21,000 constraint and resource-count procurement comparison.",
+          "primary_evidence": [
+            {
+              "source_id": "E22",
+              "url": "https://www.skedda.com/pricing",
+              "version_or_page_date": "mutable pricing observed 2026-10-09",
+              "locator": "United States & Canada, Plus/Premier, lines 8–57"
+            },
+            {
+              "source_id": "E23",
+              "url": "https://www.skedda.com/insights/best-archie-alternatives",
+              "version_or_page_date": "mutable vendor publication observed 2026-10-09",
+              "locator": "Featured Skedda pricing, line 97"
+            }
+          ],
+          "reasoning": "The candidate assigns the displayed starting price to each individual space. The pricing card includes a bundle of spaces, and a separate vendor description corroborates that bundle. A price that scales with space count is not the same as multiplying the displayed plan starting amount by every room/equipment resource. That changes the cost basis of the proposed worksheet substantially. Regional/product eligibility and a dated quote remain open; the final’s refusal to claim overall affordability is sound but does not make its stated pricing unit accurate. No total-price calculation or candidate repair is supplied here.",
+          "independently_checked_primary_fact": "The current US/Canada Plus card starts at $249/month billed annually and includes 35 spaces. The vendor’s separate comparison explicitly corroborates that bundle. Pricing by space count does not make the displayed plan starting amount $249 for each individual space."
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N1-m1",
+          "type": "ambiguous_mechanism_wording",
+          "severity": "minor",
+          "title": "One-hour buffer versus one-hour interbooking gap is unclear",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/final.md",
+            "lines": [
+              57
+            ],
+            "passages": [
+              {
+                "line": 57,
+                "text": "Skedda buffers are useful only where equal before/after gaps fit the operation. A one-hour symmetric gap represents 30 minutes before and 30 minutes after, not independent setup and cleanup durations. Existing bookings are not retroactively given the new rule. Coordinators/system users can bypass the buffer, so any exception should be governed and auditable. [R02–R03]"
+              }
+            ]
+          },
+          "original_obligation": "O2 accurate mechanism units/semantics; original setup/cleanup access window.",
+          "primary_evidence": [
+            {
+              "source_id": "E15",
+              "url": "https://support.skedda.com/en/articles/3653032-buffer-time",
+              "version_or_page_date": "2025-03-04",
+              "locator": "Rules and FAQ, lines 19–52"
+            }
+          ],
+          "reasoning": "The phrase can describe an operational gap split between adjacent tenants, but is misleading if read as Skedda’s configured buffer value. The primary guide distinguishes equal padding and overlapping buffers. The final does not choose a numeric production setting and does require asymmetric-phase tests, so the interpretation ambiguity is a minor defect rather than a second material falsehood."
+        },
+        {
+          "id": "N1-m2",
+          "type": "scope_consistency",
+          "severity": "minor",
+          "title": "Optional signer/provenance elaboration becomes core acceptance in the adjudication",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/final.md",
+            "lines": [
+              21,
+              107
+            ],
+            "passages": [
+              {
+                "line": 21,
+                "text": "| **P3:** “Record equipment-use and cleaning signoffs using tenant-defined procedures.” | **Retain; intent is covered. Optional record-structure and identity elaboration.** | A minimal record may link tenant, booking/access interval, equipment, individual signer, attestation time, and optional tenant-owned procedure/revision reference. If staff transcribe paper, record the attestation time separately from the later entry time, identify the transcriber and source sheet, and retain a correction trail. A client-account PIN or cleanliness concern note is not proof of which person attested that cleaning was completed. “Signoff submitted,” missing/late/disputed/corrected, equipment readiness, coordinator observation, and a food-safety conclusion are distinct states. Procedure metadata and a batch reference are optional, not a common procedure requirement. |"
+              },
+              {
+                "line": 107,
+                "text": "| **M3 — person-level signoff and paper transcription** | **Accept and promote to core P3 acceptance.** A four-digit client-account PIN and cleanliness issue note are not evidence of an identified individual cleaning attestation. If a coordinator enters paper later, retain the original attestation time and source separately from digital entry time, and preserve authorship/corrections. Optional procedure IDs remain optional. |"
+              }
+            ]
+          },
+          "original_obligation": "O4 distinguish optional enhancements from original requirements; O5 coherent final.",
+          "primary_evidence": [
+            {
+              "source_id": "E04",
+              "url": "https://help.thefoodcorridor.com/en/articles/1812934-what-does-a-food-business-account-look-like",
+              "version_or_page_date": "2023-06-07",
+              "locator": "Calendars / Reporting / Community / Business Profile"
+            },
+            {
+              "source_id": "E09",
+              "url": "https://help.thefoodcorridor.com/en/articles/1413890-what-is-digital-sign-in-sign-out",
+              "version_or_page_date": "2022-09-23",
+              "locator": "Client PIN / manager attendance editing / invoices"
+            }
+          ],
+          "reasoning": "The P3 table calls identity/record structure optional, while the criticism table promotes person-level identity/provenance to core acceptance. The source supports distinguishing an account PIN from an individual attestation; it does not prove the brief requires every proposed field or an immutable individual identity model. The distinctions remain useful and supported, but mandatory-versus-proposed status is internally inconsistent. No actual tenant procedure is replaced."
+        },
+        {
+          "id": "N1-m3",
+          "type": "PRESERVATION_LOSS",
+          "severity": "minor",
+          "title": "Specific farther-ahead approval view and accessibility scenario disappear",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/reviser/final.md",
+            "lines": [
+              22,
+              89,
+              133
+            ],
+            "passages": [
+              {
+                "line": 22,
+                "text": "| **P4:** “Support an accessible coordinator view and a transition period that can coexist with paper signoffs.” | **Retain; already covered at intent level, with measurable acceptance and an operating choice needed.** | Test the complete coordinator workflow using a named screen-reader/browser pair and keyboard, including booking lookup, status, approvals if used, conflict resolution, signoff review, filters, export, focus, errors, and status announcements. Test the actual entrance tablet separately for wet-hand operation, lighting, large targets, direct non-drag booking controls, session reset, and identity confirmation. If procurement chooses WCAG 2.2 AA as a web acceptance target, include SC 2.5.7's single-pointer alternative to nonessential dragging and SC 2.5.8's 24×24 CSS-pixel target baseline with its exceptions. Neither criterion proves screen-reader task completion or wet-hand usability. Before the pilot, an accountable operations owner must choose whether paper is authoritative with digital shadow/reconciliation, or digital becomes authoritative after a stated cutover with paper as outage fallback. Define duplicates, late entries, correction, outage recovery, retention of original sheets, and reconciliation ownership. |"
+              },
+              {
+                "line": 89,
+                "text": "Use scripted accessibility scenarios for booking search, status inspection, conflict handling, signoff review, approval, filters, export, form validation, focus movement, and status/error announcements. Name the tested screen-reader/browser/device configuration. For the entrance device, also test prior-session leakage, kiosk reset, identity confirmation, screen readability in kitchen lighting, and a direct create/select flow instead of mandatory dragging. Food Corridor's guide documents both a drag/drop booking route and a create control; neither means the accessible flow has passed. [research:S07]"
+              },
+              {
+                "line": 133,
+                "text": "5. **Accessibility and entrance device:** Name actual tablet/browser and coordinator screen-reader/browser pair. Complete the coordinator task flow using screen reader and keyboard, including errors/status/focus announcements and export. Independently test the entrance device with wet hands, representative lighting, target sizes, direct non-drag controls, kiosk reset, session privacy, and tenant identity confirmation. If WCAG 2.2 AA is selected, check both relevant pointer criteria as well."
+              }
+            ]
+          },
+          "original_obligation": "O5 retain useful supported conditions/options; O6 discriminating coordinator screen-reader validation.",
+          "primary_evidence": [
+            {
+              "source_id": "E06",
+              "url": "https://help.thefoodcorridor.com/en/articles/1413916-how-can-i-approve-bookings",
+              "version_or_page_date": "2023-03-28",
+              "locator": "Submitted Bookings / Individual Calendars / Auto Approve"
+            }
+          ],
+          "reasoning": "The mapped draft explicitly preserves Food Corridor’s different approval path beyond 30 days and tests that view (draft lines 93 and 105). The final retains generic approval and accessibility tasks, but drops this concrete branching condition. It matters to test coverage because successful work in the near-term queue need not demonstrate use of the other calendar view. The main accessible workflow requirement and alternative remain intact, so this is a bounded preservation loss rather than an independent material failure."
+        }
+      ],
+      "unresolved": [
+        "Budget horizon, currency/locale quote, fees/payment volumes and implementation/support scope.",
+        "Actual vendor tenant-private signoff workflow, record completeness, role visibility and safely delivered annual archive.",
+        "Runtime confirmation/atomicity, edit and administrator behavior in the chosen product and configuration.",
+        "Actual wet-hand device and named screen-reader/browser task performance.",
+        "Board policy for missing-signoff restrictions, authority, procedures, occupancy visibility and accepted optional record fields.",
+        "Operational paper/digital authority and reconciliation workflow.",
+        "Jurisdiction, sales channel, local Food Code adoption and exact regulatory role."
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "complete for the frozen artifact pair and consequential published claims within the original small-brief scope",
+          "judgment": "all original constraints retained; material O2 cost-unit error",
+          "evidence": {
+            "candidate_final_lines": [
+              3,
+              9,
+              11,
+              13,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              73,
+              77,
+              129,
+              130,
+              131,
+              132,
+              133,
+              134,
+              135
+            ],
+            "primary_source_ids": [
+              "E01",
+              "E03",
+              "E04",
+              "E15",
+              "E19",
+              "E27",
+              "E29",
+              "E30"
+            ],
+            "assessment": "Checked all O1–O6 and explicit case constraints. The final maintains counts and pilot, budget horizon uncertainty, independent room/equipment access intervals, private named tenant data, tenant procedure authority, allergen/safety limit, wet entrance device, full screen-reader workflow, internet/paper coexistence, tenant-specific annual records and undecided board policies. It does not require tenant self-service export or impose a common cleaning model. N1-M1 is a consequential incorrect price unit, not a failure to mention the budget."
+          }
+        },
+        {
+          "axis": 2,
+          "coverage": "complete for the frozen artifact pair and consequential published claims within the original small-brief scope",
+          "judgment": "FAIL: N1-M1",
+          "evidence": {
+            "candidate_final_lines": [
+              32,
+              33,
+              34,
+              36,
+              41,
+              43,
+              45,
+              47,
+              55,
+              57,
+              59,
+              65,
+              67,
+              75,
+              77,
+              83,
+              87
+            ],
+            "primary_source_ids": [
+              "E01",
+              "E02",
+              "E03",
+              "E04",
+              "E05",
+              "E06",
+              "E07",
+              "E08",
+              "E09",
+              "E10",
+              "E11",
+              "E12",
+              "E13",
+              "E14",
+              "E15",
+              "E16",
+              "E17",
+              "E18",
+              "E19",
+              "E20",
+              "E21",
+              "E22",
+              "E23",
+              "E25",
+              "E26",
+              "E27",
+              "E28",
+              "E29",
+              "E30",
+              "E31",
+              "E32",
+              "E33"
+            ],
+            "assessment": "Checked vendor plans, buffer/approval states and admin exceptions, retention/export/inactivity, local-display versus Euro billing, account identity, PostgreSQL 18 ranges and RLS, FullCalendar interaction defaults and FDA model/adoption/channel applicability. Its custom mechanism remains conditional and unexecuted. The pricing-unit finding is an independently sourced false statement. Product fit, actual accessibility, atomicity, signoff archive and local adoption remain honest external unknowns. The buffer phrase and record-scope inconsistency are lesser defects."
+          }
+        },
+        {
+          "axis": 3,
+          "coverage": "complete for the frozen artifact pair and consequential published claims within the original small-brief scope",
+          "judgment": "useful materially different discovery demonstrated",
+          "evidence": {
+            "candidate_final_lines": [
+              9,
+              29,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              53,
+              59,
+              67
+            ],
+            "primary_source_ids": [
+              "E01",
+              "E03",
+              "E15",
+              "E25",
+              "E26",
+              "E31",
+              "E32"
+            ],
+            "assessment": "Kitchen SaaS, coworking/shared-kitchen platform, general scheduler plus private log/archive, and custom transactional core offer meaningful choices beyond a thin interval/privacy checklist. Paper survives as transition/fallback, not a claimed collision-control product. PostgreSQL and device/identity/archive distinctions help evaluate those paths. Spacebring remains a lead with preparation-time, signoff and privacy uncertainties. Omission of a bounded coordinator-run pilot is a secondary option contraction, not a need to list every possible approach."
+          }
+        },
+        {
+          "axis": 4,
+          "coverage": "complete for the frozen artifact pair and consequential published claims within the original small-brief scope",
+          "judgment": "all P1–P6 dispositions examined; no material false correction",
+          "evidence": {
+            "candidate_final_lines": [
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              26
+            ],
+            "primary_source_ids": [
+              "E03",
+              "E04",
+              "E09",
+              "E15",
+              "E27",
+              "E31"
+            ],
+            "assessment": "P1 retains all phases and clarifies the original collision goal with resource model and confirmation state. P2 preserves named privacy scope while treating occupancy as separate. P3/P4 intent is already covered, with record identity, AT, wet-device and paper-operating choices elaborated. P5/P6 are explicit unresolved decisions, including no common-template option. No clause is rejected. Requiring board approval even for nonblocking reporting goes beyond literal P5 authority wording; this is conservative governance scope expansion, not an applied booking restriction or a source-backed reason to reject P5. P3 optional/core inconsistency is N1-m2."
+          }
+        },
+        {
+          "axis": 5,
+          "coverage": "complete for the frozen artifact pair and consequential published claims within the original small-brief scope",
+          "judgment": "full prose preservation with N1-m3 and coherent criticism reconciliation",
+          "evidence": {
+            "candidate_final_lines": [
+              75,
+              83,
+              95,
+              105,
+              106,
+              107,
+              108,
+              109,
+              110,
+              111,
+              112,
+              113,
+              114,
+              115,
+              119,
+              120,
+              121,
+              122,
+              123
+            ],
+            "primary_source_ids": [
+              "E06",
+              "E10",
+              "E11",
+              "E19",
+              "E20",
+              "E25",
+              "E27",
+              "E30",
+              "E31",
+              "E32",
+              "E34",
+              "E35",
+              "E36"
+            ],
+            "assessment": "Read full discovery/draft, ten major and seven minor critic items, three verification questions and the full verifier. Main options, caveats, same-horizon costs, paper-authority alternatives, confidentiality boundary, annual archive, resource/approval state, model-law distinction and narrow issue chain survive. Currency observations are reconciled using the vendor footnote instead of blindly treating the critic’s dollar display as contradiction. Inactive-access evidence stays separate from export and old null timestamps are not filled. Specific farther-ahead approval routing is lost. The mapped discovery differs from its reveal-record hash, limiting pre-reveal provenance; this is not a scientific quality score."
+          }
+        },
+        {
+          "axis": 6,
+          "coverage": "complete for the frozen artifact pair and consequential published claims within the original small-brief scope",
+          "judgment": "meaningful proposals; no executed-test overclaim",
+          "evidence": {
+            "candidate_final_lines": [
+              127,
+              129,
+              130,
+              131,
+              132,
+              133,
+              134,
+              135,
+              148,
+              150
+            ],
+            "primary_source_ids": [
+              "E06",
+              "E15",
+              "E18",
+              "E19",
+              "E20",
+              "E27",
+              "E31",
+              "E32",
+              "E35"
+            ],
+            "assessment": "Seven plans discriminate at the reservation point, across tenant/role/output channels, original versus entered signoff identity/time, full-year/departure/retention archives, actual AT versus wet hands, paper/outage/retries and quoted cost/pilot exit. The custom proposal has no executed database witness; the rendering chain has no executed evaluator regression. Source/code inspection is described accurately as the only relevant executed science, rather than passed product validation. General approval tasks lose the specific farther-ahead branch (N1-m3), but retained scenarios are substantive."
+          }
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "source_id": "E01",
+            "claim": "The Food Corridor product overview — Kitchen-management and scheduling sections",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E01].checked_fact"
+          },
+          {
+            "source_id": "E02",
+            "claim": "The Food Corridor signup plan selector — Select Your Plan / All Plans Include, lines 34–101",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E02].checked_fact"
+          },
+          {
+            "source_id": "E03",
+            "claim": "The Food Corridor equipment reservation help — Steps 1–9",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E03].checked_fact"
+          },
+          {
+            "source_id": "E04",
+            "claim": "The Food Corridor food-business account — Calendars / Reporting / Community / Business Profile",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E04].checked_fact"
+          },
+          {
+            "source_id": "E05",
+            "claim": "The Food Corridor onboarding checklist uses — Ensure Kitchen Hygiene",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E05].checked_fact"
+          },
+          {
+            "source_id": "E06",
+            "claim": "The Food Corridor booking approval — Submitted Bookings / Individual Calendars / Auto Approve",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E06].checked_fact"
+          },
+          {
+            "source_id": "E07",
+            "claim": "The Food Corridor reporting — CSV filtering / All Bookings, lines 49–72",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E07].checked_fact"
+          },
+          {
+            "source_id": "E08",
+            "claim": "The Food Corridor tenant digital sign-in/out — PIN and cleanliness/equipment concern notes",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E08].checked_fact"
+          },
+          {
+            "source_id": "E09",
+            "claim": "The Food Corridor admin digital sign-in/out — Client PIN / manager attendance editing / invoices",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E09].checked_fact"
+          },
+          {
+            "source_id": "E10",
+            "claim": "The Food Corridor inactive accounts — Inactive versus deleted, lines 45–46",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E10].checked_fact"
+          },
+          {
+            "source_id": "E11",
+            "claim": "The Food Corridor older account deletion help — Inactive client history access",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E11].checked_fact"
+          },
+          {
+            "source_id": "E12",
+            "claim": "The Food Corridor view-only permissions — View-only role guidance",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E12].checked_fact"
+          },
+          {
+            "source_id": "E13",
+            "claim": "The Food Corridor tenant booking — Create booking / daily view / equipment",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E13].checked_fact"
+          },
+          {
+            "source_id": "E14",
+            "claim": "The Food Corridor pricing FAQ — Onboarding Flows / onboarding calls / transaction FAQ",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E14].checked_fact"
+          },
+          {
+            "source_id": "E15",
+            "claim": "Skedda buffer time — Rules and FAQ, lines 19–52",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E15].checked_fact"
+          },
+          {
+            "source_id": "E16",
+            "claim": "Skedda access and visibility — Venue access / content visibility",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E16].checked_fact"
+          },
+          {
+            "source_id": "E17",
+            "claim": "Skedda custom fields — Field collection / propagation / inclusion",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E17].checked_fact"
+          },
+          {
+            "source_id": "E18",
+            "claim": "Skedda exports — List-view export / FAQ",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E18].checked_fact"
+          },
+          {
+            "source_id": "E19",
+            "claim": "Skedda booking/visit retention — Data retention period setting / recurrence / export FAQ, lines 25–42",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E19].checked_fact"
+          },
+          {
+            "source_id": "E20",
+            "claim": "Skedda booking requests and approvals — Plan availability / pending requests / editing / custom admins",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E20].checked_fact"
+          },
+          {
+            "source_id": "E21",
+            "claim": "Skedda system-user roles — Booking administrator / system administrator / owner",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E21].checked_fact"
+          },
+          {
+            "source_id": "E22",
+            "claim": "Skedda US/Canada pricing — United States & Canada, Plus/Premier, lines 8–57",
+            "status": "independently checked; see findings for candidate mismatch",
+            "checked_assertion_ref": "source-map.json primary_sources[E22].checked_fact"
+          },
+          {
+            "source_id": "E23",
+            "claim": "Skedda corroborating vendor pricing description — Featured Skedda pricing, line 97",
+            "status": "independently checked; see findings for candidate mismatch",
+            "checked_assertion_ref": "source-map.json primary_sources[E23].checked_fact"
+          },
+          {
+            "source_id": "E24",
+            "claim": "Skedda approvals feature evolution — Publication/update dates; approvals feature",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E24].checked_fact"
+          },
+          {
+            "source_id": "E25",
+            "claim": "Spacebring pricing — Business price / MAU / footnote, including line 578",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E25].checked_fact"
+          },
+          {
+            "source_id": "E26",
+            "claim": "Spacebring shared-kitchen solution — Shared equipment / preparation-time section",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E26].checked_fact"
+          },
+          {
+            "source_id": "E27",
+            "claim": "WCAG 2.2 Recommendation — SC 2.1.1, 2.5.7, 2.5.8, 4.1.2, 4.1.3",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E27].checked_fact"
+          },
+          {
+            "source_id": "E28",
+            "claim": "WAI dragging-movements explanation — Single-pointer alternative and keyboard distinction",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E28].checked_fact"
+          },
+          {
+            "source_id": "E29",
+            "claim": "FDA Food Code 2026 publication — Model code / adoption explanation",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E29].checked_fact"
+          },
+          {
+            "source_id": "E30",
+            "claim": "FDA Food Code 2026 full text — Preface status/adoption; Annex 3 PDF page 347 (printed 268)",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E30].checked_fact"
+          },
+          {
+            "source_id": "E31",
+            "claim": "PostgreSQL range types — Sections 8.17.1, 8.17.6, 8.17.10",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E31].checked_fact"
+          },
+          {
+            "source_id": "E32",
+            "claim": "PostgreSQL row security — Section 5.9",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E32].checked_fact"
+          },
+          {
+            "source_id": "E33",
+            "claim": "FullCalendar overlap option — eventOverlap description/default",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E33].checked_fact"
+          },
+          {
+            "source_id": "E34",
+            "claim": "FullCalendar issue 6393 — DayGrid eventOrderStrict report and 5.9 milestone",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E34].checked_fact"
+          },
+          {
+            "source_id": "E35",
+            "claim": "FullCalendar fix — seg-hierarchy.ts / event-placement.ts",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E35].checked_fact"
+          },
+          {
+            "source_id": "E36",
+            "claim": "FullCalendar release 5.9.0 — Release notes issue 6393",
+            "status": "independently checked published fact/applicability boundary",
+            "checked_assertion_ref": "source-map.json primary_sources[E36].checked_fact"
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "definition": "Complete coverage of consequential asserted published mechanisms and applicability conclusions within the original bounded brief, including independently detecting available-source omissions. This does not mean every possible tool/feature was researched or unresolved product acceptance was executed."
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "stages": [
+          "discovery",
+          "draft including adjudicated additions",
+          "independent critic",
+          "three verification questions",
+          "independent verifier",
+          "reviser final"
+        ],
+        "criticism_adjudications": [
+          {
+            "criticism": "M1",
+            "adjudication": "accept with classification nuance",
+            "reason": "Collision prevention comes from the brief. Literal P1 already names phases; clarification must not imply those phases were absent. Capacity, concurrent confirmation and complete allocation are useful acceptance conditions.",
+            "final_lines": [
+              19,
+              105
+            ],
+            "primary_source_ids": [
+              "E03",
+              "E15",
+              "E31"
+            ]
+          },
+          {
+            "criticism": "M2",
+            "adjudication": "accept qualified distinction",
+            "reason": "P2 forbids cross-tenant named data, not tenant-owned records or all occupancy. Profile surfaces justify testing, not a breach conclusion.",
+            "final_lines": [
+              20,
+              65,
+              106
+            ],
+            "primary_source_ids": [
+              "E04",
+              "E16"
+            ]
+          },
+          {
+            "criticism": "M3",
+            "adjudication": "accept distinctions; qualify mandatory-field demand",
+            "reason": "Account PIN cannot identify an individual by itself. Signer/transcriber/time distinctions are useful, but the brief does not explicitly require every proposed identity/history field. Final optional/core inconsistency is N1-m2.",
+            "final_lines": [
+              21,
+              67,
+              107
+            ],
+            "primary_source_ids": [
+              "E04",
+              "E09"
+            ]
+          },
+          {
+            "criticism": "M4",
+            "adjudication": "accept scope limit",
+            "reason": "Selected WCAG benchmark, actual AT tasks and wet entrance-device work answer different questions; no legal target inferred.",
+            "final_lines": [
+              22,
+              87,
+              108
+            ],
+            "primary_source_ids": [
+              "E27",
+              "E28"
+            ]
+          },
+          {
+            "criticism": "M5",
+            "adjudication": "accept",
+            "reason": "An operations owner chooses paper/digital authority; the brief does not explicitly assign this to the board. Both authority alternatives survive.",
+            "final_lines": [
+              22,
+              91,
+              109
+            ],
+            "primary_source_ids": []
+          },
+          {
+            "criticism": "M6",
+            "adjudication": "accept unresolved policy; qualify authority expansion",
+            "reason": "No silent booking sanction or common procedure is justified. Board approval of every nonblocking display is an extra conservative process choice, not literal P5 requirement.",
+            "final_lines": [
+              23,
+              24,
+              110,
+              123
+            ],
+            "primary_source_ids": []
+          },
+          {
+            "criticism": "M7",
+            "adjudication": "accept",
+            "reason": "Current-year reports and inactive history are not full own-record archive proof. Completeness/secure delivery matter; self-service remains optional.",
+            "final_lines": [
+              73,
+              75,
+              77,
+              111
+            ],
+            "primary_source_ids": [
+              "E07",
+              "E10",
+              "E11",
+              "E18",
+              "E19"
+            ]
+          },
+          {
+            "criticism": "M8",
+            "adjudication": "reconcile factual currency premise; accept quote gate",
+            "reason": "A dollar display is compatible with Euro billing. The live vendor footnote supports reconciliation, rather than treating the critic’s observation as a refutation of the author. The new Skedda pricing unit still fails independently.",
+            "final_lines": [
+              41,
+              43,
+              45,
+              47,
+              112
+            ],
+            "primary_source_ids": [
+              "E02",
+              "E14",
+              "E22",
+              "E23",
+              "E25"
+            ]
+          },
+          {
+            "criticism": "M9",
+            "adjudication": "accept scope limit",
+            "reason": "Range/RLS mechanisms need application conditions, and the FullCalendar fix concerns rendering, not persisted bookings. No executed witness is required or invented.",
+            "final_lines": [
+              36,
+              59,
+              95,
+              113
+            ],
+            "primary_source_ids": [
+              "E31",
+              "E32",
+              "E33",
+              "E34",
+              "E35",
+              "E36"
+            ]
+          },
+          {
+            "criticism": "M10",
+            "adjudication": "accept usability change",
+            "reason": "Self-contained final folds substantive additions into main text and does not outsource authority to an external review folder.",
+            "final_lines": [
+              105,
+              114
+            ],
+            "primary_source_ids": []
+          },
+          {
+            "criticism": "minor 1",
+            "adjudication": "accept",
+            "reason": "Source inspection is separated from all proposed acceptance tests.",
+            "final_lines": [
+              127,
+              148,
+              150
+            ],
+            "primary_source_ids": []
+          },
+          {
+            "criticism": "minor 2",
+            "adjudication": "accept",
+            "reason": "P1 and P5 conditions are visible in the main table, not only a late superseding appendix.",
+            "final_lines": [
+              19,
+              23
+            ],
+            "primary_source_ids": []
+          },
+          {
+            "criticism": "minor 3",
+            "adjudication": "accept",
+            "reason": "Occupancy/identity visibility beyond named privacy fields remains a user question.",
+            "final_lines": [
+              20,
+              130
+            ],
+            "primary_source_ids": [
+              "E16"
+            ]
+          },
+          {
+            "criticism": "minor 4",
+            "adjudication": "accept",
+            "reason": "WCAG 2.2 AA is conditional procurement choice; pointer criteria do not prove wet-hand or AT success.",
+            "final_lines": [
+              22,
+              87,
+              133
+            ],
+            "primary_source_ids": [
+              "E27",
+              "E28"
+            ]
+          },
+          {
+            "criticism": "minor 5",
+            "adjudication": "accept",
+            "reason": "Tenant reports and inactive access remain distinct from export completeness.",
+            "final_lines": [
+              75,
+              132
+            ],
+            "primary_source_ids": [
+              "E07",
+              "E10",
+              "E11"
+            ]
+          },
+          {
+            "criticism": "minor 6",
+            "adjudication": "accept qualification; pricing error survives",
+            "reason": "Mutable price/feature pages require quoted state; caveats do not cure a false published price unit.",
+            "final_lines": [
+              41,
+              43,
+              45,
+              47
+            ],
+            "primary_source_ids": [
+              "E22",
+              "E23",
+              "E25"
+            ]
+          },
+          {
+            "criticism": "minor 7",
+            "adjudication": "accept",
+            "reason": "Food Code is model text; adoption/channel facts are not supplied, so jurisdictional applicability remains unresolved.",
+            "final_lines": [
+              83,
+              121
+            ],
+            "primary_source_ids": [
+              "E29",
+              "E30"
+            ]
+          },
+          {
+            "criticism": "verifier question 1",
+            "adjudication": "accept conditional mechanisms",
+            "reason": "Pending, confirmed, changed and elevated-writer behavior survive, without asserting every edit checks conflicts or that a queue reserves capacity.",
+            "final_lines": [
+              55,
+              59,
+              129
+            ],
+            "primary_source_ids": [
+              "E15",
+              "E20",
+              "E21"
+            ]
+          },
+          {
+            "criticism": "verifier question 2",
+            "adjudication": "accept limited visibility and archive evidence",
+            "reason": "Calendar visibility is not proof of secret leakage; inactive account/history is not a complete export. New and old sources remain distinct.",
+            "final_lines": [
+              65,
+              75,
+              119,
+              120
+            ],
+            "primary_source_ids": [
+              "E04",
+              "E07",
+              "E10",
+              "E11"
+            ]
+          },
+          {
+            "criticism": "verifier question 3",
+            "adjudication": "accept applicability boundary",
+            "reason": "2026 model status and commissary/channel limit survive; kitchen jurisdiction and role cannot be determined from this brief.",
+            "final_lines": [
+              83,
+              121
+            ],
+            "primary_source_ids": [
+              "E29",
+              "E30"
+            ]
+          }
+        ],
+        "remaining_review_scope": [],
+        "bounded_losses": [
+          "N1-m3"
+        ]
+      },
+      "grade_limits": [
+        "FAIL identifies this arm’s own material defect; it is not an absence of useful discovery or a finding that all proposals are invalid.",
+        "Product demonstrations, code/database witnesses and human acceptance sessions are outside executed evidence and explicitly proposed.",
+        "Unknown delivery/native/billing is not graded as false or zero.",
+        "A full scientific review is not proof of deployability, legal compliance or food-safety effectiveness."
+      ]
+    }
+  },
+  "original_constraint_matrix": [
+    {
+      "constraint": "Twenty businesses / three coordinators / six-tenant pilot",
+      "candidate_locators": "N2 final 24, 111–123; N1 final 3, 13, 129, 135",
+      "assessment": "Retained in both; a five-client entry plan is not presented as sufficient."
+    },
+    {
+      "constraint": "$21,000",
+      "candidate_locators": "N2 final 24, 32, 70–72, 123; N1 final 13, 39–47, 135",
+      "assessment": "Horizon/inclusions unresolved in both; N1-M1 corrupts one published price unit, not a claimed purchase approval."
+    },
+    {
+      "constraint": "Reduce double-bookings and setup/cleanup access collisions",
+      "candidate_locators": "N2 final 13, 44, 50, 64–68, 113–114; N1 final 19, 53–59, 129",
+      "assessment": "Resources/access windows, equipment subranges, capacity, edits and elevated writers are addressed."
+    },
+    {
+      "constraint": "Clarify batch handoffs",
+      "candidate_locators": "N2 final 15, 60, 133–134; N1 final 11, 21, 67–69, 131",
+      "assessment": "Private optional opaque references and operational states retained; no need to collect business secrets."
+    },
+    {
+      "constraint": "Major allergens; tenant owns its food-safety program",
+      "candidate_locators": "N2 final 15, 18, 20, 24; N1 final 11, 21, 24, 81–83, 131",
+      "assessment": "Attestation remains a tenant statement, not kitchen certification or a universal cleaning standard."
+    },
+    {
+      "constraint": "Tenant-defined equipment use and cleaning signoff",
+      "candidate_locators": "N2 final 15, 34, 58–60, 117; N1 final 21, 67–69, 131",
+      "assessment": "Attendance, monthly checklist and booking-time field are distinguished from per-use signoff."
+    },
+    {
+      "constraint": "Other tenants cannot see recipes/customers/production volumes",
+      "candidate_locators": "N2 final 14, 36, 42, 69, 115–116; N1 final 20, 63–65, 130",
+      "assessment": "Named scope retained, own private business records not forbidden, potential vendor exposure not declared a proven breach."
+    },
+    {
+      "constraint": "Entrance tablet used with wet hands",
+      "candidate_locators": "N2 final 16, 121; N1 final 22, 87–89, 133",
+      "assessment": "Actual-device tests separate from standards/AT; no passed test claimed."
+    },
+    {
+      "constraint": "One coordinator needs screen-reader-compatible administration",
+      "candidate_locators": "N2 final 16, 121; N1 final 22, 89, 133",
+      "assessment": "Full tasks, keyboard, announcements/errors/focus proposed; N1-m3 removes one specific task branch."
+    },
+    {
+      "constraint": "Internet available; transition coexists with paper",
+      "candidate_locators": "N2 final 16, 24, 122; N1 final 22, 91, 134",
+      "assessment": "Paper original versus transcription timing retained. N1 preserves two authority/cutover options."
+    },
+    {
+      "constraint": "Each tenant’s own records export at year-end",
+      "candidate_locators": "N2 final 15, 42, 89, 118; N1 final 73–77, 132",
+      "assessment": "Both require scoped records; N2-M1 omits available retention default. N1 expressly permits secure coordinator delivery."
+    },
+    {
+      "constraint": "Board undecided on missing-signoff restrictions and procedure representation",
+      "candidate_locators": "N2 final 17–18, 119–120; N1 final 23–24, 110, 123",
+      "assessment": "No selected booking ban or common procedure. Both retain alternatives; N1 extends board signoff to nonblocking display."
+    }
+  ],
+  "exact_plan_matrix": [
+    {
+      "clause": "P1",
+      "exact_text": "Schedule tenant production blocks with setup, production, and cleanup intervals.",
+      "N2": {
+        "disposition": "Correction/acceptance elaboration; uncertainty on product fit, ownership, billing, boundaries and durations.",
+        "final_line": 13,
+        "assessment": "No clause rejected; conditions do not contradict its literal scope."
+      },
+      "N1": {
+        "disposition": "Retain; materially clarify collision/confirmation behavior from brief; half-open convention optional.",
+        "final_line": 19,
+        "assessment": "No clause rejected; scope qualification described in axis 4."
+      }
+    },
+    {
+      "clause": "P2",
+      "exact_text": "Keep each tenant's recipes, customer information, and production volumes private from other tenants.",
+      "N2": {
+        "disposition": "Already covered named privacy; optional additional-surface testing and user decision on occupancy.",
+        "final_line": 14,
+        "assessment": "No clause rejected; conditions do not contradict its literal scope."
+      },
+      "N1": {
+        "disposition": "Retain; named fields already covered; broader occupancy/identity choice optional and undecided.",
+        "final_line": 20,
+        "assessment": "No clause rejected; scope qualification described in axis 4."
+      }
+    },
+    {
+      "clause": "P3",
+      "exact_text": "Record equipment-use and cleaning signoffs using tenant-defined procedures.",
+      "N2": {
+        "disposition": "Correction of linkage/archive scope; optional record-integrity fields; product fit uncertain.",
+        "final_line": 15,
+        "assessment": "No clause rejected; conditions do not contradict its literal scope."
+      },
+      "N1": {
+        "disposition": "Retain covered intent; optional identity/record elaboration, with final adjudication inconsistency noted.",
+        "final_line": 21,
+        "assessment": "No clause rejected; scope qualification described in axis 4."
+      }
+    },
+    {
+      "clause": "P4",
+      "exact_text": "Support an accessible coordinator view and a transition period that can coexist with paper signoffs.",
+      "N2": {
+        "disposition": "Covered intent with acceptance clarification: actual wet tablet and screen reader separately, plus paper provenance.",
+        "final_line": 16,
+        "assessment": "No clause rejected; conditions do not contradict its literal scope."
+      },
+      "N1": {
+        "disposition": "Retain covered intent; task acceptance and accountable paper/digital operating choice.",
+        "final_line": 22,
+        "assessment": "No clause rejected; scope qualification described in axis 4."
+      }
+    },
+    {
+      "clause": "P5",
+      "exact_text": "Booking restrictions after a missing signoff and the authority to apply them are board decisions.",
+      "N2": {
+        "disposition": "Already covered unresolved board decision; follow-up/nonblocking and future-block alternatives retained.",
+        "final_line": 17,
+        "assessment": "No clause rejected; conditions do not contradict its literal scope."
+      },
+      "N1": {
+        "disposition": "Retain unresolved board decision; interim reporting also made subject to board acceptance beyond literal clause.",
+        "final_line": 23,
+        "assessment": "No clause rejected; scope qualification described in axis 4."
+      }
+    },
+    {
+      "clause": "P6",
+      "exact_text": "A common procedure model across equipment types has not been selected.",
+      "N2": {
+        "disposition": "Already covered unresolved board decision; tenant base-plus-equipment additions versus separate procedures retained.",
+        "final_line": 18,
+        "assessment": "No clause rejected; conditions do not contradict its literal scope."
+      },
+      "N1": {
+        "disposition": "Retain unresolved board decision; several tenant-owned forms or no common template remain open.",
+        "final_line": 24,
+        "assessment": "No clause rejected; scope qualification described in axis 4."
+      }
+    }
+  ],
+  "method_clues": {
+    "blinding": "Partial only. Exact paths, assignments and stage contents identify control and treatment.",
+    "observed_structure": "N2 has investigator discovery/draft, a research-stage critique, fresh critic and reviser. N1 also has a separate verifier of three focused questions, with a critic and reviser. These are artifacts, not evidence of causal superiority.",
+    "provenance_limit": "N1 plan-reveal.json records a discovery hash/size different from the mapped discovery file. The mapped file itself matches the exact input map and is the artifact assessed. Exact pre-reveal text cannot be reconstructed within permitted inputs. No artifact-integrity scientific penalty or causal claim is assigned.",
+    "other_cases_or_evaluations_read": false,
+    "candidate_repair": false,
+    "nested_workers": false
+  },
+  "comparative_quality_eligible": false,
+  "comparison": {
+    "reason": "Neither arm is a full-quality pass. Two FAIL labels do not establish equivalent quality, and no faster-FAIL win is available.",
+    "qualitative_differences": "N1 retains more explicit approval-state, retention/year-boundary, SQL-role, paper-authority and jurisdiction conditions; N2 retains a distinct self-hosted alternative and careful optional-field/P5/P6 separation. Those differences are described, not converted into an eligible quality winner.",
+    "quality_winner": null,
+    "speed_winner": null,
+    "method_effect": null
+  },
+  "scope_limits": [
+    "Scientific grading evidence is restricted to B-07 input-map files/source roots, the original I07 brief/frozen plan, this assignment/rubric and independently relevant public primary evidence.",
+    "All six axes were actually reviewed for both complete finals. No unfinished consequential claim or stage-review scope remains.",
+    "Runtime, vendor configuration, human/AT/wet-device and regulatory-adoption determinations remain unresolved external acceptance work rather than missing evaluator claim review.",
+    "Mutable web pages establish published state observed during this run; no vendor offer or stable future capability is guaranteed.",
+    "No candidate repaired, source artifact changed, science feedback sent, native/T3 provider internals queried, downloaded executable, service/account/config/Git/canon mutation or delegated worker.",
+    "The repository-required Plans/00-plans-index.md was read as instruction context and supplied no case facts or scientific grade evidence."
+  ],
+  "evaluation_started_at": "2026-10-09T21:54:34Z",
+  "evaluation_started_at_basis": "First supported native Goal activation timestamp; startup preceding that receipt is not separately timed. Deadline remains the exact assignment deadline, without extending it.",
+  "evaluation_completed_at": "2026-10-09T22:10:55.268194+00:00",
+  "deadline": "2026-10-09T22:19:15.915790+00:00",
+  "observed_source_operations": {
+    "local": "Read exact input map, assignments, rubric, original brief and plan, all mapped scientific stages and source indexes/maps. Recomputed every mapped byte length and SHA-256. Read supporting notes in only the authorized source roots.",
+    "web": "Independent official vendor, W3C, FDA, PostgreSQL, FullCalendar and LibreBooking primary searches/opens/finds. Read-only GitHub REST/raw-text retrievals for code provenance, units and ancestry.",
+    "not_executed": [
+      "Product demos",
+      "Database/code witnesses",
+      "Candidate regression tests",
+      "Concurrency trials",
+      "Privacy/export trials",
+      "Assistive-technology or wet-hand sessions",
+      "Deployments",
+      "Human studies"
+    ],
+    "timestamp_detail": "Per-operation exact request/response times unknown; no synthetic timestamps assigned."
+  },
+  "native_and_cost_limits": {
+    "reviewer_goal": "Actually created and active observed using native create_goal/get_goal. Full artifacts must be saved/verified before native update_goal complete. Actual receipts belong to tool transcript/host; this assessment is not a hand-transcribed receipt.",
+    "reviewer_native_completion_at_science_freeze": null,
+    "candidate_native_completion": null,
+    "candidate_t3_delivery_timing": null,
+    "candidate_usage": null,
+    "candidate_billing": null,
+    "reviewer_billing": null,
+    "usage_reason": "Not independently supplied by the authorized scientific artifact set. Native Goal internal usage is not provider billable usage. No unknown value is treated as zero.",
+    "final_delivery_basis": "Exact input map says final_delivery=true and scientific_artifact_available=true for both; authored full finals exist and match hashes."
+  },
+  "evaluation_completed_at_basis": "Scientific assessment and saved-artifact freeze before native Goal completion; subsequent read-only serialization verification does not add findings.",
+  "saved_artifact_verification": {
+    "status": "passed before native completion",
+    "frozen_input_sha256_checks": 52,
+    "axes_per_arm": 6,
+    "candidate_passages": "exact line text matched",
+    "primary_source_references": "resolved to independently authored source-map",
+    "remaining_consequential_review_scope": [],
+    "candidate_repair": false,
+    "temporary_files_or_services_created": false
+  }
+}

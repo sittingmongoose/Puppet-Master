@@ -1,0 +1,65 @@
+{
+  "thread": {
+    "threadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-recipe-qualification-v1",
+    "projectId": "5fdfe527-6a7b-4c8b-8900-f6557fd88cad",
+    "title": "ER11 finite reusable invocation qualification",
+    "createdBy": "agent",
+    "creationSource": "mcp",
+    "status": "completed",
+    "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-recipe-qualification-v1:ordinal:1",
+    "activeRunId": null,
+    "providerInstanceId": "muse",
+    "model": "muse-spark-1.3-contributor",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "linkedPullRequest": null,
+    "titleRegeneration": null,
+    "branch": "t3/f19dd729",
+    "worktreePath": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-f19dd729",
+    "parentThreadId": "116bb1e4-cdb9-4654-bef1-7f5558c56ed8",
+    "relationshipToParent": "subagent",
+    "runCount": 1,
+    "itemCount": 38,
+    "pendingRequestCount": 0,
+    "archived": false,
+    "settled": false,
+    "settledAt": null,
+    "snoozed": false,
+    "snoozedUntil": null,
+    "createdAt": "2026-10-09T21:50:57.790Z",
+    "updatedAt": "2026-10-09T21:54:31.743Z"
+  },
+  "recentRuns": [
+    {
+      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-recipe-qualification-v1:ordinal:1",
+      "ordinal": 1,
+      "status": "completed",
+      "providerInstanceId": "muse",
+      "model": "muse-spark-1.3-contributor",
+      "requestedAt": "2026-10-09T21:50:58.169Z",
+      "startedAt": "2026-10-09T21:51:00.149Z",
+      "completedAt": "2026-10-09T21:54:31.743Z"
+    }
+  ],
+  "items": [
+    {
+      "position": 0,
+      "visibility": "local",
+      "sourceThreadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-recipe-qualification-v1",
+      "itemId": "turn-item:message:message%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-recipe-qualification-v1",
+      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-recipe-qualification-v1:ordinal:1",
+      "messageId": "message:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-recipe-qualification-v1",
+      "createdBy": "agent",
+      "creationSource": "mcp",
+      "type": "user_message",
+      "status": "completed",
+      "title": null,
+      "text": "Use one real native Goal under 4000 characters referring to /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/helpers/recipe-qualification/assignment.md. Perform only the finite component check in that file. No nested agents, polling, source investigation, candidate edits, product canon, Git, provider/config/account changes. Save result.md and result.json before native Goal completion.",
+      "textTruncated": false,
+      "nextTextOffset": null,
+      "updatedAt": "2026-10-09T21:50:58.169Z"
+    }
+  ],
+  "nextPosition": 0,
+  "hasMore": true
+}

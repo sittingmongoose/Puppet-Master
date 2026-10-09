@@ -1,0 +1,74 @@
+{
+  "frozen_at": "2026-10-09T21:51:19.684469+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/H01/brief.md",
+      "sha256": "2653c8600117b94d87de9c9922ace2073942b39885d7ecc25b83e32f32534bf2",
+      "bytes": 2257
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M16.json",
+      "sha256": "01975e690d48334feb2f69585e3ca4334c0543c30dd13b620b3cf465a37871c4",
+      "bytes": 2246
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/critic/assignment.md",
+      "sha256": "f7d11db3132710898f8bc109c4f4adbb97cfd6792f78ca9f1b4f5d8dd9763dfb",
+      "bytes": 2811
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/critic/input-map.json",
+      "sha256": "a9e4db2eec6b9b976419c912218724b0d2bd84d20b9cf4b2409cc8444304fe0e",
+      "bytes": 1214
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/research/draft.md",
+      "sha256": "f19c0cb31cdad33b09c5d22e4276f4b58c1e395c596e1444d81dabffbb132e59",
+      "bytes": 21585
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/research/discovery.md",
+      "sha256": "25de6522f3d1715dcc04468e3d68bd64bbbd8efac4fa9d879b9e81c9a7de4f1c",
+      "bytes": 14222
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/research/source-map.json",
+      "sha256": "afa7d4e6ca07ef3b0f8e81ad075ffc9b4da38cd41d129bdf71240746aeab4ae5",
+      "bytes": 19923
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-01/treatment/research/revealed-plan.md",
+      "sha256": "45fbd5a0a7654955292605e2995af70fece917393d469c9b18746cf4fe47785e",
+      "bytes": 587
+    }
+  ],
+  "method": {
+    "id": "M16",
+    "version": "v1",
+    "name": "intermediate-budget-allocation-on-source-assessed-reference",
+    "control": "Three fresh contexts: full external-discovery investigator, independent full critic, fresh complete reviser. Preserve all original research/source/plan/preservation/validation scope. No new source inventory or answers. The declared wall/stage resource allocation is the sole contrast; finish early when full output is ready, never fill the deadline.",
+    "treatment": "Three fresh contexts: full external-discovery investigator, independent full critic, fresh complete reviser. Preserve all original research/source/plan/preservation/validation scope. No new source inventory or answers. The declared wall/stage resource allocation is the sole contrast; finish early when full output is ready, never fill the deadline.",
+    "locked_at": "2026-10-09T21:37:32.336912+00:00",
+    "evidence_kind": "full-discovery budget-recipe comparison",
+    "control_wall_s": 4500,
+    "treatment_wall_s": 3600,
+    "control_stages_s": {
+      "research": 1800,
+      "critic": 1200,
+      "reviser": 1500
+    },
+    "treatment_stages_s": {
+      "research": 1440,
+      "critic": 1080,
+      "reviser": 1080
+    },
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "provider": "luna Max/priority in both arms",
+    "lineage": "Source-assessed three-fresh-context Luna reference has8/10 full-source passes,5alltimeeligible. Test where time is allocated at a realistic intermediate reduction, not half-deadline survival. No novelty credit, no optimized win assumed. M15 assessment feedback not read for this recipe.",
+    "selection": "Two development blocks. Material treatment source failure retires promotion. If both full treatment source passes/no regression and >=20% strict eligible both-PASS measured delivery saving, complete runnable/native recipe may qualify for remaining four-case confirmation. Nominal ceiling reduction is not measured speed/cost. Remaining capacity permits one four-case finalist; the first eligible completed M15 or M16 may lock the remaining H03-H06 cases without waiting for unrelated pending experiments. No prompt tuning after confirmation lock; C07/C08 stay reserved/unstarted unless prospectively assigned within40pairs."
+  },
+  "resource_version": "budget-75vs60-v1",
+  "stage_allowance_s": 1080,
+  "deadline": "2026-10-09T22:09:19.684469+00:00"
+}

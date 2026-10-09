@@ -1,0 +1,10 @@
+--- a/reusable/bootstrap.js
++++ b/reusable/bootstrap.js
+@@ -58,7 +58,7 @@
+ const memRow = mem.output.split("\n").find(x => /^Mem:/.test(x));
+ const availableGiB = Number(memRow?.trim().split(/\s+/).at(-1));
+ if (mem.exit_code !== 0 || !Number.isFinite(availableGiB) || availableGiB < 6) {
+-  text({blocked: "T3 requires at least 6 GB available before another worker", availableGiB});
++  text(JSON.stringify({blocked: "T3 requires at least 6 GB available before another worker", availableGiB}));
+   exit();
+ }

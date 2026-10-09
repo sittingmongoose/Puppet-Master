@@ -1,0 +1,54 @@
+{
+  "frozen_at": "2026-10-09T21:37:40.303378+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/H02/brief.md",
+      "sha256": "415ad751720b695b4cc789793972e4f663c279d83afa0a874705c6b9831b0206",
+      "bytes": 2178
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M16.json",
+      "sha256": "01975e690d48334feb2f69585e3ca4334c0543c30dd13b620b3cf465a37871c4",
+      "bytes": 2246
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/assignment.md",
+      "sha256": "599f51577409abd7573599e3dd21895a18a7483213339a090ab113bba0365d9d",
+      "bytes": 3286
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/C-02/treatment/research/input-map.json",
+      "sha256": "70f514e307b63b133932132c087580849db919572630714d5e42da8415a58d36",
+      "bytes": 673
+    }
+  ],
+  "method": {
+    "id": "M16",
+    "version": "v1",
+    "name": "intermediate-budget-allocation-on-source-assessed-reference",
+    "control": "Three fresh contexts: full external-discovery investigator, independent full critic, fresh complete reviser. Preserve all original research/source/plan/preservation/validation scope. No new source inventory or answers. The declared wall/stage resource allocation is the sole contrast; finish early when full output is ready, never fill the deadline.",
+    "treatment": "Three fresh contexts: full external-discovery investigator, independent full critic, fresh complete reviser. Preserve all original research/source/plan/preservation/validation scope. No new source inventory or answers. The declared wall/stage resource allocation is the sole contrast; finish early when full output is ready, never fill the deadline.",
+    "locked_at": "2026-10-09T21:37:32.336912+00:00",
+    "evidence_kind": "full-discovery budget-recipe comparison",
+    "control_wall_s": 4500,
+    "treatment_wall_s": 3600,
+    "control_stages_s": {
+      "research": 1800,
+      "critic": 1200,
+      "reviser": 1500
+    },
+    "treatment_stages_s": {
+      "research": 1440,
+      "critic": 1080,
+      "reviser": 1080
+    },
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "provider": "luna Max/priority in both arms",
+    "lineage": "Source-assessed three-fresh-context Luna reference has8/10 full-source passes,5alltimeeligible. Test where time is allocated at a realistic intermediate reduction, not half-deadline survival. No novelty credit, no optimized win assumed. M15 assessment feedback not read for this recipe.",
+    "selection": "Two development blocks. Material treatment source failure retires promotion. If both full treatment source passes/no regression and >=20% strict eligible both-PASS measured delivery saving, complete runnable/native recipe may qualify for remaining four-case confirmation. Nominal ceiling reduction is not measured speed/cost. Remaining capacity permits one four-case finalist; the first eligible completed M15 or M16 may lock the remaining H03-H06 cases without waiting for unrelated pending experiments. No prompt tuning after confirmation lock; C07/C08 stay reserved/unstarted unless prospectively assigned within40pairs."
+  },
+  "resource_version": "budget-75vs60-v1",
+  "stage_allowance_s": 1440,
+  "deadline": "2026-10-09T22:01:40.303378+00:00"
+}

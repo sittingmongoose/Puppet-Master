@@ -28,7 +28,7 @@ Track separate qualifications for: native Goal lifecycle/provenance; requested v
 
 ## Observed reference cohort
 
-The [exact cohort and measurements](OBSERVED_REFERENCE.json) retain all ten completed Luna controls with this three-context topology across screening and B-01/B-02/B-03: eight full-source PASS_WITH_LIMITATIONS and two FAIL. M01 controls used four contexts and are excluded by topology. All ten delivered, but only 5 of the eight source passes also met every whole-arm/stage/occupied time ceiling. This sample supports a scoped pilot; it does not establish general reliability, subscription affordability, or a qualified optimization. Provider/case differences prevent attributing this cohort comparison to model alone.
+The [exact cohort and measurements](OBSERVED_REFERENCE.json) retain all ten completed Luna controls with this three-context topology across screening and B-01/B-02/B-03: eight full-source PASS_WITH_LIMITATIONS and two FAIL. M01 controls used four contexts and are excluded by topology. All ten delivered, but only 5 of the eight source passes also met every whole-arm/stage/occupied time ceiling. This sample supports a scoped pilot; it does not establish general reliability, subscription affordability, or a qualified optimization. Provider/case differences prevent attributing this cohort comparison to model alone. The two matching failures are [A-M02-B/control](../evaluations/A-M02-B/assessment.md), which falsely characterized documented Volgistics opening recurrence as unestablished, and [A-M11-B/control](../evaluations/A-M11-B/assessment.md), which confused the pgvector vector type dimensional limit with its ANN-index limit. Both failures remain in the ten-attempt denominator.
 
 ## Existing full-output examples
 
