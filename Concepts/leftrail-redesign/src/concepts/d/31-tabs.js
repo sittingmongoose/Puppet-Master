@@ -47,9 +47,9 @@ function inkOf(st) {
   if (!ink) ink = inject(st, PMR.h('span.pm-segtab-ink.d-ink', { 'aria-hidden': 'true' }), st.querySelector(':scope > .pm-segtab-item'));
   return ink;
 }
-/* every tab animation of a strip: the ink, the icons and labels, the inverse-video tick */
+/* every tab animation of a strip: the ink, the icons and labels, the inverse-video tick, Retro's held colours */
 function stopTabs(st) {
-  const els = [st, st.querySelector(':scope > .d-ink')].concat(tabItems(st).flatMap(it => Array.from(it.children)));
+  const els = [st, st.querySelector(':scope > .d-ink')].concat(tabItems(st).flatMap(it => [it].concat(Array.from(it.children))));
   els.forEach(el => { if (el && el.getAnimations) el.getAnimations().forEach(a => { if (a.id === 'd-tab') a.cancel(); }); });
 }
 /* the ink at rest on the chosen tab; a no-op while nothing moved, so a refit never cuts a move short */
@@ -64,10 +64,28 @@ function placeInk(st, force) {
   ink._dBox = b;
 }
 
+/* The shell's fit pass after a tab click (PMPillFit, scheduled by its own document click listener for any
+   '.pm-segtab-item, [data-tab]' in the slot) is scoped to the clicked panel, yet its measure class (.pill-fit-measure)
+   lays out all nine panels and every hidden pane while it runs: on the VM 0.4 s to 1.4 s before the click's first
+   frame. For the frame of a tab click the slot carries data-d-fitview, and 22-tabs keeps the inactive panels and the
+   hidden panes out of that measure: the pane the click shows is fitted exactly as before, a hidden pane when a click
+   shows it, in a fraction of the time. Every other pass (a resize, a panel's first show) is untouched. The flag is
+   cleared two frames later, after the pass ran. */
+let fitViewSeq = 0;
+function fitViewOnly(ev) {
+  const slot = document.getElementById('sidePanelSlot');
+  const c = ev.target && ev.target.closest && ev.target.closest('.pm-segtab-item, [data-tab]');
+  if (!slot || !c || !slot.contains(c)) return;
+  if (!slot.hasAttribute('data-d-fitview')) slot.setAttribute('data-d-fitview', '');
+  const id = ++fitViewSeq;
+  requestAnimationFrame(() => requestAnimationFrame(() => { if (id === fitViewSeq) slot.removeAttribute('data-d-fitview'); }));
+}
+
 /* capture phase: the strip as it looks now, before the shell switches the tab (mid-move too: rects include the running
    animations, so a second click starts from exactly what is on screen) */
 function onTabCapture(ev) {
   if (!D.on) return;
+  fitViewOnly(ev);
   const tab = ev.target && ev.target.closest && ev.target.closest('.pm-segtab-item[data-tab]');
   if (!tab || !inPanels(tab) || tab.classList.contains('active')) return;
   const st = tab.parentElement;
@@ -76,7 +94,9 @@ function onTabCapture(ev) {
   const kids = new Map();
   tabItems(st).forEach(it => Array.from(it.children).forEach(k => { if (k.getClientRects().length) kids.set(k, stripBox(st, k).x); }));
   const moving = !!ink && ink.getAnimations().some(a => a.id === 'd-tab' && a.playState === 'running');
-  st._dFrom = { ink: ink && ink._dBox ? stripBox(st, ink) : null, at: tabItems(st).findIndex(it => it.classList.contains('active')), moving, kids };
+  /* fg: the chosen tab's colour as it was (hovered or not), which Retro holds until the ink lands on it */
+  st._dFrom = { ink: ink && ink._dBox ? stripBox(st, ink) : null, at: tabItems(st).findIndex(it => it.classList.contains('active')), moving, kids,
+    fg: getComputedStyle(tab).color };
 }
 
 /* bubble phase (onClickMotion, after the shell switched): refit now, move on the next frame */
@@ -130,7 +150,12 @@ function moveTabs(st, from, dir, anims) {
     const path = [];
     for (let i = a0; ; i += step) { path.push(stripBox(st, items[i])); if (i === at) break; }
     const n = path.length - 1;
-    if (n > 0) add(ink.animate(path.map((b, k) => Object.assign({ offset: k / n, easing: 'steps(1, end)' }, inkFrame(b))), { duration: n * TICK, fill: 'backwards' }));
+    if (n > 0) {
+      add(ink.animate(path.map((b, k) => Object.assign({ offset: k / n, easing: 'steps(1, end)' }, inkFrame(b))), { duration: n * TICK, fill: 'backwards' }));
+      /* the chosen tab keeps the colour it had (its icon and its new label) until the ink lands on it, so only one tab
+         ever looks chosen: the one under the ink. --d-tab-fg is what the active colours read (22-tabs) */
+      if (from.fg) add(items[at].animate([{ '--d-tab-fg': from.fg }, { '--d-tab-fg': from.fg }], { duration: n * TICK }));
+    }
     /* landed: the chosen tab in inverse video for one tick */
     add(st.animate([{ '--d-tab-inv': '1', '--d-tab-fg': 'var(--d-on-accent)' }, { '--d-tab-inv': '1', '--d-tab-fg': 'var(--d-on-accent)' }], { duration: TICK, delay: n * TICK }));
     return;
@@ -200,5 +225,10 @@ function wireTabs(panel) {
 }
 PANEL_IDS.forEach(id => panelHook(id, {
   apply(panel) { wireTabs(panel); },
-  unmount(panel) { tabsWired = false; panel.querySelectorAll(':scope > .pm-segtab').forEach(stopTabs); },
+  unmount(panel) {
+    tabsWired = false; fitViewSeq++;
+    panel.querySelectorAll(':scope > .pm-segtab').forEach(stopTabs);
+    const slot = document.getElementById('sidePanelSlot');
+    if (slot) slot.removeAttribute('data-d-fitview');
+  },
 }));

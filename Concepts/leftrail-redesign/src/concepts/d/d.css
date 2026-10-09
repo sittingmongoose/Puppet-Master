@@ -295,6 +295,14 @@
    the ink */
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab > .pm-segtab-item.active { background: none !important; box-shadow: none !important; border-radius: var(--d-r) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item:hover { color: var(--d-text-2) !important; }
+/* NieR's menu cursor: the hovered tab is an ink bar with paper text, the same box the chosen ink fills (the item's own
+   box), so hover, click and the brackets read as one ink. The cursor part puts o55np-cur-over on the hovered item only
+   while that part is on, so the class is its guard; the item rule above (id level, !important) hid NieR's own :hover
+   bar under the skin. */
+[data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab > .pm-segtab-item.o55np-cur-over:not(.active) {
+  background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-radius: var(--d-r) !important;
+}
+[data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab > .pm-segtab-item.o55np-cur-over:not(.active) :is(svg, .pm-ico, span, .eq-full) { color: inherit !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active { color: var(--d-tab-fg, var(--d-text)) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item svg, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item .pm-ico { width: 15px !important; height: 15px !important; flex: none; transform: none !important; transition-property: none !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active svg { color: var(--d-tab-fg, var(--accent-primary)); }
@@ -310,8 +318,20 @@
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab[data-d-tabs="active"] .pm-segtab-item.active { flex: 0 0 auto !important; padding: 0 8px !important; }
 
 /* a view that comes in after a tab change deals or prints in by script (30-motion.js); the shell's own pane rise
-   (shPaneIn on every child of a shown pane) ran under it and moved every row twice */
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-pane]:not(.pm-hidden) > * { animation: none !important; }
+   (shPaneIn on every child of a shown pane) ran under it and moved every row twice. This rule exists only to cancel
+   shPaneIn: it is not !important, so a lane that gives a direct pane child its own keyframes overrides it with a rule
+   of its own (the [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) id selector already outranks the shell's '[data-pane]:not(.pm-hidden) > *'). */
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-pane]:not(.pm-hidden) > * { animation: none; }
+
+/* the shell's fit pass after a tab click fits only the clicked panel, but its measure class showed all nine panels and
+   every hidden pane while it ran: on the VM a restyle of about 7,600 elements and a full layout, 0.4 s (Source, Retro,
+   1920) to 1.4 s (Docker, Glass, 2560) before the click's first frame. For the frame of a tab click (data-d-fitview,
+   31-tabs.js) the eight inactive panels and the clicked panel's hidden panes stay out of it. The pane the click shows
+   is visible, so it is fitted exactly as before; a hidden pane is fitted when a click shows it (the shell switches
+   panes only on a tab click, and that click runs this pass), and the passes on a resize or a panel's first show still
+   measure everything. The shell's measure class is matched as an attribute: it is a measuring state, not a pill, and
+   the rail lint reserves ".…pill…" class selectors for pill looks (none exist in the skin). */
+[data-rail-skin="d"] .side-panel-slot[data-d-fitview][class~="pill-fit-measure"] :is(.side-panel-view:not(.active), [data-pane].pm-hidden) { display: none !important; }
 
 /* reduced motion: the strip changes in one step and nothing in it moves (the script makes no animation either) */
 [data-rail-skin="d"][data-motion="reduced"] #sidePanelSlot .pm-segtab *, [data-rail-skin="d"][data-reduced-motion="1"] #sidePanelSlot .pm-segtab * { transition: none !important; }
