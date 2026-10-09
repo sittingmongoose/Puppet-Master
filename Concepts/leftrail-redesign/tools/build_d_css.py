@@ -8,9 +8,11 @@ Edit the .src.css files, never d.css. The Look settings scaler (o55PaintScales: 
 rescales flat top-level rules, so the skin cannot use CSS nesting; the macros keep its long scoping selectors short.
 Macros (followed by a space or a selector character):
   §R   [data-rail-skin="d"]                                            the skin root (html)
-  §    [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker)
+  §    [data-rail-skin="d"] :is(<every rail panel in PANELS>)            the shared rules of all nine panels
   §F / §S / §K   [data-rail-skin="d"] #panel-files / #panel-source / #panel-docker
   §B   [data-rail-skin="d"] #activityBar
+  §@name   [data-rail-skin="d"] #panel-name   (search, run, git, artifacts, testing, agents, or any panel id suffix)
+  §@#id    [data-rail-skin="d"] #id           (any other element of the rail band: bottomDebugHost, the More tray ...)
   §{fam,...}X  the same with theme guards on the root: basic friendly glass retro light dark nier notnier
 """
 from __future__ import annotations
@@ -23,7 +25,9 @@ PKG = Path(__file__).resolve().parent.parent
 SRC = PKG / 'src' / 'concepts' / 'd' / 'css'
 OUT = PKG / 'src' / 'concepts' / 'd' / 'd.css'
 ROOT = '[data-rail-skin="d"]'
-PANELS = ':is(#panel-files,#panel-source,#panel-docker)'
+# the nine rail panels (activity bar order); keep in step with PANEL_IDS in src/concepts/d/00-d.js
+PANEL_IDS = ('files', 'search', 'source', 'git', 'docker', 'testing', 'run', 'agents', 'artifacts')
+PANELS = ':is(' + ','.join('#panel-' + p for p in PANEL_IDS) + ')'
 FAM = {
     'basic': '[data-theme^="basic"]', 'friendly': '[data-theme^="friendly"]', 'glass': '[data-theme^="glass"]',
     'retro': '[data-theme^="retro"]', 'light': '[data-theme$="-light"]', 'dark': '[data-theme$="-dark"]',
@@ -39,8 +43,11 @@ HEAD = ('/* Concept D (Polish): today\'s rail, polished. GENERATED from src/conc
 def expand(text: str) -> str:
     def rep(m):
         guard = ''.join(FAM[f.strip()] for f in (m.group(1) or '{}')[1:-1].split(',') if f.strip())
+        if m.group(3):
+            name = m.group(3)
+            return ROOT + guard + ' ' + (name if name.startswith('#') else '#panel-' + name)
         return ROOT + guard + TAIL[m.group(2) or '']
-    return re.sub(r'§(\{[a-z,]+\})?([RFSKB])?(?![A-Za-z])', rep, text)
+    return re.sub(r'§(\{[a-z,]+\})?(?:([RFSKB])|@(#?[A-Za-z][\w-]*))?(?![A-Za-z@])', rep, text)
 
 
 def generate() -> str:

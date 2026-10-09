@@ -241,17 +241,21 @@ function applyPanel(panel, animate) {
   applyWorktreeFilter(panel);
   applyRows(panel);
   applyScrollEdge(panel);
+  hooksFor(panel, 'apply').forEach(h => h.apply(panel, animate));
 }
 
 /* re-run on redraws, coalesced into one pass per frame pair */
 let pending = 0;
+const dirty = new Set();
 function schedule(panel) {
+  dirty.add(panel);
   if (pending) return;
   pending = requestAnimationFrame(() => requestAnimationFrame(() => {
     pending = 0;
+    const list = Array.from(dirty);
+    dirty.clear();
     if (!D.on) return;
-    panelEls().forEach(p => applyPanel(p, true));
-    fitAll();
+    list.forEach(p => { applyPanel(p, true); fitAll(p); });
   }));
 }
 function observePanels() {

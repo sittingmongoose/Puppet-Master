@@ -1,5 +1,6 @@
-/* Concept D (Polish): today's rail, polished. A skin concept: the shell's own Files, Source Control and Docker panels
-   (#panel-files, #panel-source, #panel-docker) stay in place and keep every behaviour; d.css restyles them under
+/* Concept D (Polish): today's rail, polished. A skin concept: the shell's own nine rail panels (Files, Search, Source
+   Control, Actions & Pipelines, Docker, Testing, Debug & Run, Agents, Runtime Artifacts) stay in place and keep every
+   behaviour; d.css restyles them under
    html[data-rail-skin="d"], and this script adds what CSS cannot: status glyphs in place of pills, sentence-case
    labels and full words in place of abbreviations, text that stacks instead of shortening, the shell's dropdowns opened
    as the chat-style PMR.menu, and motion. Everything it changes is recorded and undone on destroy, so "Current" and
@@ -9,9 +10,18 @@
    40-bar.js (activity bar tile), 90-register.js. They share this wrapper's scope. */
 
 const D = { on: false, undo: [], observers: [], listeners: [], bar: null };
-const PANEL_IDS = ['panel-files', 'panel-source', 'panel-docker'];
+/* the nine rail panels in activity-bar order; keep in step with PANEL_IDS in tools/build_d_css.py (the § macro) */
+const PANEL_IDS = ['panel-files', 'panel-search', 'panel-source', 'panel-git', 'panel-docker', 'panel-testing', 'panel-run', 'panel-agents', 'panel-artifacts'];
+const PANEL_SEL = PANEL_IDS.map(id => '#' + id).join(', ');
 const panelEls = () => PANEL_IDS.map(id => document.getElementById(id)).filter(Boolean);
-const inPanels = el => !!(el && el.closest && el.closest('#panel-files, #panel-source, #panel-docker'));
+const inPanels = el => !!(el && el.closest && el.closest(PANEL_SEL));
+/* per-panel passes: a panel's own script file calls panelHook('panel-x', { apply(panel, animate), show(panel, info),
+   unmount(panel) }) at load. apply runs after the shared passes on every (re)apply, show when the panel opens,
+   unmount before the undo registry runs. Every DOM change a hook makes still goes through remember()/setAttr()/
+   addClass()/inject() so "Current" is byte-identical after a switch. */
+const PANEL_HOOKS = [];
+function panelHook(id, hook) { PANEL_HOOKS.push(Object.assign({ id }, hook)); }
+const hooksFor = (panel, fn) => PANEL_HOOKS.filter(h => h.id === panel.id && typeof h[fn] === 'function');
 
 /* ---- undo registry: every change the skin makes is reversible ---- */
 function remember(fn) { D.undo.push(fn); }

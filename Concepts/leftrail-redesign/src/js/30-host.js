@@ -129,11 +129,12 @@ function setConcept(id, opts) {
 function notifyShown(target, info) {
   const p = PMR.panelFor(target);
   if (HOST.bar && HOST.bar.panel) { try { HOST.bar.panel(target, info); } catch (e) { console.error('[pm-rail] bar panel', e); } }
+  /* a skin restyles every rail panel, not only the three the view concepts redraw */
+  const skin = HOST.inst.skin;
+  if (skin && skin.show) { try { skin.show(Object.assign({ target, panelId: p ? p.id : target }, info)); } catch (e) { console.error('[pm-rail] skin show', target, e); } }
   if (!p) return;
   const inst = HOST.inst[p.id];
   if (inst && inst.show) { try { inst.show(Object.assign({ target }, info)); } catch (e) { console.error('[pm-rail] show', p.id, e); } }
-  const skin = HOST.inst.skin;
-  if (skin && skin.show) { try { skin.show(Object.assign({ target, panelId: p.id }, info)); } catch (e) { console.error('[pm-rail] skin show', p.id, e); } }
 }
 
 /* panel changes: the shell flips .active on its panels and .hidden on the slot; watch both */
