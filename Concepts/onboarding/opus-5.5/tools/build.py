@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build Concepts/TestOpus5.5PmConcept.html from the pinned TestPMConcept.html plus ./src (onboarding, tour, Settings).
+"""Build Concepts/Onboarding concepts/TestOpus5.5PmConcept.html from the pinned TestPMConcept.html beside it plus ./src (onboarding, tour, Settings).
 
 Usage:
   python3 Concepts/onboarding/opus-5.5/tools/build.py          # build TestOpus only
@@ -29,8 +29,8 @@ import settings_layer
 TOOLS = Path(__file__).resolve().parent
 PKG = TOOLS.parent
 CONCEPTS = PKG.parents[1]
-SOURCE = CONCEPTS / 'TestPMConcept.html'
-TARGET = CONCEPTS / 'TestOpus5.5PmConcept.html'
+SOURCE = CONCEPTS / 'Onboarding concepts' / 'TestPMConcept.html'
+TARGET = CONCEPTS / 'Onboarding concepts' / 'TestOpus5.5PmConcept.html'
 PM7_TARGET = CONCEPTS / 'PMConcept7.html'
 SRC = PKG / 'src'
 BASE_SHA256 = 'b3888fad4993f484ab4548e9ff212ec0042fa0a912947a7f316514db939326be'
@@ -618,9 +618,9 @@ def check(built: str) -> list[str]:
             problems.append(f'marker {marker} appears {built.count(marker)} times')
     expected = built.encode('utf-8')
     if not TARGET.exists():
-        problems.append('Concepts/TestOpus5.5PmConcept.html is missing; run build.py')
+        problems.append('Concepts/Onboarding concepts/TestOpus5.5PmConcept.html is missing; run build.py')
     elif TARGET.read_bytes() != expected:
-        problems.append('Concepts/TestOpus5.5PmConcept.html is stale; run build.py')
+        problems.append('Concepts/Onboarding concepts/TestOpus5.5PmConcept.html is stale; run build.py')
     if not PM7_TARGET.exists():
         problems.append('Concepts/PMConcept7.html is missing; run build.py --publish-pm7')
     elif PM7_TARGET.read_bytes() != expected:

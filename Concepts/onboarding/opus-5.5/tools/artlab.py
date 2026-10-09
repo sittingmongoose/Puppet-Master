@@ -15,7 +15,7 @@ from pathlib import Path
 TOOLS = Path(__file__).resolve().parent
 PKG = TOOLS.parent
 SRC = PKG / 'src'
-BASE = PKG.parents[1] / 'TestPMConcept.html'
+BASE = PKG.parents[1] / 'Onboarding concepts' / 'TestPMConcept.html'
 
 DEFAULT_ROWS = ['hero:default', 'route:default', 'nas:find', 'nas:identity', 'nas:keys', 'nas:install', 'nas:verified', 'nas:folder']
 ART_JS = ['00-namespace.js', '05-util.js', '10-motion.js', '50-art-core.js', '51-art-basic.js', '52-art-friendly.js',

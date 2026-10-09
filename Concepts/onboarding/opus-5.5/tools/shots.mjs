@@ -12,7 +12,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : '/tmp/o55/shots');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
-const page_ = resolve(opt('page', resolve(here, '../../../TestOpus5.5PmConcept.html')));
+const page_ = resolve(opt('page', resolve(here, '../../../Onboarding concepts/TestOpus5.5PmConcept.html')));
 const flag = (k) => argv.includes('--' + k);
 const screens = opt('screens', 'welcome,look,where').split(',');
 const themes = opt('themes', 'basic-dark,basic-light,friendly-dark,friendly-light,glass-dark,glass-light,retro-dark,retro-light').split(',');

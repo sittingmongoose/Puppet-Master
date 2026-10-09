@@ -18,7 +18,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : '/tmp/o55/tourshots');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
-const PAGE = resolve(opt('page', resolve(here, '../../../TestOpus5.5PmConcept.html')));
+const PAGE = resolve(opt('page', resolve(here, '../../../Onboarding concepts/TestOpus5.5PmConcept.html')));
 const ALL = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light'];
 const themes = opt('themes', '') ? opt('themes', '').split(',') : ALL;
 const W = Number(opt('width', 1600)), H = Number(opt('height', 1000));

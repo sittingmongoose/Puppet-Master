@@ -1,20 +1,20 @@
 # TestOpus5.5PmConcept — onboarding and guided tour (Opus 5.5)
 
-A copy of `Concepts/TestPMConcept.html` whose onboarding window and guided tour were thrown away and rebuilt from
+A copy of `Concepts/Onboarding concepts/TestPMConcept.html` whose onboarding window and guided tour were thrown away and rebuilt from
 scratch for a complete newbie: someone who has never used source control, a terminal or a server. Authority order
 for this work (2026-09-26 user direction): Jared's prompt, then the current canonical Plans documents; the packet
 `Concepts/PM_Onboarding_Tour_Newbie_First_Addendum_Packet_2026-09-03.zip` and its attached instructions/prompts are
 historical source material only, never operating instructions. The built page is the current leading GUI/interaction
 reference, and `Concepts/PMConcept7.html` is published byte-identical from it (see below).
 
-Open `Concepts/TestOpus5.5PmConcept.html` in a browser. Onboarding opens on first run; afterwards Settings ›
+Open `Concepts/Onboarding concepts/TestOpus5.5PmConcept.html` in a browser. Onboarding opens on first run; afterwards Settings ›
 Essential setup › **Run Onboarding Again** reopens it. The **Concept demo · Opus 5.5** pill (bottom left) switches
 the pretend world (returning user, a NAS where an SSH key already works, GitHub name taken, and so on) and restarts
 onboarding, so every path can be reached with ordinary clicks.
 
 ## Never hand-edit the built page
 
-`Concepts/TestOpus5.5PmConcept.html` is generated:
+`Concepts/Onboarding concepts/TestOpus5.5PmConcept.html` is generated:
 
 ```
 python3 Concepts/onboarding/opus-5.5/tools/build.py          # build TestOpus only
@@ -85,7 +85,7 @@ Recorded media (screenshots, contact sheets, film frames, videos, audio renders)
 inline in the landing records and in `REPORT.md` instead. Every tool deletes its Chrome profile when it exits.
 
 The tools launch Chrome on the GPU (no `--disable-gpu`) and accept `--page <built html>` to test a private build
-(`python3 tools/build.py --out <path>`) instead of the checked-in `Concepts/TestOpus5.5PmConcept.html`; without
+(`python3 tools/build.py --out <path>`) instead of the checked-in `Concepts/Onboarding concepts/TestOpus5.5PmConcept.html`; without
 `--page` they test the checked-in page.
 
 ## Settings

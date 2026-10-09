@@ -25,7 +25,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
 const flag = (k) => args.includes('--' + k);
 const opt = (k, d) => { const i = args.indexOf('--' + k); return i >= 0 ? args[i + 1] : d; };
-const pageFile = resolve(opt('page', resolve(here, '../../../TestOpus5.5PmConcept.html')));
+const pageFile = resolve(opt('page', resolve(here, '../../../Onboarding concepts/TestOpus5.5PmConcept.html')));
 const out = resolve(args.find((a, i) => !a.startsWith('--') && !(i > 0 && args[i - 1] === '--page')) || '/tmp/o55/sound');
 mkdirSync(out, { recursive: true });
 const { page, close } = await launch({ width: 1440, height: 900 });

@@ -9,7 +9,7 @@ import { resolve, dirname } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const pageIdx = process.argv.indexOf('--page');
-export const PAGE = pageIdx >= 0 && process.argv[pageIdx + 1] ? resolve(process.argv[pageIdx + 1]) : resolve(here, '../../../TestOpus5.5PmConcept.html');
+export const PAGE = pageIdx >= 0 && process.argv[pageIdx + 1] ? resolve(process.argv[pageIdx + 1]) : resolve(here, '../../../Onboarding concepts/TestOpus5.5PmConcept.html');
 
 export async function open({ scenario = 'fresh', theme = 'basic-dark', width = 1440, height = 900, query = '', snapDir = null, snapPrefix = '' } = {}) {
   const { page, close } = await launch({ width, height });

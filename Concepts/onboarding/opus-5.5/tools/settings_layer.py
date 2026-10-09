@@ -1,6 +1,6 @@
 """O55 Settings layer: swap the pinned base's T50 Settings refresh for the Opus 5.5 fork in ../src/settings.
 
-The pinned base (Concepts/TestPMConcept.html) is the T50 lane's output: its Settings engine carries the T50 fixture
+The pinned base (Concepts/Onboarding concepts/TestPMConcept.html) is the T50 lane's output: its Settings engine carries the T50 fixture
 bands (providers, forges, events, sounds) and the appended pm51 kit + managers module, and its head carries
 <style id="pm51-settings-refresh">. This step replaces exactly those pieces with the fork, so the managers are
 authored as real source files here instead of as patches:

@@ -15,7 +15,7 @@ const out = resolve(argv[0] || '/tmp/o55-boot');
 const themes = (argv[1] || 'basic-dark').split(',');
 mkdirSync(out, { recursive: true });
 
-const pages = { base: join(concepts, 'TestPMConcept.html'), built: pageIdx >= 0 && raw[pageIdx + 1] ? resolve(raw[pageIdx + 1]) : join(concepts, 'TestOpus5.5PmConcept.html') };
+const pages = { base: join(concepts, 'Onboarding concepts', 'TestPMConcept.html'), built: pageIdx >= 0 && raw[pageIdx + 1] ? resolve(raw[pageIdx + 1]) : join(concepts, 'Onboarding concepts', 'TestOpus5.5PmConcept.html') };
 const report = {};
 for (const [name, file] of Object.entries(pages)) {
   const { page, close } = await launch({ width: 1600, height: 1000 });

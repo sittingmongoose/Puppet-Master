@@ -11,7 +11,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const raw = process.argv.slice(2);
 const pageIdx = raw.indexOf('--page');
 const argv = pageIdx >= 0 ? raw.filter((_, i) => i !== pageIdx && i !== pageIdx + 1) : raw;
-const pageFile = pageIdx >= 0 && raw[pageIdx + 1] ? resolve(raw[pageIdx + 1]) : resolve(here, '../../../TestOpus5.5PmConcept.html');
+const pageFile = pageIdx >= 0 && raw[pageIdx + 1] ? resolve(raw[pageIdx + 1]) : resolve(here, '../../../Onboarding concepts/TestOpus5.5PmConcept.html');
 const out = resolve(argv[0] || '/tmp/o55/drafts.json');
 const { page, close } = await launch({ width: 1200, height: 800 });
 try {
