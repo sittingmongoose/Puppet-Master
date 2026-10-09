@@ -558,7 +558,7 @@
       if (f === 'basic') return [{ key: 'fm-stamp', prop: 'fmStamp', x: 318, y: sign + 34, r: -7, layer: 'front' }];
       if (f === 'friendly') return [[152, floor + 14], [218, floor + 18], [374, floor + 14]].map(([x, y], i) => ({ key: 'fm-rose' + i, prop: 'fmRose', x, y, s: 1.45, r: [-24, 12, 30][i], layer: 'front', opts: { v: i } }));
       if (f === 'glass') return [-1, 0, 1].map((s, i) => ({ key: 'fm-spot' + i, prop: 'fmSpot', x: 240 + s * 112, y: floor + 4, layer: 'back', opts: { v: i, top: 30 - floor, tint: ['lav', 'pink', 'mint'][i] } }));
-      if (f === 'retro') return [{ key: 'fm-clear', prop: 'fmClear', x: 240, y: 28, layer: 'front' }, { key: 'fm-score', prop: 'fmScore', x: 240, y: floor + 72, layer: 'front' }, { key: 'fm-arrow', prop: 'fmArrow', x: 416, y: floor - 60, layer: 'front' }];
+      if (f === 'retro') return [{ key: 'fm-clear', prop: 'fmClear', x: 240, y: 28, layer: 'front' }, { key: 'fm-score', prop: 'fmScore', x: 240, y: floor + 72, layer: 'front' }, { key: 'fm-arrow', prop: 'fmArrow', x: 402, y: floor - 60, layer: 'front' }];
       return [];
     }
   };
