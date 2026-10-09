@@ -3476,16 +3476,22 @@ canonical_text: >-
   Current Product Onboarding wiring consumes PWIZ-021's owner-defined main_stage_order, connect_existing_stage_order,
   and deferred_project_stage_order. The eleven-stage main path commits the Project before paid-provider setup and then
   Free Models; the six-stage connect-existing shortcut and explicit Project Later path do not fabricate a Project or
-  run its provider phases. These graphs bind exactly thirteen typed local actions:
+  run its provider phases. These graphs bind exactly fourteen typed local actions:
   `ui.onboarding.start`, `ui.onboarding.next`, `ui.onboarding.back`, `ui.onboarding.close`, `ui.onboarding.skip`,
   `ui.onboarding.defer`, `ui.onboarding.open_details`, `ui.onboarding.more_ways`, `ui.onboarding.choose_simple_path`, `ui.onboarding.open_owner_flow`,
-  `ui.onboarding.run_automatic_preparation`, `ui.onboarding.choose_first_project`, and `ui.onboarding.finish`. These
+  `ui.onboarding.run_automatic_preparation`, `ui.onboarding.choose_first_project`, `ui.onboarding.finish`, and
+  `ui.onboarding.choose_look`. These
   actions transition or project local Product Onboarding state; they are not UICommands and receive no command-catalog
   row, semantic command handler, generic Onboarding mutation handler, or EventRecord. They use the closed
   pm.product_onboarding.action_request.v2 -> pm.product_onboarding.action_result.v2 local contract. Every request has
   required closed, normalized, secret-free local_context fields; arbitrary/raw payload fields, additional keys, and
   secret-bearing values are rejected. Exact intent/scope/choice/branch combinations distinguish setup/project disclosure
-  from branch-local more_ways updates and whole-session Skip from Project/Remote-Access optional-scope Skip. When a selected branch needs owner
+  from branch-local more_ways updates and whole-session Skip from Project/Remote-Access optional-scope Skip.
+  `ui.onboarding.start` opens a first_run window in a Basic Dark preview, with Basic Dark preselected and NieR Mode
+  unticked, and a settings_rerun window in the look on screen; `ui.onboarding.choose_look` previews the look choice, the
+  NieR Mode checkbox, the header's Look menu and the NieR Mode editor panel through a closed look_choice. Neither
+  dispatches `cmd.theme.*` or a Settings transaction; the look is written with the Project at commit (F3-520, DL-153).
+  When a selected branch needs owner
   work, its local draft queues the typed owner route and intent. The only precommit dispatch is owner-authorized read-only
   preflight or authentication necessary for the selected source, with exact current owner request validation, permission,
   consent, draft/session revision, hash, expiry and return context. MACS-005 supports first-time source sign-in without
@@ -3508,7 +3514,10 @@ canonical_text: >-
   `ui.guided_tour.next`, `ui.guided_tour.back`, `ui.guided_tour.pause`, `ui.guided_tour.resume`,
   `ui.guided_tour.skip`, `ui.guided_tour.focus_route`, `ui.guided_tour.toggle_eli5`, `ui.guided_tour.finish`, and
   `ui.guided_tour.replay`, and `ui.guided_tour.show_me`; they are not UICommands, owner mutations, EventRecords, or a
-  new persistence authority. Chat opens first and uses the existing Persona/Chat commands for Teacher selection, the
+  new persistence authority. The Tour bar's Look menu and sound control are not `ui.guided_tour.*` actions: a Look
+  choice, the NieR Mode checkbox, every live NieR Mode editor edit and the sound control's write of
+  `general.interaction.sound-effects` compose `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply`,
+  and Adjust NieR look is `ui.settings.nier_editor.open` (DL-153). Chat opens first and uses the existing Persona/Chat commands for Teacher selection, the
   supplied local question, a streamed same-conversation answer, and that same answer in simple words as one extra,
   simpler reply from Explain this reply simply (`cmd.chat.eli5.explain_reply`), the original reply unchanged (DL-126). Workspace practice routes
   actual panel docking and widget actions through their existing owners. Planning receives at least half of meaningful
@@ -3519,7 +3528,9 @@ canonical_text: >-
   Teacher example answer. The same-answer ELI5 checkpoint depends on the admission of `cmd.chat.eli5.explain_reply`:
   until then its control renders disabled with `command_not_registered` (WM-064) and the checkpoint is never
   synthesized. Reduced Motion remains Settings-owned. Skip reverse-routes
-  restoration of the captured layout, Chat state, composer placeholder, and focus. Finish restores by default or keeps
+  restoration of the captured layout, Chat state, composer placeholder, and focus. While any restore runs, the
+  application's own notices about it (a widget removed, a persona applied from the next turn) stay quiet in every look,
+  and the Tour's closing note says what was put back (F3-521, DL-153). Finish restores by default or keeps
   layout only after explicit selection through the existing finish action, removes practice content, and lands on the
   real Planning Wizard with the committed Project selected and no work auto-started. Close/reload requires a safe owner-
   revalidated checkpoint; absent original state or stale observations expose recovery, never a newly invented snapshot.
@@ -3539,7 +3550,8 @@ unblocks: []
 acceptance_criteria:
   - Main, connect-existing and Project Later consume the three exact PWIZ-021 stage-order definitions; wiring does not re-own their roster. Provider/Free Models phases require a real committed Project and never appear in connect-existing or Project Later as fake completed work.
   - Back consumes the exact durable path history: connect-existing `remote_access_setup` returns to `simple_path`, while main-path `remote_access_setup` returns to `server_storage_client`; no skipped shortcut stage is synthesized into reverse wiring.
-  - The exact current action set contains the thirteen named `ui.onboarding.*` IDs; every authored control emits one typed local action and no action is registered as a UICommand, domain event, or production wiring row. `simple_path` and `ui.onboarding.choose_simple_path` are current visible behavior.
+  - The exact current action set contains the fourteen named `ui.onboarding.*` IDs; every authored control emits one typed local action and no action is registered as a UICommand, domain event, or production wiring row. `simple_path` and `ui.onboarding.choose_simple_path` are current visible behavior.
+  - "`ui.onboarding.start` paints a Basic Dark preview for first_run (Basic Dark preselected, NieR Mode unticked) and keeps the look on screen for settings_rerun; `ui.onboarding.choose_look` previews the look, its NieR Mode checkbox, the Look menu and the editor panel with no owner route, `cmd.theme.*` or Settings transaction, the look being written with the Project at commit (DL-153)."
   - Requests and results validate against the closed action schema; applied, disabled, and rejected are distinct, and disabled/rejected results dispatch no owner work, write no session/continuation, carry no production receipt, and expose exact reasons.
   - Every request consumes the exact closed v2 local_context definition, including phase-specific owner-command/preflight/commit proof. The schema owns its required/null/gated fields; missing gated proof, an additional/arbitrary/raw field, or secret-bearing context fails closed.
   - more_ways uses toggle_setup_options plus setup_options/project_options and a matching choice for stage disclosure, or update_branch_state plus non-null canonical branch_kind and choice=null for branch-local updates; the variants cannot normalize into each other.
@@ -3563,6 +3575,8 @@ acceptance_criteria:
   - Chat opens first; `cmd.persona.select`, `cmd.chat.send`, `cmd.chat.eli5.set` (the quick dot, later replies only), and `cmd.chat.eli5.explain_reply` retain their sole Persona/Chat owners and gain exact tour consumers. The guided conversation is locally isolated, retains its identity across docking, and shows the same answer for ELI5 only as one extra, simpler reply from Explain this reply simply; the original reply is never re-sent, regenerated or rewritten (DL-126).
   - Workspace practice consumes existing panel, workspace-layout, and widget commands according to the chosen action. Planning retains at least half of meaningful actions and dwell, accepts a genuine edited answer, changes only the dependent consequence, and leaves unsure choices unresolved.
   - ELI5 is at the top beside Pause and Skip; `ui.guided_tour.toggle_eli5` changes the tour's narration only and never rewrites the Teacher example answer. The same-answer ELI5 checkpoint is never satisfied while `cmd.chat.eli5.explain_reply` is not admitted. Effective Reduced Motion is a Settings-owned projection/change route; Guided Tour has no Reduced Motion setting or action.
+  - "While a Skip or Finish restore runs, the application's own notices about it stay quiet in every look, and the Tour's closing note says what was put back (F3-521, DL-153)."
+  - "The Tour bar's Look menu and sound control are not `ui.guided_tour.*` actions: their writes compose `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply`, Adjust NieR look is `ui.settings.nier_editor.open`, and the Tour's census stays its eleven actions (DL-153)."
   - Skip restores captured layout, Chat state, placeholder, and focus through existing owners; Finish restores by default or keeps layout only on explicit selection through `ui.guided_tour.finish`, then removes practice content and focuses the real Planning Wizard with the committed Project and no auto-started work. No `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, or generic owner mutation is introduced.
   - Close/reload revalidates the last safe checkpoint and original restoration references against current owners before resume; missing, stale, or failed restoration state exposes recovery and never reports completion or captures the temporary arrangement as the original.
   - Retired five-chapter ordering and `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, and `ui.guided_tour.toggle_reduced_motion` have no current Tour control, request, alias, handler, or production row; similarly named canonical layout or Settings commands remain available to unrelated non-Tour consumers under their existing owners.
@@ -3644,6 +3658,7 @@ preserved_exact_tokens:
   - "ui.onboarding.run_automatic_preparation"
   - "ui.onboarding.choose_first_project"
   - "ui.onboarding.finish"
+  - "ui.onboarding.choose_look"
   - "usage"
   - "planning_wizard"
   - "chat_teacher"
@@ -3997,7 +4012,7 @@ owner_hints:
 
 The Settings/Onboarding/Doctor/Server/WAN/Backup/Browser/Capture/SCM/Forge/plugin/performance wave uses `Plans/touch_closure.json` as its bidirectional coverage register and `Plans/Wiring_Matrix.production.json` as the production-intent row set. Each canonical command has one catalog entry and one sole handler target, while every GUI-required command has every intended visible consumer enumerated in reverse. Typed local UI actions use the same availability, disabled-reason, accessibility, return-route, and evidence discipline but do not receive fictitious domain handlers or EventRecords.
 
-Current Product Onboarding consumes PWIZ-021's exact thirteen typed local actions and v2 main/connect-existing/deferred stage definitions. It adds no semantic command or production-wiring row. Draft choices and Settings copy previews remain uncommitted; the narrow owner-issued read-only/selected-source-auth exception is checked against actual owner inputs. PJCT-007 owns the one exact Review-bound Project commit chain. Paid-provider setup then Free Models consume that real Project, and explicit paid Skip still offers Free Models. WM-041 carries the reverse-wiring obligations; the roster and phase contract are not duplicated here.
+Current Product Onboarding consumes PWIZ-021's exact fourteen typed local actions and v2 main/connect-existing/deferred stage definitions. It adds no semantic command or production-wiring row. Draft choices and Settings copy previews remain uncommitted; the narrow owner-issued read-only/selected-source-auth exception is checked against actual owner inputs. PJCT-007 owns the one exact Review-bound Project commit chain. Paid-provider setup then Free Models consume that real Project, and explicit paid Skip still offers Free Models. WM-041 carries the reverse-wiring obligations; the roster and phase contract are not duplicated here.
 
 The actions consume `pm.product_onboarding.action_request.v2` -> `pm.product_onboarding.action_result.v2` from the owner schema, including closed phase-gated `local_context`, applied/disabled/rejected results, zero dispatch/write on disabled or rejected outcomes, and no local production receipt. SSYS-036 owns draft copy preview/rebind; MACS-005 owns first-time selected-source sign-in; PJCT-007 owns actual Project commit binding; MS-122 owns post-commit Free Models. Exact durable bounded draft, phase, Project binding and focus continuation follow PWIZ-021/SP-252. Close never completes, Back never undoes/repeats commit, Defer retains the exact continuation, and Details stays ephemeral and owner-command-free. A selected owner route consumes the existing sole owner handler and gains reverse consumers without a wrapper command. The predecessor `cmd.onboarding.first_run.open`, `cmd.onboarding.provider_setup.open`, `cmd.onboarding.provider_setup.use_provider`, `cmd.onboarding.skip_to_planning_wizard`, `cmd.onboarding.free_models.review`, `cmd.onboarding.free_models.defer`, `cmd.onboarding.review_setup`, `cmd.onboarding.open_planning_wizard`, `cmd.onboarding.free_models.refresh`, `cmd.onboarding.free_models.retry`, and `cmd.onboarding.free_models.setup` spellings are source-lineage-only: none is a production row or compatibility alias. The separate packet candidates `cmd.onboarding.back`, `cmd.onboarding.cancel`, `cmd.onboarding.continue`, `cmd.onboarding.defer`, `cmd.onboarding.finish`, `cmd.onboarding.open_details`, `cmd.onboarding.resume`, and `cmd.onboarding.skip` are source-lineage candidate tokens only and are rejected as commands, aliases, and handlers because typed local `ui.onboarding.*` actions own their semantics.
 
@@ -4033,8 +4048,8 @@ unblocks: []
 acceptance_criteria:
   - Commands, handlers, and GUI consumers are each complete in both directions with no duplicate primary ID or owner.
   - Typed local actions carry availability, disabled reason, accessibility, and exact-return evidence without fictitious runtime command rows.
-  - "Product Onboarding exposes exactly the thirteen `ui.onboarding.*` typed local actions and routes owner work through existing owner commands/handlers; no `cmd.onboarding.*` production row, compatibility alias, generic handler, or EventRecord is admitted."
-  - "Product Onboarding consumes the PWIZ-021 v2 stage/phase definitions and thirteen local actions: bounded draft and explicit Settings preview, narrowly admitted precommit read/source authentication, PJCT-007 exact Review commit, actual Project-bound paid-provider then Free Models setup, and non-replaying phase-safe continuation. Existing owner rows enumerate these reverse consumers without changing command/handler rosters."
+  - "Product Onboarding exposes exactly the fourteen `ui.onboarding.*` typed local actions and routes owner work through existing owner commands/handlers; no `cmd.onboarding.*` production row, compatibility alias, generic handler, or EventRecord is admitted."
+  - "Product Onboarding consumes the PWIZ-021 v2 stage/phase definitions and fourteen local actions: bounded draft and explicit Settings preview, narrowly admitted precommit read/source authentication, PJCT-007 exact Review commit, actual Project-bound paid-provider then Free Models setup, and non-replaying phase-safe continuation. Existing owner rows enumerate these reverse consumers without changing command/handler rosters."
   - "Every Product Onboarding request carries the closed normalized secret-free local_context; more_ways and skip variants are exact and non-ambiguous, and arbitrary/raw/secret-bearing context is rejected."
   - "Guided Tour consumes the v3 owner schema's eleven typed local actions in Chat/Teacher, workspace, Planning Wizard order; the shared Show Me path, Persona/Chat commands, panel/workspace/widget practice, safe checkpoint, default restoration or explicit Keep, and final real-Wizard handoff have exact reverse consumers without duplicate domain owners or production rows. Missing machine/native/durable proof remains partial."
   - "The packet candidates `cmd.onboarding.back`, `cmd.onboarding.cancel`, `cmd.onboarding.continue`, `cmd.onboarding.defer`, `cmd.onboarding.finish`, `cmd.onboarding.open_details`, `cmd.onboarding.resume`, and `cmd.onboarding.skip` are source-lineage only and rejected as commands, aliases, and handlers."

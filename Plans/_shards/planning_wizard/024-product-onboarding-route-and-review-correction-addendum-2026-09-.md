@@ -2,15 +2,15 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2120-L2215
+Source lines: L2132-L2227
 
-Source SHA256: `5427081e41014e5e8a9e0b1b51f78d9e6af8ecdf37f946e47827431404269ffe`
+Source SHA256: `b07109ef9a02c6dffff13598401bdc430ab9b6f7095761a8de0fa30276f24078`
 
 ---
 
 ## Product Onboarding route-and-review correction addendum - 2026-09-01
 
-PWIZ-024 retains the September 1 four-route and independent-placement correction. PWIZ-021 now applies the September 3 draft/copy/late-commit and postcommit provider phases; the six-stage connect-existing shortcut, thirteen local actions and existing owner boundaries remain intact.
+PWIZ-024 retains the September 1 four-route and independent-placement correction. PWIZ-021 now applies the September 3 draft/copy/late-commit and postcommit provider phases; the six-stage connect-existing shortcut, the typed local actions (fourteen since DL-153) and existing owner boundaries remain intact.
 
 ### PWIZ-024 - Visible project routes, independent placement, and live reviewed setup draft
 

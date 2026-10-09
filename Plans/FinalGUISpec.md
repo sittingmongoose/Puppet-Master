@@ -9692,7 +9692,10 @@ canonical_text: >-
   dropdown when >4 themes are available in it (built-in + custom). Below the family rows, after a divider, one NieR
   Mode row carries a checkbox (menuitemcheckbox), checked while NieR Mode is on, and beside it an Adjust NieR look
   button that opens the NieR Mode editor as a popup dialog (F3-598); toggling keeps the menu open, and NieR Mode
-  is never a family row or a theme variant. In Auto the selected family
+  is never a family row or a theme variant. The segmented control dispatches cmd.theme.set_mode. A family row and
+  the NieR Mode checkbox are ordinary Settings changes that compose cmd.settings.transaction.preview then
+  cmd.settings.transaction.apply over the exact IDs, the family with the current mode as SSYS-009's atomic pair, and
+  Adjust NieR look is the typed local action ui.settings.nier_editor.open (SSYS-043, DL-153). In Auto the selected family
   resolves to its dark or light variant by following the OS appearance (prefers-color-scheme)
   live. Settings > General exposes the theme family + mode controls and theme folder, create,
   import, and export actions.
@@ -9704,6 +9707,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - "Below the four family rows the menu shows one NieR Mode menuitemcheckbox with an Adjust NieR look button that opens the NieR Mode editor as a popup dialog; NieR Mode never appears as a family row or a ninth variant, and the selector still exposes exactly eight built-in variants."
+- "The segmented control dispatches cmd.theme.set_mode; a family row and the NieR Mode checkbox dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply with those commands' availability and disabled reasons; Adjust NieR look emits ui.settings.nier_editor.open (DL-153)."
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
@@ -35234,7 +35238,11 @@ canonical_text: >-
   welcome. Look selections preview presentation without dispatching owner work. Before a verified current Project
   exists, Look and sound changes, NieR Mode with its parts and background included, remain ephemeral and perform no
   durable Settings write; after Project commit or connection to an existing
-  Project, persistence requires that exact current Project Settings binding. The sound control consumes the Settings-owned
+  Project, persistence requires that exact current Project Settings binding. The eight-theme choice, the NieR Mode
+  checkbox, the Look menu and the NieR Mode editor panel emit one typed local action, `ui.onboarding.choose_look`
+  (DL-153), which never dispatches `cmd.theme.*` or a Settings transaction: the look is written with the Project at
+  commit, and a look changed after the commit is written to that Project through the same Settings binding when the
+  window finishes or closes. The sound control consumes the Settings-owned
   `general.interaction.sound-effects` effective pref (or its factory default while no Project exists), stays
   keyboard-reachable with an explicit sound-off state, and audio is never the sole status signal; onboarding's cues are
   the onboarding and Guided Tour cue category of F3-599. In user language, the
@@ -35298,6 +35306,7 @@ acceptance_criteria:
   - "Choosing connect-existing follows exactly welcome, simple_path, remote_access_setup, review_setup_plan, automatic_preparation, ready; it skips first_project, source_control_setup, and server_storage_client instead of mounting blank or inapplicable stages, while Back follows the same bounded shortcut in reverse."
   - "The connect-existing choice is composed as a first-class peer in simple_path, not a tacked-on admonition box; entering it lands on the route chooser, never on a premature Review summary or a redundant Use nearby devices/Find one I already use pre-step."
   - "The bounded eight-theme choice is available at welcome before Project and infrastructure decisions and changes presentation without dispatching owner work; Basic, Friendly, Glass, and Retro use drastically different scene imagery, composition, material, typography, and motion direction, while each family's light/dark pair preserves that family identity instead of presenting eight recolors of one illustration. A NieR Mode checkbox with an Adjust NieR look button sits below the eight-theme choice, never among its options, and previews NieR Mode, its parts and its background without a durable write (F3-598)."
+  - "The eight-theme choice, the NieR Mode checkbox, the header Look menu and the NieR Mode editor panel each emit `ui.onboarding.choose_look` (intents choose_look, preview_nier, toggle_look_menu and toggle_look_editor) with no owner route, no `cmd.theme.*` and no Settings transaction; the previewed look is written with the Project at commit, a later change through the same Settings binding when the window finishes or closes (DL-153)."
   - "Beyond welcome, the onboarding header keeps a persistent Look menu (`Change the look`: four families plus Light/Dark, then a NieR Mode checkbox with an Adjust NieR look button) and sound control reachable by keyboard on every stage; Look changes preview presentation without dispatching owner work and persist only through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`, and for NieR Mode `general.visual.nier-mode`, `general.visual.nier-parts` and `general.visual.nier-background`) with a verified current Project binding after commit or connection; Project Later and every no-Project state allow only ephemeral preview without durable writes, while the sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn on` state, honors effective Reduced Motion, and audio never carries a status alone."
   - "The header Look menu exposes its open state and family/mode choices as menuitemradio options and NieR Mode as one menuitemcheckbox with its Adjust NieR look button, which opens the NieR Mode editor as a panel inside the onboarding window; the menu closes on Escape with focus returned to its button, and theme changes settle without blocking input; the sound button is a real keyboard-focusable control exposing its on/off state, and missing-audio handling follows the existing sound-control rule (hidden or labelled, never silent failure)."
   - "Precommit access consumes the closed PWIZ-021 read-only-preflight/selected-source-auth authorization and the target owner's actual request, current permission, selected-source scope, consent, draft/session revision, focus, Client/Host context, hash, and expiry. A ref-shaped string alone grants nothing. The necessary source sign-in exception is not paid/free-provider setup, enrollment, Connected Server pairing/trust, restore, repository creation/binding, filesystem mutation, or Project creation; the sole permitted pre-Review pairing is PWIZ-029 Server-owned `cmd.client.pair.start` approval/code/QR access to the chosen folder, backup, or network storage on another Puppet Master, recorded as `puppet_master` with bound `source_access_authorization_refs` and limited to read-only browsing and validation, leaving the after-Review Connected Server pairing rule unchanged."
@@ -35423,7 +35432,10 @@ canonical_text: >-
   Reduced Motion preserve real state and focus. The Tour bar carries the same persistent Look menu (`Change the look`)
   and sound control beyond setup on every step: Look choices, the NieR Mode checkbox and its Adjust NieR look editor
   included (F3-598), apply through the Settings owner at once only with a verified
-  current Project binding, and the Tour follows that Project's effective theme. Project switching invalidates stale bindings
+  current Project binding, and the Tour follows that Project's effective theme. Neither control is a
+  `ui.guided_tour.*` action (DL-153): a Look choice, the NieR Mode checkbox, every live edit in the editor and the
+  sound control's write of `general.interaction.sound-effects` compose cmd.settings.transaction.preview then
+  cmd.settings.transaction.apply, and Adjust NieR look is ui.settings.nier_editor.open. Project switching invalidates stale bindings
   and rebinds both controls before persistence; without a Project they offer ephemeral preview and no durable writes.
   The sound control binds to the Settings-owned `general.interaction.sound-effects`
   effective pref with a keyboard-accessible sound-off state. Both are shared chrome controls, not tour-specific
@@ -35448,7 +35460,7 @@ acceptance_criteria:
   - "The three chapters occur in exact Assistant Chat/Teacher, workspace, Planning Wizard order; the September 3 correction supersedes both predecessor controllers without reviving their old step boundaries. Replay and Back preserve the current story."
   - "Every enabled Back or forward control moves exactly one valid story beat, remains reachable and visibly button-shaped, and preserves the scene's mounted state; a coached beat with a required real target advances only from that target's observed action rather than from unrelated clicks, elapsed time, or a generic forward control."
   - "The brief opening introduces `ui.guided_tour.toggle_eli5` (labelled `ELI5: Off` until turned on) beside Pause and Skip Tour and explains Reduced Motion; it reads `general.visual.reduce-animations` and directs changes to Settings without inventing a separate toggle or detour."
-  - "The Tour bar keeps the persistent Look menu (`Change the look`: four families plus Light/Dark, then a NieR Mode checkbox with an Adjust NieR look button whose editor opens as a popup dialog above the Tour) and sound control reachable by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`, and for NieR Mode `general.visual.nier-mode`, `general.visual.nier-parts` and `general.visual.nier-background`) at once with presentation-only effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference toggle beside `ui.guided_tour.toggle_eli5`."
+  - "The Tour bar keeps the persistent Look menu (`Change the look`: four families plus Light/Dark, then a NieR Mode checkbox with an Adjust NieR look button whose editor opens as a popup dialog above the Tour) and sound control reachable by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`, and for NieR Mode `general.visual.nier-mode`, `general.visual.nier-parts` and `general.visual.nier-background`) at once with presentation-only effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference toggle beside `ui.guided_tour.toggle_eli5`. Neither is a `ui.guided_tour.*` action: Look choices, the NieR Mode checkbox, live editor edits and the sound control dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply, and Adjust NieR look emits ui.settings.nier_editor.open (DL-153)."
   - "Workspace practice explains page navigation and panel purpose, asks the learner to move/dock Chat and add, move, resize, or focus a real widget, and makes the destination and persisted owner result readable. The temporary layout is reversible."
   - "Every important action offers visible Try it and Show Me (`ui.guided_tour.show_me`) using the same owner handler and success predicate. Highlighting, narration, elapsed time, look-alike controls, generic Next, or unrelated changes never count as completion. Pre-cue, travel, arrival, and settle remain visible and interruptible."
   - "Planning receives at least half of meaningful action count and meaningful dwell time, measured against a declared step census. The book-club goal becomes next-meeting/current-book/how-to-join outcomes, followed by who-can-edit, why, review, edit consequence, and the no-work-before-approval boundary using the real current Wizard names/modes."
@@ -41140,7 +41152,8 @@ canonical_text: >-
   look preview (in the concept both stay painted until the next Settings write or Project load), and resuming setup
   paints it again from the onboarding session, never from the closed setup draft. A settings copy into the new
   Project never proposes the three NieR rows (SSYS-036). The title-bar and Tour-bar controls change the setting itself
-  through the Settings owner under the verified current Project binding. Choosing a family while NieR Mode is on keeps
+  through the Settings owner under the verified current Project binding, composing cmd.settings.transaction.preview
+  then cmd.settings.transaction.apply (DL-153). Choosing a family while NieR Mode is on keeps
   NieR Mode on, records the family that shows when it is turned off, and says so in plain words: in the title bar a
   short note says the theme is saved and shows when NieR Mode is off, with a button to turn it off; inside the
   onboarding window the NieR row's own line says NieR Mode is painting over the chosen look and that look shows again
@@ -41192,7 +41205,11 @@ canonical_text: >-
   sets out. The application beneath the onboarding window stays still while the window is open. The four theme
   families have hero moments of their own (F3-600); NieR's play whenever NieR Mode is painted, whatever family
   is chosen beneath it, and have no per-family variants (DL-153). No settings key,
-  NieR part, theme family, theme variant, `ui.onboarding.*` action or `ui.guided_tour.*` action is added.
+  NieR part, theme family, theme variant, command id, route or `ui.guided_tour.*` action is added: inside the
+  onboarding window the look choice, the NieR Mode checkbox and the editor panel use the one typed local action
+  `ui.onboarding.choose_look`, the editor's open, close and Play reboot moment are `ui.settings.nier_editor.open`,
+  `ui.settings.nier_editor.close` and `ui.settings.nier_editor.replay`, and every live control composes the Settings
+  transaction pair (SSYS-043, DL-153).
 gui_related: true
 gui_classification_reason: Defines where NieR Mode is turned on and how onboarding and the Guided Tour look under it.
 split_recommended: false
@@ -41210,7 +41227,7 @@ acceptance_criteria:
   - "Pod's narration never covers an actor, a hung card or the stage kicker."
   - "A key or a press during a NieR performance snaps that performance to its end state, and input never waits on it."
   - "Reduced Motion, the Still and Colors only presets and low resource show each of these moments in its end state, and Quiet drops the Pod beats."
-  - "No settings key, NieR part, theme variant, onboarding action or tour action is added."
+  - "No settings key, NieR part, theme variant, command id, route or tour action is added; onboarding's look controls use ui.onboarding.choose_look, the editor's open, close and replay ui.settings.nier_editor.*, and the live controls the Settings transaction pair (DL-153)."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -41241,16 +41258,17 @@ negative_constraints:
   - "Do not open the NieR Mode editor as a dialog over the onboarding window."
   - "Do not write a NieR choice durably before the Project binding exists."
   - "Do not use a game asset, game audio or a character likeness."
-  - "Do not add a NieR part, a settings key, a theme or an onboarding or tour action."
+  - "Do not add a NieR part, a settings key, a theme, a command, a route or a tour action, or an onboarding action other than ui.onboarding.choose_look."
 compatibility_only_notes: []
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-153): 'the four family directions are unchanged' is retired; the four families gain their own act card, wake and curtain call (F3-600), and NieR's moments still play whenever NieR Mode is painted."
+  - "Amended 2026-10-09 (DL-153): 'no ui.onboarding.* action is added' is retired; onboarding's look choice, its NieR Mode checkbox and its editor panel use the one typed local action ui.onboarding.choose_look, the editor's open, close and replay are ui.settings.nier_editor.*, and the live controls compose cmd.settings.transaction.preview then cmd.settings.transaction.apply; no command id, route, settings key or ui.guided_tour.* action is added."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-152, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/FinalGUISpec.md#F3-082, ContractName:Plans/Settings_System.md#SSYS-043
+ContractRef: ContractName:Plans/Decision_Log.md#DL-152, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/FinalGUISpec.md#F3-082, ContractName:Plans/Settings_System.md#SSYS-043, ContractName:Plans/Decision_Log.md#DL-153, ContractName:Plans/DRY_Rules.md#DR-056
 
 ### F3-599 — Onboarding And Guided Tour Sound Cues In Notifications And Sounds
 
@@ -41308,7 +41326,10 @@ canonical_text: >-
   nothing. The Settings sound library lists every take of every onboarding and Tour cue of every kit, the NieR kit
   included, as its own built-in entry in styles of their own beside the notification sounds (Setup & tour, one per
   look, and NieR), the main take of each moment first and the other takes behind a Show N more takes control; each
-  is previewed after an explicit gesture under F3-405's preview rules. In the concept that library holds 354
+  is previewed after an explicit gesture under F3-405's preview rules. Setup & tour shows one look's takes at a time,
+  chosen by a Which look switch; that switch (ui.settings.sound_library.look.select) and Show N more takes
+  (ui.settings.sound_library.takes.toggle) are typed local presentation actions that write nothing, and previewing an
+  entry dispatches the existing cmd.sound.preview (DL-153). In the concept that library holds 354
   entries (Basic 69 takes, Friendly, Glass and Retro 66 each, and the NieR kit 87), generated demonstration tones
   labelled as such and previewed through the onboarding's own player. This pass changes the four family kits'
   sounds; the four families' pictures change only at their own hero moments (F3-600, DL-153), which play those kits'
@@ -41328,6 +41349,7 @@ acceptance_criteria:
   - "Each look's chapter sting builds that look's four-note motif one note per chapter and resolves at Ready, and a chapter already stung in the run does not sting again after Back."
   - "No two cues of priority 75 or higher play within 1000 ms except the designed layers, and Ready's chord and the tour's finish each wait through 150 ms of rest."
   - "The sound library lists every take of each onboarding and Tour cue of each kit with its moment and style (Setup & tour per look, and NieR), 354 entries in the concept, main takes first and the rest behind Show N more takes, labelled as a generated demonstration tone in the concept, and previews it only after an explicit gesture. The four family kits' sounds change with this pass; the four families' pictures change only at their own hero moments (F3-600), which add no take (DL-153)."
+  - "The sound library's Which look switch and Show N more takes are ui.settings.sound_library.look.select and ui.settings.sound_library.takes.toggle, which dispatch and write nothing, and each entry's Play dispatches cmd.sound.preview (DL-153)."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -41354,6 +41376,7 @@ preserved_exact_tokens:
   - "Menu sounds"
   - "generated demonstration tones"
   - "Show N more takes"
+  - "Which look"
 negative_constraints:
   - "Do not add an onboarding-, tour- or NieR-only sound setting, sound registry, volume, player or kit choice."
   - "Do not let a cue be the only signal."
@@ -41366,14 +41389,15 @@ owner_hints:
   - Plans/Settings_System.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-152, ContractName:Plans/FinalGUISpec.md#F3-405, ContractName:Plans/FinalGUISpec.md#F3-564, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Settings_System.md#SSYS-039
+ContractRef: ContractName:Plans/Decision_Log.md#DL-152, ContractName:Plans/FinalGUISpec.md#F3-405, ContractName:Plans/FinalGUISpec.md#F3-564, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Settings_System.md#SSYS-039, ContractName:Plans/Decision_Log.md#DL-153
 
 ## DL-153 — The App Opens In Its Own Look, Setup's Starting Look, And The Four Families' Hero Moments (2026-10-09)
 
 This addendum compiles the owner decision DL-153, Jared's request of 2026-10-09 to take the next steps of the NieR
 onboarding showpiece (DL-152) and his two rulings of that day. It amends F3-468 (the first paint), F3-520 (the look
 onboarding starts in), F3-521 (the restore's own notices), F3-598 and F3-599 (the four families' pictures), and adds
-F3-600. Behaviour stays with its owners: `Plans/Planning_Wizard.md` PWIZ-021 to PWIZ-023 (onboarding and tour
+F3-600. The wiring rulings DL-153 records also name each look control's command or typed local action in F3-082,
+F3-520, F3-521, F3-598 and F3-599. Behaviour stays with its owners: `Plans/Planning_Wizard.md` PWIZ-021 to PWIZ-023 (onboarding and tour
 orchestration), `Plans/Settings_System.md` section 4.4 and SSYS-043 (the theme pair and NieR Mode). The units own the
 presentation only. The concept is source lineage only: its class names, keys, event identifiers, harness hooks and every
 measured timing outside these units are not canon.
@@ -41410,9 +41434,9 @@ canonical_text: >-
   reverses its opacity more than once a second, and a large area leaves one way; no filter, blur, blend mode, mask,
   canvas or WebGL is used. Outside these moments every onboarding screen settles exactly as before; Ready settles with
   the troupe in a line and its family's mark (the APPROVED stamp, the roses, the spotlights, ALL CLEAR with its
-  arrow). Ready still hands the window over to the Guided Tour's first callout in every family. No settings key,
-  theme family, theme variant, NieR part, sound setting, `ui.onboarding.*` action or `ui.guided_tour.*` action is
-  added.
+  arrow). Ready still hands the window over to the Guided Tour's first callout in every family. The moments add no
+  settings key, theme family, theme variant, NieR part, sound setting, `ui.onboarding.*` action or `ui.guided_tour.*`
+  action; their one trigger, end state, snap and sound path are shared by all five styles (DR-056).
 gui_related: true
 gui_classification_reason: Defines the act card, the wake and the curtain call of onboarding in the four theme families.
 split_recommended: false
@@ -41425,7 +41449,7 @@ acceptance_criteria:
   - "Reduced Motion and low resource show each moment's end state at once, and a key or a press snaps a running moment to its end state; an act card never delays the next screen beyond NieR's act card."
   - "Every onboarding screen other than Ready settles pixel-identical to its earlier picture in the eight family variants; Ready settles with the troupe in a line and its family's mark."
   - "No surface larger than 340x256 px reverses its opacity more than once a second; no filter, blur, blend mode, mask, canvas or WebGL is used; motion is one-shot transform or opacity scaled by Animation speed."
-  - "The families' moments play only their kits' existing cues, and no settings key, theme variant, NieR part, sound setting or onboarding or tour action is added."
+  - "The families' moments play only their kits' existing cues, and the moments add no settings key, theme variant, NieR part, sound setting or onboarding or tour action."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -41452,7 +41476,7 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not make a NieR variant per family or play a family's moment while NieR Mode is painted."
   - "Do not recolour NieR's moments as a family's moments."
-  - "Do not add a settings key, a theme, a NieR part, a sound setting or an onboarding or tour action."
+  - "Do not add a settings key, a theme, a NieR part, a sound setting or an onboarding or tour action for the moments."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
@@ -41460,4 +41484,4 @@ owner_hints:
   - Plans/Planning_Wizard.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-153, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-520
+ContractRef: ContractName:Plans/Decision_Log.md#DL-153, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/DRY_Rules.md#DR-056

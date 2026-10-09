@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L41371-L41463
+Source lines: L41394-L41487
 
-Source SHA256: `a0e27d58f5b81e56672b85f9b47dfd865bdab8447ec953ba6b0ac355e873adb7`
+Source SHA256: `a15a2bb7363d89db0e00f782622f7764a4b5f306d73cf4ac96a94c8c8a5ee506`
 
 ---
 
@@ -13,7 +13,8 @@ Source SHA256: `a0e27d58f5b81e56672b85f9b47dfd865bdab8447ec953ba6b0ac355e873adb7
 This addendum compiles the owner decision DL-153, Jared's request of 2026-10-09 to take the next steps of the NieR
 onboarding showpiece (DL-152) and his two rulings of that day. It amends F3-468 (the first paint), F3-520 (the look
 onboarding starts in), F3-521 (the restore's own notices), F3-598 and F3-599 (the four families' pictures), and adds
-F3-600. Behaviour stays with its owners: `Plans/Planning_Wizard.md` PWIZ-021 to PWIZ-023 (onboarding and tour
+F3-600. The wiring rulings DL-153 records also name each look control's command or typed local action in F3-082,
+F3-520, F3-521, F3-598 and F3-599. Behaviour stays with its owners: `Plans/Planning_Wizard.md` PWIZ-021 to PWIZ-023 (onboarding and tour
 orchestration), `Plans/Settings_System.md` section 4.4 and SSYS-043 (the theme pair and NieR Mode). The units own the
 presentation only. The concept is source lineage only: its class names, keys, event identifiers, harness hooks and every
 measured timing outside these units are not canon.
@@ -50,9 +51,9 @@ canonical_text: >-
   reverses its opacity more than once a second, and a large area leaves one way; no filter, blur, blend mode, mask,
   canvas or WebGL is used. Outside these moments every onboarding screen settles exactly as before; Ready settles with
   the troupe in a line and its family's mark (the APPROVED stamp, the roses, the spotlights, ALL CLEAR with its
-  arrow). Ready still hands the window over to the Guided Tour's first callout in every family. No settings key,
-  theme family, theme variant, NieR part, sound setting, `ui.onboarding.*` action or `ui.guided_tour.*` action is
-  added.
+  arrow). Ready still hands the window over to the Guided Tour's first callout in every family. The moments add no
+  settings key, theme family, theme variant, NieR part, sound setting, `ui.onboarding.*` action or `ui.guided_tour.*`
+  action; their one trigger, end state, snap and sound path are shared by all five styles (DR-056).
 gui_related: true
 gui_classification_reason: Defines the act card, the wake and the curtain call of onboarding in the four theme families.
 split_recommended: false
@@ -65,7 +66,7 @@ acceptance_criteria:
   - "Reduced Motion and low resource show each moment's end state at once, and a key or a press snaps a running moment to its end state; an act card never delays the next screen beyond NieR's act card."
   - "Every onboarding screen other than Ready settles pixel-identical to its earlier picture in the eight family variants; Ready settles with the troupe in a line and its family's mark."
   - "No surface larger than 340x256 px reverses its opacity more than once a second; no filter, blur, blend mode, mask, canvas or WebGL is used; motion is one-shot transform or opacity scaled by Animation speed."
-  - "The families' moments play only their kits' existing cues, and no settings key, theme variant, NieR part, sound setting or onboarding or tour action is added."
+  - "The families' moments play only their kits' existing cues, and the moments add no settings key, theme variant, NieR part, sound setting or onboarding or tour action."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -92,7 +93,7 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not make a NieR variant per family or play a family's moment while NieR Mode is painted."
   - "Do not recolour NieR's moments as a family's moments."
-  - "Do not add a settings key, a theme, a NieR part, a sound setting or an onboarding or tour action."
+  - "Do not add a settings key, a theme, a NieR part, a sound setting or an onboarding or tour action for the moments."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
@@ -100,4 +101,4 @@ owner_hints:
   - Plans/Planning_Wizard.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-153, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-520
+ContractRef: ContractName:Plans/Decision_Log.md#DL-153, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/DRY_Rules.md#DR-056
