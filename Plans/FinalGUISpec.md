@@ -35102,7 +35102,7 @@ acceptance_criteria:
   - "The canonical Usage and shared PM7 fixture trees exist in the repository and concept demo reports are not used as substitutes for them."
   - "Every fixture records stable identity, owner PlanUnits, source lineage, affected surfaces, must assertions, and must-not assertions."
   - "Fixture files and their must/must_not lists grant static representation only and do not prove runtime, visual, motion, or migration behavior; visual certification requires fresh browser execution, raw receipts, screenshots/contact sheets, and independent actual-pixel review in addition to DOM, state, and geometry assertions."
-  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence binds one exact generated artifact and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, exact preview-to-accepted-settlement topology parity, Dashboard-frozen resize peers, direct and displaced-handle acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
+  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence binds one exact generated artifact and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, preview-to-accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), Dashboard-frozen resize peers, direct and displaced-handle acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
   - "No accessibility acceptance expansion, WorkNode, NodeSeed, executable queue, implementation task, or production code is created by this evidence contract."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
@@ -41423,8 +41423,8 @@ canonical_text: >-
   Hover on the page is the shell's one hover system (F3-465 driven through F3-446's single pointer handler), with no
   Usage-only hover engine; no blur outlives its moment: hover leaves no blurred or scaled raster behind, an
   entrance's blur ends with the entrance, and nothing on the page stays blurred at rest. Motion takes the theme
-  family's voice from ACD-475, with Friendly and Glass as distinct from Basic as Retro and NieR are (Friendly soft,
-  warm and a little playful; Glass depth, focus, light and refraction), and a rolling or counting value never
+  family's voice from ACD-475, which owns each voice's character, Friendly's and Glass's distinctness from Basic
+  included; Usage adds no voice and no per-view override (DR-043), and a rolling or counting value never
   overshoots its final value. Under NieR Mode the page takes NieR's parts and grammar (SSYS-043, F3-589, F3-598):
   the menu cursor marks the rail's room buttons and menu rows, and charts, heroes and motion are stepped, in ink and
   paper, with no glow, filter or blur. Continuous motion runs only on transform and opacity and targets 60 frames a
@@ -41454,7 +41454,7 @@ acceptance_criteria:
   - "Moving and resizing show the lifted card, the landing placeholder or the live size outline with the size name and width by height, peers move live, release morphs into place and Escape glides back; width resizes from both edges and the corners at every board width."
   - "A card's head actions never overlap its title at any width."
   - "After hover ends and after an entrance ends, nothing on the page stays blurred."
-  - "Friendly and Glass motion are visibly distinct from Basic, and no rolling or counting value overshoots its final value."
+  - "Usage motion under Friendly and Glass is ACD-475's voice for that family, visibly distinct from Basic as ACD-475 requires, with no Usage-only voice, and no rolling or counting value overshoots its final value."
   - "Under NieR Mode the page draws no glow, filter or blur and the menu cursor marks the rail's room buttons and menu rows."
   - "Nothing animates at idle except one live change per applied batch while Live is on; no room click runs a main-thread task over about 50 ms; on a computer without a GPU, Glass shows its solid pane while Usage is open."
   - "Under Reduce Motion every beat lands at its end state and every close path, Escape included, works."
@@ -41501,4 +41501,4 @@ owner_hints:
   - Plans/usage-feature.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-173, ContractName:Plans/Decision_Log.md#DL-175, ContractName:Plans/Decision_Log.md#DL-176, ContractName:Plans/Decision_Log.md#DL-178, ContractName:Plans/Decision_Log.md#DL-179, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/FinalGUISpec.md#F3-531, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Settings_System.md#SSYS-043, ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/DRY_Rules.md#DR-058
+ContractRef: ContractName:Plans/Decision_Log.md#DL-173, ContractName:Plans/Decision_Log.md#DL-175, ContractName:Plans/Decision_Log.md#DL-176, ContractName:Plans/Decision_Log.md#DL-178, ContractName:Plans/Decision_Log.md#DL-179, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/FinalGUISpec.md#F3-531, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Settings_System.md#SSYS-043, ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/DRY_Rules.md#DR-058, ContractName:Plans/DRY_Rules.md#DR-043

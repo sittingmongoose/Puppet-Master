@@ -18382,12 +18382,14 @@ canonical_text: >-
   current safe default. The U11 keys `u11:disclosure`, `u11:scope`, `u11:range`, `u11:settingsView`,
   `u11:parked`, `u11:seeded`, `pmw:<pageId>`, and `pm.theme`, together with the PMConcept7 key family
   `pm7:usage:v10:*`, are prototype/import lineage only and are not canonical key names. The redesigned
-  concept's prototype envelope, schema id `pm.usage.widget_layout.v1` stored under the name
-  `widget_layout:v1:usage`, and its Live key `pm7:usage:live:v1` are likewise demo-only, noncanonical prototype
-  lineage; the envelope's schema id is not a product schema. When that envelope is absent the concept considers
+  concept stores its prototype envelope under the product's own layout key name `widget_layout:v1:usage`, which
+  stays this family's canonical key; only the envelope's schema id `pm.usage.widget_layout.v1` and the concept's
+  Live key `pm7:usage:live:v1` are demo-only, noncanonical prototype lineage, and that schema id is not a product
+  schema. When that envelope is absent the concept considers
   the prior `pm7:usage:prototype:workspace:v12` envelope once, else the v11 envelope, as a one-time import source,
   and it considers the v10 family only through the bounded legacy import when no valid envelope is admitted.
-  None becomes a canonical product store or continuing dual-read source.
+  None of these prototype keys, schema ids or prior envelopes becomes a canonical product store or continuing
+  dual-read source.
 gui_related: true
 gui_classification_reason: These records decide what the Usage page shows on reopen, including disclosure level, scope, range, and widget layout.
 depends_on: [SP-222, UF-092, WS-016]

@@ -2555,7 +2555,7 @@ Lists and key/value settings open an editor that adds, removes and reorders item
 
 Rows the inventory holds once but which describe one account (nickname, jobs it may do, billing, sign-in method, Google Cloud project, priority, switch and cooldown overrides, retry budget, quota profile, credential storage) or one AI service (on or off, preferred sign-in) are drawn and edited inside that account or service. A thing without its own value shows the inventory default, never another thing's value; Details says the row is set per account or per service and lists what each one has; anywhere the plain row renderer draws such a row (All Settings included) it is a way to the accounts or services, not one global control. The per-thing value is held by the account or service owner record; the inventory row's scope metadata is not widened by this presentation, only by a recorded inventory decision such as the one below.
 
-Auto-switch is set per AI service from 2026-10-09 (`Plans/Decision_Log.md#DL-174`, `Plans/Multi-Account.md#MA-073`). That is a recorded inventory decision (`Plans/FinalGUISpec.md#F3-441`), not presentation: `ai.accounts.multi-account-switching`, `ai.accounts.hard-switch-level`, `ai.accounts.soft-warning-level` and `ai.accounts.cooldown-policy` gain the provider scope beside their existing scopes, `ai.accounts.cooldown-policy` also gains the global scope, and the provider's value is a Settings value committed through the ordinary transaction, not a field of the service's own record. Each service shows its own four rows in its own rows of this section, as rows that describe one thing; a service with no value of its own shows the global value it inherits, marked as the default, and changing it there gives the service its own value. Limits & switching › Moving between accounts keeps the global rows of all four, which are the defaults for every service (the rest period's global row is new and starts at its inventory default), and says which services have their own. Details on any of the four rows lists each service's value and the order the values apply in, as `Plans/Multi-Account.md#MA-073` sets it out. The account rows of section 8 (switch and cooldown overrides) stay inside each account and win over the service value. The Usage page's Accounts room hosts two of the four for each provider, the auto-switch toggle and the switch point, as bound controls under SSYS-044; they are the same value, not a copy, and the warning level and the rest period are edited here, reached from Usage through Open in Settings.
+Auto-switch is set per AI service from 2026-10-09 (`Plans/Decision_Log.md#DL-174`, `Plans/Multi-Account.md#MA-073`). That is a recorded inventory decision (`Plans/FinalGUISpec.md#F3-441`), not presentation: `ai.accounts.multi-account-switching`, `ai.accounts.hard-switch-level`, `ai.accounts.soft-warning-level` and `ai.accounts.cooldown-policy` gain the provider scope beside their existing scopes, `ai.accounts.cooldown-policy` also gains the global scope, and the provider's value is a Settings value committed through the ordinary transaction, whose preview request names the provider scope and the provider id as SSYS-044 sets out, not a field of the service's own record. Each service shows its own four rows in its own rows of this section, as rows that describe one thing; a service with no value of its own shows the global value it inherits, marked as the default, and changing it there gives the service its own value. Limits & switching › Moving between accounts keeps the global rows of all four, which are the defaults for every service (the rest period's global row is new and starts at its inventory default), and says which services have their own. Details on any of the four rows lists each service's value and the order the values apply in, as `Plans/Multi-Account.md#MA-073` sets it out. The account rows of section 8 (switch and cooldown overrides) stay inside each account and win over the service value. The Usage page's Accounts room hosts two of the four for each provider, the auto-switch toggle and the switch point, as bound controls under SSYS-044; they are the same value, not a copy, and the warning level and the rest period are edited here, reached from Usage through Open in Settings.
 
 ### 9. Inventory admission (2026-09-27)
 
@@ -2923,8 +2923,11 @@ canonical_text: >-
   shown there as read values and edited only in Settings, reached through Open in Settings. A hosted control is a bound control of the same
   setting, not a copy: it reads the effective value, its scope and whether it is inherited from the Settings
   projection; every change it makes is one SSYS-009 transaction through SSYS-018's cmd.settings.transaction.preview
-  and then the bound cmd.settings.transaction.apply, carrying the exact setting id, the scope (provider) and the
-  provider id, the expected Project revision, the actor and an idempotency key; a slider or stepper commits once
+  and then the bound cmd.settings.transaction.apply. The preview request carries the exact setting id, the scope
+  (provider) and the provider id as typed fields of the Settings request contract
+  (Plans/settings_system_contracts.schema.json), beside the expected Project revision, the actor and an idempotency
+  key; the apply request carries only the preview's id, generation and hash and the expected Project revision, so the
+  scope and the provider are bound by the preview and never restated or changed at apply; a slider or stepper commits once
   when the value settles, not at every step; nothing paints as committed before admission, and an optimistic value
   reconciles to the typed result or rolls back with the owner's reason; and an unavailable control shows the
   owner's disabled reason. Settings and the hosting surface show the same value at once. The hosted control offers
@@ -2938,7 +2941,7 @@ depends_on: [SSYS-009, SSYS-018, SSYS-019, SSYS-040, SSYS-043]
 unblocks: [MA-073]
 acceptance_criteria:
   - "Only the surfaces and row ids an owner unit names host Settings controls; the Usage Accounts room hosts exactly ai.accounts.multi-account-switching and ai.accounts.hard-switch-level at scope provider, one pair per provider with two or more accounts, and no control for the warning level or the rest period."
-  - "Each change on a hosted control dispatches one cmd.settings.transaction.preview and one bound cmd.settings.transaction.apply with the setting id, scope provider, provider id, expected revision, actor and idempotency key; a slider or stepper drag commits once on settle; a stale revision, invalid value or permission denial leaves the stored value and both surfaces unchanged and shows the reason."
+  - "Each change on a hosted control dispatches one cmd.settings.transaction.preview whose request carries the setting id, scope provider and provider id as typed fields with the expected revision, actor and idempotency key, and one bound cmd.settings.transaction.apply that carries only the preview reference and expected revision; an apply whose preview named another scope or provider cannot be formed; a slider or stepper drag commits once on settle; a stale revision, invalid value or permission denial leaves the stored value and both surfaces unchanged and shows the reason."
   - "After an applied change on either surface, Settings and the Usage Accounts room show the same value, inherited or the provider's own, without a reload."
   - "No hosted control writes through a host-side setter, a local store or any path other than the Settings transaction, and none keeps a value of its own."
   - "Open in Settings dispatches cmd.settings.open with target_type setting and lands on the row inside that provider's section."
@@ -2947,6 +2950,7 @@ validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - future hosted Settings control fixtures (one transaction per settled change, same value on both surfaces)
+  - Plans/settings_system_contracts.schema.json preview request validation (typed scope and provider id)
 risk_class: hosted_settings_control_copy_or_bypass
 reasoning_tier: high
 context_scope: settings_hosted_controls
@@ -2955,6 +2959,7 @@ implementation_surfaces:
   - Plans/Multi-Account.md
   - Plans/usage-feature.md
   - Plans/settings_inventory.json
+  - Plans/settings_system_contracts.schema.json
 node_compile_hint:
   mode: settings_hosted_control_contract
   create_worknodes: false

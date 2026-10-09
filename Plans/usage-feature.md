@@ -6754,19 +6754,21 @@ status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
   Usage restores the current workspace from nine view/layout state families: active `room`, disclosure
-  `detail`, date `range`, account/provider `scope`, expanded-room rail `more`, per-room widget `hidden` state,
+  `detail` (whose values are `glance`, `detailed` and `diagnostics` for At a glance, Detailed and Diagnostics, the
+  values every Usage consumer of the detail level uses, the Tidy `arrange` field included), date `range`, account/provider `scope`, expanded-room rail `more`, per-room widget `hidden` state,
   per-room settled widget `layout`, per-room widget `order`, and the Live / Paused choice `live` (DL-177), a
   remembered view-only preference that is Live by default and holds no Settings-owned value. The product
   implementation stores these through the current storage and widget-layout owners, not through the PMConcept7
   prototype localStorage keys. The redesigned concept (DL-173) keeps its view and layout in a prototype envelope
-  with schema id `pm.usage.widget_layout.v1` stored under the name `widget_layout:v1:usage`, and its Live
-  choice under `pm7:usage:live:v1`; both are demo-only, noncanonical prototype lineage, and the envelope's
-  schema id is not a product schema (the product record is `UsageWidgetLayoutRecord`, WS-020). When that
+  stored under the product's own key name `widget_layout:v1:usage` (WS-020) with the prototype schema id
+  `pm.usage.widget_layout.v1`, and its Live choice under `pm7:usage:live:v1`. Only that schema id and
+  `pm7:usage:live:v1` are demo-only, noncanonical prototype lineage: the key name is the product's, and the
+  envelope's schema id is not a product schema (the product record is `UsageWidgetLayoutRecord`, WS-020). When that
   envelope is absent it considers the prior `pm7:usage:prototype:workspace:v12` envelope once, else the v11
   envelope, carrying room, detail, range, scope, more and hidden and dropping layout and order; a corrupt or
   unknown envelope is set aside and the defaults apply without a second migration. `pm7:usage:v10:*` may be
-  considered only by the bounded legacy import when no valid current or prior envelope is admitted; none is a
-  canonical product storage key. Visibility, order, supported geometry, and semantic size persist only after a committed widget
+  considered only by the bounded legacy import when no valid current or prior envelope is admitted; neither those
+  prior envelopes nor `pm7:usage:v10:*` is a canonical product storage key. Visibility, order, supported geometry, and semantic size persist only after a committed widget
   operation; pointer-preview rectangles, ghosts, placeholders, animation state, and per-frame drafts never
   become durable state. Missing rooms, widgets, scopes, or unsupported geometry migrate or evict to the
   documented safe current default rather than leaving a dangling identity.

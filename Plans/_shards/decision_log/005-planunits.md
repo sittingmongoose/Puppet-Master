@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3620-L12415
+Source lines: L3621-L12417
 
-Source SHA256: `e79fd23f0595814b246f082d2e3d6321631bfeb3719ddfa9a61d029f977b95a3`
+Source SHA256: `f5c3f3af5fc0f1fb0718b03482e5d7628171ea19f236c4f3ae58431de0bb00c2`
 
 ---
 
@@ -8661,7 +8661,7 @@ unblocks: [UF-107]
 acceptance_criteria:
   - "Live is on by default, the Live / Paused control sits in the rail head, and the choice is remembered."
   - "Live / Paused dispatches no command and changes no counted value."
-  - "No product catalog, settings inventory, wiring matrix or persisted product key names Play the next hour, Back to now or the concept's feature switches."
+  - "Play the next hour, Back to now and the concept's feature switches receive no command, setting, wiring row, persisted key or test gate; a catalog row that only points at UF-107's lab-only disposition is not one of these."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -8759,8 +8759,8 @@ canonical_text: >-
   menu family with its corner-origin spring and keyboard behaviour. Every provider is marked by its official logo,
   never recoloured, filtered, tinted, redrawn or set on a plate it is not published on; Free Models and Local model
   server use neutral icons. Usage motion uses the theme family voices owned by ACD-475 (DR-043), with Friendly and
-  Glass as distinct from Basic as Retro and NieR are; no Usage-only voice exists, and the voices' exact values are
-  design tokens, not owner text (DL-113). Without a GPU, Glass uses its solid pane while Usage is open; no step of a
+  Glass as distinct from Basic as Retro and NieR are, a rule ACD-475 now carries as their owner; no Usage-only voice
+  exists, and the voices' exact values are design tokens, not owner text (DL-113). Without a GPU, Glass uses its solid pane while Usage is open; no step of a
   room switch exceeds about 50 ms; motion holds 60 frames a second without a GPU; nothing loops at idle; no blur
   lingers after its effect ends; Reduce Motion is instant (DL-115). F3-628 owns this presentation and DR-058 its
   reuse. The solid Glass pane and the room-switch limit are planning rulings, not owner answers.
@@ -8784,6 +8784,7 @@ implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
   - Plans/usage-feature.md
+  - Plans/assistant-chat-design.md
 node_compile_hint:
   mode: owner_decision_record
   create_worknodes: false

@@ -3605,7 +3605,8 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/Final
 1. **Menus, logos and motion on Usage** (`Plans/FinalGUISpec.md#F3-628`): the chat assistant's menu family for every Usage dropdown, official provider logos, family motion on Usage with Friendly and Glass distinct from Basic, the solid Glass pane without a GPU, the room-switch step limit, no idle loops, no lingering blur, and Reduce Motion instant (DL-115).
 2. **Reuse, not copies** (`Plans/DRY_Rules.md#DR-058`): Usage reuses the chat's menus, the family motion voices (`Plans/assistant-chat-design.md#ACD-475`, which stays their only owner, as `Plans/DRY_Rules.md#DR-043` says), the app's hover owner and the Notifications & Sounds owner, and draws provider logos from one marks source.
 3. **Export as a menu** (`Plans/usage-feature.md#UF-089`, amended): the Export menu still dispatches `cmd.usage.export`, with scope `snapshot` or `ledger`.
-4. **Unchanged:** each theme family has its own motion personality (DL-113), and Reduce Motion means instant (DL-115).
+4. **Friendly and Glass voices** (`Plans/assistant-chat-design.md#ACD-475`, amended): the motion voices owner now says that Friendly and Glass are as distinct from Basic as Retro and NieR are, in path, easing and texture only, and that every surface takes its motion from those voices; the exact values stay design tokens.
+5. **Unchanged:** each theme family has its own motion personality (DL-113), and Reduce Motion means instant (DL-115).
 
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md`, SHA-256 `fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008` (the menus and logos decisions of 2026-10-02, Direction B's point 6, the bar, and the coordinator's rulings 2 and 5); `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md`, SHA-256 `d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5` (Jared's notes 5 and 8 of 2026-10-09 in section 2).
 
@@ -12270,7 +12271,7 @@ unblocks: [UF-107]
 acceptance_criteria:
   - "Live is on by default, the Live / Paused control sits in the rail head, and the choice is remembered."
   - "Live / Paused dispatches no command and changes no counted value."
-  - "No product catalog, settings inventory, wiring matrix or persisted product key names Play the next hour, Back to now or the concept's feature switches."
+  - "Play the next hour, Back to now and the concept's feature switches receive no command, setting, wiring row, persisted key or test gate; a catalog row that only points at UF-107's lab-only disposition is not one of these."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -12368,8 +12369,8 @@ canonical_text: >-
   menu family with its corner-origin spring and keyboard behaviour. Every provider is marked by its official logo,
   never recoloured, filtered, tinted, redrawn or set on a plate it is not published on; Free Models and Local model
   server use neutral icons. Usage motion uses the theme family voices owned by ACD-475 (DR-043), with Friendly and
-  Glass as distinct from Basic as Retro and NieR are; no Usage-only voice exists, and the voices' exact values are
-  design tokens, not owner text (DL-113). Without a GPU, Glass uses its solid pane while Usage is open; no step of a
+  Glass as distinct from Basic as Retro and NieR are, a rule ACD-475 now carries as their owner; no Usage-only voice
+  exists, and the voices' exact values are design tokens, not owner text (DL-113). Without a GPU, Glass uses its solid pane while Usage is open; no step of a
   room switch exceeds about 50 ms; motion holds 60 frames a second without a GPU; nothing loops at idle; no blur
   lingers after its effect ends; Reduce Motion is instant (DL-115). F3-628 owns this presentation and DR-058 its
   reuse. The solid Glass pane and the room-switch limit are planning rulings, not owner answers.
@@ -12393,6 +12394,7 @@ implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
   - Plans/usage-feature.md
+  - Plans/assistant-chat-design.md
 node_compile_hint:
   mode: owner_decision_record
   create_worknodes: false

@@ -4,7 +4,7 @@ Source: `Plans/Multi-Account.md`
 
 Source lines: L5377-L5471
 
-Source SHA256: `40e8db16f116e0c8591c73ed42853c7a72426367871001579a90399d0423d380`
+Source SHA256: `a8b5581087437e0a209e710ed727b27c2e3081fa1b19b1d74a3b08afeffdb1cc`
 
 ---
 
@@ -48,7 +48,7 @@ canonical_text: >-
   Each provider's auto-switch status is shown in plain words from the scheduler's normalized reason codes of section 5,
   not from a second status vocabulary.
 gui_related: true
-gui_classification_reason: Settings and the Usage Accounts room show and edit each provider's auto-switch, switch point, warning level and rest period, its notches, its status and its confirmations.
+gui_classification_reason: Settings shows and edits each provider's auto-switch, switch point, warning level and rest period; the Usage Accounts room edits the auto-switch and switch point and shows the warning level and rest period read-only, with the notches, status and confirmations.
 depends_on: [MA-036, MA-049, MA-069, SSYS-009, SSYS-018, SSYS-044]
 unblocks: []
 acceptance_criteria:

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25835-L26349
+Source lines: L25835-L26357
 
-Source SHA256: `284326628056f4106d8107cd25d46608b0264d0d974da3feefaddb8ef84f1728`
+Source SHA256: `7028911ecedf19b80d35781cf05f30bfa9cf92caf819ce0b9e0241609344090c`
 
 ---
 
@@ -462,7 +462,13 @@ canonical_text: >-
   and light sharing a voice. Every beat (sending, the thinking placeholder, word arrival, the
   working card's birth, the narration tuck, the fold, family entrances, thread switch) is written
   once; a voice changes only its path, easing and texture, never its timing or order, and light
-  themes replace glows with soft shadows. Retro quantizes its steps inside the same window. Reduced
+  themes replace glows with soft shadows. Retro quantizes its steps inside the same window. Friendly
+  and Glass are each as distinct from Basic as Retro and NieR are (DL-179): Friendly soft, warm and a
+  little playful; Glass depth, focus, light and refraction. That difference lives only in path, easing
+  and texture, so it changes no timing or order, and each voice's exact values are its design tokens
+  (DL-113), not unit text. These voices are the only motion voices: every surface that moves, the
+  Usage page included, takes them from this unit and keeps no voice or per-view override of its own
+  (DR-043). Reduced
   motion, from the operating system or general.visual.reduce-animations, lands every beat at its end
   state. The chat's sound cues (DL-107) are send, first word, work started, step finished, failure,
   needs you, answer arriving, turn complete and stop. They are events of the Notifications & Sounds
@@ -482,6 +488,7 @@ unblocks: [F3-564, DR-043]
 acceptance_criteria:
   - "Per-theme card or sheet durations cannot change transcript entrance timing or order."
   - "The same beat has the same timing and order in all four families."
+  - "Friendly and Glass motion are visibly distinct from Basic in path, easing and texture, as Retro's is, on every surface that uses the voices, chat and Usage alike."
   - "Reduced motion from either source lands end states."
   - "Chat cues route through the Notifications & Sounds owner; no chat-local sound setting or volume exists."
   - "No more than one cue plays per 120ms and no step tick within 250ms of another; nothing plays before a user gesture."
@@ -503,6 +510,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "Plans/Decision_Log.md#DL-106"
   - "Plans/Decision_Log.md#DL-107"
+  - "Plans/Decision_Log.md#DL-179 (owner note of 2026-10-09: Friendly and Glass distinct from Basic)"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
 preserved_exact_tokens:
   - "DL-138"
@@ -522,4 +530,4 @@ owner_hints:
   - Plans/Settings_System.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-106, ContractName:Plans/Decision_Log.md#DL-107, ContractName:Plans/UI_Command_Catalog.md#UCC-103
+ContractRef: ContractName:Plans/Decision_Log.md#DL-106, ContractName:Plans/Decision_Log.md#DL-107, ContractName:Plans/UI_Command_Catalog.md#UCC-103, ContractName:Plans/Decision_Log.md#DL-179

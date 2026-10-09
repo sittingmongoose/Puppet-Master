@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L34695-L35136
 
-Source SHA256: `c3e94a37a917a38caea0c208fc9b73768730b87c3e86142ec63ea95a63c94e1d`
+Source SHA256: `7db637b8c5afddc25d2be612466111b6be5dd52c5d07ae65d356ed80f2ddc075`
 
 ---
 
@@ -418,7 +418,7 @@ acceptance_criteria:
   - "The canonical Usage and shared PM7 fixture trees exist in the repository and concept demo reports are not used as substitutes for them."
   - "Every fixture records stable identity, owner PlanUnits, source lineage, affected surfaces, must assertions, and must-not assertions."
   - "Fixture files and their must/must_not lists grant static representation only and do not prove runtime, visual, motion, or migration behavior; visual certification requires fresh browser execution, raw receipts, screenshots/contact sheets, and independent actual-pixel review in addition to DOM, state, and geometry assertions."
-  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence binds one exact generated artifact and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, exact preview-to-accepted-settlement topology parity, Dashboard-frozen resize peers, direct and displaced-handle acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
+  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence binds one exact generated artifact and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, preview-to-accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), Dashboard-frozen resize peers, direct and displaced-handle acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
   - "No accessibility acceptance expansion, WorkNode, NodeSeed, executable queue, implementation task, or production code is created by this evidence contract."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"

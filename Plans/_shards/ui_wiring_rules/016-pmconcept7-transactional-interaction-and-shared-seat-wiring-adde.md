@@ -4,7 +4,7 @@ Source: `Plans/UI_Wiring_Rules.md`
 
 Source lines: L760-L876
 
-Source SHA256: `6e8b622453820e34712c34a277ff854d187b74e0cc1974798ccc7efe2a98a319`
+Source SHA256: `9a62e3a2868303a2730ad3545eabd1f160bab4fbbb9d4d62c17dd1463ac24a1e`
 
 ---
 
@@ -70,8 +70,8 @@ canonical_text: >-
   or foreign-pointer leases, cancellation, no-op, and settlement cannot leave a latent activation path.
   Usage pointer-resize preview uses the shared target-first slot projection to advance the real placeholder
   footprint and visibly repack only occupied neighbors while retaining peer node identity, paint, DOM order, and
-  effect-spy silence. An accepted release retains the exact last-painted topology once, with Usage board gravity
-  applied at settle inside that one commit (WS-019); rollback restores the snapshot. Dashboard resize retains frozen peers. Usage Tidy runs
+  effect-spy silence. An accepted release commits once: the last-painted topology with only Usage board gravity
+  applied at settle inside that one commit (WS-019), so the active card settles where the preview showed it; rollback restores the snapshot. Dashboard resize retains frozen peers. Usage Tidy runs
   the same commit sequence once for the whole repacked room and dispatches exactly one existing cmd.widget.move with
   one receipt. On the Usage Accounts room the card body and Details stay local, while Use this account and the
   provider Auto-switch toggle and switch level dispatch their owner commands (UCC-147).

@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L41371-L41504
 
-Source SHA256: `c3e94a37a917a38caea0c208fc9b73768730b87c3e86142ec63ea95a63c94e1d`
+Source SHA256: `7db637b8c5afddc25d2be612466111b6be5dd52c5d07ae65d356ed80f2ddc075`
 
 ---
 
@@ -63,8 +63,8 @@ canonical_text: >-
   Hover on the page is the shell's one hover system (F3-465 driven through F3-446's single pointer handler), with no
   Usage-only hover engine; no blur outlives its moment: hover leaves no blurred or scaled raster behind, an
   entrance's blur ends with the entrance, and nothing on the page stays blurred at rest. Motion takes the theme
-  family's voice from ACD-475, with Friendly and Glass as distinct from Basic as Retro and NieR are (Friendly soft,
-  warm and a little playful; Glass depth, focus, light and refraction), and a rolling or counting value never
+  family's voice from ACD-475, which owns each voice's character, Friendly's and Glass's distinctness from Basic
+  included; Usage adds no voice and no per-view override (DR-043), and a rolling or counting value never
   overshoots its final value. Under NieR Mode the page takes NieR's parts and grammar (SSYS-043, F3-589, F3-598):
   the menu cursor marks the rail's room buttons and menu rows, and charts, heroes and motion are stepped, in ink and
   paper, with no glow, filter or blur. Continuous motion runs only on transform and opacity and targets 60 frames a
@@ -94,7 +94,7 @@ acceptance_criteria:
   - "Moving and resizing show the lifted card, the landing placeholder or the live size outline with the size name and width by height, peers move live, release morphs into place and Escape glides back; width resizes from both edges and the corners at every board width."
   - "A card's head actions never overlap its title at any width."
   - "After hover ends and after an entrance ends, nothing on the page stays blurred."
-  - "Friendly and Glass motion are visibly distinct from Basic, and no rolling or counting value overshoots its final value."
+  - "Usage motion under Friendly and Glass is ACD-475's voice for that family, visibly distinct from Basic as ACD-475 requires, with no Usage-only voice, and no rolling or counting value overshoots its final value."
   - "Under NieR Mode the page draws no glow, filter or blur and the menu cursor marks the rail's room buttons and menu rows."
   - "Nothing animates at idle except one live change per applied batch while Live is on; no room click runs a main-thread task over about 50 ms; on a computer without a GPU, Glass shows its solid pane while Usage is open."
   - "Under Reduce Motion every beat lands at its end state and every close path, Escape included, works."
@@ -141,4 +141,4 @@ owner_hints:
   - Plans/usage-feature.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-173, ContractName:Plans/Decision_Log.md#DL-175, ContractName:Plans/Decision_Log.md#DL-176, ContractName:Plans/Decision_Log.md#DL-178, ContractName:Plans/Decision_Log.md#DL-179, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/FinalGUISpec.md#F3-531, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Settings_System.md#SSYS-043, ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/DRY_Rules.md#DR-058
+ContractRef: ContractName:Plans/Decision_Log.md#DL-173, ContractName:Plans/Decision_Log.md#DL-175, ContractName:Plans/Decision_Log.md#DL-176, ContractName:Plans/Decision_Log.md#DL-178, ContractName:Plans/Decision_Log.md#DL-179, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/FinalGUISpec.md#F3-531, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Settings_System.md#SSYS-043, ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/DRY_Rules.md#DR-058, ContractName:Plans/DRY_Rules.md#DR-043
