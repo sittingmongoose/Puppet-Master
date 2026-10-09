@@ -147,6 +147,8 @@ function watchFit() {
   /* the themes' fonts are embedded and load on first use (a theme switch, NieR Mode): every measurement taken with the
      fallback face is wrong once the real one arrives, so a finished font load refits everything */
   if (document.fonts && document.fonts.addEventListener) listen(document.fonts, 'loadingdone', () => { if (D.on) { clearFitCache(); fitSoon(); } });
+  /* a tab shows a pane that was hidden (no width) at the last fit, often in another theme's face: fit it once shown */
+  listen(document, 'click', e => { if (D.on && e.target && e.target.closest && e.target.closest('[data-tab]') && inPanels(e.target)) fitSoon(); }, true);
 }
 
 /* Middle truncation for names that are paths or long ids: keep the head and the tail (the file name, the last part of
