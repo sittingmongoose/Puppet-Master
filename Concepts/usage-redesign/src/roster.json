@@ -179,7 +179,7 @@
   },
   "switch_log": [
     { "at_min_ago": 18, "provider": "openai-codex", "from": "team-codex", "to": null, "code": "cooldown_active", "text": "Team rate limited (429); cooldown for 42 minutes", "outcome": "cooldown" },
-    { "at_min_ago": 184, "provider": "openai-codex", "from": "team-codex", "to": "jared", "code": "threshold_preemptive_switch", "text": "Team reached 90% used; switched before the limit", "outcome": "switched" },
+    { "at_min_ago": 184, "provider": "openai-codex", "from": "team-codex", "to": "jared", "code": "threshold_preemptive_switch", "text": "Team reached 85% used; switched before the limit", "outcome": "switched" },
     { "at_min_ago": 286, "provider": "claude-code", "from": "personal-claude", "to": "work-claude", "code": "hard_exhaustion_failover", "text": "Personal 5-hour limit reached; moved to the next eligible account", "outcome": "switched" },
     { "at_min_ago": 421, "provider": "claude-code", "from": "studio-claude", "to": null, "code": "credentials_expired", "text": "Studio skipped: sign-in expired", "outcome": "blocked" },
     { "at_min_ago": 1072, "provider": "claude-code", "from": "lab-claude", "to": "work-claude", "code": "preferred_recovered", "text": "Preferred account Work Claude recovered (priority 1)", "outcome": "switched" },

@@ -14,10 +14,11 @@
   function stepped() { var f = fam(); return f === 'retro' || f === 'nier'; }
 
   /* the headroom tone ramp (WOW-SPEC 2.3) through the Settings thresholds: 0 calm (< 50), 1 cyan, 2 warn, 3 crit,
-     4 exhausted (100), 5 over */
-  C.ramp = function (pct) {
+     4 exhausted (100), 5 over. tone: a window's own tone (its provider's switch and warn levels, item 2); without it the
+     shared levels decide */
+  C.ramp = function (pct, tone) {
     if (pct === null || pct === undefined || !isFinite(pct)) return null;
-    var tn = PMU.roster.tone(pct);
+    var tn = tone !== undefined && tone !== null ? tone : PMU.roster.tone(pct);
     return tn === 'over' ? 5 : tn === 'exhausted' ? 4 : tn === 'crit' ? 3 : tn === 'warn' ? 2 : pct >= 50 ? 1 : 0;
   };
 
@@ -32,14 +33,28 @@
     return { cols: cols, th: PMU.roster.thresholds() };
   };
   var WIN_WORD = { fiveHour: '5H', weekly: 'WK', monthly: 'MO', daily: 'DAY' };
+  /* item 2 (d-switch): auto-switch is per provider. The line across the skyline is the shared setting; a tower whose own
+     switch point (its provider's, or its account's own) or toggle differs from it carries its own notch at that point, and
+     the caption names those providers. Only providers with two or more accounts switch. */
+  function towerPol(c) { return c.a.policy || PMU.roster.thresholds(c.p.id, c.a.id); }
+  function ownNotch(c, th) { var pol = towerPol(c); return c.p.accounts.length > 1 && (pol.auto !== th.auto || pol.switchLeft !== th.switchLeft) ? pol : null; }
+  function notchSig(m) { return JSON.stringify(m.cols.map(function (c) { var o = ownNotch(c, m.th); return o ? [c.a.key, c.w.key, o.auto, o.switchLeft] : 0; })); }
+  function warnCount(m) { return m.cols.filter(function (c) { return c.w.pct >= 100 - towerPol(c).warnLeft; }).length; }
+  function autoSub(m) {
+    var th = m.th, seen = {}, parts = [th.auto ? 'auto-switch at ' + b((100 - th.switchLeft) + '%') : 'auto-switch ' + b('off')];
+    m.cols.forEach(function (c) { var o = ownNotch(c, th); if (!o || seen[c.p.id]) return; seen[c.p.id] = 1; parts.push(esc(C.famShort ? C.famShort(c.p) : c.p.name) + ' ' + b(o.auto ? (100 - o.switchLeft) + '%' : 'off')); });
+    return parts.join(' · ');
+  }
+  function notchHtml(o) { var at = 100 - o.switchLeft; return '<i class="pmu-skynotch"' + (o.auto ? '' : ' data-off') + ' data-at="' + at + '" style="bottom:' + at + '%" aria-hidden="true"></i>'; }
   /* a tower's fill offset (translateY %, of the track's height) and its --v (0-100, one decimal) */
-  function colDetail(c) { var w = c.w; return C.fmt(w.pct, 'pct') + ' used · ' + C.fmt(Math.max(0, 100 - w.pct), 'pct') + ' left · ' + F.resetLine(w).text + ' · ' + PMU.fmt.truth(w.truth) + (w.est ? ' · estimated' : '') + ' · ' + c.a.ageText; }
+  function colDetail(c) { var w = c.w, pol = c.p.accounts.length > 1 ? towerPol(c) : null; return C.fmt(w.pct, 'pct') + ' used · ' + C.fmt(Math.max(0, 100 - w.pct), 'pct') + ' left · ' + F.resetLine(w).text + ' · ' + PMU.fmt.truth(w.truth) + (w.est ? ' · estimated' : '') + ' · ' + c.a.ageText +
+    (pol ? ' · ' + (pol.auto ? c.p.name + ' switches at ' + (100 - pol.switchLeft) + '% used' : 'auto-switch off for ' + c.p.name) : ''); }
   function skyOff(pct) { return +(100 - Math.max(1.5, Math.min(100, pct))).toFixed(2); }
   function skyV(pct) { return +Math.max(0, Math.min(100, pct)).toFixed(1); }
   C.skyOff = skyOff; C.skyV = skyV;
   function skySig(m) {
     m = m || C.skylineModel();
-    return JSON.stringify([m.th.auto, m.th.switchLeft, m.th.warnLeft, m.cols.map(function (c) { return [c.p.id, c.a.key, c.w.key, c.w.pct, c.w.truth, c.w.resetAt ? shortReset(c.w) : '']; })]);
+    return JSON.stringify([m.th.auto, m.th.switchLeft, m.th.warnLeft, m.cols.map(function (c) { return [c.p.id, c.a.key, c.w.key, c.w.pct, c.w.truth, c.w.resetAt ? shortReset(c.w) : '', c.w.tone]; }), notchSig(m)]);
   }
   /* the reset under a gauge in one short word: "1h41" today, "Tue" this week, "Nov 1" later, "-" unknown */
   function shortReset(w) {
@@ -53,28 +68,28 @@
     liveSig: function () { return skySig(); },
     render: function (body, ctx) {
       var m = C.skylineModel(), cols = m.cols, th = m.th;
-      if (!body._pmuDry) body._pmuSkySig = skySig(m);
+      if (!body._pmuDry) { body._pmuSkySig = skySig(m); body._pmuSkyNotch = notchSig(m); }
       if (!cols.length) { body.innerHTML = C.empty('No provider in scope reports a window reading.', 'Missing readings are never shown as 0 %'); return; }
       var bw = ctx.tier.bw, bh = ctx.tier.bh;
       var n = Math.max(1, Math.min(cols.length, Math.floor((bw - 40) / 37)));
       var shown = cols.slice(0, n), top = cols[0];
       var heroOk = bh >= 200;
-      var warnN = cols.filter(function (c) { return c.w.pct >= 100 - th.warnLeft; }).length;
+      var warnN = warnCount(m);
       var head = heroOk ? C.heroHead(ctx, { value: top.w.pct, fmt: top.w.pct < 10 && top.w.pct % 1 ? 'pct1' : 'pct', label: 'highest window · ' + top.p.name + ' ' + top.w.short.toLowerCase(),
-        sub: b(C.plural(cols.length, 'window')) + ' · ' + b(warnN) + ' at or past the warn line · ' + (th.auto ? 'auto-switch at ' + b((100 - th.switchLeft) + '%') : 'auto-switch ' + b('off')),
-        tone: { 2: 'warn', 3: 'crit', 4: 'crit', 5: 'crit' }[C.ramp(top.w.pct)] || null }) : '';
+        sub: b(C.plural(cols.length, 'window')) + ' · ' + b(warnN) + ' at or past the warn line · ' + autoSub(m),
+        tone: { 2: 'warn', 3: 'crit', 4: 'crit', 5: 'crit' }[C.ramp(top.w.pct, top.w.tone)] || null }) : '';
       var plotH = Math.max(70, bh - (heroOk ? 66 : 0) - 20 - 44 - 8 - (cols.length > n ? 22 : 0));
       var swAt = 100 - th.switchLeft;
       body.innerHTML = '<div class="pmu-sky">' + head + '<div class="pmu-skyplot" style="--sky-h:' + plotH + 'px;grid-template-columns:repeat(' + n + ',minmax(0,1fr))">' +
         shown.map(function (c, i) {
-          var w = c.w, r = C.ramp(w.pct), rl = F.resetLine(w);
+          var w = c.w, r = C.ramp(w.pct, w.tone), rl = F.resetLine(w), own = ownNotch(c, th);
           var hv = C.hover(c.p.name + ' · ' + c.a.nickname + ' · ' + w.label, colDetail(c));
           var key = 'win:' + c.a.key + '/' + w.key, off = skyOff(w.pct);
           /* WOW-TASKS-3 N3-7: --v (the used value) drives the spectrum; the fill and its rider move by translateY in a
              clipped track (never by height); N3-1: the track is the window's share, the value its share text */
           return '<div class="pmu-skycol" data-ramp="' + r + '" style="--v:' + skyV(w.pct) + '" data-i="' + i + '" data-prov="' + esc(c.p.id) + '" data-acct="' + esc(c.a.key) + '" data-win="' + esc(w.key) + '" role="button" tabindex="0"' + hv + '>' +
             '<span class="pmu-skyval" data-share-v="' + esc(key) + '"><b class="pmu-num" data-v="' + w.pct + '">' + esc(C.numOnly(w.pct, w.pct < 10 && w.pct % 1 ? 'pct1' : 'pct')) + '</b><i>%</i></span>' +
-            '<span class="pmu-skytrack' + (w.est ? ' is-est' : '') + '" data-share="' + esc(key) + '" data-share-dir="v"><span class="pmu-skyclip"><i class="pmu-skyfill" style="transform:translateY(' + off + '%)"><i class="pmu-skyheat"></i><i class="pmu-skyflare"></i></i></span></span>' +
+            '<span class="pmu-skytrack' + (w.est ? ' is-est' : '') + '" data-share="' + esc(key) + '" data-share-dir="v"><span class="pmu-skyclip"><i class="pmu-skyfill" style="transform:translateY(' + off + '%)"><i class="pmu-skyheat"></i><i class="pmu-skyflare"></i></i></span>' + (own ? notchHtml(own) : '') + '</span>' +
             '<span class="pmu-skyfoot">' + C.shareMark(c.p.id, 16) + '<b>' + esc(WIN_WORD[w.key] || w.short.slice(0, 3).toUpperCase()) + '</b></span>' +
             '<span class="pmu-skyreset">' + esc(shortReset(w)) + '</span></div>';
         }).join('') +
@@ -120,7 +135,9 @@
         });
         var s1 = next.querySelector('.pmu-skyswitch');
         if (s1) patchSwitch(body, plot, +s1.getAttribute('data-at'), s1.hasAttribute('data-off'), (s1.querySelector('span') || {}).textContent || '', ctx);
+        patchNotches(body, plot, next);
       }
+      body._pmuSkyNotch = notchSig(C.skylineModel());
       var h0 = body.querySelector('.pmu-herohead'), hh = dry.querySelector('.pmu-herohead');
       if (h0 && hh) {
         var sb0 = h0.querySelector('.pmu-herosub'), sb1 = hh.querySelector('.pmu-herosub'); if (sb0 && sb1 && sb0.innerHTML !== sb1.innerHTML) { C.setHtml(sb0, sb1.innerHTML); if (!ctx.liveFinal) M.animate(sb0, [{ opacity: 0.25 }, { opacity: 1 }], { dur: 160 }); }
@@ -247,8 +264,24 @@
     }
     var l0 = s0.querySelector('span'); if (l0 && label && l0.textContent !== label) l0.textContent = label;
   }
+  /* a tower's own notch (item 2) takes its provider's new level in place: it slides 320 SLIDE like the line (stepped in
+     Retro and NieR) and dims with that provider's toggle; the slides are kept on the element for the Settings ripple */
+  function patchNotches(body, plot, next) {
+    var c0s = plot.querySelectorAll('.pmu-skycol'), skyH = (body._pmuSky && body._pmuSky.plotH) || 0, st = stepped();
+    Array.prototype.forEach.call(next.querySelectorAll('.pmu-skycol'), function (c1, i) {
+      var c0 = c0s[i], n0 = c0 && c0.querySelector('.pmu-skynotch'), n1 = c1.querySelector('.pmu-skynotch'); if (!n0 || !n1) return;
+      var a0 = +n0.getAttribute('data-at'), a1 = +n1.getAttribute('data-at');
+      if (a0 !== a1) {
+        n0.style.bottom = a1 + '%'; n0.setAttribute('data-at', String(a1));
+        if (!M.reduced() && skyH) n0._pmuSlides = [M.animate(n0, [{ transform: 'translateY(' + ((a1 - a0) / 100 * skyH).toFixed(1) + 'px)' }, { transform: 'none' }], { dur: st ? 160 : 320, easing: st ? 'steps(4,jump-start)' : 'cubic-bezier(.22,1,.36,1)' })];
+      }
+      if (n0.hasAttribute('data-off') !== n1.hasAttribute('data-off')) n0.toggleAttribute('data-off', n1.hasAttribute('data-off'));
+    });
+  }
   function fastLive(body, plot, ctx) {
     var m = C.skylineModel(), sw = plot.querySelector('.pmu-skyswitch');
+    /* a tower's own notch came, went or moved (item 2): the dry render patches it */
+    if (notchSig(m) !== body._pmuSkyNotch) return false;
     /* the towers in their shown order (a re-rank moves them by CSS order, never in the DOM) */
     var cols = Array.prototype.slice.call(plot.querySelectorAll('.pmu-skycol')).sort(function (a, z) { return (a.style.order !== '' ? +a.style.order : +a.dataset.i) - (z.style.order !== '' ? +z.style.order : +z.dataset.i); });
     if (!cols.length || m.cols.length < cols.length || !sw) return false;
@@ -271,17 +304,17 @@
     patchSwitch(body, plot, 100 - m.th.switchLeft, !m.th.auto, m.th.auto ? (100 - m.th.switchLeft) + '%' : 'OFF', ctx);
     cols.forEach(function (c0, k) {
       var c = m.cols[k];
-      moveTowerTo(c0, c.w.pct, C.ramp(c.w.pct), ctx, { final: !!ctx.liveFinal, flash: ctx.reason !== 'live' });
+      moveTowerTo(c0, c.w.pct, C.ramp(c.w.pct, c.w.tone), ctx, { final: !!ctx.liveFinal, flash: ctx.reason !== 'live' });
       var det = colDetail(c); if (c0.getAttribute('data-pm-hover-detail') !== det) c0.setAttribute('data-pm-hover-detail', det);
       var rs = c0.querySelector('.pmu-skyreset'), rt = shortReset(c.w); if (rs && rs.textContent !== rt) rs.textContent = rt;
     });
     var h0 = body.querySelector('.pmu-herohead');
     if (h0) {
       var tmp = document.createElement('div'), top = m.cols[0], th = m.th;
-      var warnN = m.cols.filter(function (c) { return c.w.pct >= 100 - th.warnLeft; }).length;
+      var warnN = warnCount(m);
       tmp.innerHTML = C.heroHead(ctx, { value: top.w.pct, fmt: top.w.pct < 10 && top.w.pct % 1 ? 'pct1' : 'pct', label: 'highest window · ' + top.p.name + ' ' + top.w.short.toLowerCase(),
-        sub: b(C.plural(m.cols.length, 'window')) + ' · ' + b(warnN) + ' at or past the warn line · ' + (th.auto ? 'auto-switch at ' + b((100 - th.switchLeft) + '%') : 'auto-switch ' + b('off')),
-        tone: { 2: 'warn', 3: 'crit', 4: 'crit', 5: 'crit' }[C.ramp(top.w.pct)] || null });
+        sub: b(C.plural(m.cols.length, 'window')) + ' · ' + b(warnN) + ' at or past the warn line · ' + autoSub(m),
+        tone: { 2: 'warn', 3: 'crit', 4: 'crit', 5: 'crit' }[C.ramp(top.w.pct, top.w.tone)] || null });
       var hh = tmp.firstChild;
       var sb0 = h0.querySelector('.pmu-herosub'), sb1 = hh.querySelector('.pmu-herosub'); if (sb0 && sb1 && sb0.innerHTML !== sb1.innerHTML) C.setHtml(sb0, sb1.innerHTML);
       var lb0 = h0.querySelector('.pmu-herolabel'), lb1 = hh.querySelector('.pmu-herolabel'); if (lb0 && lb1 && lb0.textContent !== lb1.textContent) lb0.textContent = lb1.textContent;
@@ -535,7 +568,7 @@
     Array.prototype.forEach.call(marks, function (mk) { if (!byKey[mk.getAttribute('data-reset')]) ok = false; });
     if (!ok || !marks.length) return false;
     Array.prototype.forEach.call(marks, function (mk) {
-      var it = byKey[mk.getAttribute('data-reset')], w = it.w, r = String(C.ramp(w.pct));
+      var it = byKey[mk.getAttribute('data-reset')], w = it.w, r = String(C.ramp(w.pct, w.tone));
       var lab = ({ fiveHour: '5H', weekly: 'WK', monthly: 'MO' }[w.key] || w.short.slice(0, 3).toUpperCase()) + ' ' + C.fmt(w.pct, w.pct < 10 && w.pct % 1 ? 'pct1' : 'pct') + (w.resetAt - now > span ? ' · ' + F.date(w.resetAt) : '');
       var em = mk.querySelector('em'); if (em && em.textContent !== lab) em.textContent = lab;
       if (mk.getAttribute('data-ramp') !== r) mk.setAttribute('data-ramp', r);
@@ -600,7 +633,7 @@
         });
       });
       var mk = function (m, ln, j) {
-        var r = C.ramp(m.w.pct), beyond = m.at && m.at - now > span, x = m.at ? (beyond ? 100 : xOf(m.at)) : null;
+        var r = C.ramp(m.w.pct, m.w.tone), beyond = m.at && m.at - now > span, x = m.at ? (beyond ? 100 : xOf(m.at)) : null;
         if (x === null) return '';
         var lab = labOf(m);
         return '<i class="pmu-wbar" data-ramp="' + r + '"' + C.shareAttr('win:' + ln.a.key + '/' + m.w.key) + ' style="width:' + x.toFixed(2) + '%;z-index:' + (10 - j) + '"></i>' +

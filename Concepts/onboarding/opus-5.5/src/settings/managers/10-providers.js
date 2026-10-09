@@ -497,7 +497,11 @@
   /* a level dropdown: the first choice follows the shared value; a service value off the list keeps its own entry */
   function levelControl(p, id, list, label) {
     const own = ownPolicy(p, id), shared = PM51.value(id);
-    const opts = [{ value: '', label: `Shared · ${id === 'ai.accounts.cooldown-policy' ? cooldownText(shared) : leftText(shared)}`, meta: 'Follows Limits & switching > Moving between accounts' }];
+    /* the shared choice says its level once ("Shared · 20% left"; its % used in the line under it), so the closed dropdown
+       never cuts it */
+    const sharedN = pctLeft(shared);
+    const opts = [{ value: '', label: `Shared · ${id === 'ai.accounts.cooldown-policy' ? cooldownText(shared) : sharedN === null ? String(shared || '') : `${sharedN}% left`}`,
+      meta: `${id !== 'ai.accounts.cooldown-policy' && sharedN !== null ? `${100 - sharedN}% used · ` : ''}Follows Limits & switching > Moving between accounts` }];
     if (id === 'ai.accounts.cooldown-policy') COOLDOWNS.forEach(([v, meta]) => opts.push({ value: v, label: cooldownText(v), meta }));
     else {
       const vals = list.slice(); const n = pctLeft(own); if (n !== null && !vals.includes(n)) { vals.push(n); vals.sort((x, y) => x - y); }
@@ -514,7 +518,7 @@
   function policyHelp(p) {
     const own = ownPolicy(p, 'ai.accounts.multi-account-switching') !== undefined, on = autoOf(p);
     const at = usedText(policyOf(p, 'ai.accounts.hard-switch-level'));
-    return `${on ? `When an account reaches ${at}, the next one with room carries on, once the current task ends.` : 'Off: an account that runs low stays in use until you switch.'} ${own ? `${p.name}'s own choice; the shared setting is ${sharedText('ai.accounts.multi-account-switching')}.` : 'Follows the shared setting.'}`;
+    return `${on ? `When an account reaches ${at}, the next one with room carries on, once the current task ends.` : 'Off: an account that runs low stays in use until you switch.'} ${own ? `On or off is ${p.name}'s own choice; the shared setting is ${sharedText('ai.accounts.multi-account-switching')}.` : 'On or off follows the shared setting.'}`;
   }
   function policyRows(p) {
     if (!canSwitch(p)) return '';

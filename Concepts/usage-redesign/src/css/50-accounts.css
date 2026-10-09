@@ -283,13 +283,21 @@ html[data-o55-nier="on"] #panel-usage .pmu-acclight { display: none; }
 #panel-usage .pmu-ladnotch[data-off] { opacity: .22; }
 
 /* the headroom card's provider rows: mark, name, most room now, the provider's own switch */
-#panel-usage .pmu-switch.is-panel .pmu-swfam { grid-template-columns: 16px minmax(0, 1fr) minmax(20px, 36%) 30px; column-gap: 6px; align-items: center; }
+#panel-usage .pmu-switch.is-panel .pmu-swfam { grid-template-columns: 16px var(--swn, minmax(0, 1fr)) minmax(36px, 1fr) 30px; column-gap: 6px; align-items: center; }
 #panel-usage .pmu-switch.is-panel .pmu-swfamname { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #panel-usage .pmu-swfam .pmu-toggle { justify-self: end; }
 #panel-usage .pmu-swfam[data-off] .pmu-swbar { opacity: .55; }
 #panel-usage .pmu-swbar.is-none { font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #panel-usage .pmu-switch.is-panel .pmu-polshared.is-foot { margin-top: 4px; }
 #panel-usage .pmu-switch:not(.is-panel) .pmu-polshared { flex: none; }
+
+/* the Overview skyline: the dashed line across it is the shared setting; a tower whose provider (or account) switches at
+   its own point carries its own short dashed notch across its track at that point, in the line's warn tone, dim while
+   that provider's auto-switch is off */
+#panel-usage .pmu-skynotch { position: absolute; z-index: 3; left: -6px; right: -6px; height: 0; margin-bottom: -1px; pointer-events: none;
+  border-top: 2px dashed color-mix(in srgb, var(--pmu-warn) 78%, transparent); filter: drop-shadow(0 0 3px color-mix(in srgb, var(--pmu-warn) 55%, transparent)); }
+#panel-usage .pmu-skynotch[data-off] { opacity: .3; }
+html[data-pmu-soft] #panel-usage .pmu-skynotch, html[data-o55-nier="on"] #panel-usage .pmu-skynotch { filter: none; }
 
 html[data-theme^="retro"] #panel-usage :is(.pmu-polval, .pmu-ladnotch) { border-radius: 0; }
 html[data-o55-nier="on"] #panel-usage .pmu-polval { border-radius: 0; border-color: var(--o55-nier-ink); color: var(--o55-nier-ink); }

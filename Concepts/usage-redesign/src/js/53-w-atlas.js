@@ -257,7 +257,8 @@
       if (open) {
         var r = rowsDrawn.filter(function (x) { return x.account.key === open; })[0], fh = body.querySelector('.pmu-qfocushost');
         if (r && fh) {
-          var th = PMU.roster.thresholds();
+          /* the account's own provider policy (item 2: AAC draws the provider's own threshold line on the focus chart) */
+          var th = r.account.policy || PMU.roster.thresholds(r.account.providerId);
           body._pmuFocusChart = C.chart(body, 'qspark', fh, { windows: r.focus.filter(function (f) { return f.points; }).map(function (f, i) { return { label: f.label, dash: ['', '9 4', '9 3 2 3'][i % 3], points: f.points }; }),
             thresholds: { warn: 100 - th.warnLeft, switch: 100 - th.switchLeft }, resets: r.focus.map(function (f) { return f.resetAt; }).filter(Boolean), now: q.now, bucketMs: q.bucketMs, n: q.points },
             { label: r.account.nickname + ', every window, 7 days', readout: true });
