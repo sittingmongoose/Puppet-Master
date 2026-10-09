@@ -112,6 +112,8 @@ const PAGE_LIB = () => {
     const orig = document.getElementById('panel-' + panel);
     if (!(orig && orig.classList.contains('active') && !slot.classList.contains('hidden'))) icon.click();
     await L.sleep(450);
+    /* a skin panel's show animation can outlast 450 ms (Current in Friendly and Glass): wait for it, up to 1.5 s more */
+    if (L.skin) for (let i = 0; i < 10 && !L.visible(orig); i++) await L.sleep(150);
     /* a skin concept never hides the original panel (it is the view), so originalHidden is not a requirement */
     return L.skin ? { viewShown: L.visible(orig), originalHidden: null } : { viewShown: L.visible(L.view(panel)), originalHidden: !L.visible(orig) };
   };
