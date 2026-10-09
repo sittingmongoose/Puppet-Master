@@ -874,6 +874,10 @@ deployment questionnaire written long to see all of this.
   Collapse state is session-only.
 - There is no `PINNED LEFT` strip and no goal summary card in the history
   drawer. The pinned drawer still has a resize handle.
+- A pinned history drawer is in place from the first painted frame (2026-10-09):
+  the chat no longer opens full width under the drawer and then slides its
+  200px gutter in, which for about two seconds of a slow load put the composer
+  over the thread rows.
 
 ## Context Lens glyph
 
