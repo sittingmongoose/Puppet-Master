@@ -151,7 +151,8 @@
   const markBody = (el, on) => { if (el && el.classList.contains('o55fm-body') !== on) el.classList.toggle('o55fm-body', on); };
   /* the strings follow the heads while bodies move (the rig measures its hooks for that long) */
   const watch = (svg, ms) => { if (A.rig && svg) A.rig.watch(svg, { settle: ms }); };
-  /* a bow in the family's way: the pose and the timing it bows and rises with */
+  /* the old troupe's quick bow at the end of an act (the act card), in the family's way: the pose and the timing it bows
+     and rises with (the curtain call's bows pitch the upper body instead: PITCH) */
   const BOW = {
     basic: { pose: 'translateY(2px) scale(1.03, 0.82)', down: 200, up: 180, ease: 'cubic-bezier(0.2, 0, 0, 1)' },
     friendly: { pose: 'scale(1.1, 0.78)', down: 260, up: 360, ease: 'cubic-bezier(0.34, 1.56, 0.64, 1)', rise: [{ transform: 'scale(1.1, 0.78)' }, { transform: 'scale(0.94, 1.1)', offset: 0.45 }, { transform: 'none' }] },
@@ -343,7 +344,7 @@
     const p = L.ctx.pal, f = 'glass', u = L.ctx.uid;
     const cw = nar ? Math.min(390, V.w - 40) : Math.min(268, V.w - 40), ch = nar ? Math.min(82, V.h - 22) : 112;
     /* (hung under the control bar, so the bar reads as its hanger and its rod never crosses the words) */
-    const cx = V.x + V.w / 2, cy = nar ? V.y + V.h / 2 : V.y + V.h * 0.31 + 26;
+    const cx = V.x + V.w / 2, cy = nar ? V.y + V.h / 2 : V.y + V.h * 0.31 + 40;
     const x0 = cx - cw / 2, y0 = cy - ch / 2, y1 = y0 + ch;
     const top = V.y - 10, beam = `M${cx - 26} ${top}H${cx + 26}L${x0 + cw + 14} ${y0 + ch * 0.5}H${x0 - 14}Z`;
     let motes = '';
@@ -662,16 +663,16 @@
   }
 
   /* the emblems in Ready's composition (asked for by 57-scenes-journey.js for the four families). On the narrow
-     window's band (ctx.band: about y 294..406 of the scene at 760 px, the troupe's heads and shoulders) each emblem is
-     placed where the band shows it: Basic's stamp beside h2's head, Retro's ALL CLEAR across the band's top with the
-     arrow by h2's head, Friendly's roses along the band's foot between the heads. */
+     window's band (ctx.band: about y 318..434 of the scene at 760 px, the troupe's heads and shoulders) each emblem is
+     placed where the band shows it: Basic's stamp above h2's head, Retro's ALL CLEAR across the band's top with the
+     arrow by h2's head, Friendly's roses along the band's foot between the troupe. */
   A.famCall = {
     emblems(ctx) {
       const f = ctx.family, m = A.metrics(f), floor = m.floor, sign = m.signY || 64, nar = !!ctx.band;
-      if (f === 'basic') return [{ key: 'fm-stamp', prop: 'fmStamp', x: nar ? 404 : 318, y: nar ? 318 : sign + 34, r: -7, layer: 'front' }];
-      if (f === 'friendly') return (nar ? [[186, 398], [296, 400], [418, 396]] : [[150, floor + 40], [262, floor + 46], [372, floor + 40]]).map(([x, y], i) => ({ key: 'fm-rose' + i, prop: 'fmRose', x, y, s: nar ? 2 : 3.1, r: (nar ? [-60, 40, 70] : [-70, 18, 74])[i], layer: 'front', opts: { v: i } }));
+      if (f === 'basic') return [{ key: 'fm-stamp', prop: 'fmStamp', x: nar ? 404 : 318, y: nar ? 343 : sign + 34, r: -7, layer: 'front' }];
+      if (f === 'friendly') return (nar ? [[184, 420], [296, 424], [414, 418]] : [[150, floor + 40], [262, floor + 46], [372, floor + 40]]).map(([x, y], i) => ({ key: 'fm-rose' + i, prop: 'fmRose', x, y, s: nar ? 2 : 3.1, r: (nar ? [-60, 40, 70] : [-70, 18, 74])[i], layer: 'front', opts: { v: i } }));
       if (f === 'glass') return [-1, 0, 1].map((s, i) => ({ key: 'fm-spot' + i, prop: 'fmSpot', x: 240 + s * 112, y: floor + 4, layer: 'back', opts: { v: i, top: 30 - floor, tint: ['lav', 'pink', 'mint'][i] } }));
-      if (f === 'retro') return [{ key: 'fm-clear', prop: 'fmClear', x: 240, y: nar ? 318 : 262, layer: 'front', opts: { size: nar ? 22 : 26 } }, { key: 'fm-score', prop: 'fmScore', x: 240, y: floor + 72, layer: 'front' }, { key: 'fm-arrow', prop: 'fmArrow', x: nar ? 422 : 426, y: nar ? 376 : floor - 26, layer: 'front' }];
+      if (f === 'retro') return [{ key: 'fm-clear', prop: 'fmClear', x: 240, y: nar ? 345 : 262, layer: 'front', opts: { size: nar ? 22 : 26 } }, { key: 'fm-score', prop: 'fmScore', x: 240, y: floor + 72, layer: 'front' }, { key: 'fm-arrow', prop: 'fmArrow', x: nar ? 422 : 426, y: nar ? 398 : floor - 26, layer: 'front' }];
       return [];
     }
   };
