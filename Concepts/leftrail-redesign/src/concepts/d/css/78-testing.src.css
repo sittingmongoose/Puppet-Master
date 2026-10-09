@@ -1,0 +1,161 @@
+/* ---- 78. Testing (lane F), and the run rows Testing and Agents share ---------------------------------------------------
+   A run row is flat in its shelf like every D row (no card inside a card, no coloured border on the live run): its hover
+   and open fills are its own box, inset from the shelf edge with the inner radius. Line one: chevron, the row's one
+   status glyph (.lf-lead, 55-testing.js), the name, which wraps instead of being cut. Line two: the status word (.lf-state,
+   the shell's chip, coloured, glyph-less) and the facts, whole. Details open under the chevron column. */
+§@testing .sh-run, §@agents .sh-run {
+  position: relative; width: auto !important; margin: 0 0 2px !important; padding: 0 !important; overflow: clip !important;
+  border: 0 !important; border-radius: var(--d-r) !important; background: transparent !important; box-shadow: none !important;
+  transition: background-color var(--d-t2) var(--d-ease);
+}
+§@testing .sh-run:last-child, §@agents .sh-run:last-child { margin-bottom: 0 !important; }
+§@testing .sh-run.open, §@agents .sh-run.open { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-open), transparent) !important; }
+§@testing .sh-run-h, §@agents .sh-run-h {
+  display: flex !important; align-items: flex-start; gap: var(--d-gap); min-height: var(--d-row-h); margin: 0 !important;
+  padding: 5px var(--d-pad) !important; border-radius: var(--d-r) !important; background: transparent; box-shadow: none !important;
+  transform: none !important; line-height: var(--d-lh) !important; transition: background-color var(--d-t1) var(--d-ease);
+}
+§@testing .sh-run-h:hover, §@agents .sh-run-h:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+§@testing .sh-run.open > .sh-run-h, §@agents .sh-run.open > .sh-run-h { border-radius: var(--d-r) var(--d-r) 0 0 !important; }
+§@testing .sh-run-h:focus-visible, §@agents .sh-run-h:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+§@testing .sh-run-h > .sh-accchev, §@agents .sh-run-h > .sh-accchev { flex: none; width: 9px !important; height: 9px !important; margin-top: 5px; color: var(--d-text-3) !important; }
+/* the shell's dot steps aside for the row's one glyph */
+§@testing .sh-run-h > .sh-dot, §@agents .sh-run-h > .sh-dot { display: none !important; }
+§@testing .sh-run-h > .lf-lead, §@agents .sh-run-h > .lf-lead { margin-top: 3.5px; }
+§@testing .sh-run-h > .sh-main, §@agents .sh-run-h > .sh-main { display: flex !important; flex-direction: column; gap: 1px; flex: 1 1 auto; min-width: 0; }
+/* the name: whole, wrapped at its natural breaks */
+§@testing .sh-run-h .sh-name, §@agents .sh-run-h .sh-name {
+  display: block !important; max-width: none !important; overflow: visible !important; white-space: normal !important; text-overflow: clip !important;
+}
+§@testing .sh-run-h .sh-name > .sh-nm-txt, §@agents .sh-run-h .sh-name > .sh-nm-txt {
+  display: inline; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: break-word;
+}
+/* line two: the status word, then the facts, whole: they are short shell strings, and cutting them would leave the run id
+   or the progress reachable only by opening the row (code words and ids get their break points in 55-testing.js) */
+§@testing .sh-run-h > .sh-main > :is(.sh-runmeta, .sh-meta), §@agents .sh-run-h > .sh-main > :is(.sh-runmeta, .sh-meta) {
+  display: block !important; overflow: visible !important;
+  flex: none !important; max-width: none !important; max-height: none !important; white-space: normal !important; text-overflow: clip !important;
+  overflow-wrap: break-word; font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; letter-spacing: 0 !important; color: var(--d-text-3) !important;
+}
+§@testing .sh-run-h .lf-state, §@agents .sh-run-h .lf-state { display: inline !important; max-width: none !important; white-space: nowrap; vertical-align: baseline; font-weight: 600 !important; }
+§@testing .sh-run-h .lf-state > .d-gl, §@agents .sh-run-h .lf-state > .d-gl { display: none !important; }
+§@testing .sh-run-h .lf-state > .chip-full, §@agents .sh-run-h .lf-state > .chip-full { display: inline !important; }
+§@testing .sh-run-h .lf-state::after, §@agents .sh-run-h .lf-state::after { content: '\00B7'; margin: 0 5px; font-weight: 400; color: var(--d-text-3); }
+/* state colours: each element with a state carries its colour as --lf-st, so a status word and a glyph can take
+   different tones of it. Status words take their state's colour (the shared chip rule's :is() list outranks the shared
+   state colours, so the chip colour is restated here at the chip rule's weight; see the lane F report). */
+§@testing [data-d-st], §@agents [data-d-st] { --lf-st: var(--d-pend); }
+§@testing :is([data-d-st="ok"], [data-d-st="live"]), §@agents :is([data-d-st="ok"], [data-d-st="live"]) { --lf-st: var(--d-ok); }
+§@testing [data-d-st="run"], §@agents [data-d-st="run"] { --lf-st: var(--d-run); }
+§@testing :is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]), §@agents :is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]) { --lf-st: var(--d-warn); }
+§@testing :is([data-d-st="fail"], [data-d-st="blocked"]), §@agents :is([data-d-st="fail"], [data-d-st="blocked"]) { --lf-st: var(--d-fail); }
+§@testing :is([data-d-st="idle"], [data-d-st="unknown"]), §@agents :is([data-d-st="idle"], [data-d-st="unknown"]) { --lf-st: var(--d-idle); }
+§@testing [data-d-st="errored"], §@agents [data-d-st="errored"] { --lf-st: var(--accent-orange, var(--d-fail)); color: var(--lf-st) !important; }
+§@testing .pm-chip[data-d-st], §@agents .pm-chip[data-d-st] { color: var(--lf-st) !important; }
+/* light modes (and NieR dark): the graph colours are made for marks, not for 12 px words on a tinted shelf (Running in
+   Retro light measured 1.4:1). Status words take a deeper tone of their colour, mixed toward the text colour; glyphs
+   keep more of the colour (they are shapes, not text). Measured in GPU Chrome against the pixels under each word and
+   glyph, rows open, in every light variant and NieR dark: words 4.1:1 or better (most above 4.5:1), glyphs 3.3:1 or
+   better (2026-10-09, lane F). */
+§R { --lf-tx: 100%; --lf-gl: 100%; }
+§R[data-theme$="-light"] { --lf-tx: 42%; --lf-gl: 58%; }
+§R[data-theme^="friendly"][data-theme$="-light"] { --lf-tx: 36%; }
+§R[data-theme^="glass"][data-theme$="-light"] { --lf-tx: 30%; --lf-gl: 50%; }
+§R[data-o55-nier="on"][data-theme$="-light"] { --lf-tx: 36%; --lf-gl: 48%; }
+§R[data-o55-nier="on"][data-theme$="-dark"] { --lf-tx: 40%; --lf-gl: 66%; }
+§{light}@testing [data-d-st], §{light}@agents [data-d-st], §{nier,dark}@testing [data-d-st], §{nier,dark}@agents [data-d-st],
+§{light}@testing [data-d-st] > .d-gl, §{light}@agents [data-d-st] > .d-gl, §{nier,dark}@testing [data-d-st] > .d-gl, §{nier,dark}@agents [data-d-st] > .d-gl {
+  color: color-mix(in oklab, var(--lf-st) var(--lf-gl), var(--d-text)) !important;
+}
+§{light}@testing :is(.pm-chip, .lf-state, .c)[data-d-st], §{light}@agents :is(.pm-chip, .lf-state, .c)[data-d-st],
+§{nier,dark}@testing :is(.pm-chip, .lf-state, .c)[data-d-st], §{nier,dark}@agents :is(.pm-chip, .lf-state, .c)[data-d-st] {
+  color: color-mix(in oklab, var(--lf-st) var(--lf-tx), var(--d-text)) !important;
+}
+/* a status word inside a value ("Flaky 2/2 passed on attempt 2", "Errored harness failure"): an inline run of text on
+   the value's baseline, its glyph centred on the x-height, not an inline-flex box that lifts the word */
+§@testing .sh-kv > .sh-v > .pm-chip, §@agents .sh-kv > .sh-v > .pm-chip { display: inline !important; }
+§@testing .sh-kv > .sh-v > .pm-chip > .d-gl, §@agents .sh-kv > .sh-v > .pm-chip > .d-gl { display: inline-block !important; margin-right: 4px; vertical-align: -1.5px; }
+§@testing .sh-kv > .sh-v > .pm-chip > .d-gl > svg, §@agents .sh-kv > .sh-v > .pm-chip > .d-gl > svg { display: block; }
+/* details: under the chevron column, like the other D rows */
+§@testing .sh-run > .sh-accb, §@agents .sh-run > .sh-accb { padding: 0 var(--d-pad) 0 calc(var(--d-pad) + 13px) !important; }
+§@testing .sh-run > .sh-accb > .pm-acc-inner > :first-child, §@agents .sh-run > .sh-accb > .pm-acc-inner > :first-child { margin-top: 1px !important; }
+§@testing .sh-run > .sh-accb > .pm-acc-inner > :last-child, §@agents .sh-run > .sh-accb > .pm-acc-inner > :last-child { margin-bottom: 9px !important; }
+/* facts: one label column per opened row (a subgrid), as wide as its longest label up to 42 % (a longer label wraps), so
+   the values line up and keep most of the width */
+§@testing .sh-run > .sh-accb > .pm-acc-inner, §@testing .sh-shelf > .sh-accb > .pm-acc-inner,
+§@agents .sh-run > .sh-accb > .pm-acc-inner, §@agents .sh-run > .sh-accb > .pm-acc-inner > .sh-agdetail {
+  display: grid !important; grid-template-columns: fit-content(42%) minmax(0, 1fr); column-gap: 8px; align-content: start;
+}
+§@testing .sh-run > .sh-accb > .pm-acc-inner > *, §@testing .sh-shelf > .sh-accb > .pm-acc-inner > *,
+§@agents .sh-run > .sh-accb > .pm-acc-inner > *, §@agents .sh-agdetail > *, §@agents .sh-agask > * { grid-column: 1 / -1; min-width: 0; }
+§@testing .sh-run > .sh-accb > .pm-acc-inner > .sh-kv, §@testing .sh-shelf > .sh-accb > .pm-acc-inner > .sh-kv,
+§@agents .sh-run > .sh-accb > .pm-acc-inner > .sh-kv, §@agents .sh-agdetail > .sh-kv:not(.sh-kv-stack), §@agents .sh-agask > .sh-kv:not(.sh-kv-stack) {
+  grid-template-columns: subgrid !important; column-gap: 8px !important;
+}
+§@agents .sh-agdetail > .sh-agask { display: grid !important; grid-template-columns: subgrid !important; column-gap: 8px; }
+/* a long code value (a command, a suite, a path: .lf-stack, 55-testing.js) sits under its label at the full row width */
+§@testing .sh-run > .sh-accb > .pm-acc-inner > .sh-kv.lf-stack, §@agents .sh-run .sh-agdetail > .sh-kv.lf-stack {
+  grid-template-columns: minmax(0, 1fr) !important; row-gap: 1px !important;
+}
+§@testing .sh-run .sh-kv.lf-stack > .sh-v, §@agents .sh-run .sh-kv.lf-stack > .sh-v { line-height: 1.45 !important; }
+§@testing .sh-run .sh-kv > .sh-k, §@agents .sh-run .sh-kv > .sh-k, §@testing .sh-shelf > .sh-accb .sh-kv > .sh-k { white-space: normal !important; min-width: 0 !important; }
+§@testing .sh-run .sh-kv, §@agents .sh-run .sh-kv { padding: 3px 0 !important; }
+§@testing .sh-run .sh-kv > .sh-v, §@agents .sh-run .sh-kv > .sh-v { font-size: var(--d-fs-meta) !important; color: var(--d-text-2) !important; }
+§@testing .sh-run .sh-kv > .sh-v.sh-mono, §@agents .sh-run .sh-kv > .sh-v.sh-mono { font-size: var(--d-fs-small) !important; }
+§@testing .sh-run .sh-acts, §@agents .sh-run .sh-acts, §@testing .sh-shelf > .sh-accb .sh-acts {
+  margin-top: 8px !important; padding-top: 0 !important; border-top: 0 !important; gap: 6px !important;
+}
+
+/* ---- Testing --------------------------------------------------------------------------------------------------------- */
+/* header status: the word and its count ("Live · 214 passing"), not only the light */
+§@testing .sh-bstatus .sh-bextra.lf-show { display: inline !important; min-width: 0; color: var(--d-text-2); }
+/* last run: the result word, then the counts, which move under it rather than being cut */
+§@testing .sh-lrline {
+  display: flex !important; flex-wrap: wrap; align-items: baseline; gap: 2px 8px !important; margin: 0 !important; padding: 4px var(--d-pad) 2px !important;
+}
+§@testing .sh-lrline > .pm-chip { align-self: center; }
+§@testing .sh-lrsum {
+  min-width: 0; white-space: normal !important; overflow: visible !important; text-overflow: clip !important;
+  font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; letter-spacing: 0 !important; color: var(--d-text-2) !important;
+}
+§@testing .sh-shelf > .sh-body > .pm-btnrow { margin-top: var(--d-g) !important; }
+§@testing .sh-shelf > .sh-body > .pm-btnrow + .sh-run { margin-top: 4px !important; }
+/* a failure log is the one box inside a row: code, a faint failure tint, lines that wrap instead of being cut */
+§@testing .sh-log {
+  margin: 4px 0 6px !important; padding: 6px 8px !important; border: 0 !important; border-radius: var(--d-r) !important;
+  background: color-mix(in srgb, var(--d-fail) 8%, transparent) !important;
+  font: 400 var(--d-fs-small)/1.45 var(--mono-font) !important; color: var(--d-text-2) !important;
+}
+§@testing .sh-log > div { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere; }
+§@testing .sh-log > .fail { color: var(--d-fail) !important; }
+/* the evidence note sits between the head and the collapsed body: an info tint concentric with the shelf */
+§@testing .sh-shelf > .pm-note {
+  display: flex; align-items: flex-start; margin: var(--d-in) !important; padding: 6px var(--d-pad) !important; gap: 6px !important;
+  border: 0 !important; border-radius: var(--d-r) !important; background: color-mix(in srgb, var(--d-pend) 10%, transparent) !important;
+  font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-2) !important;
+}
+§@testing .sh-shelf > .pm-note .pm-note-glyph { flex: none; width: 13px !important; height: 13px !important; margin-top: 1px; color: var(--d-pend) !important; }
+§@testing .sh-shelf > .pm-note .pm-note-glyph svg { width: 13px; height: 13px; }
+§@testing .sh-shelf > .sh-accb > .pm-acc-inner > :is(.sh-kv, .pm-footnote) { padding-left: var(--d-pad) !important; padding-right: var(--d-pad) !important; }
+§@testing .sh-shelf > .sh-accb > .pm-acc-inner > .sh-acts { padding: 0 var(--d-pad) !important; }
+§@testing .sh-shelf > .sh-body > .sh-kv { padding: 4px var(--d-pad) !important; }
+
+/* Glass draws its chrome without a blur (blur only on boxes), so the header plate alone would let scrolled rows read
+   through it: in these header-only panels the rows fade out under the header instead */
+§{glass}@testing > .sh-scroll, §{glass}@agents > .sh-scroll {
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, transparent calc(var(--pm6-shrun-banner-h, 42px) - 6px), #000 calc(var(--pm6-shrun-banner-h, 42px) + 6px));
+  mask-image: linear-gradient(180deg, transparent 0, transparent calc(var(--pm6-shrun-banner-h, 42px) - 6px), #000 calc(var(--pm6-shrun-banner-h, 42px) + 6px));
+}
+
+/* ---- NieR: headers in capitals -------------------------------------------------------------------------------------- */
+§R[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(#panel-testing, #panel-agents) :is(.sh-hlabel, .sh-title, .pm-sumcard-h) {
+  text-transform: uppercase !important; letter-spacing: .14em !important;
+}
+
+/* ---- reduced motion: nothing in these panels moves ------------------------------------------------------------------- */
+§R[data-motion="reduced"] :is(#panel-testing, #panel-agents) *, §R[data-reduced-motion="1"] :is(#panel-testing, #panel-agents) * {
+  transition: none !important; animation: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  §R :is(#panel-testing, #panel-agents) * { transition: none !important; animation: none !important; }
+}
