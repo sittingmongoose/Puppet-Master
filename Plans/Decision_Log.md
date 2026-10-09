@@ -350,6 +350,8 @@ Negative constraints: no third-party emulator, parser, or PTY-abstraction crate 
 
 These dispositions authorize planning only. They do not land any owner amendment, prove runtime behavior, or seal governance.
 
+Amended 2026-10-09 (DL-182): image protocols, which these decisions left out as a separate decision, are decided by DL-182 (the complete kitty graphics protocol, sixel and iTerm2 inline images in the first terminal release). P1 stands: an image decoder is not a terminal emulator, parser or PTY-abstraction library. The terminal's container model changed the same day (DL-181: one session per tab in the universal panels); the engine and host direction recorded here is unchanged.
+
 SourceRef: `PM-Experiments/research-audit-native-20260907/process-pilot-20260908/DECISIONS.md`; `PM-Experiments/research-audit-native-20260907/process-pilot-20260908/evaluator/terminal-premium-decision-draft.md`; Jared, conversation of 2026-09-09.
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Server_System.md, ContractName:Plans/Settings_System.md, ContractName:Plans/Release_Supply_Chain.md, ContractName:Plans/Contracts_V0.md
@@ -3625,6 +3627,237 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/J
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-623, ContractName:Plans/FinalGUISpec.md#F3-624, ContractName:Plans/Source_Control_System.md#SCS-005, ContractName:Plans/Jujutsu_Integration.md#JJI-006, ContractName:Plans/FinalGUISpec.md#F3-529
 
+### DL-180: Home becomes one universal panel system, and the chat stays fixed on the right
+
+**Question:** How should the middle of the home page work: fixed editor panels, a separate dashboard and a terminal dock at the bottom, or one kind of panel that can hold anything?
+
+**Why it came up:** Home today has four fixed editor panels (two open at start), one dashboard, up to four terminal sections docked at the bottom and a chat that can be dragged into other docks. None of that came from a decision Jared made: it came from an audit packet of the concept as it stood in August. Jared asked on 2026-10-09 for a redesign of the whole home page: one universal panel that can hold dashboards, browsers, artifacts, plans, terminals, the code editor and everything the new chat needs, with a "+" button after the last tab, a way to reach tabs that do not fit, files from the left rail opening in the panels, and a chat that is not moved around any more. This is the first Decision Log entry about the home layout, and it replaces that packet's model.
+
+**What you get:**
+- One kind of panel. The middle of the window is a set of rows and columns of any depth; each panel in it is a group of tabs, and any panel can hold any kind of tab. Each split keeps its own size, so panel widths and heights are independent. Maximize fills the middle with one panel without changing the layout underneath.
+- Panels anywhere, including a full-width row at the bottom where the terminal sits today (about 40% of the height in the default layout). That row is an ordinary panel row: it can hold any tab and can itself be split side by side. A panel dragged below half its minimum folds down to its tab strip and keeps everything in it; this replaces "Collapse terminal" for every panel.
+- Four layouts to start from: Home (dashboard and editor over a terminal row), Build, Terminals 2x2 (four terminal panels filling the middle) and Focus (one panel). Restore home layout goes back to Home without closing anything.
+- One tab strip for every panel, the dashboard's included. The active tab and its panel are drawn as one shape (the contact-aware tab silhouette Jared likes, polished), which is the only mark of the active tab: no underline, no accent line, no pill. Drag to reorder and the three rotating Retro effects carry over. Tabs are 96 to 200 px wide, shrink to 72 px, then to 36 px icons; the active tab stays at least 120 px and never hides. Pinned tabs sit at the left. A file with unsaved changes shows a dot in the close slot until you point at it; a preview tab has an italic label; a tab that opened in the background shows a small hollow square. Close buttons are 24 by 24 px.
+- When tabs do not fit, a plain "+N" at the end of the strip opens a searchable list of the hidden tabs grouped by kind, and you can drop a dragged tab on it.
+- A "+" right after the last tab opens a menu (it never makes a tab by itself). Each row opens its item as a new tab in this panel; the row's trailing cell, or Alt+click, opens it as a new panel. Ctrl+T makes a new tab of the panel's usual kind. The menu has a type-to-filter field, Terminal (with shell profiles and SSH hosts), Browser, File... (with three recent files), Dashboard, Plan or document..., Artifact..., Output, Problems, Ports and Debug Console, then Split right, Split down and Reopen closed tab. An empty panel shows the same choices.
+- Files open the same way from everywhere a person clicks one: the file tree, file references in the chat, the diff views and Changes rows, transcript file records, search results, `path:line:col` links in the terminal, and every other chat or chat-wizard surface. One click opens an italic preview tab that the next single click replaces; a double click, or editing, keeps it; a file already open anywhere is shown where it is, never opened twice; Alt+click opens it in a new panel. Ctrl+P with Enter and the recent files in the "+" menu open kept tabs. Files go to the last panel you used that holds documents; panels that hold only terminals, browsers, dashboards or the runtime views (Output, Problems, Ports, Debug Console) are skipped.
+- Everything else the chat opens follows one rule: if you clicked it in the chat, it opens and takes focus; if an agent opened it by itself, it arrives as a background tab with the hollow square and never takes the keyboard. A terminal, browser or dashboard goes to the last panel you used that already holds that kind; Output, Problems, Ports and Debug Console go to the last panel holding that kind, then to the one holding a terminal, so tools land beside the terminals.
+- The kinds of tab: Editor (with a diff mode and preview tabs), Terminal, Browser (DevTools inside it, the capture toolbar), Dashboard, Plan viewer (with its Build, Revise and More footer), Document (rules, memory, revert, debug investigation, lens source, wonderer), Artifact viewer (a subtype per artifact kind, versioned), Run view (Crew, Review, Chat Room, BrainStorm and their evidence), Agent transcript (a read-only live feed), Context detail, Record viewer (search, MCP, app inspector, work records), Output, Problems, Ports and Debug Console. Setup sheets stay pop-up windows over the app. Activity Detail stays inside the chat. The chat's old Goal tab is gone.
+- Dashboard tabs can show every Usage widget; Orchestrator widgets join after that page's own redesign. You can have several dashboard tabs, each with its own layout, running on the Usage page's widget board.
+- The chat column is fixed on the right, full window height, never a tab and never moved inside the layout. Pop out is the only way to move it (in the desktop app). Its width follows the window: 480 px on a 1470 px MacBook Air, 600 px at 1920, 640 px from about 2070, and you can drag it between 400 and 760 px. The 5.6 Pro chat's History list is a flyout; pinning it widens the chat by its own width instead of squeezing the messages. Activity Detail stays in the chat. One thread history list survives, the 5.6 Pro one.
+- Narrow windows fold in a fixed order, keyed on the room left for the panels (the window minus the rail and the chat): below 960 px the rail's side panel eases to 240 px and then the chat to its minimum; below 760 px the side panel folds to its icon bar and opens over the panels; below 600 px one panel column shows, with a panel switcher in its strip (the real layout is kept); below 480 px the chat folds to an edge strip unless you choose to keep it open in narrow windows. Each step waits 48 px before undoing itself, and none of these states is ever saved.
+- The Guided Tour stops asking you to drag the chat into another dock. It teaches opening a tab from "+", opening a file from the rail into a panel, splitting by dragging a tab to a panel's edge, and adding a widget to the dashboard.
+- Keys that do not fight the rest of the app: Ctrl+1..9 and Ctrl+K stay the shell's, so tab N is Alt+N and there are no Ctrl+K chords. In a web browser, which keeps Ctrl+T, Ctrl+W, Ctrl+Shift+T and Ctrl+Tab for itself, Puppet Master answers Alt+T, Alt+W, Alt+Shift+T and Alt+` instead, and every label shows the key that works where it runs.
+- Nothing you have open is lost on upgrade: the old layout is converted into the new one, never reset.
+
+**What it costs:**
+- The chat can no longer be docked left, top or bottom, or floated inside the window. Someone who wants it elsewhere pops it out.
+- A large rewrite of canon and of the concept: the home layout record, the Home commands and wiring, the tour's workspace chapter, the dashboard's single layout and its four-widget catalogue, and the terminal's sections all change together.
+- More dashboards and more panels mean more to restore at start; tabs that are not showing start only when you open them.
+- The dashboard waits for the Usage board to run several boards at once; this thread family does that work after the Usage port lands.
+
+**Options considered:** A fixed grid of slots reusing the Usage board's snapping tracks for whole panels (rejected: the planning thread recommended the split tree and Jared chose it). Keeping the movable chat with its docks (rejected by Jared: "If the user wants to move it around, they can pop it out"). Activity Detail as its own panel tab (rejected by Jared: "it's too small to occupy a panel"). A chat as wide as the 5.6 Pro design (Jared asked for "a little narrower than the 5.6 pro design"). Folding the chat before the rail in narrow windows (Jared chose "Rail, then chat"). A dashboard limited to the four widgets confirmed on 2026-06-13 (that answer allowed promotion by an owner document; Jared's request is that promotion).
+
+**What Jared asked (2026-10-09, in the T3 planning thread "Redesign Panels and Terminal Experience"):**
+- "I instead want to do a single universal panel that can accommodate dashboard, browsers, viewing artifacts, plans, terminals(the terminal display in the new chat wizard concept is wrong and should be same as the pmconcept7 file viewing system.), the code editor (the current one is decent but I am guessing you can make it look better), and the other panels that the new chat wizard needs."
+- "The two things I do actually like do like about the current system i the fancy tabs reordering system and the file editor custom scroll bar. Although, I want you to greatly polish them in this process as they arent perfect."
+- "The panels should have a plus button on the right side of the last tab that shows the option to add a browser, terminal, dashboard, or anything else I am missing. It should give the option to open as a new tab or new panel. Clicking files in the left rail file picker should open the file in the panels. If the tabs dont fit, it should have something like a more or plus 1 tab that lets you select the tabs that dont fit [...]"
+- "The old system used to allow you to move chat around, but I think we shouldnt do that. If the user wants to move it around, they can pop it out. The dashboard needs the new widget design from the usage page updates. It should be capable of showing any widgets from the usage page or the orchestrator page [...]"
+- On the layout engine, in the question form: "Split tree + Usage gestures (Recommended)".
+- On heights: "wouldn't that make the panels short? I'm guessing panels can have different heights so that isn't a big deal. I would like to be able to put panels on the bottom like where the terminal sits now too."
+- On the chat: "Something in the middle. I don't want activity detail to be its own panel like you suggested, it's too small to occupy a panel. It is going to be wider than the current solution, but the current solution was unusable narrow. So I would think the default is a little narrower than the 5.6 pro design."
+- On narrow windows: "Rail, then chat (Recommended)".
+- On opening files: "Files referenced in chat or in the diff panel(or anywhere else in the chat wizards stuff) open the same way as the rules you stated for the file tree."
+- Everything above that is not quoted is the planning thread's recommendation, which Jared accepted without change ("Continue where you left off" after reviewing the list).
+
+**What the spec now says:**
+1. **The panel model and its layout** (`Plans/FinalGUISpec.md#F3-630`): an n-ary split tree of panels with sizes as proportions, maximize as a flag outside the tree, collapse to the strip below half a panel's minimum, the full-width bottom row in the default layout, the four named layouts, and the panel lifecycle (closing the last tab closes the panel unless it is the only panel or locked). It supersedes the four fixed editor panels, the singleton dashboard, the movable chat and the terminal sections of `#F3-501` and the F3-HOME-001 block, and the fixed bottom runtime zone of sections 3.1, 3.2 and 5 (`#F3-034`, `#F3-035`, `#F3-060`, `#F3-061`, `#F3-066`).
+2. **The tab strip** (`#F3-631`, with `#F3-505` generalised to every panel), **the "+" menu and the empty panel** (`#F3-632`), **the "+N" list** (`#F3-633`, superseding the editor-only chip of `#F3-421` and the sideways-scrolling recipe of `#F3-445` for home strips).
+3. **One opening rule set for every caller** (`#F3-634`, kept single by `Plans/DRY_Rules.md#DR-071`), consumed by `Plans/FileManager.md#F-090` (the file tree), `Plans/assistant-chat-design.md#ACD-500` (the chat) and `Plans/Contracts_V0.md#CV-360` (the placement fields every open route carries).
+4. **The tab kinds and the host contract** (`#F3-635`), **the narrow ladder** (`#F3-636`), **the chat column** (`#F3-637`), **the dashboard tab** (`#F3-638`, with `Plans/Widget_System.md#WS-030`, superseding `#F3-279`'s four-widget catalogue), **the editor** (`#F3-639`).
+5. **The layout record** (`Plans/home_workspace_layout_v2.schema.json`, `Plans/storage-plan.md#SP-330`): `pm.home_workspace_layout.v2`, converted from v1 on first read and never reset.
+6. **Commands and wiring** (`Plans/UI_Command_Catalog.md#UCC-200`, `#UCC-202`, `#UCC-203`, `Plans/Commands_System.md#CS-100`, `#CS-101`, `Plans/Wiring_Matrix.md#WM-090`, `#WM-092`, `Plans/UI_Wiring_Rules.md#UIW-040`, `#UIW-041`): tab operations are `cmd.panel_tab.*`, layout operations extend `cmd.workspace_layout.*`, the rail keeps `cmd.panel.*`, and the chat's Pop out stays `cmd.panel.undock`. Choosing a tab and maximizing are view state (`ui.panel_tab.activate`, `ui.workspace_layout.maximize`); every committed change emits the one existing event `workspace.layout_changed` (`Plans/Contracts_V0.md#CV-361`).
+7. **DRY** (`Plans/DRY_Rules.md#DR-065`, `#DR-066`, `#DR-067`, `#DR-071`): one panel and tab grammar, one gesture kit shared with the Usage board, one overlay root and stacking order, one opening module.
+8. **The Guided Tour** (`Plans/Planning_Wizard.md#PWIZ-035`, `#PWIZ-023` amended, `Plans/FinalGUISpec.md#F3-521`, `Plans/guided_tour_contracts.schema.json`, `Plans/Wiring_Matrix.md#WM-041`): the move-or-dock-chat step is replaced by the four steps above.
+9. **Settings** (`Plans/Settings_System.md#SSYS-050`): the chat's Overlay layout, the side-panel dock choice and the editor-strip setting retire; layout, tab and editor rows are added, all applying live.
+10. **Words** (`Plans/Glossary.md#G-030`): a panel is a tab group in the home centre, a tab is a panel tab; the left rail's panels are side panels; a workspace tab is still a project tab.
+11. **Looks, the dashboard's boards, the file tree, the artifact viewer and certification** (`Plans/FinalGUISpec.md#F3-647`, `Plans/Widget_System.md#WS-030`, `Plans/FileManager.md#F-090`, `Plans/Runtime_Artifacts_Panel.md#RAP-065`, `Plans/Automated_Testing_System.md#ATS-075`, `Plans/GUI_Rebuild_Requirements_Checklist.md#GRRC-040`).
+
+**Related:** the terminal side of this redesign is `Plans/Decision_Log.md#DL-181` to `#DL-183`; the shell-wide bans are `#DL-184`; the Demo Studio and the later chat port are `#DL-185`. Hover on panels and tabs follows the hover thread's merged system (`Plans/DRY_Rules.md#DR-059`): magnet and glow only on cards, rows and tiles; tabs, dividers and editor or terminal text get at most a static tint.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md`, SHA-256 `0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64` (decisions D1-D10, D21, D23-D25 and D28 with Jared's words); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html`, SHA-256 `52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981` (the agreed anatomy); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md`, SHA-256 `aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9` (the panels concept's host contract); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md`, SHA-256 `019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162` (the panels concept's numbers as built).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/DRY_Rules.md#DR-065
+
+### DL-181: The terminal is rebuilt as one session per tab, and it has no AI of its own
+
+**Question:** What should the terminal look like and do now that it is an ordinary tab in any panel?
+
+**Why it came up:** Jared said the terminal "needs a major redesign": its buttons "look horrible and dont really fit", they are too small to read, the options are confusing, and the effects, colours, fonts and backgrounds canon asked for never reached the concept. Canon still describes a terminal of up to four sections at the bottom of the window, each with workgroups, sub-tabs and a two-by-two pane grid.
+
+**What you get:**
+- One terminal session per tab. There are no splits inside a terminal: Split makes a new panel beside it with the same folder and shell. Terminal sections, workgroups, sub-tabs and the Quadrant layout are gone; the Terminals 2x2 layout makes four terminals side by side out of panels.
+- A readable tab: the label is the running program and the folder; a command that failed shows its exit code; a terminal an agent is using shows the agent mark.
+- A header row inside the tab: the folder, the branch, the running command and how long it has run, then Find, Split, Maximize and a ⋮ menu. Wide panels show labels; narrow ones show icons with hover tags; very short panels hide the row. There is no bottom bar. Controls are 24 px targets with 11 to 12 px text. No internal ids are shown.
+- Help around commands: a mark on each prompt line (a glyph, never a stripe) with copy command, copy output, run again, open the output in an editor tab and insert the command without Enter; a sticky header naming the command you are scrolled into; jumping between commands; `path:line:col` links that open in the editor by the same rules as files; a find overlay with regular expressions and highlight-all; a scrollbar drawn like the editor's minimap with marks for commands, failures and search hits; keyboard copy mode and quick-select hints; dimming of terminals you are not in; progress reported by programs (OSC 9;4); a visual bell; typing in other scripts (IME); and a plain-text buffer for screen readers.
+- Agents and people share terminals safely. You can always type: a keystroke takes over and pauses the agent, which is told. Agents cannot type into a terminal you opened unless you allow it. Password and secret prompts always come to you. While an agent is working in a terminal, a row says "<agent> is driving this terminal" with its step and Take over, Interrupt and Stop. Each command records who typed it. The prompt marks carry a secret known only to that terminal, so a program's output cannot fake them. A control API for your own scripts comes later.
+- No AI inside the terminal. "Explain What Commands Do" leaves the terminal; the Teacher persona explains Puppet Master's commands and systems in the chat instead.
+- The engine stays Puppet Master's own (the parser, the screen grid, the renderer and the process host). Ghostty, kitty, WezTerm, Rio and Alacritty are references for the design, never code we reuse.
+
+**What it costs:**
+- No split panes inside one terminal; four-up means four panels.
+- The per-tab role setting (General, Build, Server, Logs) goes; shell profiles and the label replace it.
+- Terminal layout records, sections and workgroups in canon, storage and the concept are converted or retired.
+- Agents need the human's permission to type into a terminal the human opened.
+
+**Options considered:** Keeping splits inside a terminal tab as a capped grid (Jared chose one session per tab: "The first option"). An AI explain or fix button in the terminal (Jared: "there wont be ai features baked into the terminal itself"). Reusing an existing terminal engine (decided against by DL-035, which stands).
+
+**What Jared asked (2026-10-09, in the T3 planning thread "Redesign Panels and Terminal Experience"):**
+- "The terminal needs a major redesign [...] The buttons to control it look horrible and dont really fit. Plus they are so small that its hard to read. The options are confusing too. So the whole design needs to be compeltely thrown our and redone."
+- "The agents in puppet master should be able to interact with the terminal, and users can obviously use it too, but there wont be ai features baked into the terminal itself."
+- On splits, with the question about panel heights: "The first option" (one session per tab; Split makes a new panel).
+- On command explanations: "The explain what commands do can be part of the teacher persona that explains puppet masters systems in chat."
+- The rest of this card is the planning thread's recommendation, which Jared accepted without change. Retiring the per-tab role setting is the terminal concept lead's recommendation under the label rule above.
+
+**What the spec now says:**
+1. **One session per tab** (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`): the terminal is a tab kind; sections, workgroups, sub-tabs, in-tab splits and the Quadrant layout retire (`#SMPFS-014`, `#SMPFS-138` and `#SMPFS-170` amended, section 1.6 superseded); presentation and `terminal_session_id` stay separate as before. A lead ruling where Jared's answer is silent: moving, folding, maximizing or hiding a terminal tab never touches its session; closing the tab ends the session after saying what is still running; Reopen closed tab, or a terminal restored after a restart whose session did not survive, starts a new session in the same folder and shell and says so, never pretending to be the old one.
+2. **The tab's chrome and features** (`Plans/FinalGUISpec.md#F3-640`, `#F3-641`; engine side `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183`), superseding the workgroup strip and grid units `#F3-062` to `#F3-065`, `#F3-449` and `#F3-450`.
+3. **Agents and people** (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182`, presentation `Plans/FinalGUISpec.md#F3-646`).
+4. **No AI in the terminal** (`#SMPFS-180` negative constraint; `Plans/Personas.md` section 11.8; `Plans/settings_inventory.json` retires `code.terminal.explanations`).
+5. **Commands and wiring** (`Plans/UI_Command_Catalog.md#UCC-201`, `Plans/Wiring_Matrix.md#WM-091`): section, workgroup and quadrant commands retire; take over, interrupt, find, images and appearance join; `cmd.terminal.reveal` reveals the tab wherever it is.
+6. **The engine** (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-184`, `#SMPFS-183`): DL-035's own engine and its proposals P1 to P10 stand, input protection (DL-037, DL-038), and every agent-terminal contract that keeps the session, approval leases and honest output reads.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md`, SHA-256 `0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64` (decisions D11-D13 and D18-D20).
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182, ContractName:Plans/FinalGUISpec.md#F3-640, ContractName:Plans/FinalGUISpec.md#F3-641
+
+### DL-182: The terminal shows pictures: the complete kitty graphics protocol, sixel and iTerm2 images, all in the first release
+
+**Question:** Should the terminal show images, which image protocols, and when?
+
+**Why it came up:** When Jared approved the terminal research decisions on 2026-09-09 (DL-035), image protocols were left out as "a separate decision" (ledger `pldg-20260908-001-terminal-research-repairs`), and every mention of images in canon since then is an exclusion. Jared asked for kitty graphics support in the redesign and then corrected a phased plan: "There are no phases [...] That is wrong, it is all at once."
+
+**What you get:**
+- The complete kitty graphics protocol in the first release: images sent directly, from a file or through shared memory; placements, Unicode placeholders (so images survive programs like tmux), layering above and below text, and animation.
+- Sixel images and iTerm2 inline images in the same release, so the common image tools work.
+- Images are safe: file and shared-memory transfers follow the protocol's own hardening rules (regular files only, no system or device paths, temporary files deleted only where the protocol allows, shared memory removed after reading, the same fixed error for every failed read), a remote session or a command an agent typed can only send images directly, every terminal has quotas for image memory, and a program that sends too much gets refused, not a frozen app.
+- Images respect Reduced Motion (animations hold their first frame) and show as a short text description in the screen-reader buffer and in output an agent reads.
+
+**What it costs:**
+- More decoding, memory and storage work in the terminal. Images are saved with the terminal's scrollback, inside the scrollback's storage quota: when the quota has to drop an image, its cells show a short text naming it, and a terminal restored later looks as it did.
+- The web version has to draw the same images over its text rows.
+
+**Options considered:** kitty graphics alone, or a phased rollout starting with direct transmission (Jared: "There are no phases [...] it is all at once"). Leaving images out (DL-035's default, now replaced).
+
+**What Jared asked (2026-10-09, in the T3 planning thread):** "We also probably need to add support for kitty graphics." Then, on a phased proposal: "There are no phases [...] That is wrong, it is all at once." The security rules and quotas are the planning thread's recommendation, which Jared accepted without change; their numbers come from the terminal concept's measurements. Keeping images in saved scrollback is the planning thread's rule of 2026-10-09 after Jared rejected phasing (a terminal without its images after a restart would be a scope cut DECISIONS.md does not make).
+
+**What the spec now says:**
+1. **The protocols and their safety rules** (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-181`), replacing the "images are not approved" sentences of section 3.14, `#SMPFS-158`, `Plans/FinalGUISpec.md#F3-544`, `Plans/Settings_System.md#SSYS-034` and `Plans/Automated_Testing_System.md#ATS-047`.
+2. **How images look and behave in a tab** (`Plans/FinalGUISpec.md#F3-645`).
+3. **DL-035 is amended**: the image decision it left open is this one; its own-engine rule stands (an image decoder is not a terminal emulator, parser or process host). The engine units are `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183` and `#SMPFS-184`; certification is `Plans/Automated_Testing_System.md#ATS-076`.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md`, SHA-256 `0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64` (decision D14).
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-181, ContractName:Plans/FinalGUISpec.md#F3-645
+
+### DL-183: The terminal gets real colour schemes, backgrounds, effects and fonts, all applying live
+
+**Question:** What appearance choices should the terminal have, how do they follow the app's look, and which fonts are built in?
+
+**Why it came up:** Canon asked for terminal themes, presets and an appearance group, but the concept draws one hard-coded font at 11 px, light looks draw a dark terminal, and the settings rows that exist say a restart is needed. Jared: "There were supposed to be different terminals effects, colors, fonts, backgrounds selectable in the settings but they seem to have not made it to the concept. That needs to be added." He also said fonts are being built in now and the terminal will bring new ones.
+
+**What you get:**
+- "Follow theme" by default, with a colour scheme chosen for each look: Friendly uses Catppuccin (Latte and Mocha), Glass uses Tokyo Night (Day and Storm, over its blur within the app's blur budget), Retro uses Puppet Master's own Phosphor Green and Amber for dark and Paper Teletype for light, Basic uses One Half (Light and Dark), and NieR Mode uses Puppet Master's YoRHa Parchment and Ink.
+- 34 hand-picked schemes with clear licences, import of the common theme file formats, and a minimum-contrast floor (4.5:1 by default) so text stays readable.
+- Cursor shape, blink and trail; background (the theme's surface, a solid colour, a gradient, or an image with dim and blur); padding; line height; letter spacing; ligatures; weight. Everything applies at once; nothing says "restart required".
+- Settings come from layers: the look's defaults, then your app default, then a project default, then one terminal. In the concept you choose from an Appearance popover in the terminal's ⋮ menu with a live preview, for "This terminal" or "All terminals"; Settings > Terminal binds the same model when Settings is ported.
+- Effects that only run on the terminal you are in, stop when it is idle, turn off on battery saver and on computers drawing without a graphics card where they cost too much, and stop moving entirely under Reduced Motion: dimming of other terminals, a focus ring, cursor blink and trail, smooth scrolling, backgrounds, Glass blur, Retro scanlines and phosphor glow (on by default in Retro dark), a Full CRT tier (curvature, burn-in, noise) you turn on yourself, flicker off by default and kept below the flash limit of WCAG 2.3.1, the visual bell, progress and attention marks, and a Retro "degauss" you trigger. NieR Mode gives a parchment texture and ink focus brackets, with no glow.
+- Fonts for the editor and the terminal: the editor's code font is JetBrains Mono in every look, Retro included. The terminal uses JetBrains Mono too, except in Retro, where it starts in VT323, with Sixtyfour (whose scanline and bleed settings give a CRT look without motion) and Departure Mono as other Retro choices and JetBrains Mono still selectable. Atkinson Hyperlegible Mono is there for readability. JetBrains Mono is the same file already built in for NieR Mode, under its own name.
+- Code text everywhere else (the chat, file paths, logs) is not this decision: Jared settled it on 2026-10-10 as JetBrains Mono in Basic, Glass and Friendly, IBM Plex Mono in Retro ("Retro's whole interface is Plex Mono") and PM NieR Mono in NieR, and the 5.6 Pro chat's fonts work records it.
+- Fonts must have a permissive licence: SIL Open Font License, Apache or MIT. All six terminal faces are under the SIL Open Font License.
+
+**What it costs:**
+- The page grows by the terminal's font files, 155,900 bytes before encoding for six faces.
+- Effects need care to stay cheap; each one has to prove it stops when idle and turns off where it should.
+- 34 schemes to keep with their licences: 27 from 13 open-source families (MIT or Apache) and 7 drawn for Puppet Master.
+
+**Options considered:** Flat settings rows only, applied after a restart (canon's current rows; rejected because Jared wants everything live). Fonts limited to the Open Font License and Apache (the planner's limit, not Jared's; MIT is allowed, though Departure Mono turned out to ship under the Open Font License). IBM Plex Mono as the Retro editor's code face, to match the rest of Retro (Jared: the home redesign's editor and terminal "can still use JetBrains Mono or VT323 there").
+
+**What Jared asked (2026-10-09, in the T3 planning thread):**
+- "There were supposed to be different terminals effects, colors, fonts, backgrounds selectable in the settings but they seem to have not made it to the concept. That needs to be added."
+- "Fonts are being baked in now, and I think terminal will end up introducing new fonts that need to be baked in too(part of our work)."
+- 2026-10-10, on Retro code text: "Retro's whole interface is Plex Mono, so code matches everything around it, and nothing else in Retro changes. The home redesign's editor and terminal can still use JetBrains Mono or VT323 there."
+- The schemes, effects, fonts and the licence rule are the planning thread's recommendation, which Jared accepted without change; the scheme list, font files and contrast floor are the terminal concept's (34 schemes, a 4.5:1 floor by default).
+
+**What the spec now says:**
+1. **The appearance model** (`Plans/FinalGUISpec.md#F3-642`), one model for the terminal (`Plans/DRY_Rules.md#DR-068`), stored as `Plans/storage-plan.md#SP-331` and bound by `Plans/Settings_System.md#SSYS-051`; it supersedes the "restart" badges on `code.terminal.theme` and `code.terminal.font-family`, and `#F3-083`, `#F3-120` and `#F3-121` become real.
+2. **The effects** (`#F3-643`), within `#F3-431`'s closed blur budget and `Plans/DRY_Rules.md#DR-043`'s rule that motion voices belong to the theme family.
+3. **The editor's and the terminal's faces** (`#F3-644`): the faces above, the licence rule, files through DL-161's embedding pipeline and `Plans/DRY_Rules.md#DR-050`'s one set of files.
+4. **Not changed here:** general code text across the app is `Plans/Decision_Log.md#DL-161`, `Plans/FinalGUISpec.md#F3-426` and `#F3-430` as the 5.6 Pro fonts work amends them under Jared's answer of 2026-10-10.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md`, SHA-256 `0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64` (decisions D15-D17); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-1.md`, SHA-256 `1651ae9c41a61f215ee960288b27bb78ee8d9ad804c741495e3313ff4a33e299` (D17a, Retro code text); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-1-d605b4a256.md`, SHA-256 `71784f23a24c3f922292c8979093e0e5bcbdb1c49392da0d8cd9bd04533ea7c2` (the terminal concept's schemes, fonts and appearance fields).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/FinalGUISpec.md#F3-643, ContractName:Plans/FinalGUISpec.md#F3-644, ContractName:Plans/DRY_Rules.md#DR-068
+
+### DL-184: No boxes with a coloured side, no emoji and no pills, anywhere in Puppet Master
+
+**Question:** Do the bans on coloured side borders, emoji and pills apply to the whole app, or only to the places that already state them?
+
+**Why it came up:** The bans were written one surface at a time: the chat and Settings ban coloured side stripes, Settings and the left rail ban pills, emoji is banned app-wide. Meanwhile the shell's own default selection mark is a 3 px accent stripe on the left edge, call-to-action dashboard cards have an accent left border, and several tab skins are pills. Jared repeated the rule for this redesign: "Remember, no boxes with side colors, no emojis, no pills are to be used."
+
+**What you get:**
+- One rule for every surface in Puppet Master: no box with a coloured border or stripe on one side, no emoji, and no pills (fully rounded capsules used as tabs, tags, badges, buttons or status chips). Keyboard key caps are the one capsule-like shape allowed, as Settings already says.
+- Selection is shown by the surface itself: the fused tab silhouette, a filled or tinted row, a square cursor in NieR Mode, reverse video in Retro, never an edge stripe.
+- Status is a mark plus words, drawn from the one set of status marks.
+- A program's own output in the terminal may still contain emoji; the rule is about Puppet Master's chrome.
+
+**What it costs:**
+- Existing surfaces that use the old 3 px selection stripe, the accent left border or a pill skin are redrawn when their owners next touch them; the page tabs and the Orchestrator tab bar change skins.
+
+**Options considered:** Keeping the per-surface carve-outs (the left rail's decision added one more; a shell-wide rule removes the need for each new surface to repeat it).
+
+**What Jared asked (2026-10-09, in his brief to the planning thread):** "Remember, no boxes with side colors, no emojis, no pills are to be used." Making it one DRY rule for the whole app is the planning thread's recommendation, which Jared accepted without change.
+
+**What the spec now says:**
+1. **The rule** (`Plans/DRY_Rules.md#DR-069`), owned for presentation by `Plans/FinalGUISpec.md#F3-648`.
+2. **Retired defaults:** section 3.5's "3px left-edge accent stripe" and `#F3-039`'s token, Appendix C's and `#F3-276`'s accent left border, `#F3-469`'s inset left accent bar, the workgroup pill of section 5.1, and the pill skins of `#F3-422`, `#F3-463`, `#F3-464` and `#F3-467`, each amended in place with a dated note.
+3. **Unchanged:** the chat's, Settings' and the left rail's own statements of the rule stay; they now read as instances of the one rule.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md`, SHA-256 `0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64` (decision D22 and Jared's brief).
+
+ContractRef: ContractName:Plans/DRY_Rules.md#DR-069, ContractName:Plans/FinalGUISpec.md#F3-648
+
+### DL-185: One Demo Studio for all of PMConcept7, and what the 5.6 Pro chat needs when it moves in
+
+**Question:** Where do the concept's many demo controls live, and what has to change when the 5.6 Pro chat is ported into the new home?
+
+**Why it came up:** PMConcept7 has tour and onboarding demo controls, home demos and, in the chat, many more, each with its own panel. Jared wants them in one place, and the Orchestrator and Planning Wizard redesigns will add many more. The new chat will be ported in after this redesign, and its colours, sizes, layers and hover tags have to fit PMConcept7's.
+
+**What you get:**
+- One Demo Studio for every PMConcept7 concept surface, modelled on the 5.6 Pro chat's: tour, onboarding, the chat's demos, the home demos, and later the Orchestrator and Planning Wizard pages. Each surface adds its controls to it instead of drawing its own demo panel.
+- The Demo Studio is a concept tool: it never becomes a product control, setting, command or saved value.
+- When the 5.6 Pro chat is ported: its Basic, Friendly and Glass colours are fixed to match PMConcept7's; its class names are namespaced; it sizes itself by its own column, not the window; it uses the page's one overlay layer and stacking order; PMConcept7's hover system owns its hover tags; its inline "Shell" box becomes a compact command card that opens the terminal tab; its pills and side stripes are removed; and its demo controls move into the Demo Studio.
+
+**What it costs:**
+- The chat port waits until this redesign is published, after the NieR showpiece, the 5.6 Pro chat round with its fonts, the Usage port, the left rail and the hover polish.
+- Each surface's demo controls are moved once.
+
+**Options considered:** A demo panel per surface (today's state, rejected by Jared). Porting the chat before the home redesign (rejected: the chat's tabs, width and tour step depend on the new home).
+
+**What Jared asked (2026-10-09, in the T3 planning thread):**
+- "we need to fix up the demo content and fold it into a centralized demo studio system for the rest of the pmconcept7 systems. Currently there are tour and onboarding controls, and some others, and a lot in chat. So that should all just be folded into one demo studio(like 5.6 chat's system). When I redesign the orchestrator page and planning wizard pages,(not now) those will need a lot of demo controls too so that can fold into that system."
+- On the chat's colours: "we would need to fix its theme colors as you said".
+- The rest is the planning thread's recommendation, which Jared accepted without change.
+
+**What the spec now says:**
+1. **One Demo Studio** (`Plans/FinalGUISpec.md#F3-649`, `Plans/DRY_Rules.md#DR-070`), lab only as `Plans/assistant-chat-design.md#ACD-474` already rules for the chat's.
+2. **The chat port's requirements** (`Plans/assistant-chat-design.md#ACD-501`), and the chat's openings, width, History flyout, command card and Teacher explanations (`#ACD-500`).
+3. **Order:** the concept work runs in its own package now; publishing into PMConcept7 comes after the NieR showpiece, the 5.6 Pro chat round with fonts, the Usage port, the left rail and the hover polish; the chat port follows this redesign.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md`, SHA-256 `0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64` (decisions D26-D28).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-649, ContractName:Plans/DRY_Rules.md#DR-070, ContractName:Plans/assistant-chat-design.md#ACD-501
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -5486,6 +5719,9 @@ canonical_text: >-
   component package with verified provenance and disclosed OS fallback;
   P3 through P10 are accepted for planning; P11 is accepted for evaluation only
   with selection held until PM Server ownership compatibility is resolved.
+  Amended 2026-10-09: image protocols, left out of these decisions, are decided
+  by DL-182, and an image decoder is not a terminal emulator, parser or
+  PTY-abstraction library under P1.
 gui_related: true
 gui_classification_reason: P7 through P10 add visible terminal surfaces and actions; the engine and host choices are non-GUI.
 split_recommended: false
@@ -12501,6 +12737,429 @@ owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Jujutsu_Integration.md
   - Plans/Source_Control_System.md
+```
+
+### DL-180 - Home Becomes One Universal Panel System And The Chat Stays Fixed On The Right
+
+```yaml
+plan_unit_id: DL-180
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-180 records Jared's decisions of 2026-10-09 on the home page, the first Decision Log entry about the home layout.
+  The middle of the window becomes one universal panel system: an n-ary split tree of panels with sizes as
+  proportions, each panel a tab group that holds any tab kind, maximize a flag outside the tree, a panel dragged below
+  half its minimum folding to its tab strip, a full-width bottom row in the default layout that is an ordinary panel
+  row, and four named layouts (Home, Build, Terminals 2x2, Focus) (F3-630). One tab strip serves every panel, the
+  dashboard's included, with the contact-aware silhouette as the only active-tab marker (F3-631); a "+" after the last
+  tab opens a menu of kinds as a new tab or a new panel (F3-632); a plain-text "+N" lists the tabs that do not fit
+  (F3-633). Every file reference a person clicks opens by one rule set: a single click opens the panel's preview tab,
+  a double click or an edit keeps it, an open file is revealed where it is, Alt+click opens a new panel, and files go
+  to the last-focused panel that holds documents; what the user clicks in the chat opens and takes focus, and what an
+  agent opens lands as a background tab with a hollow square in the last-focused panel holding that kind (F3-634,
+  DR-071, CV-360). The tab kinds are listed once (F3-635); the narrow ladder keys on the centre's width (F3-636); the
+  chat is a fixed right column, never a tab and never moved inside the window, with Pop out its only way to move
+  (F3-637); dashboard tabs can show every Usage widget, several at once, each with its own layout (F3-638, WS-030);
+  the Guided Tour stops asking the learner to move the chat (PWIZ-035). The old Home model of four fixed editor
+  panels, one dashboard, terminal sections in a bottom zone and a movable chat came from an audit packet, not from an
+  owner decision, and is superseded; an existing layout is converted, never reset (SP-330). Lead rulings recorded
+  under the decisions: Output, Problems, Ports and Debug Console are dedicated tool kinds that land beside the
+  terminals; activating a tab and maximizing are view state; every committed change emits the existing
+  workspace.layout_changed.
+gui_related: true
+gui_classification_reason: Records the owner decision that replaces the home page's panel model, tabs, opening rules and chat position.
+split_recommended: false
+depends_on: [DL-147, DL-161]
+unblocks: [F3-630, F3-631, F3-632, F3-633, F3-634, F3-635, F3-636, F3-637, F3-638, F3-639, F3-647, DR-065, DR-066, DR-067, DR-071, UCC-200, UCC-202, UCC-203, CS-100, CS-101, WM-090, WM-092, UIW-040, UIW-041, SSYS-050, SP-330, CV-360, CV-361, ACD-500, PWIZ-035, WS-030, F-090, RAP-065, ATS-075, GRRC-040, G-030]
+acceptance_criteria:
+  - "Canon describes one panel model for the home centre: a split tree whose panels each hold any tab kind, with the bottom row an ordinary panel row, and no fixed editor panels, singleton dashboard, terminal sections or bottom runtime zone remain active (F3-630)."
+  - "One tab strip, one \"+\" menu and one \"+N\" list serve every panel, the dashboard's included (F3-631, F3-632, F3-633, DR-065)."
+  - "Every caller that opens something goes through one opening module with one placement rule and one placement field set (F3-634, DR-071, CV-360)."
+  - "The chat is a fixed right column whose only way to move is Pop out, with the width rule and History flyout of F3-637, and no unit still describes chat docking or floating inside the window as active."
+  - "An existing Home layout is converted to the v2 record on first read and never reset (SP-330)."
+  - "The Guided Tour's workspace chapter teaches the four new steps and no longer asks the learner to move or dock the chat (PWIZ-035)."
+  - "Jared's words are quoted verbatim, the planning thread's accepted recommendations and the lead's rulings are labelled as such, and the source is cited by path and SHA-256."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/UI_Wiring_Rules.md
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/Contracts_V0.md
+  - Plans/home_workspace_layout_v2.schema.json
+  - Plans/assistant-chat-design.md
+  - Plans/Planning_Wizard.md
+  - Plans/guided_tour_contracts.schema.json
+  - Plans/Widget_System.md
+  - Plans/FileManager.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Automated_Testing_System.md
+  - Plans/GUI_Rebuild_Requirements_Checklist.md
+  - Plans/Glossary.md
+  - Plans/00-plans-index.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1-D10, D21, D23-D25, D28)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-180"
+  - "+N"
+  - "Terminals 2x2"
+  - "cmd.panel_tab.open"
+  - "cmd.workspace_layout.split"
+  - "ui.panel_tab.activate"
+  - "workspace.layout_changed"
+  - "home_workspace_layout.v2"
+negative_constraints:
+  - "Do not reintroduce fixed editor panel slots, a singleton dashboard surface, terminal sections or a fixed bottom runtime zone."
+  - "Do not let the chat be docked, floated or moved inside the window; Pop out is its only way to move."
+  - "Do not give any caller its own opening or dedupe rule."
+  - "Do not reset a user's layout on upgrade."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/storage-plan.md
+```
+
+### DL-181 - The Terminal Is Rebuilt As One Session Per Tab With No AI Of Its Own
+
+```yaml
+plan_unit_id: DL-181
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-181 records Jared's decisions of 2026-10-09 on the terminal. The terminal is an ordinary tab kind with one
+  session per tab and no splits inside it; Split makes a new panel beside it with the same folder and shell; sections,
+  workgroups, sub-tabs, in-tab splits, the editor terminal stack and the Quadrant layout retire, and the Terminals 2x2
+  named layout makes four terminal panels (SMPFS-180). Its chrome is a readable tab label (process and folder, the
+  exit code of a failed command, the agent mark) and one header row with the folder, branch, running command and
+  elapsed time, then Find, Split, Maximize and a menu, with 24 px targets, no bottom bar and no internal ids (F3-640).
+  It gains command marks drawn as glyphs, a sticky command header, command jumps, path links that open by the one
+  opening rule, find, a minimap-style scrollbar, copy mode and quick select, inactive dimming, progress, a visual
+  bell, IME and an accessible text buffer (F3-641, SMPFS-183). People and agents share terminals safely: a keystroke
+  takes over and pauses the agent, agents type into a human's terminal only when allowed, secret prompts go only to
+  the human, every command records who typed it, and the marks carry a per-terminal secret (SMPFS-182, F3-646). There
+  is no AI inside the terminal: Explain What Commands Do moves to the Teacher persona in the chat. DL-035's own engine
+  stands; other terminals are design references only (SMPFS-184). Lead ruling where the answer is silent: moving,
+  folding, maximizing or hiding a terminal tab never touches its session; closing it ends the session after saying
+  what is still running; reopening a closed terminal tab, or restoring one whose session did not survive, starts a new
+  session in the same folder and profile and never pretends to be the old one.
+gui_related: true
+gui_classification_reason: Records the owner decision that rebuilds the terminal as a tab kind with new chrome, features and agent rules.
+split_recommended: false
+depends_on: [DL-035, DL-037, DL-038, DL-180]
+unblocks: [SMPFS-180, SMPFS-182, SMPFS-183, SMPFS-184, F3-640, F3-641, F3-646, UCC-201, WM-091, UIW-042, ACD-502, CV-362, SP-332, ATS-076]
+acceptance_criteria:
+  - "Canon holds one terminal session per tab; no active unit describes terminal sections, workgroups, sub-tabs, in-tab splits, the Quadrant layout or the four-section and four-pane caps (SMPFS-180)."
+  - "The terminal tab's chrome and features are owned once (F3-640, F3-641, SMPFS-183), with marks drawn as glyphs and never as stripes."
+  - "The agent rules hold: takeover by keystroke, agent input into a human's terminal only when allowed, secret prompts only to the human, attribution of every command, marks protected by a per-terminal secret (SMPFS-182)."
+  - "No AI feature exists in the terminal surface, and code.terminal.explanations is retired in favour of the Teacher persona."
+  - "DL-035's own-engine direction is unchanged."
+  - "Jared's words are quoted verbatim and the lead's ruling on sessions is labelled as such."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/FinalGUISpec.md
+  - Plans/Personas.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/UI_Wiring_Rules.md
+  - Plans/settings_inventory.json
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+  - Plans/assistant-chat-design.md
+  - Plans/Automated_Testing_System.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D11-D13, D18-D20)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md, SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-181"
+  - "Take over"
+  - "Interrupt"
+  - "Stop"
+  - "Explain What Commands Do"
+  - "code.terminal.explanations"
+negative_constraints:
+  - "Do not add splits, sections or workgroups inside a terminal tab."
+  - "Do not add an AI feature to the terminal surface."
+  - "Do not let an agent answer a password or secret prompt, or type into a human-opened terminal without the human's grant."
+owner_hints:
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-182 - The Terminal Shows Images With Kitty Graphics Sixel And iTerm2 All In The First Release
+
+```yaml
+plan_unit_id: DL-182
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-182 records Jared's decision of 2026-10-09 on terminal images, the decision the terminal research of 2026-09-09
+  (DL-035) left out. The first terminal release has the complete kitty graphics protocol (direct, file, temporary-file
+  and shared-memory transmission, placements, Unicode placeholders, layering above and below text, and animation),
+  sixel, and iTerm2 inline images, with no phases. File, temporary-file and shared-memory transfers follow the
+  protocol's hardening rules, are refused in remote sessions and for commands an agent typed, and are bounded by per-
+  image, per-terminal and total quotas; a program that sends too much is refused, never allowed to freeze the app.
+  Images persist with the terminal's saved scrollback within its storage quota, an evicted image leaving a short text
+  placeholder that names it; animation pauses under Reduced Motion and while the terminal is hidden; images read as a
+  short text placeholder in the accessible buffer and in agent output reads (SMPFS-181, F3-645). DL-035's own-engine
+  rule stands: an image decoder is not a terminal emulator, parser or process host. The quota numbers come from the
+  terminal concept's measurements.
+gui_related: true
+gui_classification_reason: Records the owner decision that admits three image protocols into the terminal's first release.
+split_recommended: false
+depends_on: [DL-035, DL-181]
+unblocks: [SMPFS-181, F3-645, ATS-076]
+acceptance_criteria:
+  - "SMPFS-181 owns the three protocols, their hardening rules, the remote refusal and the quotas, and F3-645 owns how images look in a tab."
+  - "No unit still says image protocols are not approved."
+  - "DL-035 is amended to point at this decision, with its own-engine rule unchanged."
+  - "Jared's words are quoted verbatim, including his correction that there are no phases."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+  - Plans/Automated_Testing_System.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D14)"
+  - "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs (image protocols left as a separate decision)"
+preserved_exact_tokens:
+  - "DL-182"
+  - "kitty graphics protocol"
+  - "sixel"
+  - "iTerm2"
+  - "Unicode placeholders"
+negative_constraints:
+  - "Do not phase the three protocols or ship one without the others."
+  - "Do not read device files, FIFOs, sockets or files the program could not read itself, and do not accept file, temporary-file or shared-memory media from a remote session."
+  - "Do not let saved images exceed the scrollback storage quota; an evicted image leaves a text placeholder naming it."
+owner_hints:
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-183 - The Terminal Gets Real Colour Schemes Backgrounds Effects And Fonts All Applying Live
+
+```yaml
+plan_unit_id: DL-183
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-183 records Jared's decisions of 2026-10-09 on the terminal's appearance. The terminal follows the theme by
+  default with a colour scheme chosen per look (Friendly Catppuccin, Glass Tokyo Night, Retro Puppet Master's Phosphor
+  Green and Amber and Paper Teletype, Basic One Half, NieR Mode's YoRHa Parchment and Ink), offers about 30 curated
+  schemes with clear licences, imports common theme files, and keeps a minimum-contrast floor. Cursor, background,
+  padding, line height, letter spacing, ligatures and weight are choices, every one applying live with no restart. One
+  layered appearance model resolves field by field from the look's defaults, the app default, a project default and a
+  per-tab override; the terminal's Appearance popover and Settings > Terminal bind the same model (F3-642, DR-068,
+  SSYS-051, SP-331). Effects run only on the focused terminal, stop when idle, turn off on battery saver and where
+  costly without a graphics card, and stop moving under Reduced Motion; the Full CRT tier is opt-in and flicker is off
+  by default and capped below WCAG 2.3.1 (F3-643). The editor's code face is JetBrains Mono in every look, Retro
+  included; the terminal defaults to JetBrains Mono except in Retro, where it defaults to VT323 with Sixtyfour and
+  Departure Mono as options and JetBrains Mono selectable; Atkinson Hyperlegible Mono is offered for readability; only
+  permissively licensed fonts (SIL Open Font License, Apache, MIT) are built in, through DL-161's pipeline (F3-644).
+  General code text across the chat and PMConcept7 (JetBrains Mono in Basic, Glass and Friendly, IBM Plex Mono in
+  Retro, PM NieR Mono in NieR; Jared, 2026-10-10, D17a) belongs to DL-161, F3-426 and F3-430 and is not amended by
+  this record. The 34 schemes, the 4.5:1 default contrast floor and the six terminal faces are the terminal concept's.
+gui_related: true
+gui_classification_reason: Records the owner decision on the terminal's schemes, backgrounds, effects and built-in code fonts.
+split_recommended: false
+depends_on: [DL-161, DL-181]
+unblocks: [F3-642, F3-643, F3-644, DR-068, SSYS-051, SP-331]
+acceptance_criteria:
+  - "One terminal appearance model exists with four layers resolved field by field, and every field applies live with no restart badge (F3-642, DR-068, SSYS-051)."
+  - "Each look has its default scheme, and the curated schemes carry their licences."
+  - "Effects follow the focused-only, idle-stop, battery, no-GPU and Reduced Motion policy, with Full CRT opt-in and flicker off by default (F3-643)."
+  - "The editor's code face is JetBrains Mono in every look and the terminal's default face is JetBrains Mono except VT323 in Retro, and every built-in font is under the SIL Open Font License, Apache or MIT (F3-644)."
+  - "DL-161, F3-426 and F3-430 are cited for general code text and are not amended by this record."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+  - Plans/storage-plan.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15-D17)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-1.md, SHA-256 1651ae9c41a61f215ee960288b27bb78ee8d9ad804c741495e3313ff4a33e299 (D17a)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-1-d605b4a256.md, SHA-256 71784f23a24c3f922292c8979093e0e5bcbdb1c49392da0d8cd9bd04533ea7c2 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-183"
+  - "Follow theme"
+  - "JetBrains Mono"
+  - "VT323"
+  - "Sixtyfour"
+  - "Departure Mono"
+  - "Atkinson Hyperlegible Mono"
+  - "WCAG 2.3.1"
+negative_constraints:
+  - "Do not mark a terminal appearance setting as needing a restart."
+  - "Do not keep a second terminal theme or font store beside the one appearance model."
+  - "Do not build in a font whose licence is not SIL Open Font License, Apache or MIT."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/Settings_System.md
+```
+
+### DL-184 - No Boxes With A Coloured Side No Emoji And No Pills Anywhere In Puppet Master
+
+```yaml
+plan_unit_id: DL-184
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-184 records Jared's rule of 2026-10-09, restated for the home redesign, as one shell-wide rule: no box with a
+  coloured border or stripe on one side, no emoji in Puppet Master's own chrome, and no pills (fully rounded capsules
+  used as tabs, tags, badges, buttons or status chips) anywhere in Puppet Master; keyboard key caps stay the one
+  capsule-like shape allowed, and a program's own output in the terminal may contain emoji (DR-069, F3-648). Selection
+  is shown by the surface itself, never by an edge stripe. The shell's default 3 px left-edge selection stripe, the
+  accent left borders and the pill skins on tab-like controls retire; the chat's, Settings' and the left rail's own
+  statements of the rule stay as instances of the one rule.
+gui_related: true
+gui_classification_reason: Records the owner's shell-wide ban on side stripes, emoji and pills.
+split_recommended: false
+depends_on: []
+unblocks: [DR-069, F3-648]
+acceptance_criteria:
+  - "DR-069 states the rule once for the whole app and F3-648 owns its presentation."
+  - "Section 3.5's selection stripe, F3-039's token, F3-276's accent left border, F3-469's inset left accent bar and the pill skins named by F3-648 carry dated retirement notes."
+  - "Jared's words are quoted verbatim."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D22 and Jared's brief)"
+preserved_exact_tokens:
+  - "DL-184"
+negative_constraints:
+  - "Do not draw a coloured border or stripe on one side of a box, a pill-shaped control, or an emoji in Puppet Master's chrome."
+owner_hints:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-185 - One Demo Studio For All Of PMConcept7 And What The 5.6 Pro Chat Needs When It Moves In
+
+```yaml
+plan_unit_id: DL-185
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-185 records Jared's decisions of 2026-10-09 on demo controls and the later chat port. PMConcept7's demo controls
+  (the tour's, onboarding's, the chat's, the home demos', and later the Orchestrator and Planning Wizard pages') fold
+  into one centralized Demo Studio modelled on the 5.6 Pro chat's; it is a concept tool and never a product control,
+  setting, command, wiring row, saved value or test gate (F3-649, DR-070, in the pattern of ACD-474). When the 5.6 Pro
+  chat is ported, after this redesign is published: its Basic, Friendly and Glass colours are fixed to match
+  PMConcept7's, its class names are namespaced, it sizes by its own column, it uses the one overlay root and stacking
+  order, PMConcept7's hover system owns its hover tags, its inline Shell box becomes a compact command card that opens
+  the terminal tab, its pills and side stripes are removed, and its demo controls move into the Demo Studio (ACD-501,
+  ACD-500). Publishing the redesign into PMConcept7 follows the NieR showpiece, the 5.6 Pro round with its fonts, the
+  Usage port, the left rail and the hover polish.
+gui_related: true
+gui_classification_reason: Records the owner decisions on one Demo Studio and the requirements of the later chat port.
+split_recommended: false
+depends_on: [DL-180, DL-184]
+unblocks: [F3-649, DR-070, ACD-501]
+acceptance_criteria:
+  - "One Demo Studio is owned by F3-649 and DR-070 and is excluded from every product catalog, setting, wiring row, persisted key and test gate."
+  - "ACD-501 lists the chat port's requirements and says the port follows this redesign."
+  - "Jared's words are quoted verbatim."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/assistant-chat-design.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D26-D28)"
+preserved_exact_tokens:
+  - "DL-185"
+  - "Demo Studio"
+negative_constraints:
+  - "Do not give the Demo Studio or any demo control a command, setting, wiring row, persisted key or test gate."
+  - "Do not draw a separate demo panel per surface."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/assistant-chat-design.md
 ```
 
 ## Migration Coverage
