@@ -3764,7 +3764,10 @@
         "Plans/FinalGUISpec.md#F3-520",
         "Plans/UI_Wiring_Rules.md#UIW-015",
         "Plans/UI_Command_Catalog.md#UCC-106",
-        "Plans/Wiring_Matrix.md#WM-041"
+        "Plans/Wiring_Matrix.md#WM-041",
+        "Plans/Decision_Log.md#DL-153",
+        "Plans/FinalGUISpec.md#F3-598",
+        "Plans/DRY_Rules.md#DR-056"
       ],
       "owner_plan": "Plans/Planning_Wizard.md",
       "plan_unit": "PWIZ-021",
@@ -3778,14 +3781,15 @@
       "handler_owner": "Product Onboarding local transition controller plus owner routes; the authored browser-concept controller exists and the native Slint handler is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "V2 schema/fixture/static tests encode draft/copy/late commit/paid then Free Models and thirteen local actions. The authored browser concept is a separate not-yet-reconciled simulation; no native control/handler, protected auth, durable adapter, migration or provider execution is proven.",
+      "production_or_simulation": "V2 schema/fixture/static tests encode draft/copy/late commit/paid then Free Models and fourteen local actions. The authored browser concept is a separate not-yet-reconciled simulation; no native control/handler, protected auth, durable adapter, migration or provider execution is proven.",
       "gui_triggers": [
         "PWIZ-021 main, connect-existing and explicit Project Later stage graphs",
         "First Project draft; fresh-settings default or searchable actual-Project copy preview",
         "Necessary selected-source sign-in and read-only account/container repository listing via MACS-005/FGI-011",
         "Exact Review confirmation and Project-owned commit chain, then paid-provider and Free Models setup/Skip",
         "Close/Defer/resume and phase-safe Back without undoing/repeating commit",
-        "Ephemeral Details and inline SVG choice help"
+        "Ephemeral Details and inline SVG choice help",
+        "The look choice at welcome and the header's Look menu: family and Light/Dark, the NieR Mode checkbox and the NieR Mode editor panel, as one ui.onboarding.choose_look look preview (DL-153)"
       ],
       "return_route": "PWIZ-021 v2 exact draft/review/hash, actual Project binding, paid/free phases/results, independent placements, branch/history, current Client and focus continuation. Close/resume never erases or recreates a Project; Project Later stays deferred.",
       "reverse_consumers": [
@@ -4619,28 +4623,38 @@
       "requirement_refs": [
         "Plans/Settings_System.md#SSYS-003",
         "Plans/Settings_System.md#SSYS-012",
-        "Plans/Settings_System.md#SSYS-013"
+        "Plans/Settings_System.md#SSYS-013",
+        "Plans/Settings_System.md#SSYS-043",
+        "Plans/FinalGUISpec.md#F3-598",
+        "Plans/FinalGUISpec.md#F3-599",
+        "Plans/Decision_Log.md#DL-153",
+        "Plans/DRY_Rules.md#DR-056"
       ],
       "owner_plan": "Plans/Settings_System.md",
       "plan_unit": "SSYS-003",
       "dry_contract_ref": "Concepts/pm7-tools/systems_integration_source.py#typed Settings local actions",
-      "payload_schema_ref": "typed route/tab identifier and current Settings state",
-      "result_schema_ref": "local Settings projection state",
+      "payload_schema_ref": "typed route/tab, editor or library-filter identifier and current Settings state",
+      "result_schema_ref": "local Settings projection state (tab, route, open editor or library filter)",
       "error_schema_ref": "missing target or concept_fixture_only",
-      "availability_rule": "Current Settings shell and exact stable tab/route target are required.",
-      "permission_gate": "Local presentation only; tab/route selection grants no domain authority.",
+      "availability_rule": "Current Settings shell and exact stable tab/route target are required; the NieR Mode editor opens whether or not NieR Mode is on (SSYS-043), and the sound library filters need the Notifications & Sounds library on screen.",
+      "permission_gate": "Local presentation only; tab/route selection, opening or closing the NieR Mode editor, replaying its reboot moment and filtering the sound library grant no domain authority and write nothing.",
       "disabled_reason_rule": "Expose missing target or owner route and never simulate domain work.",
       "handler_owner": "K3 Settings local projection controller; native Slint handler is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "PMConcept7 typed local-action simulation only.",
+      "production_or_simulation": "PMConcept7 typed local-action simulation only; the NieR Mode editor and sound library actions are simulated by the opus-5.5 concept.",
       "gui_triggers": [
-        "Settings Server tabs, Browser/SCM tabs, and owner-backed route controls"
+        "Settings Server tabs, Browser/SCM tabs, and owner-backed route controls",
+        "NieR Mode editor: Adjust NieR look in the title-bar theme selector and the Tour bar's Look menu, and the Settings row's Customize NieR Mode; its close button, Escape and scrim; Play reboot moment",
+        "Settings > Notifications & Sounds > Sound library: the Which look switch and Show N more takes"
       ],
-      "return_route": "Current Settings document/index/detail/manager context and focus.",
+      "return_route": "Current Settings document/index/detail/manager context and focus; the NieR Mode editor returns focus to the control that opened it.",
       "reverse_consumers": [
         "Concepts/pm7-tools/systems_integration_source.py",
-        "Plans/FinalGUISpec.md"
+        "Plans/FinalGUISpec.md",
+        "Plans/Settings_System.md",
+        "Concepts/onboarding/opus-5.5/src/settings/kit.d/22-nier-chips.js",
+        "Concepts/onboarding/opus-5.5/src/settings/managers/05-notifications.js"
       ],
       "event_refs": [
         "none_local_presentation_action"
@@ -4650,11 +4664,12 @@
       ],
       "observable_work": [],
       "persistence_refs": [
-        "local tab/route projection only"
+        "local tab/route, editor-open and library-filter projection only"
       ],
       "migration_refs": [],
       "test_refs": [
-        "Concepts/pm7-tools/verify/systems_integration.mjs"
+        "Concepts/pm7-tools/verify/systems_integration.mjs",
+        "Concepts/onboarding/opus-5.5/tools/scenarios.mjs"
       ],
       "evidence_refs": [
         "concept_simulation_not_native_runtime"
@@ -10287,6 +10302,14 @@
       "The closed action now covers same-stage Details and stable SVG choice-help topics through toggle_choice_explanation, exact stage scope, and expanded state with no persistence or owner route; final browser accessibility/motion and native Slint evidence remain absent."
     ],
     [
+      "TOUCH-ONB-014",
+      "TCP-ONBOARD",
+      "ui_action",
+      "ui.onboarding.choose_look",
+      "partial",
+      "The closed action covers the look choice and the header's Look menu (choose_look, preview_nier, toggle_look_menu, toggle_look_editor) with a closed look_choice and no owner route, cmd.theme.* or Settings transaction; the look is written with the Project at commit (DL-153). The onboarding session's durable NieR field, browser accessibility and native Slint evidence remain absent."
+    ],
+    [
       "TOUCH-TOUR-001",
       "TCP-TOUR",
       "ui_action",
@@ -10845,6 +10868,46 @@
       "ui.settings.route.open",
       "partial",
       "Concept local action exists; native Slint owner route and exact-return evidence are absent."
+    ],
+    [
+      "TOUCH-SETLOC-004",
+      "TCP-SET-LOCAL",
+      "ui_action",
+      "ui.settings.nier_editor.open",
+      "partial",
+      "Concept local action exists (Adjust NieR look and Customize NieR Mode open the one NieR Mode editor popup); native Slint dialog, focus containment and accessibility evidence are absent."
+    ],
+    [
+      "TOUCH-SETLOC-005",
+      "TCP-SET-LOCAL",
+      "ui_action",
+      "ui.settings.nier_editor.close",
+      "partial",
+      "Concept local action exists (close button, Escape and scrim return focus to the opener); native Slint focus-return and accessibility evidence are absent."
+    ],
+    [
+      "TOUCH-SETLOC-006",
+      "TCP-SET-LOCAL",
+      "ui_action",
+      "ui.settings.nier_editor.replay",
+      "partial",
+      "Concept local action exists (Play reboot moment replays the reboot plate with no repaint or write); native Slint motion and Reduced Motion evidence are absent."
+    ],
+    [
+      "TOUCH-SETLOC-007",
+      "TCP-SET-LOCAL",
+      "ui_action",
+      "ui.settings.sound_library.look.select",
+      "partial",
+      "Concept local filter exists (the sound library's Which look switch shows one look's takes and writes nothing); native Slint segmented-control and accessibility evidence are absent."
+    ],
+    [
+      "TOUCH-SETLOC-008",
+      "TCP-SET-LOCAL",
+      "ui_action",
+      "ui.settings.sound_library.takes.toggle",
+      "partial",
+      "Concept local disclosure exists (Show N more takes and Show only the main take of each); native Slint disclosure and accessibility evidence are absent."
     ],
     [
       "TOUCH-PSLOC-001",

@@ -55795,7 +55795,7 @@
     },
     "catalog.settings_transaction_apply": {
       "ui_element_id": "catalog.settings_transaction_apply",
-      "ui_location": "Settings K3 workspace > confirmed current transaction preview; Project-owner commit chain applying the SSYS-036 explicitly selected settings copy after Project commit",
+      "ui_location": "Settings K3 workspace > confirmed current transaction preview; Project-owner commit chain applying the SSYS-036 explicitly selected settings copy after Project commit; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153)",
       "ui_command_id": "cmd.settings.transaction.apply",
       "handler_location": "handlers::settings::transaction_apply",
       "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request",
@@ -55805,7 +55805,8 @@
         "Apply exactly one current preview under revision/CAS and idempotency guards",
         "Route each value to its sole owner and require readback before committed",
         "Return refused, failed, or rollback_required truthfully and never infer success from acknowledgement",
-        "Onboarding-selected copy can apply only after SSYS-036 rebind to the actual committed Project and current preview/permission/CAS. It cannot apply an uncreated draft, broaden selected settings, copy secrets or treat command acknowledgement as completion."
+        "Onboarding-selected copy can apply only after SSYS-036 rebind to the actual committed Project and current preview/permission/CAS. It cannot apply an uncreated draft, broaden selected settings, copy secrets or treat command acknowledgement as completion.",
+        "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041)."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, sole-owner routing, CAS/race, idempotent replay, restart, readback, partial-failure, and rollback fixtures are required before certification.",
       "state_selector": "state.commands.settings_transaction_apply.availability",
@@ -55848,6 +55849,11 @@
           "test_id": "wiring.cmd_settings_transaction_apply.onboarding_phase_binding",
           "evidence_kind": "dispatcher_fixture",
           "requirement": "Onboarding-selected copy can apply only after SSYS-036 rebind to the actual committed Project and current preview/permission/CAS. It cannot apply an uncreated draft, broaden selected settings, copy secrets or treat command acknowledgement as completion. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
+        },
+        {
+          "test_id": "wiring.cmd_settings_transaction_apply.look_surfaces",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041). Static owner declarations only; native dispatcher and owner proof remain required."
         }
       ],
       "event_test_requirements": [
@@ -55856,7 +55862,7 @@
     },
     "catalog.settings_transaction_preview": {
       "ui_element_id": "catalog.settings_transaction_preview",
-      "ui_location": "Settings K3 workspace > every pending value, import, reset, and bulk-change review; Product Onboarding uncreated Project Copy settings from preview and postcommit rebind through SSYS-036",
+      "ui_location": "Settings K3 workspace > every pending value, import, reset, and bulk-change review; Product Onboarding uncreated Project Copy settings from preview and postcommit rebind through SSYS-036; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153)",
       "ui_command_id": "cmd.settings.transaction.preview",
       "handler_location": "handlers::settings::transaction_preview",
       "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request",
@@ -55866,7 +55872,8 @@
         "Resolve exact stable setting IDs and owner routes without committing",
         "Reject stale revisions, invalid values, permission/policy blockers, secrets, and unavailable owners with typed reasons",
         "Return rollback eligibility and migration/readback requirements without claiming a handler ran",
-        "Validate the SSYS-036 draft-preview request/result variants without a destination Project, exact current source/draft/explicit setting choices and excluded secrets/local state. Postcommit rebind verifies the actual Project and exact preview/hash, recomputes preview under current ownership/permission, then requires ordinary apply; no precommit write."
+        "Validate the SSYS-036 draft-preview request/result variants without a destination Project, exact current source/draft/explicit setting choices and excluded secrets/local state. Postcommit rebind verifies the actual Project and exact preview/hash, recomputes preview under current ownership/permission, then requires ordinary apply; no precommit write.",
+        "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041)."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, owner-resolution, permission, stale-CAS, and no-write fixtures are required before production certification.",
       "state_selector": "state.commands.settings_transaction_preview.availability",
@@ -55909,6 +55916,11 @@
           "test_id": "wiring.cmd_settings_transaction_preview.onboarding_phase_binding",
           "evidence_kind": "dispatcher_fixture",
           "requirement": "Validate the SSYS-036 draft-preview request/result variants without a destination Project, exact current source/draft/explicit setting choices and excluded secrets/local state. Postcommit rebind verifies the actual Project and exact preview/hash, recomputes preview under current ownership/permission, then requires ordinary apply; no precommit write. Static fixture checks: tests/test_pm_onboarding_phases.py and, for settings copy, tests/test_pm_settings_draft_transfer.py; native dispatcher/owner proof remains required."
+        },
+        {
+          "test_id": "wiring.cmd_settings_transaction_preview.look_surfaces",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041). Static owner declarations only; native dispatcher and owner proof remain required."
         }
       ],
       "event_test_requirements": [
@@ -56247,7 +56259,7 @@
     },
     "catalog.sound_preview": {
       "ui_element_id": "catalog.sound_preview",
-      "ui_location": "Sound surface > Preview",
+      "ui_location": "Sound surface > Preview; Settings > Notifications & Sounds > Sound library > Play on every entry, the Setup & tour and NieR groups included (F3-599, DL-153)",
       "ui_command_id": "cmd.sound.preview",
       "handler_location": "handlers::sound::preview",
       "expected_event_types": [],
@@ -56256,7 +56268,8 @@
         "cmd.sound.preview must expose projected state selector and disabled reason before dispatch",
         "cmd.sound.preview dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.sound.preview must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.sound.preview must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.sound.preview must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Previewing a Setup & tour or NieR library entry dispatches cmd.sound.preview after an explicit gesture under F3-405's preview rules; the library's Which look switch (ui.settings.sound_library.look.select) and Show N more takes (ui.settings.sound_library.takes.toggle) are typed local presentation actions that dispatch nothing."
       ],
       "evidence_required": "Production wiring contract for cmd.sound.preview; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.sound_preview.availability",
@@ -56294,6 +56307,11 @@
           "test_id": "wiring.catalog.sound_preview.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.sound_preview.setup_tour_and_nier_groups",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Previewing a Setup & tour or NieR library entry dispatches cmd.sound.preview after an explicit gesture under F3-405's preview rules; the library's Which look switch (ui.settings.sound_library.look.select) and Show N more takes (ui.settings.sound_library.takes.toggle) are typed local presentation actions that dispatch nothing. Static owner declarations only; native dispatcher proof remains required."
         }
       ],
       "event_test_requirements": [

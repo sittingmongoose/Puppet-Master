@@ -417,7 +417,7 @@ class BoundedGapRepairInventoryTests(unittest.TestCase):
         self.assertEqual(sum(c.startswith("cmd.bsd.") for c in admitted), 9)
         self.assertEqual(sum(c.startswith("cmd.chat.context_lens.") for c in admitted), 7)
         self.assertNotIn("cmd.bsd.set", admitted)
-        self.assertEqual(len(rows), 674)
+        self.assertEqual(len(rows), 681)
         self.assertEqual(len(profiles), 135)
         for command, (profile_id, owner, unit) in admitted.items():
             with self.subTest(command=command):
@@ -570,7 +570,7 @@ class ForgeReviewAliasConsumerTests(unittest.TestCase):
         self.assertEqual(self.row(self.registry)[:5],
                          ["TOUCH-GHPR-001", "TCP-GITHUB-PR", "command_alias", self.ALIAS, "partial"])
         self.assertEqual(sum(row[3] == self.ALIAS for row in self.registry["rows"]), 1)
-        self.assertEqual((len(self.registry["rows"]), len(self.registry["profiles"])), (674, 135))
+        self.assertEqual((len(self.registry["rows"]), len(self.registry["profiles"])), (681, 135))
         binding = self.registry["alias_bindings"][self.ALIAS]
         for field in ("exact_target", "availability_source", "handler_dispatch_token"):
             self.assertEqual(binding[field], self.TARGET)
@@ -877,7 +877,7 @@ class CommandsShortcutsCensusTests(unittest.TestCase):
         self.assertEqual(sum(row[1] == "TCP-CMDSC" for row in registry["rows"]), 16)
         self.assertEqual((len(registry["rows"]), len(registry["profiles"]),
                           len(registry["excluded_tokens"]), len(registry["alias_bindings"])),
-                         (674, 135, 58, 65))
+                         (681, 135, 58, 65))
 
     def test_unknown_commands_ids_are_rejected(self) -> None:
         for unknown in self.UNKNOWN:
