@@ -7,7 +7,7 @@ as T33+ transforms derived from that pin. See README.md ("Re-baseline").
 
 2026-09-26 publication change (user direction): the checked-in
 Concepts/PMConcept7.html is published byte-identical from
-Concepts/TestOpus5.5PmConcept.html via
+Concepts/Onboarding concepts/TestOpus5.5PmConcept.html via
 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7. This pipeline's
 T33+ tail, including the old T44 Settings tome, T45 onboarding/tour, and T50
 Settings refresh stages, is retained for explicit historical output only: a
@@ -2675,7 +2675,7 @@ def main(argv=None):
         print("FATAL: refusing to write the T33+ historical tail (old T44/T45/T50) "
               "to Concepts/PMConcept7.html.\n"
               "Since 2026-09-26 that file is published byte-identical from "
-              "Concepts/TestOpus5.5PmConcept.html via\n"
+              "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html via\n"
               "  python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7\n"
               "Build this pipeline to a scratch --out for historical output, or pass "
               "--allow-legacy-pm7-promotion for an explicit historical promotion.",

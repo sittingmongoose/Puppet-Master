@@ -8,7 +8,7 @@ import argparse,hashlib,json,re,subprocess,tempfile
 HERE=Path(__file__).resolve().parent
 def sha(x):return hashlib.sha256(x).hexdigest()
 def build():
-    ap=argparse.ArgumentParser();ap.add_argument('--out',type=Path,default=HERE.parent/'TestPMConcept.html');ap.add_argument('--check',action='store_true');ap.add_argument('--report',type=Path);a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--out',type=Path,default=HERE.parent/'Onboarding concepts'/'TestPMConcept.html');ap.add_argument('--check',action='store_true');ap.add_argument('--report',type=Path);a=ap.parse_args()
     pin=json.loads((HERE/'layout_b06_checkpoint.json').read_text());data=(HERE/'base/TestPMConcept-layout-b06-base.html').read_bytes()
     if sha(data)!=pin['sha256']:raise SystemExit('Published checkpoint mismatch; no silent repin.')
     src=data.decode('utf-8');css=(HERE/'assistant_narrow_source.css').read_text(encoding='utf-8')

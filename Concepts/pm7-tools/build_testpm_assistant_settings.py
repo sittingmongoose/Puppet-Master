@@ -12,7 +12,7 @@ PIN=json.loads((HERE/'assistant_settings_checkpoint.json').read_text())
 def need(ok,why):
     if not ok:raise SystemExit(why)
 def run():
-    args=argparse.ArgumentParser();args.add_argument('--out',type=Path,default=HERE.parent/'TestPMConcept.html');args.add_argument('--check',action='store_true');args.add_argument('--report',type=Path);a=args.parse_args()
+    args=argparse.ArgumentParser();args.add_argument('--out',type=Path,default=HERE.parent/'Onboarding concepts'/'TestPMConcept.html');args.add_argument('--check',action='store_true');args.add_argument('--report',type=Path);a=args.parse_args()
     raw=BASE.read_bytes();need(hashlib.sha256(raw).hexdigest()==PIN['sha256'],'Checkpoint hash mismatch; do not silently repin')
     before=raw.decode('utf-8');notes={};after=source.apply(before,notes,need)
     # Exact all-non-Settings script equality, not merely a token scan.

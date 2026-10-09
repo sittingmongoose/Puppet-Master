@@ -7,7 +7,7 @@ from pathlib import Path
 import re, hashlib, json
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[2]
-SOURCE=ROOT/'Concepts/TestPMConcept.html'
+SOURCE=ROOT/'Concepts/Onboarding concepts/TestPMConcept.html'
 TARGET=ROOT/'Concepts/Onboarding concepts/TestAstraPmConcept.html'
 # __file__ is Concepts/onboarding/astra-gpt-6-pro/build.py; parents[2] = repository root.
 def remove_element(text: str, element_id: str) -> str:

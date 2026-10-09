@@ -2,7 +2,7 @@
 """Publish TestPMConcept.html from the pinned checkpoint plus the T50 Settings refresh.
 
 Usage:
-  python3 Concepts/pm7-tools/build_testpm_settings_refresh.py            # writes Concepts/TestPMConcept.html
+  python3 Concepts/pm7-tools/build_testpm_settings_refresh.py            # writes Concepts/Onboarding concepts/TestPMConcept.html
   python3 Concepts/pm7-tools/build_testpm_settings_refresh.py --check    # verifies the published file
   python3 Concepts/pm7-tools/build_testpm_settings_refresh.py --out X --report R.json
   python3 Concepts/pm7-tools/build_testpm_settings_refresh.py --parity <build_pm7 output.html>
@@ -61,7 +61,7 @@ def node_check(doc: str) -> int:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--out", type=Path, default=HERE.parent / "TestPMConcept.html")
+    ap.add_argument("--out", type=Path, default=HERE.parent / "Onboarding concepts" / "TestPMConcept.html")
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--report", type=Path)
     ap.add_argument("--parity", type=Path, help="another built HTML whose Settings blocks must match")

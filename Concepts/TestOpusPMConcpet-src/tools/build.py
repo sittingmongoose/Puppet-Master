@@ -8,7 +8,7 @@ import re, sys, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]          # Concepts/
 SRC  = pathlib.Path(__file__).resolve().parents[1] / "src"  # …-src/src
-BASE = ROOT / "TestPMConcept.html"
+BASE = ROOT / "Onboarding concepts" / "TestPMConcept.html"
 OUT  = ROOT / "Onboarding concepts" / "TestOpusPMConcpet.html"
 
 def read(name):
