@@ -13,15 +13,19 @@
  *     .pm6-tb-menu-trigger of the panel must sprout a chat-style .pmr-menu, never the shell's .pm6-tb-menu, and no
  *     <select> may be visible inside the panel ('current' reports only); reduced motion leaves nothing animating;
  *   - every theme family x light/dark, and NieR Mode light/dark: view visible, no overflow at 280, type floor, pills.
+ *   - --restore: boots Current, snapshots the rail's nine panels and the activity bar (normalised as the kit's
+ *     t-restore.mjs does), uses D (every panel, every tab, two expanders and a menu per panel, the Git/Jujutsu engine
+ *     switch both ways), goes back to Current, snapshots again and fails on any difference, per panel and theme.
  *
- *   node Concepts/leftrail-redesign/tools/rail_boot.mjs <out-dir> [--page P] [--ref R] [--concepts a,b,c,d]
- *        [--panels files,source,docker] [--themes all|basic-dark,...] [--quick] [--shots]
- * Writes <out-dir>/rail-boot.json (summary.gpu names the WebGL renderer), prints a summary, exits 1 when a check
- * fails. --shots writes rail screenshots per concept x theme x panel into <out-dir>/shots (review media: delete
- * after review). Every agent-browser session is stopped when its page is done (finally, SIGINT, SIGTERM); profiles
- * are deleted by agent-browser at stop. Running on the GPU is mandatory: --disable-gpu and swiftshader flags are
- * forbidden, and a browser whose WebGL UNMASKED_RENDERER_WEBGL names SwiftShader or llvmpipe aborts the run with
- * the failing check `not on the GPU: <renderer>`. */
+ *   node Concepts/leftrail-redesign/tools/rail_boot.mjs <out-dir> [--page P] [--ref R] [--concepts a,b,c,d|none]
+ *        [--panels files,source,docker] [--themes all|basic-dark,...] [--quick] [--shots] [--restore]
+ * Skin concepts (d, current) are checked on all nine rail panels, the view concepts (a, b, c) on their three
+ * (files, source, docker); --panels overrides both. Writes <out-dir>/rail-boot.json (summary.gpu names the WebGL
+ * renderer), prints a summary, exits 1 when a check fails. --shots writes rail screenshots per concept x theme x panel
+ * into <out-dir>/shots (review media: delete after review). Every agent-browser session is stopped when its page is
+ * done (finally, SIGINT, SIGTERM); profiles are deleted by agent-browser at stop. Running on the GPU is mandatory:
+ * --disable-gpu and swiftshader flags are forbidden, and a browser whose WebGL UNMASKED_RENDERER_WEBGL names
+ * SwiftShader or llvmpipe aborts the run with the failing check `not on the GPU: <renderer>`. */
 import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
@@ -40,11 +44,16 @@ const REF = resolve(opt('ref', join(concepts, 'PMConcept7.html')));
 const ALL_THEMES = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light'];
 const themesOpt = opt('themes', 'all');
 const THEMES = themesOpt === 'all' ? ALL_THEMES : String(themesOpt).split(',');
-const CONCEPTS = String(opt('concepts', 'a,b,c,d')).split(',');
-const PANELS = String(opt('panels', 'files,source,docker')).split(',');
+const CONCEPTS = opt('concepts', 'a,b,c,d') === 'none' ? [] : String(opt('concepts', 'a,b,c,d')).split(',');
+/* the rail's nine panels in activity-bar order (keep in step with PANEL_IDS in 00-d.js) */
+const ALL_PANELS = ['files', 'search', 'source', 'git', 'docker', 'testing', 'run', 'agents', 'artifacts'];
+const VIEW_PANELS = ['files', 'source', 'docker'];
+const PANELS_OPT = opt('panels', null);
+const panelsFor = (skin) => (PANELS_OPT ? String(PANELS_OPT).split(',') : (skin ? ALL_PANELS : VIEW_PANELS));
+const TARGET = Object.fromEntries(ALL_PANELS.map((p) => [p, 'panel-' + p]));
 const QUICK = !!opt('quick', false);
 const SHOTS = !!opt('shots', false);
-const TARGET = { files: 'panel-files', source: 'panel-source', docker: 'panel-docker' };
+const RESTORE = !!opt('restore', false);
 const norm = (e) => e.replace(/file:\/\/\S+?\.html(:\d+)*(:\d+)?/g, '<page>').replace(/\s+/g, ' ').trim();
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -103,6 +112,8 @@ const PAGE_LIB = () => {
     const orig = document.getElementById('panel-' + panel);
     if (!(orig && orig.classList.contains('active') && !slot.classList.contains('hidden'))) icon.click();
     await L.sleep(450);
+    /* a skin panel's show animation can outlast 450 ms (Current in Friendly and Glass): wait for it, up to 1.5 s more */
+    if (L.skin) for (let i = 0; i < 10 && !L.visible(orig); i++) await L.sleep(150);
     /* a skin concept never hides the original panel (it is the view), so originalHidden is not a requirement */
     return L.skin ? { viewShown: L.visible(orig), originalHidden: null } : { viewShown: L.visible(L.view(panel)), originalHidden: !L.visible(orig) };
   };
@@ -263,6 +274,40 @@ const PAGE_LIB = () => {
     await L.sleep(900);
     return { theme: document.documentElement.getAttribute('data-theme'), nier: document.documentElement.getAttribute('data-o55-nier') };
   };
+  /* --restore: an element as the kit's t-restore.mjs normalises it for comparison (style attributes, the tab ink, the
+     lazy hover-tag attributes and the tab / open state classes are dropped; the other classes sorted) */
+  L.snap = (id) => {
+    const el = document.getElementById(id).cloneNode(true);
+    el.querySelectorAll('[style]').forEach((e) => e.removeAttribute('style'));
+    el.querySelectorAll('.pm-segtab-ink').forEach((e) => e.remove());
+    /* live clocks (the elapsed counters of running jobs) tick on their own: their digits are masked */
+    el.querySelectorAll('[data-elapsed], [id$="LiveElapsed"]').forEach((e) => { e.removeAttribute('data-elapsed'); e.textContent = '#'; });
+    return el.outerHTML.replace(/\s(aria-expanded|tabindex|data-fit|aria-selected|aria-hidden|title|aria-label|aria-describedby|data-pm-hover-[a-z-]+)="[^"]*"/g, '')
+      .replace(/ class="([^"]*)"/g, (m, c) => ' class="' + c.split(/\s+/).filter((x) => x && !/^(pm-panel-enter|open|active|pm-hidden|is-menu-open|menu-open)$/.test(x)).sort().join(' ') + '"')
+      .replace(/ class=""/g, ''); /* a class attribute left empty by a tab click is no attribute */
+  };
+  L.snapAll = (targets) => Object.fromEntries(Object.entries(targets).map(([k, id]) => [k, L.snap(id)]));
+  L.walkTabs = async (root) => { for (const t of [...root.querySelectorAll('[data-tab]')].filter(L.visible)) { t.click(); await L.sleep(220); } };
+  /* both snapshots are taken with every panel's tabs walked in the same order, so the tab state the shell leaves behind
+     is the same on both sides (the kit's t-restore walks the tabs of Current before its snapshot too) */
+  L.walkAll = async (panels) => { for (const p of panels) { await L.open(p); await L.walkTabs(document.getElementById('panel-' + p)); } };
+  /* --restore: D used the way a reviewer uses it (each panel opened, its visible tabs clicked, two expanders and the first
+     menu opened and closed, then the Git/Jujutsu engine switch both ways with the Jujutsu tabs walked) */
+  L.useRail = async (panels) => {
+    for (const p of panels) {
+      await L.open(p);
+      const root = document.getElementById('panel-' + p);
+      await L.walkTabs(root);
+      for (const h of [...root.querySelectorAll('.sh-shelf[data-acc] > .sh-head')].filter(L.visible).slice(0, 2)) { h.click(); await L.sleep(220); }
+      const trig = [...root.querySelectorAll('.pm6-tb-menu-trigger')].filter(L.visible)[0];
+      if (trig) { trig.click(); await L.sleep(300); window.PMR.menu.closeAll(); await L.sleep(200); }
+    }
+    await L.open('source');
+    const engine = (e) => document.querySelector(`#panel-source [data-pm7-scm-engine="${e}"]`);
+    if (engine('jj')) { engine('jj').click(); await L.sleep(400); await L.walkTabs(document.getElementById('panel-source')); }
+    if (engine('git')) { engine('git').click(); await L.sleep(400); }
+    return panels.length;
+  };
 };
 
 async function bootPage(file, { width = 1600, height = 1000 } = {}) {
@@ -305,11 +350,11 @@ async function refErrors() {
 async function refPairs() {
   const b = await bootPage(REF);
   try {
-    return await b.page.evaluate((panels) => {
+    return await b.page.evaluate((targets) => {
       const o = {};
-      for (const p of panels) { const s = new Set(); const el = document.getElementById('panel-' + p); el.querySelectorAll('[data-demo-action]').forEach((e) => s.add(e.getAttribute('data-demo-action') + ' | ' + (e.getAttribute('data-demo-arg') || ''))); if (p === 'files') document.querySelectorAll('#fileContextMenu [data-demo-action]').forEach((e) => s.add(e.getAttribute('data-demo-action') + ' | ' + (e.getAttribute('data-demo-arg') || ''))); o[p] = [...s]; }
+      for (const [p, id] of Object.entries(targets)) { const s = new Set(); const el = document.getElementById(id); el.querySelectorAll('[data-demo-action]').forEach((e) => s.add(e.getAttribute('data-demo-action') + ' | ' + (e.getAttribute('data-demo-arg') || ''))); if (p === 'files') document.querySelectorAll('#fileContextMenu [data-demo-action]').forEach((e) => s.add(e.getAttribute('data-demo-action') + ' | ' + (e.getAttribute('data-demo-arg') || ''))); o[p] = [...s]; }
       return o;
-    }, PANELS);
+    }, TARGET);
   } finally { await b.close(); }
 }
 
@@ -351,7 +396,8 @@ async function runConcept(c, ref) {
     }, c);
     r.boot = ready;
     r.skin = !!(ready && ready.skinMode);
-    for (const p of PANELS) {
+    const panels = panelsFor(r.skin);
+    for (const p of panels) {
       const pr = {};
       pr.open = await page.evaluate((x) => window.__railCheck.open(x), p);
       if (r.skin) {
@@ -399,13 +445,13 @@ async function runConcept(c, ref) {
         anims = document.getAnimations().filter((a) => { const t = a.effect && a.effect.target; return t && t.closest && (t.closest('.pmr-view') || t.closest('#pmr-overlay')) && a.playState === 'running'; }).length;
       }
       de.removeAttribute('data-motion'); window.PMR.menu.closeAll(); return { running: anims };
-    }, PANELS[0]);
+    }, panels[0]);
     const themeList = QUICK ? ['basic-dark', 'retro-light'] : THEMES;
     const runs = themeList.map((t) => ({ slug: t, nier: false })).concat(QUICK ? [] : [{ slug: 'basic-dark', nier: true }, { slug: 'basic-light', nier: true }]);
     for (const t of runs) {
       const key = t.slug + (t.nier ? '+nier' : '');
       const tr = { set: await page.evaluate(([s, n]) => window.__railCheck.theme(s, n), [t.slug, t.nier]), panels: {} };
-      for (const p of PANELS) {
+      for (const p of panels) {
         await page.evaluate((x) => window.__railCheck.open(x), p);
         await page.evaluate((x) => window.__railCheck.setWidth(x), 280);
         tr.panels[p] = {
@@ -434,12 +480,67 @@ async function runConcept(c, ref) {
   return r;
 }
 
+/* --restore: Current, snapshot of the nine panels and the activity bar; D used; Current again, snapshot. The two must
+   match element for element in every theme (NieR included), and D's own marks must be gone. Diffs are short: the
+   number of differing positions and the first one, before and after. */
+const RESTORE_IDS = Object.assign({ bar: 'activityBar' }, TARGET);
+function shortDiff(a, b) {
+  const A = a.split(/(?=<)/), B = b.split(/(?=<)/);
+  let count = 0, first = -1;
+  for (let i = 0; i < Math.max(A.length, B.length); i++) if (A[i] !== B[i]) { count++; if (first < 0) first = i; }
+  if (first < 0) return null;
+  const clip = (s) => (s === undefined ? '(end)' : s.replace(/\s+/g, ' ').slice(0, 160));
+  return { lines: count, at: first, before: clip(A.slice(first, first + 2).join('')), after: clip(B.slice(first, first + 2).join('')) };
+}
+async function restoreCheck() {
+  const res = { themes: {}, errors: [] };
+  const b = await bootPage(PAGE);
+  const page = b.page;
+  try {
+    await page.evaluate(async () => {
+      const L = window.__railCheck;
+      for (let i = 0; i < 60 && !document.documentElement.hasAttribute('data-pmr-ready'); i++) await L.sleep(100);
+      window.PMR.concepts.set('current'); await L.sleep(800); L.skin = true;
+    });
+    const walkEveryPanel = () => page.evaluate((ids) => window.__railCheck.walkAll(ids), ALL_PANELS);
+    const runs = (QUICK ? ['basic-dark'] : THEMES).map((t) => ({ slug: t, nier: false })).concat(QUICK ? [] : [{ slug: 'basic-dark', nier: true }]);
+    for (const t of runs) {
+      const key = t.slug + (t.nier ? '+nier' : '');
+      await page.evaluate(([s, n]) => window.__railCheck.theme(s, n), [t.slug, t.nier]);
+      await walkEveryPanel();
+      const before = await page.evaluate((ids) => window.__railCheck.snapAll(ids), RESTORE_IDS);
+      const skinBefore = await page.evaluate(() => document.documentElement.getAttribute('data-rail-skin'));
+      await page.evaluate(async () => { window.PMR.concepts.set('d'); await window.__railCheck.sleep(800); });
+      const used = await page.evaluate((ids) => window.__railCheck.useRail(ids), ALL_PANELS);
+      await page.evaluate(async () => { window.PMR.menu.closeAll(); window.PMR.concepts.set('current'); await window.__railCheck.sleep(800); });
+      await walkEveryPanel();
+      const after = await page.evaluate((ids) => window.__railCheck.snapAll(ids), RESTORE_IDS);
+      const left = await page.evaluate(() => {
+        let marks = 0; document.querySelectorAll('*').forEach((e) => { if (e.classList.contains('d-abind')) marks++; for (const a of e.attributes) if (a.name.startsWith('data-d-')) marks++; });
+        return { skin: document.documentElement.getAttribute('data-rail-skin'), marks };
+      });
+      const diffs = {};
+      for (const k of Object.keys(RESTORE_IDS)) { if (before[k] !== after[k]) diffs[k] = shortDiff(before[k], after[k]); }
+      res.themes[key] = { used, diffs, skin: { before: skinBefore, after: left.skin }, marks: left.marks };
+      console.log(`restore ${key}: ${Object.keys(diffs).length ? 'DIFF in ' + Object.keys(diffs).join(', ') : 'identical (' + Object.keys(RESTORE_IDS).length + ' elements)'}`);
+    }
+    res.errors = [...new Set(b.errors.map(norm))];
+  } catch (e) {
+    res.fatal = String(e && e.stack || e).slice(0, 600);
+  } finally {
+    await b.close();
+  }
+  return res;
+}
+
 const results = [];
 const fails = [];
 let ref = { errors: [], pairs: {} };
+let rest = null;
 try {
   ref = { errors: await refErrors(), pairs: await refPairs() };
   for (const c of CONCEPTS) results.push(await runConcept(c, ref.pairs));
+  if (RESTORE) rest = await restoreCheck();
 
   /* verdicts */
   for (const r of results) {
@@ -469,12 +570,23 @@ try {
       if (x.pills) fails.push(`${c}/${t}/${p}: ${x.pills} pill-shaped elements`);
     }
   }
+  if (rest) {
+    if (rest.fatal) fails.push(`restore: fatal ${rest.fatal.split('\n')[0]}`);
+    const newErr = rest.errors.filter((e) => !ref.errors.includes(e));
+    if (newErr.length) fails.push(`restore: ${newErr.length} new console errors: ${newErr.slice(0, 3).join(' || ')}`);
+    for (const [key, t] of Object.entries(rest.themes)) {
+      for (const [k, d] of Object.entries(t.diffs)) fails.push(`restore/${k}@${key}: differs after D -> Current (${d.lines} positions, first at ${d.at}: ${d.before} vs ${d.after})`);
+      if (t.skin.after !== t.skin.before) fails.push(`restore@${key}: data-rail-skin ${t.skin.before} -> ${t.skin.after} after going back to Current`);
+      if (t.marks) fails.push(`restore@${key}: ${t.marks} D marks (data-d-* attributes, .d-abind) left after going back to Current`);
+    }
+  }
 } catch (e) {
   if (e instanceof NoGpu) fails.push(e.message);
   else throw e;
 }
 const summary = { page: PAGE, ref: REF, gpu: GPU, refErrors: ref.errors.length, refPairs: Object.fromEntries(Object.entries(ref.pairs).map(([k, v]) => [k, v.length])), concepts: results.map((r) => ({ concept: r.concept, skin: r.skin, gpu: r.gpu, errors: r.errors.length, reach: Object.fromEntries(Object.entries(r.panels).map(([p, x]) => [p, x.reach ? `${x.reach.reached} seen, ${x.reach.missingCount} missing` : 'skipped'])), type: Object.fromEntries(Object.entries(r.panels).map(([p, x]) => [p, x.type && x.type.min])) })), fails };
-writeFileSync(join(out, 'rail-boot.json'), JSON.stringify({ summary, results }, null, 2));
+if (rest) summary.restore = Object.fromEntries(Object.entries(rest.themes).map(([k, t]) => [k, { used: t.used, differing: Object.keys(t.diffs) }]));
+writeFileSync(join(out, 'rail-boot.json'), JSON.stringify({ summary, results, restore: rest }, null, 2));
 console.log(JSON.stringify(summary, null, 1));
 console.log(fails.length ? `rail boot: ${fails.length} failing checks` : 'rail boot: ok');
 process.exit(fails.length ? 1 : 0);
