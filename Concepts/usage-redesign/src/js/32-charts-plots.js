@@ -462,10 +462,12 @@
       else morphCostMarks(c, geo, from, cost, mids, YB);
     } else { paintArea(c, geo, geo); if (!live || !liveCostMarks(c, geo, cost, mids, YB, true)) paintCostMarks(c, geo, cost, mids, YB); }
     c._geo = geo;
-    /* the flyer map (C3-5): the token trend repeats on Overview and Analytics (chart:tokens) */
+    /* the flyer map (C3-5): the token trend repeats on Overview and Analytics (chart:tokens). A plot of ONE token type (the
+       savings trend's cache reads) is not that chart: it never claims the key, so the all-tokens line never flies into it
+       and the token trend's live beats never repaint it */
     if (!compact) {
       var yTop = sc.a.top, tt0 = dom.t0, tt1 = t1;
-      charts.setFly(c, f.box, c.opts.share || spec.share || (m.token ? 'tokens' : null), { shareEl: f.rv,
+      charts.setFly(c, f.box, c.opts.share || spec.share || (m.token && m.series.length > 1 ? 'tokens' : null), { shareEl: f.rv,
         box: { l: pad.l, t: pad.t, w: pw, h: ph }, domain: { x0: tt0, x1: tt1, y0: 0, y1: yTop },
         boxOf: function (d) { var l = X(d.x0), r = X(d.x1); return { l: l, t: Y(d.y1), w: r - l, h: Y(d.y0) - Y(d.y1) }; },
         paths: function () { return P.total ? [P.total, P.glow, P.totalLine] : [P.bands[0], P.edges[0]]; } });
