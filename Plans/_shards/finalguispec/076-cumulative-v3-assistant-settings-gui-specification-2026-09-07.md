@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L36621-L37323
 
-Source SHA256: `f53b691e46c27e09fd2db732b918c0650a0f8b9516dd9b49d708c869ab1be25a`
+Source SHA256: `ec9fcca7a80f55122d75bbc7d9b1700ff628f9d28b94f4d4ade985e4f06ff116`
 
 ---
 
@@ -234,7 +234,7 @@ invariants.
   30. `project-backup` (Project-level archive and backup)
   31. `updates` (Application update channels and policies)
   32. `project-defaults-templates` (Project scaffolding templates)
-  33. `onboarding-guided-tour` (Guided tour replay, onboarding flags)
+  33. `onboarding-guided-tour` (Run Onboarding Again, Guided Tour resume and replay, onboarding flags)
   34. `doctor` (System health checks, diagnostics)
   35. `usage-budgets` (Spend limits, token quotas)
   36. `teacher-help` (Interactive tutorial and help projection)

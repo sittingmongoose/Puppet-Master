@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L1642-L1906
+Source lines: L1642-L1907
 
-Source SHA256: `316c41314a852e5f6618fe0e9c76723bfdcccb3d0db19ac9d181cd624a1c4e4b`
+Source SHA256: `76af4ce20341765c36c0be4a79d1b944d2a7e2260ce6ea24fd056962fca59038`
 
 ---
 
@@ -80,6 +80,7 @@ acceptance_criteria:
   - The top controls place ELI5 beside Pause and Skip Tour. The brief opening explains ELI5 and Reduced Motion; the Tour reads the effective Settings-owned general.visual.reduce-animations preference without writing it or adding a motion-toggle screen. Reduced Motion retains sequence/cause-and-effect and action parity.
   - Each scene heading receives programmatic focus. Callouts measure, clamp, and remeasure the mounted target across resize, scale, localization, movement, and route changes; stale or missing target geometry cannot advance the film.
   - Skip restores exact captured layout, Chat thread/selection/placeholder/draft, and focus. Finish requires current prerequisite predicates, restores temporary layout by default or honors explicit Keep, removes practice content, and lands on the real Planning Wizard without work. Restoration failure remains recoverable, never completed. Safe checkpoint tests revalidate owner state on Close/reload/resume, reject stale/secret-bearing records, return to the earliest unsatisfied prerequisite, and never replay domain work.
+  - Reload tests prove that Skip or Finish after a reload still restores through the layout owner's snapshot ref; that a checkpoint which cannot be revalidated restores whatever of its basis is still resolvable, never adopts the temporary arrangement as the new starting point, and starts a fresh session with a plain notice instead of a dead-end recovery panel; that Run Onboarding Again after a reload discards the checkpoint, snapshot ref, resume affordance, and any restoration-pending notice; that a tour started from Settings, with Chat hidden, skips without a restoration failure; and that Settings offers Resume Guided Tour (`settings.guided_tour.resume`) only while a checkpoint can resume, beside Replay Guided Tour and Run Onboarding Again.
   - Restoration tests include panel size shares and dock dimensions, hidden-panel order, widget geometry, repeated failed-then-successful restoration against the original snapshot, and stale-revision/persistence-failure rejection by the existing resize owner. Explicit Keep applies only to layout; it does not retain practice content or claim restoration. Default restoration cannot substitute a factory reset or unchecked layout assignment.
   - Static schema/fixture gates, source-transform assertions, browser-concept verification, native Slint/runtime execution, accessibility certification, motion-quality review, and visual acceptance validate only their declared evidence layers and cannot substitute for one another.
   - The retained exact 128-row packet denominator (SH 12, ONB 28, TOUR 11, DOC 24, IMP 10, TST 7, PERF 13, SRV 6, RA 17) is predecessor evidence only. Neither its ONB/Tour slices nor the v2 three-scene/ten-action fixtures prove the current tour. Tour acceptance uses three chapters, eleven typed tour actions, the declared stable-step/action/dwell census, and separate browser/static/native/runtime/accessibility/motion/visual verdicts. Onboarding revision reconciliation remains a separate obligation.

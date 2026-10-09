@@ -36844,7 +36844,7 @@ invariants.
   30. `project-backup` (Project-level archive and backup)
   31. `updates` (Application update channels and policies)
   32. `project-defaults-templates` (Project scaffolding templates)
-  33. `onboarding-guided-tour` (Guided tour replay, onboarding flags)
+  33. `onboarding-guided-tour` (Run Onboarding Again, Guided Tour resume and replay, onboarding flags)
   34. `doctor` (System health checks, diagnostics)
   35. `usage-budgets` (Spend limits, token quotas)
   36. `teacher-help` (Interactive tutorial and help projection)

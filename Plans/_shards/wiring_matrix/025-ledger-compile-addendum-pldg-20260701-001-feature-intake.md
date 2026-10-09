@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3464-L3806
+Source lines: L3464-L3810
 
-Source SHA256: `404019bb055035ef29c59d01614e270b6f1b546c06cac022bcbf36bf29dd5438`
+Source SHA256: `c85055258bf1320ddf91619b6745282c1090c408cd41d9176bf7e43aea7af768`
 
 ---
 
@@ -69,7 +69,10 @@ canonical_text: >-
   restoration of the captured layout, Chat state, composer placeholder, and focus. Finish restores by default or keeps
   layout only after explicit selection through the existing finish action, removes practice content, and lands on the
   real Planning Wizard with the committed Project selected and no work auto-started. Close/reload requires a safe owner-
-  revalidated checkpoint; absent original state or stale observations expose recovery, never a newly invented snapshot.
+  revalidated checkpoint; absent original state or stale observations never yield a newly invented snapshot: what of the
+  original basis still resolves is restored, then a fresh session starts with a plain notice, and only a restoration
+  failure exposes recovery. Run Onboarding Again resets the tour completely through its normal restoration, and Settings
+  reaches resume and replay through the route-only `settings.guided_tour.resume` and `settings.guided_tour.replay`.
   These are static wiring obligations, not proof of a durable adapter, native handler, recovery, or runtime acceptance.
 
   The eleven predecessor
@@ -111,7 +114,8 @@ acceptance_criteria:
   - Workspace practice consumes existing panel, workspace-layout, and widget commands according to the chosen action. Planning retains at least half of meaningful actions and dwell, accepts a genuine edited answer, changes only the dependent consequence, and leaves unsure choices unresolved.
   - ELI5 is at the top beside Pause and Skip; `ui.guided_tour.toggle_eli5` changes the tour's narration only and never rewrites the Teacher example answer. The same-answer ELI5 checkpoint is never satisfied while `cmd.chat.eli5.explain_reply` is not admitted. Effective Reduced Motion is a Settings-owned projection/change route; Guided Tour has no Reduced Motion setting or action.
   - Skip restores captured layout, Chat state, placeholder, and focus through existing owners; Finish restores by default or keeps layout only on explicit selection through `ui.guided_tour.finish`, then removes practice content and focuses the real Planning Wizard with the committed Project and no auto-started work. No `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, or generic owner mutation is introduced.
-  - Close/reload revalidates the last safe checkpoint and original restoration references against current owners before resume; missing, stale, or failed restoration state exposes recovery and never reports completion or captures the temporary arrangement as the original.
+  - Close/reload revalidates the last safe checkpoint and original restoration references against current owners before resume; missing or stale state restores what still resolves and starts a fresh session with a notice, failed restoration exposes recovery, and neither reports completion or captures the temporary arrangement as the original.
+  - Run Onboarding Again discards the tour checkpoint, snapshot ref, resume affordance, and any restoration-pending notice; Settings Resume Guided Tour (`settings.guided_tour.resume`) is disabled unless a checkpoint can resume.
   - Retired five-chapter ordering and `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, and `ui.guided_tour.toggle_reduced_motion` have no current Tour control, request, alias, handler, or production row; similarly named canonical layout or Settings commands remain available to unrelated non-Tour consumers under their existing owners.
   - Disabled/rejected Tour actions change no scene or owner state. Stale owner observations, missing exact mounted targets, restoration failure, layout failure, or deterministic-reply failure pause or fail closed with a named recovery reason and never synthesize completion.
   - The eleven listed `cmd.onboarding.*` spellings remain source-lineage-only and appear as neither production wiring rows nor compatibility aliases.
