@@ -463,6 +463,24 @@ PATCHES = [
      "      scroll-behavior: auto !important;\n"
      "    }",
      'reduced motion: no transitions'),
+    # The page-tab ink re-measured every tab (offsetLeft/Width/Top/Height) inside the observer of a theme or motion
+    # change, a microtask after the attribute write: the read forced the whole page's style and layout there (about
+    # 217 ms under a Reduced Motion toggle, whose [data-motion] rules match every element), and whatever the same task
+    # wrote next (Settings' re-render, the look layer) made the frame style the page again. The ink now re-measures at
+    # the next frame, before that frame's paint: the read then shares the frame's own style and layout pass, and the
+    # ink lands in the same frame as the new look. Several changes in one frame re-measure once.
+    ("    window.PM7_PAGE_TAB_INK = { resync: resync };\n"
+     "    try {\n"
+     "      new MutationObserver(resync).observe(document.documentElement, {\n",
+     "    window.PM7_PAGE_TAB_INK = { resync: resync };\n"
+     "    var resyncFrame = 0;\n"
+     "    function resyncNextFrame() {\n"
+     "      if (resyncFrame) return;\n"
+     "      resyncFrame = requestAnimationFrame(function () { resyncFrame = 0; resync(); });\n"
+     "    }\n"
+     "    try {\n"
+     "      new MutationObserver(resyncNextFrame).observe(document.documentElement, {\n",
+     'page-tab ink: re-measure at the next frame'),
 ]
 
 
