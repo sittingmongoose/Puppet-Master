@@ -122,12 +122,12 @@ function jjMeta(r) {
 function jjRow(r) {
   const aside = r.letter ? jh('span', { class: ['pm-gs', 'd-jr-aside', r.letter === 'A' ? 'pm-gs-staged' : r.letter === 'C' ? 'd-gs-conflict' : 'pm-gs-mod'], text: r.letter })
     : r.aside ? jh('span.d-jr-aside', { text: r.aside }) : null;
+  /* two independent lines, so a wide diff on line 2 never narrows the name on line 1 */
   const head = jh('div', { class: 'sh-chg-h d-jr pmr-cur', 'data-collapse': '', role: 'button', tabindex: '0', 'aria-expanded': String(!!r.open) },
     jjIco('chevR', 'sh-accchev'),
-    jh('span', { class: ['sh-nm-txt', r.mono && 'sh-mono', r.quiet && 'd-jr-quiet'], text: r.name }),
-    aside,
-    jjMeta(r),
-    r.ds ? jh('span.sh-ds', jh('b.add', { text: '+' + r.ds[0] }), ' ', jh('b.del', { text: '-' + r.ds[1] })) : null);
+    jh('span.d-jr-l1', jh('span', { class: ['sh-nm-txt', r.mono && 'sh-mono', r.quiet && 'd-jr-quiet'], text: r.name }), aside),
+    jh('span.d-jr-l2', jjMeta(r),
+      r.ds ? jh('span.sh-ds', jh('b.add', { text: '+' + r.ds[0] }), ' ', jh('b.del', { text: '-' + r.ds[1] })) : null));
   if (r.hover) PMR.hover(head, r.hover, r.hoverDetail);
   const inner = [];
   if (r.hunk) inner.push(jh('div.sh-hunkprev', { text: r.hunk }));
