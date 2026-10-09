@@ -918,9 +918,10 @@
 [data-rail-skin="d"] #panel-testing .sh-run-h .sh-name > .sh-nm-txt, [data-rail-skin="d"] #panel-agents .sh-run-h .sh-name > .sh-nm-txt {
   display: inline; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: break-word;
 }
-/* line two: the status word, then the facts; three lines at most */
+/* line two: the status word, then the facts, whole: they are short shell strings, and cutting them would leave the run id
+   or the progress reachable only by opening the row (code words and ids get their break points in 55-testing.js) */
 [data-rail-skin="d"] #panel-testing .sh-run-h > .sh-main > :is(.sh-runmeta, .sh-meta), [data-rail-skin="d"] #panel-agents .sh-run-h > .sh-main > :is(.sh-runmeta, .sh-meta) {
-  display: -webkit-box !important; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden !important;
+  display: block !important; overflow: visible !important;
   flex: none !important; max-width: none !important; max-height: none !important; white-space: normal !important; text-overflow: clip !important;
   overflow-wrap: break-word; font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; letter-spacing: 0 !important; color: var(--d-text-3) !important;
 }
@@ -928,16 +929,40 @@
 [data-rail-skin="d"] #panel-testing .sh-run-h .lf-state > .d-gl, [data-rail-skin="d"] #panel-agents .sh-run-h .lf-state > .d-gl { display: none !important; }
 [data-rail-skin="d"] #panel-testing .sh-run-h .lf-state > .chip-full, [data-rail-skin="d"] #panel-agents .sh-run-h .lf-state > .chip-full { display: inline !important; }
 [data-rail-skin="d"] #panel-testing .sh-run-h .lf-state::after, [data-rail-skin="d"] #panel-agents .sh-run-h .lf-state::after { content: '\00B7'; margin: 0 5px; font-weight: 400; color: var(--d-text-3); }
-[data-rail-skin="d"] #panel-testing [data-d-st="errored"], [data-rail-skin="d"] #panel-agents [data-d-st="errored"] { color: var(--accent-orange, var(--d-fail)) !important; }
-/* status words take their state's colour (the shared chip rule's :is() list outranks the shared state colours, so the
-   colours are restated here at the chip rule's weight; see the lane F report) */
-[data-rail-skin="d"] #panel-testing .pm-chip:is([data-d-st="ok"], [data-d-st="live"]), [data-rail-skin="d"] #panel-agents .pm-chip:is([data-d-st="ok"], [data-d-st="live"]) { color: var(--d-ok) !important; }
-[data-rail-skin="d"] #panel-testing .pm-chip[data-d-st="run"], [data-rail-skin="d"] #panel-agents .pm-chip[data-d-st="run"] { color: var(--d-run) !important; }
-[data-rail-skin="d"] #panel-testing .pm-chip:is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]), [data-rail-skin="d"] #panel-agents .pm-chip:is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]) { color: var(--d-warn) !important; }
-[data-rail-skin="d"] #panel-testing .pm-chip:is([data-d-st="fail"], [data-d-st="blocked"]), [data-rail-skin="d"] #panel-agents .pm-chip:is([data-d-st="fail"], [data-d-st="blocked"]) { color: var(--d-fail) !important; }
-[data-rail-skin="d"] #panel-testing .pm-chip:is([data-d-st="pending"], [data-d-st="info"]), [data-rail-skin="d"] #panel-agents .pm-chip:is([data-d-st="pending"], [data-d-st="info"]) { color: var(--d-pend) !important; }
-[data-rail-skin="d"] #panel-testing .pm-chip:is([data-d-st="idle"], [data-d-st="unknown"]), [data-rail-skin="d"] #panel-agents .pm-chip:is([data-d-st="idle"], [data-d-st="unknown"]) { color: var(--d-idle) !important; }
-[data-rail-skin="d"] #panel-testing .pm-chip[data-d-st="errored"], [data-rail-skin="d"] #panel-agents .pm-chip[data-d-st="errored"] { color: var(--accent-orange, var(--d-fail)) !important; }
+/* state colours: each element with a state carries its colour as --lf-st, so a status word and a glyph can take
+   different tones of it. Status words take their state's colour (the shared chip rule's :is() list outranks the shared
+   state colours, so the chip colour is restated here at the chip rule's weight; see the lane F report). */
+[data-rail-skin="d"] #panel-testing [data-d-st], [data-rail-skin="d"] #panel-agents [data-d-st] { --lf-st: var(--d-pend); }
+[data-rail-skin="d"] #panel-testing :is([data-d-st="ok"], [data-d-st="live"]), [data-rail-skin="d"] #panel-agents :is([data-d-st="ok"], [data-d-st="live"]) { --lf-st: var(--d-ok); }
+[data-rail-skin="d"] #panel-testing [data-d-st="run"], [data-rail-skin="d"] #panel-agents [data-d-st="run"] { --lf-st: var(--d-run); }
+[data-rail-skin="d"] #panel-testing :is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]), [data-rail-skin="d"] #panel-agents :is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]) { --lf-st: var(--d-warn); }
+[data-rail-skin="d"] #panel-testing :is([data-d-st="fail"], [data-d-st="blocked"]), [data-rail-skin="d"] #panel-agents :is([data-d-st="fail"], [data-d-st="blocked"]) { --lf-st: var(--d-fail); }
+[data-rail-skin="d"] #panel-testing :is([data-d-st="idle"], [data-d-st="unknown"]), [data-rail-skin="d"] #panel-agents :is([data-d-st="idle"], [data-d-st="unknown"]) { --lf-st: var(--d-idle); }
+[data-rail-skin="d"] #panel-testing [data-d-st="errored"], [data-rail-skin="d"] #panel-agents [data-d-st="errored"] { --lf-st: var(--accent-orange, var(--d-fail)); color: var(--lf-st) !important; }
+[data-rail-skin="d"] #panel-testing .pm-chip[data-d-st], [data-rail-skin="d"] #panel-agents .pm-chip[data-d-st] { color: var(--lf-st) !important; }
+/* light modes (and NieR dark): the graph colours are made for marks, not for 12 px words on a tinted shelf (Running in
+   Retro light measured 1.4:1). Status words take a deeper tone of their colour, mixed toward the text colour; glyphs
+   keep more of the colour (they are shapes, not text). Measured in tasks2/g-contrast.mjs: words 4.5:1 or better on the
+   open row tint, glyphs 3:1 or better, in every light variant. */
+[data-rail-skin="d"] { --lf-tx: 100%; --lf-gl: 100%; }
+[data-rail-skin="d"][data-theme$="-light"] { --lf-tx: 42%; --lf-gl: 58%; }
+[data-rail-skin="d"][data-theme^="friendly"][data-theme$="-light"] { --lf-tx: 36%; }
+[data-rail-skin="d"][data-theme^="glass"][data-theme$="-light"] { --lf-tx: 30%; --lf-gl: 50%; }
+[data-rail-skin="d"][data-o55-nier="on"][data-theme$="-light"] { --lf-tx: 36%; --lf-gl: 48%; }
+[data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] { --lf-tx: 40%; --lf-gl: 66%; }
+[data-rail-skin="d"][data-theme$="-light"] #panel-testing [data-d-st], [data-rail-skin="d"][data-theme$="-light"] #panel-agents [data-d-st], [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-testing [data-d-st], [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-agents [data-d-st],
+[data-rail-skin="d"][data-theme$="-light"] #panel-testing [data-d-st] > .d-gl, [data-rail-skin="d"][data-theme$="-light"] #panel-agents [data-d-st] > .d-gl, [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-testing [data-d-st] > .d-gl, [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-agents [data-d-st] > .d-gl {
+  color: color-mix(in oklab, var(--lf-st) var(--lf-gl), var(--d-text)) !important;
+}
+[data-rail-skin="d"][data-theme$="-light"] #panel-testing :is(.pm-chip, .lf-state, .c)[data-d-st], [data-rail-skin="d"][data-theme$="-light"] #panel-agents :is(.pm-chip, .lf-state, .c)[data-d-st],
+[data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-testing :is(.pm-chip, .lf-state, .c)[data-d-st], [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-agents :is(.pm-chip, .lf-state, .c)[data-d-st] {
+  color: color-mix(in oklab, var(--lf-st) var(--lf-tx), var(--d-text)) !important;
+}
+/* a status word inside a value ("Flaky 2/2 passed on attempt 2", "Errored harness failure"): an inline run of text on
+   the value's baseline, its glyph centred on the x-height, not an inline-flex box that lifts the word */
+[data-rail-skin="d"] #panel-testing .sh-kv > .sh-v > .pm-chip, [data-rail-skin="d"] #panel-agents .sh-kv > .sh-v > .pm-chip { display: inline !important; }
+[data-rail-skin="d"] #panel-testing .sh-kv > .sh-v > .pm-chip > .d-gl, [data-rail-skin="d"] #panel-agents .sh-kv > .sh-v > .pm-chip > .d-gl { display: inline-block !important; margin-right: 4px; vertical-align: -1.5px; }
+[data-rail-skin="d"] #panel-testing .sh-kv > .sh-v > .pm-chip > .d-gl > svg, [data-rail-skin="d"] #panel-agents .sh-kv > .sh-v > .pm-chip > .d-gl > svg { display: block; }
 /* details: under the chevron column, like the other D rows */
 [data-rail-skin="d"] #panel-testing .sh-run > .sh-accb, [data-rail-skin="d"] #panel-agents .sh-run > .sh-accb { padding: 0 var(--d-pad) 0 calc(var(--d-pad) + 13px) !important; }
 [data-rail-skin="d"] #panel-testing .sh-run > .sh-accb > .pm-acc-inner > :first-child, [data-rail-skin="d"] #panel-agents .sh-run > .sh-accb > .pm-acc-inner > :first-child { margin-top: 1px !important; }
@@ -955,6 +980,11 @@
   grid-template-columns: subgrid !important; column-gap: 8px !important;
 }
 [data-rail-skin="d"] #panel-agents .sh-agdetail > .sh-agask { display: grid !important; grid-template-columns: subgrid !important; column-gap: 8px; }
+/* a long code value (a command, a suite, a path: .lf-stack, 55-testing.js) sits under its label at the full row width */
+[data-rail-skin="d"] #panel-testing .sh-run > .sh-accb > .pm-acc-inner > .sh-kv.lf-stack, [data-rail-skin="d"] #panel-agents .sh-run .sh-agdetail > .sh-kv.lf-stack {
+  grid-template-columns: minmax(0, 1fr) !important; row-gap: 1px !important;
+}
+[data-rail-skin="d"] #panel-testing .sh-run .sh-kv.lf-stack > .sh-v, [data-rail-skin="d"] #panel-agents .sh-run .sh-kv.lf-stack > .sh-v { line-height: 1.45 !important; }
 [data-rail-skin="d"] #panel-testing .sh-run .sh-kv > .sh-k, [data-rail-skin="d"] #panel-agents .sh-run .sh-kv > .sh-k, [data-rail-skin="d"] #panel-testing .sh-shelf > .sh-accb .sh-kv > .sh-k { white-space: normal !important; min-width: 0 !important; }
 [data-rail-skin="d"] #panel-testing .sh-run .sh-kv, [data-rail-skin="d"] #panel-agents .sh-run .sh-kv { padding: 3px 0 !important; }
 [data-rail-skin="d"] #panel-testing .sh-run .sh-kv > .sh-v, [data-rail-skin="d"] #panel-agents .sh-run .sh-kv > .sh-v { font-size: var(--d-fs-meta) !important; color: var(--d-text-2) !important; }
@@ -1059,6 +1089,8 @@
   transition: background-color var(--d-t1) var(--d-ease);
 }
 [data-rail-skin="d"] #panel-agents .pm-sumcard[data-acc] > .pm-sumcard-h { cursor: pointer; }
+/* a heading that does not fold ("Queued work") starts in the text column of the one that does, past the chevron */
+[data-rail-skin="d"] #panel-agents .pm-sumcard-h:not([data-collapse]) { padding-left: calc(var(--d-pad) + 9px + var(--d-gap)) !important; }
 [data-rail-skin="d"] #panel-agents .pm-sumcard[data-acc] > .pm-sumcard-h:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
 [data-rail-skin="d"] #panel-agents .pm-sumcard[data-acc].open > .pm-sumcard-h { border-radius: var(--d-r) var(--d-r) 0 0 !important; }
 [data-rail-skin="d"] #panel-agents .pm-sumcard[data-acc].open { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-open), transparent) !important; }
@@ -1067,7 +1099,8 @@
   display: inline-flex; align-items: center; gap: 4px; margin-left: auto; flex: none;
   font: 500 var(--d-fs-meta)/1.3 var(--body-font) !important; letter-spacing: 0 !important; font-variant-numeric: tabular-nums; color: var(--d-text-2) !important;
 }
-[data-rail-skin="d"] #panel-agents .pm-sumcard-h > .c[data-d-st="warn"] { color: var(--d-warn) !important; }
+[data-rail-skin="d"] #panel-agents .pm-sumcard-h > .c[data-d-st] { color: var(--lf-st) !important; }
+[data-rail-skin="d"][data-theme$="-light"] #panel-agents .pm-sumcard-h > .c[data-d-st], [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-agents .pm-sumcard-h > .c[data-d-st] { color: color-mix(in oklab, var(--lf-st) var(--lf-tx), var(--d-text)) !important; }
 [data-rail-skin="d"] #panel-agents .pm-sumcard[data-acc] > .sh-accb { padding: 0 var(--d-pad) 0 calc(var(--d-pad) + 13px) !important; }
 [data-rail-skin="d"] #panel-agents .pm-sumcard[data-acc] > .sh-accb > .pm-acc-inner > :last-child { margin-bottom: 6px !important; }
 [data-rail-skin="d"] #panel-agents .pm-sumcard .pm-occ {
@@ -1128,6 +1161,12 @@
 }
 [data-rail-skin="d"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label::first-letter { text-transform: uppercase; }
 [data-rail-skin="d"] #activityBar .icon[data-target].active .icon-label { color: var(--d-text) !important; }
+/* NieR marks the open panel the shell's way, the whole item (icon and name) as one ink band, collapsed or expanded, as
+   it marks Chat and Home: the name is paper on that ink, never ink on ink */
+[data-rail-skin="d"][data-o55-nier="on"] #activityBar .icon[data-target].active .icon-label { color: var(--o55-nier-on-ink) !important; }
+/* Glass light: the Chat and Home switches are white marks on their tiles; their names sit under the tile on the light
+   bar, so they take the text colour (white there could not be read) */
+[data-rail-skin="d"][data-theme^="glass"][data-theme$="-light"] #activityBar:not(.collapsed) .icon.active:not([data-target]) .icon-label { color: var(--d-text) !important; }
 /* the expand / collapse toggle: a chevron in the same tile as the icons (the shell writes ">" or "<" into it; the text
    stays for other code, the chevron is drawn and turns when the bar shows its names) */
 [data-rail-skin="d"] #activityBar > .activity-bar-toggle {
@@ -1200,7 +1239,9 @@
 }
 [data-rail-skin="d"][data-o55-nier="on"] #activityBar > #abMoreBtn:is(.is-menu-open, .pm-ab-drop-hot) .symbol { background: var(--o55-nier-ink) !important; box-shadow: none !important; }
 [data-rail-skin="d"][data-o55-nier="on"] #activityBar > #abMoreBtn:is(.is-menu-open, .pm-ab-drop-hot) { color: var(--o55-nier-on-ink) !important; }
-/* the menu: the bar's own icon drawings at the menu's icon size */
+/* the menu: the bar's own icon drawings at the menu's icon size; its rows are buttons, which do not inherit the font,
+   so they take the theme's face from the plate (IBM Plex Mono in Retro, PM NieR Sans in NieR) like its heading */
+[data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-mi { font-family: inherit !important; }
 [data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-mi-ico svg { width: 15px; height: 15px; }
 [data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-menu-empty { max-width: 220px; padding: 10px 10px; font-size: 12px; line-height: 1.45; color: var(--text-secondary); }
 /* its heading is a sentence, not a capitals micro label */

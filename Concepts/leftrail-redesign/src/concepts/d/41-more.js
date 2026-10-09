@@ -63,6 +63,14 @@ function lfMountMore() {
       onPick: it => { const r = rowFor(it._id); if (r) r.click(); },
     });
     if (!el) return;
+    /* NieR: the square cursor marks the hovered More button just right of it (the button is at the window's edge, so the
+       cursor cannot sit on its left); the menu opens past that mark instead of under it, so the mark never sits on the
+       heading's first letter */
+    const root = document.documentElement;
+    if (root.getAttribute('data-o55-nier') === 'on' && /(^|\s)cursor(\s|$)/.test(root.getAttribute('data-o55-nier-parts') || '')) {
+      const r = btn.getBoundingClientRect(), left = parseFloat(el.style.left) || 0;
+      if (left >= r.right - 1) el.style.left = Math.round(Math.max(left, r.right + 16)) + 'px';
+    }
     /* each row shows the bar's own drawing of its icon */
     el.querySelectorAll('.pmr-mi').forEach(b => {
       const src = list.find(r => r.id === (b._pmrItem && b._pmrItem._id)), slot = b.querySelector('.pmr-mi-ico');

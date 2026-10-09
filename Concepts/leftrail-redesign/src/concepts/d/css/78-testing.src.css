@@ -30,9 +30,10 @@
 §@testing .sh-run-h .sh-name > .sh-nm-txt, §@agents .sh-run-h .sh-name > .sh-nm-txt {
   display: inline; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: break-word;
 }
-/* line two: the status word, then the facts; three lines at most */
+/* line two: the status word, then the facts, whole: they are short shell strings, and cutting them would leave the run id
+   or the progress reachable only by opening the row (code words and ids get their break points in 55-testing.js) */
 §@testing .sh-run-h > .sh-main > :is(.sh-runmeta, .sh-meta), §@agents .sh-run-h > .sh-main > :is(.sh-runmeta, .sh-meta) {
-  display: -webkit-box !important; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden !important;
+  display: block !important; overflow: visible !important;
   flex: none !important; max-width: none !important; max-height: none !important; white-space: normal !important; text-overflow: clip !important;
   overflow-wrap: break-word; font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; letter-spacing: 0 !important; color: var(--d-text-3) !important;
 }
@@ -40,16 +41,40 @@
 §@testing .sh-run-h .lf-state > .d-gl, §@agents .sh-run-h .lf-state > .d-gl { display: none !important; }
 §@testing .sh-run-h .lf-state > .chip-full, §@agents .sh-run-h .lf-state > .chip-full { display: inline !important; }
 §@testing .sh-run-h .lf-state::after, §@agents .sh-run-h .lf-state::after { content: '\00B7'; margin: 0 5px; font-weight: 400; color: var(--d-text-3); }
-§@testing [data-d-st="errored"], §@agents [data-d-st="errored"] { color: var(--accent-orange, var(--d-fail)) !important; }
-/* status words take their state's colour (the shared chip rule's :is() list outranks the shared state colours, so the
-   colours are restated here at the chip rule's weight; see the lane F report) */
-§@testing .pm-chip:is([data-d-st="ok"], [data-d-st="live"]), §@agents .pm-chip:is([data-d-st="ok"], [data-d-st="live"]) { color: var(--d-ok) !important; }
-§@testing .pm-chip[data-d-st="run"], §@agents .pm-chip[data-d-st="run"] { color: var(--d-run) !important; }
-§@testing .pm-chip:is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]), §@agents .pm-chip:is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]) { color: var(--d-warn) !important; }
-§@testing .pm-chip:is([data-d-st="fail"], [data-d-st="blocked"]), §@agents .pm-chip:is([data-d-st="fail"], [data-d-st="blocked"]) { color: var(--d-fail) !important; }
-§@testing .pm-chip:is([data-d-st="pending"], [data-d-st="info"]), §@agents .pm-chip:is([data-d-st="pending"], [data-d-st="info"]) { color: var(--d-pend) !important; }
-§@testing .pm-chip:is([data-d-st="idle"], [data-d-st="unknown"]), §@agents .pm-chip:is([data-d-st="idle"], [data-d-st="unknown"]) { color: var(--d-idle) !important; }
-§@testing .pm-chip[data-d-st="errored"], §@agents .pm-chip[data-d-st="errored"] { color: var(--accent-orange, var(--d-fail)) !important; }
+/* state colours: each element with a state carries its colour as --lf-st, so a status word and a glyph can take
+   different tones of it. Status words take their state's colour (the shared chip rule's :is() list outranks the shared
+   state colours, so the chip colour is restated here at the chip rule's weight; see the lane F report). */
+§@testing [data-d-st], §@agents [data-d-st] { --lf-st: var(--d-pend); }
+§@testing :is([data-d-st="ok"], [data-d-st="live"]), §@agents :is([data-d-st="ok"], [data-d-st="live"]) { --lf-st: var(--d-ok); }
+§@testing [data-d-st="run"], §@agents [data-d-st="run"] { --lf-st: var(--d-run); }
+§@testing :is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]), §@agents :is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]) { --lf-st: var(--d-warn); }
+§@testing :is([data-d-st="fail"], [data-d-st="blocked"]), §@agents :is([data-d-st="fail"], [data-d-st="blocked"]) { --lf-st: var(--d-fail); }
+§@testing :is([data-d-st="idle"], [data-d-st="unknown"]), §@agents :is([data-d-st="idle"], [data-d-st="unknown"]) { --lf-st: var(--d-idle); }
+§@testing [data-d-st="errored"], §@agents [data-d-st="errored"] { --lf-st: var(--accent-orange, var(--d-fail)); color: var(--lf-st) !important; }
+§@testing .pm-chip[data-d-st], §@agents .pm-chip[data-d-st] { color: var(--lf-st) !important; }
+/* light modes (and NieR dark): the graph colours are made for marks, not for 12 px words on a tinted shelf (Running in
+   Retro light measured 1.4:1). Status words take a deeper tone of their colour, mixed toward the text colour; glyphs
+   keep more of the colour (they are shapes, not text). Measured in tasks2/g-contrast.mjs: words 4.5:1 or better on the
+   open row tint, glyphs 3:1 or better, in every light variant. */
+§R { --lf-tx: 100%; --lf-gl: 100%; }
+§R[data-theme$="-light"] { --lf-tx: 42%; --lf-gl: 58%; }
+§R[data-theme^="friendly"][data-theme$="-light"] { --lf-tx: 36%; }
+§R[data-theme^="glass"][data-theme$="-light"] { --lf-tx: 30%; --lf-gl: 50%; }
+§R[data-o55-nier="on"][data-theme$="-light"] { --lf-tx: 36%; --lf-gl: 48%; }
+§R[data-o55-nier="on"][data-theme$="-dark"] { --lf-tx: 40%; --lf-gl: 66%; }
+§{light}@testing [data-d-st], §{light}@agents [data-d-st], §{nier,dark}@testing [data-d-st], §{nier,dark}@agents [data-d-st],
+§{light}@testing [data-d-st] > .d-gl, §{light}@agents [data-d-st] > .d-gl, §{nier,dark}@testing [data-d-st] > .d-gl, §{nier,dark}@agents [data-d-st] > .d-gl {
+  color: color-mix(in oklab, var(--lf-st) var(--lf-gl), var(--d-text)) !important;
+}
+§{light}@testing :is(.pm-chip, .lf-state, .c)[data-d-st], §{light}@agents :is(.pm-chip, .lf-state, .c)[data-d-st],
+§{nier,dark}@testing :is(.pm-chip, .lf-state, .c)[data-d-st], §{nier,dark}@agents :is(.pm-chip, .lf-state, .c)[data-d-st] {
+  color: color-mix(in oklab, var(--lf-st) var(--lf-tx), var(--d-text)) !important;
+}
+/* a status word inside a value ("Flaky 2/2 passed on attempt 2", "Errored harness failure"): an inline run of text on
+   the value's baseline, its glyph centred on the x-height, not an inline-flex box that lifts the word */
+§@testing .sh-kv > .sh-v > .pm-chip, §@agents .sh-kv > .sh-v > .pm-chip { display: inline !important; }
+§@testing .sh-kv > .sh-v > .pm-chip > .d-gl, §@agents .sh-kv > .sh-v > .pm-chip > .d-gl { display: inline-block !important; margin-right: 4px; vertical-align: -1.5px; }
+§@testing .sh-kv > .sh-v > .pm-chip > .d-gl > svg, §@agents .sh-kv > .sh-v > .pm-chip > .d-gl > svg { display: block; }
 /* details: under the chevron column, like the other D rows */
 §@testing .sh-run > .sh-accb, §@agents .sh-run > .sh-accb { padding: 0 var(--d-pad) 0 calc(var(--d-pad) + 13px) !important; }
 §@testing .sh-run > .sh-accb > .pm-acc-inner > :first-child, §@agents .sh-run > .sh-accb > .pm-acc-inner > :first-child { margin-top: 1px !important; }
@@ -67,6 +92,11 @@
   grid-template-columns: subgrid !important; column-gap: 8px !important;
 }
 §@agents .sh-agdetail > .sh-agask { display: grid !important; grid-template-columns: subgrid !important; column-gap: 8px; }
+/* a long code value (a command, a suite, a path: .lf-stack, 55-testing.js) sits under its label at the full row width */
+§@testing .sh-run > .sh-accb > .pm-acc-inner > .sh-kv.lf-stack, §@agents .sh-run .sh-agdetail > .sh-kv.lf-stack {
+  grid-template-columns: minmax(0, 1fr) !important; row-gap: 1px !important;
+}
+§@testing .sh-run .sh-kv.lf-stack > .sh-v, §@agents .sh-run .sh-kv.lf-stack > .sh-v { line-height: 1.45 !important; }
 §@testing .sh-run .sh-kv > .sh-k, §@agents .sh-run .sh-kv > .sh-k, §@testing .sh-shelf > .sh-accb .sh-kv > .sh-k { white-space: normal !important; min-width: 0 !important; }
 §@testing .sh-run .sh-kv, §@agents .sh-run .sh-kv { padding: 3px 0 !important; }
 §@testing .sh-run .sh-kv > .sh-v, §@agents .sh-run .sh-kv > .sh-v { font-size: var(--d-fs-meta) !important; color: var(--d-text-2) !important; }

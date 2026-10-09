@@ -35,6 +35,12 @@
 }
 §R:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label::first-letter { text-transform: uppercase; }
 §B .icon[data-target].active .icon-label { color: var(--d-text) !important; }
+/* NieR marks the open panel the shell's way, the whole item (icon and name) as one ink band, collapsed or expanded, as
+   it marks Chat and Home: the name is paper on that ink, never ink on ink */
+§R[data-o55-nier="on"] #activityBar .icon[data-target].active .icon-label { color: var(--o55-nier-on-ink) !important; }
+/* Glass light: the Chat and Home switches are white marks on their tiles; their names sit under the tile on the light
+   bar, so they take the text colour (white there could not be read) */
+§R[data-theme^="glass"][data-theme$="-light"] #activityBar:not(.collapsed) .icon.active:not([data-target]) .icon-label { color: var(--d-text) !important; }
 /* the expand / collapse toggle: a chevron in the same tile as the icons (the shell writes ">" or "<" into it; the text
    stays for other code, the chevron is drawn and turns when the bar shows its names) */
 §B > .activity-bar-toggle {

@@ -40,6 +40,8 @@
   transition: background-color var(--d-t1) var(--d-ease);
 }
 §@agents .pm-sumcard[data-acc] > .pm-sumcard-h { cursor: pointer; }
+/* a heading that does not fold ("Queued work") starts in the text column of the one that does, past the chevron */
+§@agents .pm-sumcard-h:not([data-collapse]) { padding-left: calc(var(--d-pad) + 9px + var(--d-gap)) !important; }
 §@agents .pm-sumcard[data-acc] > .pm-sumcard-h:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
 §@agents .pm-sumcard[data-acc].open > .pm-sumcard-h { border-radius: var(--d-r) var(--d-r) 0 0 !important; }
 §@agents .pm-sumcard[data-acc].open { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-open), transparent) !important; }
@@ -48,7 +50,8 @@
   display: inline-flex; align-items: center; gap: 4px; margin-left: auto; flex: none;
   font: 500 var(--d-fs-meta)/1.3 var(--body-font) !important; letter-spacing: 0 !important; font-variant-numeric: tabular-nums; color: var(--d-text-2) !important;
 }
-§@agents .pm-sumcard-h > .c[data-d-st="warn"] { color: var(--d-warn) !important; }
+§@agents .pm-sumcard-h > .c[data-d-st] { color: var(--lf-st) !important; }
+§{light}@agents .pm-sumcard-h > .c[data-d-st], §{nier,dark}@agents .pm-sumcard-h > .c[data-d-st] { color: color-mix(in oklab, var(--lf-st) var(--lf-tx), var(--d-text)) !important; }
 §@agents .pm-sumcard[data-acc] > .sh-accb { padding: 0 var(--d-pad) 0 calc(var(--d-pad) + 13px) !important; }
 §@agents .pm-sumcard[data-acc] > .sh-accb > .pm-acc-inner > :last-child { margin-bottom: 6px !important; }
 §@agents .pm-sumcard .pm-occ {

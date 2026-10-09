@@ -1,13 +1,17 @@
 /* Testing (lane F), and the run rows Testing and Agents share.
 
    A run row (.sh-run) reads like every other D row: [chevron][status glyph] name on line one, the status word and the
-   facts on line two, the details when it opens. The shell draws a coloured dot in front of the name AND a status chip
+   facts under it, the details when it opens. The shell draws a coloured dot in front of the name AND a status chip
    after it; D shows one glyph per row instead, in the glyph column (.lf-lead): the chip's state when the row has one,
    else the dot's. The chip keeps its element and its word, moves to the head of the facts line ("Flaky 2/2 · passed on
-   retry 2/2 · ..."), and loses its own glyph there. Names wrap at their natural breaks ("::" and "_" get a zero-width
-   break opportunity) instead of being cut.
-   Every change goes through remember() / addClass() / setAttr() / inject() / setOwnText(), so switching to "Current"
-   leaves the panel byte-identical. Top-level names carry the LF_ prefix: every D script shares one scope. */
+   retry 2/2 · ..."), and loses its own glyph there. Every chip in the two panels (the head's and the one in the opened
+   row's Status line) gets the same run state, so a row never says two different things.
+   Text fits by layout: code words get break opportunities at their natural joints (after "::", "_" and "/", before a
+   file extension), ids such as tr-2214 or art-diff-n21 never break at their hyphens (a word joiner), and the opened
+   row stacks a long code value under its label at the full row width.
+   Every change goes through remember() / addClass() / setAttr() / inject() / setOwnText(), or a text-node edit that
+   remembers its original, so switching to "Current" leaves the panel byte-identical. Top-level names carry the LF_
+   prefix: every D script shares one scope. */
 
 const LF_RUN = (() => {
   /* the run states this panel family adds to the glyph set: errored is a harness failure, not a failed assertion, so it
@@ -73,11 +77,84 @@ const LF_RUN = (() => {
     parent.insertBefore(node, before || null);
     remember(() => { if (home) home.insertBefore(node, next && next.parentNode === home ? next : null); });
   }
-  /* code-like names break after "::" and "_" rather than inside a word */
-  function breaks(el) {
-    const t = ownText(el);
-    if (!t || t.indexOf('\u200B') >= 0 || !/::|_/.test(t)) return;
-    setOwnText(el, t.replace(/::(?=\S)/g, '::\u200B').replace(/_(?=\S)/g, '_\u200B'));
+  /* a text node's new value, remembered: undone only while the node still shows what D wrote (the shell may have
+     rewritten it since, and then its own text stays) */
+  function editText(n, v) {
+    const orig = n.nodeValue;
+    if (v === orig) return;
+    n.nodeValue = v;
+    remember(() => { if (n.nodeValue === v) n.nodeValue = orig; });
+  }
+  /* code words break at their joints, never inside a word: a zero-width break after "::", "_" and "/" in runs of 11+
+     characters that look like code, and before a file extension in runs too long for a line (24+). Ids keep their
+     hyphens: a word joiner after each one (tr-2214, art-tr-2199, art-diff-n21, lane-b), and after every hyphen inside a
+     word of a command, a log line or a code-style run name. All of it is idempotent (the look-aheads skip a mark
+     already there). */
+  const TOKEN = /[^\s()'"`,;]{11,}/g;
+  const CODE = /::|_|\/[A-Za-z]|[A-Za-z0-9]\.[A-Za-z]/;
+  const ID = /\b(?:[a-z]+-)+[a-z]?\d+\b|\blane-[a-z]\b/g;
+  function fitText(s) {
+    s = s.replace(ID, id => id.replace(/-(?!\u2060)/g, '-\u2060'));
+    return s.replace(TOKEN, tok => (!CODE.test(tok) ? tok : tok
+      .replace(/::(?=[^\s:\u200B])/g, '::\u200B')
+      .replace(/_(?=[^\s_\u200B])/g, '_\u200B')
+      .replace(/\/(?=[A-Za-z])/g, '/\u200B')
+      .replace(/([A-Za-z0-9])\.(?=[A-Za-z])/g, (m, c) => (tok.replace(/[\u200B\u2060]/g, '').length >= 24 ? c + '\u200B.' : m))));
+  }
+  const TEXT_SEL = '.sh-nm-txt, .sh-runmeta, .sh-meta, .sh-v, .sh-log > div, .sh-lrsum';
+  const SKIP_SEL = '.d-gl, .chip-abbr, svg, .sh-modelmark';
+  function texts(panel) {
+    const seen = new Set();
+    panel.querySelectorAll(TEXT_SEL).forEach(el => {
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+        if (seen.has(n)) continue;
+        seen.add(n);
+        const host = n.parentElement;
+        if (!n.nodeValue.trim() || (host && host.closest(SKIP_SEL))) continue;
+        let v = fitText(n.nodeValue);
+        /* in code (a command, a log line, a code-style run name) a hyphenated word is one name (puppet-core, import-load,
+           qty-stepper) and a flag keeps its dashes (--proptest, -p) */
+        if (host && host.closest('.sh-v.sh-mono, .sh-log, .sh-name.sh-mono')) {
+          v = v.replace(/([A-Za-z0-9])-(?=[A-Za-z0-9])/g, '$1-\u2060')
+            .replace(/(^|[\s(])(--?)(?=[A-Za-z])/g, (m, a, d) => a + d.split('').join('\u2060') + '\u2060');
+        }
+        editText(n, v);
+      }
+    });
+  }
+  /* an opened row stacks a long code value (a command, a suite, a path) under its label at the full row width instead
+     of squeezing it into the value column */
+  function stacks(panel) {
+    panel.querySelectorAll('.sh-run .sh-accb .sh-kv:not(.sh-kv-stack)').forEach(kv => {
+      const v = kv.querySelector(':scope > .sh-v');
+      if (!v) return;
+      const s = v.textContent.replace(/[\u200B\u2060]/g, '').trim();
+      const longest = s.split(/\s+/).reduce((m, w) => Math.max(m, w.length), 0);
+      if ((v.classList.contains('sh-mono') && s.length > 26) || longest >= 18) addClass(kv, 'lf-stack');
+    });
+  }
+  /* every status chip in the panel speaks the run vocabulary; a chip whose glyph shows draws the run shape */
+  function chips(panel, animate) {
+    panel.querySelectorAll('.pm-chip').forEach(chip => {
+      if (!chip.hasAttribute('data-d-st')) return;
+      const st = chipState(chip);
+      if (chip.getAttribute('data-d-st') !== st) setAttr(chip, 'data-d-st', st);
+      const gl = chip.querySelector(':scope > .d-gl'), shape = SHAPE[st] || st;
+      if (!gl || gl.getAttribute('data-gl') === shape) return;
+      gl.setAttribute('data-gl', shape);
+      gl.innerHTML = svgFor(shape);
+      if (st === 'run') gl.setAttribute('data-pulse', ''); else gl.removeAttribute('data-pulse');
+      if (animate) popGlyph(gl);
+    });
+  }
+  /* Agents: the facts line ends with the same "waiting 4m" the head's waiting / elapsed line already says */
+  function dropTime(run, meta) {
+    const time = run.querySelector('.sh-agtime');
+    if (!time || !meta) return;
+    const nodes = Array.from(meta.childNodes).filter(n => n.nodeType === 3 && n.nodeValue.trim());
+    const last = nodes[nodes.length - 1];
+    if (last) editText(last, last.nodeValue.replace(/\s*·\s*(waiting|elapsed)\s+\S+\s*$/i, ''));
   }
 
   function rows(panel, animate) {
@@ -88,8 +165,6 @@ const LF_RUN = (() => {
       const main = head.querySelector(':scope > .sh-main');
       const name = main && main.querySelector(':scope > .sh-name');
       const meta = main && main.querySelector(':scope > .sh-runmeta, :scope > .sh-meta');
-      const txt = name && name.querySelector(':scope > .sh-nm-txt');
-      if (txt && name.classList.contains('sh-mono')) breaks(txt);
       const chip = (meta && meta.querySelector(':scope > .lf-state')) || (name && name.querySelector(':scope > .pm-chip'));
       if (chip && meta && chip.parentNode !== meta) {
         addClass(chip, 'lf-state');
@@ -101,6 +176,7 @@ const LF_RUN = (() => {
       /* Agents: the waiting / elapsed line belongs to the head, so it hovers and opens with the row */
       const time = run.querySelector(':scope > .sh-agtime');
       if (time && main) moveTo(time, main, null);
+      dropTime(run, meta);
     });
   }
 
@@ -110,10 +186,18 @@ const LF_RUN = (() => {
       const t = ownText(el);
       if (t && /^[a-z]/.test(t)) setOwnText(el, capFirst(t));
     });
+    /* a meter named by a plain word ("context"); lane ids (lane-b · api) stay as they are */
+    panel.querySelectorAll('.pm-occ > .nm').forEach(el => {
+      const t = ownText(el);
+      if (/^[a-z]+$/.test(t)) setOwnText(el, capFirst(t));
+    });
   }
 
-  /* abbreviations and ASCII arrows inside longer text, in these two panels only */
-  const PH = [[/\b(\d+(?:\.\d+)?k) tok\b/g, '$1 tokens'], [/ -> /g, ' \u2192 ']];
+  /* abbreviations, ASCII arrows and spelling inside longer text, in these two panels only */
+  const PH = [
+    [/\b(\d+(?:\.\d+)?k) tok\b/g, '$1 tokens'], [/ -> /g, ' \u2192 '], [/\b(\d+) ops\b/g, '$1 operations'],
+    [/\brepro (?=\S)/g, 'reproduction '], [/^(\s*)Re-run(\s*)$/g, '$1Rerun$2'], [/^(\s*)Open Chat(\s*)$/g, '$1Open chat$2'],
+  ];
   function phrases(panel) {
     const walker = document.createTreeWalker(panel, NodeFilter.SHOW_TEXT);
     const hits = [];
@@ -121,12 +205,9 @@ const LF_RUN = (() => {
       if (PH.some(([rx]) => { rx.lastIndex = 0; return rx.test(n.nodeValue); })) hits.push(n);
     }
     hits.forEach(n => {
-      const orig = n.nodeValue;
-      let v = orig;
+      let v = n.nodeValue;
       PH.forEach(([rx, rep]) => { rx.lastIndex = 0; v = v.replace(rx, rep); });
-      if (v === orig) return;
-      n.nodeValue = v;
-      remember(() => { n.nodeValue = orig; });
+      editText(n, v);
     });
   }
 
@@ -138,16 +219,18 @@ const LF_RUN = (() => {
     deal(dealList(sc), { delay: Math.round(spec().step * 1.5) });
   }
 
-  /* leaving D: once the undo has put every chip back beside its name, the shell measures its chips again (PMPillFit),
-     so a chip that had room in D's facts line is abbreviated again where Current needs it */
-  function refit(panel) {
-    requestAnimationFrame(() => { if (panel.offsetWidth && typeof window.PMPillFit === 'function') window.PMPillFit(panel); });
+  /* the shell fits its chips and counts to their room (PMPillFit writes data-fit), and does so again while D is on,
+     where a chip in the facts line has room. Leaving D puts back the fit Current measured before D, not one measured in
+     D's layout or in the first frames after the switch, while Friendly's rows are still easing back to their own
+     padding (a refit there left "flaky 2/2" whole where Current shows "flaky"). */
+  const FIT_SEL = '.pm-chip[data-narrow-chip], .sh-bstatus[data-narrow], .sh-hcount, .pm-btnrow';
+  function fits(panel) {
+    panel.querySelectorAll(FIT_SEL).forEach(el => { if (!el.hasAttribute('data-d-a-data-fit')) setAttr(el, 'data-fit', el.getAttribute('data-fit')); });
   }
 
   return {
-    apply(panel, animate) { rows(panel, animate); heads(panel); phrases(panel); },
+    apply(panel, animate) { fits(panel); rows(panel, animate); chips(panel, animate); texts(panel); stacks(panel); heads(panel); phrases(panel); },
     enter,
-    refit,
   };
 })();
 
@@ -187,5 +270,4 @@ panelHook('panel-testing', {
     lfResults(panel);
   },
   show(panel, info) { LF_RUN.enter(panel, info); },
-  unmount(panel) { LF_RUN.refit(panel); },
 });

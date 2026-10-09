@@ -23,5 +23,4 @@ panelHook('panel-agents', {
     lfAgentSummaries(panel);
   },
   show(panel, info) { LF_RUN.enter(panel, info); },
-  unmount(panel) { LF_RUN.refit(panel); },
 });
