@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40509-L41095
+Source lines: L40509-L41098
 
-Source SHA256: `f53b691e46c27e09fd2db732b918c0650a0f8b9516dd9b49d708c869ab1be25a`
+Source SHA256: `82869833b57f45dad6e8b330a66abb33118a25afbfaa916127497bd99d1b3137`
 
 ---
 
@@ -210,8 +210,10 @@ canonical_text: >-
   footer is an Objective history disclosure with the revision count, which opens the revision list in place. Editing
   shows the text-only objective editor with Save and Cancel edit. There is no View Goal route to a separate Goal
   document and no Ask for a replacement control; a replacement the agent proposes after the user asks for one in the
-  chat still follows Goal_Runtime_System's approval path. The activity bar's Goal preview stays the short card, and
-  its Details opens this section with Objective history expanded. To-Dos (DL-147; behaviour TDR-007, TDR-011): as a
+  chat still follows Goal_Runtime_System's approval path. The activity bar's Goal preview draws the same compact Goal
+  projection, with the same control row, the Plan row when the Goal is bound and the Objective history disclosure,
+  and has no Details button; its Edit opens this section with the objective in edit (cmd.chat.goal.open_editor),
+  while Edit inside this section only swaps in the editor (amended 2026-10-09). To-Dos (DL-147; behaviour TDR-007, TDR-011): as a
   second scoped exception to the 2026-09-08 rollback, after F3-580's, each row is one line in the To-Do hover
   preview's checklist form inside the panel's native frame: the expand caret on a parent, the status mark (F3-585),
   the title (full contrast while in progress, struck through when completed), the explicit assignment, shown only when
@@ -282,6 +284,7 @@ compatibility_only_notes: []
 stale_retired_dispositions:
   - "For the To-Do rows only, the native card presentation of F3-542 and F3-580 is replaced by one-line checklist rows (DL-147); the panel keeps its native frame."
   - "The Goal panel's View Goal route and its Ask for a replacement control are retired (DL-147); the agent-proposed replacement path is not."
+  - "The Goal preview's Details button is retired with them (DL-147); the preview draws the compact Goal projection instead (amended 2026-10-09)."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md

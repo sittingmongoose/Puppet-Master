@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27042-L27106
+Source lines: L27042-L27114
 
-Source SHA256: `284326628056f4106d8107cd25d46608b0264d0d974da3feefaddb8ef84f1728`
+Source SHA256: `6090b4e2b1b06c97d5b40c899b436e8179cef180f0b944c0fb14215c831b35c3`
 
 ---
 
@@ -20,26 +20,33 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Opening a subagent (its Activity Detail row or that row's Open live transcript, a Subagents preview row, a
-  working-activity satellite, or a row of the live agents card) opens that child run's history, the direct child
-  history navigation of section 14.1, as one editor document per child run beside the chat through the ACD-480
-  document mechanism: an open document is focused, never duplicated, and at narrow widths it follows the Plan tab's
-  rules (DL-147). The document is read-only for the user: it has no composer and no control that acts on the child or
+  Opening a subagent (its Activity Detail row or that row's Open live transcript, a row of the live agents card, a
+  working-activity satellite, a row of the working activity's Child agents list, or another working-activity row that
+  names a child agent) opens that child run's history, the direct child history navigation of section 14.1, as one
+  editor document per child run beside the chat through the ACD-480 document mechanism: an open document is focused,
+  never duplicated, and at narrow widths it follows the Plan tab's rules (DL-147). Every opener dispatches
+  cmd.agents.open_thread with the child run's thread ref (UI_Command_Catalog UCC-188), never a chat-local alias. A row
+  of the activity bar's Subagents preview is not an opener: like every preview row it opens Activity Detail on that
+  agent (FinalGUISpec F3-537) (amended 2026-10-09). The document is read-only for the user: it has no composer and no control that acts on the child or
   on the parent thread, and while the child runs it follows new items live. Its items are projections of the child
   run's persisted records, and its status is section 14's child-run status projection, never a second lifecycle. Its
   messages, events and needs-you items render as the main chat renders them (ACD-469), and between messages each
   stretch of the child's work records (tool calls, file changes, tests) is one collapsed row that states what the
   stretch did and opens in place to list those records (decision card 7). The inline subagent card keeps section 14's
-  expanded panel (work stream, thought stream, state, context and result).
+  expanded panel (work stream, thought stream, state, context and result). The document is drawn on a root of its
+  own by the chat's one transcript renderer (DRY_Rules DR-052): the chat's turn spine, reply streaming, sound cues and
+  follow-along never bind to it, and nothing arriving in it plays a chat cue.
 gui_related: true
 gui_classification_reason: Defines what opening a subagent does in the assistant chat.
 split_recommended: false
-depends_on: [DL-147, ACD-480, ACD-469, ACD-473]
+depends_on: [DL-147, ACD-480, ACD-469, ACD-473, UCC-129]
 unblocks: [F3-593]
 acceptance_criteria:
   - "Opening a subagent twice focuses one document and never duplicates it."
   - "The document has no composer and no control that changes the child or the parent thread."
   - "Its status words come from the child-run status projection, and each stretch of work records is one collapsed row until opened."
+  - "Every opener dispatches cmd.agents.open_thread; a Subagents preview row opens Activity Detail on that agent instead."
+  - "Items arriving in the document play no chat cue and do not move the chat's spine or follow-along."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -65,6 +72,7 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not give the subagent document a composer or a mutation control."
   - "Do not invent a subagent-only status in the document."
+  - "Do not register a chat-local command or alias for opening a subagent."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
@@ -72,4 +80,4 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-147, ContractName:Plans/assistant-chat-design.md#ACD-480, ContractName:Plans/FinalGUISpec.md#F3-593
+ContractRef: ContractName:Plans/Decision_Log.md#DL-147, ContractName:Plans/assistant-chat-design.md#ACD-480, ContractName:Plans/FinalGUISpec.md#F3-593, ContractName:Plans/UI_Command_Catalog.md#UCC-188, ContractName:Plans/FinalGUISpec.md#F3-537, ContractName:Plans/DRY_Rules.md#DR-052
