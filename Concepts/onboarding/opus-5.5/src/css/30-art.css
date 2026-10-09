@@ -279,6 +279,12 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="decode"]) .o55-nier-asleep 
 .o55-scene-host .o55-scene-wrap.o55-scene-wrap[data-family="nier"].o55-out { animation: o55-cut 1ms steps(1) 420ms both; }
 html[data-o55-nier-parts]:not([data-o55-nier-parts~="slice"]) .o55-scene-host .o55-scene-wrap[data-family="nier"]:not(.o55-out) { animation: o55-scene-in 520ms cubic-bezier(0.2, 0, 0, 1) both; }
 html[data-o55-nier-parts]:not([data-o55-nier-parts~="slice"]) .o55-scene-host .o55-scene-wrap[data-family="nier"].o55-out { animation: o55-scene-out 360ms cubic-bezier(0.3, 0, 1, 1) both; }
+/* the old cast steps out whole as the slice starts, and the slice cuts only the old set (A.mount .o55-out-whole: a
+   NieR scene over a NieR scene, not the curtain call; a held change's old layer from its release). The knots are named
+   too: a held troupe's knots are shown on their own (.o55-ens-hold .nv-knot, above). Slint: the cast's visible: false
+   on the slice's first frame. */
+.o55-scene-wrap.o55-out-whole:not(.o55-scene-waiting) :is(.o55-nier-unit, .o55-nier-you, .o55-nier-mach, .o55-nier-bar, .o55-nier-link, .o55-ties, .nv-knot),
+.o55-scene-wrap.o55-out-whole:not(.o55-scene-waiting) .o55-it:is([data-key="sign"], [data-key="signhang"], [data-key="ok"], [data-key="ready"]) { visibility: hidden; }
 @keyframes o55-scene-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes o55-scene-out { from { opacity: 1; } to { opacity: 0; } }
 @keyframes o55-scene-in-x { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: none; } }
