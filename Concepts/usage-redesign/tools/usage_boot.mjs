@@ -1,23 +1,51 @@
-/* Usage boot check: load TestOpus5.5PmConcept.html (the input) and UsageTestPMConcept7.html (the review copy) headless on
- * file:// with ?o55=off, and confirm the new page boots without new console errors and keeps every outside contract of
- * the old Usage page (understand/cur-xref.md section 10): the chat context module, the pm6-js-usage bridge, NieR Mode's
- * and Pod 042's PM7_USAGE.data.context, the status bar, Retro Light's darker green, Home, all eight themes and NieR Mode.
+/* Usage boot check: load a page with the redesigned Usage page and a reference page with the old Prism Usage page
+ * headless on file:// with ?o55=off, and confirm the new page boots without new console errors and keeps every outside
+ * contract of the old Usage page (understand/cur-xref.md section 10): the chat context module, the pm6-js-usage bridge,
+ * NieR Mode's and Pod 042's PM7_USAGE.data.context, the status bar, Retro Light's darker green, Home, all eight themes
+ * and NieR Mode.
+ *   node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir>                    # see "which pages" below
+ *   node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir> --published        # Concepts/PMConcept7.html
+ *   node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir> --page /tmp/x.html # a private build.py --out build
  *   node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir> [page-under-test] [reference-page]
+ * Which pages: the Usage page is published through opus-5.5 build.py (step 2b, usage_layer). Published mode tests
+ * Concepts/PMConcept7.html (or --page) against a fresh private reference build without the Usage layer
+ * (build.py --out <out-dir>/reference-no-usage.html --no-usage, the same sources with the old page). It is the default
+ * once the review copy Concepts/UsageTestPMConcept7.html is gone; while it exists, the default is that review copy
+ * against its input, Concepts/Onboarding concepts/TestOpus5.5PmConcept.html.
  * Writes <out-dir>/usage-boot.json (never into the repository), prints the summary, exits 1 when a check fails.
  * Each browser gets a private profile that chrome.mjs deletes on close. No screenshots. */
 import { launch, sleep } from '../../onboarding/opus-5.5/tools/chrome.mjs';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const concepts = resolve(here, '../..');
-const out = resolve(process.argv[2] || '/tmp/usage-boot');
+const args = process.argv.slice(2);
+const flag = (name) => { const i = args.indexOf(name); if (i === -1) return null; const v = args[i + 1]; args.splice(i, 2); return v; };
+const pageArg = flag('--page');
+const published = args.includes('--published') || !!pageArg; if (args.includes('--published')) args.splice(args.indexOf('--published'), 1);
+const out = resolve(args[0] || '/tmp/usage-boot');
 mkdirSync(out, { recursive: true });
-/* page under test and reference page: by default the review copy against its input; after the publish (README,
- * Proposal B) pass PMConcept7.html and a copy of the pre-publish TestOpus5.5PmConcept.html */
-const pages = { base: resolve(process.argv[4] || join(concepts, 'Onboarding concepts', 'TestOpus5.5PmConcept.html')),
-  usage: resolve(process.argv[3] || join(concepts, 'UsageTestPMConcept7.html')) };
+const reviewCopy = join(concepts, 'UsageTestPMConcept7.html');
+let pages;
+if (args[1] && !published) {
+  pages = { base: resolve(args[2] || join(concepts, 'Onboarding concepts', 'TestOpus5.5PmConcept.html')), usage: resolve(args[1]) };
+} else if (!published && existsSync(reviewCopy)) {
+  pages = { base: join(concepts, 'Onboarding concepts', 'TestOpus5.5PmConcept.html'), usage: reviewCopy };
+} else {
+  const usage = resolve(pageArg || join(concepts, 'PMConcept7.html'));
+  if (!readFileSync(usage, 'utf8').includes('<!-- USAGE:BODY:START -->')) {
+    console.error(`${usage} has no Usage band (<!-- USAGE:BODY:START -->): publish with opus-5.5 build.py --publish-pm7 first`);
+    process.exit(2);
+  }
+  const base = join(out, 'reference-no-usage.html');
+  const r = spawnSync('python3', [join(concepts, 'onboarding', 'opus-5.5', 'tools', 'build.py'), '--out', base, '--no-usage'], { encoding: 'utf8' });
+  if (r.status !== 0) { console.error('reference build failed:', (r.stderr || '') + (r.stdout || '')); process.exit(2); }
+  pages = { base, usage };
+}
+console.error(`usage_boot: page ${pages.usage} against reference ${pages.base}`);
 const THEMES = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light'];
 /* the same error in both pages carries a different file and line; compare the message only */
 const norm = (e) => e.replace(/file:\/\/\S+?\.html(:\d+)*(:\d+)?/g, '<page>').replace(/\s+/g, ' ').trim();
@@ -170,7 +198,7 @@ const baseErrors = new Set(b.errors.map(norm));
 const newErrors = u.errors.filter((e) => !baseErrors.has(norm(e)));
 const ub = u.boot, ux = u.ctxActions || {};
 const checks = {
-  'no new console errors vs TestOpus': newErrors.length === 0,
+  'no new console errors vs the reference page': newErrors.length === 0,
   '#pmuApp present': ub.pmuApp === true,
   '#pm7UsageApp absent': ub.oldApp === false,
   'PM7_CONTEXT present': ub.ctxApi === true,

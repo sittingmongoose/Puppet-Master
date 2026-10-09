@@ -63,6 +63,14 @@ BAND_ONLY = ['id="pm7UsageApp"', 'id="pm7uBoard"', '<style id="pm7-t29-usage-fin
              '<style id="pm7-t32-final">', T21_ANCHOR, CTX_JS_START, CTX_JS_END]
 # Whole Usage-only stylesheets outside the band.
 DROP_WHOLE = ['pm7-t24-usage-readability-and-fit']
+# What a built page with this layer must no longer carry, and what it must still carry (the old page's outside
+# contracts: the chat context module, the usage bridge, the status bar, Home, Retro Light's green). opus-5.5 build.py
+# check() enforces both on the published page.
+REMOVED = ['id="pm7UsageApp"', 'id="pm7uBoard"', 'pm7-t24-usage-readability-and-fit', 'pm7-t31-usage-final',
+           'PM7 SECTION 15/32: usage-prism-js']
+KEPT = ['window.PM7_CONTEXT =', '<script id="pm6-js-usage">', '.pm7-statusbar', '<style id="pm7-t32-final">',
+        '<style id="pm7-t29-usage-final">', '<style id="pm-usage-ctx-css">', '<style id="pm-usage-css">',
+        '<script id="pm-usage-js">', 'id="pmuApp"', '[data-theme="retro-light"]{--accent-lime:#2f7a3d']
 
 # The two deliberate edits to the extracted context module: a compaction writes the new page's data and re-renders its
 # Context room. (Toasts go to window.toast through the shim's toast(); the old one wrote into the Usage page's own
@@ -669,6 +677,9 @@ def lint() -> list[str]:
                 for cls in PILL_CSS.findall(sel):
                     if 'pill' in cls.lower():
                         problems.append(f'pill class name in {rel}: .{cls}')
+            # the build's page-wide universal lint (opus-5.5 build.py, 29a9ee2595): a selector that starts at
+            # html/:root/body with a state and ends in a bare `*` restyles the whole page on each change of that state
+            problems.extend(build.lint_page_wide_universal('Concepts/usage-redesign/' + rel, text))
         if p.suffix in ('.html', '.js'):
             code = re.sub(r'/\*[\s\S]*?\*/', ' ', text) if p.suffix == '.js' else re.sub(r'<!--[\s\S]*?-->', ' ', text)
             for rx in PILL_MARKUP:
