@@ -1378,7 +1378,7 @@
 
   /* ---- playing: queue, merge, voice ---- */
   let queue = [], flushing = false, recent = null, playSeed = 1;
-  const lastAt = {}, starts = [], playedAt = {}, landAt = [], active = [];
+  const lastAt = {}, lastVoice = {}, starts = [], playedAt = {}, landAt = [], active = [];
   /* story time (the motion clock, which slow-motion filming stretches) for what is choreographed: a rest, a deferral, a
      celebration's layer window. Merges and rate limits stay in real time: they are about sounds overlapping. */
   const mNow = () => (O55.motion && typeof O55.motion.now === 'function' ? O55.motion.now() : performance.now());
@@ -1480,6 +1480,7 @@
       if (take) { const src = ctx.createBufferSource(); src.buffer = take; src.connect(g); src.start(t0); nodes.push(src); entry.take = true; }
       else run(fns[vi], ctx, g, t0, v, k);
       entry.played = true; entry.variant = vi; if (item.layer) entry.layer = true;
+      if (entry.voice != null) lastVoice[item.event] = entry.voice; /* the chord-note checks read the last voice that played */
     } catch (err) { entry.error = String(err && err.message || err); }
     const send = sendOf.get(g); if (spec.sendNodes) nodes.push(...spec.sendNodes);
     window.setTimeout(() => { nodes.forEach((n) => { try { n.disconnect(); } catch (_) {} }); }, Math.round((tailOf(kit, ev) + 2.6) * 1000));
@@ -1493,14 +1494,21 @@
   /* several asked for in one moment: the most important plays. The moment is when each was asked for (a long render
      between the ask and the flush must not let a lesser sound stack on top) */
   /* the same event asked again inside the merge window is one sound twice — except when the repeat is the music:
-     a stage chord tone whose helper's voice differs (the wake chord's three strings, the landings, the bows; the same
-     voice keeps its own RATE), and the rail walk's tick on every step (H3; its walk flag asks past the merge here and
-     past RATE below, so the walk ticks step by step instead of every other step; final review minor 2 and minor 7).
-     b is the note already accepted (win or recent), a the candidate; its entry carries what it played with. */
+     a stage chord tone whose helper's voice differs from the last one that played (the wake chord's three strings,
+     the landings, the bows, the goodbye chord's three cheers; the same voice keeps its own RATE), and the rail walk's
+     tick on every step (H3; its walk flag asks past the merge here and past RATE below, so the walk ticks step by
+     step instead of every other step; final review minor 2 and minor 7). b is the note already accepted (win or
+     recent), a the candidate; its entry carries what it played with. */
   function musicalRepeat(a, b) {
     if (!a || !b || a.event !== b.event) return false;
     if (a.opts.walk) return !!(b.entry && b.entry.walk);
-    return !!(FOLEY.has(a.event) && a.opts.voice != null && b.entry && b.entry.voice != null && (a.opts.voice | 0) !== b.entry.voice);
+    return !!(chordNote(a.event, a.opts) && b.entry && b.entry.voice != null && (a.opts.voice | 0) !== b.entry.voice);
+  }
+  /* a chord note: a stage tone whose voice differs from the last voice of its event that actually played. It is the
+     chord's next note, not a repeat, so it asks past the same-event merge and past RATE too (a busy frame once
+     dropped `string v2` to RATE.string 35 ms after v1); the same voice is a repeat and keeps both limits. */
+  function chordNote(event, o) {
+    return !!(STAGE.has(event) && o.voice != null && lastVoice[event] != null && (o.voice | 0) !== lastVoice[event]);
   }
   function flush() {
     flushing = false;
@@ -1589,8 +1597,9 @@
     if (late && late.since != null && big.m >= late.since && big.prio >= prio && big.event !== event) { entry.dropped = 'merged'; entry.by = big.event; return false; }
     const rate = RATE[event];
     /* the rail walk's tick rides on every step (60 ms), under RATE.move (110 ms): a walk tick asks past the rate
-       (its walk flag also lets the next tick through the same-event merge, see musicalRepeat in flush) */
-    if (rate && !o.walk && now - (lastAt[event] || -1e9) < rate * (lowres ? 1.8 : 1)) { entry.dropped = 'rate'; return false; }
+       (its walk flag also lets the next tick through the same-event merge, see musicalRepeat in flush). A chord note
+       (a stage tone with a new voice, chordNote above) asks past the rate too: the same voice keeps its RATE. */
+    if (rate && !o.walk && !chordNote(event, o) && now - (lastAt[event] || -1e9) < rate * (lowres ? 1.8 : 1)) { entry.dropped = 'rate'; return false; }
     if (event === 'land') {
       while (landAt.length && now - landAt[0] > LAND_SPAN) landAt.shift();
       if (landAt.length >= LAND_MAX) { entry.dropped = 'rate'; return false; }

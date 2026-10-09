@@ -82,10 +82,11 @@ body.pm-home-dragging .o55t-zonelabel { transform: translateY(-50%) scale(1.06);
 /* while the tour runs, its callout is the only guide on screen: the app's hover tags would stack a second tooltip on
    top of it wherever the mouse happens to rest */
 html[data-o55-tour] #pm-hover-tag-root { display: none !important; }
-/* the results card and the hand-over line outlive that root (85-tour-nier.js sets these on html, and dismisses a tag
-   that is already open). An open tag sets visibility:visible on itself, so hiding the root is not enough: it is taken
-   out of the page, or the pill from the Restore click draws over the card and the line. */
-html:is([data-o55-tour-results], [data-o55nw-hand]) #pm-hover-tag-root { display: none !important; }
+/* the results card and the hand-over line outlive that root (85-tour-nier.js takes the root itself out while they
+   show, and dismisses a tag that is already open). An open tag sets visibility:visible on itself, so hiding the root
+   is not enough: it is taken out of the page, or the pill from the Restore click draws over the card and the line.
+   The class stands on the root itself, one small element, so the hand-over click never restyles the whole document. */
+#pm-hover-tag-root.o55t-notags { display: none !important; }
 /* while Chat is being dragged the guide steps back: the scrim thins and the callout fades so the learner sees the
    workspace make room, and the spotlight sits on the drop zone */
 body.pm-home-dragging .o55t-scrimpath { fill-opacity: 0.35; }
