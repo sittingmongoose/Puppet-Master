@@ -284,7 +284,9 @@ const PAGE_LIB = () => {
     return { theme: document.documentElement.getAttribute('data-theme'), nier: document.documentElement.getAttribute('data-o55-nier') };
   };
   /* --restore: an element as the kit's t-restore.mjs normalises it for comparison (style attributes, the tab ink, the
-     lazy hover-tag attributes and the tab / open state classes are dropped; the other classes sorted) */
+     lazy hover-tag attributes and the tab / open state classes are dropped; the other classes sorted). The shell's
+     scroll-edge classes (pm-edge-t/b/l/r, PM_EDGE: "more content this way") follow the scroller's current overflow
+     and are refreshed by its own observer some time after a layout change, so they are dropped too. */
   L.snap = (id) => {
     const el = document.getElementById(id).cloneNode(true);
     el.querySelectorAll('[style]').forEach((e) => e.removeAttribute('style'));
@@ -292,7 +294,7 @@ const PAGE_LIB = () => {
     /* live clocks (the elapsed counters of running jobs) tick on their own: their digits are masked */
     el.querySelectorAll('[data-elapsed], [id$="LiveElapsed"]').forEach((e) => { e.removeAttribute('data-elapsed'); e.textContent = '#'; });
     return el.outerHTML.replace(/\s(aria-expanded|tabindex|data-fit|aria-selected|aria-hidden|title|aria-label|aria-describedby|data-pm-hover-[a-z-]+)="[^"]*"/g, '')
-      .replace(/ class="([^"]*)"/g, (m, c) => ' class="' + c.split(/\s+/).filter((x) => x && !/^(pm-panel-enter|open|active|pm-hidden|is-menu-open|menu-open)$/.test(x)).sort().join(' ') + '"')
+      .replace(/ class="([^"]*)"/g, (m, c) => ' class="' + c.split(/\s+/).filter((x) => x && !/^(pm-panel-enter|open|active|pm-hidden|is-menu-open|menu-open|pm-edge-[tblr])$/.test(x)).sort().join(' ') + '"')
       .replace(/ class=""/g, ''); /* a class attribute left empty by a tab click is no attribute */
   };
   L.snapAll = (targets) => Object.fromEntries(Object.entries(targets).map(([k, id]) => [k, L.snap(id)]));
