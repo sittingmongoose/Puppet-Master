@@ -430,10 +430,23 @@ html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o5
 html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold][data-o55nw-go] .o55-railitem:nth-child(6) { animation-delay: 800ms; }
 html[data-o55-nier="on"]:not([data-motion="reduced"]) #pm-o55-onboarding[data-o55nw-cold][data-o55nw-go] .o55-headctl { animation: o55nw-cold-in 1ms step-end 760ms both; }
 @keyframes o55nw-cold-in { from { opacity: 0; } to { opacity: 1; } }
-/* the screen the log opened on: its eyebrow is there at once (the log's line has just become its rule), and the
-   promise rows step in 80 ms apart from 440 ms (each with a phase tick) */
+/* the screen the log opened on: its eyebrow is there at once (the log's line has just become its rule) */
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-cold] .o55-eyebrow { animation: none; }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-cold].o55-entering .o55-promise li { animation-delay: calc(440ms + var(--ci, 0) * 80ms); }
+/* Its entrance, from its release until it has played (data-o55nw-enter, 66-nier-window.js screen), is its own and not
+   .o55-entering's: the opening holds this screen longer than that class's settle fallback (60-ui-core.js transition,
+   2.6 s from the build), which took the class off before the release at 1x (the pane came up finished for 2-3 frames)
+   or in the middle of the entrance at 0.25x (the rows jumped in whole). The same steps as any NieR screen, except
+   that the title does not step in (it types on in the log's place, under its ticks; stepping in, it stayed unseen for
+   its first ten letters while they ticked), and the promise rows step in 80 ms apart from 440 ms, each row's first
+   faint step on its phase tick (o55nw-in shows nothing for its first 30 %; they used to land 100 ms after it). The
+   release shows the entrance at its first step and holds it there (data-o55nw-cue) until the frame after the long
+   one that paints it. */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-st { animation: o55nw-in var(--o55-step) step-end calc(var(--o55-enter-delay) + var(--i, 0) * var(--o55-stagger)) both; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-main.o55-st { animation-name: o55nw-fade; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] :is(.o55-eyebrow, .o55-title, .o55-foot) { animation: none; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-main :is(.o55-card, .o55-row, .o55-tile) { animation: o55nw-in var(--o55-step) step-end calc(var(--o55-enter-delay) + 3 * var(--o55-stagger) + var(--ci, 0) * 60ms) both; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter] .o55-promise li { animation: o55nw-in var(--o55-step) step-end calc(440ms - .3 * var(--o55-step) + var(--ci, 0) * 80ms) both; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-layer[data-o55nw-enter][data-o55nw-cue] :is(.o55-st, .o55-main :is(.o55-card, .o55-row, .o55-tile), .o55-promise li) { animation-play-state: paused !important; }
 
 /* ============================================================================== H3: the rail walk, the counter roll */
 /* The current chapter's ink block walks the rail (66-nier-window.js railWalk): a block of the same size steps from the

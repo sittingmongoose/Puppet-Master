@@ -3,13 +3,14 @@
    The window's skin, the look screen and the tour call these; nothing here runs by itself.
 
    Words (rule 4: words arrive readable)
-     type(el, { text?, perLetter = 18, cap = 500, caret = true, delay?, sound?, part? }) -> Promise<bool>
+     type(el, { text?, perLetter = 18, cap = 500, caret = true, delay?, at?, sound?, part? }) -> Promise<bool>
          the words type on, left to right, behind a block caret, about 18 ms a letter and never longer than cap. The
          whole string is laid out from the first frame (the untyped letters are drawn transparent), so nothing
-         reflows, and the real words stay in the text (and in aria-label) throughout. [part, default decode]
-     decode(el, { text?, ms?, sound? }) -> Promise<bool>
+         reflows, and the real words stay in the text (and in aria-label) throughout. at: a Promise; the words wait
+         untyped from the call and type when it settles (false: they come back whole instead). [part, default decode]
+     decode(el, { text?, ms?, at?, sound? }) -> Promise<bool>
          a label of 8 characters or fewer resolves from scrambled glyphs left to right inside a held, clipped box;
-         anything longer types on (type)                                                                   [decode]
+         anything longer types on (type, with at)                                                          [decode]
    Surfaces (they open from a line and close to a line, rule 2)
      slice(el, { ms?, from? })        el opens from its middle line, or from `from` (a line element or a rect), whose
                                       line it then takes away                                            [slice]
@@ -638,7 +639,8 @@
       if (o.caret !== false) off.setAttribute('data-caret', '');
       t0 = M.now(); tick();
     };
-    if (o.delay > 0) timer = M.after(o.delay, start); else start();
+    if (o.at && typeof o.at.then === 'function') o.at.then((go) => (go === false ? stop(true) : start()), () => stop(true));
+    else if (o.delay > 0) timer = M.after(o.delay, start); else start();
     return p;
   };
 
@@ -677,7 +679,7 @@
     if (!node0) return no();
     const text = o.text != null ? String(o.text) : node0.nodeValue;
     if (Array.from(text.trim()).length > SHORT || typeJobIn(el)) {
-      return FX.type(el, { text, part: 'decode', cap: Math.min(500, Number(o.ms) || 500), sound: o.sound ? (o.sound === true ? 'type' : o.sound) : false });
+      return FX.type(el, { text, part: 'decode', cap: Math.min(500, Number(o.ms) || 500), at: o.at, sound: o.sound ? (o.sound === true ? 'type' : o.sound) : false });
     }
     const node = node0;
     const prev = decoding.get(node); if (prev) prev.stop(true);
