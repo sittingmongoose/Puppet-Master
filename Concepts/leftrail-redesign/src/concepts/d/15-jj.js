@@ -17,13 +17,15 @@ const JJ_TABS = [
   { id: 'workspaces', label: 'Workspaces', icon: 'folderOpen', git: 'worktrees' },
   { id: 'history', label: 'History', icon: 'clock', git: 'history' },
   { id: 'bookmarks', label: 'Bookmarks', icon: 'pin', git: 'branches' },
-  { id: 'operations', label: 'Operation Log', icon: 'undo', git: 'history' },
+  { id: 'operations', label: 'Operation Log', icon: 'oplog', git: 'history' },
 ];
 const JJ_FROM_GIT = { changes: 'changes', worktrees: 'workspaces', history: 'history', branches: 'bookmarks' };
 const JJ_AVAIL = 'owner_unavailable_concept_preview';
-/* glyphs PM_ICONS does not have, drawn in its style (24 grid, 2 px stroke) */
+/* glyphs PM_ICONS does not have, drawn in its style (24 grid, 2 px stroke). The undo arrow is kept for the Undo action
+   alone; the Operation Log view is a list of entries, so a navigation tab never looks like a button that rewrites. */
 const JJ_SVG = {
   undo: '<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>',
+  oplog: '<path d="M9 6h11"/><path d="M9 12h11"/><path d="M9 18h11"/><path d="M4.5 6h.01"/><path d="M4.5 12h.01"/><path d="M4.5 18h.01"/>',
 };
 /* the immutable state: a solid badge with a padlock knocked out (00-d.js glyph family) */
 SOLID.immutable = {
@@ -100,7 +102,13 @@ function jjMenu(trig, def) {
   PMR.menu.toggle({ id: 'd-jj-' + def.id, label: def.label, groups }, trig, { width: w });
 }
 function jjActs(list) { return jh('div.sh-acts', list.filter(Boolean).map(c => jjBtn(c))); }
-function jjKv(k, v, mono) { return jh('div.sh-kv', jh('span.sh-k', { text: k }), jh('span', { class: ['sh-v', mono && 'sh-mono'], text: v })); }
+/* a fact; a path breaks only after a slash (a <wbr> after each one), never inside a folder name */
+function jjKv(k, v, mono) {
+  const val = jh('span', { class: ['sh-v', mono && 'sh-mono'] });
+  if (mono && v.indexOf('/') >= 0) v.split('/').forEach((seg, i, all) => { val.append(seg + (i < all.length - 1 ? '/' : '')); if (i < all.length - 1) val.appendChild(document.createElement('wbr')); });
+  else val.textContent = v;
+  return jh('div.sh-kv', jh('span.sh-k', { text: k }), val);
+}
 /* "Technical details": raw ids only here (JJI §4.1, SCS §4.2) */
 function jjTech(rows) {
   if (!rows || !rows.length) return null;
@@ -118,16 +126,18 @@ function jjMeta(r) {
   parts.forEach(p => p.classList.add('d-jmi'));
   return jh('span.sh-meta', jh('span.d-jmeta', parts));
 }
-/* a row: line 1 the name (and on the right the letter or the age), line 2 the state, id and facts (and the diff) */
+/* a row: line 1 the name (and on the right the letter or the age), line 2 the state, id and facts (and the diff).
+   dsTop puts the diff on line 1 instead, where Git's worktree rows have it, so slot 2 keeps its layout across the
+   engine switch. */
 function jjRow(r) {
   const aside = r.letter ? jh('span', { class: ['pm-gs', 'd-jr-aside', r.letter === 'A' ? 'pm-gs-staged' : r.letter === 'C' ? 'd-gs-conflict' : 'pm-gs-mod'], text: r.letter })
     : r.aside ? jh('span.d-jr-aside', { text: r.aside }) : null;
+  const ds = r.ds ? jh('span.sh-ds', jh('b.add', { text: '+' + r.ds[0] }), ' ', jh('b.del', { text: '-' + r.ds[1] })) : null;
   /* two independent lines, so a wide diff on line 2 never narrows the name on line 1 */
-  const head = jh('div', { class: 'sh-chg-h d-jr pmr-cur', 'data-collapse': '', role: 'button', tabindex: '0', 'aria-expanded': String(!!r.open) },
+  const head = jh('div', { class: ['sh-chg-h', 'd-jr', r.dsTop && 'd-jr-dstop', 'pmr-cur'], 'data-collapse': '', role: 'button', tabindex: '0', 'aria-expanded': String(!!r.open) },
     jjIco('chevR', 'sh-accchev'),
-    jh('span.d-jr-l1', jh('span', { class: ['sh-nm-txt', r.mono && 'sh-mono', r.quiet && 'd-jr-quiet'], text: r.name }), aside),
-    jh('span.d-jr-l2', jjMeta(r),
-      r.ds ? jh('span.sh-ds', jh('b.add', { text: '+' + r.ds[0] }), ' ', jh('b.del', { text: '-' + r.ds[1] })) : null));
+    jh('span.d-jr-l1', jh('span', { class: ['sh-nm-txt', r.mono && 'sh-mono', r.quiet && 'd-jr-quiet'], text: r.name }), aside, r.dsTop ? ds : null),
+    jh('span.d-jr-l2', jjMeta(r), r.dsTop ? null : ds));
   if (r.hover) PMR.hover(head, r.hover, r.hoverDetail);
   const inner = [];
   if (r.hunk) inner.push(jh('div.sh-hunkprev', { text: r.hunk }));
@@ -171,7 +181,7 @@ function rebaseItems(change, onto) {
 
 function paneChanges() {
   const more = { label: 'More', hover: 'More actions for the current change', menu: () => ({ id: 'cur-more', label: 'Current change', groups: [
-    { label: 'Rebase onto', items: rebaseItems(CUR.id, [{ label: 'main', meta: 'ytsrmlzk · 4 min', what: 'main has moved; its descendants follow' }, { label: 'thread/import-fixes', meta: 'rxwlunkq' }, { label: 'ci/buildx-pin', meta: '2 versions', reason: 'change_divergent_ambiguous_target' }]) },
+    { label: 'Rebase onto', items: rebaseItems(CUR.id, [{ label: 'main', meta: 'ytsrmlzk · 4 minutes', what: 'main has moved; its descendants follow' }, { label: 'thread/import-fixes', meta: 'rxwlunkq' }, { label: 'ci/buildx-pin', meta: '2 versions', reason: 'change_divergent_ambiguous_target' }]) },
     { items: [
       { label: 'Split', icon: 'scissors', cmd: 'cmd.jujutsu.change.split', reason: 'interactive_editor_session_required' },
       { label: 'Discard edits', icon: 'x', danger: true, cmd: 'cmd.jujutsu.change.restore', arg: jjArg('cmd.jujutsu.change.restore', CUR.id + ' (every file)', 'confirm: Discard every edit in this change? Its files go back to how they are in its parent change. Undo is in the Operation Log.') },
@@ -201,14 +211,14 @@ function paneChanges() {
     ['QuantityStepper.svelte', 'web/src/lib/components/recipe/editor', 'M', 24, 6, '@@ -12,6 +12,14 @@ <script lang="ts">'],
     ['quantity_parse_proptest.rs', 'tests', 'A', 58, 0, '@@ -0,0 +1,58 @@ proptest! {'],
   ].map(f => jjRow({
-    name: f[0], mono: true, letter: f[2], meta: [jh('span.d-jm.d-jdir', { text: f[1] })], ds: [f[3], f[4]], hunk: f[5],
+    name: f[0], letter: f[2], meta: [jh('span.d-jm.d-jdir', { text: f[1] })], ds: [f[3], f[4]], hunk: f[5],
     acts: [
       { label: 'Open diff', cmd: 'cmd.jujutsu.diff.open', arg: jjArg('cmd.jujutsu.diff.open', f[1] + '/' + f[0], 'current change vs its parent') },
       { label: 'Open file', cmd: 'cmd.file.open', arg: jjArg('cmd.file.open', f[1] + '/' + f[0]), path: f[1] + '/' + f[0] },
     ],
   }));
   const conflict = jjRow({
-    name: 'import.rs', mono: true, letter: 'C', st: ['conflict', 'conflicted'], meta: [jh('span.d-jm.d-jdir', { text: 'src/services' }), '2 sides'], ds: [31, 9],
+    name: 'import.rs', letter: 'C', st: ['conflict', 'conflicted'], meta: [jh('span.d-jm.d-jdir', { text: 'src/services' }), '2 sides'], ds: [31, 9],
     hunk: '<<<<<<< Conflict 1 of 1 · lines 88-104',
     facts: [['Sides', 'this change and feat(ratings)']],
     acts: [
@@ -231,7 +241,7 @@ function paneWorkspaces() {
     { label: 'Open Operation Log', cmd: 'cmd.jujutsu.operation.log', arg: jjArg('cmd.jujutsu.operation.log', 'lane-d-infra@', 'see what rewrote its change') },
     { label: 'Inspect last operation', cmd: 'cmd.jujutsu.operation.show', arg: jjArg('cmd.jujutsu.operation.show', 'op 7d41c2 (Rebased 2 changes onto main)') },
   ];
-  const ws = (name, o) => jjRow(Object.assign({ name, mono: true }, o));
+  const ws = (name, o) => jjRow(Object.assign({ name, mono: true, dsTop: true }, o));
   const open = n => ({ label: 'Open', cmd: 'cmd.jujutsu.workspace.open', arg: jjArg('cmd.jujutsu.workspace.open', n) });
   const sw = n => ({ label: 'Switch to this workspace', cmd: 'cmd.jujutsu.workspace.switch', arg: jjArg('cmd.jujutsu.workspace.switch', n) });
   const rm = n => ({ label: 'Remove', danger: true, cmd: 'cmd.jujutsu.workspace.remove', arg: jjArg('cmd.jujutsu.workspace.remove', n, 'confirm: removes the workspace from Jujutsu; its folder stays on disk and its change stays in History') });
@@ -239,20 +249,20 @@ function paneWorkspaces() {
     ws('default@', { owner: 'manual', st: ['current', 'you are here', 'current'], meta: ['Manual'], ds: [262, 37],
       facts: [['Working on', CUR.desc], ['Path', '~/Projects/tastebook', true], ['Last activity', '14:32 · Described the current change']],
       acts: [open('default@'), { label: 'Remove', danger: true, cmd: 'cmd.jujutsu.workspace.remove', reason: 'workspace_current' }],
-      tech: [['Workspace ID', 'default'], ['@ change ID', 'nkmwqzvwlprsxtyuoqmnwkzlrvptyxso']] }),
-    ws('import-fixes@', { owner: 'thread', st: ['live', 'active'], meta: ['Thread', '17 min'],
+      tech: [['Workspace ID', 'default'], ['Current change ID', 'nkmwqzvwlprsxtyuoqmnwkzlrvptyxso']] }),
+    ws('import-fixes@', { owner: 'thread', st: ['live', 'active'], meta: ['Thread', '17 minutes ago'],
       facts: [['Working on', 'No description yet (empty, on Fix import of mixed units)'], ['Path', '~/Projects/tastebook/.workspaces/import-fixes', true], ['Last activity', '14:18 · Started a new change']],
       acts: [open('import-fixes@'), sw('import-fixes@'), { label: 'Thread', cmd: null, attrs: { 'data-demo-action': 'demo.toast', 'data-demo-arg': 'cmd.chat.open -> thread import-fixes' } }, rm('import-fixes@')],
-      tech: [['Workspace ID', 'import-fixes'], ['@ change ID', 'vqptlmrowkzsnxyulpqmrtwvoyknszlx']] }),
-    ws('lane-b-api@', { owner: 'orch', st: ['live', 'active'], meta: ['Orchestrator run #47', '2 h'], ds: [310, 42],
+      tech: [['Workspace ID', 'import-fixes'], ['Current change ID', 'vqptlmrowkzsnxyulpqmrtwvoyknszlx']] }),
+    ws('lane-b-api@', { owner: 'orch', st: ['live', 'active'], meta: ['Orchestrator run #47', '2 hours ago'], ds: [310, 42],
       facts: [['Working on', 'Add the ratings endpoint to the public API'], ['Path', '~/Projects/tastebook/.workspaces/lane-b-api', true], ['Last activity', '12:40 · Described a change']],
       acts: [open('lane-b-api@'), sw('lane-b-api@'), { label: 'Lane', attrs: { 'data-demo-action': 'page.go', 'data-demo-arg': 'orchestrator' } }, rm('lane-b-api@')],
-      tech: [['Workspace ID', 'lane-b-api'], ['@ change ID', 'lwpkzrnsqvmoxtyuylqkwnrzpsvmotxk']] }),
-    ws('lane-d-infra@', { owner: 'agents', st: ['stale', 'out of date'], meta: ['Infra agent', '3 h'], ds: [188, 23],
+      tech: [['Workspace ID', 'lane-b-api'], ['Current change ID', 'lwpkzrnsqvmoxtyuylqkwnrzpsvmotxk']] }),
+    ws('lane-d-infra@', { owner: 'agents', st: ['stale', 'out of date'], meta: ['Infra agent', '3 hours ago'], ds: [188, 23],
       rowNote: 'Another workspace rewrote its change. Jujutsu brings it up to date from inside it: open it and run jj workspace update-stale there.',
       facts: [['Working on', 'Pin buildx for multi-arch builds (version 1 of 2)'], ['Path', '~/Projects/tastebook/.workspaces/lane-d-infra', true], ['Last activity', '11:52 · Described a change']],
       acts: [open('lane-d-infra@'), sw('lane-d-infra@')].concat(recover, [{ label: 'Lane', attrs: { 'data-demo-action': 'page.go', 'data-demo-arg': 'orchestrator' } }, rm('lane-d-infra@')]),
-      tech: [['Workspace ID', 'lane-d-infra'], ['@ change ID', 'swkqmnoxlptyrzvuwkqnmslxozprtyvn']] }),
+      tech: [['Workspace ID', 'lane-d-infra'], ['Current change ID', 'swkqmnoxlptyrzvuwkqnmslxozprtyvn']] }),
   ];
   const empty = jh('div.d-jj-empty', { hidden: '' }, jh('span.d-jj-empty-t'), jh('button.d-jj-link', { type: 'button', text: 'Show all' }));
   const filter = jjOwnerFilter(rows, empty);
@@ -303,7 +313,7 @@ function paneHistory() {
       { label: 'Squash into parent', icon: 'merge', cmd: 'cmd.jujutsu.change.squash', reason: r || o.squash, arg: jjArg('cmd.jujutsu.change.squash', id + ' into its parent') },
       { label: 'Abandon', icon: 'trash', danger: true, cmd: 'cmd.jujutsu.change.abandon', reason: r, arg: jjArg('cmd.jujutsu.change.abandon', id + ' "' + desc + '"', 'confirm: its children move onto its parent. Undo is in the Operation Log.') },
     ].filter(Boolean);
-    const onto = r ? [{ label: 'main', reason: r }] : rebaseItems(id, o.onto || [{ label: 'main', meta: 'ytsrmlzk · 4 min' }]);
+    const onto = rebaseItems(id, r ? [{ label: 'main', reason: r }] : (o.onto || [{ label: 'main', meta: 'ytsrmlzk · 4 minutes' }]));
     const create = { label: 'New bookmark here…', icon: 'plus', cmd: 'cmd.jujutsu.bookmark.create', reason: o.lockAll ? r : undefined, arg: jjArg('cmd.jujutsu.bookmark.create', 'new bookmark on ' + id, 'asks for a name') };
     return { label: 'More', hover: 'More actions for this change', menu: () => ({ id: 'hist-more', label: desc, groups: [
       { items },
@@ -314,34 +324,54 @@ function paneHistory() {
   const pushedNote = 'Pushed to origin. Rewriting it is fine; the next push updates origin.';
   const rows = [];
   rows.push(jjGroup('pin', 'feature/mixed-fractions', '', true));
-  rows.push(jjRow({ name: CUR.desc, aside: '3 min', st: ['conflict', 'conflicted'], id: CUR.id, meta: ['default@'],
+  rows.push(jjRow({ name: CUR.desc, aside: '3 minutes', st: ['conflict', 'conflicted'], id: CUR.id, meta: ['default@'],
     files: [['src/parse/quantity.rs', 64, 12], ['src/parse/mixed_fractions.rs', 96, 0], ['src/services/import.rs', 31, 9]],
     facts: [['Files', '6 changed · 1 conflict · the rest are in Changes'], ['Evolution', '4 versions · last rewritten 14:32 by Describe']],
     acts: [diff(CUR.id), newOn(CUR.id, 'finishes the current change'), more(CUR.id, CUR.desc, { noNew: true, squash: 'immutable_parent', moves: [bmMove('feature/mixed-fractions', CUR.id, 'already here'), bmBack('main')] })],
     tech: [['Change ID', 'nkmwqzvwlprsxtyuoqmnwkzlrvptyxso'], ['Commit ID', 'e19a8b3f6c2d4a17b0e95d3c8f21a6b4d7e0c913']] }));
   rows.push(jjGroup('pin', 'thread/import-fixes', '3 changes', true));
-  rows.push(jjRow({ name: 'No description yet', quiet: true, aside: '17 min', st: ['idle', 'empty'], id: 'vqptlmro', meta: ['import-fixes@'],
+  rows.push(jjRow({ name: 'No description yet', quiet: true, aside: '17 minutes', st: ['idle', 'empty'], id: 'vqptlmro', meta: ['import-fixes@'],
     facts: [['Files', 'none yet']],
     acts: [diff('vqptlmro'), edit('vqptlmro', 'No description yet'), more('vqptlmro', 'No description yet', { moves: [bmMove('thread/import-fixes', 'vqptlmro', 'moves it 1 change forward; push to update origin')] })],
     tech: [['Change ID', 'vqptlmrowkzsnxyulpqmrtwvoyknszlx'], ['Commit ID', '3b8e01d94c7fa2e65d1b09c8e4f7a3d2b6c5e901']] }));
-  rows.push(jjRow({ name: 'Fix import of mixed units', aside: '2 h', id: 'rxwlunkq', meta: [jh('span.d-jm.d-jbm', { text: 'thread/import-fixes' })],
+  rows.push(jjRow({ name: 'Fix import of mixed units', aside: '2 hours', id: 'rxwlunkq', meta: [jh('span.d-jm.d-jbm', { text: 'thread/import-fixes' })],
     files: [['src/services/import.rs', 45, 11]],
     facts: [['Origin', 'not pushed yet: origin is 1 change behind']],
     acts: [diff('rxwlunkq'), edit('rxwlunkq', 'Fix import of mixed units'), more('rxwlunkq', 'Fix import of mixed units', { moves: [bmMove('thread/import-fixes', 'rxwlunkq', 'already here')] })],
     tech: [['Change ID', 'rxwlunkqmzpvtsoyrkwlnqxzmuspvtoy'], ['Commit ID', 'a4c9e27b1d08f63e5b2a7c90d4e1f8b36a5c2d07']] }));
-  rows.push(jjRow({ name: 'Normalise unit names before parsing', aside: '5 h', st: ['info', 'pushed', 'info'], id: 'tmzqylws', meta: ['at origin'],
+  rows.push(jjRow({ name: 'Normalise unit names before parsing', aside: '5 hours', st: ['info', 'pushed', 'info'], id: 'tmzqylws', meta: ['at origin'],
     files: [['src/services/normalize_units.rs', 73, 4]], note: pushedNote,
     acts: [diff('tmzqylws'), edit('tmzqylws', 'Normalise unit names before parsing'), more('tmzqylws', 'Normalise unit names before parsing', { squash: 'immutable_parent', moves: [bmBack('thread/import-fixes')] })],
     tech: [['Change ID', 'tmzqylwsrkpnvxuotlqzmwsykrnpvxut'], ['Commit ID', '5e2d8a13f0b94c67e1a3d52b8f09c7e4a6d1b38f']] }));
+  /* feature/search: pushed to origin; upstream's copy is 1 change behind (Bookmarks) */
+  rows.push(jjGroup('pin', 'feature/search', '2 changes', true));
+  rows.push(jjRow({ name: 'Rank search results by rating', aside: '50 minutes', st: ['info', 'pushed', 'info'], id: 'kwvznpqo', meta: ['at origin'],
+    files: [['src/services/search/rank.rs', 58, 9]], note: pushedNote,
+    acts: [diff('kwvznpqo'), edit('kwvznpqo', 'Rank search results by rating'), more('kwvznpqo', 'Rank search results by rating', { moves: [bmMove('feature/search', 'kwvznpqo', 'already here')] })],
+    tech: [['Change ID', 'kwvznpqolmrstuxyzkqpnwvmlorstuyx'], ['Commit ID', '6b2e9d14a7c3f05e8d1b4a9c2e7f3d06b5a8c1e4']] }));
+  rows.push(jjRow({ name: 'Index recipe ratings for search', aside: '1 hour', st: ['info', 'pushed', 'info'], id: 'pvlqtsmo', meta: ['at origin and upstream'],
+    files: [['src/services/search/index.rs', 34, 2]], note: 'Pushed to origin and upstream. Rewriting it is fine; the next push to each updates it there.',
+    acts: [diff('pvlqtsmo'), edit('pvlqtsmo', 'Index recipe ratings for search'), more('pvlqtsmo', 'Index recipe ratings for search', { squash: 'immutable_parent', moves: [bmBack('feature/search')] })],
+    tech: [['Change ID', 'pvlqtsmoxnkrwzuyplmqovsnxtkrwyzu'], ['Commit ID', 'c47a1e8f2d5b09c3e6a1f4d7b2c8e5a903d6f1b2']] }));
+  /* docs/schema-org is conflicted: it points at the change here and at the one origin moved it to; both are listed */
+  rows.push(jjGroup('pin', 'docs/schema-org', '2 targets', true));
+  rows.push(jjRow({ name: 'Add schema.org coverage notes', aside: '3 hours', id: 'lqvmspxt', meta: ['target here'],
+    files: [['docs/schema-org.md', 41, 0]], note: 'docs/schema-org points at this change and at the one origin moved it to. Pick one in Bookmarks.',
+    acts: [diff('lqvmspxt'), edit('lqvmspxt', 'Add schema.org coverage notes'), more('lqvmspxt', 'Add schema.org coverage notes', { squash: 'immutable_parent', moves: [bmMove('docs/schema-org', 'lqvmspxt', 'resolves the conflict here; push to update origin')] })],
+    tech: [['Change ID', 'lqvmspxtznwkoryuqlmpvxstnwkzyrou'], ['Commit ID', '2f8c5a1d9e3b70c4a6e2d8f1b5c9a3e7d04b6f18']] }));
+  rows.push(jjRow({ name: 'Draft schema.org notes', aside: '2 hours', st: ['info', 'pushed', 'info'], id: 'npwtzkqr', meta: ["origin's target"],
+    files: [['docs/schema-org.md', 28, 0]],
+    acts: [diff('npwtzkqr'), edit('npwtzkqr', 'Draft schema.org notes'), more('npwtzkqr', 'Draft schema.org notes', { squash: 'immutable_parent', moves: [bmMove('docs/schema-org', 'npwtzkqr', 'resolves the conflict here; origin already points there')] })],
+    tech: [['Change ID', 'npwtzkqrmlvsoyxunwqtpkrzmlvsxoyu'], ['Commit ID', 'e5a9d3c7b1f06e2a8d4c9b3f7e1a5d2c60b8f4a3']] }));
   rows.push(jjGroup('branch', 'No bookmark', 'set aside', false));
-  rows.push(jjRow({ name: 'Try a regex fraction parser', aside: '1 d', id: 'zkpnwlqo', meta: ['no bookmark', 'yesterday'],
+  rows.push(jjRow({ name: 'Try a regex fraction parser', aside: 'yesterday', id: 'zkpnwlqo', meta: ['no bookmark'],
     files: [['src/parse/quantity.rs', 22, 30]],
     note: 'Set aside with New change. It stays here until you abandon it or put a bookmark on it.',
-    acts: [diff('zkpnwlqo'), edit('zkpnwlqo', 'Try a regex fraction parser'), more('zkpnwlqo', 'Try a regex fraction parser', { squash: 'immutable_parent', moves: [bmMove('spike/regex-parser', 'zkpnwlqo', 'recreates it here; origin still has the old one')] })],
+    acts: [diff('zkpnwlqo'), edit('zkpnwlqo', 'Try a regex fraction parser'), more('zkpnwlqo', 'Try a regex fraction parser', { squash: 'immutable_parent', moves: [{ label: 'spike/regex-parser', icon: 'pin', meta: 'deleted here', cmd: 'cmd.jujutsu.bookmark.create', arg: jjArg('cmd.jujutsu.bookmark.create', 'spike/regex-parser on zkpnwlqo', 'recreates it here, matching origin again') }] })],
     tech: [['Change ID', 'zkpnwlqosvmrtyuxqkzlnwpsomrvtyxu'], ['Commit ID', '9f1c3b5e7a2d04f68c1e9b3a5d7f20c4e8a6b1d3']] }));
   rows.push(jjGroup('pin', 'ci/buildx-pin', '', true));
   const div = 'change_divergent_ambiguous_target';
-  rows.push(jjRow({ name: 'Pin buildx for multi-arch builds', aside: '1 h', st: ['warn', 'divergent'], id: 'swkqmnox', meta: ['2 versions'], cls: 'd-jj-divergent',
+  rows.push(jjRow({ name: 'Pin buildx for multi-arch builds', aside: '1 hour', st: ['warn', 'divergent'], id: 'swkqmnox', meta: ['2 versions'], cls: 'd-jj-divergent',
     note: 'Two workspaces rewrote this change at the same time, so it has two versions. Act on one of the versions below.',
     acts: [more('swkqmnox', 'Pin buildx for multi-arch builds', { reason: div, noNew: true, lockAll: true })],
     tech: [['Change ID', 'swkqmnoxlptyrzvuwkqnmslxozprtyvn']] }));
@@ -353,19 +383,19 @@ function paneHistory() {
       { label: 'Abandon this version', danger: true, cmd: 'cmd.jujutsu.change.abandon', arg: jjArg('cmd.jujutsu.change.abandon', 'commit ' + commit.slice(0, 8) + ' (version ' + n + ' of swkqmnox)', 'confirm: the other version stays; Undo is in the Operation Log') },
     ],
     tech: [['Commit ID', commit]] });
-  rows.push(ver(1, 'Infra agent', 'lane-d-infra@', '3 h', '7c0d2e9f4b1a6c38e5d07f2b9a4c1e6d8b3f5a20', [['.github/workflows/docker-publish-multi-arch.yml', 12, 3]]));
-  rows.push(ver(2, 'you', 'default@', '1 h', 'd81f5a3c9e07b24f6a1d8c3e5b90f7a2c4e6d1b8', [['.github/workflows/docker-publish-multi-arch.yml', 14, 3], ['docker/buildx.toml', 6, 0]]));
+  rows.push(ver(1, 'Infra agent', 'lane-d-infra@', '3 hours', '7c0d2e9f4b1a6c38e5d07f2b9a4c1e6d8b3f5a20', [['.github/workflows/docker-publish-multi-arch.yml', 12, 3]]));
+  rows.push(ver(2, 'you', 'default@', '1 hour', 'd81f5a3c9e07b24f6a1d8c3e5b90f7a2c4e6d1b8', [['.github/workflows/docker-publish-multi-arch.yml', 14, 3], ['docker/buildx.toml', 6, 0]]));
   rows.push(jjGroup('pin', 'main', 'immutable', true));
-  rows.push(jjRow({ name: 'feat(search): tantivy query endpoint + ranked results', aside: '4 min', st: ['immutable', 'immutable', 'idle'], id: 'ytsrmlzk', meta: ['main@origin'],
+  rows.push(jjRow({ name: 'feat(search): tantivy query endpoint + ranked results', aside: '4 minutes', st: ['immutable', 'immutable', 'idle'], id: 'ytsrmlzk', meta: ['main@origin'],
     files: [['src/routes/search.rs', 182, 6], ['src/services/search/tantivy_query.rs', 240, 0]],
-    acts: [diff('ytsrmlzk'), newOn('ytsrmlzk', 'this is how you start from main'), more('ytsrmlzk', 'feat(search): tantivy query endpoint + ranked results', { reason: imm, noNew: true, moves: [bmMove('feature/search', 'ytsrmlzk', 'moves it back onto main; push to update origin')] })],
+    acts: [diff('ytsrmlzk'), newOn('ytsrmlzk', 'this is how you start from main'), more('ytsrmlzk', 'feat(search): tantivy query endpoint + ranked results', { reason: imm, noNew: true, moves: [bmBack('feature/search')] })],
     tech: [['Change ID', 'ytsrmlzkqpwnvxoutsrmlzkqpwnvxout'], ['Commit ID', 'abc12ef90d4c6b1a3e5f7d9c2b4a6e8f0d1c3b57']] }));
-  rows.push(jjRow({ name: 'feat(ratings): schema + API + stars UI', aside: '2 h', st: ['immutable', 'immutable', 'idle'], id: 'qoxlywut', meta: ['parent of the current change'],
+  rows.push(jjRow({ name: 'feat(ratings): schema + API + stars UI', aside: '2 hours', st: ['immutable', 'immutable', 'idle'], id: 'qoxlywut', meta: ['parent of the current change'],
     files: [['migrations/0007_ratings.sql', 38, 0], ['src/routes/ratings.rs', 120, 4], ['web/src/lib/components/recipe/StarsRating.svelte', 86, 0]],
     acts: [diff('qoxlywut'), newOn('qoxlywut'), more('qoxlywut', 'feat(ratings): schema + API + stars UI', { reason: imm, noNew: true, moves: [bmBack('main')] })],
     tech: [['Change ID', 'qoxlywutmrsnkpzvlqwyxtoumrksnzpl'], ['Commit ID', 'def34ab17c9e2f05d8b6a4c1e3f7d9b20a5c8e64']] }));
   return [
-    jjShelf({ id: 'history', cat: 'amber', icon: 'clock', label: 'History', count: '6 not on main', body: rows.concat([
+    jjShelf({ id: 'history', cat: 'amber', icon: 'clock', label: 'History', count: '10 not on main', body: rows.concat([
       jh('div.pm-footnote.d-jj-shelfnote', { text: 'Showing your changes that are not on main, and main. Everything else is in the full history.' }),
       jjWide({ label: 'Open full history', cmd: 'cmd.jujutsu.history.open', arg: jjArg('cmd.jujutsu.history.open', 'tastebook', 'the full graph, every head and the root'), detail: 'Opens the History and graph view with every change, every head and the root.' }),
     ]) }),
@@ -376,68 +406,82 @@ function paneBookmarks() {
   const push = (bm, remote, what) => ({ label: 'Push to ' + remote, cmd: 'cmd.jujutsu.git.push', arg: jjArg('cmd.jujutsu.git.push', bm + ' to ' + remote, 'one remote' + (what ? '; ' + what : '')), detail: 'Pushes ' + bm + ' to ' + remote + ' only. Other remotes are not touched.' });
   const newHere = (bm, id) => ({ label: 'New change here', cmd: 'cmd.jujutsu.change.new', arg: jjArg('cmd.jujutsu.change.new', 'on top of ' + bm + ' (' + id + ')', "Jujutsu's answer to switching branch") });
   const moveHere = (bm, targets) => ({ label: 'Move here…', menu: () => ({ id: 'bm-move', label: 'Move ' + bm + ' to', groups: [{ label: 'Here only; push to update origin', items: targets }] }), detail: 'Moves the bookmark here only. Push it to update origin.' });
-  const tgt = (bm, label, id, meta) => ({ label, meta, cmd: 'cmd.jujutsu.bookmark.move', arg: jjArg('cmd.jujutsu.bookmark.move', bm + ' to ' + id, 'here only; push to update origin') });
   const back = (label, meta) => ({ label, meta, cmd: 'cmd.jujutsu.bookmark.move', reason: 'bookmark_move_backwards' });
-  const rename = bm => ({ label: 'Rename…', icon: 'edit', cmd: 'cmd.jujutsu.bookmark.rename', arg: jjArg('cmd.jujutsu.bookmark.rename', bm, 'confirm: renaming a tracked bookmark untracks it first; the old name stays on origin until you delete it there, and the new name is not on origin yet') });
-  const del = (bm, tracked) => ({ label: 'Delete', icon: 'trash', danger: true, cmd: 'cmd.jujutsu.bookmark.delete', arg: jjArg('cmd.jujutsu.bookmark.delete', bm, tracked ? 'confirm: deletes it here; the copy on origin stays until you push this deletion' : 'confirm: deletes it here; origin is not affected') });
+  /* Rename and Delete change this repository only; their confirmations name every remote that keeps a copy (DL-057) */
+  const names = rs => rs.length > 1 ? rs.slice(0, -1).join(', ') + ' and ' + rs[rs.length - 1] : rs[0];
+  const rename = (bm, rs) => ({ label: 'Rename…', icon: 'edit', cmd: 'cmd.jujutsu.bookmark.rename', arg: jjArg('cmd.jujutsu.bookmark.rename', bm, rs.length
+    ? 'confirm: renames it here only; the old name stays on ' + names(rs) + ' until you push its deletion' + (rs.length > 1 ? ' to each' : '') + ', and the new name is on no remote until you push it'
+    : 'confirm: renames it here only; it is on no remote, so nothing on any remote changes') });
+  const del = (bm, rs) => ({ label: 'Delete', icon: 'trash', danger: true, cmd: 'cmd.jujutsu.bookmark.delete', arg: jjArg('cmd.jujutsu.bookmark.delete', bm, rs.length
+    ? 'confirm: deletes it here; the ' + (rs.length > 1 ? 'copies' : 'copy') + ' on ' + names(rs) + (rs.length > 1 ? ' stay' : ' stays') + ' until you push this deletion' + (rs.length > 1 ? ' to each' : '')
+    : 'confirm: deletes it here; it is on no remote, so nothing on any remote changes') });
   const menu = (bm, items) => ({ label: 'More', hover: 'More actions for ' + bm, menu: () => ({ id: 'bm-more', label: bm, groups: [{ items }] }) });
-  const curTarget = bm => tgt(bm, CUR.desc, CUR.id, 'current change');
+  const untrack = (bm, remote, what) => ({ label: 'Untrack at ' + remote, icon: 'eyeOff', cmd: 'cmd.jujutsu.bookmark.untrack', arg: jjArg('cmd.jujutsu.bookmark.untrack', bm + '@' + remote, 'one remote: ' + remote + (what ? '; ' + what : '')) });
   const rows = [
     jjRow({ name: 'main', mono: true, st: ['ok', 'synced'], meta: ['with origin'],
       facts: [['Points at', 'feat(search): tantivy query endpoint + ranked results · ytsrmlzk'], ['origin', 'same change']],
-      acts: [newHere('main', 'ytsrmlzk'), moveHere('main', [back(CUR.desc, 'sideways'), back('feat(ratings): schema + API + stars UI', 'behind')]), menu('main', [rename('main'), { label: 'Untrack at origin', icon: 'eyeOff', cmd: 'cmd.jujutsu.bookmark.untrack', arg: jjArg('cmd.jujutsu.bookmark.untrack', 'main@origin', 'one remote: origin') }, del('main', true)])] }),
+      acts: [newHere('main', 'ytsrmlzk'), moveHere('main', [back(CUR.desc, 'sideways'), back('feat(ratings): schema + API + stars UI', 'behind')]), menu('main', [rename('main', ['origin']), untrack('main', 'origin'), del('main', ['origin'])])] }),
     jjRow({ name: 'feature/mixed-fractions', mono: true, st: ['idle', 'absent'], meta: ['at origin', 'on your current change'],
       facts: [['Points at', CUR.desc + ' · ' + CUR.id], ['origin', 'not there yet; pushing creates it']],
       acts: [Object.assign(push('feature/mixed-fractions', 'origin', 'creates it there'), { reason: 'conflict_state_unresolved' }), newHere('feature/mixed-fractions', CUR.id),
-        menu('feature/mixed-fractions', [{ label: 'Track at origin', icon: 'eye', cmd: 'cmd.jujutsu.bookmark.track', reason: 'remote_bookmark_absent' }, rename('feature/mixed-fractions'), del('feature/mixed-fractions', false)])] }),
+        menu('feature/mixed-fractions', [{ label: 'Track at origin', icon: 'eye', cmd: 'cmd.jujutsu.bookmark.track', reason: 'remote_bookmark_absent' }, rename('feature/mixed-fractions', []), del('feature/mixed-fractions', [])])] }),
     jjRow({ name: 'thread/import-fixes', mono: true, st: ['dirty', 'unsynced', 'warn'], meta: ['origin is 1 change behind'],
       facts: [['Points at', 'Fix import of mixed units · rxwlunkq'], ['origin', 'Normalise unit names before parsing · tmzqylws']],
       acts: [push('thread/import-fixes', 'origin', 'moves it 1 change forward'), newHere('thread/import-fixes', 'rxwlunkq'),
-        menu('thread/import-fixes', [{ label: 'Move here…', icon: 'pin', cmd: 'cmd.jujutsu.bookmark.move', arg: jjArg('cmd.jujutsu.bookmark.move', 'thread/import-fixes to vqptlmro', 'here only; push to update origin') }, { label: 'Untrack at origin', icon: 'eyeOff', cmd: 'cmd.jujutsu.bookmark.untrack', arg: jjArg('cmd.jujutsu.bookmark.untrack', 'thread/import-fixes@origin', 'one remote: origin') }, rename('thread/import-fixes'), del('thread/import-fixes', true)])] }),
-    jjRow({ name: 'release/1.4', mono: true, st: ['ok', 'combined'], meta: ['origin and upstream in step'],
-      facts: [['Points at', 'chore(release): 1.4.0 · mpqzrstw'], ['origin', 'same change'], ['upstream', 'same change']],
-      acts: [newHere('release/1.4', 'mpqzrstw'), menu('release/1.4', [rename('release/1.4'), del('release/1.4', true)])] }),
-    jjRow({ name: 'feature/search', mono: true, st: ['info', 'tracked per remote'], meta: ['upstream 2 behind'],
-      facts: [['Points at', 'Rank search results by rating · kwvznpqo'], ['origin', 'synced'], ['upstream', 'unsynced · 2 changes behind']],
-      acts: [push('feature/search', 'upstream', 'moves it 2 changes forward there'), newHere('feature/search', 'kwvznpqo'),
-        menu('feature/search', [{ label: 'Untrack at upstream', icon: 'eyeOff', cmd: 'cmd.jujutsu.bookmark.untrack', arg: jjArg('cmd.jujutsu.bookmark.untrack', 'feature/search@upstream', 'one remote: upstream; origin stays tracked') }, rename('feature/search'), del('feature/search', true)])] }),
+        menu('thread/import-fixes', [{ label: 'Move here…', icon: 'pin', cmd: 'cmd.jujutsu.bookmark.move', arg: jjArg('cmd.jujutsu.bookmark.move', 'thread/import-fixes to vqptlmro', 'here only; push to update origin') }, untrack('thread/import-fixes', 'origin'), rename('thread/import-fixes', ['origin']), del('thread/import-fixes', ['origin'])])] }),
+    jjRow({ name: 'feature/search', mono: true, st: ['info', 'tracked per remote'], meta: ['upstream 1 behind'],
+      facts: [['Points at', 'Rank search results by rating · kwvznpqo'], ['origin', 'synced'], ['upstream', 'unsynced · 1 change behind']],
+      acts: [push('feature/search', 'upstream', 'moves it 1 change forward there'), newHere('feature/search', 'kwvznpqo'),
+        menu('feature/search', [untrack('feature/search', 'upstream', 'origin stays tracked'), rename('feature/search', ['origin', 'upstream']), del('feature/search', ['origin', 'upstream'])])] }),
     jjRow({ name: 'docs/schema-org', mono: true, st: ['conflict', 'conflicted'], meta: ['2 targets'],
       facts: [['Here', 'Add schema.org coverage notes · lqvmspxt'], ['origin', 'Draft schema.org notes · npwtzkqr (moved on origin)']],
       note: 'It points at two changes. Pick one with the buttons below; there is no picker yet.',
       acts: [
         { label: 'Move to the one here', cmd: 'cmd.jujutsu.bookmark.move', arg: jjArg('cmd.jujutsu.bookmark.move', 'docs/schema-org to lqvmspxt "Add schema.org coverage notes"', 'resolves the conflict here; push to update origin') },
-        { label: "Move to origin's", cmd: 'cmd.jujutsu.bookmark.move', arg: jjArg('cmd.jujutsu.bookmark.move', 'docs/schema-org to npwtzkqr "Draft schema.org notes"', 'resolves the conflict here') },
+        { label: "Move to origin's", cmd: 'cmd.jujutsu.bookmark.move', arg: jjArg('cmd.jujutsu.bookmark.move', 'docs/schema-org to npwtzkqr "Draft schema.org notes"', 'resolves the conflict here; origin already points there') },
         Object.assign(push('docs/schema-org', 'origin'), { reason: 'conflict_state_unresolved' }),
-        menu('docs/schema-org', [del('docs/schema-org', true)])] }),
+        menu('docs/schema-org', [del('docs/schema-org', ['origin'])])] }),
+    jjRow({ name: 'ci/buildx-pin', mono: true, st: ['ok', 'synced'], meta: ['with origin', 'on version 1'],
+      facts: [['Points at', 'Pin buildx for multi-arch builds · swkqmnox, version 1 (Infra agent)'], ['origin', 'same version']],
+      note: 'Its change has two versions (History). The bookmark stays on the version it points at.',
+      acts: [newHere('ci/buildx-pin', 'swkqmnox version 1'),
+        menu('ci/buildx-pin', [untrack('ci/buildx-pin', 'origin'), rename('ci/buildx-pin', ['origin']), del('ci/buildx-pin', ['origin'])])] }),
+    jjRow({ name: 'release/1.4', mono: true, st: ['ok', 'combined'], meta: ['origin and upstream in step'],
+      facts: [['Points at', 'chore(release): 1.4.0 · mpqzrstw, on main'], ['origin', 'same change'], ['upstream', 'same change']],
+      acts: [newHere('release/1.4', 'mpqzrstw'), menu('release/1.4', [rename('release/1.4', ['origin', 'upstream']), del('release/1.4', ['origin', 'upstream'])])] }),
     jjRow({ name: 'spike/regex-parser', mono: true, st: ['orphan', 'deleted here'], meta: ['still on origin'],
       facts: [['Here', 'deleted'], ['origin', 'Try a regex fraction parser · zkpnwlqo']],
       acts: [{ label: 'Push deletion to origin', cmd: 'cmd.jujutsu.git.push', arg: jjArg('cmd.jujutsu.git.push', 'deletion of spike/regex-parser to origin', 'one remote; deletes it there') }] }),
   ];
   const fetchMenu = () => ({ id: 'fetch', label: 'Fetch', groups: [{ items: [
-    { label: 'From origin', meta: 'default', icon: 'fetch', cmd: 'cmd.jujutsu.git.fetch', arg: jjArg('cmd.jujutsu.git.fetch', 'origin', 'the default remote') },
-    { label: 'From upstream', icon: 'fetch', cmd: 'cmd.jujutsu.git.fetch', arg: jjArg('cmd.jujutsu.git.fetch', 'upstream', 'one remote') },
-    { label: 'From origin and upstream', icon: 'fetch', cmd: 'cmd.jujutsu.git.fetch', arg: jjArg('cmd.jujutsu.git.fetch', 'origin and upstream', 'both remotes, named') },
+    { label: 'From origin', meta: 'default', icon: 'pull', cmd: 'cmd.jujutsu.git.fetch', arg: jjArg('cmd.jujutsu.git.fetch', 'origin', 'the default remote') },
+    { label: 'From upstream', icon: 'pull', cmd: 'cmd.jujutsu.git.fetch', arg: jjArg('cmd.jujutsu.git.fetch', 'upstream', 'one remote') },
+    { label: 'From origin and upstream', icon: 'pull', cmd: 'cmd.jujutsu.git.fetch', arg: jjArg('cmd.jujutsu.git.fetch', 'origin and upstream', 'both remotes, named') },
   ] }] });
   return [
-    jjShelf({ id: 'bookmarks', cat: 'neutral', icon: 'pin', label: 'Bookmarks', count: 7, headBtns: [
+    jjShelf({ id: 'bookmarks', cat: 'neutral', icon: 'pin', label: 'Bookmarks', count: 8, headBtns: [
       { label: 'New bookmark', icon: 'plus', cmd: 'cmd.jujutsu.bookmark.create', arg: jjArg('cmd.jujutsu.bookmark.create', 'new bookmark on ' + CUR.id, 'asks for a name'), hover: 'New bookmark', detail: 'Puts a new bookmark on the current change. You only need one to push it.' },
-      { label: 'Fetch', icon: 'fetch', menu: fetchMenu, hover: 'Fetch', detail: 'From origin by default. Pick upstream, or both, by name.' },
+      /* the shell's download-from-remote glyph: its "fetch" glyph is the same pair of circling arrows as Refresh above */
+      { label: 'Fetch', icon: 'pull', menu: fetchMenu, hover: 'Fetch', detail: 'From origin by default. Pick upstream, or both, by name.' },
     ], body: rows }),
     jjShelf({ id: 'git', cat: 'blue', icon: 'source', label: 'Git', count: 'colocated', body: [
-      jjKv('Git copy', 'Colocated: this folder is also a Git repository'),
-      jjKv('Import and export', 'Off: Jujutsu 0.44 can race with Git here'),
+      jh('div.d-jkv',
+        jjKv('Git copy', 'Colocated: this folder is also a Git repository'),
+        jjKv('Import and export', 'Off: Jujutsu 0.44 can race with Git here')),
       jjActs([
         { label: 'Import from Git', cmd: 'cmd.jujutsu.git.import', reason: 'jj_0_44_colocated_import_export_disabled_upstream_race' },
         { label: 'Export to Git', cmd: 'cmd.jujutsu.git.export', reason: 'jj_0_44_colocated_import_export_disabled_upstream_race' },
       ]),
-      jh('div.pm-footnote.d-jj-shelfnote', { text: "@git is Git's own copy of each bookmark, not a remote, so it is not listed." }),
+      jh('div.pm-footnote.d-jj-shelfnote', { text: "Git's own copy of each bookmark is not a remote, so it is not listed here." }),
     ] }),
     jjFoot("Bookmarks don't move by themselves: move one onto a change before you push it. Each remote keeps its own copy."),
   ];
 }
 
 function paneOperations() {
-  const restore = (op, at, what) => ({ label: 'Restore to this point…', cmd: 'cmd.jujutsu.operation.restore', arg: jjArg('cmd.jujutsu.operation.restore', 'op ' + op + ' (' + at + ')', 'preview first: ' + what), detail: 'Previews first and names what goes back. This is not Undo and not a backup restore.' });
+  /* jj op restore returns the repository to the state right after that operation: everything later is undone, the
+     operation itself stays. Each preview names those later operations, newest last. */
+  const restore = (op, at, what) => ({ label: 'Restore to this point…', cmd: 'cmd.jujutsu.operation.restore', arg: jjArg('cmd.jujutsu.operation.restore', 'op ' + op + ' (' + at + ')', 'preview first: ' + what), detail: 'Puts the repository back to how it was right after this operation, undoing everything after it. It previews first and names what goes back. This is not Undo and not a backup restore.' });
   const inspect = (op, what) => ({ label: 'Inspect', cmd: 'cmd.jujutsu.operation.show', arg: jjArg('cmd.jujutsu.operation.show', 'op ' + op, what) });
   const op = (o) => jjRow({ name: o.what, aside: o.at, st: o.st, meta: o.meta, facts: o.facts,
     acts: [inspect(o.op, o.what), o.at === '14:32' ? null : restore(o.op, o.at, o.back)], tech: [['Operation ID', o.full]] });
@@ -445,18 +489,18 @@ function paneOperations() {
     op({ what: 'Described the current change', at: '14:32', op: '8f314d', full: '8f314d2ae9c07b5d1e3f6a8c0b2d4e6f81a3c5e7', meta: ['you', 'default@'],
       facts: [['Rewrote', CUR.desc + ' (version 3 → 4)']] }),
     op({ what: 'Fetched from origin', at: '14:30', op: '9c20ab', full: '9c20ab71d4e6f8a0c2b4d6e8f0a1c3e5b7d9f1a2', meta: ['you', '2 bookmarks updated'],
-      facts: [['Moved', 'main: 2 changes forward · feature/search: 1 change forward']], back: 'main and feature/search go back to before the fetch' }),
+      facts: [['Moved', 'main: 2 changes forward · feature/search: 1 change forward']], back: 'undoes the 14:32 Describe: the description goes back to version 3; the fetch itself stays' }),
     op({ what: 'Started a new change', at: '14:18', op: '38b7ca', full: '38b7ca04e2d6f8a1c3b5d7e9f0a2c4e6b8d0f1a3', meta: ['import-fixes thread', 'import-fixes@'],
-      facts: [['Created', 'No description yet · vqptlmro, on Fix import of mixed units']], back: 'the empty change goes away' }),
+      facts: [['Created', 'No description yet · vqptlmro, on Fix import of mixed units']], back: 'undoes 2 later operations: the 14:30 fetch (main and feature/search go back to where they were) and the 14:32 Describe (the description goes back to version 3); the new change itself stays' }),
     op({ what: 'Rebased 2 changes onto main', at: '13:55', op: '7d41c2', full: '7d41c2e8f0a2b4c6d8e0f1a3b5c7d9e1f2a4b6c8', st: ['unknown', 'outside Puppet Master'], meta: ['origin unknown'],
-      facts: [['Rewrote', 'Normalise unit names before parsing · Fix import of mixed units'], ['Who', 'Not recorded by Puppet Master (JJI-011)'], ['Workspaces', 'lane-d-infra@ went out of date']], back: 'both changes go back onto the older main' }),
+      facts: [['Rewrote', 'Normalise unit names before parsing · Fix import of mixed units'], ['Who', 'Not recorded: it ran outside Puppet Master'], ['Workspaces', 'lane-d-infra@ went out of date']], back: 'undoes 3 later operations: the empty change from 14:18 goes away, the 14:30 fetch is undone and the description goes back to version 3; the rebase itself stays' }),
     op({ what: 'Saved the working copy', at: '13:40', op: '1e5f9b', full: '1e5f9b3d7a0c2e4f6b8d0a1c3e5f7b9d1a3c5e7f', meta: ['automatic', 'default@'],
-      facts: [['Rewrote', CUR.desc + ' (version 2 → 3) · 2 files']], back: 'the change goes back to version 2; your files on disk are not touched until you edit again' }),
+      facts: [['Rewrote', CUR.desc + ' (version 2 → 3) · 2 files']], back: 'undoes 4 later operations: the 13:55 rebase (both changes go back onto the older main), the 14:18 new change, the 14:30 fetch and the 14:32 Describe (version 3 again); the save itself stays' }),
     op({ what: 'Abandoned an empty change', at: '13:20', op: '4a8c2e', full: '4a8c2e6f0b1d3a5c7e9f2b4d6a8c0e1f3b5d7a9c', meta: ['you', 'default@'],
-      facts: [['Abandoned', 'No description yet · wlqmzpos (empty)']], back: 'the empty change comes back' }),
+      facts: [['Abandoned', 'No description yet · wlqmzpos (empty)']], back: 'undoes 5 later operations: the 13:40 save (the current change goes back to version 2 and its files on disk change to match), the 13:55 rebase, the 14:18 new change, the 14:30 fetch and the 14:32 Describe; the change stays abandoned. Undo brings it all back' }),
   ];
   return [
-    jjShelf({ id: 'operations', cat: 'blue', icon: 'undo', label: 'Operation Log', count: '6 shown', body: [
+    jjShelf({ id: 'operations', cat: 'blue', icon: 'oplog', label: 'Operation Log', count: '6 shown', body: [
       jjWide({ label: 'Undo: Described the current change', primary: true, cmd: 'cmd.jujutsu.operation.undo', arg: jjArg('cmd.jujutsu.operation.undo', 'op 8f314d "Described the current change" (14:32)', 'the newest operation; the description goes back to version 3'), detail: 'Undo always reverts the newest operation, and this button names it. To go further back, use Restore to this point on an older one.', cls: 'd-jj-wide d-jj-undo' }),
     ].concat(rows, [
       jh('div.pm-footnote.d-jj-shelfnote', { text: 'Every Jujutsu action is recorded here and can be undone. Project backups are separate: Backup history, below.' }),
@@ -530,9 +574,37 @@ function jjBuildStrip() {
     const i = JJ_TABS.findIndex(t => t.id === JJ.tab), d = keys[ev.key];
     const n = d === -99 ? 0 : d === 99 ? JJ_TABS.length - 1 : (i + d + JJ_TABS.length) % JJ_TABS.length;
     jjSelect(JJ_TABS[n].id, { animate: true });
-    strip.querySelector('[data-jj-tab="' + JJ_TABS[n].id + '"]').focus();
+    jjFocusSettled(strip, JJ_TABS[n].id);
   });
   return strip;
+}
+/* Keyboard focus follows the selection once the strip has settled. NieR's target brackets (19-nier-parts retFocus)
+   measure their target once, on focusin; focusing at once framed the 24 px icon slot the tab was still growing from.
+   Waits for the strip's own finite animations and transitions (the label's width, whatever motion a family adds),
+   not for the ink; capped, and cancelled by the next key. Focus stays on the old tab meanwhile, so keys keep working. */
+function jjFocusSettled(strip, id) {
+  const tok = JJ.focusTok = (JJ.focusTok || 0) + 1;
+  const go = () => {
+    if (tok !== JJ.focusTok || JJ.strip !== strip || JJ.tab !== id || !strip.contains(document.activeElement)) return;
+    const b = strip.querySelector('[data-jj-tab="' + id + '"]');
+    if (b && document.activeElement !== b) b.focus({ preventScroll: true });
+  };
+  if (reduced() || typeof strip.getAnimations !== 'function') { go(); return; }
+  /* two frames: jjSelect's own frame has refit the strip and started the ink and the label transitions by then */
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    if (tok !== JJ.focusTok) return;
+    const running = strip.getAnimations({ subtree: true }).filter(a => {
+      const t = a.effect && a.effect.target;
+      if (!t || a.playState === 'finished' || (t.closest && t.closest('.pm-segtab-ink'))) return false;
+      const end = a.effect.getComputedTiming().endTime;
+      return Number.isFinite(end);
+    });
+    if (!running.length) { go(); return; }
+    let done = false;
+    const fin = () => { if (!done) { done = true; go(); } };
+    Promise.all(running.map(a => a.finished.catch(() => null))).then(fin);
+    setTimeout(fin, 1200);
+  }));
 }
 /* the fit rule for both Source strips (DECISION §4.4): decided by the longest label, so the mode never flips on a click */
 function jjStripMode(st) {
