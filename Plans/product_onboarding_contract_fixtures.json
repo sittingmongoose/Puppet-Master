@@ -27,18 +27,19 @@
     "ui.onboarding.open_owner_flow",
     "ui.onboarding.run_automatic_preparation",
     "ui.onboarding.choose_first_project",
-    "ui.onboarding.finish"
+    "ui.onboarding.finish",
+    "ui.onboarding.choose_look"
   ],
   "coverage": {
     "canonical_stage_count": 11,
-    "typed_action_count": 13,
-    "valid_request_count": 30,
-    "valid_applied_result_count": 29,
+    "typed_action_count": 14,
+    "valid_request_count": 36,
+    "valid_applied_result_count": 31,
     "valid_disabled_result_count": 1,
     "valid_rejected_result_count": 1,
     "valid_session_count": 5,
     "valid_migration_receipt_count": 4,
-    "invalid_case_count": 212,
+    "invalid_case_count": 230,
     "valid_setup_plan_count": 15,
     "invalid_setup_plan_count": 43,
     "connect_existing_setup_plan_count": 6,
@@ -58,7 +59,7 @@
     "optional_scope_skip_applied_result_count": 2,
     "branch_local_more_ways_request_count": 1,
     "branch_local_more_ways_applied_result_count": 1,
-    "request_with_closed_local_context_count": 18,
+    "request_with_closed_local_context_count": 24,
     "connect_existing_shortcut_request_count": 1,
     "connect_existing_shortcut_applied_result_count": 1,
     "null_simple_path_selection_negative_count": 7,
@@ -105,7 +106,10 @@
     "phase_boundary_semantic_negative_count": 6,
     "valid_project_recovery_route_projection_count": 8,
     "invalid_project_recovery_route_projection_count": 16,
-    "recovery_open_owner_flow_request_count": 3
+    "recovery_open_owner_flow_request_count": 3,
+    "look_choice_request_count": 6,
+    "look_choice_applied_result_count": 2,
+    "look_choice_negative_count": 18
   },
   "valid": [
     {
@@ -7140,6 +7144,358 @@
         "source_surface": "owner_return",
         "return_focus_id": "onboarding.automatic_preparation.project_recovery"
       }
+    },
+    {
+      "name": "valid.request.choose_look.look_tile",
+      "definition": "onboarding_action_request",
+      "value": {
+        "schema_id": "pm.product_onboarding.action_request.v2",
+        "schema_version": "2.0.0",
+        "action_id": "ui.onboarding.choose_look",
+        "action_instance_id": "action:onboarding:choose_look:1",
+        "onboarding_session_id": "onboarding:action:choose_look:1",
+        "stage": "welcome",
+        "expected_revision": 5,
+        "continuation_generation": 2,
+        "choice": null,
+        "owner_route_ref": null,
+        "actor_ref": "actor:user:1",
+        "idempotency_key": "idempotency:onboarding:choose_look:1",
+        "source_surface": "first_run",
+        "return_focus_id": "onboarding.welcome.look.glass_light",
+        "local_context": {
+          "intent": "choose_look",
+          "scope": null,
+          "branch_kind": null,
+          "branch_step": null,
+          "selection_ref": null,
+          "target_ref": null,
+          "owner_operation_ref": null,
+          "owner_branch_ref": null,
+          "expanded": null,
+          "start_tour": null,
+          "recovery_condition": null,
+          "owner_phase": null,
+          "owner_command_id": null,
+          "precommit_authorization_ref": null,
+          "project_commit_ref": null,
+          "setup_commit_binding": null,
+          "look_choice": {
+            "theme_family": "glass",
+            "theme_mode": "light",
+            "nier_mode": null,
+            "nier_parts": null,
+            "nier_background": null
+          }
+        }
+      }
+    },
+    {
+      "name": "valid.request.choose_look.nier_checkbox",
+      "definition": "onboarding_action_request",
+      "value": {
+        "schema_id": "pm.product_onboarding.action_request.v2",
+        "schema_version": "2.0.0",
+        "action_id": "ui.onboarding.choose_look",
+        "action_instance_id": "action:onboarding:choose_look:2",
+        "onboarding_session_id": "onboarding:action:choose_look:2",
+        "stage": "welcome",
+        "expected_revision": 6,
+        "continuation_generation": 2,
+        "choice": null,
+        "owner_route_ref": null,
+        "actor_ref": "actor:user:1",
+        "idempotency_key": "idempotency:onboarding:choose_look:2",
+        "source_surface": "first_run",
+        "return_focus_id": "onboarding.welcome.look.nier_mode",
+        "local_context": {
+          "intent": "preview_nier",
+          "scope": null,
+          "branch_kind": null,
+          "branch_step": null,
+          "selection_ref": null,
+          "target_ref": null,
+          "owner_operation_ref": null,
+          "owner_branch_ref": null,
+          "expanded": null,
+          "start_tour": null,
+          "recovery_condition": null,
+          "owner_phase": null,
+          "owner_command_id": null,
+          "precommit_authorization_ref": null,
+          "project_commit_ref": null,
+          "setup_commit_binding": null,
+          "look_choice": {
+            "theme_family": null,
+            "theme_mode": null,
+            "nier_mode": true,
+            "nier_parts": null,
+            "nier_background": null
+          }
+        }
+      }
+    },
+    {
+      "name": "valid.request.choose_look.nier_editor_parts",
+      "definition": "onboarding_action_request",
+      "value": {
+        "schema_id": "pm.product_onboarding.action_request.v2",
+        "schema_version": "2.0.0",
+        "action_id": "ui.onboarding.choose_look",
+        "action_instance_id": "action:onboarding:choose_look:3",
+        "onboarding_session_id": "onboarding:action:choose_look:3",
+        "stage": "first_project",
+        "expected_revision": 7,
+        "continuation_generation": 2,
+        "choice": null,
+        "owner_route_ref": null,
+        "actor_ref": "actor:user:1",
+        "idempotency_key": "idempotency:onboarding:choose_look:3",
+        "source_surface": "first_run",
+        "return_focus_id": "onboarding.look_editor.preset.colors_only",
+        "local_context": {
+          "intent": "preview_nier",
+          "scope": null,
+          "branch_kind": null,
+          "branch_step": null,
+          "selection_ref": null,
+          "target_ref": null,
+          "owner_operation_ref": null,
+          "owner_branch_ref": null,
+          "expanded": null,
+          "start_tour": null,
+          "recovery_condition": null,
+          "owner_phase": null,
+          "owner_command_id": null,
+          "precommit_authorization_ref": null,
+          "project_commit_ref": null,
+          "setup_commit_binding": null,
+          "look_choice": {
+            "theme_family": null,
+            "theme_mode": null,
+            "nier_mode": null,
+            "nier_parts": [
+              "Square hairlines",
+              "Menu cursor",
+              "YoRHa headers",
+              "Parchment ground",
+              "Target brackets",
+              "Diamond loaders"
+            ],
+            "nier_background": null
+          }
+        }
+      }
+    },
+    {
+      "name": "valid.request.choose_look.nier_editor_background_rerun",
+      "definition": "onboarding_action_request",
+      "value": {
+        "schema_id": "pm.product_onboarding.action_request.v2",
+        "schema_version": "2.0.0",
+        "action_id": "ui.onboarding.choose_look",
+        "action_instance_id": "action:onboarding:choose_look:4",
+        "onboarding_session_id": "onboarding:action:choose_look:4",
+        "stage": "welcome",
+        "expected_revision": 8,
+        "continuation_generation": 2,
+        "choice": null,
+        "owner_route_ref": null,
+        "actor_ref": "actor:user:1",
+        "idempotency_key": "idempotency:onboarding:choose_look:4",
+        "source_surface": "settings_rerun",
+        "return_focus_id": "onboarding.look_editor.background.bunker",
+        "local_context": {
+          "intent": "preview_nier",
+          "scope": null,
+          "branch_kind": null,
+          "branch_step": null,
+          "selection_ref": null,
+          "target_ref": null,
+          "owner_operation_ref": null,
+          "owner_branch_ref": null,
+          "expanded": null,
+          "start_tour": null,
+          "recovery_condition": null,
+          "owner_phase": null,
+          "owner_command_id": null,
+          "precommit_authorization_ref": null,
+          "project_commit_ref": null,
+          "setup_commit_binding": null,
+          "look_choice": {
+            "theme_family": null,
+            "theme_mode": null,
+            "nier_mode": null,
+            "nier_parts": null,
+            "nier_background": "The Bunker"
+          }
+        }
+      }
+    },
+    {
+      "name": "valid.request.choose_look.look_menu_open",
+      "definition": "onboarding_action_request",
+      "value": {
+        "schema_id": "pm.product_onboarding.action_request.v2",
+        "schema_version": "2.0.0",
+        "action_id": "ui.onboarding.choose_look",
+        "action_instance_id": "action:onboarding:choose_look:5",
+        "onboarding_session_id": "onboarding:action:choose_look:5",
+        "stage": "source_control_setup",
+        "expected_revision": 9,
+        "continuation_generation": 2,
+        "choice": null,
+        "owner_route_ref": null,
+        "actor_ref": "actor:user:1",
+        "idempotency_key": "idempotency:onboarding:choose_look:5",
+        "source_surface": "first_run",
+        "return_focus_id": "onboarding.header.look_menu",
+        "local_context": {
+          "intent": "toggle_look_menu",
+          "scope": null,
+          "branch_kind": null,
+          "branch_step": null,
+          "selection_ref": null,
+          "target_ref": null,
+          "owner_operation_ref": null,
+          "owner_branch_ref": null,
+          "expanded": true,
+          "start_tour": null,
+          "recovery_condition": null,
+          "owner_phase": null,
+          "owner_command_id": null,
+          "precommit_authorization_ref": null,
+          "project_commit_ref": null,
+          "setup_commit_binding": null,
+          "look_choice": null
+        }
+      }
+    },
+    {
+      "name": "valid.request.choose_look.look_editor_open",
+      "definition": "onboarding_action_request",
+      "value": {
+        "schema_id": "pm.product_onboarding.action_request.v2",
+        "schema_version": "2.0.0",
+        "action_id": "ui.onboarding.choose_look",
+        "action_instance_id": "action:onboarding:choose_look:6",
+        "onboarding_session_id": "onboarding:action:choose_look:6",
+        "stage": "welcome",
+        "expected_revision": 10,
+        "continuation_generation": 2,
+        "choice": null,
+        "owner_route_ref": null,
+        "actor_ref": "actor:user:1",
+        "idempotency_key": "idempotency:onboarding:choose_look:6",
+        "source_surface": "first_run",
+        "return_focus_id": "onboarding.welcome.look.adjust_nier",
+        "local_context": {
+          "intent": "toggle_look_editor",
+          "scope": null,
+          "branch_kind": null,
+          "branch_step": null,
+          "selection_ref": null,
+          "target_ref": null,
+          "owner_operation_ref": null,
+          "owner_branch_ref": null,
+          "expanded": true,
+          "start_tour": null,
+          "recovery_condition": null,
+          "owner_phase": null,
+          "owner_command_id": null,
+          "precommit_authorization_ref": null,
+          "project_commit_ref": null,
+          "setup_commit_binding": null,
+          "look_choice": null
+        }
+      }
+    },
+    {
+      "name": "valid.result.applied.choose_look.nier_preview",
+      "definition": "onboarding_action_result",
+      "value": {
+        "schema_id": "pm.product_onboarding.action_result.v2",
+        "schema_version": "2.0.0",
+        "action_id": "ui.onboarding.choose_look",
+        "action_instance_id": "action:onboarding:choose_look:3",
+        "onboarding_session_id": "onboarding:action:choose_look:3",
+        "status": "applied",
+        "stage_before": "first_project",
+        "stage_after": "first_project",
+        "session_status_after": "active",
+        "local_effect": "look_previewed",
+        "onboarding_session_written": true,
+        "continuation_snapshot": {
+          "onboarding_session_id": "onboarding:action:choose_look:3",
+          "stage": "first_project",
+          "simple_path_selection": "start_on_this_computer",
+          "path_kind": "guided_setup",
+          "queued_setup_plan_ref": "setup-plan:queued:1",
+          "queued_setup_plan_revision": 1,
+          "reviewed_setup_plan_revision": null,
+          "review_confirmation": "unconfirmed",
+          "approved_setup_plan_sha256": null,
+          "automatic_preparation_currentness_ref": null,
+          "active_branch": null,
+          "scm_backend_selection": null,
+          "forge_provider_selection": null,
+          "history": [
+            "welcome",
+            "simple_path",
+            "first_project"
+          ],
+          "revision": 8,
+          "continuation_generation": 2,
+          "initiating_client_id": "client:desktop:1",
+          "return_focus_id": "onboarding.look_editor.preset.colors_only",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "project_disposition": "draft",
+          "project_commit_binding": null,
+          "provider_phase_status": "not_started",
+          "free_models_phase_status": "not_started",
+          "provider_owner_result_refs": [],
+          "free_models_owner_result_refs": []
+        },
+        "details_open_after": false,
+        "owner_route_ref": null,
+        "owner_operation_ref": null,
+        "production_receipt_ref": null,
+        "owner_mutation_claimed": false,
+        "error_code": null,
+        "disabled_reason": null,
+        "return_focus_id": "onboarding.look_editor.preset.colors_only",
+        "revision": 8,
+        "continuation_generation": 2
+      }
+    },
+    {
+      "name": "valid.result.applied.choose_look.look_menu_open",
+      "definition": "onboarding_action_result",
+      "value": {
+        "schema_id": "pm.product_onboarding.action_result.v2",
+        "schema_version": "2.0.0",
+        "action_id": "ui.onboarding.choose_look",
+        "action_instance_id": "action:onboarding:choose_look:5",
+        "onboarding_session_id": "onboarding:action:choose_look:5",
+        "status": "applied",
+        "stage_before": "source_control_setup",
+        "stage_after": "source_control_setup",
+        "session_status_after": "active",
+        "local_effect": "disclosure_opened",
+        "onboarding_session_written": false,
+        "continuation_snapshot": null,
+        "details_open_after": true,
+        "owner_route_ref": null,
+        "owner_operation_ref": null,
+        "production_receipt_ref": null,
+        "owner_mutation_claimed": false,
+        "error_code": null,
+        "disabled_reason": null,
+        "return_focus_id": "onboarding.header.look_menu",
+        "revision": 10,
+        "continuation_generation": 2
+      }
     }
   ],
   "invalid": [
@@ -7284,7 +7640,7 @@
     {
       "name": "invalid.predecessor_action_identifier",
       "definition": "onboarding_action_request",
-      "expected_error": "predecessor action is not in the current exact 13-action enum",
+      "expected_error": "predecessor action is not in the current exact 14-action enum",
       "value": {
         "schema_id": "pm.product_onboarding.action_request.v2",
         "schema_version": "2.0.0",
@@ -12706,6 +13062,215 @@
         "resume_attempt_command_instance_id": "command:project:resume:09",
         "resume_attempt_idempotency_key": "idempotency:project:resume:09",
         "resume_disposition": "resume_by_fresh_authorized_attempt"
+      }
+    },
+    {
+      "name": "invalid.choose_look.carries_choice",
+      "definition": "onboarding_action_request",
+      "expected_error": "choose_look carries its look in local_context.look_choice and requires choice null",
+      "base_valid": "valid.request.choose_look.look_tile",
+      "patch": {
+        "choice": "start_on_this_computer"
+      }
+    },
+    {
+      "name": "invalid.choose_look.carries_owner_route",
+      "definition": "onboarding_action_request",
+      "expected_error": "a look preview has no owner route",
+      "base_valid": "valid.request.choose_look.look_tile",
+      "patch": {
+        "owner_route_ref": "route:settings:appearance"
+      }
+    },
+    {
+      "name": "invalid.choose_look.dispatches_theme_command",
+      "definition": "onboarding_action_request",
+      "expected_error": "onboarding's look preview never dispatches cmd.theme.*",
+      "base_valid": "valid.request.choose_look.look_tile",
+      "patch": {
+        "local_context.owner_command_id": "cmd.theme.set_mode"
+      }
+    },
+    {
+      "name": "invalid.choose_look.dispatches_settings_transaction",
+      "definition": "onboarding_action_request",
+      "expected_error": "a NieR preview inside the onboarding window never applies a Settings transaction",
+      "base_valid": "valid.request.choose_look.nier_checkbox",
+      "patch": {
+        "local_context.owner_command_id": "cmd.settings.transaction.apply"
+      }
+    },
+    {
+      "name": "invalid.choose_look.missing_look_choice",
+      "definition": "onboarding_action_request",
+      "expected_error": "choose_look states its look_choice, null only for the menu and editor toggles",
+      "base_valid": "valid.request.choose_look.look_tile",
+      "remove": [
+        "local_context.look_choice"
+      ]
+    },
+    {
+      "name": "invalid.choose_look.family_choice_carries_nier_rows",
+      "definition": "onboarding_action_request",
+      "expected_error": "intent choose_look changes the family and mode only",
+      "base_valid": "valid.request.choose_look.look_tile",
+      "patch": {
+        "local_context.look_choice.nier_mode": true
+      }
+    },
+    {
+      "name": "invalid.choose_look.family_choice_without_mode",
+      "definition": "onboarding_action_request",
+      "expected_error": "intent choose_look names both the family and Light or Dark",
+      "base_valid": "valid.request.choose_look.look_tile",
+      "patch": {
+        "local_context.look_choice.theme_mode": null
+      }
+    },
+    {
+      "name": "invalid.choose_look.nier_preview_carries_theme_pair",
+      "definition": "onboarding_action_request",
+      "expected_error": "intent preview_nier changes NieR's rows only",
+      "base_valid": "valid.request.choose_look.nier_checkbox",
+      "patch": {
+        "local_context.look_choice.theme_family": "basic"
+      }
+    },
+    {
+      "name": "invalid.choose_look.nier_preview_changes_nothing",
+      "definition": "onboarding_action_request",
+      "expected_error": "intent preview_nier changes at least one NieR row",
+      "base_valid": "valid.request.choose_look.nier_checkbox",
+      "patch": {
+        "local_context.look_choice.nier_mode": null
+      }
+    },
+    {
+      "name": "invalid.choose_look.auto_mode",
+      "definition": "onboarding_action_request",
+      "expected_error": "the onboarding look choice is a family with Light or Dark",
+      "base_valid": "valid.request.choose_look.look_tile",
+      "patch": {
+        "local_context.look_choice.theme_mode": "auto"
+      }
+    },
+    {
+      "name": "invalid.choose_look.nier_as_family",
+      "definition": "onboarding_action_request",
+      "expected_error": "NieR Mode is never a theme family",
+      "base_valid": "valid.request.choose_look.look_tile",
+      "patch": {
+        "local_context.look_choice.theme_family": "nier"
+      }
+    },
+    {
+      "name": "invalid.choose_look.unknown_nier_part",
+      "definition": "onboarding_action_request",
+      "expected_error": "nier_parts uses the 29 canonical part labels",
+      "base_valid": "valid.request.choose_look.nier_editor_parts",
+      "patch": {
+        "local_context.look_choice.nier_parts": [
+          "Glow trails"
+        ]
+      }
+    },
+    {
+      "name": "invalid.choose_look.look_choice_extra_field",
+      "definition": "onboarding_action_request",
+      "expected_error": "look_choice is closed",
+      "base_valid": "valid.request.choose_look.look_tile",
+      "patch": {
+        "local_context.look_choice.theme_variant": "glass_light"
+      }
+    },
+    {
+      "name": "invalid.choose_look.menu_toggle_carries_look",
+      "definition": "onboarding_action_request",
+      "expected_error": "opening or closing the Look menu changes no look",
+      "base_valid": "valid.request.choose_look.look_menu_open",
+      "patch": {
+        "local_context.look_choice": {
+          "theme_family": "retro",
+          "theme_mode": "dark",
+          "nier_mode": null,
+          "nier_parts": null,
+          "nier_background": null
+        }
+      }
+    },
+    {
+      "name": "invalid.next_carries_look_choice",
+      "definition": "onboarding_action_request",
+      "expected_error": "only ui.onboarding.choose_look carries a look",
+      "base_valid": "valid.request.next",
+      "patch": {
+        "local_context.look_choice": {
+          "theme_family": "basic",
+          "theme_mode": "dark",
+          "nier_mode": null,
+          "nier_parts": null,
+          "nier_background": null
+        }
+      }
+    },
+    {
+      "name": "invalid.result.choose_look_preview_without_session_write",
+      "definition": "onboarding_action_result",
+      "expected_error": "a previewed look is written to the onboarding session with its continuation",
+      "base_valid": "valid.result.applied.choose_look.nier_preview",
+      "patch": {
+        "onboarding_session_written": false,
+        "continuation_snapshot": null
+      }
+    },
+    {
+      "name": "invalid.result.choose_look_menu_writes_session",
+      "definition": "onboarding_action_result",
+      "expected_error": "opening or closing the Look menu or the editor writes no session",
+      "base_valid": "valid.result.applied.choose_look.look_menu_open",
+      "patch": {
+        "onboarding_session_written": true,
+        "continuation_snapshot": {
+          "onboarding_session_id": "onboarding:action:choose_look:3",
+          "stage": "first_project",
+          "simple_path_selection": "start_on_this_computer",
+          "path_kind": "guided_setup",
+          "queued_setup_plan_ref": "setup-plan:queued:1",
+          "queued_setup_plan_revision": 1,
+          "reviewed_setup_plan_revision": null,
+          "review_confirmation": "unconfirmed",
+          "approved_setup_plan_sha256": null,
+          "automatic_preparation_currentness_ref": null,
+          "active_branch": null,
+          "scm_backend_selection": null,
+          "forge_provider_selection": null,
+          "history": [
+            "welcome",
+            "simple_path",
+            "first_project"
+          ],
+          "revision": 8,
+          "continuation_generation": 2,
+          "initiating_client_id": "client:desktop:1",
+          "return_focus_id": "onboarding.look_editor.preset.colors_only",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "project_disposition": "draft",
+          "project_commit_binding": null,
+          "provider_phase_status": "not_started",
+          "free_models_phase_status": "not_started",
+          "provider_owner_result_refs": [],
+          "free_models_owner_result_refs": []
+        }
+      }
+    },
+    {
+      "name": "invalid.result.choose_look_claims_owner_route",
+      "definition": "onboarding_action_result",
+      "expected_error": "a look preview launches no owner route",
+      "base_valid": "valid.result.applied.choose_look.nier_preview",
+      "patch": {
+        "owner_route_ref": "route:settings:appearance"
       }
     }
   ],
