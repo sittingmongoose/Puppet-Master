@@ -6020,7 +6020,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "5f05f408ffcdf7741745aa20d29680a4b7a3c9c40c54898749c1f8e55dfa5fd0",
+      "sha256": "293e2430e0ce1a7ff20b4079cbab90320573e33b606b1d086b5a5ac81272d6bb",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 148
@@ -7561,7 +7561,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 42537,
+      "line_count": 42551,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 614,
       "plan_unit_ids": [
@@ -8315,7 +8315,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "2d2c1daec00bac477bcf98a919885bf127bcc1151a3124fe3612a96bd997e00b",
+      "sha256": "166e3db237b19799c7dd021d5f241c76f90bb7389aac03e6dcf7f60ffaa8588a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 613,
@@ -20672,7 +20672,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-10T00:17:27Z",
+  "generated_at_utc": "2026-10-10T00:18:09Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

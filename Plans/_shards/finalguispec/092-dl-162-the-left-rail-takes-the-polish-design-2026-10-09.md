@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42010-L42358
+Source lines: L42010-L42372
 
-Source SHA256: `2d2c1daec00bac477bcf98a919885bf127bcc1151a3124fe3612a96bd997e00b`
+Source SHA256: `166e3db237b19799c7dd021d5f241c76f90bb7389aac03e6dcf7f60ffaa8588a`
 
 ---
 
@@ -250,7 +250,18 @@ canonical_text: >-
   overshoot, about 420 ms. Glass glides, a long soft rise of about 480 ms in which only the shelf boxes come out of a
   light blur, never a row and never a backdrop blur, so F3-431's blur budget is unchanged. Retro is stepped, the same
   moves in three or four hard steps, about 200 ms. NieR Mode is ink: rows are wiped in from left to right and the bar
-  tile moves as an ink cut. Every rail animation follows general.visual.animation-speed, lands at its end state at
+  tile moves as an ink cut. A tab change in any rail strip, the two Source Control strips included, is one
+  relayout: the chosen tab's label appears in one step with no width morph, one ink sits exactly on the chosen
+  tab's box, and every animation of the change, the ink, the tabs and the new pane, starts together on one clock.
+  Basic glides the ink, Friendly springs it with the overshoot held inside the strip, and Glass glides it with a
+  liquid stretch. Retro runs on a 33 ms tick: the ink hops tab by tab, the chosen tab keeps the colour it had
+  before the click until the ink lands on it, shows one tick of inverse video and then its active colours, so only
+  the tab under the ink ever looks chosen, and the new view prints line by line with its boxes growing with their
+  lines, as Retro panel entrances and expanders also do. Under NieR Mode hovering a tab inks it with the same box
+  as the chosen ink; a click cuts the ink straight to the tab, and once the click has landed the Target brackets
+  part locks onto the chosen tab's final box, so the brackets match the selector, while the Menu cursor's square,
+  which a chosen tab no longer takes, moves to the new box's centre and fades out. Every rail animation follows
+  general.visual.animation-speed, lands at its end state at
   once under reduced motion (general.visual.reduce-animations or the operating system), and none persists on the
   active view (F3-480 (4)).
 gui_related: true
@@ -262,6 +273,7 @@ acceptance_criteria:
   - "Every popup opened from the nine rail panels is the chat picker plate with its sprout, portaled and unclipped, keyboard operable and closed by Escape."
   - "Under reduced motion every rail animation is instant, and Animation speed scales every scripted rail animation."
   - "Under Glass no rail row animates a blur and no rail element adds a backdrop blur."
+  - "In Retro, at every frame of a tab change, at most one tab shows the chosen colours; under NieR Mode the target brackets settle on the chosen tab's final box."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -280,6 +292,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-162"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06"
   - "Concepts/leftrail-redesign/src/js/20-menu.js and src/concepts/d/10-skin.js, 30-motion.js, 40-bar.js (concept lineage only, commit c93e341606)"
+  - "Concepts/leftrail-redesign/src/concepts/d/31-tabs.js and css/22-tabs.src.css, tab switches redone per family for the owner's issue 3 of 2026-10-09 (lane commits 9e8e75acab and 95e0259ab1; concept lineage only)"
 preserved_exact_tokens:
   - "chat's picker style"
   - "general.visual.animation-speed"
@@ -289,6 +302,7 @@ negative_constraints:
   - "Do not blur a rail row or add a backdrop blur for rail motion."
 compatibility_only_notes:
   - "The concept times its motion with the theme tokens it has (about 240, 420, 480 and 200 ms); the product's motion tokens own exact durations and the beats and voices here bind."
+  - "The concept reaches NieR Mode's Menu cursor and Target brackets parts through two hook classes it adds to the NieR kit's selector lists, .pmr-cur (cursor) and .pmr-lock (brackets that lock after the click); the hooks are concept plumbing, the behaviour above is canon."
 stale_retired_dispositions: []
 owner_boundary_notes:
   - "ACD-439 owns the sprout motion and the chat pickers' look; this unit applies them to the rail and adds only placement and keyboard."

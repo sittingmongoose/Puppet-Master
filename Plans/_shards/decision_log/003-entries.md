@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L13-L3625
 
-Source SHA256: `5f05f408ffcdf7741745aa20d29680a4b7a3c9c40c54898749c1f8e55dfa5fd0`
+Source SHA256: `293e2430e0ce1a7ff20b4079cbab90320573e33b606b1d086b5a5ac81272d6bb`
 
 ---
 
@@ -3571,7 +3571,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-606, ContractName:Plans/Final
 1. **Geometry, shelves and type** (`Plans/FinalGUISpec.md#F3-618`; F3-474's shelf tints and section 3.5's selection stripe amended for the rail).
 2. **Statuses and counts** (`Plans/FinalGUISpec.md#F3-619`), which the panel owners' chip, pill and badge wording now reads through (`Plans/Runtime_Artifacts_Panel.md#RAP-049`, `Plans/FileManager.md#F-074` and `Plans/Automated_Testing_System.md#ATS-028` amended).
 3. **Fitting by layout** (`Plans/FinalGUISpec.md#F3-620`; `#F3-480` (3), `#F3-445`'s tab recipe and `#F3-196` amended for the rail; `Plans/Containers_Registry_and_Unraid.md#CRAU-098`, `Plans/UI_Command_Catalog.md#UCC-136` and `Plans/GitHub_Integration.md#GI-039` amended: tab labels are never abbreviated).
-4. **Dropdowns and motion** (`Plans/FinalGUISpec.md#F3-621`).
+4. **Dropdowns and motion** (`Plans/FinalGUISpec.md#F3-621`), including the tab switch redone for the owner's issue 3: one move per theme family on one clock, Retro stepping its ink tab by tab on a 33 ms tick with only the tab under the ink lit, and NieR Mode cutting the ink to the tab and locking the target brackets onto the chosen tab's final box once the click has landed.
 5. **The Owner dropdown and the folding publish card** (`Plans/FinalGUISpec.md#F3-622`; `Plans/WorktreeGitImprovement.md#W-075` amended). Neither adds a command or a wiring row.
 6. **One owner for the rail's look** (`Plans/DRY_Rules.md#DR-057`).
 7. **Not decided yet:** whether the Jujutsu view of Source Control has sub-tabs, the commands and wiring the build of the remaining six panels adds, and the activity bar's More tray. They are recorded under this decision when they are settled.
