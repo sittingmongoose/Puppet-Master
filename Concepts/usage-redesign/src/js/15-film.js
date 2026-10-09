@@ -83,12 +83,22 @@
   function wave(cards, o) {
     o = o || {};
     var v = voice(), base = o.base || 0, row = o.row == null ? v.row : o.row, col = o.col == null ? v.col : o.col, cap = o.cap == null ? T.cap : o.cap;
+    /* a room change (o.cam, 40-board.js streamBuild) takes its voice's cadence (MOTION-4 4.2): Basic 28 / 16 / 160 (the
+       board moves as one camera with a ripple), Friendly 40 / 26 / 280 (a looser, lilting wave), Glass from the hero
+       outward 24 / 14 / 140 (the hero comes into focus first), Retro 60 / 15 / 240, NieR 45 / 30 / 240 */
+    var cv = o.cam ? camVoice() : null, heroIds = o.heroes || [];
+    if (cv && cv.wave) { row = cv.wave[0]; col = cv.wave[1]; cap = cv.wave[2]; }
     var tops = [], groups = {};
     cards.forEach(function (c) { var y = +c.dataset.y || 0; if (tops.indexOf(y) < 0) tops.push(y); (groups[y] = groups[y] || []).push(c); });
     tops.sort(function (a, b) { return a - b; });
     Object.keys(groups).forEach(function (y) { groups[y].sort(function (a, b) { return (+a.dataset.x || 0) - (+b.dataset.x || 0); }); });
+    var isHero = function (c) { return c.plan ? heroIds.indexOf(c.plan.id) >= 0 : !!(c.hasAttribute && c.hasAttribute('data-hero')); };
+    var hc = cv && cv.heroFirst ? cards.filter(isHero)[0] : null;
+    var hr = hc ? tops.indexOf(+hc.dataset.y || 0) : 0, hx = hc ? +hc.dataset.x || 0 : 0;
     cards.forEach(function (c) {
       var y = +c.dataset.y || 0, r = tops.indexOf(y), k = groups[y].indexOf(c);
+      /* Glass: rank by distance from the hero (rows from its row, columns from its side) */
+      if (hc) { r = Math.abs(r - hr); k = c === hc ? 0 : 1 + groups[y].filter(function (z) { return Math.abs((+z.dataset.x || 0) - hx) < Math.abs((+c.dataset.x || 0) - hx); }).length; if (r === 0 && c === hc) k = 0; }
       c._pmuEnterDelay = reduced() || M.paused() ? 0 : base + Math.min(cap, row * r + col * k);
     });
     return cards.slice().sort(function (a, b) { return a._pmuEnterDelay - b._pmuEnterDelay; });
@@ -407,6 +417,7 @@
     o = o || {};
     if (reduced() || !track || off.head || !lit(track)) return null;
     var g = H('i', 'pmu-film-head', track);
+    g.setAttribute('data-voice', voice().name);
     var from = o.from == null ? 0 : o.from, to = o.to == null ? 100 : o.to;
     var a = anim(g, [{ transform: 'translateX(' + (from - 100) + '%)', opacity: 0 }, { opacity: 0.85, offset: 0.15 }, { opacity: 0.85, offset: 0.72 },
       { transform: 'translateX(' + (to - 100) + '%)', opacity: 0 }], { dur: o.dur || T.fill, delay: o.delay || 0, easing: o.easing || E.roll, fill: 'both' });
@@ -511,11 +522,154 @@
   }
 
   /* ======== WOW round 3 (WOW-SPEC-3): one camera, one light, one pulse ======== */
+  /* MOTION-4 RC9: the hero reveals at 160 (its number at 200) and the supporting bodies from 300, 20 apart, cap 240, so no
+     plate stands empty for more than about 200 ms (Friendly Light showed white empty plates for 250 ms) */
   var T3 = { frameFade: 200, frameTravel: 420, frameRow: 28, frameCol: 16, frameCap: 220, rule: 300, ghostFade: 140, ghostTravel: 220,
-    takeoff: 110, flight: 460, flightStep: 24, flightCap: 120, land: 420, heroAt: 200, quietGap: 280, quietStep: 24, quietCap: 360,
+    takeoff: 110, flight: 460, flightStep: 24, flightCap: 120, land: 420, heroAt: 160, quietGap: 140, quietStep: 20, quietCap: 240,
     quietFade: 200, quietTravel: 280, quietDraw: 600, quietFill: 520, beatGap: 6000, liveRoll: 420, liveFlash: 620, liveSweep: 650,
-    rerank: 420, slideOut: 220, heroInstr: 900, heroNum: 40 };
+    rerank: 420, slideOut: 220, heroInstr: 900, heroNum: 40, beatLead: 160 };
   function flag(name) { return !PMU.flags || PMU.flags[name] !== false; }
+
+  /* ======== MOTION-4 (lane b-motion, Jared's items 7 and 8): one camera you can see, and five voices that differ in kind ========
+     The room change is ONE camera move: the old room (the ghost, one layer) and the new frames travel the same pan P along
+     the rail with matched velocities. The ghost moves from the click and fades only when the new chrome is in (frames(),
+     the chrome task), so no frame shows an empty board between the rooms. P by the distance travelled on the rail: a
+     neighbour 40 px, two or three rooms 56, four or more 72 (tokens --pmu-cam-p1/p2/p3 in 00-base.css; no GPU 24, one
+     board-level move). The voices differ in kind, as Retro and NieR always did (the chat's ACD-475 voices):
+     Basic is ink: a crisp pan, and an ink stroke draws under each first-row head and dries.
+     Friendly is hop: the old room steps back and tilts away; the new plates hop up from their feet with one soft bounce
+       and a small alternating tilt (a lilting wave); warm light blooms under the hero; flyers hop along an arc and land
+       with a squash (marks, numbers) or a puff of three dots (meters, controls never scale).
+     Glass is depth: a dolly through glass. Down the rail the camera pushes in (the old room passes the lens: it grows and
+       blurs), up the rail it pulls out; the new room comes out of depth and blur into focus with the hero first (rack
+       focus); one refraction band crosses the board; flyers rise toward the lens.
+     Values never overshoot in any voice (numbers, meters, bar and ring fills land exactly on their value): springs, the
+     hop and the squash move plates, marks, dots and paths only. Every blur ends at exactly 0 (fill backwards: no filter
+     after the end) or dies with its layer; finishMoment ends every one at once. */
+  var CAM = { dir: 1, dist: 1 };
+  function camera(o) { o = o || {}; CAM = { dir: o.dir < 0 ? -1 : 1, dist: Math.max(1, Math.round(Math.abs(o.dist || 1))) }; return CAM; }
+  function camP(dist) { if (soft()) return 24; var d = dist || CAM.dist; return d >= 4 ? 72 : d >= 2 ? 56 : 40; }
+  /* the voices of the room change (MOTION-4 4.2). ghost: y in P units (x dir), sc / push / pull scale, rot deg (x dir);
+     frame: y in P units, travel ms + curve (Friendly: a spring), fade ms; wave: row / col / cap ms */
+  var CAMV = {
+    basic: { ghost: { y: -1, sc: 0.985, ms: 360, ease: E.slide }, fade: 180,
+      frame: { y: 1, ms: 520, ease: E.settle, fade: 200 }, wave: [28, 16, 160], body: { y: 6, fade: 200, ms: 280, ease: E.settle } },
+    friendly: { ghost: { y: -0.8, sc: 0.96, rot: -1.4, ms: 380, ease: 'cubic-bezier(.3,0,.5,1)' }, fade: 200,
+      frame: { y: 0.9, sc: 0.94, tilt: 8, spring: [260, 21], fade: 220 }, wave: [40, 26, 280], body: { y: 10, fade: 220, ms: 320, ease: E.settle } },
+    glass: { ghost: { y: -0.35, push: 1.06, pull: 0.94, blur: 10, ms: 400, ease: E.slide }, fade: 220,
+      frame: { y: 0.35, push: 0.93, pull: 1.07, blur: 10, blurHero: 300, blurMs: 420, ms: 560, ease: E.depth, fade: 260 }, wave: [24, 14, 140], heroFirst: true,
+      body: { sc: 0.985, fade: 240, ms: 320, ease: E.depth } },
+    retro: { wave: [60, 15, 240] },
+    nier: { wave: [45, 30, 240] }
+  };
+  function camVoice(f) { return CAMV[f || fam()] || CAMV.basic; }
+  /* a physical spring as a position function (Friendly's hop: k 260, c 21 settles in about 640 ms after one overshoot of
+     about 7 %, the plate's feet land and bounce once) */
+  var springFnCache = {};
+  function springFn(k, c) {
+    var key = k + ',' + c; if (springFnCache[key]) return springFnCache[key];
+    var x = 0, v = 0, dt = 1 / 600, t = 0, pts = [0], peak = 0;
+    while (t < 2) { var a = -k * (x - 1) - c * v; v += a * dt; x += v * dt; t += dt; pts.push(x); if (x > peak) peak = x; if (t > 0.2 && Math.abs(x - 1) < 0.002 && Math.abs(v) < 0.04) break; }
+    var n = pts.length - 1;
+    var res = { ms: Math.round(t * 1000), peak: peak, fn: function (p) { if (p >= 1) return 1; if (p <= 0) return 0; var q = p * n, i = Math.floor(q); return pts[i] + (pts[i + 1] - pts[i]) * (q - i); } };
+    springFnCache[key] = res;
+    return res;
+  }
+  /* sampled keyframes for ONE animation per element (PERF-3 rule 10): opacity on its own curve and length, the transform
+     from `tr` to rest (tr.out: from rest to `tr`) on its own, an optional blur on a third; samples cluster early */
+  function camKeys(total, parts, n) {
+    n = n || 18;
+    var out = [], op = parts.op, tr = parts.tr, bl = parts.blur;
+    for (var i = 0; i <= n; i++) {
+      var off = i === n ? 1 : Math.pow(i / n, 1.35), ms = total * off, key = { offset: +off.toFixed(4) };
+      if (op) { var po = op.fn(Math.min(1, ms / Math.max(1, op.ms))); key.opacity = +(op.from + (op.to - op.from) * po).toFixed(3); }
+      if (tr) {
+        var pt = tr.fn(Math.min(1, ms / Math.max(1, tr.ms))), k = tr.out ? pt : 1 - pt, tf = [];
+        if (tr.base) tf.push(tr.base);
+        if (tr.y) tf.push('translateY(' + (tr.y * k).toFixed(2) + 'px)');
+        if (tr.rot) tf.push('rotate(' + (tr.rot * k).toFixed(3) + 'deg)');
+        if (tr.sc != null && tr.sc !== 1) tf.push('scale(' + (1 + (tr.sc - 1) * k).toFixed(4) + ')');
+        key.transform = tf.length ? tf.join(' ') : 'none';
+        if (tr.origin) key.transformOrigin = tr.origin;
+      }
+      if (bl) { var pb = bl.fn(Math.min(1, ms / Math.max(1, bl.ms))), kb = bl.out ? pb : 1 - pb; key.filter = 'blur(' + Math.max(0, bl.px * kb).toFixed(2) + 'px)'; }
+      out.push(key);
+    }
+    /* an entrance ends exactly at rest: no blur, no transform left (a blur that does not end at 0 is item 5's soft text) */
+    var lastK = out[out.length - 1];
+    if (bl && !bl.out) lastK.filter = 'blur(0px)';
+    if (tr && !tr.out && !tr.base) lastK.transform = 'none';
+    return out;
+  }
+  /* the visible centre of the board in board pixels (no layout read): the dolly and the step-back pivot there */
+  function viewCentre() {
+    var cls = PMU.board && PMU.board.cls ? PMU.board.cls() : null, W = cls && cls.W ? cls.W : 1200;
+    return { x: W / 2, y: Math.max(200, (window.innerHeight || 900) - 170) / 2 };
+  }
+  /* a card's grid box in board pixels (no layout read) */
+  function cardBox(card) {
+    var ds = card.dataset, r = { x: +ds.x || 0, y: +ds.y || 0, w: +ds.w || 4, h: +ds.h || 4 };
+    var p = PMU.board && PMU.board.px ? PMU.board.px(r) : null;
+    return p || { l: 0, t: 0, w: 300, h: 200 };
+  }
+  /* the ghost's fade starts when the new chrome is in (frames(), or the fallback timer) and its removal waits for it */
+  function fadeGhost(m) {
+    var G = m && m.ghost; if (!G || G.fade) return;
+    G.fade = true;
+    var a = G.el.isConnected ? anim(G.el, [{ opacity: 1 }, { opacity: 0 }], { dur: G.fadeMs, easing: E.exit, fill: 'forwards' }) : null;
+    G.fade = a || true;
+    if (a) a.finished.then(function () { later(G.done); }, G.done); else G.done();
+  }
+  /* the hold of the beat's targets (MOTION-4 RC4): a card revealed inside a moment keeps what its signature beat will
+     reveal from invisible (05-film.css [data-beat-hold]) unseen until the beat creates its animations in the same task;
+     finish, end, Reduce Motion and a beat that throws all release it */
+  function releaseBeatHold() {
+    var board = document.getElementById('pmuBoard'); if (!board) return;
+    Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card[data-beat-hold]'), function (c) { c.removeAttribute('data-beat-hold'); });
+  }
+  /* Glass: one refraction band crosses the board in the camera's direction (a wide diagonal specular sheet, one element) */
+  function refract(dir, delay) {
+    if (reduced() || off.key) return null;
+    var stage = document.getElementById('pmuStage'); if (!stage) return null;
+    var old = stage.querySelector(':scope > .pmu-film-refract'); if (old) old.remove();
+    var wrap = H('i', 'pmu-film-refract', stage), band = H('i', '', wrap);
+    wrap.setAttribute('aria-hidden', 'true');
+    var from = dir < 0 ? 'translateX(260%) rotate(9deg)' : 'translateX(-120%) rotate(9deg)', to = dir < 0 ? 'translateX(-120%) rotate(9deg)' : 'translateX(260%) rotate(9deg)';
+    var a = anim(band, [{ transform: from, opacity: 0 }, { opacity: 1, offset: 0.18 }, { opacity: 1, offset: 0.72 }, { transform: to, opacity: 0 }],
+      { dur: 760, delay: delay == null ? 120 : delay, easing: E.depth, fill: 'both' });
+    gone(a, wrap);
+    return a;
+  }
+  /* Basic: an ink stroke draws under a first-row head (scaleX from the left, 300 OUT) and dries (fades) by 860 */
+  function inkStroke(card, d) {
+    var head = card.querySelector(':scope > .pmu-cardhead'); if (!head) return null;
+    var s = H('i', 'pmu-film-ink', head);
+    s.setAttribute('aria-hidden', 'true');
+    var a = anim(s, [{ transform: 'scaleX(0)', opacity: 1, easing: E.out }, { transform: 'scaleX(1)', opacity: 1, offset: 0.36, easing: 'cubic-bezier(.4,0,.6,1)' }, { transform: 'scaleX(1)', opacity: 0 }],
+      { dur: 860, delay: d, easing: 'linear', fill: 'both' });
+    gone(a, s);
+    return a;
+  }
+  /* the hero light floor (MOTION-4 RC3): a hero whose instruments made no light (Plans: bars and markers only) still
+     carries light in every voice. Basic and Glass: one light front crosses the hero body (800 DRAW); Friendly: a warm
+     bloom under the hero (opacity 0 -> .85 -> 0, 900 OUT); Retro and NieR have their scan bar and boot scanline. */
+  var LIGHTS = '.pmu-film-comet, .pmu-film-front, .pmu-film-head, .pmu-film-sweep, .pmu-film-glint, .pmu-film-floor, .pmu-film-warm, .pmu-odo';
+  function heroFloor(card, d) {
+    var f = fam(); if (f === 'retro' || f === 'nier' || !lit(card)) return null;
+    if (card.querySelector(LIGHTS)) return null;
+    var a;
+    if (f === 'friendly') {
+      var w = H('i', 'pmu-film-warm', null); w.setAttribute('aria-hidden', 'true'); card.insertBefore(w, card.firstChild);
+      a = anim(w, [{ opacity: 0, transform: 'scale(.86)' }, { opacity: 0.85, transform: 'scale(1)', offset: 0.34 }, { opacity: 0, transform: 'scale(1.04)' }], { dur: 900, delay: d, easing: E.out, fill: 'both' });
+      gone(a, w);
+      return a;
+    }
+    var wrap = H('i', 'pmu-film-floor', card), band = H('i', '', wrap);
+    wrap.setAttribute('aria-hidden', 'true');
+    a = anim(band, [{ transform: 'translateX(-100%)', opacity: 0 }, { opacity: 1, offset: 0.1 }, { opacity: 1, offset: 0.82 }, { transform: 'translateX(0%)', opacity: 0 }], { dur: 800, delay: d, easing: E.draw, fill: 'both' });
+    gone(a, wrap);
+    return a;
+  }
   /* ---- the moment: an arrival or a room change. It records every animation made through PMU.motion (rapid switching
      finishes it at once), holds the light budget and the reveal timeline, and ends when its signature beat is over ---- */
   var moment = null, inBeat = 0, momentListeners = [];
@@ -542,6 +696,7 @@
     root.removeAttribute('data-pmu-moment');
     var board = document.getElementById('pmuBoard');
     if (board) later(function () { if (!moment) board.removeAttribute('data-film'); });
+    releaseBeatHold();
     emitMoment('end', m);
   }
   /* rapid switching (6.2): the running moment ends at once in its final state (Animation.finish on everything it made;
@@ -553,6 +708,10 @@
     m.timers.forEach(clearTimeout);
     if (m.flights && m.flights.finish) { try { m.flights.finish(); } catch (error) {} }
     m.anims.forEach(function (a) { try { if (a.finish && a.playState !== 'finished' && a.playState !== 'idle') a.finish(); } catch (error) {} });
+    /* the old room's ghost: a fade not started yet (the new chrome never came) ends now too, so no still, blurred old room
+       stays over the next one */
+    if (m.ghost) { try { fadeGhost(m); if (m.ghost.fade && m.ghost.fade.finish && m.ghost.fade.playState !== 'finished') m.ghost.fade.finish(); } catch (error) {} }
+    releaseBeatHold();
     var board = document.getElementById('pmuBoard');
     if (board) Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card[data-body-wait]'), function (c) { if (c.querySelector(':scope > .pmu-cardbody > *')) c.removeAttribute('data-body-wait'); });
     m.queue = [];
@@ -600,28 +759,65 @@
      frame first. Without a GPU: the fade only (o.from lets a room change start part-way). Cards outside the viewport get
      no entrance. o.wave === false keeps the cards' own _pmuEnterDelay. ---- */
   function frames(cards, o) {
+    var m = moment;
+    /* the new chrome is in: the old room starts to fade now (MOTION-4 RC2: never earlier, so no empty board) */
+    if (m && m.ghost && !m.ghost.fade) fadeGhost(m);
     if (reduced() || M.paused() || !cards || !cards.length || off.plates) return;
     o = o || {};
-    var f = fam(), dir = o.dir || 0, sgn = dir < 0 ? -1 : 1, base = o.base || 0, sp = soft();
+    var f = fam(), dir = o.dir || 0, sgn = dir < 0 ? -1 : 1, base = o.base || 0, sp = soft(), V = camVoice(f);
     if (o.wave !== false) wave(cards, { base: 0, row: f === 'retro' ? 60 : T3.frameRow, col: T3.frameCol, cap: o.cap || T3.frameCap });
+    var cam = !sp && (f === 'basic' || f === 'friendly' || f === 'glass');
+    /* a room change pans by P (rail distance); the first arrival rises from below by a shorter 28 px in the same voice */
+    var P = dir ? camP() : 28, push = dir >= 0, centre = cam && f === 'glass' ? viewCentre() : null;
+    /* column rank inside each grid row (Friendly's alternating tilt) and the first row (Basic's ink strokes) */
+    var rowOf = {}, top = Infinity;
+    cards.forEach(function (c) { var y = +c.dataset.y || 0; top = Math.min(top, y); (rowOf[y] = rowOf[y] || []).push(c); });
+    Object.keys(rowOf).forEach(function (y) { rowOf[y].sort(function (a, b) { return (+a.dataset.x || 0) - (+b.dataset.x || 0); }).forEach(function (c, i) { c._pmuCol = i; }); });
+    /* the no-GPU profile on a room change: ONE board-level move (the new board rises P = 24 in the camera's direction from
+       90 % opacity, 280 OUT) instead of a fade per frame: the camera still moves, and no frame shows the board under 90 % */
+    var boardMove = sp && dir && f !== 'nier' && o.board && o.board.isConnected;
+    if (boardMove) anim(o.board, [{ opacity: 0.9, transform: 'translateY(' + (24 * sgn) + 'px)' }, { opacity: 1, transform: 'none' }], { dur: 280, delay: 0, easing: E.out });
+    var heroMade = false;
     cards.forEach(function (card) {
       if (!inView(card)) return;
-      var d = base + (card._pmuEnterDelay || 0);
+      var d = base + (card._pmuEnterDelay || 0), hero = card.hasAttribute('data-hero');
       card._pmuFrameAt = d;
+      if (m && !reduced()) card.setAttribute('data-beat-hold', '');
+      var travel = sp ? (boardMove ? 280 : T3.frameFade + 60) : f === 'friendly' ? springFn(V.frame.spring[0], V.frame.spring[1]).ms : f === 'glass' ? V.frame.ms : f === 'retro' ? 240 : f === 'nier' ? 420 : V.frame.ms;
       /* when this frame is at rest, on the moment's clock (a flight lands only on a frame at rest) */
-      card._pmuFrameEnd = moment ? since(moment) + d + (sp ? T3.frameFade + 60 : f === 'friendly' || f === 'glass' ? 520 : f === 'retro' ? 240 : T3.frameTravel) : 0;
-      if (f === 'nier') { bootPlate(card, d, sp && !card.hasAttribute('data-hero')); return; }
+      card._pmuFrameEnd = m ? since(m) + d + travel : 0;
+      if (f === 'nier') { bootPlate(card, d, sp && !hero); return; }
       if (sp) {
-        anim(card, [{ opacity: o.from || 0 }, { opacity: 1 }], { dur: T3.frameFade + 60, delay: d, easing: E.out });
-        if (f === 'glass' && card.hasAttribute('data-hero')) glint(card, d + 120);
+        if (!boardMove) anim(card, [{ opacity: o.from || 0 }, { opacity: 1 }], { dur: T3.frameFade + 60, delay: d, easing: E.out });
+        if (f === 'glass' && hero) glint(card, d + 120);
         return;
       }
       if (f === 'retro') { anim(card, [{ opacity: 0, transform: 'translateY(' + (8 * sgn) + 'px)' }, { opacity: 1, transform: 'none' }], { dur: 240, delay: d, easing: 'steps(4,jump-start)' }); return; }
-      var from = f === 'friendly' ? { y: 18 * sgn, rot: -1 } : f === 'glass' ? { sc: 1.02, blur: 6 } : { y: (dir ? 16 : 14) * sgn };
-      var tr = f === 'friendly' ? { ms: 520, ease: E.hop } : f === 'glass' ? { ms: 520, ease: E.depth } : { ms: T3.frameTravel, ease: E.settle };
-      anim(card, combo(tr.ms, { ms: T3.frameFade, ease: E.out, from: o.from || 0 }, tr, from), { dur: tr.ms, delay: d, easing: 'linear' });
-      if (f === 'glass' && card.hasAttribute('data-hero')) glint(card, d + 180);
+      var F = V.frame, keys, total;
+      if (f === 'friendly') {
+        /* hop: up from the plate's feet with one soft bounce, tilted so the plate's corner lifts 8 px whatever its width,
+           alternating by column (+ even, - odd) */
+        var sprg = springFn(F.spring[0], F.spring[1]), w = cardBox(card).w || 300;
+        var th = Math.atan(F.tilt / Math.max(40, w / 2)) * 180 / Math.PI * (card._pmuCol % 2 ? -1 : 1);
+        total = sprg.ms;
+        keys = camKeys(total, { op: { from: o.from || 0, to: 1, ms: F.fade, fn: M.curve(E.out) }, tr: { y: F.y * P * sgn, sc: F.sc, rot: th, ms: total, fn: sprg.fn, origin: '50% 100%' } }, 24);
+      } else if (f === 'glass') {
+        /* depth: out of the distance (push) or from in front of the lens (pull), about the board's visible centre (a real
+           dolly: plates far from the centre travel further), out of blur into focus, the hero focused first */
+        var bx = cardBox(card), org = centre ? (centre.x - bx.l).toFixed(1) + 'px ' + (centre.y - bx.t).toFixed(1) + 'px' : null;
+        total = F.ms;
+        keys = camKeys(total, { op: { from: o.from || 0, to: 1, ms: F.fade, fn: M.curve(E.out) }, tr: { y: F.y * P * sgn, sc: push ? F.push : F.pull, ms: total, fn: M.curve(F.ease), origin: org },
+          blur: { px: F.blur, ms: hero ? F.blurHero : F.blurMs, fn: M.curve(E.depth) } }, 18);
+      } else {
+        total = F.ms;
+        keys = camKeys(total, { op: { from: o.from || 0, to: 1, ms: F.fade, fn: M.curve(E.out) }, tr: { y: F.y * P * sgn, ms: total, fn: M.curve(F.ease) } }, 16);
+        /* ink: the first row's heads are underlined by a stroke that draws and dries */
+        if ((+card.dataset.y || 0) === top) inkStroke(card, d + 80);
+      }
+      anim(card, keys, { dur: total, delay: d, easing: 'linear' });
+      if (f === 'glass' && hero && !heroMade) { heroMade = true; glint(card, d + 200); }
     });
+    if (cam && f === 'glass') refract(dir < 0 ? -1 : 1, base + 100);
     if (f === 'retro' && o.scan !== false) scanBar(o.board || (cards[0] && cards[0].parentNode), base);
   }
 
@@ -652,7 +848,9 @@
         gone(anim(scan, [{ transform: 'translateY(0%)', opacity: 1 }, { transform: 'translateY(100%)', opacity: 1, offset: 0.98 }, { transform: 'translateY(100%)', opacity: 0 }],
           { dur: 300, delay: d, easing: 'steps(5,jump-start)', fill: 'both' }), scan);
       } else if (o.quiet && !soft() && !stepped) {
-        anim(body, combo(T3.quietTravel, { ms: T3.quietFade, ease: E.out }, { ms: T3.quietTravel, ease: E.settle }, { y: 6 }, 8), { dur: T3.quietTravel, delay: d, easing: 'linear' });
+        /* a supporting body in its voice (MOTION-4 4.2): Basic 6 px, Friendly 10 px (settles, no overshoot), Glass from .985 */
+        var bv = camVoice(f).body || CAMV.basic.body;
+        anim(body, combo(bv.ms, { ms: bv.fade, ease: E.out }, { ms: bv.ms, ease: bv.ease }, bv.sc ? { sc: bv.sc } : { y: bv.y }, 8), { dur: bv.ms, delay: d, easing: 'linear' });
       } else {
         anim(body, [{ opacity: 0 }, { opacity: 1 }], { dur: stepped ? 120 : o.quiet ? T3.quietFade : 160, delay: d, easing: stepped ? 'steps(' + (o.quiet ? 2 : 3) + ',jump-start)' : E.out });
       }
@@ -661,7 +859,10 @@
       var run = function () { entry.fn(d + (o.quiet ? 0 : T3.heroNum)); };
       try { if (o.quiet && PMU.charts && PMU.charts.quietly) PMU.charts.quietly(run); else run(); } catch (error) { console.error('[pm-usage] film reveal', error); }
     }
+    /* every hero carries light in every voice (MOTION-4 RC3) */
+    if (!o.quiet && moment && card.hasAttribute('data-hero') && innerOn(card)) { try { heroFloor(card, d + T3.heroNum); } catch (error) {} }
   }
+  function bodyMs() { var f = fam(); return (camVoice(f).body || CAMV.basic.body).ms; }
   /* the board calls this after each body of a moment is built: the hero at its time (arrival: the release; room change:
      200 after the click), the supporting bodies quietly from 280 after the hero, 24 apart in build (reading) order, cap
      360; a body built after its slot reveals at once. Before the arrival's release a body only records that it is built. */
@@ -689,7 +890,11 @@
     var m = moment; if (!m || m.room !== room || m.beatDone) return;
     m.beatDone = true;
     var beatAt = m.heroAt + T3.heroNum + T3.heroInstr, el = since(m);
-    playBeat(room, cards, { at: Math.max(0, beatAt - el) });
+    /* MOTION-4 RC5: the beat runs on the moment's timer T3.beatLead before its time, when every body is built AND drawn
+       (called at once, a room built fast ran it before its chart existed: Prompt cache lost its beat in 3 of 12 entries) */
+    var runAt = beatAt - T3.beatLead - el;
+    if (runAt <= 16) playBeat(room, cards, { at: Math.max(0, beatAt - el) });
+    else mtimer(m, runAt, function () { if (moment === m) playBeat(room, cards, { at: T3.beatLead }); });
     mtimer(m, Math.max(0, beatAt + 900 - el), function () { endMoment(m); });
   }
 
@@ -718,7 +923,7 @@
       cards.forEach(function (c) { c._pmuLeaving = true; c.removeAttribute('data-hero'); g.appendChild(c); });
       scroll.appendChild(g);
     }
-    var f = fam(), dir = o.dir || 1, base = o.sTop ? 'translateY(' + (-o.sTop) + 'px)' : '', a;
+    var f = fam(), dir = o.dir || 1, base = o.sTop ? 'translateY(' + (-o.sTop) + 'px)' : '', a, gAnims = [];
     if (soft()) a = anim(g, [{ opacity: 1, transform: base || 'none' }, { opacity: 0, transform: base || 'none' }], { dur: T3.ghostFade, easing: E.exit, fill: 'forwards' });
     else if (f === 'retro' || f === 'nier') {
       var n = f === 'nier' ? 8 : 8, ms = f === 'nier' ? 200 : 180;
@@ -726,37 +931,51 @@
       var line = H('i', f === 'nier' ? 'pmu-film-scan pmu-ghostscan' : 'pmu-film-scanbar pmu-ghostscan', g);
       gone(anim(line, [{ transform: 'translateY(0%)', opacity: 1 }, { transform: 'translateY(100%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(100%)', opacity: 0 }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'both' }), line);
     } else {
-      var from = { base: base, y: 0 };
-      var keys = combo(T3.ghostTravel, { ms: T3.ghostFade, ease: E.exit, from: 1, to: 0 }, { ms: T3.ghostTravel, ease: E['in'] }, from, 10);
-      /* the drift runs from rest to its end: combo eases towards rest, so the travel is written explicitly */
-      var ft = M.curve(E['in']), sc = f === 'glass' ? 0.985 : 0.992, rot = f === 'friendly' ? 0.6 * dir : 0, blur = f === 'glass' && !soft() ? 6 : 0;
-      keys.forEach(function (k) {
-        var e = ft(k.offset), tf = [];
-        if (base) tf.push(base);
-        tf.push('translateY(' + (-18 * dir * e).toFixed(2) + 'px)');
-        if (rot) tf.push('rotate(' + (rot * e).toFixed(3) + 'deg)');
-        tf.push('scale(' + (1 - (1 - sc) * e).toFixed(4) + ')');
-        k.transform = tf.join(' ');
-        if (blur) k.filter = 'blur(' + (blur * e).toFixed(2) + 'px)'; else delete k.filter;
-      });
-      a = anim(g, keys, { dur: T3.ghostTravel, easing: 'linear', fill: 'forwards' });
+      /* MOTION-4 RC1 / RC2 and 4.2: the camera's first half. The old room moves from the click (this task) on its voice's
+         path, at full opacity: Basic pans P up the rail (-P x dir, scale .985, 360 SLIDE); Friendly steps back and tilts
+         away about the visible centre (-0.8 P, scale .96, -1.4 deg x dir, 380); Glass passes the lens (push: scale 1.06,
+         pull: .94, -0.35 P, 400) and blurs out on a separate layer-less animation that leaves no filter behind. Its fade
+         starts when the new chrome is in (frames(): fadeGhost), so the board is never empty between the rooms. */
+      var CV = camVoice(f), gv = CV.ghost, P = camP(), cy = viewCentre().y + (o.sTop || 0);
+      var sc = f === 'glass' ? (dir > 0 ? gv.push : gv.pull) : gv.sc;
+      var tr = { base: base, y: gv.y * P * dir, rot: gv.rot ? gv.rot * dir : 0, sc: sc, ms: gv.ms, fn: M.curve(gv.ease), out: true,
+        origin: f === 'friendly' || f === 'glass' ? '50% ' + cy.toFixed(0) + 'px' : null };
+      a = anim(g, camKeys(gv.ms, { tr: tr }, 14), { dur: gv.ms, easing: 'linear', fill: 'forwards' });
+      if (gv.blur && !soft()) gAnims.push(anim(g, [{ filter: 'blur(0px)' }, { filter: 'blur(' + gv.blur + 'px)', offset: 0.55 }, { filter: 'blur(' + gv.blur + 'px)' }], { dur: gv.ms + 200, easing: E.out, fill: 'none' }));
+      var mm = moment;
+      if (mm && a) {
+        mm.ghost = { el: g, fade: null, fadeMs: CV.fade, done: null, move: a, anims: gAnims };
+        /* the new chrome never came (an empty room): the old room fades on its own */
+        mtimer(mm, 240, function () { fadeGhost(mm); });
+      } else if (a) gAnims.push(anim(g, [{ opacity: 1 }, { opacity: 0 }], { dur: CV.fade, delay: 100, easing: E.exit, fill: 'forwards' }));
     }
+    gAnims.push(a);
     var done = function () {
+      if (done.ran) return; done.ran = true;
       drop(Array.prototype.slice.call(g.querySelectorAll(':scope > .pmu-card')));
       /* the old board element empties into the hidden spare (40-board.js), never leaves the scroll pane */
-      if (o.ghost) { if (a) { try { a.cancel(); } catch (error) {} } g.textContent = ''; g.hidden = true; g.className = 'pmu-board'; g.removeAttribute('style'); ['data-film', 'data-op', 'data-held', 'data-hold-bodies'].forEach(function (a) { g.removeAttribute(a); }); }
+      if (o.ghost) { gAnims.concat(mg && mg.fade && mg.fade.cancel ? [mg.fade] : []).forEach(function (x) { if (x) { try { x.cancel(); } catch (error) {} } }); g.textContent = ''; g.hidden = true; g.className = 'pmu-board'; g.removeAttribute('style'); ['data-film', 'data-op', 'data-held', 'data-hold-bodies'].forEach(function (a) { g.removeAttribute(a); }); }
       else g.remove();
     };
-    if (a) a.finished.then(function () { later(done); }, done); else done();
+    var mg = moment && moment.ghost && moment.ghost.el === g ? moment.ghost : null;
+    if (mg) mg.done = done;
+    else if (a) a.finished.then(function () { later(done); }, done); else done();
     return g;
   }
   /* the key light moves with the camera (6.1): translateY(6 % of the stage x dir) -> 0, 520 SETTLE; with a GPU only (it is
      the one full-stage layer: without a GPU its motion costs the software compositor 11-15 ms per frame, PERF-3) */
+  /* MOTION-4 4.2: the key light moves in the voice of the camera. Basic pans 8 / 10 / 12 % of the stage by rail distance
+     (600 SETTLE); Friendly blooms from the hero's corner (scale .9, opacity .55 -> 1, 700 OUT); Glass dollies with the
+     camera (push 1.08, pull .94 -> 1, 600 DEPTH); Retro keeps its stepped pan; NieR has no key light */
   function keyPan(dir) {
     if (reduced() || soft() || off.key) return null;
     var stage = document.getElementById('pmuStage'), el = stage && stage.querySelector(':scope > .pmu-film-key:not(.pmu-key-old)');
     if (!el) return null;
-    return anim(el, [{ transform: 'translateY(' + (6 * (dir || 1)) + '%)' }, { transform: 'none' }], { dur: 520, easing: E.settle });
+    var f = fam(), d = dir || CAM.dir, pct = CAM.dist >= 4 ? 12 : CAM.dist >= 2 ? 10 : 8;
+    if (f === 'friendly') return anim(el, [{ transform: 'scale(.9)', transformOrigin: '22% 0', opacity: 0.55 }, { transform: 'none', transformOrigin: '22% 0', opacity: 1 }], { dur: 700, easing: E.out });
+    if (f === 'glass') return anim(el, [{ transform: 'scale(' + (d > 0 ? 1.08 : 0.94) + ')', transformOrigin: '50% 40%' }, { transform: 'none', transformOrigin: '50% 40%' }], { dur: 600, easing: E.depth });
+    if (f === 'retro') return anim(el, [{ transform: 'translateY(' + (6 * d) + '%)' }, { transform: 'none' }], { dur: 520, easing: 'steps(4,jump-start)' });
+    return anim(el, [{ transform: 'translateY(' + (pct * d) + '%)' }, { transform: 'none' }], { dur: 600, easing: E.settle });
   }
 
   /* ======== 6.3-6.6 shared-element flight (film.flight) ========
@@ -770,6 +989,7 @@
      flyer and its target swap in one frame and the target gets the landing light. Caps: 12 with a GPU, 6 without, 4 in
      NieR. Without a GPU: one element per flyer on a straight path, no takeoff. Reduce Motion: no flight. */
   var SHARE_RANK = { chart: 0, num: 1, ctl: 2, win: 3, acct: 4, prov: 5, reset: 6 };
+  var FILL = '.pmu-metertrack, .pmu-ladtrack, .pmu-skytrack';
   /* a room not visited yet (its keys unknown): the shares it is known to hold (WOW-SPEC-3 6.5), so the flock is chosen from
      what can land there instead of lifting numbers that will find no target */
   var ROOM_HINT = {
@@ -785,14 +1005,22 @@
   /* the keys (and the cards that hold them) each room showed on its first screen, recorded when its moment ends */
   function recordKeys(room) {
     var board = document.getElementById('pmuBoard'); if (!board || !room) return;
-    var keys = {}, cards = [];
+    var keys = {}, cards = [], home = {};
     Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card'), function (c) {
       if (!inView(c)) return;
       var list = c.querySelectorAll('[data-share]'); if (!list.length) return;
-      cards.push(c.getAttribute('data-widget'));
-      Array.prototype.forEach.call(list, function (e) { keys[e.getAttribute('data-share')] = true; });
+      var id = c.getAttribute('data-widget');
+      cards.push(id);
+      /* the plate that holds each key (MOTION-4 RC6: a revisit's flyers aim their early leg there; a used meter before a
+         headroom ladder, the hero before a plate) */
+      Array.prototype.forEach.call(list, function (e) {
+        var k = e.getAttribute('data-share'); keys[k] = true;
+        var ladder = !!(e.closest && e.closest('.pmu-ladrow, .pmu-ladtrack')), h = home[k];
+        if (!h || (h.ladder && !ladder) || (h.ladder === ladder && !h.hero && c.hasAttribute('data-hero'))) home[k] = { id: id, ladder: ladder, hero: c.hasAttribute('data-hero') };
+      });
     });
-    roomKeys[room] = { keys: keys, cards: cards };
+    var homes = {}; Object.keys(home).forEach(function (k) { homes[k] = home[k].id; });
+    roomKeys[room] = { keys: keys, cards: cards, home: homes };
   }
   momentListeners.push(function (what, m) { if (what === 'end' || what === 'finish') { try { recordKeys(m.room); } catch (error) {} } });
   function flightCards(room) {
@@ -852,8 +1080,10 @@
          redraws the bounding box of everything that moves (VM e3r5, Overview -> Costs: draw-gap dropped 7.5 -> 21.5) */
       if (soft() && shareKind(key) === 'chart') return;
       var keyEl = el;
-      /* a window flies as its meter's track (the cell that carries the key also holds its value and reset line) */
-      if (shareKind(key) === 'win') el = el.querySelector('.pmu-metertrack, .pmu-ladtrack') || el;
+      /* a window flies as its meter's track (the cell that carries the key also holds its value and reset line), and only
+         as a fill (MOTION-4 RC8): a Plans timeline bar or quota line carries the key for live patches, but its length is
+         the time to the reset, not the share used, so it never morphs into a meter (it arrives with its body) */
+      if (shareKind(key) === 'win') { el = el.matches && el.matches(FILL) ? el : el.querySelector(FILL); if (!el) return; }
       var r = el.getBoundingClientRect(); if (r.width < 2 || r.height < 2) return;
       var vw = Math.min(r.right, sr.right) - Math.max(r.left, sr.left), vh = Math.min(r.bottom, sr.bottom) - Math.max(r.top, sr.top);
       if (vw <= 0 || vh <= 0 || vw * vh < 0.5 * r.width * r.height) return;
@@ -940,10 +1170,22 @@
     if (!m || !rec || !rec.items.length || rec.to !== m.room || !flightOn()) return null;
     var layer = flightLayer(); if (!layer) return null;
     var f = fam(), sp = soft(), flyers = [];
-    rec.items.forEach(function (it) {
+    /* each flyer's home plate in the new room (MOTION-4 RC6 / RC7): a revisit knows it (recorded at the room's last visit);
+       a first visit predicts it from the widget naming. On a first visit a share whose home is unknown or below the first
+       screen does not lift at all (it left with the ghost instead of lifting, waiting and fading where it took off). */
+    var known = roomKeys[m.room], ids = PMU.board && PMU.board.visible ? PMU.board.visible(m.room) || [] : [];
+    var vh = Math.max(200, (window.innerHeight || 900) - 170);
+    var items = rec.items.filter(function (it) {
+      var h = known ? (known.home && known.home[it.key]) || null : homeOf(m.room, it.key, ids);
+      if (h && ids.indexOf(h) < 0) h = null;
+      if (h && !known) { var g0 = PMU.board.rect ? PMU.board.rect(h) : null, p0 = g0 && PMU.board.px ? PMU.board.px(g0) : null; if (!p0 || p0.t > vh) h = null; }
+      it.home = h;
+      return known ? true : !!h;
+    });
+    items.forEach(function (it) {
       var clone = cloneFor(it); if (!clone) return;
       var fl = makeFlyer(layer, it.r, clone, it, sp);
-      fl.it = it; fl.key = it.key; flyers.push(fl);
+      fl.it = it; fl.key = it.key; fl.home = it.home; flyers.push(fl);
       if (it.v) { var vc = it.v.el.cloneNode(true); stripClone(vc); vc.classList.add('pmu-fly-c'); applyFace(vc, it.v.font); fl.val = makeFlyer(layer, it.v.r, vc, it.v, sp); }
       it.el.style.visibility = 'hidden';
       if (it.v) it.v.el.style.visibility = 'hidden';
@@ -964,9 +1206,9 @@
     m.flights = F;
     /* a first visit predicts the cards that hold the targets (built after the hero, revealed with it) and every flyer
        starts toward its predicted plate when its takeoff ends; it re-aims at its real target when that exists */
-    if (!roomKeys[m.room] && PMU.board && PMU.board.visible) {
-      var ids = PMU.board.visible(m.room) || [], pred = [];
-      flyers.forEach(function (fl) { fl.home = homeOf(m.room, fl.key, ids); if (fl.home && pred.indexOf(fl.home) < 0) pred.push(fl.home); });
+    if (!known) {
+      var pred = [];
+      flyers.forEach(function (fl) { if (fl.home && pred.indexOf(fl.home) < 0) pred.push(fl.home); });
       m.predicted = pred;
     }
     m.flyCards = flightCards(m.room);
@@ -1066,7 +1308,8 @@
         var c = t.closest('.pmu-card'); if (!c || c.hasAttribute('data-late')) return;
         /* a window lands on the meter's track inside the cell that carries the key (the cell also holds the value and its
            reset line: a tower scaled to the whole cell became a block) */
-        var land0 = fl.it && fl.it.kind === 'win' ? t.querySelector('.pmu-metertrack, .pmu-ladtrack, .pmu-skytrack') || t : t;
+        var land0 = fl.it && fl.it.kind === 'win' ? (t.matches && t.matches(FILL) ? t : t.querySelector(FILL)) : t;
+        if (!land0) return;
         var r = land0.getBoundingClientRect(); if (r.width < 1 || r.height < 1 || r.bottom < sr.top || r.top > sr.bottom) return;
         /* the target's rect at REST: its plate and body may still be entering (a frame rises 16 px, a quiet body 6 px), so
            their current translation is taken off (computed style of two elements, read where the layout is clean) */
@@ -1088,7 +1331,7 @@
       }
       [pick.t, vt && vt.t].forEach(function (t) { if (!t) return; t.setAttribute('data-pmu-fly-target', ''); settleTarget(t); });
       /* the body that holds the target is fully in before the landing (its reveal ends at its slot + its fade) */
-      var bodyIn = Math.max(pick.card._pmuRevealAt != null ? pick.card._pmuRevealAt + T3.quietTravel : 0, pick.card._pmuFrameEnd || 0);
+      var bodyIn = Math.max(pick.card._pmuRevealAt != null ? pick.card._pmuRevealAt + bodyMs() : 0, pick.card._pmuFrameEnd || 0);
       var t0 = Math.max(start + Math.min(T3.flightCap, T3.flightStep * i), bodyIn - T3.flight);
       pick.bodyIn = bodyIn - el0;
       i++;
@@ -1135,14 +1378,15 @@
       else if (kind === 'num') { fsx = fsy = b.h / a.h; }
       else { fsx = fsy = Math.min(b.w / a.w, b.h / a.h); }
       dx = (b.x + b.w / 2) - (a.x + a.w / 2); dy = (b.y + b.h / 2) - (a.y + a.h / 2);
-      var fdur = Math.max(300, Math.round(T3.flight * (1 - 0.35 * from.p)));
+      var fdur = Math.max(300, Math.round(flightMs(f) * (1 - 0.35 * from.p)));
       /* the body that holds the target is fully in before the landing (the shorter leg starts later if it must) */
       if (pick.bodyIn != null && delay + fdur < pick.bodyIn) { delay = pick.bodyIn - fdur; from = preAt(fl, delay); }
       var cfy = M.curve('cubic-bezier(.55,.05,.35,1)'), cfs = M.curve(E.roll), kin = [];
       for (var j = 0; j <= 12; j++) { var oo = j / 12, ey = cfy(oo), es = cfs(oo); kin.push({ offset: oo, transform: 'translateY(' + (from.y + (dy - from.y) * ey).toFixed(2) + 'px) rotate(' + (from.r + (R - from.r) * es).toFixed(2) + 'deg) scale(' + (1 + (fsx - 1) * es).toFixed(4) + ',' + (1 + (fsy - 1) * es).toFixed(4) + ')' }); }
-      anim(fl.outer, [{ transform: 'translateX(' + from.x.toFixed(2) + 'px)' }, { transform: 'translateX(' + dx.toFixed(2) + 'px)' }], { dur: fdur, delay: delay, easing: E.slide, fill: 'forwards' });
+      var ok0 = outerPath(from.x, dx, f);
+      anim(fl.outer, ok0.keys, { dur: fdur, delay: delay, easing: ok0.easing, fill: 'forwards' });
       var lastF = anim(fl.inner, kin, { dur: fdur, delay: delay, easing: 'linear', fill: 'forwards' });
-      if (fl.takeoff) anim(fl.lift, [{ transform: 'translateY(-3px) scale(1.04)' }, { transform: 'none' }], { dur: fdur, delay: delay, easing: E.out, fill: 'forwards' });
+      if (fl.takeoff) liftPath(fl, fdur, delay, f);
       if (fl.shadow) anim(fl.shadow, [{ opacity: 1 }, { opacity: 0 }], { dur: fdur, delay: delay, easing: E.out, fill: 'forwards' });
       if (f === 'glass') glintFlyer(fl, delay + 40);
       fl.anim = lastF;
@@ -1166,7 +1410,7 @@
       else { sx = sy = Math.min(b.w / a.w, b.h / a.h); }
       tf = function (e) { return 'translateY(' + (dy * e.y).toFixed(2) + 'px) scale(' + (1 + (sx - 1) * e.s).toFixed(4) + ',' + (1 + (sy - 1) * e.s).toFixed(4) + ')'; };
     }
-    var dur = f === 'retro' ? 400 : f === 'nier' ? 360 : T3.flight;
+    var dur = f === 'retro' ? 400 : f === 'nier' ? 360 : flightMs(f);
     var stepped = f === 'retro' || f === 'nier', last;
     if (sp || stepped) {
       /* one element, straight path (no GPU, Retro, NieR): translate + scale together */
@@ -1174,18 +1418,49 @@
       last = anim(fl.outer, keys, { dur: dur, delay: delay, easing: stepped ? 'steps(' + (f === 'retro' ? 8 : 6) + ',jump-end)' : E.slide, fill: 'forwards' });
       if (f === 'nier' && !sp) afterimages(fl, keys, dur, delay);
     } else {
-      anim(fl.outer, [{ transform: 'translateX(0px)' }, { transform: 'translateX(' + dx.toFixed(2) + 'px)' }], { dur: dur, delay: delay, easing: E.slide, fill: 'forwards' });
+      var ok1 = outerPath(0, dx, f);
+      anim(fl.outer, ok1.keys, { dur: dur, delay: delay, easing: ok1.easing, fill: 'forwards' });
       var fy = M.curve('cubic-bezier(.55,.05,.35,1)'), fs = M.curve(E.roll), keys2 = [];
       for (var i = 0; i <= 12; i++) { var off2 = i / 12; keys2.push({ offset: off2, transform: tf({ y: fy(off2), s: fs(off2) }) }); }
       last = anim(fl.inner, keys2, { dur: dur, delay: delay, easing: 'linear', fill: 'forwards' });
-      /* the lift settles back as it flies (it lands at rest) */
-      if (fl.takeoff) anim(fl.lift, [{ transform: 'translateY(-3px) scale(1.04)' }, { transform: 'none' }], { dur: dur, delay: delay, easing: E.out, fill: 'forwards' });
+      /* the lift settles back as it flies (it lands at rest); Glass rises toward the lens on the way */
+      if (fl.takeoff) liftPath(fl, dur, delay, f);
       if (fl.shadow) anim(fl.shadow, [{ opacity: 1 }, { opacity: 0 }], { dur: dur, delay: delay, easing: E.out, fill: 'forwards' });
       if (f === 'glass') glintFlyer(fl, delay + 40);
     }
     fl.anim = last;
     if (!last) { land(fl); return; }
     last.finished.then(function () { land(fl); }, function () {});
+  }
+  /* MOTION-4 4.2 flight paths per voice: Basic 460 on the arc; Friendly hops (the path bows 28 px against gravity at
+     mid-flight, 520); Glass rises toward the lens (the lift grows 10 % at mid-flight, 500). The outer element carries X
+     (and Friendly's hop, in screen pixels whatever the flyer's scale); the lift carries the takeoff and the lens. */
+  function flightMs(f) { return f === 'friendly' ? 520 : f === 'glass' ? 500 : T3.flight; }
+  function outerPath(x0, x1, f) {
+    if (f !== 'friendly') return { keys: [{ transform: 'translateX(' + x0.toFixed(2) + 'px)' }, { transform: 'translateX(' + x1.toFixed(2) + 'px)' }], easing: E.slide };
+    var fx = M.curve(E.slide), out = [];
+    for (var i = 0; i <= 16; i++) { var t = i / 16; out.push({ offset: t, transform: 'translate(' + (x0 + (x1 - x0) * fx(t)).toFixed(2) + 'px,' + (-28 * Math.sin(Math.PI * t)).toFixed(2) + 'px)' }); }
+    return { keys: out, easing: 'linear' };
+  }
+  function liftPath(fl, dur, delay, f) {
+    if (f !== 'glass') { anim(fl.lift, [{ transform: 'translateY(-3px) scale(1.04)' }, { transform: 'none' }], { dur: dur, delay: delay, easing: E.out, fill: 'forwards' }); return; }
+    var out = [];
+    for (var i = 0; i <= 12; i++) { var t = i / 12, e = 1 - M.curve(E.out)(t), lens = 0.1 * Math.sin(Math.PI * t); out.push({ offset: t, transform: 'translateY(' + (-3 * e - 4 * Math.sin(Math.PI * t)).toFixed(2) + 'px) scale(' + (1 + 0.04 * e + lens).toFixed(4) + ')' }); }
+    out[out.length - 1].transform = 'none';
+    anim(fl.lift, out, { dur: dur, delay: delay, easing: 'linear', fill: 'forwards' });
+  }
+  /* Friendly's landing on a meter or a control: three warm dots puff out from the landing point and fade (a value or a
+     fill never scales) */
+  function puff(r) {
+    if (!r || reduced()) return;
+    var layer = flightLayer(); if (!layer) return;
+    var cx = r.x + r.w / 2, cy = r.y + r.h / 2;
+    [[-1, -0.7], [0, -1], [1, -0.7]].forEach(function (v, i) {
+      var dot = H('i', 'pmu-film-puff', layer);
+      dot.style.left = cx.toFixed(1) + 'px'; dot.style.top = cy.toFixed(1) + 'px';
+      gone(anim(dot, [{ transform: 'translate(-50%,-50%) scale(.4)', opacity: 0 }, { opacity: 0.95, offset: 0.2 },
+        { transform: 'translate(calc(-50% + ' + (10 * v[0]) + 'px), calc(-50% + ' + (10 * v[1]) + 'px)) scale(1)', opacity: 0 }], { dur: 360, delay: 20 * i, easing: E.out, fill: 'both' }), dot);
+    });
   }
   function afterimages(fl, keys, dur, delay) {
     [[0.4, 60], [0.2, 120]].forEach(function (p) {
@@ -1247,8 +1522,16 @@
     inBeat++;
     try {
       lightAt(lr, { noSweep: true, dur: T3.land });
-      if (f === 'friendly') anim(t, [{ transform: 'scale(1)' }, { transform: 'scale(1.06)', offset: 0.45 }, { transform: 'scale(1)' }], { dur: 240, easing: E.hop });
-      if (f === 'glass' && (fl.it && (fl.it.kind === 'prov' || fl.it.kind === 'acct'))) halo(t, { dur: 600 });
+      var kd = (fl.it && fl.it.kind) || 'num';
+      /* Friendly: marks and numbers land with a squash (a plate-like body, never a fill length); meters, ladders and
+         controls get a puff of three warm dots instead, so no fill ever reads longer than its value (MOTION-4 4.2) */
+      if (f === 'friendly') {
+        if (kd === 'prov' || kd === 'acct' || kd === 'num') anim(t, [{ transform: 'scale(1)' }, { transform: 'scale(1.08,.94)', offset: 0.3 }, { transform: 'scale(.97,1.03)', offset: 0.65 }, { transform: 'scale(1)' }], { dur: 280, easing: E.out });
+        else if (kd !== 'chart') puff(lr);
+      }
+      if (f === 'glass' && (kd === 'prov' || kd === 'acct')) halo(t, { dur: 600 });
+      /* Glass: a specular glint runs along a landed fill */
+      if (f === 'glass' && kd === 'win') glint(t, 40);
     } finally { inBeat--; }
   }
 
@@ -1275,16 +1558,21 @@
   var beats = {};
   function beat(room, fn) { beats[room] = fn; }
   function playBeat(room, cards, o) {
-    var fn = beats[room]; if (!fn || reduced()) return;
+    var fn = beats[room];
+    /* the beat's targets show from here: in the same task as the beat creates their animations (fill backwards keeps each
+       unseen until its delay), so none shows, hides and pops back (MOTION-4 RC4) */
+    releaseBeatHold();
+    if (!fn || reduced()) return;
     o = o || {};
     var m = moment, el = m ? since(m) : 0, last = 0;
     cards = (cards || []).filter(function (c) { return c.isConnected; });
     cards.forEach(function (c) { if (m && c._pmuRevealAt != null) c._pmuEnterDelay = Math.max(0, c._pmuRevealAt - el); last = Math.max(last, c._pmuEnterDelay || 0); });
     var heroes = cards.filter(function (c) { return c.hasAttribute('data-hero'); });
     inBeat++;
+    emitMoment('beat', m || { room: room });
     try { fn({ room: room, cards: cards, hero: heroes[0] || null, heroes: heroes, at: o.at || 0, last: last, inner: T3.heroNum }); }
     catch (error) { console.error('[pm-usage] film beat ' + room, error); }
-    finally { inBeat--; }
+    finally { inBeat--; emitMoment('beat-end', m || { room: room }); }
   }
 
   /* ---- the shell's power-on (3.1 Phase A): rail rows, brand, ink, title, head controls and the key light ---- */
@@ -1424,7 +1712,11 @@
     frames: frames, reveal: reveal, bodyBuilt: bodyBuilt, allBuilt: allBuilt, ghost: ghost,
     lit: lit, isQuiet: quietEl, lightBudget: lightBudget, flag: flag,
     budget: function (card, on) { if (card) card._pmuBudget = on !== false; }, lightAt: lightAt, rectIn: rectIn,
-    snapShares: snapShares, flight: flight, pairFlights: pairFlights, flightCards: flightCards, roomKeys: function () { return roomKeys; } };
+    snapShares: snapShares, flight: flight, pairFlights: pairFlights, flightCards: flightCards, roomKeys: function () { return roomKeys; },
+    /* MOTION-4 (lane b-motion) */
+    camera: camera, cam: function () { return { dir: CAM.dir, dist: CAM.dist, p: camP() }; }, CAMV: CAMV, springFn: springFn, refract: refract, heroFloor: heroFloor,
+    /* animations made before the moment began (the room title, 46-shell.js render) join it, so a rapid switch ends them too */
+    adopt: function (list) { var m = moment; if (!m) return; (list || []).forEach(function (a) { if (a) m.anims.push(a); }); } };
 })();
 
 /* ======== Live film (WOW-SPEC-3 8; WOW-TASKS-3 E3-6 .. E3-8; flag live, Q1) ========

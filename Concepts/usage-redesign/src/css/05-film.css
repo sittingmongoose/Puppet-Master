@@ -190,3 +190,52 @@ html[data-theme^="retro"] #panel-usage .pmu-flight > .pmu-film-at, html[data-o55
     linear-gradient(var(--pmu-ink), var(--pmu-ink)) 0 100% / 7px 1.5px, linear-gradient(var(--pmu-ink), var(--pmu-ink)) 0 100% / 1.5px 7px,
     linear-gradient(var(--pmu-ink), var(--pmu-ink)) 100% 100% / 7px 1.5px, linear-gradient(var(--pmu-ink), var(--pmu-ink)) 100% 100% / 1.5px 7px;
   background-repeat: no-repeat; }
+
+/* ---- MOTION-4 (lane b-motion, Jared's items 7 and 8): the layers of the room-change camera and the voices. Each is one
+   short-lived element PMU.film adds for one animation (transform and opacity only) and removes at its end. ---- */
+/* the hold of a room's signature beat (RC4): what the beat reveals from invisible stays unseen from the card's reveal until
+   the beat creates its animations in the same task (15-film.js playBeat removes data-beat-hold; finish, end and Reduce
+   Motion release it too). Content can mark any further target with data-beat. */
+#panel-usage .pmu-board > .pmu-card[data-beat-hold] [data-beat],
+#panel-usage .pmu-board > .pmu-card[data-beat-hold] .pmu-wmk,
+#panel-usage .pmu-board > .pmu-card[data-beat-hold] .pmu-accrow.is-eff .pmu-acclight,
+#panel-usage .pmu-board > .pmu-card[data-beat-hold] .pmu-freestate[data-tone="warn"],
+#panel-usage .pmu-board > .pmu-card[data-beat-hold] .pmu-alerttop .pmu-ico,
+#panel-usage .pmu-board > .pmu-card[data-beat-hold] .pmu-alerttop > svg { opacity: 0; }
+/* Glass: one refraction band crosses the stage in the camera's direction (a wide diagonal specular sheet) */
+#panel-usage .pmu-film-refract { position: absolute; inset: 0; z-index: 6; display: block; overflow: hidden; pointer-events: none; }
+#panel-usage .pmu-film-refract > i { position: absolute; top: -45%; bottom: -45%; left: 0; width: 38%; display: block; will-change: transform, opacity; mix-blend-mode: plus-lighter;
+  background: linear-gradient(100deg, transparent 0, rgba(255,255,255,0) 26%, rgba(255,255,255,.05) 40%, rgba(255,255,255,.13) 50%, rgba(214,238,255,.05) 60%, rgba(255,255,255,0) 74%, transparent 100%); }
+html[data-theme="glass-light"] #panel-usage .pmu-film-refract > i { mix-blend-mode: normal;
+  background: linear-gradient(100deg, transparent 0, rgba(255,255,255,0) 26%, rgba(255,255,255,.22) 42%, rgba(255,255,255,.46) 50%, rgba(220,236,255,.22) 58%, rgba(255,255,255,0) 74%, transparent 100%); }
+/* Basic: the ink stroke under a first-row head (draws from the left, then dries) */
+#panel-usage .pmu-cardhead > .pmu-film-ink { position: absolute; left: 14px; right: 14px; bottom: 0; height: 1.5px; display: block; pointer-events: none; transform-origin: 0 50%;
+  border-radius: 1px; will-change: transform, opacity; background: linear-gradient(90deg, var(--pmu-accent), color-mix(in srgb, var(--pmu-accent) 35%, transparent));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--pmu-accent) 45%, transparent); }
+html[data-theme$="-light"] #panel-usage .pmu-cardhead > .pmu-film-ink { box-shadow: none; }
+/* the hero light floor (RC3). Basic and Glass: a light front crosses the hero (a track-wide layer slides and lights its
+   right edge, with a faint wash behind it) */
+#panel-usage .pmu-card > .pmu-film-floor { position: absolute; inset: 0; z-index: 6; display: block; overflow: hidden; border-radius: inherit; pointer-events: none; }
+#panel-usage .pmu-card > .pmu-film-floor > i { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; display: block; will-change: transform, opacity;
+  background: linear-gradient(90deg, transparent 62%, color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 7%, transparent) 92%, color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 16%, transparent) 99.4%, transparent 100%); }
+#panel-usage .pmu-card > .pmu-film-floor > i::after { content: ""; position: absolute; right: -1px; top: 6%; bottom: 6%; width: 2px; border-radius: 1px;
+  background: linear-gradient(to bottom, transparent, color-mix(in srgb, #fff 55%, var(--pmu-l-key, var(--pmu-accent))) 30%, color-mix(in srgb, #fff 55%, var(--pmu-l-key, var(--pmu-accent))) 70%, transparent);
+  box-shadow: 0 0 18px 4px color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 30%, transparent); }
+html[data-theme$="-light"] #panel-usage .pmu-card > .pmu-film-floor > i::after { background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 70%, transparent) 30%, color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 70%, transparent) 70%, transparent);
+  box-shadow: 0 0 14px 3px color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 18%, transparent); }
+/* Friendly: a warm bloom under the hero (behind its content: the plate is a stacking context while a moment runs) */
+#panel-usage .pmu-card > .pmu-film-warm { position: absolute; inset: -14% -6%; z-index: -1; display: block; pointer-events: none; will-change: transform, opacity;
+  background: radial-gradient(60% 70% at 30% 34%, color-mix(in srgb, var(--pmu-l-key, #FF9F7A) 40%, transparent), color-mix(in srgb, var(--pmu-l-key, #FF9F7A) 12%, transparent) 52%, transparent 74%); }
+html[data-theme="friendly-light"] #panel-usage .pmu-card > .pmu-film-warm {
+  background: radial-gradient(60% 70% at 30% 34%, color-mix(in srgb, var(--pmu-l-key, #FF8F6B) 30%, transparent), color-mix(in srgb, var(--pmu-l-key, #FF8F6B) 9%, transparent) 52%, transparent 74%); }
+#panel-usage .pmu-board[data-film] > .pmu-card[data-hero] { isolation: isolate; }
+/* Friendly: the three warm dots of a landing on a meter or a control */
+#panel-usage .pmu-flight > .pmu-film-puff { position: absolute; width: 5px; height: 5px; margin: 0; display: block; border-radius: 50%; pointer-events: none; will-change: transform, opacity;
+  background: var(--pmu-l-key, #FF9F7A); box-shadow: 0 0 6px color-mix(in srgb, var(--pmu-l-key, #FF9F7A) 60%, transparent); }
+/* the head glow in the voices: Friendly a round bead with two echo dots (the comet's hop texture), Glass a white core
+   in a wide halo */
+#panel-usage .pmu-film-head[data-voice="hop"]::after { right: -5px; width: 10px; height: 10px; margin-top: -5px;
+  background: color-mix(in srgb, #fff 45%, var(--c, var(--pmu-calm)));
+  box-shadow: 0 0 8px 1px color-mix(in srgb, var(--c, var(--pmu-calm)) 55%, transparent), -9px 0 0 -2px color-mix(in srgb, var(--c, var(--pmu-calm)) 55%, transparent), -16px 0 0 -3px color-mix(in srgb, var(--c, var(--pmu-calm)) 35%, transparent); }
+#panel-usage .pmu-film-head[data-voice="depth"]::after { right: -18px; width: 36px; height: 36px; margin-top: -18px;
+  background: radial-gradient(circle, #fff 0, color-mix(in srgb, #fff 70%, var(--c, var(--pmu-calm))) 9%, color-mix(in srgb, var(--c, var(--pmu-calm)) 45%, transparent) 24%, transparent 66%); }
