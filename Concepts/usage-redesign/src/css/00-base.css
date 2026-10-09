@@ -251,6 +251,13 @@ html[data-theme^="retro"] #panel-usage .pmu-shell { --pmu-tone-calm: var(--pmu-s
   --pmu-dur-fill: 900ms; --pmu-dur-sweep: 900ms; --pmu-dur-count: 1000ms; --pmu-dur-value: 520ms; --pmu-dur-pulse: 420ms; --pmu-dur-morph: 520ms;
   --pmu-dur-slide: 260ms; --pmu-dur-lift: 140ms; --pmu-dur-settle: 220ms; --pmu-dur-morph-size: 260ms; --pmu-dur-cancel: 300ms; --pmu-dur-hover: 260ms;
   --pmu-dur-pop: 260ms; --pmu-dur-insp: 520ms; --pmu-dur-toggle: 260ms; --pmu-dur-readout: 140ms; --pmu-dur-flash: 620ms;
+  /* the room-change camera and the voices (MOTION-4; 15-film.js CAMV mirrors these): the pan P by rail distance (a
+     neighbour, two or three rooms, four or more; no GPU 24 px) and each voice's curve. Basic ink settles, Friendly hop
+     springs (plates only, never a value), Glass depth comes out of focus; values roll on --pmu-ease-roll in every voice */
+  --pmu-cam-p1: 40px; --pmu-cam-p2: 56px; --pmu-cam-p3: 72px; --pmu-cam-soft: 24px;
+  --pmu-ease-ink: cubic-bezier(.17,.84,.29,.99); --pmu-ease-hop: cubic-bezier(.34,1.56,.64,1); --pmu-ease-depth: cubic-bezier(.05,.7,.1,1);
+  --pmu-ease-roll: cubic-bezier(.16,1,.3,1); --pmu-ease-stepback: cubic-bezier(.3,0,.5,1);
+  --pmu-dur-cam-ink: 520ms; --pmu-dur-cam-hop: 600ms; --pmu-dur-cam-depth: 560ms;
   /* plate geometry (DESIGN-SPEC-ATLAS 3.1) */
   --pmu-head-plate: 52px; --pmu-head-line: 34px; --pmu-head-tile: 30px;
   --pmu-card-2: #232323;

@@ -173,6 +173,7 @@
     var a = anim(band, [{ transform: 'translateX(-120%) skewX(-20deg)', opacity: 0 }, { opacity: 1, offset: 0.2 }, { opacity: 1, offset: 0.7 }, { transform: 'translateX(320%) skewX(-20deg)', opacity: 0 }],
       { dur: 900, delay: d, easing: E.depth, fill: 'both' });
     gone(a, wrap);
+    return a;
   }
   /* Retro: one phosphor scan bar sweeps down the board on an entrance (480 ms in twelve steps) */
   function scanBar(board, d) {
@@ -1361,6 +1362,18 @@
     list.forEach(function (a) { try { if (a.playState !== 'finished' && a.effect && a.effect.getTiming().iterations !== Infinity) a.finish(); } catch (error) {} });
   }
   function leave(fl) {
+    /* a flyer on its early leg whose home plate turned out not to show its reading (a first visit: the plate shows one
+       window of the account) is absorbed into that plate: it ends its leg there and dissolves (scale .9, 220 OUT), never
+       fading mid-air and never landing on another reading (MOTION-4 RC7) */
+    var rest = 0;
+    if (fl.pre && fl.pre.a) { try { var ct = fl.pre.a.effect.getComputedTiming(); rest = Math.max(0, ((T3.takeoff + PRE.dur) * M.speed() - (ct.localTime || 0)) / M.speed()); } catch (error) { rest = 0; } }
+    if (rest > 0) {
+      fl.done = true;
+      anim(fl.lift, [{ transform: 'translateY(-3px) scale(1.04)' }, { transform: 'scale(.9)' }], { dur: 220, delay: Math.max(0, rest - 200), easing: E.out, fill: 'forwards' });
+      var ab = anim(fl.outer, [{ opacity: 1 }, { opacity: 0 }], { dur: 220, delay: Math.max(0, rest - 200), easing: E.out, fill: 'forwards' });
+      if (ab) ab.finished.then(function () { later(function () { preCancel(fl); fl.outer.remove(); }); }, function () { fl.outer.remove(); }); else fl.outer.remove();
+      return;
+    }
     var a = anim(fl.outer, [{ opacity: 1 }, { opacity: 0 }], { dur: T3.ghostFade, easing: E.exit, fill: 'forwards' });
     fl.done = true;
     if (a) a.finished.then(function () { later(function () { fl.outer.remove(); }); }, function () { fl.outer.remove(); }); else fl.outer.remove();
@@ -1491,7 +1504,9 @@
     var box = H('i', 'pmu-film-at', layer);
     box.style.cssText = 'left:' + (r.x - 3).toFixed(1) + 'px;top:' + (r.y - 2).toFixed(1) + 'px;width:' + (r.w + 6).toFixed(1) + 'px;height:' + (r.h + 4).toFixed(1) + 'px';
     var a = flash(box, { tone: o.tone, noSweep: true, dur: o.dur });
-    var b = !o.noSweep && !soft() ? sweep(box, { delay: (o.delay || 0) + 120, dur: 650 }) : null;
+    box.setAttribute('data-voice', voice().name);
+    /* a live lead in its voice (MOTION-4 4.2): Glass a specular glint instead of the sweep; Friendly's flash is warm (CSS) */
+    var b = !o.noSweep && !soft() ? (fam() === 'glass' ? glint(box, (o.delay || 0) + 120) : sweep(box, { delay: (o.delay || 0) + 120, dur: 650 })) : null;
     var lastA = b || a;
     if (lastA) lastA.finished.then(function () { later(function () { box.remove(); }); }, function () { box.remove(); }); else box.remove();
     return box;
