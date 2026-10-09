@@ -672,7 +672,10 @@
     const stamp = () => {
       if (stamped) return; stamped = true;
       shown(); hs.forEach(unbow);
-      if (!acts(svg)) { SND('celebrate'); return; }
+      /* the instant end state (Reduced Motion, Still, low resource): both state sounds play - the save, then the
+         celebration 120 ms after it, clear of the merge window (an instant celebrate 14-16 ms after the save was
+         merged into it; the act's picture is already its end state, so the hold costs nothing) */
+      if (!acts(svg)) { M.after(120, () => SND('celebrate')); return; }
       hs.forEach((g, i) => joy(g, 620, i * 60));
       if (A.rig) A.rig.cheer(svg, 'all', { hop: 8, dur: 360, stagger: 60, steps: 2, arm: 0.6, lean: 0 });
       if (sign) lockOn(svg, sign, 0);
