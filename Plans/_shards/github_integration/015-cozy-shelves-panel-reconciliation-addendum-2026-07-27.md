@@ -2,9 +2,9 @@
 
 Source: `Plans/GitHub_Integration.md`
 
-Source lines: L2118-L2516
+Source lines: L2118-L2520
 
-Source SHA256: `a128627d85b0eb7cafb591dd7f33e769fcad42a272294631f99c93f272a50e4c`
+Source SHA256: `5784359331c772b8e0d3e514d23155891ecec7e845ab4a6cdda0a54db596661b`
 
 ---
 
@@ -265,7 +265,10 @@ canonical_text: >-
   contract with full logs escalating to the bottom runtime zone, and section stacks reuse the Source Control
   two-level scroll model (expanded sections scroll internally under max-height; the outer stack scrolls when
   combined sections exceed the panel). The Current Branch / Workflows / Settings ownership split is
-  unchanged; this unit governs only their presentation inside the rail.
+  unchanged; this unit governs only their presentation inside the rail. Amended 2026-10-09 (DL-162):
+  segmented-tab labels no longer abbreviate at any tier; they fit as FinalGUISpec F3-620 says (every full
+  label, then the active tab's full label with glyphs for the others, then glyphs only), and each tab keeps
+  its full accessible label.
 gui_related: true
 gui_classification_reason: Defines the user-visible subview navigation and width-tier behavior of the GitHub Actions rail panel.
 depends_on: [GI-020]
@@ -273,7 +276,7 @@ unblocks: []
 acceptance_criteria:
 - The three subviews present as segmented tabs with exactly one active subview; no accordion or drill-in substitute IA.
 - Behavior is specified across the 240-480px envelope with 280px default; nothing depends on widths below 240px outside test-only adversarial checks.
-- Abbreviated or glyph tabs retain full accessible labels.
+- Glyph-only tabs retain full accessible labels, and no tab label is abbreviated (DL-162).
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -289,6 +292,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - 'Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)'
+- 'Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; tab labels fit by FinalGUISpec F3-620, never abbreviated)'
 preserved_exact_tokens:
 - Current Branch
 - Workflows

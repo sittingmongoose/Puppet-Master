@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32746-L33427
+Source lines: L32753-L33442
 
-Source SHA256: `6c5c21f4243da1e3e553ad7a12acfafc3b059a1725e54f0bfd9ebc23790bc07b`
+Source SHA256: `4d0cbee4c81a8f9772413cc2ad62c810efe938f8f4575e9a79f64a238de7c7b1`
 
 ---
 
@@ -218,7 +218,10 @@ canonical_text: >-
   basic-light sets the category purple to #9C27B0 and the category amber to #F57C00.
   --accent-primary is reserved for selection state and never doubles as a category color.
   Category tint fills use the fixed tint steps 7%, 11%, 16%, and 20% over the panel base
-  color, precomputed per theme at build time; no runtime color mixing occurs.
+  color, precomputed per theme at build time; no runtime color mixing occurs. Amended
+  2026-10-09 (DL-162): the left rail's shelves take their tints from the roles of F3-618
+  (fill, head band, edge hairline, row hover, open row) at that unit's per-family steps; the
+  --cat-* family, its two override sets and the selection-only rule stand.
 gui_related: true
 gui_classification_reason: This unit defines the visible category color system for panel shelves and its theme overrides.
 split_recommended: false
@@ -591,7 +594,10 @@ canonical_text: >-
   status pill may keep its longer form; width tiers (min/mid/wide) remain layout-chrome
   signals only (padding, owner hide, generic icon-only tab chrome) and never decide
   label truncation; the Slint realization selects among precomputed label variants by
-  measured available width. (4) ONE-SHOT PANEL ENTER + ABRUPT-ONLY REMEASURE - the
+  measured available width. Amended 2026-10-09 (DL-162): in the left rail the ladder has no
+  abbreviated form and no label is shortened; F3-620 owns rail fitting (every tab label, then
+  the active tab's label with icons for the rest, then icons only, and names that stack or
+  lose their middle). (4) ONE-SHOT PANEL ENTER + ABRUPT-ONLY REMEASURE - the
   panel enter animation applies once on activation and is removed on completion (never
   a persistent animation on the active view, which restarts on style invalidation and
   reads as a black flash), and expanded-accordion height remeasure runs only on abrupt
@@ -621,6 +627,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Concepts/ChatGuiUpdates2.md section 'Cozy Shelves rail concepts (2026-07-27)' (fix-wave change ledger; source-lineage-only)"
+- "Plans/Decision_Log.md#DL-162 (owner decision, 2026-10-09; amends (3) for the left rail)"
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)"
 preserved_exact_tokens:
@@ -632,8 +639,9 @@ compatibility_only_notes:
 - "Slint portability: popup layering via PopupWindow; label variants precomputed and chosen by measured width; enter animation is a one-shot property animation; no arbitrary-content backdrop blur, no SVG filters, precomputed color math."
 stale_retired_dispositions:
 - "Hardcoded px-breakpoint label swapping in earlier concept revisions is retired lineage; measure-based fitting supersedes it."
+- "The abbreviated step of the (3) fit ladder is retired for the left rail on 2026-10-09 (DL-162); F3-620 owns rail label fitting."
 owner_boundary_notes:
-- "F3-472 owns expander anatomy; F3-473 owns the motion map; this unit owns popup layering, chevron uniqueness, label-fit policy, and enter/remeasure timing."
+- "F3-472 owns expander anatomy; F3-473 owns the motion map; this unit owns popup layering, chevron uniqueness, label-fit policy, and enter/remeasure timing; in the left rail F3-620 owns label fitting and F3-619 replaces pill, banner-status and chip capsules with a glyph and a word."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```

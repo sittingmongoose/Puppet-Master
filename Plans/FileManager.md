@@ -4589,6 +4589,8 @@ canonical_text: >-
   projection of Source Control state: repository state ownership, git semantics, staging, and
   refresh cadence remain with Source Control and worktree contracts per F-057, with file identity,
   repo_id, and worktree_id handed off explicitly.
+  Amended 2026-10-09 (DL-162): the letters draw without a capsule in one fixed column, and the
+  rollup's "N changed" count is a plain number, not a chip (FinalGUISpec F3-619).
 gui_related: true
 gui_classification_reason: This unit governs visible file-tree git badge, rollup tint, and count-chip presentation.
 depends_on: [F-057]
@@ -4612,6 +4614,7 @@ source_lineage:
   - user decision 2026-07-27 (Cozy Shelves panel review)
   - Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)
   - Plans/FileManager.md:165
+  - Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; letters and counts without capsules, FinalGUISpec F3-619)
 source_atom_ids: []
 preserved_exact_tokens: ["optional Git status strip"]
 negative_constraints:

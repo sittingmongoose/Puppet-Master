@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L2234-L2466
+Source lines: L2234-L2470
 
-Source SHA256: `0f6862817d85cfe80bc72c7eadf312b269e62156b7bbd54785bf11cea7d5f2b0`
+Source SHA256: `8cdf9c1f55b1a22fefbe40697928c4f6aab276ef2cab5c95c716d3b98109bb9d`
 
 ---
 
@@ -92,6 +92,9 @@ canonical_text: >-
   recovery/disclosure provenance link required by the Case L consumer contract. The health dot never uses
   --accent-primary, which stays reserved for selection (user decision 2026-07-27); category shelf tinting
   is a separate --cat-* per-theme indirection concern and does not encode health or freshness.
+  Amended 2026-10-09 (DL-162): in the left rail the health dot is drawn as FinalGUISpec F3-619's status glyph
+  with its word, and the staleness chip as a glyph and a word with no capsule; the two channels, the nine
+  distinguishable combinations and the selection-only accent are unchanged.
 gui_related: true
 gui_classification_reason: Defines the visible badge/chip treatment for artifact projection trust states.
 depends_on: [RAP-045]
@@ -118,6 +121,7 @@ source_lineage:
   - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
   - "user decision 2026-07-27"
   - "Plans/Runtime_Artifacts_Panel.md:2037-2042"
+  - "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; glyph and word in place of dot and chip, FinalGUISpec F3-619)"
 preserved_exact_tokens:
   - projection_freshness
   - projection_health

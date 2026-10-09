@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5339-L26474
+Source lines: L5341-L26478
 
-Source SHA256: `6c5c21f4243da1e3e553ad7a12acfafc3b059a1725e54f0bfd9ebc23790bc07b`
+Source SHA256: `4d0cbee4c81a8f9772413cc2ad62c810efe938f8f4575e9a79f64a238de7c7b1`
 
 ---
 
@@ -10492,7 +10492,8 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Side panels adapt at 480px+, 360-479px, 280-359px, and 240px minimum widths by reducing
   text, moving footer context to icons or context percent, and placing extras behind an
-  overflow menu with tooltips where needed.
+  overflow menu with tooltips where needed. Amended 2026-10-09 (DL-162): the left rail's
+  panels never reduce or abbreviate text by width; they fit by layout as F3-620 says.
 gui_related: true
 gui_classification_reason: >-
   This unit defines side-panel responsive control density.
@@ -10517,6 +10518,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0131"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; the left rail never reduces text by width)"
 preserved_exact_tokens:
 - "480px+"
 - "360-479px"

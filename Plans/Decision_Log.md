@@ -3541,6 +3541,47 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-2026
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-606, ContractName:Plans/FinalGUISpec.md#F3-607, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-015, ContractName:Plans/DRY_Rules.md#DR-047
 
+### DL-162: The left rail takes the Polish design
+
+**Question:** Which of the left-rail concepts becomes the left rail?
+
+**Why it came up:** Jared found the left rail cramped and hard to read: type as small as 7 px, too much on one line, pills and chips everywhere, and tab labels shortened to fit. On 2026-10-02 he asked for concepts in a review copy, `Concepts/LeftRailPMConcept7.html`, under hard rules: no pills, no boxes with coloured side bars, no emoji, the chat assistant's dropdown style, every theme and NieR Mode, motion that matters and readable type. Four concepts were built: A "Ledger", B "Stack", C "Lens" and, landed on 2026-10-05, D "Polish", next to today's rail as "Current".
+
+**What you get:**
+- Today's panels and their coloured shelf boxes stay; Polish tidies them. Each shelf is one box, its head is a band across its top, a closed shelf is just its head, and rows sit 2 px inside the box with matching rounded corners, so every hover and selection lines up with its box.
+- More room for names on a narrow rail: 3 px from the rail edge to a box, 5 px of padding in a row, 4 px between a chevron, a status mark and the text, and names start 24 px from the edge instead of 31.
+- One readable type ladder: titles 13 px, labels 12 px, names 12.5 px, facts and code 11.5 px, nothing under 11 px; Retro half a pixel smaller because its font runs wide. Text uses each look's own fonts.
+- No pills anywhere. A status is a small mark whose shape is the state (a solid disc with a check for done, a cross for failed, a triangle for a warning, a dot with a halo for something live, an empty ring for stopped, a slowly turning dashed ring for pending, a half-filled circle for changed, a tray for a stash, and a few more) followed by the state in words, in the same colour. Counts are plain numbers in one column.
+- Nothing is abbreviated. A summary that does not fit moves under its label, long names keep their end and lose their middle (`ci-build-…-publish.yml`), a changed file shows its name on the first line and its folder and changes on the second, and tabs show every label when they fit, then only the open tab's label, then icons, each with its full name on hover.
+- Every dropdown in the rail opens like the chat's model and mode pickers, with their look, their sprouting motion and the keyboard.
+- Motion in each look's own voice: Basic crisp, Friendly springy, Glass gliding (a soft blur only on the shelf boxes as they arrive), Retro stepped, NieR Mode drawn in ink. Animation speed and reduced motion are respected.
+- Two small additions in Source Control: the worktree owner filter becomes one Owner dropdown, and the publish and review card's details fold away and stay folded until opened.
+
+**What it costs:**
+- Every rail panel's owner text that spoke of chips, pills, badges or abbreviated tab labels now reads through the rail's rules; Docker Manager, Actions & Pipelines and the worktree filters change in their own units.
+- At the narrowest widths tabs show icons rather than short words, so a tab's name is on hover only.
+- The rail's status marks are not the chat's 13 status marks: the two sets differ (the chat's failed mark is a triangle, the rail's warning mark is). Whether one set should serve both is an open question for Jared.
+- The rail's header and tab plates keep the frosted scroll-under they already had in Basic, Friendly and Retro, which F3-431's closed blur budget does not list; Glass turns it off. Whether the budget admits it, or the product draws those plates solid, is an open question for Jared.
+- The concept still has three issues Jared raised on the same day (Jujutsu sub-text alignment, Jujutsu tabs that do nothing, and Retro and NieR tab-switch motion); they are being fixed under this decision, and any canon they change is recorded with it.
+
+**Options considered:** A "Ledger" (read in place: calm two-line rows, an overflow dropdown for tabs), B "Stack" (drill in: a summary page per panel and no tabs), C "Lens" (a detail sheet beside the rail and morphing icon tabs), D "Polish" (today's rail, polished), or keeping the current rail. Jared chose D. The rail's width envelope (240 px minimum, 280 px default, 480 px maximum, F3-471) and the 48 px icon-only activity bar (F3-198) are unchanged.
+
+**What the owner decided** (in plain words):
+- 2026-10-09, in his request: go with the Polish design, finish the rest of the rail in it with the newer NieR Mode changes and the looks' built-in fonts in mind, fix the three issues he found, and update the plans, DRY rules, commands and wiring wherever the work changes them.
+
+**What the spec now says:**
+1. **Geometry, shelves and type** (`Plans/FinalGUISpec.md#F3-618`; F3-474's shelf tints and section 3.5's selection stripe amended for the rail).
+2. **Statuses and counts** (`Plans/FinalGUISpec.md#F3-619`), which the panel owners' chip, pill and badge wording now reads through (`Plans/Runtime_Artifacts_Panel.md#RAP-049`, `Plans/FileManager.md#F-074` and `Plans/Automated_Testing_System.md#ATS-028` amended).
+3. **Fitting by layout** (`Plans/FinalGUISpec.md#F3-620`; `#F3-480` (3), `#F3-445`'s tab recipe and `#F3-196` amended for the rail; `Plans/Containers_Registry_and_Unraid.md#CRAU-098`, `Plans/UI_Command_Catalog.md#UCC-136` and `Plans/GitHub_Integration.md#GI-039` amended: tab labels are never abbreviated).
+4. **Dropdowns and motion** (`Plans/FinalGUISpec.md#F3-621`).
+5. **The Owner dropdown and the folding publish card** (`Plans/FinalGUISpec.md#F3-622`; `Plans/WorktreeGitImprovement.md#W-075` amended). Neither adds a command or a wiring row.
+6. **One owner for the rail's look** (`Plans/DRY_Rules.md#DR-057`).
+7. **Not decided yet:** whether the Jujutsu view of Source Control has sub-tabs, the commands and wiring the build of the remaining six panels adds, and the activity bar's More tray. They are recorded under this decision when they are settled.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md`, SHA-256 `4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06` (the owner request, verbatim, and the design he chose); the concept source `Concepts/leftrail-redesign/src/concepts/d/` at commit c93e341606 (concept lineage only).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-620, ContractName:Plans/FinalGUISpec.md#F3-621, ContractName:Plans/FinalGUISpec.md#F3-622, ContractName:Plans/DRY_Rules.md#DR-057
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -12286,6 +12327,71 @@ negative_constraints:
   - "Do not add a command, wiring row or setting for the removed button."
 owner_hints:
   - Plans/FinalGUISpec.md
+```
+
+### DL-162 - The Left Rail Takes The Polish Design
+
+```yaml
+plan_unit_id: DL-162
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-162 records the owner decision of 2026-10-09 that the left rail takes concept D, "Polish", of the left-rail
+  review copy. The nine rail panels keep the Cozy Shelves structure and coloured shelf boxes with tighter geometry
+  (a 3 px gutter, a 2 px inset, an outer radius R and an inner radius R minus the inset, row names 24 px from the
+  rail edge), one type ladder with nothing under 11 px, and the looks' own faces (F3-618). Statuses are a glyph
+  whose shape is the state plus a coloured word, counts are plain tabular numbers, and nothing is a pill or carries a
+  coloured side bar (F3-619). Text fits by layout and is never abbreviated, tab strips included (F3-620; F3-480 (3),
+  F3-445, CRAU-098, UCC-136 and GI-039 amended). Every rail dropdown is the chat picker, and motion is per theme family:
+  Basic crisp, Friendly springy, Glass gliding with blur only on the shelf boxes, Retro stepped and NieR Mode ink,
+  under the Animation speed and reduced-motion settings (F3-621). The worktree owner filter becomes an Owner
+  dropdown and the publish and review card folds (F3-622, W-075 amended), with no new command. DR-057 keeps the
+  grammar in one owner. Open owner questions: whether the rail's glyphs and the chat's 13 status marks (F3-585)
+  should be one set, and whether the rail's frosted scroll-under plates fit F3-431's blur budget. Left for later
+  under this decision: the Jujutsu view's sub-tabs, the remaining panels' commands and wiring, and the More tray.
+gui_related: true
+gui_classification_reason: Records an owner decision on the left rail's presentation.
+split_recommended: false
+depends_on: [F3-472, F3-474, F3-480, F3-445, F3-471]
+unblocks: [F3-618, F3-619, F3-620, F3-621, F3-622, DR-057]
+acceptance_criteria:
+  - "The rail's geometry, type, statuses, fitting, dropdowns and motion are owned by F3-618 to F3-622, and the amended consumer units point at them."
+  - "No command, action or wiring row is added by this decision."
+  - "The owner's decision is recorded in plain words with its source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: rail_presentation_drift
+reasoning_tier: high
+context_scope: left_rail_polish
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/Containers_Registry_and_Unraid.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/FileManager.md
+  - Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06"
+  - "Concepts/leftrail-redesign/src/concepts/d/ at commit c93e341606 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-162"
+  - "Polish"
+  - "never abbreviated"
+negative_constraints:
+  - "Do not add a command, an action or a wiring row through this decision."
+  - "Do not reintroduce pills, coloured side bars or abbreviated labels in the left rail."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
 ```
 
 ## Migration Coverage
