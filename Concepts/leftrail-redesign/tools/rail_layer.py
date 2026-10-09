@@ -54,6 +54,14 @@ NIER_SELECTOR_PATCHES = [
     ("const STRIP_SEL = '.page-tab, ",
      "const STRIP_SEL = '.page-tab, .pmr-strip, ",
      'nier strip list (rail)'),
+    # Target brackets on a chosen item whose box changes when it is chosen (a rail tab shows its label): the brackets
+    # are placed on the next frame, after the click has landed, and lock on afresh there, so they frame the box the
+    # ink fills instead of the tab as it was before the click (concept D's tabs carry .pmr-lock, 31-tabs.js)
+    ("    if (retLock) window.clearTimeout(retLock);\n    retT = t; retPlace(t);\n    retLock = later(",
+     "    if (retLock) window.clearTimeout(retLock);\n    retT = t;\n"
+     "    if (t.closest('.pmr-lock')) window.requestAnimationFrame(() => { if (retT === t && ret) { ret.removeAttribute('data-on'); retPlace(t); } });\n"
+     "    else retPlace(t);\n    retLock = later(",
+     'nier brackets lock after the click (rail)'),
 ]
 
 CONCEPT_IDS = ('a', 'b', 'c', 'd')

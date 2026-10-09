@@ -3,9 +3,13 @@
      Basic    crisp: short rise, ease-out
      Friendly springy: a taller rise with overshoot
      Glass    gliding: a long, soft rise out of a light blur
-     Retro    stepped: the same moves in three hard steps
-     NieR     ink: rows are wiped in left to right, like a terminal drawing a line */
+     Retro    stepped: on the step clock (TICK) a list prints in line by line, one line per tick, each
+              line appearing in one step; single moves (an icon, a chip) go in three hard steps
+     NieR     ink: rows are wiped in left to right, like a terminal drawing a line
+   Tab changes are 31-tabs.js; it calls enterPane here for the view that comes in. */
 
+/* Retro's step clock: two frames at 60 Hz. Every Retro part of a tab change or a print changes only on a tick. */
+const TICK = 33;
 const FAM_MOTION = {
   basic:    { dy: 6,  dx: 14, dur: 240, step: 22, ease: 'cubic-bezier(.2, .8, .2, 1)' },
   friendly: { dy: 10, dx: 18, dur: 420, step: 30, ease: 'cubic-bezier(.34, 1.45, .5, 1)', scale: .985 },
@@ -28,6 +32,18 @@ function enterFrames(f, dx, dy) {
   return [a, b];
 }
 function stopEnter(el) { el.getAnimations().forEach(a => { if (a.id === 'd-enter') a.cancel(); }); }
+/* A pending animation starts at the time of the frame it was made in, and the shell's own fit pass (PMPillFit, run on
+   every panel switch and tab click) can make that frame long: on the VM it took half a second, and every move was
+   over before the next frame. So a change collects what it makes (o.anims) and starts it all again, together, on the
+   next frame: the first frame shows the start, then everything runs from one start time. */
+function startTogether(anims) {
+  if (!anims || !anims.length) return;
+  requestAnimationFrame(() => {
+    const t = document.timeline.currentTime;
+    if (t == null) return;
+    anims.forEach(a => { try { if (a.playState !== 'idle') a.startTime = t; } catch (e) { /* gone */ } });
+  });
+}
 /* stagger a list in; runs once per call, never on scroll */
 function cascade(list, opts) {
   if (reduced() || !list.length) return;
@@ -39,6 +55,7 @@ function cascade(list, opts) {
       duration: Math.round(f.dur * (o.durK || 1)), easing: f.ease, delay: (o.delay || 0) + i * (o.step != null ? o.step : f.step), fill: 'backwards',
     });
     a.id = 'd-enter';
+    if (o.anims) o.anims.push(a);
   });
 }
 const visible = el => !!(el && el.offsetParent !== null && el.getClientRects().length);
@@ -63,9 +80,82 @@ function dealList(pane) {
   });
   return out;
 }
-/* play a deal: boxes settle with the next row, rows follow one step apart; capped so a long list never drags */
+/* Retro prints, like a terminal: one line per tick, each line hidden until its tick and then simply there (no fade, no
+   slide); a box opens with its first line and grows down with every line printed into it, its bottom edge riding the
+   cursor; the Files tree prints row by row through its open folders; past the cap the rest comes with the last line,
+   so a long list never drags. o.from: the first tick (default 1: the frame after the change) */
+/* a box whose children stack one under another (a list, a step chain) prints child by child; a row (under 44 px) or
+   anything laid out side by side is one line */
+function lineSplit(el, depth) {
+  if (depth > 3 || el.offsetHeight < 44) return [el];
+  const kids = Array.from(el.children).filter(k => k.offsetHeight > 0 && k.getClientRects().length);
+  if (kids.length < 2) return [el];
+  const rects = kids.map(k => k.getBoundingClientRect());
+  for (let i = 1; i < rects.length; i++) if (rects[i].top < rects[i - 1].bottom - 2) return [el];
+  return kids.flatMap(k => lineSplit(k, depth + 1));
+}
+/* the Files tree: a folder's row, then its open children as a box (their indent guide grows with them) */
+function treeLines(node, out) {
+  const row = node.querySelector(':scope > .fm-row');
+  if (row && visible(row) && onScreen(row)) out.push({ el: row });
+  const kids = node.querySelector(':scope > .fm-children');
+  if (kids && node.classList.contains('open') && visible(kids)) {
+    out.push({ el: kids, box: true });
+    kids.querySelectorAll(':scope > .fm-node').forEach(n => treeLines(n, out));
+  }
+}
+function printLines(list) {
+  const out = [];
+  list.forEach(it => {
+    if (it.el && it.el.classList && it.el.classList.contains('fm-node')) treeLines(it.el, out);
+    else if (it.box || !it.el || !it.el.children) out.push(it);
+    else lineSplit(it.el, 0).filter(onScreen).forEach(el => out.push({ el }));
+  });
+  return out;
+}
+/* the box grows with the cursor: clipped to the bottom of the lowest line printed so far, one step per tick; the
+   clip keeps a few pixels at the sides for Retro's offset shadow */
+function growBox(b, o) {
+  const r = b.el.getBoundingClientRect(), H = r.height;
+  const last = b.lines.length ? b.lines[b.lines.length - 1].tick : b.tick;
+  if (!H || last <= b.tick) return;
+  const frames = [];
+  let low = 0;
+  for (let t = b.tick; t <= last; t++) {
+    b.lines.forEach(l => { if (l.tick === t) low = Math.max(low, l.el.getBoundingClientRect().bottom - r.top); });
+    const cut = t === last ? 0 : Math.max(0, H - low);
+    frames.push({ offset: (t - b.tick) / (last - b.tick + 1), clipPath: 'inset(0px -4px ' + cut.toFixed(1) + 'px -4px)', easing: 'steps(1, end)' });
+  }
+  frames.push({ offset: 1, clipPath: 'inset(0px -4px 0px -4px)' });
+  const a = b.el.animate(frames, { duration: (last - b.tick + 1) * TICK, delay: b.tick * TICK, fill: 'backwards' });
+  a.id = 'd-enter';
+  if (o.anims) o.anims.push(a);
+}
+function printIn(list, o) {
+  const lines = printLines(list), max = o.max || 16, boxes = [];
+  let k = o.from != null ? o.from : 1, n = 0;
+  if (o.delay) k += Math.round(o.delay / TICK);
+  for (const it of lines) {
+    const el = it.el;
+    if (!el || !el.animate) continue;
+    stopEnter(el);
+    if (k > 0) {
+      const a = el.animate([{ opacity: 0 }, { opacity: 0 }], { duration: k * TICK });
+      a.id = 'd-enter';
+      if (o.anims) o.anims.push(a);
+    }
+    if (it.box) { boxes.push({ el, tick: k, lines: [] }); continue; }
+    boxes.forEach(b => { if (b.el.contains(el)) b.lines.push({ el, tick: k }); });
+    if (n < max - 1) { k += 1; n += 1; }
+  }
+  boxes.forEach(b => growBox(b, o));
+}
+/* play a deal: boxes settle with the next row, rows follow one step apart; capped so a long list never drags.
+   o.anims (optional) collects the animations for startTogether */
 function deal(list, o) {
+  o = o || {};
   if (reduced() || !list.length) return;
+  if (fam() === 'retro') { printIn(list, o); return; }
   const f = spec();
   let t = o.delay || 0, n = 0;
   for (const it of list) {
@@ -80,6 +170,7 @@ function deal(list, o) {
       : enterFrames(rowSpec, o.dx || 0, o.dy != null ? o.dy : f.dy);
     const a = el.animate(frames, { duration: Math.round(f.dur * (it.box ? .75 : 1)), easing: f.ease, delay: t, fill: 'backwards' });
     a.id = 'd-enter';
+    if (o.anims) o.anims.push(a);
     if (!it.box) { t += o.step != null ? o.step : f.step; n += 1; }
   }
 }
@@ -89,25 +180,26 @@ function enterPanel(panel) {
   if (reduced() || !panel) return;
   const chrome = [':scope > .sh-banner', ':scope > .pm7-scm-context', ':scope > .pm-segtab', ':scope > .fm-toolbar-wrap']
     .map(s => panel.querySelector(s)).filter(visible);
-  const f = spec();
-  cascade(chrome, { dy: f.wipe ? 0 : Math.max(2, Math.round(f.dy / 2)), step: Math.round(f.step * .6), durK: .8 });
+  const f = spec(), anims = [];
+  cascade(chrome, { dy: f.wipe ? 0 : Math.max(2, Math.round(f.dy / 2)), step: Math.round(f.step * .6), durK: .8, anims });
   const jj = panel.querySelector(':scope > .pm7-scm-jj-view');
   const list = (jj && visible(jj)) ? Array.from(jj.children).map(el => ({ el })) : dealList(activePane(panel));
   const foot = panel.querySelector(':scope > .pm7-scm-git-footer');
   if (visible(foot)) list.push({ el: foot });
-  deal(list, { delay: Math.round(f.step * 1.5) });
+  deal(list, { delay: Math.round(f.step * 1.5), anims });
   const ico = panel.querySelector(':scope > .sh-banner > .sh-bico');
   if (ico && !f.wipe) {
     const k = fam() === 'retro' ? 'steps(4, end)' : 'cubic-bezier(.3, 1.6, .5, 1)';
-    ico.animate([{ transform: 'scale(.7) rotate(-12deg)' }, { transform: 'none' }], { duration: Math.round(f.dur * 1.2), easing: k });
+    anims.push(ico.animate([{ transform: 'scale(.7) rotate(-12deg)' }, { transform: 'none' }], { duration: Math.round(f.dur * 1.2), easing: k }));
   }
+  startTogether(anims);
 }
 
-/* a tab change: the new pane deals in from the side of the tab you came from */
-function enterPane(pane, dir) {
+/* a tab change: the new pane deals in from the side of the tab you came from (Retro: prints in from the next tick) */
+function enterPane(pane, dir, anims) {
   if (reduced() || !pane) return;
   const f = spec();
-  deal(dealList(pane), { dx: f.wipe ? (dir < 0 ? -1 : 1) : dir * f.dx, dy: 0, max: 12, step: Math.round(f.step * .8) });
+  deal(dealList(pane), { dx: f.wipe ? (dir < 0 ? -1 : 1) : dir * f.dx, dy: 0, max: 12, step: Math.round(f.step * .8), anims });
 }
 
 /* an expander opens: its body's rows fade down into place, a beat after the height starts */
@@ -118,6 +210,7 @@ function revealBody(item) {
   if (!inner) return;
   let kids = Array.from(inner.children);
   if (kids.length === 1 && kids[0].classList.contains('sh-body')) kids = Array.from(kids[0].children);
+  if (fam() === 'retro') { printIn(kids.slice(0, 8).map(el => ({ el })), { from: 2 }); return; }
   const f = spec();
   kids.slice(0, 8).forEach((el, i) => {
     stopEnter(el);
@@ -169,20 +262,7 @@ function onClickMotion(ev) {
   const t = ev.target;
   if (!t || !t.closest || !inPanels(t)) return;
   const tab = t.closest('[data-tab]');
-  if (tab) {
-    const panel = tab.closest('.side-panel-view');
-    const tabs = Array.from(panel.querySelectorAll('[data-tab]'));
-    const now = tabs.indexOf(tab), was = panel._dTab != null ? panel._dTab : now;
-    panel._dTab = now;
-    if (now === was) return;
-    requestAnimationFrame(() => {
-      const strip = tab.closest('.pm-segtab');
-      if (strip) fitTabs(strip);
-      const pane = activePane(panel);
-      if (pane) { stackHeads(pane); stackRows(pane); midFitAll(pane); enterPane(pane, now > was ? 1 : -1); }
-    });
-    return;
-  }
+  if (tab) { tabChanged(tab); return; }
   const head = t.closest('[data-collapse]');
   if (head && !t.closest('button, a, input, .pm6-tb-menu-trigger, .pm-minibtn')) {
     const item = head.closest('[data-acc]');
