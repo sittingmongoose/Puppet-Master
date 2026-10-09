@@ -2761,7 +2761,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 d6286edbbe34d3dec3d41b9f330faf80aa2006bc823e15e6e875ef148fd0d91d"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4"
   - "Plans/Decision_Log.md#DL-161"
 preserved_exact_tokens:
   - "F3-430"

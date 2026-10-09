@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29657-L30727
+Source lines: L29657-L30733
 
-Source SHA256: `8776bc41b3fbbddae6c67c7ba15c97d6aafa48a7dda3b55f0f0037afcaaa59b9`
+Source SHA256: `55a14b1f34e6b9790c6d08c5a92123177902dacb427fedda1d5e4913773b1495`
 
 ---
 
@@ -380,7 +380,11 @@ canonical_text: >-
   Concepts/onboarding/opus-5.5/src/css/01-webfonts.css from its src/fonts files and OFL-*.txt licences, and
   Gelasio, an SIL OFL face drawn to Georgia's metrics, stands in under the family name Georgia for the
   info-badge glyph because Georgia cannot be embedded. Its Inter, Poppins and IBM Plex Mono files are the
-  bytes the 5.6 Pro chat concept embeds (DR-050). While on, NieR Mode owns general.visual.accent-color and
+  bytes the 5.6 Pro chat concept embeds (DR-050). The page's symbol characters (arrows, check and cross marks,
+  triangles, the warning sign, dots, math signs, the command key and box lines) are PM Symbols, drawn as SVG in
+  src/fonts/symbols/svg and built into a proportional and a monospace variable font that are attached to every
+  embedded text face for those characters only, with each face's own family, style and weight
+  (src/css/03-symbols.css); form controls take the look's face (src/css/02-control-fonts.css). While on, NieR Mode owns general.visual.accent-color and
   general.visual.app-font (F3-441); turning it off restores the chosen theme. It is an overlay, not a ninth theme.
 gui_related: true
 gui_classification_reason: This unit defines the visible Friendly theme fonts, ground texture, frosted chrome, pastels, and switch behavior.
@@ -391,6 +395,7 @@ acceptance_criteria:
   - "Basic and Glass render Inter, Friendly Poppins with Nunito fallback, Retro IBM Plex Mono; NieR Mode renders its bundled PM NieR Sans and PM NieR Mono faces without a font network request."
   - "Inter, Poppins, Nunito and IBM Plex Mono are bundled locally and no runtime font CDN request is made."
   - "PMConcept7 draws Basic and Glass in Inter, Friendly in Poppins and Retro in IBM Plex Mono, and the info-badge glyph in the Gelasio stand-in for Georgia, from embedded data on a machine with none of those fonts installed; its Inter, Poppins and IBM Plex Mono files are byte-identical to 5.6 Pro's."
+  - "PMConcept7 draws every symbol character it uses from PM Symbols in every look, and its buttons, inputs and menus in the look's face."
   - "The Friendly ground renders the paper texture with an 18px dot grid, and frosted 14px chrome blur is limited to the title bar, status bar, and bottom panel."
   - "The five category pastels (mint, sky, coral, lavender, butter) drive category surface tinting."
   - "Cross-family theme switches that change Retro or Friendly font families require restart, while same-family and Glass/Basic Inter switches stay live."
@@ -423,6 +428,7 @@ preserved_exact_tokens:
   - "mplus1-latin-var.woff2"
   - "01-webfonts.css"
   - "Gelasio"
+  - "PM Symbols"
   - "DR-050"
   - "DL-161"
   - "JetBrains Mono"

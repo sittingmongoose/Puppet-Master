@@ -4,7 +4,7 @@ Source: `Plans/DRY_Rules.md`
 
 Source lines: L2722-L2778
 
-Source SHA256: `89b03690afe4633f9e5ed7bf536362a73c0849837fb701f03ccf6aad2a3f9b40`
+Source SHA256: `92b9843cc9445ef32b3be2568251c9b0e7ffccd394cbad6d64d3ce39d2357496`
 
 ---
 
@@ -50,7 +50,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 d6286edbbe34d3dec3d41b9f330faf80aa2006bc823e15e6e875ef148fd0d91d"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4"
   - "Plans/Decision_Log.md#DL-161"
 preserved_exact_tokens:
   - "F3-430"

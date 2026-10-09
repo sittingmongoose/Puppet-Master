@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "362c2749988adfc89c9016d562bcc840526d999293771a935fa8b90addd3a5da",
+      "sha256": "4c03a11a8d76d14fcf2c75a56ec786a9e2e1ee9c531ee3952efb4785f0ef886e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -5713,7 +5713,7 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 11873,
+      "line_count": 11881,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 141,
       "plan_unit_ids": [
@@ -6002,7 +6002,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "fd1f15a8a859f0397e4f09993254166305de3086ab5e6bef6d1742c28d15cb8a",
+      "sha256": "f012cd87d925ff4b91ddbfd5cbdb763c6d22f0a239982484d4e9a364d739e6bd",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 141
@@ -6407,7 +6407,7 @@
         "shared_runtime_parallel_owner_drift",
         "usage_role_parallel_owner_drift"
       ],
-      "sha256": "89b03690afe4633f9e5ed7bf536362a73c0849837fb701f03ccf6aad2a3f9b40",
+      "sha256": "92b9843cc9445ef32b3be2568251c9b0e7ffccd394cbad6d64d3ce39d2357496",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 45
@@ -7533,7 +7533,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 41358,
+      "line_count": 41364,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 599,
       "plan_unit_ids": [
@@ -8268,7 +8268,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "8776bc41b3fbbddae6c67c7ba15c97d6aafa48a7dda3b55f0f0037afcaaa59b9",
+      "sha256": "55a14b1f34e6b9790c6d08c5a92123177902dacb427fedda1d5e4913773b1495",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 598,
@@ -20614,7 +20614,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-09T17:47:24Z",
+  "generated_at_utc": "2026-10-09T18:24:11Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3414-L11845
+Source lines: L3418-L11853
 
-Source SHA256: `fd1f15a8a859f0397e4f09993254166305de3086ab5e6bef6d1742c28d15cb8a`
+Source SHA256: `f012cd87d925ff4b91ddbfd5cbdb763c6d22f0a239982484d4e9a364d739e6bd`
 
 ---
 
@@ -8405,7 +8405,8 @@ canonical_text: >-
   data, and Gelasio stands in under the name Georgia for the info-badge glyph because Georgia cannot be embedded
   (F3-430). Its Inter, Poppins and IBM Plex Mono files are the 5.6 Pro chat concept's, byte for byte (DR-050).
   Orbitron, Rajdhani and JetBrains Mono are not embedded because no text draws in them, and platform font names
-  stay the computer's.
+  stay the computer's. The page's symbol characters are PM Symbols, drawn for Puppet Master as SVG and embedded
+  beside every text face for those characters only, and form controls take the look's face (F3-430).
 gui_related: true
 gui_classification_reason: Records an owner request on the concepts' fonts.
 split_recommended: false
@@ -8413,6 +8414,7 @@ depends_on: [F3-430]
 unblocks: [DR-050]
 acceptance_criteria:
   - "Every theme face PMConcept7 draws in Basic, Glass, Friendly and Retro comes from embedded data."
+  - "Every symbol character the page uses draws from PM Symbols in every look."
   - "The owner's request is recorded in plain words with its source hashes."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -8428,12 +8430,14 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 d6286edbbe34d3dec3d41b9f330faf80aa2006bc823e15e6e875ef148fd0d91d"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/proof-after.json, SHA-256 bfda89d92f00e53a7ad8dec195de68ff5ef1774443e4fb70868ce32bc061a82a"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/symbols-proof.json, SHA-256 e0f74c7c89eb6d80a7f48776822310df03989c1cf4e9d421cfe962af30f8ceae"
 preserved_exact_tokens:
   - "DL-161"
   - "Gelasio"
   - "Georgia"
+  - "PM Symbols"
 negative_constraints:
   - "Do not load a concept font from the network."
 owner_hints:
