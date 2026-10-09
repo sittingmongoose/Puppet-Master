@@ -607,9 +607,11 @@ export function inPageLint(o) {
         if (!(oy !== 'visible' ? el.scrollHeight > el.clientHeight + 1 : el.scrollHeight > el.clientHeight + 4)) continue;
         const rec = { region: name(el), scrollHeight: el.scrollHeight, clientHeight: el.clientHeight, overflowY: oy };
         if (o.rosterAfterYield && el.matches('.pmx-roster-rows')) {
-          const fits = [...r.querySelectorAll('.pmx-plate-fit')].map(f => { const modes = [...f.querySelectorAll(':scope > .pmx-plate')].map(p => p.getAttribute('data-mode')); return { fit: f.getAttribute('data-fit') || '', leanest: modes[modes.length - 1] || '' }; });
+          /* 2026-10-09 (Jared: "it pushes the graph out of view"): a slot yields down to its floor, the leanest drawing
+             that fits its width (the runtime's data-floor), not to its caption; a slot with no floor yields to its leanest */
+          const fits = [...r.querySelectorAll('.pmx-plate-fit')].map(f => { const modes = [...f.querySelectorAll(':scope > .pmx-plate')].map(p => p.getAttribute('data-mode')); return { fit: f.getAttribute('data-fit') || '', floor: f.getAttribute('data-floor') || '', leanest: modes[modes.length - 1] || '' }; });
           const roster = el.closest('.pmx-roster'), lean = roster ? roster.getAttribute('data-pmx-lean') || '' : '';
-          const yielded = fits.every(f => f.fit && f.fit === f.leanest) && lean === '2';
+          const yielded = fits.every(f => f.fit && f.fit === (f.floor || f.leanest)) && lean === '2';
           (yielded ? allowed : bad).push(Object.assign(rec, { afterYield: yielded ? 'allowed (lead ruling: may scroll at this size after yielding)' : 'scrolls before the sheet yielded', plates: fits, lean }));
           continue;
         }

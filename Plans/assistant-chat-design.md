@@ -553,6 +553,7 @@ Core rules:
 - The shared question-card applies across Assistant, Interviewer, `/Interviewer/requirements`, and `/document-builder` flows; it is not Interview-only and does not force strict one-question-at-a-time sequencing.
 - Question-card inputs support `allow_other`, `allow_multi_select?: boolean`, `required?: boolean`, `placeholder?: string`, and legacy `default_value?: string | string[]` as compatibility aliases that normalize into canonical `allow_freeform`, `multi_select`, `required`, `placeholder`, and `default_values`.
 - Shared question styling uses one consistent question-card `/flow` across Assistant, Interviewer, requirements, and `/document-builder` questions, so question visuals are not restyled ad hoc per surface and PM-owned draft state remains the answer owner.
+- The question card shows an option's `description` under its label and a QuestionItem's `description` under the question, and it fits answers of any length without cutting them short: it grows up to the room above the composer, then scrolls its body with its actions in reach (`Plans/FinalGUISpec.md#F3-609`, DL-158).
 - The minimum output compatibility shape is `status: "answered" | "submitted" | "dismissed" | "timed_out" | "unavailable"`, `answers: Array<{ question_id, value, source: "option" | "other" | "freeform" }>`, `submitted: boolean`, and `submitted_at?`; canonical storage may also expose `answers: Array<{question_id, values: string[]}>`.
 - Dismissed and paused flows preserve submitted-vs-dismissed distinction: `status = "dismissed"` / dismissed state pauses the flow and must not fabricate partial submitted answers, auto-submit, or auto-cancel the broader thread. Paused is UI-only for a backgrounded/navigated-away widget and does not produce a tool output until resumed or dismissed.
 - `/dismiss` is a retired shorthand for the same question-card exit path; canonical behavior is the dismissed/paused state transition above.
@@ -27051,26 +27052,33 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Opening a subagent (its Activity Detail row or that row's Open live transcript, a Subagents preview row, a
-  working-activity satellite, or a row of the live agents card) opens that child run's history, the direct child
-  history navigation of section 14.1, as one editor document per child run beside the chat through the ACD-480
-  document mechanism: an open document is focused, never duplicated, and at narrow widths it follows the Plan tab's
-  rules (DL-147). The document is read-only for the user: it has no composer and no control that acts on the child or
+  Opening a subagent (its Activity Detail row or that row's Open live transcript, a row of the live agents card, a
+  working-activity satellite, a row of the working activity's Child agents list, or another working-activity row that
+  names a child agent) opens that child run's history, the direct child history navigation of section 14.1, as one
+  editor document per child run beside the chat through the ACD-480 document mechanism: an open document is focused,
+  never duplicated, and at narrow widths it follows the Plan tab's rules (DL-147). Every opener dispatches
+  cmd.agents.open_thread with the child run's thread ref (UI_Command_Catalog UCC-188), never a chat-local alias. A row
+  of the activity bar's Subagents preview is not an opener: like every preview row it opens Activity Detail on that
+  agent (FinalGUISpec F3-537) (amended 2026-10-09). The document is read-only for the user: it has no composer and no control that acts on the child or
   on the parent thread, and while the child runs it follows new items live. Its items are projections of the child
   run's persisted records, and its status is section 14's child-run status projection, never a second lifecycle. Its
   messages, events and needs-you items render as the main chat renders them (ACD-469), and between messages each
   stretch of the child's work records (tool calls, file changes, tests) is one collapsed row that states what the
   stretch did and opens in place to list those records (decision card 7). The inline subagent card keeps section 14's
-  expanded panel (work stream, thought stream, state, context and result).
+  expanded panel (work stream, thought stream, state, context and result). The document is drawn on a root of its
+  own by the chat's one transcript renderer (DRY_Rules DR-052): the chat's turn spine, reply streaming, sound cues and
+  follow-along never bind to it, and nothing arriving in it plays a chat cue.
 gui_related: true
 gui_classification_reason: Defines what opening a subagent does in the assistant chat.
 split_recommended: false
-depends_on: [DL-147, ACD-480, ACD-469, ACD-473]
+depends_on: [DL-147, ACD-480, ACD-469, ACD-473, UCC-129]
 unblocks: [F3-593]
 acceptance_criteria:
   - "Opening a subagent twice focuses one document and never duplicates it."
   - "The document has no composer and no control that changes the child or the parent thread."
   - "Its status words come from the child-run status projection, and each stretch of work records is one collapsed row until opened."
+  - "Every opener dispatches cmd.agents.open_thread; a Subagents preview row opens Activity Detail on that agent instead."
+  - "Items arriving in the document play no chat cue and do not move the chat's spine or follow-along."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -27096,6 +27104,7 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not give the subagent document a composer or a mutation control."
   - "Do not invent a subagent-only status in the document."
+  - "Do not register a chat-local command or alias for opening a subagent."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
@@ -27103,4 +27112,4 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-147, ContractName:Plans/assistant-chat-design.md#ACD-480, ContractName:Plans/FinalGUISpec.md#F3-593
+ContractRef: ContractName:Plans/Decision_Log.md#DL-147, ContractName:Plans/assistant-chat-design.md#ACD-480, ContractName:Plans/FinalGUISpec.md#F3-593, ContractName:Plans/UI_Command_Catalog.md#UCC-188, ContractName:Plans/FinalGUISpec.md#F3-537, ContractName:Plans/DRY_Rules.md#DR-052

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29657-L30715
+Source lines: L29657-L30733
 
-Source SHA256: `ec9fcca7a80f55122d75bbc7d9b1700ff628f9d28b94f4d4ade985e4f06ff116`
+Source SHA256: `4fda7c380979f66f7d2b4aea2bcd243da6ef37306b055648aa27ae58d4d3e771`
 
 ---
 
@@ -374,7 +374,17 @@ canonical_text: >-
   with PM NieR Mono, the JetBrains Mono variable face at weights 100-800 in jetbrains-mono-latin-var.woff2.
   Both are bundled under SIL OFL with their licences; the regular theme faces and Nunito fallback are
   bundled too. The source font declarations are Concepts/onboarding/opus-5.5/src/settings/styles.d/13-nier.css
-  and its nier/fonts/OFL-*.txt licences. While on, NieR Mode owns general.visual.accent-color and
+  and its nier/fonts/OFL-*.txt licences. The concepts carry the theme faces the same way (DL-161): PMConcept7
+  embeds Inter (variable, upright and italic), Poppins 400-800 with italic 400 and 600, Nunito (variable) and
+  IBM Plex Mono 400-700 with italic 400 and 600 as Latin woff2 data: URIs, declared in
+  Concepts/onboarding/opus-5.5/src/css/01-webfonts.css from its src/fonts files and OFL-*.txt licences, and
+  Gelasio, an SIL OFL face drawn to Georgia's metrics, stands in under the family name Georgia for the
+  info-badge glyph because Georgia cannot be embedded. Its Inter, Poppins and IBM Plex Mono files are the
+  bytes the 5.6 Pro chat concept embeds (DR-050). The page's symbol characters (arrows, check and cross marks,
+  triangles, the warning sign, dots, math signs, the command key and box lines) are PM Symbols, drawn as SVG in
+  src/fonts/symbols/svg and built into a proportional and a monospace variable font that are attached to every
+  embedded text face for those characters only, with each face's own family, style and weight
+  (src/css/03-symbols.css); form controls take the look's face (src/css/02-control-fonts.css). While on, NieR Mode owns general.visual.accent-color and
   general.visual.app-font (F3-441); turning it off restores the chosen theme. It is an overlay, not a ninth theme.
 gui_related: true
 gui_classification_reason: This unit defines the visible Friendly theme fonts, ground texture, frosted chrome, pastels, and switch behavior.
@@ -384,6 +394,8 @@ unblocks: []
 acceptance_criteria:
   - "Basic and Glass render Inter, Friendly Poppins with Nunito fallback, Retro IBM Plex Mono; NieR Mode renders its bundled PM NieR Sans and PM NieR Mono faces without a font network request."
   - "Inter, Poppins, Nunito and IBM Plex Mono are bundled locally and no runtime font CDN request is made."
+  - "PMConcept7 draws Basic and Glass in Inter, Friendly in Poppins and Retro in IBM Plex Mono, and the info-badge glyph in the Gelasio stand-in for Georgia, from embedded data on a machine with none of those fonts installed; its Inter, Poppins and IBM Plex Mono files are byte-identical to 5.6 Pro's."
+  - "PMConcept7 draws every symbol character it uses from PM Symbols in every look, and its buttons, inputs and menus in the look's face."
   - "The Friendly ground renders the paper texture with an 18px dot grid, and frosted 14px chrome blur is limited to the title bar, status bar, and bottom panel."
   - "The five category pastels (mint, sky, coral, lavender, butter) drive category surface tinting."
   - "Cross-family theme switches that change Retro or Friendly font families require restart, while same-family and Glass/Basic Inter switches stay live."
@@ -401,6 +413,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
+  - "Plans/Decision_Log.md#DL-161 (owner request, 2026-10-09)"
   - "Plans/FinalGUISpec.md:964"
   - "Plans/FinalGUISpec.md:7647"
   - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
@@ -413,6 +426,11 @@ preserved_exact_tokens:
   - "general.visual.accent-color"
   - "jetbrains-mono-latin-var.woff2"
   - "mplus1-latin-var.woff2"
+  - "01-webfonts.css"
+  - "Gelasio"
+  - "PM Symbols"
+  - "DR-050"
+  - "DL-161"
   - "JetBrains Mono"
   - "M PLUS 1"
   - "PM NieR Mono"

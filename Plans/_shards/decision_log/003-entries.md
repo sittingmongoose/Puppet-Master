@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L3376
+Source lines: L13-L3502
 
-Source SHA256: `e3792b33109db9b96f0cef6bee55b0369c15407a43e5af00569dad39f487fd8c`
+Source SHA256: `7def4e82703338f3baacffc544a4432bb37b0ca347d0fc9402ed0a56b3af97d5`
 
 ---
 
@@ -3372,3 +3372,129 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-597, ContractName:Plans/Final
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-onb-20261007/JARED-REQUEST-20261007.md`, SHA-256 `416638453431ef6bac2b4a8066560214c4fa3bcd8e0663cf778fba89bc63e652`.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-082, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/Settings_System.md#SSYS-043
+
+### DL-161: PMConcept7 carries its own fonts
+
+**Question:** Should PMConcept7 carry the fonts its looks name, instead of borrowing whatever the computer has?
+
+**Why it came up:** PMConcept7's looks name Inter, Poppins, Nunito, IBM Plex Mono and Georgia, but the page carried only NieR Mode's two faces. On a computer without those fonts every look fell back to the machine's own sans or mono (DejaVu on the test VM), so Basic, Glass, Friendly and Retro looked different from one computer to the next. Jared asked on 2026-10-09 that PMConcept7 have all its fonts built in.
+
+**What you get:**
+- Basic and Glass in Inter, Friendly in Poppins (with Nunito behind it), Retro in IBM Plex Mono, on every computer and with no font download. Each face is the Latin set, stored inside the page.
+- The weights and slants the looks use: Inter at every weight and in italic, Poppins 400 to 800 and italic 400 and 600, IBM Plex Mono 400 to 700 and italic 400 and 600.
+- Georgia, which the page names only for the bold italic "i" on its info badges, is a paid font that cannot be built in. Gelasio, a free font drawn to Georgia's measurements, stands in under the name Georgia.
+- PMConcept7 and the 5.6 Pro chat use the same Inter, Poppins and IBM Plex Mono files, byte for byte, so both draw the same letters. PMConcept7's build check fails if the two drift apart.
+- The symbols the page uses (arrows, check and cross marks, triangles, the warning sign, dots, math signs, the command key and box lines) are drawn for Puppet Master and built in as PM Symbols, so they look the same on every computer, in every look, at regular and bold weight, and line up in monospace and terminal text.
+- Buttons, text boxes and menus use the look's font. The browser had drawn them in Arial in Basic, Retro and NieR Mode.
+
+**What it costs:**
+- PMConcept7 grows by 463,484 bytes (about 4.5%), to 10.8 MB: 408,446 for the fonts, 54,449 for the symbols and 589 for the control rule.
+- Any non-Latin script still uses the computer's own fonts.
+- Code text in Basic, Glass and Friendly still uses the computer's own monospace, because those looks name it on purpose; only its symbols are ours. Retro's code text is IBM Plex Mono.
+- A new symbol in the page needs a drawing: until one is added to PM Symbols it falls back to the computer's font.
+
+**Options considered:** Not built in: Orbitron and Rajdhani (the page's starting defaults, which every look replaces, retired as theme faces by DL-138) and JetBrains Mono (behind IBM Plex Mono with the same letters, so it never draws; its file is already in the page as NieR Mode's mono). Roboto, Segoe UI, SF Pro, SF Mono, Menlo, Consolas, Cascadia Mono and system-ui name the computer's own fonts on purpose. For Georgia, leaving the computer's own serif would differ by machine; Gelasio is the free face made to Georgia's measurements.
+
+**What the owner decided** (in plain words):
+- 2026-10-09, in his request: "Make sure PMConcept7 has all its fonts built in." The choice of faces, weights and slants, the Gelasio stand-in and the shared files are agent choices under that request.
+- 2026-10-09, follow-up: the symbols are custom SVG drawings built into a font, rather than icons placed in the page or the computer's own glyphs, and form controls get a CSS rule so they use the look's font ("svg for 1 and css rule for the second", then "SVG glyphs as a font"). The glyph designs are agent choices under that answer.
+
+**What the spec now says:**
+1. **The concepts' fonts** (`Plans/FinalGUISpec.md#F3-430`, amended): PMConcept7 embeds the theme faces, Nunito and the Gelasio stand-in for Georgia as Latin woff2 data, declared in `Concepts/onboarding/opus-5.5/src/css/01-webfonts.css`; its symbols are PM Symbols (`src/css/03-symbols.css`), and its form controls take the look's face (`src/css/02-control-fonts.css`).
+2. **One set of font files for both concepts** (`Plans/DRY_Rules.md#DR-050`).
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md`, SHA-256 `51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4` (the request and the evidence index); `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/proof-after.json`, SHA-256 `bfda89d92f00e53a7ad8dec195de68ff5ef1774443e4fb70868ce32bc061a82a` (the fonts Chrome drew in every look on the P1000 VM, which has none of these fonts installed); `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/symbols-proof.json`, SHA-256 `e0f74c7c89eb6d80a7f48776822310df03989c1cf4e9d421cfe962af30f8ceae` (every symbol drawn from PM Symbols in every look and text context).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-430, ContractName:Plans/DRY_Rules.md#DR-050
+
+### DL-158: The Ask Card fits long answers
+
+**Question:** What should the questions card (the Ask Card) do when the answers are much longer?
+
+**Why it came up:** Jared liked the reworked questions card and asked what happens when the answers are much longer: does it adjust its size and still look good? It did not. The card grew without limit: a long review pushed Submit and the composer off the screen, a long web address ran out past the edge of its row, the Something else answer was one line that hid what did not fit, and the note scrolled inside a fixed box.
+
+**What you get:**
+- The card grows and shrinks with what it holds, up to the room above the message box, and leaves a strip of the conversation in view under the chat header.
+- Past that, the card's own body scrolls; Back, Skip, Next or Submit and the close button stay where they are and can always be clicked. A faint fade shows there is more, and a thin line sits above the buttons while the body scrolls.
+- Long questions, options, descriptions and answers wrap, and a long web address breaks inside its row instead of running off it.
+- Options can have a description under their name, and a question can have one under it.
+- Something else and the note grow as you type, and review shows every answer whole, line breaks included.
+- Short questionnaires look exactly as before.
+
+**What it costs:**
+- With very long content the user scrolls inside the card to see all of it, and the conversation behind it shows only a strip until the card is closed.
+
+**Options considered:** None were offered; Jared asked for the card to adjust and still look good, and the brief asked for it to grow up to the screen and keep its buttons in reach. Cutting long answers short was not considered, because the answers are the user's own words.
+
+**What the owner decided** (in plain words):
+- 2026-10-09, in his request: the questions card should adjust its size when the answers are much longer, and still look good.
+
+**What the spec now says:**
+1. **The Ask Card fits long answers** (`Plans/FinalGUISpec.md#F3-609`), adding to its look (`Plans/FinalGUISpec.md#F3-596`). The questionnaire's behaviour stays with `Plans/assistant-chat-design.md` section 7.4.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-questionnaire-long-answers-20261009/JARED_REQUEST.md`, SHA-256 `b1b1280a6dac4c2b1afed428e91c817bba1c2e7c360bfdae59b3bdec34cacf52` (the owner request).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-609, ContractName:Plans/FinalGUISpec.md#F3-596
+
+### DL-154: A collaboration setup sheet's graph stays in view as helpers and rounds are added
+
+**Question:** What should a collaboration setup sheet do with its graph when the team grows, and with a Chat Room's preview when it is set to many rounds?
+
+**Why it came up:** In the Crew, BrainStorm, Review and Chat Room setup sheets the cast plate gave up its height to the growing roster first and fell back to one caption sentence. From about six helpers (fewer with the specialists on) no drawing fitted the width at all, so with a full team the graph was gone. A Chat Room set to many rounds drew one dot per round on its In your chat preview, up to twelve, and from ten rounds the dots ran past the card and pushed its words out. Jared reported both on 2026-10-09. He accepted that a graph cannot scale to any number of helpers, but asked that it hold a higher number, and that the rounds wrap down.
+
+**What you get:**
+- The graph stays a drawing at every team size each kind allows, up to eight helpers with both specialists, in every theme and window size from 700 px wide up. When the team is too wide for one row, the helpers wrap onto two rows, or three. The Coordinator or Moderator still hands its string to every row, and every row still leads to You.
+- The plate keeps the height of its leanest drawing that fits. The roster's rows scroll inside their own region with Add a helper kept visible, rather than the graph giving way. The caption sentence remains only for a slot no drawing fits.
+- In a narrow window, where the sheet is one scrolling column, the graph stays at the top of the column while its question is on screen.
+- A Chat Room's track shows one dot per round, up to its 20-round limit. A long track wraps its dots down onto more rows, and its words ("Round 1 of 20 · not started") get a row of their own. The same applies to the run card in the chat.
+
+**What it costs:**
+- The roster starts scrolling a little sooner when the team is large (from about six helpers at 1280 x 800), because the graph keeps its room.
+- Run cards and previews of very long Chat Rooms are one or two rows taller.
+- The wrapped graph cuts very long helper names at a whole word in the widest themes' type (Retro's), as the one-row strip already did.
+
+**Options considered:** scaling the drawing down to fit (refused: a plate is never scaled, DL-149, and small text becomes unreadable); a scroll inside the graph (kept only as an idea for teams beyond the limits, which no sheet allows today); raising the helper limits (not asked: the limits are Collaborative_Workflows' and stay at eight). The lead ruled on the shape of the wrap and the narrow-window behaviour under existing canon; neither needed an owner answer.
+
+**What Jared asked (2026-10-09, relayed by the round's orchestrator thread):** adding several helpers to a Crew pushed the graph out of view in the Set up a Crew sheet, and the other setup sheets do the same; he understood that the graph cannot scale to any number of workers, but it should hold a higher number. Choosing many rounds in the Chat Room sheet pushed the graphic off the screen, and it should wrap down. The record states his request in plain words rather than quoting it (his choice of 2026-10-07 for decision log entries, decision card 2 recorded in DL-145).
+
+**What the spec now says:**
+1. **The plate's floor and the wrap** (`Plans/FinalGUISpec.md#F3-601`, amending `#F3-566` and `#F3-595`): a sheet's cast plate never yields past the leanest drawing that fits its width, and a team too wide for one strip row is drawn as the wrap (two or three rows, a fork from the lead and a join to You). The same wrap heads a run view whose team is too wide for one row. In the one-column narrow sheet the plate stays at the top while its question is on screen.
+2. **The track** (`Plans/FinalGUISpec.md#F3-602`): a run card's track never runs past the card; a Chat Room's track has a stop per round up to 20, and a track of eight or more stops wraps its dots down and gives its words their own row.
+3. **One mechanism** (`Plans/DRY_Rules.md#DR-045`): one plate-slot fit rule serves every plate slot (the four collaboration sheets, Scheduling's plates, Back Seat Driver's cue plate), one cast grammar with the wrap serves every sheet and run view, and one track primitive serves every run card and preview.
+4. **Unchanged:** the helper limits (Crew and Review 1 to 8, BrainStorm and Chat Room 2 to 8), the round limits (Chat Room 1 to 20, BrainStorm's debate 1 to 4), every command, action, setting and wiring row. No `data-action`, command, settings key or wiring entry is added, changed or removed, so `Plans/UI_Command_Catalog.md`, `Plans/Commands_System.md`, `Plans/UI_Wiring_Rules.md` and both Wiring Matrix files are untouched.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-popup-graphs-20261009/JARED_REQUEST.md`, SHA-256 `46723a8829ea87fc5e01a261d81e92e32f3f1bc2e8a428af6704b1e3a91229e2`; survey before the change `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-popup-graphs-20261009/SURVEY-BEFORE.md`, SHA-256 `b4036f1bffdf0bfb65f40fa5062540f60960b072bb46c667a7bcb00f26e0ac5f`.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-601, ContractName:Plans/FinalGUISpec.md#F3-602, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/FinalGUISpec.md#F3-595, ContractName:Plans/DRY_Rules.md#DR-045
+
+### DL-156: The Plan card's buttons line up and fit the card in every theme
+
+**Question:** How should the Plan card's buttons, and the scheduled-build line above them, be laid out so they fit the card in every theme?
+
+**Why it came up:** On 2026-10-09 Jared sent a Retro Light screenshot of the Plan card in the chat. Build was shorter than Revise and Open plan, and its text was smaller. The three buttons sat on a grey band that touched the card's bottom padding and had no inset of its own, so they didn't line up with anything. The scheduled-build line wrapped "(Chicago time)" against Details. He asked for the buttons to be better designed for the space, in all themes.
+
+**What you get:**
+- One row of buttons for every Plan: Build, Revise (while the Plan is Ready) and Open plan on the chat card, and the same row in the editor's footer, on a finished Plan's compact card, under a paused or waiting build, in the scheduled-build line and on the "Build started" receipt. Every button is the same height with the same text size, in all ten themes, with even gaps.
+- No grey band. One thin line separates the Plan's summary from its status: the scheduled build, the step count ("6 steps · Ready") and the buttons, all on the card's left edge.
+- The scheduled-build line reads in rows: "Builds weeknights 10 PM–2 AM (Chicago time)" with Details beside it, then "next: tonight" and the night ribbon. "Use V6" and "Cancel schedule" get their own row under the sentence instead of squeezing it into a narrow column.
+- While building, "Building…" stays at full strength rather than greyed out, and the step count is plain words at the end of the row.
+- After you press Build on a Plan that also had a schedule, the line now reads "Schedule ended · you started this build now, so the schedule won’t start a second one." It used to offer "Use V" for a version that didn't exist.
+
+**What it costs:**
+- Build is a little taller than before (32 px, like every other button in the chat's cards). The card grows by a few pixels.
+- The scheduled-build line can take one more row on a wide card, because its detail now sits under the lead rather than beside it.
+
+**Options considered:** Keep the grey band, but stretch it to the card's edges with its own padding. Not chosen: no other chat card uses a band, and the wand modules' cards put their actions on the content edge. Put the step count at the right end of the button row. Not chosen: in Retro's wider type it wrapped at the card's usual width. The "Schedule ended" wording is the lead's ruling: Build already ends the schedule, and the old notice offered a version that did not exist. Jared may want to confirm it.
+
+**What Jared asked (2026-10-09, relayed with his screenshot by the orchestrator thread):** that the Plan card's buttons, which did not line up well, be designed for the space in every theme. The record states his request in plain words rather than quoting it (decision card 2 of 2026-10-07, recorded in DL-145).
+
+**What the spec now says:**
+1. **The Plan card's status zone and one action row** (`Plans/FinalGUISpec.md#F3-606`; section 6 now points to it).
+2. **The schedule line's layout** (`Plans/FinalGUISpec.md#F3-607`).
+3. **Schedule ended** (`Plans/Scheduling_and_Quota_Resume.md#SQR-015`, amended): a schedule invalidated with no newer version leads with Schedule ended and offers no Use V<n>.
+4. **One shared row** (`Plans/DRY_Rules.md#DR-047`): no Plan surface sizes its own buttons.
+5. **Unchanged:** no command, action id, wiring, setting or label is added or removed.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-20261009/JARED_REQUEST.md`, SHA-256 `4454066fa6584209b779ebf33441037b484f09f452599fcbef3477383782a93d` (the owner request); `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-20261009/JARED-SCREENSHOT-retro-light.png`, SHA-256 `e668fe203ee8aeeb9c9ed1e8aa2f263f525188ce14d4a837958074aace4b839b` (his screenshot).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-606, ContractName:Plans/FinalGUISpec.md#F3-607, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-015, ContractName:Plans/DRY_Rules.md#DR-047

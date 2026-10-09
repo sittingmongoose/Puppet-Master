@@ -550,9 +550,29 @@ const B = (name, html) => { built.push([name, html]); return html; };
   g17('cycle 1 paper words: HTML lines in a foreignObject 12 px in and 8 px down, at the inner width (w - 24; 16 less beside the lock)', () => {
     const h = PPc.paper({ x: 0, y: 0, w: 120, h: 50, label: 'The job', sub: 'Add CSV', lock: true });
     return [has(h, '<foreignObject class="pmx-p-paper-fo" x="12" y="8" width="96" height="34">', '<div xmlns="http://www.w3.org/1999/xhtml" class="pmx-p-paper-text"><span class="pmx-p-note">The job</span><span class="pmx-p-lab" style="max-width:80px">Add CSV</span></div></foreignObject>') && !/<text[^>]*>(The job|Add CSV)</.test(h), h]; });
-  g17('cycle 1 pmxPlateFit({caption}): a 40 px caption plate appended last (the leanest mode), the slot floor follows it', () => {
+  /* 2026-10-09 (DL-154, F3-601): the caption is still appended after the drawings, but the slot's floor is the leanest
+     DRAWING, not the caption, so a plate keeps a drawing while a roster's rows scroll (the runtime then raises the floor
+     to the leanest drawing that fits the slot's width) */
+  g17('cycle 1 / F3-601 pmxPlateFit({caption}): a 40 px caption plate appended after the drawings, the slot floor is the leanest drawing', () => {
     const h = X.pmxPlateFit({ key: 'fx', fit: 'full', plates: [X.pmxPlate({ mode: 'full', fitH: 170 }), X.pmxPlate({ mode: 'strip', fitH: 72 })], caption: 'Two work at once.' });
-    return [has(h, '--pmx-fit-min:40px', '<figure class="pmx-plate" data-k="fx:caption" data-mode="caption" data-fit-h="40"', '<figcaption class="pmx-fine pmx-plate-cap">Two work at once.</figcaption></figure></div>') && h.indexOf('data-mode="strip"') < h.indexOf('data-mode="caption"'), h]; });
+    return [has(h, '--pmx-fit-min:72px', '<figure class="pmx-plate" data-k="fx:caption" data-mode="caption" data-fit-h="40"', '<figcaption class="pmx-fine pmx-plate-cap">Two work at once.</figcaption></figure></div>') && !h.includes('--pmx-fit-min:40px') && h.indexOf('data-mode="strip"') < h.indexOf('data-mode="caption"'), h]; });
+  g17('F3-601 pmxPlateFit({caption, tail}): a tail drawing leaner than the caption (the Chat Room lean line) sets the floor and stands after the caption', () => {
+    const h = X.pmxPlateFit({ key: 'ft', plates: [X.pmxPlate({ mode: 'strip', fitH: 48 })], caption: 'Words.', tail: [X.pmxPlate({ mode: 'lean', fitH: 32 })] });
+    return [h.includes('--pmx-fit-min:32px') && h.indexOf('data-mode="caption"') < h.indexOf('data-mode="lean"'), h]; });
+  g17('F3-601 pmxPlateFit with a caption and no drawing: the caption alone sets the 40 px floor', () => {
+    const h = X.pmxPlateFit({ key: 'fc', plates: [], caption: 'Words.' });
+    return [h.includes('--pmx-fit-min:40px') && h.includes('data-mode="caption"'), h]; });
+  /* F3-601 the wrap: a team too wide for one strip row is drawn on 2 or 3 rows, so pmxCastFit always holds a drawing
+     at the 8-helper limit with both specialists; a small team never gets one */
+  const castSp = n => ({ key: 'cx', kind: 'crew', fitKey: 'cx-fit', hub: { key: 'cx-hub', role: 'coordinator', label: 'Coordinator' },
+    seats: Array.from({ length: n }, (_, i) => ({ key: 'cx-s' + i, role: 'builder', seat: (i % 8) + 1, label: ['Builder', 'Checker', 'Tester', 'Docs writer', 'Integrator', 'Architect', 'Reviewer', 'Researcher'][i % 8] })),
+    wing: [{ key: 'cx-w', role: 'wonderer', seat: 1, label: 'Wonderer' }, { key: 'cx-g', role: 'grill', seat: 2, label: 'Grill Me' }], you: { label: 'You' }, caption: 'Words.' });
+  g17('F3-601 pmxCastPlate(spec, "wrap"): 8 helpers and both specialists on 2-3 rows, a fork from the hub and a join to You, at scale-1 widths', () => {
+    const h = X.pmxCastPlate(castSp(8), 'wrap'), t = /data-cast="wrap" data-tiers="([23])"/.exec(h), w = /viewBox="0 0 (\d+) /.exec(h);
+    return [!!t && !!w && +w[1] <= 576 && has(h, 'data-mode="wrap"', 'data-k="cx:wrap:fork"', 'data-k="cx:wrap:join"', 'data-k="cx:wrap:toyou"', 'data-k="cx-w"', 'data-k="cx-g"'), h.slice(0, 400)]; });
+  g17('F3-601 pmxCastFit: 8 helpers and both specialists still hold a drawing before the caption (the wrap); 2 helpers get no wrap', () => {
+    const big = X.pmxCastFit(castSp(8)), small = X.pmxCastFit(castSp(2));
+    return [big.includes('data-cast="wrap"') && big.indexOf('data-cast="wrap"') < big.indexOf('data-mode="caption"') && !/--pmx-fit-min:40px/.test(big) && !small.includes('data-cast="wrap"'), big.slice(0, 300) + ' | ' + small.slice(0, 200)]; });
   g17('cycle 1 pmxPlateFit without a caption keeps its modes only (no caption plate)', () => { const h = X.pmxPlateFit({ key: 'fy', fit: 'full', plates: [X.pmxPlate({ mode: 'full', fitH: 170 })] }); return [!h.includes('data-mode="caption"'), h]; });
   g17('cycle 1 pmxHero: the field sits in its own box (.pmx-hero-box), the box only around the field', () => { const h = X.pmxHero({ key: 'hb', n: 1, title: 'T', field: { tag: 'textarea', value: 'v' } }); return [has(h, '<div class="pmx-hero-box"><textarea class="pmx-hero-field"', '>v</textarea></div>'), h]; });
   g17('cycle 1 pmxActions: a kind\'s extra actions carry pmx-act-extra, the core (Open Panel, Message) never', () => {

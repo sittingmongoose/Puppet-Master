@@ -8512,7 +8512,7 @@ div.qs-step-body{ cursor:default; }
   background:var(--qs-row); color:var(--text); cursor:pointer;
   transition:background 180ms var(--spring-ease), border-color 180ms var(--spring-ease), color 180ms var(--spring-ease);
 }
-.qs-ask-opt{ align-items:center; }
+.qs-ask-opt{ align-items:flex-start; } /* item 5: a wrapping row keeps its mark and number on the first line */
 .qs-ask-opt:hover, .qs-ask-review-row:hover{ background:var(--qs-row-hover); }
 .qs-ask-opt.is-on{
   background:var(--qs-on);
@@ -8758,6 +8758,86 @@ button.qs-spine-slot.is-current::after{
   display:grid; place-items:center;
   box-shadow:0 0 0 3px var(--surface-2), 0 0 12px 1px color-mix(in srgb, var(--accent) 45%, transparent);
 }
+
+/* ==========================================================================
+   Ask Card: long answers (item 5, 2026-10-09).  The card grows and shrinks with
+   its content up to the room above the composer: questions.js fitAskRoom()
+   publishes --qs-ask-room (the chat stage less its header, Context Lens and
+   composer rows) on the root, and the cap leaves a 48px strip of transcript
+   under the header.  Past the cap the body
+   scrolls inside the card; the close button, the spine and the footer stay put.
+   Text wraps wherever it must (a long URL included): nothing scrolls sideways.
+   ========================================================================== */
+.decision-host[data-variant="8"]{
+  --qs-ask-max: max(240px, calc(var(--qs-ask-room, 60vh) - 56px));
+}
+.decision-host[data-variant="8"] .qs.qs-ask,
+.decision-host[data-variant="8"] .qs-shell.qs-opening > .qs.qs-ask,
+.decision-host[data-variant="8"] .qs-shell.qs-morphing > .qs.qs-ask,
+.decision-host[data-variant="8"] .qs-shell.qs-closing > .qs.qs-ask{ max-height:var(--qs-ask-max); }
+/* the open morph measures its target with .qs-measure (max-height:none !important); the Ask Card measures capped */
+.decision-host[data-variant="8"] .qs-shell.qs-measure > .qs.qs-ask{ max-height:var(--qs-ask-max) !important; }
+.qs-ask-row{ min-height:0; }
+.qs-ask-body{
+  flex:1 1 auto; min-width:0; min-height:0;
+  overflow-x:hidden; overflow-y:auto; overscroll-behavior:contain;
+  /* 4px of slack on every side, given back by the margins: focus rings and the row press are not cut by the edge */
+  margin:-4px; padding:4px;
+}
+/* scrolling: the edges the content runs past fade (none at an edge it rests on), and the footer takes a hairline */
+.qs-ask.is-scroll .qs-ask-body{
+  --qs-fade-t:14px; --qs-fade-b:18px;
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 var(--qs-fade-t), #000 calc(100% - var(--qs-fade-b)), transparent 100%);
+  mask-image:linear-gradient(to bottom, transparent 0, #000 var(--qs-fade-t), #000 calc(100% - var(--qs-fade-b)), transparent 100%);
+}
+.qs-ask.is-scroll .qs-ask-body.at-start{ --qs-fade-t:0px; }
+.qs-ask.is-scroll .qs-ask-body.at-end{ --qs-fade-b:0px; }
+.qs-ask.is-scroll .qs-ask-foot{
+  margin-top:0; padding-top:11px;
+  border-top:1px solid var(--qs-line);
+}
+/* long words and URLs break rather than run past the card; review keeps a multi-line answer's line breaks */
+.qs-ask-title, .qs-ask-desc, .qs-ask-sub, .qs-ask-opt-label, .qs-ask-opt-desc,
+.qs-ask-review-a, .qs-ask-review-q{ overflow-wrap:anywhere; }
+.qs-ask-review-a{ white-space:pre-line; }
+/* the question's description (Tools.md QuestionItem `description?`) sits under the title, on the title's hang */
+.qs-ask-desc{
+  font-size:13px; font-weight:450; line-height:1.45; color:var(--muted);
+  margin:-6px 0 12px; padding-right:8px;
+}
+.qs-ask-title.has-glyph ~ .qs-ask-desc,
+.qs-ask-title.has-glyph ~ .qs-ask-sub{ padding-left:var(--qs-hang); }
+/* an option's description: under its label, muted, on the label's column */
+.qs-ask-opt-copy{ display:flex; flex-direction:column; gap:2px; min-width:0; flex:1 1 auto; }
+.qs-ask-opt-desc{ font-size:12.5px; font-weight:450; line-height:1.4; color:var(--muted); }
+/* rows that wrap keep the mark and the number centred on the label's first line (1.45 x 14px), which is exactly
+   where a one-line row centred them */
+.qs-ask-opt > .qs-ask-mark{ margin-top:calc((1.45 * 14px - 18px) / 2); }
+.qs-ask-opt > .qs-num{ margin-top:calc((1.45 * 14px - 1.45 * 13px) / 2); }
+/* Something else: a textarea one line tall that grows with its text (field-sizing; questions.js autoSizeField()
+   elsewhere). Its mark, number, chips and attach stay on its first line: --qs-other-line is the one-line well
+   (a 1.45 x 13px line, 4px field padding twice, 4px well padding twice, its 1px border twice), and each is centred
+   on it exactly as align-items:center placed them before the field could grow. */
+.qs-ask .qs-other-ask{
+  --qs-other-field: calc(1.45 * 13px + 8px);
+  --qs-other-line: calc(var(--qs-other-field) + 10px);
+  align-items:flex-start;
+}
+.qs-ask .qs-other-ask > .qs-ask-mark{ margin-top:calc((var(--qs-other-line) - 18px) / 2); }
+.qs-ask .qs-other-ask > .qs-num{ margin-top:calc((var(--qs-other-line) - 1.45 * 13px) / 2); }
+.qs-ask .qs-other-ask .qs-other-line{ align-items:flex-start; }
+.qs-ask .qs-other-ask .qs-other-line > .qs-attach,
+.qs-ask .qs-other-ask .qs-other-line > .qs-file-chip{ margin-top:calc((var(--qs-other-field) - 22px) / 2); }
+.qs-ask .qs-other-ask textarea.qs-other-input{
+  display:block; resize:none; overflow:hidden;
+  field-sizing:content; min-height:0;
+  overflow-wrap:anywhere; white-space:pre-wrap;
+}
+/* the optional note grows with its text too, from the 120px it rests at (its old flex basis); the body is the one
+   scroller, so the field never scrolls inside itself */
+.qs-ask-note-input{ flex:0 0 auto; min-height:120px; field-sizing:content; overflow:hidden; overflow-wrap:anywhere; }
+/* the @-file sprout opens below its field when there is no room above it in the body (questions.js mentionDown) */
+.qs-ask .qs-mention.is-down{ top:calc(100% + 4px); bottom:auto; }
 
 /* ==========================================================================
    Container tiers.  Every width-dependent rule below queries the DECISION HOST,
@@ -9602,7 +9682,10 @@ body.pm56-reduced .live-agent-row > .agent-mark, body.pm56-reduced .agent-lane >
 .pmx-sheet .pmx-plate-fit[data-fit="full"] > .pmx-plate[data-mode="full"],
 .pmx-sheet .pmx-plate-fit[data-fit="compact"] > .pmx-plate[data-mode="compact"],
 .pmx-sheet .pmx-plate-fit[data-fit="lean"] > .pmx-plate[data-mode="lean"],
-.pmx-sheet .pmx-plate-fit[data-fit="strip"] > .pmx-plate[data-mode="strip"]{display:block;}
+.pmx-sheet .pmx-plate-fit[data-fit="strip"] > .pmx-plate[data-mode="strip"],
+.pmx-sheet .pmx-plate-fit[data-fit="wrap"] > .pmx-plate[data-mode="wrap"]{display:block;}
+/* the cast's wrap is drawn at two widths (576, then 500); only the one the runtime picked shows */
+.pmx-sheet .pmx-plate-fit > .pmx-plate[data-mode="wrap"]:not([data-pick]){display:none;}
 .pmx-sheet .pmx-plate-fit[data-fit="caption"] > .pmx-plate[data-mode="caption"], .pmx-sheet .pmx-plate-fit:not([data-fit]) > .pmx-plate[data-mode="caption"]:last-child{display:flex;}
 /* a caption that wraps (retro at 1024 x 768) grows its plate and the slot with it: 8 px of floor above and below its
    text, never squeezed (J-2) */
@@ -9750,6 +9833,12 @@ body[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
 .pmx-stop[data-state="now"] .pmx-stop-label{color:var(--text);font-weight:600;}
 .pmx-track-now{min-width:0;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .pmx-track-now b{color:var(--text);font-weight:600;}
+/* a wrapping track (8 or more stops, 2026-10-09): the dots take the card's width and wrap down onto more rows, 10 px
+   joins between them (20 rounds fit two rows of a 360 px card); the words keep a whole row under them */
+.pmx-track[data-wrap]{flex-wrap:wrap;height:auto;min-height:20px;row-gap:4px;}
+.pmx-track[data-wrap] > .pmx-track-line{flex:1 1 100%;min-width:0;flex-wrap:wrap;row-gap:8px;padding:6px 0;}
+.pmx-track[data-wrap] > .pmx-track-now{flex:1 1 100%;}
+.pmx-track[data-wrap] .pmx-track-line .pmx-stop + .pmx-stop::before{width:10px;margin:0 2px;}
 
 /* C5/C6 lanes: two lines, a fixed height (J-2: 6 px between the text and the lane's hairlines, so 49 px) */
 .pmx-lanes{display:flex;flex-direction:column;min-width:0;}
@@ -9829,7 +9918,8 @@ p.pmx-meta, .pmx-meta{margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-r
 /* J-2: 32 px actions with 10 px sides; wrapped rows keep 12 px; boxed neighbours keep 10 px (text buttons carry their own padding) */
 .pmx-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px 6px;min-height:32px;width:100%;min-width:0;}
 .pmx-act{height:32px;min-height:32px;padding:0 10px;border-radius:8px;font:var(--pmx-w-560) 12px/16px var(--font-ui);white-space:nowrap;}
-.pmx-actions > :is(.primary-button, .soft-button) + .primary-button, .pmx-actions > :is(.primary-button, .soft-button) + .soft-button{margin-left:4px;}
+/* the Plan card's Build (.pd-build, plans.js) is a boxed primary too (C56, DR-047) */
+.pmx-actions > :is(.primary-button, .soft-button, .pd-build) + :is(.primary-button, .soft-button, .pd-build){margin-left:4px;}
 .pmx-act.text-button{color:var(--muted);background:none;}
 .pmx-act.text-button:hover{color:var(--text);background:var(--surface-3);}
 .pmx-act.primary-button{height:32px;min-height:32px;padding:0 14px;}
@@ -10159,9 +10249,9 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
 }
 /* closing (STORM-A): a track of 6 or more stops keeps its M form up to 720 px (each label beside its dot needs ~700) */
 @container pmxrun (min-width: 520px) and (max-width: 719.98px){
-  .pmx-track:is([data-n="6"], [data-n="7"], [data-n="8"], [data-n="9"], [data-n="10"]) .pmx-stop-label{display:none;}
-  .pmx-track:is([data-n="6"], [data-n="7"], [data-n="8"], [data-n="9"], [data-n="10"]) .pmx-track-now{display:block;flex:1 1 auto;}
-  .pmx-track:is([data-n="6"], [data-n="7"], [data-n="8"], [data-n="9"], [data-n="10"]) .pmx-track-line .pmx-stop + .pmx-stop::before{width:22px;margin:0 3px;}
+  .pmx-track[data-long] .pmx-stop-label{display:none;}
+  .pmx-track[data-long] .pmx-track-now{display:block;flex:1 1 auto;}
+  .pmx-track[data-long] .pmx-track-line .pmx-stop + .pmx-stop::before{width:22px;margin:0 3px;}
 }
 /* R-21: the run title shows only on a card of 640 px or more (at 591 it left the headline nothing) */
 @container pmxrun (min-width: 640px){ .pmx-receipt .pmx-receipt-title{display:block;} }
@@ -10238,6 +10328,9 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
   /* one scrolling column has height to spare: the plate slot shows the richest mode that fits the width at its
      natural height (the runtime reads --pmx-fit-free) */
   .pmx-sheet .pmx-plate-fit{--pmx-fit-free:1;flex:none;height:auto;max-height:none;}
+  /* 2026-10-09 (Jared: "it pushes the graph out of view"): while its question is on screen the plate stays at the top
+     of the scrolling body and the roster's rows pass under it, on the sheet's own colour (8 px above and below) */
+  .pmx-sheet .pmx-q-body > .pmx-plate-fit{position:sticky;top:8px;z-index:2;background:var(--pmx-sheet-bg);box-shadow:0 -8px 0 var(--pmx-sheet-bg),0 8px 0 var(--pmx-sheet-bg);}
   .pmx-sheet .pmx-plate-fit > .pmx-plate:not([data-mode="caption"]){height:var(--pmx-plate-h);}
   /* one column has the width back: the roster's model and persona columns return to their full widths (the 1024
      rule narrowed them, which cut "Implementer" and the model names at 900 and 700) */
@@ -11825,22 +11918,23 @@ body.pm56-reduced .pmx-run[data-density="live"] .pmx-stop[data-state="now"] + .p
 }
 .plan-doc .pd-md-block{ display:block; }
 
-/* ------------------------------------------------------------ the footer */
-.plan-doc .pd-foot{
-  display:flex; flex-wrap:wrap; align-items:center; gap:6px;
-  padding:10px 14px; border-top:1px solid var(--border); background:var(--surface-3);
-}
-/* ONE control. It changes LABEL; it is never replaced by a status badge. */
+/* ------------------------------------------------------------ the footer
+   C56: the footer is the shared action row (.pmx-actions, module-shell.css) and every control in it is a .pmx-act,
+   so Build, Revise, Open plan and More are one height (32 px) and one type size, with 10 px between boxed
+   neighbours. It is a row on the card's content edge, never a tinted band with its own inset. */
+.plan-doc .pd-foot{ padding:12px 14px; border-top:1px solid var(--border); }
+/* ONE control. It changes LABEL; it is never replaced by a status badge. Its size is the .pmx-act's; the sides are
+   the primary action's 14 px. */
 .plan-doc .pd-build{
-  height:26px; padding:0 13px; cursor:pointer;
-  border:1px solid var(--accent); border-radius:var(--radius-sm);
+  padding:0 14px; cursor:pointer;
+  border:1px solid var(--accent);
   background:var(--accent); color:var(--on-accent);
-  font:600 12px/1 var(--font-ui); white-space:nowrap;
+  font:600 12px/16px var(--font-ui); white-space:nowrap;
   transition:filter var(--spring-soft), background var(--spring-soft),
              color var(--spring-soft), border-color var(--spring-soft);
 }
 .plan-doc .pd-build:hover:not([disabled]){ filter:brightness(1.08); }
-.plan-doc .pd-build[disabled]{ cursor:default; }
+.plan-doc .pd-build[disabled]{ cursor:default; opacity:1; }  /* a label, not a greyed control: .pmx-act[disabled] would fade it */
 .plan-doc .pd-build-building{
   background:var(--surface-2); color:var(--text); border-color:var(--accent);
 }
@@ -11865,13 +11959,15 @@ html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:
 /* Support copy sits BESIDE the control, never inside it — a paused build still
    reads "Building…" on the button. */
 .plan-doc .pd-wait{
-  display:inline-flex; align-items:center; gap:6px; margin-left:2px;
+  display:inline-flex; align-items:center; gap:6px;
   font:400 11px/1.4 var(--font-ui); color:var(--muted);
 }
 /* the wait line's mark is a status mark (waiting-dep, paused; plans.js waitMark), inked by its tone, never the
    accent; its .nx-st wrapper is already flex:none (neon-icons.css) */
 .plan-doc .pd-wait svg{ flex:0 0 auto; }
 .plan-doc .pd-act{ white-space:nowrap; }
+/* in the action row the support copy takes a row of its own under the buttons, on the content edge */
+.plan-doc .pd-foot > .pd-wait{ flex:1 1 100%; min-width:0; }
 
 /* --------------------------------------------------- historical compact */
 .plan-doc-compact{ background:var(--surface-2); }
@@ -11995,7 +12091,6 @@ html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:
 
 /* ---------------------------------------------------------- narrow panes */
 @media (max-width:590px){
-  .plan-doc .pd-foot{ gap:5px; }
   .plan-doc .pd-kv span{ flex-basis:110px; }
   .plan-doc .pd-body{ max-height:380px; }
 }
@@ -12055,7 +12150,11 @@ html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:
 .plan-doc .pd-md-mark-mixed{ color:var(--accent); opacity:.8; }
 
 /* --- the attention line beside the Build control ------------------------- */
-.plan-doc .pd-attn{ align-items:flex-start; gap:8px; flex-wrap:wrap; }
+/* the mark column and its 10 px gap match the schedule line's (plan-demo-batch2.css); the admitted actions are an
+   action row under the copy */
+.plan-doc .pd-attn{ display:grid; grid-template-columns:16px minmax(0,1fr); align-items:start; gap:6px 10px; }
+.plan-doc .pd-attn > svg, .plan-doc .pd-attn > .nx-st{ margin-top:1px; }
+.plan-doc .pd-attn-acts{ grid-column:2; }
 .plan-doc .pd-attn-copy{ display:flex; flex-direction:column; gap:1px; min-width:0; }
 .plan-doc .pd-attn-copy strong{ font:600 11.5px/1.4 var(--font-ui); color:var(--text); }
 .plan-doc .pd-attn-copy span{ font:400 11px/1.5 var(--font-ui); color:var(--muted); }
@@ -12065,15 +12164,13 @@ html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:
   align-self:flex-start; font:500 10px/1.4 var(--font-ui); color:var(--subtle);
   border:1px solid var(--border); border-radius:999px; padding:0 6px; margin-top:2px;
 }
-.plan-doc .pd-attn-act{ font-size:11px; padding:3px 8px; }
 
 /* --- the compact To-Do completion summary (not a second lifecycle chip) --- */
+/* plain words at the row's end, so it never reads as a third button or a status chip */
 .plan-doc .pd-progress{
-  font:500 11px/1.5 var(--font-ui); color:var(--muted);
-  border:1px solid var(--border); border-radius:999px; padding:2px 9px;
-  background:var(--surface-3);
+  margin-left:auto; font:500 11.5px/16px var(--font-ui); color:var(--muted); font-variant-numeric:tabular-nums;
 }
-.plan-doc .pd-progress-stale{ color:var(--subtle); border-style:dashed; }
+.plan-doc .pd-progress-stale{ color:var(--subtle); font-style:italic; }
 
 /* --- typed embeds -------------------------------------------------------- */
 .plan-doc .pd-embed{
@@ -14323,8 +14420,8 @@ body[data-theme^="retro"] .pmx-dflt-title{ font-size:12.5px; }
 .todo-detail .todo-chips { display:grid; }
 .todo-detail .todo-chip { white-space:normal; }
 /* Consistent quiet card headers and footers; work components are excluded. */
-.polish-plan-more { display:flex; flex-wrap:wrap; gap:6px; flex-basis:100%; padding-top:5px; }
-.plan-doc .pd-foot { gap:7px; }
+/* More's actions: a second .pmx-actions row under the footer's (C56) */
+.polish-plan-more { flex-basis:100%; }
 .polish-wand-group { border-bottom:1px solid var(--border); }
 .polish-wand-group:last-child { border:0; }
 .polish-group-toggle { min-height:36px; }
@@ -14417,8 +14514,14 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .plan-preview-open strong{font-size:14px;font-weight:600;line-height:1.45;}
 .plan-preview-open:hover strong{text-decoration:underline;text-underline-offset:3px;}
 .plan-preview-open>span{font-size:11px;line-height:1.6;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.plan-preview-meta{display:flex;gap:12px;font-size:10px;color:var(--muted);text-transform:capitalize;margin:4px 0 9px;}
-.plan-preview .pd-foot{padding:11px 0 0;margin:0;}
+/* C56: one hairline opens the card's status zone (the schedule line when there is one, else the step count), and
+   the action row closes it on the content edge: no tinted band, no inset of its own, the card's padding below. */
+.plan-preview-open + :is(.plan-schedule-line,.plan-preview-meta){margin-top:3px;padding-top:12px;border-top:1px solid var(--border);}
+.plan-preview .plan-schedule-line{margin-bottom:0;padding-bottom:0;border-bottom:0;}
+.plan-preview-meta{display:flex;gap:6px;margin:0;font:500 11px/16px var(--font-ui);color:var(--muted);font-variant-numeric:tabular-nums;}
+.plan-preview-meta > span + span::before{content:"·";margin-right:6px;}
+.plan-preview .plan-schedule-line + .plan-preview-meta{margin-top:10px;}
+.plan-preview .pd-foot{margin:12px 0 0;padding:0;border:0;background:none;}
 .plan-doc-editor{max-width:960px;margin:0 auto;padding:25px 30px;min-width:0;}
 .plan-doc-editor .pd-head-main{min-width:0;}
 .pd-title>button{border:0;padding:0;font:inherit;color:inherit;background:transparent;text-align:left;cursor:pointer;}
@@ -14506,26 +14609,34 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .plan-demo-guide small{display:block;color:var(--muted);font-size:10px;margin-bottom:4px;}
 .plan-demo-guide strong{display:block;font-size:12px;font-weight:550;}
 .plan-demo-controls{display:flex;gap:8px;align-items:center;}
-.plan-demo-guide button,.plan-run-line button{padding:6px 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface-2,transparent);color:inherit;font:inherit;cursor:pointer;}
+.plan-demo-guide button{padding:6px 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface-2,transparent);color:inherit;font:inherit;cursor:pointer;}
 .plan-demo-guide button:disabled{opacity:.5;cursor:default;}
 .plan-demo-guide .plan-demo-close{padding:6px;display:grid;place-items:center;}
 .plan-demo-guide p{flex-basis:100%;margin:0;font-size:11px;}
 .plan-run-line{display:flex;align-items:center;gap:10px;margin:12px 0;padding:10px 0;color:var(--muted);font-size:12px;}
 .plan-run-line span{flex:1;min-width:0;}
 .plan-run-line small{display:block;margin-top:4px;}
+/* its Open plan is the Plan footer's .soft-button.pmx-act (C56), not a one-off button */
 
-/* The Plan card's schedule line (scheduling.js planSummary; DESIGN-SPEC 8.8 "In chat", IMPACT A1-30): one row of
-   the canon token and its sentence, the actions it allows, and under them the night ribbon and the steps built.
-   It sits beside the Plan's Build control and never takes its place. No strips, no boxes: a hairline under it. */
-.plan-schedule-line{display:grid;grid-template-columns:16px minmax(0,1fr) auto;align-items:start;gap:6px 10px;min-width:0;margin:0 0 10px;padding:8px 0 10px;border-bottom:1px solid var(--border);color:var(--muted);}
-.plan-sched-mark{display:flex;padding-top:2px;color:var(--muted);}
-.plan-sched-say{margin:0;min-width:0;padding-top:1px;font:450 12px/17.5px var(--font-ui);color:var(--muted);overflow-wrap:anywhere;}
+/* The Plan card's schedule line (scheduling.js planSummary; DESIGN-SPEC 8.8 "In chat", IMPACT A1-30): the canon token,
+   its lead on the first row with Details beside it, then the detail and the night ribbon (and the steps built) flowing
+   on the row below; a decision's buttons (Use V6, Cancel schedule) get their own row under the sentence (C56). It sits
+   beside the Plan's Build control and never takes its place. No strips, no boxes: a hairline under it. The mark column
+   and its 10 px gap are the same as the Build attention line's (plans.css .pd-attn). */
+.plan-schedule-line{display:grid;grid-template-columns:16px minmax(0,1fr) auto;align-items:start;gap:4px 10px;min-width:0;margin:0 0 10px;padding:8px 0 10px;border-bottom:1px solid var(--border);color:var(--muted);}
+.plan-sched-mark{display:flex;padding-top:1px;color:var(--muted);}
+.plan-sched-say{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;margin:0;min-width:0;font:450 12px/17.5px var(--font-ui);color:var(--muted);}
+.plan-sched-say > b{flex:1 0 100%;min-width:0;color:var(--text);font-weight:600;overflow-wrap:break-word;}
 .plan-sched-say b{color:var(--text);font-weight:600;}
+.plan-sched-sep{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+.plan-sched-detail{flex:0 1 auto;min-width:0;overflow-wrap:break-word;}
 .plan-schedule-line[data-tone="update"] .plan-sched-mark{color:var(--warning);}
-.plan-sched-acts{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:0 10px;margin:-6px -10px -6px 0;}
-.plan-sched-acts > .text-button, .plan-sched-acts > .soft-button{height:32px;min-height:32px;padding:0 10px;font:600 12px/16px var(--font-ui);white-space:nowrap;}
+/* Details: a 32 px text action centred on the lead's first line, its label on the content edge */
+.plan-sched-acts{display:flex;align-items:center;margin:-7px -10px -7px 0;}
 .plan-sched-acts > .text-button{color:var(--muted);}
-.plan-sched-foot{grid-column:2 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;min-width:0;font:500 11.5px/17px var(--font-ui);color:var(--muted);font-variant-numeric:tabular-nums;}
+.plan-sched-decide{grid-column:2 / -1;margin-top:6px;}
+.plan-sched-decide > .text-button:first-child{margin-left:-10px;}
+.plan-sched-foot{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;min-width:0;font:500 11.5px/17px var(--font-ui);color:var(--muted);font-variant-numeric:tabular-nums;}
 .plan-sched-ribbon{display:block;flex:none;}
 .plan-sched-base{stroke:var(--border-strong);stroke-width:1;}
 .plan-sched-band{fill:var(--muted);opacity:.7;}
@@ -14536,7 +14647,7 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .plan-sched-overnight{grid-column:2 / -1;margin:2px 0 0;min-width:0;font:450 12px/17.5px var(--font-ui);color:var(--muted);overflow-wrap:anywhere;}
 .plan-sched-overnight b{color:var(--text);font-weight:600;}
 .plan-sched-overnight > .text-button{height:32px;min-height:32px;margin:-8px 0 -8px 0;padding:0 10px;color:var(--text);font:600 12px/16px var(--font-ui);vertical-align:baseline;}
-@container (max-width: 360px){ .plan-schedule-line{grid-template-columns:16px minmax(0,1fr);} .plan-sched-acts{grid-column:2;justify-content:flex-start;margin:0 0 -6px -10px;} }
+@container (max-width: 360px){ .plan-schedule-line{grid-template-columns:16px minmax(0,1fr);} .plan-sched-acts{grid-column:2;margin:-4px 0 -7px -10px;} }
 
 /* the guide is a pmx guide (G-25); beside the Plan it only needs the document's side margins */
 .editor-body>.schedule-demo-guide{margin:12px 20px;}
@@ -15402,7 +15513,7 @@ body:is([data-theme^="retro"], [data-theme^="friendly"]) .pmx-mem-rule-text{font
 .transcript{scroll-padding-bottom:calc(var(--thread-float-h,44px) + 28px)}
 .transcript button,.transcript a,.transcript summary{scroll-margin-bottom:calc(var(--thread-float-h,44px) + 28px)}
 
-.pd-compact-actions{grid-column:2;display:flex;gap:8px;flex-wrap:wrap;min-width:0}.pd-compact-actions>*{max-width:100%}
+.pd-compact-actions{grid-column:2;min-width:0}.pd-compact-actions>*{max-width:100%}
 
 /* Native card/section grammar. No side stripes or working-animation changes. */
 .debug-document{padding:22px;color:var(--text);font:13px/1.6 var(--font-ui);min-width:0;max-width:100%}
@@ -20099,6 +20210,8 @@ html[data-o55-nier-parts~="cursor"] .qs-ask .qs-other-ask.is-on {
 }
 html[data-o55-nier-parts~="cursor"] .qs-ask-opt.is-on .qs-num,
 html[data-o55-nier-parts~="cursor"] .qs-ask .qs-other-ask.is-on .qs-num { color: var(--o55-nier-on-ink); }
+/* item 5 (2026-10-09): an option's description rides the cursor too, in paper a step quieter than its label */
+html[data-o55-nier-parts~="cursor"] .qs-ask-opt.is-on .qs-ask-opt-desc { color: var(--o55-nier-on-ink); opacity: .8; }
 html[data-o55-nier-parts~="cursor"] .qs-ask-opt.is-on .qs-ask-mark,
 html[data-o55-nier-parts~="cursor"] .qs-ask .qs-other-ask.is-on .qs-ask-mark { background: var(--o55-nier-on-ink); border-color: var(--o55-nier-on-ink); }
 html[data-o55-nier-parts~="cursor"] .qs-ask-opt.is-on .qs-ask-mark-radio::after,
@@ -22708,6 +22821,45 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
 
   const questionQueueDepth = questionFlows.filter((f) => f.state === 'queued').length;
 
+  /* Item 5 (2026-10-09): the same deployment questionnaire written long, for Demo Studio's "Long answers
+     questionnaire" and questions-verify's L checks. Options use the canonical object shape (Tools.md
+     `options?: Array<{id, label, description?}>`) beside plain strings; answers run to several lines and carry an
+     unbroken URL, so every place an answer can appear is exercised. Not a flow: it never enters the queue. */
+  const longUrl = 'https://deploy.example.internal/hosts/truenas/apps/puppet-master/health?probe=readiness&expect=200&timeout=30s&retries=5';
+  const longNote = 'Keep provider credentials on the server; clients only ever hold a session token.\n'
+    + 'Allow clients to reconnect without losing draft state, including a half-written questionnaire.\n'
+    + 'Never restart the NAS while a run is executing; wait for the checkpoint, then restart.\n'
+    + 'Use ' + longUrl + ' as the readiness check.\n\n'
+    + 'If the preferred host is offline for more than ten minutes, pause and ask rather than moving the run, because a run that silently changes hosts loses its browser session and its worktree bind.';
+  const longQuestions = [
+    { id:'lq1', type:'choice', required:true,
+      prompt:'Where should the primary Puppet Master server run, given that it must stay reachable from every client on the home network, survive a reboot of the NAS without losing queued runs, and keep provider credentials on a host you control?',
+      description:'This decides which execution hosts are reachable without a relay and where credentials live.',
+      options:[
+        { id:'truenas', label:'TrueNAS Docker', description:'Runs as an app container with its data on the encrypted pool, its port published through the reverse proxy, and nightly snapshots handled by the existing replication task.' },
+        { id:'windows', label:'Windows native on the gaming PC, which has the most memory and the GPU', description:'It sleeps when nobody is using it and restarts for updates on its own schedule, so queued runs would wait.' },
+        { id:'url', label:longUrl, description:'A custom endpoint someone pasted as an option.' },
+        'Linux native'
+      ],
+      answer:'TrueNAS Docker',
+      why:'Host selection decides which execution hosts are reachable without a relay.' },
+    { id:'lq2', type:'multi', required:true, prompt:'Which hosts may execute Windows work?',
+      options:[
+        'Windows native: the physical PC with the RTX 3090, full GPU, real browsers and every installed toolchain',
+        'Windows WSL: Ubuntu under WSL2 on the same PC, sharing the GPU through the WSL driver but not the Windows browsers',
+        'Linux container: a disposable container on the NAS with no GPU, no browsers and only the tools baked into its image',
+        'macOS: the MacBook Air, which is on battery most of the day and only reachable while it is awake'
+      ],
+      answer:['Windows native: the physical PC with the RTX 3090, full GPU, real browsers and every installed toolchain'],
+      other:'The spare Intel NUC in the closet, but only for builds that need no GPU, and only after it is re-imaged from ' + longUrl,
+      why:'Windows-only tooling cannot be routed to a Linux container.' },
+    { id:'lq3', type:'text', required:false, prompt:'Add any constraints the deployment plan should preserve.',
+      answer:longNote, other:longNote,
+      why:'Free-text constraints are copied verbatim into the resulting Plan artifact.' },
+    { id:'lq4', type:'summary', required:false, prompt:'Review the resolved deployment summary.', answer:'',
+      why:'Nothing is submitted until this page is seen.' }
+  ];
+
 
   /* =====================================================================
      operational -- absent before this wave.
@@ -23627,7 +23779,7 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
     contextSources, contextWindow, contextCompaction, contextByThread, compactionOutcomes,
     /* configuration */
     recipes, themes, models, accounts, accountsNeedingAttention, accountNick,
-    questions, questionFlows, questionQueueDepth,
+    questions, questionFlows, questionQueueDepth, longQuestions,
     /* operations */
     operational, warnings, scriptedReplies, drafts,
     workingTakes, transcriptTakes
@@ -31646,6 +31798,30 @@ window.PM56_NIER_FACES = [
     requestAnimationFrame(sync);
   }
   if(document.body) setMode('closed');   // history.css is inert until this exists
+  /* A stored pin is applied now, before app.js's first render, not only in boot(): boot() runs at DOMContentLoaded,
+     after that render, so .assistant-grid was first styled unpinned and its 200px gutter then slid in through the
+     padding-left transition. A frame painted the composer under the drawer, and the boot stall that follows held it
+     there for about two seconds (2026-10-09). boot() still confirms or corrects this from the app's state; the
+     stored width goes on with it, clamped by history.css until boot() clamps it in JS. */
+  (function earlyPin(){
+    if(!document.body) return;
+    var saved = store(null), pin = saved === '1';
+    if(saved == null){
+      /* first run: boot() inherits the app's default historyMode ('pinned', unless saved prefs say otherwise) and
+         drops it under app.js's isNarrow() width */
+      var hm = 'pinned';
+      try{ hm = JSON.parse(window.localStorage.getItem('pm56-prefs') || '{}').historyMode || 'pinned'; }catch(e){}
+      pin = hm === 'pinned' && window.innerWidth >= 821;
+    }
+    if(!pin) return;
+    var w = parseFloat(storeW(null));
+    if(isFinite(w) && w > 0) document.documentElement.style.setProperty('--ph-user-w', Math.round(w) + 'px');
+    setMode('pinned');
+  })();
+  /* ...and boot() itself runs from app.js's first render, in the afterRender hook that fires after the patch and
+     before that frame is painted: the app's default historyMode 'pinned' (the in-grid column) is folded into the
+     pinned drawer before anything is drawn, so the composer's first painted place is its final one. */
+  EXT.slot('afterRender', function(c, info){ if(!api && info && info.phase === 'app') boot(); });
   document.addEventListener('DOMContentLoaded', boot);
   setTimeout(boot, 0);
 
@@ -35230,6 +35406,15 @@ window.PM56_NIER_FACES = [
     }
     return parts.join(' · ');
   }
+  /* Options arrive as plain strings (the fixture's legacy shape) or as the canonical `{id, label, description?}`
+     (Plans/Tools.md). The answer stays the label either way, so answerText() and the review read the same text. */
+  function optLabel(o) {
+    if (o && typeof o === 'object') return String(o.label != null ? o.label : (o.id != null ? o.id : ''));
+    return String(o == null ? '' : o);
+  }
+  function optDesc(o) {
+    return (o && typeof o === 'object' && o.description) ? String(o.description) : '';
+  }
   function answeredCount(qs) {
     var n = 0;
     for (var i = 0; i < qs.length; i++) if (hasAnswer(qs[i])) n++;
@@ -35305,10 +35490,11 @@ window.PM56_NIER_FACES = [
         kind: q.type,
         action: q.type === 'choice' ? 'answer-choice' : 'answer-multi',
         options: (q.options || []).slice(0, 4).map(function (o) {
+          var label = optLabel(o);
           return {
-            value: o, label: o, hint: '',
-            selected: q.type === 'choice' ? q.answer === o
-              : (Array.isArray(q.answer) && q.answer.indexOf(o) >= 0)
+            value: label, label: label, hint: optDesc(o),
+            selected: q.type === 'choice' ? q.answer === label
+              : (Array.isArray(q.answer) && q.answer.indexOf(label) >= 0)
           };
         })
       };
@@ -35344,6 +35530,7 @@ window.PM56_NIER_FACES = [
       subtitle: (flow && flow.note) || '',
       meta: [{ text: ans + '/' + qs.length + ' answered', tone: ans === qs.length ? 'ok' : '' }],
       prompt: q.prompt,
+      description: q.description || '',
       required: !!q.required,
       note: q.why || '',
       input: input,
@@ -35650,6 +35837,17 @@ window.PM56_NIER_FACES = [
     var i = s.lastIndexOf('/');
     return i >= 0 ? s.slice(i + 1) : s;
   }
+  /* The @-file sprout opens above its field. Inside the Ask Card's scrolling body (item 5) a field near the top of
+     the visible body has no room above, where the sprout would be cut off by the body's edge, so it opens below
+     instead. Read from the field as it is on screen now, before the render that opens the sprout. */
+  var MENTION_ROOM = 190;
+  function mentionDown() {
+    var body = document.querySelector('.qs-ask .qs-ask-body');
+    var field = body && body.querySelector('[data-input="question-other"]');
+    if (!body || !field) return false;
+    var line = field.closest('.qs-other-line, .qs-ask-note-well') || field;
+    return line.getBoundingClientRect().top - body.getBoundingClientRect().top < MENTION_ROOM;
+  }
   function otherRow(ctx, m, style) {
     if (m.type !== 'question') return '';
     var kind = (m.input && m.input.kind) || '';
@@ -35668,7 +35866,7 @@ window.PM56_NIER_FACES = [
         + '" title="' + ctx.esc(label) + '">@' + ctx.esc(label) + '<span aria-hidden="true">×</span></button>';
     }).join('');
     var sprout = mention
-      ? '<div class="qs-mention" role="listbox" data-k="qs-mention">' + (paths.length ? paths.map(function (p) {
+      ? '<div class="qs-mention' + (style === 'ask' && mentionDown() ? ' is-down' : '') + '" role="listbox" data-k="qs-mention">' + (paths.length ? paths.map(function (p) {
           return '<button type="button" class="qs-mention-item" role="option" data-action="qs-mention-pick" data-path="'
             + ctx.esc(p) + '">' + ctx.esc(p) + '</button>';
         }).join('') : '<span class="qs-mention-empty">No matching files</span>') + '</div>'
@@ -35692,8 +35890,14 @@ window.PM56_NIER_FACES = [
       + '<div class="qs-other-field">'
       + '<div class="qs-other-line">'
       + chips
-      + '<input type="text" class="qs-other-input" data-input="question-other" data-k="qs-text:question-other" placeholder="'
-      + ctx.esc(OTHER_PLACEHOLDER) + '" value="' + ctx.esc(other) + '" autocomplete="off" spellcheck="false">'
+      /* item 5: on the Ask Card the answer is a one-row textarea that grows with what is typed (questions.css
+         field-sizing, autoSizeFields() where that is missing), so a long answer stays readable instead of scrolling
+         sideways out of a one-line input */
+      + (style === 'ask'
+        ? '<textarea class="qs-other-input" rows="1" data-input="question-other" data-k="qs-text:question-other" placeholder="'
+          + ctx.esc(OTHER_PLACEHOLDER) + '" autocomplete="off" spellcheck="false">' + ctx.esc(other) + '</textarea>'
+        : '<input type="text" class="qs-other-input" data-input="question-other" data-k="qs-text:question-other" placeholder="'
+          + ctx.esc(OTHER_PLACEHOLDER) + '" value="' + ctx.esc(other) + '" autocomplete="off" spellcheck="false">')
       + '<button type="button" class="icon-button qs-attach" data-action="qs-attach" title="Attach a file" aria-label="Attach a file">'
       + iconOf(ctx, 'attach', 16) + '</button>'
       + '</div>'
@@ -35716,7 +35920,7 @@ window.PM56_NIER_FACES = [
         + '" title="' + ctx.esc(label) + '">@' + ctx.esc(label) + '<span aria-hidden="true">×</span></button>';
     }).join('');
     var sprout = mention
-      ? '<div class="qs-mention" role="listbox" data-k="qs-mention">' + (paths.length ? paths.map(function (p) {
+      ? '<div class="qs-mention' + (mentionDown() ? ' is-down' : '') + '" role="listbox" data-k="qs-mention">' + (paths.length ? paths.map(function (p) {
           return '<button type="button" class="qs-mention-item" role="option" data-action="qs-mention-pick" data-path="'
             + ctx.esc(p) + '">' + ctx.esc(p) + '</button>';
         }).join('') : '<span class="qs-mention-empty">No matching files</span>') + '</div>'
@@ -35813,7 +36017,11 @@ window.PM56_NIER_FACES = [
           + '<span class="qs-ask-mark qs-ask-mark-' + (multi ? 'check' : 'radio') + (o.selected ? ' is-on' : '')
           + '" aria-hidden="true"></span>'
           + optNum(i)
-          + '<span class="qs-ask-opt-label">' + ctx.esc(o.label) + '</span></button>';
+          + (o.hint
+            ? '<span class="qs-ask-opt-copy"><span class="qs-ask-opt-label">' + ctx.esc(o.label) + '</span>'
+              + '<span class="qs-ask-opt-desc">' + ctx.esc(o.hint) + '</span></span>'
+            : '<span class="qs-ask-opt-label">' + ctx.esc(o.label) + '</span>')
+          + '</button>';
       }).join('') + '</div>';
     } else {
       body = '<div class="choice-grid qs-grid" data-k="qs-opts">' + opts.map(function (o, i) {
@@ -36144,7 +36352,9 @@ window.PM56_NIER_FACES = [
     var N = window.PM56_NEON;
     var mark = (N && N.status) ? '<span class="qs-ask-glyph" aria-hidden="true">' + N.status('waiting', 16, 'nx-still') + '</span>' : '';
     return '<div class="qs-prompt qs-ask-title' + (mark ? ' has-glyph' : '') + '" data-k="qs-prompt">' + mark + ctx.esc(m.prompt)
-      + (m.required ? '<span class="qs-req" title="Required">*</span>' : '') + '</div>';
+      + (m.required ? '<span class="qs-req" title="Required">*</span>' : '') + '</div>'
+      /* the question's own description (Tools.md QuestionItem `description?`), when it has one */
+      + (m.description ? '<p class="qs-ask-desc" data-k="qs-ask-desc">' + ctx.esc(m.description) + '</p>' : '');
   }
   function take8(ctx, m) {
     if (m.type !== 'question') return take0(ctx, m);
@@ -36166,11 +36376,17 @@ window.PM56_NIER_FACES = [
     var next = idx === last
       ? { a: 'submit-questionnaire', label: 'Submit', kind: 'primary' }
       : { a: 'next-question', label: 'Next', kind: 'primary' };
-    return '<section class="decision-surface qs qs-ask" data-qs="8" data-k="qs:8">'
+    var st = qsState(ctx);
+    return '<section class="decision-surface qs qs-ask' + (st.bodyScroll ? ' is-scroll' : '') + '" data-qs="8" data-k="qs:8">'
       + '<button type="button" class="qs-ask-x" data-action="close-decision" title="Close and return later; answers are preserved" aria-label="Close decision">'
       + iconOf(ctx, 'close', 12) + '</button>'
       + '<div class="qs-ask-row">'
+      /* item 5: the body scrolls inside the card once the card reaches the room above the composer; the spine and
+         the footer stay put. Keyed per question, so every question opens at its top; data-scroll-key puts it in
+         app.js's captureScroll/restoreScroll, so a re-render (an answer picked, a work tick) keeps the reader's place. */
+      + '<div class="qs-ask-body' + askEdges + '" data-k="qs-ask-body:' + ctx.esc(m.key) + '" data-scroll-key="qs-ask-body:' + ctx.esc(m.key) + '">'
       + reel(ctx, m, askTitle(ctx, m) + sub + inputHtml(ctx, m, 'ask'))
+      + '</div>'
       + askSpine(ctx, m)
       + '</div>'
       + '<div class="qs-ask-foot" data-k="qs-ask-foot">'
@@ -36507,6 +36723,10 @@ window.PM56_NIER_FACES = [
     var q = (ctx.state.questions || [])[ctx.state.questionIndex | 0];
     if (!q) return;
     var v = t.value;
+    if (t.closest && t.closest('.qs-ask')) {
+      autoSizeField(t);
+      requestAnimationFrame(syncAskBody);
+    }
     var hadPreset = q.type === 'choice' && String(q.answer || '').trim();
     q.other = v;
     if (q.type === 'choice') q.answer = '';
@@ -36573,6 +36793,77 @@ window.PM56_NIER_FACES = [
       : shell.getBoundingClientRect().height;
     if (!(h > 0)) h = 44;
     stage.style.setProperty('--decision-h', Math.round(h) + 'px');
+  }
+  /* ---- Item 5 (2026-10-09): the Ask Card fits its content, up to the room above the composer ----
+     --qs-ask-room is the chat stage's height less its header, Context Lens and composer rows, published on the root;
+     questions.css caps the card at that room less a strip of transcript, and past the cap the body scrolls inside
+     the card with the footer in reach. It is measured here rather than read from app.js's --chat-dock-h: a render
+     rewrites the stage's style attribute, and for that instant the composer variable is gone, the cap lifts and the
+     body's scroll snaps to its top. A ResizeObserver on the stage and the composer (a typed message grows the
+     composer) re-measures, as do window resizes and each render syncMorph sees: no loop, no new MutationObserver. */
+  var askRO = null, askRoObserved = [];
+  function watchAskRoom(stage, comp) {
+    if (!window.ResizeObserver) return;
+    if (!askRO) askRO = new ResizeObserver(function () { fitAskRoom(); syncAskBody(); });
+    if (askRoObserved[0] === stage && askRoObserved[1] === comp) return;
+    askRO.disconnect();
+    askRoObserved = [stage, comp];
+    askRO.observe(stage);
+    if (comp) askRO.observe(comp);
+  }
+  function fitAskRoom() {
+    var stage = document.querySelector('.chat-stage');
+    if (!stage) return;
+    var used = 0, comp = null;
+    for (var i = 0; i < stage.children.length; i++) {
+      var c = stage.children[i];
+      if (c.classList.contains('chat-header') || c.classList.contains('lens-dock')) used += c.offsetHeight;
+      else if (c.classList.contains('composer')) { comp = c; used += c.offsetHeight; }
+    }
+    watchAskRoom(stage, comp);
+    /* on the root, not the stage, for the same reason as above */
+    var root = document.documentElement;
+    var v = Math.max(0, stage.clientHeight - used) + 'px';
+    if (root.style.getPropertyValue('--qs-ask-room') !== v) root.style.setProperty('--qs-ask-room', v);
+  }
+  /* The body's scroll state, as classes the CSS draws from: .is-scroll on the card (the footer's hairline, the edge
+     fades), .at-start / .at-end on the body (no fade at an edge the content already rests on). */
+  var askEdges = ' at-start';   /* the last edges read, so a render paints them too and a work tick cannot strip them */
+  function askBodyEdges(body) {
+    var start = body.scrollTop <= 1, end = body.scrollTop + body.clientHeight >= body.scrollHeight - 1;
+    body.classList.toggle('at-start', start);
+    body.classList.toggle('at-end', end);
+    askEdges = (start ? ' at-start' : '') + (end ? ' at-end' : '');
+  }
+  function syncAskBody() {
+    var card = document.querySelector('.decision-host .qs-ask');
+    var body = card && card.querySelector('.qs-ask-body');
+    if (!body) return;
+    var scroll = body.scrollHeight > body.clientHeight + 1;
+    card.classList.toggle('is-scroll', scroll);
+    askBodyEdges(body);
+    var ctx = window.PM56_EXT && window.PM56_EXT.ctx && window.PM56_EXT.ctx({});
+    if (ctx) qsState(ctx).bodyScroll = scroll;
+    /* a sprout that opened below its field (mentionDown) is scrolled into the body's view once, as it appears */
+    var sprout = body.querySelector('.qs-mention.is-down');
+    if (sprout && !sprout.__qsShown) {
+      sprout.__qsShown = true;
+      var over = sprout.getBoundingClientRect().bottom - body.getBoundingClientRect().bottom + 8;
+      if (over > 0) body.scrollTop += over;
+    }
+  }
+  /* The Ask Card's text fields grow with their text through CSS field-sizing; where an engine lacks it, the same
+     growth is set here from scrollHeight (on render and on input). */
+  var FIELD_SIZING = !!(window.CSS && CSS.supports && CSS.supports('field-sizing', 'content'));
+  function autoSizeField(t) {
+    if (FIELD_SIZING || !t || t.tagName !== 'TEXTAREA') return;
+    t.style.height = 'auto';
+    t.style.height = t.scrollHeight + 'px';
+  }
+  function autoSizeFields() {
+    if (FIELD_SIZING) return;
+    var list = document.querySelectorAll('.qs-ask textarea.qs-other-input');
+    for (var i = 0; i < list.length; i++) autoSizeField(list[i]);
   }
   function trackAskDock(shell, flag, ms) {
     var start = performance.now();
@@ -36677,6 +36968,7 @@ window.PM56_NIER_FACES = [
       shell.__qsOpening = false;
       setAskDock(shell);
       snapSpineThumb();
+      syncAskBody();
     }
     setTimeout(finishOpen, 560);
     playAnim(shell, [
@@ -36823,6 +37115,7 @@ window.PM56_NIER_FACES = [
       shell.__qsH = next;
       shell.__qsSpringing = false;
       setAskDock(shell);
+      syncAskBody();
     };
   }
   function spineThumbTop(spine, thumb) {
@@ -36885,6 +37178,11 @@ window.PM56_NIER_FACES = [
   function syncMorph() {
     var shell = document.querySelector('.decision-host .qs-shell');
     if (!shell) return;
+    if (shell.getAttribute('data-take') === '8') {
+      fitAskRoom();
+      autoSizeFields();
+      syncAskBody();
+    }
     if (shell.classList.contains('qs-will-open') && !shell.__qsOpening) playOpen(shell);
     else {
       var ctx = window.PM56_EXT && window.PM56_EXT.ctx && window.PM56_EXT.ctx({});
@@ -36906,6 +37204,16 @@ window.PM56_NIER_FACES = [
     new MutationObserver(function () { requestAnimationFrame(syncMorph); }).observe(document.documentElement, {
       childList: true, subtree: true, attributes: true, attributeFilter: ['data-phase']
     });
+    window.addEventListener('resize', function () {
+      if (!document.querySelector('.decision-host .qs-ask')) return;
+      fitAskRoom();
+      syncAskBody();
+    });
+    /* scroll does not bubble; one capturing listener reads the Ask Card body's edges as it scrolls */
+    document.addEventListener('scroll', function (e) {
+      var t = e.target;
+      if (t && t.classList && t.classList.contains('qs-ask-body')) askBodyEdges(t);
+    }, { capture: true, passive: true });
     requestAnimationFrame(syncMorph);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindMorph);
@@ -37737,7 +38045,7 @@ window.PM56_NIER_FACES = [
     glyph: glyphIn
   };
   var LEGEND = { hands: 'pmx-lg pmx-lg-hands', fixed: 'pmx-lg pmx-lg-fixed', toyou: 'pmx-lg pmx-lg-toyou', sees: 'pmx-lg pmx-lg-sees', hatch: 'pmx-lg pmx-lg-hatch', hollow: 'pmx-lg pmx-lg-hollow', filled: 'pmx-lg pmx-lg-filled', dot: 'pmx-lg pmx-lg-dot', bar: 'pmx-lg pmx-lg-bar', screen: 'pmx-lg pmx-lg-screen' };
-  var PLATE_H = { full: 200, compact: 160, lean: 99, strip: 96, caption: 40 };
+  var PLATE_H = { full: 200, compact: 160, lean: 99, strip: 96, wrap: 112, caption: 40 };
   /* pmxPlate({key,kind,mode,w,h,svg,legend,caption,cls,fluid,part,fitH,align,attrs})
      fitH: the drawing's natural height when it sits in a .pmx-plate-fit slot (J-2 plate yield);
      align: the viewBox alignment (xMidYMid by default; xMidYMin keeps a drawing at the top). */
@@ -37761,21 +38069,25 @@ window.PM56_NIER_FACES = [
      mode whose natural height fits (data-fit). The mode chosen last time is carried into the template so a
      re-render never flips it back. A drawing is never scaled down to fit. */
   /* caption (review cycle 1, 6.3 yield order): the words a caption mode shows (40 px); given, a caption plate is
-     appended as the leanest mode, so the plate yields all the way down before a roster's rows scroll.
-     min: the slot's floor; by default the leanest mode's natural height (the reference: min-height = the leanest
-     mode).
+     appended after the drawings. It shows only when no drawing fits the slot's width (2026-10-09: the plate yields
+     down to its leanest drawing, then a roster's rows scroll; PM56_PMX fitPlates).
+     min: the slot's floor; by default the leanest drawing's natural height (the runtime raises it to the leanest
+     drawing that fits the slot's width).
      tail (2026-10-08): modes leaner than the caption's 40 px, appended after it (the Chat Room's 32 px lean line), so the
      slot's modes still run from the tallest to the shortest and "leanest" stays the last one. */
   function pmxPlateFit(o) {
     o = o || {};
     var list = Array.isArray(o.plates) ? o.plates.slice() : [str(o.plates)];
+    /* the floor is the leanest DRAWING (2026-10-09: the caption no longer sets it, so the slot keeps a drawing while a
+       roster's rows scroll; the runtime raises it to the leanest drawing that fits the slot's width) */
+    var leanest = null;
+    list.concat(o.tail || []).join('').replace(/data-fit-h="([\d.]+)"/g, function (m, v) { v = +v; if (isFinite(v) && (leanest == null || v < leanest)) leanest = v; return m; });
     if (o.caption) list.push(pmxPlate({ key: (o.key ? o.key + ':' : '') + 'caption', kind: o.kind, mode: 'caption', fitH: 40, caption: o.caption }));
     if (o.tail) list = list.concat(o.tail);
     var plates = list.join('');
-    var leanest = null;
-    plates.replace(/data-fit-h="([\d.]+)"/g, function (m, v) { v = +v; if (isFinite(v) && (leanest == null || v < leanest)) leanest = v; return m; });
+    if (leanest == null && o.caption) leanest = 40;
     var min = o.min != null ? num(o.min, 72) : (leanest != null ? leanest : 72);
-    if (o.caption && leanest != null) min = Math.min(min, leanest);
+    if (o.caption && leanest != null && o.min != null) min = Math.min(min, leanest);
     var fit = o.fit != null ? o.fit : (o.key && window.PM56_PMX && window.PM56_PMX.plateFit ? window.PM56_PMX.plateFit(o.key) : '');
     return '<div class="' + cls('pmx-plate-fit', o.cls) + '"' + k(o.key) + (fit ? ' data-fit="' + esc(fit) + '"' : '') + ' style="--pmx-fit-min:' + min + 'px"' + at('data-pmx-affects', o.affects) + '>' + plates + '</div>';
   }
@@ -37822,7 +38134,12 @@ window.PM56_NIER_FACES = [
     /* lean: a mode of its own between compact and strip (BrainStorm: 95 tall, so a slot of 95-117, the recorded draft's
        beside its guide strip or a 1280 x 800 window's, keeps the chapters and the strings): seats at .86 hanging right
        off the bus, names 11 under the figures */
-    lean: { W: 576, M: 12, s: .86, sy: .86, bar: 20, paperW: 96, paperH: 32, bus: 46, drop: 0, name: 11, sub: 0, pmin: 64, pmax: 104, wing: 24 }
+    lean: { W: 576, M: 12, s: .86, sy: .86, bar: 20, paperW: 96, paperH: 32, bus: 46, drop: 0, name: 11, sub: 0, pmin: 64, pmax: 104, wing: 24 },
+    /* wrap (2026-10-09, Jared: "When you add multiple helpers in crew, it pushes the graph out of view"): the strip's
+       seats wrapped onto 2 or 3 rows 52 apart (112 or 164 tall), for a team too wide for one row at the strip's
+       minimum pitch. The hub forks to each row's first seat and each row's last seat joins the edge to You; the
+       specialists stand in one column after the rule, one per row. */
+    wrap: { W: 500, M: 12, s: 1, row: 24, rowH: 52, name: 13, pmin: 58, pref: 76, pmax: 128, tiers: 3 }
   };
   /* text widths are measured in the theme's own plate font (a canvas, the body's --font-ui: Inter, Poppins, IBM Plex
      Mono, the NieR face) with 4 % to spare; without a canvas, .62 em a character (Plex Mono is .6 em) */
@@ -38131,6 +38448,59 @@ window.PM56_NIER_FACES = [
     }
     return castPlate(sp, 'strip', W, G.H, out);
   }
+  /* wrap: the strip's row of helpers on as few rows as fit (2 or 3), each row at one pitch, names under the marks. The
+     hub (if any) and You stand at the rows' middle height; a fork carries the hub's string to every row's first seat and
+     a join brings every row's last seat to the edge to You, so it still reads left to right. The specialists stand in a
+     column after the rule (one per row). '' when no tier count up to G.tiers fits W. */
+  function castWrap(sp, Wo) {
+    var P = pmxPlateParts, G = CAST.wrap, core = sp.seats || [], wing = sp.wing || [], n = core.length, m = wing.length;
+    var W = num(Wo, G.W), M = G.M, s = G.s, half = Math.round(14 * s), kp = (sp.key || 'pmx-plate-cast') + ':wrap:';
+    if (n < 2) return '';
+    var you = sp.you || { label: 'You' }, hb = sp.hub, ly = half + G.name, out = '', i;
+    var hubCell = hb ? Math.max(2 * half + 8, castW(hb.label, 11) + 12) : 0, youCell = Math.max(2 * half + 8, castW(you.label, 11) + 12);
+    var wcell = m ? Math.max.apply(null, wing.map(function (c) { return Math.max(48, castW(c.label, 11) + 10); })) : 0;
+    /* hub cell, 10 to the fork, 6 to the first cell; 6 from the last cell to the join, 10 to You's cell; the rule's 20 */
+    var fixed = (hb ? hubCell + 16 : 0) + 16 + youCell + (m ? 20 + wcell : 0);
+    var needs = core.map(function (c) { return castW(c.label, 11) + 6; }), want = Math.max(G.pmin, Math.max.apply(null, needs));
+    var T, per, pitch;
+    for (T = 2; T <= G.tiers; T++) {
+      if (m > T) continue;
+      per = Math.ceil(n / T);
+      pitch = Math.min(G.pmax, Math.max(want, G.pref), Math.floor((W - 2 * M - fixed) / per));
+      if (pitch >= G.pmin) break;
+    }
+    if (T > G.tiers) return '';
+    var rows = [];
+    for (i = 0; i < T; i++) rows.push(core.slice(i * per, (i + 1) * per));
+    rows = rows.filter(function (r) { return r.length; }); T = rows.length;
+    var Ys = rows.map(function (r, j) { return G.row + j * G.rowH; }), Y0 = Ys[0], Y1 = Ys[T - 1], Ym = Math.round((Y0 + Y1) / 2);
+    var x = M + Math.max(0, Math.floor((W - 2 * M - (fixed + per * pitch)) / 2)), hx = null, fx = null;
+    if (hb) { hx = Math.round(x + hubCell / 2); x += hubCell + 10; fx = x; x += 6; }
+    else x += 8;
+    var sx0 = x, ex = sx0 + per * pitch, jx = ex + 6, yX = Math.round(jx + 10 + youCell / 2);
+    var bp = sp.busPart || 'assign';
+    if (hb) {
+      out += P.seat({ key: hb.key, x: hx, y: Ym, s: s, role: hb.role || 'lead', seat: hb.seat, state: hb.state, part: hb.part, ly: ly, label: esc(hb.label) });
+      out += P.line({ key: kp + 'in', from: { x: hx + half + 2, y: Ym }, to: { x: fx, y: Ym }, style: 'fixed', part: bp });
+      out += P.line({ key: kp + 'fork', from: { x: fx, y: Y0 }, to: { x: fx, y: Y1 }, style: 'fixed', part: bp, draw: 'down' });
+    }
+    rows.forEach(function (row, j) {
+      var Y = Ys[j], k0 = j * per, cw = castCells(row.map(function (c, q) { return needs[k0 + q]; }), pitch, G.pmin), xs = castXs(cw, sx0);
+      if (hb) out += P.line({ key: kp + 'in:' + j, from: { x: fx, y: Y }, to: { x: xs[0] - half - 2, y: Y }, style: 'fixed', part: bp });
+      if (sp.screens) for (var q = 0; q < row.length - 1; q++) out += P.screen({ key: kp + 'scr:' + (k0 + q), x: Math.round((xs[q] + xs[q + 1]) / 2), y: Y + 1, h: 22, part: 'blind' });
+      row.forEach(function (c, q) { out += P.seat({ key: c.key, x: xs[q], y: Y, s: s, role: c.role, seat: c.seat, state: c.state, standin: c.standin, part: c.part, ly: ly, label: castLabel(c.label, Math.floor(cw[q]) - 6, 11) }); });
+      out += P.line({ key: kp + 'out:' + j, from: { x: xs[row.length - 1] + half + 4, y: Y }, to: { x: jx, y: Y }, style: 'toyou', part: you.part || 'you' });
+    });
+    out += P.line({ key: kp + 'join', from: { x: jx, y: Y0 }, to: { x: jx, y: Y1 }, style: 'toyou', part: you.part || 'you', draw: 'down' });
+    out += P.line({ key: kp + 'toyou', from: { x: jx, y: Ym }, to: { x: yX - half - 2, y: Ym }, style: 'toyou', part: you.part || 'you' });
+    out += P.you({ x: yX, y: Ym, s: s, at: 'below', ly: ly, label: esc(you.label), part: you.part || 'you' });
+    if (m) {
+      var rx = Math.round(yX + youCell / 2 + 10), wx = Math.round(rx + 10 + wcell / 2), w0 = Math.max(0, Math.floor((T - m) / 2));
+      out += P.line({ key: kp + 'wing', from: { x: rx, y: Y0 - half }, to: { x: rx, y: Y1 + half + 4 }, style: 'rule', part: 'specialists' });
+      wing.forEach(function (c, j) { out += P.seat({ key: c.key, x: wx, y: Ys[w0 + j], s: s, role: c.role, seat: c.seat, state: c.state, part: c.part, ly: ly, label: castLabel(c.label, wcell - 8, 11) }); });
+    }
+    return castPlate(sp, 'wrap', W, Y1 + ly + 9, out).replace(' data-cast="wrap"', ' data-cast="wrap" data-tiers="' + T + '"');
+  }
   /* pmxCastPlate(spec, mode) - one mode of a cast plate ('' when it does not fit). spec: {key, kind, cls,
      input:{label,sub,text,mirror,short,part} | chapters:[{label,state,part}], hub:{key,role,label,sub,state,part}, junctionPart,
      out:{label,part}, seats:[{key,role,seat,state,standin,label,sub,part,waits}], screens, busPart,
@@ -38141,6 +38511,8 @@ window.PM56_NIER_FACES = [
     /* a one-line kind's lean mode is the lean line (the Chat Room); BrainStorm's lean is a stage */
     var leanLine = mode === 'lean' && sp.strip === 'line';
     var row = mode === 'strip' || mode === 'line' || leanLine, kind = leanLine ? 'leanLine' : mode === 'line' || (mode === 'strip' && sp.strip === 'line') ? 'line' : mode;
+    /* wrap: drawn 500 wide on as few rows as fit (so it fits the 516 px column of a 1024 window), else 576 */
+    if (mode === 'wrap') return castWrap(sp, num(sp.w && sp.w.wrap, CAST.wrap.W)) || (sp.w && sp.w.wrap ? '' : castWrap(sp, 576));
     if (!row && !CAST[mode]) return '';
     /* a mode drawn narrow first (a compact plate and a strip fit the 516 px column of a 1024 window); when a big team
        does not fit that, the same mode at 576 (it then shows from 1280 up, and the caption below that) */
@@ -38155,10 +38527,21 @@ window.PM56_NIER_FACES = [
      richest first, and the caption (J-2 yield) */
   function pmxCastFit(sp) {
     sp = sp || {};
-    var modes = sp.modes || ['full', 'compact', 'strip'], plates = [], tail = [];
+    var modes = sp.modes || ['full', 'compact', 'strip', 'wrap'], plates = [], tail = [];
     /* the lean line (32 tall) is leaner than the caption (40): it stands after it, the slot's last resort that still
        draws the cast, where a short slot used to leave the caption alone (a 1280 x 800 window's Chat Room) */
-    modes.forEach(function (md) { var h = pmxCastPlate(sp, md); if (h) (md === 'lean' && sp.strip === 'line' && sp.caption ? tail : plates).push(h); });
+    /* wrap (2026-10-09) is drawn only for a team whose one-row strip does not fit the narrow 500 px draw (a 1024 window's
+       column): a team the strip holds there never needs a second row */
+    var stripW = 0;
+    modes.forEach(function (md) {
+      if (md === 'wrap' && stripW && stripW <= CAST.wrap.W) return;
+      /* the wrap is drawn 576 wide first (wider seats keep their names whole at 1280 and up and in the one-column body)
+         and 500 wide after it, for the 516 px column of a 1024 window; the runtime shows the one it picks (data-pick) */
+      if (md === 'wrap' && !(sp.w && sp.w.wrap)) { [576, CAST.wrap.W].forEach(function (ww) { var hw = castWrap(sp, ww); if (hw) plates.push(hw); }); return; }
+      var h = pmxCastPlate(sp, md); if (!h) return;
+      if (md === 'strip' || (md === 'lean' && sp.strip === 'line')) { var vw = /viewBox="0 0 ([\d.]+)/.exec(h); if (vw && (!stripW || +vw[1] < stripW)) stripW = +vw[1]; }
+      (md === 'lean' && sp.strip === 'line' && sp.caption ? tail : plates).push(h);
+    });
     return pmxPlateFit({ key: sp.fitKey, kind: sp.kind, affects: sp.affects, plates: plates, caption: sp.caption, tail: tail });
   }
 
@@ -38525,9 +38908,13 @@ window.PM56_NIER_FACES = [
   var STOP_STATES = { done: 1, now: 1, next: 1, skipped: 1, failed: 1 };
   function pmxTrack(o) {
     o = o || {};
-    /* data-n (closing, STORM-A): the stop count; a long track (6 or more stops) keeps its M form at the L tier, where
-       every label beside its dot would not fit */
-    return '<div class="' + cls('pmx-track', o.cls) + '"' + k(o.key) + ' data-n="' + (o.stops || []).length + '"' + raw(o.attrs) + '><ol class="pmx-track-line">' + (o.stops || []).map(function (s) {
+    /* data-n (closing, STORM-A): the stop count; a long track (data-long, 6 or more stops) keeps its M form at the L
+       tier, where every label beside its dot would not fit. data-wrap (2026-10-09, Jared: "Selecting many rounds in the
+       chatroom pop up pushes the graphic off the screen. It should wrap down"): a track of 8 or more stops (a Chat Room
+       of 8 to 20 rounds) gives its dots their own rows, wrapping down instead of running past the card, and the words
+       ("Round 1 of 20 · not started") take the row under them. */
+    var n = (o.stops || []).length;
+    return '<div class="' + cls('pmx-track', o.cls) + '"' + k(o.key) + ' data-n="' + n + '"' + (n >= 6 ? ' data-long="1"' : '') + (n >= 8 ? ' data-wrap="1"' : '') + raw(o.attrs) + '><ol class="pmx-track-line">' + (o.stops || []).map(function (s) {
       var st = STOP_STATES[s.state] ? s.state : 'next';
       return '<li class="pmx-stop"' + k(s.key) + ' data-state="' + st + '"><i class="pmx-stop-dot"></i><span class="pmx-stop-label">' + str(s.label) + '</span></li>';
     }).join('') + '</ol><p class="pmx-track-now">' + str(o.nowText) + '</p></div>';
@@ -40954,24 +41341,62 @@ window.PM56_NIER_FACES = [
     for (var i = 0; i < slots.length; i++) {
       var slot = slots[i], kids = slot.children, h = slot.clientHeight, w = slot.clientWidth, pick = null;
       if (!kids.length) continue;
+      /* before the sheet settles, its entrance's rise inflates the column's scrollHeight and puts a scrollbar beside the
+         slot for a moment; the slot's width is read without it, so the first mode is the one the settled sheet keeps */
+      var scol = slot.closest('.pmx-col'), sroot = overlayRoot();
+      if (scol && !(sroot && sroot.classList.contains('pmx-sheet-settled'))) {
+        var ccs = getComputedStyle(scol);
+        w += Math.max(0, scol.offsetWidth - scol.clientWidth - (parseFloat(ccs.borderLeftWidth) || 0) - (parseFloat(ccs.borderRightWidth) || 0));
+      }
       /* a slot in a scrolling one-column body is not height-bound: only the width decides */
       if (getComputedStyle(slot).getPropertyValue('--pmx-fit-free').trim() === '1') h = Infinity;
       /* a mode fits when its drawing fits at scale 1: its natural height in the slot's height and its viewBox
          width in the slot's width (a drawing is never scaled down, review cycle 1); a caption always fits */
       /* 1 % of width is layout rounding, not a scale (Basic's 1.26fr main column is 575.4 px for a 576 drawing) */
       var fitsW = function (kid) { var svg = kid.querySelector(':scope > .pmx-plate-svg'), fw = svg && svg.viewBox && svg.viewBox.baseVal ? svg.viewBox.baseVal.width : 0; return !fw || fw <= w * 1.01 + 0.5; };
+      /* the slot's floor (2026-10-09, Jared: "it pushes the graph out of view"): the leanest drawing that fits the slot's
+         width. The slot claims that height (--pmx-fit-min), so a roster's growing rows scroll in their own region before
+         the drawing would give way, and the caption is left only for a slot no drawing fits the width of (past the
+         limit). */
+      var floorKid = null, floorH = Infinity;
+      for (var f = 0; f < kids.length; f++) {
+        var ffh = parseFloat(kids[f].getAttribute('data-fit-h'));
+        if (kids[f].getAttribute('data-mode') !== 'caption' && isFinite(ffh) && ffh < floorH && fitsW(kids[f])) { floorKid = kids[f]; floorH = ffh; }
+      }
+      /* data-floor names the floor's mode for the verifiers (pmx-verify's no-scroll: a roster may scroll once its slot
+         shows the floor) */
+      var fm = floorKid ? floorKid.getAttribute('data-mode') || '' : '';
+      if (fm) { if (slot.getAttribute('data-floor') !== fm) slot.setAttribute('data-floor', fm); } else if (slot.hasAttribute('data-floor')) slot.removeAttribute('data-floor');
+      if (floorKid && h !== Infinity) {
+        var want = Math.ceil(floorH) + 'px';
+        if (slot.style.getPropertyValue('--pmx-fit-min') !== want) { slot.style.setProperty('--pmx-fit-min', want); h = slot.clientHeight; }
+      }
       for (var j = 0; j < kids.length; j++) {
         var fh = parseFloat(kids[j].getAttribute('data-fit-h'));
         if (isFinite(fh) && fh <= h + 0.5 && fitsW(kids[j])) { pick = kids[j]; break; }
       }
       /* nothing fits at scale 1: the caption mode if the slot has one (a lane passes pmxPlateFit({caption})),
          else the leanest mode (the one case left where a drawing is scaled; a lane avoids it with a caption) */
+      if (!pick && floorKid) pick = floorKid;
       if (!pick) { for (var c = 0; c < kids.length; c++) if (kids[c].getAttribute('data-mode') === 'caption') pick = kids[c]; }
       if (!pick) pick = kids[kids.length - 1];
       var lk = slot.getAttribute('data-k') || String(i);
       /* a yield step never lands on a mode too wide for the slot (a mode after the caption, pmxPlateFit tail): the
          drawing would be scaled down; the slot keeps the leanest step that fits */
-      if (lean && lean[lk]) { var at0 = Array.prototype.indexOf.call(kids, pick), to = Math.min(kids.length - 1, at0 + lean[lk]); while (to > at0 && !fitsW(kids[to]) && kids[to].getAttribute('data-mode') !== 'caption') to--; pick = kids[to]; }
+      /* a yield step never lands past the floor: while a drawing fits the width, the steps run over the drawings that fit
+         the slot (width and height) and stop at the leanest of them, never at the caption */
+      if (lean && lean[lk]) {
+        var at0 = Array.prototype.indexOf.call(kids, pick);
+        if (floorKid) {
+          var steps = lean[lk];
+          for (var st = at0 + 1; st < kids.length && steps > 0; st++) {
+            var sk = kids[st], sh = parseFloat(sk.getAttribute('data-fit-h'));
+            if (sk.getAttribute('data-mode') !== 'caption' && fitsW(sk) && isFinite(sh) && sh <= h + 0.5) { pick = sk; steps--; }
+          }
+        } else { var to = Math.min(kids.length - 1, at0 + lean[lk]); while (to > at0 && !fitsW(kids[to]) && kids[to].getAttribute('data-mode') !== 'caption') to--; pick = kids[to]; }
+      }
+      /* data-pick: the one drawing shown, where a slot holds two of one mode (the cast's wrap at 576 and at 500) */
+      for (var dp = 0; dp < kids.length; dp++) { if (kids[dp] === pick) { if (!pick.hasAttribute('data-pick')) pick.setAttribute('data-pick', ''); } else if (kids[dp].hasAttribute('data-pick')) kids[dp].removeAttribute('data-pick'); }
       var mode = pick.getAttribute('data-mode') || '', key = slot.getAttribute('data-k'), was = slot.getAttribute('data-fit');
       if (key) plateFitMem[key] = mode;
       if (was !== mode) {
@@ -40994,7 +41419,8 @@ window.PM56_NIER_FACES = [
      layout, so marks are measured without it */
   function markOverflow(sheet) {
     /* 6.3 yield order (review cycle 1; lead ruling on spec conflict G: J-2's 60 px rows stay): the plate has
-       already yielded to its leanest mode (flex: the slot's floor is the leanest mode's height) before a roster's
+       already yielded to its floor (flex: the slot's floor is the height of its leanest drawing that fits its width,
+       fitPlates) before a roster's
        rows can overflow; then the roster's column helpers drop (lean 1), then the rows' secondary fine lines
        (lean 2); only then do the rows scroll with the 14 px fade. Measured from the natural state every time. */
     var rows = sheet.querySelectorAll('.pmx-roster-rows');
@@ -45272,11 +45698,13 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
      header and reads the version rather than the status.
      ===================================================================== */
   var BUILD_LABEL = { ready:'Build', building:'Building…', completed:'Completed', canceled:'Canceled' };
+  /* the preview card's status word beside its step count ("6 steps · Ready") */
+  var BUILD_STATUS = { ready:'Ready', building:'Building', completed:'Completed', canceled:'Canceled' };
 
   function buildControl(r){
     var label = BUILD_LABEL[r.status] || 'Build';
     var live  = r.status==='ready'&&eligible(r).build;
-    var cls   = 'pd-build pd-build-'+esc(r.status);
+    var cls   = 'pd-build pmx-act pd-build-'+esc(r.status);
     /* Terminal states and Building… are the SAME element, disabled. Rendering a
        <span> for them would make it a badge, which §7.3 explicitly rules out. */
     return '<button type="button" class="'+cls+'"'+(live?'':' disabled aria-disabled="true"')+
@@ -45295,13 +45723,13 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     var a=attention(r);
     if(!a) return r.wait ? '<span class="pd-wait">'+waitMark('wait')+esc(r.wait)+'</span>' : '';
     var acts=a.allowed_action_ids.map(function(id){
-      return '<button type="button" class="soft-button pd-act pd-attn-act" data-action="pd-attn" data-id="'+esc(r.plan_id)+'" data-value="'+esc(id)+'" data-expected="'+esc(encodeURIComponent(JSON.stringify(recoverySnapshot(r.plan_id))))+'">'+esc(ATTN_LABEL[id]||id)+'</button>';
+      return '<button type="button" class="soft-button pmx-act pd-act pd-attn-act" data-action="pd-attn" data-id="'+esc(r.plan_id)+'" data-value="'+esc(id)+'" data-expected="'+esc(encodeURIComponent(JSON.stringify(recoverySnapshot(r.plan_id))))+'">'+esc(ATTN_LABEL[id]||id)+'</button>';
     }).join('');
     var att=a.attempt ? '<span class="pd-attn-attempt">attempt '+esc(a.attempt)+'</span>' : '';
     return '<span class="pd-wait pd-attn pd-attn-'+esc(a.tone)+'" data-condition="'+esc(a.condition_kind)+'">'+
       (a.tone==='warning'?ICON.warning:waitMark(/^Paused\b/.test(a.line)?'paused':a.condition_kind))+
       '<span class="pd-attn-copy"><strong>'+esc(a.line)+'</strong><span>'+esc(a.reason)+'</span>'+att+'</span>'+
-      acts+'</span>';
+      (acts?'<span class="pd-attn-acts pmx-actions">'+acts+'</span>':'')+'</span>';
   }
   var ATTN_LABEL = {
     resume:'Resume', retry:'Retry', cancel:'Cancel build', details:'Details',
@@ -45331,7 +45759,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
      5. THE CARD
      ===================================================================== */
   function actionBtn(a,label,id,extra,kind){
-    return '<button type="button" class="'+(kind||'soft-button')+' pd-act" data-action="'+esc(a)+'" data-id="'+esc(id)+'"'+(a==='pd-build-goal'&&rec(id)?' data-version="'+rec(id).version+'" data-hash="'+hashOf(body(rec(id)))+'"':'')+(extra||'')+'>'+esc(label)+'</button>';
+    return '<button type="button" class="'+(kind||'soft-button')+' pmx-act pd-act" data-action="'+esc(a)+'" data-id="'+esc(id)+'"'+(a==='pd-build-goal'&&rec(id)?' data-version="'+rec(id).version+'" data-hash="'+hashOf(body(rec(id)))+'"':'')+(extra||'')+'>'+esc(label)+'</button>';
   }
 
   function cardHeader(r){
@@ -45442,7 +45870,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
         esc(blk.map(function(x){ return x.id+(x.why?' — '+x.why:''); }).join('; '))+
         '</span></span></span>'
       : '';
-    return '<div class="pd-foot">'+primary.join('')+'<button type="button" class="soft-button" data-action="pd-more-actions" data-id="'+esc(r.plan_id)+'" aria-expanded="'+!!(ui.more&&ui.more[r.plan_id])+'">More ›</button>'+(ui.more&&ui.more[r.plan_id]?'<div class="polish-plan-more">'+out.join('')+'</div>':'')+progressSummary(r)+blkLine+waitCopy(r)+'</div>';
+    return '<div class="pd-foot pmx-actions">'+primary.join('')+'<button type="button" class="soft-button pmx-act" data-action="pd-more-actions" data-id="'+esc(r.plan_id)+'" aria-expanded="'+!!(ui.more&&ui.more[r.plan_id])+'">More ›</button>'+(ui.more&&ui.more[r.plan_id]?'<div class="polish-plan-more pmx-actions">'+out.join('')+'</div>':'')+progressSummary(r)+blkLine+waitCopy(r)+'</div>';
   }
 
   /* Historical Completed/Canceled cards stay IN PLACE and default COMPACT
@@ -45455,8 +45883,8 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
         '<span class="pd-compact-dot" aria-hidden="true">'+(r.status==='completed'?stepMark('completed'):'')+'</span>'+
         '<div class="pd-compact-copy"><strong>'+esc(r.title)+'</strong>'+
           '<span>'+esc(r.strategy)+' · V'+r.version+'</span></div>'+
-        '<div class="pd-compact-actions">'+buildControl(r)+
-        '<button type="button" class="soft-button pd-act" data-action="pd-expand" data-id="'+esc(r.plan_id)+'">Open</button></div>'+
+        '<div class="pd-compact-actions pmx-actions">'+buildControl(r)+
+        '<button type="button" class="soft-button pmx-act pd-act" data-action="pd-expand" data-id="'+esc(r.plan_id)+'">Open</button></div>'+
       '</div>'+why+
     '</article>';
   }
@@ -45486,8 +45914,8 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
       '<div class="plan-preview-kicker">'+ICON.plan+'<span>Plan</span><span>V'+r.version+' · '+esc(r.strategy)+'</span></div>'+
       '<button class="plan-preview-open" data-action="pd-info" data-id="'+esc(r.plan_id)+'"><strong>'+esc(r.title)+'</strong>'+(summary?'<span>'+esc(summary)+'</span>':'')+'</button>'+
       (window.PM56_SCHED?.planSummary(r.plan_id)||'')+
-      '<div class="plan-preview-meta"><span>'+steps(body(r)).length+(steps(body(r)).length===1?' step':' steps')+'</span><span>'+esc(r.status)+'</span></div>'+
-      '<div class="pd-foot">'+buildControl(r)+(e.revise?actionBtn('pd-revise','Revise',r.plan_id):'')+actionBtn('pd-info','Open plan',r.plan_id)+
+      '<p class="plan-preview-meta"><span>'+steps(body(r)).length+(steps(body(r)).length===1?' step':' steps')+'</span><span>'+esc(BUILD_STATUS[r.status]||r.status)+'</span></p>'+
+      '<div class="pd-foot pmx-actions">'+buildControl(r)+(e.revise?actionBtn('pd-revise','Revise',r.plan_id):'')+actionBtn('pd-info','Open plan',r.plan_id)+
         (r.status==='building'?progressSummary(r)+waitCopy(r):'')+'</div></article>';
   }
 
@@ -46585,7 +47013,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
  // A Plan receipt is a linked record, not a Goal state or generic work note.
  EXT.slot('transcriptMessage',c=>{
   const m=c.message||c.m;if(!m||!['plan-run-receipt','plan-revision-receipt'].includes(m.type))return '';
-  return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('plan',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button data-action="pd-info" data-id="'+c.esc(m.plan_id)+'">Open plan</button></div>';
+  return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('plan',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button type="button" class="soft-button pmx-act" data-action="pd-info" data-id="'+c.esc(m.plan_id)+'">Open plan</button></div>';
  });
 
   EXT.action('pd-open-goal',(c,b)=>{const r=rec(b.dataset.id),g=r&&window.PM56_GOAL.bound(r.plan_id);if(g&&!window.PM56_GOAL.cancelled(g)){if(c.thread.id!==g.thread)c.switchThread(g.thread);c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';c.closeDialog();c.state.menu=null;if(innerWidth<=1100)c.state.editorRevealed=false;c.renderApp();}return true;});
@@ -47537,7 +47965,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     if(panelDomain(ctx)!=='todo')return '';
     const tid=currentThreadId(ctx),list=itemsOf(tid);if(!list)return '<div class="todo-panel todo-panel-empty"><p>No To-Do list exists for this thread yet.</p></div>';
     const view=treeView(tid),rows=visibleTree(tid),s=summary(tid),spaceH=rows.length*ROW_HEIGHT;view.top=Math.max(0,Math.min(view.top,Math.max(0,spaceH-view.vh)));
-    return '<div class="todo-panel" data-k="todo-panel:'+esc(tid)+'"><div class="todo-panel-summary"><strong>'+s.completed+' of '+s.total+' complete</strong><span>'+s.active+' active'+(s.blocked?' · '+s.blocked+' blocked':'')+'</span></div><label class="todo-search"><span>Search this hierarchy</span><input type="search" data-todo-search="'+esc(tid)+'" value="'+esc(view.query)+'" placeholder="Title or exact item ID" aria-label="Search this hierarchy"></label><div class="todo-tree-navigation"><small>'+rows.length+' visible of '+list.length+' items</small><button class="text-button" data-action="todo-reveal-last" data-thread="'+esc(tid)+'">Last item</button><button class="text-button" data-action="todo-expand-all" data-thread="'+esc(tid)+'">Expand all</button></div><div class="todo-viewport" data-todo-viewport="'+esc(tid)+'" data-k="todo-viewport:'+esc(tid)+'" role="tree" aria-label="Current thread To-Dos" tabindex="0"><div class="todo-tree todo-virtual-space" style="height:'+spaceH+'px">'+virtualRows(ctx,tid,rows,view.top,view.vh)+'</div></div>'+(!rows.length?'<p>No matching items.</p>':'')+selectedDetail(ctx,tid)+'<div class="todo-refusals-wrap">'+renderRefusals(tid)+'</div></div>';
+    return '<div class="todo-panel" data-k="todo-panel:'+esc(tid)+'"><div class="todo-panel-summary"><strong>'+s.completed+' of '+s.total+' complete</strong><span>'+s.active+' active'+(s.blocked?' · '+s.blocked+' blocked':'')+'</span></div><label class="todo-search"><span>Search this hierarchy</span><input type="search" data-todo-search="'+esc(tid)+'" value="'+esc(view.query)+'" placeholder="Title or exact item ID" aria-label="Search this hierarchy"></label><div class="todo-tree-navigation"><small>'+rows.length+' visible of '+list.length+' items</small><button class="text-button" data-action="todo-expand-all" data-thread="'+esc(tid)+'">Expand all</button></div><div class="todo-viewport" data-todo-viewport="'+esc(tid)+'" data-k="todo-viewport:'+esc(tid)+'" role="tree" aria-label="Current thread To-Dos" tabindex="0"><div class="todo-tree todo-virtual-space" style="height:'+spaceH+'px">'+virtualRows(ctx,tid,rows,view.top,view.vh)+'</div></div>'+(!rows.length?'<p>No matching items.</p>':'')+selectedDetail(ctx,tid)+'<div class="todo-refusals-wrap">'+renderRefusals(tid)+'</div></div>';
   }
   function revealItem(ctx,tid,id){
     if(tid!==currentThreadId(ctx))return;
@@ -47563,7 +47991,6 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     'todo-show-item':(ctx,b)=>revealItem(ctx,b.dataset.thread||currentThreadId(ctx),b.dataset.id),
     'todo-toggle-parent':(ctx,b)=>{const s=scopeAction(ctx,b);if(!s.ok)return;const v=treeView(s.tid),collapsed=v.query.trim()?v.searchCollapsed:ui.collapsed;collapsed[s.id]=!collapsed[s.id];v.top=0;ctx.renderApp();},
     'todo-open-work':(ctx,b)=>{const s=scopeAction(ctx,b);if(!s.ok){ctx.toast('Work not opened',s.error);return;}const out=openWork(s.tid,s.id,b.dataset.binding);if(out.ok){const v=treeView(s.tid);v.selected=s.id;v.work=out;ctx.renderApp();}else ctx.toast('Work unavailable',out.error);},
-    'todo-reveal-last':(ctx,b)=>{const tid=b.dataset.thread,list=itemsOf(tid);if(list?.length)revealItem(ctx,tid,docOrder(list).at(-1).todo_id);},
     'todo-expand-all':(ctx,b)=>{if(b.dataset.thread!==currentThreadId(ctx))return;for(const t of itemsOf(b.dataset.thread)||[])delete ui.collapsed[t.todo_id];treeView(b.dataset.thread).top=0;treeView(b.dataset.thread).searchCollapsed={};ctx.renderApp();},
     'todo-toggle-receipts':(ctx,b)=>{ui.receiptsOpen[b.dataset.id]=!ui.receiptsOpen[b.dataset.id];ctx.renderApp();},
     'todo-toggle-refusals':ctx=>{ui.refusalsOpen=!ui.refusalsOpen;ctx.renderApp();},
@@ -49100,7 +49527,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
 
   /* ---- the stage track (C4): named stops, counted progress, never a percent ---- */
   function runStops(run) {
-    if (run.kind === 'chat_room') { var rr = roomRounds(run), out = []; for (var i = 1; i <= Math.min(rr.max, 12); i++) out.push('Round ' + i); return out; }
+    if (run.kind === 'chat_room') { var rr = roomRounds(run), out = []; for (var i = 1; i <= clamp(rr.max, 1, 20); i++) out.push('Round ' + i); return out; }
     if (run.kind === 'review' && (run.config || {}).strategy === 'single_agent') return ['Snapshot', 'Reading on its own', 'Writing the report'];
     return KIND_STOPS[run.kind] || [];
   }
@@ -50760,7 +51187,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     return 'Nothing runs by itself in this preview, so ' + (noun || 'nothing has started') + ' yet.';
   }
   function draftStops(d) {
-    if (d.kind === 'chat_room') { var n = clamp(d.config.maxRounds || 5, 1, 20); var out = []; for (var i = 1; i <= Math.min(n, 12); i++) out.push('Round ' + i); return out; }
+    if (d.kind === 'chat_room') { var n = clamp(d.config.maxRounds || 5, 1, 20); var out = []; for (var i = 1; i <= n; i++) out.push('Round ' + i); return out; }
     if (d.kind === 'review' && d.config.strategy === 'single_agent') return ['Snapshot', 'Reading on their own', 'Writing the report'];
     return KIND_STOPS[d.kind] || [];
   }
@@ -50903,7 +51330,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     var caption = n + ' helpers draft alone, debate, check the facts and vote. You get one plan.';
     /* compact and strip at 576: the seven chapter names and four long helper names need the width, and BrainStorm's slot
        at 1024 x 768 holds the caption only */
-    return { key: 'pmx-plate-bs', kind: 'brainstorm', fitKey: 'pmx-plate-fit:bs', affects: 'team', busPart: 'team', modes: ['full', 'compact', 'lean', 'strip'], w: { compact: 576, lean: 576, strip: 576 },
+    return { key: 'pmx-plate-bs', kind: 'brainstorm', fitKey: 'pmx-plate-fit:bs', affects: 'team', busPart: 'team', modes: ['full', 'compact', 'lean', 'strip', 'wrap'], w: { compact: 576, lean: 576, strip: 576 },
       chapters: BS_CHAPTERS.map(function (c, i) { return { label: c[0], state: stop < 0 ? 'next' : i < stop ? 'done' : i === stop ? 'now' : 'next', part: c[1] + (i === 0 ? ' job' : '') + (i === 5 ? rules : '') }; }),
       seats: castSeats(d, 'brainstorm', live, { noun: 'Helper', part: 'team blind', dash: false }), screens: n > 1,
       wing: castWing(d, 'brainstorm', live),
@@ -50924,7 +51351,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     var R = pol.value === 'ask_everyone_once' ? 1 : clamp(cfg.maxRounds || 5, 1, 20);
     var note = pol.label + ' · ' + (live && live.rounds ? live.rounds : (R === 1 ? 'one round' : 'up to ' + R + ' rounds'));
     var caption = n + ' helpers and the Moderator talk it through. You pick what, if anything, to keep.';
-    return { key: 'pmx-plate-room', kind: 'chat_room', fitKey: 'pmx-plate-fit:room', affects: 'team', busPart: 'policy', strip: 'line', modes: ['full', 'compact', 'strip', 'lean'],
+    return { key: 'pmx-plate-room', kind: 'chat_room', fitKey: 'pmx-plate-fit:room', affects: 'team', busPart: 'policy', strip: 'line', modes: ['full', 'compact', 'strip', 'lean', 'wrap'],
       input: { label: 'The topic', text: roomTopic(d), mirror: 'job', part: 'job' },
       hub: { key: 'pmx-p-seat:room:mod', role: 'moderator', label: 'Moderator', sub: cfg.moderatorPersona || 'Product Manager', state: (live && live.lead) || 'idle', part: 'moderator' },
       seats: castSeats(d, 'chat_room', live, { noun: 'Helper', part: 'team', dash: false }), wing: castWing(d, 'chat_room', live),
@@ -50942,9 +51369,10 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     var sp = fn(d, live || {});
     o = o || {};
     sp.key = o.key || ('cv-plate-' + kind);
-    sp.w = { full: o.w || 640, compact: o.w || 640, strip: o.w || 640, line: o.w || 640 };
+    sp.w = { full: o.w || 640, compact: o.w || 640, strip: o.w || 640, line: o.w || 640, wrap: o.w || 640 };
     sp.cls = o.cls || '';
-    var modes = o.modes || ['full', 'compact', 'strip'];
+    /* wrap (2026-10-09): a team too wide for one row at 640 still gets its cast, on 2 or 3 rows */
+    var modes = o.modes || ['full', 'compact', 'strip', 'wrap'];
     /* every key in a view's plate is its own (cv:), so a sheet open over the view never shares one */
     for (var i = 0; i < modes.length; i++) { var h = S.pmxCastPlate(sp, modes[i]); if (h) return h.replace(/ data-k="(?!cv:)/g, ' data-k="cv:'); }
     return '';
@@ -54886,13 +55314,16 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     /* "continues Mon 10:00 PM": the weekday is always named, even tonight */
     var nextDay=Number.isFinite(nextMs)&&nextMs?(function(p){return p?DAY_LABELS[T0.weekday(p)]+' '+clockAt(nextMs,zone):'';})(zp(zone,nextMs)):'';
     /* a slot set in another zone than the viewer's names it once (its times are that zone's wall times) */
-    var oz=otherZone(zone),zt=oz?' ('+esc(oz)+')':'';
+    var oz=otherZone(zone),zt=oz?' ('+esc(nb(oz))+')':'';  /* the zone never breaks inside its parentheses (C56) */
     var rep=api&&api.executionReport&&b.dispatchReceipt?api.executionReport(planId):null,cs=rep&&rep.completion_summary,steps=cs&&cs.leaf_steps?cs.resolved+' of '+cs.leaf_steps+' steps':'';
     var slot=one?'':nightsWord(b.days_of_week)+' '+slotText(b.local_start,b.local_pause);
-    if(b.state==='invalidated'){
+    /* Build (or an ended run) invalidates the schedule without a new version: nothing to rebind, so the line says the
+       schedule is over instead of offering "Use V" for a version that does not exist */
+    if(b.state==='invalidated'&&b.pendingVersion==null){tone='done';lead='Schedule ended';say=/^Build Now/.test(b.invalidated_reason||'')?'you started this build now, so the schedule won’t start a second one.':'the build it was set for has ended, so it won’t start again.';}
+    else if(b.state==='invalidated'){
       tone='update';lead='Schedule needs update';say='You edited this plan (now V'+esc(b.pendingVersion)+'). <b>Build V'+esc(b.pendingVersion)+' instead?</b>';
-      acts='<button type="button" class="soft-button" data-action="sched-rebind-build" data-id="'+id+'" data-version="'+esc(b.pendingVersion)+'" data-hash="'+esc(b.pendingHash)+'" data-revision="'+b.revision+'">Use V'+esc(b.pendingVersion)+'</button>'+
-        '<button type="button" class="text-button" data-action="sched-cancel-build" data-id="'+id+'" data-revision="'+b.revision+'" data-currentness="'+esc(buildCurrent(b))+'">Cancel schedule</button>';
+      acts='<button type="button" class="soft-button pmx-act" data-action="sched-rebind-build" data-id="'+id+'" data-version="'+esc(b.pendingVersion)+'" data-hash="'+esc(b.pendingHash)+'" data-revision="'+b.revision+'">Use V'+esc(b.pendingVersion)+'</button>'+
+        '<button type="button" class="text-button pmx-act" data-action="sched-cancel-build" data-id="'+id+'" data-revision="'+b.revision+'" data-currentness="'+esc(buildCurrent(b))+'">Cancel schedule</button>';
     }else if(b.state==='canceled'||b.state==='cancelled'){tone='done';lead='Schedule canceled';say='V'+esc(b.exact_target_version)+' won’t be built on a schedule.';}
     else if(b.state==='held'){tone='update';lead='Held';say=esc(buildHeldWords(b));}
     else if(b.state==='expired'){tone='done';lead='Skipped';say='it was more than '+Math.round((b.grace_seconds||SCHED_DEFAULTS.build.graceMinutes*60)/60)+' min late.';}
@@ -54914,10 +55345,14 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     else{ribbon=true;lead='Builds '+esc(slot)+zt;say=nextSay?'next: '+esc(nextWords({kind:'recurring_window',timezone:zone,days:b.days_of_week,startTime:b.local_start,pauseTime:b.local_pause},now)||nextSay):'';}
     var foot=ribbon||steps?'<span class="plan-sched-foot">'+(ribbon?nightRibbon(b,now):'')+(steps&&tone!=='done'?'<span>'+esc(steps)+'</span>':'')+'</span>':'';
     /* 8.8 "the next morning, one receipt": what the night did, once the slot has paused it safely */
-    if(lead==='Outside execution window')foot+=overnightReceipt(b,steps);
+    var night=lead==='Outside execution window'?overnightReceipt(b,steps):'';
+    /* C56: the lead is the line's first row and Details sits beside it; what follows the lead (the detail, then the
+       night ribbon) flows on the row below, and a decision's buttons get a row of their own under the sentence, so
+       neither ever squeezes the sentence into a narrow column. The " · " stays in the text for screen readers. */
     return '<div class="plan-schedule-line" data-plan-schedule="'+id+'" data-tone="'+tone+'"><span class="plan-sched-mark">'+SH.pmxKindMark('build-at',16)+'</span>'+
-      '<p class="plan-sched-say"><b>'+lead+'</b>'+(say?' · '+say:'')+'</p><span class="plan-sched-acts">'+acts+
-      '<button type="button" class="text-button" data-action="sched-open-plan-record" data-id="'+id+'">'+(b.state==='invalidated'?'Review':'Details')+'</button></span>'+foot+'</div>';
+      '<p class="plan-sched-say"><b>'+lead+'</b>'+(say?'<span class="plan-sched-sep"> · </span><span class="plan-sched-detail">'+say+'</span>':'')+foot+'</p>'+
+      '<span class="plan-sched-acts"><button type="button" class="text-button pmx-act" data-action="sched-open-plan-record" data-id="'+id+'">'+(b.state==='invalidated'&&b.pendingVersion!=null?'Review':'Details')+'</button></span>'+
+      (acts?'<span class="plan-sched-decide pmx-actions">'+acts+'</span>':'')+night+'</div>';
   }
   function overnightReceipt(b,steps){
     /* the night began when the run was admitted (its receipt) or, on a later night, when the slot reopened */
@@ -64397,7 +64832,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   const replies=n*R,lo=Math.max(1,Math.round(replies*0.27)),hi=Math.max(lo+2,Math.round(replies*0.67));
   out.estimate=recorded?{recorded:true}:{text:'About '+(replies===1?'1 reply':replies+' replies')+' · usually '+lo+'–'+hi+' min · roughly $'+(replies*0.027).toFixed(2)+'–$'+(replies*0.08).toFixed(2)+' · an estimate, not a promise'};
   /* the preview's first frame (A16): the card's top frame as it will be born */
-  const stops=[];for(let i=1;i<=Math.min(R,12);i++)stops.push('Round '+i);
+  const stops=[];for(let i=1;i<=R;i++)stops.push('Round '+i);
   out.firstFrame=recorded
    ?{density:'starting',status:'yourmove',word:'Your move',reason:'start the first round.',stops,nowText:'<b>Round 1 of '+R+'</b> · not started'}
    :{density:'waiting',status:'waiting',word:'Waiting to start',reason:escH(C.waitingReason?C.waitingReason({kind:'chat_room'}):'Nothing runs by itself in this preview, so the Moderator hasn’t opened the first round yet.'),stops,nowText:'<b>Round 1 of '+R+'</b> · not started'};
@@ -64439,7 +64874,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  function trackOf(r,f){
   const stops=[],done=r.status==='completed',stopped=!!STOPPED[r.status];
   const cur=r.status==='failed'?'failed':r.status==='running'||r.status==='paused'?'now':'next';
-  for(let i=1;i<=Math.min(f.max,12);i++)stops.push({key:'pmx-stop:'+r.id+':'+(i-1),label:'Round '+i,state:i<=f.s.roundsSoFar?'done':f.inRound&&i===f.round.number?cur:done?'skipped':'next'});
+  for(let i=1;i<=f.max;i++)stops.push({key:'pmx-stop:'+r.id+':'+(i-1),label:'Round '+i,state:i<=f.s.roundsSoFar?'done':f.inRound&&i===f.round.number?cur:done?'skipped':'next'});
   const nowText=done?'<b>Finished</b> · '+plural(f.s.roundsSoFar,'round')+' · '+repliesWord(f.replies)
    :!f.started?'<b>Round 1 of '+f.max+'</b> · not started'
    :stopped?'<b>Round '+f.n+' of '+f.max+'</b> · '+(r.status==='paused'?'paused':'stopped')+' after '+repliesWord(f.replies)
@@ -76293,7 +76728,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
       'Live turns':['Live reply','Live agent turn','Trouble mid-turn','Long agent turn'],
       'Work lifecycle':['Start complete work','Multi-orbit turn','Pause work','Step work','Complete work','Reset work','Show work history','Live subagents','Blocked subagent','Conflict mediation','Crew coordination'],
       'Every Working Animation state':D.workSteps.map(x=>`Work · ${x.label}`),
-      'Questions and decisions':['Prepare questions','Open questionnaire','Queue questionnaire','Plan approval','Plan revision','Plan cancellation','Permission request','Permission denial','Conflict resolution','Cancel and return'],
+      'Questions and decisions':['Prepare questions','Open questionnaire','Long answers questionnaire','Queue questionnaire','Plan approval','Plan revision','Plan cancellation','Permission request','Permission denial','Conflict resolution','Cancel and return'],
       'Artifacts':['Mermaid artifact','Interactive dashboard','Data explorer','Architecture map','Interactive quiz','Periodic table','Flowchart','Interactive chart','Generated image','Test evidence','Document artifact','Deep Plan artifact','Artifact stale','Artifact failure'],
       'Capabilities':['BSD intervention','BSD silent check','BSD timeout','BSD unavailable','BSD quota limited','Context Focus','Context Mute','Subcompact preview','Subcompact applied','Subcompact cancelled','ELI5 receipt','Goal replanning','Goal paused','Goal blocked'],
       'Thread and message states':['Plain text conversation','Queued Message Demo','Archived threads','Cross-thread search','Long response','Message details','Edit and branch','Restore from point','Draft history','New message anchor'],
@@ -76832,6 +77267,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
     'No models':()=>{switchThread('no-models');addReceipt('model-unavailable','No configured model is reachable','Every account is unauthenticated, quota-limited, or offline.');openMenu('model','model');},
 
     'Open questionnaire':()=>{switchThread('questions');state.questionIndex=0;state.decision={type:'question'};renderApp();},
+    /* Item 5 (2026-10-09): the deployment questionnaire written long (D.longQuestions), to judge the Ask Card's fit. */
+    'Long answers questionnaire':()=>{switchThread('questions');state.questions=clone(D.longQuestions);state.questionIndex=0;state.decision={type:'question'};renderApp();},
     'Queue questionnaire':()=>{switchThread('questions');state.decision=null;state.questionQueue+=1;addReceipt('question-receipt','Questionnaire queued','It waits in the transcript and can be resumed without losing the draft.');},
     'Cancel and return':()=>{switchThread('questions');state.decision=null;addReceipt('question-receipt','Questionnaire cancelled','The explicit cancellation is recorded. Existing answers remain in thread history.');},
 

@@ -144,22 +144,23 @@
 }
 .plan-doc .pd-md-block{ display:block; }
 
-/* ------------------------------------------------------------ the footer */
-.plan-doc .pd-foot{
-  display:flex; flex-wrap:wrap; align-items:center; gap:6px;
-  padding:10px 14px; border-top:1px solid var(--border); background:var(--surface-3);
-}
-/* ONE control. It changes LABEL; it is never replaced by a status badge. */
+/* ------------------------------------------------------------ the footer
+   C56: the footer is the shared action row (.pmx-actions, module-shell.css) and every control in it is a .pmx-act,
+   so Build, Revise, Open plan and More are one height (32 px) and one type size, with 10 px between boxed
+   neighbours. It is a row on the card's content edge, never a tinted band with its own inset. */
+.plan-doc .pd-foot{ padding:12px 14px; border-top:1px solid var(--border); }
+/* ONE control. It changes LABEL; it is never replaced by a status badge. Its size is the .pmx-act's; the sides are
+   the primary action's 14 px. */
 .plan-doc .pd-build{
-  height:26px; padding:0 13px; cursor:pointer;
-  border:1px solid var(--accent); border-radius:var(--radius-sm);
+  padding:0 14px; cursor:pointer;
+  border:1px solid var(--accent);
   background:var(--accent); color:var(--on-accent);
-  font:600 12px/1 var(--font-ui); white-space:nowrap;
+  font:600 12px/16px var(--font-ui); white-space:nowrap;
   transition:filter var(--spring-soft), background var(--spring-soft),
              color var(--spring-soft), border-color var(--spring-soft);
 }
 .plan-doc .pd-build:hover:not([disabled]){ filter:brightness(1.08); }
-.plan-doc .pd-build[disabled]{ cursor:default; }
+.plan-doc .pd-build[disabled]{ cursor:default; opacity:1; }  /* a label, not a greyed control: .pmx-act[disabled] would fade it */
 .plan-doc .pd-build-building{
   background:var(--surface-2); color:var(--text); border-color:var(--accent);
 }
@@ -184,13 +185,15 @@ html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:
 /* Support copy sits BESIDE the control, never inside it — a paused build still
    reads "Building…" on the button. */
 .plan-doc .pd-wait{
-  display:inline-flex; align-items:center; gap:6px; margin-left:2px;
+  display:inline-flex; align-items:center; gap:6px;
   font:400 11px/1.4 var(--font-ui); color:var(--muted);
 }
 /* the wait line's mark is a status mark (waiting-dep, paused; plans.js waitMark), inked by its tone, never the
    accent; its .nx-st wrapper is already flex:none (neon-icons.css) */
 .plan-doc .pd-wait svg{ flex:0 0 auto; }
 .plan-doc .pd-act{ white-space:nowrap; }
+/* in the action row the support copy takes a row of its own under the buttons, on the content edge */
+.plan-doc .pd-foot > .pd-wait{ flex:1 1 100%; min-width:0; }
 
 /* --------------------------------------------------- historical compact */
 .plan-doc-compact{ background:var(--surface-2); }
@@ -314,7 +317,6 @@ html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:
 
 /* ---------------------------------------------------------- narrow panes */
 @media (max-width:590px){
-  .plan-doc .pd-foot{ gap:5px; }
   .plan-doc .pd-kv span{ flex-basis:110px; }
   .plan-doc .pd-body{ max-height:380px; }
 }
@@ -374,7 +376,11 @@ html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:
 .plan-doc .pd-md-mark-mixed{ color:var(--accent); opacity:.8; }
 
 /* --- the attention line beside the Build control ------------------------- */
-.plan-doc .pd-attn{ align-items:flex-start; gap:8px; flex-wrap:wrap; }
+/* the mark column and its 10 px gap match the schedule line's (plan-demo-batch2.css); the admitted actions are an
+   action row under the copy */
+.plan-doc .pd-attn{ display:grid; grid-template-columns:16px minmax(0,1fr); align-items:start; gap:6px 10px; }
+.plan-doc .pd-attn > svg, .plan-doc .pd-attn > .nx-st{ margin-top:1px; }
+.plan-doc .pd-attn-acts{ grid-column:2; }
 .plan-doc .pd-attn-copy{ display:flex; flex-direction:column; gap:1px; min-width:0; }
 .plan-doc .pd-attn-copy strong{ font:600 11.5px/1.4 var(--font-ui); color:var(--text); }
 .plan-doc .pd-attn-copy span{ font:400 11px/1.5 var(--font-ui); color:var(--muted); }
@@ -384,15 +390,13 @@ html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:
   align-self:flex-start; font:500 10px/1.4 var(--font-ui); color:var(--subtle);
   border:1px solid var(--border); border-radius:999px; padding:0 6px; margin-top:2px;
 }
-.plan-doc .pd-attn-act{ font-size:11px; padding:3px 8px; }
 
 /* --- the compact To-Do completion summary (not a second lifecycle chip) --- */
+/* plain words at the row's end, so it never reads as a third button or a status chip */
 .plan-doc .pd-progress{
-  font:500 11px/1.5 var(--font-ui); color:var(--muted);
-  border:1px solid var(--border); border-radius:999px; padding:2px 9px;
-  background:var(--surface-3);
+  margin-left:auto; font:500 11.5px/16px var(--font-ui); color:var(--muted); font-variant-numeric:tabular-nums;
 }
-.plan-doc .pd-progress-stale{ color:var(--subtle); border-style:dashed; }
+.plan-doc .pd-progress-stale{ color:var(--subtle); font-style:italic; }
 
 /* --- typed embeds -------------------------------------------------------- */
 .plan-doc .pd-embed{

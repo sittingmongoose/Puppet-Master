@@ -952,7 +952,7 @@ div.qs-step-body{ cursor:default; }
   background:var(--qs-row); color:var(--text); cursor:pointer;
   transition:background 180ms var(--spring-ease), border-color 180ms var(--spring-ease), color 180ms var(--spring-ease);
 }
-.qs-ask-opt{ align-items:center; }
+.qs-ask-opt{ align-items:flex-start; } /* item 5: a wrapping row keeps its mark and number on the first line */
 .qs-ask-opt:hover, .qs-ask-review-row:hover{ background:var(--qs-row-hover); }
 .qs-ask-opt.is-on{
   background:var(--qs-on);
@@ -1198,6 +1198,86 @@ button.qs-spine-slot.is-current::after{
   display:grid; place-items:center;
   box-shadow:0 0 0 3px var(--surface-2), 0 0 12px 1px color-mix(in srgb, var(--accent) 45%, transparent);
 }
+
+/* ==========================================================================
+   Ask Card: long answers (item 5, 2026-10-09).  The card grows and shrinks with
+   its content up to the room above the composer: questions.js fitAskRoom()
+   publishes --qs-ask-room (the chat stage less its header, Context Lens and
+   composer rows) on the root, and the cap leaves a 48px strip of transcript
+   under the header.  Past the cap the body
+   scrolls inside the card; the close button, the spine and the footer stay put.
+   Text wraps wherever it must (a long URL included): nothing scrolls sideways.
+   ========================================================================== */
+.decision-host[data-variant="8"]{
+  --qs-ask-max: max(240px, calc(var(--qs-ask-room, 60vh) - 56px));
+}
+.decision-host[data-variant="8"] .qs.qs-ask,
+.decision-host[data-variant="8"] .qs-shell.qs-opening > .qs.qs-ask,
+.decision-host[data-variant="8"] .qs-shell.qs-morphing > .qs.qs-ask,
+.decision-host[data-variant="8"] .qs-shell.qs-closing > .qs.qs-ask{ max-height:var(--qs-ask-max); }
+/* the open morph measures its target with .qs-measure (max-height:none !important); the Ask Card measures capped */
+.decision-host[data-variant="8"] .qs-shell.qs-measure > .qs.qs-ask{ max-height:var(--qs-ask-max) !important; }
+.qs-ask-row{ min-height:0; }
+.qs-ask-body{
+  flex:1 1 auto; min-width:0; min-height:0;
+  overflow-x:hidden; overflow-y:auto; overscroll-behavior:contain;
+  /* 4px of slack on every side, given back by the margins: focus rings and the row press are not cut by the edge */
+  margin:-4px; padding:4px;
+}
+/* scrolling: the edges the content runs past fade (none at an edge it rests on), and the footer takes a hairline */
+.qs-ask.is-scroll .qs-ask-body{
+  --qs-fade-t:14px; --qs-fade-b:18px;
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 var(--qs-fade-t), #000 calc(100% - var(--qs-fade-b)), transparent 100%);
+  mask-image:linear-gradient(to bottom, transparent 0, #000 var(--qs-fade-t), #000 calc(100% - var(--qs-fade-b)), transparent 100%);
+}
+.qs-ask.is-scroll .qs-ask-body.at-start{ --qs-fade-t:0px; }
+.qs-ask.is-scroll .qs-ask-body.at-end{ --qs-fade-b:0px; }
+.qs-ask.is-scroll .qs-ask-foot{
+  margin-top:0; padding-top:11px;
+  border-top:1px solid var(--qs-line);
+}
+/* long words and URLs break rather than run past the card; review keeps a multi-line answer's line breaks */
+.qs-ask-title, .qs-ask-desc, .qs-ask-sub, .qs-ask-opt-label, .qs-ask-opt-desc,
+.qs-ask-review-a, .qs-ask-review-q{ overflow-wrap:anywhere; }
+.qs-ask-review-a{ white-space:pre-line; }
+/* the question's description (Tools.md QuestionItem `description?`) sits under the title, on the title's hang */
+.qs-ask-desc{
+  font-size:13px; font-weight:450; line-height:1.45; color:var(--muted);
+  margin:-6px 0 12px; padding-right:8px;
+}
+.qs-ask-title.has-glyph ~ .qs-ask-desc,
+.qs-ask-title.has-glyph ~ .qs-ask-sub{ padding-left:var(--qs-hang); }
+/* an option's description: under its label, muted, on the label's column */
+.qs-ask-opt-copy{ display:flex; flex-direction:column; gap:2px; min-width:0; flex:1 1 auto; }
+.qs-ask-opt-desc{ font-size:12.5px; font-weight:450; line-height:1.4; color:var(--muted); }
+/* rows that wrap keep the mark and the number centred on the label's first line (1.45 x 14px), which is exactly
+   where a one-line row centred them */
+.qs-ask-opt > .qs-ask-mark{ margin-top:calc((1.45 * 14px - 18px) / 2); }
+.qs-ask-opt > .qs-num{ margin-top:calc((1.45 * 14px - 1.45 * 13px) / 2); }
+/* Something else: a textarea one line tall that grows with its text (field-sizing; questions.js autoSizeField()
+   elsewhere). Its mark, number, chips and attach stay on its first line: --qs-other-line is the one-line well
+   (a 1.45 x 13px line, 4px field padding twice, 4px well padding twice, its 1px border twice), and each is centred
+   on it exactly as align-items:center placed them before the field could grow. */
+.qs-ask .qs-other-ask{
+  --qs-other-field: calc(1.45 * 13px + 8px);
+  --qs-other-line: calc(var(--qs-other-field) + 10px);
+  align-items:flex-start;
+}
+.qs-ask .qs-other-ask > .qs-ask-mark{ margin-top:calc((var(--qs-other-line) - 18px) / 2); }
+.qs-ask .qs-other-ask > .qs-num{ margin-top:calc((var(--qs-other-line) - 1.45 * 13px) / 2); }
+.qs-ask .qs-other-ask .qs-other-line{ align-items:flex-start; }
+.qs-ask .qs-other-ask .qs-other-line > .qs-attach,
+.qs-ask .qs-other-ask .qs-other-line > .qs-file-chip{ margin-top:calc((var(--qs-other-field) - 22px) / 2); }
+.qs-ask .qs-other-ask textarea.qs-other-input{
+  display:block; resize:none; overflow:hidden;
+  field-sizing:content; min-height:0;
+  overflow-wrap:anywhere; white-space:pre-wrap;
+}
+/* the optional note grows with its text too, from the 120px it rests at (its old flex basis); the body is the one
+   scroller, so the field never scrolls inside itself */
+.qs-ask-note-input{ flex:0 0 auto; min-height:120px; field-sizing:content; overflow:hidden; overflow-wrap:anywhere; }
+/* the @-file sprout opens below its field when there is no room above it in the body (questions.js mentionDown) */
+.qs-ask .qs-mention.is-down{ top:calc(100% + 4px); bottom:auto; }
 
 /* ==========================================================================
    Container tiers.  Every width-dependent rule below queries the DECISION HOST,

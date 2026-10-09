@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3384-L11766
+Source lines: L3510-L12158
 
-Source SHA256: `e3792b33109db9b96f0cef6bee55b0369c15407a43e5af00569dad39f487fd8c`
+Source SHA256: `7def4e82703338f3baacffc544a4432bb37b0ca347d0fc9402ed0a56b3af97d5`
 
 ---
 
@@ -8390,4 +8390,270 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
+```
+
+### DL-161 - PMConcept7 Carries Its Own Fonts
+
+```yaml
+plan_unit_id: DL-161
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-161 records the owner request of 2026-10-09 that PMConcept7 have all its fonts built in. PMConcept7 embeds
+  Inter, Poppins with Nunito behind it, and IBM Plex Mono, at the weights and italics its looks use, as Latin woff2
+  data, and Gelasio stands in under the name Georgia for the info-badge glyph because Georgia cannot be embedded
+  (F3-430). Its Inter, Poppins and IBM Plex Mono files are the 5.6 Pro chat concept's, byte for byte (DR-050).
+  Orbitron, Rajdhani and JetBrains Mono are not embedded because no text draws in them, and platform font names
+  stay the computer's. The page's symbol characters are PM Symbols, drawn for Puppet Master as SVG and embedded
+  beside every text face for those characters only, and form controls take the look's face (F3-430).
+gui_related: true
+gui_classification_reason: Records an owner request on the concepts' fonts.
+split_recommended: false
+depends_on: [F3-430]
+unblocks: [DR-050]
+acceptance_criteria:
+  - "Every theme face PMConcept7 draws in Basic, Glass, Friendly and Retro comes from embedded data."
+  - "Every symbol character the page uses draws from PM Symbols in every look."
+  - "The owner's request is recorded in plain words with its source hashes."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: theme_token_drift
+reasoning_tier: standard
+context_scope: concept_web_fonts
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/proof-after.json, SHA-256 bfda89d92f00e53a7ad8dec195de68ff5ef1774443e4fb70868ce32bc061a82a"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/symbols-proof.json, SHA-256 e0f74c7c89eb6d80a7f48776822310df03989c1cf4e9d421cfe962af30f8ceae"
+preserved_exact_tokens:
+  - "DL-161"
+  - "Gelasio"
+  - "Georgia"
+  - "PM Symbols"
+negative_constraints:
+  - "Do not load a concept font from the network."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+### DL-158 - The Ask Card Fits Long Answers
+
+```yaml
+plan_unit_id: DL-158
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-158 records the owner request of 2026-10-09. The questions card (the Ask Card) adjusts to long answers: it grows
+  and shrinks with its content up to the room above the composer, then scrolls its body inside the card with Back,
+  Skip, Next or Submit and close always in reach; long text and long web addresses wrap inside their rows; option and
+  question descriptions are shown; Something else and the note grow as they are typed; review shows answers whole; a
+  questionnaire whose content fits is unchanged (F3-609).
+gui_related: true
+gui_classification_reason: Records an owner decision on how the questions card handles long content.
+split_recommended: false
+depends_on: [DL-150]
+unblocks: [F3-609]
+acceptance_criteria:
+  - "The Ask Card's behaviour and draft lifecycle are unchanged (assistant-chat-design section 7.4)."
+  - "The owner's request is recorded in plain words with its source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: question_card_presentation_drift
+reasoning_tier: standard
+context_scope: chat_fixes_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-questionnaire-long-answers-20261009/JARED_REQUEST.md, SHA-256 b1b1280a6dac4c2b1afed428e91c817bba1c2e7c360bfdae59b3bdec34cacf52"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-158"
+  - "Ask Card"
+negative_constraints:
+  - "Do not cut long answers short to make them fit."
+  - "Do not change the questionnaire's behaviour through its size."
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+### DL-154 - A Collaboration Setup Sheet's Graph Stays In View As Helpers And Rounds Are Added
+
+```yaml
+plan_unit_id: DL-154
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-154 records the owner request of 2026-10-09. A collaboration setup sheet's cast plate stays a drawing at every
+  team size its kind allows, up to eight helpers with both specialists: it never yields past the leanest drawing that
+  fits its slot's width, the roster scrolls in its own region instead, and a team too wide for one strip row is drawn
+  as the wrap, its seats on two or three rows with a fork from the lead and a join to You (F3-601). In the one-column
+  narrow sheet the plate stays at the top while its question is on screen, and a run view whose team is too wide for
+  one row draws the same wrap. A Chat Room's run card and preview track shows one stop per round up to the 20-round
+  limit, and a track of eight or more stops wraps its dots down with its words on their own row (F3-602). One
+  plate-slot fit rule, one cast grammar and one track primitive carry this everywhere (DR-045). Helper limits, round
+  limits, commands, settings and wiring are unchanged. Jared reported that adding helpers pushed the graph out of view
+  in every setup sheet and asked that it hold a higher number, and that many Chat Room rounds pushed the graphic off
+  the screen and should wrap down; the record states it in plain words, without quoting him.
+gui_related: true
+gui_classification_reason: Records an owner decision on how collaboration graphs and tracks behave as teams and rounds grow.
+split_recommended: false
+depends_on: [DL-149, F3-566, F3-569, F3-592, F3-595]
+unblocks: [F3-601, F3-602, DR-045]
+acceptance_criteria:
+  - "Each collaboration setup sheet shows a cast plate drawing at its 8-helper limit with both specialists (F3-601)."
+  - "A Chat Room of 20 rounds shows 20 stops inside its card (F3-602)."
+  - "No helper limit, round limit, command, settings key or wiring row changes."
+  - "The owner request is recorded in plain words, with the verbatim source cited by path and SHA-256."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: wand_sheet_presentation_drift
+reasoning_tier: high
+context_scope: wand_modules_gui
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/00-plans-index.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-popup-graphs-20261009/JARED_REQUEST.md, SHA-256 46723a8829ea87fc5e01a261d81e92e32f3f1bc2e8a428af6704b1e3a91229e2"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-popup-graphs-20261009/SURVEY-BEFORE.md, SHA-256 b4036f1bffdf0bfb65f40fa5062540f60960b072bb46c667a7bcb00f26e0ac5f"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; branch fix/c56-popup-graphs-20261009)"
+preserved_exact_tokens:
+  - "DL-154"
+  - "cast plate"
+  - "the wrap"
+negative_constraints:
+  - "Do not scale a cast plate to fit, and do not let it fall to its caption while a drawing fits its width."
+  - "Do not change a helper limit, a round limit, a command or a wiring row under this decision."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+### DL-156 - The Plan Card's Buttons Line Up And Fit The Card In Every Theme
+
+```yaml
+plan_unit_id: DL-156
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-156 records the owner request of 2026-10-09: the Plan card's buttons, which did not line up, are designed for
+  the space in every theme. Every Plan surface's actions use one shared action row: one height and one type size,
+  even gaps, Build as a boxed primary (DR-047). The transcript card has no tinted footer band: one hairline opens a
+  status zone of the schedule line, the step count and the action row on the card's content edge (F3-606). The
+  schedule line reads in rows, its decision controls on a row of their own (F3-607). Disabled Build labels keep full
+  contrast. By the lead's ruling, a schedule that Build or an ended run invalidated, with no newer version, reads
+  Schedule ended and offers no Use V<n> (SQR-015). No command, action id, wiring, setting or label is added or
+  removed. The record states the request in plain words, without quoting him.
+gui_related: true
+gui_classification_reason: Records an owner decision on the Plan card's action row and schedule line layout.
+split_recommended: false
+depends_on: [DL-145, F3-566, SQR-015, APR-071]
+unblocks: [F3-606, F3-607, DR-047]
+acceptance_criteria:
+  - "Every Plan action row has one control height and type size in all ten themes (F3-606, DR-047)."
+  - "The schedule line's decision controls sit on their own row (F3-607), and an invalidated schedule with no newer version reads Schedule ended (SQR-015)."
+  - "The owner request is recorded in plain words, with the source cited by path and SHA-256."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: plan_card_layout_drift
+reasoning_tier: medium
+context_scope: chat_plan_card_actions_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/DRY_Rules.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-20261009/JARED_REQUEST.md, SHA-256 4454066fa6584209b779ebf33441037b484f09f452599fcbef3477383782a93d"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-20261009/JARED-SCREENSHOT-retro-light.png, SHA-256 e668fe203ee8aeeb9c9ed1e8aa2f263f525188ce14d4a837958074aace4b839b"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-156"
+  - "Schedule ended"
+  - "action row"
+negative_constraints:
+  - "Do not add a command, action id or setting for this layout."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+### DL-160 - The To-Do Navigation Line Loses Its Last Item Button
+
+```yaml
+plan_unit_id: DL-160
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-160 records the owner's decision of 2026-10-09. The Last item button is removed from the To-Do panel's navigation
+  line, which keeps the visible count, "N visible of M items", and Expand all and nothing else (F3-593). The button
+  jumped the list to the final item and selected it, and nothing takes its place. The search field still finds any
+  title or exact ID, and the list reaches its final item by scrolling after Expand all has opened every parent. No
+  command, wiring entry, setting or To-Do state changes: the button never had a command ID, so the UI command catalog,
+  Commands_System and the Wiring Matrix hold no row for it and none is retired.
+gui_related: true
+gui_classification_reason: Records the owner's removal of one control from the To-Do panel's navigation line in Activity Detail.
+split_recommended: false
+depends_on: [DL-147]
+unblocks: [F3-593]
+acceptance_criteria:
+  - "The To-Do navigation line holds the visible count and Expand all only, and no Last item control exists in the panel (F3-593)."
+  - "No command, wiring row, setting or To-Do state is added or retired by this change."
+  - "The removal is recorded with its date, 2026-10-09."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: todo_navigation_control_drift
+reasoning_tier: high
+context_scope: todo_navigation_line_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Decision_Log.md
+  - Plans/00-plans-index.md
+  - Concepts/chat-assistant-concepts/5.6 Pro/todos.js
+  - Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (To-Dos section; concept lineage only)"
+preserved_exact_tokens:
+  - "DL-160"
+  - "Expand all"
+  - "visible of"
+negative_constraints:
+  - "Do not add a replacement for the Last item button to the To-Do navigation line."
+  - "Do not add a command, wiring row or setting for the removed button."
+owner_hints:
+  - Plans/FinalGUISpec.md
 ```
