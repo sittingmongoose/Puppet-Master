@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2880,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-10-09T02:49:18Z",
+  "generated_at_utc": "2026-10-09T05:56:35Z",
   "gui_related_units": {
     "count": 3403,
     "units": [
@@ -41727,12 +41727,10 @@
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {
-        "error": "pnc019_source_hash_path_missing",
+        "actual": null,
+        "error": "pnc019_source_hash_stale",
+        "expected": "c92316cbe40459e99153304840de361233cc28c7fc404df4a05ac583484c1466",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
-      },
-      {
-        "detail": "[Errno 2] No such file or directory: 'Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
-        "error": "event_authority_currentness_audit_unavailable"
       },
       {
         "bulk_registration_allowed": false,
