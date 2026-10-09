@@ -388,7 +388,8 @@ becomes in Slint:
 | Fold to a line (`FX.fold`: the window or callout collapsing to its centre line) | `transform-scale-y`, or a clipping `Rectangle` |
 | Line travel and hops (`FX.lineTo`, `FX.hops`: the line moving, the Pod's held-hop flight) | a `Rectangle`'s x, y and width stepped |
 | Hung cards (`FX.banner` hang: strings, knots, the card lowered and hauled up) | a clipping `Rectangle`, 1 px `Rectangle` strings and `Path` knots |
-| Pod lanes (`FX.pod.say`: the strip placed clear of actors and subjects) | geometry from layout rects; hit tests remain only on the tour's anchor path (`covers()`, 5 points) |
+| Pod lanes (`FX.pod.say`: the strip placed clear of actors and subjects; in the narrow layout a line the band has no clear place for is spoken in a pane-top lane between the band's foot and the title rule) | geometry from layout rects; hit tests remain only on the tour's anchor path (`covers()`, 5 points) |
+| A NieR scene change's cast (the old troupe, You, the control bar and the strings stepping out whole on the slice's first frame, so the slice cuts only the set) | `visible: false` on the old cast's elements at that frame; the slice is the clipping `Rectangle` above |
 | The reboot plate's clip (the in-window and page-wide cover growing from the control pressed) | a clipping `Rectangle` stepping x, y, width and height; the compositor version is an overflow box with a counter-transformed inner |
 | Ready's theatre curtain (two parchment panels closing and opening in held steps) | two `Path` panels whose `x` steps by `floor(t * n) / n` on a `Timer`; the edges stop only where no unit stands, so no clip is needed |
 | A unit's bow (the upper body pitching about the hips in two held steps, the head dropping below its knot) | `transform-scale-y` with `transform-origin` on the hip line, plus the head's `y`, both stepped by a `Timer` |
