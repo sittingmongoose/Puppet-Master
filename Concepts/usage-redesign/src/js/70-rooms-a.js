@@ -66,51 +66,92 @@
         ['Reset truth', PMU.fmt.truth(ev.w.truth)], ['After reset', 'pending recheck'], ['Source', ev.a.fresh.source + ' · ' + ev.a.ageText]] };
   } });
 
-  /* plan cards: the provider's own windows from its effective Settings account, plus the old card's facts */
+  /* plan plates (lane d-plans, Jared item 4): one plate per Settings provider with accounts, listing EVERY account (two or
+     more: the account rows plate, 52-w-plans.js rowsPlate; one: the plan card with its windows, amounts and facts). The six
+     legacy ids keep their widget ids and the old card's facts; the other providers of the review roster (Muse Code, Google
+     Antigravity, Z.AI Coding Plan, OpenCode Go, Anthropic API, Cursor) get plan-<settings id> plates. */
   var PLAN_EXTRA = {
     claude: { share: 18, model: 'Sonnet 4.6' }, codex: { share: 23, model: 'GPT-5.4' }, qwen: { share: 31, model: 'Qwen3 Coder' },
     gemini: { share: 29, model: 'Gemini 3.1 Pro' }, kimi: { share: 36, model: 'Kimi K2' }, copilot: { share: 35, model: 'Copilot completion' }
   };
+  var PLAN_IDS = ['claude', 'codex', 'qwen', 'gemini', 'kimi', 'copilot', 'muse', 'antigravity', 'zai-coding', 'opencode-go', 'anthropic-api', 'cursor-cli'];
+  C.PLAN_IDS = PLAN_IDS;
+  var GROUP_WORD = { plan: 'subscription · plan allowance', use: 'pay as you go', own: 'your own route' };
+  function planInScope(v) { return v.legacyId ? D.inScope(v.legacyId) : D.settingsInScope(v.settingsId); }
   function planModel(id) {
     return function () {
-      if (!D.inScope(id)) return null;
-      var v = D.planView(id); if (!v) return null;
-      var p = v.legacy, a = v.account, x = PLAN_EXTRA[id];
-      var pace = C.pace(p.pace);
-      var amounts = a ? a.amounts.slice() : [];
-      var facts = [['Billing', p.billing_basis], ['Entitlement', p.entitlement_class], ['Settlement', p.settlement_status], ['Monthly share', x.share + '%'], ['Pace', pace + ' (relative)'],
-        ['Cache read', p.cache + '%'], ['Authority', p.allowance_authority + ' · ' + (a ? a.ageText : p.allowance_freshness)], ['Model', x.model], ['Attempts', v.attempts.map(function (t) { return t.attempt_id; }).join(', ') || 'none in range']];
-      return { name: v.name, settingsId: v.settingsId, account: a, windows: v.windows, binding: v.binding, plan: (a && a.plan ? a.plan : p.plan) + (a ? ' · ' + a.nickname : ''),
-        requests: v.costs.requests || p.requests, tokens: (v.costs.input + v.costs.output) || p.tokens, amounts: amounts, facts: facts,
+      var v = D.planView(id); if (!v || !planInScope(v)) return null;
+      var p = v.legacy, a = v.account, x = PLAN_EXTRA[v.legacyId] || null, rp = v.provider, multi = !!(rp && rp.accounts.length > 1);
+      var amounts = a && !multi ? a.amounts.slice() : [];
+      var facts, foot;
+      if (p) {
+        var pace = C.pace(p.pace);
+        facts = (multi ? [['Requests', F.num(v.costs.requests || p.requests) + ' in range'], ['Tokens', F.tok((v.costs.input + v.costs.output) || p.tokens) + ' in range']] : [])
+          .concat([['Billing', p.billing_basis], ['Entitlement', p.entitlement_class], ['Settlement', p.settlement_status], ['Monthly share', x.share + '%'], ['Pace', pace + ' (relative)'],
+            ['Cache read', p.cache + '%'], ['Authority', p.allowance_authority + ' · ' + (a ? a.ageText : p.allowance_freshness)], ['Model', x.model], ['Attempts', v.attempts.map(function (t) { return t.attempt_id; }).join(', ') || 'none in range']]);
         /* the foot names the source of the % the card shows (Gemini API: a PM estimate of spend over the budget) */
-        foot: esc(pace) + ' · ' + esc(v.binding && v.binding.truth === 'pm_estimate' ? 'PM estimate · invoiced spend over the Settings budget' : p.allowance_authority), footGlyph: 'info' };
+        foot = esc(pace) + ' · ' + esc(v.binding && v.binding.truth === 'pm_estimate' ? 'PM estimate · invoiced spend over the Settings budget' : p.allowance_authority);
+      } else {
+        facts = [['Billing', GROUP_WORD[rp.group] || rp.group], ['Auth', a ? a.auth : '-'], ['Host', a ? a.host : '-'], ['Route role', a ? a.routeRole : '-']]
+          .filter(function (f) { return f[1]; });
+        foot = a ? esc(a.fresh.source) + ' · ' + esc(C.sampledText(a.sampledAt)) : 'no reading yet';
+      }
+      return { name: v.name, settingsId: v.settingsId, provider: rp, account: a, windows: v.windows, binding: v.binding,
+        /* a single account's plan and its nickname (a nickname that only repeats the provider's name is left out: "Muse") */
+        plan: multi ? '' : (a && a.plan ? a.plan : v.plan) + (a && !C.nickRepeats(a.nickname, v.name) ? ' · ' + a.nickname : ''),
+        requests: p && !multi ? v.costs.requests || p.requests : null, tokens: p && !multi ? (v.costs.input + v.costs.output) || p.tokens : null, amounts: amounts, facts: facts,
+        foot: foot, footGlyph: 'info' };
     };
   }
   function planMeta(id) {
     return function () {
       var v = D.planView(id); if (!v) return '';
-      var a = v.account;
-      return (a ? a.nickname + ' · ' + (a.plan || v.plan) : v.plan) + ' · ' + (v.windows.length ? v.windows.map(function (w) { return w.short.toLowerCase(); }).join(' + ') : 'no plan windows');
+      var a = v.account, rp = v.provider, wins = (v.windowDefs || []).map(function (w) { return w.short.toLowerCase(); }).join(' + ') || 'no plan windows';
+      if (rp && rp.accounts.length > 1) return rp.accounts.length + ' accounts · ' + (a ? a.nickname + ' active' : 'none active') + ' · ' + wins;
+      return (a ? a.nickname + ' · ' + (a.plan || v.plan) : v.plan) + ' · ' + wins;
     };
   }
+  /* Details: every account and every window with its reading, reset truth, source and sampled time (AAC: provenance per
+     account and window), then the provider's plan facts and identifiers */
   function planInspect(id) {
     return function () {
       var v = D.planView(id); if (!v) return null;
-      var p = v.legacy, a = v.account;
-      var row = function (k, val) { return [k, esc(val == null ? '-' : val)]; };
-      return { kind: 'provider', title: v.name, subtitle: (a ? a.nickname + ' · ' : '') + p.plan, sections: [
-        { title: 'Windows', rows: v.windows.map(function (w) { return row(w.label, w.pct === null ? PMU.roster.vsWord(w) : C.fmt(w.pct, 'pct') + ' used' + (w.amount ? ' · ' + w.amount : '') + ' · ' + F.reset(w).text + ' · ' + PMU.fmt.truth(w.truth) + (w.est ? ' · estimated' : '')); }) },
-        { title: 'Plan', rows: [row('Plan tier', p.plan), row('Requests', String(p.requests)), row('Tokens', F.tok(p.tokens) + ' (' + F.tok(p.input) + ' in · ' + F.tok(p.output) + ' out)'), row('Billing basis', p.billing_basis),
+      var p = v.legacy, rp = v.provider, x = PLAN_EXTRA[v.legacyId] || null;
+      var row = function (k, val) { return [k, esc(val == null || val === '' ? '-' : val)]; };
+      var winRow = function (a, w) {
+        return row(w.label, (w.pct === null ? PMU.roster.vsWord(w) : C.fmt(w.pct, 'pct') + ' used · ' + C.fmt(Math.max(0, 100 - w.pct), 'pct') + ' left' + (w.amount ? ' · ' + w.amount : '') + ' · ' + F.reset(w).text + ' · ' + PMU.fmt.truth(w.truth) + (w.est ? ' · estimated' : '')) +
+          ' · ' + (C.winSource(w, a.ageText) || 'source not recorded'));
+      };
+      var sections = (rp ? rp.accounts : []).map(function (a) {
+        return { title: a.nickname + (a.effective ? ' · Active' + (a.override ? ' (override)' : '') : ' · ' + a.stateWord), rows: [row('Identity', a.identity), row('Plan', a.planLine || a.plan), row('Reading', (a.fresh ? a.fresh.source : '') + ' · ' + C.sampledText(a.sampledAt) + (a.fresh && a.fresh.stale ? ' (cached)' : ''))]
+          .concat(a.windows.length ? a.windows.map(function (w) { return winRow(a, w); }) : [row('Windows', a.noWindowsWord || 'This provider reports no plan windows')])
+          .concat(a.amounts.map(function (m2) { return row(m2.label, m2.vs && m2.vs !== 'ok' ? m2.word : (m2.value || '') + (m2.suffix ? ' ' + m2.suffix : '')); })) };
+      });
+      if (p) {
+        sections.push({ title: 'Plan', rows: [row('Plan tier', p.plan), row('Requests', String(p.requests)), row('Tokens', F.tok(p.tokens) + ' (' + F.tok(p.input) + ' in · ' + F.tok(p.output) + ' out)'), row('Billing basis', p.billing_basis),
           row('Entitlement', p.entitlement_class), row('Settlement', p.settlement_status), row('Pace', C.pace(p.pace) + ' (relative to the 24-hour norm)'), row('Cache read share', p.cache + '%'), row('Allowance authority', p.allowance_authority + ' · ' + p.allowance_freshness),
-          row('Monthly share', PLAN_EXTRA[id].share + '%'), row('Model', PLAN_EXTRA[id].model), row('Counting basis', JSON.stringify((D.series('countingBasis') || {})[id] || {}).replace(/[{}"]/g, '').replace(/,/g, ', '))] },
-        { title: 'Identifiers', rows: [row('Provider', p.provider_id), row('Installation', p.installation_id), row('Account IDs', p.account_ids.join(', ')), row('Connection IDs', p.connection_ids.join(', ')),
+          row('Monthly share', x.share + '%'), row('Model', x.model), row('Counting basis', JSON.stringify((D.series('countingBasis') || {})[v.legacyId] || {}).replace(/[{}"]/g, '').replace(/,/g, ', '))] });
+        sections.push({ title: 'Identifiers', rows: [row('Provider', p.provider_id), row('Installation', p.installation_id), row('Account IDs', p.account_ids.join(', ')), row('Connection IDs', p.connection_ids.join(', ')),
           row('Product / model', p.product_id + ' · ' + p.model_id), row('Requested route', p.requested_route_id), row('Effective route', p.effective_route_id),
-          row('Attempt IDs', v.attempts.map(function (t) { return t.attempt_id; }).join(', ') || 'none in selected window'), row('Attempts / tokens', v.costs.attempts + ' · ' + F.tok(v.costs.input + v.costs.output))] }
-      ], raw: { provider: p.provider_id, windows: v.windows.map(function (w) { return { key: w.key, pct: w.pct, reset_at: w.resetAt, truth: w.truth }; }) } };
+          row('Attempt IDs', v.attempts.map(function (t) { return t.attempt_id; }).join(', ') || 'none in selected window'), row('Attempts / tokens', v.costs.attempts + ' · ' + F.tok(v.costs.input + v.costs.output))] });
+      } else if (rp) sections.push({ title: 'Plan', rows: [row('Billing', GROUP_WORD[rp.group] || rp.group), row('Product', rp.product), row('Vendor', rp.vendorName), row('Status', rp.statusWord)] });
+      return { kind: 'provider', title: v.name, subtitle: rp && rp.accounts.length > 1 ? rp.accounts.length + ' accounts · ' + (v.account ? v.account.nickname + ' active' : 'none active') : (v.account ? v.account.nickname + ' · ' : '') + (p ? p.plan : v.plan),
+        sections: sections, raw: { provider: v.settingsId, accounts: (rp ? rp.accounts : []).map(function (a) { return { account: a.id, effective: a.effective, state: a.state,
+          windows: a.windows.map(function (w) { return { key: w.key, pct: w.pct, reset_at: w.resetAt, reset_pending: !!w.resetPending, truth: w.truth, sampled_at: w.sampledAt, source: w.source }; }) }; }) } };
     };
   }
-  ['claude', 'codex', 'qwen', 'gemini', 'kimi', 'copilot'].forEach(function (id) {
-    def('plan-' + id, 'plans', { title: function () { return legName(id); }, mark: PMU.roster.legacyProvider(id), prov: PMU.roster.legacyProvider(id), meta: planMeta(id), model: planModel(id), inspect: planInspect(id) });
+  /* a single account's state word at the head's right where it fits beside the title (the Accounts plate's rule) */
+  function planAside(id) {
+    return function (ctx) {
+      var v = D.planView(id), rp = v && v.provider; if (!rp || rp.accounts.length !== 1) return '';
+      var a = rp.accounts[0];
+      if (!ctx || !ctx.tier || !stateFitsAside(ctx, rp.name, a.stateWord)) return '';
+      return { text: a.stateWord, tone: a.stateTone === 'muted' ? null : a.stateTone };
+    };
+  }
+  PLAN_IDS.forEach(function (id) {
+    var sid = PMU.roster.legacyProvider(id);
+    def('plan-' + id, 'plans', { title: function () { var r = PMU.roster.provider(sid); return r ? r.name : legName(id); }, mark: sid, prov: sid, meta: planMeta(id), model: planModel(id), inspect: planInspect(id), aside: planAside(id) });
   });
 
   def('context-now', 'overview', { meta: function () { return 'current thread · app-level view'; }, model: function () { return C.contextModel(); }, inspect: function () { return C.contextInspect(); } });
@@ -252,8 +293,34 @@
   } });
 
   /* ================================================================== Plans & limits */
-  /* the Plans & limits hero (WOW-TASKS N-2): every active account's windows and their next resets on one 7-day line */
-  def('plans-timeline', 'plans', { kind: 'windows', meta: function () { return 'next 7 days from now · the active account of each provider · local time'; } });
+  /* the windows timeline's lanes (lane d-plans, Jared item 4: every account, "never only the active one"): one lane per
+     account of every provider with plan windows, grouped by provider in Settings order, accounts in routing order. A lane
+     with no reading says why ("Signed out · no reading", "Quota not exposed") instead of drawing nothing, and a window whose
+     reset passed without a new reading is a pending marker at NOW ("5H pending"), never 0 % and never its old %. Providers
+     without plan windows (Google Antigravity, Z.AI Coding Plan, Cursor) are named on one line under the lanes. */
+  C.windowLanes = function () {
+    var now = PMU.clock.now(), lanes = [], none = [];
+    PMU.roster.read().providers.forEach(function (p) {
+      if (!p.accounts.length || !D.settingsInScope(p.id)) return;
+      if (!p.windows.length) { none.push(p); return; }
+      p.accounts.forEach(function (a, i) {
+        var ms = a.windows.filter(function (w) { return w.pct !== null; }).map(function (w) {
+          var known = w.resetAt && w.truth !== 'unknown' && w.resetAt > now;
+          return { w: w, at: known ? w.resetAt : null };
+        });
+        var pend = a.windows.filter(function (w) { return w.resetPending; });
+        var hidden = a.windows.length && a.windows.every(function (w) { return w.pct === null && (w.vs === 'not_exposed' || w.vs === 'disabled'); });
+        var note = ms.length || pend.length ? '' : hidden ? 'Quota not exposed' : a.stateWord + ' · no reading';
+        lanes.push({ p: p, a: a, ms: ms, pend: pend, note: note, noteVs: hidden ? 'not_exposed' : 'unknown', first: i === 0, multi: p.accounts.length > 1 });
+      });
+    });
+    return { lanes: lanes, none: none };
+  };
+  /* the Plans & limits hero (WOW-TASKS N-2): every account's windows and their next resets on one 7-day line */
+  def('plans-timeline', 'plans', { kind: 'windows', meta: function () {
+    var L = C.windowLanes(), n = L.lanes.length;
+    return 'next 7 days from now · ' + C.plural(n, 'account') + ' · local time';
+  } });
   def('reset-map', 'plans', { kind: 'agenda', horizon: '7d', meta: function (ctx) { return C.agendaMeta(ctx, '7d'); }, config: [C.horizonCfg('7d')] });
   def('quota-history', 'plans', { kind: 'qhist', meta: function () { return C.qhistMeta(); }, model: function () { return D.quotaRows(); } });
   def('plan-settlement', 'plans', { meta: rangeMeta('billing and settlement are separate axes'), model: function () {

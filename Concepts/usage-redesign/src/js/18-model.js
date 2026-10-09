@@ -38,10 +38,17 @@
     return { auto: auto !== false && auto !== 'off' && auto !== 'false', switchLeft: isFinite(sw) && sw > 0 ? sw : 10, warnLeft: isFinite(warn) && warn > 0 ? warn : 20,
       available: PMU.settings.available() };
   }
-  /* calm | warn | crit | exhausted | over | null (null = missing: no bar) */
-  function tone(pctUsed) {
+  /* lane d-plans (2026-10-09): a provider's own switch and warn levels (lane d-switch makes thresholds() take a provider
+     id; until then, or for a provider without its own values, the shared levels apply) */
+  function thFor(providerId) {
+    var t = null;
+    if (providerId) { try { t = thresholds(providerId); } catch (error) { t = null; } }
+    return t || thresholds();
+  }
+  /* calm | warn | crit | exhausted | over | null (null = missing: no bar); providerId: that provider's levels */
+  function tone(pctUsed, providerId) {
     if (pctUsed === null || pctUsed === undefined || !isFinite(pctUsed)) return null;
-    var th = thresholds(), left = 100 - pctUsed;
+    var th = thFor(providerId), left = 100 - pctUsed;
     if (pctUsed > 100) return 'over';
     if (left <= 0) return 'exhausted';
     if (left <= th.switchLeft) return 'crit';
@@ -59,26 +66,48 @@
     var s = String(label || key).replace(/ window$/i, '');
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
-  function windowView(key, label, fact, governed, rolls) {
+  /* src: {pid, sampledAt (the account's reading time), source, readAt (a newer reading of this window: the demo hour's
+     poll after a reset)}. Reset truth (lane d-plans, from AAC's pendingReset): a window whose reset time has passed while
+     its reading predates that reset has no current reading: pct is null, vs 'reset_pending', and it reads "Reset at
+     <time> · new reading pending" (never 0 %, never the old %; the old reading stays history only, in quota history) */
+  function windowView(key, label, fact, governed, rolls, src) {
     fact = fact || { vs: 'unknown' };
+    src = src || {};
     var pct = num(fact.pct);
-    var resetAt = num(fact.reset_in_min) !== null ? loadedAt + fact.reset_in_min * MIN : fact.reset_rule === 'next_month' ? nextMonthStart() : null;
+    var resetAt = num(fact.reset_in_min) !== null ? loadedAt + fact.reset_in_min * MIN : num(fact.reset_passed_min) !== null ? loadedAt - fact.reset_passed_min * MIN
+      : fact.reset_rule === 'next_month' ? nextMonthStart() : null;
     var winMin = fact.win_min || WINDOW_MIN[key] || null;
     /* a window whose reset passed during the demo hour (8.6) starts its next window: the reset moves on by whole windows */
     if (rolls > 0 && resetAt !== null && winMin) resetAt += rolls * winMin * MIN;
     var truth = fact.truth || 'unknown';
-    var pace = resetAt && winMin ? Math.max(0, Math.min(1, 1 - (resetAt - clockNow()) / (winMin * MIN))) : null;
-    var vsState = fact.vs && fact.vs !== 'ok' && fact.vs !== 'estimated' ? fact.vs : pct === null ? 'unknown' : (pct === 0 && fact.zero ? 'zero' : 'ok');
-    return { key: key, label: label, short: shortLabel(key, label), pct: pct, left: pct === null ? null : Math.max(0, 100 - pct), used: num(fact.used), limit: num(fact.limit),
-      unit: fact.unit || '', amount: amountText(fact), resetAt: resetAt, truth: truth, conf: fact.conf || '', vs: vsState, est: fact.vs === 'estimated',
-      note: fact.note || '', tone: tone(pct), pace: pace, pacePts: num(fact.pace_pts), governed: !!governed, binding: false };
+    /* when this window was read: its own age (a fact may carry age_s), a newer demo reading, else the account's reading */
+    var sampledAt = num(src.readAt) !== null ? src.readAt : num(fact.age_s) !== null ? loadedAt - fact.age_s * 1000 : num(src.sampledAt);
+    var lastPct = pct === null ? num(fact.last_pct) : pct;
+    var passed = lastPct !== null && resetAt !== null && truth !== 'unknown' && (!fact.vs || fact.vs === 'ok' || fact.vs === 'estimated') && resetAt <= clockNow() && (sampledAt === null || sampledAt < resetAt);
+    if (passed) pct = null;
+    var pace = resetAt && winMin && !passed ? Math.max(0, Math.min(1, 1 - (resetAt - clockNow()) / (winMin * MIN))) : null;
+    var vsState = passed ? 'reset_pending' : fact.vs && fact.vs !== 'ok' && fact.vs !== 'estimated' ? fact.vs : pct === null ? 'unknown' : (pct === 0 && fact.zero ? 'zero' : 'ok');
+    return { key: key, label: label, short: shortLabel(key, label), pct: pct, left: pct === null ? null : Math.max(0, 100 - pct), used: passed ? null : num(fact.used), limit: num(fact.limit),
+      unit: fact.unit || '', amount: passed ? '' : amountText(fact), resetAt: resetAt, truth: truth, conf: fact.conf || '', vs: vsState, est: fact.vs === 'estimated',
+      note: fact.note || '', tone: tone(pct, src.pid), pace: pace, pacePts: passed ? null : num(fact.pace_pts), governed: !!governed, binding: false,
+      resetPending: passed, lastPct: passed ? lastPct : null, sampledAt: sampledAt, source: src.source || '', providerId: src.pid || '' };
+  }
+  /* "Reset at 13:50 · new reading pending" (a reset earlier today), "Reset at Tue 13:50 · ..." (this week), "Reset at Oct 2 · ..." */
+  function resetPendingWord(w) {
+    var dt = clockNow() - w.resetAt;
+    var when = dt < DAY && new Date(w.resetAt).getDate() === new Date(clockNow()).getDate() ? PMU.fmt.clock(w.resetAt) : dt < 6 * DAY ? PMU.fmt.day(w.resetAt) + ' ' + PMU.fmt.clock(w.resetAt) : PMU.fmt.date(w.resetAt);
+    return 'Reset at ' + when + ' · new reading pending';
   }
   function vsWord(w) {
+    if (w.vs === 'reset_pending' && w.resetAt !== null) return resetPendingWord(w);
     if (w.vs === 'not_exposed') return w.note && /limit/.test(w.note) ? 'Limit not exposed' : 'Quota not exposed';
     if (w.vs === 'disabled') return 'Disabled';
     if (w.vs === 'unknown') return 'Usage unknown';
     return (PMU.vs.STATES[w.vs] || {}).word || 'Usage unknown';
   }
+
+  /* the meters draw a missing reading with PMU.vs: a passed reset waiting for its next reading has its own state */
+  if (PMU.vs && PMU.vs.STATES && !PMU.vs.STATES.reset_pending) PMU.vs.STATES.reset_pending = { glyph: 'refresh', word: 'New reading pending', tone: 'neutral' };
 
   /* ---------------------------------------------------------------- the roster */
   function legacyFor(id) { return id ? DATA.accounts.filter(function (a) { return a.id === id; })[0] || null : null; }
@@ -145,7 +174,8 @@
             fact = Object.assign({}, fact, { pct: Math.max(0, Math.round((fact.pct + dw) * 10) / 10) });
             if (num(fact.used) !== null && num(fact.limit) !== null) fact.used = Math.round(fact.used + dw / 100 * fact.limit);
           }
-          return windowView(w.key, w.label, fact, governed, ov('roll:' + key + '/' + w.key));
+          return windowView(w.key, w.label, fact, governed, ov('roll:' + key + '/' + w.key),
+            { pid: p.id, sampledAt: f && f.fresh && num(f.fresh.age_s) !== null ? loadedAt - f.fresh.age_s * 1000 : null, source: f && f.fresh ? f.fresh.source || '' : '', readAt: OV() ? OV()['read:' + key + '/' + w.key] : null });
         });
         var known = wins.filter(function (w) { return w.pct !== null; });
         var binding = known.slice().sort(function (x, y) { return (x.left - y.left) || (WINDOW_ORDER.indexOf(x.key) - WINDOW_ORDER.indexOf(y.key)); })[0] || null;
@@ -185,6 +215,7 @@
           effective: effective, override: isOverride && effective, plan: f ? f.plan : '', planLine: f ? f.plan_line : '', host: f ? f.host : '', auth: f ? f.auth : (a.method || ''),
           method: a.method || '', health: a.health || '', fresh: fresh,
           ageText: fresh.ageS === null ? 'no reading yet' : (fresh.stale ? 'cached ' + PMU.fmt.age(fresh.ageS) : PMU.fmt.age(fresh.ageS)),
+          sampledAt: fresh.ageS === null ? null : loadedAt - fresh.ageS * 1000,
           windows: wins, binding: binding, amounts: amounts, noWindowsWord: noWindowsWord, extra: (f && f.extra) || [], credits: f && f.credits, spend: f && f.spend, cooldown: cooldown,
           failure: f && f.failure, routeRole: f ? f.route_role : '', legacy: f && f.legacy_id ? legacyFor(f.legacy_id) : null, legacyId: f ? f.legacy_id : null,
           supportsManual: supports, eligible: eligible, history: (f && f.history) || {}, hasFacts: !!f, roles: (a.props && a.props['ai.accounts.account-roles']) || [],
@@ -585,15 +616,20 @@
     return { groups: groups, noWindows: noWindows, points: 42, bucketMs: bucketMs, now: Math.floor(clockNow() / 60000) * 60000 };
   }
 
-  /* a plan card (Plans & limits, Overview): one of the six legacy providers, with the windows of the provider's effective
-     Settings account so both rooms agree (R-PLAN-03/04) */
-  function planView(legacyId) {
-    var p = DATA.providers.filter(function (x) { return x.id === legacyId; })[0]; if (!p) return null;
-    var sid = LEGACY_PROVIDER[legacyId] || legacyId, rp = PMU.roster.provider(sid), eff = rp ? rp.effective : null;
-    var c = costs().byProvider[legacyId] || { attempts: 0, requests: 0, settled: 0, plan: 0, input: 0, output: 0, pending: 0 };
-    var list = attemptsNow().filter(function (a) { return a.provider_id === legacyId; });
-    return { legacy: p, settingsId: sid, provider: rp, account: eff, windows: eff ? eff.windows : [], binding: eff ? eff.binding : null, costs: c, attempts: list,
-      name: rp ? rp.name : p.name, plan: p.plan };
+  /* a plan plate (Plans & limits): one Settings provider with EVERY account (lane d-plans, Jared item 4: "doesn't have
+     all the multiple accounts from the same provider"; MA-049: never one generic account label for a provider). id is a
+     legacy id (claude, codex, ...: the old card's facts come along) or a Settings provider id (muse, antigravity, ...).
+     account / windows / binding stay the effective account's, so the Overview and the pressure rows agree (R-PLAN-03/04) */
+  function planView(id) {
+    var legacyId = LEGACY_PROVIDER[id] && id !== 'opencode' ? id : SETTINGS_LEGACY[id] || null;
+    var p = legacyId ? DATA.providers.filter(function (x) { return x.id === legacyId; })[0] || null : null;
+    var sid = LEGACY_PROVIDER[id] || id, rp = PMU.roster.provider(sid), eff = rp ? rp.effective : null;
+    if (!p && !rp) return null;
+    var c = (legacyId && costs().byProvider[legacyId]) || { attempts: 0, requests: 0, settled: 0, plan: 0, input: 0, output: 0, pending: 0 };
+    var list = legacyId ? attemptsNow().filter(function (a) { return a.provider_id === legacyId; }) : [];
+    return { legacy: p, legacyId: legacyId, settingsId: sid, provider: rp, account: eff, accounts: rp ? rp.accounts : [], windowDefs: rp ? rp.windows : [],
+      windows: eff ? eff.windows : [], binding: eff ? eff.binding : null, costs: c, attempts: list,
+      name: rp ? rp.name : p.name, plan: p ? p.plan : eff ? eff.plan : '' };
   }
 
   PMU.data = {
@@ -776,15 +812,22 @@
             if (!lead.length) lead.push(k);
           });
         });
-        /* 3 resets the demo clock passed: the window starts again (rolling windows with a known length only) */
+        /* 3 resets the demo clock passed (reset truth, lane d-plans): the window first reads "Reset at <time> · new reading
+           pending" (no reading: never 0 %, never the old %); the account's next poll, two steps (4 demo minutes) later,
+           brings the new window's first reading (0 % used, its reset moved on by whole windows). An account whose readings
+           are cached (stale) is not polled, so its window stays pending. Rolling windows with a known length only. */
         inval();
         PMU.roster.read().accounts.forEach(function (a) {
           var reset = false;
           a.windows.forEach(function (w) {
-            if (w.pct === null || w.resetAt === null || w.truth === 'unknown' || w.resetAt > now || !(WINDOW_MIN[w.key])) return;
-            o['roll:' + a.key + '/' + w.key] = (o['roll:' + a.key + '/' + w.key] || 0) + 1;
-            o['win:' + a.key + '/' + w.key] = Math.round(((o['win:' + a.key + '/' + w.key] || 0) - w.pct) * 1e6) / 1e6;
-            changed['win:' + a.key + '/' + w.key] = true; reset = true;
+            if (!w.resetPending || w.lastPct === null || !(WINDOW_MIN[w.key])) return;
+            var k = a.key + '/' + w.key;
+            if (o['pend:' + k] == null) { o['pend:' + k] = step; changed['win:' + k] = true; if (!lead.length) lead.push('win:' + k); return; }
+            if (a.fresh.stale || step - o['pend:' + k] < 2) return;
+            o['roll:' + k] = (o['roll:' + k] || 0) + 1;
+            o['win:' + k] = Math.round(((o['win:' + k] || 0) - w.lastPct) * 1e6) / 1e6;
+            o['read:' + k] = now; delete o['pend:' + k];
+            changed['win:' + k] = true; reset = true;
           });
           if (reset && a.state === 'exhausted' && !a.windows.some(function (w) { return w.pct !== null && w.pct >= 100 && !(w.resetAt !== null && w.resetAt <= now); })) o['state:' + a.key] = 'standby';
         });

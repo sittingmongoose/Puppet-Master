@@ -36,25 +36,153 @@
   }
   C.fitBlocks = fitBlocks;
 
-  /* one meter spec for a WindowView (A1 6) */
+  /* "sampled 20s ago" from a reading time (the demo clock: a reading not polled again ages while the page is open) */
+  C.sampledText = function (at) { return at === null || at === undefined || !isFinite(at) ? 'no reading yet' : 'sampled ' + PMU.fmt.age(Math.max(0, (PMU.clock.now() - at) / 1000)); };
+  /* a window's provenance in one line (AAC: source and sampled time per account and window, in the hover tag and Details,
+     never as body clutter): "provider reported · status line rate_limits · sampled 20s ago" */
+  C.winSource = function (w, age) {
+    var sampled = w.sampledAt !== null && w.sampledAt !== undefined ? C.sampledText(w.sampledAt) : age ? 'sampled ' + String(age).replace(/^cached /, '') : '';
+    return [w.truth && w.truth !== 'unknown' ? PMU.fmt.truth(w.truth) : '', w.source || '', sampled].filter(Boolean).join(' · ');
+  };
+  /* one meter spec for a WindowView (A1 6). The notch and the tone ramp are the provider's own switch and warn levels
+     (lane d-plans: thresholds(providerId), lane d-switch's per-provider policy; the shared levels where it has none) */
   C.meterSpec = function (w, opts) {
     opts = opts || {};
-    var th = PMU.roster.thresholds();
-    var rl = PMU.fmt.resetLine(w);
+    var pid = opts.prov || w.providerId || null, th = (pid && PMU.roster.thresholds(pid)) || PMU.roster.thresholds();
+    var rl = PMU.fmt.resetLine(w), src = C.winSource(w, opts.age);
+    var pace = w.pacePts !== null && w.pacePts !== undefined ? (w.pacePts > 0 ? '+' : '') + w.pacePts + ' pts vs norm' : '';
+    var label = (opts.hoverName ? opts.hoverName + ' · ' : '') + w.label;
+    /* reset truth: no current reading after a passed reset says so, with when it was last read (the old % never shows) */
+    var hover = w.resetPending ? { label: label, detail: PMU.roster.vsWord(w) + ' · last reading ' + (w.sampledAt !== null && w.sampledAt !== undefined ? PMU.fmt.age(Math.max(0, (PMU.clock.now() - w.sampledAt) / 1000)) : 'time not recorded') +
+      (w.source ? ' (' + w.source + ')' : '') + ', before the reset' } : { label: label };
     return { label: opts.label || w.short, pct: w.pct, vs: w.pct === null ? (w.vs === 'ok' ? 'unknown' : w.vs) : undefined, vsWord: w.pct === null ? PMU.roster.vsWord(w) : undefined,
       tone: w.tone, size: opts.size || 'c', window: w.key, binding: !!w.binding, estimated: !!w.est, dimmed: !!opts.stale, stale: !!opts.stale,
       notch: w.governed && w.pct !== null ? { at: 100 - th.switchLeft, faint: !opts.effective, off: !th.auto } : null,
       resetText: w.pct === null ? '' : rl.text, resetSoon: rl.soon, amount: opts.noAmount ? '' : (w.amount || (w.note && w.pct !== null ? w.note : '')), prov: opts.prov,
-      source: (w.truth ? PMU.fmt.truth(w.truth) + (opts.age ? ' · ' + opts.age : '') : '') + (w.pacePts !== null && w.pacePts !== undefined ? ' · ' + (w.pacePts > 0 ? '+' : '') + w.pacePts + ' pts vs norm' : ''), thresholds: { warn: 100 - th.warnLeft, switch: 100 - th.switchLeft },
-      hover: { label: (opts.hoverName ? opts.hoverName + ' · ' : '') + w.label } };
+      source: [src, pace].filter(Boolean).join(' · '), thresholds: { warn: 100 - th.warnLeft, switch: 100 - th.switchLeft },
+      hover: hover };
   };
   var METER_H = { c: 58, i: 58, k: 44 };   /* measured k: 44 (CONTENT-3, VM 1920 and 1440) */
 
+  /* ================================================================== limit, two or more accounts: the account rows plate
+     (lane d-plans, Jared item 4: "The plans and limits page doesn't have all the multiple accounts from the same provider.
+     For example the 3 codex accounts."; canon MA-049: never one generic account label for a provider). AAC's Home rule
+     (research R3 2): one row per account, every window a meter cell with its reset, an Active mark, the account column as
+     wide as the widest identity. Plans & limits shows limits, not actions: the effective account is said by its check
+     glyph, its 680 name, the "Active" word leading its meta line and the room's active light (the Accounts room's row
+     grammar, so both rooms read alike); a row opens that account's Details. Source and sampled time live in the hover
+     tags (identity and every meter) and in the plate's Details, never as body clutter; a cached account says "cached".
+     Content grows by rows (WS-017 presets): a short plate shows its first accounts and folds the rest into "N more
+     accounts" (hover lists each with its windows; Details lists everything); the provider's plan facts fill what the rows
+     leave, the rest counted in the head. Two layouts by measured width: columns (ACCOUNT | one column per window) where
+     every window fits beside the identity, else stacked (each account a block: identity over its window meters), so
+     every window of every account shows at every width (the binding-window fallback is gone). */
+  var PGAP = 12, PWIN = 88, PIDENT = 96;
+  function stateHtmlP(a) { return '<span class="pmu-acstate" data-state="' + a.shownState + '" data-tone="' + a.stateTone + '"><b>' + esc(a.stateWord) + '</b></span>'; }
+  /* the meta line: the state word (Active first, in its tone), the plan; a cached reading says so with its age */
+  function metaText(a) { return [a.stateWord, a.plan, a.fresh && a.fresh.stale ? 'M ' + a.ageText : ''].filter(Boolean).join(' · '); }
+  function metaHtml(a) {
+    return [stateHtmlP(a), a.plan ? esc(a.plan) : '', a.fresh && a.fresh.stale ? '<span class="pmu-stale">' + C.glyph('clockCircle') + esc(a.ageText) + '</span>' : ''].filter(Boolean).join('<i class="pmu-dot"> · </i>');
+  }
+  /* who, how fresh and from where: the identity's hover tag (the nickname is never cut without this path, and Details) */
+  function identHover(p, a) {
+    return C.hover(a.nickname + (a.effective ? ' · Active' + (a.override ? ' (override)' : '') : ''), [p.name, a.identity, a.planLine || a.plan, a.stateWord, a.host, (a.fresh ? a.fresh.source : '') + ' · ' + C.sampledText(a.sampledAt)]
+      .filter(Boolean).join(' · ') + ' · select for Details');
+  }
+  function allHiddenP(a) { return a.windows.length > 0 && a.windows.every(function (w) { return w.pct === null && (w.vs === 'not_exposed' || w.vs === 'disabled'); }); }
+  function foldLine(a) {
+    return a.nickname + ' · ' + a.stateWord + ' · ' + (a.windows.length ? a.windows.map(function (w) { return w.short + ' ' + (w.pct === null ? PMU.roster.vsWord(w) : C.fmt(w.pct, 'pct') + ' used · ' + PMU.fmt.resetLine(w).text); }).join(' · ') : (a.noWindowsWord || 'no plan windows'));
+  }
+  C.planFoldLine = foldLine;
+  function rowsPlate(body, ctx, m) {
+    var p = m.provider, accs = p.accounts, n = p.windows.length, bw = ctx.tier.bw, bh = ctx.tier.bh;
+    var look = PMU.theme.look(), k = look.nier || look.family === 'retro' ? 1.12 : look.family === 'glass' ? 1.04 : 1;
+    var tw = function (s, px, wt) { return C.wrapW(s, px, wt) * k; };
+    /* the identity column: the widest nickname, state word or plan (AAC: sized to the widest identity; the meta line wraps
+       at its middle dot), never under 96 px and never so wide that a window column falls under 92 px. Columns only where
+       the identity keeps its longest word whole ("sittingmongoose" was broken inside the word at 138 px) */
+    var wantId = Math.ceil(24 + Math.max.apply(null, accs.map(function (a) { return Math.max(tw(a.nickname, 13.5, 600), tw(a.stateWord, 12, 600), tw(a.plan || '', 12)); })));
+    var longWord = Math.ceil(24 + Math.max.apply(null, accs.map(function (a) { return Math.max.apply(null, String(a.nickname).split(/\s+/).map(function (x) { return tw(x, 13.5, 600); }).concat(
+      String(a.stateWord + ' ' + (a.plan || '')).split(/\s+/).map(function (x) { return tw(x, 12, 600); }))); })));
+    var cols = n > 0 && bw - n * (PWIN + PGAP) >= Math.max(PIDENT, longWord);
+    var identW = cols ? Math.max(PIDENT, longWord, Math.min(wantId, 200, bw - n * (PWIN + PGAP))) : bw;
+    var winW = cols ? (bw - identW - n * PGAP) / n : 0;
+    /* stacked: the window meters of an account side by side where they fit (at least 88 px each), else in rows */
+    var perLine = cols ? n : Math.max(1, Math.min(Math.max(1, n), Math.floor((bw + 10) / (88 + 10))));
+    var cellW = cols ? winW : (bw - 10 * (perLine - 1)) / perLine;
+    var textW = (cols ? identW : bw) - 24;
+    var identH = function (a) {
+      var am = a.amounts.length && n && !allHiddenP(a) ? 16 * C.wrapLines(a.amounts[0].label + ' ' + (a.amounts[0].value || a.amounts[0].word) + ' ' + (a.amounts[0].suffix || ''), textW, 12) : 0;
+      return 18 * C.wrapLines(a.nickname, textW, 13.5, 600) + 16 * C.wrapLines(metaText(a), textW, 12) + am;
+    };
+    /* one window cell: the value line (17), the track (14), the reset line (14 a line, wrapped in its column) */
+    var cellH = function (a, w) {
+      if (w.pct === null) return 6 + 17 * Math.min(3, C.wrapLines(PMU.roster.vsWord(w), cellW - 20, 12.5, 520));
+      return 17 + 14 + 4 + 14 * Math.min(3, C.wrapLines(PMU.fmt.resetLine(w).text, cellW, 12)) + (w.amount ? 14 : 0);
+    };
+    var rowH = function (a) {
+      if (!n || allHiddenP(a)) return Math.max(56, Math.max(identH(a), 22 * Math.min(3, a.amounts.length + 1)) + 18);
+      if (cols) return Math.max(60, Math.ceil(Math.max(identH(a), Math.max.apply(null, a.windows.map(function (w) { return cellH(a, w); }))) + 18));
+      var lines = Math.ceil(n / perLine), mh = 0;
+      for (var li = 0; li < lines; li++) mh += 6 + Math.max.apply(null, a.windows.slice(li * perLine, li * perLine + perLine).map(function (w) { return Math.max(42, cellH(a, w)); }));
+      return Math.ceil(identH(a) + mh + 16);
+    };
+    var bandH = cols ? 26 : 0, MORE = 26;
+    var hs = accs.map(rowH), used = bandH, shownN = 0;
+    for (var i = 0; i < accs.length; i++) { if (used + hs[i] + (i < accs.length - 1 ? 0 : 0) <= bh + 4) { used += hs[i]; shownN++; } else break; }
+    if (shownN < accs.length) { while (shownN > 1 && used + MORE > bh + 4) { shownN--; used -= hs[shownN]; } used += MORE; }
+    shownN = Math.max(1, shownN);
+    var shown = accs.slice(0, shownN), folded = accs.slice(shownN);
+    var tmpl = cols ? identW + 'px ' + p.windows.map(function () { return 'minmax(' + PWIN + 'px,1fr)'; }).join(' ') : '';
+    var band = cols ? '<div class="pmu-colhead pmu-accband pmu-planband" style="grid-template-columns:' + tmpl + ';column-gap:' + PGAP + 'px"><span class="pmu-cap">' + esc(C.plural(accs.length, 'ACCOUNT', 'ACCOUNTS')) + '</span>' +
+      p.windows.map(function (w) { return '<span class="pmu-cap">' + esc(String(w.label).replace(/ window$/i, '').toUpperCase()) + '</span>'; }).join('') + '</div>' : '';
+    var rows = shown.map(function (a) {
+      var hidden = !n || allHiddenP(a);
+      var amountsLine = a.amounts.length && !hidden ? '<span class="pmu-amounts">' + esc(a.amounts[0].label) + ' <b>' + esc(a.amounts[0].value || a.amounts[0].word) + '</b>' + (a.amounts[0].suffix ? ' ' + esc(a.amounts[0].suffix) : '') + '</span>' : '';
+      var ident = '<span class="pmu-accid"' + identHover(p, a) + '><span class="pmu-accglyph">' + (a.stateGlyph ? C.glyph(a.stateGlyph) : '') + '</span>' +
+        '<span class="pmu-acctext"><b class="pmu-ident' + (a.effective ? ' is-eff' : p.effective ? ' is-other' : '') + '"' + C.shareAttr('acct:' + a.key) + '>' + esc(a.nickname) + '</b>' +
+        '<span class="pmu-identmeta">' + metaHtml(a) + '</span>' + amountsLine + '</span></span>';
+      var cells;
+      if (hidden) {
+        var word = !n ? a.noWindowsWord || 'Quota not exposed' : (a.windows[0].note && /limit/.test(a.windows[0].note) ? 'Limit not exposed' : 'Quota not exposed');
+        cells = '<span class="pmu-acccell is-merged"' + (cols && n > 1 ? ' style="grid-column:span ' + n + '"' : '') + '>' +
+          (a.amounts || []).slice(0, 2).map(function (x) { var vsA = x.vs && x.vs !== 'ok'; return '<div class="pmu-amount pmu-amt"' + C.hover(x.label + (x.value ? ' ' + x.value : ''), [x.suffix, x.note, x.word].filter(Boolean).join(' · ')) + '>' + (vsA ? '<span></span>' : C.glyph(x.glyph || 'info')) + '<span>' + esc(bw < 420 && /^Spend/.test(x.label) ? 'Spend' : x.label) + '</span><span class="pmu-amtv">' + (vsA ? C.vs(x.vs, x.word) : '<b>' + esc(x.value) + '</b>' + (x.suffix ? ' <em>' + esc(x.suffix) + '</em>' : '')) + '</span></div>'; }).join('') +
+          ((!n && a.amounts.length) ? '' : '<span class="pmu-accna">' + C.vs('not_exposed', word) + '</span>') + '</span>';
+      } else if (cols) cells = a.windows.map(function (w) { return '<span class="pmu-acccell" data-win="' + esc(w.key) + '"' + C.shareAttr('win:' + a.key + '/' + w.key) + '></span>'; }).join('');
+      else cells = '<span class="pmu-planmeters" style="grid-template-columns:repeat(' + perLine + ',minmax(0,1fr))">' + a.windows.map(function (w) { return '<span class="pmu-acccell" data-win="' + esc(w.key) + '"' + C.shareAttr('win:' + a.key + '/' + w.key) + '></span>'; }).join('') + '</span>';
+      var sig = a.shownState + '|' + a.effective + '|' + a.windows.map(function (w) { return w.pct; }).join(',');
+      return '<div class="pmu-row pmu-accrow pmu-planrow is-comfy' + (cols ? '' : ' is-stack') + (a.effective ? ' is-eff' : '') + '" data-reveal data-flash-key="' + esc(a.key) + '" data-flash-sig="' + esc(sig) + '" data-acct="' + esc(a.key) + '" data-state="' + a.shownState + '"' +
+        ' data-pmu-act="acct-inspect" data-value="' + esc(a.key) + '" role="button" tabindex="0"' + (cols ? ' style="grid-template-columns:' + tmpl + ';column-gap:' + PGAP + 'px"' : '') + '>' +
+        '<i class="pmu-acclight" aria-hidden="true"></i>' + ident + cells + '</div>';
+    }).join('');
+    var foldItems = folded.map(foldLine);
+    /* the provider's plan facts in the room the rows leave (two columns where pairs fit), the rest counted in the head */
+    var room = bh - used - 8, facts = (m.facts || []).slice(), footOk = m.foot && room >= 34 + 30;
+    if (footOk) room -= 34;
+    var lay = facts.length ? C.factLayout(facts, bw) : null, fr = lay && !folded.length ? lay.fit(room) : { n: 0, used: 0 };
+    var headItems = facts.slice(fr.n).map(C.factText).concat(m.foot && !footOk ? [String(m.foot).replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim()] : []);
+    C.headMore(ctx, body, headItems);
+    body.innerHTML = '<div class="pmu-acc is-group pmu-planplate" data-mode="' + (cols ? 'full' : 'stack') + '"' + (folded.length || C.smallCard(ctx) || !headItems.length ? '' : C.foldHover(headItems)) + '>' + band + '<div class="pmu-accrows">' + rows + '</div>' +
+      (folded.length ? C.more(folded.length, folded.length === 1 ? 'account' : 'accounts', false, foldItems) : '') + (fr.n ? lay.html(fr.n) : '') + '</div>' + (footOk ? C.foot(m.foot, m.footGlyph) : '');
+    shown.forEach(function (a) {
+      var row = body.querySelector('.pmu-planrow[data-acct="' + a.key + '"]');
+      if (!row || !n || allHiddenP(a)) return;
+      a.windows.forEach(function (w) {
+        var h = row.querySelector('[data-win="' + w.key + '"]');
+        var spec = C.meterSpec(w, { size: cols ? 'c' : 'k', effective: a.effective, prov: p.id, stale: a.fresh.stale, age: a.ageText, hoverName: p.name + ' · ' + a.nickname });
+        if (cols) spec.noLabel = true; else spec.label = w.short;
+        C.chart(body, 'meter', h, spec, { label: a.nickname + ' ' + w.label });
+      });
+    });
+  }
+
   /* ================================================================== limit: provider plan cards */
-  /* model: planView + {facts, pace, foot, plan, requests, tokens} (defined in 70-rooms-a.js) */
+  /* model: planView + {facts, pace, foot, plan, requests, tokens} (defined in 70-rooms-a.js); a provider with two or more
+     accounts renders the account rows plate (rowsPlate above) */
   C.kind('limit', {
     render: function (body, ctx) {
       var m = ctx.model; if (!m) { body.innerHTML = C.empty('This provider is not in the selected scope.'); return; }
+      if (m.provider && m.provider.accounts.length > 1 && ctx.tier.h !== 'h0') { rowsPlate(body, ctx, m); return; }
       var size = ctx.tier.bw >= 220 ? 'i' : 'k', mh = METER_H[size] + 8;
       var wins = m.windows || [];
       var xl = ctx.tier.w === 'xl' && C.h(ctx, 'h3');
@@ -66,7 +194,10 @@
       var bh = ctx.tier.bh, footH = m.foot ? (footLines > 1 ? 16 + 18 * footLines : 34) : 0;
       if (ctx.tier.h === 'h0') {
         var b = m.binding || wins[0];
-        body.innerHTML = '<div class="pmu-limit is-h0"><span class="pmu-limitinline">' + (b ? esc(b.short) + ' <b>' + esc(b.pct === null ? PMU.roster.vsWord(b) : C.fmt(b.pct, 'pct')) + '</b>' + (b.pct === null ? '' : ' used · ' + esc(PMU.fmt.resetLine(b).text)) : esc('No plan windows')) + '</span></div>';
+        /* a strip: the effective account's binding window; every account of the provider is in the hover tag and Details */
+        var all = m.provider && m.provider.accounts.length > 1 ? m.provider.accounts : [];
+        body.innerHTML = '<div class="pmu-limit is-h0"' + C.foldHover(all.map(foldLine)) + '><span class="pmu-limitinline">' + (all.length && m.account ? esc(m.account.nickname) + ' · ' : '') + (b ? esc(b.short) + ' <b>' + esc(b.pct === null ? PMU.roster.vsWord(b) : C.fmt(b.pct, 'pct')) + '</b>' + (b.pct === null ? '' : ' used · ' + esc(PMU.fmt.resetLine(b).text)) : esc('No plan windows')) +
+          (all.length > 1 ? ' · ' + esc(C.plural(all.length - 1, 'more account', 'more accounts')) : '') + '</span></div>';
         return;
       }
       if (wins.length * mh + footH > bh + 2) footH = 0;   /* every window stays visible before the foot does (R-PLAN-01) */

@@ -528,9 +528,9 @@
      marker's words ("5H 79%") and tone, its bar's tone and the hero's label patch in place; no dry render */
   function windowsLive(body, ctx) {
     var now = PMU.clock.now(), span = 7 * 86400000, marks = body.querySelectorAll('.pmu-wmk[data-reset]'), byKey = {}, ok = true;
-    PMU.roster.read().providers.forEach(function (p) {
-      if (!p.effective || !D.settingsInScope(p.id)) return;
-      p.effective.windows.forEach(function (w) { if (w.pct !== null && w.resetAt) byKey[p.effective.key + '/' + Math.round(w.resetAt / 60000)] = { p: p, a: p.effective, w: w }; });
+    /* lane d-plans: every account's lane (C.windowLanes), not only the active account's */
+    winLanes().lanes.forEach(function (ln) {
+      ln.a.windows.forEach(function (w) { if (w.pct !== null && w.resetAt) byKey[ln.a.key + '/' + Math.round(w.resetAt / 60000)] = { p: ln.p, a: ln.a, w: w }; });
     });
     Array.prototype.forEach.call(marks, function (mk) { if (!byKey[mk.getAttribute('data-reset')]) ok = false; });
     if (!ok || !marks.length) return false;
@@ -544,37 +544,47 @@
     });
     var all = Object.keys(byKey).map(function (k) { return byKey[k]; }).filter(function (x) { return x.w.resetAt > now && x.w.truth !== 'unknown'; }).sort(function (x, y) { return x.w.resetAt - y.w.resetAt; });
     var lb = body.querySelector('.pmu-herolabel'), next = all[0];
-    if (lb && next) { var t = 'next reset · ' + next.p.name + ' ' + next.w.short.toLowerCase() + ' · ' + C.fmt(next.w.pct, 'pct') + ' used'; if (lb.textContent !== t) lb.textContent = t; }
+    if (lb && next) { var t = 'next reset · ' + laneWho(next) + ' ' + next.w.short.toLowerCase() + ' · ' + C.fmt(next.w.pct, 'pct') + ' used'; if (lb.textContent !== t) lb.textContent = t; }
     return true;
   }
+  /* the lanes: every account of every provider with plan windows (70-rooms-a.js C.windowLanes); the active account of each
+     provider where that is not loaded */
+  function winLanes() {
+    if (C.windowLanes) return C.windowLanes();
+    var lanes = [];
+    PMU.roster.read().providers.forEach(function (p) {
+      if (!p.effective || !D.settingsInScope(p.id)) return;
+      var now = PMU.clock.now(), ms = p.effective.windows.filter(function (w) { return w.pct !== null; }).map(function (w) { return { w: w, at: w.resetAt && w.truth !== 'unknown' && w.resetAt > now ? w.resetAt : null }; });
+      if (ms.length) lanes.push({ p: p, a: p.effective, ms: ms, pend: [], note: '', first: true, multi: false });
+    });
+    return { lanes: lanes, none: [] };
+  }
+  /* "Claude Personal" where the provider has two or more accounts, else the provider's name */
+  function laneWho(x) { return x.p.accounts.length > 1 && !C.nickRepeats(x.a.nickname, x.p.name) ? x.p.name + ' ' + x.a.nickname : x.p.name; }
   C.kind('windows', {
     live: function (body, ctx) { return windowsLive(body, ctx); },
     liveSig: function () {
-      return JSON.stringify(PMU.roster.read().providers.map(function (p) { return p.effective && D.settingsInScope(p.id) ? [p.id, p.effective.key, p.effective.windows.map(function (w) { return [w.pct, w.resetAt ? Math.round(w.resetAt / 60000) : null, w.truth]; })] : 0; }));
+      return JSON.stringify(winLanes().lanes.map(function (ln) { return [ln.a.key, ln.a.effective, ln.note, ln.a.windows.map(function (w) { return [w.pct, w.resetAt ? Math.round(w.resetAt / 60000) : null, w.truth, !!w.resetPending]; })]; }));
     },
     render: function (body, ctx) {
-      var lanes = [], now = PMU.clock.now(), span = 7 * 86400000, all = [];
-      PMU.roster.read().providers.forEach(function (p) {
-        if (!p.effective || !D.settingsInScope(p.id)) return;
-        var ms = p.effective.windows.filter(function (w) { return w.pct !== null; }).map(function (w) {
-          var known = w.resetAt && w.truth !== 'unknown' && w.resetAt > now;
-          return { w: w, at: known ? w.resetAt : null };
-        });
-        if (!ms.length) return;
-        lanes.push({ p: p, a: p.effective, ms: ms }); ms.forEach(function (m) { if (m.at) all.push({ p: p, a: p.effective, w: m.w, at: m.at }); });
-      });
-      if (!lanes.length) { body.innerHTML = C.empty('No active account reports a window.', 'Missing readings are never shown as 0 %'); return; }
+      var now = PMU.clock.now(), span = 7 * 86400000, all = [], WL = winLanes(), lanes = WL.lanes, none = WL.none;
+      lanes.forEach(function (ln) { ln.ms.forEach(function (m) { if (m.at) all.push({ p: ln.p, a: ln.a, w: m.w, at: m.at }); }); });
+      if (!lanes.length) { body.innerHTML = C.empty('No account reports a window.', 'Missing readings are never shown as 0 %'); return; }
       all.sort(function (x, y) { return x.at - y.at; });
       var bw = ctx.tier.bw, bh = ctx.tier.bh, heroOk = bh >= 200, next = all[0];
       var in7 = all.filter(function (x) { return x.at - now <= span; }).length;
-      var head = heroOk && next ? C.heroHead(ctx, { text: F.clock(next.at), label: 'next reset · ' + next.p.name + ' ' + next.w.short.toLowerCase() + ' · ' + C.fmt(next.w.pct, 'pct') + ' used',
+      var head = heroOk && next ? C.heroHead(ctx, { text: F.clock(next.at), label: 'next reset · ' + laneWho(next) + ' ' + next.w.short.toLowerCase() + ' · ' + C.fmt(next.w.pct, 'pct') + ' used',
         sub: b(in7) + (in7 === 1 ? ' reset' : ' resets') + ' in the next 7 days · ' + b(all.length - in7) + ' later' }) : '';
+      /* lane d-plans: one lane per account, grouped by provider (the provider's mark on its first lane, a rule between
+         providers); a lane reads the account's nickname where the provider has two or more accounts, else the provider */
+      var laneName = function (ln) { return ln.multi && !C.nickRepeats(ln.a.nickname, ln.p.name) ? ln.a.nickname : ln.p.name; };
       /* the lane label column is as wide as its longest name (Mac stills 2026-10-02: "Google AI Studi" cut at 132 px) */
-      var laneName = function (ln) { return ln.a.nickname === ln.p.name || ln.p.name.indexOf(ln.a.nickname) >= 0 ? ln.p.name : ln.a.nickname; };
       var nameW = Math.max.apply(null, lanes.map(function (ln) { return PMU.charts && PMU.charts.textW ? PMU.charts.textW(laneName(ln), 13, false, 540) * 1.06 : laneName(ln).length * 7.4; }));
-      var labW = bw >= 420 ? Math.round(Math.min(Math.max(164, bw * 0.24), Math.max(120, nameW + 16 + 7 + 14))) : 40, axisH = 24, edge = 64;
-      var laneH = Math.max(20, Math.min(36, Math.floor((bh - (heroOk ? 66 : 0) - axisH - 6) / lanes.length)));
-      var lanesN = Math.min(lanes.length, Math.floor((bh - (heroOk ? 66 : 0) - axisH - 6) / laneH));
+      var labW = bw >= 420 ? Math.round(Math.min(Math.max(150, bw * 0.24), Math.max(120, nameW + 16 + 7 + 14))) : 40, axisH = 24, edge = 64;
+      var noneH = none.length ? 24 : 0, plotRoom = bh - (heroOk ? 66 : 0) - axisH - 6 - noneH;
+      var laneH = Math.max(20, Math.min(34, Math.floor(plotRoom / lanes.length)));
+      var lanesN = Math.min(lanes.length, Math.floor(plotRoom / laneH));
+      if (lanesN < lanes.length) lanesN = Math.max(1, Math.floor((plotRoom - 22) / laneH));
       var xOf = function (t) { return Math.max(0, Math.min(100, 100 * (t - now) / span)); };
       var trackW = Math.max(60, bw - labW - edge);
       /* a day tick closer than 40 px to NOW is dropped ("NOW" printed into "SAT") */
@@ -582,12 +592,14 @@
       /* each marker's words read to its right; when they would run into the next marker they read to its left, and
          when neither side has room they go to the hover only (the marker stays) */
       var labOf = function (m) { return ({ fiveHour: '5H', weekly: 'WK', monthly: 'MO' }[m.w.key] || m.w.short.slice(0, 3).toUpperCase()) + ' ' + C.fmt(m.w.pct, m.w.pct < 10 && m.w.pct % 1 ? 'pct1' : 'pct') + (m.at && m.at - now > span ? ' · ' + F.date(m.at) : ''); };
+      var pendLab = function (w) { return ({ fiveHour: '5H', weekly: 'WK', monthly: 'MO' }[w.key] || w.short.slice(0, 3).toUpperCase()) + ' pending'; };
       var labPx = function (t) { return (PMU.charts && PMU.charts.textW ? PMU.charts.textW(t, 11, true) : t.length * 6.6) + 22; };
       lanes.forEach(function (ln) {
-        var items = ln.ms.filter(function (m) { return m.at; }).map(function (m) {
+        /* a pending window (reset passed, no new reading) sits at NOW and its words come first */
+        var items = ln.pend.map(function (w) { return { pend: w, x: 0, w: labPx(pendLab(w)), beyond: false, m: {} }; }).concat(ln.ms.filter(function (m) { return m.at; }).map(function (m) {
           var beyond = m.at - now > span, x = beyond ? trackW : m.at - now < 0 ? 0 : (m.at - now) / span * trackW, w = labPx(labOf(m));
           return { m: m, x: x, w: w, beyond: beyond };
-        }).sort(function (a, z) { return a.x - z.x; });
+        })).sort(function (a, z) { return a.x - z.x; });
         items.forEach(function (it, i) {
           var next = items[i + 1], prev = items[i - 1];
           /* integ3: a label beyond the week also gives way to the previous MARKER itself, not only to its right-hand words
@@ -595,8 +607,8 @@
           if (it.beyond) { var pEnd = prev ? (prev.side === 'r' ? prev.x + prev.w : prev.x + 16) : -labW; it.side = pEnd > it.x - it.w ? 'none' : 'l'; it.m.side = it.side; return; }
           var rightEnd = it.x + it.w, nextStart = next ? (next.beyond ? next.x - next.w : next.x - 8) : trackW + edge;
           var leftStart = it.x - it.w, prevEnd = prev ? (prev.side === 'r' ? prev.x + prev.w : prev.x + 8) : -labW;
-          it.side = rightEnd <= nextStart ? 'r' : leftStart >= prevEnd ? 'l' : 'none';
-          it.m.side = it.side;
+          it.side = rightEnd <= nextStart ? 'r' : leftStart >= prevEnd && !it.pend ? 'l' : 'none';
+          it.m.side = it.side; if (it.pend) it.pend._side = it.side;
         });
       });
       var mk = function (m, ln, j) {
@@ -605,17 +617,28 @@
         var lab = labOf(m);
         return '<i class="pmu-wbar" data-ramp="' + r + '"' + C.shareAttr('win:' + ln.a.key + '/' + m.w.key) + ' style="width:' + x.toFixed(2) + '%;z-index:' + (10 - j) + '"></i>' +
           '<span class="pmu-wmk' + (beyond ? ' is-beyond' : '') + (m.side === 'l' && !beyond ? ' is-left' : '') + (m.side === 'none' ? ' no-label' : '') + '" data-ramp="' + r + '" data-shape="' + (SHAPE[m.w.key] || 'c') + '" data-reset="' + esc(ln.a.key + '/' + Math.round(m.at / 60000)) + '" style="' + (beyond ? 'right:-6px' : 'left:' + x.toFixed(2) + '%') + '"' +
-          C.hover(ln.p.name + ' · ' + ln.a.nickname + ' · ' + m.w.label, C.fmt(m.w.pct, 'pct') + ' used · ' + F.resetLine(m.w).text + ' · ' + PMU.fmt.truth(m.w.truth)) + '><i></i><em>' + esc(lab) + '</em></span>';
+          C.hover(ln.p.name + ' · ' + ln.a.nickname + ' · ' + m.w.label, C.fmt(m.w.pct, 'pct') + ' used · ' + F.resetLine(m.w).text + ' · ' + (C.winSource ? C.winSource(m.w, ln.a.ageText) : PMU.fmt.truth(m.w.truth))) + '><i></i><em>' + esc(lab) + '</em></span>';
       };
+      /* reset truth (lane d-plans): a window whose reset passed with no new reading is a hollow marker at NOW, "5H pending" */
+      var pk = function (w, ln) {
+        return '<span class="pmu-wpend' + (w._side === 'none' ? ' no-label' : '') + '" data-shape="' + (SHAPE[w.key] || 'c') + '"' + C.shareAttr('win:' + ln.a.key + '/' + w.key) +
+          C.hover(ln.p.name + ' · ' + ln.a.nickname + ' · ' + w.label, PMU.roster.vsWord(w) + (C.winSource ? ' · last reading ' + (C.winSource(w, ln.a.ageText) || 'not recorded') : '')) + '><i></i><em>' + esc(pendLab(w)) + '</em></span>';
+      };
+      var foldLane = function (ln) { return (ln.multi ? ln.p.name + ' · ' : '') + laneName(ln) + ' · ' + (ln.note || ln.pend.map(function (w) { return w.short + ' ' + PMU.roster.vsWord(w); }).concat(ln.ms.map(function (m) { return m.w.short + ' ' + C.fmt(m.w.pct, 'pct') + ' used · ' + F.resetLine(m.w).text; })).join(' · ')); };
+      var noneLine = none.length ? '<div class="pmu-wnone"' + C.hover('No plan windows', none.map(function (p) { return p.name + ' · ' + p.accounts.map(function (a) { return a.nickname + ' ' + (a.noWindowsWord || 'no plan windows'); }).join(', '); }).join('; ')) + '>' +
+        C.vs('not_exposed', none.map(function (p) { return p.name; }).join(', ') + ': no plan windows') + '</div>' : '';
       body.innerHTML = '<div class="pmu-wline">' + head + '<div class="pmu-wplot" style="--lab:' + labW + 'px;--edge:' + edge + 'px;height:' + (lanesN * laneH + axisH) + 'px">' +
         '<div class="pmu-wlanes">' + lanes.slice(0, lanesN).map(function (ln, k) {
-          return '<div class="pmu-wlane" style="top:' + (k * laneH) + 'px;height:' + laneH + 'px" data-acct="' + esc(ln.a.key) + '"><span class="pmu-wlab"' + C.hover(ln.p.name, ln.a.nickname) + '>' + C.shareMark(ln.p.id, 16) +
+          var gfirst = ln.first && k > 0;
+          return '<div class="pmu-wlane' + (gfirst ? ' is-gfirst' : '') + (ln.a.effective && ln.multi ? ' is-eff' : '') + (ln.first ? '' : ' is-sub') + '" style="top:' + (k * laneH) + 'px;height:' + laneH + 'px" data-acct="' + esc(ln.a.key) + '" data-prov="' + esc(ln.p.id) + '">' +
+            '<span class="pmu-wlab"' + C.hover(ln.p.name + (ln.multi ? ' · ' + ln.a.nickname : ''), [ln.a.identity, ln.a.stateWord, ln.a.plan].filter(Boolean).join(' · ')) + '>' + (ln.first ? C.shareMark(ln.p.id, 16) : '<span class="pmu-wsub" aria-hidden="true"></span>') +
             (labW > 60 ? '<span>' + esc(laneName(ln)) + '</span>' : '') + '</span>' +
-            '<span class="pmu-wtrack">' + ln.ms.slice().sort(function (x, y) { return (y.at || 0) - (x.at || 0); }).map(function (m, j) { return mk(m, ln, j); }).join('') + '</span></div>';
+            '<span class="pmu-wtrack">' + (ln.note ? '<span class="pmu-wnote">' + C.vs(ln.noteVs, ln.note) + '</span>' : '') +
+            ln.ms.slice().sort(function (x, y) { return (y.at || 0) - (x.at || 0); }).map(function (m, j) { return mk(m, ln, j); }).join('') + ln.pend.map(function (w) { return pk(w, ln); }).join('') + '</span></div>';
         }).join('') + '</div>' +
         '<div class="pmu-wgrid">' + days.map(function (t) { return '<i style="left:' + xOf(t).toFixed(2) + '%"></i>'; }).join('') + '<i class="pmu-wnow"></i></div>' +
         '<div class="pmu-waxis"><span class="is-now" style="left:0">NOW</span>' + days.map(function (t) { return '<span style="left:' + xOf(t).toFixed(2) + '%">' + esc(F.day(t)) + '</span>'; }).join('') + '</div>' +
-        '</div>' + (lanes.length > lanesN ? C.more(lanes.length - lanesN, 'providers', false, lanes.slice(lanesN).map(function (ln) { return ln.p.name + ' · ' + ln.a.nickname + ' · ' + ln.ms.map(function (m) { return m.w.short + ' ' + C.fmt(m.w.pct, 'pct') + ' used · ' + F.resetLine(m.w).text; }).join(' · '); })) : '') + '</div>';
+        '</div>' + (lanes.length > lanesN ? C.more(lanes.length - lanesN, 'accounts', false, lanes.slice(lanesN).map(foldLane)) : '') + noneLine + '</div>';
       body.querySelector('.pmu-wplot').addEventListener('click', function (event) {
         var lane = event.target.closest('.pmu-wlane'); if (lane && PMU.accounts) PMU.accounts.inspect(lane.getAttribute('data-acct'), lane);
       });

@@ -1,0 +1,42 @@
+/* Plans & limits: every account of a provider (owner: lane d-plans, 2026-10-09; Jared item 4 "The plans and limits page
+   doesn't have all the multiple accounts from the same provider"). The plan plates reuse the Accounts room's row grammar
+   (50-accounts.css: .pmu-acc.is-group, .pmu-accrow, .pmu-accband, the active light), so both rooms read alike; this sheet
+   adds only what Plans & limits has on its own: the stacked rows of a narrow plate, the per-account lanes of the windows
+   timeline (provider groups, a lane that has no reading, the pending marker of a passed reset) and the no-windows line. */
+
+/* ------------------------------------------------------------------ the account rows plate */
+#panel-usage .pmu-planplate .pmu-planrow.is-comfy { min-height: 60px; padding-top: 9px; padding-bottom: 9px; }
+/* stacked (a plate too narrow for a column per window): the identity, then the account's window meters side by side */
+#panel-usage .pmu-planrow.is-stack { grid-template-columns: minmax(0, 1fr); row-gap: 7px; align-items: start; padding-top: 10px; padding-bottom: 10px; }
+#panel-usage .pmu-planmeters { display: grid; column-gap: 10px; row-gap: 8px; min-width: 0; }
+#panel-usage .pmu-planrow .pmu-acccell { min-width: 0; }
+#panel-usage .pmu-planrow .pmu-meter .pmu-meterna .pmu-vs { white-space: normal; }
+/* the meta line leads with the state word in its tone (the Active mark) and wraps rather than cut */
+#panel-usage .pmu-planrow .pmu-identmeta .pmu-acstate b { font-weight: 600; }
+#panel-usage .pmu-planplate > .pmu-facts { margin-top: 6px; }
+#panel-usage .pmu-planplate > .pmu-more { margin-top: 2px; }
+
+/* ------------------------------------------------------------------ the windows timeline: one lane per account */
+/* a provider's lanes are one group: its mark on the first lane, a quiet tree tick on the others, a rule between groups */
+#panel-usage .pmu-wlane.is-gfirst { box-shadow: inset 0 1px 0 var(--pmu-rule); }
+#panel-usage .pmu-wsub { flex: none; width: 8px; height: 9px; margin: -7px 1px 0 7px; border-left: 1px solid var(--pmu-rule-strong); border-bottom: 1px solid var(--pmu-rule-strong);
+  border-bottom-left-radius: 3px; }
+html[data-theme^="retro"] #panel-usage .pmu-wsub, html[data-o55-nier="on"] #panel-usage .pmu-wsub { border-bottom-left-radius: 0; }
+#panel-usage .pmu-wlane.is-sub .pmu-wlab { font-weight: 500; }
+#panel-usage .pmu-wlane.is-eff .pmu-wlab > span:last-child { font-weight: 680; color: var(--pmu-ink); }
+/* a lane with no reading says why, quietly, at the start of its track (never a 0 % bar) */
+#panel-usage .pmu-wnote { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); max-width: calc(100% - 8px); font-size: 12px; line-height: 16px; color: var(--pmu-ink-3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-wnote .pmu-vs { display: inline-flex; align-items: center; gap: 5px; }
+/* reset truth: a passed reset with no new reading is a hollow dashed marker at NOW, "5H pending" (its hover says when) */
+#panel-usage .pmu-wpend { position: absolute; top: 50%; left: 0; z-index: 13; display: inline-flex; align-items: center; gap: 5px; height: 18px; margin-top: -9px; margin-left: -6px; white-space: nowrap; }
+#panel-usage .pmu-wpend i { flex: none; width: 11px; height: 11px; border-radius: 50%; border: 1.5px dashed var(--pmu-ink-3); background: var(--pmu-card); box-sizing: border-box; }
+#panel-usage .pmu-wpend[data-shape="d"] i { border-radius: 2px; transform: rotate(45deg) scale(.86); }
+#panel-usage .pmu-wpend[data-shape="s"] i { border-radius: 2px; }
+#panel-usage .pmu-wpend em { padding: 0 3px; font-style: normal; font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .03em; color: var(--pmu-ink-3); background: var(--pmu-card); border-radius: 3px; }
+#panel-usage .pmu-wpend.no-label em { display: none; }
+html[data-theme^="retro"] #panel-usage .pmu-wpend i, html[data-o55-nier="on"] #panel-usage .pmu-wpend i { border-radius: 0; }
+html[data-o55-nier="on"] #panel-usage .pmu-wpend em { border-radius: 0; background: var(--o55-nier-paper, var(--pmu-card)); }
+/* the providers that report no plan windows, named once under the lanes */
+#panel-usage .pmu-wnone { margin-top: 4px; min-height: 20px; font-size: 12px; line-height: 18px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-wnone .pmu-vs { white-space: normal; }
