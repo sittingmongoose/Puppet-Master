@@ -36,8 +36,10 @@ Concepts/leftrail-redesign/
   tools/build_rail.py           build / --check Concepts/LeftRailPMConcept7.html (--out PATH [--only x] for private builds)
   tools/rail_layer.py           apply(text, need) -> (text, notes), lint(), syntax_check(text)
   tools/rail_boot.mjs           acceptance check on GPU Chrome (reach, overflow, type floor, pills, side bars, themes, NieR;
-                                skin concepts checked on the shell's own panels, their dropdowns must open PMR.menu)
-  tools/rail_perf.py            frames drawn per rail motion on the VM GPU (headful, renderer asserted)
+                                skin concepts d and current checked on all nine rail panels (the shell's own), their
+                                dropdowns must open PMR.menu; --restore: D -> Current leaves the panels identical)
+  tools/rail_perf.py            frames drawn per rail motion on the VM GPU (headful, renderer asserted): for the skin
+                                concepts every panel's bar switch, expander, menu and tab
   tools/build_d_css.py          concept D's d.css from src/concepts/d/css/*.src.css (--check for staleness)
   tools/parity.py               every original data-demo-action/-arg pair of the three panels is in the fixture
   src/css/*.css                 shared tokens, the menu, the host, the kit, the NieR hooks
@@ -52,8 +54,16 @@ Concepts/leftrail-redesign/
 python3 Concepts/leftrail-redesign/tools/build_rail.py          # build Concepts/LeftRailPMConcept7.html
 python3 Concepts/leftrail-redesign/tools/build_rail.py --check  # rebuild in memory, lint, syntax, byte parity
 python3 Concepts/leftrail-redesign/tools/parity.py --list       # fixture completeness against PMConcept7.html
-node Concepts/leftrail-redesign/tools/rail_boot.mjs <out-dir> [--concepts a,b,c,d,current] [--quick] [--shots]
-python3 Concepts/leftrail-redesign/tools/rail_perf.py Concepts/LeftRailPMConcept7.html <out.json> --concepts d
+node Concepts/leftrail-redesign/tools/rail_boot.mjs <out-dir> [--concepts a,b,c,d,current|none] [--panels files,search]
+     [--themes all|basic-dark,...] [--quick] [--shots] [--restore]
+     # d and current: all nine panels by default; a, b, c: files, source, docker; --panels overrides both;
+     # --restore: boots Current, uses D, returns to Current and fails on any difference (every theme, NieR included);
+     # --concepts none --restore runs the restore check alone
+python3 Concepts/leftrail-redesign/tools/rail_perf.py Concepts/LeftRailPMConcept7.html <out.json> [--concepts d,current]
+     [--themes basic-dark,glass-dark,retro-light] [--size 1600x1000] [--port 9351]
+     # d and current: nine panels (bar-switch, expand, menu-open, tab per panel, as each panel has them); a, b, c: their own
+     # moments; each run record has name (the moment kind) and panel. On the VM, from the lane directory:
+     # PM_PERF_TOOLS=~/src/PuppetMaster/Concepts/onboarding/opus-5.5/tools/perf python3 rail_perf.py rail.html out.json
 python3 Concepts/leftrail-redesign/tools/build_d_css.py [--check]
 python3 Concepts/onboarding/opus-5.5/tools/build.py --check     # the published concept stays untouched: "check ok"
 ```
@@ -62,6 +72,10 @@ python3 Concepts/onboarding/opus-5.5/tools/build.py --check     # the published 
 enforced there. The opus-5.5 build reads `Plans/settings_inventory.json`; in a sparse worktree without `Plans`, write
 that one file from `HEAD` (`git show HEAD:Plans/settings_inventory.json > Plans/settings_inventory.json`). Keep
 `<out-dir>` outside the repository; `--shots` writes review screenshots there (delete them after review).
+`rail_boot.mjs` finds `playwright-core` through env `PM_PLAYWRIGHT` (a directory that contains it), then the VM lab's
+`node_modules`, then `~/pm-motion-lab`. It starts one agent-browser GPU session at a time and stops each one when its page
+is done. Pass the built page and the reference with `--page` and `--ref` when they are not in the repository, and never
+run it with `--disable-gpu`.
 
 ## What the layer does
 
