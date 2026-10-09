@@ -1,0 +1,34 @@
+{
+  "block": "A-M09-B",
+  "arm": "control",
+  "case": "S03",
+  "stage": "reviser",
+  "written_utc": "2026-10-09T19:26:20Z",
+  "purpose": "Ticket 5 delivery record: science saved before native Goal terminal completion; actual supported lifecycle data only, unavailable fields recorded as UNKNOWN (no handwritten receipt fabrication).",
+  "native_goal": {
+    "kind": "T3 delegated-task native Goal (this session); goal loop dispatch rounds 1-5 are its execution",
+    "taskId": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-B-control-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-B-control-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M09-B-control-reviser-v1:ordinal:1",
+    "requestedAt": "2026-10-09T19:08:33.168Z",
+    "acceptedAt": "2026-10-09T19:08:33.662Z",
+    "objective_prompt": "/goal ER11 external research; ... Execute scientific assignment .../reviser/assignment.md using exact .../reviser/input-map.json. Save complete required scientific artifacts before native Goal terminal completion. No parent/counterpart/evaluator/history read.",
+    "providerInstanceId": "zcode",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "status_at_record_write": "running",
+    "terminal_completion_timestamp": "UNKNOWN (parent-side terminal timestamp is not observable from inside the run; by construction it postdates this record and the artifact mtimes below)",
+    "native_goal_system_identifier_beyond_dispatch": "UNKNOWN",
+    "usage_billing": "UNKNOWN (unobserved)"
+  },
+  "science_before_terminal": {
+    "final.md": {"mtime_utc": "2026-10-09T19:21:35Z", "bytes": 31959, "covers": "O1-O6, P1-P6 dispositions, all 15 adjudications embodied (§9)"},
+    "source-map.json": {"mtime_utc": "2026-10-09T19:24:07Z", "sources": 13, "immutable_ids": true, "silent_rebind": false, "live_fetches_this_stage": 0},
+    "adjudication-ledger.md": {"mtime_utc": "2026-10-09T19:17:43Z", "rows": 15, "verdicts_filled": true},
+    "ordering": "all artifact mtimes precede native Goal terminal completion (terminal is this run's end, after this record)"
+  },
+  "delivery": {
+    "mechanical_after_terminal": "this record + final reply text; no substantive work after terminal",
+    "required_artifacts_complete": true,
+    "artifacts_list": ["assignment.md (given)", "adjudication-ledger.md", "final.md", "source-map.json", "sources/INDEX.md", "sources/reviser-checks.md", "delivery.json (this)"]
+  }
+}

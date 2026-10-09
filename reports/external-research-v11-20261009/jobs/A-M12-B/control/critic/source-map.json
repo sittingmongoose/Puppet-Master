@@ -1,0 +1,109 @@
+{
+  "block": "A-M12-B",
+  "arm": "control",
+  "case": "S06",
+  "method": "M12",
+  "stage": "critic",
+  "generated_at": "2026-10-09T19:01:00Z",
+  "evidence_kind": "independent-reverification",
+  "rules": {
+    "source_ids_immutable": true,
+    "no_silent_rebind": true,
+    "treat_sources_as_data": true,
+    "id_discipline": "IDs S01–S11 reused from research/source-map.json only where URL is identical (audit of the same source). No new sources bound under stage deadline.",
+    "fetch_mechanism": "HTTP GET via WebFetch tool (small-model-mediated extraction, best-effort verbatim quotes). No runtime, no binaries downloaded, no account/config changes.",
+    "access_timestamp_note": "UTC wall-clock at fetch completion, minute precision"
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "title": "VictoriaMetrics single-server docs — Deduplication section",
+      "url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/#deduplication",
+      "locator": "Deduplication anchor: minScrapeInterval behavior; equal-timestamp biggest-value tie-break; -downsampling.period=0s:D equivalence",
+      "version_or_commit": "unpinned current docs at critic access; page states feature availability from v1.107.0–v1.137.0 but no single VM version; -dedup.minScrapeInterval default NOT stated (predecessor uncertainty CONFIRMED)",
+      "accessed_at": "2026-10-09T18:57Z",
+      "observed_operations": "HTTP GET 200; section extraction; predecessor claims independently reproduced verbatim",
+      "retained": "sources/critic-audit-excerpts.md §S01"
+    },
+    {
+      "id": "S02",
+      "title": "Eclipse Mosquitto — mosquitto.conf(5) man page",
+      "url": "https://mosquitto.org/man/mosquitto-conf-5.html",
+      "locator": "options: persistence, autosave_interval, max_queued_messages, max_inflight_messages, persistent_client_expiration, allow_anonymous",
+      "version_or_commit": "current mosquitto.org docs at critic access; 2.x option set",
+      "accessed_at": "2026-10-09T18:57Z",
+      "observed_operations": "HTTP GET 200; default-value extraction; predecessor defaults independently reproduced (persistence false, autosave 1800s, queue 1000, inflight 20)",
+      "retained": "sources/critic-audit-excerpts.md §S02"
+    },
+    {
+      "id": "S03",
+      "title": "QuestDB docs — Deduplication concept",
+      "url": "https://questdb.com/docs/concept/deduplication/",
+      "locator": "DEDUP ENABLE UPSERT KEYS syntax; designated timestamp requirement; WAL requirement; existing-data exclusion",
+      "version_or_commit": "unpinned current docs; introducing version NOT stated on page (predecessor uncertainty CONFIRMED)",
+      "accessed_at": "2026-10-09T18:57Z",
+      "observed_operations": "HTTP GET 200; requirements extraction",
+      "retained": "sources/critic-audit-excerpts.md §S03"
+    },
+    {
+      "id": "S04",
+      "title": "Prometheus Alertmanager — configuration docs",
+      "url": "https://prometheus.io/docs/alerting/latest/configuration/",
+      "locator": "<route> defaults: group_wait 30s, group_interval 5m, repeat_interval 4h; global resolve_timeout 5m; group_by '...' semantics; webhook groupKey",
+      "version_or_commit": "unpinned current docs at critic access",
+      "accessed_at": "2026-10-09T18:59Z",
+      "observed_operations": "HTTP GET 200; default-value extraction; predecessor defaults independently reproduced",
+      "retained": "sources/critic-audit-excerpts.md §S04"
+    },
+    {
+      "id": "S05",
+      "title": "Grafana OnCall OSS — GitHub repository (archived)",
+      "url": "https://github.com/grafana/oncall",
+      "locator": "archive banner + README status note; license",
+      "version_or_commit": "repo state at critic access: banner 'archived by the owner on Jun 5, 2026'; README 'maintenance mode 2025-03-11 … archived 2026-03-24'; AGPL-3.0",
+      "accessed_at": "2026-10-09T18:59Z",
+      "observed_operations": "HTTP GET 200; banner/README extraction; two-date record matches predecessor's",
+      "retained": "sources/critic-audit-excerpts.md §S05"
+    },
+    {
+      "id": "S06",
+      "title": "Telegraf — mqtt_consumer input plugin README (master)",
+      "url": "https://raw.githubusercontent.com/influxdata/telegraf/master/plugins/inputs/mqtt_consumer/README.md",
+      "locator": "options: qos (default 0), persistent_session (default false; QoS 1/2 recommendation), max_undelivered_messages (default 1000)",
+      "version_or_commit": "master branch raw file at critic access; commit not pinned (uncertainty carried)",
+      "accessed_at": "2026-10-09T18:59Z",
+      "observed_operations": "HTTP GET 200 raw file; option extraction; predecessor claims independently reproduced",
+      "retained": "sources/critic-audit-excerpts.md §S06"
+    },
+    {
+      "id": "S08",
+      "title": "ThingsBoard docs — Alarms (user guide)",
+      "url": "https://thingsboard.io/docs/user-guide/alarms/",
+      "locator": "ack semantics (time+user recorded); four alarm states; Start Time telemetry-timestamp semantics; cleared-alarm retention; severity escalation; Indeterminate severity",
+      "version_or_commit": "unpinned current docs at critic access; PE/CE not distinguished on page (predecessor uncertainty CONFIRMED)",
+      "accessed_at": "2026-10-09T18:57Z",
+      "observed_operations": "HTTP GET 200; lifecycle extraction; predecessor claims independently reproduced",
+      "retained": "sources/critic-audit-excerpts.md §S08"
+    },
+    {
+      "id": "S11",
+      "title": "Eclipse Mosquitto — 'Version 2.0.0 released' blog post",
+      "url": "https://mosquitto.org/blog/2020/12/version-2-0-0-released",
+      "locator": "breaking changes: loopback-only default listener; allow_anonymous false default on configured listeners",
+      "version_or_commit": "Mosquitto 2.0.0 (2020-12)",
+      "accessed_at": "2026-10-09T18:59Z",
+      "observed_operations": "HTTP GET 200; direct fetch of blog body — CLOSES predecessor S11 uncertainty (predecessor had snippet-level evidence only); critic fetched the trailing-slash variant of the recorded URL (version-2-0-0-released/), which returned 200; URL recorded verbatim as in research/source-map.json to keep the ID immutable (documented normalization, not a rebind)",
+      "retained": "sources/critic-audit-excerpts.md §S11"
+    }
+  ],
+  "not_refetched": [
+    {"id": "S07", "reason": "stage deadline; consulted via predecessor excerpts only; ntfy rate-limit/cache defaults remain unknown"},
+    {"id": "S09", "reason": "stage deadline; predecessor excerpt read; BSD-3/Django claims not re-verified by critic"},
+    {"id": "S10", "reason": "PDF binary excluded by assignment; clause-level Sparkplug wording remains UNVERIFIED (predecessor uncertainty STANDS)"},
+    {"id": "S12", "reason": "stage deadline; InfluxDB 3 duplicate/OOO semantics remain unknown"},
+    {"id": "S13", "reason": "stage deadline; FUXA alarm support remains unconfirmed"},
+    {"id": "S14", "reason": "stage deadline; Rapid SCADA module claims not re-verified"},
+    {"id": "S15", "reason": "stage deadline; GoAlert ack-history specifics remain unverified"}
+  ],
+  "critic_verdict_on_predecessor_evidence": "All 8 re-fetched sources reproduce the predecessor's quoted claims. No false quotation found. Predecessor uncertainty labels for S01/S03/S08 confirmed accurate; S11 uncertainty resolved by this audit; S10/S15 (and S07/S12/S13) uncertainties stand unresolved under the deadline."
+}

@@ -1,0 +1,71 @@
+{
+  "frozen_at": "2026-10-09T18:52:54.797526+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S03/brief.md",
+      "sha256": "2a61c01e944a06f96cfb299eaa2cc94b7ec5cf31349d35f45c8902bc228c327e",
+      "bytes": 1436
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M03.json",
+      "sha256": "dd1a7ef0f180b704ead6e959b35c5414972690525c8ceb925a45c32f77318d6b",
+      "bytes": 576
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M03-A/control/reviser/assignment.md",
+      "sha256": "6dbbe0821b97b49afcbb83c6a355d2e38b996db5bb66e6735978eac56dc8f868",
+      "bytes": 2747
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M03-A/control/reviser/input-map.json",
+      "sha256": "bdb2e1ed1e022d7b25c318aa277319b1e92e0f4541bf37bee71af7d505d8546e",
+      "bytes": 1504
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M03-A/control/research/draft.md",
+      "sha256": "86cf018eab00194f619b84a76424b591ca4ba1d9c4a57095d32c3efc33eb756c",
+      "bytes": 16727
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M03-A/control/research/discovery.md",
+      "sha256": "cba22e2fdcabe077d8db93d17b383426c3b99f2159e05f17d6646fc88fc71f33",
+      "bytes": 21003
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M03-A/control/research/source-map.json",
+      "sha256": "f0687b5534158c9c9d41e9164814a6f2bcb64a1dfcd0e1116c5883f84473baa9",
+      "bytes": 7465
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M03-A/control/research/revealed-plan.md",
+      "sha256": "2c0df4f2acff82294fc57884cc9be66006f719350436b570bbd044d84e1d5df4",
+      "bytes": 345
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M03-A/control/critic/source-map.json",
+      "sha256": "77cd1a25adc9f0e5df685fa4b4d8c2963f2c8e52795d8a0edd2e5f01911a865a",
+      "bytes": 6274
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M03-A/control/critic/critique.md",
+      "sha256": "f73ed8808cd7d27045cb2283e240f00b701237781b07985091e6922d89d6d9eb",
+      "bytes": 17855
+    }
+  ],
+  "method": {
+    "id": "M03",
+    "version": "v1",
+    "name": "critic-finalizer",
+    "control": "Researcher then independent critic then separate fresh reviser.",
+    "treatment": "Researcher then fresh independent critic who writes both substantive criticism and the COMPLETE final. All critique dispositions and preservation must be explicit.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Isolated finalization topology; full same scope",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T19:10:54.797526+00:00"
+}

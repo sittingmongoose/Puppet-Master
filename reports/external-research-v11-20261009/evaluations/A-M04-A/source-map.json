@@ -1,0 +1,1265 @@
+{
+  "block": "A-M04-A",
+  "kind": "fresh independent evaluator primary-source map",
+  "candidate_sources_are_not_oracles": true,
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M04-A/assignment.md",
+      "sha256": "e45d0beacc6375bfb59e7eb4ce4a8640f1342fd98d61a9471a03f6fbf0558dcc",
+      "bytes": 1980,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M04-A/input-map.json",
+      "sha256": "3180c70e32d829671700124be0b45ae468d96c7941315d1b9ca0c01f784d1ef8",
+      "bytes": 10315,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S04/brief.md",
+      "sha256": "3d8f2bf8481535c8b0c9a847811f72501aabb1195c20749639ee43a6085ff0e5",
+      "bytes": 1406,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S04/plan-root-only.md",
+      "sha256": "ba17f0ff21418aefbc6d0645d84371769ba941a45afa9f65b00c740de0ba2315",
+      "bytes": 362,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+      "sha256": "3f829f27e3320dd23098df2b9edb82ff8e751945add55b95ecd4b10b226eee15",
+      "bytes": 23983,
+      "expected_sha256": "3f829f27e3320dd23098df2b9edb82ff8e751945add55b95ecd4b10b226eee15",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/source-map.json",
+      "sha256": "795cf7adb69fb4dd488cf16029d3c2145c571a198dd563e4c1989ae43d56f2e0",
+      "bytes": 28666,
+      "expected_sha256": "795cf7adb69fb4dd488cf16029d3c2145c571a198dd563e4c1989ae43d56f2e0",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/assignment.md",
+      "sha256": "e0ca9127cc1b84a039fed0e0d0ec8309cabcd263f438016d5a55ae202ed71f5d",
+      "bytes": 2774,
+      "expected_sha256": "e0ca9127cc1b84a039fed0e0d0ec8309cabcd263f438016d5a55ae202ed71f5d",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/input-map.json",
+      "sha256": "d8bda3e4cbea1bd93f08cd65e7b90360bbc09be7378bc8db57c1c49a1ed12239",
+      "bytes": 1504,
+      "expected_sha256": "d8bda3e4cbea1bd93f08cd65e7b90360bbc09be7378bc8db57c1c49a1ed12239",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/critique.md",
+      "sha256": "50f3ee6ab4b80e379b40d9c748c74e3109102a4398248cc09fd671127a921d71",
+      "bytes": 14188,
+      "expected_sha256": "50f3ee6ab4b80e379b40d9c748c74e3109102a4398248cc09fd671127a921d71",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/source-map.json",
+      "sha256": "c5d1d666aed885876084dcb46713b131045f19786381f6e8ea1845e65feaa49b",
+      "bytes": 7281,
+      "expected_sha256": "c5d1d666aed885876084dcb46713b131045f19786381f6e8ea1845e65feaa49b",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/assignment.md",
+      "sha256": "ef6afe466f3bc8ef6db30ffaa30e8780940bb0fd1c72724b3fd85ecc081d1470",
+      "bytes": 2511,
+      "expected_sha256": "ef6afe466f3bc8ef6db30ffaa30e8780940bb0fd1c72724b3fd85ecc081d1470",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/input-map.json",
+      "sha256": "3b5a1ced7b0b65e1832b4bab7faccd0adb5b366fcb2ef424e4cf74ebbd2b0fed",
+      "bytes": 1180,
+      "expected_sha256": "3b5a1ced7b0b65e1832b4bab7faccd0adb5b366fcb2ef424e4cf74ebbd2b0fed",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/discovery.md",
+      "sha256": "cbcd63ae3ed1c6ccf5a5be59b89bf8cd6b8f3d3cfbdb29a98cc0812c74792cda",
+      "bytes": 14058,
+      "expected_sha256": "cbcd63ae3ed1c6ccf5a5be59b89bf8cd6b8f3d3cfbdb29a98cc0812c74792cda",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/draft.md",
+      "sha256": "e38c19a7f3c9ef3580b72793d09b7aa644dad15ceaf3c5709646fdf5bcc1d566",
+      "bytes": 18587,
+      "expected_sha256": "e38c19a7f3c9ef3580b72793d09b7aa644dad15ceaf3c5709646fdf5bcc1d566",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/source-map.json",
+      "sha256": "974d89798f46ba28eb435fab3b83ed1a66be5e659bea1b5a934dceb18b4eabca",
+      "bytes": 15721,
+      "expected_sha256": "974d89798f46ba28eb435fab3b83ed1a66be5e659bea1b5a934dceb18b4eabca",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/revealed-plan.md",
+      "sha256": "ba17f0ff21418aefbc6d0645d84371769ba941a45afa9f65b00c740de0ba2315",
+      "bytes": 362,
+      "expected_sha256": "ba17f0ff21418aefbc6d0645d84371769ba941a45afa9f65b00c740de0ba2315",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/plan-reveal.json",
+      "sha256": "8c9019ecc209f70942365df070e80312b8a6af5301cfd70003d1cdcaf90f49c7",
+      "bytes": 276,
+      "expected_sha256": "8c9019ecc209f70942365df070e80312b8a6af5301cfd70003d1cdcaf90f49c7",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/assignment.md",
+      "sha256": "38178e849b49e8c57fff75e569634f963f934a0a97afba3e88b435f0eeba2c7e",
+      "bytes": 2987,
+      "expected_sha256": "38178e849b49e8c57fff75e569634f963f934a0a97afba3e88b435f0eeba2c7e",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/input-map.json",
+      "sha256": "4e4e4bfea6abd6df0531b744a24d40b2fe323a6810f9d5f388cf62728d2d7a8d",
+      "bytes": 634,
+      "expected_sha256": "4e4e4bfea6abd6df0531b744a24d40b2fe323a6810f9d5f388cf62728d2d7a8d",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+      "sha256": "699a4305d8b5fb54f43caf7d3450a97c237a955221d820098c27c7146d567046",
+      "bytes": 22938,
+      "expected_sha256": "699a4305d8b5fb54f43caf7d3450a97c237a955221d820098c27c7146d567046",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/source-map.json",
+      "sha256": "1ce91a73dc7932719a97c99df83ca4a8279c1aca7bb2641e52813e3724861fc2",
+      "bytes": 23368,
+      "expected_sha256": "1ce91a73dc7932719a97c99df83ca4a8279c1aca7bb2641e52813e3724861fc2",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/assignment.md",
+      "sha256": "05c7c62bf831a932c57030909a198eb73bb5ca97b6f84bbeb745aa3c930e571c",
+      "bytes": 2902,
+      "expected_sha256": "05c7c62bf831a932c57030909a198eb73bb5ca97b6f84bbeb745aa3c930e571c",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/input-map.json",
+      "sha256": "d848c0845bb72be59ee46a176deeeae4de5b1bb34fb458246ebcca21bd3f4b34",
+      "bytes": 1526,
+      "expected_sha256": "d848c0845bb72be59ee46a176deeeae4de5b1bb34fb458246ebcca21bd3f4b34",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/critique.md",
+      "sha256": "08d386b486f523b0a4b35a84adbf18d61bf842832c6ee217eada770962f399d6",
+      "bytes": 6030,
+      "expected_sha256": "08d386b486f523b0a4b35a84adbf18d61bf842832c6ee217eada770962f399d6",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/final.md",
+      "sha256": "341123b14af2705b11b57646a8a64586c119bc7557de3487348892c99239b29c",
+      "bytes": 23475,
+      "expected_sha256": "341123b14af2705b11b57646a8a64586c119bc7557de3487348892c99239b29c",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/source-map.json",
+      "sha256": "3443140f09af92132e7a2993eb3a7a52be9895bda2d7a34a09d89b9d5cfa7576",
+      "bytes": 17443,
+      "expected_sha256": "3443140f09af92132e7a2993eb3a7a52be9895bda2d7a34a09d89b9d5cfa7576",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/assignment.md",
+      "sha256": "f9b74f6ea4318130b61a27e61e06dff0755ac57935d398dad1bbe68833de8534",
+      "bytes": 2639,
+      "expected_sha256": "f9b74f6ea4318130b61a27e61e06dff0755ac57935d398dad1bbe68833de8534",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/input-map.json",
+      "sha256": "3070871c90a09036e2cdc6891392a3a083f27d591c58abfb40af4344a7149139",
+      "bytes": 1196,
+      "expected_sha256": "3070871c90a09036e2cdc6891392a3a083f27d591c58abfb40af4344a7149139",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/discovery.md",
+      "sha256": "a98f842fef4d1f5329d3bce3ccf6b2d5908999acb2b2767300b24b8291c10bcf",
+      "bytes": 15420,
+      "expected_sha256": "a98f842fef4d1f5329d3bce3ccf6b2d5908999acb2b2767300b24b8291c10bcf",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/draft.md",
+      "sha256": "648bad78e3fb2cd4d79b2997e57569c42a7a8dcc7bfa1a2b041662d8e57702de",
+      "bytes": 20132,
+      "expected_sha256": "648bad78e3fb2cd4d79b2997e57569c42a7a8dcc7bfa1a2b041662d8e57702de",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/final.md",
+      "sha256": "432d6f1cd75fe3a415c264607e100e1081d836356dbd6dcc623cd20543d9de7c",
+      "bytes": 22549,
+      "expected_sha256": "432d6f1cd75fe3a415c264607e100e1081d836356dbd6dcc623cd20543d9de7c",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/revision-pass.md",
+      "sha256": "a7fc6b6624554ca82c00b8c92c4983dd3825c0c6c278145196c51c4db08138e0",
+      "bytes": 2962,
+      "expected_sha256": "a7fc6b6624554ca82c00b8c92c4983dd3825c0c6c278145196c51c4db08138e0",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/source-map.json",
+      "sha256": "2b0973c687128caefeb2e97944d5421a322a25a7046439f77a38f4e807c35ac8",
+      "bytes": 11423,
+      "expected_sha256": "2b0973c687128caefeb2e97944d5421a322a25a7046439f77a38f4e807c35ac8",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/revealed-plan.md",
+      "sha256": "ba17f0ff21418aefbc6d0645d84371769ba941a45afa9f65b00c740de0ba2315",
+      "bytes": 362,
+      "expected_sha256": "ba17f0ff21418aefbc6d0645d84371769ba941a45afa9f65b00c740de0ba2315",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/plan-reveal.json",
+      "sha256": "2865232ed966899542966866aba183e85e6fbc13f2b9c7316cfd876cbd81bbc5",
+      "bytes": 276,
+      "expected_sha256": "2865232ed966899542966866aba183e85e6fbc13f2b9c7316cfd876cbd81bbc5",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/assignment.md",
+      "sha256": "2b3efd813d4073dcf0f8db7e43b48b3ccf69c5892736d9a220c9dc1dc7175ddf",
+      "bytes": 3117,
+      "expected_sha256": "2b3efd813d4073dcf0f8db7e43b48b3ccf69c5892736d9a220c9dc1dc7175ddf",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/input-map.json",
+      "sha256": "75ab9032fac9c3dffc4afed6690c6430fa15bceb9099916eb110e76e6e172da6",
+      "bytes": 640,
+      "expected_sha256": "75ab9032fac9c3dffc4afed6690c6430fa15bceb9099916eb110e76e6e172da6",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/sources/README.md",
+      "sha256": "25c1d46d2b736e49609e1481325b97ce97234eeac0778706c49e3fd1206edd2a",
+      "bytes": 908,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/sources/independent-checks.md",
+      "sha256": "5d1900ea4f2aeacd64ceaef745df282d9557c2b4939604d60c4001bef949d3c8",
+      "bytes": 3917,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/sources/independent-checks.md",
+      "sha256": "86c2f13cc24b0c08c67d3f008d24486a893e52ab521b6a9753601463f9b6c6c8",
+      "bytes": 4377,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/sources/README.md",
+      "sha256": "02f04c0dae90a57c5ef7605bc6e080bfc005e29f316fc954dac39468e4a5896f",
+      "bytes": 961,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/sources/equipment-booking.md",
+      "sha256": "248cd52d4069543f994afcc3f866be768c3291db83bdaddf68b192dc6d2f2e28",
+      "bytes": 3998,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/sources/inventree-concurrency.md",
+      "sha256": "1761dfb966a4a6b34fa2ba03b5d41092762892e0f8c14d1f789c2cb3ae00db9f",
+      "bytes": 1891,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/sources/offline-consistency.md",
+      "sha256": "5c5297d41bdb73fe1539183c4a1c8f3b44a816a19a8e0022b24efd2d315da265",
+      "bytes": 2680,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/sources/stock-control.md",
+      "sha256": "13fc29b8ed35ee03c40ee8d78c75c8ee506b63f0d7a62b1c2504c0403a17c52d",
+      "bytes": 3323,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/sources/S07-inventree-recheck.md",
+      "sha256": "18825f96cd58f206aa255b1c549c94aad8a8f35517efb3a17b82aaf3bac9891e",
+      "bytes": 938,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/sources/S08-postgresql-time.md",
+      "sha256": "bdf5faca70769500de3afae27a84d7856b0bc416b58d010cc9f1e586753120eb",
+      "bytes": 1103,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/sources/S10-librebooking-recheck.md",
+      "sha256": "68610f0dd0e271a726556485db6d013a5992fe095fdb0b8fbf6f1c5d258d5361",
+      "bytes": 1583,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/sources/S11-postgresql-datetime.md",
+      "sha256": "831497be6dbeb3e774dd2134bb8de6b75af989a021aa75fa91b593d30b717e6b",
+      "bytes": 1029,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/sources/index.md",
+      "sha256": "3e9cbf44292c4b053812291bd07920c8aad327868d5251ba9a5075338d9e3da8",
+      "bytes": 853,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/sources/S10-librebooking.md",
+      "sha256": "cfd121dab23f18ac1b9ae9189dad9e567d94b7166b01dabe46ac9310044449ca",
+      "bytes": 1866,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/sources/index.md",
+      "sha256": "c044015ac3cdfe198a5e19950e9948b01d299f8c8405169d3c6c9a8a892e4564",
+      "bytes": 540,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S01-myturn.md",
+      "sha256": "31f0d04fde7226824f6731401ea57a0b3a2968db5d1b1d15fc912b3b939e1ba2",
+      "bytes": 684,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S02-pge-workflow.md",
+      "sha256": "494dc73167543f0fd1e6af92631bccb5a05bd77dd3c570ae9cd0d0d0ce5bc701",
+      "bytes": 637,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S03-fabman.md",
+      "sha256": "6c4c91febe55ed426a93eb1bab9b7c9b8d86484051fc9be12dd408589cd13b90",
+      "bytes": 671,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S04-snipe-overview.md",
+      "sha256": "2af17006252d2eb12afb04f3fab864acf64811f39867472940d72f2ec65fc052",
+      "bytes": 662,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S05-snipe-import.md",
+      "sha256": "8070b33299dde72c3e8d42d0c34f7d5f2d339ef5479ae6a679bd38515148fbbd",
+      "bytes": 863,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S06-inventree-docs.md",
+      "sha256": "065752fd93a1c8770f52c3c2713e67142cc85354b93c7ce66059efeb26b461c5",
+      "bytes": 1184,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S07-inventree-race.md",
+      "sha256": "7937bacebcbc300e244b8b5c49954901f588417cf1a18ea3c3fb496d71a710e8",
+      "bytes": 1270,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S08-postgresql-overlap.md",
+      "sha256": "31df10ea1d266b0f135167610a8d1ca59f673d9674fece0423665242362f3b71",
+      "bytes": 899,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S09-couchdb-offline.md",
+      "sha256": "0024fc380d1d714e44133d56b31ea39475d4b6bf2f297e2f0bf74eb2e4287318",
+      "bytes": 966,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/bounded-excerpts.md",
+      "sha256": "48cc2292b35c81e191c33d94aa53e8ed57ea865e37ebe456595666c314adb2b9",
+      "bytes": 1790,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/index.md",
+      "sha256": "f0625e5b7fc84ba48602fd9a8e453fd5800039e64d80eef282631f2a1432e099",
+      "bytes": 1028,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    }
+  ],
+  "sources": [
+    {
+      "id": "E01",
+      "title": "Snipe-IT v8.8.0",
+      "url": "https://github.com/grokability/snipe-it/releases/tag/v8.8.0",
+      "version_or_snapshot": "v8.8.0; 2c466fa; 2026-09-30",
+      "section_or_symbol": "Unified Calendar; Requestables Overhaul; PHP requirement",
+      "independently_observed": "Dated requests and fulfillment links appear on a unified calendar. PHP >=8.2 is required; 8.4+ recommended. This release's narrative does not describe the CSV mapping/preview wizard.",
+      "applicability": "Supports N2's corrected borrowing-workflow scope; does not establish request holds, overlap arbitration, or offline correctness.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E02",
+      "title": "Snipe-IT v8.7.0",
+      "url": "https://github.com/grokability/snipe-it/releases/tag/v8.7.0",
+      "version_or_snapshot": "v8.7.0; 1d05a7c; 2026-08-11",
+      "section_or_symbol": "Importer wizard, web lines 196–198",
+      "independently_observed": "This release describes a multi-step CSV importer with column mapping, preview, and row-error presentation.",
+      "applicability": "Shows N2's attribution of that description to v8.8.0 is inaccurate. Feature inheritance remains plausible and is not disputed.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E03",
+      "title": "Snipe-IT overview",
+      "url": "https://snipe-it.readme.io/docs/overview",
+      "version_or_snapshot": "Mutable official guide, retrieved 2026-10-09",
+      "section_or_symbol": "Asset tags; Checking In/Out; Status Labels; Consumables",
+      "independently_observed": "Unique asset tags identify assets. Checkout prevents another assignment before checkin. Status categories determine assignability; consumables are issued without return.",
+      "applicability": "Custody and availability examples, not proof of future reservation concurrency or makerspace work orders.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E04",
+      "title": "Snipe-IT asset importer",
+      "url": "https://snipe-it.readme.io/docs/importing-assets",
+      "version_or_snapshot": "Mutable official guide, retrieved 2026-10-09",
+      "section_or_symbol": "Field mapping; ID/Asset Tag; audit fields; custom fields",
+      "independently_observed": "ID takes precedence for update matching, otherwise Asset Tag; Name is mutable. Some imported audit dates do not create audit events. Custom fields must exist and match names.",
+      "applicability": "Supports rejecting blind mutable-name updates; source does not mandate proposed hashes, rollback, or immutable history.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E05",
+      "title": "Snipe-IT history importer",
+      "url": "https://snipe-it.readme.io/docs/importing-history",
+      "version_or_snapshot": "Guide describes v3.3 introduction; retrieved 2026-10-09",
+      "section_or_symbol": "Existing entities; Date/Asset Tag/Name columns; chronological ordering",
+      "independently_observed": "Assets and users must already exist; unsupported extra columns are ignored and chronological order matters. Date parsing has format limitations.",
+      "applicability": "Current inventory and historical import are distinct. Product-specific restrictions are not universal rules.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E06",
+      "title": "Snipe-IT requestable assets",
+      "url": "https://snipe-it.readme.io/docs/requestable-assets",
+      "version_or_snapshot": "Mutable guide, retrieved 2026-10-09",
+      "section_or_symbol": "Requestable assets and models",
+      "independently_observed": "Both specific assets and asset models may be requested.",
+      "applicability": "Older overview is narrower than v8.8.0 release; neither this guide nor display alone proves no double booking.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E07",
+      "title": "PostgreSQL range types",
+      "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+      "version_or_snapshot": "PostgreSQL 18",
+      "section_or_symbol": "§§8.17.1, 8.17.6, 8.17.7, 8.17.10",
+      "independently_observed": "tsrange uses timestamps without time zone; tstzrange uses timestamps with time zone. Two-argument constructors use [). Timestamp ranges are continuous. GiST exclusion with && prevents overlap; btree_gist permits scalar equality plus overlap.",
+      "applicability": "Supports both authority mechanisms and N1's type caveat. Requires correct resource key, interval validity, state scope, and all authoritative writes; cannot protect partitioned independent authorities.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E08",
+      "title": "PostgreSQL CREATE TABLE",
+      "url": "https://www.postgresql.org/docs/18/sql-createtable.html",
+      "version_or_snapshot": "PostgreSQL 18",
+      "section_or_symbol": "EXCLUDE; WHERE predicate; DEFERRABLE",
+      "independently_observed": "An exclusion constraint can cover a predicate-selected subset via a partial index. Operators need suitable classes. NOT DEFERRABLE is the default.",
+      "applicability": "Supports active-state filtering as an implementation choice. Product states, buffers, nullability, and override policy are not furnished by the database.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E09",
+      "title": "PostgreSQL date/time",
+      "url": "https://www.postgresql.org/docs/18/datatype-datetime.html",
+      "version_or_snapshot": "PostgreSQL 18",
+      "section_or_symbol": "§8.5.1.3 Time Stamps",
+      "independently_observed": "Zoned input is converted to UTC; the original zone is not retained. Unzoned timestamp ignores a zone annotation. Missing zone uses configured TimeZone.",
+      "applicability": "N1 correctly separates instants from the retained site/display zone. N2 leaves representation to owner choice instead of providing a ready SQL schema.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E10",
+      "title": "PostgreSQL SET CONSTRAINTS",
+      "url": "https://www.postgresql.org/docs/18/sql-set-constraints.html",
+      "version_or_snapshot": "PostgreSQL 18",
+      "section_or_symbol": "Description",
+      "independently_observed": "Immediate constraints check at statement end; deferred constraints at transaction commit. Nondeferrable constraints stay immediate.",
+      "applicability": "No candidate claim was treated as proof of a locally executed transaction or deployed schema.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E11",
+      "title": "CouchDB conflicts",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "version_or_snapshot": "Stable documentation identifies CouchDB 3.5; mutable path",
+      "section_or_symbol": "§2.3 conflicts, winner selection and application resolution",
+      "independently_observed": "Replicas can retain conflicting revisions; deterministic winner selection and ordinary views expose one branch. Applications must find and resolve other branches.",
+      "applicability": "Both finals correctly distinguish document convergence from physical-tool exclusivity, including separate booking documents with no shared-document conflict.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E12",
+      "title": "PouchDB conflicts",
+      "url": "https://pouchdb.com/guides/conflicts.html",
+      "version_or_snapshot": "Mutable project guide, retrieved 2026-10-09",
+      "section_or_symbol": "Eventual conflicts; conflict discovery and resolution",
+      "independently_observed": "Disconnected updates can succeed locally; conflicts later retain discoverable branches while an arbitrary deterministic winner is returned. Application policy selects resolution.",
+      "applicability": "Timestamp policy is an application choice, not evidence that losing reservations are physically valid.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E13",
+      "title": "PouchDB replication",
+      "url": "https://pouchdb.com/guides/replication.html",
+      "version_or_snapshot": "Mutable project guide, retrieved 2026-10-09",
+      "section_or_symbol": "Replication; live and retry options",
+      "independently_observed": "Multi-master replication permits writes at different nodes. Live replication and retry are distinct options; outage recovery needs explicit retry behavior.",
+      "applicability": "Supports local capture alternative; not an operationally free or globally exclusive booking system.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E14",
+      "title": "InvenTree stock",
+      "url": "https://docs.inventree.org/en/stable/stock/",
+      "version_or_snapshot": "Mutable stable documentation, retrieved 2026-10-09",
+      "section_or_symbol": "Stock item identity, locations and tracking",
+      "independently_observed": "Stock records carry part, location, quantity and optional serial identity; locations can be nested. Actor-linked stock history is documented.",
+      "applicability": "Supports separate serialized custody and quantity/location models. Does not demonstrate a timed lending reservation.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E15",
+      "title": "InvenTree stock availability",
+      "url": "https://docs.inventree.org/en/stable/stock/availability/",
+      "version_or_snapshot": "Mutable stable documentation, retrieved 2026-10-09",
+      "section_or_symbol": "In stock; Allocated; Available; Consumption",
+      "independently_observed": "Allocation commits stock while on-hand quantity remains until consumption; available is in-stock minus allocated.",
+      "applicability": "Order/build quantity commitments are a scoped analogy, not calendar bookings or proof all versions/backends enforce an invariant.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E16",
+      "title": "InvenTree units",
+      "url": "https://docs.inventree.org/en/latest/concepts/units/",
+      "version_or_snapshot": "Mutable latest documentation, retrieved 2026-10-09",
+      "section_or_symbol": "Unit Conversion; case sensitivity; Piece Units; Custom Units",
+      "independently_observed": "Pint supports compatible conversions. Symbols are case-sensitive; piece/each/dozen/hundred/thousand are supported dimensionless units. Custom dimensionless units use definition 1.",
+      "applicability": "Supports category-specific units and validation. Integer-only stock is a proposed simple starting policy, not an upstream restriction.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E17",
+      "title": "InvenTree parts",
+      "url": "https://docs.inventree.org/en/latest/part/",
+      "version_or_snapshot": "Mutable latest documentation, retrieved 2026-10-09",
+      "section_or_symbol": "Units of Measure, web line 418",
+      "independently_observed": "Default blank part unit means dimensionless pieces; physical units and compatible supplier units are also supported.",
+      "applicability": "Confirms N2's blank-unit statement directly; an indexed older release alone was not used to establish the current documentation.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E18",
+      "title": "InvenTree stock tracking",
+      "url": "https://docs.inventree.org/en/latest/stock/tracking/",
+      "version_or_snapshot": "Mutable latest documentation, retrieved 2026-10-09",
+      "section_or_symbol": "Tracking entries; deleting stock; Delete Old Entries",
+      "independently_observed": "Tracking records actor/date/delta; part history can outlive a deleted stock item. Automatic old-entry deletion is disabled by default; the age setting is 365 days when used.",
+      "applicability": "Both finals keep retention a user policy. Condensing numeric settings does not materially remove the decision.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E19",
+      "title": "InvenTree bulk data import",
+      "url": "https://docs.inventree.org/en/latest/concepts/data_import/",
+      "version_or_snapshot": "Mutable latest documentation, retrieved 2026-10-09",
+      "section_or_symbol": "Safety; permissions; mapping; row validation; updating",
+      "independently_observed": "Import is nonreversible; backup advised. It stages rows, maps fields, validates and permits confirmation. Related models must exist; create and update cannot mix in one session.",
+      "applicability": "Supports N2's staged-import caveat; proposed target-system rollback remains unimplemented.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E20",
+      "title": "InvenTree plugins",
+      "url": "https://docs.inventree.org/en/latest/plugins/develop/",
+      "version_or_snapshot": "Mutable latest documentation, retrieved 2026-10-09",
+      "section_or_symbol": "Plugin development; internal API stability; mixins",
+      "independently_observed": "Plugins extend multiple capabilities through mixins; internal APIs are not promised stable. Plugin functionality is disabled by default.",
+      "applicability": "Supports N2's optional extension path and upgrade burden. No need to build plugin infrastructure for this small brief.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E21",
+      "title": "InvenTree build allocation",
+      "url": "https://docs.inventree.org/en/stable/manufacturing/allocate/",
+      "version_or_snapshot": "Mutable stable documentation, retrieved 2026-10-09",
+      "section_or_symbol": "Consuming Stock",
+      "independently_observed": "Build allocation commits quantity; completion consumes untracked parts or installs tracked ones.",
+      "applicability": "Governing domain applicability check for N2's concurrency example: quantity workflow, not date-window lending.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E22",
+      "title": "InvenTree allocation race PR",
+      "url": "https://github.com/inventree/InvenTree/pull/12478",
+      "version_or_snapshot": "PR #12478; merged 2026-07-28",
+      "section_or_symbol": "PR problem report",
+      "independently_observed": "Two order allocations against the same five units could both succeed because availability was checked without locking the stock row.",
+      "applicability": "Directly verifies the reported failure underlying N2's retained evolution narrative.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E23",
+      "title": "InvenTree allocation patch/tests",
+      "url": "https://github.com/inventree/InvenTree/pull/12478/files",
+      "version_or_snapshot": "Merged PR diff, retrieved 2026-10-09",
+      "section_or_symbol": "Build.allocate_stock; BuildAllocateStockConcurrencyTest; stock locking and revalidation hunks",
+      "independently_observed": "The patch locks stock rows in primary-key order before quantity revalidation. Added transaction tests use threads/connections and a select_for_update capability guard.",
+      "applicability": "Code and assertions inspected, not run. This bounded review does not certify race scheduling, every path, backend support, or whole-product concurrency.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E24",
+      "title": "InvenTree 1.5.0",
+      "url": "https://github.com/inventree/InvenTree/releases/tag/1.5.0",
+      "version_or_snapshot": "1.5.0; 6a6736b; 2026-08-11",
+      "section_or_symbol": "What's Changed, #12478",
+      "independently_observed": "The tagged release lists the allocation race fix.",
+      "applicability": "Completes N2's issue/patch/test/release evidence without inferring local deployment or runtime success.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E25",
+      "title": "InvenTree take-stock race PR",
+      "url": "https://github.com/inventree/InvenTree/pull/12718",
+      "version_or_snapshot": "PR #12718; master merge 2dca27f; 2026-08-27",
+      "section_or_symbol": "Problem report; merge; backport references",
+      "independently_observed": "The PR reports concurrent StockItem.take_stock over-consumption, merged to master, and links its 1.5.x backport.",
+      "applicability": "Independently supports N1 discovery's evolution subject and establishes source-grounded preservation loss.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E26",
+      "title": "InvenTree take-stock backport",
+      "url": "https://github.com/inventree/InvenTree/pull/12719",
+      "version_or_snapshot": "PR #12719; 1.5.x; 4446c95; 2026-08-27",
+      "section_or_symbol": "Backport and merge",
+      "independently_observed": "The maintenance-branch PR explicitly backports #12718.",
+      "applicability": "Release applicability has to be retained when presenting the evolution finding; the final's S07 reference alone does not communicate it.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E27",
+      "title": "InvenTree take-stock patch/tests",
+      "url": "https://github.com/inventree/InvenTree/commit/4446c95",
+      "version_or_snapshot": "4446c95; cherry-pick of 2dca27f",
+      "section_or_symbol": "stock/models.py StockItem.take_stock; stock/tests.py StockItemTakeStockConcurrencyTest",
+      "independently_observed": "The quantity cap moves after row lock/refresh. A guarded separate-connection threaded test asserts one successful removal and quantity zero.",
+      "applicability": "Quantity depletion analogue; no independent execution occurred. Provides the specific useful mechanism absent from N1's delivered final.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E28",
+      "title": "InvenTree 1.5.3",
+      "url": "https://github.com/inventree/InvenTree/releases/tag/1.5.3",
+      "version_or_snapshot": "1.5.3; 1930db0; 2026-09-08",
+      "section_or_symbol": "What's Changed, #12718/#12719",
+      "independently_observed": "This tagged maintenance release lists the take-stock race fix.",
+      "applicability": "Completes the verified N1 discovery evolution chain. N1 final contains no release identity.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E29",
+      "title": "Cheqroom reservation lifecycle",
+      "url": "https://knowledge.cheqroom.com/helpcenter/how-to-create-and-manage-reservations",
+      "version_or_snapshot": "Current official knowledge base; article updated 2026-06-18",
+      "section_or_symbol": "Finalizing reservations; status definitions",
+      "independently_observed": "Draft reservations do not hold equipment; Reserved bookings do. Conversion to checkout records custody.",
+      "applicability": "Supports N2 lifecycle and state-scoped invariant. Reservation drafts differ from checkout drafts; no blanket draft statement was inferred.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E30",
+      "title": "Cheqroom booking conflicts",
+      "url": "https://knowledge.cheqroom.com/helpcenter/preventing-booking-conflicts",
+      "version_or_snapshot": "Current official knowledge base, retrieved 2026-10-09",
+      "section_or_symbol": "Conflict controls; role overrides",
+      "independently_observed": "Ordinary conflict rules flag overlapping or other-location items. Conflict-ignore permission and custom-role plan availability affect overrides.",
+      "applicability": "N2 correctly leaves current subscription entitlements unknown; feature docs do not establish race safety.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E31",
+      "title": "Cheqroom cross-location booking",
+      "url": "https://knowledge.cheqroom.com/helpcenter/why-am-i-unable-to-create-a-booking-across-multiple-locations",
+      "version_or_snapshot": "Current official knowledge base, retrieved 2026-10-09",
+      "section_or_symbol": "Booking pickup location; ignore-conflicts permission",
+      "independently_observed": "Booking location denotes pickup; differently stored items conflict unless the role can override.",
+      "applicability": "Supports site-aware workflow, not proof that all overrides are safe or maker policy.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E32",
+      "title": "Cheqroom checkout and returns",
+      "url": "https://knowledge.cheqroom.com/helpcenter/how-to-create-and-manage-check-outs-and-check-ins",
+      "version_or_snapshot": "Article updated 2026-06-18",
+      "section_or_symbol": "Checkout status; partial check-in",
+      "independently_observed": "Checkout marks physical custody; partial return releases returned items while the rest remain outstanding.",
+      "applicability": "N2 separates reservation and custody correctly. No member/staff product trial was executed.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E33",
+      "title": "Cheqroom reports",
+      "url": "https://help.cheqroom.com/en/articles/6193193-generate-reports-from-cheqroom",
+      "version_or_snapshot": "Indexed official help content; migrating URL",
+      "section_or_symbol": "Usage, custody, issues and locations reports",
+      "independently_observed": "Official indexed content describes operational reporting categories.",
+      "applicability": "A feature lead only; exact live plan and migrated URL remain a retrieval limitation.",
+      "status": "indexed_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E34",
+      "title": "MyTurn lending-library features",
+      "url": "https://myturn.com/lending-libraries/",
+      "version_or_snapshot": "Mutable vendor page, retrieved 2026-10-09",
+      "section_or_symbol": "Lending Library Software Features",
+      "independently_observed": "Describes checkin/out, barcode scanning, multiple locations/transfers, reminders, reservations, import/export and integrations.",
+      "applicability": "Useful tool-lending comparator; vendor features are not concurrency, offline, pricing or contract assurance.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E35",
+      "title": "PG&E lending program",
+      "url": "https://pge.myturn.com/library/",
+      "version_or_snapshot": "Primary indexed page; crawled about three weeks before retrieval on 2026-10-09",
+      "section_or_symbol": "Reservation approval and pickup instructions",
+      "independently_observed": "Program requests receive staff review/approval, with two-day lead time and staffed appointment windows.",
+      "applicability": "Confirms the scoped N1 example through indexed primary content after direct retrieval failed. Not a universal MyTurn setting; live present behavior is untested.",
+      "status": "indexed_primary_after_direct_failure",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E36",
+      "title": "Fabman maker workflow",
+      "url": "https://www.fabman.io/",
+      "version_or_snapshot": "Mutable vendor page, retrieved 2026-10-09",
+      "section_or_symbol": "Bookings; access/training; machine integration; API",
+      "independently_observed": "Describes machine/room/desk bookings, member training/access, optional billing and machine integration, plus API extension.",
+      "applicability": "Supports N1's maker-specific discovery. Does not certify import, consumables, offline behavior or overlap safety.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E37",
+      "title": "Fabman Python wrapper",
+      "url": "https://fabman-api.readthedocs.io/en/stable/introduction.html",
+      "version_or_snapshot": "Python wrapper documentation 1.2.10; revision f05e23e3; copyright University of Texas at Austin/Texas Inventionworks",
+      "section_or_symbol": "Introduction; corresponding class index includes Booking",
+      "independently_observed": "This is customer Python wrapper documentation, distinct from Fabman's own API version/documentation.",
+      "applicability": "N1's wording and source publisher blur wrapper provenance. Booking as a feature remains independently supported by vendor sources.",
+      "status": "primary_for_wrapper_not_vendor_api",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E38",
+      "title": "Fabman official API",
+      "url": "https://github.com/FabmanHQ/fabman-api",
+      "version_or_snapshot": "Vendor-owned mutable repository, retrieved 2026-10-09; REST /api/v1",
+      "section_or_symbol": "Entities; Webhooks; Optimistic locking",
+      "independently_observed": "Vendor documentation lists Bookings and webhooks; optimistic version checks are described for most entities.",
+      "applicability": "Confirms an extension/API lead without promoting wrapper 1.2.10 to a vendor REST release or claiming booking-overlap invariants.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E39",
+      "title": "LibreBooking README",
+      "url": "https://github.com/LibreBooking/librebooking",
+      "version_or_snapshot": "Mutable develop branch, retrieved 2026-10-09; no immutable HEAD bound",
+      "section_or_symbol": "Security notices; Features; Installation",
+      "independently_observed": "Describes scheduling, waitlists, roles, quotas, reporting/calendar integration and PHP/Apache/MySQL or MariaDB deployment. Announces an undisclosed high-impact security release for October 13 and warns about pre-7.0.0 admin takeover.",
+      "applicability": "Supports N1's optional scheduler and hosting/security caveats. The new undisclosed issue's affected versions cannot be inferred from the earlier warning.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    },
+    {
+      "id": "E40",
+      "title": "LibreBooking v7.0.0",
+      "url": "https://github.com/LibreBooking/librebooking/releases/tag/v7.0.0",
+      "version_or_snapshot": "v7.0.0; 422b4b0; 2026-10-06",
+      "section_or_symbol": "Release identity; upgrade changes",
+      "independently_observed": "Tagged release identity matches N1's account; changes include removal of the web migration path.",
+      "applicability": "Confirms release citation; does not bind the later mutable security notice to this release.",
+      "status": "direct_primary",
+      "access_window_utc": "2026-10-09T18:58:01Z/2026-10-09T19:08:00Z",
+      "execution": "Public source retrieval and reading; no source code, test, API mutation, or executable run."
+    }
+  ],
+  "observed_operations": {
+    "method": "Independent public primary retrieval through web open/find/search, followed by source and code/test/release reading; frozen permitted files read through local text commands.",
+    "sources": [
+      {
+        "id": "E01",
+        "url": "https://github.com/grokability/snipe-it/releases/tag/v8.8.0",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E02",
+        "url": "https://github.com/grokability/snipe-it/releases/tag/v8.7.0",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E03",
+        "url": "https://snipe-it.readme.io/docs/overview",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E04",
+        "url": "https://snipe-it.readme.io/docs/importing-assets",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E05",
+        "url": "https://snipe-it.readme.io/docs/importing-history",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E06",
+        "url": "https://snipe-it.readme.io/docs/requestable-assets",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E07",
+        "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E08",
+        "url": "https://www.postgresql.org/docs/18/sql-createtable.html",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E09",
+        "url": "https://www.postgresql.org/docs/18/datatype-datetime.html",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E10",
+        "url": "https://www.postgresql.org/docs/18/sql-set-constraints.html",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E11",
+        "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E12",
+        "url": "https://pouchdb.com/guides/conflicts.html",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E13",
+        "url": "https://pouchdb.com/guides/replication.html",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E14",
+        "url": "https://docs.inventree.org/en/stable/stock/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E15",
+        "url": "https://docs.inventree.org/en/stable/stock/availability/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E16",
+        "url": "https://docs.inventree.org/en/latest/concepts/units/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E17",
+        "url": "https://docs.inventree.org/en/latest/part/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E18",
+        "url": "https://docs.inventree.org/en/latest/stock/tracking/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E19",
+        "url": "https://docs.inventree.org/en/latest/concepts/data_import/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E20",
+        "url": "https://docs.inventree.org/en/latest/plugins/develop/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E21",
+        "url": "https://docs.inventree.org/en/stable/manufacturing/allocate/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E22",
+        "url": "https://github.com/inventree/InvenTree/pull/12478",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E23",
+        "url": "https://github.com/inventree/InvenTree/pull/12478/files",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E24",
+        "url": "https://github.com/inventree/InvenTree/releases/tag/1.5.0",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E25",
+        "url": "https://github.com/inventree/InvenTree/pull/12718",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E26",
+        "url": "https://github.com/inventree/InvenTree/pull/12719",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E27",
+        "url": "https://github.com/inventree/InvenTree/commit/4446c95",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E28",
+        "url": "https://github.com/inventree/InvenTree/releases/tag/1.5.3",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E29",
+        "url": "https://knowledge.cheqroom.com/helpcenter/how-to-create-and-manage-reservations",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E30",
+        "url": "https://knowledge.cheqroom.com/helpcenter/preventing-booking-conflicts",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E31",
+        "url": "https://knowledge.cheqroom.com/helpcenter/why-am-i-unable-to-create-a-booking-across-multiple-locations",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E32",
+        "url": "https://knowledge.cheqroom.com/helpcenter/how-to-create-and-manage-check-outs-and-check-ins",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E33",
+        "url": "https://help.cheqroom.com/en/articles/6193193-generate-reports-from-cheqroom",
+        "status": "indexed_primary",
+        "operation": "search/indexed primary reading"
+      },
+      {
+        "id": "E34",
+        "url": "https://myturn.com/lending-libraries/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E35",
+        "url": "https://pge.myturn.com/library/",
+        "status": "indexed_primary_after_direct_failure",
+        "operation": "search/indexed primary reading"
+      },
+      {
+        "id": "E36",
+        "url": "https://www.fabman.io/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E37",
+        "url": "https://fabman-api.readthedocs.io/en/stable/introduction.html",
+        "status": "primary_for_wrapper_not_vendor_api",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E38",
+        "url": "https://github.com/FabmanHQ/fabman-api",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E39",
+        "url": "https://github.com/LibreBooking/librebooking",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E40",
+        "url": "https://github.com/LibreBooking/librebooking/releases/tag/v7.0.0",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      }
+    ],
+    "failed_or_migrated": [
+      {
+        "url": "https://pge.myturn.com/library/",
+        "result": "Direct web retrieval returned Internal Error; independent indexed primary search recovered approval/two-day content. Candidate critic-stage HTTP 403 remains its own provenance, not evaluator result."
+      },
+      {
+        "url": "https://help.cheqroom.com/en/articles/9515148-how-to-create-and-manage-reservations",
+        "result": "Legacy direct retrieval failed/redirected to generic help search; current official knowledge.cheqroom.com article recovered."
+      },
+      {
+        "url": "https://help.cheqroom.com/en/articles/1884304-preventing-booking-conflicts",
+        "result": "Legacy help source inaccessible; current official knowledge.cheqroom.com conflict article recovered."
+      }
+    ],
+    "operation_count": null,
+    "count_limit": "No invented operation count; source records are coverage groupings, not a number-based quality measure."
+  },
+  "remaining_required_primary_checks": [],
+  "complete_for_assessment": true,
+  "limits": "Live sources are current evaluator observations, not proof of what an earlier agent actually fetched. Mutable docs are not bound to an invented commit. Indexed primary access is distinguished from successful direct access; test source/assertions are distinguished from executed tests."
+}

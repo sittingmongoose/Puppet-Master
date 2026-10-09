@@ -1,0 +1,1681 @@
+{
+  "block": "A-M10-B",
+  "case": "S04",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/assignment.md",
+      "sha256": "92dc3e5d7c7dac929af59fc36dee83e36a7746ce093943581485d2c956561b95"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/input-map.json",
+      "sha256": "a2cf0be480ef5fcf74e70ceffd4ca8b451a3346085d330a0e70ecc88b56d8263"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S04/brief.md",
+      "sha256": "3d8f2bf8481535c8b0c9a847811f72501aabb1195c20749639ee43a6085ff0e5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S04/plan-root-only.md",
+      "sha256": "ba17f0ff21418aefbc6d0645d84371769ba941a45afa9f65b00c740de0ba2315"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/reviser/final.md",
+      "sha256": "597f2c54a96e2013f78e15c8c92ba5e49f0a89071c17868eafc7a853f66eb3ba"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/reviser/source-map.json",
+      "sha256": "63781361941f38cc0946260f0cc0afa1492d092c71aff28a996781c651b5e272"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/reviser/assignment.md",
+      "sha256": "73c1cb17a040577d00dc69d696d7a7b535366f47eda9402b7aa0a7c35da2a160"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/reviser/input-map.json",
+      "sha256": "461b2fca54a2a6fbbecb3f11040a9bbe187172a7a5a5500a9f047e5d1e36d4bb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/critic/critique.md",
+      "sha256": "e3778858a859f84cf37be7639ab5d1e4e4acdaa38dc0678155059cd44febf258"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/critic/source-map.json",
+      "sha256": "e04ef165dac57859a30ea1babdec02dc7d9236c3916b051511a10c78d77e02c1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/critic/assignment.md",
+      "sha256": "3616a2ce3bbc8947f37076756c364ebf69a20a3fab7d5e831888e5e5eb8506b3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/critic/input-map.json",
+      "sha256": "33fbf45eab88e3729f088b2b94bc95752bf21ae3eb461dc5298a4087ccd7e620"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/research/discovery.md",
+      "sha256": "9819fa461146b1f616bb194274b0d87d6a42018b14cea3f10322838abfd9274d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/research/draft.md",
+      "sha256": "7473991e28b0587a7d4915edbc828b1017a1b0e1e424eeacd85890763b7ae2bc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/research/source-map.json",
+      "sha256": "75e6cf36d4b201c8ca3b7f20054a9031f27a9dd44567da22dc63fa79916de67c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/research/revealed-plan.md",
+      "sha256": "ba17f0ff21418aefbc6d0645d84371769ba941a45afa9f65b00c740de0ba2315"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/research/plan-reveal.json",
+      "sha256": "28d5f0f00bd6a668132ee63b981a2debc4b69f16f510b8e179235f614b23e8dd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/research/assignment.md",
+      "sha256": "d95d572f5123253c3ff73c8eaf3ae6a0b7b1522d5a7489afa594a6132800e524"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/research/input-map.json",
+      "sha256": "f6df0ca03f8f42a475c09f2e30fadc987c933538f39f9a6728ba1cbd8a430377"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/reviser/final.md",
+      "sha256": "e2a9c7b7d8a03abdcb8978a7aa56e62d837f2adcb0e7197c93d114c76c8e16c0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/reviser/source-map.json",
+      "sha256": "501d81de0809c864c514aa399c5d2c0d6be043cb2a9f19e82a71627ab1116dc0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/reviser/assignment.md",
+      "sha256": "f3e12c890e161e340c1f3132665e973f727887e68a325264ec0f5d4dfe385479"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/reviser/input-map.json",
+      "sha256": "18a55a7efed1d6df09d8e5d0976244457771c90d59611b2b72759da5fbf8b44c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/critic/critique.md",
+      "sha256": "dc0263bd5e90a3433c3af387cecff4a3c976118732b207687a266f1d9220e7ac"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/critic/source-map.json",
+      "sha256": "8835e25c771a71cad9d256b98b410f790a0381aa53445aa0be76d88dda9c35d0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/critic/assignment.md",
+      "sha256": "bfa03af7ed327c5041cb8525685310f71a39bfb8b6e5c3e094e6d2eb9353b27f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/critic/input-map.json",
+      "sha256": "8b50aa5a841ceb8a2ac901b620ec5858e6c9b12d9e88a9a51fe92b9b26649902"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/discovery.md",
+      "sha256": "7d1567d93885d6bf278101cfb250b0d1c7603a68268b6ae30555dbcaaecf9362"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/draft.md",
+      "sha256": "6ba53c145ee4d597d13a8b694d438c2ef7ac6a088c5f58c386cf18e6c19a8e55"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/source-map.json",
+      "sha256": "d23523bdbc659a639b8f12c5042ac69c9a4e9272245fb5815b112834a6388747"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/revealed-plan.md",
+      "sha256": "ba17f0ff21418aefbc6d0645d84371769ba941a45afa9f65b00c740de0ba2315"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/plan-reveal.json",
+      "sha256": "f1bae095c91e3526719dc0bde9d7db0e76603c66e9246775b960a68d79ca295c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/assignment.md",
+      "sha256": "b97ef9e9fdc1d7f44d40264fa0979270b5ebcda17cf32d8d6b68aa0a8c2208fc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/input-map.json",
+      "sha256": "db99c5b96a5675c7a6fd2cb5fd6030c86460737277e38f59413e12f3d2ecf488"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/reviser/sources/index.md",
+      "sha256": "fd21b39b4421c1cb7bdb8cf3a267ae6582925d352efc1431556671ae75f9b251"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/critic/sources/index.md",
+      "sha256": "175584cabc3aecc917dbc6cc069e85e7a218b8dc59b3fcadbee019ccaf842993"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/research/sources/index.md",
+      "sha256": "86c39c34006318ff64efaf7afc1a5789fd93cb3db46a45a523595dfcc601687b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/reviser/sources/index.md",
+      "sha256": "bc4fe57875223e1f9d020f39edfd4e2cf471728176c1f68028e4acc7f72be927"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/critic/sources/C01-postgres-constraints.md",
+      "sha256": "a26efacb8b5effb43e55a03b4945845824a091257511a279ec5f4fb3a61abef6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/critic/sources/C02-pouchdb-conflicts.md",
+      "sha256": "eda8d8a546c27a4000b24e0e81a96babb2eede43d972d05848197ffad3dbe005"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/critic/sources/C03-papaparse-results.md",
+      "sha256": "1e3d0b0384be2f068de6459aee3e4e67bfcbbee925f1fa612c502101683aec3c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/critic/sources/index.md",
+      "sha256": "9fe02fdf8f6a0ec4990004cb50eaf76f48ae07722725647199e644f6e8568e70"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/sources/S01-circulate.md",
+      "sha256": "8bb4bec0b0ff940bb30c14ea67c578034f371cc9a3986d7e4776f1ef05357380"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/sources/S02-postgres-exclusion.md",
+      "sha256": "62547ee80969d4f97554db4ec8580f2f025a35571572a23d8fa4786cf89430e9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/sources/S03-pouchdb-replication.md",
+      "sha256": "591cb850583f4239d1ab5add4588bbe664727e8b3ac5803ddd0dd14543ea2637"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/sources/S04-pouchdb-conflicts.md",
+      "sha256": "0827a2ea870bb23d7eba9b35fd0f8c9956d69952e615f5b64c2d210c6d8543d4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/sources/S05-papaparse.md",
+      "sha256": "21652830aa86161f5adb66f6d088fa18d50f2eb46e14a08e7ce3093d2d2f97b1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/sources/S06-snipeit.md",
+      "sha256": "39c42ad50e09b1e08dbd531045640ce757c9ce7e1e60ebd16e887637d0dc0174"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/sources/S07-powersync.md",
+      "sha256": "9897765ef2008d124593bf26474f4616262963871751f89b92ce286e9092e133"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/sources/S08-inventree.md",
+      "sha256": "0dbfd7505453350a94dcf312b84a913c9caaabc967ebcd592db0fb7cefcfa0ff"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/sources/S09-yale-availability.md",
+      "sha256": "d72aa9f501e167f02073baab05725b56d58558f983f83dc8a61837e1ec44d917"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/sources/S10-csv-fix.md",
+      "sha256": "697d0d73e6e044712e2463d3ca6920dd2a34e245907cea3b82e10bfec8b43faa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/sources/S12-pocketbase-litestream.md",
+      "sha256": "a59d60bbf5402817be2e5499d57eac5ce14f6c76cb36e5325e99882469b2b00c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/sources/S14-lending-landscape.md",
+      "sha256": "174ff956e83ea5e099c5a0ab0e0b566e8eef5ad75b5bda933d4df74d1519d049"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/sources/S15-csv-breakage.md",
+      "sha256": "e8392f6bd0029f26104fbefe36b02328fb275625b171334fdb7b33d2b991c50c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/sources/S16-conflict-secondaries.md",
+      "sha256": "3480b161a47c468204300ecb252f0a52c3d0853fed42ae6440aa00ac78227a3e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/sources/S17-inventory-comparisons.md",
+      "sha256": "48f4011defa16b2f5b304e094f6b7238c5e1eab1980d5132b952ef241765603a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/research/sources/index.md",
+      "sha256": "b580cbe2f983d70789a0955c3ae93ff153202f82df7d7b012c8ae3306779828b"
+    }
+  ],
+  "arms": {
+    "N2": {
+      "actual_arm": "control",
+      "final_delivery": true,
+      "grade": "FAIL",
+      "material_findings": [
+        {
+          "id": "N2-F01",
+          "title": "An existing skip-conflicts API parameter is misreported as a missing capability",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/reviser/final.md",
+          "candidate_locator": "lines 198\u2013204 and 345\u2013349",
+          "candidate_passage": "the reservation API has no parameter matching the GUI\u2019s \u201cSkip conflicting bookings\u201d \u2026 PR #1235 \u2026 may be closing it",
+          "original_obligation": "O2 governing code facts and O3 accurate issue/fix/evolution chain; O6 API/GUI parity applicability",
+          "primary_evidence": [
+            {
+              "id": "Libre-1220",
+              "url": "https://api.github.com/repos/librebooking/librebooking/issues/1220",
+              "version_or_locator": "LibreBooking issue #1220, opened 2026-03-24, closed 2026-03-26",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/Libre-1220.txt",
+              "sha256": "ca9f9ab8d26d65b422b1cd2ae80ddcf12d231ff11c3a7a47acd610336685fcc1"
+            },
+            {
+              "id": "Libre-1235",
+              "url": "https://api.github.com/repos/librebooking/librebooking/pulls/1235",
+              "version_or_locator": "LibreBooking merged PR #1235, merged 2026-03-26; merge 6f10d2fd654e1e744887826f33a8701b842d8a91",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/Libre-1235.txt",
+              "sha256": "dea22a3d6be147171e83167134c6c10eb202b25f842eca33c3c7ef289bba6ab8"
+            }
+          ],
+          "reasoning": "Issue #1220 is a user asking for a documented parameter and explicitly considering an undocumented one. The linked merged PR #1235 states the create/update APIs already supported skipping conflicts and adds missing API documentation/examples. The final strengthened the user report into an absent-code claim and treats an already merged documentation change as a possible future behavioral fix. The March 2026 chain therefore supports documentation discoverability, not the asserted missing API semantics. API/GUI parity remains a useful proposed test, but this is a false factual reason for it and affects evaluation of the default booking product. This does not assert that every release has identical behavior: a deployment version is still required.",
+          "type": "MATERIALLY_WRONG",
+          "secondary_types": [
+            "UNSUPPORTED_CONSEQUENTIAL"
+          ],
+          "severity": "material",
+          "applicability": "Applies to the actual final design/claim, with the stated source version and domain conditions; no candidate repair performed."
+        },
+        {
+          "id": "N2-F02",
+          "title": "The open-checkout index has no specified release path in an immutable event journal",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/reviser/final.md",
+          "candidate_locator": "lines 100, 114\u2013121 and 176\u2013184",
+          "candidate_passage": "Journals (append-only, never overwrite) \u2026 ON custody_events (copy_id) WHERE (event_type = 'checkout' AND returned_at IS NULL)",
+          "original_obligation": "Original ordinary checkout/checkin requirement; P6 normal workflow retained; O2 governing predicate semantics; O5 evidence-backed M5 close-out",
+          "primary_evidence": [
+            {
+              "id": "PG-partial",
+              "url": "https://www.postgresql.org/docs/18/indexes-partial.html",
+              "version_or_locator": "PostgreSQL 18, \u00a711.8",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/PG-partial.txt",
+              "sha256": "bb823904ef2f681496e60c8eb3b2dbd8554e966cbb38567fa4d62b15452839c6"
+            },
+            {
+              "id": "PG-constraints",
+              "url": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+              "version_or_locator": "PostgreSQL 18, \u00a75.5.6",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/PG-constraints.txt",
+              "sha256": "61411b9fc432ecb2eade0d43ab1458e5e64a84d29278fa37f535df9be29d1f6a"
+            }
+          ],
+          "reasoning": "A PostgreSQL partial unique index evaluates the predicate on each indexed row. An immutable checkout event with returned_at NULL remains indexed when a separate checkin event is appended. A later checkout of that copy still collides. The final specifies neither an update that closes the original row nor a separate mutable open-custody projection whose indexed row is removed/closed by checkin. The SQL can work with such a state model, but that model is absent and conflicts with the blanket append-only statement. This is a concrete normal-flow hole in the claimed M5 closure, not a demand for unlimited production detail. The static trace in evidence shows precisely this row-membership problem; no database was run.",
+          "type": "MATERIALLY_INCOMPLETE",
+          "secondary_types": [],
+          "severity": "material",
+          "applicability": "Applies to the actual final design/claim, with the stated source version and domain conditions; no candidate repair performed."
+        },
+        {
+          "id": "N2-F03",
+          "title": "The revised buffer representation is not covered by the stated database backstop",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/reviser/final.md",
+          "candidate_locator": "lines 109\u2013111 and 153\u2013169; compare /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/research/draft.md lines 87\u201388 and final m15 lines 568\u2013569",
+          "candidate_passage": "buffer_minutes or an explicitly linked blocked range \u2026 tstzrange(starts_at, ends_at) WITH && \u2026 Back-to-back bookings \u2026 never conflict",
+          "original_obligation": "Avoid double booking; O2 enforcement applicability; O5 preservation of buffered conflict semantics through critic m15",
+          "primary_evidence": [
+            {
+              "id": "PG-range",
+              "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+              "version_or_locator": "PostgreSQL 18, \u00a78.17.1/6/10",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/PG-range.txt",
+              "sha256": "ce35a48ce62c76594a1382b267270061366eee8b98aaebe0bca85c7b03d058e2"
+            },
+            {
+              "id": "PG-constraints",
+              "url": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+              "version_or_locator": "PostgreSQL 18, \u00a75.5.6",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/PG-constraints.txt",
+              "sha256": "61411b9fc432ecb2eade0d43ab1458e5e64a84d29278fa37f535df9be29d1f6a"
+            }
+          ],
+          "reasoning": "The final allows booking timestamps to be unpadded and buffer_minutes to be stored separately, while its exclusion expression compares only those timestamps. For a booking 10:00\u201311:00 with 15 minutes cleanup and another starting 11:05, the exclusion sees nonoverlap although the final\u2019s promised booking-plus-buffer conflict check must reject. The alternative linked blocked range is not specified as a row in the constrained relation with an included status; it cannot make the buffer_minutes alternative safe by implication. Application checking may detect many cases, but the final expressly relies on a database backstop to close concurrent check-then-insert races. Critic m15 usefully questioned opaque padding; the changed representation lost the explicit range-enforcement relationship. The finding concerns the allowed representation and claimed backstop, not a claim every separate-block representation is impossible.",
+          "type": "MATERIALLY_INCOMPLETE",
+          "secondary_types": [
+            "PRESERVATION_LOSS"
+          ],
+          "severity": "material",
+          "applicability": "Applies to the actual final design/claim, with the stated source version and domain conditions; no candidate repair performed."
+        },
+        {
+          "id": "N2-F04",
+          "title": "The two-site stock test requires the wrong number of commits",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/control/reviser/final.md",
+          "candidate_locator": "lines 122\u2013131 and 651\u2013658",
+          "candidate_passage": "Same consumable stocked at both sites \u2026 two sites concurrently consume the last units \u2026 exactly one outcome commits (control-row serialization)",
+          "original_obligation": "P2 two-site stock integrity and P6/O6 a meaningful discriminating test with a correct oracle",
+          "primary_evidence": [
+            {
+              "id": "PG-locks",
+              "url": "https://www.postgresql.org/docs/18/explicit-locking.html",
+              "version_or_locator": "PostgreSQL 18, \u00a713.3.2",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/PG-locks.txt",
+              "sha256": "6aef77d7912cc8867e7670bbeeacb8bfcd25029192bade53863bab6a9f84b494"
+            },
+            {
+              "id": "PG-isolation",
+              "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+              "version_or_locator": "PostgreSQL 18, \u00a713.2.1",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/PG-isolation.txt",
+              "sha256": "0aad71fb00ea0b8b4839a6e6c03e0af6ab14ad12c4e77b4ef06fd4531ec67759"
+            }
+          ],
+          "reasoning": "The design derives balances per site and locks per (part, site). Locks for A and B are different rows. With one unit physically at each site, one consume at A and one at B are both valid and should both commit without any negative balance. V6\u2019s exactly-one oracle instead rejects that correct implementation; it confuses two contenders for one site balance with two independent site balances. The fixture explicitly begins with stock at both sites. If the intended test were two clients acting on one site\u2019s last unit, it is not the specified V6 fixture. This is a proposed-test error, not a false assertion that the test was executed.",
+          "type": "MATERIALLY_WRONG",
+          "secondary_types": [],
+          "severity": "material",
+          "applicability": "Applies to the actual final design/claim, with the stated source version and domain conditions; no candidate repair performed."
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N2-m01",
+          "candidate_locator": "P1/P2 lines 382\u2013409",
+          "finding": "Calendar and mutable-row rejection language exceeds the stated counterexamples. Exchange resource scheduling and atomic row updates are supported conditional alternatives; calendar alone still lacks the whole inventory workflow.",
+          "evidence": [
+            "Exchange-calendar",
+            "PG-isolation",
+            "InvenTree-stockmodel"
+          ],
+          "severity": "minor qualification; not an additional independent FAIL"
+        },
+        {
+          "id": "N2-m02",
+          "candidate_locator": "Chain 2 lines 354\u2013360",
+          "finding": "The username/system-config regression is documented for API-key-only requests by downstream clients. Universal removal of username/user-id fields is broader than the retrieved reports. Changelog auth reorganization and session invalidation are confirmed; reports are not universal code proof.",
+          "evidence": [
+            "Grocy-470-correct",
+            "Grocy-363",
+            "Grocy-364"
+          ],
+          "severity": "minor applicability qualification"
+        },
+        {
+          "id": "N2-m03",
+          "candidate_locator": "critic m13 and source-map current documentation references",
+          "finding": "A /current/ documentation alias is mutable, not an immutable release pin. Independent review used PostgreSQL 18 and the source capture hashes. SQL semantics are supported, so this is a reproducibility/locator weakness rather than a new mechanism failure.",
+          "evidence": [
+            "PG-range",
+            "PG-constraints"
+          ],
+          "severity": "minor"
+        },
+        {
+          "id": "N2-m04",
+          "candidate_locator": "Route A RPO/RTO, status-cache, LDAP and adapter claims",
+          "finding": "These are candidate policies/conditional feasibility, not independently executed compatible-deployment, loss or recovery guarantees. The final mostly states that distinction; retain it when using the recommendation.",
+          "evidence": [
+            "InvenTree-auth",
+            "LibreBooking",
+            "PocketBase-faq"
+          ],
+          "severity": "minor grade limitation"
+        }
+      ],
+      "unresolved": [
+        "Actual inventory counts/classes/units and member eligibility/overdue/admin/negative-stock policies; the brief supplies no precise answers.",
+        "Actual budget, staff host/operator capacity, SaaS licensing and procurement constraints.",
+        "Selected deployment versions, identity provider and credential/revocation policy, real outage duration/device-loss tolerance, throughput and restoration timings.",
+        "Actual old CSV corpus/dialects, column semantics, stable-ID mapping and quarantine/import policies.",
+        "Measured cost/feasibility of Route A offline adapter and cross-product LDAP/actor reconciliation/status guard; deployment validation, not a demonstrated built-in product capability.",
+        "Real tests for TTL/outbox caps, browser eviction, backup RPO/RTO and degraded status-cache behavior."
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "Complete: O1\u2013O6, members reserving tools, staff consumables/repair/checkout, both sites, unreliable Wi-Fi, low hosting burden, inconsistent historical CSV, double booking, audit and future extension seams.",
+          "judgment": "The final delivers a self-contained design, unfamiliar product choices, three issue/release chains, explicit P1\u2013P6 dispositions and proposed acceptance probes. It prices Route A\u2019s two applications, identity drift and offline adapter instead of pretending product adoption supplies offline automatically. It offers a one-server alternative, a SaaS alternative and explicit user choices. No whole obligation or explicit user constraint is omitted. Material defects in facts, ordinary custody flow and enforcement/validation remain despite that breadth.",
+          "evidence": [
+            "brief.md O1\u2013O6",
+            "N2 final lines 1\u201395, 97\u2013324, 334\u2013452, 601\u2013696",
+            "N2-F01",
+            "N2-F02",
+            "N2-F03",
+            "N2-F04"
+          ]
+        },
+        {
+          "axis": 2,
+          "coverage": "Complete relevant consequential primary review: products/identity/offline applicability, PostgreSQL ranges/predicates/locks, buffer and custody semantics, event history/CSV, three historical chains and version/deployment qualifications.",
+          "judgment": "The core PostgreSQL overlap example and per-key control-row fencing are source-grounded when their range and transaction premises hold. Units are explicit signed decimals per site; idempotency and offline capture/accept are separated. Audit bulk/raw caveats and pagination are supported. The LibreBooking API claim is wrong, and the custody/buffer backstops are materially incomplete. Grocy downstream symptoms are reports with credential-context exceptions, not proof of a universal endpoint removal. Invented seven-day/TTL/retention/RPO defaults are visibly design policy, not falsely sourced vendor defaults.",
+          "evidence": [
+            "PG-range",
+            "PG-constraints",
+            "PG-partial",
+            "PG-locks",
+            "PG-isolation",
+            "Libre-commit",
+            "Libre-1220",
+            "Libre-1235",
+            "Grocy-470-correct",
+            "Grocy-471",
+            "Grocy-363",
+            "Grocy-364",
+            "InvenTree-4541",
+            "InvenTree-4488",
+            "InvenTree-4631",
+            "InvenTree-app320files",
+            "SimpleHistory",
+            "Frictionless"
+          ]
+        },
+        {
+          "axis": 3,
+          "coverage": "Complete: every discovered family, retained option/condition, restored Snipe-IT option, qualified SaaS route, dropped OpenFab lead, Supabase/prototype seam.",
+          "judgment": "Useful discoveries extend beyond a shared calendar: LibreBooking/Fab-manager booking, InvenTree/Grocy stock, Snipe-IT custody, CommonsBooking\u2019s WordPress context, Fabman\u2019s training/access/billing and myTurn\u2019s lending SaaS. The design distinguishes exclusive tools, copies and consumables and prices integrations. These are viable investigation paths under stated conditions, not demonstrated compatible deployments. OpenFab was properly removed rather than promoted from inadequate evidence. Supabase is a prototype backend proposal requiring a separate local store/outbox, not proof of built-in offline. Most useful option breadth survives; breadth does not excuse the source and mechanism defects.",
+          "evidence": [
+            "LibreBooking",
+            "FabManager",
+            "InvenTree",
+            "SnipeIT",
+            "Grocy-auth",
+            "CommonsBooking-readme",
+            "Fabman",
+            "MyTurn",
+            "PowerSync-update",
+            "Supabase-client",
+            "N2 discovery/draft/final comparison"
+          ]
+        },
+        {
+          "axis": 4,
+          "coverage": "Complete: P1\u2013P6 and correction/enhancement/user-decision/already-covered/rejected/uncertain fragments are adjudicated individually below.",
+          "judgment": "Rejecting calendar-only coverage of the entire inventory workflow, timestamp-only scarce-tool arbitration, name-overwrite CSV and notes-only maintenance is justified. Preserving views, timestamps, notes and ordinary smoke flows avoids needless rejection. P2\u2019s categorical wording is broader than its stale-overwrite counterexample; safe row updates exist. P1\u2019s generic calendar-incapability premise also needs resource-calendar qualification. Those qualifications do not mean a calendar alone satisfies offline inventory/audit. The material failures attach to concrete final mechanisms and facts, not to a supposed requirement to keep the thin plan unchanged.",
+          "evidence": [
+            "PG-isolation",
+            "Exchange-calendar",
+            "InvenTree-stockmodel",
+            "Pouch-conflicts",
+            "Papa-docs",
+            "SnipeIT",
+            "LibreBooking",
+            "N2 plan_dispositions"
+          ]
+        },
+        {
+          "axis": 5,
+          "coverage": "Complete: full discovery \u2192 draft \u2192 critique \u2192 final comparison; M1\u2013M6, m1\u2013m15, seven omission/conditions items, returned option/context and retained uncertainty reviewed individually below.",
+          "judgment": "The final preserves full material prose, alternatives and defaults, not merely criticism IDs. Many critic-driven additions are useful: stock fencing, host/outage costs, offline ambiguity handling, history oracle and old-client test. M5\u2019s claimed closure lacks a checkin release model; m15\u2019s storage change loses buffer coverage in the stated constraint; M6\u2019s fetched issue is still overread despite the linked documentation-only PR. The source and representation revisions must be judged by evidence rather than final\u2019s claim that no criticism was obeyed automatically.",
+          "evidence": [
+            "N2 discovery.md/draft.md/critique.md/final.md full comparison",
+            "N2 criticism_adjudication",
+            "N2-F01",
+            "N2-F02",
+            "N2-F03"
+          ]
+        },
+        {
+          "axis": 6,
+          "coverage": "Complete: E/source-reading statements versus V1/V2/V2b/V3/V4/V5/V6 and retained normal-flow smoke; oracles, architecture applicability and execution limits.",
+          "judgment": "The candidate honestly reports source review only and labels implementation tests proposed. Reservation races, offline retries/double lends, hostile CSV, independent audit action comparison and old-client/new-server checks are meaningful. V6 has a wrong oracle for independent site balances. Buffer/checkin static counterexamples also show that the proposed normal workflow and padded conflict acceptance need actual enforcement applicability. RPO/RTO are policies awaiting a real restoration witness; no source read or exit code proves recovery or concurrent correctness.",
+          "evidence": [
+            "N2 final lines 601\u2013674",
+            "PG-range",
+            "PG-partial",
+            "PG-locks",
+            "PG-isolation",
+            "semantic-counterexamples.json",
+            "N2-F04"
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "complete": true,
+        "remaining_claims": [],
+        "checked_claims": [
+          {
+            "claim": "Booking/lending product fit, licensing/hosting and integration caveats",
+            "result": "Official LibreBooking/Fab-manager/CommonsBooking, asset/stock and SaaS sources corroborate broad families. Route A integration/offline is explicitly conditional; no universal off-the-shelf fit proven.",
+            "primary_evidence": [
+              "LibreBooking",
+              "FabManager",
+              "CommonsBooking-readme",
+              "InvenTree",
+              "SnipeIT",
+              "Fabman",
+              "MyTurn",
+              "LendEngine"
+            ]
+          },
+          {
+            "claim": "Shared LDAP and reconciliation/status drift",
+            "result": "LDAP investigation supported for LibreBooking and InvenTree; same-pair deployment/credential behavior remains a named gate, not an established result. Exact refresh interval and separate-login fallback are design policies.",
+            "primary_evidence": [
+              "LibreBooking",
+              "InvenTree-auth",
+              "Grocy-auth"
+            ]
+          },
+          {
+            "claim": "Single-PG/PWA or synced backend; Supabase standalone offline",
+            "result": "Remote service alone does not supply the proposed local outbox/cache; backend arbitration and app identity are required. Candidate states adapter cost.",
+            "primary_evidence": [
+              "Supabase-client",
+              "PowerSync-update",
+              "Pouch-conflicts"
+            ]
+          },
+          {
+            "claim": "tstzrange [), btree_gist, equality-plus-overlap exclusion, partial statuses and 23P01",
+            "result": "Mechanism supported for unique resource ranges; statuses/completed policy chosen by candidate. Padded/buffer_minutes scope materially incomplete.",
+            "primary_evidence": [
+              "PG-range",
+              "PG-constraints",
+              "N2-F03"
+            ]
+          },
+          {
+            "claim": "Open custody partial unique index",
+            "result": "Row predicate semantics supported; checkin release/projection absent in immutable event model. Material incomplete normal flow.",
+            "primary_evidence": [
+              "PG-partial",
+              "N2-F02"
+            ]
+          },
+          {
+            "claim": "Stock decimal/unit/site ledger and row-control fencing",
+            "result": "A proposed movement model is legitimate; row locks serialize the same control key, not different site keys. Safe stored-balance alternatives exist.",
+            "primary_evidence": [
+              "PG-locks",
+              "PG-isolation",
+              "InvenTree-stockmodel",
+              "N2-F04"
+            ]
+          },
+          {
+            "claim": "Offline first-sync/TTL/FIFO/idempotency/negative policy",
+            "result": "Explicit maker policies rather than vendor defaults. Clock/capture order is not fairness/physical-custody proof; sync sources support separating transport and arbitration.",
+            "primary_evidence": [
+              "Pouch-conflicts",
+              "PowerSync-update"
+            ]
+          },
+          {
+            "claim": "Append history, causal links, pagination, ORM bulk/raw exceptions",
+            "result": "History helpers/signals caveats and InvenTree chain supported; exact staff trail/retention is a proposed model.",
+            "primary_evidence": [
+              "SimpleHistory",
+              "InvenTree-4488",
+              "InvenTree-4541",
+              "InvenTree-4631",
+              "InvenTree-app320files"
+            ]
+          },
+          {
+            "claim": "CSV strings/dialects/locale/errors/preview/quarantine and run hash lifecycle",
+            "result": "Parser/schema mechanics supported; exact mappings, retention/hash policy and export/formula handling remain proposals, no corpus execution.",
+            "primary_evidence": [
+              "Papa-docs",
+              "Frictionless"
+            ]
+          },
+          {
+            "claim": "Libre tall-view bug and patch",
+            "result": "Actual patch confirms approximate-end flag and actual/buffered timestamp attributes. No executed LibreBooking reproduction.",
+            "primary_evidence": [
+              "Libre-commit"
+            ]
+          },
+          {
+            "claim": "Libre API whole-series failure and PR closure",
+            "result": "Primary issue is a user documentation request; merged PR says API support already existed. Final absent-parameter chain is wrong.",
+            "primary_evidence": [
+              "Libre-1220",
+              "Libre-1235",
+              "N2-F01"
+            ]
+          },
+          {
+            "claim": "Grocy 4.7.0 \u2192 4.7.1 auth/API evolution",
+            "result": "Release dates, middleware review, session invalidation and listed 4.7.1 fixes confirmed. Downstream USER_USERNAME issue confirmed in API-key context. Broader field-removal/HTML-200/non-array symptoms remain report-level, not universally established code behavior.",
+            "primary_evidence": [
+              "Grocy-470-correct",
+              "Grocy-471",
+              "Grocy-363",
+              "Grocy-364",
+              "Grocy-auth"
+            ]
+          },
+          {
+            "claim": "InvenTree new causal write \u2192 backfill \u2192 pagination/widget chain",
+            "result": "Independently corroborated PR bodies and app patch, with named historical merges. Product transferability is history/pagination, not maker-specific repair condition proof.",
+            "primary_evidence": [
+              "InvenTree-4488",
+              "InvenTree-4541",
+              "InvenTree-4631",
+              "InvenTree-app320",
+              "InvenTree-app320files"
+            ]
+          },
+          {
+            "claim": "Repair gating, duration/retention, extension/API/webhook and recovery parameters",
+            "result": "Proposed policies are explicitly defaults/decisions. Relevant product features substantiate seams, not implemented candidate semantics, loss guarantees or backup timings.",
+            "primary_evidence": [
+              "SnipeIT",
+              "MyTurn",
+              "SimpleHistory"
+            ]
+          },
+          {
+            "claim": "V1\u2013V6/V2b/smoke applicability and independent oracles",
+            "result": "Reviewed each proposal; meaningful race/import/audit/version checks mostly present. Cross-site commit oracle wrong. No runtime witness claimed.",
+            "primary_evidence": [
+              "PG-range",
+              "PG-partial",
+              "PG-locks",
+              "PG-isolation",
+              "N2-F04",
+              "semantic-counterexamples.json"
+            ]
+          }
+        ]
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "reviewed_stages": [
+          "research/discovery.md",
+          "research/draft.md",
+          "critic/critique.md",
+          "reviser/final.md",
+          "all associated source maps/indexes/excerpts and frozen assignments"
+        ],
+        "preserved": "Booking/stock/custody product alternatives, explicit two-site semantics, Supabase/PWA prototype distinction, audit/CSV/extension architecture and cost/uncertainty survive in substantive prose. Snipe-IT custody restored. All seven omission-register items appear as defaults, proposals or decisions.",
+        "qualified_or_retired": "Open Fab Control dropped for inadequate evidence, generic tool-library secondary displaced by primary myTurn, InvenTree repair-condition claim narrowed, status vocabulary mapped rather than silently rebound.",
+        "material_losses_or_false_additions": [
+          "N2-F03 buffer representation loses explicit constrained padded-range relationship.",
+          "N2-F01 linked documentation PR does not substantiate supposedly strengthened API gap.",
+          "N2-F02 M5 closure incomplete despite source-grounded need for DB custody guard."
+        ],
+        "criticism_coverage": "M1\u2013M6; m1\u2013m15; omission register 1\u20137; validation applicability/per-P concurrence, all individually adjudicated in criticism_adjudication."
+      },
+      "grade_limits": [
+        "FAIL is an independent source-grounded scientific grade after full six-axis artifact and consequential-claim review, not a delivery/native/cost grade.",
+        "No candidate runtime tests were executed; no failure or success rate, repair outcome, performance benchmark or deployed compatibility is inferred.",
+        "Honest staff/deployment inputs above are not counted as evasive missing research. Unsupported consequential claims are findings, not disguised unknown user decisions.",
+        "This is not comparative full quality: both arms have different strengths and defects, and two FAIL grades do not establish equivalence or a faster FAIL win."
+      ],
+      "plan_dispositions": [
+        {
+          "plan": "P1",
+          "candidate_disposition": "CORRECTION; calendar view enhancement retained; quota/booking policy decisions; gap uncertainties",
+          "assessment": "A shared calendar alone is not a complete makerspace inventory system, and reservation integrity must be explicit. The database-backed unique-resource route is reasonable. The candidate\u2019s assertion that calendars categorically lack conflict handling is overbroad: Exchange resource mailboxes offer AutoAccept, AllowConflicts=false and recurrence conflict limits under documented mailbox/provisioning conditions. Existing licensing and offline support are unknown. This is a premise qualification, not evidence the exact calendar-only plan is adequate. Buffer enforcement is materially incomplete in the chosen final representation (N2-F03)."
+        },
+        {
+          "plan": "P2",
+          "candidate_disposition": "CORRECTION; barcode/low-stock enhancements; allow-negative policy decision",
+          "assessment": "Replacing blind client absolute overwrites with per-site typed movements/idempotency/audit is a sound design option. A derived ledger still needs fenced checks, which M1 usefully supplies for a shared part/site. Mandatory no-row wording exceeds the evidence: transactionally updated stored balances with history are viable (InvenTree). The final does not show the same-site last-unit lock result applies across independent sites; V6 is wrong (N2-F04). Transfer policy and negative-stock exception are explicitly stated rather than sourced defaults."
+        },
+        {
+          "plan": "P3",
+          "candidate_disposition": "CORRECTION; offline permit preserved; timestamps as evidence; queue/conflict policy decisions",
+          "assessment": "Rejecting timestamp-only arbitration for scarce physical resources is justified: device skew and deterministic winners do not establish physical custody or fairness. The final retains offline intents, retries and capture/accept ordering, and explicitly chooses first-sync-wins with visible earlier capture and staff override. That is a declared product policy with fairness limits, not a factual claim that source code chooses the policy. TTL/outbox capacity and device loss are priced. The custody enforcement claimed to close the double-lend still lacks normal checkin release (N2-F02)."
+        },
+        {
+          "plan": "P4",
+          "candidate_disposition": "REJECT name overwrite; correction stable-key staged import; enhancements dry run/quarantine/mapping",
+          "assessment": "Correct to reject names as destructive automatic identity keys across inconsistent historical data. Strings preserve leading zero IDs; file-level locale/delimiter and staff confirmation are sensible scoped policies. A file hash no-op rule is a deliberate import policy, not a universal correct reconciliation rule. Formula handling, uneven rows and correction reports are meaningful proposals awaiting runtime fixtures. Names remain hints, so user data can still assist matching without silent overwrite."
+        },
+        {
+          "plan": "P5",
+          "candidate_disposition": "CORRECTION; retain notes; optional work-order/photo/reminder extensions",
+          "assessment": "Correct to retain free text but add queryable state/history that can gate reservations and checkout. States down/in_repair/retired versus degraded are explicit policy. Cached status in Route A has a declared lag and staff-confirmation condition; the assessment does not treat a 15-minute cache as an instantly consistent safety guarantee. Fully integrated scheduling under partitions remains deployment validation."
+        },
+        {
+          "plan": "P6",
+          "candidate_disposition": "CORRECTION expand acceptance; already-covered ordinary smoke retained",
+          "assessment": "Appropriately retains normal create/cancel/checkin flows and adds consequential concurrency, offline, CSV, audit, old-client and two-site probes. They are proposed, not executed. Most oracles discriminate real failures, while V6\u2019s cross-site exactly-one criterion is wrong and the normal checkout/checkin/checkout flow exposes the incomplete custody model. No artificial demand for a full production test suite is imposed."
+        }
+      ],
+      "criticism_adjudication": [
+        {
+          "criticism": "M1",
+          "candidate_response": "ACCEPT: per-part/site stock control lock added",
+          "independent_adjudication": "The critique identifies a real write-skew risk: an append-only sum alone does not fence two consumers. PostgreSQL row locking inside the validation/apply transaction is a valid same-key solution under the described re-read premise. The final overextends exactly-one to different site keys in V6, so the design addition is sound but the validation close-out is not.",
+          "evidence": [
+            "PG-locks",
+            "PG-isolation",
+            "N2-F04"
+          ]
+        },
+        {
+          "criticism": "M2",
+          "candidate_response": "ACCEPT with AMEND: integration conditions, drift guard and Snipe-IT restored",
+          "independent_adjudication": "Pricing two UIs, shared identity and status drift is relevant to a small operator. LibreBooking\u2019s LDAP extension and InvenTree\u2019s documented advanced LDAP support substantiate investigation, not a completed pairwise integration. The final states same-IdP testing or separate-login actor reconciliation. Snipe-IT custody is restored with cost/CSV/audit context. Fifteen-minute drift and nightly catalogue are chosen cache policies with a live-status staff condition, not proof of instantaneous repair blocking.",
+          "evidence": [
+            "LibreBooking",
+            "InvenTree-auth",
+            "SnipeIT"
+          ]
+        },
+        {
+          "criticism": "M3",
+          "candidate_response": "ACCEPT: one VPS, backups and outage/outbox limits",
+          "independent_adjudication": "A concrete host/operator and outage tradeoff is useful. Nightly backup RPO and client outbox-loss limitations are stated, not claimed tested. The single-node tradeoff respects the brief rather than mandating enterprise failover. Hardware throughput, restore timings and device eviction remain honest build tests.",
+          "evidence": [
+            "N2 draft/final comparison",
+            "PocketBase-faq"
+          ]
+        },
+        {
+          "criticism": "M4",
+          "candidate_response": "ACCEPT: first-sync policy, expiry, loser workflow and device FIFO",
+          "independent_adjudication": "These were real policy holes, but public sync code cannot dictate the fair winner. The final makes first accepted server intent authoritative, preserves capture order for staff review, adds TTL and defines local FIFO scope. It acknowledges physical double-lend ambiguity and creates staff work rather than claiming a server can undo physical possession. This is a bounded product policy, not automatically proven fairness.",
+          "evidence": [
+            "Pouch-conflicts",
+            "PowerSync-update",
+            "N2 final 1.4"
+          ]
+        },
+        {
+          "criticism": "M5",
+          "candidate_response": "ACCEPT: partial unique open-custody index",
+          "independent_adjudication": "A server/database invariant for concurrent double checkout is well motivated. The final does not close the normal checkin release path under its append-only event declaration. The claimed complete closure is materially incomplete, even though a properly modeled open-state predicate could enforce one borrower.",
+          "evidence": [
+            "PG-partial",
+            "N2-F02"
+          ]
+        },
+        {
+          "criticism": "M6",
+          "candidate_response": "ACCEPT IDs; AMEND Chain 1 through issue/commit fetches",
+          "independent_adjudication": "Closing missing source IDs and retrieving the actual tall-view patch improves traceability. The patch genuinely concerns actual/buffered data and approximate end height. But #1220 is not proof of absent API implementation, and the linked merged #1235 expressly says support already existed with documentation missing. The claimed strengthened API chain is wrong.",
+          "evidence": [
+            "Libre-commit",
+            "Libre-1220",
+            "Libre-1235",
+            "N2-F01"
+          ]
+        },
+        {
+          "criticism": "m1",
+          "candidate_response": "ACCEPT completed predicate rationale",
+          "independent_adjudication": "Including completed historical rows is a declared audit/backdated-overlap policy, supported by partial exclusion semantics. It is not a PostgreSQL default. Cancellation/no-show and early completion semantics remain business policy.",
+          "evidence": [
+            "PG-range",
+            "PG-constraints"
+          ]
+        },
+        {
+          "criticism": "m2",
+          "candidate_response": "ACCEPT already-covered label correction",
+          "independent_adjudication": "Correctly distinguishes an earlier Supabase offline-adapter proposal from observed built-in offline prior art. Remote SDK/backend alone is not a local intent store; the proposed queue remains clearly additional architecture.",
+          "evidence": [
+            "Supabase-client",
+            "N2 discovery lines 199\u2013206/draft/final"
+          ]
+        },
+        {
+          "criticism": "m3",
+          "candidate_response": "ACCEPT narrower InvenTree condition/history applicability",
+          "independent_adjudication": "Narrowing a product assertion to the observed causal-history migration avoids turning the parts product into a proved repair-condition implementation. The independent PRs confirm new-write link then historical backfill.",
+          "evidence": [
+            "InvenTree-4488",
+            "InvenTree-4541"
+          ]
+        },
+        {
+          "criticism": "m4",
+          "candidate_response": "ACCEPT per-file delimiter fixture",
+          "independent_adjudication": "Proper distinction between different files\u2019 dialects and delimiters appearing inside quoted fields. Parser dialect detection does not authorize arbitrary row-level mixing.",
+          "evidence": [
+            "Papa-docs",
+            "Frictionless"
+          ]
+        },
+        {
+          "criticism": "m5",
+          "candidate_response": "ACCEPT independent scripted-action audit oracle",
+          "independent_adjudication": "Comparing independently recorded expected actions/actors/order links to audit entries is meaningful; it avoids merely checking an audit screen is nonempty. Bulk/raw bypass paths need either history helpers/logging or explicit prevention, as official history docs warn.",
+          "evidence": [
+            "SimpleHistory",
+            "N2 V4"
+          ]
+        },
+        {
+          "criticism": "m6",
+          "candidate_response": "ACCEPT old-client/new-server contract test",
+          "independent_adjudication": "A pinned documented client contract and machine-readable status/body expectations can expose real auth/API breakage. It is a proposal, not proof of compatibility.",
+          "evidence": [
+            "Grocy-470-correct",
+            "Grocy-471",
+            "Grocy-363",
+            "N2 V5"
+          ]
+        },
+        {
+          "criticism": "m7",
+          "candidate_response": "ACCEPT declared file locale",
+          "independent_adjudication": "A per-file staff locale is a legitimate handling policy for ambiguous historical dates, not a parser fact. It preserves predictable parsing and quarantines genuinely unparseable values.",
+          "evidence": [
+            "Papa-docs",
+            "N2 CSV proposal"
+          ]
+        },
+        {
+          "criticism": "m8",
+          "candidate_response": "ACCEPT primary myTurn replacement",
+          "independent_adjudication": "The official product source corroborates lending/reservation/member/site features more directly than a general tool-library secondary. Marketing capability is not offline/deployment proof.",
+          "evidence": [
+            "MyTurn"
+          ]
+        },
+        {
+          "criticism": "m9",
+          "candidate_response": "ACCEPT unsupported Open Fab Control removed",
+          "independent_adjudication": "Correctly drops an inadequately evidenced named option rather than fabricating an independent product finding. This does not prove the product cannot exist; the other relevant discovery paths remain.",
+          "evidence": [
+            "N2 source maps/draft/final"
+          ]
+        },
+        {
+          "criticism": "m10",
+          "candidate_response": "ACCEPT repair gating rules",
+          "independent_adjudication": "Naming blocking versus degraded states resolves a real design ambiguity. These are maker policy defaults; available reference product status/history features support modeling, not these exact values.",
+          "evidence": [
+            "SnipeIT",
+            "N2 state model"
+          ]
+        },
+        {
+          "criticism": "m11",
+          "candidate_response": "ACCEPT copy site-transfer/hold behavior",
+          "independent_adjudication": "The design states actor/reason, site movement and queue/due-state behavior. This is useful two-site semantics; multi-site products establish feasibility, not correctness of unexecuted transfer code.",
+          "evidence": [
+            "SnipeIT",
+            "MyTurn",
+            "N2 state model"
+          ]
+        },
+        {
+          "criticism": "m12",
+          "candidate_response": "ACCEPT extension mechanics",
+          "independent_adjudication": "Versioned REST, scoped tokens and at-least-once signed/retried webhooks with a dead-letter path are concrete design proposals. They remain a future integration contract needing execution; no fetched product API proves the candidate contract implemented.",
+          "evidence": [
+            "SnipeIT",
+            "N2 extension proposal"
+          ]
+        },
+        {
+          "criticism": "m13",
+          "candidate_response": "ACCEPT claimed PostgreSQL pin",
+          "independent_adjudication": "The SQL mechanism is independently supported by version 18 docs. The candidate\u2019s mutable /current/ reference is not an immutable release pin; this criticism is only partly closed.",
+          "evidence": [
+            "PG-range",
+            "PG-constraints",
+            "N2-m03"
+          ]
+        },
+        {
+          "criticism": "m14",
+          "candidate_response": "ACCEPT secondary pattern subordinate",
+          "independent_adjudication": "Correct not to use the secondary example as governing evidence. The official range/exclusion sections directly substantiate the room/resource pattern and operator semantics.",
+          "evidence": [
+            "PG-range",
+            "PG-constraints"
+          ]
+        },
+        {
+          "criticism": "m15",
+          "candidate_response": "ACCEPT booking-plus-buffer storage change",
+          "independent_adjudication": "Questioning invisible padding is sensible, but the final\u2019s allowed buffer_minutes representation no longer participates in its shown range exclusion. The response preserves display clarity and loses the demonstrated concurrent enforcement relationship.",
+          "evidence": [
+            "PG-range",
+            "N2-F03"
+          ]
+        },
+        {
+          "criticism": "omissions 1\u20137",
+          "candidate_response": "ACCEPT into default, proposal or decision register",
+          "independent_adjudication": "All seven are traced: cross-site member identity; tool/copy site binding; series/blackout/buffer with quotas deferred; notification surface; privacy/retention; checkout duration/hold/renewal caps; import-run lifecycle. They are preserved in full prose and visibly policy rather than source facts. Series skip support and buffer enforcement have the independent defects above; otherwise no omission is secretly claimed source-proven.",
+          "evidence": [
+            "N2 final lines 570\u2013589",
+            "N2-F01",
+            "N2-F03"
+          ]
+        },
+        {
+          "criticism": "per-P/validation/false-correction concurrence",
+          "candidate_response": "AGREE claimed in final",
+          "independent_adjudication": "Independent review does not adopt blanket concurrence. Most corrections are justified within the ordinary brief, but resource-calendar and atomic-row exceptions qualify broad rejections; custody/buffer and V6 fail their specific applicability. No criticism ID is used as an oracle.",
+          "evidence": [
+            "N2 plan_dispositions",
+            "Exchange-calendar",
+            "InvenTree-stockmodel",
+            "N2-F02",
+            "N2-F03",
+            "N2-F04"
+          ]
+        }
+      ]
+    },
+    "N1": {
+      "actual_arm": "treatment",
+      "final_delivery": true,
+      "grade": "FAIL",
+      "material_findings": [
+        {
+          "id": "N1-F01",
+          "title": "A false compaction limit was introduced by accepting critic m7",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/reviser/final.md",
+          "candidate_locator": "lines 43, 92, 111, 117 and 142; critic/critique.md m7",
+          "candidate_passage": "compaction drops conflict bodies while keeping lineage \u2026 losing branches remain resolvable only within that bound",
+          "original_obligation": "Offline conflict/audit integrity; O2 compaction/revision exceptions; O5 independent adjudication of criticism",
+          "primary_evidence": [
+            {
+              "id": "Couch-conflicts",
+              "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+              "version_or_locator": "Apache CouchDB 3.5, \u00a72.3.3/4, revision trees and resolving conflicts",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/Couch-conflicts.txt",
+              "sha256": "2377552b36ccc37e8508c57139dfeb5d8f1f9a7bdab5cf807821f429459b9379"
+            },
+            {
+              "id": "Couch-compaction",
+              "url": "https://docs.couchdb.org/en/stable/maintenance/compaction.html",
+              "version_or_locator": "Apache CouchDB 3.5, database compaction",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/Couch-compaction.txt",
+              "sha256": "420dae027c0845b2334cde204bd4fd1d0d0644da69121f0f60010b3280577755"
+            },
+            {
+              "id": "Couch-revlimit",
+              "url": "https://docs.couchdb.org/en/stable/api/database/misc.html",
+              "version_or_locator": "Apache CouchDB 3.5, \u00a71.3.25 /{db}/_revs_limit",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/Couch-revlimit.txt",
+              "sha256": "e62b6d67b5fc0199c8fde71c1e63e4ffe7ccb04b8b9678af35f263e550e24c22"
+            },
+            {
+              "id": "Couch-1507",
+              "url": "https://api.github.com/repos/apache/couchdb/issues/1507",
+              "version_or_locator": "Apache CouchDB issue #1507, historical design discussion; corroboration only",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/Couch-1507.txt",
+              "sha256": "1f7936695308f7186d83f2866dbf9f4a10d95a80ff9889816fc48965255ae722"
+            }
+          ],
+          "reasoning": "CouchDB 3.5 distinguishes current conflicting leaf revisions from old non-leaf history. Compaction discards bodies of non-leaf revisions, while current conflicting leaves remain available for explicit conflict resolution. _revs_limit bounds retained revision ancestry, not a time-to-live for every unresolved losing leaf. Historical ancestor bodies may be unavailable for a three-way merge and stemming can affect replication ancestry; those genuine caveats do not support the final\u2019s blanket conflict-body/losing-branch expiry claim. The draft did not have this supposed operating bound; the critic introduced it and the final accepted and repeated it without primary support. It wrongly prices and limits the offline multi-master option and can misdirect retention decisions. This is not a claim that CouchDB revisions are an audit log or that purge/deletion cannot remove leaves.",
+          "type": "MATERIALLY_WRONG",
+          "secondary_types": [
+            "FALSE_CORRECTION_OR_REJECTION",
+            "PRESERVATION_LOSS"
+          ],
+          "severity": "material",
+          "applicability": "Applies to the actual final design/claim, with the stated source version and domain conditions; no candidate repair performed."
+        },
+        {
+          "id": "N1-F02",
+          "title": "The PouchDB 9.0 Delta Sync and 50% bandwidth attribution lacks release support",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/reviser/final.md",
+          "candidate_locator": "lines 39 and 112",
+          "candidate_passage": "PouchDB 9.0 Delta Sync cut field bandwidth by up to ~50%",
+          "original_obligation": "O2 correct release/feature/performance applicability; O3 a grounded release evolution chain; unreliable Wi-Fi constraint",
+          "primary_evidence": [
+            {
+              "id": "Pouch-release9",
+              "url": "https://pouchdb.com/2024/05/24/pouchdb-9.0.0.html",
+              "version_or_locator": "PouchDB 9.0.0 official release, 2024-05-24; historical release notes (the separately retrieved git tree SHA is not a tag/commit SHA)",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/Pouch-release9.txt",
+              "sha256": "2fc25c41a9c28a2ab1f5b480dd074f90335d6090b62869d0b168e089a72acb41"
+            },
+            {
+              "id": "Pouch-replication",
+              "url": "https://pouchdb.com/guides/replication.html",
+              "version_or_locator": "PouchDB replication guide, site v9.0.0",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/Pouch-replication.txt",
+              "sha256": "2c00d58435aa45e431a6f82ed538cdcee755c59316569093265dff5175f9f8d2"
+            },
+            {
+              "id": "Pouch-conflicts",
+              "url": "https://pouchdb.com/guides/conflicts.html",
+              "version_or_locator": "PouchDB conflicts guide, site v9.0.0, immediate/eventual/upsert sections",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/Pouch-conflicts.txt",
+              "sha256": "dd59d5b268e04d22b26d0aa1c7a830fc7488bd6e8a9cca84f51b952b6ceff755"
+            }
+          ],
+          "reasoning": "The official PouchDB 9.0.0 release and its detailed changelog describe adapter/index performance and other changes, not the claimed Delta Sync feature or a 50% bandwidth benchmark. The candidate obtains the feature/number from a secondary guide and promotes it into a named official-release evolution chain without a primary implementation or measured workload. Existing replication optimizations do not establish this specific new-release feature or percentage. This is consequential to the offline architecture rationale and the third O3 chain. The general separation of transport and business arbitration is sound and independently supported, and the independently supported Yale chain means O3 is not wholly absent. The finding is unsupported named-release/performance attribution, not a proof that no product anywhere uses delta sync.",
+          "type": "UNSUPPORTED_CONSEQUENTIAL",
+          "secondary_types": [],
+          "severity": "material",
+          "applicability": "Applies to the actual final design/claim, with the stated source version and domain conditions; no candidate repair performed."
+        },
+        {
+          "id": "N1-F03",
+          "title": "The libSQL/Turso rejection collapses different generations without a version pin",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/reviser/final.md",
+          "candidate_locator": "line 122; discovery rejected lead and draft carry-forward",
+          "candidate_passage": "libSQL/Turso offline-sync beta (explicit data-loss warnings, resolution not implemented)",
+          "original_obligation": "O1 useful viable options; O2 release/domain applicability; O4 false rejection and O5 preservation of uncertainty",
+          "primary_evidence": [
+            {
+              "id": "Turso-blog",
+              "url": "https://turso.tech/blog/introducing-databases-anywhere-with-turso-sync",
+              "version_or_locator": "Turso official Introducing Databases Anywhere with Turso Sync, 2025-10-08; beta sync packages, Last Push Wins and custom transform hook",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/Turso-blog.txt",
+              "sha256": "ceda16cf5d4255070c9729a12a8247442ba6fdaf34719d0012df154a02ecb873"
+            },
+            {
+              "id": "Turso-offline",
+              "url": "https://docs.turso.tech/features/embedded-replicas/introduction",
+              "version_or_locator": "Turso official embedded-replica introduction, current docs accessed 2026-10-09; older page-based replication versus logical Turso Sync",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/Turso-offline.txt",
+              "sha256": "ba59e16b8765cb802c7a6231bd408940406a7247987f61c2d19e3c9252ad5598"
+            }
+          ],
+          "reasoning": "The final excludes the broad libSQL/Turso offline-sync family using an unpinned warning and a categorical lack-of-resolution claim. Official Turso documentation distinguishes the older page-replica model from newer logical Turso Sync. The official 2025-10-08 Turso Sync introduction already documents Last Push Wins and a custom transform hook for conflict resolution. It is still beta in that announcement and is not evidence that a scarce-tool invariant is automatically enforced, so rejecting a specific unsafe beta could be justified. But a secondary description of an older experiment cannot establish that resolution is unimplemented across the named family at the October 2026 assessment. The missing release/package/domain distinction makes this consequential option elimination unsupported. This assessment does not recommend adoption or infer a scarce-resource correctness guarantee from a transform hook.",
+          "type": "UNSUPPORTED_CONSEQUENTIAL",
+          "secondary_types": [
+            "FALSE_CORRECTION_OR_REJECTION"
+          ],
+          "severity": "material",
+          "applicability": "Applies to the actual final design/claim, with the stated source version and domain conditions; no candidate repair performed."
+        },
+        {
+          "id": "N1-F04",
+          "title": "Stored quantity rows are rejected categorically using a false product/mechanism premise",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-B/treatment/reviser/final.md",
+          "candidate_locator": "lines 29\u201330 and 122",
+          "candidate_passage": "Quantity must be DERIVED \u2026 never a single row \u2026 None of them stores truth as one client-written number",
+          "original_obligation": "P2 exact disposition; O2 concurrency exceptions/code facts; O4 avoid false correction; low-hosting constraint",
+          "primary_evidence": [
+            {
+              "id": "InvenTree-stockmodel",
+              "url": "https://raw.githubusercontent.com/inventree/InvenTree/master/src/backend/InvenTree/stock/models.py",
+              "version_or_locator": "InvenTree StockItem.quantity/updateQuantity/add_stock/take_stock/lock_quantity; master accessed 2026-10-09; latest path commit 02da01dfec309ac410e846a57d329d0e96b90e21",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/InvenTree-stockmodel.txt",
+              "sha256": "0fa4c4cb09981d182c9564c48cbd236f368b9f0454ba6e0accfc0393bf273820"
+            },
+            {
+              "id": "PG-isolation",
+              "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+              "version_or_locator": "PostgreSQL 18, \u00a713.2.1",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/PG-isolation.txt",
+              "sha256": "0aad71fb00ea0b8b4839a6e6c03e0af6ab14ad12c4e77b4ef06fd4531ec67759"
+            },
+            {
+              "id": "PG-locks",
+              "url": "https://www.postgresql.org/docs/18/explicit-locking.html",
+              "version_or_locator": "PostgreSQL 18, \u00a713.3.2",
+              "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M10-B/evidence/PG-locks.txt",
+              "sha256": "6aef77d7912cc8867e7670bbeeacb8bfcd25029192bade53863bab6a9f84b494"
+            }
+          ],
+          "reasoning": "Blind stale absolute overwrites really can lose updates and lack an audit trail. But the original P2 says a database row updated by each client; it does not state that clients bypass transactional server operations, share no location key, or erase a separate history. PostgreSQL Read Committed updates re-evaluate a concurrently changed target row, and a locked transactional increment/decrement with history can be safe. InvenTree itself has a stored Decimal StockItem.quantity; add_stock/take_stock use an atomic transaction, lock_quantity, updateQuantity and tracking entries. Thus the blanket assertion that the recommended reference products do not use such a stored quantity and the mandatory derived-only correction are not supported. A movement ledger is a useful proposed design, but the candidate turns that choice into a required correction by ruling out a demonstrably viable stored-balance-with-audit mechanism. This does not endorse direct offline LWW overwrites, and exact unit/location/negative-balance policy remains necessary.",
+          "type": "FALSE_CORRECTION_OR_REJECTION",
+          "secondary_types": [],
+          "severity": "material",
+          "applicability": "Applies to the actual final design/claim, with the stated source version and domain conditions; no candidate repair performed."
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N1-m01",
+          "candidate_locator": "line 23 and line 122 generic calendar rejection; Koha/OpenRoom rejection",
+          "finding": "A resource-calendar store is not intrinsically unable to reject booking conflicts: Exchange documents mailbox-specific AutoAccept and conflict settings. Koha also has offline circulation/multi-branch support, though its ILS domain can make it a poor fit. These options require narrower fit reasoning; no evidence forces adoption or makes them an entire makerspace solution. OpenRoom repository lookup failed, which is not evidence of incapability.",
+          "evidence": [
+            "Exchange-calendar",
+            "Koha"
+          ],
+          "severity": "minor domain qualification"
+        },
+        {
+          "id": "N1-m02",
+          "candidate_locator": "lines 110, 116 and 120 small-backend RAM/size, Circulate LOC and MyTurn adoption counts",
+          "finding": "Approximate RAM/size/LOC/adoption figures have no pinned workload or independently reproduced count. Official sources substantiate the product families and features, not a measured hosting guarantee. Treat these numbers as unverified supporting color.",
+          "evidence": [
+            "PocketBase",
+            "PocketBase-faq",
+            "Circulate",
+            "MyTurn"
+          ],
+          "severity": "minor unsupported numeric detail"
+        },
+        {
+          "id": "N1-m03",
+          "candidate_locator": "P-V5 lines 73\u201379 and alternatives lines 116\u2013120",
+          "finding": "PowerSync client re-sync validates a different loss surface from authoritative Postgres restoration; SaaS export is portability, not server recovery. The Postgres backup drill is stated separately under D. Criteria are proposed and their limitations should stay explicit.",
+          "evidence": [
+            "PowerSync-update",
+            "PocketBase-faq"
+          ],
+          "severity": "minor validation applicability"
+        },
+        {
+          "id": "N1-m04",
+          "candidate_locator": "P6 Yale ordinary-flow claim and Chain 1 summary",
+          "finding": "The official #1449 discussion reports disabled availability specs and a further overdue-flag bug; it does not demonstrate that every historical regression passed a particular normal-flow suite. The recommendation to test the common availability equation is well supported without that universal test-history assertion.",
+          "evidence": [
+            "Yale-1449comments",
+            "Yale-934files",
+            "Yale-985files"
+          ],
+          "severity": "minor historical overstatement"
+        }
+      ],
+      "unresolved": [
+        "Actual inventory counts/classes/units and member eligibility/overdue/admin/negative-stock policies; the brief supplies no precise answers.",
+        "Actual budget, staff host/operator capacity, SaaS licensing and procurement constraints.",
+        "Selected deployment versions, identity provider and credential/revocation policy, real outage duration/device-loss tolerance, throughput and restoration timings.",
+        "Actual old CSV corpus/dialects, column semantics, stable-ID mapping and quarantine/import policies.",
+        "Build-time idempotency scope/dedup window, outbox/conflict bounds and overflow behavior. Explicit design decisions; no evidence-derived numeric defaults supplied.",
+        "NocoDB/Baserow/Shelf remain optional uninvestigated leads; no claim that their mechanisms were surveyed.",
+        "Actual runtime fit/support/restore performance of any PocketBase-class backend; no scarcity invariant follows from a single binary."
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "Complete: O1\u2013O6 and every explicit makerspace constraint, including staff workflow, unreliable two-site Wi-Fi, CSV, low hosting, double booking, audit and extensions.",
+          "judgment": "The final answers the original brief with an availability equation, explicit per-P fragments, several architecture paths, an honest executed/proposed split and design questions that depend on staff policy. A small single-writer backend and SaaS comparison respect the hosting constraint; offline identity and revocation are now explicit. All obligations have substantive content, and at least the Yale issue/patch chain satisfies the minimum evolution requirement. Material unsupported release/option claims and a false critic addition still prevent full quality.",
+          "evidence": [
+            "brief.md O1\u2013O6",
+            "N1 final lines 1\u201379, 109\u2013162",
+            "N1-F01",
+            "N1-F02",
+            "N1-F03",
+            "N1-F04"
+          ]
+        },
+        {
+          "axis": 2,
+          "coverage": "Complete relevant consequential primary review: availability/counting/TZ, transaction and replication semantics, revision exceptions, CSV config/error behavior, primary lending/stock products, operations and three evolution chains.",
+          "judgment": "Correct mechanisms include pairwise exclusion versus counted capacity, deterministic replication winners versus business arbitration, immediate versus eventual conflicts, parser data/errors/meta and true versus displayed availability. PowerSync\u2019s backend arbitration is conservatively labeled inference and independently corroborated by official docs. The compaction bound is false, named PouchDB 9.0 Delta Sync/50% attribution lacks official release evidence, Turso versions are collapsed, and the universal derived-only quantity premise conflicts with actual InvenTree code. Small-binary memory figures and unpinned commercial adoption counts are insufficiently bounded minor claims, not benchmarked proof.",
+          "evidence": [
+            "PG-range",
+            "PG-constraints",
+            "PG-isolation",
+            "SQLite-isolation",
+            "Pouch-conflicts",
+            "Pouch-replication",
+            "Couch-conflicts",
+            "Couch-compaction",
+            "Pouch-release9",
+            "Papa-docs",
+            "Papa-faq",
+            "PowerSync-update",
+            "PowerSync-conflict-official",
+            "InvenTree-stockmodel",
+            "Turso-blog",
+            "Turso-offline"
+          ]
+        },
+        {
+          "axis": 3,
+          "coverage": "Complete: all discovered tools/families, architecture A\u2013F, explicit rejected options, optional leads and conditional hosting/offline tradeoffs.",
+          "judgment": "Circulate and YaleSTC are useful domain-specific discoveries; Snipe-IT, InvenTree and Grocy supply concrete custody/stock distinctions; PocketBase/SQLite/Litestream, CouchDB/PouchDB, PowerSync/Postgres and SaaS form genuinely different conditional options. Shelf and NocoDB/Baserow remain clearly uninvestigated leads. Domain-specific availability questions are a particular strength. Rejection of BOM/build depth and backup-as-sync is sensible. The Turso exclusion is not adequately version-grounded, and generic calendar/Koha dismissal needs narrower domain qualifications. No source-count ranking or requirement to adopt every possible product is applied.",
+          "evidence": [
+            "Circulate",
+            "Yale-934files",
+            "Yale-985files",
+            "Yale-1449comments",
+            "Yale-625files",
+            "SnipeIT",
+            "InvenTree",
+            "MyTurn",
+            "LendEngine",
+            "PocketBase",
+            "PocketBase-faq",
+            "SQLite-isolation",
+            "Litestream",
+            "Turso-blog",
+            "Koha",
+            "Exchange-calendar",
+            "N1 final lines 110\u2013122"
+          ]
+        },
+        {
+          "axis": 4,
+          "coverage": "Complete: P1\u2013P6 with all preserved fragments, optional enhancements, user decisions and externally unresolved items.",
+          "judgment": "The P1 reservation-source concern, P3 timestamp arbitration correction, P4 stable-key import, P5 repair gating and P6 expanded regressions are mostly well reasoned. P2 overcorrects by mandating derived-only quantities and making false generalized claims about row storage. Outlook/CalDAV calendar stores are not inherently incapable of resource reservations, but the brief still needs inventory/offline/audit functionality beyond a calendar. Optional enhancements and staff-dependent policies are labeled rather than smuggled into unconditional requirements.",
+          "evidence": [
+            "N1 plan_dispositions",
+            "N1-F04",
+            "Exchange-calendar",
+            "PG-range",
+            "PG-isolation",
+            "InvenTree-stockmodel",
+            "Pouch-conflicts",
+            "Papa-docs",
+            "SnipeIT"
+          ]
+        },
+        {
+          "axis": 5,
+          "coverage": "Complete: full stage comparison; M1\u2013M4 and m1\u2013m12 individually adjudicated, with D1\u2013D8/U1\u2013U6/R1\u2013R3 and all alternatives/rejections tracked.",
+          "judgment": "The final preserves substantial prose and uncertainty, brings quantity, offline identity and membership interaction into the availability design, and prices validation by architecture. It correctly demotes an unverified cr-sqlite maintenance claim and keeps a new Airtable-class idea as a lead. Critic m7 is false and its acceptance introduces and propagates a false CouchDB limit. Critic M4\u2019s blanket claim that SQLite concurrency is trivial is itself too strong; serializing writes does not automatically make an application\u2019s stale read/check/write safe. The final\u2019s transaction/serialized-winner criterion partly avoids that critic error. Critic agreement and the reviser\u2019s read-only rechecks do not authenticate original secondary release claims.",
+          "evidence": [
+            "N1 discovery.md/draft.md/critique.md/final.md full comparison",
+            "N1 criticism_adjudication",
+            "N1-F01",
+            "SQLite-isolation"
+          ]
+        },
+        {
+          "axis": 6,
+          "coverage": "Complete: E1\u2013E5 evidence/read-only witnesses versus proposed P-V1\u2013P-V6, including each A\u2013E architecture\u2019s different oracle and recovery applicability.",
+          "judgment": "The candidate clearly says no runtime/reservation/import/recovery test ran. The capacity N+1\u2192N case, both-versions staff arbitration, identity-revocation case, hostile CSV result taxonomy and availability matrix are meaningful. Different architecture criteria are useful, provided business success is not replaced by sync visibility or documenting a race. For PowerSync, rebuilding a client from Postgres does not test restoring the authoritative server; for SaaS, export is portability rather than server recovery. These are stated scope limits, not invented execution failure. Backup/restore performance, queue/retention bounds and deployment identity remain build validation.",
+          "evidence": [
+            "N1 final lines 63\u201379 and 116\u2013120",
+            "SQLite-isolation",
+            "PG-constraints",
+            "PowerSync-update",
+            "Papa-docs",
+            "PocketBase-faq",
+            "Couch-conflicts"
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "complete": true,
+        "remaining_claims": [],
+        "checked_claims": [
+          {
+            "claim": "Circulate/Yale/asset/stock/SaaS families and two-site transferability",
+            "result": "Official projects substantiate lending lifecycle and stock/custody domains. Circulate tenants are separate libraries, so multi-tenancy is not silently proof of shared cross-site members; final says two-site/offline unknown. Adoption/size/RAM color unverified.",
+            "primary_evidence": [
+              "Circulate",
+              "Yale-934files",
+              "SnipeIT",
+              "InvenTree",
+              "Grocy-auth",
+              "MyTurn",
+              "LendEngine"
+            ]
+          },
+          {
+            "claim": "Unique-unit range/exclusion and counted N capacity",
+            "result": "Pairwise exclusion supported; at-most-N requires the candidate\u2019s separate counting/per-unit assignment guard. Exact serialized/advisory implementation is proposed, not run. TZ/site policy stated.",
+            "primary_evidence": [
+              "PG-range",
+              "PG-constraints",
+              "SQLite-isolation"
+            ]
+          },
+          {
+            "claim": "Quantity derived-only correction versus atomic row history",
+            "result": "Blind overwrite race real; blanket stored-row rejection false. InvenTree stored Decimal quantity and locked atomic add/take tracking provide counterexample.",
+            "primary_evidence": [
+              "InvenTree-stockmodel",
+              "PG-isolation",
+              "N1-F04"
+            ]
+          },
+          {
+            "claim": "Pouch immediate/eventual conflicts, 409s, delta-upsert and deterministic winner",
+            "result": "Primary guides support distinctions; true business deltas can be retried, deterministic winner is not scarce-tool fairness. Capture timestamps remain evidence.",
+            "primary_evidence": [
+              "Pouch-conflicts",
+              "Pouch-replication"
+            ]
+          },
+          {
+            "claim": "Couch compaction/revision retention exception",
+            "result": "Non-leaf historical bodies differ from live conflict leaves; final losing-branch expiry bound is wrong. Revision metadata is not permanent audit history.",
+            "primary_evidence": [
+              "Couch-conflicts",
+              "Couch-compaction",
+              "Couch-revlimit",
+              "Couch-1507",
+              "N1-F01"
+            ]
+          },
+          {
+            "claim": "PouchDB 9.0 Delta Sync and 50% bandwidth",
+            "result": "Official named release/changelog does not support the asserted feature or measurement. Classified consequential unsupported, not universal absence proven.",
+            "primary_evidence": [
+              "Pouch-release9",
+              "Pouch-replication",
+              "N1-F02"
+            ]
+          },
+          {
+            "claim": "PowerSync visibility versus arbitration/backend conflict handling",
+            "result": "Conservative inference is corroborated by official conflict/update docs: backend processes uploaded operations and defines conflict behavior, including idempotency. Visibility itself is not a scarce reservation rule.",
+            "primary_evidence": [
+              "PowerSync-update",
+              "PowerSync-conflict-official"
+            ]
+          },
+          {
+            "claim": "PWA/local store/outbox/identity and membership decisions",
+            "result": "Architecture requirements are proposals; revocation/identity/outbox bounds explicitly unresolved staff/build choices, not fetched defaults. Actor prerequisites and member lifecycle fit the brief.",
+            "primary_evidence": [
+              "PowerSync-update",
+              "MyTurn",
+              "Pouch-conflicts"
+            ]
+          },
+          {
+            "claim": "PocketBase/SQLite/Litestream low-hosting default and recovery",
+            "result": "Single-server SQLite/WAL and Litestream backup role supported; no workload RAM/throughput guarantees or multi-writer property proved. Correct transaction still required.",
+            "primary_evidence": [
+              "PocketBase",
+              "PocketBase-faq",
+              "SQLite-isolation",
+              "Litestream"
+            ]
+          },
+          {
+            "claim": "Papa Parse data/errors/meta, FieldMismatch, header duplicate/types, encoding and CRLF/quoting",
+            "result": "Supported with explicit exceptions: error rows are not automatically parser failure; dynamic typing false by default; codes remain strings; duplicate Papa headers are renamed with metadata; encoding option local FileReader; generic dict overwrite is separate. Candidate otherwise distinguishes proposed handling.",
+            "primary_evidence": [
+              "Papa-docs",
+              "Papa-faq"
+            ]
+          },
+          {
+            "claim": "Yale #934/#932, #985/#982, #1449/#1220, #1131, #625, #1580/#1521 chain",
+            "result": "Bodies, key patches and issue discussion substantiate availability/renewal/floor/status/override/overdue/request-block evolution. Old overdue policy and pending request behavior are conditional user questions, not requirements. Later #1449 discussion adds a second overdue-flag defect and disabled specs, qualifying universal ordinary-flow assertions.",
+            "primary_evidence": [
+              "Yale-934",
+              "Yale-934files",
+              "Yale-932",
+              "Yale-985",
+              "Yale-985files",
+              "Yale-982",
+              "Yale-1449",
+              "Yale-1449comments",
+              "Yale-1220",
+              "Yale-1131",
+              "Yale-625",
+              "Yale-625files",
+              "Yale-1580",
+              "Yale-1521"
+            ]
+          },
+          {
+            "claim": "CSV 36f7dc5 issue/fix illustration",
+            "result": "Full pertinent Go/TSX patches independently retrieved; structured parse/error handling and viewer correction supported. No candidate runtime importer claim.",
+            "primary_evidence": [
+              "CSV-commit-relevant",
+              "Papa-docs"
+            ]
+          },
+          {
+            "claim": "Turso family rejection and cr-sqlite design/maintenance qualification",
+            "result": "Current versus older Turso mechanisms require distinct release pins; official 2025 sync has Last Push Wins/custom transform, contradicting generic unresolved premise. cr-sqlite maintenance rationale correctly dropped; silent merge not physical scarcity oracle.",
+            "primary_evidence": [
+              "Turso-blog",
+              "Turso-offline",
+              "CRSQLite",
+              "N1-F03"
+            ]
+          },
+          {
+            "claim": "Calendar/Koha/OpenRoom/PartKeepr/BOM and optional lead eliminations",
+            "result": "PartKeepr official repo archived; BOM and ILS domain fit are scoped choices. Exchange/Koha exceptions qualify broad incapability. OpenRoom lookup failed, no negative capability inference. Shelf/NocoDB/Baserow not asserted surveyed.",
+            "primary_evidence": [
+              "Exchange-calendar",
+              "Koha",
+              "PartKeepr"
+            ]
+          },
+          {
+            "claim": "Repair cases, REST/webhooks, reminders and per-architecture proposed tests",
+            "result": "Relevant lending features support future seams. A\u2013E test criteria examined for actual business oracle: SQLite transaction not trivial, multi-master surface both versions, backend acceptance not sync visibility, authoritative recovery distinct from export/client rebuild. No runtime execution claimed.",
+            "primary_evidence": [
+              "SnipeIT",
+              "MyTurn",
+              "SQLite-isolation",
+              "PG-constraints",
+              "PowerSync-update",
+              "Papa-docs"
+            ]
+          }
+        ]
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "reviewed_stages": [
+          "research/discovery.md",
+          "research/draft.md",
+          "critic/critique.md",
+          "reviser/final.md",
+          "all associated source maps/indexes/excerpts and frozen assignments"
+        ],
+        "preserved": "Availability equation/domain findings, architecture A\u2013E, optional lead F, D1\u2013D8/U1\u2013U6/R1\u2013R3, snippets versus primary limits, ordinary flows and proposed/executed distinction survive as full prose. Quantity/identity/membership/test applicability additions connect to their dependent policies and probes.",
+        "qualified_or_retired": "cr-sqlite secondary maintenance argument demoted; PowerSync arbitration labeled inference; m9 new Airtable-class suggestion remains explicitly uninvestigated; staff defaults remain recommendatory.",
+        "material_losses_or_false_additions": [
+          "N1-F01 accepted critic m7 adds and propagates false live-conflict compaction limit.",
+          "N1-F02 secondary Delta Sync release/percentage promoted into final O3 chain without primary support.",
+          "N1-F03 older/unpinned Turso warning retains a broad option rejection without generation distinction.",
+          "N1-F04 row mechanism overcorrection retained through blanket critic concurrence."
+        ],
+        "criticism_coverage": "M1\u2013M4 and m1\u2013m12 plus per-P/obligations/false-correction concurrence individually adjudicated."
+      },
+      "grade_limits": [
+        "FAIL is an independent source-grounded scientific grade after full six-axis artifact and consequential-claim review, not a delivery/native/cost grade.",
+        "No candidate runtime tests were executed; no failure or success rate, repair outcome, performance benchmark or deployed compatibility is inferred.",
+        "Honest staff/deployment inputs above are not counted as evasive missing research. Unsupported consequential claims are findings, not disguised unknown user decisions.",
+        "This is not comparative full quality: both arms have different strengths and defects, and two FAIL grades do not establish equivalence or a faster FAIL win."
+      ],
+      "plan_dispositions": [
+        {
+          "plan": "P1",
+          "candidate_disposition": "CORRECTION; optional view/sync; D1 quantity/policy/TZ and D8 membership; uncertainty actual classes",
+          "assessment": "The shared availability equation and count-versus-unit distinction improve the thin plan. Pairwise exclusion is not an aggregate capacity counter, and the per-unit/serializable/advisory-lock alternatives are stated rather than conflated. Date granularity, pending requests, overdue and admin overrides remain user choices informed by Yale, not imported Yale policies as requirements. The categorical rejection of Google/Outlook/CalDAV stores is too broad; resource-calendar processing can handle booking conflicts under specified configuration, though it does not supply the entire inventory/offline/audit solution."
+        },
+        {
+          "plan": "P2",
+          "candidate_disposition": "CORRECTION; optional barcode; idempotency scope/window decisions; reorder uncertainty",
+          "assessment": "The lost-update example is valid for stale absolute overwrites and a ledger/audit design is useful. The final\u2019s mandatory derived-only architecture and claim that referenced products do not use a stored client-updated quantity are false as general statements (N1-F04). InvenTree provides a concrete locked, transactionally updated quantity plus history. Display-floor versus true quantity should remain separate; negative physical balance policy and per-location identity still require staff choices."
+        },
+        {
+          "plan": "P3",
+          "candidate_disposition": "ALREADY-COVERED offline permit + CORRECTION reject timestamp reconciliation; D2 partition, D7 identity, bounded queues",
+          "assessment": "The split is apt: unreliable sites need offline workflow but timestamps alone cannot resolve scarce custody. Immediate conflict retries versus eventual branches and both-version staff review are meaningful. Offline identity/revocation and queue overflow are surfaced rather than invented. Transport remains distinct from reservation arbitration. The newly accepted compaction expiry premise and named Delta Sync release performance are materially unsupported/wrong (N1-F01/F02); they do not invalidate the correctly scoped sync-versus-arbitration distinction."
+        },
+        {
+          "plan": "P4",
+          "candidate_disposition": "CORRECTION reject names; stable IDs/dry-run/quarantine/undo; optional mapping memory; staff CSV choices",
+          "assessment": "Sound preservation of names as possible hints rather than overwrite authority. Papa Parse data/errors/meta and FieldMismatch code handling support visible repair and string IDs. The final distinguishes a dict-header duplicate loss mechanism from the parser\u2019s specific behavior; current Papa docs automatically rename duplicates and expose renamedHeaders, so do not assume Papa itself silently overwrites. Explicit export quoting/newline settings are useful proposals."
+        },
+        {
+          "plan": "P5",
+          "candidate_disposition": "CORRECTION notes-only; retain text in repair case; optional photo/parts/reminders; repair lifecycle decisions",
+          "assessment": "Repair cases/history and availability gating serve the staff workflow better than a free-text-only flag. The final does not discard free text. Member-facing reminders are a future seam rather than an unconditional new v1 requirement. State/booking interaction is made part of the common availability matrix. Cross-site conflict handling for a repair race remains a proposed fixture, not source-proven behavior."
+        },
+        {
+          "plan": "P6",
+          "candidate_disposition": "CORRECTION expand beyond happy path; already-covered normal flows retained; architecture-priced probes",
+          "assessment": "Expanded tests address actual availability failures, partitions, identity, hostile CSV, repair/audit and recovery. Architecture-specific success conditions are valuable. SQLite still needs a correct transaction around the decision; write serialization alone does not justify calling a concurrency test trivial. P-V5 scopes are different: client re-sync and SaaS export are not equivalent to authoritative-server disaster recovery. They are openly proposed and no runtime witness is fabricated."
+        }
+      ],
+      "criticism_adjudication": [
+        {
+          "criticism": "M1",
+          "candidate_response": "ACCEPT counted/multi-unit availability",
+          "independent_adjudication": "Real omission: pairwise per-tool exclusion does not express arbitrary at-most-N capacity. Per-unit assignment plus exclusion or a correctly serialized counted guard are legitimate design options. The added N+1 versus N test and equation row are meaningful, with architecture-specific transaction validation still required.",
+          "evidence": [
+            "PG-constraints",
+            "PG-range",
+            "Yale-985files",
+            "SQLite-isolation"
+          ]
+        },
+        {
+          "criticism": "M2",
+          "candidate_response": "ACCEPT explicit offline identity decision and test",
+          "independent_adjudication": "Actor-dependent events require an identity policy under partition; sync visibility is not identity acquisition. D7 surfaces options and a revoked/lapsed actor review case without inventing the actual staff mechanism. Proportionate to the brief; not a demand for a specific identity product.",
+          "evidence": [
+            "PowerSync-update",
+            "N1 draft/final comparison"
+          ]
+        },
+        {
+          "criticism": "M3",
+          "candidate_response": "ACCEPT with AMEND recommended membership default",
+          "independent_adjudication": "A stated member eligibility/lifecycle interaction is useful. The critic\u2019s particular membership default is not dictated by public lending products. Final D8 explicitly permits staff confirmation and even no v1 lifecycle. This preserves uncertainty rather than importing requirements from a reference system.",
+          "evidence": [
+            "MyTurn",
+            "N1 draft/final comparison"
+          ]
+        },
+        {
+          "criticism": "M4",
+          "candidate_response": "ACCEPT per-architecture validation",
+          "independent_adjudication": "Different A\u2013E failure surfaces warrant different criteria. But the critic/final statement that concurrency is trivial under a single SQLite writer is too strong: serialization of writes does not prevent an application from making a stale precheck outside its apply transaction. The final\u2019s serialized ledger-winner and transaction-oriented criteria are a better bounded reading. P-V5 client re-sync/export have narrower oracles than authoritative recovery.",
+          "evidence": [
+            "SQLite-isolation",
+            "PG-isolation",
+            "PowerSync-update",
+            "N1-m03"
+          ]
+        },
+        {
+          "criticism": "m1",
+          "candidate_response": "ACCEPT secondary room example, defer build pin",
+          "independent_adjudication": "Official PostgreSQL \u00a78.17.10 directly supplies a room/range exclusion example. The range mechanism is supported now, not merely by agreement among snippets. The final\u2019s pin deferral is a minor reproducibility issue, not reason to reject the mechanism.",
+          "evidence": [
+            "PG-range",
+            "PG-constraints"
+          ]
+        },
+        {
+          "criticism": "m2",
+          "candidate_response": "ACCEPT downgrade unverified cr-sqlite maintenance premise",
+          "independent_adjudication": "Dropping a secondary maintenance assertion is correct. Rejecting silent auto-merge as a scarce-resource arbiter is a scoped design reason; it does not reject every CRDT use. Current source describes CRDT/causal-log mechanics, not a magical physical-custody oracle.",
+          "evidence": [
+            "CRSQLite",
+            "Pouch-conflicts"
+          ]
+        },
+        {
+          "criticism": "m3",
+          "candidate_response": "ACCEPT mark PowerSync arbitration as inference",
+          "independent_adjudication": "The prior fetched visibility/sync-rules docs did not establish the arbitration mechanism. Honest inference labeling is appropriate. Independent official conflict docs now corroborate backend-defined conflict handling and upload operation semantics, so this is a sound conditional conclusion, not a false correction.",
+          "evidence": [
+            "PowerSync-update",
+            "PowerSync-conflict-official"
+          ]
+        },
+        {
+          "criticism": "m4",
+          "candidate_response": "ACCEPT snippet-level Yale limitation",
+          "independent_adjudication": "The limitation is honestly preserved. Independent complete issue bodies, #934/#985/#625 patches and #1449 discussion substantiate the availability family and a real status-regression chain. They also reveal disabled specs and a later overdue-flag problem. Snippet convergence alone was never primary validation; the equation lesson stands on the retrieved records.",
+          "evidence": [
+            "Yale-934files",
+            "Yale-985files",
+            "Yale-625files",
+            "Yale-1449",
+            "Yale-1449comments",
+            "Yale-1220",
+            "Yale-1131",
+            "Yale-1580",
+            "Yale-1521"
+          ]
+        },
+        {
+          "criticism": "m5",
+          "candidate_response": "ACCEPT CSV commit as snippet illustration",
+          "independent_adjudication": "Independent complete relevant patches of 36f7dc5 confirm structured CSV result/error handling and the viewer surface. Papa Parse\u2019s primary data/errors/meta and FieldMismatch taxonomy support the core import rule. The candidate correctly does not claim to have executed the importer or fetched the diff.",
+          "evidence": [
+            "CSV-commit-relevant",
+            "Papa-docs",
+            "Papa-faq"
+          ]
+        },
+        {
+          "criticism": "m6",
+          "candidate_response": "ACCEPT timezone condition",
+          "independent_adjudication": "tstzrange is timestamp-with-time-zone and [) constructor bounds are documented. Site-local display and boundary policy are sensible explicit business handling; date-versus-time granularity remains a real staff decision.",
+          "evidence": [
+            "PG-range"
+          ]
+        },
+        {
+          "criticism": "m7",
+          "candidate_response": "ACCEPT supposed revision-retention conflict limit",
+          "independent_adjudication": "Reject the critic premise: it conflates compacted non-leaf historical bodies with current conflicting leaves. The final\u2019s new losing-branch expiry bound is materially wrong and propagated into B and the conditions. Independent evidence, not acceptance by the reviser, governs.",
+          "evidence": [
+            "Couch-conflicts",
+            "Couch-compaction",
+            "Couch-revlimit",
+            "N1-F01"
+          ]
+        },
+        {
+          "criticism": "m8",
+          "candidate_response": "ACCEPT export/unparse settings",
+          "independent_adjudication": "Papa Parse docs support explicit newline/quote configuration and CRLF defaults. Naming export settings is a sensible extension to retained report/export scope, not an executed portability result.",
+          "evidence": [
+            "Papa-docs"
+          ]
+        },
+        {
+          "criticism": "m9",
+          "candidate_response": "ACCEPT AS LEAD NocoDB/Baserow",
+          "independent_adjudication": "Correctly retained as an uninvestigated lead with no asserted mechanism and no changed P disposition. It would enrich O1 if pursued; the original brief does not mandate exhaustive product discovery or a repair of this optional lead.",
+          "evidence": [
+            "N1 final line 121 and stage comparison"
+          ]
+        },
+        {
+          "criticism": "m10",
+          "candidate_response": "ACCEPT member-facing reminders as future seam",
+          "independent_adjudication": "Member communication is plausibly supported by official lending-product features. Final labels due/overdue notices a future seam rather than an unconditional v1 implementation burden.",
+          "evidence": [
+            "MyTurn"
+          ]
+        },
+        {
+          "criticism": "m11",
+          "candidate_response": "ACCEPT build-time outbox/conflict bound placeholder",
+          "independent_adjudication": "Explicit retention/overflow design requirements are useful. No source bounds this makerspace\u2019s outage/storage needs, so not inventing N days is appropriate. This is an unresolved design parameter, not failure to fetch an available numerical answer.",
+          "evidence": [
+            "N1 final lines 44, 96, 142"
+          ]
+        },
+        {
+          "criticism": "m12",
+          "candidate_response": "ACCEPT idempotency scope/window decision",
+          "independent_adjudication": "Intent UUID shape and dedup scope/window are explicit implementation decisions. Official backend-sync guidance supports idempotent operation handling. The final does not pretend that an unstated lifetime is a source default or a tested guarantee.",
+          "evidence": [
+            "PowerSync-update",
+            "PowerSync-conflict-official"
+          ]
+        },
+        {
+          "criticism": "per-P/O/false-correction concurrence",
+          "candidate_response": "CONCUR blanket no-false-correction claim",
+          "independent_adjudication": "Do not accept blanket concurrence: stored quantity rows have supported safe forms, m7 introduces a false operating premise, and the broad Turso rejection lacks version applicability. General calendar fit also needs qualification. Most retained narrower roles and explicit uncertain decisions are sound.",
+          "evidence": [
+            "N1 plan_dispositions",
+            "N1-F01",
+            "N1-F03",
+            "N1-F04",
+            "Exchange-calendar"
+          ]
+        }
+      ]
+    }
+  },
+  "method_clues": "N2 paths disclose control; N1 paths disclose treatment and M10 question queues. Stage assignments/source indexes disclose methods and claimed native IDs. Partial blinding only. No candidate history, other cases, evaluator answers or private provider internals were accessed. Citation count, method label, apparent agreement and file length did not determine grades.",
+  "comparative_quality_eligible": false,
+  "scope_limits": [
+    "Both complete frozen finals, discoveries, drafts, critiques, source maps, source-root excerpts/indexes, stage assignments/input maps and plan-reveal records were read. All declared SHA-256 and byte sizes match the exact evaluation input-map.",
+    "Relevant public primary documentation, releases, issue/PR bodies and patches were independently retrieved. Candidate secondary claims were checked against primaries or classified unsupported; honest deployment/user unknowns remain unknown.",
+    "No candidate application, PostgreSQL, CouchDB, PouchDB, importer or recovery drill was executed. Proposed test designs and their oracles were assessed; static semantic traces are reasoning aids, not runtime proof.",
+    "Public current/master sources can drift. Historical claims were checked with named releases/commits when available; current documentation does not prove a deployment release or the makerspace\u2019s operating policies.",
+    "The assessment does not demand an unlimited production specification, every possible product, or invented workload/budget/policy answers. Optional uninvestigated leads remain optional, not missing required facts."
+  ],
+  "evaluation_started_at": "2026-10-09T18:56:09Z",
+  "evaluation_completed_at": "2026-10-09T19:16:28.998397+00:00",
+  "observed_source_operations": {
+    "frozen_files": "Read-only text/JSON inspection, targeted range reads to close truncations, full source-root inspection, SHA-256 and declared-byte comparisons. Hash validity established input identity, not quality.",
+    "primary_operations": "Normal public web search/open/find plus 83 independent read-only HTTP source operations recorded in source-map.json (includes failures and corroborating/redundant retrievals). No credentialed/private operations.",
+    "executed_scientific_runtime": false,
+    "static_counterexamples": "Three explicit semantic fixtures saved in evidence/semantic-counterexamples.json; no database or candidate code run.",
+    "source_operation_count": 83
+  },
+  "native_and_cost_limits": {
+    "reviewer_goal_created": true,
+    "reviewer_goal_observed_active": true,
+    "observed_active_at": "2026-10-09T18:56:09Z",
+    "completion_policy": "Complete native Goal only after assessment.md, assessment.json, source-map.json and evidence are saved and mechanically verified. This pre-completion assessment does not fabricate a terminal receipt.",
+    "candidate_native_completion": null,
+    "candidate_native_ids": "Stage source maps contain self-reported native IDs; not independently authenticated as completion by this reviewer.",
+    "candidate_token_usage": null,
+    "candidate_billing": null,
+    "reviewer_token_usage": null,
+    "reviewer_billing": null,
+    "t3_host_terminal_observation": null,
+    "time_or_speed_quality_inference": "None. Delivery/native/cost are distinct from scientific grade. Two FAIL grades establish neither equal quality nor a speed winner.",
+    "native_usage_observation": "get_goal at the final active check exposed tokensUsed=341943 and timeUsedSeconds=1161. These are the tool\u2019s active Goal counters, not authenticated API tokens, billing, candidate cost or terminal usage. No terminal receipt is synthesized."
+  },
+  "independent_synthesis": "Both arms offer useful but different work. N2 is more concrete about a product-adoption route, lifecycle defaults and custody/stock operations, but its stated backstops and one test oracle have concrete holes. N1 is stronger in the lending availability equation, counted capacity and architecture-specific testing, but accepts a false critic compaction premise and makes unsupported release/option and overbroad stock-storage claims. These observations do not yield a full-quality ranking, equal quality, or a speed win; comparative_quality_eligible is false."
+}

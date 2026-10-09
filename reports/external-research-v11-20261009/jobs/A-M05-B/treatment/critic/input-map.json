@@ -1,0 +1,23 @@
+{
+  "block": "A-M05-B",
+  "arm": "treatment",
+  "case": "S11",
+  "method": "M05",
+  "stage": "critic",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic",
+  "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S11/brief.md",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/revealed-plan.md"
+  ],
+  "source_roots": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/sources"
+  ],
+  "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic",
+  "deadline": "2026-10-09T19:07:22.873642+00:00",
+  "arm_deadline": "2026-10-09T19:39:30.502703+00:00",
+  "native_route": "luna",
+  "evidence_kind": "full-discovery"
+}

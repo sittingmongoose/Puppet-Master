@@ -1,0 +1,41 @@
+{
+  "frozen_at": "2026-10-09T18:39:43.084419+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S07/brief.md",
+      "sha256": "11201a686d012432b0c60757835ab1e0f959b2fdcccd661911f0cac5c3c3bd7a",
+      "bytes": 1426
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M07.json",
+      "sha256": "d72b00d76072a7cad1ec539cacc5d55d249d27ae95b4db03b6725199d5ee6ec6",
+      "bytes": 725
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/assignment.md",
+      "sha256": "7beb975ea9f2ffa11d4ca64d2f804e6932bf7bfee6d06e3102505c16f98f3e5f",
+      "bytes": 3149
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/input-map.json",
+      "sha256": "0bf712d7b0da9da47555671d35e0f267d12b6d93516cdb7d325fb04e44a4cffa",
+      "bytes": 640
+    }
+  ],
+  "method": {
+    "id": "M07",
+    "version": "v1",
+    "name": "evidence-on-demand",
+    "control": "Fresh critic/reviser receive conventional draft, source bibliography and complete own-arm captured evidence; may navigate normally.",
+    "treatment": "Same own-arm evidence plus navigable exact-byte source index. Reviewer/reviser retrieve governing context on demand, expand beyond author excerpt to definitions/exceptions/callers. Never treat cache as trusted conclusions; cold capture charged.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Evidence handoff structure; no source removal",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T19:09:43.084419+00:00"
+}

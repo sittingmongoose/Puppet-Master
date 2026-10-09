@@ -1,0 +1,41 @@
+{
+  "frozen_at": "2026-10-09T18:57:49.357967+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S06/brief.md",
+      "sha256": "4c4e4dd878bb0d77ecbbdcbc86993acdae4f9e52f019466d518bd9139e9f2de6",
+      "bytes": 1431
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M06.json",
+      "sha256": "83f1273a0d2f0b17dc53b5165aed32594d796c3aca566e8624e3346bf4df1676",
+      "bytes": 589
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-A/control/research/assignment.md",
+      "sha256": "e862cf0f156837353283a5f701d272dbbb662e1474bee92b4b4ae94a140acf29",
+      "bytes": 2961
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-A/control/research/input-map.json",
+      "sha256": "7bc1ee679d7a11d012fe5bf9cc1e504a467279452a16ae1699783776f6ab9a6f",
+      "bytes": 634
+    }
+  ],
+  "method": {
+    "id": "M06",
+    "version": "v1",
+    "name": "evidence-first-challenge",
+    "control": "Fresh critic reads draft then derives source challenges.",
+    "treatment": "Fresh critic first independently derives brief/primary-source facts WITHOUT draft; saves evidence-first.md; then opens frozen draft and compares. Same fresh reviser afterwards.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Draft anchoring intervention; full final scope",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T19:27:49.357967+00:00"
+}

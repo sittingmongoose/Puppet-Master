@@ -1,0 +1,293 @@
+{
+  "candidate": "A-M08-B/treatment/research",
+  "collected_at_utc": "2026-10-09T18:43:47Z",
+  "assignment": "Instructions embedded in the exact input-map.json; no parent, counterpart, evaluator, or campaign history was read.",
+  "inputs": [
+    {
+      "id": "IN-01",
+      "title": "S02 community-audio brief",
+      "url": "file:///home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S02/brief.md",
+      "version": "exact local brief named by input-map.json",
+      "sha256": "e42d1e70aa37a1339a8820e2953b41812b841d09f6310095eab1e65fb1e84882",
+      "locator": "complete file; O1-O6 requirements",
+      "accessed_at_utc": "2026-10-09T18:40:23Z",
+      "observed_operations": [
+        "read complete file",
+        "calculated SHA-256"
+      ],
+      "evidence_path": "discovery.md"
+    },
+    {
+      "id": "IN-02",
+      "title": "A-M08-B input map",
+      "url": "file:///home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-B/treatment/research/input-map.json",
+      "version": "exact assignment-provided map",
+      "sha256": "91e992836f53d43e059aff0c6f39669f2f5033671bd25279df51bd5fb77a39a0",
+      "locator": "complete file; stage, roots, deadlines, method, native route",
+      "accessed_at_utc": "2026-10-09T18:40:23Z",
+      "observed_operations": [
+        "read complete file",
+        "calculated SHA-256"
+      ],
+      "evidence_path": "discovery.md"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S02",
+      "title": "Oral History Resources — UK Libraries",
+      "url": "https://libraries.uky.edu/locations/special-collections-research-center/louie-b-nunn-center-oral-history/nunn-center-resources",
+      "version": "current unversioned official page",
+      "commit": null,
+      "locator": "OHMS description and account/tool links, lines 21-29",
+      "accessed_at_utc": "2026-10-09T18:43:21Z",
+      "observed_operations": [
+        "opened official page",
+        "read OHMS description and account/tool links"
+      ],
+      "evidence_path": "sources/evidence/S02-ohms-resource.md",
+      "claim_scope": "Word search links to moments; no support terms or SLA claim."
+    },
+    {
+      "id": "S03",
+      "title": "OHMS Viewer v3.10.15 release",
+      "url": "https://github.com/uklibraries/ohms-viewer/releases/tag/v3.10.15",
+      "version": "v3.10.15",
+      "commit": "ec922b6bd2e94bbbe537aa931e273ce99637ec7d",
+      "locator": "cache-folder Apache/Nginx direct-access sample rules, release entry lines 217-232",
+      "accessed_at_utc": "2026-10-09T18:43:21Z",
+      "observed_operations": [
+        "opened release history",
+        "read sample server-rule note",
+        "resolved full SHA from pinned README"
+      ],
+      "evidence_path": "sources/evidence/S03-ohms-v31015.md",
+      "claim_scope": "Sample config, not proof of installation or complete system security."
+    },
+    {
+      "id": "S04",
+      "title": "OHMS Viewer v3.10.12 release",
+      "url": "https://github.com/uklibraries/ohms-viewer/releases/tag/v3.10.12",
+      "version": "v3.10.12",
+      "commit": "093ff83 (short commit exposed by release page)",
+      "locator": "fix for disappearing index View Transcript navigation and transcript segment linking",
+      "accessed_at_utc": "2026-10-09T18:43:21Z",
+      "observed_operations": [
+        "opened release history",
+        "read fix note and linked commit title"
+      ],
+      "evidence_path": "sources/evidence/S04-ohms-v31012.md",
+      "claim_scope": "Release-note evidence only; no local software execution."
+    },
+    {
+      "id": "S05",
+      "title": "OHMS Viewer README",
+      "url": "https://github.com/uklibraries/ohms-viewer/blob/ec922b6/README.md",
+      "version": "v3.10.15 snapshot",
+      "commit": "ec922b6bd2e94bbbe537aa931e273ce99637ec7d",
+      "locator": "different media-player implementation; transcript/index/time-point QA; GPL-3.0",
+      "accessed_at_utc": "2026-10-09T18:43:47Z",
+      "observed_operations": [
+        "opened commit-pinned README",
+        "read player requirements and testing guidance"
+      ],
+      "evidence_path": "sources/evidence/S05-ohms-viewer-readme.md",
+      "claim_scope": "Player substitution requires integration; old generic runtime note not treated as current."
+    },
+    {
+      "id": "S06",
+      "title": "OHMS Transcript Module — Aviary User Guide",
+      "url": "https://coda.aviaryplatform.com/7-transcript-module-172",
+      "version": "unversioned live guide observed 2026-10-09",
+      "commit": null,
+      "locator": "§§7.5-7.7: editing text, speakers, find/replace, start time; HH:MM:SS",
+      "accessed_at_utc": "2026-10-09T18:43:21Z",
+      "observed_operations": [
+        "opened guide",
+        "read editing and time-unit behavior"
+      ],
+      "evidence_path": "sources/evidence/S06-aviary-transcripts.md",
+      "claim_scope": "Documented capability; import/export round trip not tested."
+    },
+    {
+      "id": "S07",
+      "title": "Indexes — Aviary User Guide",
+      "url": "https://coda.aviaryplatform.com/indexes-221",
+      "version": "unversioned live guide",
+      "commit": null,
+      "locator": "timed index segments, formats, Public setting; lines 41 and 150-151",
+      "accessed_at_utc": "2026-10-09T18:43:21Z",
+      "observed_operations": [
+        "opened guide",
+        "read segment fields and index-level visibility"
+      ],
+      "evidence_path": "sources/evidence/S07-aviary-indexes.md",
+      "claim_scope": "Index object access documented; arbitrary per-segment ACL not established."
+    },
+    {
+      "id": "S08",
+      "title": "Media Files and Permissions — Aviary User Guide",
+      "url": "https://coda.aviaryplatform.com/media-files-285",
+      "version": "unversioned live guide; related access-request guide dated 2025-10-28",
+      "commit": null,
+      "locator": "media status/storage description; permission groups and access-request sections 163-190 in related page",
+      "accessed_at_utc": "2026-10-09T18:43:21Z",
+      "observed_operations": [
+        "opened media and access-request guides",
+        "read status, storage and request descriptions"
+      ],
+      "evidence_path": "sources/evidence/S08-aviary-media.md",
+      "claim_scope": "Vendor claims; no independent security, contract, retention, or export review."
+    },
+    {
+      "id": "S09",
+      "title": "Manage Media Access with Cultural Protocols — Mukurtu User Manual",
+      "url": "https://docs.mukurtu.org/media/ManageMediaAccessWithProtocols/",
+      "version": "Mukurtu v4 manual; URL unversioned",
+      "commit": null,
+      "locator": "v4 required media protocol, sync and independent content/media access, lines 248-256; related community protocol page",
+      "accessed_at_utc": "2026-10-09T18:43:21Z",
+      "observed_operations": [
+        "opened v4 manual pages",
+        "read open/strict, membership, protocol and media-sync behavior"
+      ],
+      "evidence_path": "sources/evidence/S09-mukurtu-protocols.md",
+      "claim_scope": "Object/media-level controls; interval-level access not documented in reviewed pages."
+    },
+    {
+      "id": "S10",
+      "title": "Audio Files — Mukurtu User Manual",
+      "url": "https://docs.mukurtu.org/media/ByTypeMediaUpload/Audio/",
+      "version": "Mukurtu v4 manual; URL unversioned",
+      "commit": null,
+      "locator": "audio upload steps 4-8; required protocols; All/Any behavior; player",
+      "accessed_at_utc": "2026-10-09T18:43:21Z",
+      "observed_operations": [
+        "opened audio upload guide",
+        "read required protocol, sharing default and player"
+      ],
+      "evidence_path": "sources/evidence/S10-mukurtu-audio.md",
+      "claim_scope": "Media asset semantics, not segment policy."
+    },
+    {
+      "id": "S11",
+      "title": "Media and Items — Omeka S User Manual",
+      "url": "https://omeka.org/s/docs/user-manual/content/media/",
+      "version": "current unversioned manual",
+      "commit": null,
+      "locator": "media permissions and public/private status; item visibility/attached media behavior",
+      "accessed_at_utc": "2026-10-09T18:43:21Z",
+      "observed_operations": [
+        "opened media and item manuals",
+        "read item/media visibility and user roles"
+      ],
+      "evidence_path": "sources/evidence/S11-omeka-media.md",
+      "claim_scope": "No timecoded transcript/index authoring or segment ACL shown."
+    },
+    {
+      "id": "S12",
+      "title": "Whisper Model Card and transcription code",
+      "url": "https://github.com/openai/whisper/blob/v20250625/model-card.md",
+      "version": "v20250625 tag",
+      "commit": null,
+      "locator": "training-data distribution, intended use, limitations; related transcribe.py timestamps",
+      "accessed_at_utc": "2026-10-09T18:43:47Z",
+      "observed_operations": [
+        "opened tag-pinned model card and code file",
+        "read task support, data balance, risk and timestamp behavior"
+      ],
+      "evidence_path": "sources/evidence/S12-whisper.md",
+      "claim_scope": "General capability; specific archive accuracy unknown."
+    },
+    {
+      "id": "S13",
+      "title": "Robust Speech Recognition via Large-Scale Weak Supervision",
+      "url": "https://arxiv.org/abs/2212.04356v1",
+      "version": "arXiv v1, submitted 2022-12-06",
+      "commit": null,
+      "locator": "§§3.4, 3.8, 4.5; Table 3 and Fig. 3",
+      "accessed_at_utc": "2026-10-09T18:43:21Z",
+      "observed_operations": [
+        "opened author paper page",
+        "read multilingual and long-form findings"
+      ],
+      "evidence_path": "sources/evidence/S13-whisper-paper.md",
+      "claim_scope": "Benchmarks not calibrated for this collection."
+    },
+    {
+      "id": "S14",
+      "title": "Whisper changelog",
+      "url": "https://github.com/openai/whisper/blob/v20250625/CHANGELOG.md",
+      "version": "v20250625 tag",
+      "commit": null,
+      "locator": "v20250625 release heading and issue/PR bullets",
+      "accessed_at_utc": "2026-10-09T18:43:47Z",
+      "observed_operations": [
+        "opened tag-pinned changelog",
+        "read security, device, translation-documentation and timestamp changes"
+      ],
+      "evidence_path": "sources/evidence/S14-whisper-evolution.md",
+      "claim_scope": "Engineering evolution, not evidence of oral-history transcript accuracy."
+    },
+    {
+      "id": "S15",
+      "title": "Oral History Association ethical and archival guidance",
+      "url": "https://oralhistory.org/wp-content/uploads/2025/12/2025-OHA-PrinciplesBP_Statement-on-Ethics.pdf",
+      "version": "2025 Principles and Best Practices; related archive manual adopted 2019, current glossary",
+      "commit": null,
+      "locator": "2025 PDF pp.1-2; archive access/restrictions/rights; glossary consent and index",
+      "accessed_at_utc": "2026-10-09T18:43:21Z",
+      "observed_operations": [
+        "opened ethics PDF, archive manual and glossary",
+        "read consent, approval, public access, restrictions and rolling consent"
+      ],
+      "evidence_path": "sources/evidence/S15-oha.md",
+      "claim_scope": "Professional practice guidance, not legal advice."
+    },
+    {
+      "id": "S16",
+      "title": "Library of Congress audio format guidance",
+      "url": "https://wwws.loc.gov/preservation/digital/formats/fdd/fdd000357.shtml",
+      "version": "BWF v2 format description and current RFS",
+      "commit": null,
+      "locator": "LC preference and sustainability factors; audio media-independent preferred formats",
+      "accessed_at_utc": "2026-10-09T18:43:21Z",
+      "observed_operations": [
+        "opened BWF description and audio RFS",
+        "read archival-master and preferred-format statements"
+      ],
+      "evidence_path": "sources/evidence/S16-loc-audio.md",
+      "claim_scope": "Preservation guidance; no claim that already-digital sources should be converted."
+    },
+    {
+      "id": "S17",
+      "title": "The BagIt File Packaging Format",
+      "url": "https://datatracker.ietf.org/doc/rfc8493/",
+      "version": "RFC 8493, BagIt v1.0, October 2018",
+      "commit": null,
+      "locator": "§§2.1-2.4 and §3; payload manifest, checksums and validity",
+      "accessed_at_utc": "2026-10-09T18:43:21Z",
+      "observed_operations": [
+        "opened RFC",
+        "read package, manifest and validation requirements"
+      ],
+      "evidence_path": "sources/evidence/S17-bagit.md",
+      "claim_scope": "Transfer packaging/fixity, not replication, authorization, or backup."
+    },
+    {
+      "id": "S18",
+      "title": "PREMIS Data Dictionary for Preservation Metadata",
+      "url": "https://loc.gov/standards/premis/v3/",
+      "version": "PREMIS 3.0",
+      "commit": null,
+      "locator": "official model and schema listing; Object/Event/Rights/Agent entities",
+      "accessed_at_utc": "2026-10-09T18:43:21Z",
+      "observed_operations": [
+        "opened official LOC page",
+        "read model entities and schema links"
+      ],
+      "evidence_path": "sources/evidence/S18-premis.md",
+      "claim_scope": "Metadata vocabulary, not storage product or execution guarantee."
+    }
+  ]
+}

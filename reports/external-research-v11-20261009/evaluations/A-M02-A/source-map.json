@@ -1,0 +1,225 @@
+{
+  "block": "A-M02-A",
+  "case": "S02",
+  "created_at": "2026-10-09T19:21:59.697375+00:00",
+  "authority": "Exactly E02 and its enumerated files, brief, frozen plan and rubric. No arm map expands the review package.",
+  "frozen_inputs": [
+    {
+      "id": "E01",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M02-A/assignment.md",
+      "sha256": "531893ce4208e6104bc43e0c36e01db51980f3a5b970de068e21b51f6b1772a6",
+      "bytes": 1980,
+      "lines": 5,
+      "role": "review_assignment"
+    },
+    {
+      "id": "E02",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M02-A/input-map.json",
+      "sha256": "ef03a1b4d22940b973acdc427a7da4d2b97e9ce3826a7a0ac7fa91d179910162",
+      "bytes": 1966,
+      "lines": 49,
+      "role": "frozen_evaluation_map"
+    },
+    {
+      "id": "E03",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939,
+      "lines": 19,
+      "role": "assessment_contract"
+    },
+    {
+      "id": "E04",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S02/brief.md",
+      "sha256": "e42d1e70aa37a1339a8820e2953b41812b841d09f6310095eab1e65fb1e84882",
+      "bytes": 1517,
+      "lines": 11,
+      "role": "original_brief"
+    },
+    {
+      "id": "E05",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S02/plan-root-only.md",
+      "sha256": "29a9a74bc968d816bb61b8968346b552b8fc75a61ab72b2c5a18e059a7760363",
+      "bytes": 389,
+      "lines": 3,
+      "role": "frozen_plan"
+    },
+    {
+      "id": "N2-I1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/control/research/assignment.md",
+      "sha256": "e4141d0f481ccbbff157ae70abf6b7778033ede55da84ee09d30c1c0a764eba8",
+      "bytes": 3006,
+      "lines": 5,
+      "role": "mapped_arm_protocol_input"
+    },
+    {
+      "id": "N2-I2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/control/research/input-map.json",
+      "sha256": "02a78ae2b9413dcc9a1cf021cf4131acbbb047c9e42944347f22c0682de9698e",
+      "bytes": 633,
+      "lines": 16,
+      "role": "mapped_arm_protocol_input"
+    },
+    {
+      "id": "N1-I1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/treatment/research/assignment.md",
+      "sha256": "160853d49cad64c0e254f344c6f07068478cfcff6e41deac6dc9439f7048091e",
+      "bytes": 3169,
+      "lines": 5,
+      "role": "mapped_arm_protocol_input"
+    },
+    {
+      "id": "N1-I2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/treatment/research/input-map.json",
+      "sha256": "e61bcf00b31300fec20de6eaaf330db414e971a805007227d3614f5227df660a",
+      "bytes": 639,
+      "lines": 16,
+      "role": "mapped_arm_protocol_input"
+    }
+  ],
+  "arm_inventory": [
+    {
+      "label": "N2",
+      "actual_arm": "control",
+      "expected_hashes_verified": true,
+      "mapped_scientific_artifacts": [],
+      "final_delivery": false,
+      "final": null,
+      "source_roots": []
+    },
+    {
+      "label": "N1",
+      "actual_arm": "treatment",
+      "expected_hashes_verified": true,
+      "mapped_scientific_artifacts": [],
+      "final_delivery": false,
+      "final": null,
+      "source_roots": []
+    }
+  ],
+  "judgment_sources": [
+    {
+      "id": "J01",
+      "judgment": "N2 frozen final is absent; NO_DELIVERY and scientific_quality null.",
+      "sources": [
+        "E02:8-24",
+        "E03:15"
+      ],
+      "candidate_scientific_passage": null,
+      "technical_primary_evidence": []
+    },
+    {
+      "id": "J02",
+      "judgment": "N1 frozen final is absent; NO_DELIVERY and scientific_quality null.",
+      "sources": [
+        "E02:26-42",
+        "E03:15"
+      ],
+      "candidate_scientific_passage": null,
+      "technical_primary_evidence": []
+    },
+    {
+      "id": "J03",
+      "judgment": "Mapped arm files contain instructions/metadata only, not authored discovery, plan comparison, draft, criticism, final or scientific witnesses.",
+      "sources": [
+        "N2-I1:1-5",
+        "N2-I2:1-16",
+        "N1-I1:1-5",
+        "N1-I2:1-16"
+      ],
+      "candidate_scientific_passage": null,
+      "technical_primary_evidence": []
+    },
+    {
+      "id": "J04",
+      "judgment": "Unreviewable substantive scope spans all O1-O6, explicit constraints, all P1-P6, technical primary claims/evolution, preservation and validation.",
+      "sources": [
+        "E04:3,6-11",
+        "E05:3",
+        "E03:5-15"
+      ],
+      "candidate_scientific_passage": null,
+      "technical_primary_evidence": []
+    },
+    {
+      "id": "J05",
+      "judgment": "No full-quality or comparative quality conclusion is supportable.",
+      "sources": [
+        "E01:3",
+        "E03:15-17",
+        "J01",
+        "J02",
+        "J03",
+        "J04"
+      ],
+      "candidate_scientific_passage": null,
+      "technical_primary_evidence": []
+    }
+  ],
+  "public_primary_sources": [],
+  "independently_checked_technical_claims": [],
+  "primary_coverage_complete": false,
+  "primary_coverage_limit": "No actual scientific candidate claims, mechanism selections or releases are supplied. Original specification and frozen inventory are primary evidence for scope/delivery only. No public source could establish whether unseen prose is correct or preserved.",
+  "bounded_evidence_files": [],
+  "observed_source_operations": [
+    {
+      "operation": "local_read",
+      "targets": [
+        "E01",
+        "E02"
+      ],
+      "result": "Read complete reviewer assignment and exact map before native Goal activation; preliminary reading timestamp not separately captured."
+    },
+    {
+      "operation": "local_read",
+      "targets": [
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "result": "Read complete rubric, original brief and frozen plan after supported native create/get showed active."
+    },
+    {
+      "operation": "local_read_and_sha256",
+      "targets": [
+        "N2-I1",
+        "N2-I2",
+        "N1-I1",
+        "N1-I2"
+      ],
+      "result": "Read all four mapped files completely with numbered lines. Each byte count and SHA-256 matches the frozen expected value. Identity check only; no scientific grade from hashes."
+    },
+    {
+      "operation": "local_read_and_sha256",
+      "targets": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "result": "Recorded exact hashes and numbered source locators; no file mutation."
+    },
+    {
+      "operation": "public_primary_retrieval",
+      "targets": [],
+      "result": "Not performed: no authored candidate claims or source selections exist in the permitted map. No technical primary coverage is claimed."
+    },
+    {
+      "operation": "candidate_or_product_execution",
+      "targets": [],
+      "result": "Not performed. No candidate execution record or proposed test is mapped; execution status remains null."
+    },
+    {
+      "operation": "bounded_output_write",
+      "targets": [
+        "assessment.md",
+        "assessment.json",
+        "source-map.json"
+      ],
+      "result": "Assessment outputs only, in the assigned evaluation directory. No candidate, canon, Git, account, configuration or service mutation."
+    }
+  ],
+  "locator_convention": "E/N identifiers map to immutable path and SHA-256 above; colon numbers are 1-based source lines. All frozen-plan P clauses occur on E05 line 3.",
+  "scientific_work_after_terminal": false
+}

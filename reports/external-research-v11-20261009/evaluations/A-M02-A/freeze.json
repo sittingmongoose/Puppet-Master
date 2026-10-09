@@ -1,0 +1,52 @@
+{
+  "frozen_at": "2026-10-09T19:17:05.391959+00:00",
+  "inputs": {
+    "block": "A-M02-A",
+    "case": "S02",
+    "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S02/brief.md",
+    "frozen_plan": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S02/plan-root-only.md",
+    "rubric": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+    "arms": {
+      "N2": {
+        "actual_arm": "control",
+        "final_delivery": false,
+        "final": null,
+        "files": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/control/research/assignment.md",
+            "sha256": "e4141d0f481ccbbff157ae70abf6b7778033ede55da84ee09d30c1c0a764eba8",
+            "bytes": 3006
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/control/research/input-map.json",
+            "sha256": "02a78ae2b9413dcc9a1cf021cf4131acbbb047c9e42944347f22c0682de9698e",
+            "bytes": 633
+          }
+        ],
+        "source_roots": []
+      },
+      "N1": {
+        "actual_arm": "treatment",
+        "final_delivery": false,
+        "final": null,
+        "files": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/treatment/research/assignment.md",
+            "sha256": "160853d49cad64c0e254f344c6f07068478cfcff6e41deac6dc9439f7048091e",
+            "bytes": 3169
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/treatment/research/input-map.json",
+            "sha256": "e61bcf00b31300fec20de6eaaf330db414e971a805007227d3614f5227df660a",
+            "bytes": 639
+          }
+        ],
+        "source_roots": []
+      }
+    },
+    "output": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M02-A",
+    "deadline": "2026-10-09T19:42:05.391959+00:00",
+    "premium_experiment_only": true,
+    "method_clues": "Paths and stage contents can reveal method. Partial blinding only."
+  }
+}

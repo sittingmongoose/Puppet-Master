@@ -1,0 +1,3 @@
+# Published primary-source review evidence
+
+Full authored assessment prose, per-axis judgments, candidate locators, source URLs/version symbols, source maps and bounded observation/witness JSON (where authored) are published. Raw primary pages, corpora and nested clones stay outside GitHub under repository policy. Local evidence paths in assessments are acquisition locators, not promises of published files. Reconstruct from named primary URLs and commits; recorded byte hashes identify observed captures. Live aliases and inaccessible historical material have the limits named in the corresponding assessment. Static reasoning is explicitly distinguished from executed code. No private transcript or provider internals are exported.

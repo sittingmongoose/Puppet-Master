@@ -1,0 +1,191 @@
+{
+  "assignment": "ER11 A-M07-A/treatment/research",
+  "case": "S07",
+  "method": "M07 evidence-on-demand",
+  "stage": "research",
+  "evidence_kind": "full-discovery",
+  "captured_at_utc": "2026-10-09T18:43:05Z",
+  "usage_billing_observed": null,
+  "source_id_policy": "IDs are immutable within this run. A changed URL target/version/commit requires a new ID and explicit drift note; never silently rebind.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Docusaurus versioning",
+      "url": "https://docusaurus.io/docs/versioning",
+      "version": "Docusaurus 3.10.2, confirmed by rendered page version label and selected version",
+      "commit": null,
+      "commit_status": "Rendered docs did not expose their publishing commit; version retained exactly rather than guessed.",
+      "locator": "Overview; Terminology; Tagging a new version; Configuring versioning behavior; Recommended practices",
+      "accessed_at_utc": "2026-10-09T18:42:08Z",
+      "operations": [
+        "web.open on exact URL; inspected rendered content and version label"
+      ],
+      "evidence_file": "sources/S01-docusaurus-versioning.md"
+    },
+    {
+      "id": "S02",
+      "title": "Docusaurus i18n introduction",
+      "url": "https://docusaurus.io/docs/i18n/introduction",
+      "version": "Docusaurus 3.10.2, confirmed by rendered page version label",
+      "commit": null,
+      "commit_status": "Rendered docs did not expose their publishing commit.",
+      "locator": "i18n goals/non-goals; Translation workflow; Translation files; Translation files location",
+      "accessed_at_utc": "2026-10-09T18:42:08Z",
+      "operations": [
+        "web.open on exact URL; inspected rendered content and version label"
+      ],
+      "evidence_file": "sources/S02-docusaurus-i18n-introduction.md"
+    },
+    {
+      "id": "S03",
+      "title": "Docusaurus i18n tutorial",
+      "url": "https://docusaurus.io/docs/i18n/tutorial",
+      "version": "Docusaurus 3.10.2, confirmed by rendered page version selector",
+      "commit": null,
+      "commit_status": "Rendered docs did not expose their publishing commit.",
+      "locator": "Configure your site; Translate the docs; Use explicit heading IDs; Deploy your site",
+      "accessed_at_utc": "2026-10-09T18:43:05Z",
+      "operations": [
+        "web.open on exact URL; inspected page content"
+      ],
+      "evidence_file": "sources/S03-docusaurus-i18n-tutorial.md"
+    },
+    {
+      "id": "S04",
+      "title": "Antora component version descriptor",
+      "url": "https://docs.antora.org/antora/3.1/component-version-descriptor/",
+      "version": "Antora documentation series 3.1, explicit in URL",
+      "commit": null,
+      "commit_status": "The 3.1 documentation deployment did not expose a patch commit.",
+      "locator": "What is antora.yml; required name/version keys; optional display_version and prerelease keys",
+      "accessed_at_utc": "2026-10-09T18:42:08Z",
+      "operations": [
+        "web.open on exact URL; inspected official docs content"
+      ],
+      "evidence_file": "sources/S04-antora-descriptor.md"
+    },
+    {
+      "id": "S05",
+      "title": "Antora distributed component versions",
+      "url": "https://docs.antora.org/antora/3.1/distributed-component-version/",
+      "version": "Antora documentation series 3.1, explicit in URL",
+      "commit": null,
+      "commit_status": "The 3.1 documentation deployment did not expose a patch commit.",
+      "locator": "Distributed component version; descriptor keys; conflicting files",
+      "accessed_at_utc": "2026-10-09T18:42:08Z",
+      "operations": [
+        "web.open on exact URL; inspected official docs content"
+      ],
+      "evidence_file": "sources/S05-antora-distributed-versions.md"
+    },
+    {
+      "id": "S06",
+      "title": "Antora intrinsic page attributes",
+      "url": "https://docs.antora.org/antora/3.1/page/intrinsic-attributes/",
+      "version": "Antora documentation series 3.1, explicit in URL",
+      "commit": null,
+      "commit_status": "The 3.1 documentation deployment did not expose a patch commit.",
+      "locator": "Intrinsic page attributes; origin and version fields",
+      "accessed_at_utc": "2026-10-09T18:42:44Z",
+      "operations": [
+        "web.open on exact URL",
+        "web.find for page-origin-refhash; inspected matching lines"
+      ],
+      "evidence_file": "sources/S06-antora-origin-metadata.md"
+    },
+    {
+      "id": "S07",
+      "title": "DocSearch required configuration and records",
+      "url": "https://docsearch.algolia.com/docs/required-configuration/",
+      "version": "Current docs page, last-updated label 2026-08-06; crawler record schema v3 and frontend v5 described separately",
+      "commit": null,
+      "commit_status": "Rendered docs did not expose a source commit.",
+      "locator": "recordProps selectors and anchors; global metadata tags; version/language attributes and facets",
+      "accessed_at_utc": "2026-10-09T18:42:44Z",
+      "operations": [
+        "web.open on exact URL",
+        "web.find for docsearch:version; inspected matching lines"
+      ],
+      "evidence_file": "sources/S07-docsearch-records-and-facets.md"
+    },
+    {
+      "id": "S08",
+      "title": "Typesense Search API",
+      "url": "https://typesense.org/docs/30.1/api/search.html",
+      "version": "Typesense API documentation 30.1, explicit in URL",
+      "commit": null,
+      "commit_status": "Versioned API docs did not expose a source commit.",
+      "locator": "Query parameters; Filter parameters; Pagination parameters; Faceting parameters",
+      "accessed_at_utc": "2026-10-09T18:42:44Z",
+      "operations": [
+        "web.open on exact URL",
+        "web.find for pagination default and exact/non-exact filter semantics"
+      ],
+      "evidence_file": "sources/S08-typesense-search-30.1.md"
+    },
+    {
+      "id": "S09",
+      "title": "Backstage TechDocs creating and publishing",
+      "url": "https://backstage.io/docs/features/techdocs/creating-and-publishing/",
+      "version": "Current feature docs as accessed 2026-10-09; no package version displayed",
+      "commit": null,
+      "commit_status": "Rendered feature docs did not expose an immutable app/package version or commit.",
+      "locator": "Create a basic documentation setup; enable docs for existing entity; source-tree symlink constraint",
+      "accessed_at_utc": "2026-10-09T18:42:44Z",
+      "operations": [
+        "web.open on exact URL",
+        "web.find for symbolic-link behavior; inspected matching lines"
+      ],
+      "evidence_file": "sources/S09-backstage-techdocs-source.md"
+    },
+    {
+      "id": "S10",
+      "title": "Backstage TechDocs CI/CD",
+      "url": "https://backstage.io/docs/features/techdocs/configuring-ci-cd/",
+      "version": "Current feature docs as accessed 2026-10-09; no package version displayed",
+      "commit": null,
+      "commit_status": "Rendered feature docs did not expose an immutable app/package version or commit.",
+      "locator": "Recommended deployment setup; generate; publish; etag and skip-if-unchanged",
+      "accessed_at_utc": "2026-10-09T18:42:44Z",
+      "operations": [
+        "web.open on exact URL",
+        "web.find for content hash; inspected matching lines"
+      ],
+      "evidence_file": "sources/S10-backstage-techdocs-cicd.md"
+    },
+    {
+      "id": "S11",
+      "title": "Docusaurus PR 10875: localized version file fix",
+      "url": "https://github.com/facebook/docusaurus/pull/10875/files",
+      "version": "Docusaurus PR merged 2025-01-31",
+      "commit": "3b72bb4",
+      "commit_status": "Short merge SHA shown by GitHub PR; PR also lists commits 097a7b1, 6c22e7e and 5ce472f.",
+      "locator": "PR motivation/test plan; packages/docusaurus-plugin-content-docs/src/cli.ts; versions/files.ts; CLI test",
+      "accessed_at_utc": "2026-10-09T18:43:05Z",
+      "operations": [
+        "web.open on exact files URL",
+        "inspected PR description and visible code diff",
+        "Also opened the parent PR URL at 18:42:08Z and found Motivation at 18:42:44Z; the exact excerpt was captured there, while code diff was opened at the primary /files URL at 18:43:05Z."
+      ],
+      "evidence_file": "sources/S11-docusaurus-i18n-version-fix.md",
+      "related_urls": [
+        "https://github.com/facebook/docusaurus/pull/10875"
+      ]
+    },
+    {
+      "id": "S12",
+      "title": "Docusaurus 3.8.0 release",
+      "url": "https://github.com/facebook/docusaurus/releases/tag/v3.8.0",
+      "version": "Docusaurus v3.8.0, release date 2025-05-26",
+      "commit": "948d63c",
+      "commit_status": "Short commit SHA shown by the release tag page.",
+      "locator": "Release heading/date; docusaurus-plugin-content-docs bug-fix entry for PR 10875",
+      "accessed_at_utc": "2026-10-09T18:43:05Z",
+      "operations": [
+        "web.open on exact release URL; inspected release commit and changelog entry"
+      ],
+      "evidence_file": "sources/S12-docusaurus-380-release.md"
+    }
+  ],
+  "exact_excerpt_index": "sources/exact-excerpts.json"
+}

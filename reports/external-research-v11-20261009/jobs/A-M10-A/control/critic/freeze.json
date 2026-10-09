@@ -1,0 +1,64 @@
+{
+  "frozen_at": "2026-10-09T19:02:25.899672+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S10/brief.md",
+      "sha256": "17322e03cfaa4aad42ef991cbf666e5ca646cca2439f71b748c8642761ccbbf2",
+      "bytes": 1420
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M10.json",
+      "sha256": "2ee60c924228059b042bfd860b34c4d5a1804d42a38285b20cc20db739223882",
+      "bytes": 1387
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/assignment.md",
+      "sha256": "7991a2e578d6ae6780c29b0a7982d8bf58e69b065a57fe8c39c03e7a4d6a6b7a",
+      "bytes": 2574
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/input-map.json",
+      "sha256": "0bdbd24a43871be3d77f6a685480cc73c0a560b1584726c8555e6bd4e1b18ca1",
+      "bytes": 1180
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/draft.md",
+      "sha256": "aaf2de38bcfa9a9cda75b4c5c4da12817c1c54d893856e98d4e045abf130472c",
+      "bytes": 17895
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/discovery.md",
+      "sha256": "cb49c9c8095cacac7786fadbff7b639db04e5be16bb354728c9032e16320283b",
+      "bytes": 15416
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "sha256": "79f196b285904c65c883f3a70ffc81207905cc34fd8c20e61242c5391dab9be3",
+      "bytes": 16820
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/revealed-plan.md",
+      "sha256": "3f5acb86924c2981486d394c7e57a6578fdafd05ad7345800fda856c84dbf6bf",
+      "bytes": 312
+    }
+  ],
+  "method": {
+    "id": "M10",
+    "version": "v1",
+    "name": "question-relevance-reformulation",
+    "control": "Competent conventional investigator researches brief questions, follows leads, reads governing evidence and synthesizes a complete draft.",
+    "treatment": "Maintain question-indexed retrieval queues for original obligations AND emergent alternative leads. Score candidate passages for question relevance/applicability, keep exact full evidence available outside contextual evidence cards, and reformulate only an unanswered question from its missing governing condition. Three working cards per question is a context prioritization rule, NEVER a cap on investigation, evidence or preserved output. Explicitly expand to surrounding definitions/exceptions when cards insufficient. Same native context/time and finalizer.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Fresh externally researched PaperQA2",
+    "primary_methodology": "https://arxiv.org/abs/2409.13740v2",
+    "novelty": "Question-specific rank/contextualize/reformulate loop, distinct from repository navigation and evidence-before-proposal.",
+    "adaptation_limit": "Paper/implementation mechanisms motivate the intervention; published benchmark gains are NOT ER11 evidence.",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T19:14:25.899672+00:00"
+}

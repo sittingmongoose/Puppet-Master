@@ -1,0 +1,74 @@
+{
+  "frozen_at": "2026-10-09T19:08:38.571900+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S03/brief.md",
+      "sha256": "2a61c01e944a06f96cfb299eaa2cc94b7ec5cf31349d35f45c8902bc228c327e",
+      "bytes": 1436
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M09.json",
+      "sha256": "851380dfcd3ceeb7d52fdff86b0d28539c7032c79adaa40352229b0e76cce860",
+      "bytes": 1338
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/assignment.md",
+      "sha256": "a6900c959db241c7a7cc0e326564ef47fc3c2a59f94922e4e8dc7b0644b69b97",
+      "bytes": 3203
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/reviser/input-map.json",
+      "sha256": "dc7c78771f88ae49b9a318579a155a690dd6ebb218f3f51a50d23bef08c51fd0",
+      "bytes": 1525
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/draft.md",
+      "sha256": "9acca6c370643004644c0346ab6c2662e8f3cc04ed6e7cb8b7edecb1e53d04d9",
+      "bytes": 19452
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/discovery.md",
+      "sha256": "b40894b4d7601b018b50da306365c2880499f51b644cc7c3399e21436273a5c1",
+      "bytes": 18000
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/source-map.json",
+      "sha256": "ad053378ebc53eeb8a04d863c0654b3317aa666a9ae608761e47059937371565",
+      "bytes": 7769
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/revealed-plan.md",
+      "sha256": "2c0df4f2acff82294fc57884cc9be66006f719350436b570bbd044d84e1d5df4",
+      "bytes": 345
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/source-map.json",
+      "sha256": "f7eeb675cf33cdb41fff4fb92b641a74c7cf6d449c7eba79aaeb08846d8da851",
+      "bytes": 16121
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/critic/critique.md",
+      "sha256": "691c6fbd348a73dc47409cfe104709bb92bb7e843edaab47bd5e53da3a9f9b65",
+      "bytes": 21712
+    }
+  ],
+  "method": {
+    "id": "M09",
+    "version": "v1",
+    "name": "analogical-outline-interviews",
+    "control": "Competent conventional brief-led investigator follows useful leads and prepares cited discovery then plan-comparison draft.",
+    "treatment": "Retrieve TWO analogous real workflows/product feature taxonomies, derive FOUR distinct inquiry lenses including original user obligations. Conduct grounded answer-conditioned follow-up inquiry in each lens: each later question must use the preceding sourced answer, with irrelevant analogy categories explicitly rejected. One investigator context, same tools/time; no added scouts or search cap. Map obligations and discovered alternatives to lens/evidence; ordinary full criticism and revision follow.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Fresh externally researched STORM",
+    "primary_methodology": "https://arxiv.org/abs/2402.14207v2",
+    "novelty": "Query-generation state transitions from analogy-derived lenses + source-conditioned interviews, rather than parallel scout roles/shared flat inventory.",
+    "adaptation_limit": "Paper/implementation mechanisms motivate the intervention; published benchmark gains are NOT ER11 evidence.",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T19:26:38.571900+00:00"
+}

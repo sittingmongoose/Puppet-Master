@@ -1,0 +1,1223 @@
+{
+  "block": "A-M02-A",
+  "case": "S02",
+  "assessment_contract": "ER11 independent assessment contract v1",
+  "assessment_status": "SAVED_FROZEN_INPUT_ASSESSMENT",
+  "scientific_review_status": "HOLD",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M02-A/assignment.md",
+      "sha256": "531893ce4208e6104bc43e0c36e01db51980f3a5b970de068e21b51f6b1772a6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M02-A/input-map.json",
+      "sha256": "ef03a1b4d22940b973acdc427a7da4d2b97e9ce3826a7a0ac7fa91d179910162"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S02/brief.md",
+      "sha256": "e42d1e70aa37a1339a8820e2953b41812b841d09f6310095eab1e65fb1e84882"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S02/plan-root-only.md",
+      "sha256": "29a9a74bc968d816bb61b8968346b552b8fc75a61ab72b2c5a18e059a7760363"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/control/research/assignment.md",
+      "sha256": "e4141d0f481ccbbff157ae70abf6b7778033ede55da84ee09d30c1c0a764eba8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/control/research/input-map.json",
+      "sha256": "02a78ae2b9413dcc9a1cf021cf4131acbbb047c9e42944347f22c0682de9698e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/treatment/research/assignment.md",
+      "sha256": "160853d49cad64c0e254f344c6f07068478cfcff6e41deac6dc9439f7048091e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/treatment/research/input-map.json",
+      "sha256": "e61bcf00b31300fec20de6eaaf330db414e971a805007227d3614f5227df660a"
+    }
+  ],
+  "arms": {
+    "N2": {
+      "actual_arm": "control",
+      "final_delivery": false,
+      "grade": "NO_DELIVERY",
+      "scientific_quality": null,
+      "scientific_review_status": "HOLD",
+      "delivery_evidence": {
+        "map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M02-A/input-map.json",
+        "map_locator": "E02:8-24",
+        "final": null,
+        "mapped_files": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/control/research/assignment.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/control/research/input-map.json"
+        ],
+        "source_roots": [],
+        "interpretation": "Known absent final in this frozen package. Does not establish whether any later/unmapped deliverable exists, whether work ran, or why delivery is absent."
+      },
+      "material_findings": [],
+      "minor_findings": [],
+      "unresolved": [
+        {
+          "id": "N2-U1",
+          "axis": 1,
+          "kind": "UNAVAILABLE_REVIEW_SCOPE",
+          "description": "Obligation fulfillment and omissions in actual discovery/draft/final prose; retention of the collection scale, volunteer transcripts, multilingual speech, consent, low-cost public access, staff word/speaker edits, original audio, time-linked excerpts and recording/segment withdrawal.",
+          "reason": "No authored scientific candidate/stage or technical source index is supplied by the exact frozen input map."
+        },
+        {
+          "id": "N2-U2",
+          "axis": 2,
+          "kind": "UNAVAILABLE_REVIEW_SCOPE",
+          "description": "All candidate-selected mechanisms and consequential primary-source conclusions, including applicable code/releases, defaults/exceptions, data units/types, limits and domain applicability; O3 issue/fix/regression/release or evolution chain. Actual claims cannot be enumerated without authored material.",
+          "reason": "No authored scientific candidate/stage or technical source index is supplied by the exact frozen input map."
+        },
+        {
+          "id": "N2-U3",
+          "axis": 3,
+          "kind": "UNAVAILABLE_REVIEW_SCOPE",
+          "description": "Actual unfamiliar discoveries, viable alternatives and tradeoffs, usefulness for the original constraints, optional leads, and retention in a self-contained final.",
+          "reason": "No authored scientific candidate/stage or technical source index is supplied by the exact frozen input map."
+        },
+        {
+          "id": "N2-U4",
+          "axis": 4,
+          "kind": "UNAVAILABLE_REVIEW_SCOPE",
+          "description": "All six actual dispositions and their primary support, including false correction or inappropriate rejection. The candidate plan-reveal chronology is not available.",
+          "reason": "No authored scientific candidate/stage or technical source index is supplied by the exact frozen input map."
+        },
+        {
+          "id": "N2-U5",
+          "axis": 5,
+          "kind": "UNAVAILABLE_REVIEW_SCOPE",
+          "description": "All supported findings/conditions/options/uncertainties at each stage, each actual critic claim and an evidence-based accept/reject decision, and final retention or loss. No criticism is available to adjudicate.",
+          "reason": "No authored scientific candidate/stage or technical source index is supplied by the exact frozen input map."
+        },
+        {
+          "id": "N2-U6",
+          "axis": 6,
+          "kind": "UNAVAILABLE_REVIEW_SCOPE",
+          "description": "Actual validation design and proposed/executed distinction; any execution artifact, independent oracle, discriminating case and release/domain applicability.",
+          "reason": "No authored scientific candidate/stage or technical source index is supplied by the exact frozen input map."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "name": "Original obligations and explicit constraints",
+          "coverage": {
+            "status": "UNASSESSABLE_NO_CANDIDATE",
+            "input_inventory_review_complete": true,
+            "scientific_scope_review_complete": false,
+            "examined": "Enumerated all O1-O6 and every explicit product constraint against the full mapped arm files. The files contain protocol instructions and input metadata, not an authored response to the brief.",
+            "remaining_scope": "Obligation fulfillment and omissions in actual discovery/draft/final prose; retention of the collection scale, volunteer transcripts, multilingual speech, consent, low-cost public access, staff word/speaker edits, original audio, time-linked excerpts and recording/segment withdrawal."
+          },
+          "judgment": "No scientific obligation-compliance judgment is possible. The frozen final is explicitly absent; this is a delivery result, not six independently established substantive omissions.",
+          "evidence": [
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E04:3,6-11"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E03:6,15"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E02:8-24"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N2-I1:1-5"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N2-I2:1-16"
+            }
+          ],
+          "candidate_scientific_passage": null,
+          "independently_checked_technical_primary_evidence": []
+        },
+        {
+          "axis": 2,
+          "name": "Consequential facts, defaults, units, types, limits and applicability",
+          "coverage": {
+            "status": "UNASSESSABLE_NO_CANDIDATE",
+            "input_inventory_review_complete": true,
+            "scientific_scope_review_complete": false,
+            "examined": "Read all mapped prose for product/mechanism selections and consequential claims. None is supplied. No candidate source index, release locator, code symbol, governing default, exception, limit, unit/type statement or evolution claim is mapped.",
+            "remaining_scope": "All candidate-selected mechanisms and consequential primary-source conclusions, including applicable code/releases, defaults/exceptions, data units/types, limits and domain applicability; O3 issue/fix/regression/release or evolution chain. Actual claims cannot be enumerated without authored material."
+          },
+          "judgment": "No claims were independently technically verified or refuted. Wrong, unsupported, externally unresolved, and evasively deferred conclusions cannot be distinguished from absent artifacts. No public primary source is attached merely to manufacture a candidate claim.",
+          "evidence": [
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E04:3,7-8"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E03:7,13,15"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E02:8-24"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N2-I1:1-5"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N2-I2:1-16"
+            }
+          ],
+          "candidate_scientific_passage": null,
+          "independently_checked_technical_primary_evidence": []
+        },
+        {
+          "axis": 3,
+          "name": "Unfamiliar discovery and useful alternatives",
+          "coverage": {
+            "status": "UNASSESSABLE_NO_CANDIDATE",
+            "input_inventory_review_complete": true,
+            "scientific_scope_review_complete": false,
+            "examined": "Read both mapped documents for discovery, options, materially different products/mechanisms and optional leads. The assignments require these outputs but are not those outputs.",
+            "remaining_scope": "Actual unfamiliar discoveries, viable alternatives and tradeoffs, usefulness for the original constraints, optional leads, and retention in a self-contained final."
+          },
+          "judgment": "Discovery usefulness and breadth are unknown. Empty frozen source_roots and absent authored prose are not evidence that the researchers made zero discoveries or that either method is superior.",
+          "evidence": [
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E04:3,6,10"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E03:8,15"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E02:8-24"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N2-I1:1-5"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N2-I2:1-16"
+            }
+          ],
+          "candidate_scientific_passage": null,
+          "independently_checked_technical_primary_evidence": []
+        },
+        {
+          "axis": 4,
+          "name": "Every exact plan clause and disposition",
+          "coverage": {
+            "status": "UNASSESSABLE_NO_CANDIDATE",
+            "input_inventory_review_complete": true,
+            "scientific_scope_review_complete": false,
+            "examined": "Transcribed P1-P6 exactly and searched the full mapped arm content for an authored comparison or any correction/enhancement/user-decision/already-covered/reject/uncertain disposition. None is supplied.",
+            "remaining_scope": "All six actual dispositions and their primary support, including false correction or inappropriate rejection. The candidate plan-reveal chronology is not available."
+          },
+          "judgment": "All six disposition values remain null. The frozen plan is a criterion, not a candidate response. No P clause is accepted, rejected, repaired or declared technically defective by this assessment.",
+          "evidence": [
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E05:3"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E04:9"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E03:9,15"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E02:8-24"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N2-I1:1-5"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N2-I2:1-16"
+            }
+          ],
+          "candidate_scientific_passage": null,
+          "independently_checked_technical_primary_evidence": []
+        },
+        {
+          "axis": 5,
+          "name": "Draft to critique to final preservation",
+          "coverage": {
+            "status": "UNASSESSABLE_NO_CANDIDATE",
+            "input_inventory_review_complete": true,
+            "scientific_scope_review_complete": false,
+            "examined": "Confirmed that the exact map supplies no discovery, draft, critic, revision, final, source index or native-answer fallback content. Arm assignment line 4 describes an intended method; line 5 instructs the researcher to produce a discovery and draft. Neither passage is evidence that those stages ran.",
+            "remaining_scope": "All supported findings/conditions/options/uncertainties at each stage, each actual critic claim and an evidence-based accept/reject decision, and final retention or loss. No criticism is available to adjudicate."
+          },
+          "judgment": "Preservation cannot be assessed. Critic agreement, disagreement, execution and compliance are unknown. Missing stage evidence is not an established preservation loss.",
+          "evidence": [
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E04:10"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E03:10,13,15"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E02:8-24"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N2-I1:1-5"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N2-I2:1-16"
+            }
+          ],
+          "candidate_scientific_passage": null,
+          "independently_checked_technical_primary_evidence": []
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed versus executed validation",
+          "coverage": {
+            "status": "UNASSESSABLE_NO_CANDIDATE",
+            "input_inventory_review_complete": true,
+            "scientific_scope_review_complete": false,
+            "examined": "Read all mapped prose for authored validation proposals, execution claims, independent oracles, discrimination and applicable release evidence. The assignment permits qualified witnesses and honest proposals, but supplies neither a proposal nor a witness.",
+            "remaining_scope": "Actual validation design and proposed/executed distinction; any execution artifact, independent oracle, discriminating case and release/domain applicability."
+          },
+          "judgment": "Validation adequacy and execution status are unknown. Reviewer byte/hash checks only establish input identity and are not speech, indexing, consent, preservation, or product validations. No unexecuted check is called proven.",
+          "evidence": [
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E04:11"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E05:3/P6"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E03:11,15"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E02:8-24"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N2-I1:1-5"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N2-I2:1-16"
+            }
+          ],
+          "candidate_scientific_passage": null,
+          "independently_checked_technical_primary_evidence": []
+        }
+      ],
+      "obligation_coverage": [
+        {
+          "id": "O1",
+          "exact_text": "Independently discover useful unfamiliar tools, products and materially different approaches beyond the thin plan.",
+          "criterion_locator": "E04:6",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "id": "O2",
+          "exact_text": "Investigate consequential primary source/code behavior and governing defaults, units/types, limits and applicability for selected mechanisms.",
+          "criterion_locator": "E04:7",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "id": "O3",
+          "exact_text": "Investigate at least one relevant issue/fix/regression/release or evolution chain; say when evidence is absent/inapplicable.",
+          "criterion_locator": "E04:8",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "id": "O4",
+          "exact_text": "Compare every exact P clause after plan reveal; distinguish correction, optional enhancement, user decision, already-covered, rejected and uncertain findings.",
+          "criterion_locator": "E04:9",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "id": "O5",
+          "exact_text": "Retain useful alternatives, conditions, original constraints, disagreement and uncertainty in one self-contained coherent final; do not replace text with IDs.",
+          "criterion_locator": "E04:10",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "id": "O6",
+          "exact_text": "Propose meaningful discriminating validations and separate executed checks from proposed work. No runtime available is honest; do not pretend proposals ran. Scope is this small product brief, not unlimited production guarantees.",
+          "criterion_locator": "E04:11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        }
+      ],
+      "explicit_constraint_coverage": [
+        {
+          "constraint": "Searchable community oral-history collection",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "2,000 hour-long recordings",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Volunteer transcripts",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Consent restrictions",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Multilingual speakers",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Low-cost public website",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Staff correction of words and speakers",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Preservation of source audio",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Time-linked excerpts",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Withdrawal of an entire recording or a restricted segment",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Research workable products/mechanisms and indexing",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Research transcription evolution evidence and preservation workflows",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Do not assume all speech recognition is equally useful",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "A small product-brief research scope, not unlimited production guarantees",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Honest disclosure of unavailable runtime; proposals must not be described as executed",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        }
+      ],
+      "plan_dispositions": [
+        {
+          "clause_id": "P1",
+          "exact_clause": "Batch automatic transcription then publish text and audio.",
+          "criterion_locator": "E05:3",
+          "candidate_path": null,
+          "candidate_passage": null,
+          "disposition": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE",
+          "remaining_scope": "No candidate assessment of automatic transcription, publication, consent-conditioned availability, volunteer work, or multilingual applicability is supplied."
+        },
+        {
+          "clause_id": "P2",
+          "exact_clause": "Keep transcript edits as one replacement text file.",
+          "criterion_locator": "E05:3",
+          "candidate_path": null,
+          "candidate_passage": null,
+          "disposition": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE",
+          "remaining_scope": "No candidate assessment of word/speaker correction, source preservation, time-linked excerpts, revision treatment, or a replacement-file disposition is supplied."
+        },
+        {
+          "clause_id": "P3",
+          "exact_clause": "Search full text with a general database search index.",
+          "criterion_locator": "E05:3",
+          "candidate_path": null,
+          "candidate_passage": null,
+          "disposition": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE",
+          "remaining_scope": "No candidate assessment of selected indexing behavior, multilingual applicability, restricted/withdrawn content, scale, or public-site cost is supplied."
+        },
+        {
+          "clause_id": "P4",
+          "exact_clause": "One consent flag hides the public recording.",
+          "criterion_locator": "E05:3",
+          "candidate_path": null,
+          "candidate_passage": null,
+          "disposition": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE",
+          "remaining_scope": "No candidate assessment of recording versus segment restrictions, withdrawal, public accessibility, or a consent-flag disposition is supplied."
+        },
+        {
+          "clause_id": "P5",
+          "exact_clause": "Keep WAV originals and MP3 listening copies.",
+          "criterion_locator": "E05:3",
+          "candidate_path": null,
+          "candidate_passage": null,
+          "disposition": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE",
+          "remaining_scope": "No candidate assessment of source preservation or a format/copy disposition is supplied."
+        },
+        {
+          "clause_id": "P6",
+          "exact_clause": "Validate word accuracy on a few English clips.",
+          "criterion_locator": "E05:3",
+          "candidate_path": null,
+          "candidate_passage": null,
+          "disposition": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE",
+          "remaining_scope": "No candidate assessment of the English-only validation disposition, multilingual coverage, speakers, timing, discriminating checks, or proposed/executed distinction is supplied."
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [],
+        "remaining_claims": [
+          {
+            "kind": "UNENUMERABLE_ABSENT_CANDIDATE",
+            "scope": "All actual consequential candidate claims, governing defaults/exceptions/units/types/limits/applicability and O3 release/evolution conclusions. No authored claim inventory is available."
+          }
+        ],
+        "complete": false,
+        "public_primary_sources_retrieved": [],
+        "candidate_claim_count": null,
+        "note": "Frozen brief/plan/map ground the non-delivery and scope judgments. They are not independent technical primary verification. No technical material defect is asserted."
+      },
+      "preservation_coverage": {
+        "complete": false,
+        "available_stages": [
+          "research assignment",
+          "research input map"
+        ],
+        "scientific_stages_available": [],
+        "discovery": null,
+        "draft": null,
+        "critique": null,
+        "revision": null,
+        "final": null,
+        "critic_claims_available": null,
+        "criticism_accept_reject_evidence": [],
+        "supported_findings_traced": [],
+        "preservation_losses_established": [],
+        "remaining_scope": "Entire authored discovery/draft/critique/final chain, all scientific findings and qualifications/options/uncertainties, and each criticism. The protocol description does not substitute for stage evidence."
+      },
+      "validation_coverage": {
+        "proposed_checks": null,
+        "executed_checks": null,
+        "candidate_execution_status": null,
+        "independent_oracles_checked": [],
+        "reviewer_identity_checks_are_scientific_tests": false
+      },
+      "grade_limits": [
+        "NO_DELIVERY is a frozen delivery classification; scientific quality is null, not FAIL, PASS, zero, or an inferred low score.",
+        "All six axes have criterion/inventory coverage; none has full scientific candidate/primary-source coverage. Scientific review is HOLD for the explicit missing scopes.",
+        "Empty material/minor findings mean no candidate defect was established, not that the unseen work is defect-free.",
+        "No candidate response was generated, corrected, repaired or reconstructed from instructions.",
+        "Runtime, native/T3 lifecycle, usage, billing, timing, cause of non-delivery and subsequent artifacts are unobserved."
+      ]
+    },
+    "N1": {
+      "actual_arm": "treatment",
+      "final_delivery": false,
+      "grade": "NO_DELIVERY",
+      "scientific_quality": null,
+      "scientific_review_status": "HOLD",
+      "delivery_evidence": {
+        "map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M02-A/input-map.json",
+        "map_locator": "E02:26-42",
+        "final": null,
+        "mapped_files": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/treatment/research/assignment.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-A/treatment/research/input-map.json"
+        ],
+        "source_roots": [],
+        "interpretation": "Known absent final in this frozen package. Does not establish whether any later/unmapped deliverable exists, whether work ran, or why delivery is absent."
+      },
+      "material_findings": [],
+      "minor_findings": [],
+      "unresolved": [
+        {
+          "id": "N1-U1",
+          "axis": 1,
+          "kind": "UNAVAILABLE_REVIEW_SCOPE",
+          "description": "Obligation fulfillment and omissions in actual discovery/draft/final prose; retention of the collection scale, volunteer transcripts, multilingual speech, consent, low-cost public access, staff word/speaker edits, original audio, time-linked excerpts and recording/segment withdrawal.",
+          "reason": "No authored scientific candidate/stage or technical source index is supplied by the exact frozen input map."
+        },
+        {
+          "id": "N1-U2",
+          "axis": 2,
+          "kind": "UNAVAILABLE_REVIEW_SCOPE",
+          "description": "All candidate-selected mechanisms and consequential primary-source conclusions, including applicable code/releases, defaults/exceptions, data units/types, limits and domain applicability; O3 issue/fix/regression/release or evolution chain. Actual claims cannot be enumerated without authored material.",
+          "reason": "No authored scientific candidate/stage or technical source index is supplied by the exact frozen input map."
+        },
+        {
+          "id": "N1-U3",
+          "axis": 3,
+          "kind": "UNAVAILABLE_REVIEW_SCOPE",
+          "description": "Actual unfamiliar discoveries, viable alternatives and tradeoffs, usefulness for the original constraints, optional leads, and retention in a self-contained final.",
+          "reason": "No authored scientific candidate/stage or technical source index is supplied by the exact frozen input map."
+        },
+        {
+          "id": "N1-U4",
+          "axis": 4,
+          "kind": "UNAVAILABLE_REVIEW_SCOPE",
+          "description": "All six actual dispositions and their primary support, including false correction or inappropriate rejection. The candidate plan-reveal chronology is not available.",
+          "reason": "No authored scientific candidate/stage or technical source index is supplied by the exact frozen input map."
+        },
+        {
+          "id": "N1-U5",
+          "axis": 5,
+          "kind": "UNAVAILABLE_REVIEW_SCOPE",
+          "description": "All supported findings/conditions/options/uncertainties at each stage, each actual critic claim and an evidence-based accept/reject decision, and final retention or loss. No criticism is available to adjudicate.",
+          "reason": "No authored scientific candidate/stage or technical source index is supplied by the exact frozen input map."
+        },
+        {
+          "id": "N1-U6",
+          "axis": 6,
+          "kind": "UNAVAILABLE_REVIEW_SCOPE",
+          "description": "Actual validation design and proposed/executed distinction; any execution artifact, independent oracle, discriminating case and release/domain applicability.",
+          "reason": "No authored scientific candidate/stage or technical source index is supplied by the exact frozen input map."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "name": "Original obligations and explicit constraints",
+          "coverage": {
+            "status": "UNASSESSABLE_NO_CANDIDATE",
+            "input_inventory_review_complete": true,
+            "scientific_scope_review_complete": false,
+            "examined": "Enumerated all O1-O6 and every explicit product constraint against the full mapped arm files. The files contain protocol instructions and input metadata, not an authored response to the brief.",
+            "remaining_scope": "Obligation fulfillment and omissions in actual discovery/draft/final prose; retention of the collection scale, volunteer transcripts, multilingual speech, consent, low-cost public access, staff word/speaker edits, original audio, time-linked excerpts and recording/segment withdrawal."
+          },
+          "judgment": "No scientific obligation-compliance judgment is possible. The frozen final is explicitly absent; this is a delivery result, not six independently established substantive omissions.",
+          "evidence": [
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E04:3,6-11"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E03:6,15"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E02:26-42"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N1-I1:1-5"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N1-I2:1-16"
+            }
+          ],
+          "candidate_scientific_passage": null,
+          "independently_checked_technical_primary_evidence": []
+        },
+        {
+          "axis": 2,
+          "name": "Consequential facts, defaults, units, types, limits and applicability",
+          "coverage": {
+            "status": "UNASSESSABLE_NO_CANDIDATE",
+            "input_inventory_review_complete": true,
+            "scientific_scope_review_complete": false,
+            "examined": "Read all mapped prose for product/mechanism selections and consequential claims. None is supplied. No candidate source index, release locator, code symbol, governing default, exception, limit, unit/type statement or evolution claim is mapped.",
+            "remaining_scope": "All candidate-selected mechanisms and consequential primary-source conclusions, including applicable code/releases, defaults/exceptions, data units/types, limits and domain applicability; O3 issue/fix/regression/release or evolution chain. Actual claims cannot be enumerated without authored material."
+          },
+          "judgment": "No claims were independently technically verified or refuted. Wrong, unsupported, externally unresolved, and evasively deferred conclusions cannot be distinguished from absent artifacts. No public primary source is attached merely to manufacture a candidate claim.",
+          "evidence": [
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E04:3,7-8"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E03:7,13,15"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E02:26-42"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N1-I1:1-5"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N1-I2:1-16"
+            }
+          ],
+          "candidate_scientific_passage": null,
+          "independently_checked_technical_primary_evidence": []
+        },
+        {
+          "axis": 3,
+          "name": "Unfamiliar discovery and useful alternatives",
+          "coverage": {
+            "status": "UNASSESSABLE_NO_CANDIDATE",
+            "input_inventory_review_complete": true,
+            "scientific_scope_review_complete": false,
+            "examined": "Read both mapped documents for discovery, options, materially different products/mechanisms and optional leads. The assignments require these outputs but are not those outputs.",
+            "remaining_scope": "Actual unfamiliar discoveries, viable alternatives and tradeoffs, usefulness for the original constraints, optional leads, and retention in a self-contained final."
+          },
+          "judgment": "Discovery usefulness and breadth are unknown. Empty frozen source_roots and absent authored prose are not evidence that the researchers made zero discoveries or that either method is superior.",
+          "evidence": [
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E04:3,6,10"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E03:8,15"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E02:26-42"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N1-I1:1-5"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N1-I2:1-16"
+            }
+          ],
+          "candidate_scientific_passage": null,
+          "independently_checked_technical_primary_evidence": []
+        },
+        {
+          "axis": 4,
+          "name": "Every exact plan clause and disposition",
+          "coverage": {
+            "status": "UNASSESSABLE_NO_CANDIDATE",
+            "input_inventory_review_complete": true,
+            "scientific_scope_review_complete": false,
+            "examined": "Transcribed P1-P6 exactly and searched the full mapped arm content for an authored comparison or any correction/enhancement/user-decision/already-covered/reject/uncertain disposition. None is supplied.",
+            "remaining_scope": "All six actual dispositions and their primary support, including false correction or inappropriate rejection. The candidate plan-reveal chronology is not available."
+          },
+          "judgment": "All six disposition values remain null. The frozen plan is a criterion, not a candidate response. No P clause is accepted, rejected, repaired or declared technically defective by this assessment.",
+          "evidence": [
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E05:3"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E04:9"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E03:9,15"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E02:26-42"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N1-I1:1-5"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N1-I2:1-16"
+            }
+          ],
+          "candidate_scientific_passage": null,
+          "independently_checked_technical_primary_evidence": []
+        },
+        {
+          "axis": 5,
+          "name": "Draft to critique to final preservation",
+          "coverage": {
+            "status": "UNASSESSABLE_NO_CANDIDATE",
+            "input_inventory_review_complete": true,
+            "scientific_scope_review_complete": false,
+            "examined": "Confirmed that the exact map supplies no discovery, draft, critic, revision, final, source index or native-answer fallback content. Arm assignment line 4 describes an intended method; line 5 instructs the researcher to produce a discovery and draft. Neither passage is evidence that those stages ran.",
+            "remaining_scope": "All supported findings/conditions/options/uncertainties at each stage, each actual critic claim and an evidence-based accept/reject decision, and final retention or loss. No criticism is available to adjudicate."
+          },
+          "judgment": "Preservation cannot be assessed. Critic agreement, disagreement, execution and compliance are unknown. Missing stage evidence is not an established preservation loss.",
+          "evidence": [
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E04:10"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E03:10,13,15"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E02:26-42"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N1-I1:1-5"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N1-I2:1-16"
+            }
+          ],
+          "candidate_scientific_passage": null,
+          "independently_checked_technical_primary_evidence": []
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed versus executed validation",
+          "coverage": {
+            "status": "UNASSESSABLE_NO_CANDIDATE",
+            "input_inventory_review_complete": true,
+            "scientific_scope_review_complete": false,
+            "examined": "Read all mapped prose for authored validation proposals, execution claims, independent oracles, discrimination and applicable release evidence. The assignment permits qualified witnesses and honest proposals, but supplies neither a proposal nor a witness.",
+            "remaining_scope": "Actual validation design and proposed/executed distinction; any execution artifact, independent oracle, discriminating case and release/domain applicability."
+          },
+          "judgment": "Validation adequacy and execution status are unknown. Reviewer byte/hash checks only establish input identity and are not speech, indexing, consent, preservation, or product validations. No unexecuted check is called proven.",
+          "evidence": [
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E04:11"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E05:3/P6"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E03:11,15"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "E02:26-42"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N1-I1:1-5"
+            },
+            {
+              "kind": "frozen_specification_or_inventory",
+              "locator": "N1-I2:1-16"
+            }
+          ],
+          "candidate_scientific_passage": null,
+          "independently_checked_technical_primary_evidence": []
+        }
+      ],
+      "obligation_coverage": [
+        {
+          "id": "O1",
+          "exact_text": "Independently discover useful unfamiliar tools, products and materially different approaches beyond the thin plan.",
+          "criterion_locator": "E04:6",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "id": "O2",
+          "exact_text": "Investigate consequential primary source/code behavior and governing defaults, units/types, limits and applicability for selected mechanisms.",
+          "criterion_locator": "E04:7",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "id": "O3",
+          "exact_text": "Investigate at least one relevant issue/fix/regression/release or evolution chain; say when evidence is absent/inapplicable.",
+          "criterion_locator": "E04:8",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "id": "O4",
+          "exact_text": "Compare every exact P clause after plan reveal; distinguish correction, optional enhancement, user decision, already-covered, rejected and uncertain findings.",
+          "criterion_locator": "E04:9",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "id": "O5",
+          "exact_text": "Retain useful alternatives, conditions, original constraints, disagreement and uncertainty in one self-contained coherent final; do not replace text with IDs.",
+          "criterion_locator": "E04:10",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "id": "O6",
+          "exact_text": "Propose meaningful discriminating validations and separate executed checks from proposed work. No runtime available is honest; do not pretend proposals ran. Scope is this small product brief, not unlimited production guarantees.",
+          "criterion_locator": "E04:11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        }
+      ],
+      "explicit_constraint_coverage": [
+        {
+          "constraint": "Searchable community oral-history collection",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "2,000 hour-long recordings",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Volunteer transcripts",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Consent restrictions",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Multilingual speakers",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Low-cost public website",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Staff correction of words and speakers",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Preservation of source audio",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Time-linked excerpts",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Withdrawal of an entire recording or a restricted segment",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Research workable products/mechanisms and indexing",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Research transcription evolution evidence and preservation workflows",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Do not assume all speech recognition is equally useful",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "A small product-brief research scope, not unlimited production guarantees",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        },
+        {
+          "constraint": "Honest disclosure of unavailable runtime; proposals must not be described as executed",
+          "criterion_locator": "E04:3,11",
+          "candidate_passage": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE"
+        }
+      ],
+      "plan_dispositions": [
+        {
+          "clause_id": "P1",
+          "exact_clause": "Batch automatic transcription then publish text and audio.",
+          "criterion_locator": "E05:3",
+          "candidate_path": null,
+          "candidate_passage": null,
+          "disposition": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE",
+          "remaining_scope": "No candidate assessment of automatic transcription, publication, consent-conditioned availability, volunteer work, or multilingual applicability is supplied."
+        },
+        {
+          "clause_id": "P2",
+          "exact_clause": "Keep transcript edits as one replacement text file.",
+          "criterion_locator": "E05:3",
+          "candidate_path": null,
+          "candidate_passage": null,
+          "disposition": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE",
+          "remaining_scope": "No candidate assessment of word/speaker correction, source preservation, time-linked excerpts, revision treatment, or a replacement-file disposition is supplied."
+        },
+        {
+          "clause_id": "P3",
+          "exact_clause": "Search full text with a general database search index.",
+          "criterion_locator": "E05:3",
+          "candidate_path": null,
+          "candidate_passage": null,
+          "disposition": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE",
+          "remaining_scope": "No candidate assessment of selected indexing behavior, multilingual applicability, restricted/withdrawn content, scale, or public-site cost is supplied."
+        },
+        {
+          "clause_id": "P4",
+          "exact_clause": "One consent flag hides the public recording.",
+          "criterion_locator": "E05:3",
+          "candidate_path": null,
+          "candidate_passage": null,
+          "disposition": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE",
+          "remaining_scope": "No candidate assessment of recording versus segment restrictions, withdrawal, public accessibility, or a consent-flag disposition is supplied."
+        },
+        {
+          "clause_id": "P5",
+          "exact_clause": "Keep WAV originals and MP3 listening copies.",
+          "criterion_locator": "E05:3",
+          "candidate_path": null,
+          "candidate_passage": null,
+          "disposition": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE",
+          "remaining_scope": "No candidate assessment of source preservation or a format/copy disposition is supplied."
+        },
+        {
+          "clause_id": "P6",
+          "exact_clause": "Validate word accuracy on a few English clips.",
+          "criterion_locator": "E05:3",
+          "candidate_path": null,
+          "candidate_passage": null,
+          "disposition": null,
+          "judgment": "UNASSESSABLE_NO_CANDIDATE",
+          "remaining_scope": "No candidate assessment of the English-only validation disposition, multilingual coverage, speakers, timing, discriminating checks, or proposed/executed distinction is supplied."
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [],
+        "remaining_claims": [
+          {
+            "kind": "UNENUMERABLE_ABSENT_CANDIDATE",
+            "scope": "All actual consequential candidate claims, governing defaults/exceptions/units/types/limits/applicability and O3 release/evolution conclusions. No authored claim inventory is available."
+          }
+        ],
+        "complete": false,
+        "public_primary_sources_retrieved": [],
+        "candidate_claim_count": null,
+        "note": "Frozen brief/plan/map ground the non-delivery and scope judgments. They are not independent technical primary verification. No technical material defect is asserted."
+      },
+      "preservation_coverage": {
+        "complete": false,
+        "available_stages": [
+          "research assignment",
+          "research input map"
+        ],
+        "scientific_stages_available": [],
+        "discovery": null,
+        "draft": null,
+        "critique": null,
+        "revision": null,
+        "final": null,
+        "critic_claims_available": null,
+        "criticism_accept_reject_evidence": [],
+        "supported_findings_traced": [],
+        "preservation_losses_established": [],
+        "remaining_scope": "Entire authored discovery/draft/critique/final chain, all scientific findings and qualifications/options/uncertainties, and each criticism. The protocol description does not substitute for stage evidence."
+      },
+      "validation_coverage": {
+        "proposed_checks": null,
+        "executed_checks": null,
+        "candidate_execution_status": null,
+        "independent_oracles_checked": [],
+        "reviewer_identity_checks_are_scientific_tests": false
+      },
+      "grade_limits": [
+        "NO_DELIVERY is a frozen delivery classification; scientific quality is null, not FAIL, PASS, zero, or an inferred low score.",
+        "All six axes have criterion/inventory coverage; none has full scientific candidate/primary-source coverage. Scientific review is HOLD for the explicit missing scopes.",
+        "Empty material/minor findings mean no candidate defect was established, not that the unseen work is defect-free.",
+        "No candidate response was generated, corrected, repaired or reconstructed from instructions.",
+        "Runtime, native/T3 lifecycle, usage, billing, timing, cause of non-delivery and subsequent artifacts are unobserved."
+      ]
+    }
+  },
+  "method_clues": {
+    "blinding": "partial",
+    "map_disclosure": "Paths and stage contents can reveal method. Partial blinding only.",
+    "observed": [
+      "Neutral labels directly map to control/treatment in E02; actual-arm pathnames are visible.",
+      "N2-I1:4 describes conventional source-led research and a complete cited draft, then a fresh critic and separate reviser.",
+      "N1-I1:4 describes navigating governing symbols/callers/definitions/defaults/exceptions/tests/release history on demand, then a separate fresh critic and reviser.",
+      "Both arm input maps name M02, research stage and glm native_route (lines 5-6,14). These are metadata/instructions, not evidence of execution."
+    ],
+    "effect": "No substantive arm work is available. Method descriptions are not used as outcome evidence or as proxies for quality."
+  },
+  "comparative_quality_eligible": false,
+  "comparative_judgment": "No scientific comparison is supportable. Both frozen finals are absent, both scientific-quality values are null, and neither is a source-grounded FAIL. Shared non-delivery does not establish quality equivalence or a speed result.",
+  "scope_limits": [
+    "The exact map is authoritative for this assessment; no recursive scan or enlargement of the frozen package was performed.",
+    "Both arms independently supply only protocol inputs. Neither supplies scientific prose, complete stages, final answer/fallback, or source indexes. There is no complete counterpart to assess.",
+    "All O1-O6, explicit constraints, six axis criteria and P1-P6 have been inventoried, but all scientific candidate, primary verification, preservation and validation scopes remain unavailable.",
+    "HOLD describes incomplete scientific review; NO_DELIVERY describes the known frozen final-delivery result. These classifications do not establish a source-grounded FAIL.",
+    "Relevant technical claims are not enumerable. No public technical sources were retrieved, and no independently verified technical findings are represented as complete.",
+    "No causes, actual discoveries, critique participation, elapsed candidate time, deadline outcome, native/T3 completion, usage or billing are inferred from the mapped assignment/input metadata.",
+    "No quality equivalence, preference, scientific method superiority or speed winner can be supported. Comparative quality eligibility is false.",
+    "The evaluation start field is the first recorded UTC time at native activation (19:18:54); preliminary assignment/map reading occurred before it and its exact start time is unknown.",
+    "The saved completion timestamp marks completion of assessment authoring, not candidate or reviewer native/T3 terminal state. Supported Goal completion occurs after save and verification."
+  ],
+  "evaluation_started_at": "2026-10-09T19:18:54+00:00",
+  "evaluation_completed_at": "2026-10-09T19:21:59.697375+00:00",
+  "deadline": "2026-10-09T19:42:05.391959+00:00",
+  "observed_source_operations": [
+    {
+      "operation": "local_read",
+      "targets": [
+        "E01",
+        "E02"
+      ],
+      "result": "Read complete reviewer assignment and exact map before native Goal activation; preliminary reading timestamp not separately captured."
+    },
+    {
+      "operation": "local_read",
+      "targets": [
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "result": "Read complete rubric, original brief and frozen plan after supported native create/get showed active."
+    },
+    {
+      "operation": "local_read_and_sha256",
+      "targets": [
+        "N2-I1",
+        "N2-I2",
+        "N1-I1",
+        "N1-I2"
+      ],
+      "result": "Read all four mapped files completely with numbered lines. Each byte count and SHA-256 matches the frozen expected value. Identity check only; no scientific grade from hashes."
+    },
+    {
+      "operation": "local_read_and_sha256",
+      "targets": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "result": "Recorded exact hashes and numbered source locators; no file mutation."
+    },
+    {
+      "operation": "public_primary_retrieval",
+      "targets": [],
+      "result": "Not performed: no authored candidate claims or source selections exist in the permitted map. No technical primary coverage is claimed."
+    },
+    {
+      "operation": "candidate_or_product_execution",
+      "targets": [],
+      "result": "Not performed. No candidate execution record or proposed test is mapped; execution status remains null."
+    },
+    {
+      "operation": "bounded_output_write",
+      "targets": [
+        "assessment.md",
+        "assessment.json",
+        "source-map.json"
+      ],
+      "result": "Assessment outputs only, in the assigned evaluation directory. No candidate, canon, Git, account, configuration or service mutation."
+    }
+  ],
+  "native_and_cost_limits": {
+    "reviewer_goal_activation": "One supported create_goal call referencing this assignment and one supported get_goal call returned active before scientific assessment writing.",
+    "reviewer_goal_completion_at_save": null,
+    "reviewer_t3_completion": null,
+    "candidate_native_completion": {
+      "N2": null,
+      "N1": null
+    },
+    "candidate_t3_completion": {
+      "N2": null,
+      "N1": null
+    },
+    "candidate_usage": {
+      "N2": null,
+      "N1": null
+    },
+    "candidate_billing": {
+      "N2": null,
+      "N1": null
+    },
+    "reviewer_provider_usage": null,
+    "reviewer_billing": null,
+    "note": "Native lifecycle is observed through supported calls; no Goal receipt JSON is authored. Terminal reviewer completion is intentionally subsequent to these saved artifacts. Native/T3 completion and billing are distinct; no zero or false is substituted for unknown."
+  }
+}

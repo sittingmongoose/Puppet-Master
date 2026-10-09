@@ -1,0 +1,61 @@
+{
+  "frozen_at": "2026-10-09T18:55:22.873642+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S11/brief.md",
+      "sha256": "da5e0032e5ce6e30ca840d7b65d3d1a4104e87dbad54081d3b65ff9bfb059314",
+      "bytes": 1439
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M05.json",
+      "sha256": "441994238f267b924e47584a69a2f0ae7f2b609dd901fcac40412b2b2eb7df7f",
+      "bytes": 699
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic/assignment.md",
+      "sha256": "ac1c003eaf02697eee187055e803f5582c7ad75c41ef42f59cbebb10eafda7c5",
+      "bytes": 2671
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic/input-map.json",
+      "sha256": "6a3dd1cd078cb0b70c3ed84e33d67c14207bfad2ce1b3e847e93b35a4029a7da",
+      "bytes": 1196
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/draft.md",
+      "sha256": "584edc7870584f57774a7b12a3bdde09e861e8928b131162597253b25731e80d",
+      "bytes": 21037
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/discovery.md",
+      "sha256": "ab1cc84ea47d3698e7b86991f6668bfde93b6e3fb1804e39dc494e22fb49eddd",
+      "bytes": 18888
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/source-map.json",
+      "sha256": "e6501a8d8e4b6180a6c85ee6986dab5efeeff1238eb19400c993ca7be61f66b5",
+      "bytes": 16576
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/revealed-plan.md",
+      "sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "bytes": 297
+    }
+  ],
+  "method": {
+    "id": "M05",
+    "version": "v1",
+    "name": "retained-investigator",
+    "control": "Researcher terminalizes after complete draft, fresh critic, separate fresh reviser.",
+    "treatment": "Original researcher retains ONE native Goal and source context through discovery/draft, waits for independent critic, then resolves criticism and writes complete final in SAME context. Waiting/handoff costs count; no early native completion.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Declared retained context; no artificial new Goal at phase boundary",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T19:07:22.873642+00:00"
+}

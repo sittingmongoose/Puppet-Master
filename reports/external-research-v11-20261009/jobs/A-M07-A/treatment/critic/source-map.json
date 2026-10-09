@@ -1,0 +1,229 @@
+{
+  "assignment": "ER11 A-M07-A/treatment/critic",
+  "case": "S07",
+  "method": "M07 evidence-on-demand",
+  "stage": "critic",
+  "evidence_kind": "full-critique",
+  "captured_at_utc": "2026-10-09T19:09:05Z",
+  "usage_billing_observed": null,
+  "source_id_policy": "Q IDs are immutable within this critic stage. A changed target/version/commit requires a new ID and explicit drift note; inherited S01–S12 IDs remain unchanged.",
+  "reviewed_local_inputs": [
+    {
+      "role": "exact task brief",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S07/brief.md",
+      "sha256": "11201a686d012432b0c60757835ab1e0f959b2fdcccd661911f0cac5c3c3bd7a"
+    },
+    {
+      "role": "revealed thin plan",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/revealed-plan.md",
+      "sha256": "906fbabc0e9c4996064d210148f2784a1e161d38cce2f54aea992f2d4f7f7ee6"
+    },
+    {
+      "role": "research draft",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/draft.md",
+      "sha256": "5a526c9cc6a1ee7dc4413430a7ed4738708b6cdaded8a64709aeb482ba692e35"
+    },
+    {
+      "role": "research discovery",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/discovery.md",
+      "sha256": "0e54d8edcfd9d05c01014f9e79173cdf68e6e879629a76d7e966528735b8d761"
+    },
+    {
+      "role": "research source-map",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/source-map.json",
+      "sha256": "2d18708cb3a696d7329e62d848f4f026d0667b06e147f58c815949a67adde91e"
+    },
+    {
+      "role": "research source index",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/index.md",
+      "sha256": "6b821e6b0f253e2883d92d15a92d45f2f8db6fde680a70e5e572e0992f07ea09"
+    },
+    {
+      "role": "research exact-excerpt index",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/exact-excerpts.json",
+      "sha256": "8d658f82a7c493f71aabf595409af5a101f7f73b87f444ba04e9e2d2fd5482b2"
+    },
+    {
+      "role": "research source note S01-docusaurus-versioning",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S01-docusaurus-versioning.md",
+      "sha256": "2e84993a21c23a949aeff5c3841cb3ecd83329125f1d4febda4421014e5e4d68"
+    },
+    {
+      "role": "research source note S02-docusaurus-i18n-introduction",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S02-docusaurus-i18n-introduction.md",
+      "sha256": "c533a961b7110059e7458f06a460a3b04d96ebdb0413ab148027a7dbf3253a73"
+    },
+    {
+      "role": "research source note S03-docusaurus-i18n-tutorial",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S03-docusaurus-i18n-tutorial.md",
+      "sha256": "93cfc4ea671d7fd6a10564d1affdd8e7cf6e8862f74d5a566b88d2bae3baf0d8"
+    },
+    {
+      "role": "research source note S04-antora-descriptor",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S04-antora-descriptor.md",
+      "sha256": "11df198254153fc07686f2ff3d03ef9145f0b1ba93c4b2d91d70601e594b4a18"
+    },
+    {
+      "role": "research source note S05-antora-distributed-versions",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S05-antora-distributed-versions.md",
+      "sha256": "8e483f00aa6d6c0eec4974d514c0ea66f29f74a96b602c4d77d55bbbc87e2d90"
+    },
+    {
+      "role": "research source note S06-antora-origin-metadata",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S06-antora-origin-metadata.md",
+      "sha256": "a20e8fa26db4f130b3ada2f681548b48e2863e04a59efa3b888e7d948db05047"
+    },
+    {
+      "role": "research source note S07-docsearch-records-and-facets",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S07-docsearch-records-and-facets.md",
+      "sha256": "6b287e84d5205408b26a86daab34d115ea1c5bce10515dbcbc08ba120533963b"
+    },
+    {
+      "role": "research source note S08-typesense-search-30.1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S08-typesense-search-30.1.md",
+      "sha256": "7bd05b7a245652ff6a03f3212908d871eaa64389bf654d538256f70ed96ba7db"
+    },
+    {
+      "role": "research source note S09-backstage-techdocs-source",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S09-backstage-techdocs-source.md",
+      "sha256": "cfc6a56cee0302193783a7f72627ad17e231c8ea35287705ba89c622a0f7c385"
+    },
+    {
+      "role": "research source note S10-backstage-techdocs-cicd",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S10-backstage-techdocs-cicd.md",
+      "sha256": "6c290cd2c344c195276b54b3b7112511e1651fce2ff866966e521fc30588f113"
+    },
+    {
+      "role": "research source note S11-docusaurus-i18n-version-fix",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S11-docusaurus-i18n-version-fix.md",
+      "sha256": "3dd95b7f35995d2af85b3a95dabc36b47555e0315591e41eab84608de5e468d4"
+    },
+    {
+      "role": "research source note S12-docusaurus-380-release",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-A/treatment/research/sources/S12-docusaurus-380-release.md",
+      "sha256": "a272e502ce1f07a3a90275e2587050cb28737c24b78ec196349bb8bd20e27e7d"
+    }
+  ],
+  "inherited_source_register": {
+    "source_map": "../research/source-map.json",
+    "source_index": "../research/sources/index.md",
+    "exact_excerpt_index": "../research/sources/exact-excerpts.json",
+    "source_ids_inspected": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06",
+      "S07",
+      "S08",
+      "S09",
+      "S10",
+      "S11",
+      "S12"
+    ],
+    "scope": "Read complete discovery and draft, original brief, revealed plan, source-map, source index, all S01–S12 evidence notes, and every exact excerpt. Independently recomputed all 12 inherited excerpt SHA-256 values; all matched their register."
+  },
+  "sources": [
+    {
+      "id": "Q01",
+      "title": "Docusaurus versioning",
+      "url": "https://docusaurus.io/docs/versioning",
+      "version": "Docusaurus 3.10.2, page version label",
+      "commit": null,
+      "commit_status": "None; rendered page exposed no publishing commit.",
+      "locator": "Terminology; configuring versioning behavior; tagging a new version.",
+      "accessed_at_utc": "2026-10-09T19:09:05Z",
+      "operations": [
+        "web.open exact URL; inspected current/latest definition, configuration and copy behavior."
+      ],
+      "related_predecessor_source_id": "S01",
+      "evidence_file": "sources/Q01-docusaurus-versioning.md"
+    },
+    {
+      "id": "Q02",
+      "title": "Docusaurus Docs Multi-instance",
+      "url": "https://docusaurus.io/docs/docs-multi-instance",
+      "version": "Docusaurus 3.10.2, page version label",
+      "commit": null,
+      "commit_status": "None; rendered page exposed no publishing commit.",
+      "locator": "Use-cases; setup; versioned paths; tagging new versions.",
+      "accessed_at_utc": "2026-10-09T19:09:05Z",
+      "operations": [
+        "web.open exact URL; inspected distinct-doc-set, independent-lifecycle and per-instance version paths."
+      ],
+      "related_predecessor_source_id": "New independent URL",
+      "evidence_file": "sources/Q02-docusaurus-multi-instance.md"
+    },
+    {
+      "id": "Q03",
+      "title": "Antora component-version sorting",
+      "url": "https://docs.antora.org/antora/3.1/how-component-versions-are-sorted/",
+      "version": "Antora documentation series 3.1, versioned URL",
+      "commit": null,
+      "commit_status": "None; rendered page exposed no publishing commit.",
+      "locator": "Component version sorting rules; latest component version; prerelease/unversioned cases.",
+      "accessed_at_utc": "2026-10-09T19:09:05Z",
+      "operations": [
+        "web.open exact URL; inspected ordering and latest-selection sections."
+      ],
+      "related_predecessor_source_id": "New independent URL",
+      "evidence_file": "sources/Q03-antora-version-sorting.md"
+    },
+    {
+      "id": "Q04",
+      "title": "Typesense Search API",
+      "url": "https://typesense.org/docs/30.1/api/search.html",
+      "version": "Typesense API documentation 30.1, versioned URL",
+      "commit": null,
+      "commit_status": "None; versioned docs exposed no source commit.",
+      "locator": "Query; exact/non-exact filters; pagination; prefix and typo parameters.",
+      "accessed_at_utc": "2026-10-09T19:09:05Z",
+      "operations": [
+        "web.open exact URL",
+        "web.find pagination, prefix, numerical token typo and exact filter; inspected matching lines."
+      ],
+      "related_predecessor_source_id": "S08",
+      "evidence_file": "sources/Q04-typesense-search-30.1.md"
+    },
+    {
+      "id": "Q05",
+      "title": "Docusaurus PR 10875",
+      "url": "https://github.com/facebook/docusaurus/pull/10875",
+      "version": "Merged 2025-01-31",
+      "commit": "3b72bb4",
+      "commit_status": "3b72bb4; short merge SHA displayed by PR.",
+      "locator": "Motivation; test plan; changed CLI implementation and test.",
+      "accessed_at_utc": "2026-10-09T19:09:05Z",
+      "operations": [
+        "web.open exact PR URL",
+        "web.find missing localized version resource and merge",
+        "inspected PR description and code-diff link."
+      ],
+      "related_predecessor_source_id": "S11",
+      "evidence_file": "sources/Q05-docusaurus-pr-10875.md"
+    },
+    {
+      "id": "Q06",
+      "title": "Docusaurus v3.8.0 release",
+      "url": "https://github.com/facebook/docusaurus/releases/tag/v3.8.0",
+      "version": "Docusaurus 3.8.0, release date 2025-05-26",
+      "commit": "948d63c",
+      "commit_status": "948d63c; short SHA displayed by tag page.",
+      "locator": "Release date/commit; docs-plugin bug-fix entry for PR 10875.",
+      "accessed_at_utc": "2026-10-09T19:09:05Z",
+      "operations": [
+        "web.open exact release URL",
+        "inspected release date, tag commit and #10875 entry."
+      ],
+      "related_predecessor_source_id": "S12",
+      "evidence_file": "sources/Q06-docusaurus-v3.8.0-release.md"
+    }
+  ],
+  "exact_excerpt_index": "sources/exact-excerpts.json",
+  "limits": [
+    "No product runtime, prototype, target-corpus, private account, pricing, billing, performance, or authorization environment was available or inspected.",
+    "No product/integration witness was executed; validation proposals remain unexecuted.",
+    "Primary docs with no exposed commit are identified by their observed version/deployment, not guessed commits."
+  ]
+}

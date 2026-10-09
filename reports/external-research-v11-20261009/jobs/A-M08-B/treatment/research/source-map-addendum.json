@@ -1,0 +1,78 @@
+{
+  "title": "ER11 research-source addendum recorded after plan reveal; discovery.md remains frozen",
+  "collected_at_utc": "2026-10-09T18:51:50Z",
+  "discovery_was_not_modified": true,
+  "additional_sources": [
+    {
+      "id": "S19",
+      "title": "Aviary Pricing",
+      "url": "https://www.aviaryplatform.com/pricing",
+      "version": "current public pricing page, accessed 2026-10-09",
+      "commit": null,
+      "accessed_at_utc": "2026-10-09T18:49:00Z",
+      "locator": "subscription and resource-cap table; free OHMS line; automated metadata rate and disclaimer; optional services",
+      "observed_operations": [
+        "opened the vendor pricing page",
+        "read limited-size free OHMS offer, paid plan caps, displayed rates, per-minute processing rate and caveat",
+        "calculated one-pass estimate from 2,000 hours at the displayed per-minute rate"
+      ],
+      "evidence_path": "sources/evidence/S19-aviary-pricing.md",
+      "claim_scope": "Displayed prices may depend on Monthly/Yearly selection; included storage and billing basis need confirmation. $4,800 is an arithmetic estimate at the displayed $0.04/min rate, not a quote."
+    },
+    {
+      "id": "S20",
+      "title": "OHMS Viewer Transcript.php, v3.10.15",
+      "url": "https://github.com/uklibraries/ohms-viewer/blob/ec922b6/app/Ohms/Transcript.php",
+      "version": "v3.10.15",
+      "commit": "ec922b6bd2e94bbbe537aa931e273ce99637ec7d",
+      "accessed_at_utc": "2026-10-09T18:51:50Z",
+      "locator": "mapIndexSegmentWithTranscript, formatTranscriptVtt, split_and_convert_time (page lines 1836-1905 and 2542-2577)",
+      "observed_operations": [
+        "opened the exact release-pinned PHP file",
+        "located time parsing, conversion, index-to-transcript mapping and display paths",
+        "read the actual implementation; did not execute code"
+      ],
+      "evidence_path": "sources/evidence/S20-ohms-timestamp-code.md",
+      "claim_scope": "In this pinned version the code parses but drops millisecond fractions for these paths and stops after the first index point matched to one transcript segment. Version-specific code observation."
+    },
+    {
+      "id": "S21",
+      "title": "OHMS Viewer v3.10.14 release",
+      "url": "https://github.com/uklibraries/ohms-viewer/releases/tag/v3.10.14",
+      "version": "v3.10.14",
+      "commit": "bb1d8e5 (short commit exposed by release page)",
+      "accessed_at_utc": "2026-10-09T18:43:21Z",
+      "locator": "release note for legacy transcript without timecode PDF export fix, release history lines 241-272",
+      "observed_operations": [
+        "opened release history",
+        "read legacy transcript PDF issue/fix release note"
+      ],
+      "evidence_path": "sources/evidence/S21-ohms-v31014.md",
+      "claim_scope": "Release note only; it does not specify the cause or establish all legacy variants are covered."
+    }
+  ],
+  "commit_resolution": {
+    "id": "S04",
+    "source_url": "https://github.com/uklibraries/ohms-viewer/commit/093ff83.patch",
+    "version": "v3.10.12",
+    "short_commit": "093ff83",
+    "full_commit": "093ff8384a47cde906183d4c4cb9b03bef2c6c9d",
+    "accessed_at_utc": "2026-10-09T18:49:00Z",
+    "locator": "patch header and changes in app/Ohms/Transcript.php; patch lines 0-105",
+    "observed_operations": [
+      "opened commit patch",
+      "resolved full SHA",
+      "confirmed index/transcript VTT mapping and integer-second conversion in that commit"
+    ]
+  },
+  "source_map_corrections": [
+    {
+      "id": "S03",
+      "correction": "The release page was opened at 2026-10-09T18:43:21Z; full commit ec922b6bd2e94bbbe537aa931e273ce99637ec7d was resolved from the pinned README at 2026-10-09T18:43:47Z, not at release-page access time."
+    },
+    {
+      "id": "S04",
+      "correction": "The v3.10.12 short SHA was resolved to full commit 093ff8384a47cde906183d4c4cb9b03bef2c6c9d from the public .patch at 2026-10-09T18:49:00Z."
+    }
+  ]
+}

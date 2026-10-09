@@ -1,0 +1,1191 @@
+{
+  "schema": "ER11 scientific source map v1",
+  "case": "S01",
+  "block": "A-M01-A",
+  "arm": "control",
+  "method": "M01 coherent-batching reviser",
+  "stage": "reviser",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser",
+  "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser",
+  "assignment": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/assignment.md",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/input-map.json",
+  "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S01/brief.md",
+  "research_window_utc": "2026-10-09T18:59:41Z/2026-10-09T19:04:00Z",
+  "usage_billing_observed": null,
+  "scope_exclusions_respected": [
+    "parent",
+    "counterpart",
+    "evaluator",
+    "campaign/history"
+  ],
+  "source_identity_policy": "All inherited source maps are preserved byte-for-byte as copied files and as unmodified nested source_map objects. Original source IDs remain scoped to their inventory. RV01–RV06 are additive reviser records; no inherited ID is rebound.",
+  "authorized_inputs_reviewed": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/assignment.md",
+      "sha256": "c40957fb52f2869f7e94daeab2478ebf3230c5b6ab2013a86e147730701847d6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser/input-map.json",
+      "sha256": "1544595130208aeffc6494a7ccf8c1cbed2d7b5762c4d2990401e17875db92e2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S01/brief.md",
+      "sha256": "1cc2f8f9f6ae1205f1f6152fa412d4b1afb153e1a3bb026def3dd25efaa1484d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/draft.md",
+      "sha256": "0759955d5433144f292395bafadc15402b013ed3557598d1487598cfc25a53ec"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/discovery.md",
+      "sha256": "e933f1d941c838a79f7a9f31b1faf72c6cb2de389559b84b801df3725d91ce36"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/revealed-plan.md",
+      "sha256": "82757a00748f375bd341f03520625ba71db51524f4d51bb8b06aeba1baf0e2e5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/source-map.json",
+      "sha256": "c97de588fdf9647dc61bc2b12142ca39017febd9f965afdeffe35237e3b27f70"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/draft.md",
+      "sha256": "0809c431b86e66efa3f9f7b5577aff4470a634eb0fd6b02b9d60f4d2061de8e6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/discovery.md",
+      "sha256": "6c5d1ebed6715786512ba407a83c69f2a3ab8201756c38affdd06a63aceaef82"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/revealed-plan.md",
+      "sha256": "82757a00748f375bd341f03520625ba71db51524f4d51bb8b06aeba1baf0e2e5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/source-map.json",
+      "sha256": "bfc8570f133ab565089d8036758b26437da9f90dac02277d20c63888bf77e3e2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/critique.md",
+      "sha256": "cf591696adad90d1f75f51f5c334e2508afd14daa9d94abd46c7fd8f4765f8e7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/source-map.json",
+      "sha256": "56a7fe4da85e31f27523440e25daf33f16a952135ee5238f20933367da80e17c"
+    }
+  ],
+  "declared_source_roots_copied": [
+    {
+      "inventory_id": "research-q1",
+      "original_source_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources",
+      "copied_source_root": "sources/inherited/research-q1/sources",
+      "files": [
+        "android.md",
+        "couchdb.md",
+        "index.md",
+        "postgresql.md",
+        "powersync.md"
+      ]
+    },
+    {
+      "inventory_id": "research-q2",
+      "original_source_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/sources",
+      "copied_source_root": "sources/inherited/research-q2/sources",
+      "files": [
+        "README.md",
+        "source-notes.md"
+      ]
+    },
+    {
+      "inventory_id": "critic",
+      "original_source_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/sources",
+      "copied_source_root": "sources/inherited/critic/sources",
+      "files": [
+        "index.md",
+        "observations.md"
+      ]
+    }
+  ],
+  "inherited_source_inventories": [
+    {
+      "inventory_id": "research-q1",
+      "original_source_map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/source-map.json",
+      "preserved_copy_path": "sources/inherited/maps/research-q1.json",
+      "source_id_count": 21,
+      "source_map": {
+        "assignment": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/assignment.md",
+        "input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/input-map.json",
+        "case_brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S01/brief.md",
+        "declared_predecessors": [],
+        "declared_source_roots": [],
+        "usage_billing_observed": null,
+        "source_ids_immutable": true,
+        "sources": [
+          {
+            "id": "A01",
+            "title": "Build an offline-first app",
+            "url": "https://developer.android.com/topic/architecture/data-layer/offline-first",
+            "version_or_revision": "Android rolling developer documentation; no page version/update date displayed",
+            "commit": null,
+            "locator": "Model data; local/network sources; lazy writes; sync/conflict resolution; WorkManager",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open",
+            "evidence_path": "sources/android.md",
+            "claims_used_for": "Local source of truth, critical local-first writes, retry queues, policy tradeoffs",
+            "mutable_source": true
+          },
+          {
+            "id": "A02",
+            "title": "Define work requests",
+            "url": "https://developer.android.com/develop/background-work/background-tasks/persistent/getting-started/define-work",
+            "version_or_revision": "Android rolling developer documentation",
+            "commit": null,
+            "locator": "Periodic work; constraints; retry/backoff",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open + web.find",
+            "evidence_path": "sources/android.md",
+            "claims_used_for": "15 minute minimum; delayed/skipped runs; exponential 30 second default and 10 second minimum",
+            "mutable_source": true
+          },
+          {
+            "id": "A03",
+            "title": "Migrate your Room database",
+            "url": "https://developer.android.com/training/data-storage/room/migrating-db-versions",
+            "version_or_revision": "Android rolling developer documentation",
+            "commit": null,
+            "locator": "Migration guide introduction and AutoMigrationSpec",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open",
+            "evidence_path": "sources/android.md",
+            "claims_used_for": "Migration paths, schema export, rename/delete handling",
+            "mutable_source": true
+          },
+          {
+            "id": "A04",
+            "title": "Capture an image",
+            "url": "https://developer.android.com/media/camera/camerax/take-photo",
+            "version_or_revision": "Android page last updated 2026-09-24 UTC",
+            "commit": null,
+            "locator": "Storage method; OutputFileOptions; save callback",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open",
+            "evidence_path": "sources/android.md",
+            "claims_used_for": "Asynchronous file write completion/failure",
+            "mutable_source": true
+          },
+          {
+            "id": "A05",
+            "title": "Access app-specific files",
+            "url": "https://developer.android.com/training/data-storage/app-specific",
+            "version_or_revision": "Android rolling developer documentation",
+            "commit": null,
+            "locator": "Internal persistent files and uninstall behavior",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open",
+            "evidence_path": "sources/android.md",
+            "claims_used_for": "Private internal storage and removal on uninstall",
+            "mutable_source": true
+          },
+          {
+            "id": "A06",
+            "title": "Open files using the Storage Access Framework",
+            "url": "https://developer.android.com/guide/topics/providers/document-provider",
+            "version_or_revision": "Android rolling developer documentation",
+            "commit": null,
+            "locator": "SAF control flow and create/open document intents",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open",
+            "evidence_path": "sources/android.md",
+            "claims_used_for": "User-granted import/export location access",
+            "mutable_source": true
+          },
+          {
+            "id": "C01",
+            "title": "Technical Overview",
+            "url": "https://docs.couchdb.org/en/stable/intro/overview.html",
+            "version_or_revision": "Apache CouchDB 3.5 docs; stable alias observed with 3.5.2 release notes",
+            "commit": null,
+            "locator": "Document Storage; Security and Validation; Distributed Updates/Replication",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open",
+            "evidence_path": "sources/couchdb.md",
+            "claims_used_for": "JSON+HTTP model, replication, validation",
+            "mutable_source": true
+          },
+          {
+            "id": "C02",
+            "title": "Replication and conflict model",
+            "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+            "version_or_revision": "Apache CouchDB 3.5 docs; stable alias observed with 3.5.2 release notes",
+            "commit": null,
+            "locator": "Winning revisions; open_revs=all; conflict resolution/sweepers",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open + web.find",
+            "evidence_path": "sources/couchdb.md",
+            "claims_used_for": "Deterministic winner; losing revisions retained; explicit resolution",
+            "mutable_source": true
+          },
+          {
+            "id": "C03",
+            "title": "Database security",
+            "url": "https://docs.couchdb.org/en/stable/api/database/security.html",
+            "version_or_revision": "Apache CouchDB 3.5 docs; stable alias observed with 3.5.2 release notes",
+            "commit": null,
+            "locator": "Member/admin access and default behavior",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open + web.find",
+            "evidence_path": "sources/couchdb.md",
+            "claims_used_for": "DB-wide member read scope; new DB defaults",
+            "mutable_source": true
+          },
+          {
+            "id": "C04",
+            "title": "Replicator Database",
+            "url": "https://docs.couchdb.org/en/stable/replication/replicator.html",
+            "version_or_revision": "Apache CouchDB 3.5 docs; stable alias observed with 3.5.2 release notes",
+            "commit": null,
+            "locator": "Scheduler/states; selectors; winning_revs_only",
+            "accessed_at_utc": "2026-10-09T18:30:53Z",
+            "operations_observed": "web.open",
+            "evidence_path": "sources/couchdb.md",
+            "claims_used_for": "Persistent jobs/restarts, retries, transfer filtering",
+            "mutable_source": true
+          },
+          {
+            "id": "C05",
+            "title": "CouchDB issue #5422",
+            "url": "https://github.com/apache/couchdb/issues/5422",
+            "version_or_revision": "Issue report describes CouchDB 3.4.2 and git SHA prefix 6e5ad2a5c; opened 2025-02-04",
+            "commit": null,
+            "locator": "Issue description, reproduction, environment and activity/labels",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open",
+            "evidence_path": "sources/couchdb.md",
+            "claims_used_for": "Reported attachment replication size growth and observed issue status",
+            "mutable_source": false
+          },
+          {
+            "id": "C06",
+            "title": "CouchDB 3.5.x release notes",
+            "url": "https://docs.couchdb.org/en/stable/whatsnew/3.5.html",
+            "version_or_revision": "3.5.2 release notes via rolling stable docs",
+            "commit": null,
+            "locator": "3.5.2 section, #5777 and #5881",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open + web.find",
+            "evidence_path": "sources/couchdb.md",
+            "claims_used_for": "Replicator evolution; no #5422 fix observed",
+            "mutable_source": true
+          },
+          {
+            "id": "P01",
+            "title": "PowerSync product architecture",
+            "url": "https://powersync.com/",
+            "version_or_revision": "Rolling product website",
+            "commit": null,
+            "locator": "What is PowerSync; How it works",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open",
+            "evidence_path": "sources/powersync.md",
+            "claims_used_for": "Service/client SQLite architecture and backend list",
+            "mutable_source": true
+          },
+          {
+            "id": "P02",
+            "title": "PowerSync Self-Hosting",
+            "url": "https://docs.powersync.com/intro/self-hosting",
+            "version_or_revision": "Rolling PowerSync docs",
+            "commit": null,
+            "locator": "Docker self-host and dashboard note",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open",
+            "evidence_path": "sources/powersync.md",
+            "claims_used_for": "Docker self-host; no dashboard",
+            "mutable_source": true
+          },
+          {
+            "id": "P03",
+            "title": "Sync Streams",
+            "url": "https://docs.powersync.com/sync/streams/overview",
+            "version_or_revision": "Rolling PowerSync docs",
+            "commit": null,
+            "locator": "Overview and client subsets",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open",
+            "evidence_path": "sources/powersync.md",
+            "claims_used_for": "SQL-like partial sync to client SQLite",
+            "mutable_source": true
+          },
+          {
+            "id": "P04",
+            "title": "Using Parameters",
+            "url": "https://docs.powersync.com/sync/streams/parameters",
+            "version_or_revision": "Rolling PowerSync docs",
+            "commit": null,
+            "locator": "Auth parameters; auth.user_id; subscription/auth example",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open + web.find",
+            "evidence_path": "sources/powersync.md",
+            "claims_used_for": "Signed identity claims and scope constraints",
+            "mutable_source": true
+          },
+          {
+            "id": "P05",
+            "title": "Writing Client Changes / Handling Update Conflicts",
+            "url": "https://docs.powersync.com/handling-writes/writing-client-changes ; https://docs.powersync.com/handling-writes/handling-update-conflicts",
+            "version_or_revision": "Rolling PowerSync docs",
+            "commit": null,
+            "locator": "Operation types; synchronous/idempotent backend; conflict policy",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open + web.find",
+            "evidence_path": "sources/powersync.md",
+            "claims_used_for": "Backend upload responsibility, dedup and LWW defaults",
+            "mutable_source": true
+          },
+          {
+            "id": "P06",
+            "title": "Attachments / Files",
+            "url": "https://docs.powersync.com/client-sdks/advanced/attachments",
+            "version_or_revision": "Rolling PowerSync docs; Kotlin helper table labels v1.0.0 alpha",
+            "commit": null,
+            "locator": "Intro/workflow/SDK table/Kotlin adapter",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open + web.find",
+            "evidence_path": "sources/powersync.md",
+            "claims_used_for": "External files queue; alpha maturity; Android private-storage example",
+            "mutable_source": true
+          },
+          {
+            "id": "P07",
+            "title": "PowerSync service license at v1.23.0",
+            "url": "https://github.com/powersync-ja/powersync-service/blob/v1.23.0/service/LICENSE",
+            "version_or_revision": "FSL-1.1-ALv2 at immutable v1.23.0 tag",
+            "commit": "v1.23.0; release UI short commit c406602",
+            "locator": "License grant, permitted purpose, competing use, future ALv2",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open",
+            "evidence_path": "sources/powersync.md",
+            "claims_used_for": "Internal use, restrictions, future license",
+            "mutable_source": false
+          },
+          {
+            "id": "P08",
+            "title": "PowerSync service release v1.23.0",
+            "url": "https://github.com/powersync-ja/powersync-service/releases/tag/v1.23.0",
+            "version_or_revision": "v1.23.0, dated 2026-06-23",
+            "commit": "v1.23.0; release UI short commit c406602",
+            "locator": "Release body, PR #676",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open",
+            "evidence_path": "sources/powersync.md",
+            "claims_used_for": "Released Sync Streams error behavior fix and version pinning",
+            "mutable_source": false
+          },
+          {
+            "id": "D01",
+            "title": "PostgreSQL pg_dump",
+            "url": "https://www.postgresql.org/docs/current/app-pgdump.html",
+            "version_or_revision": "PostgreSQL 18 docs via mutable current alias",
+            "commit": null,
+            "locator": "pg_dump description and archive formats",
+            "accessed_at_utc": "2026-10-09T18:30:08Z",
+            "operations_observed": "web.open",
+            "evidence_path": "sources/postgresql.md",
+            "claims_used_for": "Portable DB export, single DB limit, not routine prod backup",
+            "mutable_source": true
+          }
+        ]
+      }
+    },
+    {
+      "inventory_id": "research-q2",
+      "original_source_map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/source-map.json",
+      "preserved_copy_path": "sources/inherited/maps/research-q2.json",
+      "source_id_count": 18,
+      "source_map": {
+        "case": "S01",
+        "stage": "research-q2",
+        "source_map_version": "1",
+        "access_window_utc": "2026-10-09T18:25:00Z/2026-10-09T18:27:22Z",
+        "access_timestamp_note": "Web tool output did not provide per-page request timestamps; this is the observed research window. The end timestamp is the UTC clock read immediately after the final page inspection.",
+        "sources": [
+          {
+            "source_id": "ODK-COLLECT",
+            "title": "ODK Collect",
+            "publisher": "Get ODK",
+            "url": "https://docs.getodk.org/collect-intro/",
+            "version_or_edition": "Live official docs; accessed 2026-10-09; page does not state a product release tag.",
+            "commit": null,
+            "locator": "Overview and Supported devices, lines 125-132.",
+            "observed_operations": [
+              "web search_query constrained to docs.getodk.org",
+              "web open",
+              "recorded offline, draft, location, image, and Android scope statements"
+            ]
+          },
+          {
+            "source_id": "ODK-CENTRAL-INSTALL",
+            "title": "Installing ODK Central",
+            "publisher": "Get ODK",
+            "url": "https://docs.getodk.org/central-install/",
+            "version_or_edition": "Live official docs; accessed 2026-10-09; install instructions distinguish current self-host operation from managed cloud.",
+            "commit": null,
+            "locator": "Self-hosting and installing elsewhere, lines 141-164.",
+            "observed_operations": [
+              "web search_query constrained to docs.getodk.org",
+              "web open",
+              "recorded self-host prerequisites and operator burden"
+            ]
+          },
+          {
+            "source_id": "ODK-CENTRAL-SUBMISSIONS",
+            "title": "Managing Submissions in Central",
+            "publisher": "Get ODK",
+            "url": "https://docs.getodk.org/central-submissions/",
+            "version_or_edition": "Live official docs; accessed 2026-10-09; content includes version-qualified behavior for Central v1.2+, v1.3, and v2025.1.0+.",
+            "commit": null,
+            "locator": "State/actions and table filters, lines 186-205; CSV attachment layout, lines 208-236; review states and detail/edit workflow, lines 294-317.",
+            "observed_operations": [
+              "web search_query constrained to docs.getodk.org",
+              "web open at three locators",
+              "recorded actual defaults, reviewer actions, history, and export structure"
+            ]
+          },
+          {
+            "source_id": "ODK-CENTRAL-CHANGELOG",
+            "title": "ODK Central API Changelog",
+            "publisher": "Get ODK",
+            "url": "https://docs.getodk.org/central-api-changelog/",
+            "version_or_edition": "Live official changelog; inspected entries through Central v2026.3.1.",
+            "commit": null,
+            "locator": "v2026.3.1 fixes lines 123-140; v1.5 and v1.4 lines 354-381; v1.3 and v1.2 lines 382-429.",
+            "observed_operations": [
+              "web search_query constrained to docs.getodk.org",
+              "web open at changelog locators",
+              "traced review-state, comments, versions/diffs, audit, export, and geodata evolution"
+            ]
+          },
+          {
+            "source_id": "KOBO-COLLECT",
+            "title": "Collecting data using KoboCollect",
+            "publisher": "KoboToolbox",
+            "url": "https://support.kobotoolbox.org/data_collection_kobocollect.html",
+            "version_or_edition": "Official support article last updated 2026-07-17; page describes KoboCollect Android workflow.",
+            "commit": null,
+            "locator": "Form refresh and offline entry/finalization, lines 38-65; saved-data deletion and connectivity troubleshooting, lines 92-96 and 130-133.",
+            "observed_operations": [
+              "web search_query constrained to support.kobotoolbox.org",
+              "web open at workflow locator",
+              "recorded predownload, offline draft, queue/finalization distinctions"
+            ]
+          },
+          {
+            "source_id": "SURVEY123-EDIT",
+            "title": "Prepare for editing existing survey data",
+            "publisher": "Esri ArcGIS Survey123",
+            "url": "https://doc.arcgis.com/en/survey123/create/connect/prepareforediting.htm",
+            "version_or_edition": "Live official docs; feature is stated as available in Survey123 Connect and the field app.",
+            "commit": null,
+            "locator": "Enable editing and Inbox limits/caveat, lines 18-45.",
+            "observed_operations": [
+              "web search_query constrained to doc.arcgis.com",
+              "web open",
+              "recorded Inbox cap, query filtering, and Sent/Inbox behavior caveat"
+            ]
+          },
+          {
+            "source_id": "SURVEY123-OFFLINE",
+            "title": "Submit survey results",
+            "publisher": "Esri ArcGIS Survey123",
+            "url": "https://doc.arcgis.com/en/survey123/capture/mobile/submitsurveyresults.htm",
+            "version_or_edition": "Live official docs; version not stated on page.",
+            "commit": null,
+            "locator": "Draft, Outbox, and reconnect workflow, lines 7-26.",
+            "observed_operations": [
+              "web search_query constrained to doc.arcgis.com",
+              "web open",
+              "recorded explicit offline send path and editability"
+            ]
+          },
+          {
+            "source_id": "QFIELDCLOUD-JOBS",
+            "title": "Jobs - QFieldCloud",
+            "publisher": "OPENGIS.ch / QField Ecosystem",
+            "url": "https://docs.qfield.org/reference/qfieldcloud/jobs/",
+            "version_or_edition": "Live official ecosystem documentation; accessed 2026-10-09.",
+            "commit": null,
+            "locator": "Offline package job, lines 213-228; delta conflicts and policy default, lines 256-288.",
+            "observed_operations": [
+              "web search_query constrained to docs.qfield.org",
+              "web open",
+              "recorded default last-wins/manual resolution and primary-key collision cases"
+            ]
+          },
+          {
+            "source_id": "MERGIN-FORMATS",
+            "title": "Supported Formats",
+            "publisher": "Mergin Maps",
+            "url": "https://merginmaps.com/docs/gis/supported_formats/",
+            "version_or_edition": "Live official docs; accessed 2026-10-09.",
+            "commit": null,
+            "locator": "Mobile vector data format table, lines 255-281.",
+            "observed_operations": [
+              "web search_query constrained to merginmaps.com",
+              "web open",
+              "recorded GeoPackage versus Shapefile/PostGIS offline/collaboration distinctions"
+            ]
+          },
+          {
+            "source_id": "MERGIN-SELECTIVE-SYNC",
+            "title": "Selective Synchronisation",
+            "publisher": "Mergin Maps",
+            "url": "https://merginmaps.com/docs/manage/selective_sync/",
+            "version_or_edition": "Live official docs; accessed 2026-10-09.",
+            "commit": null,
+            "locator": "Behavior and photo example, lines 255-281.",
+            "observed_operations": [
+              "web search_query constrained to merginmaps.com",
+              "web click from official documentation index",
+              "web open",
+              "recorded device-specific media exclusion and setup location"
+            ]
+          },
+          {
+            "source_id": "FULCRUM-EXPORT",
+            "title": "How to Download or Export Data",
+            "publisher": "Fulcrum Help Center",
+            "url": "https://help.fulcrumapp.com/en/articles/73547-how-to-download-or-export-data",
+            "version_or_edition": "Official article published 2026-01-15.",
+            "commit": null,
+            "locator": "Downloader limits/formats and Exporter tradeoffs, lines 11-64.",
+            "observed_operations": [
+              "web search_query constrained to help.fulcrumapp.com",
+              "web open",
+              "compared filtered export, media limits, and available data formats"
+            ]
+          },
+          {
+            "source_id": "ANDROID-ACCESSIBILITY",
+            "title": "Build accessible apps",
+            "publisher": "Android Developers",
+            "url": "https://developer.android.com/guide/topics/ui/accessibility/index.html",
+            "version_or_edition": "Live Android developer guidance; accessed 2026-10-09.",
+            "commit": null,
+            "locator": "Design, develop, and test headings, lines 79-100.",
+            "observed_operations": [
+              "web search_query constrained to developer.android.com",
+              "web open",
+              "recorded labeling, accessible user flows, and scanner/automated test recommendations"
+            ]
+          },
+          {
+            "source_id": "WCAG-ERROR",
+            "title": "Understanding Success Criterion 3.3.1: Error Identification",
+            "publisher": "W3C WAI",
+            "url": "https://www.w3.org/WAI/WCAG22/Understanding/error-identification",
+            "version_or_edition": "WCAG 2.2 Understanding document; informative guidance for SC 3.3.1 Level A.",
+            "commit": null,
+            "locator": "Error description requirement and validation limitations, lines 55-68.",
+            "observed_operations": [
+              "web search_query constrained to w3.org",
+              "web open",
+              "recorded text identification of detected errors and limitations of generic first-error-only behavior"
+            ]
+          },
+          {
+            "source_id": "WCAG-TARGET",
+            "title": "Understanding Success Criterion 2.5.8: Target Size (Minimum)",
+            "publisher": "W3C WAI",
+            "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum",
+            "version_or_edition": "WCAG 2.2 Understanding document; informative guidance for SC 2.5.8 Level AA.",
+            "commit": null,
+            "locator": "24-by-24 CSS-pixel target and spacing exception, lines 68-95.",
+            "observed_operations": [
+              "web search_query constrained to w3.org",
+              "web open",
+              "recorded threshold and applicability units for a web coordinator interface"
+            ]
+          },
+          {
+            "source_id": "WHATWG-HTML-WEBSTORAGE",
+            "title": "HTML Standard, Web storage",
+            "publisher": "WHATWG",
+            "url": "https://html.spec.whatwg.org/multipage/webstorage.html",
+            "version_or_edition": "Living Standard last updated 2026-10-09.",
+            "commit": null,
+            "locator": "Introduction and concurrency caveat, lines 42-83; Storage interface with DOMString key/value, lines 105-115; localStorage getter, lines 409-454.",
+            "accessed_at": "2026-10-09T18:30:39Z",
+            "phase": "post-plan comparison supplement",
+            "observed_operations": [
+              "web search_query for the HTML Standard Web Storage section",
+              "web open at lines 2-205",
+              "reviewed origin scoping, shared state/no locking caveat, and string key/value API"
+            ]
+          },
+          {
+            "source_id": "WHATWG-STORAGE-SNAPSHOT",
+            "title": "Storage Standard, commit snapshot 23f38d8feaf530b9787822e067a7eb6f953af322",
+            "publisher": "WHATWG",
+            "url": "https://storage.spec.whatwg.org/commit-snapshots/23f38d8feaf530b9787822e067a7eb6f953af322/",
+            "version_or_edition": "Commit snapshot last updated 2026-10-06; historical snapshot linked from living standard.",
+            "commit": "23f38d8feaf530b9787822e067a7eb6f953af322",
+            "locator": "Registered storage endpoint quota, lines 144-152; default best-effort local bucket, lines 228-230; persistence permission, lines 295-308; storage pressure and usage/quota, lines 309-326; estimate API usage/quota in bytes, lines 334-359.",
+            "accessed_at": "2026-10-09T18:30:39Z",
+            "phase": "post-plan comparison supplement",
+            "observed_operations": [
+              "web search_query for WHATWG Storage Standard",
+              "web open living standard",
+              "clicked snapshot as of this commit",
+              "opened snapshot at quota and persistence locators"
+            ]
+          },
+          {
+            "source_id": "ODK-CENTRAL-API-UPDATES",
+            "title": "Submission Management",
+            "publisher": "Get ODK",
+            "url": "https://docs.getodk.org/central-api-submission-management/",
+            "version_or_edition": "Live official API documentation; submission-update endpoint introduced in Central v1.2.",
+            "commit": null,
+            "locator": "Updating Submission Data: PUT endpoint, instanceId versioning, deprecatedID current-version precondition and 409 Conflict, full-replacement XML, media-copy rule; lines 587-598.",
+            "accessed_at": "2026-10-09T18:31:30Z",
+            "phase": "post-plan comparison supplement",
+            "observed_operations": [
+              "web open of official API page",
+              "inspected update endpoint schema and version precondition",
+              "recorded status code and attachment behavior"
+            ]
+          },
+          {
+            "source_id": "ODK-CENTRAL-PROJECT-ACCESS",
+            "title": "Managing Projects in Central",
+            "publisher": "Get ODK",
+            "url": "https://docs.getodk.org/central-projects/",
+            "version_or_edition": "Live official documentation; accessed 2026-10-09.",
+            "commit": null,
+            "locator": "Project membership and person-specific project/form access, lines 119-130; role descriptions, lines 157-175; per-App-User form access, lines 179-185.",
+            "accessed_at": "2026-10-09T18:33:32Z",
+            "phase": "post-plan comparison supplement",
+            "observed_operations": [
+              "web search_query constrained to docs.getodk.org",
+              "web open at project membership and role/access locators",
+              "recorded role distinctions and individual form assignment behavior"
+            ]
+          }
+        ],
+        "post_plan_comparison_source_count": 4
+      }
+    },
+    {
+      "inventory_id": "critic",
+      "original_source_map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/source-map.json",
+      "preserved_copy_path": "sources/inherited/maps/critic.json",
+      "source_id_count": 12,
+      "source_map": {
+        "case": "S01",
+        "block": "A-M01-A",
+        "arm": "control",
+        "stage": "critic",
+        "source_map_version": "1",
+        "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic",
+        "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic",
+        "assignment": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/assignment.md",
+        "input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/input-map.json",
+        "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S01/brief.md",
+        "reviewed_inputs": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/draft.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/discovery.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/source-map.json",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/revealed-plan.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/draft.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/discovery.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/source-map.json",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/revealed-plan.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/index.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/android.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/couchdb.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/powersync.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/postgresql.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/sources/source-notes.md"
+        ],
+        "declared_predecessors": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/draft.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/discovery.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/source-map.json",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/revealed-plan.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/draft.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/discovery.md",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/source-map.json",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/revealed-plan.md"
+        ],
+        "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+        "access_timestamp_note": "The web tool did not expose per-request timestamps. This window is bounded by exact UTC clock reads before and after the public-source inspection. Per-source operations and locators are recorded below. Tool outputs identified pages as crawled today/yesterday where shown.",
+        "source_ids_immutable": true,
+        "usage_billing_observed": null,
+        "sources": [
+          {
+            "source_id": "CR01",
+            "title": "HTML Standard — Web storage",
+            "publisher": "WHATWG",
+            "url": "https://html.spec.whatwg.org/multipage/webstorage.html",
+            "version_or_edition": "Living Standard; last updated 2026-10-09",
+            "commit": null,
+            "locator": "§12.1, lines 62–83 (origin storage and no-locking warning); §12.2.1, lines 105–115 (DOMString keys/values); localStorage getter, lines 439–454",
+            "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+            "observed_operations": [
+              "web.open direct URL",
+              "inspected returned specification lines"
+            ],
+            "evidence_path": "sources/observations.md",
+            "claims_used_for": "P1: origin-scoped key/value behavior and concurrency warning; does not decide native versus PWA."
+          },
+          {
+            "source_id": "CR02",
+            "title": "Submission Management API",
+            "publisher": "Get ODK",
+            "url": "https://docs.getodk.org/central-api-submission-management/",
+            "version_or_edition": "Live official ODK Central API documentation; update endpoint introduced in Central 1.2",
+            "commit": null,
+            "locator": "Updating Submission Data, lines 587–598: current-version deprecatedID precondition and 409, full XML replacement, matching media-copy behavior",
+            "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+            "observed_operations": [
+              "web.open direct URL",
+              "web.find for Updating Submission Data, current version, and copied attachments",
+              "inspected returned lines"
+            ],
+            "evidence_path": "sources/observations.md",
+            "claims_used_for": "P2: product-specific version precondition, full replacement and attachment behavior."
+          },
+          {
+            "source_id": "CR03",
+            "title": "ODK Central API Changelog",
+            "publisher": "Get ODK",
+            "url": "https://docs.getodk.org/central-api-changelog/",
+            "version_or_edition": "Live official changelog; entries inspected through Central v2026.3.1",
+            "commit": null,
+            "locator": "v2026.3.1 lines 123–140; v1.4 lines 366–379; v1.3 lines 382–401; v1.2 lines 402–424",
+            "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+            "observed_operations": [
+              "web.open direct URL",
+              "web.find for v1.2, v1.3, v1.4, geodata",
+              "inspected returned changelog entries"
+            ],
+            "evidence_path": "sources/observations.md",
+            "claims_used_for": "O3: documented ODK review/edit, diff/audit, export evolution and later geodata fix; not a reproduced regression."
+          },
+          {
+            "source_id": "CR04",
+            "title": "Jobs — QFieldCloud",
+            "publisher": "OPENGIS.ch / QField Ecosystem",
+            "url": "https://docs.qfield.org/reference/qfieldcloud/jobs/",
+            "version_or_edition": "Live official ecosystem documentation; accessed 2026-10-09",
+            "commit": null,
+            "locator": "Understanding conflicts / delta_apply, policy defaults and resolution, lines 256–288 in predecessor map; returned page content inspected",
+            "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+            "observed_operations": [
+              "web.search_query constrained to docs.qfield.org",
+              "inspected returned official page result"
+            ],
+            "evidence_path": "sources/observations.md",
+            "claims_used_for": "P2 and O2: QFieldCloud-specific timestamp Last Wins behavior; older overlapping changes discarded but retained in history; manual alternative."
+          },
+          {
+            "source_id": "CR05",
+            "title": "Feature Status",
+            "publisher": "PowerSync",
+            "url": "https://docs.powersync.com/resources/feature-status",
+            "version_or_edition": "Live official PowerSync documentation; rolling status table accessed 2026-10-09",
+            "commit": null,
+            "locator": "Feature Status and feature table, lines 133–146 and 185–238",
+            "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+            "observed_operations": [
+              "web.open Client SDK overview",
+              "web.click to Feature Status",
+              "inspected returned table"
+            ],
+            "evidence_path": "sources/observations.md",
+            "claims_used_for": "q1 P06 traceability: Room Kotlin is Beta; Kotlin SDK GA; Kotlin attachment helpers Alpha."
+          },
+          {
+            "source_id": "CR06",
+            "title": "Supported Platforms",
+            "publisher": "PowerSync",
+            "url": "https://docs.powersync.com/resources/supported-platforms",
+            "version_or_edition": "Live official PowerSync documentation; rolling platform table accessed 2026-10-09",
+            "commit": null,
+            "locator": "Kotlin platform table, lines 274–295; Android SDK support versus Kotlin native target labels",
+            "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+            "observed_operations": [
+              "web.open Client SDK overview",
+              "web.click to Supported Platforms",
+              "inspected returned Kotlin rows"
+            ],
+            "evidence_path": "sources/observations.md",
+            "claims_used_for": "Context for PowerSync Android/Kotlin support; SDK platform row is product-specific and should not be confused with native Kotlin/Native targets."
+          },
+          {
+            "source_id": "CR07",
+            "title": "Selective Synchronisation",
+            "publisher": "Mergin Maps",
+            "url": "https://merginmaps.com/docs/manage/selective_sync/",
+            "version_or_edition": "Live official Mergin Maps documentation; accessed 2026-10-09",
+            "commit": null,
+            "locator": "Behavior, example and QGIS setup, lines 255–281",
+            "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+            "observed_operations": [
+              "web.open direct URL",
+              "inspected behavior/example and setup lines"
+            ],
+            "evidence_path": "sources/observations.md",
+            "claims_used_for": "P3/O2: selective sync can omit files such as photos from other devices while feature data remains visible; files remain on origin device/server and are available on web/QGIS."
+          },
+          {
+            "source_id": "CR08",
+            "title": "Prepare for editing existing survey data",
+            "publisher": "Esri ArcGIS Survey123",
+            "url": "https://doc.arcgis.com/en/survey123/create/connect/prepareforediting.htm",
+            "version_or_edition": "Live official Survey123 documentation; feature page says Connect and field app",
+            "commit": null,
+            "locator": "Inbox limit and Sent/Inbox caveat, lines 18–45; image behavior/limitations, lines 114–124",
+            "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+            "observed_operations": [
+              "web.open direct URL",
+              "inspected returned page lines 18–45 and 114–124"
+            ],
+            "evidence_path": "sources/observations.md",
+            "claims_used_for": "M1/O2: cap applies to 5,000 parent records; existing images are not downloaded to Inbox; offline workflows for editing existing images are unsupported."
+          },
+          {
+            "source_id": "CR09",
+            "title": "How to Download or Export Data",
+            "publisher": "Fulcrum Help Center",
+            "url": "https://help.fulcrumapp.com/en/articles/73547-how-to-download-or-export-data",
+            "version_or_edition": "Official article published 2026-01-15",
+            "commit": null,
+            "locator": "Data Downloader and Exporter descriptions/limits/formats, lines 11–64",
+            "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+            "observed_operations": [
+              "web.open direct URL",
+              "inspected returned article lines 11–64"
+            ],
+            "evidence_path": "sources/observations.md",
+            "claims_used_for": "O2: Downloader-specific 10 GB and/or 100,000 media-file ceiling; Exporter has different filtering/geometry tradeoffs."
+          },
+          {
+            "source_id": "CR10",
+            "title": "Understanding Success Criterion 2.5.8: Target Size (Minimum)",
+            "publisher": "W3C WAI",
+            "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum",
+            "version_or_edition": "WCAG 2.2 informative Understanding document; SC 2.5.8 Level AA",
+            "commit": null,
+            "locator": "Success Criterion and exceptions, lines 21–64",
+            "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+            "observed_operations": [
+              "web.open direct URL",
+              "inspected returned page"
+            ],
+            "evidence_path": "sources/observations.md",
+            "claims_used_for": "O2: 24-by-24 CSS pixels or stated exceptions; units are relevant to web content and must not be relabeled Android dp."
+          },
+          {
+            "source_id": "CR11",
+            "title": "ODK Central README",
+            "publisher": "Get ODK",
+            "url": "https://github.com/getodk/central/blob/master/README.md",
+            "version_or_edition": "Mutable master branch; repository README accessed 2026-10-09",
+            "commit": null,
+            "locator": "License section, lines 230–232; source code Apache 2.0 and third-party software included under respective licenses",
+            "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+            "observed_operations": [
+              "web.search_query for official getodk/central source",
+              "web.open returned repository README",
+              "inspected License section"
+            ],
+            "evidence_path": "sources/observations.md",
+            "claims_used_for": "Minor licensing precision for q2's ODK Central self-host alternative; not a complete license audit."
+          },
+          {
+            "source_id": "CR12",
+            "title": "CouchDB issue #5422 — Replicating documents with attachments causes target db to grow much larger than source db",
+            "publisher": "Apache CouchDB project on GitHub",
+            "url": "https://github.com/apache/couchdb/issues/5422",
+            "version_or_edition": "Issue opened 2025-02-04; reporter environment CouchDB 3.4.2 / SHA prefix 6e5ad2a5c; page state rendered Closed at critic retrieval",
+            "commit": null,
+            "locator": "Issue/report and reproduction, lines 128–167 and 231–242; visible labels/activity, lines 248–269",
+            "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+            "observed_operations": [
+              "web.open direct URL",
+              "inspected status, labels, reproduction, reporter environment, visible activity"
+            ],
+            "evidence_path": "sources/observations.md",
+            "claims_used_for": "M2: mutable current tracker state differs from q1 map's immutable-source classification; closure has no visible explanation/fix/linked PR in returned page."
+          }
+        ],
+        "access_failures": [
+          {
+            "predecessor_source_ref": "research-q2 source WHATWG-STORAGE-SNAPSHOT",
+            "url": "https://storage.spec.whatwg.org/commit-snapshots/23f38d8feaf530b9787822e067a7eb6f953af322/",
+            "version_or_commit": "commit 23f38d8feaf530b9787822e067a7eb6f953af322 as recorded by q2",
+            "observed_operation": "web.open",
+            "result": "tool returned Internal Error / no page content; critic did not independently reverify the 5 × 2^20-byte recommended localStorage quota. The exact prior source-map record was retained as inherited evidence, not rebound."
+          }
+        ]
+      }
+    }
+  ],
+  "reviser_sources": [
+    {
+      "source_id": "RV01",
+      "title": "CouchDB issue #5422 — attachment replication growth",
+      "publisher": "Apache CouchDB project on GitHub",
+      "url": "https://github.com/apache/couchdb/issues/5422",
+      "version_or_edition": "Mutable issue page; originally reported against CouchDB 3.4.2 / SHA prefix 6e5ad2a5c; current page shows Closed, bug and needs-triage labels, and maintainer discussion through the PR #5437 merge",
+      "commit": null,
+      "locator": "Issue state and description/reproduction lines 129–166; reporter environment 231–246; maintainer explanation, linked fix and closure lines 263–364; current labels/development section lines 371–397",
+      "access_window_utc": "2026-10-09T18:59:41Z/2026-10-09T19:04:00Z",
+      "observed_operations": [
+        "web.open direct URL"
+      ],
+      "evidence_path": "sources/observations.md#rv01",
+      "claims_used_for": "M2 source-state update: preserves the 3.4.2 attachment-stub reproduction while identifying the current issue explanation, linked PR #5437, and closure as mutable issue state.",
+      "source_mutability": "Issue text and status/comments are mutable; historical report and observed page state are timestamped separately."
+    },
+    {
+      "source_id": "RV02",
+      "title": "Fix atts_since functionality for document GETs — PR #5437",
+      "publisher": "Apache CouchDB project on GitHub",
+      "url": "https://github.com/apache/couchdb/pull/5437",
+      "version_or_edition": "Merged to main on 2025-02-21",
+      "commit": "f1799d6 (abbreviated merge commit displayed by GitHub)",
+      "locator": "PR title/status and merge target lines 130–154; explanation of attachment bodies being re-replicated lines 173–175; fix commit and merge lines 221–238",
+      "access_window_utc": "2026-10-09T18:59:41Z/2026-10-09T19:04:00Z",
+      "observed_operations": [
+        "web.open direct URL"
+      ],
+      "evidence_path": "sources/observations.md#rv02",
+      "claims_used_for": "Links the reported 3.4.2 replication behavior to the atts_since document GET path and records the merged fix; documentary evidence, not local reproduction.",
+      "source_mutability": "GitHub PR record is a primary project record; merge commit is immutable."
+    },
+    {
+      "source_id": "RV03",
+      "title": "Apache CouchDB 3.4.x release notes",
+      "publisher": "Apache CouchDB",
+      "url": "https://docs.couchdb.org/en/stable/whatsnew/3.4.html",
+      "version_or_edition": "Rolling stable documentation; inspected Version 3.4.3 section in the 3.4.x branch",
+      "commit": null,
+      "locator": "Version 3.4.3 lines 16–23: #5347 attachment-size calculation / compaction scheduling and #5437 atts_since document GET fix avoiding re-replication of attachment bodies on updates",
+      "access_window_utc": "2026-10-09T18:59:41Z/2026-10-09T19:04:00Z",
+      "observed_operations": [
+        "web.search_query for official CouchDB 3.4.x release notes",
+        "web.find on returned official release notes for #5437"
+      ],
+      "evidence_path": "sources/observations.md#rv03",
+      "claims_used_for": "Confirms the fix is listed in CouchDB 3.4.3 notes and distinguishes the atts_since change from the separate #5347 attachment-size/compaction change.",
+      "source_mutability": "Rolling documentation URL; versioned 3.4.3 release section. Recheck before choosing a release."
+    },
+    {
+      "source_id": "RV04",
+      "title": "Prepare for editing existing survey data",
+      "publisher": "ArcGIS Survey123",
+      "url": "https://doc.arcgis.com/en/survey123/create/connect/prepareforediting.htm",
+      "version_or_edition": "Live official documentation; page says Connect and the Survey123 field app; accessed 2026-10-09",
+      "commit": null,
+      "locator": "Inbox maximum and Sent/Inbox caveat lines 18–45; image behavior/limitations lines 114–124",
+      "access_window_utc": "2026-10-09T18:59:41Z/2026-10-09T19:04:00Z",
+      "observed_operations": [
+        "web.open direct URL"
+      ],
+      "evidence_path": "sources/observations.md#rv04",
+      "claims_used_for": "M1: Inbox response cap is 5,000 parent records, existing images are not downloaded from Inbox, and offline workflows are unsupported for editing existing images; new image capture is enabled by default.",
+      "source_mutability": "Live documentation; point-in-time access recorded."
+    },
+    {
+      "source_id": "RV05",
+      "title": "Feature Status",
+      "publisher": "PowerSync",
+      "url": "https://docs.powersync.com/resources/feature-status",
+      "version_or_edition": "Live rolling Feature Status table; accessed 2026-10-09",
+      "commit": null,
+      "locator": "Feature status definitions lines 133–146; table lines 185–242, including Kotlin SDK, Room (Kotlin), and attachment helper rows",
+      "access_window_utc": "2026-10-09T18:59:41Z/2026-10-09T19:04:00Z",
+      "observed_operations": [
+        "web.open direct URL"
+      ],
+      "evidence_path": "sources/observations.md#rv05",
+      "claims_used_for": "Separates current Kotlin SDK GA, Room (Kotlin) Beta, and Kotlin attachment helper Alpha maturity labels.",
+      "source_mutability": "Live rolling documentation; status can change and should be rechecked before adoption."
+    },
+    {
+      "source_id": "RV06",
+      "title": "Storage Standard snapshot source at commit 23f38d8feaf530b9787822e067a7eb6f953af322",
+      "publisher": "WHATWG",
+      "url": "https://github.com/whatwg/storage/blob/23f38d8feaf530b9787822e067a7eb6f953af322/storage.bs",
+      "version_or_edition": "Pinned repository file at commit 23f38d8feaf530b9787822e067a7eb6f953af322; historical snapshot last updated 2026-10-06",
+      "commit": "23f38d8feaf530b9787822e067a7eb6f953af322",
+      "locator": "Storage endpoint quota table lines 2017–2064; local storage bucket default mode lines 2278–2286; storage pressure behavior lines 2547–2558",
+      "access_window_utc": "2026-10-09T18:59:41Z/2026-10-09T19:04:00Z",
+      "observed_operations": [
+        "web.open pinned GitHub URL",
+        "web.find for quota/local storage text"
+      ],
+      "evidence_path": "sources/observations.md#rv06",
+      "claims_used_for": "Independently verifies the snapshot’s recommended localStorage quota of 5 × 2^20 bytes (5 mebibytes), best-effort default mode, and storage-pressure clearing note. This is not a universal measured browser cap.",
+      "source_mutability": "Pinned commit; exact historical file is immutable."
+    }
+  ],
+  "access_failures": [
+    {
+      "url": "https://storage.spec.whatwg.org/commit-snapshots/23f38d8feaf530b9787822e067a7eb6f953af322/",
+      "observed_operation": "web.open",
+      "result": "Returned Internal Error / URL inaccessible through the browser tool. The exact pinned commit was then opened at the WHATWG GitHub source recorded as RV06; the source was not rebound to a different commit."
+    },
+    {
+      "url": "https://docs.powersync.com/resources/feature-status/",
+      "observed_operation": "web.open",
+      "result": "Trailing-slash URL returned Internal Error. The canonical no-trailing-slash URL was opened successfully and is recorded as RV05."
+    }
+  ],
+  "adjudication_notes": [
+    {
+      "finding": "Survey123 existing-image limitation",
+      "disposition": "accepted narrowly",
+      "source_ids": [
+        "CR08",
+        "RV04"
+      ],
+      "note": "Applies to Inbox retrieval/editing existing images; does not establish inability to capture new images offline."
+    },
+    {
+      "finding": "CouchDB issue #5422",
+      "disposition": "critic finding amended with later primary-source check",
+      "source_ids": [
+        "Q1:C05",
+        "Q1:C06",
+        "RV01",
+        "RV02",
+        "RV03"
+      ],
+      "note": "Keep q1 and critic observations as historical time-bounded records. Current issue page links merged PR #5437; 3.4.3 notes list #5437. No application behavior was locally reproduced."
+    },
+    {
+      "finding": "PowerSync Room and attachment maturity",
+      "disposition": "citation corrected through separate source",
+      "source_ids": [
+        "Q1:P06",
+        "CR05",
+        "RV05"
+      ],
+      "note": "Attachment documentation supports helper maturity; Feature Status separately supports Room Beta and Kotlin SDK GA."
+    },
+    {
+      "finding": "ODK licensing",
+      "disposition": "precision accepted",
+      "source_ids": [
+        "CR11"
+      ],
+      "note": "Central source license and bundled third-party/managed hosting terms are distinct; no full legal review."
+    },
+    {
+      "finding": "PowerSync P05 multi-page citation",
+      "disposition": "split in prose while preserving original source record",
+      "source_ids": [
+        "Q1:P05"
+      ],
+      "note": "Writing-client-changes URL supports operation/backend behavior; handling-update-conflicts URL supports conflict examples."
+    }
+  ],
+  "native_goal_activation_note": "A fresh native Goal was created through the supported create_goal call and returned active before scientific writing. Completion was deferred until final.md, source-map.json, and sources/index.md were saved. No handwritten activation receipt was substituted for the native call.",
+  "declared_predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/revealed-plan.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/revealed-plan.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/critique.md"
+  ],
+  "declared_source_roots": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/sources",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/sources"
+  ],
+  "input_map_record": {
+    "block": "A-M01-A",
+    "arm": "control",
+    "case": "S01",
+    "method": "M01",
+    "stage": "reviser",
+    "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser",
+    "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S01/brief.md",
+    "predecessors": [
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/draft.md",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/discovery.md",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/source-map.json",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/revealed-plan.md",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/draft.md",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/discovery.md",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/source-map.json",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/revealed-plan.md",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/source-map.json",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/critique.md"
+    ],
+    "source_roots": [
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/sources",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/sources"
+    ],
+    "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/reviser",
+    "deadline": "2026-10-09T19:15:43.278610+00:00",
+    "arm_deadline": "2026-10-09T19:24:41.207874+00:00",
+    "native_route": "luna",
+    "evidence_kind": "full-discovery"
+  },
+  "reviewed_source_root_files": [
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/android.md",
+      "preserved_copy_path": "sources/inherited/research-q1/sources/android.md",
+      "sha256": "49ba177152de6509a96718affd0e0c5b1d724084665b975c4a54b4b03d911755"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/couchdb.md",
+      "preserved_copy_path": "sources/inherited/research-q1/sources/couchdb.md",
+      "sha256": "4912ab1d2dd70b9e7433a14272ab1d7b9bd9b8facb6454834960fbb69d6cd51f"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/index.md",
+      "preserved_copy_path": "sources/inherited/research-q1/sources/index.md",
+      "sha256": "774113df5be3dfc22c717a7b4fca01649f98a78bc819edb956ba8c9d67c9a941"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/postgresql.md",
+      "preserved_copy_path": "sources/inherited/research-q1/sources/postgresql.md",
+      "sha256": "262c451dccd9787431b273b4ae29d750bb8c5d8b4b499fa2189fa64fb1f76ca7"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/powersync.md",
+      "preserved_copy_path": "sources/inherited/research-q1/sources/powersync.md",
+      "sha256": "2bfe17ae22350ff067a58744de6184af4f3aa0fe68e5a9c5e010f3f16887135b"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/sources/README.md",
+      "preserved_copy_path": "sources/inherited/research-q2/sources/README.md",
+      "sha256": "8eae61cc547021bfc6b4178fe09df4b5f102bcc3d31b5a6039851216a22ff2d2"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/sources/source-notes.md",
+      "preserved_copy_path": "sources/inherited/research-q2/sources/source-notes.md",
+      "sha256": "32dc4b46e3cb482e38446626be7aff3d23b20e766e208f2d090d32222f99c22a"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/sources/index.md",
+      "preserved_copy_path": "sources/inherited/critic/sources/index.md",
+      "sha256": "2c577ead37d2cadb45b3ef1afe18be1721fb2d9f259334d60914d7298b482b1d"
+    },
+    {
+      "original_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/sources/observations.md",
+      "preserved_copy_path": "sources/inherited/critic/sources/observations.md",
+      "sha256": "e303a557d951eeef71431807afca25b680a7e1b5c4d73fa9e7634e1852fd6e63"
+    }
+  ]
+}

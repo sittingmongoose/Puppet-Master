@@ -1,0 +1,91 @@
+{
+  "schema": "er11-source-map-v1",
+  "stage": "A-M05-B/control/reviser",
+  "case": "S11",
+  "method": "M05",
+  "captured_at_utc": "2026-10-09T19:10:38Z",
+  "source_id_policy": "R01-R05 are new immutable reviser records for sources independently opened in this stage. Inherited S01-S15 and C01-C09 retain their original meanings and records; no S16 is assigned, copied, or cited.",
+  "inherited_source_maps": [
+    {
+      "path": "../research/source-map.json",
+      "sha256": "b73b7075520c22a27b8d8c6a07189626c5fe99317718bee01f031c80207b2e31",
+      "source_ids": "S01-S15",
+      "use": "Original research-stage records cited by final.md; immutable IDs and records remain in that predecessor."
+    },
+    {
+      "path": "../critic/source-map.json",
+      "sha256": "2c757be34622b87e1151c08c400ef8618dd014682ca266a836b5360596f145b1",
+      "source_ids": "C01-C09",
+      "use": "Original critic-stage records considered during revision; immutable IDs and records remain in that predecessor."
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "R01",
+      "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "version_commit": "W3C Recommendation published 2024-12-12; dated stable edition, not the mutable latest-version alias.",
+      "locator": "SC 1.2.3 Audio Description or Media Alternative (Prerecorded), Level A; SC 1.2.5 Audio Description (Prerecorded), Level AA.",
+      "accessed_at_utc": "2026-10-09T19:10:38Z",
+      "observed_operations": [
+        "Opened the dated Recommendation directly.",
+        "Read publication/version metadata.",
+        "Located and read the normative text and conformance levels for SC 1.2.3 and SC 1.2.5."
+      ],
+      "evidence_note": "SC 1.2.3 at Level A permits an audio description or a time-based media alternative for prerecorded synchronized video; SC 1.2.5 at Level AA requires audio description."
+    },
+    {
+      "source_id": "R02",
+      "title": "Understanding Success Criterion 1.2.5: Audio Description (Prerecorded)",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded",
+      "version_commit": "WAI informative Understanding document as served 2026-10-09; mutable supporting guidance, no fixed revision identifier exposed in the inspected page.",
+      "locator": "Intent/note for SC 1.2.5 on existing audio already conveying important video information; SC 1.2.3 versus SC 1.2.5 discussion; advisory technique H96.",
+      "accessed_at_utc": "2026-10-09T19:10:38Z",
+      "observed_operations": [
+        "Opened the exact WAI source.",
+        "Located and read the note that no additional description is necessary when existing audio conveys all important video information.",
+        "Read the explanatory distinction between the Level A alternative and the Level AA audio-description requirement."
+      ],
+      "evidence_note": "WAI explains that if all important video information is already conveyed in audio, no additional description is necessary; otherwise the Level A media-alternative option does not replace the Level AA requirement. The page presents the track element as an advisory technique."
+    },
+    {
+      "source_id": "R03",
+      "title": "HTML Standard — The track element",
+      "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+      "version_commit": "WHATWG HTML Living Standard as served 2026-10-09; mutable standard, no fixed revision identifier exposed by the inspected page.",
+      "locator": "Text-track kind definitions; descriptions kind and its stated use for audio synthesis when video is obscured, unavailable or unusable.",
+      "accessed_at_utc": "2026-10-09T19:10:38Z",
+      "observed_operations": [
+        "Opened the exact standard section.",
+        "Located and read the descriptions kind definition."
+      ],
+      "evidence_note": "The standard defines descriptions as textual descriptions intended for synthesis as audio; this semantic definition does not prove end-to-end support in a selected browser/player/assistive-technology stack."
+    },
+    {
+      "source_id": "R04",
+      "title": "Able Player releases",
+      "url": "https://github.com/ableplayer/ableplayer/releases",
+      "version_commit": "Release listing observed 2026-10-09: v5.0.0, short commit 8d235f9, released 2026-06-21 and marked Latest; v5.1.0-beta2, short commit c4f10ab, released 2026-10-06 and marked Pre-release.",
+      "locator": "Release list and entries for v5.1.0-beta2 and v5.0.0.",
+      "accessed_at_utc": "2026-10-09T19:10:38Z",
+      "observed_operations": [
+        "Opened the official GitHub release listing.",
+        "Read stable/latest and pre-release labels, release dates and commit identifiers."
+      ],
+      "evidence_note": "v5.0.0 is the latest stable release shown; beta2 is newer but marked pre-release. The release listing alone does not prove beta2 contains PR #778."
+    },
+    {
+      "source_id": "R05",
+      "title": "Able Player PR #778 — Apply fixes for issues with YouTube",
+      "url": "https://github.com/ableplayer/ableplayer/pull/778",
+      "version_commit": "PR #778 merge event observed 2026-10-09; commit cd617fc merged into develop on 2026-09-13.",
+      "locator": "Merge event and reported checks.",
+      "accessed_at_utc": "2026-10-09T19:10:38Z",
+      "observed_operations": [
+        "Opened the exact public pull request.",
+        "Located and read the merge event, target branch, commit and reported check count."
+      ],
+      "evidence_note": "The page reports cd617fc merged into develop and seven checks passed. This is not evidence of inclusion in a stable release or the v5.1.0-beta2 tag."
+    }
+  ]
+}

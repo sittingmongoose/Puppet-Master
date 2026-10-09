@@ -1,0 +1,74 @@
+{
+  "frozen_at": "2026-10-09T19:16:48.468922+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S12/brief.md",
+      "sha256": "61cf00bb05356a56f0dacd250a18916c8d671b14bfd5b26e10a5869c584b4be2",
+      "bytes": 1435
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M12.json",
+      "sha256": "263abf18154d1ca385115b9074badb53e76ec207bdf0ece2441c986b4799c8a1",
+      "bytes": 1666
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/reviser/assignment.md",
+      "sha256": "160dc672e90dab5f54e7137b7dffb7a24ccd917a128d0a99ff0152d7d93de8c6",
+      "bytes": 2857
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/reviser/input-map.json",
+      "sha256": "19c4e3e2806c2d6f20350e54503742f9e9fe7cc03c7509924ed40dfca515863a",
+      "bytes": 1504
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/research/draft.md",
+      "sha256": "7f4aca85cf9afef5876355ca3ea34e4c0e6258ecc3e22e3609e44df83aa4616f",
+      "bytes": 22398
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/research/discovery.md",
+      "sha256": "bb0552e6b329062a8329dbef2768752dad7b5115a117b8e6a767f3dd299a2b0e",
+      "bytes": 25837
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/research/source-map.json",
+      "sha256": "86da3bf800c9764bfa3aa3882977904c87d3690fedb6c28643d249c2e029a757",
+      "bytes": 18638
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/research/revealed-plan.md",
+      "sha256": "d2d6337b2348b26a45a6fec16de0d478e11934ea1e263d5d99f6bed5b4b4a954",
+      "bytes": 279
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/critic/source-map.json",
+      "sha256": "9379070f70b06ee83f92f55b4a7f47e36265b5f8665ad5b2b2a2874512eac056",
+      "bytes": 4628
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-A/control/critic/critique.md",
+      "sha256": "ab039d9e347c5ce89eb3b7200861cb97caef69096fb45a1b915e6362868da10a",
+      "bytes": 18533
+    }
+  ],
+  "method": {
+    "id": "M12",
+    "version": "v1",
+    "name": "adaptive-evidence-state-branching",
+    "control": "Competent conventional investigator may adapt queries and follow leads freely under equal time and full obligations; no artificial static-query prohibition.",
+    "treatment": "Maintain parent-child search branch states tied to propositions affecting product recommendation, applicability, plan correction or useful alternative. After each retrieval record supported/refuted/conditional/unknown transitions and new conditions/options/duplicates. Give next retrieval attention to observed state change per minute (+4 consequential proposition transition,+2 new applicability condition,+2 viable alternative,-2 duplicate). Preserve one unresolved countercase branch AND obligation/alternative coverage floor; zero-change branches can pause only after all mandatory research coverage accounted for. This explicit adaptive allocation is an inference-time adaptation, not IGRPO training/reward reproduction. Complete full scope and same critic/reviser.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Fresh externally researched IGRPO",
+    "primary_methodology": "https://arxiv.org/abs/2607.06223v2",
+    "novelty": "Iterated parent-child evidence-state utility allocates search attention; distinct from static critical-first and more parallel scouts; control remains competent and adaptive.",
+    "adaptation_limit": "Paper/implementation mechanisms motivate the intervention; published benchmark gains are NOT ER11 evidence.",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T19:34:48.468922+00:00"
+}

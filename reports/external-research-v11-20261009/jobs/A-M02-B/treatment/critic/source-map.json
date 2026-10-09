@@ -1,0 +1,265 @@
+{
+  "block": "A-M02-B",
+  "arm": "treatment",
+  "case": "S08",
+  "method": "M02",
+  "stage": "critic",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic",
+  "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/input-map.json",
+  "predecessors_reviewed": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/revealed-plan.md"
+  ],
+  "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic",
+  "created_at_utc": "2026-10-09T18:53:00Z",
+  "native_goal_activation": {
+    "supported_create_call": "functions.create_goal",
+    "supported_get_call": "functions.get_goal",
+    "thread_id": "01a121fe-fdd7-7740-9602-0ee2ef893359",
+    "objective": "Execute the ER11 external research scientific assignment in /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic using its exact input-map.json; respect all read boundaries, save complete required scientific artifacts, then complete the native Goal.",
+    "status_observed_after_get": "active",
+    "created_at_epoch": 1791571787,
+    "terminal_status": "not yet invoked at artifact save time"
+  },
+  "usage_billing_observed": null,
+  "source_index": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/README.md",
+  "critique_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/critique.md",
+  "critique_sha256": "8717c6d95d6ae5921a91e630d3c5720734d362f46228df00722830d58bd62f3e",
+  "sources": [
+    {
+      "source_id": "C01",
+      "title": "OR-Tools v9.15 Python Shift Scheduling Example",
+      "url": "https://github.com/google/or-tools/blob/v9.15/examples/python/shift_scheduling_sat.py",
+      "version_or_date": "tag v9.15",
+      "commit": "551ad10",
+      "locator": [
+        "solve_shift_scheduling and example data/constraints around lines 1434–1663; parameter declaration near file start"
+      ],
+      "accessed_at_utc": "2026-10-09T18:53:00Z",
+      "access_timestamp_basis": "Clock sample immediately after the grouped public open/targeted-open pass completed; page fetches occurred just before the sample.",
+      "observed_operations": [
+        "public web open by exact URL",
+        "targeted headings, schema fields, source code, release notes, or tests inspected as listed in locator",
+        "bounded evidence note prepared; no source code or product operation executed"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C01-ortools-v9.15-source.md",
+      "evidence_sha256": "e2029118d2558ea04cac32f0d481dff6fa294e8e1aa281345c31321bb1ceed7c",
+      "source_kind": "official vendor documentation, API schema, versioned source, pull request, or release record",
+      "relevance": "versioned official source example; modeling patterns and example parameter only"
+    },
+    {
+      "source_id": "C02",
+      "title": "Google solveShiftScheduling REST Reference",
+      "url": "https://developers.google.com/optimization/service/reference/rest/v1/scheduling/solveShiftScheduling",
+      "version_or_date": "Operations Research API REST v1; mutable schema reference",
+      "commit": null,
+      "locator": [
+        "SolveParameters.timeLimit; SolutionStatus; SchedulingConstraint; CoverageRequirement; Priority defaults"
+      ],
+      "accessed_at_utc": "2026-10-09T18:53:00Z",
+      "access_timestamp_basis": "Clock sample immediately after the grouped public open/targeted-open pass completed; page fetches occurred just before the sample.",
+      "observed_operations": [
+        "public web open by exact URL",
+        "targeted headings, schema fields, source code, release notes, or tests inspected as listed in locator",
+        "bounded evidence note prepared; no source code or product operation executed"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C02-google-workforce-rest.md",
+      "evidence_sha256": "e5566e9db71d46e86e3795dc754da512e2acf413dd4b22d828d8ee5e5ea10df6",
+      "source_kind": "official vendor documentation, API schema, versioned source, pull request, or release record",
+      "relevance": "official API schema for defaults, units, endpoints, priorities and response conditions"
+    },
+    {
+      "source_id": "C03",
+      "title": "Google DateTime Type",
+      "url": "https://developers.google.com/optimization/service/reference/rest/v1/DateTime",
+      "version_or_date": "REST v1; last updated 2025-02-06",
+      "commit": null,
+      "locator": [
+        "civil/physical time description; time_offset union; Timestamp guidance; TimeZone fields"
+      ],
+      "accessed_at_utc": "2026-10-09T18:53:00Z",
+      "access_timestamp_basis": "Clock sample immediately after the grouped public open/targeted-open pass completed; page fetches occurred just before the sample.",
+      "observed_operations": [
+        "public web open by exact URL",
+        "targeted headings, schema fields, source code, release notes, or tests inspected as listed in locator",
+        "bounded evidence note prepared; no source code or product operation executed"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C03-google-datetime.md",
+      "evidence_sha256": "f70724fd887fe1fe2a899f314ae53723e25ffcfbf46f5df195876d3b3d774158",
+      "source_kind": "official vendor documentation, API schema, versioned source, pull request, or release record",
+      "relevance": "official API type and time-zone guidance"
+    },
+    {
+      "source_id": "C04",
+      "title": "Better Impact Comprehensive Guide to Scheduling",
+      "url": "https://support.betterimpact.com/en/articles/13192494-comprehensive-guide-to-scheduling",
+      "version_or_date": "Vendor help guide dated 2026-02-04; no product release version",
+      "commit": null,
+      "locator": [
+        "Scheduling Fundamentals; Schedule Settings; signup/assignment/confirmation; overlap and anonymous roster controls"
+      ],
+      "accessed_at_utc": "2026-10-09T18:53:00Z",
+      "access_timestamp_basis": "Clock sample immediately after the grouped public open/targeted-open pass completed; page fetches occurred just before the sample.",
+      "observed_operations": [
+        "public web open by exact URL",
+        "targeted headings, schema fields, source code, release notes, or tests inspected as listed in locator",
+        "bounded evidence note prepared; no source code or product operation executed"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C04-better-impact-scheduling.md",
+      "evidence_sha256": "644084cb396c3aed2649d8704d8716e3819aa08fa25ab4ff4113109486fff2ee",
+      "source_kind": "official vendor documentation, API schema, versioned source, pull request, or release record",
+      "relevance": "official vendor documentation; configuration-specific product behavior"
+    },
+    {
+      "source_id": "C05",
+      "title": "Better Impact Comprehensive Guide to Activities",
+      "url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+      "version_or_date": "Mutable vendor article; updated over a week before access; no product release version",
+      "commit": null,
+      "locator": [
+        "Recurring Pattern schedule type; Enterprise Activity Templates; individual-shift creation during template use"
+      ],
+      "accessed_at_utc": "2026-10-09T18:53:00Z",
+      "access_timestamp_basis": "Clock sample immediately after the grouped public open/targeted-open pass completed; page fetches occurred just before the sample.",
+      "observed_operations": [
+        "public web open by exact URL",
+        "targeted headings, schema fields, source code, release notes, or tests inspected as listed in locator",
+        "bounded evidence note prepared; no source code or product operation executed"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C05-better-impact-activities.md",
+      "evidence_sha256": "866f2827546b3c3c6fae0d90eb38fbd601604ad8fe8c874efe2add1efcdf5429",
+      "source_kind": "official vendor documentation, API schema, versioned source, pull request, or release record",
+      "relevance": "official vendor documentation; recurrence/template distinction"
+    },
+    {
+      "source_id": "C06",
+      "title": "VolunteerLocal Jobs & Shifts",
+      "url": "https://www.volunteerlocal.com/features/jobs-shifts",
+      "version_or_date": "Mutable vendor feature page; no version/date displayed",
+      "commit": null,
+      "locator": [
+        "Event/Program Layer; Jobs Layer; Shifts Layer and listed shift types"
+      ],
+      "accessed_at_utc": "2026-10-09T18:53:00Z",
+      "access_timestamp_basis": "Clock sample immediately after the grouped public open/targeted-open pass completed; page fetches occurred just before the sample.",
+      "observed_operations": [
+        "public web open by exact URL",
+        "targeted headings, schema fields, source code, release notes, or tests inspected as listed in locator",
+        "bounded evidence note prepared; no source code or product operation executed"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C06-volunteerlocal-jobs-shifts.md",
+      "evidence_sha256": "78a0dd4e1ee2c53445974556a1ab68b87722acbd73516aa6b63f7f3dc5832d20",
+      "source_kind": "official vendor documentation, API schema, versioned source, pull request, or release record",
+      "relevance": "official vendor feature page; no account or trial"
+    },
+    {
+      "source_id": "C07",
+      "title": "Timefold Solver Load Balancing and Fairness",
+      "url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/load-balancing-and-fairness",
+      "version_or_date": "Docs identify Timefold Solver 2.7.1; mutable latest docs",
+      "commit": null,
+      "locator": [
+        "What is fair; loadBalance collector; unfairness comparison; BigDecimal rationale"
+      ],
+      "accessed_at_utc": "2026-10-09T18:53:00Z",
+      "access_timestamp_basis": "Clock sample immediately after the grouped public open/targeted-open pass completed; page fetches occurred just before the sample.",
+      "observed_operations": [
+        "public web open by exact URL",
+        "targeted headings, schema fields, source code, release notes, or tests inspected as listed in locator",
+        "bounded evidence note prepared; no source code or product operation executed"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C07-timefold-fairness.md",
+      "evidence_sha256": "2d72516c49f3674172ba64ad745259dd6815c4947d603135198cd4d0aa390ea6",
+      "source_kind": "official vendor documentation, API schema, versioned source, pull request, or release record",
+      "relevance": "official solver documentation; not a volunteer fairness policy"
+    },
+    {
+      "source_id": "C08",
+      "title": "Timefold Solver Non-disruptive Replanning",
+      "url": "https://docs.timefold.ai/timefold-solver/latest/responding-to-change/non-disruptive-replanning",
+      "version_or_date": "Docs identify Timefold Solver 2.7.1; mutable latest docs",
+      "commit": null,
+      "locator": [
+        "Pinning; non-disruptive replanning; published/current value example"
+      ],
+      "accessed_at_utc": "2026-10-09T18:53:00Z",
+      "access_timestamp_basis": "Clock sample immediately after the grouped public open/targeted-open pass completed; page fetches occurred just before the sample.",
+      "observed_operations": [
+        "public web open by exact URL",
+        "targeted headings, schema fields, source code, release notes, or tests inspected as listed in locator",
+        "bounded evidence note prepared; no source code or product operation executed"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C08-timefold-replanning.md",
+      "evidence_sha256": "ba13f3e2892764246556d5014123d31b688ddf6558dc60622c9714b952556fd5",
+      "source_kind": "official vendor documentation, API schema, versioned source, pull request, or release record",
+      "relevance": "official solver documentation; design options only"
+    },
+    {
+      "source_id": "C09",
+      "title": "Timefold Solver PR #2596",
+      "url": "https://github.com/TimefoldAI/timefold-solver/pull/2596",
+      "version_or_date": "Merged 2026-08-18",
+      "commit": "98bb88e",
+      "locator": [
+        "PR description; three executeTemporary overloads; MoveDirectorTest; merge event"
+      ],
+      "accessed_at_utc": "2026-10-09T18:53:00Z",
+      "access_timestamp_basis": "Clock sample immediately after the grouped public open/targeted-open pass completed; page fetches occurred just before the sample.",
+      "observed_operations": [
+        "public web open by exact URL",
+        "targeted headings, schema fields, source code, release notes, or tests inspected as listed in locator",
+        "bounded evidence note prepared; no source code or product operation executed"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C09-timefold-pr-2596.md",
+      "evidence_sha256": "4d7b2f0e103c3e9a70bbb0b9838cbb968739fd398ccdba14d8611051deb388d5",
+      "source_kind": "official vendor documentation, API schema, versioned source, pull request, or release record",
+      "relevance": "official repository pull request and change record"
+    },
+    {
+      "source_id": "C10",
+      "title": "Timefold Solver Releases",
+      "url": "https://github.com/TimefoldAI/timefold-solver/releases",
+      "version_or_date": "v2.6.0 tag 7b8284c; v2.7.1 tag 04d17fc",
+      "commit": "7b8284c; 04d17fc",
+      "locator": [
+        "v2.6.0 PR #2596 changelog entry; v2.7.1 release note"
+      ],
+      "accessed_at_utc": "2026-10-09T18:53:00Z",
+      "access_timestamp_basis": "Clock sample immediately after the grouped public open/targeted-open pass completed; page fetches occurred just before the sample.",
+      "observed_operations": [
+        "public web open by exact URL",
+        "targeted headings, schema fields, source code, release notes, or tests inspected as listed in locator",
+        "bounded evidence note prepared; no source code or product operation executed"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C10-timefold-releases.md",
+      "evidence_sha256": "1aeac20fa0a0ad3955b06c332098ddba42c2f45070efc03f787f11851fe5032f",
+      "source_kind": "official vendor documentation, API schema, versioned source, pull request, or release record",
+      "relevance": "official repository release records"
+    },
+    {
+      "source_id": "C11",
+      "title": "Google Workforce Scheduling API Overview",
+      "url": "https://developers.google.com/optimization/service/scheduling/workforce_scheduling",
+      "version_or_date": "REST API v1 overview; last updated 2024-08-06",
+      "commit": null,
+      "locator": [
+        "shift generation versus scheduling; priority order; trusted-tester and API-key access"
+      ],
+      "accessed_at_utc": "2026-10-09T18:53:00Z",
+      "access_timestamp_basis": "Clock sample immediately after the grouped public open/targeted-open pass completed; page fetches occurred just before the sample.",
+      "observed_operations": [
+        "public web open by exact URL",
+        "targeted headings, schema fields, source code, release notes, or tests inspected as listed in locator",
+        "bounded evidence note prepared; no source code or product operation executed"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources/C11-google-workforce-overview.md",
+      "evidence_sha256": "9a12a4115b62e68386ced9e2b87eb5a416446cff1441b412a4052bd42a8f6f3e",
+      "source_kind": "official vendor documentation, API schema, versioned source, pull request, or release record",
+      "relevance": "official API overview; no access requested or exercised"
+    }
+  ],
+  "independent_verification_scope": "Public primary sources listed here; no downloaded executable, account, API key, solver or product instance used."
+}

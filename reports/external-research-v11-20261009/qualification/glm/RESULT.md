@@ -1,0 +1,3 @@
+GLM qualification v1 did not activate the slash lifecycle because a delegated role prefix preceded /goal; it was cancelled and retained.
+
+Qualification v2 activated the installed bridge but missed its frozen 18:25 UTC cutoff. Later mechanical file inspection found artifact.md saved at 18:26:33.798343 UTC and source-map.json at 18:26:52.204456 UTC, before root cancellation at 18:27:34 UTC. The earlier root note that only research notes existed at cancellation was inaccurate. These late authored component outputs are retained without upgrading the original timing result. Installed bridge lifecycle is observed; vendor-native mapping remains UNKNOWN. This is SQLite component evidence, never a full external-discovery success.

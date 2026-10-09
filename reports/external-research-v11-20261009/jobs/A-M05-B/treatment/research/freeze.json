@@ -1,0 +1,41 @@
+{
+  "frozen_at": "2026-10-09T18:39:30.502703+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S11/brief.md",
+      "sha256": "da5e0032e5ce6e30ca840d7b65d3d1a4104e87dbad54081d3b65ff9bfb059314",
+      "bytes": 1439
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M05.json",
+      "sha256": "441994238f267b924e47584a69a2f0ae7f2b609dd901fcac40412b2b2eb7df7f",
+      "bytes": 699
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/assignment.md",
+      "sha256": "18d9ffe68031a1521933787d7236e3dba22ada84808c361d16cba8d8f012a065",
+      "bytes": 3689
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/input-map.json",
+      "sha256": "a7be2f0483b7de00e246eece07184a198313579b3d607450cb5b1b11e1a6aa47",
+      "bytes": 640
+    }
+  ],
+  "method": {
+    "id": "M05",
+    "version": "v1",
+    "name": "retained-investigator",
+    "control": "Researcher terminalizes after complete draft, fresh critic, separate fresh reviser.",
+    "treatment": "Original researcher retains ONE native Goal and source context through discovery/draft, waits for independent critic, then resolves criticism and writes complete final in SAME context. Waiting/handoff costs count; no early native completion.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Declared retained context; no artificial new Goal at phase boundary",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T19:39:30.502703+00:00"
+}

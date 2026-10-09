@@ -1,0 +1,71 @@
+{
+  "frozen_at": "2026-10-09T19:08:18.629163+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+      "sha256": "cc962dde020c6c859e7149db1adcdc9b9872bc02c7f7d8566fea32bf8c5e73cf",
+      "bytes": 1453
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M02.json",
+      "sha256": "2f3c73c02e96c7b0130c20108f2ad7cbc61f8da6ce239f2cac662308362038fd",
+      "bytes": 730
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/assignment.md",
+      "sha256": "a6f4749c54f3c94774e824641a11afa171e288feb19d710f530e900803b89d50",
+      "bytes": 2954
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/input-map.json",
+      "sha256": "7034df35e6d72ccc60246155b912f89a2aed743b8c40045bbb0c10b24970dee1",
+      "bytes": 1526
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/draft.md",
+      "sha256": "c75e6a8c4283edca7a9214824c0ba4b55f98c4b50f9f9fb6152a90c44a14c455",
+      "bytes": 24776
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/discovery.md",
+      "sha256": "50372bd6f796bdeede2ad5867bdf66e9e078f3ca89d26b969cc4e0512e6bab6e",
+      "bytes": 22950
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/source-map.json",
+      "sha256": "8d0ec7468d69c4e7f1846631a316f8c25528a263aee5de339d31720851583410",
+      "bytes": 22997
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/revealed-plan.md",
+      "sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c",
+      "bytes": 312
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/source-map.json",
+      "sha256": "00cc8f59caf8230ac66a48e3ac2990186e23de1f4537ed4c483c54cd5405030b",
+      "bytes": 17153
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/critique.md",
+      "sha256": "8717c6d95d6ae5921a91e630d3c5720734d362f46228df00722830d58bd62f3e",
+      "bytes": 13180
+    }
+  ],
+  "method": {
+    "id": "M02",
+    "version": "v1",
+    "name": "progressive-retrieval",
+    "control": "Conventional source-led research and cited complete draft, then fresh critic and separate fresh reviser.",
+    "treatment": "Navigate governing symbols, callers, definitions, defaults, exceptions, tests and release history on demand; expand context where a decision depends on it. Keep open discovery. SAME separate fresh critic and fresh reviser; replicate actual I-METHOD-01 topology.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Actual I-METHOD-01 retrieval recipe, not critic-finalizer",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T19:24:39.923973+00:00"
+}

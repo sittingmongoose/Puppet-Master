@@ -1,0 +1,2440 @@
+{
+  "block": "A-M04-A",
+  "case": "S04",
+  "schema": "ER11 independent assessment contract v1",
+  "assignment": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M04-A/assignment.md",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M04-A/input-map.json",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M04-A/assignment.md",
+      "sha256": "e45d0beacc6375bfb59e7eb4ce4a8640f1342fd98d61a9471a03f6fbf0558dcc",
+      "bytes": 1980,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M04-A/input-map.json",
+      "sha256": "3180c70e32d829671700124be0b45ae468d96c7941315d1b9ca0c01f784d1ef8",
+      "bytes": 10315,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S04/brief.md",
+      "sha256": "3d8f2bf8481535c8b0c9a847811f72501aabb1195c20749639ee43a6085ff0e5",
+      "bytes": 1406,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S04/plan-root-only.md",
+      "sha256": "ba17f0ff21418aefbc6d0645d84371769ba941a45afa9f65b00c740de0ba2315",
+      "bytes": 362,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+      "sha256": "3f829f27e3320dd23098df2b9edb82ff8e751945add55b95ecd4b10b226eee15",
+      "bytes": 23983,
+      "expected_sha256": "3f829f27e3320dd23098df2b9edb82ff8e751945add55b95ecd4b10b226eee15",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/source-map.json",
+      "sha256": "795cf7adb69fb4dd488cf16029d3c2145c571a198dd563e4c1989ae43d56f2e0",
+      "bytes": 28666,
+      "expected_sha256": "795cf7adb69fb4dd488cf16029d3c2145c571a198dd563e4c1989ae43d56f2e0",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/assignment.md",
+      "sha256": "e0ca9127cc1b84a039fed0e0d0ec8309cabcd263f438016d5a55ae202ed71f5d",
+      "bytes": 2774,
+      "expected_sha256": "e0ca9127cc1b84a039fed0e0d0ec8309cabcd263f438016d5a55ae202ed71f5d",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/input-map.json",
+      "sha256": "d8bda3e4cbea1bd93f08cd65e7b90360bbc09be7378bc8db57c1c49a1ed12239",
+      "bytes": 1504,
+      "expected_sha256": "d8bda3e4cbea1bd93f08cd65e7b90360bbc09be7378bc8db57c1c49a1ed12239",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/critique.md",
+      "sha256": "50f3ee6ab4b80e379b40d9c748c74e3109102a4398248cc09fd671127a921d71",
+      "bytes": 14188,
+      "expected_sha256": "50f3ee6ab4b80e379b40d9c748c74e3109102a4398248cc09fd671127a921d71",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/source-map.json",
+      "sha256": "c5d1d666aed885876084dcb46713b131045f19786381f6e8ea1845e65feaa49b",
+      "bytes": 7281,
+      "expected_sha256": "c5d1d666aed885876084dcb46713b131045f19786381f6e8ea1845e65feaa49b",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/assignment.md",
+      "sha256": "ef6afe466f3bc8ef6db30ffaa30e8780940bb0fd1c72724b3fd85ecc081d1470",
+      "bytes": 2511,
+      "expected_sha256": "ef6afe466f3bc8ef6db30ffaa30e8780940bb0fd1c72724b3fd85ecc081d1470",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/input-map.json",
+      "sha256": "3b5a1ced7b0b65e1832b4bab7faccd0adb5b366fcb2ef424e4cf74ebbd2b0fed",
+      "bytes": 1180,
+      "expected_sha256": "3b5a1ced7b0b65e1832b4bab7faccd0adb5b366fcb2ef424e4cf74ebbd2b0fed",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/discovery.md",
+      "sha256": "cbcd63ae3ed1c6ccf5a5be59b89bf8cd6b8f3d3cfbdb29a98cc0812c74792cda",
+      "bytes": 14058,
+      "expected_sha256": "cbcd63ae3ed1c6ccf5a5be59b89bf8cd6b8f3d3cfbdb29a98cc0812c74792cda",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/draft.md",
+      "sha256": "e38c19a7f3c9ef3580b72793d09b7aa644dad15ceaf3c5709646fdf5bcc1d566",
+      "bytes": 18587,
+      "expected_sha256": "e38c19a7f3c9ef3580b72793d09b7aa644dad15ceaf3c5709646fdf5bcc1d566",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/source-map.json",
+      "sha256": "974d89798f46ba28eb435fab3b83ed1a66be5e659bea1b5a934dceb18b4eabca",
+      "bytes": 15721,
+      "expected_sha256": "974d89798f46ba28eb435fab3b83ed1a66be5e659bea1b5a934dceb18b4eabca",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/revealed-plan.md",
+      "sha256": "ba17f0ff21418aefbc6d0645d84371769ba941a45afa9f65b00c740de0ba2315",
+      "bytes": 362,
+      "expected_sha256": "ba17f0ff21418aefbc6d0645d84371769ba941a45afa9f65b00c740de0ba2315",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/plan-reveal.json",
+      "sha256": "8c9019ecc209f70942365df070e80312b8a6af5301cfd70003d1cdcaf90f49c7",
+      "bytes": 276,
+      "expected_sha256": "8c9019ecc209f70942365df070e80312b8a6af5301cfd70003d1cdcaf90f49c7",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/assignment.md",
+      "sha256": "38178e849b49e8c57fff75e569634f963f934a0a97afba3e88b435f0eeba2c7e",
+      "bytes": 2987,
+      "expected_sha256": "38178e849b49e8c57fff75e569634f963f934a0a97afba3e88b435f0eeba2c7e",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/input-map.json",
+      "sha256": "4e4e4bfea6abd6df0531b744a24d40b2fe323a6810f9d5f388cf62728d2d7a8d",
+      "bytes": 634,
+      "expected_sha256": "4e4e4bfea6abd6df0531b744a24d40b2fe323a6810f9d5f388cf62728d2d7a8d",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+      "sha256": "699a4305d8b5fb54f43caf7d3450a97c237a955221d820098c27c7146d567046",
+      "bytes": 22938,
+      "expected_sha256": "699a4305d8b5fb54f43caf7d3450a97c237a955221d820098c27c7146d567046",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/source-map.json",
+      "sha256": "1ce91a73dc7932719a97c99df83ca4a8279c1aca7bb2641e52813e3724861fc2",
+      "bytes": 23368,
+      "expected_sha256": "1ce91a73dc7932719a97c99df83ca4a8279c1aca7bb2641e52813e3724861fc2",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/assignment.md",
+      "sha256": "05c7c62bf831a932c57030909a198eb73bb5ca97b6f84bbeb745aa3c930e571c",
+      "bytes": 2902,
+      "expected_sha256": "05c7c62bf831a932c57030909a198eb73bb5ca97b6f84bbeb745aa3c930e571c",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/input-map.json",
+      "sha256": "d848c0845bb72be59ee46a176deeeae4de5b1bb34fb458246ebcca21bd3f4b34",
+      "bytes": 1526,
+      "expected_sha256": "d848c0845bb72be59ee46a176deeeae4de5b1bb34fb458246ebcca21bd3f4b34",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/critique.md",
+      "sha256": "08d386b486f523b0a4b35a84adbf18d61bf842832c6ee217eada770962f399d6",
+      "bytes": 6030,
+      "expected_sha256": "08d386b486f523b0a4b35a84adbf18d61bf842832c6ee217eada770962f399d6",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/final.md",
+      "sha256": "341123b14af2705b11b57646a8a64586c119bc7557de3487348892c99239b29c",
+      "bytes": 23475,
+      "expected_sha256": "341123b14af2705b11b57646a8a64586c119bc7557de3487348892c99239b29c",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/source-map.json",
+      "sha256": "3443140f09af92132e7a2993eb3a7a52be9895bda2d7a34a09d89b9d5cfa7576",
+      "bytes": 17443,
+      "expected_sha256": "3443140f09af92132e7a2993eb3a7a52be9895bda2d7a34a09d89b9d5cfa7576",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/assignment.md",
+      "sha256": "f9b74f6ea4318130b61a27e61e06dff0755ac57935d398dad1bbe68833de8534",
+      "bytes": 2639,
+      "expected_sha256": "f9b74f6ea4318130b61a27e61e06dff0755ac57935d398dad1bbe68833de8534",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/input-map.json",
+      "sha256": "3070871c90a09036e2cdc6891392a3a083f27d591c58abfb40af4344a7149139",
+      "bytes": 1196,
+      "expected_sha256": "3070871c90a09036e2cdc6891392a3a083f27d591c58abfb40af4344a7149139",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/discovery.md",
+      "sha256": "a98f842fef4d1f5329d3bce3ccf6b2d5908999acb2b2767300b24b8291c10bcf",
+      "bytes": 15420,
+      "expected_sha256": "a98f842fef4d1f5329d3bce3ccf6b2d5908999acb2b2767300b24b8291c10bcf",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/draft.md",
+      "sha256": "648bad78e3fb2cd4d79b2997e57569c42a7a8dcc7bfa1a2b041662d8e57702de",
+      "bytes": 20132,
+      "expected_sha256": "648bad78e3fb2cd4d79b2997e57569c42a7a8dcc7bfa1a2b041662d8e57702de",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/final.md",
+      "sha256": "432d6f1cd75fe3a415c264607e100e1081d836356dbd6dcc623cd20543d9de7c",
+      "bytes": 22549,
+      "expected_sha256": "432d6f1cd75fe3a415c264607e100e1081d836356dbd6dcc623cd20543d9de7c",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/revision-pass.md",
+      "sha256": "a7fc6b6624554ca82c00b8c92c4983dd3825c0c6c278145196c51c4db08138e0",
+      "bytes": 2962,
+      "expected_sha256": "a7fc6b6624554ca82c00b8c92c4983dd3825c0c6c278145196c51c4db08138e0",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/source-map.json",
+      "sha256": "2b0973c687128caefeb2e97944d5421a322a25a7046439f77a38f4e807c35ac8",
+      "bytes": 11423,
+      "expected_sha256": "2b0973c687128caefeb2e97944d5421a322a25a7046439f77a38f4e807c35ac8",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/revealed-plan.md",
+      "sha256": "ba17f0ff21418aefbc6d0645d84371769ba941a45afa9f65b00c740de0ba2315",
+      "bytes": 362,
+      "expected_sha256": "ba17f0ff21418aefbc6d0645d84371769ba941a45afa9f65b00c740de0ba2315",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/plan-reveal.json",
+      "sha256": "2865232ed966899542966866aba183e85e6fbc13f2b9c7316cfd876cbd81bbc5",
+      "bytes": 276,
+      "expected_sha256": "2865232ed966899542966866aba183e85e6fbc13f2b9c7316cfd876cbd81bbc5",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/assignment.md",
+      "sha256": "2b3efd813d4073dcf0f8db7e43b48b3ccf69c5892736d9a220c9dc1dc7175ddf",
+      "bytes": 3117,
+      "expected_sha256": "2b3efd813d4073dcf0f8db7e43b48b3ccf69c5892736d9a220c9dc1dc7175ddf",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/input-map.json",
+      "sha256": "75ab9032fac9c3dffc4afed6690c6430fa15bceb9099916eb110e76e6e172da6",
+      "bytes": 640,
+      "expected_sha256": "75ab9032fac9c3dffc4afed6690c6430fa15bceb9099916eb110e76e6e172da6",
+      "verified_match": true,
+      "role": "mapped_candidate"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/sources/README.md",
+      "sha256": "25c1d46d2b736e49609e1481325b97ce97234eeac0778706c49e3fd1206edd2a",
+      "bytes": 908,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/sources/independent-checks.md",
+      "sha256": "5d1900ea4f2aeacd64ceaef745df282d9557c2b4939604d60c4001bef949d3c8",
+      "bytes": 3917,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/sources/independent-checks.md",
+      "sha256": "86c2f13cc24b0c08c67d3f008d24486a893e52ab521b6a9753601463f9b6c6c8",
+      "bytes": 4377,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/sources/README.md",
+      "sha256": "02f04c0dae90a57c5ef7605bc6e080bfc005e29f316fc954dac39468e4a5896f",
+      "bytes": 961,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/sources/equipment-booking.md",
+      "sha256": "248cd52d4069543f994afcc3f866be768c3291db83bdaddf68b192dc6d2f2e28",
+      "bytes": 3998,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/sources/inventree-concurrency.md",
+      "sha256": "1761dfb966a4a6b34fa2ba03b5d41092762892e0f8c14d1f789c2cb3ae00db9f",
+      "bytes": 1891,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/sources/offline-consistency.md",
+      "sha256": "5c5297d41bdb73fe1539183c4a1c8f3b44a816a19a8e0022b24efd2d315da265",
+      "bytes": 2680,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/sources/stock-control.md",
+      "sha256": "13fc29b8ed35ee03c40ee8d78c75c8ee506b63f0d7a62b1c2504c0403a17c52d",
+      "bytes": 3323,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/sources/S07-inventree-recheck.md",
+      "sha256": "18825f96cd58f206aa255b1c549c94aad8a8f35517efb3a17b82aaf3bac9891e",
+      "bytes": 938,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/sources/S08-postgresql-time.md",
+      "sha256": "bdf5faca70769500de3afae27a84d7856b0bc416b58d010cc9f1e586753120eb",
+      "bytes": 1103,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/sources/S10-librebooking-recheck.md",
+      "sha256": "68610f0dd0e271a726556485db6d013a5992fe095fdb0b8fbf6f1c5d258d5361",
+      "bytes": 1583,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/sources/S11-postgresql-datetime.md",
+      "sha256": "831497be6dbeb3e774dd2134bb8de6b75af989a021aa75fa91b593d30b717e6b",
+      "bytes": 1029,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/sources/index.md",
+      "sha256": "3e9cbf44292c4b053812291bd07920c8aad327868d5251ba9a5075338d9e3da8",
+      "bytes": 853,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/sources/S10-librebooking.md",
+      "sha256": "cfd121dab23f18ac1b9ae9189dad9e567d94b7166b01dabe46ac9310044449ca",
+      "bytes": 1866,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/sources/index.md",
+      "sha256": "c044015ac3cdfe198a5e19950e9948b01d299f8c8405169d3c6c9a8a892e4564",
+      "bytes": 540,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S01-myturn.md",
+      "sha256": "31f0d04fde7226824f6731401ea57a0b3a2968db5d1b1d15fc912b3b939e1ba2",
+      "bytes": 684,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S02-pge-workflow.md",
+      "sha256": "494dc73167543f0fd1e6af92631bccb5a05bd77dd3c570ae9cd0d0d0ce5bc701",
+      "bytes": 637,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S03-fabman.md",
+      "sha256": "6c4c91febe55ed426a93eb1bab9b7c9b8d86484051fc9be12dd408589cd13b90",
+      "bytes": 671,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S04-snipe-overview.md",
+      "sha256": "2af17006252d2eb12afb04f3fab864acf64811f39867472940d72f2ec65fc052",
+      "bytes": 662,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S05-snipe-import.md",
+      "sha256": "8070b33299dde72c3e8d42d0c34f7d5f2d339ef5479ae6a679bd38515148fbbd",
+      "bytes": 863,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S06-inventree-docs.md",
+      "sha256": "065752fd93a1c8770f52c3c2713e67142cc85354b93c7ce66059efeb26b461c5",
+      "bytes": 1184,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S07-inventree-race.md",
+      "sha256": "7937bacebcbc300e244b8b5c49954901f588417cf1a18ea3c3fb496d71a710e8",
+      "bytes": 1270,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S08-postgresql-overlap.md",
+      "sha256": "31df10ea1d266b0f135167610a8d1ca59f673d9674fece0423665242362f3b71",
+      "bytes": 899,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/S09-couchdb-offline.md",
+      "sha256": "0024fc380d1d714e44133d56b31ea39475d4b6bf2f297e2f0bf74eb2e4287318",
+      "bytes": 966,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/bounded-excerpts.md",
+      "sha256": "48cc2292b35c81e191c33d94aa53e8ed57ea865e37ebe456595666c314adb2b9",
+      "bytes": 1790,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/sources/index.md",
+      "sha256": "f0625e5b7fc84ba48602fd9a8e453fd5800039e64d80eef282631f2a1432e099",
+      "bytes": 1028,
+      "expected_sha256": null,
+      "verified_match": null,
+      "role": "brief_plan_contract_or_declared_source_note"
+    }
+  ],
+  "arms": {
+    "N2": {
+      "actual_arm": "control",
+      "final_delivery": true,
+      "grade": "PASS_WITH_LIMITATIONS",
+      "material_findings": [],
+      "minor_findings": [
+        {
+          "id": "N2-m1",
+          "type": "MINOR_PROVENANCE_ERROR",
+          "severity": "minor",
+          "title": "CSV wizard description attached to the wrong Snipe-IT release",
+          "candidate_evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+              "lines": "27",
+              "description": "Says the v8.8.0 release describes a CSV mapping/preview wizard."
+            }
+          ],
+          "original_obligations": [
+            "O2"
+          ],
+          "primary": [
+            "E01",
+            "E02"
+          ],
+          "reasoning": "The description appears in v8.7.0's Importer wizard section, not v8.8.0's release narrative. v8.8.0's dated request/calendar and PHP statements are independently supported. The capability can be inherited from v8.7.0; the final does not claim that the wizard guarantees safe migration or changes its ID-based import policy. This is an inaccurate release locator, without a materially false product-selection or safety consequence."
+        }
+      ],
+      "unresolved": [],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "complete",
+          "judgment": "Original obligations and explicit brief constraints substantively fulfilled.",
+          "evidence": [
+            {
+              "candidate": [
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+                  "lines": "5–15",
+                  "description": "Two sites/Wi-Fi/hosting/import/core recommendation"
+                },
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+                  "lines": "19–41",
+                  "description": "Product/mechanism and complete evolution science"
+                },
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+                  "lines": "47–83",
+                  "description": "Exact plan, audit/extensions, options and validation"
+                }
+              ],
+              "primary": [
+                "E01",
+                "E03",
+                "E07",
+                "E11",
+                "E14",
+                "E22",
+                "E23",
+                "E24",
+                "E29",
+                "E30"
+              ],
+              "reasoning": "O1 useful competition; O2 governing behavior; O3 concrete chain; O4 all clauses; O5 final material prose and decisions; O6 discriminating unexecuted proposals. No inappropriate demand for production implementation."
+            }
+          ]
+        },
+        {
+          "axis": 2,
+          "coverage": "complete",
+          "judgment": "Consequential facts and applicability supported, with minor release-description attribution error.",
+          "evidence": [
+            {
+              "candidate": [
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+                  "lines": "11,25–41",
+                  "description": "Source-backed product and mechanism claims"
+                }
+              ],
+              "primary": [
+                "E01",
+                "E02",
+                "E03",
+                "E04",
+                "E05",
+                "E06",
+                "E07",
+                "E08",
+                "E11",
+                "E12",
+                "E13",
+                "E14",
+                "E15",
+                "E16",
+                "E17",
+                "E18",
+                "E19",
+                "E20",
+                "E21",
+                "E22",
+                "E23",
+                "E24",
+                "E29",
+                "E30",
+                "E31",
+                "E32",
+                "E33"
+              ],
+              "reasoning": "Checks distinguish custody from timed holds; allocations from bookings; stock units from identity; constructor default from timestamp canonicalization; display/replication from exclusivity. Source-backed analogies do not become target guarantees. N2-m1 is minor."
+            }
+          ]
+        },
+        {
+          "axis": 3,
+          "coverage": "complete",
+          "judgment": "Useful discovery and materially different alternatives retained.",
+          "evidence": [
+            {
+              "candidate": [
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/discovery.md",
+                  "lines": "entire file",
+                  "description": "Independent pre-reveal discovery"
+                },
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+                  "lines": "19–37,60,64–72",
+                  "description": "Cheqroom, Snipe-IT, InvenTree, central authority/local replication and optional extensions"
+                }
+              ],
+              "primary": [
+                "E01",
+                "E07",
+                "E11",
+                "E20",
+                "E29",
+                "E30",
+                "E31",
+                "E32",
+                "E33"
+              ],
+              "reasoning": "Timed-lending lifecycle, date-window requests, quantity inventory, range enforcement and offline replica tradeoffs offer real choices beyond a calendar/row/timestamp plan. API/barcode/report/reminder leads remain optional; no citation-count quality inference."
+            }
+          ]
+        },
+        {
+          "axis": 4,
+          "coverage": "complete",
+          "judgment": "All exact P1–P6 dispositions examined; no material false correction or rejection.",
+          "evidence": [
+            {
+              "candidate": [
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+                  "lines": "43–52",
+                  "description": "Exact clause/disposition table"
+                }
+              ],
+              "primary": [
+                "E03",
+                "E04",
+                "E05",
+                "E07",
+                "E11",
+                "E12",
+                "E15",
+                "E22",
+                "E27",
+                "E29",
+                "E30"
+              ],
+              "reasoning": "Calendar and normal flows retained. Unsafe interpretations of quantity writes, timestamps, name overwrites and free-text-only repair are challenged without replacing viable plan scope. User decisions/unknowns are concrete."
+            }
+          ]
+        },
+        {
+          "axis": 5,
+          "coverage": "complete",
+          "judgment": "Supported discovery/draft findings, options and critic amendments preserved in material final prose.",
+          "evidence": [
+            {
+              "candidate": [
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/draft.md",
+                  "lines": "entire file",
+                  "description": "Initial proposal"
+                },
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/critique.md",
+                  "lines": "11–33,57–60",
+                  "description": "Four main criticism groups and minor caveats"
+                },
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+                  "lines": "9–15,25–27,41,47–83",
+                  "description": "Accepted amendments and retained chain/options"
+                }
+              ],
+              "primary": [
+                "E01",
+                "E04",
+                "E07",
+                "E08",
+                "E12",
+                "E18",
+                "E22",
+                "E23",
+                "E24",
+                "E29",
+                "E30"
+              ],
+              "reasoning": "Critic concerns independently adjudicated. Dated Snipe features, stale offline custody, holding-state/boundary rules and existing-hold repair impact are substantively integrated. Exact numeric upstream retention settings are safely condensed into retained user policy; no material unsupported deletion identified."
+            }
+          ]
+        },
+        {
+          "axis": 6,
+          "coverage": "complete",
+          "judgment": "Validation has meaningful oracles and correctly separates proposals from source inspection.",
+          "evidence": [
+            {
+              "candidate": [
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+                  "lines": "74–85",
+                  "description": "Eight proposed checks and explicit execution scope"
+                },
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+                  "lines": "41",
+                  "description": "Upstream tests/guard/source provenance"
+                }
+              ],
+              "primary": [
+                "E07",
+                "E23",
+                "E24",
+                "E27"
+              ],
+              "reasoning": "Simultaneous competing clients with one-commit oracle, near-zero decrements/idempotent replay, partition order, independent CSV expected results and repair-existing-hold checks discriminate failures. No runtime or source-test success is claimed."
+            }
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "claims": "Reservation authority, [) boundaries, continuous timestamp ranges, GiST/exclusion, scalar equality, active-state scope",
+            "primary": [
+              "E07",
+              "E08",
+              "E10"
+            ],
+            "judgment": "Supported mechanism, conditional product policy; no distributed/offline guarantee."
+          },
+          {
+            "claims": "Replication, deterministic visible winner, retained conflicts and need for application resolution",
+            "primary": [
+              "E11",
+              "E12",
+              "E13"
+            ],
+            "judgment": "Supported; does not make conflicting physical promises valid."
+          },
+          {
+            "claims": "Serialized custody versus quantity, location/allocated/available semantics and unit vocabulary",
+            "primary": [
+              "E03",
+              "E14",
+              "E15",
+              "E16",
+              "E17",
+              "E21"
+            ],
+            "judgment": "Supported with quantity/order/build domain limits."
+          },
+          {
+            "claims": "Import identity, precreated custom fields, historical importer prerequisites/ignored fields/date scope",
+            "primary": [
+              "E04",
+              "E05"
+            ],
+            "judgment": "Supported product-specific patterns; proposed provenance and rollback are design inferences."
+          },
+          {
+            "claims": "Tracking/retention and audit correction versus fabricated legacy provenance",
+            "primary": [
+              "E18",
+              "E19"
+            ],
+            "judgment": "Source retention is configurable; neither brief nor sources establish legal or indefinite retention."
+          },
+          {
+            "claims": "Cheqroom draft/reserved/custody/partial-return/pickup/override/report features",
+            "primary": [
+              "E29",
+              "E30",
+              "E31",
+              "E32",
+              "E33"
+            ],
+            "judgment": "Direct recovered current official lifecycle/role/site sources plus indexed report lead; subscription/race/offline specifics left unknown."
+          },
+          {
+            "claims": "Snipe-IT v8.8.0 date-window calendar, release identity/PHP, requestables and CSV wizard attribution",
+            "primary": [
+              "E01",
+              "E02",
+              "E06"
+            ],
+            "judgment": "New request/calendar and PHP facts supported; wizard release attribution minor error."
+          },
+          {
+            "claims": "InvenTree plugin/import features and allocation failure→lock/revalidate→threaded test→1.5.0 evolution",
+            "primary": [
+              "E19",
+              "E20",
+              "E21",
+              "E22",
+              "E23",
+              "E24"
+            ],
+            "judgment": "Source/code/release checked; no execution, backend or calendar-domain overclaim."
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "externally_unresolved_limits": [
+          "Commercial pricing, entitlements, contracts, exact offline behavior and export/recovery fit remain honestly unverified; they are explicit next decisions, not silently selected defaults.",
+          "InvenTree stable/latest pages and vendor help are mutable; source/code/release identities and domain restrictions are retained.",
+          "Cheqroom legacy help URLs failed or migrated; current official reservation/conflict/location/checkout articles were independently recovered, but report feature evidence remains indexed."
+        ]
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "stages_read": [
+          "research/discovery.md",
+          "research/draft.md",
+          "critic/critique.md",
+          "reviser/final.md",
+          "all mapped stage assignments/maps and bounded source notes"
+        ],
+        "judgment": "No material supported research/options/limitations lost; four main criticisms and minor qualifications traced independently.",
+        "matrix": [
+          {
+            "topic": "Booking/custody/site workflow",
+            "earlier_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/discovery.md",
+              "locator": "Cheqroom findings; complete discovery/draft"
+            },
+            "final_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+              "locator": "19–21,47,56,76,82"
+            },
+            "judgment": "Timed reservation versus checkout/partial return/pickup/override distinctions survive, with help-migration and unknown subscription limits.",
+            "primary": [
+              "E29",
+              "E30",
+              "E31",
+              "E32"
+            ]
+          },
+          {
+            "topic": "Snipe-IT comparison",
+            "earlier_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/draft.md",
+              "locator": "Snipe-IT custody-limited characterization; critic M1"
+            },
+            "final_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+              "locator": "25–27,47,72,78"
+            },
+            "judgment": "Corrects too-narrow competitor scope with primary v8.8 dated-calendar evidence; holds/races remain unknown.",
+            "primary": [
+              "E01",
+              "E03",
+              "E06"
+            ]
+          },
+          {
+            "topic": "Stock and upstream evolution",
+            "earlier_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/discovery.md",
+              "locator": "InvenTree stock/concurrency findings; draft evolution section"
+            },
+            "final_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+              "locator": "31,39–41,48,81"
+            },
+            "judgment": "Failure, lock/revalidation, test guard, release and noncalendar scope retained as prose; source-test runtime remains unobserved.",
+            "primary": [
+              "E14",
+              "E15",
+              "E22",
+              "E23",
+              "E24"
+            ]
+          },
+          {
+            "topic": "Offline and hosting alternatives",
+            "earlier_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/draft.md",
+              "locator": "replication/authority and owner decisions; critic stale-custody concern"
+            },
+            "final_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+              "locator": "7–9,35–37,49,64–67,77"
+            },
+            "judgment": "Local capture/central authority/site partition options and operational burden preserved; stale custody clarification integrated.",
+            "primary": [
+              "E07",
+              "E11",
+              "E12",
+              "E13"
+            ]
+          },
+          {
+            "topic": "Import, history, audit and extensions",
+            "earlier_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/discovery.md",
+              "locator": "stock-control/import/retention/plugin findings"
+            },
+            "final_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+              "locator": "27,31,50,58–60,69–70,80–81"
+            },
+            "judgment": "Required inconsistent CSV, identity, ambiguity/history limits and optional API/plugin choices survive. Condensed retention defaults still preserve the material policy decision.",
+            "primary": [
+              "E04",
+              "E05",
+              "E18",
+              "E19",
+              "E20"
+            ]
+          },
+          {
+            "topic": "Maintenance and validation",
+            "earlier_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/draft.md",
+              "locator": "structured maintenance and unexecuted proposals; critic M3/M4"
+            },
+            "final_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+              "locator": "11–13,51–52,74–85"
+            },
+            "judgment": "Existing-confirmed repair impact, holding states and falsifiable oracles added without converting proposals to test success.",
+            "primary": [
+              "E03",
+              "E07",
+              "E08",
+              "E29"
+            ]
+          }
+        ]
+      },
+      "grade_limits": [
+        "Research/design quality only; no makerspace runtime, vendor account, migration trial, acceptance test or independent execution of upstream tests.",
+        "Commercial pricing, entitlements, contracts, exact offline behavior and export/recovery fit remain honestly unverified; they are explicit next decisions, not silently selected defaults.",
+        "InvenTree stable/latest pages and vendor help are mutable; source/code/release identities and domain restrictions are retained.",
+        "Cheqroom legacy help URLs failed or migrated; current official reservation/conflict/location/checkout articles were independently recovered, but report feature evidence remains indexed.",
+        "Minor release-description attribution N2-m1 remains in the frozen candidate.",
+        "The proposed PostgreSQL design is not a complete SQL schema or certified time-zone/backend design; its unspecified implementation details are proportionate to this brief."
+      ],
+      "original_obligations": [
+        {
+          "id": "O1",
+          "judgment": "fulfilled",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+          "lines": "19–37,60",
+          "reasoning": "Competition and different consistency/quantity/lending approaches, plus optional extensions."
+        },
+        {
+          "id": "O2",
+          "judgment": "fulfilled_with_minor",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+          "lines": "11,25–41",
+          "reasoning": "Governing source facts/units/range defaults/applicability checked; N2-m1 minor release locator."
+        },
+        {
+          "id": "O3",
+          "judgment": "fulfilled",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+          "lines": "39–41",
+          "reasoning": "Actual #12478 failure, fix mechanism, guarded concurrency test and 1.5.0 release retained."
+        },
+        {
+          "id": "O4",
+          "judgment": "fulfilled",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+          "lines": "43–52",
+          "reasoning": "All exact clauses individually compared and nuanced."
+        },
+        {
+          "id": "O5",
+          "judgment": "fulfilled",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+          "lines": "7–15,41,54–72",
+          "reasoning": "Constraints, science, conditions, uncertainty and owner decisions self-contained."
+        },
+        {
+          "id": "O6",
+          "judgment": "fulfilled",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+          "lines": "74–85",
+          "reasoning": "Discriminating proposals with honest source-only execution statement."
+        }
+      ],
+      "plan_dispositions": [
+        {
+          "id": "P1",
+          "exact_clause": "Use a shared calendar for reservations.",
+          "dispositions": [
+            "correction",
+            "optional enhancement",
+            "already covered",
+            "user decision"
+          ],
+          "judgment": "Calendar is retained as interface; a display alone does not enforce concurrent commits. State/interval/site/override choices are visible. Database or vendor authority remains selectable.",
+          "primary": [
+            "E01",
+            "E07",
+            "E08",
+            "E29",
+            "E30"
+          ],
+          "evidence_lines": "47; 7,11"
+        },
+        {
+          "id": "P2",
+          "exact_clause": "Keep stock quantities in a database row updated by each client.",
+          "dispositions": [
+            "correction",
+            "uncertain"
+          ],
+          "judgment": "A shared row can be safe under an atomic authoritative operation. Final challenges unspecified/unsafe concurrency, retains row or transactional ledger, tracks site/unit/idempotency and separates unique tools. Does not forbid every client-initiated safe write.",
+          "primary": [
+            "E14",
+            "E15",
+            "E16",
+            "E22",
+            "E23"
+          ],
+          "evidence_lines": "48; 15"
+        },
+        {
+          "id": "P3",
+          "exact_clause": "Permit offline checkout and reconcile by timestamp.",
+          "dispositions": [
+            "reject as written",
+            "user decision",
+            "uncertain"
+          ],
+          "judgment": "Timestamp-only reconciliation cannot establish physical entitlement. Offline checkout explicitly remains an owner choice with custody/serviceability/stale-transfer checks; firm cross-site holds wait for authority or chosen partition policy.",
+          "primary": [
+            "E11",
+            "E12",
+            "E13"
+          ],
+          "evidence_lines": "49; 9,64–65"
+        },
+        {
+          "id": "P4",
+          "exact_clause": "CSV import overwrites matching names.",
+          "dispositions": [
+            "correction",
+            "uncertain"
+          ],
+          "judgment": "Rejects names as mutable identity and blind overwrite while preserving required CSV import. Stable IDs, ambiguity stop, preview, row provenance and idempotent rerun are proportionate design safeguards; current inventory/history scope remains open.",
+          "primary": [
+            "E04",
+            "E05",
+            "E19"
+          ],
+          "evidence_lines": "50; 69,80"
+        },
+        {
+          "id": "P5",
+          "exact_clause": "Tool maintenance is a free-text note.",
+          "dispositions": [
+            "correction",
+            "already covered in brief",
+            "user decision"
+          ],
+          "judgment": "Repair status needs structured availability; free text retained for symptoms. Already-confirmed holds affected by repair get visible recorded resolution. Work-order depth/notification policy left to staff.",
+          "primary": [
+            "E03",
+            "E18",
+            "E29"
+          ],
+          "evidence_lines": "51; 13,68,79"
+        },
+        {
+          "id": "P6",
+          "exact_clause": "Test normal reservation and check-in flows.",
+          "dispositions": [
+            "correction/addition",
+            "already covered"
+          ],
+          "judgment": "Normal flows kept as smoke baseline; race/partitions/repair/CSV/roles/acceptance added. No test proposal called executed.",
+          "primary": [
+            "E07",
+            "E23",
+            "E27"
+          ],
+          "evidence_lines": "52; 74–85"
+        }
+      ],
+      "critic_dispositions": [
+        {
+          "id": "C2-1",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/critique.md",
+          "critic_lines": "11–15",
+          "disposition": "accept",
+          "reasoning": "v8.8.0 adds dated requests/calendar. Corrects the earlier broad only-custody characterization; does not prove overlap safety. Final admits unknown hold/approval behavior.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+          "final_lines": "25–27,47,72,78",
+          "primary": [
+            "E01",
+            "E06"
+          ]
+        },
+        {
+          "id": "C2-2",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/critique.md",
+          "critic_lines": "17–21",
+          "disposition": "accept",
+          "reasoning": "Cached location does not establish present physical custody during a partition. Final adds actual presence/serviceability/known custody and unconfirmed stale-transfer path.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+          "final_lines": "9,49,65,77",
+          "primary": [
+            "E11",
+            "E12",
+            "E13"
+          ]
+        },
+        {
+          "id": "C2-3",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/critique.md",
+          "critic_lines": "23–27",
+          "disposition": "accept with product-policy scope",
+          "reasoning": "Holding states and nonempty consistent bounds are needed for chosen invariant; scalar classes/partial predicate grounded. No source chooses all product states or authorizes overrides.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+          "final_lines": "11,37,47,67,76",
+          "primary": [
+            "E07",
+            "E08",
+            "E10"
+          ]
+        },
+        {
+          "id": "C2-4",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/critique.md",
+          "critic_lines": "29–33",
+          "disposition": "accept",
+          "reasoning": "Repair reported after confirmation is a concrete brief risk. Final preserves affected holds and recorded cancel/reassign/contact instead of silently losing history.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+          "final_lines": "13,51,68,79",
+          "primary": [
+            "E03",
+            "E29"
+          ]
+        },
+        {
+          "id": "C2-5",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/critique.md",
+          "critic_lines": "57",
+          "disposition": "accept as design caveat",
+          "reasoning": "Append-only alone leaves correction/retention unspecified. Compensating events and user-chosen retention make proposed audit useful without a legal guarantee.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+          "final_lines": "58,70",
+          "primary": [
+            "E18"
+          ]
+        },
+        {
+          "id": "C2-6",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/critique.md",
+          "critic_lines": "58",
+          "disposition": "accept",
+          "reasoning": "Row and transactional event approaches must preserve the same invariant; final keeps both, not a mandatory event-sourced architecture.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+          "final_lines": "15,48,81",
+          "primary": [
+            "E22",
+            "E23",
+            "E27"
+          ]
+        },
+        {
+          "id": "C2-7",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/critique.md",
+          "critic_lines": "59",
+          "disposition": "accept",
+          "reasoning": "Quantity-order allocation is not timed tool reservation; final explicitly retains the scope and backend/test guard.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+          "final_lines": "31,41,48",
+          "primary": [
+            "E15",
+            "E21",
+            "E22",
+            "E23"
+          ]
+        },
+        {
+          "id": "C2-8",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/critique.md",
+          "critic_lines": "60",
+          "disposition": "accept",
+          "reasoning": "Hosting/product simplicity is conditional on actual link and support burden; final offers managed/local/custom choices and asks for owner capacity.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+          "final_lines": "66,71–72,83",
+          "primary": [
+            "E29",
+            "E30",
+            "E20"
+          ]
+        },
+        {
+          "id": "C2-9",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/critic/critique.md",
+          "critic_lines": "48–53,64–66",
+          "disposition": "accept independently checked reiterations and provenance limits",
+          "reasoning": "O1/O2 feature expansion and mutable/inaccessible-source caveats, O3 critic page-versus-diff distinction, O4 all-plan coverage, O5 conditional central/site-pool and local-first support burden, and O6 unexecuted discriminating additions are reflected in the final. Critic's claim that no P2/P4 correction is contradicted is independently qualified against safe client writes and product-specific import rules, not used as an oracle.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/reviser/final.md",
+          "final_lines": "21,25–41,47–52,64–85",
+          "primary": [
+            "E01",
+            "E04",
+            "E07",
+            "E11",
+            "E22",
+            "E23",
+            "E29",
+            "E30"
+          ]
+        }
+      ],
+      "validation": {
+        "executed": "Public source/document/code/release inspection asserted by candidate and independently checked as evidence; no target-system or upstream test run.",
+        "proposed": "Eight scenarios with falsifiable domain oracles; runtime/backend/product/owner policy prerequisites explicit.",
+        "overclaim": false
+      }
+    },
+    "N1": {
+      "actual_arm": "treatment",
+      "final_delivery": true,
+      "grade": "FAIL",
+      "material_findings": [
+        {
+          "id": "N1-M1",
+          "type": "PRESERVATION_LOSS",
+          "severity": "material",
+          "title": "Delivered final loses the substantive, source-grounded inventory evolution chain",
+          "candidate_evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+              "lines": "48",
+              "description": "Refers to a reported take-stock race/fix/test/release chain without explaining the defect, patch ordering, backport or release."
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+              "lines": "52",
+              "description": "Mentions separate threads/connections but no regression capability guard or identified release."
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+              "lines": "74",
+              "description": "States upstream history was inspected, without presenting that history."
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/discovery.md",
+              "lines": "34–36",
+              "description": "Supported full chain: stale pre-lock cap, post-lock fix, threaded regression, master/backport/release identities."
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/final.md",
+              "lines": "60",
+              "description": "Compact earlier crosswalk still names stale quantity, post-lock fix, separate connections, 1.5.x backport and 1.5.3."
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/critique.md",
+              "lines": "26–28",
+              "description": "Critic asserts complete preservation; that assertion is not corroborated by the delivered final."
+            }
+          ],
+          "original_obligations": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S04/brief.md",
+              "lines": "8",
+              "id": "O3",
+              "text": "Investigate at least one relevant issue/fix/regression/release or evolution chain; say when evidence is absent/inapplicable."
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S04/brief.md",
+              "lines": "10",
+              "id": "O5",
+              "text": "Retain useful alternatives, conditions, original constraints, disagreement and uncertainty in one self-contained coherent final; do not replace text with IDs."
+            }
+          ],
+          "primary": [
+            "E25",
+            "E26",
+            "E27",
+            "E28"
+          ],
+          "reasoning": "The upstream investigation happened and is substantially correct. The defect is preservation into the required self-contained delivered final: its entire 79 lines contain neither PR/backport/release identifiers nor the stale pre-lock versus refreshed post-lock quantity explanation. The discovery and source map cannot supply missing material prose by reference to S07. That loss removes the actual learning and version/backend applicability of the one researched evolution chain, while the final claims it was inspected. This is an O5 preservation failure affecting O3 delivery, not an allegation that no research occurred, that the selected mechanism is wrong, or that the candidate falsely ran tests.",
+          "consequence": "A reader of the delivered final cannot tell which inventory race occurred, what the patch changed, or which release includes it; generic advice to serialize stock writes is not the researched evolution finding.",
+          "limits": "Absence checked against the full mapped reviser final, not a cropped passage. Public patch and tests were read, not executed. No requirement to adopt InvenTree or its architecture is inferred."
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N1-m1",
+          "type": "MINOR_PROVENANCE_ERROR",
+          "severity": "minor",
+          "title": "Fabman wrapper version and publisher blurred with the vendor API",
+          "candidate_evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+              "lines": "20",
+              "description": "Calls the stable 1.2.10 API index Fabman's without identifying the customer Python wrapper."
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/source-map.json",
+              "lines": "JSON /sources/2 (id S03), publisher and version_or_commit",
+              "description": "Publisher is recorded as Fabman (vendor primary source), while the 1.2.10 documentation is the customer Python wrapper."
+            }
+          ],
+          "original_obligations": [
+            "O2"
+          ],
+          "primary": [
+            "E36",
+            "E37",
+            "E38"
+          ],
+          "reasoning": "The 1.2.10 documentation is a University of Texas/Texas Inventionworks Python wrapper, not a Fabman REST API release. The vendor's own API lists Bookings and webhooks, so the useful booking/API lead is independently valid. There is no API version compatibility, concurrency or implementation guarantee resting on the confused provenance."
+        }
+      ],
+      "unresolved": [],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "complete",
+          "judgment": "Most brief requirements addressed; investigated O3 is not substantively retained in delivered final as required by O5.",
+          "evidence": [
+            {
+              "candidate": [
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+                  "lines": "5–25,33–74",
+                  "description": "Constraints, discoveries, domain, plan and proposals"
+                },
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/discovery.md",
+                  "lines": "36",
+                  "description": "Actual researched chain"
+                },
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+                  "lines": "48,52,74",
+                  "description": "Generic chain/test references"
+                }
+              ],
+              "primary": [
+                "E07",
+                "E09",
+                "E11",
+                "E25",
+                "E26",
+                "E27",
+                "E28",
+                "E34",
+                "E35",
+                "E36",
+                "E39",
+                "E40"
+              ],
+              "reasoning": "O1/O2/O4/O6 substantive, O3 research real, O5 materially incomplete for evolution science. Reservations/custody/consumables/repair/sites/offline/CSV/audit/hosting choices otherwise retained. Extension leads adequate but shallow."
+            }
+          ]
+        },
+        {
+          "axis": 2,
+          "coverage": "complete",
+          "judgment": "Main technical facts and scoped vendor observations supported; minor Fabman wrapper provenance error.",
+          "evidence": [
+            {
+              "candidate": [
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+                  "lines": "19–25,33–41,47–52,78",
+                  "description": "Product/type/stock/import/replication/limit claims"
+                }
+              ],
+              "primary": [
+                "E03",
+                "E04",
+                "E05",
+                "E07",
+                "E08",
+                "E09",
+                "E11",
+                "E14",
+                "E15",
+                "E16",
+                "E18",
+                "E25",
+                "E26",
+                "E27",
+                "E28",
+                "E34",
+                "E35",
+                "E36",
+                "E37",
+                "E38",
+                "E39",
+                "E40"
+              ],
+              "reasoning": "Timestamp types and UTC/site-zone distinction are correct; quantity depletion remains distinct from booking. New Libre security notice is correctly not bound to tag. PG&E detail is corroborated as an indexed program example, not universal default. N1-m1 concerns provenance, not a false Booking capability."
+            }
+          ]
+        },
+        {
+          "axis": 3,
+          "coverage": "complete",
+          "judgment": "Useful unfamiliar products, mechanisms and condition-dependent choices retained.",
+          "evidence": [
+            {
+              "candidate": [
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/discovery.md",
+                  "lines": "entire file",
+                  "description": "Pre-reveal discovery"
+                },
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+                  "lines": "19–27,56–61",
+                  "description": "Lending/maker/scheduler/custody/quantity/authority/replica alternatives"
+                }
+              ],
+              "primary": [
+                "E07",
+                "E11",
+                "E14",
+                "E34",
+                "E35",
+                "E36",
+                "E38",
+                "E39",
+                "E40"
+              ],
+              "reasoning": "MyTurn/Fabman provide distinct lending and eligibility/machine models; LibreBooking adds optional scheduler with hosting/security limits. Site partitions, single writer, leases and central store have visible tradeoffs. Exact vendor universe is not required."
+            }
+          ]
+        },
+        {
+          "axis": 4,
+          "coverage": "complete",
+          "judgment": "Every P clause examined; narrowing of P2 avoids false blanket rejection.",
+          "evidence": [
+            {
+              "candidate": [
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+                  "lines": "43–52",
+                  "description": "Exact plan table"
+                }
+              ],
+              "primary": [
+                "E03",
+                "E04",
+                "E05",
+                "E07",
+                "E11",
+                "E15",
+                "E27",
+                "E34",
+                "E35",
+                "E36"
+              ],
+              "reasoning": "Calendar as interface, client-triggered safe writes and normal-flow smoke tests remain viable. Rejects only stale/unconstrained quantity mutation, timestamp-only conflict decisions, name identity and notes as sole availability. Migration/audit safeguards labeled proposed; no mandatory complex subsystem."
+            }
+          ]
+        },
+        {
+          "axis": 5,
+          "coverage": "complete",
+          "judgment": "Material final preservation failure; main critic amendments otherwise reasoned and retained.",
+          "evidence": [
+            {
+              "candidate": [
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+                  "lines": "48",
+                  "description": "Refers to a reported take-stock race/fix/test/release chain without explaining the defect, patch ordering, backport or release."
+                },
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+                  "lines": "52",
+                  "description": "Mentions separate threads/connections but no regression capability guard or identified release."
+                },
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+                  "lines": "74",
+                  "description": "States upstream history was inspected, without presenting that history."
+                },
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/discovery.md",
+                  "lines": "34–36",
+                  "description": "Supported full chain: stale pre-lock cap, post-lock fix, threaded regression, master/backport/release identities."
+                },
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/final.md",
+                  "lines": "60",
+                  "description": "Compact earlier crosswalk still names stale quantity, post-lock fix, separate connections, 1.5.x backport and 1.5.3."
+                },
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/critique.md",
+                  "lines": "26–28",
+                  "description": "Critic asserts complete preservation; that assertion is not corroborated by the delivered final."
+                }
+              ],
+              "primary": [
+                "E25",
+                "E26",
+                "E27",
+                "E28",
+                "E07",
+                "E09",
+                "E39",
+                "E40"
+              ],
+              "reasoning": "N1-M1 rejects critic's blanket preservation assertion: final generic S07 references cannot carry bug/patch/test/branch/release science. Scheduler criticism is independently downgraded from necessary material omission to optional enhancement; time model/P2/conditionality refinements accepted."
+            }
+          ]
+        },
+        {
+          "axis": 6,
+          "coverage": "complete",
+          "judgment": "Meaningful unexecuted validation proposals and honest runtime limits.",
+          "evidence": [
+            {
+              "candidate": [
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+                  "lines": "63–78",
+                  "description": "Eight proposal scenarios and execution/status boundaries"
+                },
+                {
+                  "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+                  "lines": "52",
+                  "description": "Threaded upstream test described as model, not executed"
+                }
+              ],
+              "primary": [
+                "E07",
+                "E09",
+                "E27"
+              ],
+              "reasoning": "One-confirmation overlap race, bounded accepted decrement, duplicate replay/partition orders, repair impact, CSV reviewed counts, restore, and units checks are discriminating. No runtime witness or upstream test execution claimed. Missing evolution prose is preservation, not validation overclaim."
+            }
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "claims": "Reservation authority, [) boundaries, continuous timestamp ranges, GiST/exclusion, scalar equality, active-state scope",
+            "primary": [
+              "E07",
+              "E08",
+              "E10"
+            ],
+            "judgment": "Supported mechanism, conditional product policy; no distributed/offline guarantee."
+          },
+          {
+            "claims": "Replication, deterministic visible winner, retained conflicts and need for application resolution",
+            "primary": [
+              "E11",
+              "E12",
+              "E13"
+            ],
+            "judgment": "Supported; does not make conflicting physical promises valid."
+          },
+          {
+            "claims": "Serialized custody versus quantity, location/allocated/available semantics and unit vocabulary",
+            "primary": [
+              "E03",
+              "E14",
+              "E15",
+              "E16",
+              "E17",
+              "E21"
+            ],
+            "judgment": "Supported with quantity/order/build domain limits."
+          },
+          {
+            "claims": "Import identity, precreated custom fields, historical importer prerequisites/ignored fields/date scope",
+            "primary": [
+              "E04",
+              "E05"
+            ],
+            "judgment": "Supported product-specific patterns; proposed provenance and rollback are design inferences."
+          },
+          {
+            "claims": "Tracking/retention and audit correction versus fabricated legacy provenance",
+            "primary": [
+              "E18",
+              "E19"
+            ],
+            "judgment": "Source retention is configurable; neither brief nor sources establish legal or indefinite retention."
+          },
+          {
+            "claims": "PostgreSQL tsrange/tstzrange, UTC normalization, retained site zone, btree_gist and state predicates",
+            "primary": [
+              "E07",
+              "E08",
+              "E09",
+              "E10"
+            ],
+            "judgment": "Supported explicit type and applicability limits."
+          },
+          {
+            "claims": "MyTurn lending features and PG&E approval/two-day appointment example",
+            "primary": [
+              "E34",
+              "E35"
+            ],
+            "judgment": "Vendor features directly observed; program example independently indexed after direct failure; scoped honestly."
+          },
+          {
+            "claims": "Fabman bookings/access/machine/API, 1.2.10 wrapper provenance",
+            "primary": [
+              "E36",
+              "E37",
+              "E38"
+            ],
+            "judgment": "Capabilities supported; wrapper identity should not be attributed to vendor API release."
+          },
+          {
+            "claims": "LibreBooking features, hosting, current security notice and v7.0.0 identity",
+            "primary": [
+              "E39",
+              "E40"
+            ],
+            "judgment": "Supported; undisclosed issue applicability honestly unresolved."
+          },
+          {
+            "claims": "take_stock stale cap→post-lock cap/test→master/backport→1.5.3 chain",
+            "primary": [
+              "E25",
+              "E26",
+              "E27",
+              "E28"
+            ],
+            "judgment": "Discovery/source notes accurate; final materially loses substantive chain."
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "externally_unresolved_limits": [
+          "No makerspace runtime, product trial, upstream test, import or restore witness was executed; source review cannot establish runtime correctness.",
+          "PG&E detail was recovered through indexed primary content after direct access failed; current live operation remains untested. Candidate honestly records its critic-stage 403.",
+          "LibreBooking's new security notice is on mutable develop README; affected version scope remains undisclosed and was not bound to v7.0.0."
+        ]
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "stages_read": [
+          "research/discovery.md",
+          "research/draft.md",
+          "research/final.md",
+          "research/revision-pass.md",
+          "critic/critique.md",
+          "critic/final.md",
+          "reviser/final.md",
+          "all mapped stage assignments/maps and bounded source notes"
+        ],
+        "judgment": "Entire stage sequence assessed. Source-backed loss N1-M1 isolated; options and the other critic amendments survive.",
+        "matrix": [
+          {
+            "topic": "Lending/maker products and program limits",
+            "earlier_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/discovery.md",
+              "locator": "product findings and approval example"
+            },
+            "final_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+              "locator": "19–23,27,60,78"
+            },
+            "judgment": "MyTurn/Fabman/Snipe scope and program-specific approval survive; PG&E critic retrieval failure explicitly preserved. Wrapper publisher ambiguity remains minor.",
+            "primary": [
+              "E03",
+              "E34",
+              "E35",
+              "E36",
+              "E37",
+              "E38"
+            ]
+          },
+          {
+            "topic": "Quantity/unit/import/audit",
+            "earlier_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/discovery.md",
+              "locator": "28–32"
+            },
+            "final_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+              "locator": "22–23,37,39,48,50,59,70–72"
+            },
+            "judgment": "Stock arithmetic, fractional-unit policy, legacy unknowns and structured audit/correction/retention choices retained; no need for upstream setting numbers in final.",
+            "primary": [
+              "E04",
+              "E05",
+              "E14",
+              "E15",
+              "E16",
+              "E18"
+            ]
+          },
+          {
+            "topic": "Inventory evolution chain",
+            "earlier_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/discovery.md",
+              "locator": "34–36; research final 60; critic final entire file"
+            },
+            "final_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+              "locator": "48,52,74; full 79-line final searched/read"
+            },
+            "judgment": "MATERIAL LOSS N1-M1. Discovery contains full defect/patch/test/master/backport/release path. Draft is compressed; research final crosswalk has compact substance; critic/reviser finals retain generic references only. No causal claim about a particular stage mechanism.",
+            "primary": [
+              "E25",
+              "E26",
+              "E27",
+              "E28"
+            ]
+          },
+          {
+            "topic": "Authority/offline/hosting alternatives",
+            "earlier_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/draft.md",
+              "locator": "38–40,47–51"
+            },
+            "final_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+              "locator": "9–15,24–25,47–49,56–61"
+            },
+            "judgment": "Calendar view and authority, provisional/site ownership/leases/single writer and failing-link/operational questions survive. Central hypothesis correctly conditional.",
+            "primary": [
+              "E07",
+              "E09",
+              "E11",
+              "E34",
+              "E36"
+            ]
+          },
+          {
+            "topic": "Critic refinements and scheduler",
+            "earlier_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/critique.md",
+              "locator": "9–15,19–24"
+            },
+            "final_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+              "locator": "11,21,24,48,50–52,65,78"
+            },
+            "judgment": "Useful scheduler/security/hosting lead and type/UTC caveats retained. Safe client-triggered writes no longer blanket-rejected. Critic's mandatory-material scheduler framing independently rejected.",
+            "primary": [
+              "E07",
+              "E09",
+              "E39",
+              "E40"
+            ]
+          },
+          {
+            "topic": "Repair and discriminating proposals",
+            "earlier_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/research/draft.md",
+              "locator": "42–43, proposed checks"
+            },
+            "final_evidence": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+              "locator": "36,41,51–52,63–74"
+            },
+            "judgment": "Typed availability/free text, future-booking effects, race/partition/CSV/audit/recovery proposals remain self-contained and unexecuted.",
+            "primary": [
+              "E03",
+              "E07",
+              "E27"
+            ]
+          }
+        ]
+      },
+      "grade_limits": [
+        "The grade is FAIL for a defined final-preservation defect despite useful and largely supported research; it is not a judgment that every recommendation is defective.",
+        "No makerspace runtime, product trial, upstream test, import or restore witness was executed; source review cannot establish runtime correctness.",
+        "PG&E detail was recovered through indexed primary content after direct access failed; current live operation remains untested. Candidate honestly records its critic-stage 403.",
+        "LibreBooking's new security notice is on mutable develop README; affected version scope remains undisclosed and was not bound to v7.0.0.",
+        "Fabman wrapper provenance minor N1-m1 remains; official vendor sources independently support booking and API leads.",
+        "Extensions are explored through machine integration, API and optional training/billing rather than a developed extension roadmap; adequate as leads for this small brief, shallow for later implementation planning."
+      ],
+      "original_obligations": [
+        {
+          "id": "O1",
+          "judgment": "fulfilled",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+          "lines": "19–27,56–61",
+          "reasoning": "Useful lending, maker, quantity, scheduler and consistency alternatives."
+        },
+        {
+          "id": "O2",
+          "judgment": "fulfilled_with_minor",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+          "lines": "19–25,33–52,78",
+          "reasoning": "Primary technical facts checked; N1-m1 wrapper provenance minor."
+        },
+        {
+          "id": "O3",
+          "judgment": "investigation_fulfilled_delivery_loss",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+          "lines": "48,52,74; discovery 36",
+          "reasoning": "Research investigated concrete chain, but delivered final does not present it."
+        },
+        {
+          "id": "O4",
+          "judgment": "fulfilled",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+          "lines": "43–52",
+          "reasoning": "All exact clauses and qualification categories evaluated."
+        },
+        {
+          "id": "O5",
+          "judgment": "material_defect",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+          "lines": "48,52,74",
+          "reasoning": "N1-M1 loses one supported materially useful research chain in the self-contained final."
+        },
+        {
+          "id": "O6",
+          "judgment": "fulfilled",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+          "lines": "63–78",
+          "reasoning": "Proposals discriminate races/partitions/import/state failures; not called executed."
+        }
+      ],
+      "plan_dispositions": [
+        {
+          "id": "P1",
+          "exact_clause": "Use a shared calendar for reservations.",
+          "dispositions": [
+            "already covered as view",
+            "conditional correction",
+            "user decision"
+          ],
+          "judgment": "Keeps calendar, adds resource/pool identity and authoritative overlap policy; approval versus immediate/hybrid remains user choice. Snipe overview scope is custody guide, not a proven global exclusion of all later Snipe features.",
+          "primary": [
+            "E07",
+            "E34",
+            "E35",
+            "E36"
+          ],
+          "evidence_lines": "47; 9,41,56"
+        },
+        {
+          "id": "P2",
+          "exact_clause": "Keep stock quantities in a database row updated by each client.",
+          "dispositions": [
+            "correction",
+            "reject stale read-modify-write",
+            "user decision"
+          ],
+          "judgment": "Explicitly acknowledges each client may safely initiate an authoritative write. Rejects unconstrained stale mutation, not row storage or every client origin. Units/permission/event/idempotency choices retained.",
+          "primary": [
+            "E14",
+            "E15",
+            "E16",
+            "E27"
+          ],
+          "evidence_lines": "48; 37"
+        },
+        {
+          "id": "P3",
+          "exact_clause": "Permit offline checkout and reconcile by timestamp.",
+          "dispositions": [
+            "uncertain",
+            "reject timestamp-only",
+            "user decision"
+          ],
+          "judgment": "Offline checkout requirement and failing link unresolved. Provisional journal/single writer/site quotas/leases shown with limits; timestamp isn't entitlement. Exact offline authority must be selected and tested.",
+          "primary": [
+            "E11",
+            "E12",
+            "E13"
+          ],
+          "evidence_lines": "49; 13,57–58"
+        },
+        {
+          "id": "P4",
+          "exact_clause": "CSV import overwrites matching names.",
+          "dispositions": [
+            "reject blind overwrite/name identity",
+            "required capability retained",
+            "user decision"
+          ],
+          "judgment": "Makes inconsistent-sheet migration explicit, stable ID or reviewed crosswalk, ambiguity/error/provenance/backup/rerun safeguards. Says these are proposed safeguards, not Snipe requirements. Historic scope stays open.",
+          "primary": [
+            "E04",
+            "E05"
+          ],
+          "evidence_lines": "50; 59,61,70"
+        },
+        {
+          "id": "P5",
+          "exact_clause": "Tool maintenance is a free-text note.",
+          "dispositions": [
+            "correction",
+            "free text retained",
+            "user decision"
+          ],
+          "judgment": "Adds typed repair/unavailable state and minimum queue/event facts without requiring a full work-order subsystem. Repair/late-return affects future holds with preserved records.",
+          "primary": [
+            "E03",
+            "E18"
+          ],
+          "evidence_lines": "51; 36,41"
+        },
+        {
+          "id": "P6",
+          "exact_clause": "Test normal reservation and check-in flows.",
+          "dispositions": [
+            "already covered smoke",
+            "correction/addition"
+          ],
+          "judgment": "Retains normal flows; separate-client races/partitions/replay/import/recovery/units added. Feature-dependent proposals honest. O3 detail loss does not turn test proposal into an execution claim.",
+          "primary": [
+            "E07",
+            "E27"
+          ],
+          "evidence_lines": "52; 63–74"
+        }
+      ],
+      "critic_dispositions": [
+        {
+          "id": "C1-1",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/critique.md",
+          "critic_lines": "9",
+          "disposition": "accept optional lead; reject mandatory-material framing",
+          "reasoning": "LibreBooking is a useful dedicated scheduler with current security/hosting caveats. Original O1 already researched multiple different useful products/mechanisms; no requirement to discover this exact product. Omission of this one comparator was not itself a material failure.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+          "final_lines": "21,60,65,78",
+          "primary": [
+            "E39",
+            "E40"
+          ]
+        },
+        {
+          "id": "C1-2",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/critique.md",
+          "critic_lines": "11",
+          "disposition": "accept refinement",
+          "reasoning": "tsrange lacks time zone; btree_gist setup and explicit instant/site-zone policy matter. This strengthens a supported mechanism rather than invalidating original PostgreSQL approach.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+          "final_lines": "24,41,78",
+          "primary": [
+            "E07",
+            "E08",
+            "E09"
+          ]
+        },
+        {
+          "id": "C1-3",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/critique.md",
+          "critic_lines": "13",
+          "disposition": "accept correction",
+          "reasoning": "Client-originated writes can be safe; reject stale unconstrained mutation. Final explicitly narrows P2 and keeps architecture open.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+          "final_lines": "48",
+          "primary": [
+            "E15",
+            "E27"
+          ]
+        },
+        {
+          "id": "C1-4",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/critique.md",
+          "critic_lines": "15",
+          "disposition": "accept conditionality",
+          "reasoning": "Central app is a plausible inference, not established lowest-risk choice without organizational/network/hosting data. Final retains hypothesis with actual fit screen.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+          "final_lines": "11,57,60–61,65",
+          "primary": [
+            "E07",
+            "E11",
+            "E34",
+            "E36"
+          ]
+        },
+        {
+          "id": "C1-5",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/critique.md",
+          "critic_lines": "19",
+          "disposition": "accept retained calendar scope",
+          "reasoning": "Calendar as view/request surface remains useful; it is not by itself proof of concurrency enforcement.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+          "final_lines": "9,47",
+          "primary": [
+            "E07",
+            "E39"
+          ]
+        },
+        {
+          "id": "C1-6",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/critique.md",
+          "critic_lines": "20",
+          "disposition": "accept",
+          "reasoning": "Timestamp-only reconciliation not entitlement; provisional/site ownership/authority alternatives retained.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+          "final_lines": "13,49,57–58",
+          "primary": [
+            "E11"
+          ]
+        },
+        {
+          "id": "C1-7",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/critique.md",
+          "critic_lines": "21",
+          "disposition": "accept scoped safeguards",
+          "reasoning": "Snipe importer requirements are examples. Hash/provenance/rollback are risk-based proposed safeguards, not source-imposed laws.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+          "final_lines": "50",
+          "primary": [
+            "E04",
+            "E05"
+          ]
+        },
+        {
+          "id": "C1-8",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/critique.md",
+          "critic_lines": "22",
+          "disposition": "accept proportional analogy",
+          "reasoning": "Structured repair plus notes is brief-related; asset status is not a demonstrated full maker work-order subsystem.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+          "final_lines": "36,51",
+          "primary": [
+            "E03",
+            "E18"
+          ]
+        },
+        {
+          "id": "C1-9",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/critique.md",
+          "critic_lines": "23",
+          "disposition": "accept validation gating",
+          "reasoning": "Race checks discriminate beyond smoke tests; no source test executed; offline/fractional/historic/restore checks depend on selected policy.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+          "final_lines": "52,63–74",
+          "primary": [
+            "E27"
+          ]
+        },
+        {
+          "id": "C1-10",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/critique.md",
+          "critic_lines": "24",
+          "disposition": "accept source limits",
+          "reasoning": "Vendor feature lists are not assurance; PG&E direct failure scoped and mutable documentation labeled. Indexed primary corroborates program example, without retroactively claiming critic retrieval succeeded.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+          "final_lines": "19,27,74,78",
+          "primary": [
+            "E34",
+            "E35",
+            "E36"
+          ]
+        },
+        {
+          "id": "C1-11",
+          "critic_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/critic/critique.md",
+          "critic_lines": "28",
+          "disposition": "reject blanket preservation claim",
+          "reasoning": "Claimed retained issue/fix/release chain is missing as material prose in critic/reviser final. N1-M1 distinguishes investigated source notes from delivered self-contained science.",
+          "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/treatment/reviser/final.md",
+          "final_lines": "48,52,74",
+          "primary": [
+            "E25",
+            "E26",
+            "E27",
+            "E28"
+          ]
+        }
+      ],
+      "validation": {
+        "executed": "Public documentation and upstream history inspection, plus earlier prescribed plan reveal as recorded; no product/runtime/upstream test witness.",
+        "proposed": "Eight scenarios gated on chosen products and policies; expected outcomes discriminate domain failures.",
+        "overclaim": false
+      }
+    }
+  },
+  "method_clues": {
+    "blinding": "partial",
+    "observed": "Exact paths and stage headers identify N2/control and N1/treatment; N1 includes research/critic final and revision artifacts, whereas N2 has a research draft and critique before reviser final.",
+    "effect": "Both complete arm sequences were assessed independently against S04 brief/plan and primary sources. Neither final or critic served as the other arm's oracle. Stage presence/length/citation counts do not define quality; no method-causal attribution is justified."
+  },
+  "comparative_quality_eligible": false,
+  "comparative_interpretation": "Only N2 is a full-quality pass with stated limits. N1 has a specific material final-preservation defect. This is not a claim of equivalence, a speed win, broad method superiority, or a billing/cost result.",
+  "scope_limits": {
+    "actual_coverage": "Both complete mapped finals, discovery/draft/critique/revision/final stages where present, all declared source maps and bounded notes, all O1–O6, exact P1–P6 and substantive critic findings were read and adjudicated. Relevant public product/docs/code/release sources independently checked.",
+    "remaining_evaluator_scope": [],
+    "excluded": "No other case/evaluation/campaign, private provider/account/config state, candidate repair, Git/canon/service mutation, executable download, product account, nested agent or deployment.",
+    "evidence_limits": "Live sources are current evaluator observations, not proof of what an earlier agent actually fetched. Mutable docs are not bound to an invented commit. Indexed primary access is distinguished from successful direct access; test source/assertions are distinguished from executed tests.",
+    "proportionality": "Small product research/design brief; no requirement for a deployable schema, complete competitor census, pricing contract, production assurance or test runtime.",
+    "runtime_science": "No target implementation or upstream test was executed by evaluator. Commands only read/hash permitted files and serialize/check these assessment outputs.",
+    "no_candidate_repair": true
+  },
+  "evaluation_started_at": "2026-10-09T18:58:01Z",
+  "evaluation_completed_at": "2026-10-09T19:14:55.628355Z",
+  "observed_source_operations": {
+    "method": "Independent public primary retrieval through web open/find/search, followed by source and code/test/release reading; frozen permitted files read through local text commands.",
+    "sources": [
+      {
+        "id": "E01",
+        "url": "https://github.com/grokability/snipe-it/releases/tag/v8.8.0",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E02",
+        "url": "https://github.com/grokability/snipe-it/releases/tag/v8.7.0",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E03",
+        "url": "https://snipe-it.readme.io/docs/overview",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E04",
+        "url": "https://snipe-it.readme.io/docs/importing-assets",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E05",
+        "url": "https://snipe-it.readme.io/docs/importing-history",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E06",
+        "url": "https://snipe-it.readme.io/docs/requestable-assets",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E07",
+        "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E08",
+        "url": "https://www.postgresql.org/docs/18/sql-createtable.html",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E09",
+        "url": "https://www.postgresql.org/docs/18/datatype-datetime.html",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E10",
+        "url": "https://www.postgresql.org/docs/18/sql-set-constraints.html",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E11",
+        "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E12",
+        "url": "https://pouchdb.com/guides/conflicts.html",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E13",
+        "url": "https://pouchdb.com/guides/replication.html",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E14",
+        "url": "https://docs.inventree.org/en/stable/stock/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E15",
+        "url": "https://docs.inventree.org/en/stable/stock/availability/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E16",
+        "url": "https://docs.inventree.org/en/latest/concepts/units/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E17",
+        "url": "https://docs.inventree.org/en/latest/part/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E18",
+        "url": "https://docs.inventree.org/en/latest/stock/tracking/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E19",
+        "url": "https://docs.inventree.org/en/latest/concepts/data_import/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E20",
+        "url": "https://docs.inventree.org/en/latest/plugins/develop/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E21",
+        "url": "https://docs.inventree.org/en/stable/manufacturing/allocate/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E22",
+        "url": "https://github.com/inventree/InvenTree/pull/12478",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E23",
+        "url": "https://github.com/inventree/InvenTree/pull/12478/files",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E24",
+        "url": "https://github.com/inventree/InvenTree/releases/tag/1.5.0",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E25",
+        "url": "https://github.com/inventree/InvenTree/pull/12718",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E26",
+        "url": "https://github.com/inventree/InvenTree/pull/12719",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E27",
+        "url": "https://github.com/inventree/InvenTree/commit/4446c95",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E28",
+        "url": "https://github.com/inventree/InvenTree/releases/tag/1.5.3",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E29",
+        "url": "https://knowledge.cheqroom.com/helpcenter/how-to-create-and-manage-reservations",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E30",
+        "url": "https://knowledge.cheqroom.com/helpcenter/preventing-booking-conflicts",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E31",
+        "url": "https://knowledge.cheqroom.com/helpcenter/why-am-i-unable-to-create-a-booking-across-multiple-locations",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E32",
+        "url": "https://knowledge.cheqroom.com/helpcenter/how-to-create-and-manage-check-outs-and-check-ins",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E33",
+        "url": "https://help.cheqroom.com/en/articles/6193193-generate-reports-from-cheqroom",
+        "status": "indexed_primary",
+        "operation": "search/indexed primary reading"
+      },
+      {
+        "id": "E34",
+        "url": "https://myturn.com/lending-libraries/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E35",
+        "url": "https://pge.myturn.com/library/",
+        "status": "indexed_primary_after_direct_failure",
+        "operation": "search/indexed primary reading"
+      },
+      {
+        "id": "E36",
+        "url": "https://www.fabman.io/",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E37",
+        "url": "https://fabman-api.readthedocs.io/en/stable/introduction.html",
+        "status": "primary_for_wrapper_not_vendor_api",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E38",
+        "url": "https://github.com/FabmanHQ/fabman-api",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E39",
+        "url": "https://github.com/LibreBooking/librebooking",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      },
+      {
+        "id": "E40",
+        "url": "https://github.com/LibreBooking/librebooking/releases/tag/v7.0.0",
+        "status": "direct_primary",
+        "operation": "open and targeted source reading; find where needed"
+      }
+    ],
+    "failed_or_migrated": [
+      {
+        "url": "https://pge.myturn.com/library/",
+        "result": "Direct web retrieval returned Internal Error; independent indexed primary search recovered approval/two-day content. Candidate critic-stage HTTP 403 remains its own provenance, not evaluator result."
+      },
+      {
+        "url": "https://help.cheqroom.com/en/articles/9515148-how-to-create-and-manage-reservations",
+        "result": "Legacy direct retrieval failed/redirected to generic help search; current official knowledge.cheqroom.com article recovered."
+      },
+      {
+        "url": "https://help.cheqroom.com/en/articles/1884304-preventing-booking-conflicts",
+        "result": "Legacy help source inaccessible; current official knowledge.cheqroom.com conflict article recovered."
+      }
+    ],
+    "operation_count": null,
+    "count_limit": "No invented operation count; source records are coverage groupings, not a number-based quality measure."
+  },
+  "native_and_cost_limits": {
+    "native_goal": "Actual native Goal created and active status observed; completion required only after full saved science and verification. No handwritten lifecycle receipt.",
+    "native_completion_at_assessment_save": null,
+    "t3_completion": null,
+    "candidate_native_completion": {
+      "N2": null,
+      "N1": null
+    },
+    "usage": null,
+    "billing": null,
+    "cost": null,
+    "latency_comparison": null,
+    "explanation": "Final delivery was observed in exact mapped complete files and asserted true in the frozen map. Delivery/scientific quality are separate from host/native completion and provider usage/billing, which were not independently observed."
+  },
+  "input_integrity": {
+    "mapped_candidate_files": 33,
+    "declared_source_note_files": 26,
+    "all_expected_hashes_match": true,
+    "note": "Integrity establishes exact inputs only; it is not a quality grade."
+  },
+  "verification": {
+    "performed_at": "2026-10-09T19:14:55.628355Z",
+    "status": "passed",
+    "checks": [
+      "required rubric schema fields",
+      "both mapped delivered finals",
+      "six complete evidence-bearing axes per arm",
+      "all six original obligations and exact plan clauses per arm",
+      "substantive criticism accept/reject and stage preservation matrices",
+      "all independent primary source IDs resolve",
+      "all 64 frozen file hashes unchanged; 33 map expected hashes and byte counts matched",
+      "all local Markdown evidence links resolve",
+      "material findings carry candidate/original obligation/primary/type/severity/reasoning",
+      "no candidate repair or runtime-result fabrication"
+    ],
+    "scientific_meaning": "Serialization/integrity checks supplement the authored source-grounded assessment and do not determine quality."
+  }
+}

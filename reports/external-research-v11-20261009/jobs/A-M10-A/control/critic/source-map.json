@@ -1,0 +1,186 @@
+{
+  "format": "ER11-source-map-v1",
+  "block": "A-M10-A",
+  "stage": "critic",
+  "captured_at_utc": "2026-10-09T19:08:43Z",
+  "usage_billing_observed": null,
+  "access_context": "Read-only direct web open/find of public primary documentation, versioned crate documentation and public repository records. Timestamps are UTC clock readings immediately before each grouped access call. No product, package, local dataset, installer or executable was processed.",
+  "sources": [
+    {
+      "id": "C01",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "version": "DuckDB 1.5 current documentation; mutable alias.",
+      "commit_or_tag": null,
+      "locator": "Header identifies 1.5 current; Sample Size at lines 523-529 (20,480 rows by default; regular files may be sampled at multiple positions, gzip/stdin from the beginning).",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": ["web open exact URL", "web find Sample Size"],
+      "evidence": "sources/primary-checks.md#C01",
+      "drift": "Mutable current documentation; exact app dependency must be checked."
+    },
+    {
+      "id": "C02",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "version": "DuckDB 1.5 current documentation; mutable alias.",
+      "commit_or_tag": null,
+      "locator": "Projection pushdown example at lines 610-620; reject tables and defaults at lines 622-670; line and byte position schema at lines 649-655.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": ["web open exact URL", "web find temporary", "web find projection", "web find ignore_errors"],
+      "evidence": "sources/primary-checks.md#C02",
+      "drift": "Mutable current documentation; engine reject metadata is not an application persistence contract."
+    },
+    {
+      "id": "C03",
+      "url": "https://duckdb.org/docs/current/core_extensions/excel",
+      "version": "DuckDB 1.5 current documentation; mutable alias.",
+      "commit_or_tag": null,
+      "locator": "XLSX-only support and extension loading at lines 511-520; first-sheet, all_varchar, ignore_errors, empty-cell and first-data-row inference at lines 557-597.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": ["web open exact URL", "web find XLS", "web find empty cells", "web find ignore_errors"],
+      "evidence": "sources/primary-checks.md#C03",
+      "drift": "Mutable current documentation."
+    },
+    {
+      "id": "C04",
+      "url": "https://learn.microsoft.com/en-us/power-query/connectors/text-csv",
+      "version": "Current Microsoft Learn page; last updated 2026-06-29; mutable.",
+      "commit_or_tag": null,
+      "locator": "CSV type detection choices and sample/full-file/Text alternatives at lines 103-111; quoted-line-break behavior at lines 129-145.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": ["web open exact URL"],
+      "evidence": "sources/primary-checks.md#C04",
+      "drift": "Documentation notes capabilities vary by host product."
+    },
+    {
+      "id": "C05",
+      "url": "https://learn.microsoft.com/en-us/power-query/data-types",
+      "version": "Current Microsoft Learn page; mutable.",
+      "commit_or_tag": null,
+      "locator": "First-200-row inference at lines 79-81; OS regional default and Using locale behavior at lines 105-126.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": ["web open exact URL", "web find locale", "web find first 200 rows"],
+      "evidence": "sources/primary-checks.md#C05",
+      "drift": "Mutable documentation; describes Power Query behavior, not a universal locale rule."
+    },
+    {
+      "id": "C06",
+      "url": "https://learn.microsoft.com/en-us/power-query/data-profiling-tools",
+      "version": "Current Microsoft Learn page; mutable.",
+      "commit_or_tag": null,
+      "locator": "Column profiling defaults to first 1,000 rows with a control to profile the entire dataset; profile scope section.",
+      "accessed_at_utc": "2026-10-09T19:04:34Z",
+      "observed_operations": ["web open exact URL", "web find 1,000"],
+      "evidence": "sources/primary-checks.md#C06",
+      "drift": "Mutable documentation; no desktop build was run."
+    },
+    {
+      "id": "C07",
+      "url": "https://openrefine.org/docs/manual/running/",
+      "version": "Current OpenRefine manual; mutable.",
+      "commit_or_tag": null,
+      "locator": "History (Undo/Redo) and Reusing operations sections: project history persists; selected operations can be extracted/applied as JSON; some operations cannot be extracted.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": ["web search_query official domain", "web open exact URL"],
+      "evidence": "sources/primary-checks.md#C07",
+      "drift": "Current manual; stable release context is a separate source in the predecessor map."
+    },
+    {
+      "id": "C08",
+      "url": "https://openrefine.org/docs/manual/exploring",
+      "version": "Current OpenRefine manual; mutable.",
+      "commit_or_tag": null,
+      "locator": "Data types and Dates sections at lines 44-62; date values are normalized to ISO-8601 with UTC time.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": ["web open exact URL", "web find UTC"],
+      "evidence": "sources/primary-checks.md#C08",
+      "drift": "Manual documents product semantics, not a recommended universal date policy."
+    },
+    {
+      "id": "C09",
+      "url": "https://github.com/OpenRefine/OpenRefine/issues/6009",
+      "version": "Issue opened 2023-08-10; mutable discussion record.",
+      "commit_or_tag": null,
+      "locator": "Current Results / Expected Behavior / Versions at lines 166-180; comments describe preserving timezone-free date components at lines 208-220.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": ["web open exact URL", "web find timezone"],
+      "evidence": "sources/primary-checks.md#C09",
+      "drift": "User expectation/disagreement evidence, not a normative rule."
+    },
+    {
+      "id": "C10",
+      "url": "https://framework.frictionlessdata.io/docs/guides/validating-data",
+      "version": "Current Frictionless documentation; mutable; exact version not visible in this page access.",
+      "commit_or_tag": null,
+      "locator": "Structured error fields in examples around lines 235-280; Limit Errors section at lines 1159-1170 shows configurable limit_errors, including explicit limit_errors=1.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": ["web open exact URL", "web find limit", "web find rowNumber", "web find limit_errors"],
+      "evidence": "sources/primary-checks.md#C10",
+      "drift": "This access did not verify a default of 1,000 for a pinned release."
+    },
+    {
+      "id": "C11",
+      "url": "https://github.com/duckdb/duckdb/issues/13043",
+      "version": "Issue report says DuckDB 1.0.0 CLI on macOS arm64.",
+      "commit_or_tag": null,
+      "locator": "Issue reproduction and linked PR; environment/version fields at lines 211-241.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": ["web open exact URL", "web find macOS"],
+      "evidence": "sources/primary-checks.md#C11",
+      "drift": "Reporter states latest build was not tested; not independently reproduced."
+    },
+    {
+      "id": "C12",
+      "url": "https://github.com/duckdb/duckdb/pull/13083",
+      "version": "Merged 2024-07-20; merge 50bb0a0; PR commits af6844e and 9a4da7f.",
+      "commit_or_tag": "merge 50bb0a0",
+      "locator": "Merged status/date and described extra-delimiter sniffer change at lines 130-197 and 206-220.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": ["web open exact URL", "web find Merged"],
+      "evidence": "sources/primary-checks.md#C12",
+      "drift": "Fix is scoped to the described issue/example; does not prove general malformed-file robustness."
+    },
+    {
+      "id": "C13",
+      "url": "https://github.com/duckdb/duckdb/releases/tag/v1.1.0",
+      "version": "DuckDB v1.1.0.",
+      "commit_or_tag": "v1.1.0; fa5c2fe (as registered in predecessor source-map)",
+      "locator": "What's Changed lists PR #13083 at lines 595-598.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": ["web open exact URL", "web find 13083"],
+      "evidence": "sources/primary-checks.md#C13",
+      "drift": "Immutable release tag; release inclusion does not establish all later behavior."
+    },
+    {
+      "id": "C14",
+      "url": "https://github.com/tafia/calamine/releases/tag/v0.36.1",
+      "version": "Calamine v0.36.1, released 2026-07-27.",
+      "commit_or_tag": "v0.36.1; 0a24c2a",
+      "locator": "Release heading and fixes for strict OOXML, empty XLS strings and XLSB record parsing at lines 129-175.",
+      "accessed_at_utc": "2026-10-09T19:08:43Z",
+      "observed_operations": ["web open exact release URL"],
+      "evidence": "sources/primary-checks.md#C14",
+      "drift": "Tag-pinned release notes; not a performance result."
+    },
+    {
+      "id": "C15",
+      "url": "https://docs.rs/calamine/0.36.1/calamine/enum.Data.html",
+      "version": "calamine 0.36.1.",
+      "commit_or_tag": "v0.36.1; 0a24c2a",
+      "locator": "Version heading and Data variants Int, Float, String, Bool, DateTime, DateTimeIso, DurationIso, Error, Empty at lines 2-18 and 69-86.",
+      "accessed_at_utc": "2026-10-09T19:08:43Z",
+      "observed_operations": ["web open exact versioned URL"],
+      "evidence": "sources/primary-checks.md#C15",
+      "drift": "Versioned crate documentation."
+    },
+    {
+      "id": "C16",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.ByteRecord.html",
+      "version": "csv crate 1.4.0.",
+      "commit_or_tag": "crate 1.4.0",
+      "locator": "ByteRecord described as a single CSV record stored as raw bytes; valid for non-UTF-8 input at lines 69-80.",
+      "accessed_at_utc": "2026-10-09T19:08:43Z",
+      "observed_operations": ["web open exact versioned URL", "web find UTF-8"],
+      "evidence": "sources/primary-checks.md#C16",
+      "drift": "Versioned crate documentation."
+    }
+  ]
+}

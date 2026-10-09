@@ -1,0 +1,185 @@
+{
+  "block": "A-M11-B",
+  "arm": "treatment",
+  "case": "S05",
+  "method": "M11",
+  "stage": "reviser",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser",
+  "assignment_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/assignment.md",
+  "input_map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser/input-map.json",
+  "brief_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S05/brief.md",
+  "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/reviser",
+  "snapshot_at_utc": "2026-10-09T18:57:54Z",
+  "usage_or_billing": null,
+  "source_index": "sources/index.md",
+  "independent_reviser_evidence": "sources/01-reviser-verifications.md",
+  "upstream_source_maps": [
+    {
+      "stage": "research",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "source_ids": "S01-S21",
+      "handling": "Declared predecessor provenance retained at its original path; source IDs and meanings are unchanged."
+    },
+    {
+      "stage": "critic",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/source-map.json",
+      "source_ids": "C01-C19",
+      "handling": "Declared predecessor provenance retained at its original path; source IDs and meanings are unchanged."
+    }
+  ],
+  "access_batch_note": "V01-V08 were opened directly as public primary sources read-only during the 2026-10-09T18:57:34Z through 2026-10-09T18:57:54Z batch. The timestamp below records batch completion; sources were not searched via a result page.",
+  "independent_reviser_sources": [
+    {
+      "source_id": "V01",
+      "title": "Total Hits is wrong when there is rankingScoreThreshold | Meilisearch issue 5274",
+      "url": "https://github.com/meilisearch/meilisearch/issues/5274",
+      "version_or_revision": "Issue opened 2025-01-23; report states Meilisearch v1.12; closed and listed under v1.16.0 solved-issues milestone at access.",
+      "commit": null,
+      "locator": "Status/version and issue report around lines 128-208; fix-scope comment around lines 476-485.",
+      "accessed_at_utc": "2026-10-09T18:57:54Z",
+      "observed_operations": [
+        "Opened the exact public primary issue URL read-only.",
+        "Inspected status, reported version, maintainer explanation of threshold/limit count and facet behavior, and later fix-scope comment.",
+        "Did not run Meilisearch, reproduce the report, call an API, authenticate, or download software."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/01-reviser-verifications.md#v01",
+      "observation_summary": "Historical threshold-count/facet report on v1.12; page is closed under v1.16.0, and a contributor specifies fix scope for page/hitsPerPage but not limit/offset."
+    },
+    {
+      "source_id": "V02",
+      "title": "Frequently Asked Questions | Local Contexts",
+      "url": "https://localcontexts.org/support/frequently-asked-questions/",
+      "version_or_revision": "Live FAQ; page reports last updated 2026-09-10.",
+      "commit": null,
+      "locator": "Label/Notice distinction and copyright relationship around lines 91-99; ownership around 108-114; Notice conditions around 139-142.",
+      "accessed_at_utc": "2026-10-09T18:57:54Z",
+      "observed_operations": [
+        "Opened the exact public primary FAQ URL read-only.",
+        "Inspected the Label/Notice distinction, Label ownership, copyright relationship, and Notice-category conditions.",
+        "Did not create a project, apply a Label or Notice, authenticate, or call the Hub API."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/01-reviser-verifications.md#v02",
+      "observation_summary": "Disclosure and Engagement Notices may be used without community approval; Collections Care Notices require engagement with Indigenous community authorities; Labels remain community-controlled."
+    },
+    {
+      "source_id": "V03",
+      "title": "Getting started with AI-powered search | Meilisearch documentation",
+      "url": "https://github.com/meilisearch/documentation/blob/main/capabilities/hybrid_search/getting_started.mdx",
+      "version_or_revision": "Mutable documentation main branch; no commit pinned.",
+      "commit": null,
+      "locator": "Document template around lines 259-274; batch/cache, hybrid query, and rankingScoreThreshold around lines 276-296.",
+      "accessed_at_utc": "2026-10-09T18:57:54Z",
+      "observed_operations": [
+        "Opened the exact public documentation URL read-only.",
+        "Inspected field selection, the example provider data flow, caching, and score-threshold range/tuning text.",
+        "Did not call Meilisearch or an embedding provider, authenticate, or download software."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/01-reviser-verifications.md#v03",
+      "observation_summary": "The template selects fields; the guide example sends document text to OpenAI and documents a 0-1 threshold to be tuned on local data."
+    },
+    {
+      "source_id": "V04",
+      "title": "Adding a null-valued attribute to searchableAttributes changes _rankingScore in hybrid search | Meilisearch issue 6591",
+      "url": "https://github.com/meilisearch/meilisearch/issues/6591",
+      "version_or_revision": "Issue opened 2026-08-17; body reports Meilisearch 1.52; Open at access.",
+      "commit": null,
+      "locator": "Title/status, reported version, and report/reproduction around lines 129-155.",
+      "accessed_at_utc": "2026-10-09T18:57:54Z",
+      "observed_operations": [
+        "Opened the exact public primary issue URL read-only.",
+        "Inspected title, current status, reported version, and issue description.",
+        "Did not reproduce the report, run Meilisearch, call an API, authenticate, or download software."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/01-reviser-verifications.md#v04",
+      "observation_summary": "Open user report describes a hybrid ranking path/score change in one v1.52 configuration; it does not report data extraction or a privacy attack."
+    },
+    {
+      "source_id": "V05",
+      "title": "Reconciling | OpenRefine",
+      "url": "https://openrefine.org/docs/manual/reconciling",
+      "version_or_revision": "Live current manual; no OpenRefine version pinned.",
+      "commit": null,
+      "locator": "Human review and iterative process around lines 25-47; candidate decisions and cell preservation around lines 64-78; performance notes in the same manual.",
+      "accessed_at_utc": "2026-10-09T18:57:54Z",
+      "observed_operations": [
+        "Opened the exact public primary manual URL read-only.",
+        "Inspected human review, candidate scoring, original-value/link retention, and performance behavior.",
+        "Did not call a reconciliation service, authenticate, download software, or run product code."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/01-reviser-verifications.md#v05",
+      "observation_summary": "Reconciliation is semi-automated, requires human judgment, preserves original and entity link in a cell, has service-specific score semantics, and may be slow without an operation-level throttle."
+    },
+    {
+      "source_id": "V06",
+      "title": "Presentation API 3.0 | IIIF",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "version_or_revision": "IIIF Presentation API 3.0.0; no repository commit exposed by the published specification.",
+      "commit": null,
+      "locator": "requiredStatement and rights properties around lines 203-228.",
+      "accessed_at_utc": "2026-10-09T18:57:54Z",
+      "observed_operations": [
+        "Opened the exact public specification URL read-only.",
+        "Inspected requiredStatement rendering and rights-property semantics.",
+        "Did not generate a manifest, call an image service, authenticate, or execute software."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/01-reviser-verifications.md#v06",
+      "observation_summary": "Clients must render requiredStatement; rights is informative and may be rendered."
+    },
+    {
+      "source_id": "V07",
+      "title": "PostgreSQL 18 full-text search documentation",
+      "url": "https://www.postgresql.org/docs/current/textsearch-intro.html",
+      "additional_urls": [
+        "https://www.postgresql.org/docs/current/textsearch-indexes.html"
+      ],
+      "version_or_revision": "Current documentation resolved to PostgreSQL 18 at access; documentation only, not a pinned/running database.",
+      "commit": null,
+      "locator": "Introduction §12.1, including preprocessing and tsvector/tsquery; preferred index types §12.9.",
+      "accessed_at_utc": "2026-10-09T18:57:54Z",
+      "observed_operations": [
+        "Opened both exact official documentation URLs read-only.",
+        "Inspected text preprocessing, lexemes, dictionaries, tsvector/tsquery, ranking, and GIN/GiST index guidance.",
+        "Did not run a database, call an API, authenticate, download software, or benchmark."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/01-reviser-verifications.md#v07",
+      "observation_summary": "PostgreSQL 18 provides indexed full-text search mechanisms; docs prefer GIN for regular text search and describe conditions/tradeoffs."
+    },
+    {
+      "source_id": "V08",
+      "title": "Apache Solr Reference Guide: Searching and Faceting",
+      "url": "https://solr.apache.org/guide/solr/latest/getting-started/searching-in-solr.html",
+      "additional_urls": [
+        "https://solr.apache.org/guide/solr/latest/query-guide/faceting.html"
+      ],
+      "version_or_revision": "Official latest guide resolved to Apache Solr 10.0 at access; not a deployed build or pinned commit.",
+      "commit": null,
+      "locator": "Searching: request handlers, parsers, and filter queries; Faceting: field-term analysis and facet parameters/defaults.",
+      "accessed_at_utc": "2026-10-09T18:57:54Z",
+      "observed_operations": [
+        "Opened both exact official documentation URLs read-only.",
+        "Inspected query/filter behavior, facet activation, and analyzed versus literal field terms.",
+        "Did not run Solr, call an API, authenticate, download software, or benchmark."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/01-reviser-verifications.md#v08",
+      "observation_summary": "Solr is a separate schema-driven search platform; filters and facets are supported, with schema/field representation affecting facet terms."
+    }
+  ],
+  "execution_summary": {
+    "read_inputs": [
+      "This reviser assignment.md and exact input-map.json.",
+      "Mapped S05 brief.",
+      "All declared research predecessor documents and declared research source root.",
+      "Declared critic critique.md, source-map.json, and declared critic source root."
+    ],
+    "external_operations": "Opened V01-V08 public primary source URLs read-only; no API, account, service transaction, download, execution, test, or benchmark.",
+    "usage_or_billing": null
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "block": "A-M01-B",
+  "witnesses": [
+    {
+      "source_id": "E21",
+      "url": "https://docs.antora.org/antora/latest/page/resource-id-coordinates/",
+      "section_or_symbol": "Version coordinate",
+      "accessed_at": "2026-10-09T18:56:14.100692+00:00",
+      "response_sha256": "fa4848fd18b9d3746914340914ac88248aa659719a252ebe3c69dd9bc4c99d53",
+      "text_sha256": "3c8c9cb92b1a3b24414923cb573706ccc265cc062eae486b81d2870a410e8234",
+      "bounded_verbatim_witness": "If the component coordinate is specified without specifying a version coordinate, the latest version of that component will be chosen.",
+      "assessor_interpretation": "Cross-component version omission resolves latest, not necessarily reader release.",
+      "operation": "Read-only source inspection; no runtime execution"
+    },
+    {
+      "source_id": "E31",
+      "url": "https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/incorporating-feedback-in-your-pull-request",
+      "section_or_symbol": "Applying suggested changes",
+      "accessed_at": "2026-10-09T18:56:14.490262+00:00",
+      "response_sha256": "fd110cfae129fe15dd0d138b5347ff93a9fc522cc89d602bfee7e60d58a8a268",
+      "text_sha256": "c18ad4f72716ca3d2e5b5048411372646e6d767b691d9e8d52404352fe20d89d",
+      "bounded_verbatim_witness": "creates a single commit on the compare branch of the pull request",
+      "assessor_interpretation": "Suggested changes can be applied in a reviewed PR workflow; authoring provenance and explicit application are documented.",
+      "operation": "Read-only source inspection; no runtime execution"
+    },
+    {
+      "source_id": "E55",
+      "url": "https://raw.githubusercontent.com/jimporter/mike/master/mike/driver.py",
+      "section_or_symbol": "deploy_desc",
+      "accessed_at": "2026-10-09T19:02:01.156134+00:00",
+      "response_sha256": "911677704f1d9fbc3c54553bdf341e16bc1a4351c5a5127011089a344941e2f7",
+      "text_sha256": "911677704f1d9fbc3c54553bdf341e16bc1a4351c5a5127011089a344941e2f7",
+      "bounded_verbatim_witness": "Build the current documentation and deploy it to the specified version (and\naliases, if any) on the target branch.",
+      "assessor_interpretation": "Build input is current checkout documentation; publishing to a version does not forbid source-branch PR review.",
+      "operation": "Read-only source inspection; no runtime execution"
+    },
+    {
+      "source_id": "E45",
+      "url": "https://raw.githubusercontent.com/jimporter/mike/master/mike/commands.py",
+      "section_or_symbol": "commands.deploy",
+      "accessed_at": "2026-10-09T19:01:13.362434+00:00",
+      "response_sha256": "bb3e59a7b0a23bb97ac2b242d2b88c6b4f797584ad5c4310ce8f57b95c730aca",
+      "text_sha256": "bb3e59a7b0a23bb97ac2b242d2b88c6b4f797584ad5c4310ce8f57b95c730aca",
+      "bounded_verbatim_witness": "rev=git_utils.get_latest_commit('HEAD', short=True)",
+      "assessor_interpretation": "Deployment message derives source commit from current HEAD; output branch/version management is separate from source review.",
+      "operation": "Read-only source inspection; no runtime execution"
+    },
+    {
+      "source_id": "E52",
+      "url": "https://pandoc.org/MANUAL.html",
+      "section_or_symbol": "Description",
+      "accessed_at": "2026-10-09T19:01:14.275011+00:00",
+      "response_sha256": "5358438e9299e514995ec5242ebaafe9155349fa33fb148db95eb07e2f86a3b1",
+      "text_sha256": "099622f408b98861229529328e054b9e714ee7b279033cbce62906c87e884813",
+      "bounded_verbatim_witness": "one\n      should not expect perfect conversions between every format and\n      every other",
+      "assessor_interpretation": "Public converter primary contract explicitly limits universal fidelity; a genuine second-system conversion oracle matters.",
+      "operation": "Read-only source inspection; no runtime execution"
+    },
+    {
+      "source_id": "E54",
+      "url": "https://raw.githubusercontent.com/dfl-aeb/backstage-plugin-techdocs-addon-versioning/main/README.md",
+      "section_or_symbol": "README introduction",
+      "accessed_at": "2026-10-09T19:02:01.023971+00:00",
+      "response_sha256": "37185acaa7c8876ed8d2d94d27781be348a324b627f23041c9a9e4222ee8978b",
+      "text_sha256": "37185acaa7c8876ed8d2d94d27781be348a324b627f23041c9a9e4222ee8978b",
+      "bounded_verbatim_witness": "It is currently work in progress and not yet ready for production use.",
+      "assessor_interpretation": "Addon status limit independently confirmed; does not establish total absence of CLI preview.",
+      "operation": "Read-only source inspection; no runtime execution"
+    },
+    {
+      "source_id": "E10",
+      "url": "https://api.github.com/repos/pagefind/pagefind/releases/tags/v1.5.0",
+      "section_or_symbol": "v1.5.0 release opening",
+      "accessed_at": "2026-10-09T18:56:13.682335+00:00",
+      "response_sha256": "e167b95c55db4e89cba1f76029a2b22c48f9b0164bc031e1ffdbc4cc8ee28806",
+      "text_sha256": "bc97b32526a228555f6d4cc55f468eed28498bbb41e146a83434134419f47128",
+      "bounded_verbatim_witness": "The existing Default UI and Modular UI remain available and supported for now",
+      "assessor_interpretation": "Release evolution does not imply old UI removal or mandatory migration.",
+      "operation": "Read-only source inspection; no runtime execution"
+    },
+    {
+      "source_id": "E42",
+      "url": "https://pagefind.app/docs/multilingual/",
+      "section_or_symbol": "Specialized languages",
+      "accessed_at": "2026-10-09T18:56:14.734748+00:00",
+      "response_sha256": "72b9b5de3c717d386c67f3ddd54ad6d37f57ff11f2e3f63dcfb7e798b6e7b340",
+      "text_sha256": "a2245cafe02ffeab13dbfef470ec598d664853d431f9d0207348e38f7298f0fa",
+      "bounded_verbatim_witness": "which is the default when running npx pagefind",
+      "assessor_interpretation": "Extended binary default is documented; no CJK runtime-quality result is implied.",
+      "operation": "Read-only source inspection; no runtime execution"
+    }
+  ],
+  "limits": "Bounded textual/code witnesses. They do not prove product runtime, organizational applicability or performance. Full temporary page cache removed before completion."
+}

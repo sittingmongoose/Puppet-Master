@@ -1,0 +1,298 @@
+{
+  "assignment": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/assignment.md",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/input-map.json",
+  "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S10/brief.md",
+  "map_created_at": "2026-10-09T18:45:05Z",
+  "access_timestamp_note": "Grouped-batch accessed_at is the immediate post-response clock sample, under one second after retrieval. Exact version/channel and locators preserved. S06 declares a later exact docs.rs open returned Internal Error; an earlier successful result is identified.",
+  "source_ids_immutable": true,
+  "sources": [
+    {
+      "id": "S01",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "version": "DuckDB docs 1.5 current",
+      "locator": "515–553; 590–653",
+      "ops": [
+        "web search DuckDB inference",
+        "web open URL and inspect sections"
+      ],
+      "title": "S01",
+      "version_or_commit": "DuckDB docs 1.5 current",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search DuckDB inference",
+        "web open URL and inspect sections"
+      ],
+      "evidence": "sources/observations.md#s01"
+    },
+    {
+      "id": "S02",
+      "url": "https://duckdb.org/docs/current/data/csv/overview",
+      "version": "DuckDB docs 1.5 current",
+      "locator": "CSV parameter table",
+      "ops": [
+        "web search defaults",
+        "open URL and inspect parameter table"
+      ],
+      "title": "S02",
+      "version_or_commit": "DuckDB docs 1.5 current",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search defaults",
+        "open URL and inspect parameter table"
+      ],
+      "evidence": "sources/observations.md#s02"
+    },
+    {
+      "id": "S03",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "version": "DuckDB docs 1.5 current",
+      "locator": "530–577; 622–696",
+      "ops": [
+        "web search rejects/line size",
+        "open URL, find reject_errors and inspect schema"
+      ],
+      "title": "S03",
+      "version_or_commit": "DuckDB docs 1.5 current",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search rejects/line size",
+        "open URL, find reject_errors and inspect schema"
+      ],
+      "evidence": "sources/observations.md#s03"
+    },
+    {
+      "id": "S04",
+      "url": "https://duckdb.org/docs/current/guides/file_formats/excel_import",
+      "version": "DuckDB docs 1.5 current",
+      "locator": "515–530; 554–610",
+      "ops": [
+        "web search DuckDB Excel import",
+        "open URL, find XLS, stop_at_empty and types"
+      ],
+      "title": "S04",
+      "version_or_commit": "DuckDB docs 1.5 current",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search DuckDB Excel import",
+        "open URL, find XLS, stop_at_empty and types"
+      ],
+      "evidence": "sources/observations.md#s04"
+    },
+    {
+      "id": "S05",
+      "url": "https://duckdb.org/docs/current/operations_manual/limits ; https://duckdb.org/docs/current/guides/performance/oom",
+      "version": "DuckDB docs 1.5 current",
+      "locator": "Limits 517–527; OOM 515",
+      "ops": [
+        "web search memory/spill",
+        "open both pages and find memory percentages"
+      ],
+      "title": "S05",
+      "version_or_commit": "DuckDB docs 1.5 current",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search memory/spill",
+        "open both pages and find memory percentages"
+      ],
+      "evidence": "sources/observations.md#s05"
+    },
+    {
+      "id": "S06",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.ReaderBuilder.html ; https://docs.rs/csv/1.4.0/csv/struct.Reader.html ; https://docs.rs/crate/csv/1.4.0",
+      "version": "csv 1.4.0, released 2025-10-17",
+      "locator": "ReaderBuilder defaults; read_record/position; crate metadata",
+      "ops": [
+        "web search ReaderBuilder/version",
+        "open docs.rs; later exact open returned Internal Error, earlier result retained"
+      ],
+      "title": "S06",
+      "version_or_commit": "csv 1.4.0, released 2025-10-17",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search ReaderBuilder/version",
+        "open docs.rs; later exact open returned Internal Error, earlier result retained"
+      ],
+      "evidence": "sources/observations.md#s06"
+    },
+    {
+      "id": "S07",
+      "url": "https://arrow.apache.org/rust/arrow_csv/reader/index.html ; https://arrow.apache.org/rust/arrow_csv/reader/struct.ReaderBuilder.html",
+      "version": "arrow_csv API 59.1.0 per official result; latest URL",
+      "locator": "Schema/batch/inference/builder methods",
+      "ops": [
+        "web search Arrow CSV",
+        "open API pages and inspect"
+      ],
+      "title": "S07",
+      "version_or_commit": "arrow_csv API 59.1.0 per official result; latest URL",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search Arrow CSV",
+        "open API pages and inspect"
+      ],
+      "evidence": "sources/observations.md#s07"
+    },
+    {
+      "id": "S08",
+      "url": "https://docs.rs/calamine/0.36.1/calamine/enum.Data.html ; https://docs.rs/calamine/0.36.1/calamine/struct.Xlsx.html ; https://docs.rs/crate/calamine/0.36.1/source/Changelog.md",
+      "version": "calamine 0.36.1, 2026-07-27",
+      "locator": "Data enum 73–140; has_1904_epoch; changelog",
+      "ops": [
+        "web search Calamine values/epoch",
+        "open APIs, find DateTimeIso, search changelog"
+      ],
+      "title": "S08",
+      "version_or_commit": "calamine 0.36.1, 2026-07-27",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search Calamine values/epoch",
+        "open APIs, find DateTimeIso, search changelog"
+      ],
+      "evidence": "sources/observations.md#s08"
+    },
+    {
+      "id": "S09",
+      "url": "https://docs.rs/calamine/0.36.1/calamine/struct.XlsxCellReader.html",
+      "version": "calamine 0.36.1",
+      "locator": "Iterator lines 40–55",
+      "ops": [
+        "web search streaming API",
+        "open API; find iterator section"
+      ],
+      "title": "S09",
+      "version_or_commit": "calamine 0.36.1",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search streaming API",
+        "open API; find iterator section"
+      ],
+      "evidence": "sources/observations.md#s09"
+    },
+    {
+      "id": "S10",
+      "url": "https://learn.microsoft.com/en-us/power-query/connectors/text-csv ; https://learn.microsoft.com/en-us/power-query/data-types",
+      "version": "Current docs, data-types page updated 2026-08-14; build unspecified",
+      "locator": "Sample choices, first-200, regional settings/Using locale, date types",
+      "ops": [
+        "web search locale/type detection",
+        "open canonical English URLs and inspect"
+      ],
+      "title": "S10",
+      "version_or_commit": "Current docs, data-types page updated 2026-08-14; build unspecified",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search locale/type detection",
+        "open canonical English URLs and inspect"
+      ],
+      "evidence": "sources/observations.md#s10"
+    },
+    {
+      "id": "S11",
+      "url": "https://openrefine.org/docs/manual/running ; https://openrefine.org/docs/manual/exporting",
+      "version": "Current unversioned docs; export updated 2026-01-28",
+      "locator": "History 375–401; export 112–130",
+      "ops": [
+        "web search reuse",
+        "open docs and inspect history/archive"
+      ],
+      "title": "S11",
+      "version_or_commit": "Current unversioned docs; export updated 2026-01-28",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search reuse",
+        "open docs and inspect history/archive"
+      ],
+      "evidence": "sources/observations.md#s11"
+    },
+    {
+      "id": "S12",
+      "url": "https://openrefine.org/docs/manual/installing ; https://openrefine.org/docs/technical-reference/architecture-4",
+      "version": "Current unversioned pages, distinct generations",
+      "locator": "Installing 241–250; v4 around 50",
+      "ops": [
+        "web search memory",
+        "open pages and inspect contexts"
+      ],
+      "title": "S12",
+      "version_or_commit": "Current unversioned pages, distinct generations",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search memory",
+        "open pages and inspect contexts"
+      ],
+      "evidence": "sources/observations.md#s12"
+    },
+    {
+      "id": "S13",
+      "url": "https://github.com/OpenRefine/OpenRefine/issues/1908",
+      "version": "Issue against 3.1, compare 2.8/3.1",
+      "locator": "Issue 175–206 and maintainer thread",
+      "ops": [
+        "web search issue",
+        "open issue and inspect versions/analysis"
+      ],
+      "title": "S13",
+      "version_or_commit": "Issue against 3.1, compare 2.8/3.1",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search issue",
+        "open issue and inspect versions/analysis"
+      ],
+      "evidence": "sources/observations.md#s13"
+    },
+    {
+      "id": "S14",
+      "url": "https://github.com/OpenRefine/OpenRefine/pull/2909 ; https://github.com/OpenRefine/OpenRefine/commit/306b541 ; https://github.com/OpenRefine/OpenRefine/commit/c5aed37",
+      "version": "PR merged 2020-07-09; commits 306b541/c5aed37",
+      "locator": "PR 130–205; changed files",
+      "ops": [
+        "open PR/commit URLs",
+        "find OffsetDateTime; inspect test/fix summary"
+      ],
+      "title": "S14",
+      "version_or_commit": "PR merged 2020-07-09; commits 306b541/c5aed37",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "open PR/commit URLs",
+        "find OffsetDateTime; inspect test/fix summary"
+      ],
+      "evidence": "sources/observations.md#s14"
+    },
+    {
+      "id": "S15",
+      "url": "https://github.com/OpenRefine/OpenRefine/releases/tag/3.5.0",
+      "version": "tag 3.5.0, commit d4209a2, released 2020-11-07",
+      "locator": "Release 151–159",
+      "ops": [
+        "web search release relation",
+        "open tag, inspect metadata"
+      ],
+      "title": "S15",
+      "version_or_commit": "tag 3.5.0, commit d4209a2, released 2020-11-07",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search release relation",
+        "open tag, inspect metadata"
+      ],
+      "evidence": "sources/observations.md#s15"
+    },
+    {
+      "id": "S16",
+      "url": "https://github.com/OpenRefine/OpenRefine/issues/7042 ; https://github.com/OpenRefine/OpenRefine/pull/7703",
+      "version": "Issue 2024-12-11, milestone 3.10.2, PR 7703",
+      "locator": "Issue 138–193 and linked PR",
+      "ops": [
+        "web search CSV evolution",
+        "open issue/PR and inspect"
+      ],
+      "title": "S16",
+      "version_or_commit": "Issue 2024-12-11, milestone 3.10.2, PR 7703",
+      "accessed_at": "2026-10-09T18:44:25Z (browser batch; clock sampled immediately after)",
+      "observed_operations": [
+        "web search CSV evolution",
+        "open issue/PR and inspect"
+      ],
+      "evidence": "sources/observations.md#s16"
+    }
+  ]
+}

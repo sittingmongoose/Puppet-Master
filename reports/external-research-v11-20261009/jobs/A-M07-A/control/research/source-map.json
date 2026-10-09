@@ -1,0 +1,282 @@
+{
+  "schema_version": 1,
+  "block": "A-M07-A",
+  "arm": "control",
+  "case": "S07",
+  "method": "M07",
+  "stage": "research",
+  "captured_as_of_utc": "2026-10-09T18:46:35Z",
+  "source_id_policy": "IDs are immutable within this map. A changed or moved source must receive a new ID and be recorded as drift; no silent URL rebinding.",
+  "records": [
+    {
+      "id": "S01",
+      "title": "Versioning | Docusaurus",
+      "url": "https://docusaurus.io/docs/versioning",
+      "product_version": "Docusaurus documentation v3.10.2, explicitly displayed on page",
+      "source_commit": null,
+      "commit_status": "Not exposed by the versioned documentation page; no commit inferred.",
+      "locator": "Versioning; Overview; Tagging a new version; Configuring versioning behavior; Recommended practices. Relevant rendered lines 74-84, 134-156, 191-195, 305-359, 449-460; access via Versioning URL.",
+      "access_timestamp_utc": "2026-10-09T18:45:09Z",
+      "observed_operations": [
+        "Opened the exact official URL; confirmed displayed version 3.10.2; inspected current/latest terminology, version snapshot behavior, options, and version-retention guidance."
+      ],
+      "evidence_file": "sources/evidence-notes.md#s01",
+      "drift_policy": "Living documentation; freeze this retrieval date and displayed version. Re-check as a new source record before relying on later text."
+    },
+    {
+      "id": "S02",
+      "title": "i18n - Introduction | Docusaurus",
+      "url": "https://docusaurus.io/docs/i18n/introduction",
+      "product_version": "Docusaurus documentation v3.10.2, explicitly displayed on page",
+      "source_commit": null,
+      "commit_status": "Not exposed by the versioned documentation page; no commit inferred.",
+      "locator": "Goals; Translation workflow; Translation files; Translation files location. Relevant rendered lines 74 onward and 163-211; access via Introduction URL.",
+      "access_timestamp_utc": "2026-10-09T18:45:09Z",
+      "observed_operations": [
+        "Opened the exact official URL; inspected locale file layout and i18n design and workflow notes."
+      ],
+      "evidence_file": "sources/evidence-notes.md#s02",
+      "drift_policy": "Living documentation; freeze this retrieval date and displayed version. Re-check as a new source record before relying on later text."
+    },
+    {
+      "id": "S03",
+      "title": "[v2] Translations approach · Docusaurus issue #2651",
+      "url": "https://github.com/facebook/docusaurus/issues/2651",
+      "product_version": "Docusaurus v2 translation proposal; issue opened 2020-04-24 and shown closed",
+      "source_commit": null,
+      "commit_status": "Issue record has no commit identifier; no implementation commit inferred.",
+      "locator": "Issue proposal and prior v1 translation limitations; rendered lines 138-189.",
+      "access_timestamp_utc": "2026-10-09T18:45:09Z",
+      "observed_operations": [
+        "Searched the official Docusaurus repository issues; opened the exact issue URL; inspected proposal, status, and linked prior concerns."
+      ],
+      "evidence_file": "sources/evidence-notes.md#s03",
+      "drift_policy": "GitHub issue is mutable; preserve the observed issue number, status, and date; status may later change."
+    },
+    {
+      "id": "S04",
+      "title": "404 Error for Translated Versioned Index Document · Docusaurus issue #11112",
+      "url": "https://github.com/facebook/docusaurus/issues/11112",
+      "product_version": "Reporter describes Docusaurus 3.7.0 in a versioned and localized static-build reproduction; issue was open at inspection.",
+      "source_commit": null,
+      "commit_status": "Issue does not expose a fix commit; inspected page shows no branch or pull request relationship. No fix inferred.",
+      "locator": "Status and labels; Description; reproduction behavior; rendered lines 138-177 and issue metadata near end.",
+      "access_timestamp_utc": "2026-10-09T18:46:04Z",
+      "observed_operations": [
+        "Searched the official Docusaurus repository issues; opened the exact issue URL; re-opened its reproduction section and checked status/metadata."
+      ],
+      "evidence_file": "sources/evidence-notes.md#s04",
+      "drift_policy": "Mutable issue. The finding is limited to the reported version and environment; status and any later fix require a new dated check."
+    },
+    {
+      "id": "S05",
+      "title": "Creating and publishing your docs | Backstage TechDocs",
+      "url": "https://backstage.io/docs/features/techdocs/creating-and-publishing/",
+      "product_version": "Rolling Backstage documentation page; page does not state a product release version.",
+      "source_commit": null,
+      "commit_status": "No docs-source commit exposed at the page; no commit inferred.",
+      "locator": "Create a basic documentation setup; Enable documentation for an existing entity; backstage.io/techdocs-ref; rendered lines 92-161.",
+      "access_timestamp_utc": "2026-10-09T18:45:09Z",
+      "observed_operations": [
+        "Opened the exact official URL; inspected repository layout, catalog annotation, Markdown input, and build restrictions."
+      ],
+      "evidence_file": "sources/evidence-notes.md#s05",
+      "drift_policy": "Rolling docs; URL not versioned. Re-check for any later implementation decision."
+    },
+    {
+      "id": "S06",
+      "title": "Getting Started | Backstage TechDocs",
+      "url": "https://backstage.io/docs/features/techdocs/getting-started/",
+      "product_version": "Rolling Backstage documentation page; page does not state a product release version.",
+      "source_commit": null,
+      "commit_status": "No docs-source commit exposed at the page; no commit inferred.",
+      "locator": "Configuration defaults; Should TechDocs Backend generate docs?; Choosing storage; Docker/MkDocs behavior; rendered lines 90-126.",
+      "access_timestamp_utc": "2026-10-09T18:45:09Z",
+      "observed_operations": [
+        "Opened the exact official URL; read documented defaults and recommended external CI build/read-only serving path."
+      ],
+      "evidence_file": "sources/evidence-notes.md#s06",
+      "drift_policy": "Rolling docs; URL not versioned. Re-check for any later implementation decision."
+    },
+    {
+      "id": "S07",
+      "title": "Be able to manage multiple versions of the same TechDocs · Backstage issue #12259",
+      "url": "https://github.com/backstage/backstage/issues/12259",
+      "product_version": "TechDocs versioning feature request opened 2022-06-25; shown closed as not planned at inspection.",
+      "source_commit": null,
+      "commit_status": "Issue has no fix commit; no implementation inferred.",
+      "locator": "Issue status and feature suggestion; proposed storage/version pattern; rendered lines 133-180.",
+      "access_timestamp_utc": "2026-10-09T18:45:44Z",
+      "observed_operations": [
+        "Searched the official Backstage repository issues; opened the exact issue URL; checked status and request details."
+      ],
+      "evidence_file": "sources/evidence-notes.md#s07",
+      "drift_policy": "Mutable issue. The absence of this built-in feature is supported here only as of the observed status and current docs inspected."
+    },
+    {
+      "id": "S08",
+      "title": "Versions | Read the Docs user documentation",
+      "url": "https://docs.readthedocs.com/platform/stable/versions.html",
+      "product_version": "Read the Docs platform stable documentation route; no platform release number exposed.",
+      "source_commit": null,
+      "commit_status": "No docs-source commit exposed at the page; no commit inferred.",
+      "locator": "Versions are Git tags and branches; version states; version syncing; default routing; rendered lines 3-21, 22-36, 74-117.",
+      "access_timestamp_utc": "2026-10-09T18:45:09Z",
+      "observed_operations": [
+        "Opened the exact official URL; inspected default aliases, tag/branch rules, build triggers, active/inactive states, and route behavior."
+      ],
+      "evidence_file": "sources/evidence-notes.md#s08",
+      "drift_policy": "Living docs under stable alias; version string is not exposed. Preserve retrieval date and exact URL."
+    },
+    {
+      "id": "S09",
+      "title": "Localization and Internationalization | Read the Docs user documentation",
+      "url": "https://docs.readthedocs.com/platform/latest/localization.html",
+      "product_version": "Read the Docs platform latest documentation route; no platform release number exposed.",
+      "source_commit": null,
+      "commit_status": "No docs-source commit exposed at the page; no commit inferred.",
+      "locator": "Projects with one language; Projects with multiple translations; rendered lines 3-40.",
+      "access_timestamp_utc": "2026-10-09T18:45:09Z",
+      "observed_operations": [
+        "Opened the exact official URL; inspected language path conventions and project-per-translation setup."
+      ],
+      "evidence_file": "sources/evidence-notes.md#s09",
+      "drift_policy": "Living docs under latest alias; version string is not exposed. Preserve retrieval date and exact URL."
+    },
+    {
+      "id": "S10",
+      "title": "Search query syntax | Read the Docs user documentation",
+      "url": "https://docs.readthedocs.com/platform/latest/server-side-search/syntax.html",
+      "product_version": "Read the Docs platform latest documentation route; no platform release number exposed.",
+      "source_commit": null,
+      "commit_status": "No docs-source commit exposed at the page; no commit inferred.",
+      "locator": "project, subprojects and user parameters; permissions; limitations; exact phrase search; rendered lines 4-73.",
+      "access_timestamp_utc": "2026-10-09T18:45:44Z",
+      "observed_operations": [
+        "Opened the exact official URL; inspected supported filters, permission behavior, result limits, and multiple-version limitation."
+      ],
+      "evidence_file": "sources/evidence-notes.md#s10",
+      "drift_policy": "Living docs under latest alias; version string is not exposed. Preserve retrieval date and exact URL."
+    },
+    {
+      "id": "S11",
+      "title": "Import or migrate your content to GitBook with Git Sync",
+      "url": "https://gitbook.com/docs/guides/editing-and-publishing-documentation/import-or-migrate-your-content-to-gitbook-with-git-sync",
+      "product_version": "Rolling GitBook documentation; current page has no release version field.",
+      "source_commit": null,
+      "commit_status": "No docs-source commit exposed; no commit inferred.",
+      "locator": "Import multiple sections; map repository directories to site sections; choose repository-to-GitBook or GitBook-to-repository sync; rendered lines 1-45.",
+      "access_timestamp_utc": "2026-10-09T18:45:44Z",
+      "observed_operations": [
+        "Opened the exact official URL and inspected the multi-space/multi-folder mapping and initial sync direction workflow."
+      ],
+      "evidence_file": "sources/evidence-notes.md#s11",
+      "drift_policy": "Living docs. A later URL or workflow change must be recorded as a new source record."
+    },
+    {
+      "id": "S12",
+      "title": "Migrate to GitBook",
+      "url": "https://gitbook.com/docs/getting-started/import",
+      "product_version": "Rolling GitBook documentation; current page has no release version field.",
+      "source_commit": null,
+      "commit_status": "No docs-source commit exposed; no commit inferred.",
+      "locator": "Import panel limitations and Git Sync import guidance; page report from web access at 18:45:09; later repeat fetch at 18:45:44 timed out.",
+      "access_timestamp_utc": "2026-10-09T18:45:09Z",
+      "observed_operations": [
+        "Opened exact official URL successfully once and inspected search result and page excerpt; attempted a later open which timed out, so no later state was substituted."
+      ],
+      "evidence_file": "sources/evidence-notes.md#s12",
+      "drift_policy": "Living docs; one later fetch timed out. Preserve the successful retrieval and note the failed repeat; re-check before migration planning."
+    },
+    {
+      "id": "S13",
+      "title": "Localize your docs with variants in GitBook",
+      "url": "https://gitbook.com/docs/guides/content-organization-and-localization/localize-your-docs-with-variants-in-gitbook",
+      "product_version": "Rolling GitBook docs; page described as last updated about two months before retrieval, without an explicit product release.",
+      "source_commit": null,
+      "commit_status": "No docs-source commit exposed; no commit inferred.",
+      "locator": "Localizations organized in dedicated spaces, linked to one docs site as variants; rendered lines 1-18, 54-107.",
+      "access_timestamp_utc": "2026-10-09T18:45:44Z",
+      "observed_operations": [
+        "Opened the exact official URL; inspected localized spaces, variants, default-language selection, and publishing."
+      ],
+      "evidence_file": "sources/evidence-notes.md#s13",
+      "drift_policy": "Living docs. Preserve date and explicit page title; re-check before an implementation choice."
+    },
+    {
+      "id": "S14",
+      "title": "Translations | GitBook Agent documentation",
+      "url": "https://gitbook.com/docs/gitbook-agent/translations",
+      "product_version": "Rolling GitBook docs; page has no release number and did not display a beta label in the inspected content.",
+      "source_commit": null,
+      "commit_status": "No docs-source commit exposed; no commit inferred.",
+      "locator": "How translations work; pricing; editability FAQ; limits; rendered lines 1-17, 59-113.",
+      "access_timestamp_utc": "2026-10-09T18:45:44Z",
+      "observed_operations": [
+        "Opened the exact official URL; inspected automatic updates, fixed-slug guidance, current editability, and published feature limitations."
+      ],
+      "evidence_file": "sources/evidence-notes.md#s14",
+      "drift_policy": "Living docs and paid feature terms may change; preserve retrieval date and verify with vendor for decisions."
+    },
+    {
+      "id": "S15",
+      "title": "2025 Product updates | GitBook changelog",
+      "url": "https://gitbook.com/docs/changelog/2025-product-updates",
+      "product_version": "GitBook product update dated 2025-11-04; rolling 2025 changelog page.",
+      "source_commit": null,
+      "commit_status": "No source commit exposed; no commit inferred.",
+      "locator": "Search result breadcrumbs and better variant + language support; search scope controls; rendered lines 320-340 and 638-646.",
+      "access_timestamp_utc": "2026-10-09T18:46:35Z",
+      "observed_operations": [
+        "Opened official 2025 updates index; used find on the exact variant and search-scope headings; inspected the corresponding dated release notes."
+      ],
+      "evidence_file": "sources/evidence-notes.md#s15",
+      "drift_policy": "Historical changelog entry; a retrospective update may alter page contents, but release date and URL are retained."
+    },
+    {
+      "id": "S16",
+      "title": "Swimm native integrations help keep your docs up to date",
+      "url": "https://swimm.io/blog/swimm-native-integrations",
+      "product_version": "Company product post; no Swimm product version or immutable source commit exposed.",
+      "source_commit": null,
+      "commit_status": "No commit exposed; article is not code-pinned.",
+      "locator": "IDE links to docs; GitHub check on PRs; auto-sync versus manual approval; rendered lines 38-73.",
+      "access_timestamp_utc": "2026-10-09T18:45:44Z",
+      "observed_operations": [
+        "Searched Swimm official materials; opened the exact company article and inspected code/doc linkage and PR check behavior."
+      ],
+      "evidence_file": "sources/evidence-notes.md#s16",
+      "drift_policy": "Product blog is mutable and not versioned. Treat capabilities as vendor-described and validate in a trial; no current product version inferred."
+    },
+    {
+      "id": "S17",
+      "title": "The complete guide to creating and publishing documentation in GitBook",
+      "url": "https://gitbook.com/docs/guides/editing-and-publishing-documentation/complete-guide-to-publishing-docs-gitbook",
+      "product_version": "GitBook guide updated 2026-01-23, as stated in page; no platform release version.",
+      "source_commit": null,
+      "commit_status": "No docs-source commit exposed; no commit inferred.",
+      "locator": "Overview, public/private docs site and content spaces; site structure and variants; rendered lines 1-19, with feature controls later in page.",
+      "access_timestamp_utc": "2026-10-09T18:46:11Z",
+      "observed_operations": [
+        "Opened the exact official URL; confirmed stated update date and inspected hosted site, content space, and settings model."
+      ],
+      "evidence_file": "sources/evidence-notes.md#s17",
+      "drift_policy": "Living guide updated in 2026; re-check current plan and feature availability before selection."
+    },
+    {
+      "id": "X01",
+      "title": "Old dated GitBook changelog URL surfaced by search but no longer retrievable",
+      "url": "https://gitbook.com/docs/changelog/september-2025/24-september-nested-section-groups-new-change-request-review-options-and-more",
+      "product_version": "Expected dated changelog entry; exact URL returned Page Not Found at retrieval.",
+      "source_commit": null,
+      "commit_status": "Not applicable; source could not be retrieved.",
+      "locator": "Whole URL fetch returned Page Not Found and suggested the 2025 product-updates index; excluded from claims.",
+      "access_timestamp_utc": "2026-10-09T18:45:44Z",
+      "observed_operations": [
+        "Opened the exact dated URL from a search result; received a Page Not Found response; did not treat the failed page as evidence. Later used S15 via the official 2025 updates index."
+      ],
+      "evidence_file": "sources/evidence-notes.md#x01",
+      "drift_policy": "Excluded. Do not silently rebind this URL to another changelog entry."
+    }
+  ]
+}

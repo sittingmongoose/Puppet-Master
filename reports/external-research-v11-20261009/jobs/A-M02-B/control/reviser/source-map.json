@@ -1,0 +1,945 @@
+{
+  "schema": "er11-source-map-v1",
+  "case": "S08",
+  "block": "A-M02-B",
+  "arm": "control",
+  "method": "M02",
+  "stage": "reviser",
+  "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser",
+  "assignment_sha256": "0e899a760e09ac57a21431d231e0bc8218725cfdd3f72ec5ea3d780916c060fe",
+  "input_map_sha256": "78028fb58700b2891094812365f903c2374aa6e59d2bf7aaf221d4ffbbf2194e",
+  "brief_sha256": "cc962dde020c6c859e7149db1adcdc9b9872bc02c7f7d8566fea32bf8c5e73cf",
+  "discovery_sha256": "ad0bd90a99a66059d7db9e2f8e405675474c64edfca8cfcbc0d85c8b29ec7528",
+  "draft_sha256": "953e849f7d502cc79eca606a70c3f5466023602668ac4ce71f0c830e348bda29",
+  "critique_sha256": "336bf62fae9f153bf4a704af1409587dcbfdc4d6d9f2ad6c582c882d3de24972",
+  "revealed_plan_sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c",
+  "reviewed_predecessors": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+      "sha256": "cc962dde020c6c859e7149db1adcdc9b9872bc02c7f7d8566fea32bf8c5e73cf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/draft.md",
+      "sha256": "953e849f7d502cc79eca606a70c3f5466023602668ac4ce71f0c830e348bda29"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/discovery.md",
+      "sha256": "ad0bd90a99a66059d7db9e2f8e405675474c64edfca8cfcbc0d85c8b29ec7528"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/source-map.json",
+      "sha256": "23c130bd9d2fee223d0062d2cc538a920dc81fa38e70a68e07604962e098e7a5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/revealed-plan.md",
+      "sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/critic/source-map.json",
+      "sha256": "fa96ce61a7c7c66fe2640a81e1c923be6d8e3026e9678da220d4a3353b4e89c4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/critic/critique.md",
+      "sha256": "336bf62fae9f153bf4a704af1409587dcbfdc4d6d9f2ad6c582c882d3de24972"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Better Impact Volunteer Impact product page",
+      "url": "https://www.betterimpact.com/solutions-volunteer-impact?hsCtaAttrib=171143047728",
+      "version": "vendor product page ©2026; mutable; no build/revision",
+      "commit": null,
+      "locator": "Self-scheduling, reminders/mobile, privacy/security, FAQ; accessed render lines 105-148, 247-262.",
+      "accessed_at": "2026-10-09T18:28:29Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read scheduling/mobile/privacy sections"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s01--better-impact-volunteer-impact-product-page",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      }
+    },
+    {
+      "id": "S02",
+      "title": "My Impact mobile guide",
+      "url": "https://siteguide.betterimpact.com/en/articles/9893058-navigating-the-app-and-mobile-interface",
+      "version": "help article dated 2025-01-08; mutable",
+      "commit": null,
+      "locator": "Lines 10-12, 37-60, 63-84.",
+      "accessed_at": "2026-10-09T18:28:29Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read mobile menu/profile sections"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s02--my-impact-mobile-guide",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      }
+    },
+    {
+      "id": "S03",
+      "title": "Better Impact profile import guide",
+      "url": "https://support.betterimpact.com/en/articles/8368729-importing-user-profiles",
+      "version": "support article dated 2026-08-26; mutable",
+      "commit": null,
+      "locator": "Import preparation/submission/result sections; accessed render lines 34-81, 84-124.",
+      "accessed_at": "2026-10-09T18:28:29Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read import requirements"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s03--better-impact-profile-import-guide",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      }
+    },
+    {
+      "id": "S04",
+      "title": "Volgistics schedule overview",
+      "url": "https://www.volgistics.com/help/schedule/schedule-overview/",
+      "version": "unversioned mutable vendor help; no revision/build shown",
+      "commit": null,
+      "locator": "Self-scheduling and coordinator scheduling; accessed render lines 248-260.",
+      "accessed_at": "2026-10-09T18:27:08Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read self-scheduling/coordinator sections"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s04--volgistics-schedule-overview",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "Schedule Overview lines 250–260: volunteer self-scheduling and coordinator access; coordinators may edit volunteer entries when enabled but cannot make/change openings."
+      }
+    },
+    {
+      "id": "S05",
+      "title": "Volgistics getting started with self-scheduling",
+      "url": "https://www.volgistics.com/help/schedule/getting-started-with-self-scheduling/",
+      "version": "unversioned mutable vendor help",
+      "commit": null,
+      "locator": "Setup, assignment rules, reminders; accessed render lines 174-212.",
+      "accessed_at": "2026-10-09T18:27:08Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read setup/rules/reminder sections"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s05--volgistics-self-scheduling-setup",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      }
+    },
+    {
+      "id": "S06",
+      "title": "Volgistics self-scheduling settings",
+      "url": "https://www.volgistics.com/help/schedule/self-scheduling-settings-for-vicnet-and-victouch/",
+      "version": "unversioned mutable vendor help",
+      "commit": null,
+      "locator": "Calendar-format limits and advance scheduling; accessed render lines 252-285.",
+      "accessed_at": "2026-10-09T18:27:08Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read limits/date-window settings"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s06--volgistics-self-scheduling-limits",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      }
+    },
+    {
+      "id": "S07",
+      "title": "Volgistics volunteer privacy settings",
+      "url": "https://www.volgistics.com/help/vicnet-portal/volunteer-privacy-settings/",
+      "version": "unversioned mutable vendor help",
+      "commit": null,
+      "locator": "Peer visibility, default, volunteer/coordinator settings; accessed render lines 141-209.",
+      "accessed_at": "2026-10-09T18:27:08Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read privacy sections"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s07--volgistics-volunteer-privacy-settings",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      }
+    },
+    {
+      "id": "S08",
+      "title": "Volgistics import volunteer records",
+      "url": "https://www.volgistics.com/help/volunteer-records/import-volunteer-records/",
+      "version": "unversioned mutable vendor help",
+      "commit": null,
+      "locator": "Formats, new-record semantics, mapping review and staged records; lines 141-180, 200-205.",
+      "accessed_at": "2026-10-09T18:27:08Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read import semantics/validation"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s08--volgistics-volunteer-record-import",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      }
+    },
+    {
+      "id": "S09",
+      "title": "Volgistics recurring schedule edit behavior",
+      "url": "https://www.volgistics.com/help/schedule/edit-a-schedule-entry-or-remove-a-scheduled-volunteer/",
+      "version": "unversioned mutable vendor help",
+      "commit": null,
+      "locator": "Regular recurring-entry edit/removal; lines 143-149, 168-199, 217-240.",
+      "accessed_at": "2026-10-09T18:31:18Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read recurring edit/removal sections"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s09--volgistics-recurring-entry-edit-behavior",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "Edit a Schedule Entry lines 143–182, 196–199: recurring volunteer entries, separate openings, one-date handling, and past/future scope."
+      }
+    },
+    {
+      "id": "S10",
+      "title": "Google OR-Tools employee scheduling documentation",
+      "url": "https://developers.google.com/optimization/scheduling/employee_scheduling?hl=en",
+      "version": "rolling docs; no release pin",
+      "commit": null,
+      "locator": "Employee example and request objective; lines 79-92, 143-154 and request section.",
+      "accessed_at": "2026-10-09T18:27:08Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read assignment/coverage/objective"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s10--google-or-tools-employee-scheduling-documentation",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      }
+    },
+    {
+      "id": "S11",
+      "title": "OR-Tools release v9.15",
+      "url": "https://github.com/google/or-tools/releases/tag/v9.15",
+      "version": "v9.15 release dated 2026-01-12",
+      "commit": "551ad10d94835c99e5e1e684500d3db398c0e345",
+      "locator": "Release header and tag/commit metadata.",
+      "accessed_at": "2026-10-09T18:30:19Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read release metadata"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s11--or-tools-v915-release",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      }
+    },
+    {
+      "id": "S12",
+      "title": "OR-Tools v9.15 shift scheduling sample",
+      "url": "https://github.com/google/or-tools/blob/551ad10d94835c99e5e1e684500d3db398c0e345/examples/python/shift_scheduling_sat.py",
+      "version": "OR-Tools v9.15",
+      "commit": "551ad10d94835c99e5e1e684500d3db398c0e345",
+      "locator": "Pinned source lines 1561-1626, 1734-1772, 1781-1795.",
+      "accessed_at": "2026-10-09T18:27:08Z",
+      "observed_operations": [
+        "web open pinned file",
+        "web find",
+        "read model/demand/objective/result"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s12--or-tools-v915-pinned-shift-scheduling-code",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "Pinned source lines 1596–1619, 1734–1772, 1781–1795: exactly one modeled option including Off; work demand lower bound; excess penalties; FEASIBLE/OPTIMAL status."
+      }
+    },
+    {
+      "id": "S13",
+      "title": "Timefold Employee Shift Scheduling fairness",
+      "url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/employee-resource-constraints/fairness/balance-time-worked",
+      "version": "docs branch 1.35.x; hosted API",
+      "commit": null,
+      "locator": "Rule, tag defaults, history, FTE, formula; lines 21-51, 81-97, 130-153, 208-234.",
+      "accessed_at": "2026-10-09T18:28:42Z",
+      "observed_operations": [
+        "web search_query",
+        "web open versioned docs",
+        "read schema/defaults/formula"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s13--timefold-employee-shift-scheduling-fairness-version-135x",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "Versioned hosted API docs lines 209–234: FTE bounds; soft balance for at least two eligible employees; shift assignment continues when fairness is violated."
+      }
+    },
+    {
+      "id": "S14",
+      "title": "Timefold Employee Shift Scheduling constraints",
+      "url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/user-guide/constraints",
+      "version": "docs branch 1.35.x; hosted API",
+      "commit": null,
+      "locator": "Hard/medium/soft semantics and weight default/cap; lines 25-43, 89-104.",
+      "accessed_at": "2026-10-09T18:31:18Z",
+      "observed_operations": [
+        "web open versioned page",
+        "read scoring/weight sections"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s14--timefold-employee-shift-scheduling-constraints-version-135x",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "Versioned hosted API docs lines 89–103: active soft weight default and maximum."
+      }
+    },
+    {
+      "id": "S15",
+      "title": "Timefold quickstart fairness issue #492",
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts/issues/492",
+      "version": "issue opened 2024-06-24; linked PR #517",
+      "commit": null,
+      "locator": "Issue body and timeline; lines 129-180.",
+      "accessed_at": "2026-10-09T18:28:29Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read issue/timeline"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s15--timefold-quickstart-issue-492",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "Issue #492 lines 129–180: request for fairness quickstart and closure linkage."
+      }
+    },
+    {
+      "id": "S16",
+      "title": "Timefold quickstart fairness PR #517",
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts/pull/517",
+      "version": "merged 2024-07-18; three commits; primary implementation S17",
+      "commit": "77b1c335ce47c2026ba2873a646582cfbc091d58; b6528f0; 54629972695a6027418e1eaa65437d6dd7704954",
+      "locator": "Merge/commit history lines 128-200; constraint diff lines 455-472 of files view.",
+      "accessed_at": "2026-10-09T18:28:29Z",
+      "observed_operations": [
+        "web search_query",
+        "web open PR/files view",
+        "read merge history/fairness diff"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s16--timefold-quickstart-pull-request-517",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "PR #517 lines 129–200 and merge history: merged quickstart change and linked Solver fix."
+      }
+    },
+    {
+      "id": "S17",
+      "title": "Timefold quickstart fairness implementation commit",
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts/commit/77b1c33.patch",
+      "version": "merged changeset; implementation commit",
+      "commit": "77b1c335ce47c2026ba2873a646582cfbc091d58",
+      "locator": "Patch lines 110-206; collector lines 196-203; test-file metadata lines 4-17.",
+      "accessed_at": "2026-10-09T18:30:19Z",
+      "observed_operations": [
+        "web open public patch",
+        "read fairness code/test metadata"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s17--timefold-quickstart-fairness-implementation-commit",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open",
+          "web.find"
+        ],
+        "locator": "Pinned implementation patch; soft shift-count balance and tests."
+      }
+    },
+    {
+      "id": "S18",
+      "title": "Timefold Solver load-balance follow-up PR #980",
+      "url": "https://github.com/TimefoldAI/timefold-solver/pull/980",
+      "version": "merged 2024-07-18; milestone v1.13.0; marked required for #517",
+      "commit": "d6546cc9720df0578c67ec91956ca7a46eaf36c8",
+      "locator": "Merge/required-for metadata; lines 130-183, 208-214.",
+      "accessed_at": "2026-10-09T18:28:42Z",
+      "observed_operations": [
+        "web click from PR #517",
+        "web open",
+        "read merge metadata"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s18--timefold-solver-follow-up-fix-pr-980",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "PR #980 lines 130–183: merged cast fix, required-for #517 linkage, v1.13.0 milestone."
+      }
+    },
+    {
+      "id": "S19",
+      "title": "Timefold Solver Python cast fix commit",
+      "url": "https://github.com/TimefoldAI/timefold-solver/commit/d6546cc.patch",
+      "version": "fix merged in milestone v1.13.0",
+      "commit": "d6546cc9720df0578c67ec91956ca7a46eaf36c8",
+      "locator": "Patch lines 0-24; cast changes lines 16-21.",
+      "accessed_at": "2026-10-09T18:30:19Z",
+      "observed_operations": [
+        "web open patch",
+        "read exact cast changes"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s19--timefold-solver-python-cast-fix-commit",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open",
+          "web.find"
+        ],
+        "locator": "Pinned patch lines 0–24: long-valued load-balance casts."
+      }
+    },
+    {
+      "id": "S20",
+      "title": "W3C WCAG 2.2 Recommendation",
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "version": "W3C Recommendation 2024-12-12; stable snapshot",
+      "commit": null,
+      "locator": "Abstract/metadata lines 0-47; SC 2.1.1, 1.4.10, 2.5.8 in same doc.",
+      "accessed_at": "2026-10-09T18:31:43Z",
+      "observed_operations": [
+        "web open exact Recommendation snapshot",
+        "web find/open target criteria"
+      ],
+      "evidence": {
+        "path": "sources/accessibility.md#s20--w3c-wcag-22-recommendation",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "37a86317fac5dad8c183ce5bb86c2b78efcf36400db783f9026d09be945396ff"
+      }
+    },
+    {
+      "id": "S21",
+      "title": "RFC 5545: Internet Calendaring and Scheduling Core Object Specification (iCalendar)",
+      "url": "https://www.rfc-editor.org/rfc/rfc5545",
+      "version": "RFC 5545, Standards Track, Proposed Standard, September 2009; RFC Editor lists updates RFC 5546, 6868, 7529, 7953, 7986, 9073, 9074, and 9253",
+      "commit": null,
+      "locator": "Sections 3.3.5 and 3.3.10; §3.3.5 accessed render lines 1849–1889 (fixed UTC/TZID, floating local, repeated/nonexistent local time); §3.3.10 lines 2359–2363 (invalid/nonexistent recurrence instances).",
+      "accessed_at": "2026-10-09T18:38:58Z",
+      "observed_operations": [
+        "web open RFC Editor page at sections 3.3.5 and 3.3.10",
+        "web find repeated/nonexistent local-time and recurrence passages"
+      ],
+      "evidence": {
+        "path": "sources/timezones.md#s21--rfc-5545-icalendar-local-time-and-recurrence-rules",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "03e5ca1802dee74c7fd8ab8b9bfcde0d9a5b04d87116b350210e148e93f0dc44"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "RFC 5545 §3.3.5 lines 1849–1889 and §3.3.10 lines 2359–2363: floating/zoned DATE-TIME, DST rules, RRULE-generated nonexistent instance."
+      }
+    },
+    {
+      "id": "C01",
+      "title": "RFC 5545 date-time and recurrence rules",
+      "url": "https://www.rfc-editor.org/rfc/rfc5545",
+      "version": "RFC 5545 Proposed Standard, September 2009; RFC Editor lists updates",
+      "commit": null,
+      "locator": "§3.3.5 lines 1849–1889; §3.3.10 lines 2359–2363",
+      "accessed_at": "2026-10-09T18:49:00Z",
+      "observed_operations": [
+        "web.open"
+      ],
+      "evidence": {
+        "path": "sources/critic-standards.md#c01--rfc-5545-date-time-and-recurrence-rfc-editor",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "ed9dfa5e15a710b3ba1e1435d39c8d03530fead79513c85d6ef8303df6d87920"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "RFC 5545 §3.3.5 and §3.3.10; see independently checked RFC source entry S21."
+      }
+    },
+    {
+      "id": "C02",
+      "title": "WCAG 2.2 Recommendation",
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "version": "W3C Recommendation, 2024-12-12 fixed snapshot",
+      "commit": null,
+      "locator": "SC 1.4.10 lines 612–627; SC 2.1.1 lines 700–707; SC 2.5.8 lines 1142–1157",
+      "accessed_at": "2026-10-09T18:49:00Z",
+      "observed_operations": [
+        "web.open"
+      ],
+      "evidence": {
+        "path": "sources/critic-standards.md#c02--wcag-22-recommendation-w3c",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "ed9dfa5e15a710b3ba1e1435d39c8d03530fead79513c85d6ef8303df6d87920"
+      }
+    },
+    {
+      "id": "C03",
+      "title": "Volgistics recurring schedule entry edit/removal",
+      "url": "https://www.volgistics.com/help/schedule/edit-a-schedule-entry-or-remove-a-scheduled-volunteer/",
+      "version": "Unversioned mutable vendor help; no revision/build shown",
+      "commit": null,
+      "locator": "Lines 146–182 and 196–199; volunteer-record regular entry and date-specific adjustment",
+      "accessed_at": "2026-10-09T18:50:00Z",
+      "observed_operations": [
+        "web.open",
+        "web.find"
+      ],
+      "evidence": {
+        "path": "sources/critic-vendors.md#c03--volgistics-recurring-schedule-entry-editing",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "03fa5ab86916fea2029a871dc319952267af92329ce469f236a2b0d00c07475c"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "Volgistics recurring-entry page lines 143–182 and 196–199; individual volunteer entry and separate opening object."
+      }
+    },
+    {
+      "id": "C04",
+      "title": "Volgistics schedule overview",
+      "url": "https://www.volgistics.com/help/schedule/schedule-overview/",
+      "version": "Unversioned mutable vendor help; no revision/build shown",
+      "commit": null,
+      "locator": "Lines 248–260; volunteer self-scheduling and coordinator scheduling limits",
+      "accessed_at": "2026-10-09T18:50:00Z",
+      "observed_operations": [
+        "web.open"
+      ],
+      "evidence": {
+        "path": "sources/critic-vendors.md#c04--volgistics-schedule-overview",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "03fa5ab86916fea2029a871dc319952267af92329ce469f236a2b0d00c07475c"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "Volgistics Schedule Overview lines 250–260; coordinator entry editing limits and no opening creation/change."
+      }
+    },
+    {
+      "id": "C05",
+      "title": "Volgistics self-scheduling setup",
+      "url": "https://www.volgistics.com/help/schedule/getting-started-with-self-scheduling/",
+      "version": "Unversioned mutable vendor help; no revision/build shown",
+      "commit": null,
+      "locator": "Lines 143–185; prerequisites, enablement, assignment rules",
+      "accessed_at": "2026-10-09T18:51:00Z",
+      "observed_operations": [
+        "web.open"
+      ],
+      "evidence": {
+        "path": "sources/critic-vendors.md#c05--volgistics-self-scheduling-setup",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "03fa5ab86916fea2029a871dc319952267af92329ce469f236a2b0d00c07475c"
+      }
+    },
+    {
+      "id": "C06",
+      "title": "Volgistics self-scheduling limits",
+      "url": "https://www.volgistics.com/help/schedule/self-scheduling-settings-for-vicnet-and-victouch/",
+      "version": "Unversioned mutable vendor help; no revision/build shown",
+      "commit": null,
+      "locator": "Lines 255–272; self-service caps and operator/coordinator exception",
+      "accessed_at": "2026-10-09T18:50:00Z",
+      "observed_operations": [
+        "web.open"
+      ],
+      "evidence": {
+        "path": "sources/critic-vendors.md#c06--volgistics-self-scheduling-caps",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "03fa5ab86916fea2029a871dc319952267af92329ce469f236a2b0d00c07475c"
+      }
+    },
+    {
+      "id": "C07",
+      "title": "Volgistics volunteer privacy settings",
+      "url": "https://www.volgistics.com/help/vicnet-portal/volunteer-privacy-settings/",
+      "version": "Unversioned mutable vendor help; no revision/build shown",
+      "commit": null,
+      "locator": "Lines 141–166; peer names, hide-name behavior, defaults",
+      "accessed_at": "2026-10-09T18:50:00Z",
+      "observed_operations": [
+        "web.open"
+      ],
+      "evidence": {
+        "path": "sources/critic-vendors.md#c07--volgistics-peer-name-privacy",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "03fa5ab86916fea2029a871dc319952267af92329ce469f236a2b0d00c07475c"
+      }
+    },
+    {
+      "id": "C08",
+      "title": "Volgistics volunteer record import",
+      "url": "https://www.volgistics.com/help/volunteer-records/import-volunteer-records/",
+      "version": "Unversioned mutable vendor help; no revision/build shown",
+      "commit": null,
+      "locator": "Lines 141–157 and 198–203; import utility semantics and pending records",
+      "accessed_at": "2026-10-09T18:50:00Z",
+      "observed_operations": [
+        "web.open",
+        "web.find"
+      ],
+      "evidence": {
+        "path": "sources/critic-vendors.md#c08--volgistics-volunteer-record-import",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "03fa5ab86916fea2029a871dc319952267af92329ce469f236a2b0d00c07475c"
+      }
+    },
+    {
+      "id": "C09",
+      "title": "Better Impact Volunteer Impact product page",
+      "url": "https://www.betterimpact.com/solutions-volunteer-impact?hsCtaAttrib=171143047728",
+      "version": "Vendor product page identifies ©2026; mutable, no build/revision",
+      "commit": null,
+      "locator": "Lines 105–142 and 252–262; shift/reminder/mobile/admin claims",
+      "accessed_at": "2026-10-09T18:51:00Z",
+      "observed_operations": [
+        "web.open"
+      ],
+      "evidence": {
+        "path": "sources/critic-vendors.md#c09--better-impact-volunteer-impact-product-page",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "03fa5ab86916fea2029a871dc319952267af92329ce469f236a2b0d00c07475c"
+      }
+    },
+    {
+      "id": "C10",
+      "title": "Better Impact mobile guide",
+      "url": "https://siteguide.betterimpact.com/en/articles/9893058-navigating-the-app-and-mobile-interface",
+      "version": "Help article dated 2025-01-08; mutable",
+      "commit": null,
+      "locator": "Lines 21–34 and 37–84; assignment, profile, privacy, messaging and availability",
+      "accessed_at": "2026-10-09T18:51:00Z",
+      "observed_operations": [
+        "web.open"
+      ],
+      "evidence": {
+        "path": "sources/critic-vendors.md#c10--better-impact-mobile-guide",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "03fa5ab86916fea2029a871dc319952267af92329ce469f236a2b0d00c07475c"
+      }
+    },
+    {
+      "id": "C11",
+      "title": "Timefold hosted Employee Shift Scheduling fairness",
+      "url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/employee-resource-constraints/fairness/balance-time-worked",
+      "version": "Docs branch 1.35.x; hosted Employee Shift Scheduling API, distinct from open-source Solver",
+      "commit": null,
+      "locator": "Lines 171–234; FTE and formula; line 229 soft standard-deviation rule",
+      "accessed_at": "2026-10-09T18:50:00Z",
+      "observed_operations": [
+        "web.open",
+        "web.find"
+      ],
+      "evidence": {
+        "path": "sources/critic-solvers.md#c11--timefold-hosted-employee-shift-scheduling-fairness-docs-135x",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "945cbfc1f59ced1c075c8cdd8b4b6483a3e5bf03c45c6a085e0921965b784c32"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "Timefold 1.35.x docs lines 209–234; see independently checked hosted API source entry S13."
+      }
+    },
+    {
+      "id": "C12",
+      "title": "Timefold hosted constraint priorities and weights",
+      "url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/user-guide/constraints",
+      "version": "Docs branch 1.35.x; hosted API",
+      "commit": null,
+      "locator": "Lines 89–102; soft-weight default and maximum",
+      "accessed_at": "2026-10-09T18:50:00Z",
+      "observed_operations": [
+        "web.open"
+      ],
+      "evidence": {
+        "path": "sources/critic-solvers.md#c12--timefold-hosted-constraint-priorities-and-weights-docs-135x",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "945cbfc1f59ced1c075c8cdd8b4b6483a3e5bf03c45c6a085e0921965b784c32"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "Timefold 1.35.x docs lines 89–103; see independently checked hosted API source entry S14."
+      }
+    },
+    {
+      "id": "C13",
+      "title": "OR-Tools v9.15 pinned shift scheduling sample",
+      "url": "https://github.com/google/or-tools/blob/551ad10d94835c99e5e1e684500d3db398c0e345/examples/python/shift_scheduling_sat.py",
+      "version": "OR-Tools v9.15",
+      "commit": "551ad10d94835c99e5e1e684500d3db398c0e345",
+      "locator": "Lines 1561–1619, 1734–1795; decision variables, daily demand, objective, solver result",
+      "accessed_at": "2026-10-09T18:50:00Z",
+      "observed_operations": [
+        "web.open",
+        "web.find"
+      ],
+      "evidence": {
+        "path": "sources/critic-solvers.md#c13--or-tools-v915-pinned-shift-scheduling-sample",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "945cbfc1f59ced1c075c8cdd8b4b6483a3e5bf03c45c6a085e0921965b784c32"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "Pinned OR-Tools source lines 1596–1619 and 1734–1795; see independently checked source entry S12."
+      }
+    },
+    {
+      "id": "C14",
+      "title": "Timefold fairness quickstart issue #492",
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts/issues/492",
+      "version": "Opened 2024-06-24; closed after linked PR #517",
+      "commit": null,
+      "locator": "Lines 129–180; issue and closure linkage",
+      "accessed_at": "2026-10-09T18:51:00Z",
+      "observed_operations": [
+        "web.open"
+      ],
+      "evidence": {
+        "path": "sources/critic-solvers.md#c14--timefold-quickstart-fairness-issue-492",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "945cbfc1f59ced1c075c8cdd8b4b6483a3e5bf03c45c6a085e0921965b784c32"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "Issue #492 lines 129–180; quickstart feature request and PR closure."
+      }
+    },
+    {
+      "id": "C15",
+      "title": "Timefold quickstart fairness PR #517",
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts/pull/517",
+      "version": "Merged 2024-07-18; three commits; implementation at C17",
+      "commit": "77b1c335ce47c2026ba2873a646582cfbc091d58",
+      "locator": "Lines 129–200, 204–236; merge/history and linked fix",
+      "accessed_at": "2026-10-09T18:51:00Z",
+      "observed_operations": [
+        "web.open"
+      ],
+      "evidence": {
+        "path": "sources/critic-solvers.md#c15--timefold-quickstart-fairness-pr-517",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "945cbfc1f59ced1c075c8cdd8b4b6483a3e5bf03c45c6a085e0921965b784c32"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "PR #517 lines 129–200; merged quickstart and linked fix."
+      }
+    },
+    {
+      "id": "C16",
+      "title": "Timefold Solver Python load-balance cast PR #980",
+      "url": "https://github.com/TimefoldAI/timefold-solver/pull/980",
+      "version": "Merged 2024-07-18; milestone v1.13.0; marked required for #517",
+      "commit": "d6546cc9720df0578c67ec91956ca7a46eaf36c8",
+      "locator": "Lines 130–183 and 208–214; required-for linkage and merge metadata",
+      "accessed_at": "2026-10-09T18:51:00Z",
+      "observed_operations": [
+        "web.open"
+      ],
+      "evidence": {
+        "path": "sources/critic-solvers.md#c16--timefold-solver-load-balance-cast-pr-980",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "945cbfc1f59ced1c075c8cdd8b4b6483a3e5bf03c45c6a085e0921965b784c32"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open"
+        ],
+        "locator": "PR #980 lines 130–183; required-for linkage and milestone."
+      }
+    },
+    {
+      "id": "C17",
+      "title": "Timefold quickstart fairness implementation patch",
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts/commit/77b1c335ce47c2026ba2873a646582cfbc091d58.patch",
+      "version": "Merged implementation commit",
+      "commit": "77b1c335ce47c2026ba2873a646582cfbc091d58",
+      "locator": "Patch lines 110–206; soft shift-count balance and tests",
+      "accessed_at": "2026-10-09T18:51:00Z",
+      "observed_operations": [
+        "web.open"
+      ],
+      "evidence": {
+        "path": "sources/critic-solvers.md#c17--timefold-quickstart-fairness-implementation-commit",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "945cbfc1f59ced1c075c8cdd8b4b6483a3e5bf03c45c6a085e0921965b784c32"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open",
+          "web.find"
+        ],
+        "locator": "Pinned quickstart implementation patch; see source entry S17."
+      }
+    },
+    {
+      "id": "C18",
+      "title": "Timefold Solver Python cast-fix patch",
+      "url": "https://github.com/TimefoldAI/timefold-solver/commit/d6546cc9720df0578c67ec91956ca7a46eaf36c8.patch",
+      "version": "Merged fix commit; milestone v1.13.0",
+      "commit": "d6546cc9720df0578c67ec91956ca7a46eaf36c8",
+      "locator": "Patch lines 0–24; load-balance collector casts",
+      "accessed_at": "2026-10-09T18:51:00Z",
+      "observed_operations": [
+        "web.open"
+      ],
+      "evidence": {
+        "path": "sources/critic-solvers.md#c18--timefold-solver-python-cast-fix-commit",
+        "kind": "locally authored bounded paraphrase/evidence note; not full-page mirror or raw capture",
+        "sha256": "945cbfc1f59ced1c075c8cdd8b4b6483a3e5bf03c45c6a085e0921965b784c32"
+      },
+      "reviser_recheck": {
+        "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+        "observed_operations": [
+          "web.open",
+          "web.find"
+        ],
+        "locator": "Pinned cast-fix patch; see source entry S19."
+      }
+    }
+  ],
+  "usage_billing_observed": null,
+  "external_accounts_or_api_calls": [],
+  "observations": "Reviewed the exact S08 brief, input map, full own-arm research draft/discovery/revealed plan/source map, complete critic critique/source map, and bounded source notes. Independently reopened the public Volgistics recurring-entry and schedule-overview pages, RFC 5545, pinned OR-Tools v9.15 code, Timefold 1.35.x hosted API docs, and the Timefold issue/PR/fix chain. No product, solver, roster import, API, performance, usability, or accessibility test was executed. Vendor evidence remains mutable vendor documentation; RFC 5545 is interchange semantics; solver samples and issue history do not establish volunteer-policy fit. Usage/billing was not observed.",
+  "primary_rechecks": {
+    "accessed_at_window_utc": "2026-10-09T19:03:31Z–2026-10-09T19:12:11Z",
+    "observed_operations": [
+      "web.open",
+      "web.find"
+    ],
+    "source_ids": [
+      "S04",
+      "S09",
+      "S12",
+      "S13",
+      "S14",
+      "S15",
+      "S16",
+      "S17",
+      "S18",
+      "S19",
+      "S21",
+      "C01",
+      "C03",
+      "C04",
+      "C11",
+      "C12",
+      "C13",
+      "C14",
+      "C15",
+      "C16",
+      "C17",
+      "C18"
+    ],
+    "note": "Original access timestamps and IDs are preserved on each source entry. Recheck locators and operation type are attached to the same immutable IDs."
+  }
+}

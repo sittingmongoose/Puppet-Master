@@ -1,5 +1,5 @@
 {
-  "snapshot_at": "2026-10-09T18:58:00.974107+00:00",
+  "snapshot_at": "2026-10-09T19:29:16.988408+00:00",
   "rows": [
     {
       "block": "A-M01-A",
@@ -10,9 +10,9 @@
       "route": "luna",
       "arm": "control",
       "attempt_status": "STARTED",
-      "final_delivered": false,
+      "final_delivered": true,
       "grade": null,
-      "final_path": null,
+      "final_path": "jobs/A-M01-A/control/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:24:41.207874+00:00",
       "deadline": "2026-10-09T19:24:41.207874+00:00"
     },
@@ -41,7 +41,7 @@
       "arm": "control",
       "attempt_status": "STARTED",
       "final_delivered": true,
-      "grade": null,
+      "grade": "FAIL",
       "final_path": "jobs/A-M01-B/control/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:24:43.415876+00:00",
       "deadline": "2026-10-09T19:24:43.415876+00:00"
@@ -56,7 +56,7 @@
       "arm": "treatment",
       "attempt_status": "STARTED",
       "final_delivered": true,
-      "grade": null,
+      "grade": "FAIL",
       "final_path": "jobs/A-M01-B/treatment/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:24:45.382757+00:00",
       "deadline": "2026-10-09T19:24:45.382757+00:00"
@@ -71,7 +71,7 @@
       "arm": "control",
       "attempt_status": "INVALID_INFRASTRUCTURE_OVERDISPATCH",
       "final_delivered": false,
-      "grade": null,
+      "grade": "NO_DELIVERY",
       "final_path": null,
       "arm_requested_at": "2026-10-09T18:28:04.185225+00:00",
       "deadline": "2026-10-09T19:28:04.185225+00:00"
@@ -86,7 +86,7 @@
       "arm": "treatment",
       "attempt_status": "INVALID_INFRASTRUCTURE_OVERDISPATCH",
       "final_delivered": false,
-      "grade": null,
+      "grade": "NO_DELIVERY",
       "final_path": null,
       "arm_requested_at": "2026-10-09T18:28:04.925513+00:00",
       "deadline": "2026-10-09T19:28:04.925513+00:00"
@@ -100,9 +100,9 @@
       "route": "luna",
       "arm": "control",
       "attempt_status": "STARTED",
-      "final_delivered": false,
+      "final_delivered": true,
       "grade": null,
-      "final_path": null,
+      "final_path": "jobs/A-M02-B/control/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:24:21.745620+00:00",
       "deadline": "2026-10-09T19:24:21.745620+00:00"
     },
@@ -115,9 +115,9 @@
       "route": "luna",
       "arm": "treatment",
       "attempt_status": "STARTED",
-      "final_delivered": false,
+      "final_delivered": true,
       "grade": null,
-      "final_path": null,
+      "final_path": "jobs/A-M02-B/treatment/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:24:39.923973+00:00",
       "deadline": "2026-10-09T19:24:39.923973+00:00"
     },
@@ -130,9 +130,9 @@
       "route": "muse",
       "arm": "control",
       "attempt_status": "STARTED",
-      "final_delivered": false,
+      "final_delivered": true,
       "grade": null,
-      "final_path": null,
+      "final_path": "jobs/A-M03-A/control/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:38:35.160115+00:00",
       "deadline": "2026-10-09T19:38:35.160115+00:00"
     },
@@ -145,9 +145,9 @@
       "route": "muse",
       "arm": "treatment",
       "attempt_status": "STARTED",
-      "final_delivered": false,
+      "final_delivered": true,
       "grade": null,
-      "final_path": null,
+      "final_path": "jobs/A-M03-A/treatment/critic-finalizer/final.md",
       "arm_requested_at": "2026-10-09T18:45:07.863362+00:00",
       "deadline": "2026-10-09T19:45:07.863362+00:00"
     },
@@ -174,12 +174,12 @@
       "case": "S09",
       "route": "glm",
       "arm": "treatment",
-      "attempt_status": "UNSTARTED",
+      "attempt_status": "STARTED",
       "final_delivered": false,
       "grade": null,
       "final_path": null,
-      "arm_requested_at": null,
-      "deadline": null
+      "arm_requested_at": "2026-10-09T19:28:46.634199+00:00",
+      "deadline": "2026-10-09T20:28:46.634199+00:00"
     },
     {
       "block": "A-M04-A",
@@ -191,7 +191,7 @@
       "arm": "control",
       "attempt_status": "STARTED",
       "final_delivered": true,
-      "grade": null,
+      "grade": "PASS_WITH_LIMITATIONS",
       "final_path": "jobs/A-M04-A/control/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:28:48.843615+00:00",
       "deadline": "2026-10-09T19:28:48.843615+00:00"
@@ -206,7 +206,7 @@
       "arm": "treatment",
       "attempt_status": "STARTED",
       "final_delivered": true,
-      "grade": null,
+      "grade": "FAIL",
       "final_path": "jobs/A-M04-A/treatment/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:28:50.363520+00:00",
       "deadline": "2026-10-09T19:28:50.363520+00:00"
@@ -219,12 +219,12 @@
       "case": "S10",
       "route": "muse",
       "arm": "control",
-      "attempt_status": "UNSTARTED",
+      "attempt_status": "STARTED",
       "final_delivered": false,
       "grade": null,
       "final_path": null,
-      "arm_requested_at": null,
-      "deadline": null
+      "arm_requested_at": "2026-10-09T19:25:30.428055+00:00",
+      "deadline": "2026-10-09T20:25:30.428055+00:00"
     },
     {
       "block": "A-M04-B",
@@ -234,12 +234,12 @@
       "case": "S10",
       "route": "muse",
       "arm": "treatment",
-      "attempt_status": "UNSTARTED",
+      "attempt_status": "STARTED",
       "final_delivered": false,
       "grade": null,
       "final_path": null,
-      "arm_requested_at": null,
-      "deadline": null
+      "arm_requested_at": "2026-10-09T19:25:39.848988+00:00",
+      "deadline": "2026-10-09T20:25:39.848988+00:00"
     },
     {
       "block": "A-M05-A",
@@ -249,12 +249,12 @@
       "case": "S05",
       "route": "glm",
       "arm": "control",
-      "attempt_status": "UNSTARTED",
+      "attempt_status": "STARTED",
       "final_delivered": false,
       "grade": null,
       "final_path": null,
-      "arm_requested_at": null,
-      "deadline": null
+      "arm_requested_at": "2026-10-09T19:27:45.873912+00:00",
+      "deadline": "2026-10-09T20:27:45.873912+00:00"
     },
     {
       "block": "A-M05-A",
@@ -264,12 +264,12 @@
       "case": "S05",
       "route": "glm",
       "arm": "treatment",
-      "attempt_status": "UNSTARTED",
+      "attempt_status": "STARTED",
       "final_delivered": false,
       "grade": null,
       "final_path": null,
-      "arm_requested_at": null,
-      "deadline": null
+      "arm_requested_at": "2026-10-09T19:27:53.148426+00:00",
+      "deadline": "2026-10-09T20:27:53.148426+00:00"
     },
     {
       "block": "A-M05-B",
@@ -280,9 +280,9 @@
       "route": "luna",
       "arm": "control",
       "attempt_status": "STARTED",
-      "final_delivered": false,
+      "final_delivered": true,
       "grade": null,
-      "final_path": null,
+      "final_path": "jobs/A-M05-B/control/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:39:25.793101+00:00",
       "deadline": "2026-10-09T19:39:25.793101+00:00"
     },
@@ -295,9 +295,9 @@
       "route": "luna",
       "arm": "treatment",
       "attempt_status": "STARTED",
-      "final_delivered": false,
+      "final_delivered": true,
       "grade": null,
-      "final_path": null,
+      "final_path": "jobs/A-M05-B/treatment/research/final.md",
       "arm_requested_at": "2026-10-09T18:39:30.502703+00:00",
       "deadline": "2026-10-09T19:39:30.502703+00:00"
     },
@@ -310,9 +310,9 @@
       "route": "muse",
       "arm": "control",
       "attempt_status": "STARTED",
-      "final_delivered": false,
+      "final_delivered": true,
       "grade": null,
-      "final_path": null,
+      "final_path": "jobs/A-M06-A/control/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:57:49.357967+00:00",
       "deadline": "2026-10-09T19:57:49.357967+00:00"
     },
@@ -324,12 +324,12 @@
       "case": "S06",
       "route": "muse",
       "arm": "treatment",
-      "attempt_status": "UNSTARTED",
-      "final_delivered": false,
+      "attempt_status": "STARTED",
+      "final_delivered": true,
       "grade": null,
-      "final_path": null,
-      "arm_requested_at": null,
-      "deadline": null
+      "final_path": "jobs/A-M06-A/treatment/reviser/final.md",
+      "arm_requested_at": "2026-10-09T19:02:34.548436+00:00",
+      "deadline": "2026-10-09T20:02:34.548436+00:00"
     },
     {
       "block": "A-M06-B",
@@ -489,12 +489,12 @@
       "case": "S09",
       "route": "muse",
       "arm": "control",
-      "attempt_status": "UNSTARTED",
+      "attempt_status": "STARTED",
       "final_delivered": false,
       "grade": null,
       "final_path": null,
-      "arm_requested_at": null,
-      "deadline": null
+      "arm_requested_at": "2026-10-09T19:02:48.904788+00:00",
+      "deadline": "2026-10-09T20:02:48.904788+00:00"
     },
     {
       "block": "A-M09-A",
@@ -504,12 +504,12 @@
       "case": "S09",
       "route": "muse",
       "arm": "treatment",
-      "attempt_status": "UNSTARTED",
+      "attempt_status": "STARTED",
       "final_delivered": false,
       "grade": null,
       "final_path": null,
-      "arm_requested_at": null,
-      "deadline": null
+      "arm_requested_at": "2026-10-09T19:08:53.336694+00:00",
+      "deadline": "2026-10-09T20:08:53.336694+00:00"
     },
     {
       "block": "A-M09-B",
@@ -520,9 +520,9 @@
       "route": "glm",
       "arm": "control",
       "attempt_status": "STARTED",
-      "final_delivered": false,
+      "final_delivered": true,
       "grade": null,
-      "final_path": null,
+      "final_path": "jobs/A-M09-B/control/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:28:00.568027+00:00",
       "deadline": "2026-10-09T19:28:00.568027+00:00"
     },
@@ -535,9 +535,9 @@
       "route": "glm",
       "arm": "treatment",
       "attempt_status": "STARTED",
-      "final_delivered": false,
+      "final_delivered": true,
       "grade": null,
-      "final_path": null,
+      "final_path": "jobs/A-M09-B/treatment/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:28:01.079824+00:00",
       "deadline": "2026-10-09T19:28:01.079824+00:00"
     },
@@ -550,9 +550,9 @@
       "route": "luna",
       "arm": "control",
       "attempt_status": "STARTED",
-      "final_delivered": false,
+      "final_delivered": true,
       "grade": null,
-      "final_path": null,
+      "final_path": "jobs/A-M10-A/control/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:40:19.143486+00:00",
       "deadline": "2026-10-09T19:40:19.143486+00:00"
     },
@@ -581,7 +581,7 @@
       "arm": "control",
       "attempt_status": "STARTED",
       "final_delivered": true,
-      "grade": null,
+      "grade": "FAIL",
       "final_path": "jobs/A-M10-B/control/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:28:02.976111+00:00",
       "deadline": "2026-10-09T19:28:02.976111+00:00"
@@ -596,7 +596,7 @@
       "arm": "treatment",
       "attempt_status": "STARTED",
       "final_delivered": true,
-      "grade": null,
+      "grade": "FAIL",
       "final_path": "jobs/A-M10-B/treatment/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:28:03.544425+00:00",
       "deadline": "2026-10-09T19:28:03.544425+00:00"
@@ -640,9 +640,9 @@
       "route": "luna",
       "arm": "control",
       "attempt_status": "STARTED",
-      "final_delivered": false,
+      "final_delivered": true,
       "grade": null,
-      "final_path": null,
+      "final_path": "jobs/A-M11-B/control/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:28:50.955054+00:00",
       "deadline": "2026-10-09T19:28:50.955054+00:00"
     },
@@ -655,9 +655,9 @@
       "route": "luna",
       "arm": "treatment",
       "attempt_status": "STARTED",
-      "final_delivered": false,
+      "final_delivered": true,
       "grade": null,
-      "final_path": null,
+      "final_path": "jobs/A-M11-B/treatment/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:28:52.038615+00:00",
       "deadline": "2026-10-09T19:28:52.038615+00:00"
     },
@@ -670,9 +670,9 @@
       "route": "muse",
       "arm": "control",
       "attempt_status": "STARTED",
-      "final_delivered": false,
+      "final_delivered": true,
       "grade": null,
-      "final_path": null,
+      "final_path": "jobs/A-M12-A/control/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:53:07.250513+00:00",
       "deadline": "2026-10-09T19:53:07.250513+00:00"
     },
@@ -685,9 +685,9 @@
       "route": "muse",
       "arm": "treatment",
       "attempt_status": "STARTED",
-      "final_delivered": false,
+      "final_delivered": true,
       "grade": null,
-      "final_path": null,
+      "final_path": "jobs/A-M12-A/treatment/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:53:15.823711+00:00",
       "deadline": "2026-10-09T19:53:15.823711+00:00"
     },
@@ -700,9 +700,9 @@
       "route": "glm",
       "arm": "control",
       "attempt_status": "STARTED",
-      "final_delivered": false,
+      "final_delivered": true,
       "grade": null,
-      "final_path": null,
+      "final_path": "jobs/A-M12-B/control/reviser/final.md",
       "arm_requested_at": "2026-10-09T18:28:01.622902+00:00",
       "deadline": "2026-10-09T19:28:01.622902+00:00"
     },

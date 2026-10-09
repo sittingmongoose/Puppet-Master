@@ -1,0 +1,64 @@
+{
+  "frozen_at": "2026-10-09T18:53:00.687047+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S06/brief.md",
+      "sha256": "4c4e4dd878bb0d77ecbbdcbc86993acdae4f9e52f019466d518bd9139e9f2de6",
+      "bytes": 1431
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M12.json",
+      "sha256": "263abf18154d1ca385115b9074badb53e76ec207bdf0ece2441c986b4799c8a1",
+      "bytes": 1666
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/assignment.md",
+      "sha256": "16da751ac8d35425a0739893294261383d268c8fd855af6928f19012698c7a48",
+      "bytes": 2594
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/critic/input-map.json",
+      "sha256": "d5bd16741f879b9ca940603d24190b9c8f18461ba482e69c177591ab7ba9d6ff",
+      "bytes": 1179
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/draft.md",
+      "sha256": "cff97ab1ca83f7f49fb6ec6b29142bdc88758238b9ee4a17619521c744785c16",
+      "bytes": 16830
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/discovery.md",
+      "sha256": "598fbc58889a3c75ab934d824a8ddb2c0d38c4500af8776a1e647e6c91222cee",
+      "bytes": 14767
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/source-map.json",
+      "sha256": "3426631fa470b31afa598bdcb375785ac7576cf85438223334ba2bd578c5ce22",
+      "bytes": 11008
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M12-B/control/research/revealed-plan.md",
+      "sha256": "323cdef9d3d765ff0e060c6772f62b1280cf5cfa6cec1fc1e0162badd50b5c62",
+      "bytes": 332
+    }
+  ],
+  "method": {
+    "id": "M12",
+    "version": "v1",
+    "name": "adaptive-evidence-state-branching",
+    "control": "Competent conventional investigator may adapt queries and follow leads freely under equal time and full obligations; no artificial static-query prohibition.",
+    "treatment": "Maintain parent-child search branch states tied to propositions affecting product recommendation, applicability, plan correction or useful alternative. After each retrieval record supported/refuted/conditional/unknown transitions and new conditions/options/duplicates. Give next retrieval attention to observed state change per minute (+4 consequential proposition transition,+2 new applicability condition,+2 viable alternative,-2 duplicate). Preserve one unresolved countercase branch AND obligation/alternative coverage floor; zero-change branches can pause only after all mandatory research coverage accounted for. This explicit adaptive allocation is an inference-time adaptation, not IGRPO training/reward reproduction. Complete full scope and same critic/reviser.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Fresh externally researched IGRPO",
+    "primary_methodology": "https://arxiv.org/abs/2607.06223v2",
+    "novelty": "Iterated parent-child evidence-state utility allocates search attention; distinct from static critical-first and more parallel scouts; control remains competent and adaptive.",
+    "adaptation_limit": "Paper/implementation mechanisms motivate the intervention; published benchmark gains are NOT ER11 evidence.",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T19:05:00.687047+00:00"
+}

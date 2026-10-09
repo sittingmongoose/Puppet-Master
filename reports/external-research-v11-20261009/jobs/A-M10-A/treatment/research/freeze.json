@@ -1,0 +1,44 @@
+{
+  "frozen_at": "2026-10-09T18:40:39.323584+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S10/brief.md",
+      "sha256": "17322e03cfaa4aad42ef991cbf666e5ca646cca2439f71b748c8642761ccbbf2",
+      "bytes": 1420
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M10.json",
+      "sha256": "2ee60c924228059b042bfd860b34c4d5a1804d42a38285b20cc20db739223882",
+      "bytes": 1387
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/assignment.md",
+      "sha256": "b79caef5ff67d50b4b77d8509b6df794406edcd83d3b3b92dc9a25cd7767ec4d",
+      "bytes": 3481
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/treatment/research/input-map.json",
+      "sha256": "5510846b884c4021721539e779a40556d747d80a5894e2f4d552a19563c79fe4",
+      "bytes": 640
+    }
+  ],
+  "method": {
+    "id": "M10",
+    "version": "v1",
+    "name": "question-relevance-reformulation",
+    "control": "Competent conventional investigator researches brief questions, follows leads, reads governing evidence and synthesizes a complete draft.",
+    "treatment": "Maintain question-indexed retrieval queues for original obligations AND emergent alternative leads. Score candidate passages for question relevance/applicability, keep exact full evidence available outside contextual evidence cards, and reformulate only an unanswered question from its missing governing condition. Three working cards per question is a context prioritization rule, NEVER a cap on investigation, evidence or preserved output. Explicitly expand to surrounding definitions/exceptions when cards insufficient. Same native context/time and finalizer.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Fresh externally researched PaperQA2",
+    "primary_methodology": "https://arxiv.org/abs/2409.13740v2",
+    "novelty": "Question-specific rank/contextualize/reformulate loop, distinct from repository navigation and evidence-before-proposal.",
+    "adaptation_limit": "Paper/implementation mechanisms motivate the intervention; published benchmark gains are NOT ER11 evidence.",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T19:10:39.323584+00:00"
+}

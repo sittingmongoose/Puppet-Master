@@ -1,0 +1,132 @@
+{
+  "schema": "er11-source-map-v1",
+  "stage": "A-M05-B/control/critic",
+  "case": "S11",
+  "method": "M05",
+  "captured_at_utc": "2026-10-09T18:58:33Z",
+  "notes": [
+    "These are independent critic sources, not replacements for or rebindings of research-stage source IDs S01-S15 or the draft's unresolved S16.",
+    "No software, media, external account, or service was run. Pages were opened and read as evidence/data.",
+    "The exact research predecessor source-map.json stops at S15. The source-map-supplemental.json mentioned in the allowed sources/index.md was not read."
+  ],
+  "sources": [
+    {
+      "source_id": "C01",
+      "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "version_commit": "W3C Recommendation published 2024-12-12; the page identifies the dated stable version https://www.w3.org/TR/2024/REC-WCAG22-20241212/; current-version URL is a mutable alias.",
+      "locator": "SC 1.2.2 Level A; SC 1.2.3 Level A; SC 1.2.5 Level AA; SC 1.2.8 Level AAA.",
+      "accessed_at_utc": "2026-10-09T18:58:33Z",
+      "observed_operations": [
+        "Opened the W3C WCAG 2.2 page.",
+        "Read the published-version metadata.",
+        "Located and read the normative criteria for prerecorded captions, audio description/media alternative, audio description, and media alternative."
+      ],
+      "evidence_note": "Normative distinction: SC 1.2.3 is Level A and permits an audio description or a time-based media alternative; SC 1.2.5 is Level AA and requires audio description; SC 1.2.8 is Level AAA."
+    },
+    {
+      "source_id": "C02",
+      "title": "Understanding Success Criterion 1.2.5: Audio Description (Prerecorded)",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded",
+      "version_commit": "WAI Understanding document, informative explanation; page states updated 2026-03-09.",
+      "locator": "SC 1.2.5; Intent note on when existing audio conveys all visual information; explanation of the Level A choice and additional Level AA requirement; advisory technique H96.",
+      "accessed_at_utc": "2026-10-09T18:58:33Z",
+      "observed_operations": [
+        "Opened the exact WAI source.",
+        "Read the full returned page, including the conformance-level explanation, exception note, and technique status."
+      ],
+      "evidence_note": "WAI explains that where all important video information is already conveyed in audio, no additional description is necessary; otherwise the Level A media-alternative choice does not replace the Level AA audio-description requirement. WAI lists use of the HTML track element as an advisory technique."
+    },
+    {
+      "source_id": "C03",
+      "title": "Understanding Success Criterion 1.2.2: Captions (Prerecorded)",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded",
+      "version_commit": "WAI Understanding document, informative explanation; page states updated 2026-08-10.",
+      "locator": "Definition and intent for captions; dialogue and meaningful non-speech sound; language/style guidance.",
+      "accessed_at_utc": "2026-10-09T18:58:33Z",
+      "observed_operations": [
+        "Opened the exact WAI source.",
+        "Read the full returned page, including the captions definition and intent."
+      ],
+      "evidence_note": "The page distinguishes captions from dialogue-only subtitles and describes speech plus needed non-speech audio such as speaker identity and meaningful effects."
+    },
+    {
+      "source_id": "C04",
+      "title": "HTML Standard — The track element",
+      "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+      "version_commit": "WHATWG HTML Living Standard as served 2026-10-09; mutable standard, no fixed revision identifier exposed by this page.",
+      "locator": "Track kinds, label, srclang, and default attributes; description kind.",
+      "accessed_at_utc": "2026-10-09T18:58:33Z",
+      "observed_operations": [
+        "Opened the exact standard section.",
+        "Located and read track kind and attribute requirements, including the default-track constraints."
+      ],
+      "evidence_note": "The standard defines semantic track kinds and track metadata. Definition of a descriptions kind establishes a markup model; it does not by itself establish actual support in any selected user agent/player/assistive-technology combination."
+    },
+    {
+      "source_id": "C05",
+      "title": "WebVTT: The Web Video Text Tracks Format",
+      "url": "https://www.w3.org/TR/webvtt1/",
+      "version_commit": "W3C WebVTT Candidate Recommendation Draft as served 2026-10-09.",
+      "locator": "Cue timing syntax and offsets; nondecreasing cue start offsets; end-after-start; ordered cues and permitted overlap.",
+      "accessed_at_utc": "2026-10-09T18:58:33Z",
+      "observed_operations": [
+        "Opened the W3C WebVTT specification.",
+        "Located and read cue timing and timestamp sections."
+      ],
+      "evidence_note": "Cue timestamps are media-relative offsets with millisecond components; cue starts are nondecreasing, each end exceeds its own start, and distinct cues may overlap."
+    },
+    {
+      "source_id": "C06",
+      "title": "Able Player releases",
+      "url": "https://github.com/ableplayer/ableplayer/releases",
+      "version_commit": "Release listing observed 2026-10-09: latest stable shown as v5.0.0 (8d235f9, 2026-06-21); newer pre-release v5.1.0-beta2 (c4f10ab, 2026-10-06).",
+      "locator": "Release list; v5.1.0-beta2 pre-release and commit; v5.0.0 marked Latest stable release.",
+      "accessed_at_utc": "2026-10-09T18:58:33Z",
+      "observed_operations": [
+        "Opened the official GitHub release listing.",
+        "Read release order, stable/pre-release labels, commit identifiers, and available notes."
+      ],
+      "evidence_note": "The v5.0.0 stable baseline is supported. A newer beta exists; the listing alone does not establish that PR #778's change is included in that beta."
+    },
+    {
+      "source_id": "C07",
+      "title": "Able Player issue #775 — develop YouTube regression report",
+      "url": "https://github.com/ableplayer/ableplayer/issues/775",
+      "version_commit": "Issue #775, opened 2026-08-12; issue and comments as observed 2026-10-09.",
+      "locator": "Issue description and tested-version caveat, including reporter's develop build, 17 of 60 demos, and checked-in build-directory behavior.",
+      "accessed_at_utc": "2026-10-09T18:58:33Z",
+      "observed_operations": [
+        "Opened the exact public issue.",
+        "Read the reporter's description, version caveat, cited regression causes, and reproduction details."
+      ],
+      "evidence_note": "These are issue-reporter results, not an independent reproduction by this critic. The report distinguishes a freshly built develop tree from released v5.0.0 and says the checked-in build output was stale."
+    },
+    {
+      "source_id": "C08",
+      "title": "Able Player PR #778 — Apply fixes for issues with YouTube",
+      "url": "https://github.com/ableplayer/ableplayer/pull/778",
+      "version_commit": "PR #778 merged 2026-09-13; merge commit cd617fc into develop.",
+      "locator": "Merge event and checks summary.",
+      "accessed_at_utc": "2026-10-09T18:58:33Z",
+      "observed_operations": [
+        "Opened the exact public pull request.",
+        "Read merge target, commit identifier, date, and reported checks."
+      ],
+      "evidence_note": "The page reports seven checks passed and a merge into develop; this is not evidence that a stable release contains the fix."
+    },
+    {
+      "source_id": "C09",
+      "title": "Subtitle Edit v5.2.0 release",
+      "url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.2.0",
+      "version_commit": "Official tagged release v5.2.0; release page states release date 2026-09-10.",
+      "locator": "Release page for v5.2.0.",
+      "accessed_at_utc": "2026-10-09T18:58:33Z",
+      "observed_operations": [
+        "Opened the exact tagged official release page.",
+        "Read the tagged version and release record."
+      ],
+      "evidence_note": "This supports that v5.2.0 is a released candidate; it does not prove feature parity for a specific OS/build or suitability for the actual caption workload."
+    }
+  ]
+}

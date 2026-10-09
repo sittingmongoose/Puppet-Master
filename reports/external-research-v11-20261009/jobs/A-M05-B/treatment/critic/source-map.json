@@ -1,0 +1,365 @@
+{
+  "assignment": "ER11 A-M05-B treatment/critic",
+  "case": "S11 accessibility-video",
+  "method": "M05 retained-investigator",
+  "stage": "critic",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic",
+  "input_map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic/input-map.json",
+  "brief_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S11/brief.md",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/revealed-plan.md"
+  ],
+  "source_roots": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/sources"
+  ],
+  "usage_billing_observed": null,
+  "native_usage_observed": null,
+  "native_goal": {
+    "created_by": "functions.create_goal",
+    "goal_id": "01a12205-2245-7dd3-a82d-ec0fa49ba882",
+    "initial_status": "active",
+    "objective": "Execute ER11 scientific assignment A-M05-B/treatment/critic at /home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/critic: read only the exact authorized brief, declared predecessor artifacts and source roots plus independently selected public primary sources; independently critique the full discovery and draft against the revealed plan and governing evidence; write the required complete critique.md and source-map.json with bounded evidence under the assigned stage path; then complete this native Goal only after the scientific artifacts are saved."
+  },
+  "inherited_source_map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-B/treatment/research/source-map.json",
+  "source_id_policy": "S01-S22 are copied verbatim from the exact declared predecessor source map with identifiers and source records unchanged. S23-S24 are new critic-stage sources. IDs are immutable; a changed source publication requires a new ID and explicit drift note.",
+  "evidence_note": "sources/primary-source-notes.md",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "version_or_commit": "W3C Recommendation, WCAG 2.2; the stable normative edition linked at access time",
+      "locator": "Success Criteria 1.2.2, 1.2.3, 1.2.5; exact criterion text and levels in the Recommendation",
+      "accessed_at": "2026-10-09T18:44:19Z",
+      "operations": [
+        "opened exact URL",
+        "read sections on prerecorded captions, visual-information alternatives/audio description, and prerecorded audio description"
+      ],
+      "mutable_drift": false
+    },
+    {
+      "id": "S02",
+      "title": "Understanding Success Criterion 1.2.2: Captions (Prerecorded)",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded",
+      "version_or_commit": "WCAG 2.2 informative understanding page; live page retrieved 2026-10-09",
+      "locator": "terms for captions; speech and meaningful non-speech audio; speaker identification; placement",
+      "accessed_at": "2026-10-09T18:44:19Z",
+      "operations": [
+        "opened exact URL",
+        "read caption definition and explanatory notes"
+      ],
+      "mutable_drift": true,
+      "drift_note": "Informative web page may be updated independently of the Recommendation; the normative source is S01."
+    },
+    {
+      "id": "S03",
+      "title": "Understanding Success Criterion 1.2.3: Audio Description or Media Alternative (Prerecorded)",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-or-media-alternative-prerecorded",
+      "version_or_commit": "WCAG 2.2 informative understanding page; live page retrieved 2026-10-09",
+      "locator": "In Brief, Intent, Sufficient Techniques, Key Terms; distinction between audio description and a full alternative transcript",
+      "accessed_at": "2026-10-09T18:44:19Z",
+      "operations": [
+        "opened exact URL",
+        "read options, applicability notes, and definitions"
+      ],
+      "mutable_drift": true,
+      "drift_note": "Informative web page may be updated independently of the Recommendation; the normative source is S01."
+    },
+    {
+      "id": "S04",
+      "title": "HTML Standard, Media elements",
+      "url": "https://html.spec.whatwg.org/multipage/media.html",
+      "version_or_commit": "WHATWG HTML Living Standard as accessed 2026-10-09; mutable living edition",
+      "locator": "Track element; kind, src, srclang, label, default; text-track readiness states; text-track cue time units; media controls",
+      "accessed_at": "2026-10-09T18:44:19Z",
+      "operations": [
+        "opened exact URL",
+        "read text-track and track-element requirements"
+      ],
+      "mutable_drift": true,
+      "drift_note": "Living standard can change; recorded retrieval date and section locator preserve the observed edition."
+    },
+    {
+      "id": "S05",
+      "title": "WebVTT: The Web Video Text Tracks Format",
+      "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+      "version_or_commit": "W3C Candidate Recommendation Draft, 2026-05-20",
+      "locator": "Sections 1, 3.2-3.5, 4.1-4.6, 6.3, 10.1; the spec explicitly labels this publication a work in progress",
+      "accessed_at": "2026-10-09T18:44:19Z",
+      "operations": [
+        "opened exact dated publication",
+        "read status, supported track kinds, timestamp syntax, cue sequence rules, and format MIME type"
+      ],
+      "mutable_drift": false,
+      "drift_note": "This exact dated draft is immutable as a publication, but it is not the final Recommendation; future WebVTT publications may differ."
+    },
+    {
+      "id": "S06",
+      "title": "TTML Profiles for Internet Media Subtitles and Captions 1.2 (IMSC 1.2)",
+      "url": "https://www.w3.org/TR/2020/REC-ttml-imsc1.2-20200804/",
+      "version_or_commit": "W3C Recommendation, 2020-08-04",
+      "locator": "Sections 1-2, 6, 8-9; Text and Image profiles, text-based exchange, presentation and profile constraints",
+      "accessed_at": "2026-10-09T18:44:19Z",
+      "operations": [
+        "opened exact dated Recommendation",
+        "read scope, profile, and text-profile provisions"
+      ],
+      "mutable_drift": false,
+      "drift_note": "The dated Recommendation is stable; check the current W3C index/errata before a future production-format decision."
+    },
+    {
+      "id": "S07",
+      "title": "DCMP Captioning Key",
+      "url": "https://dcmp.org/captioningkey/print",
+      "version_or_commit": "Current online DCMP Captioning Key as accessed 2026-10-09; no version label on page",
+      "locator": "Elements of Quality Captioning; line division; caption duration; presentation-rate specifications; sound effects and music",
+      "accessed_at": "2026-10-09T18:44:25Z",
+      "operations": [
+        "opened exact URL",
+        "read quality, duration, placement and educational-media presentation-rate guidance"
+      ],
+      "mutable_drift": true,
+      "drift_note": "Online guide is mutable and is guidance for DCMP work; its frame and rate values are not WCAG universal limits."
+    },
+    {
+      "id": "S08",
+      "title": "Able Player README",
+      "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/README.md",
+      "version_or_commit": "Able Player v5.0.0, commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+      "locator": "Feature List; Compatibility; Captions; Transcript; YouTube/Vimeo support and limitations; MIME Types; Keyboard Shortcuts; User Preferences",
+      "accessed_at": "2026-10-09T18:44:25Z",
+      "operations": [
+        "opened immutable commit-pinned README",
+        "read features, defaults, supported media sources, transcript behavior, and compatibility"
+      ],
+      "mutable_drift": false
+    },
+    {
+      "id": "S09",
+      "title": "Able Player v5.0.0 release notes",
+      "url": "https://github.com/ableplayer/ableplayer/releases/tag/v5.0.0",
+      "version_or_commit": "v5.0.0, release commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae, dated 2026-06-21",
+      "locator": "v5.0.0 release section; ESM, dynamic lifecycle, breaking changes, browser target, and release fixes",
+      "accessed_at": "2026-10-09T18:44:25Z",
+      "operations": [
+        "opened release page",
+        "read exact release notes and commit identifier"
+      ],
+      "mutable_drift": true,
+      "drift_note": "The version tag identifies the release; the page lists later releases dynamically. Code behavior is pinned separately by S08."
+    },
+    {
+      "id": "S10",
+      "title": "Able Player issue #775: YouTube regressions on develop",
+      "url": "https://github.com/ableplayer/ableplayer/issues/775",
+      "version_or_commit": "Issue #775, opened 2026-08-12; issue page status Closed at retrieval",
+      "locator": "Description; version tested; regression details; issue metadata and Development relationships",
+      "accessed_at": "2026-10-09T18:44:25Z",
+      "operations": [
+        "opened exact issue",
+        "read reported failure conditions, tested version, and displayed issue relationships"
+      ],
+      "mutable_drift": true,
+      "drift_note": "Issue status and relationships can change. Reporter says regressions were on develop and absent from v5.0.0; at access the issue page showed no linked branch or pull request."
+    },
+    {
+      "id": "S11",
+      "title": "Able Player license",
+      "url": "https://github.com/ableplayer/ableplayer/blob/8d235f977689f310a074b3ddcf68e8d19a7ed4ae/LICENSE",
+      "version_or_commit": "Able Player v5.0.0, commit 8d235f977689f310a074b3ddcf68e8d19a7ed4ae",
+      "locator": "Full LICENSE file; lines 240-277 in the rendered source",
+      "accessed_at": "2026-10-09T18:45:13Z",
+      "operations": [
+        "opened immutable commit-pinned license",
+        "read license identifier and attribution conditions"
+      ],
+      "mutable_drift": false
+    },
+    {
+      "id": "S12",
+      "title": "Subtitle Edit FAQ",
+      "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/docs/faq.md",
+      "version_or_commit": "Subtitle Edit v5.2.0 tag; release commit shown by GitHub as d8e3b8b",
+      "locator": "Supported formats; video player and waveform; speech-to-text engines; synchronization",
+      "accessed_at": "2026-10-09T18:44:25Z",
+      "operations": [
+        "opened release-tag-pinned FAQ",
+        "read supported formats, local speech-recognition choices, waveform, and sync guidance"
+      ],
+      "mutable_drift": false,
+      "drift_note": "Pinned release tag and the release-page commit identifier are preserved; future versions require a new source ID."
+    },
+    {
+      "id": "S13",
+      "title": "Subtitle Edit v5.2.0 release notes",
+      "url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.2.0",
+      "version_or_commit": "v5.2.0, commit d8e3b8b, released 2026-09-10",
+      "locator": "Release summary sections on waveform, WebVTT, translation/AI, speech-to-text, quality report, and bug fixes",
+      "accessed_at": "2026-10-09T18:44:25Z",
+      "operations": [
+        "opened release page",
+        "read release notes and commit identifier"
+      ],
+      "mutable_drift": false
+    },
+    {
+      "id": "S14",
+      "title": "Subtitle Edit license",
+      "url": "https://github.com/SubtitleEdit/subtitleedit/blob/v5.2.0/LICENSE",
+      "version_or_commit": "Subtitle Edit v5.2.0 tag",
+      "locator": "Full LICENSE file; MIT License and notice requirement",
+      "accessed_at": "2026-10-09T18:45:18Z",
+      "operations": [
+        "opened release-tag-pinned license",
+        "read license identifier and attribution condition"
+      ],
+      "mutable_drift": false
+    },
+    {
+      "id": "S15",
+      "title": "Amara: Create Captions and Translations",
+      "url": "https://support.amara.org/support/solutions/articles/195345-create-captions-and-translations",
+      "version_or_commit": "Support article modified 2026-06-09 according to the search result; direct open redirected to an inaccessible account authorization page on 2026-10-09",
+      "locator": "Search-result rendering: editor workflow, language selection, keyboard steps, and fluency recommendation",
+      "accessed_at": "2026-10-09T18:45:51Z",
+      "operations": [
+        "searched official Amara support",
+        "read returned article summary",
+        "reopened exact URL; observed redirect to authorization service and did not treat it as independently verified"
+      ],
+      "mutable_drift": true,
+      "drift_note": "The article content could not be reopened without authorization. Treat the search snippet as limited evidence and verify current editor/workflow details during procurement."
+    },
+    {
+      "id": "S16",
+      "title": "Amara: Create a private team",
+      "url": "https://support.amara.org/support/solutions/articles/25931-create-a-private-team-on-amara-",
+      "version_or_commit": "Support article modified 2024-07-03 according to the rendered page",
+      "locator": "Team privacy, roles/workflows, import/export, and Amara Integrated description",
+      "accessed_at": "2026-10-09T18:44:25Z",
+      "operations": [
+        "opened exact support page",
+        "read team types and feature claims"
+      ],
+      "mutable_drift": true,
+      "drift_note": "Plan details, pricing, privacy terms, APIs, and features may change; no price or contract term was observed."
+    },
+    {
+      "id": "S17",
+      "title": "U.S. Copyright Act, Title 17, Chapter 1",
+      "url": "https://www.copyright.gov/title17/92chap1.html",
+      "version_or_commit": "Current U.S. Copyright Office statutory compilation as accessed 2026-10-09; sections 101 and 106",
+      "locator": "Section 106(1)-(4); section 101 definition of derivative work",
+      "accessed_at": "2026-10-09T18:44:25Z",
+      "operations": [
+        "opened exact official compilation",
+        "read rights relevant to reproduction, derivative works, distribution, and public performance"
+      ],
+      "mutable_drift": true,
+      "drift_note": "Statutory compilation may change; jurisdiction and amendments must be checked at implementation. It does not resolve exceptions or this organization's rights."
+    },
+    {
+      "id": "S18",
+      "title": "U.S. Copyright Office Circular 14: Copyright in Derivative Works and Compilations",
+      "url": "https://www.copyright.gov/circs/circ14.pdf",
+      "version_or_commit": "Circular 14, reviewed 2020-07",
+      "locator": "Pages 1-2; translations as derivative-work examples and authorization for adaptations",
+      "accessed_at": "2026-10-09T18:45:51Z",
+      "operations": [
+        "opened official PDF",
+        "read dated publication and relevant derivative-work paragraphs"
+      ],
+      "mutable_drift": false,
+      "drift_note": "The document states that some registration policies were superseded; only the derivative-work explanation was used, not its registration instructions."
+    },
+    {
+      "id": "S19",
+      "title": "Video.js guide: Show captions and subtitles",
+      "url": "https://videojs.org/docs/framework/html/guides/captions",
+      "version_or_commit": "Live HTML-framework documentation retrieved 2026-10-09; page does not pin a code commit; comparison only",
+      "locator": "Recommended approach; track list and selection behavior; CORS; language-selection menu; troubleshooting",
+      "accessed_at": "2026-10-09T18:45:34Z",
+      "operations": [
+        "opened exact docs URL",
+        "read WebVTT example, caption-track selection defaults, asynchronous cue load, CORS requirements, and error cases"
+      ],
+      "mutable_drift": true,
+      "drift_note": "Unpinned current documentation is not evidence for an unselected release; verify against the exact version if chosen."
+    },
+    {
+      "id": "S20",
+      "title": "Video.js accessibility guide",
+      "url": "https://videojs.org/docs/framework/html/concepts/accessibility",
+      "version_or_commit": "Live HTML-framework documentation retrieved 2026-10-09; page does not pin a code commit; comparison only",
+      "locator": "Standards target, keyboard interactions, focus, status announcement, caption controls, contrast, and touch target notes",
+      "accessed_at": "2026-10-09T18:45:34Z",
+      "operations": [
+        "opened exact docs URL",
+        "read the accessibility guide"
+      ],
+      "mutable_drift": true,
+      "drift_note": "Unpinned current documentation is not evidence for an unselected release; verify against exact source if chosen."
+    },
+    {
+      "id": "S21",
+      "title": "Video.js releases",
+      "url": "https://github.com/videojs/video.js/releases",
+      "version_or_commit": "Release page accessed 2026-10-09; displayed v8.24.2 and v10.0.1 releases",
+      "locator": "v8.24.2 and Video.js v10.0.1 release entries; v10.0.1 date 2026-10-02",
+      "accessed_at": "2026-10-09T18:45:34Z",
+      "operations": [
+        "opened release list",
+        "read version labels, release dates, and displayed release identifiers"
+      ],
+      "mutable_drift": true,
+      "drift_note": "Release page is a moving list; release identifiers are preserved here, and maturity status was not adjudicated."
+    },
+    {
+      "id": "S22",
+      "title": "Video.js v10 project overview",
+      "url": "https://github.com/videojs/v10",
+      "version_or_commit": "Repository landing page retrieved 2026-10-09; moved to videos/video.js and identifies v10 as near-stable/RC in its text",
+      "locator": "Project status and timeline",
+      "accessed_at": "2026-10-09T18:45:34Z",
+      "operations": [
+        "opened exact repository page",
+        "read project status and timeline"
+      ],
+      "mutable_drift": true,
+      "drift_note": "Status claims can change. Because the release page and project landing page do not communicate maturity consistently, no Video.js version is recommended without a fresh check."
+    },
+    {
+      "id": "S23",
+      "title": "Selecting Web Accessibility Evaluation Tools",
+      "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+      "version_or_commit": "W3C WAI guidance page updated 2024-05-13; live page retrieved 2026-10-09",
+      "locator": "What Evaluation Tools Can Do and Can Not Do; automated checks, human judgment, false or misleading results",
+      "accessed_at": "2026-10-09T18:59:43Z",
+      "operations": [
+        "searched official W3C WAI site for evaluation-tool scope",
+        "opened exact URL",
+        "read the What Evaluation Tools Can Do and Can Not Do section"
+      ],
+      "mutable_drift": true,
+      "drift_note": "WAI guidance is informative and can change; the page itself states it was updated 2024-05-13. It describes tool classes generally and does not establish the capability of an unnamed scanner."
+    },
+    {
+      "id": "S24",
+      "title": "Understanding Success Criterion 1.2.5: Audio Description (Prerecorded)",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded.html",
+      "version_or_commit": "WCAG 2.2 informative WAI Understanding page; live page retrieved 2026-10-09",
+      "locator": "Intent and Key Terms, audio description Note 3; Level AA status and explanation of visual details not conveyed in main soundtrack",
+      "accessed_at": "2026-10-09T18:59:43Z",
+      "operations": [
+        "searched official WAI WCAG 2.2 explanatory pages",
+        "opened exact result URL",
+        "read the criterion explanation, intent, and audio-description key-term notes"
+      ],
+      "mutable_drift": true,
+      "drift_note": "Informative page may be revised independently of the normative WCAG 2.2 Recommendation. S01 remains the normative source."
+    }
+  ]
+}

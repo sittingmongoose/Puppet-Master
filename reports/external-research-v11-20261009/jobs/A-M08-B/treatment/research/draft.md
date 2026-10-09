@@ -1,0 +1,123 @@
+# Research draft — community-audio oral-history collection
+
+**Candidate:** A-M08-B / treatment / S02  
+**Stage:** research  
+**Method:** M08 progressive complete draft; this final version includes the exact-plan comparison and a preservation/contradiction review.  
+**Discovery snapshot:** [discovery.md](discovery.md) was written before plan reveal and left unchanged. [draft-v1.md](draft-v1.md) preserves the complete first plan-crosswalk draft. Source records are in [source-map.json](source-map.json), with post-reveal citations in [source-map-addendum.json](source-map-addendum.json).  
+**Scope:** Only the specified input map, S02 brief, the revealed own-case plan, and cited public primary sources were used. No parent, counterpart, evaluator, campaign history, or plan-root-only artifact was read.
+
+## Recommendation
+
+Use a reversible pilot to compare self-hosted OHMS with managed Aviary OHMS. Add Mukurtu v4 only if the represented communities want its community protocol governance; consider Omeka S as the catalog/exhibit layer only if the team supplies the oral-history editing/synchronization layer. Keep preservation, editorial, and public-access objects separable and exportable.
+
+Do not publish machine-generated transcripts or audio automatically. Keep versioned timed transcripts/indexes with attributable human review. Enforce access on the smallest unit consent restricts, across audio, transcript, search, excerpts, feeds, APIs, exports, caches and derivatives. A whole-record flag is not sufficient for segment withdrawal. Before implementation, ask stakeholders what withdrawal means for public access versus the preservation copy.
+
+The brief covers 2,000 hour-long recordings (2,000 total hours), volunteer transcripts, multilingual speakers, word/speaker correction, original-audio preservation, time-linked excerpts, whole-recording or segment restrictions/withdrawal, search and a low-cost public website. The brief does not specify supported languages, source formats, current rights agreements, staffing, hosting constraints, traffic, budget ceiling, or whether every recording needs a verbatim transcript. These remain decision inputs.
+
+## Exact plan comparison (O4)
+
+| Exact clause from the revealed plan | Disposition | Retained intent and required correction |
+| --- | --- | --- |
+| **P1: “Batch automatic transcription then publish text and audio.”** | **Correction** | Batch inference can help with backlog after consent eligibility is checked, but each result begins as a marked machine draft. A competent reviewer must verify wording, language, speaker labels, timestamps and restrictions before publication. Publish only the transcript and audio derivative approved for that audience. For languages or conditions where ASR is not useful, prefer a human topic index or descriptive record over false verbatim completeness. |
+| **P2: “Keep transcript edits as one replacement text file.”** | **Rejected** | Replacement-only text loses provenance, reviewer approval, prior accepted wording and the ability to reverse a bad edit or trace withdrawal. Store timed transcript versions and structured segments with stable IDs, language, author/volunteer, timestamps, review state, and source/model provenance. Allow suggested edits; publish a reviewed version. Generate TXT/WebVTT exports as outputs, not as the only record. |
+| **P3: “Search full text with a general database search index.”** | **Correction** | Full-text search and a simple database index may be enough for 2,000 interviews; benchmark before adding a separate search service. Build it from public-approved data or enforce rights on every result. Searchable units should correspond to consent units: record/segment, language, speaker ID, time range, approved transcript and topic fields. Restricted text must not leak through hits, snippets, suggestions, facets, APIs, exports, feeds or cached indexes. Search and player links must resolve to the same allowed moment. |
+| **P4: “One consent flag hides the public recording.”** | **Rejected** | A single flag may hide one whole resource but cannot express separate rules for metadata, audio, transcript, translated transcript, topic index, excerpt, or interval. Keep consent/rights evidence and current decisions at the needed object/interval granularity: scope, audience, permitted use, authority, start/end, embargo/review date, and action history. **User decision required:** does withdrawal mean removing public access while retaining an authorized sealed master, or deleting the master too? The signed agreement and governing policy decide; the software cannot choose. A restricted interval must be absent from both audio and text/index products. |
+| **P5: “Keep WAV originals and MP3 listening copies.”** | **Already-covered, with a format correction** | The separation between source and access copy is sound. Retain received digital files bit-for-bit; do not convert compressed originals into a purported master. Library of Congress guidance prefers BWF wrapping LPCM for archival masters when reformatting mono/stereo analog material and WAVE with embedded metadata as preferred media-independent digital audio, but does not require one BWF version for every input. Choose MP3 only if it fits streaming/access needs; it is not the preservation copy. Identify every derivative, link it to its source and checksum, and make access derivatives redacted when restrictions require. |
+| **P6: “Validate word accuracy on a few English clips.”** | **Correction** | A few English clips cannot validate multilingual performance, dialects, proper names, code-switching, overlap, noise or hour-long context. Use consent-cleared examples stratified across represented languages and important recording conditions, with fluent human reviewers. Report WER/CER under explicit normalization rules, hallucinated/missed words, names, speakers, timing error, reviewer minutes per hour and differences by language/condition. Agree thresholds with project stakeholders; omit ASR in strata where it does not meet them. |
+
+### Cross-finding classifications
+
+- **Correction:** P1, P3 and P6 retain useful intent but need review, consent-aware search and representative validation.
+- **Rejected:** P2 as a replacement-only transcript record; P4 as a one-flag policy for all restriction and withdrawal needs.
+- **Already-covered:** P5's source/access separation, with bit-preservation and appropriate-format conditions.
+- **Optional enhancement:** OHMS synchronization, managed Aviary OHMS, Mukurtu community protocols, Omeka S catalog/exhibits, a human timecoded topic index, selective ASR, BagIt intake packages and PREMIS preservation-event metadata.
+- **User decisions:** operations model and budget; community control; languages and transcript coverage; which derived objects are restricted; whether consent permits preservation retention after withdrawal; remote ASR/vendor processing; public versus authenticated access; accessibility/domain requirements.
+- **Uncertain:** interval-level ACL and deletion behavior in any candidate; exact Aviary storage/egress and billing basis; free OHMS repository size; Aviary migration/export fidelity; current self-hosted OHMS runtime support; accuracy by local language/dialect; source audio formats and volume; the legal meaning of each consent form. Resolve through agreements, vendor demonstrations, and pilot checks.
+
+## Products and materially different approaches (O1)
+
+### OHMS: oral-history-oriented authoring and synchronized discovery
+
+University of Kentucky Libraries describes OHMS as connecting word-level search to precise interview moments and links the OHMS tool, account request and login. OHMS Viewer is an oral-history-specific viewer that can be configured with a chosen media host/site. Its pinned README says substituting a media player calls for PHP and JavaScript customization and asks implementers to verify transcript/index search links against playback time. This fits searching and time-linked excerpts but requires hosting/integration/security ownership. Confirm current runtime requirements against the selected release rather than relying on a generic old README requirement. [S02, S03, S05]
+
+A topic index is a useful alternate coverage tier, not simply a bad transcript. It records human-curated topics and time ranges, supporting discovery without representing it as a word-for-word record. If resources do not support full transcripts in every language, an index-first policy can keep more recordings findable while preserving transcription for priority material.
+
+### OHMS inside Aviary: hosted authoring and media service
+
+The Aviary guide documents transcript import/creation, editing text and speaker labels, find/replace, start-time correction, multiple transcript languages, annotation and export. The newer OHMS Aviary transcript standard uses timed segments; legacy transcripts have less complete timing/edit support until converted. Manual time entry is HH:MM:SS; WebVTT uses hours, minutes, seconds and milliseconds. Test actual imports, edits and export round trips. [S06]
+
+Aviary documents access status for resources, media, transcripts and indexes, permission groups and access requests. Its media guide says uploaded media in Wasabi are private/encrypted at rest and access leases expire. These are vendor claims, not an independent audit. The guide describes timed segments inside an index but public/private status at the index level; it does not establish arbitrary per-segment access rules. Treat interval privacy/deletion as unproven until a demonstration and negative tests establish behavior across all outputs. [S07–S08]
+
+A post-reveal check of the vendor’s public pricing page (2026-10-09) found a free OHMS application subscription limited to a small-size organizational repository, paid plan resource caps of 100, 1,000, 5,000, 10,000 and 20,000, and dollar-listed displayed plan values from $15 to $1,900. The page offers a monthly/yearly selector, but the retrieved table does not establish the selected billing period or included storage volume; confirm both. Listed automated transcription, translation and time alignment are estimated at $0.04 per media minute, billed in addition to the subscription and subject to change/volume discounts. One pass over 2,000 hours is 120,000 minutes × $0.04 = **$4,800** at that displayed estimate, before review, reruns, taxes and hosting. This makes total cost and review labor a concrete decision, not a generic “free vs paid” comparison. [S19]
+
+### Mukurtu v4: community-defined protocols
+
+Mukurtu v4 requires cultural protocols for content and media. Its documentation distinguishes open access visible to all visitors from strict access limited to logged-in protocol members. An open item can link to media with stricter protocols, allowing public discovery while restricting playback. With multiple protocols, the audio guide says “All” is the more restrictive default; “Any” permits membership in any selected protocol. These rules are meaningful when communities represented want to govern access through such protocols. The docs establish asset-level access, not arbitrary transcript-word/time-range ACLs. Do not treat Mukurtu as a complete segment-redaction or synchronized transcript system. [S09–S10]
+
+### Omeka S: general collection/exhibit publication
+
+Omeka S offers items, media, metadata, sites and exhibits. Its manual says an item may be public while attached media are private and describes global roles separately from site-specific roles. This can fit a general catalog/public website, but the manual does not provide timecoded transcript correction or interval-level permissions. Pair it with OHMS or another tested oral-history layer if those functions are required. [S11]
+
+### Whisper: optional multilingual draft generation
+
+Whisper v20250625 supports transcription in the spoken language and speech translation into English; code provides word timestamps. Its model card describes 680,000 training hours with an uneven distribution: 65% English audio/English transcript, 18% non-English audio/English transcript and 17% non-English audio/non-English transcript across 98 languages. It warns of hallucinated words, uneven language/accent/dialect performance, weaker performance where training data is lower, and that speaker diarization has not been robustly evaluated. The original paper also reports benchmark differences associated with training-data volume and long-form decoding challenges. Neither model-card claims nor benchmark results predict this collection’s language-specific accuracy. Use ASR as an editable, consent-cleared draft only where a local pilot demonstrates value. [S12–S14]
+
+Whisper’s v20250625 changelog includes a safer torch.load setting, a dynamic-time-warping device fix, translation-limit documentation and timestamp improvements. This is relevant code evolution but does not show that accuracy for these oral histories is solved. [S14]
+
+## Consequential source behavior, units and applicability (O2, O3)
+
+### OHMS VTT precision and index mapping
+
+A post-reveal review of the exact v3.10.15 Transcript.php source found a material timing limit. It reads millisecond fields from WebVTT but the conversion to seconds drops the fractions; display and seek values are whole seconds. For index-to-transcript associations, it compares integer index seconds against a half-open transcript interval [start, end) and stops after the first matching point. Therefore, in this pinned release, subsecond timing is lost on these paths and a single transcript segment only receives the first matching index point. If staff need subsecond navigation or multiple index markers inside one paragraph, create smaller cues or use a tested alternative; test 250 ms boundaries and two index points before choosing. This is direct source-code inspection of v3.10.15, not a runtime execution. [S20]
+
+The OHMS Viewer release trail includes v3.10.12 (full commit 093ff8384a47cde906183d4c4cb9b03bef2c6c9d), whose release/commit links VTT index and transcript navigation; v3.10.14 (short commit bb1d8e5), which fixes PDF export for legacy transcripts without timecodes; and v3.10.15 (full commit ec922b6bd2e94bbbe537aa931e273ce99637ec7d), which adds Apache/Nginx sample rules denying direct HTTP access to cache paths. This is a relevant issue/fix/release chain touching synchronization, legacy content and publication security. The v3.10.15 code still exhibits the integer-second behavior described above, so a navigation fix should not be mistaken for millisecond precision. No software was run. [S03–S05, S20–S21]
+
+### Speech recognition and human review
+
+The model card says Whisper is trained on noisy web data and may emit words not spoken; accuracy differs by language and accent/dialect. Its code’s timestamp outputs are estimates and not proof of transcript correctness. Preserve raw model output and run identity in the editorial record, then human-correct. Never permit ASR to name/identify a person or silently normalize language varieties. Translation into English is a derived translation, not the source-language transcript. [S12–S14]
+
+### Access and withdrawal
+
+The reviewed product docs describe permissions on different object types: Aviary resource/media/transcript/index; Mukurtu content/media protocol; Omeka S item/media public/private. They do not prove that arbitrary audio intervals, their transcript words, topics, metadata snippets and cache/object-store copies share one enforceable permission rule. Use a single rights decision source and ensure every derivative/search/access path consults it. For interval withdrawal, the public access audio may need a separately rendered redacted copy or an authenticated segment-serving design; the related transcript, index, captions and embeddings/snippets must also be regenerated. Preserve the unmodified source only if the agreement permits; if it requires erasure, execute and record erasure rather than retaining an “immutable” copy.
+
+OHA’s 2025 ethics guidance recommends documented informed consent, explains potential uses, supports narrator review/approval before release when possible, and says access/care planning should begin early. OHA archival guidance emphasizes explicit restriction/access procedures; its glossary distinguishes consent from copyright and describes rolling consent. This is professional guidance, not legal advice. Record exactly what a participant/community authorized, which versions/derivatives it covers, who decides an exception, and what a withdrawal can or cannot recall after public download. [S15]
+
+### Preservation and capacity
+
+Library of Congress guidance prefers BWF wrapping LPCM for archival masters when reformatting mono/stereo analog audio, and lists WAVE with embedded metadata as preferred media-independent digital audio. For received digital recordings, retain the input bits. Keep listening copies as separate derivatives. [S16]
+
+BagIt RFC 8493 v1.0 defines a payload directory and checksum manifests; a valid package verifies checksums for the listed files. It can support intake/transfer/fixity but is not a backup or access-control system. PREMIS 3.0 separates Objects, Events, Rights and Agents, useful for describing source/derivative links, fixity, transformations, retention and people/software. It is metadata, not storage or a purge mechanism. [S17–S18]
+
+Storage estimate from the brief’s 2,000 hours (decimal units; one copy): stereo PCM at 96 kHz/24-bit is 2,073,600,000 bytes/hour, about 4.15 TB total; 48 kHz/24-bit/stereo is about 2.07 TB; a 64 kbit/s stream copy is about 28.8 MB/hour or 57.6 GB. These calculations exclude metadata, containers, alternate languages/formats, replicas, backup history, growth and egress. No inventory or capacity test was run.
+
+## Proposed architecture and workflow
+
+1. **Preservation:** retain the received audio unchanged with stable interview ID, original filename, technical/source metadata, checksums, consent authority and retention rule. Maintain the number and locations of copies required by the institution’s policy. Log checksum, format validation, migration, deletion and restoration events.
+2. **Editorial records:** keep transcripts and topic indexes as versioned timed segments. Record language, stable speaker/person identifier (or pseudonym), time range, source/model provenance, editor, date and review state. Volunteers edit drafts or submit proposals; authorized staff/community reviewers approve public versions. Preserve old versions under the same rights rules as the new one.
+3. **Public search/view:** include only public-approved item description, transcript/index segments and derivative audio. Use stable segment IDs and canonical time representation. Search results, snippets, autocomplete, facets, API/export and media links all apply current rights. Test OHMS’s second-based behavior and multiple-index-point mapping if using its Viewer.
+4. **Restriction and withdrawal:** evaluate authority and scope; immediately suppress affected public records and search documents; invalidate direct URLs and caches; rebuild allowed transcript, index, captions and access audio; record the decision and action. Apply deletion/embargo to the preservation original as the governing agreement requires. A browser-hidden control is not security. Disclose that downloaded copies may remain outside the repository’s control.
+5. **Portability:** keep stable IDs and explicit crosswalks. Export OHMS XML when used, transcript WebVTT/TXT, index WebVTT/CSV and rights/preservation metadata. Verify round-trip behavior. Avoid making a vendor-only file or one replacement TXT the only authoritative data.
+
+## Stakeholder decisions before procurement
+
+1. Recurring spend ceiling; internal hosting/support capacity; subscription period/storage/bandwidth and egress.
+2. Whether a community protocol governance system is wanted and who will define/maintain those protocols.
+3. Whether a withdrawal removes public access only or also erases preservation copies; rights for transcript, translations, indexes, excerpts and metadata.
+4. Which languages/dialects to prioritize; what transcript/index coverage is promised; who can review each language.
+5. Whether any audio may be processed by an external service, how sensitive segments are handled, and whether user accounts or anonymous access are needed.
+6. Actual source formats, average bit rate/channel count, streaming audience, and existing website/accessibility/domain requirements.
+
+## Validation proposals (O6; none executed)
+
+1. Use a consent-cleared 30–60 minute interview to compare a human transcript, an ASR draft and a human topic index. Sample every represented language and salient audio conditions, including low-resource languages, accent/dialect, code-switching, noise and overlap. Measure WER/CER with explicit normalization, omissions/hallucinations, proper-name and speaker errors, time alignment, reviewer minutes/hour and index utility. Review thresholds with community stakeholders.
+2. Have volunteer/staff users correct words/speakers and adjust timing in both candidate routes. Verify author attribution, review state, revision history and import/export of speaker IDs, languages, punctuation and annotation. For OHMS v3.10.15 specifically, test VTT cues with millisecond fractions and two index points within one transcript cue; verify player, index, transcript and search navigation against the source audio.
+3. Restrict one known interval. Search its distinctive word/topic/speaker and test snippets, suggestions, APIs, feeds, export, direct URL, byte-range, player seeking, caption tracks, redacted media, caches and CDN for both public and authorized users. Ensure allowed surrounding audio still lands at the correct time.
+4. Withdraw a whole-recording item and then an interval. Verify removal/suppression from public page, search, APIs, transcripts, indexes, captions, derivative media and caches. Verify the recorded preservation-copy disposition matches the consent. Confirm directly that a downloaded public copy cannot be recalled.
+5. Package a sample intake with BagIt; verify all checksums, detect one changed byte, restore a test backup, and record fixity/format/migration/deletion events with PREMIS or a minimal equivalent. Replace estimates with actual file size, replication and transfer measurements.
+6. For Aviary, request a written plan/billing/storage quote; confirm the monthly/yearly price selection, included storage, egress, domain/theme, privacy/retention, exit and migration terms; and demonstrate interval restrictions and purge. For self-hosted OHMS, verify current release runtime support, protected cache/XML paths, media player compatibility, update ownership and accessibility.
+
+The above checks are proposals. This research used public documentation and source code only; no product account, audio sample, transcript, performance test, security test, or backup test was run.
+
+## Sources
+
+Use source IDs to navigate the initial [source map](source-map.json), [post-reveal source addendum](source-map-addendum.json) and [evidence index](sources/README.md). Key primary sources are [UK Libraries OHMS resources](https://libraries.uky.edu/locations/special-collections-research-center/louie-b-nunn-center-oral-history/nunn-center-resources), [OHMS Viewer v3.10.15 release](https://github.com/uklibraries/ohms-viewer/releases/tag/v3.10.15), [Aviary transcript guide](https://coda.aviaryplatform.com/7-transcript-module-172), [Aviary pricing](https://www.aviaryplatform.com/pricing), [Mukurtu media protocols](https://docs.mukurtu.org/media/ManageMediaAccessWithProtocols/), [Omeka S media manual](https://omeka.org/s/docs/user-manual/content/media/), [Whisper v20250625 model card](https://github.com/openai/whisper/blob/v20250625/model-card.md), [OHA 2025 ethics guidance](https://oralhistory.org/wp-content/uploads/2025/12/2025-OHA-PrinciplesBP_Statement-on-Ethics.pdf), [LOC BWF guidance](https://wwws.loc.gov/preservation/digital/formats/fdd/fdd000357.shtml), [BagIt RFC 8493](https://datatracker.ietf.org/doc/rfc8493/) and [PREMIS 3.0](https://loc.gov/standards/premis/v3/).

@@ -1,0 +1,938 @@
+{
+  "format": "ER11-source-map-v1",
+  "block": "A-M10-A",
+  "arm": "control",
+  "stage": "reviser",
+  "captured_at_utc": "2026-10-09T19:24:20Z",
+  "usage_billing_observed": null,
+  "access_context": "Read-only inspection of the exact declared predecessor evidence plus independent web open/find checks of public primary sources. Inherited S and C source IDs retain their original source metadata and IDs; inherited_from and evidence_root are navigation fields. The R sources record this stage’s independent checks. No product, package, local dataset, installer or executable was processed or run.",
+  "upstream_source_maps": [
+    {
+      "stage": "research",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "source_ids": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S16",
+        "S17",
+        "S18",
+        "S19",
+        "S20",
+        "S21",
+        "S22",
+        "S23",
+        "S24",
+        "S25",
+        "S26",
+        "S27",
+        "S28",
+        "S29"
+      ]
+    },
+    {
+      "stage": "critic",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "source_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15",
+        "C16"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "version": "Page navigation identified DuckDB 1.5 current; mutable alias. Current release context S06.",
+      "commit_or_tag": null,
+      "locator": "Sample Size, Detection Steps, Type Detection, Header Detection, Dates and Timestamps; observed lines 515-607 and following date-format section.",
+      "accessed_at_utc": "2026-10-09T18:44:22Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact URL",
+        "web open relevant sections"
+      ],
+      "evidence": "sources/duckdb.md#S01",
+      "drift": "Current docs alias is mutable; content is paraphrased from this access.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S02",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "version": "DuckDB 1.5 current docs at access; mutable alias.",
+      "commit_or_tag": null,
+      "locator": "ignore_errors, Retrieving Faulty CSV Lines, Reject Scans, Reject Errors and Parameters; observed lines 583-668.",
+      "accessed_at_utc": "2026-10-09T18:44:32Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact URL",
+        "web open relevant sections"
+      ],
+      "evidence": "sources/duckdb.md#S02",
+      "drift": "Current docs alias is mutable; release context S06.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S03",
+      "url": "https://duckdb.org/docs/current/core_extensions/excel",
+      "version": "DuckDB 1.5 current docs at access; mutable alias.",
+      "commit_or_tag": null,
+      "locator": "Installing and Loading, Reading XLSX Files, Type and Range Inference; observed lines 513-596.",
+      "accessed_at_utc": "2026-10-09T18:44:32Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact URL",
+        "web open relevant sections"
+      ],
+      "evidence": "sources/duckdb.md#S03",
+      "drift": "Current docs alias is mutable; release context S06.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S04",
+      "url": "https://duckdb.org/2024/07/09/memory-management",
+      "version": "Article published 2024-07-09; not tied to a release tag.",
+      "commit_or_tag": null,
+      "locator": "memory_limit, temp_directory, intermediate spilling, duckdb_memory(), duckdb_temporary_files().",
+      "accessed_at_utc": "2026-10-09T18:44:32Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact URL",
+        "web open relevant sections"
+      ],
+      "evidence": "sources/duckdb.md#S04",
+      "drift": "Article does not guarantee spill support for every query/build.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S05",
+      "url": "https://duckdb.org/docs/current/extensions/installing_extensions",
+      "version": "DuckDB 1.5 current docs at access; mutable alias.",
+      "commit_or_tag": null,
+      "locator": "Extension Repositories, installing core extensions, shared extension locations and limitations.",
+      "accessed_at_utc": "2026-10-09T18:46:30Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact URL"
+      ],
+      "evidence": "sources/duckdb.md#S05",
+      "drift": "Current docs alias is mutable; offline first-run behavior was not tested.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S06",
+      "url": "https://github.com/duckdb/duckdb/releases/tag/v1.5.6",
+      "version": "DuckDB v1.5.6, released 2026-09-28.",
+      "commit_or_tag": "v1.5.6; 069cc9f",
+      "locator": "Release heading, signed tag commit and What's Changed.",
+      "accessed_at_utc": "2026-10-09T18:44:32Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact release URL"
+      ],
+      "evidence": "sources/duckdb.md#S06",
+      "drift": "Immutable release tag; current status cross-checked with official release calendar.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S07",
+      "url": "https://github.com/duckdb/duckdb/issues/13043",
+      "version": "Issue reporter states DuckDB 1.0.0 CLI on macOS arm64; opened 2024-07-17.",
+      "commit_or_tag": null,
+      "locator": "CSV sniffing reproduction and activity linking the report to PR #13083.",
+      "accessed_at_utc": "2026-10-09T18:44:32Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact issue URL",
+        "web open reproduction"
+      ],
+      "evidence": "sources/duckdb.md#S07",
+      "drift": "Issue report was not independently reproduced.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S08",
+      "url": "https://github.com/duckdb/duckdb/pull/13083",
+      "version": "Merged 2024-07-20.",
+      "commit_or_tag": "merge 50bb0a0; PR commits af6844e and 9a4da7f",
+      "locator": "PR description, example, Fix link to #13043, merge status and commit lines.",
+      "accessed_at_utc": "2026-10-09T18:44:32Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact PR URL",
+        "web open description and merge details"
+      ],
+      "evidence": "sources/duckdb.md#S08",
+      "drift": "Merged PR is stable by commit.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S09",
+      "url": "https://github.com/duckdb/duckdb/releases/tag/v1.1.0",
+      "version": "DuckDB v1.1.0, released 2024-09-09.",
+      "commit_or_tag": "v1.1.0; fa5c2fe",
+      "locator": "Release date/commit and What's Changed entry naming PR #13083.",
+      "accessed_at_utc": "2026-10-09T18:44:32Z",
+      "observed_operations": [
+        "web open exact release URL",
+        "web find 13083 and CSV Sniffer"
+      ],
+      "evidence": "sources/duckdb.md#S09",
+      "drift": "Immutable release tag.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S10",
+      "url": "https://github.com/duckdb/duckdb/discussions/21249",
+      "version": "Discussion opened 2026-03-09; author gives no exact engine build.",
+      "commit_or_tag": "Author cites source snapshot 3d63e1d; code was not separately inspected.",
+      "locator": "Initial report of slash-separated date not auto-detected and quoted date candidates.",
+      "accessed_at_utc": "2026-10-09T18:46:30Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact discussion URL"
+      ],
+      "evidence": "sources/duckdb.md#S10",
+      "drift": "Mutable discussion; report not independently reproduced.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S11",
+      "url": "https://docs.rs/csv/latest/csv/struct.ReaderBuilder.html",
+      "version": "docs.rs latest alias showed csv 1.4.0.",
+      "commit_or_tag": "crate 1.4.0; latest alias mutable.",
+      "locator": "ReaderBuilder overview and delimiter, header, flexible, trim, quote and escape methods; observed lines 2-28, 53-64, 145-179, 215-293, 345-379.",
+      "accessed_at_utc": "2026-10-09T18:46:30Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact URL"
+      ],
+      "evidence": "sources/rust-readers.md#S11",
+      "drift": "Version observed at access is stated; URL uses latest alias.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S12",
+      "url": "https://docs.rs/csv/latest/csv/struct.StringRecord.html",
+      "version": "docs.rs latest alias showed csv 1.4.0.",
+      "commit_or_tag": "crate 1.4.0; latest alias mutable.",
+      "locator": "StringRecord UTF-8 description and position/range APIs.",
+      "accessed_at_utc": "2026-10-09T18:46:30Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact URL"
+      ],
+      "evidence": "sources/rust-readers.md#S12",
+      "drift": "Version observed at access is stated; URL uses latest alias.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S13",
+      "url": "https://docs.rs/calamine/0.36.1/calamine/enum.Data.html",
+      "version": "calamine 0.36.1.",
+      "commit_or_tag": "v0.36.1; release commit 0a24c2a",
+      "locator": "Data enum variants Int, Float, String, Bool, DateTime, DateTimeIso, DurationIso, Error, Empty; lines 69-83.",
+      "accessed_at_utc": "2026-10-09T18:44:50Z",
+      "observed_operations": [
+        "web search_query",
+        "web open versioned docs.rs URL",
+        "web find pub enum Data"
+      ],
+      "evidence": "sources/rust-readers.md#S13",
+      "drift": "Versioned URL and release tag.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S14",
+      "url": "https://docs.rs/calamine/0.36.1/calamine/struct.ExcelDateTime.html",
+      "version": "calamine 0.36.1.",
+      "commit_or_tag": "v0.36.1; release commit 0a24c2a",
+      "locator": "Excel serial, 1900/1904 epoch, precision, timezone and compatibility behavior; lines 97-125.",
+      "accessed_at_utc": "2026-10-09T18:44:50Z",
+      "observed_operations": [
+        "web search_query",
+        "web open versioned docs.rs URL",
+        "web find 1904"
+      ],
+      "evidence": "sources/rust-readers.md#S14",
+      "drift": "Versioned URL and release tag.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S15",
+      "url": "https://github.com/tafia/calamine/releases/tag/v0.36.1",
+      "version": "v0.36.1, released 2026-07-27.",
+      "commit_or_tag": "v0.36.1; 0a24c2a",
+      "locator": "Fixes for Strict OOXML, empty XLS strings and XLSB parsing; lines 159-180.",
+      "accessed_at_utc": "2026-10-09T18:44:50Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact release URL",
+        "web find empty strings"
+      ],
+      "evidence": "sources/rust-readers.md#S15",
+      "drift": "Immutable release tag.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S16",
+      "url": "https://github.com/tafia/calamine/blob/v0.36.1/README.md",
+      "version": "Calamine v0.36.1.",
+      "commit_or_tag": "v0.36.1; release commit 0a24c2a",
+      "locator": "README description, supported spreadsheet formats and Reader usage.",
+      "accessed_at_utc": "2026-10-09T18:46:30Z",
+      "observed_operations": [
+        "web search_query",
+        "web open tag-pinned README URL"
+      ],
+      "evidence": "sources/rust-readers.md#S16",
+      "drift": "Tag-pinned source.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S17",
+      "url": "https://openrefine.org/docs/manual/running/",
+      "version": "Current manual at access; official stable release context S20.",
+      "commit_or_tag": null,
+      "locator": "Local web server/offline basics, heap settings, autosave and project history; lines 23-29, 100-110, 163-169, 375-378.",
+      "accessed_at_utc": "2026-10-09T18:44:43Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact manual URL"
+      ],
+      "evidence": "sources/products.md#S17",
+      "drift": "Mutable current manual.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S18",
+      "url": "https://openrefine.org/docs/manual/exporting",
+      "version": "Current manual; page states last updated 2026-01-28.",
+      "commit_or_tag": null,
+      "locator": "Export operations section: history saved and reapplied as JSON.",
+      "accessed_at_utc": "2026-10-09T18:44:50Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact manual URL",
+        "web find re-apply"
+      ],
+      "evidence": "sources/products.md#S18",
+      "drift": "Mutable current manual; only inspected behavior is summarized.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S19",
+      "url": "https://openrefine.org/docs/manual/exploring",
+      "version": "Current manual at access; stable release context S20.",
+      "commit_or_tag": null,
+      "locator": "Date type, UTC ISO-8601 conversion, failed text behavior and locale output; lines 44-75.",
+      "accessed_at_utc": "2026-10-09T18:44:50Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact manual URL",
+        "web find ISO-8601"
+      ],
+      "evidence": "sources/products.md#S19",
+      "drift": "Mutable current manual.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S20",
+      "url": "https://github.com/OpenRefine/OpenRefine/releases/tag/3.10.0",
+      "version": "OpenRefine 3.10.0, released 2026-02-26.",
+      "commit_or_tag": "3.10.0; 457290d",
+      "locator": "Release metadata and changes to recipes, operation dependencies, undo notification and import/export.",
+      "accessed_at_utc": "2026-10-09T18:44:43Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact release URL"
+      ],
+      "evidence": "sources/products.md#S20",
+      "drift": "Immutable release tag.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S21",
+      "url": "https://github.com/OpenRefine/OpenRefine/issues/6009",
+      "version": "Opened 2023-08-10; issue text says behavior changed in OpenRefine 3.0. Page showed Closed and a linked openrefine.org issue #360.",
+      "commit_or_tag": null,
+      "locator": "Issue description and stated affected versions; lines 144-185.",
+      "accessed_at_utc": "2026-10-09T18:44:43Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact issue URL"
+      ],
+      "evidence": "sources/products.md#S21",
+      "drift": "Historical report and user expectation, not a normative locale rule. No corresponding fix was found in inspected 3.10.0 notes.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S22",
+      "url": "https://learn.microsoft.com/en-us/power-query/connectors/text-csv",
+      "version": "Current Microsoft Learn article; open redirected to text-csv.",
+      "commit_or_tag": null,
+      "locator": "CSV type detection choices; first 200 rows, entire set, or Text; lines 108-110.",
+      "accessed_at_utc": "2026-10-09T18:44:43Z",
+      "observed_operations": [
+        "web search_query",
+        "web open URL and observed redirect"
+      ],
+      "evidence": "sources/products.md#S22",
+      "drift": "Mutable product documentation; no desktop build was run.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S23",
+      "url": "https://learn.microsoft.com/en-us/power-query/data-types",
+      "version": "Current Microsoft Learn article.",
+      "commit_or_tag": null,
+      "locator": "First-200-row type/header detection and locale sections; lines 79-85 and 99-126.",
+      "accessed_at_utc": "2026-10-09T18:44:43Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact URL",
+        "web find first 200 rows and locale"
+      ],
+      "evidence": "sources/products.md#S23",
+      "drift": "Mutable product documentation.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S24",
+      "url": "https://learn.microsoft.com/en-us/power-query/dealing-with-errors",
+      "version": "Current Microsoft Learn article.",
+      "commit_or_tag": null,
+      "locator": "Cell-level error and column quality sections; lines 71-81.",
+      "accessed_at_utc": "2026-10-09T18:44:43Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact URL",
+        "web find column quality"
+      ],
+      "evidence": "sources/products.md#S24",
+      "drift": "Mutable product documentation.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S25",
+      "url": "https://learn.microsoft.com/en-us/power-query/data-profiling-tools",
+      "version": "Current Microsoft Learn article.",
+      "commit_or_tag": null,
+      "locator": "Profile scope defaults to first 1,000 rows; documented control switches to entire data set.",
+      "accessed_at_utc": "2026-10-09T18:46:30Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact URL"
+      ],
+      "evidence": "sources/products.md#S25",
+      "drift": "Mutable product documentation.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S26",
+      "url": "https://framework.frictionlessdata.io/docs/getting-started.html",
+      "version": "Current docs; release context S29.",
+      "commit_or_tag": null,
+      "locator": "Python requirement, API/CLI and supported CSV/Excel/JSON formats.",
+      "accessed_at_utc": "2026-10-09T18:46:30Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact URL"
+      ],
+      "evidence": "sources/products.md#S26",
+      "drift": "Mutable docs alias; pin implementation version separately.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S27",
+      "url": "https://framework.frictionlessdata.io/docs/guides/validating-data",
+      "version": "Current docs; release context S29.",
+      "commit_or_tag": null,
+      "locator": "Validation report flatten fields, rowNumber/fieldNumber, custom checks and error limits; lines 978-1128 and 1159-1170.",
+      "accessed_at_utc": "2026-10-09T18:44:43Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact URL",
+        "web find report.flatten"
+      ],
+      "evidence": "sources/products.md#S27",
+      "drift": "Mutable docs alias.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S28",
+      "url": "https://framework.frictionlessdata.io/docs/formats/excel.html",
+      "version": "Current docs; release context S29.",
+      "commit_or_tag": null,
+      "locator": "ExcelControl sheet, preserve_formatting, stringified, and schema coercion; lines 164-222.",
+      "accessed_at_utc": "2026-10-09T18:44:43Z",
+      "observed_operations": [
+        "web search_query",
+        "web open exact URL",
+        "web find stringified"
+      ],
+      "evidence": "sources/products.md#S28",
+      "drift": "Mutable docs alias.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "S29",
+      "url": "https://github.com/frictionlessdata/frictionless-py/releases/tag/v5.20.0",
+      "version": "v5.20.0, released 2026-10-08.",
+      "commit_or_tag": "v5.20.0; 3988672",
+      "locator": "Release metadata and What's Changed.",
+      "accessed_at_utc": "2026-10-09T18:46:30Z",
+      "observed_operations": [
+        "web open release listing",
+        "web find v5.20.0",
+        "web open exact release URL"
+      ],
+      "evidence": "sources/products.md#S29",
+      "drift": "Immutable release tag.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/research/sources"
+    },
+    {
+      "id": "C01",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "version": "DuckDB 1.5 current documentation; mutable alias.",
+      "commit_or_tag": null,
+      "locator": "Header identifies 1.5 current; Sample Size at lines 523-529 (20,480 rows by default; regular files may be sampled at multiple positions, gzip/stdin from the beginning).",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": [
+        "web open exact URL",
+        "web find Sample Size"
+      ],
+      "evidence": "sources/primary-checks.md#C01",
+      "drift": "Mutable current documentation; exact app dependency must be checked.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources"
+    },
+    {
+      "id": "C02",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "version": "DuckDB 1.5 current documentation; mutable alias.",
+      "commit_or_tag": null,
+      "locator": "Projection pushdown example at lines 610-620; reject tables and defaults at lines 622-670; line and byte position schema at lines 649-655.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": [
+        "web open exact URL",
+        "web find temporary",
+        "web find projection",
+        "web find ignore_errors"
+      ],
+      "evidence": "sources/primary-checks.md#C02",
+      "drift": "Mutable current documentation; engine reject metadata is not an application persistence contract.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources"
+    },
+    {
+      "id": "C03",
+      "url": "https://duckdb.org/docs/current/core_extensions/excel",
+      "version": "DuckDB 1.5 current documentation; mutable alias.",
+      "commit_or_tag": null,
+      "locator": "XLSX-only support and extension loading at lines 511-520; first-sheet, all_varchar, ignore_errors, empty-cell and first-data-row inference at lines 557-597.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": [
+        "web open exact URL",
+        "web find XLS",
+        "web find empty cells",
+        "web find ignore_errors"
+      ],
+      "evidence": "sources/primary-checks.md#C03",
+      "drift": "Mutable current documentation.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources"
+    },
+    {
+      "id": "C04",
+      "url": "https://learn.microsoft.com/en-us/power-query/connectors/text-csv",
+      "version": "Current Microsoft Learn page; last updated 2026-06-29; mutable.",
+      "commit_or_tag": null,
+      "locator": "CSV type detection choices and sample/full-file/Text alternatives at lines 103-111; quoted-line-break behavior at lines 129-145.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": [
+        "web open exact URL"
+      ],
+      "evidence": "sources/primary-checks.md#C04",
+      "drift": "Documentation notes capabilities vary by host product.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources"
+    },
+    {
+      "id": "C05",
+      "url": "https://learn.microsoft.com/en-us/power-query/data-types",
+      "version": "Current Microsoft Learn page; mutable.",
+      "commit_or_tag": null,
+      "locator": "First-200-row inference at lines 79-81; OS regional default and Using locale behavior at lines 105-126.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": [
+        "web open exact URL",
+        "web find locale",
+        "web find first 200 rows"
+      ],
+      "evidence": "sources/primary-checks.md#C05",
+      "drift": "Mutable documentation; describes Power Query behavior, not a universal locale rule.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources"
+    },
+    {
+      "id": "C06",
+      "url": "https://learn.microsoft.com/en-us/power-query/data-profiling-tools",
+      "version": "Current Microsoft Learn page; mutable.",
+      "commit_or_tag": null,
+      "locator": "Column profiling defaults to first 1,000 rows with a control to profile the entire dataset; profile scope section.",
+      "accessed_at_utc": "2026-10-09T19:04:34Z",
+      "observed_operations": [
+        "web open exact URL",
+        "web find 1,000"
+      ],
+      "evidence": "sources/primary-checks.md#C06",
+      "drift": "Mutable documentation; no desktop build was run.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources"
+    },
+    {
+      "id": "C07",
+      "url": "https://openrefine.org/docs/manual/running/",
+      "version": "Current OpenRefine manual; mutable.",
+      "commit_or_tag": null,
+      "locator": "History (Undo/Redo) and Reusing operations sections: project history persists; selected operations can be extracted/applied as JSON; some operations cannot be extracted.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": [
+        "web search_query official domain",
+        "web open exact URL"
+      ],
+      "evidence": "sources/primary-checks.md#C07",
+      "drift": "Current manual; stable release context is a separate source in the predecessor map.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources"
+    },
+    {
+      "id": "C08",
+      "url": "https://openrefine.org/docs/manual/exploring",
+      "version": "Current OpenRefine manual; mutable.",
+      "commit_or_tag": null,
+      "locator": "Data types and Dates sections at lines 44-62; date values are normalized to ISO-8601 with UTC time.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": [
+        "web open exact URL",
+        "web find UTC"
+      ],
+      "evidence": "sources/primary-checks.md#C08",
+      "drift": "Manual documents product semantics, not a recommended universal date policy.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources"
+    },
+    {
+      "id": "C09",
+      "url": "https://github.com/OpenRefine/OpenRefine/issues/6009",
+      "version": "Issue opened 2023-08-10; mutable discussion record.",
+      "commit_or_tag": null,
+      "locator": "Current Results / Expected Behavior / Versions at lines 166-180; comments describe preserving timezone-free date components at lines 208-220.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": [
+        "web open exact URL",
+        "web find timezone"
+      ],
+      "evidence": "sources/primary-checks.md#C09",
+      "drift": "User expectation/disagreement evidence, not a normative rule.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources"
+    },
+    {
+      "id": "C10",
+      "url": "https://framework.frictionlessdata.io/docs/guides/validating-data",
+      "version": "Current Frictionless documentation; mutable; exact version not visible in this page access.",
+      "commit_or_tag": null,
+      "locator": "Structured error fields in examples around lines 235-280; Limit Errors section at lines 1159-1170 shows configurable limit_errors, including explicit limit_errors=1.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": [
+        "web open exact URL",
+        "web find limit",
+        "web find rowNumber",
+        "web find limit_errors"
+      ],
+      "evidence": "sources/primary-checks.md#C10",
+      "drift": "This access did not verify a default of 1,000 for a pinned release.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources"
+    },
+    {
+      "id": "C11",
+      "url": "https://github.com/duckdb/duckdb/issues/13043",
+      "version": "Issue report says DuckDB 1.0.0 CLI on macOS arm64.",
+      "commit_or_tag": null,
+      "locator": "Issue reproduction and linked PR; environment/version fields at lines 211-241.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": [
+        "web open exact URL",
+        "web find macOS"
+      ],
+      "evidence": "sources/primary-checks.md#C11",
+      "drift": "Reporter states latest build was not tested; not independently reproduced.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources"
+    },
+    {
+      "id": "C12",
+      "url": "https://github.com/duckdb/duckdb/pull/13083",
+      "version": "Merged 2024-07-20; merge 50bb0a0; PR commits af6844e and 9a4da7f.",
+      "commit_or_tag": "merge 50bb0a0",
+      "locator": "Merged status/date and described extra-delimiter sniffer change at lines 130-197 and 206-220.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": [
+        "web open exact URL",
+        "web find Merged"
+      ],
+      "evidence": "sources/primary-checks.md#C12",
+      "drift": "Fix is scoped to the described issue/example; does not prove general malformed-file robustness.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources"
+    },
+    {
+      "id": "C13",
+      "url": "https://github.com/duckdb/duckdb/releases/tag/v1.1.0",
+      "version": "DuckDB v1.1.0.",
+      "commit_or_tag": "v1.1.0; fa5c2fe (as registered in predecessor source-map)",
+      "locator": "What's Changed lists PR #13083 at lines 595-598.",
+      "accessed_at_utc": "2026-10-09T19:08:16Z",
+      "observed_operations": [
+        "web open exact URL",
+        "web find 13083"
+      ],
+      "evidence": "sources/primary-checks.md#C13",
+      "drift": "Immutable release tag; release inclusion does not establish all later behavior.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources"
+    },
+    {
+      "id": "C14",
+      "url": "https://github.com/tafia/calamine/releases/tag/v0.36.1",
+      "version": "Calamine v0.36.1, released 2026-07-27.",
+      "commit_or_tag": "v0.36.1; 0a24c2a",
+      "locator": "Release heading and fixes for strict OOXML, empty XLS strings and XLSB record parsing at lines 129-175.",
+      "accessed_at_utc": "2026-10-09T19:08:43Z",
+      "observed_operations": [
+        "web open exact release URL"
+      ],
+      "evidence": "sources/primary-checks.md#C14",
+      "drift": "Tag-pinned release notes; not a performance result.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources"
+    },
+    {
+      "id": "C15",
+      "url": "https://docs.rs/calamine/0.36.1/calamine/enum.Data.html",
+      "version": "calamine 0.36.1.",
+      "commit_or_tag": "v0.36.1; 0a24c2a",
+      "locator": "Version heading and Data variants Int, Float, String, Bool, DateTime, DateTimeIso, DurationIso, Error, Empty at lines 2-18 and 69-86.",
+      "accessed_at_utc": "2026-10-09T19:08:43Z",
+      "observed_operations": [
+        "web open exact versioned URL"
+      ],
+      "evidence": "sources/primary-checks.md#C15",
+      "drift": "Versioned crate documentation.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources"
+    },
+    {
+      "id": "C16",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.ByteRecord.html",
+      "version": "csv crate 1.4.0.",
+      "commit_or_tag": "crate 1.4.0",
+      "locator": "ByteRecord described as a single CSV record stored as raw bytes; valid for non-UTF-8 input at lines 69-80.",
+      "accessed_at_utc": "2026-10-09T19:08:43Z",
+      "observed_operations": [
+        "web open exact versioned URL",
+        "web find UTF-8"
+      ],
+      "evidence": "sources/primary-checks.md#C16",
+      "drift": "Versioned crate documentation.",
+      "inherited_from": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/source-map.json",
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/critic/sources"
+    },
+    {
+      "id": "R01",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "version": "DuckDB 1.5 current documentation as shown on page; mutable current alias.",
+      "commit_or_tag": null,
+      "locator": "Page lines 515-529 describe auto-detection, default 20,480-row type sample, full-file sample_size=-1 and beginning-only sampling for gzip/stdin; lines 590-605 describe candidate type conversion and VARCHAR fallback.",
+      "accessed_at_utc": "2026-10-09T19:18:49Z",
+      "observed_operations": [
+        "web open exact URL"
+      ],
+      "evidence": "sources/independent-checks.md#R01",
+      "drift": "Mutable current documentation; exact behavior must be checked against the selected application dependency.",
+      "inherited_from": null,
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser"
+    },
+    {
+      "id": "R02",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "version": "DuckDB 1.5 current documentation as shown on page; mutable current alias.",
+      "commit_or_tag": null,
+      "locator": "Lines 610-628 show projection-pushdown example and reject tables; default temporary reject tables and multiple entries for multiple errors on one line.",
+      "accessed_at_utc": "2026-10-09T19:18:49Z",
+      "observed_operations": [
+        "web open exact URL",
+        "web find \"Projection Pushdown\""
+      ],
+      "evidence": "sources/independent-checks.md#R02",
+      "drift": "Mutable current documentation; engine positions do not by themselves establish product-level durable logical row identity.",
+      "inherited_from": null,
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser"
+    },
+    {
+      "id": "R03",
+      "url": "https://learn.microsoft.com/en-us/power-query/connectors/text-csv",
+      "version": "Current Microsoft Learn Power Query documentation; mutable.",
+      "commit_or_tag": null,
+      "locator": "CSV section lines 103-111 documents first-200-row, entire-dataset and Text-only type-detection choices, and warns inference may be incorrect.",
+      "accessed_at_utc": "2026-10-09T19:18:49Z",
+      "observed_operations": [
+        "web open exact URL",
+        "web find \"first 200 rows\""
+      ],
+      "evidence": "sources/independent-checks.md#R03",
+      "drift": "Mutable product documentation; host capabilities may differ; no product build was run.",
+      "inherited_from": null,
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser"
+    },
+    {
+      "id": "R04",
+      "url": "https://learn.microsoft.com/en-us/power-query/data-types",
+      "version": "Current Microsoft Learn Power Query documentation; mutable.",
+      "commit_or_tag": null,
+      "locator": "Lines 106-126 say Desktop uses OS regional format for conversion unless overridden and document a Using locale option.",
+      "accessed_at_utc": "2026-10-09T19:18:49Z",
+      "observed_operations": [
+        "web open exact URL",
+        "web find \"operating system\"",
+        "web find \"Using locale\""
+      ],
+      "evidence": "sources/independent-checks.md#R04",
+      "drift": "Mutable product documentation; describes Power Query semantics, not a universal locale policy.",
+      "inherited_from": null,
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser"
+    },
+    {
+      "id": "R05",
+      "url": "https://learn.microsoft.com/en-us/power-query/data-profiling-tools",
+      "version": "Current Microsoft Learn Power Query documentation; mutable.",
+      "commit_or_tag": null,
+      "locator": "Lines 46-47 say profiling defaults to the first 1,000 rows and can be changed to the entire dataset.",
+      "accessed_at_utc": "2026-10-09T19:18:49Z",
+      "observed_operations": [
+        "web open exact URL",
+        "web find \"first 1000 rows\""
+      ],
+      "evidence": "sources/independent-checks.md#R05",
+      "drift": "Mutable documentation; this is product-specific profiling behavior, not a universal sample recommendation.",
+      "inherited_from": null,
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser"
+    },
+    {
+      "id": "R06",
+      "url": "https://openrefine.org/docs/manual/running/",
+      "version": "Current OpenRefine manual; mutable.",
+      "commit_or_tag": null,
+      "locator": "Lines 395-401 explain extracting and applying selected operations as JSON and state that some operations, including single-cell edits, cannot be replicated this way.",
+      "accessed_at_utc": "2026-10-09T19:18:49Z",
+      "observed_operations": [
+        "web open exact URL",
+        "web find \"not all operations\""
+      ],
+      "evidence": "sources/independent-checks.md#R06",
+      "drift": "Mutable manual; establishes documented coverage limits, not a full recipe contract for this product.",
+      "inherited_from": null,
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser"
+    },
+    {
+      "id": "R07",
+      "url": "https://framework.frictionlessdata.io/docs/guides/validating-data",
+      "version": "Current Frictionless documentation; mutable; exact package version not identified by this page access.",
+      "commit_or_tag": null,
+      "locator": "Lines 1159-1170 demonstrate configurable limit_errors=1; this accessed section does not establish a default of 1,000.",
+      "accessed_at_utc": "2026-10-09T19:18:49Z",
+      "observed_operations": [
+        "web open exact URL",
+        "web find \"limit_errors\""
+      ],
+      "evidence": "sources/independent-checks.md#R07",
+      "drift": "Mutable docs; default must be verified against an exact release/tag before assertion.",
+      "inherited_from": null,
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser"
+    },
+    {
+      "id": "R08",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.ByteRecord.html",
+      "version": "csv crate 1.4.0.",
+      "commit_or_tag": "csv crate 1.4.0",
+      "locator": "Versioned docs lines 69-82 describe ByteRecord as a raw-byte CSV record, permit non-UTF-8 rows, and note position information is ignored in record equality.",
+      "accessed_at_utc": "2026-10-09T19:18:49Z",
+      "observed_operations": [
+        "web open exact versioned URL",
+        "web find \"non-UTF-8\""
+      ],
+      "evidence": "sources/independent-checks.md#R08",
+      "drift": "Version-pinned docs.rs page; reader behavior remains untested in this product.",
+      "inherited_from": null,
+      "evidence_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M10-A/control/reviser"
+    }
+  ]
+}

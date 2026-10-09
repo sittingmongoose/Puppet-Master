@@ -1,0 +1,190 @@
+{
+  "frozen_at": "2026-10-09T19:25:10.709968+00:00",
+  "inputs": {
+    "block": "A-M02-B",
+    "case": "S08",
+    "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+    "frozen_plan": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/plan-root-only.md",
+    "rubric": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+    "arms": {
+      "N2": {
+        "actual_arm": "control",
+        "final_delivery": true,
+        "final": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+        "files": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/final.md",
+            "sha256": "d9004158d5bc646163a0cb665ca235d572762c9d7b5188138bfc3785f495abcf",
+            "bytes": 40073
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/source-map.json",
+            "sha256": "78e085b4ec108149b3eb025810f5368d9c03cc05c2ede12dae91c4705de8d23e",
+            "bytes": 42607
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/assignment.md",
+            "sha256": "0e899a760e09ac57a21431d231e0bc8218725cfdd3f72ec5ea3d780916c060fe",
+            "bytes": 2793
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/input-map.json",
+            "sha256": "78028fb58700b2891094812365f903c2374aa6e59d2bf7aaf221d4ffbbf2194e",
+            "bytes": 1504
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/critic/critique.md",
+            "sha256": "336bf62fae9f153bf4a704af1409587dcbfdc4d6d9f2ad6c582c882d3de24972",
+            "bytes": 13605
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/critic/source-map.json",
+            "sha256": "fa96ce61a7c7c66fe2640a81e1c923be6d8e3026e9678da220d4a3353b4e89c4",
+            "bytes": 16351
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/critic/assignment.md",
+            "sha256": "d52315e491b17f20eecaa2141e7ab0469d1d81cc1d4bcadea58a4af87cc8b69c",
+            "bytes": 2530
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/critic/input-map.json",
+            "sha256": "f1415e77f80760b92e4f8625e8e5535dec29b3994e31dfe49e6b7aa339102ff8",
+            "bytes": 1180
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/discovery.md",
+            "sha256": "ad0bd90a99a66059d7db9e2f8e405675474c64edfca8cfcbc0d85c8b29ec7528",
+            "bytes": 14349
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/draft.md",
+            "sha256": "953e849f7d502cc79eca606a70c3f5466023602668ac4ce71f0c830e348bda29",
+            "bytes": 33133
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/source-map.json",
+            "sha256": "23c130bd9d2fee223d0062d2cc538a920dc81fa38e70a68e07604962e098e7a5",
+            "bytes": 18703
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/revealed-plan.md",
+            "sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c",
+            "bytes": 312
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/plan-reveal.json",
+            "sha256": "e6b576100f0a4a03b47f2f88d6d20f4193592ee762d91d63d768c9f5b4174e81",
+            "bytes": 276
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/assignment.md",
+            "sha256": "d98439bf6bb52f83e070bb8d7f768c97229c1cd6033d70d0241101d4e327b2bf",
+            "bytes": 3006
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/input-map.json",
+            "sha256": "9d92689268725131e8598505292a636d2bd6eb79ed9d4e09ad49ac3ab08aab83",
+            "bytes": 634
+          }
+        ],
+        "source_roots": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/reviser/sources",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/critic/sources",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research/sources"
+        ]
+      },
+      "N1": {
+        "actual_arm": "treatment",
+        "final_delivery": true,
+        "final": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+        "files": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/final.md",
+            "sha256": "ca8bac0c261bc6bee53c266f252b87c43b8e0352878c1e429b953caa3542dd05",
+            "bytes": 41478
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/source-map.json",
+            "sha256": "10e6de015abe03b20cf8dba544c53d3aeda88462c4845ddfca09bf5b93b618be",
+            "bytes": 59763
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/assignment.md",
+            "sha256": "a6f4749c54f3c94774e824641a11afa171e288feb19d710f530e900803b89d50",
+            "bytes": 2954
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/input-map.json",
+            "sha256": "7034df35e6d72ccc60246155b912f89a2aed743b8c40045bbb0c10b24970dee1",
+            "bytes": 1526
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/critique.md",
+            "sha256": "8717c6d95d6ae5921a91e630d3c5720734d362f46228df00722830d58bd62f3e",
+            "bytes": 13180
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/source-map.json",
+            "sha256": "00cc8f59caf8230ac66a48e3ac2990186e23de1f4537ed4c483c54cd5405030b",
+            "bytes": 17153
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/assignment.md",
+            "sha256": "091d7b6215f9a3459b056f2ba2242ef83bf48e449af21e5ef07f1b536f5ada3a",
+            "bytes": 2691
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/input-map.json",
+            "sha256": "af0746730ab1362583aaf7db96e03dd659826c55f667f068b648d851779305ad",
+            "bytes": 1196
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/discovery.md",
+            "sha256": "50372bd6f796bdeede2ad5867bdf66e9e078f3ca89d26b969cc4e0512e6bab6e",
+            "bytes": 22950
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/draft.md",
+            "sha256": "c75e6a8c4283edca7a9214824c0ba4b55f98c4b50f9f9fb6152a90c44a14c455",
+            "bytes": 24776
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/source-map.json",
+            "sha256": "8d0ec7468d69c4e7f1846631a316f8c25528a263aee5de339d31720851583410",
+            "bytes": 22997
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/revealed-plan.md",
+            "sha256": "7e4f1384d66ce7873734d1c1ca75dfa030353bde9972931a5fba6e768553064c",
+            "bytes": 312
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/plan-reveal.json",
+            "sha256": "700e04e8b79de44440eaef36b92b7c8dc0c4217310b708bab92b783acb625d73",
+            "bytes": 276
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/assignment.md",
+            "sha256": "c00b412edb672987845801c273aaf20961ab346dd4f88f766a250c79b4a9e5ba",
+            "bytes": 3169
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/input-map.json",
+            "sha256": "bbfc993228d7c34405a0ac1cdaa8b412d45eeb6b8849d0766b0e8f7ca5822373",
+            "bytes": 640
+          }
+        ],
+        "source_roots": [
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/reviser/sources",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/critic/sources",
+          "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources"
+        ]
+      }
+    },
+    "output": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M02-B",
+    "deadline": "2026-10-09T19:50:10.709968+00:00",
+    "premium_experiment_only": true,
+    "method_clues": "Paths and stage contents can reveal method. Partial blinding only."
+  }
+}

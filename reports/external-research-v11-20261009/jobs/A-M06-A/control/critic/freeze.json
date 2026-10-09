@@ -1,0 +1,61 @@
+{
+  "frozen_at": "2026-10-09T19:09:02.069021+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S06/brief.md",
+      "sha256": "4c4e4dd878bb0d77ecbbdcbc86993acdae4f9e52f019466d518bd9139e9f2de6",
+      "bytes": 1431
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M06.json",
+      "sha256": "83f1273a0d2f0b17dc53b5165aed32594d796c3aca566e8624e3346bf4df1676",
+      "bytes": 589
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-A/control/critic/assignment.md",
+      "sha256": "7438e63f843ec18e34b1ba706e45333001e5ef1ae333d311289d160a4dc36b41",
+      "bytes": 2485
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-A/control/critic/input-map.json",
+      "sha256": "05d2a272a7b9219ad742d295dd503a700ff13135a014f6a4c8d8f82b080b4a85",
+      "bytes": 1180
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-A/control/research/draft.md",
+      "sha256": "fae2e2ba9b30b4ccbb5c4ba0b70a3338528c430468b22dfb23c36e2c15485a18",
+      "bytes": 19178
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-A/control/research/discovery.md",
+      "sha256": "4f156861bbf6e668d3bba9b0f25587b2c03a4cff017df70fd214d7d118e06c18",
+      "bytes": 27238
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-A/control/research/source-map.json",
+      "sha256": "60676d43889192ff52e12903855effce10a24d54ef68abf367c40a2436755a5e",
+      "bytes": 6691
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M06-A/control/research/revealed-plan.md",
+      "sha256": "323cdef9d3d765ff0e060c6772f62b1280cf5cfa6cec1fc1e0162badd50b5c62",
+      "bytes": 332
+    }
+  ],
+  "method": {
+    "id": "M06",
+    "version": "v1",
+    "name": "evidence-first-challenge",
+    "control": "Fresh critic reads draft then derives source challenges.",
+    "treatment": "Fresh critic first independently derives brief/primary-source facts WITHOUT draft; saves evidence-first.md; then opens frozen draft and compares. Same fresh reviser afterwards.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Draft anchoring intervention; full final scope",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T19:21:02.069021+00:00"
+}

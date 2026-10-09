@@ -1,0 +1,1264 @@
+{
+  "block": "A-M01-B",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M01-B/input-map.json",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M01-B/assignment.md",
+      "sha256": "3067a4c3bb217ff6f27db19d641b6a1b973b6a00f4dc918f2fc82927c32fda9f",
+      "bytes": 1980
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M01-B/input-map.json",
+      "sha256": "4633b86a3a3f3550b12796bdab9f886e16351617c87898270eb029b1e181cd78",
+      "bytes": 11503
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S07/brief.md",
+      "sha256": "11201a686d012432b0c60757835ab1e0f959b2fdcccd661911f0cac5c3c3bd7a",
+      "bytes": 1426
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S07/plan-root-only.md",
+      "sha256": "906fbabc0e9c4996064d210148f2784a1e161d38cce2f54aea992f2d4f7f7ee6",
+      "bytes": 331
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/reviser/final.md",
+      "sha256": "b07bbc92f6d8441566b997401ab6375208b2a12a250443e0a510c6672fda86c4",
+      "bytes": 39210
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/reviser/source-map.json",
+      "sha256": "9b4d3f2d04146e3e79407e1dc1865bf1107a4d938d5b94946c5859a4adb53f8b",
+      "bytes": 3119
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/reviser/assignment.md",
+      "sha256": "07b422cf95df2cbe534fdd274c942704b8899b56bf4d756266b7d85dc750b6ce",
+      "bytes": 2850
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/reviser/input-map.json",
+      "sha256": "4b4fa00a26037316ebd7b4667bce7cd6a7c1d47b8822ac48fbd515c5d9cc6d1d",
+      "bytes": 2082
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/discovery.md",
+      "sha256": "dbe97be85defbb98089388bb6a4c414fc14702ad0d11aa99f5f3a8981a39ad3d",
+      "bytes": 19513
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/draft.md",
+      "sha256": "dd0aaadeebfe92d53c39b90e8e1207659c38ddfcd62a28ec3fc835741067f388",
+      "bytes": 12413
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/source-map.json",
+      "sha256": "16bd12dd1ea3fab5a9ceec7b4c8ee8940e24d042c8f76bad4c64aef54172de8b",
+      "bytes": 4091
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/revealed-plan.md",
+      "sha256": "906fbabc0e9c4996064d210148f2784a1e161d38cce2f54aea992f2d4f7f7ee6",
+      "bytes": 331
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/plan-reveal.json",
+      "sha256": "c57d0d13137e5003e5f0853e8b3227f5ad965d20a5bdf40406cf7e7e5dbf9651",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/assignment.md",
+      "sha256": "c15d26643a308e24305451df45338db9d1f51cc8112d3ab092a821b65128ad95",
+      "bytes": 3396
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/input-map.json",
+      "sha256": "cf49088c28ed10c47c66090bc9c4ef05e4979b679e6d752d0e68532899dd3a5e",
+      "bytes": 640
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/discovery.md",
+      "sha256": "30a6f58ba6b5e469a213a0465083a934e7a66ec1a957c497e6b7c2ba5bc3df09",
+      "bytes": 20316
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/draft.md",
+      "sha256": "3cac746e38027645160b47331ffa6b83f2cf599b5706a88bbd7ebfbabdb84dce",
+      "bytes": 13503
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/source-map.json",
+      "sha256": "d5f295cacfd906b0602f472aea404529a1040011739eea1a256ae76c1d4118a2",
+      "bytes": 9753
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/revealed-plan.md",
+      "sha256": "906fbabc0e9c4996064d210148f2784a1e161d38cce2f54aea992f2d4f7f7ee6",
+      "bytes": 331
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/plan-reveal.json",
+      "sha256": "8ab1aa8901abd2f981de268c4b7eca3e6d7a17341536a15e28bb25c01a274d9a",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/assignment.md",
+      "sha256": "af6c5498ddfeec81f88874297c6b372e28798ab7b354187359e1680daf0dc23c",
+      "bytes": 3348
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/input-map.json",
+      "sha256": "d2bf54035d474e746223c1ed445e3fbe810d9160a21077dc0b875ceac922be73",
+      "bytes": 750
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/critic/critique.md",
+      "sha256": "cdb0bfd92e5f54ececd447ce372260171ec4ff344c13d9d685e0efbe2dd3a592",
+      "bytes": 9839
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/critic/source-map.json",
+      "sha256": "dc443b26aabc3500070b99f338e94b05e2af21c85b26a3d1f164d91395f345e3",
+      "bytes": 3028
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/critic/assignment.md",
+      "sha256": "92b15d54d756e11cb73d5e5116ffd977bfdd437cf7f1abd065c6fefa768a34c4",
+      "bytes": 2587
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/critic/input-map.json",
+      "sha256": "36ef1c6f420b96bd448bf612552fa565b59c6185802ac2b1a0e42edb3c9c3977",
+      "bytes": 1758
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/reviser/sources/index.md",
+      "sha256": "a2f04a88583c2ebe8f738bc16a6f71c5c4ef8b72a652aeab8baab23685ec4b0b",
+      "bytes": 1556
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/sources/index.md",
+      "sha256": "605deff7566884ed86a6988835efba3a4b1021ef4ffa908de32179367aea2152",
+      "bytes": 1049
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/sources/S03-pagefind-filtering-indexing.md",
+      "sha256": "ed9053e46855efe3d834778477bbfb6149694a33bb8c8a706cfabd7b4d07166b",
+      "bytes": 1755
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/sources/S05-docusaurus-i18n.md",
+      "sha256": "ce9f598aed6cf1e0b7858bf8a01da91744585002932ef5b7a280d4b13d9692cc",
+      "bytes": 1133
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/sources/S04-meilisearch-tenant-tokens.md",
+      "sha256": "3e66eced66368b4fa25107909a52f79a99de2256d9920bf22def9f49642932fd",
+      "bytes": 1624
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/sources/S06-docusaurus-canonical-report.md",
+      "sha256": "60a91ea390e178a50718339fd230bce00d3d6fbcba7b00980687efc5dac6fc7f",
+      "bytes": 1302
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/sources/S01-docusaurus-versioning.md",
+      "sha256": "960041ffdd04942406b87b33348b86060155477010e55399f24c1d2a0f8c33f0",
+      "bytes": 1287
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/sources/S07-usedocsversion-fix-snippet.md",
+      "sha256": "1fa1f29e0eb96fc23e05712d2deb4685d1e4dee3381eca38ce3421ba7af1f1c1",
+      "bytes": 969
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/sources/S02-antora-versioning.md",
+      "sha256": "5cd7af80f579b02d647b7f66f840758f9ab9d73a9aa1605681e57ee5f8131938",
+      "bytes": 1257
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/sources/S14-meilisearch-settings.md",
+      "sha256": "022d9011ea71e4479cbfac437a7ab74020678316ce2f359c777420e0f2876f79",
+      "bytes": 444
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/sources/index.md",
+      "sha256": "a89dc0246759010f2b6e96aa882e81290c6904d898c283fb3436253d05dff700",
+      "bytes": 1807
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/sources/S01-pagefind-docs.md",
+      "sha256": "0f203548129527ddf7a54b517a412298f5ea6ded662598fbac893d11a59512ac",
+      "bytes": 488
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/sources/S11-starlight-i18n.md",
+      "sha256": "4573851ee282b46603959a52125ec2a30f11f56d0866190fe8323fab3e674bc2",
+      "bytes": 344
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/sources/S07-docusaurus-versioning.md",
+      "sha256": "16217544198cac9e825235d480a762c31e61f7c9adc1c43adf275d05337556e7",
+      "bytes": 472
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/sources/S03-antora-how.md",
+      "sha256": "1ec07dcf956a0f798bcda97f596100e91ed2fbdd2844db120dc7bb47f953d758",
+      "bytes": 365
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/sources/S15-sphinx-intl.md",
+      "sha256": "c77733efe773b06cd5dacdfce401972256b90ebb3da33624a162bac2761c0731",
+      "bytes": 380
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/sources/S08-docusaurus-search.md",
+      "sha256": "72b782553894d0409dd9290515bd57e4515c08726e037c3de0287c16d6159d24",
+      "bytes": 360
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/sources/S04-antora-versioning.md",
+      "sha256": "d552338f549f5c7a4e53f0e729c58dfb16937753fd1845e046cc17250f48676b",
+      "bytes": 410
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/sources/S06-vale-ini.md",
+      "sha256": "7b7913285f33068341c45458b6db64c4a059bdae2ae7e52bb5a3e88bb04f171b",
+      "bytes": 576
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/sources/S16-backstage-16711.md",
+      "sha256": "bf1e748bc019c0d76380ae611a4d35964f6277711f8f1cfee8f0001322bd4521",
+      "bytes": 534
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/sources/S10-mkdocs-material-versioning.md",
+      "sha256": "94a32e9ef46f588f9e1873a363e8ece50d3845c8abb52747827f1b344df12130",
+      "bytes": 410
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/sources/S02-pagefind-config.md",
+      "sha256": "e7c0fc65cd31ad437fe84fe0b9709b5de539e55d481e66be48a59e6be467d544",
+      "bytes": 423
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/sources/S12-starlight-search.md",
+      "sha256": "de1c913a04fc039f8e221197c6e847b4e4d50bcb14e023a3968a9cc80f7bfe42",
+      "bytes": 361
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/sources/S05-vale-intro.md",
+      "sha256": "fe67b52e52bb7e345dae143aeba13bd7748a4e76a73efd6623d03317a2e79cbe",
+      "bytes": 530
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/sources/S09-docusaurus-i18n.md",
+      "sha256": "e020d25fb361f338fb00cfc4980a3aef22e5d67e5096aa1e78db117ed75fb2ff",
+      "bytes": 416
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/sources/S13-typesense-search.md",
+      "sha256": "8bc5ab99f2f8dd7c48670737d286b3046f0f1660fc61b257f9dfbaa042e0decb",
+      "bytes": 381
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/critic/sources/index.md",
+      "sha256": "eea935281864a14ee42c30a1d54a5c6038c19597b6be76768edf4ae2d9317eba",
+      "bytes": 606
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/critic/sources/C-S02-meilisearch-tenant-tokens.md",
+      "sha256": "be1331d97994964cb20c342636379271c9cfd7049ae98fe0081db16796087b21",
+      "bytes": 1378
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/critic/sources/C-S01-pagefind-filtering.md",
+      "sha256": "82cf916772be6aacca97a90b8595aacbd2fc7ee6ee652c049b6da3df4058e8a3",
+      "bytes": 1388
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/reviser/final.md",
+      "sha256": "bfeb2b58ce05fd787b2bd0284e3977acfe56f0385dfa05308ad66204f4312372",
+      "bytes": 43052
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/reviser/source-map.json",
+      "sha256": "5f34b850246bebdc2027ecde04939f7cf4915e30da854284e6348ce331e423be",
+      "bytes": 7082
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/reviser/assignment.md",
+      "sha256": "0f774bc3e6caaa542828c453fa13c674e414765b33717e928bc01f05c14b26df",
+      "bytes": 2840
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/reviser/input-map.json",
+      "sha256": "f1f8bbd799ea87aadc7c35e52ac90df354a6cf3399754a1ff411234107bf5a66",
+      "bytes": 1526
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/critic/critique.md",
+      "sha256": "52bc675c23d6c71b4bda8b96245b9d73f7369ca3502c4ac0ad754478823648cb",
+      "bytes": 32220
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/critic/source-map.json",
+      "sha256": "a818929e9a7d416dbf43a700c8e69ea758a0db5fb283e8c69cab87cc95c9d321",
+      "bytes": 6937
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/critic/assignment.md",
+      "sha256": "8de29afee2ff001d06f3cce756e36d3dded1a148c3fc06b64732fa44a2f6c4e9",
+      "bytes": 2577
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/critic/input-map.json",
+      "sha256": "376d51ad6e393d124713e6f5fc6b6278bd4653c512f0cda8231e0d1d75073109",
+      "bytes": 1196
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/discovery.md",
+      "sha256": "f4ee44daac647f72c51ecefdceea7434192a2839442c4d0cfd055334780a2edd",
+      "bytes": 32646
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/draft.md",
+      "sha256": "10d313fb565fa691dc99bcb4084110d002e676a02af029666c34b6f58c040735",
+      "bytes": 23935
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/source-map.json",
+      "sha256": "12ebc39fc647a581ec1bed7f22ef73193bd11fc7922ccb2ff0a1f4dea4053840",
+      "bytes": 10649
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/revealed-plan.md",
+      "sha256": "906fbabc0e9c4996064d210148f2784a1e161d38cce2f54aea992f2d4f7f7ee6",
+      "bytes": 331
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/plan-reveal.json",
+      "sha256": "ff332a04d85bfaed7f5ac302976af6213b5ff3649c9cd5e8bc8016b8382cc7b0",
+      "bytes": 276
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/assignment.md",
+      "sha256": "b0822918d26bf991e9c6496cada4f9b8189ee792ff10ee870afec36592f43f66",
+      "bytes": 3055
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/input-map.json",
+      "sha256": "dd5ad84d45e06147a51bde2394641de8b556c6ffd1f5944e60d4c1864af4ab76",
+      "bytes": 640
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/reviser/sources/index.md",
+      "sha256": "0fb4a464aee322fb6acc43384e67542b22d295d3aef16c07efb9575e31fe73ad",
+      "bytes": 1368
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/reviser/sources/R11-docusaurus-search-local.excerpt.txt",
+      "sha256": "a7d66f8c880c07070cdc9f624d9f8c823422a85ec47dacfe8a9ed2242e8018b7",
+      "bytes": 2020
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/reviser/sources/R10-docusaurus-versioning.excerpt.txt",
+      "sha256": "337ec3d0d3ea447e5f155d1df10bfe51e9fed9f82f95dd6d6d24100ce444cd9c",
+      "bytes": 1289
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/critic/sources/index.md",
+      "sha256": "ea9269f0883b5fc00bb12374e9b059a047645a54c68e91db1a86671fb088e637",
+      "bytes": 1659
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/critic/sources/C14-vale.excerpt.txt",
+      "sha256": "adb5d51eb016a1cad74376fb274eece24e1dc578894cea8ae02704eb5bb0f8ac",
+      "bytes": 1733
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/critic/sources/C10-docusaurus-versioning.excerpt.txt",
+      "sha256": "9620e5ada66633bbccd7138548e5012239253b9cbeb849760d7136fe057b8849",
+      "bytes": 2008
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/critic/sources/C12-meilisearch-typo.excerpt.txt",
+      "sha256": "efc9debeb054e4afd46d733b82f953e1bec6e03fa0f76366d058c50bd30f7b0f",
+      "bytes": 1289
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/critic/sources/C13-pagefind-search-config.excerpt.txt",
+      "sha256": "70d5bcd4f15a4b68ca098c5aad2b435ea37990b572bd62492999472d817d24b1",
+      "bytes": 1436
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/critic/sources/C11-docusaurus-search.excerpt.txt",
+      "sha256": "cec4f01bd571f39b1cd426aaad623e284e5e2ca047810981bdd8eedd964be75e",
+      "bytes": 1755
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/sources/index.md",
+      "sha256": "14e7d158f795eea4a2430e312d8edd80b784c8e4ec9cf255e9641fa48491d901",
+      "bytes": 2306
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/sources/S09-typesense-search.excerpt.txt",
+      "sha256": "99746c7a9f9428b73794fc2ce02cda16d0a57676dc1026deaa8600b79c84bd0c",
+      "bytes": 2046
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/sources/S07-meilisearch-ranking.excerpt.txt",
+      "sha256": "a7ea2971e96edb10136cd9393dc46f762940d4c1c88776f6ab1dec1d361e4dc0",
+      "bytes": 1691
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/sources/S05-pagefind-ranking.excerpt.txt",
+      "sha256": "6590f7e276fb8451d4e5b0b28aa1ae8850baf2304c83b6d39d16471a84b26ba7",
+      "bytes": 2014
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/sources/S11-vale.excerpt.txt",
+      "sha256": "c27e4ebc731bf19ac2bc9168425ceb603ed58ca1709cb3e9d0575b93eafb2742",
+      "bytes": 1773
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/sources/S10-antora.excerpt.txt",
+      "sha256": "29cd5e711c53c7ef180a01fc4f3ceae402438b57fc9bdd19022383e1507e1ff2",
+      "bytes": 1674
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/sources/S08-meilisearch-typo.excerpt.txt",
+      "sha256": "e46f93b981f9d5d4f82d92e2cdaac923dafc356540b1dad7335ce0bd5a418766",
+      "bytes": 1192
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/sources/S04-pagefind-indexing.excerpt.txt",
+      "sha256": "1035c81f574612f7dd917ecfff24605c8b818368a6ae6341bfbfe504369c46ae",
+      "bytes": 1267
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/sources/S12-mike.excerpt.txt",
+      "sha256": "7b200fec820a4d173549db228e66e26da6ffe14e435984a1976617358db20b9c",
+      "bytes": 1407
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/sources/S02-docusaurus-search.excerpt.txt",
+      "sha256": "41e46a46d3b7bbc9f9fcc6c32254dd026ea6fdce746a40878295c370d80ac514",
+      "bytes": 1646
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/treatment/research/sources/S01-docusaurus-versioning.excerpt.txt",
+      "sha256": "c3b6a802299f9cd1b23cd9746e1c41c5fb274f5ffd72a83de7e2bf4dfadd096a",
+      "bytes": 1741
+    }
+  ],
+  "source_id_policy": "E IDs are assessor independent sources; candidate q/S/C/R IDs remain their frozen identities and are not rebound.",
+  "primary_sources": [
+    {
+      "id": "E01",
+      "url": "https://docusaurus.io/docs/versioning",
+      "accessed_at": "2026-10-09T18:56:13.516881+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://docusaurus.io/docs/versioning",
+      "bytes": 93725,
+      "sha256": "7d4888ef7e5d0801bb7d2bc219d04173e51010e2f2cc1b989846b3e316d51f6e",
+      "content_type": "text/html; charset=UTF-8",
+      "text_sha256": "2c0e71ef73f605089afbd8007075d57f4b8c900a400e9798e0e74de21a3c47af",
+      "text_chars": 13292,
+      "version_or_release": "Docusaurus 3.10.2 docs",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E02",
+      "url": "https://docusaurus.io/docs/search",
+      "accessed_at": "2026-10-09T18:56:13.517666+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://docusaurus.io/docs/search",
+      "bytes": 125862,
+      "sha256": "f3f90add01ccb3cb7d609025bfa4f280c68b269cf0d093c064c75e08d80ef1d0",
+      "content_type": "text/html; charset=UTF-8",
+      "text_sha256": "ccd669f4d34484d316a5d02c820f9cfecb6925922469936920b790c91138df68",
+      "text_chars": 14853,
+      "version_or_release": "Docusaurus 3.10.2 docs",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E03",
+      "url": "https://docusaurus.io/docs/i18n/tutorial",
+      "accessed_at": "2026-10-09T18:56:13.518276+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://docusaurus.io/docs/i18n/tutorial",
+      "bytes": 167853,
+      "sha256": "c41466cc7ed316b293b287ecc9623b80b62bd6e78a70520a61e64ae09ad11e77",
+      "content_type": "text/html; charset=UTF-8",
+      "text_sha256": "47d7a19320c38eb23982954c9e6e698a9edd2abc98e9ee87a3368153ad5a8554",
+      "text_chars": 16577,
+      "version_or_release": "Docusaurus 3.10.2 docs",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E04",
+      "url": "https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-content-docs",
+      "accessed_at": "2026-10-09T18:56:13.521547+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-content-docs",
+      "bytes": 195048,
+      "sha256": "7a3c61bbb6a7e66fe8d259bb9173844db4a3caace21f1e0fbde255d39b83595b",
+      "content_type": "text/html; charset=UTF-8",
+      "text_sha256": "defeb02514810efb3b39b1b5d06be14226d64efadacd36c29e227e9d0922e67f",
+      "text_chars": 20353,
+      "version_or_release": "Docusaurus 3.10.2 plugin docs",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E05",
+      "url": "https://pagefind.app/docs/indexing/",
+      "accessed_at": "2026-10-09T18:56:13.523857+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://pagefind.app/docs/indexing/",
+      "bytes": 39818,
+      "sha256": "4733ef0fefd7dd2265df5ac40902fb1e3f999da388a029defef52dffe03bfa5d",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "753247a37de4c08ade1b98c8813ae82470c567899417f6af8229b5b1f99b5b6f",
+      "text_chars": 6760,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E06",
+      "url": "https://pagefind.app/docs/filtering/",
+      "accessed_at": "2026-10-09T18:56:13.526843+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://pagefind.app/docs/filtering/",
+      "bytes": 34597,
+      "sha256": "ca30f5cfd05e309426ac84834db9aa63cc202f0221e7c62325459ce01a65d0df",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "ae680bab56c6219c61a08e1f49d632859b4eeb3f44a15a9691f71d293c98bb6f",
+      "text_chars": 4608,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E07",
+      "url": "https://pagefind.app/docs/config-options/",
+      "accessed_at": "2026-10-09T18:56:13.528568+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://pagefind.app/docs/config-options/",
+      "bytes": 42068,
+      "sha256": "f1fe19438ab2eeb028725d6f2d7c67216d639ad9fd9686e4bd7854c6e4c2d674",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "62b7ea370e8ba7d3894315dd287b3f7eab83c6aed590408752e83711d69145b3",
+      "text_chars": 7257,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E08",
+      "url": "https://pagefind.app/docs/search-config/",
+      "accessed_at": "2026-10-09T18:56:13.530777+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://pagefind.app/docs/search-config/",
+      "bytes": 51707,
+      "sha256": "810305084c85ee00e9f709d7cbc85a22bd5bcded34c7c8cc4b9c2d1b19a4266d",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "3532a046a34571e2b7efc45fed7aff57afa1e8dbc670967e3945991c5ab5af1a",
+      "text_chars": 7204,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E09",
+      "url": "https://pagefind.app/docs/ranking/",
+      "accessed_at": "2026-10-09T18:56:13.660556+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://pagefind.app/docs/ranking/",
+      "bytes": 48303,
+      "sha256": "481d104c20649fb8af71f18e9a3ef9df31eaf6f387487077c430ef114ab14ba8",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "44af7bab4ac2eec1bbe6314cea26a1498921288f7ed99d33658c8391450873a2",
+      "text_chars": 8651,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E10",
+      "url": "https://api.github.com/repos/pagefind/pagefind/releases/tags/v1.5.0",
+      "accessed_at": "2026-10-09T18:56:13.682335+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/pagefind/pagefind/releases/tags/v1.5.0",
+      "bytes": 56893,
+      "sha256": "e167b95c55db4e89cba1f76029a2b22c48f9b0164bc031e1ffdbc4cc8ee28806",
+      "content_type": "application/json; charset=utf-8",
+      "text_sha256": "bc97b32526a228555f6d4cc55f468eed28498bbb41e146a83434134419f47128",
+      "text_chars": 8500,
+      "version_or_release": "Pagefind v1.5.0, published 2026-04-06",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E11",
+      "url": "https://raw.githubusercontent.com/pagefind/pagefind/main/CHANGELOG.md",
+      "accessed_at": "2026-10-09T18:56:13.699557+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/pagefind/pagefind/main/CHANGELOG.md",
+      "bytes": 47503,
+      "sha256": "46b288c68508d084f7b73fb3dfa3cefadff82d7959c4beb15e22174122215a29",
+      "content_type": "text/plain; charset=utf-8",
+      "text_sha256": "48b53da469b9314e531723822ef603648c0bb73f9251b57db1fe657fe9e46c42",
+      "text_chars": 46739,
+      "version_or_release": "Pagefind main CHANGELOG, v1.5.2/v1.5.0/v1.0.1 sections",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E12",
+      "url": "https://api.github.com/repos/pagefind/pagefind/commits/50641b0db8f8430a660bfaaccce423a1c2305fe3",
+      "accessed_at": "2026-10-09T18:56:13.702702+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/pagefind/pagefind/commits/50641b0db8f8430a660bfaaccce423a1c2305fe3",
+      "bytes": 29768,
+      "sha256": "ae8ab15daa5464fa4eacbf98ad51d2beed20daa6585ac508f2be997ecee7404b",
+      "content_type": "application/json; charset=utf-8",
+      "text_sha256": "db70c8a55f778dbd21777aee6376ebdff0729ea1ecb805101486c0fc515431e0",
+      "text_chars": 27330,
+      "version_or_release": "Pagefind commit 50641b0db8f8430a660bfaaccce423a1c2305fe3, September 2026; not a released-1.5.2 witness",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E13",
+      "url": "https://www.meilisearch.com/docs/capabilities/full_text_search/relevancy/ranking_rules.md",
+      "accessed_at": "2026-10-09T18:56:13.746265+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://www.meilisearch.com/docs/capabilities/full_text_search/relevancy/ranking_rules.md",
+      "bytes": 9960,
+      "sha256": "9f5520a8d2914b3d7de5a8031aab9460c2bb0e3e1d10c90230e5cc576446aa86",
+      "content_type": "text/markdown; charset=utf-8",
+      "text_sha256": "1e11f617bb3bf3f8a63c7828391ee09a84f2eac8553d006026bf5118d9aea8a9",
+      "text_chars": 9689,
+      "version_or_release": "Meilisearch rolling ranking docs; no installed engine observed",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E14",
+      "url": "https://www.meilisearch.com/docs/capabilities/full_text_search/relevancy/typo_tolerance_settings.md",
+      "accessed_at": "2026-10-09T18:56:13.784796+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://www.meilisearch.com/docs/capabilities/full_text_search/relevancy/typo_tolerance_settings.md",
+      "bytes": 15047,
+      "sha256": "0965d8cbd9d3e29de76a66120443556594aad06ba38c11bf18d50a31b7bb381f",
+      "content_type": "text/markdown; charset=utf-8",
+      "text_sha256": "022622f21de752ce1c7c241abbb804df047b6c9d28c63040b7cca7c0e34a0138",
+      "text_chars": 13989,
+      "version_or_release": "Meilisearch rolling typo docs; no installed engine observed",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E15",
+      "url": "https://www.meilisearch.com/docs/capabilities/security/overview.md",
+      "accessed_at": "2026-10-09T18:56:13.843965+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://www.meilisearch.com/docs/capabilities/security/overview.md",
+      "bytes": 5336,
+      "sha256": "39f2f4089425efecf857b7a3fc356427507c35ca386209000f7a3b1134a1be1e",
+      "content_type": "text/markdown; charset=utf-8",
+      "text_sha256": "7d4681fa4b15da2420e2e5287db442f2ede1cdc0c0b5ad921f9663a4d4305038",
+      "text_chars": 5265,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E16",
+      "url": "https://www.meilisearch.com/docs/reference/api/settings/list-all-settings.md",
+      "accessed_at": "2026-10-09T18:56:13.878142+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://www.meilisearch.com/docs/reference/api/settings/list-all-settings.md",
+      "bytes": 71977,
+      "sha256": "90ee488ef76b2a516409c9e0da3a25997d228ff03a0018afd859228915d3a47f",
+      "content_type": "text/markdown; charset=utf-8",
+      "text_sha256": "8ac4627b458e013ad09c39da3dd1cdf59b71c4a8de36bd1a0bcf7d8c326519de",
+      "text_chars": 52028,
+      "version_or_release": "Meilisearch settings OpenAPI info.version 1.54.3, not a running server observation",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E17",
+      "url": "https://typesense.org/docs/30.0/api/search.html",
+      "accessed_at": "2026-10-09T18:56:13.886474+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://typesense.org/docs/30.0/api/search.html",
+      "bytes": 182017,
+      "sha256": "7ac9f176cf3e27ed6ba52715faab3fe30d8bc3fb978e54711533b6890d3f13c6",
+      "content_type": "text/html",
+      "text_sha256": "b66939f45fa3ab29750de279784f773457183d25701af6407c6e492bd3025ee7",
+      "text_chars": 50782,
+      "version_or_release": "Typesense 30.0 API",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E18",
+      "url": "https://api.github.com/repos/typesense/typesense/releases/tags/v27.0",
+      "accessed_at": "2026-10-09T18:56:13.888325+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/typesense/typesense/releases/tags/v27.0",
+      "bytes": 10834,
+      "sha256": "99e31773026ade31f84b8e69d8c228b77d3e193d969fc4a6f7f907052113062d",
+      "content_type": "application/json; charset=utf-8",
+      "text_sha256": "2b491530bb81a296fbb66ba57a3cbf1b7b36168369b07d78fbdd11fd50a5d00c",
+      "text_chars": 9057,
+      "version_or_release": "Typesense v27.0 release, 2024-08-27",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E19",
+      "url": "https://docs.antora.org/antora/latest/content-source-versioning-methods/",
+      "accessed_at": "2026-10-09T18:56:13.964184+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://docs.antora.org/antora/latest/content-source-versioning-methods/",
+      "bytes": 52188,
+      "sha256": "1640fc625d1de2f13739e57f3ad0a19064a6da62061230235666a9289997eb22",
+      "content_type": "text/html; charset=UTF-8",
+      "text_sha256": "14ea84010a4d6ebb3bd2b4dbcc81de8c180fde97a930658df57928b59748493b",
+      "text_chars": 13589,
+      "version_or_release": "Antora 3.2 /latest/ docs observed",
+      "used_by_material_findings": [
+        "N1-M3"
+      ]
+    },
+    {
+      "id": "E20",
+      "url": "https://docs.antora.org/antora/latest/component-version-key/",
+      "accessed_at": "2026-10-09T18:56:14.080569+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://docs.antora.org/antora/latest/component-version-key/",
+      "bytes": 54877,
+      "sha256": "2a12a6677f4f31070255e3bdf23926b6841f787f07bed4bbaeea6f7bda62cd0f",
+      "content_type": "text/html; charset=UTF-8",
+      "text_sha256": "9fce228bc52cc8784ad58c556d14985c1aa9e27249913d3e4569e31963350eda",
+      "text_chars": 13261,
+      "version_or_release": "Antora 3.2 /latest/ docs observed",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E21",
+      "url": "https://docs.antora.org/antora/latest/page/resource-id-coordinates/",
+      "accessed_at": "2026-10-09T18:56:14.100692+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://docs.antora.org/antora/latest/page/resource-id-coordinates/",
+      "bytes": 59118,
+      "sha256": "fa4848fd18b9d3746914340914ac88248aa659719a252ebe3c69dd9bc4c99d53",
+      "content_type": "text/html; charset=UTF-8",
+      "text_sha256": "3c8c9cb92b1a3b24414923cb573706ccc265cc062eae486b81d2870a410e8234",
+      "text_chars": 14159,
+      "version_or_release": "Antora 3.2 /latest/ docs observed",
+      "used_by_material_findings": [
+        "N2-M2"
+      ]
+    },
+    {
+      "id": "E22",
+      "url": "https://raw.githubusercontent.com/jimporter/mike/master/README.md",
+      "accessed_at": "2026-10-09T18:56:14.102944+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/jimporter/mike/master/README.md",
+      "bytes": 16331,
+      "sha256": "7175771bad78df48e98957219915d857d32e9f65eecec1075698cc29d3a94d5f",
+      "content_type": "text/plain; charset=utf-8",
+      "text_sha256": "8c35cd3a1dd5cfab557b3ca198f127747c10dc4efd1ee69a266b5bda0b1e8aca",
+      "text_chars": 16155,
+      "version_or_release": "mike master README, mutable",
+      "used_by_material_findings": [
+        "N1-M2"
+      ]
+    },
+    {
+      "id": "E23",
+      "url": "https://squidfunk.github.io/mkdocs-material/setup/setting-up-versioning/",
+      "accessed_at": "2026-10-09T18:56:14.124021+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://squidfunk.github.io/mkdocs-material/setup/setting-up-versioning/",
+      "bytes": 82840,
+      "sha256": "5932224de36b0677ffbd3b357418b47661ec359870250e0ccbbcd9dac39dcc05",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "91baca8d33341ff849e3c79db31d08796a89f2043d1e91a5d1e340fc4794b604",
+      "text_chars": 7255,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E24",
+      "url": "https://starlight.astro.build/guides/i18n/",
+      "accessed_at": "2026-10-09T18:56:14.139030+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://starlight.astro.build/guides/i18n/",
+      "bytes": 167651,
+      "sha256": "3eaacb6520426325e34f84715ca66dd1fe1f5aca91876a931ae1bba70e258aec",
+      "content_type": "text/html; charset=UTF-8",
+      "text_sha256": "1c320c86079c8ee6c0845222ce848f98e5590788a06fabbbc33a90fb615a6af3",
+      "text_chars": 15323,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E25",
+      "url": "https://starlight.astro.build/guides/site-search/",
+      "accessed_at": "2026-10-09T18:56:14.144731+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://starlight.astro.build/guides/site-search/",
+      "bytes": 110838,
+      "sha256": "cb16e390cd60abc069ee21b1a06996d4df062b77f600ae38f2a27e4738b82c12",
+      "content_type": "text/html; charset=UTF-8",
+      "text_sha256": "50ee3a7deed40e540283e08832549e5974b192d536596e0474a045daf13f3dd1",
+      "text_chars": 8559,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E26",
+      "url": "https://www.sphinx-doc.org/en/master/usage/advanced/intl.html",
+      "accessed_at": "2026-10-09T18:56:14.179551+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://www.sphinx-doc.org/en/master/usage/advanced/intl.html",
+      "bytes": 41560,
+      "sha256": "9b258b214e13d3f69d672b5173a5d199b38930b7b3e410ece77e1a1fc985ce56",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "e0fed670557d5b7546801948cf510fa96e5d55f016161e8bf741527912395dd9",
+      "text_chars": 12284,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E27",
+      "url": "https://docs.vale.sh/topics/.vale.ini.md",
+      "accessed_at": "2026-10-09T18:56:14.200528+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://docs.vale.sh/topics/.vale.ini.md",
+      "bytes": 14810,
+      "sha256": "325b3fffc4cb96bcb386c687fb095865a87e2337d1f47a6baad68d23d1a9bfca",
+      "content_type": "text/markdown; charset=utf-8",
+      "text_sha256": "b0594ab6d561d558b964500bde17513be6d5b3c456469884a60d0f35e35c1fb5",
+      "text_chars": 14734,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E28",
+      "url": "https://docs.vale.sh/guides/actions",
+      "accessed_at": "2026-10-09T18:56:14.375635+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 404,
+      "resolved_url": "https://docs.vale.sh/guides/actions",
+      "bytes": 204348,
+      "sha256": "205324d58c8bb3ab6b499da5e70c3f1f2b061609756c1f9b97b57f53c65a620c",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "17b7e72d51f2291a7f9fb4b10ca3c90b6284587c0b15fe4c6cfaf1eef32dc851",
+      "text_chars": 4,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E29",
+      "url": "https://api.github.com/repos/backstage/backstage/issues/16711",
+      "accessed_at": "2026-10-09T18:56:14.390705+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/backstage/backstage/issues/16711",
+      "bytes": 5579,
+      "sha256": "e538d092fd8c7e661fc8e739f1355d41d3a2ef0a30e200ac8b6b167913284e8c",
+      "content_type": "application/json; charset=utf-8",
+      "text_sha256": "414a5b9591e3e845e009513b15507d49ad31c9338ae8f42a00adbd13a8939162",
+      "text_chars": 1234,
+      "version_or_release": "Backstage issue #16711, historical discussion, currently closed",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E31",
+      "url": "https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/incorporating-feedback-in-your-pull-request",
+      "accessed_at": "2026-10-09T18:56:14.490262+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/incorporating-feedback-in-your-pull-request",
+      "bytes": 147543,
+      "sha256": "fd110cfae129fe15dd0d138b5347ff93a9fc522cc89d602bfee7e60d58a8a268",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "c18ad4f72716ca3d2e5b5048411372646e6d767b691d9e8d52404352fe20d89d",
+      "text_chars": 4961,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": [
+        "N2-M1",
+        "N1-M1"
+      ]
+    },
+    {
+      "id": "E33",
+      "url": "https://api.github.com/repos/dynamoose/dynamoose/issues/1486/comments",
+      "accessed_at": "2026-10-09T18:56:14.502744+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/dynamoose/dynamoose/issues/1486/comments",
+      "bytes": 6837,
+      "sha256": "e06f52508ca499a432912f3837330cbcc8c2cca4d209d8a21d21f62c7ebda9df",
+      "content_type": "application/json; charset=utf-8",
+      "text_sha256": "0489678a56d594f5254b31a7685fd8ccfa6b535855064b7616578a15e9aa5275",
+      "text_chars": 3027,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E34",
+      "url": "https://api.github.com/repos/facebook/docusaurus/pulls/744",
+      "accessed_at": "2026-10-09T18:56:14.520350+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/facebook/docusaurus/pulls/744",
+      "bytes": 18131,
+      "sha256": "ad87e73c06b0c395a058b087b0c0b93de52caee2f327401478339757ab7c93ba",
+      "content_type": "application/json; charset=utf-8",
+      "text_sha256": "5711d9bccb40479fe55a246887ee73733b40e41cf1d3098453f9341a71a348aa",
+      "text_chars": 709,
+      "version_or_release": "Docusaurus PR #744, merged 2018-06-18 (v1-era)",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E35",
+      "url": "https://raw.githubusercontent.com/easyops-cn/docusaurus-search-local/master/README.md",
+      "accessed_at": "2026-10-09T18:56:14.533526+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/easyops-cn/docusaurus-search-local/master/README.md",
+      "bytes": 25706,
+      "sha256": "6475a30cc532669e26ba9778e9f5f4a2c65d8b1d12582ccf6f49248e92eb0123",
+      "content_type": "text/plain; charset=utf-8",
+      "text_sha256": "3f427b8b2354a79941b16f1b6265e02dc5302facb0a4816001ce29f599fc21ef",
+      "text_chars": 25385,
+      "version_or_release": "easyops-cn/docusaurus-search-local master README, mutable",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E36",
+      "url": "https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html",
+      "accessed_at": "2026-10-09T18:56:14.548382+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html",
+      "bytes": 168677,
+      "sha256": "ab7aa04e8f81e84adfb1f19948f666d73a50d72d4b0d594909bfcbe58ee710fa",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "fc52d1ca10fb4fe73dc2c24842117e953314b17b45ca1df61fd2a13338643469",
+      "text_chars": 48326,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": [
+        "N1-M3"
+      ]
+    },
+    {
+      "id": "E38",
+      "url": "https://llmstxt.org/",
+      "accessed_at": "2026-10-09T18:56:14.550523+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://llmstxt.org/",
+      "bytes": 51981,
+      "sha256": "b1380e7cf2b14d066dce6afad12694fec59d4566372cfee92cc5e24795a63c05",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "4828ba449d2ecb3d2b475f652f74dd6fd6056b82097271c255d8d927c465f83b",
+      "text_chars": 12282,
+      "version_or_release": "llmstxt.org proposal v2, mutable",
+      "used_by_material_findings": [
+        "N1-M4"
+      ]
+    },
+    {
+      "id": "E40",
+      "url": "https://www.sphinx-doc.org/en/master/usage/builders/index.html",
+      "accessed_at": "2026-10-09T18:56:14.731255+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://www.sphinx-doc.org/en/master/usage/builders/index.html",
+      "bytes": 121805,
+      "sha256": "2b5cb7b7f213d10775bfdf520e2a82263b66763da6499fd7460dbccdaafacc73",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "eadb7e8f6d66487bad0278234486a4de7b7cb2a77ce66655422dd5dde447eb61",
+      "text_chars": 29760,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": [
+        "N1-M4"
+      ]
+    },
+    {
+      "id": "E42",
+      "url": "https://pagefind.app/docs/multilingual/",
+      "accessed_at": "2026-10-09T18:56:14.734748+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://pagefind.app/docs/multilingual/",
+      "bytes": 35971,
+      "sha256": "72b9b5de3c717d386c67f3ddd54ad6d37f57ff11f2e3f63dcfb7e798b6e7b340",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "a2245cafe02ffeab13dbfef470ec598d664853d431f9d0207348e38f7298f0fa",
+      "text_chars": 5175,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E43",
+      "url": "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/changing-the-base-branch-of-a-pull-request",
+      "accessed_at": "2026-10-09T18:56:14.750402+00:00",
+      "operation": "independent public HTTPS GET; no auth; data only",
+      "status": 200,
+      "resolved_url": "https://docs.github.com/en/pull-requests/how-tos/create-pull-requests/changing-the-base-branch-of-a-pull-request",
+      "bytes": 132484,
+      "sha256": "92713d7586a7fba9ba2098d0d5f5d821556a0c191ac8cd684e5dcbc70ed76537",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "cb7048772ab4200c040257c6f6d48bb0da4ec7c9c24de8816cad2a5fbe47f1a0",
+      "text_chars": 3170,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": [
+        "N1-M2"
+      ]
+    },
+    {
+      "id": "E44",
+      "url": "https://api.github.com/repos/backstage/backstage/issues/16711/comments",
+      "accessed_at": "2026-10-09T19:01:13.493007+00:00",
+      "operation": "independent read-only HTTP GET",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/backstage/backstage/issues/16711/comments",
+      "bytes": 57075,
+      "sha256": "49ee411f6806c28007238bf0890399bf09689dccdd89554d252ad3949f87c115",
+      "content_type": "application/json; charset=utf-8",
+      "text_sha256": "59720675675a1bc828e51d114468514cda0b00da7ff1c04058545d6a4a4391d7",
+      "text_chars": 12207,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E45",
+      "url": "https://raw.githubusercontent.com/jimporter/mike/master/mike/commands.py",
+      "accessed_at": "2026-10-09T19:01:13.362434+00:00",
+      "operation": "independent read-only HTTP GET",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/jimporter/mike/master/mike/commands.py",
+      "bytes": 12003,
+      "sha256": "bb3e59a7b0a23bb97ac2b242d2b88c6b4f797584ad5c4310ce8f57b95c730aca",
+      "content_type": "text/plain; charset=utf-8",
+      "text_sha256": "bb3e59a7b0a23bb97ac2b242d2b88c6b4f797584ad5c4310ce8f57b95c730aca",
+      "text_chars": 12003,
+      "version_or_release": "mike master commands.py, mutable",
+      "used_by_material_findings": [
+        "N1-M2"
+      ]
+    },
+    {
+      "id": "E46",
+      "url": "https://www.meilisearch.com/blog/indexing-optimization-guide",
+      "accessed_at": "2026-10-09T19:01:13.781559+00:00",
+      "operation": "independent read-only HTTP GET",
+      "status": 200,
+      "resolved_url": "https://www.meilisearch.com/blog/indexing-optimization-guide",
+      "bytes": 180855,
+      "sha256": "4d68cd8e2bd3872d1ea0b8cb2eee0422fa8cd2f418a8591d85a7d047eefa3b44",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "f98b73f84b1eb2e446f6f574348cf120f3af1718fe927d3a08ba26ae58a3a64a",
+      "text_chars": 7673,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E47",
+      "url": "https://typesense.org/docs/30.0/api/api-keys.html",
+      "accessed_at": "2026-10-09T19:01:13.761714+00:00",
+      "operation": "independent read-only HTTP GET",
+      "status": 200,
+      "resolved_url": "https://typesense.org/docs/30.0/api/api-keys.html",
+      "bytes": 126370,
+      "sha256": "0b823560605a80aca34f61f285927247baf23a046494110bd6d64e3969c822a3",
+      "content_type": "text/html",
+      "text_sha256": "1e36aa746c0a6f7f7d30e80f6fa66571eea1899031c41bddbbef315067aaae38",
+      "text_chars": 17946,
+      "version_or_release": "Typesense 30.0 API keys",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E48",
+      "url": "https://api.github.com/repos/facebook/docusaurus/pulls/744/files",
+      "accessed_at": "2026-10-09T19:01:13.551771+00:00",
+      "operation": "independent read-only HTTP GET",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/facebook/docusaurus/pulls/744/files",
+      "bytes": 807,
+      "sha256": "e713a41220546e34df27a594a292d4a00fe736f253acf4ac941b3c742149e035",
+      "content_type": "application/json; charset=utf-8",
+      "text_sha256": "0b10624a359716abcaf9997e7501b97ad5033705650c6e90238f8f1cf46736de",
+      "text_chars": 331,
+      "version_or_release": "Docusaurus PR #744 changed website/siteConfig.js",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E49",
+      "url": "https://api.github.com/repos/facebook/docusaurus/issues/744/comments",
+      "accessed_at": "2026-10-09T19:01:13.474166+00:00",
+      "operation": "independent read-only HTTP GET",
+      "status": 200,
+      "resolved_url": "https://api.github.com/repos/facebook/docusaurus/issues/744/comments",
+      "bytes": 40311,
+      "sha256": "4cc2e655a50770f0a10dfaa12fd3761ee70171a9032627ebccee0e21035a933d",
+      "content_type": "application/json; charset=utf-8",
+      "text_sha256": "92240f642528ebf494c22c0c41f3ccbf9bd49d575ee440962a679377f779f9a9",
+      "text_chars": 10189,
+      "version_or_release": "Docusaurus PR #744 historical comments",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E50",
+      "url": "https://backstage.io/docs/features/techdocs/concepts/",
+      "accessed_at": "2026-10-09T19:01:13.483450+00:00",
+      "operation": "independent read-only HTTP GET",
+      "status": 200,
+      "resolved_url": "https://backstage.io/docs/features/techdocs/concepts/",
+      "bytes": 41340,
+      "sha256": "8f5b379833f46bc11dcfe01a5a5ef264c9b1bf31f660a9a910bf247f06ca1b90",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "71e14c9188846e914634b83273c5dea0fc575fbd62988ddb8332488e38c03df9",
+      "text_chars": 6014,
+      "version_or_release": "Backstage stable v1.55.0 docs",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E51",
+      "url": "https://backstage.io/docs/features/techdocs/how-to-guides/",
+      "accessed_at": "2026-10-09T19:01:13.478658+00:00",
+      "operation": "independent read-only HTTP GET",
+      "status": 200,
+      "resolved_url": "https://backstage.io/docs/features/techdocs/how-to-guides/",
+      "bytes": 165899,
+      "sha256": "3eae78e0f4870fcb54475c72db784ca46ef3f35bebdc78939f1df4decd758bf7",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "978f71d6c4845b58e1fc2683deab19cb06e0c45bcfdd9f2a093febc0411d04b4",
+      "text_chars": 31282,
+      "version_or_release": "Backstage stable v1.55.0 docs",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E52",
+      "url": "https://pandoc.org/MANUAL.html",
+      "accessed_at": "2026-10-09T19:01:14.275011+00:00",
+      "operation": "independent read-only HTTP GET",
+      "status": 200,
+      "resolved_url": "https://pandoc.org/MANUAL.html",
+      "bytes": 595371,
+      "sha256": "5358438e9299e514995ec5242ebaafe9155349fa33fb148db95eb07e2f86a3b1",
+      "content_type": "text/html",
+      "text_sha256": "099622f408b98861229529328e054b9e714ee7b279033cbce62906c87e884813",
+      "text_chars": 266229,
+      "version_or_release": "mutable public source observed 2026-10-09; no runtime inferred",
+      "used_by_material_findings": [
+        "N1-M4"
+      ]
+    },
+    {
+      "id": "E53",
+      "url": "https://typedoc.org/documents/Overview.html",
+      "accessed_at": "2026-10-09T19:01:13.716029+00:00",
+      "operation": "independent read-only HTTP GET",
+      "status": 200,
+      "resolved_url": "https://typedoc.org/documents/Overview.html",
+      "bytes": 37557,
+      "sha256": "e8519a53c91e270852793e5f01159488e9da8b4f0eeedc918db6e39279e9c2a1",
+      "content_type": "text/html; charset=utf-8",
+      "text_sha256": "e3a638e2ae73a494805ccdf51eabbe016166f78196e720cf9616b7cbf82b86c8",
+      "text_chars": 25098,
+      "version_or_release": "TypeDoc overview compatibility table includes maintained 0.28; mutable docs",
+      "used_by_material_findings": [
+        "N1-M3"
+      ]
+    },
+    {
+      "id": "E54",
+      "url": "https://raw.githubusercontent.com/dfl-aeb/backstage-plugin-techdocs-addon-versioning/main/README.md",
+      "accessed_at": "2026-10-09T19:02:01.023971+00:00",
+      "operation": "independent read-only HTTP GET",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/dfl-aeb/backstage-plugin-techdocs-addon-versioning/main/README.md",
+      "bytes": 12454,
+      "sha256": "37185acaa7c8876ed8d2d94d27781be348a324b627f23041c9a9e4222ee8978b",
+      "content_type": "text/plain; charset=utf-8",
+      "text_sha256": "37185acaa7c8876ed8d2d94d27781be348a324b627f23041c9a9e4222ee8978b",
+      "text_chars": 12298,
+      "version_or_release": "TechDocs versioning addon main README, mutable",
+      "used_by_material_findings": []
+    },
+    {
+      "id": "E55",
+      "url": "https://raw.githubusercontent.com/jimporter/mike/master/mike/driver.py",
+      "accessed_at": "2026-10-09T19:02:01.156134+00:00",
+      "operation": "independent read-only HTTP GET",
+      "status": 200,
+      "resolved_url": "https://raw.githubusercontent.com/jimporter/mike/master/mike/driver.py",
+      "bytes": 19178,
+      "sha256": "911677704f1d9fbc3c54553bdf341e16bc1a4351c5a5127011089a344941e2f7",
+      "content_type": "text/plain; charset=utf-8",
+      "text_sha256": "911677704f1d9fbc3c54553bdf341e16bc1a4351c5a5127011089a344941e2f7",
+      "text_chars": 19178,
+      "version_or_release": "mike master driver.py, mutable",
+      "used_by_material_findings": [
+        "N1-M2"
+      ]
+    }
+  ],
+  "access_limits": [
+    "Assessment scope is exact A-M01-B input map only. No campaign, other case/evaluation, private provider internals or candidate repair.",
+    "All six axes, all P clauses, all declared substantive stages/source-root contents and consequential final claim groups assessed. No remaining substantive evaluator scope is hidden behind a full-coverage label.",
+    "No execution of candidates, product builds, performance/retrieval benchmarks, contradiction-rule runtime, exporters or crawlers. Source-level observations are not runtime witnesses.",
+    "No exhaustive audit of every optional tool’s unclaimed behavior. Explicitly provisional unused product names are leads, not selected verified capabilities.",
+    "Historical issue/code evidence separated from current default semantics; absence of a regression in research is not safety.",
+    "The report evaluates research completeness under the original small product brief, not unlimited production guarantees."
+  ],
+  "observation_artifact": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M01-B/primary-observations.json",
+  "raw_cache_retention": "Temporary stripped read cache will be deleted; bounded authored source judgments and digests retained. No public page or repository executable run.",
+  "source_operations": {
+    "local": "Read-only exact assignments/maps/rubric/brief/plan, complete candidate stages, declared indexes/excerpts; hash/size verification of map entries.",
+    "public": "Independent read-only web search/open and HTTP GET of primary vendor docs, maintainer repositories, releases, issue comments and code patches. Browser-web reference cache can differ from direct HTTP current sources; no silent source-ID rebind.",
+    "independent_http_observation_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M01-B/primary-observations.json",
+    "failed_primary_retrievals": [
+      {
+        "source_id": "E28",
+        "url": "https://docs.vale.sh/guides/actions",
+        "status": 404
+      }
+    ],
+    "runtime_witnesses": [],
+    "mutations": "Only assessment artifacts and temporary read-cache inside assigned output directory; no candidate/repo/config/account/service changes."
+  },
+  "bounded_witness_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M01-B/primary-witnesses.json"
+}

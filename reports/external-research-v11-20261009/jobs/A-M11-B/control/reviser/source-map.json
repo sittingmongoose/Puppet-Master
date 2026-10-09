@@ -1,0 +1,96 @@
+{
+  "assignment": "ER11 source map for A-M11-B/control/reviser",
+  "generated_at_utc": "2026-10-09T19:02:53Z",
+  "timestamp_note": "access_requested_at_utc records the clock time immediately before the corresponding web.open batch. The browser tool exposes no per-page transport timestamp. Targeted follow-up opens are listed separately in observed_operations.",
+  "inputs_reviewed": {
+    "assignment": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/assignment.md",
+    "exact_input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/reviser/input-map.json",
+    "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S05/brief.md",
+    "predecessors": [
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/draft.md",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/discovery.md",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/source-map.json",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/revealed-plan.md",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/source-map.json",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/critique.md"
+    ],
+    "source_roots": [
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/sources",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/critic/sources"
+    ],
+    "prohibited_material_not_read": ["parent material", "counterpart material", "evaluator material", "campaign/history material"]
+  },
+  "inherited_bindings": [
+    {
+      "source_map": "../research/source-map.json",
+      "ids": ["S01", "S02", "S03", "S04", "S05", "S06", "S07", "S08", "S09", "S10", "S11", "S12", "S13", "S14", "S15"],
+      "evidence_root": "../research/sources",
+      "rule": "These immutable source IDs remain bound only in the declared research map and its evidence notes; they are not rebound in this map."
+    },
+    {
+      "source_map": "../critic/source-map.json",
+      "ids": ["C01", "C02", "C03", "C04", "C05", "C06a", "C06b", "C07", "C08"],
+      "evidence_root": "../critic/sources",
+      "rule": "These critic source IDs remain bound only in the declared critic map and its evidence notes; they are not rebound in this map."
+    }
+  ],
+  "sources": [
+    {
+      "id": "R01",
+      "title": "Take control of Meilisearch's typo tolerance",
+      "url": "https://www.meilisearch.com/blog/typo-tolerance",
+      "version_or_snapshot": "First-party live article; author identified as Meilisearch developer advocate; page says updated 2026-08-25.",
+      "commit": null,
+      "locator": "Default typo thresholds and configuration lines 22-50; identifier example lines 64-71; ranking and FAQ lines 86-97.",
+      "access_requested_at_utc": "2026-10-09T18:59:40Z",
+      "observed_operations": [
+        "Opened exact URL directly with web.open.",
+        "Read default typo thresholds, controls to disable typo tolerance globally/per term/per attribute/numeric token, exact-ID example, and ranking caveat."
+      ],
+      "evidence_file": "sources/01-meilisearch.md"
+    },
+    {
+      "id": "R02",
+      "title": "About RightsStatements.org",
+      "url": "https://rightsstatements.org/en/about.html",
+      "version_or_snapshot": "Official live page observed 2026-10-09; no release or commit shown.",
+      "commit": null,
+      "locator": "Heading ‘Providing standardised interoperable rights and reuse information’, lines 33-37.",
+      "access_requested_at_utc": "2026-10-09T18:59:40Z",
+      "observed_operations": [
+        "Opened exact official URL directly with web.open.",
+        "Read the stated purpose and scope of the rights statements for communicating copyright and reuse status of digital objects."
+      ],
+      "evidence_file": "sources/02-rights-statements.md"
+    },
+    {
+      "id": "R03",
+      "title": "Typesense Vector Search and Embeddings API",
+      "url": "https://typesense.org/docs/30.2/api/vector-search.html",
+      "version_or_snapshot": "Versioned documentation 30.2; page observed 2026-10-09.",
+      "commit": null,
+      "locator": "Selected embedding source fields and concatenation lines 175-184; selected vector/query mechanics also covered in inherited C03 and S04 notes.",
+      "access_requested_at_utc": "2026-10-09T18:59:40Z",
+      "observed_operations": [
+        "Opened exact versioned URL directly with web.open.",
+        "Reopened at the selected-field section in a targeted web.open batch at 2026-10-09T19:00:27Z; confirmed vectors regenerate when configured source fields change and that selected string fields can be concatenated into an embedding representation."
+      ],
+      "evidence_file": "sources/03-typesense-embedding-fields.md"
+    },
+    {
+      "id": "R04",
+      "title": "OpenRefine manual: Reconciling",
+      "url": "https://openrefine.org/docs/manual/reconciling/",
+      "version_or_snapshot": "Official live manual observed 2026-10-09; no software release pinned on the page.",
+      "commit": null,
+      "locator": "Overview and review/iteration caveat lines 23-38; matching decisions and original value handling lines 63-73.",
+      "access_requested_at_utc": "2026-10-09T18:59:40Z",
+      "observed_operations": [
+        "Opened exact official URL directly with web.open.",
+        "Reopened targeted lines 20 onward at 2026-10-09T19:00:27Z; read semi-automated matching, required human judgment to review/approve, iterative workflow, candidate selection, and preservation of the original cell value."
+      ],
+      "evidence_file": "sources/04-openrefine-review.md"
+    }
+  ],
+  "validation_status": "These are documentation checks only. No museum implementation, catalog, runtime, policy matrix, or user study was available or tested."
+}
