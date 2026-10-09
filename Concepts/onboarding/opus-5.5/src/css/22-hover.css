@@ -1,0 +1,126 @@
+/* PMH: the merged hover system (engine: src/js/18-hover.js, which documents the whole contract). This file has two
+   parts. The ENGINE PART (registrations, pseudo plumbing, proxy bases, the PM8-parity resets, Reduced Motion and the
+   software-rendered path) is meant to stay. The PROVISIONAL PART (every token value and the three visual layers) is a
+   middle-ground placeholder: the design panel's result replaces it, and a design changes only CSS. */
+
+/* ===== ENGINE PART ===== */
+
+/* Continuous values, written only on the hovered target and its lit neighbours. Registered as NON-inherited, so a write
+   restyles that one element, not its subtree; a pseudo-element takes them with an explicit `inherit` (below). */
+@property --pmh-i  { syntax: '<number>';     inherits: false; initial-value: 0; }
+@property --pmh-x  { syntax: '<length>';     inherits: false; initial-value: 0px; }
+@property --pmh-y  { syntax: '<length>';     inherits: false; initial-value: 0px; }
+@property --pmh-px { syntax: '<percentage>'; inherits: false; initial-value: 50%; }
+@property --pmh-py { syntax: '<percentage>'; inherits: false; initial-value: 50%; }
+@property --pmh-dx { syntax: '<number>';     inherits: false; initial-value: 0; }
+@property --pmh-dy { syntax: '<number>';     inherits: false; initial-value: 0; }
+[data-pmh-kind]::before,
+[data-pmh-kind]::after {
+  --pmh-i: inherit; --pmh-x: inherit; --pmh-y: inherit; --pmh-px: inherit; --pmh-py: inherit; --pmh-dx: inherit; --pmh-dy: inherit;
+}
+
+/* The Firefox scrollbar-reveal hook of the base (`:is(.pm6-sb-active, :hover) { --pm6-sb-ink: ... }`, base line 264, the
+   Usage layer's A1 anchor) matches every hovered element. Registered non-inherited, a hover change restyles only the
+   elements on the hover chain, not their subtrees. The base already registers it this way (line 241); this repeats the
+   registration so the hover cost does not depend on that line staying (measurements in the PMH ENGINE.md). */
+@property --pm6-sb-ink { syntax: '*'; inherits: false; }
+
+/* The token probe: one <i data-pmh-kind> per kind, read with getComputedStyle at the first frame and after a look
+   change. Never laid out, never painted. */
+#pmh-probe {
+  position: fixed; left: 0; top: 0; width: 0; height: 0; overflow: hidden;
+  visibility: hidden; pointer-events: none; contain: strict;
+}
+
+/* The magnet writes `translate` every frame while it moves; .pmh-mv keeps it out of hosts that transition `all`
+   (the PM8 .pm8-live rule did the same). */
+.pmh-mv { transition-property: transform, box-shadow, border-color, background-color, color, opacity !important; }
+
+/* PM8 parity: a hovered card, tile or row keeps its resting border and the elev-2 shadow instead of each page's own
+   :hover ring and glow (bento lime border, catalog accent border, and so on), so the PMH layers are the only hover
+   light. Also under Reduced Motion, where PM8 let the old rings come back. Usage plates keep their own hover. */
+:is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):is(.pmh-on, :hover):not(.pmu-card) {
+  border-color: var(--border) !important;
+  box-shadow: var(--elev-2) !important;
+}
+/* The light layer below sits at z-index -1 inside its host; the PM8 hosts are already isolated (base pm6-css-global),
+   this one is not. */
+.pm6-orch-hist-state { isolation: isolate; }
+
+/* Proxy bases. Placed by transform, sized inline, clipped inline (clip-path) to the target's visible part. */
+#pmh-glow {
+  position: fixed; left: 0; top: 0; width: 0; height: 0;
+  z-index: 95; pointer-events: none;
+}
+#pmh-glow > i {
+  position: absolute; left: 0; top: 0; display: block;
+  opacity: 0; will-change: opacity;
+  transition: opacity var(--pmh-glow-out-ms, 240ms) var(--ease-out, ease-out);
+}
+#pmh-glow > i.pmh-glow-on { opacity: 1; transition-duration: var(--pmh-glow-in-ms, 160ms); }
+#pmh-frame {
+  position: fixed; left: 0; top: 0; width: 0; height: 0;
+  z-index: 96; pointer-events: none; opacity: 0;
+}
+#pmh-frame.pmh-frame-on { opacity: 1; }
+#pmh-frame > i { position: absolute; display: block; }
+
+/* Reduced Motion: states switch at once (the engine stops the magnet, the travel and the pointer-following field). */
+[data-motion="reduced"] :is(#pmh-glow > i, #pmh-frame) { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  :is(#pmh-glow > i, #pmh-frame) { transition: none; }
+}
+
+/* Software-rendered (html[data-pmh-soft], set by the engine from O55.motion.softwareRendered()): no pointer-following
+   light and no emitted glow; the state classes, the frame and the magnet stay. */
+html[data-pmh-soft] [data-pmh-kind] { --pmh-field: 0; --pmh-glow: 0; }
+html[data-pmh-soft] #pmh-glow { display: none; }
+
+/* ===== PROVISIONAL PART (replace with the design panel's result) ===== */
+
+/* Tokens the engine reads (defaults in 18-hover.js TOKENS) and the look's own values. Family rows sit on <html>; the
+   kind rows below apply to the targets and the probe directly, so they win over the family for what they name. */
+:root {
+  --pmh-mag: 3; --pmh-mag-k: .02; --pmh-stiff: 240; --pmh-damp: 30;
+  --pmh-bleed: 10; --pmh-edge: .4; --pmh-ramp: 16; --pmh-out-ms: 220;
+  --pmh-glow: 1; --pmh-glow-reach: 28; --pmh-frame: 0;
+  --pmh-light-r: 150px; --pmh-light-a: .07;
+  --pmh-glow-blur: 12px; --pmh-glow-alpha: .12; --pmh-glow-in-ms: 160ms; --pmh-glow-out-ms: 240ms;
+}
+[data-theme^="basic"]    { --pmh-mag: 2.5; --pmh-stiff: 260; --pmh-damp: 32; --pmh-light-a: .06; }
+[data-theme^="friendly"] { --pmh-mag: 3.5; --pmh-stiff: 200; --pmh-damp: 24; --pmh-light-a: .08; --pmh-glow-blur: 14px; --pmh-glow-alpha: .14; }
+[data-theme^="glass"]    { --pmh-mag: 3.5; --pmh-stiff: 170; --pmh-damp: 24; --pmh-light-r: 180px; --pmh-light-a: .09; --pmh-glow-blur: 16px; --pmh-glow-alpha: .14; }
+/* Retro: no glow; a stepped 2 px magnet and a hard corner frame that jumps between boxes (placeholder). */
+[data-theme^="retro"]    { --pmh-mag: 2; --pmh-step: 1; --pmh-hz: 12; --pmh-field: 0; --pmh-glow: 0;
+                           --pmh-frame: 1; --pmh-frame-hz: 20; --pmh-frame-k: .5; --pmh-frame-follow: 1; }
+/* NieR: no glow and no magnet; ink corner brackets in held steps (placeholder for its reticle idiom). */
+html[data-o55-nier]      { --pmh-mag: 0; --pmh-field: 0; --pmh-glow: 0; --pmh-frame: 1; --pmh-frame-hz: 15; --pmh-frame-k: .5; }
+
+[data-pmh-kind="icon"] { --pmh-mag-gain: 0; --pmh-field: 0; --pmh-near: 0; --pmh-glow: 0; --pmh-frame: 0; }
+[data-pmh-kind="row"]  { --pmh-mag-gain: .35; --pmh-glow: 0; }
+[data-pmh-kind="tile"] { --pmh-mag-gain: .7; }
+
+/* (a) Host light: a small soft accent pool at the pointer, under the content. */
+:is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):is(.pmh-on, .pmh-near):not(.pmu-card)::after {
+  content: "";
+  position: absolute; inset: 0; z-index: -1;
+  border-radius: inherit; pointer-events: none;
+  -webkit-mask: none; mask: none;
+  background: radial-gradient(var(--pmh-light-r) circle at var(--pmh-x) var(--pmh-y),
+    rgba(var(--accent-primary-rgb), calc(var(--pmh-i) * var(--pmh-light-a))) 0%,
+    rgba(var(--accent-primary-rgb), calc(var(--pmh-i) * var(--pmh-light-a) * .4)) 45%,
+    transparent 100%);
+}
+html[data-pmh-soft] :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):is(.pmh-on, .pmh-near)::after { content: none; }
+
+/* (b) Emitted glow: pre-painted at half of PM8's bloom, static; only the layer's opacity moves. */
+#pmh-glow > i { box-shadow: 0 0 var(--pmh-glow-blur) rgba(var(--accent-primary-rgb), var(--pmh-glow-alpha)); }
+
+/* (c) Frame: four corner brackets just outside the box (Retro accent, NieR ink). */
+#pmh-frame { color: var(--accent-primary); }
+#pmh-frame[data-pmh-family="nier"] { color: var(--o55-nier-ink); }
+#pmh-frame > i { width: 8px; height: 8px; border: 0 solid currentColor; }
+#pmh-frame > i:nth-child(1) { left: -4px;  top: -4px;    border-width: 2px 0 0 2px; }
+#pmh-frame > i:nth-child(2) { right: -4px; top: -4px;    border-width: 2px 2px 0 0; }
+#pmh-frame > i:nth-child(3) { right: -4px; bottom: -4px; border-width: 0 2px 2px 0; }
+#pmh-frame > i:nth-child(4) { left: -4px;  bottom: -4px; border-width: 0 0 2px 2px; }
