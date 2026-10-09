@@ -12481,8 +12481,9 @@ These rows serve the six exact Plan strategies, the read-only Plan document, the
 | `cmd.chat.plan.cancel` | Cancel Build | Cancels an admitted or running Plan build; the Build control settles on Canceled and the Plan document is unchanged. | `plan_present && plan_status in {admitted, building}` | `domain_action` | `Plans/Assistant_Plan_Runtime.md` | `AssistantPlanCancelRequest` → `AssistantPlanCancelResult` | `handlers::assistant_plan::plan_cancel` |
 | `cmd.chat.plan.export` | Export Plan | Exports the exact Plan revision through the artifact owner. `content_kind` is `plan_document` (default) or `execution_report`; the existing format discriminator keeps PDF and Markdown. The execution report is a separate versioned artifact and exporting never alters `plan_hash` (PPROG-015..016, CDRY-005). | `plan_present && artifact_export_available` | `domain_action` | `Plans/Assistant_Plan_Runtime.md` | `AssistantPlanExportRequest` → `ArtifactExportResult` | `handlers::assistant_plan::plan_export` |
 | `cmd.chat.plan.open_details` | Open Plan Details | Navigates to Plan details, hidden ledger or scoped-PlanUnit information, and artifact lineage. | `plan_present` | `navigation_wrapper` | `Plans/Assistant_Plan_Runtime.md` | `AssistantPlanRoute` → `RouteResult` | `handlers::assistant_plan::plan_open_details` |
+| `cmd.chat.plan.open_version` | Open Plan Version | Opens the document of one exact Plan version in the editor: the Plan's own tab, deduplicated, while that version is still the Plan's version, otherwise that version's retained read-only document. A bound Goal's Open exact Plan · Vn raises it with the GoalPlanBinding's `assistant_plan_id`, `plan_version` and `plan_hash` (UCC-176, DL-157). It never opens Plan Details and never substitutes a newer version; a version that cannot be resolved returns a typed error and opens nothing. | `plan_present && exact_plan_version_retained` | `navigation_wrapper` | `Plans/Assistant_Plan_Runtime.md` | `AssistantPlanVersionRoute` → `RouteResult` | `handlers::assistant_plan::plan_open_version` |
 
-Source surfaces for this family: `artifact_details`, `composer`, `crew_modal`, `mode_menu`, `natural_language`, `plan_card`, `slash`, `targeted_composer`. Every named surface must read the same owner availability and the same exact disabled reason; a surface that cannot read it renders the control disabled rather than optimistic.
+Source surfaces for this family: `artifact_details`, `composer`, `crew_modal`, `goal_activity`, `goal_hover`, `mode_menu`, `natural_language`, `plan_card`, `slash`, `targeted_composer`. `goal_activity` and `goal_hover` raise only `cmd.chat.plan.open_version` and `cmd.chat.plan.request_revision`. Every named surface must read the same owner availability and the same exact disabled reason; a surface that cannot read it renders the control disabled rather than optimistic.
 
 ### To-Do Runtime
 
@@ -14631,7 +14632,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-484, ContractName:P
 
 ## 5.6 Pro Chat Round Command Census (2026-10-09)
 
-The 5.6 Pro chat round (DL-140 to DL-151, FinalGUISpec F3-584 to F3-597, F3-616, F3-617 and assistant-chat-design ACD-485) adds no command identity. Every control it adds, moves or retires is a row of this catalog, view state, draft state, a Settings write the Settings owner owns, or a concept demo. Each control's disposition and its surfaces:
+The 5.6 Pro chat round (DL-140 to DL-151, FinalGUISpec F3-584 to F3-597, F3-616, F3-617 and assistant-chat-design ACD-485) adds no command identity of its own. The one later addition is `cmd.chat.plan.open_version` for a bound Goal's Open exact Plan · Vn, which the owner decided on 2026-10-09 (DL-157, UCC-176). Every control it adds, moves or retires is a row of this catalog, view state, draft state, a Settings write the Settings owner owns, or a concept demo. Each control's disposition and its surfaces:
 
 | Control | Disposition | Surfaces |
 |---|---|---|
@@ -14641,6 +14642,7 @@ The 5.6 Pro chat round (DL-140 to DL-151, FinalGUISpec F3-584 to F3-597, F3-616,
 | Goal Activity Detail: Edit objective; Cancel edit; Objective history | View. Edit swaps in the objective editor; Objective history opens the revision list in place. | Goal Activity Detail |
 | Goal Activity Detail: Save | Command, `cmd.chat.goal.update` (unchanged) | Goal Activity Detail |
 | Goal: Revise Plan on a blocked bound Goal | Command, `cmd.chat.plan.request_revision` (unchanged) | Goal Activity Detail, `goal_hover` |
+| Goal: Open exact Plan · Vn on a bound Goal | Command, `cmd.chat.plan.open_version`, added by the owner's decision DL-157 (UCC-176). It opens that exact version's document and never Plan Details. | Goal Activity Detail (`goal_activity`), `goal_hover` |
 | Goal: View Goal, Details, Ask for a replacement | No producer. DL-147 retires them; `cmd.chat.goal.propose_update` keeps its agent-proposal producer. | — |
 | To-Do row select and expand; Close details | View | To-Dos Activity Detail |
 | To-Do: Open work | Command, `cmd.chat.todos.open_work`, from the selected item's detail only (DL-147) | `todo_activity` |
@@ -14666,12 +14668,14 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  The 5.6 Pro chat round adds no command identity. Send and Stop bind cmd.chat.send (delivery_mode queue while busy)
+  The 5.6 Pro chat round adds no command identity of its own; the owner's later decision DL-157 adds
+  cmd.chat.plan.open_version for a bound Goal's Open exact Plan · Vn (UCC-176). Send and Stop bind cmd.chat.send (delivery_mode queue while busy)
   or cmd.chat.stop, exactly one at a time, and a press with nothing to send, or on a full queue, dispatches nothing,
   the full queue showing queue_full. Goal: Pause, Resume and Cancel Goal keep their identities on the preview and the
   panel; the preview's Edit objective is cmd.chat.goal.open_editor from goal_hover only, while Edit, Cancel edit and
   Objective history inside Goal Activity Detail are view state; Save is cmd.chat.goal.update and Revise Plan
-  cmd.chat.plan.request_revision; View Goal, Details and Ask for a replacement have no producer, and
+  cmd.chat.plan.request_revision, and Open exact Plan · Vn on a bound Goal is cmd.chat.plan.open_version from
+  goal_activity and goal_hover, never cmd.chat.plan.open_details; View Goal, Details and Ask for a replacement have no producer, and
   cmd.chat.goal.propose_update keeps its agent-proposal producer. To-Dos: Open work is cmd.chat.todos.open_work from
   the selected detail only, and Start work and Run work have no producer. Every opener of a subagent's read-only live
   transcript (ACD-485) reuses cmd.agents.open_thread (UCC-129) with the child run's thread ref, never a chat-local
@@ -14687,7 +14691,8 @@ split_recommended: false
 depends_on: [UCC-129, UCC-168, UCC-170, ACD-485, F3-587, F3-593, F3-617]
 unblocks: [WM-073, WM-074, WM-075]
 acceptance_criteria:
-  - "No command identity is added for the round, and no chat-local subagent open command or alias exists."
+  - "No command identity is added for the round other than cmd.chat.plan.open_version (DL-157, UCC-176), and no chat-local subagent open command or alias exists."
+  - "A bound Goal's Open exact Plan · Vn dispatches cmd.chat.plan.open_version, never cmd.chat.plan.open_details."
   - "Every subagent opener named by ACD-485 dispatches cmd.agents.open_thread, and no Subagents preview row opens the live transcript."
   - "cmd.chat.goal.open_editor is raised from goal_hover only; Edit inside Goal Activity Detail dispatches nothing."
   - "cmd.chat.todos.open_work is raised from a To-Do's selected detail and never from a row."
@@ -14728,3 +14733,75 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-129, ContractName:Plans/UI_Command_Catalog.md#UCC-168, ContractName:Plans/assistant-chat-design.md#ACD-485, ContractName:Plans/FinalGUISpec.md#F3-593, ContractName:Plans/FinalGUISpec.md#F3-617
+
+## Open Exact Plan Version Command (2026-10-09)
+
+On a Goal bound to a Plan (FinalGUISpec F3-593), Open exact Plan · Vn had no command identity: `cmd.chat.plan.open_details` opens Plan Details, and no row opened a Plan's document. The owner decided on 2026-10-09 that it gets a new command (DL-157). The row is in the Assistant Plan Runtime table above; this unit records its contract and its producers.
+
+### UCC-176 - Open Exact Plan Version From A Bound Goal
+
+```yaml
+plan_unit_id: UCC-176
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.chat.plan.open_version (Open Plan Version, navigation_wrapper, owner Plans/Assistant_Plan_Runtime.md, request
+  AssistantPlanVersionRoute, result RouteResult, sole future target handlers::assistant_plan::plan_open_version) opens
+  the document of one exact Plan version in the editor. The request carries the assistant_plan_id, plan_version and
+  plan_hash of the Goal's GoalPlanBinding. While that version is still the Plan's version the route opens the Plan's
+  own tab, focusing it when it is already open (APR-014); once a later version exists it opens that version's retained
+  read-only document. It never opens Plan Details, never substitutes a newer version, and changes no Plan, run, Goal,
+  To-Do or artifact state. A version that is not retained, or whose hash no longer matches, returns a typed error and
+  opens nothing. Its producers are exactly a bound Goal's Open exact Plan · Vn in Goal Activity Detail (goal_activity)
+  and in the activity bar's Goal preview (goal_hover); a press from the preview closes the preview. Plan Details stays
+  cmd.chat.plan.open_details, which no Goal surface raises. The command emits no event (expected_event_types=[]).
+gui_related: true
+gui_classification_reason: "Gives the bound Goal's Open exact Plan · Vn control its own command, distinct from Plan Details."
+split_recommended: false
+depends_on: [DL-157, F3-593, APR-014]
+unblocks: [CS-088, WM-065, UIW-026]
+acceptance_criteria:
+  - "Open exact Plan · Vn on a bound Goal dispatches cmd.chat.plan.open_version with the binding's plan id, version and hash, from goal_activity and goal_hover only."
+  - "The route opens Vn's document: the Plan's own tab while Vn is current, otherwise Vn's retained read-only document; it never opens Plan Details or a newer version."
+  - "An unretained or hash-mismatched version returns a typed error and opens nothing."
+  - "No Goal surface raises cmd.chat.plan.open_details."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-plans-verify.py validate-ui-command-response
+risk_class: chat_command_catalog_gap
+reasoning_tier: high
+context_scope: goal_bound_plan_open_20261009
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/UI_Wiring_Rules.md
+node_compile_hint:
+  mode: chat_composer_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-157"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; data-action goal-open-plan-version)"
+preserved_exact_tokens:
+  - "cmd.chat.plan.open_version"
+  - "AssistantPlanVersionRoute"
+  - "handlers::assistant_plan::plan_open_version"
+  - "Open exact Plan · Vn"
+  - "goal_activity"
+  - "goal_hover"
+negative_constraints:
+  - "Do not bind Open exact Plan · Vn to cmd.chat.plan.open_details."
+  - "Do not open a newer Plan version in place of the bound one."
+  - "Do not add a chat-local alias for opening a Plan version."
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Assistant_Plan_Runtime.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-157, ContractName:Plans/FinalGUISpec.md#F3-593, ContractName:Plans/Assistant_Plan_Runtime.md#APR-014, ContractName:Plans/Commands_System.md#CS-088, ContractName:Plans/Wiring_Matrix.md#WM-065

@@ -35705,6 +35705,7 @@ acceptance_criteria:
   - "When Product Onboarding or Guided Tour is open, outside anchors cannot open or retain a tag, outside descriptions are temporarily removed from tooltip/accessibility semantics, and both bindings and semantics restore when the active overlay closes; tags inside the active overlay remain available."
   - "One bounded startup pass and incremental live binding preserve same-frame pointer/focus acknowledgement; exact old/current attribute reassertions schedule no tag work, while real attribute, character-data, insertion, removal, and subtree changes remain observable and auditable."
   - "A generated census fails on missing bindings, undocumented exemptions, duplicate keys, stale text, clipping, inaccessible disabled controls, or native-title-only behavior."
+  - "The controls inside an open assistant-chat activity bar domain preview that F3-590 lists are a documented exemption (DL-157): they open no tag, because a tag would replace the preview card, and the census counts them as exempt rather than as missing bindings."
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (separate 1600 ms pointer-residence, 1100 ms stationary-intent, 5 px radius, 1000 ms visual-focus dwell, immediate accessible-description binding, and 160 ms departure-grace fields are required for current acceptance)"
   - Concepts/pm7-tools/global_hover_tags_source.py authored guards
@@ -40654,15 +40655,29 @@ canonical_text: >-
   tags: a pointer opens one only after a deliberate dwell, long enough that passing between the composer and the bar
   opens none; keyboard focus on a domain opens its preview at once; moving to another domain while a preview is open
   switches at once; and a preview closes after the same short departure grace as a tag. The preview dwell the concept
-  measures is a lab value (ACD-474).
+  measures is a lab value (ACD-474). Previews are the one exception to the hover tag rule (owner decision of 2026-10-09,
+  DL-157): the chat shows one hover surface at a time, so a tag opened inside an open preview would replace the
+  preview card under the pointer, and no control inside an open activity bar domain preview opens a hover tag. Such a
+  control names itself by its visible text or accessible name, and a native title it carries there is the only
+  tooltip it has. As the 5.6 Pro concept draws them today: the Subagents preview's rows carry the native title Open
+  followed by the agent's name, the Artifacts preview's rows Open followed by the artifact's title, the Changes
+  preview's rows the file's path and its change summary, and the Crew preview's member rows, drawn while no Crew run
+  is live, the member's name; the Goal preview's controls (Pause or Resume, Edit, whose accessible name stays Edit
+  objective, Cancel Goal, Open exact Plan · Vn, Revise Plan and the Objective history disclosure), the To-Do
+  preview's rows and its more-items and blocked-count lines, a collaboration kind's run rows, a live Crew run's rows and every preview's
+  head carry neither a native title nor a tag. The exception covers only controls inside an open preview: the
+  activity bar's domain triggers, Activity Detail and every other chat surface keep the rule, so the Goal panel's Edit
+  objective and a To-Do row in Activity Detail keep their hover tags.
 gui_related: true
 gui_classification_reason: Defines how the assistant chat's icon controls name themselves and when its activity previews open.
 split_recommended: false
-depends_on: [DL-145, F3-523, ACD-474]
+depends_on: [DL-145, F3-523, ACD-474, DL-157]
 unblocks: []
 acceptance_criteria:
   - "No icon control in the assistant chat exposes its name only through a native title, and no chat tag opens before F3-523's thresholds."
   - "A pointer passing between the composer and the activity bar opens no preview; keyboard focus on a domain opens its preview at once."
+  - "No control inside an open activity bar domain preview opens a hover tag, and the preview stays open while the pointer rests on any of them (DL-157)."
+  - "Outside an open preview the hover tag rule holds unchanged: the Goal panel's Edit objective and a To-Do row in Activity Detail keep their hover tags."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -40685,8 +40700,10 @@ preserved_exact_tokens:
   - "PMHoverTag"
   - "native title"
   - "deliberate dwell"
+  - "Previews are the one exception"
 negative_constraints:
   - "Do not restate or change F3-523's thresholds in this unit."
+  - "Do not open a hover tag inside an open activity bar domain preview, and do not extend the preview exception to any other surface."
   - "Do not add a hand-off that opens a second tag faster than F3-523 allows."
   - "Do not open an activity preview for a pointer passing through."
 compatibility_only_notes: []
@@ -40696,7 +40713,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-145, ContractName:Plans/FinalGUISpec.md#F3-523, ContractName:Plans/assistant-chat-design.md#ACD-474
+ContractRef: ContractName:Plans/Decision_Log.md#DL-145, ContractName:Plans/FinalGUISpec.md#F3-523, ContractName:Plans/assistant-chat-design.md#ACD-474, ContractName:Plans/Decision_Log.md#DL-157
 
 ### F3-591 — Opening More Keeps The Message Chrome On Its Row
 
@@ -40829,7 +40846,10 @@ canonical_text: >-
   Goal (DL-147; behaviour GRS-055): Goal Activity Detail shows the objective, then one control row, Pause or Resume
   and Edit objective together at its start and Cancel Goal alone at the far edge in the danger tone, so the
   destructive action never sits in the safe group; a narrow panel may shorten Edit objective's visible label, never
-  its accessible name. A bound Goal adds the Plan row (Open exact Plan · Vn, and Revise Plan when blocked), and the
+  its accessible name. A bound Goal adds the Plan row (Open exact Plan · Vn, and Revise Plan when blocked; Open exact Plan · Vn is
+  cmd.chat.plan.open_version (DL-157), which opens that exact version's document, the Plan's own tab while Vn is still
+  its version and Vn's retained read-only document once a later version exists, and never Plan Details or a newer
+  version), and the
   footer is an Objective history disclosure with the revision count, which opens the revision list in place. Editing
   shows the text-only objective editor with Save and Cancel edit. There is no View Goal route to a separate Goal
   document and no Ask for a replacement control; a replacement the agent proposes after the user asks for one in the
@@ -40867,10 +40887,11 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the Goal, To-Dos and Subagents Activity Detail presentation and the subagent live transcript's look.
 split_recommended: false
-depends_on: [DL-147, GRS-055, TDR-007, TDR-011, ACD-485, ACD-469, ACD-473, F3-580, F3-585, DL-160]
+depends_on: [DL-147, GRS-055, TDR-007, TDR-011, ACD-485, ACD-469, ACD-473, F3-580, F3-585, DL-160, DL-157]
 unblocks: []
 acceptance_criteria:
   - "Goal Activity Detail renders one control row with Cancel Goal alone at the far edge and an Objective history footer; no View Goal route or Ask for a replacement control exists."
+  - "On a bound Goal, Open exact Plan · Vn in Goal Activity Detail and in the Goal preview opens Plan Vn's document through cmd.chat.plan.open_version, never Plan Details (DL-157)."
   - "Every To-Do row is one line with no button, shows an explicit assignment only when one exists, and Open work appears only in the selected detail."
   - "The To-Do navigation line holds the visible count and Expand all only, and no Last item control exists in the panel (DL-160)."
   - "A subagent's live transcript renders in the Turn Stage presentation with no composer, only Copy, More details and Expand or Collapse on messages, and each stretch of work as one collapsed row with a count."
@@ -40902,6 +40923,7 @@ preserved_exact_tokens:
   - "Read-only child thread"
   - "Step Rail"
 negative_constraints:
+  - "Do not bind Open exact Plan · Vn to Plan Details (cmd.chat.plan.open_details) or to a newer Plan version."
   - "Do not give a To-Do row a Start work, Run work or other mutation button."
   - "Do not drop a To-Do's explicit assignment from Activity Detail."
   - "Do not give the subagent live transcript a composer or a control that acts on the child or the parent thread."
@@ -40917,7 +40939,7 @@ owner_hints:
   - Plans/assistant-chat-design.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-147, ContractName:Plans/Goal_Runtime_System.md#GRS-055, ContractName:Plans/ToDo_Runtime.md#TDR-011, ContractName:Plans/assistant-chat-design.md#ACD-485, ContractName:Plans/FinalGUISpec.md#F3-580, ContractName:Plans/Decision_Log.md#DL-160
+ContractRef: ContractName:Plans/Decision_Log.md#DL-147, ContractName:Plans/Goal_Runtime_System.md#GRS-055, ContractName:Plans/ToDo_Runtime.md#TDR-011, ContractName:Plans/assistant-chat-design.md#ACD-485, ContractName:Plans/FinalGUISpec.md#F3-580, ContractName:Plans/Decision_Log.md#DL-160, ContractName:Plans/Decision_Log.md#DL-157
 
 ### F3-594 — Agents Are Puppets
 

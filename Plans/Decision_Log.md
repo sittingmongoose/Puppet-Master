@@ -3526,7 +3526,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-601, ContractName:Plans/Final
 - Build is a little taller than before (32 px, like every other button in the chat's cards). The card grows by a few pixels.
 - The scheduled-build line can take one more row on a wide card, because its detail now sits under the lead rather than beside it.
 
-**Options considered:** Keep the grey band, but stretch it to the card's edges with its own padding. Not chosen: no other chat card uses a band, and the wand modules' cards put their actions on the content edge. Put the step count at the right end of the button row. Not chosen: in Retro's wider type it wrapped at the card's usual width. The "Schedule ended" wording is the lead's ruling: Build already ends the schedule, and the old notice offered a version that did not exist. Jared may want to confirm it.
+**Options considered:** Keep the grey band, but stretch it to the card's edges with its own padding. Not chosen: no other chat card uses a band, and the wand modules' cards put their actions on the content edge. Put the step count at the right end of the button row. Not chosen: in Retro's wider type it wrapped at the card's usual width. The "Schedule ended" wording was first the lead's ruling: Build already ends the schedule, and the old notice offered a version that did not exist. Jared approved the wording on 2026-10-09 (DL-157).
 
 **What Jared asked (2026-10-09, relayed with his screenshot by the orchestrator thread):** that the Plan card's buttons, which did not line up well, be designed for the space in every theme. The record states his request in plain words rather than quoting it (decision card 2 of 2026-10-07, recorded in DL-145).
 
@@ -3624,6 +3624,38 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/Final
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md`, SHA-256 `4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06` (the owner request, verbatim, issue 2); the left-rail build's Jujutsu tab decision, revision 2 of 2026-10-09, folded with two reviews and summarised in this entry (not a repository file); the concept source `Concepts/leftrail-redesign/src/concepts/d/` from lane commits 8693996260 and 2f77b78710 (concept lineage only).
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-623, ContractName:Plans/FinalGUISpec.md#F3-624, ContractName:Plans/Source_Control_System.md#SCS-005, ContractName:Plans/Jujutsu_Integration.md#JJI-006, ContractName:Plans/FinalGUISpec.md#F3-529
+
+### DL-157: Three answers from Jared: the Schedule ended wording, a command to open the exact Plan, and previews keep their own labels
+
+**Question:** Three follow-ups to the 5.6 Pro chat round waited on Jared. Is the "Schedule ended" wording right? What should Open exact Plan · Vn on a Goal run, given that no command opened a Plan's document? And may the controls inside an activity preview keep their native labels, when the rule says every chat control names itself through the app's hover tag?
+
+**Why it came up:** The Plan card thread chose the "Schedule ended" wording itself and recorded it as the lead's ruling, pending Jared (DL-156). The Plans audit of the round found the other two. A Goal that is bound to a Plan shows Open exact Plan · Vn, but no command opens a Plan's document: the concept ran Plan Details' opener for it, which opens the Plan's current version rather than Vn. F3-590 and UIW-013 said a chat control never uses a native title, yet inside an open activity preview the concept's rows keep native titles or have no label, because the chat shows one hover surface at a time and a hover tag there would replace the preview card under the pointer.
+
+**What you get:**
+- After you press Build on a Plan that had a schedule, the line reads "Schedule ended · you started this build now, so the schedule won't start a second one." This is now your decision, not the lead's.
+- Open exact Plan · Vn on a bound Goal, in the Goal panel and in the Goal preview, opens that version of the Plan: the Plan's own tab while Vn is still its version, or Vn's saved read-only copy once a newer version exists. It never opens Plan Details and never jumps to a newer version. Opening it from the preview closes the preview.
+- Inside an open activity preview, nothing opens a hover tag. The Subagents, Artifacts and Changes rows keep their native titles ("Open" with the agent's or artifact's name, or the file's path and change summary), and so do the Crew member rows shown before a Crew run starts. The Goal preview's buttons (Edit included), the To-Do rows and the collaboration run rows have no label beyond their own text. Everywhere else in the chat, the hover-tag rule is unchanged.
+
+**What it costs:**
+- One more command and one more wiring row to build: `cmd.chat.plan.open_version`.
+- A preview row's native title looks like the system's tooltip, not the app's.
+
+**Options considered:** For the Plan control, reusing Plan Details' command (refused: Details is a different view and would not show Vn's document), or a Goal-owned opener (refused: opening a Plan document belongs to the Plan's owner, beside its other commands). For the previews, giving the rows hover tags (refused: a tag replaces the preview card) or removing their titles (not asked).
+
+**What the owner decided** (in plain words):
+- 2026-10-09: the "Schedule ended" wording is approved.
+- 2026-10-09: Open exact Plan · Vn gets a new command ("Get a new command"). Its name and form follow the Plan commands beside it, an agent choice under that answer.
+- 2026-10-09: previews are an exception to the hover-tag rule ("Previews as exception"). The list of controls it covers describes the concept as it is today.
+
+**What the spec now says:**
+1. **Schedule ended** (`Plans/Scheduling_and_Quota_Resume.md#SQR-015`, amended; DL-156 notes the approval).
+2. **The new command** `cmd.chat.plan.open_version`, a navigation_wrapper owned by `Plans/Assistant_Plan_Runtime.md` with handler `handlers::assistant_plan::plan_open_version` and request `AssistantPlanVersionRoute` returning `RouteResult` (`Plans/UI_Command_Catalog.md#UCC-176`, `Plans/Commands_System.md#CS-088`, `Plans/Wiring_Matrix.md#WM-065` and the production entry `assistant.redesign.cmd.chat_plan_open_version`, `Plans/UI_Wiring_Rules.md#UIW-026`). The Goal panel's Plan row uses it (`Plans/FinalGUISpec.md#F3-593`); UCC-188 and CS-093 note it as the one command added after the round.
+3. **Previews as the exception** (`Plans/FinalGUISpec.md#F3-590`, `Plans/UI_Wiring_Rules.md#UIW-013`, and F3-523's census, which counts them as documented exemptions).
+4. **Unchanged:** `cmd.chat.plan.open_details` and its wiring row, every other hover tag, and every setting.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/JARED_DECISIONS.md`, SHA-256 `4a23e31ad4aa68385092c9f16132cf765c59f9da1d890dfdab1f8c33ac8b3208` (the three answers as relayed); `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/preview-title-census.json`, SHA-256 `c05c8ca808724193643af423b228fdeb9d6df7800940d7f47d1ab07b041d9048` (the native titles and hover tags inside each open preview, and the new route's checks, on GPU Chrome; the Crew preview was read from source because the fixture has no Crew).
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-015, ContractName:Plans/UI_Command_Catalog.md#UCC-176, ContractName:Plans/Commands_System.md#CS-088, ContractName:Plans/Wiring_Matrix.md#WM-065, ContractName:Plans/UI_Wiring_Rules.md#UIW-026, ContractName:Plans/FinalGUISpec.md#F3-593, ContractName:Plans/FinalGUISpec.md#F3-590, ContractName:Plans/UI_Wiring_Rules.md#UIW-013
 
 ## Owner / Consumer Map
 
@@ -12278,8 +12310,8 @@ canonical_text: >-
   even gaps, Build as a boxed primary (DR-047). The transcript card has no tinted footer band: one hairline opens a
   status zone of the schedule line, the step count and the action row on the card's content edge (F3-606). The
   schedule line reads in rows, its decision controls on a row of their own (F3-607). Disabled Build labels keep full
-  contrast. By the lead's ruling, a schedule that Build or an ended run invalidated, with no newer version, reads
-  Schedule ended and offers no Use V<n> (SQR-015). No command, action id, wiring, setting or label is added or
+  contrast. A schedule that Build or an ended run invalidated, with no newer version, reads Schedule ended and offers
+  no Use V<n> (SQR-015); first the lead's ruling, its wording was approved by the owner on 2026-10-09 (DL-157). No command, action id, wiring, setting or label is added or
   removed. The record states the request in plain words, without quoting him.
 gui_related: true
 gui_classification_reason: Records an owner decision on the Plan card's action row and schedule line layout.
@@ -12501,6 +12533,74 @@ owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Jujutsu_Integration.md
   - Plans/Source_Control_System.md
+```
+
+### DL-157 - The Schedule Ended Wording, A Command To Open The Exact Plan, And Previews As The Hover Tag Exception
+
+```yaml
+plan_unit_id: DL-157
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-157 records three owner decisions of 2026-10-09. First, the Schedule ended wording is approved: after Build on a
+  scheduled Plan the schedule line reads Schedule ended · you started this build now, so the schedule won't start a
+  second one. (SQR-015), which DL-156 had recorded as the lead's ruling. Second, a bound Goal's Open exact Plan · Vn
+  gets a new command, cmd.chat.plan.open_version (navigation_wrapper, owner Assistant_Plan_Runtime, handler
+  handlers::assistant_plan::plan_open_version, AssistantPlanVersionRoute -> RouteResult), raised from goal_activity
+  and goal_hover; it opens Plan Vn's document, the Plan's own tab while Vn is current and Vn's retained read-only
+  document otherwise, and never Plan Details or a newer version (UCC-176, CS-088, WM-065, UIW-026, F3-593). Third,
+  activity bar domain previews are the one exception to the hover tag rule: no control inside an open preview opens
+  a hover tag, since a tag would replace the preview card, and the controls F3-590 lists keep a native title or none
+  (F3-590, UIW-013). The record states the decisions in plain words, quoting only his short answers.
+gui_related: true
+gui_classification_reason: Records owner decisions on the schedule line's wording, the bound Goal's Plan opener and the preview hover exception.
+split_recommended: false
+depends_on: [DL-145, DL-147]
+unblocks: [SQR-015, UCC-176, CS-088, WM-065, UIW-026, F3-593, F3-590, UIW-013]
+acceptance_criteria:
+  - "SQR-015 and DL-156 state the Schedule ended wording as the owner's approved decision of 2026-10-09."
+  - "Open exact Plan · Vn is cmd.chat.plan.open_version in the catalog, Commands_System and the production wiring, and F3-593 binds it; it never opens Plan Details."
+  - "F3-590 and UIW-013 state the preview exception and list the controls it covers; no other surface is exempted."
+  - "The decisions are recorded with their date, 2026-10-09, and the source is cited by path and SHA-256."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: owner_decision_drift
+reasoning_tier: high
+context_scope: c56_owner_decisions_20261009
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/UI_Wiring_Rules.md
+  - Plans/FinalGUISpec.md
+  - Concepts/chat-assistant-concepts/5.6 Pro/goals.js
+  - Concepts/chat-assistant-concepts/5.6 Pro/plans.js
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/JARED_DECISIONS.md, SHA-256 4a23e31ad4aa68385092c9f16132cf765c59f9da1d890dfdab1f8c33ac8b3208"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/preview-title-census.json, SHA-256 c05c8ca808724193643af423b228fdeb9d6df7800940d7f47d1ab07b041d9048"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-157"
+  - "Schedule ended"
+  - "cmd.chat.plan.open_version"
+  - "Previews as exception"
+negative_constraints:
+  - "Do not bind Open exact Plan · Vn to Plan Details."
+  - "Do not extend the preview exception beyond controls inside an open activity bar domain preview."
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/FinalGUISpec.md
 ```
 
 ## Migration Coverage

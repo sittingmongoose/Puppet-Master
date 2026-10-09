@@ -5925,6 +5925,7 @@ This addendum records the central command-contract registration for the approved
 | `cmd.chat.plan.export` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_export` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanExportRequest` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/ArtifactExportResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.chat.plan.send_to_planning_wizard` | `Plans/Planning_Wizard.md` | `handlers::planning_wizard::assistant_plan_intake` | `Plans/planning_wizard_contracts.schema.json#/$defs/AssistantPlanHandoffRequest` -> `Plans/planning_wizard_contracts.schema.json#/$defs/PlanningWizardIntakeResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.chat.plan.open_details` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_open_details` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanRoute` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.chat.plan.open_version` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_open_version` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanVersionRoute` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
 | `cmd.chat.todos.open` | `Plans/ToDo_Runtime.md` | `handlers::todo_runtime::todos_open` | `Plans/todo_runtime_contracts.schema.json#/$defs/TodoRoute` -> `Plans/todo_runtime_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
 | `cmd.chat.todos.toggle_parent` | `Plans/ToDo_Runtime.md` | `handlers::todo_runtime::todos_toggle_parent` | `Plans/todo_runtime_contracts.schema.json#/$defs/TodoViewRequest` -> `Plans/todo_runtime_contracts.schema.json#/$defs/TodoViewResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
 | `cmd.chat.todos.open_work` | `Plans/ToDo_Runtime.md` | `handlers::todo_runtime::todos_open_work` | `Plans/todo_runtime_contracts.schema.json#/$defs/TodoWorkRoute` -> `Plans/todo_runtime_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
@@ -7450,12 +7451,12 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-174, ContractName:Plan
 
 ## 5.6 Pro Chat Round Controls That Are Not Commands (2026-10-09)
 
-The 5.6 Pro chat round (DL-140 to DL-151) adds no command identity (UI_Command_Catalog UCC-188). This unit records, for this owner, which of its controls are not commands, and the one reuse that replaces a would-be alias, so that no port mints a command for them.
+The 5.6 Pro chat round (DL-140 to DL-151) adds no command identity of its own (UI_Command_Catalog UCC-188); the owner's later decision DL-157 adds `cmd.chat.plan.open_version` for a bound Goal's Open exact Plan · Vn (CS-088). This unit records, for this owner, which of its controls are not commands, and the one reuse that replaces a would-be alias, so that no port mints a command for them.
 
 ### CS-093 - 5.6 Pro Chat Round Non-Command Controls And The Subagent Open Reuse
 
 **View state (`LOCAL_PRESENTATION`): no command, no event, no catalog row.**
-- In Goal Activity Detail: Edit objective, which only swaps in the objective editor, Cancel edit, and the Objective history disclosure. The Goal preview's Edit objective is `cmd.chat.goal.open_editor`.
+- In Goal Activity Detail: Edit objective, which only swaps in the objective editor, Cancel edit, and the Objective history disclosure. The Goal preview's Edit objective is `cmd.chat.goal.open_editor`. A bound Goal's Open exact Plan · Vn is `cmd.chat.plan.open_version` (CS-088), not view state.
 - A To-Do row's selection and expansion, and Close details.
 - Activity Detail's domain tabs, including their icon-only fit (FinalGUISpec F3-616).
 - In a subagent's read-only live transcript: a stretch row's toggle, Expand or Collapse, and More details. Its Copy is `cmd.chat.copy_message`.
@@ -7522,3 +7523,63 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-188, ContractName:Plans/UI_Command_Catalog.md#UCC-129, ContractName:Plans/Commands_System.md#CDRY-021, ContractName:Plans/assistant-chat-design.md#ACD-485
+
+## Open Exact Plan Version Command Record (2026-10-09)
+
+The owner's decision DL-157 gives a bound Goal's Open exact Plan · Vn a command of its own. Its central contract record is in the table of central command contract records above; this unit states its boundary for this owner.
+
+### CS-088 - cmd.chat.plan.open_version Opens One Exact Plan Version's Document
+
+```yaml
+plan_unit_id: CS-088
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  cmd.chat.plan.open_version is registered as a navigation_wrapper owned by Plans/Assistant_Plan_Runtime.md, with the
+  sole future handler handlers::assistant_plan::plan_open_version and the typed pair AssistantPlanVersionRoute ->
+  RouteResult in Plans/assistant_plan_runtime_contracts.schema.json, the same pending owner schema as its neighbour
+  cmd.chat.plan.open_details. It keeps handler_unavailable until native evidence exists and expected_event_types=[]:
+  opening a version's document is a route, never a Plan, run, Goal, To-Do or artifact mutation. Its source surfaces
+  are goal_activity and goal_hover, the bound Goal's Open exact Plan · Vn (UCC-176). It is not an alias of
+  cmd.chat.plan.open_details, which opens Plan Details, and no chat-local or Goal-owned peer command for opening a
+  Plan version exists. The concept's goal-open-plan-version action name is concept lineage under CS-079, not a
+  command identity.
+gui_related: true
+gui_classification_reason: "Registers the bound Goal's exact-Plan opener as its own command record."
+split_recommended: false
+depends_on: [UCC-176, DL-157, CS-079]
+unblocks: [WM-065]
+acceptance_criteria:
+  - "The central contract records hold exactly one row for cmd.chat.plan.open_version, naming handlers::assistant_plan::plan_open_version and AssistantPlanVersionRoute -> RouteResult."
+  - "cmd.chat.plan.open_version keeps handler_unavailable and expected_event_types=[]."
+  - "No alias or peer command opens a Plan version from a Goal surface."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-ui-command-response
+risk_class: invented_command_identity
+reasoning_tier: medium
+context_scope: goal_bound_plan_open_20261009
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: static_command_disposition_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-157"
+  - "Plans/UI_Command_Catalog.md#UCC-176"
+preserved_exact_tokens:
+  - "cmd.chat.plan.open_version"
+  - "handlers::assistant_plan::plan_open_version"
+  - "AssistantPlanVersionRoute"
+negative_constraints:
+  - "Do not register cmd.chat.plan.open_version as an alias of cmd.chat.plan.open_details."
+  - "Do not register the concept action goal-open-plan-version as a command identity."
+owner_hints:
+  - Plans/Commands_System.md
+```
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-176, ContractName:Plans/Decision_Log.md#DL-157, ContractName:Plans/Commands_System.md#CS-079, ContractName:Plans/Assistant_Plan_Runtime.md

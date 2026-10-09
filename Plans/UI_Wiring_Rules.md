@@ -873,7 +873,7 @@ owner_hints:
 
 Every actionable or focusable control on a touched surface carries exactly one canonical `data-command-id` or typed local `data-ui-action-id`. It also exposes current availability, a machine-readable disabled reason when unavailable, one owner/handler destination, and a deterministic result/error/return route. A command-required control cannot degrade into page-local mutation. A presentation-only control cannot manufacture a domain command. PMConcept7 controls remain simulation-marked until the native dispatcher and owner handler are observed.
 
-`PMHoverTag`/`HoverTagController` is one shared Final GUI overlay consumer. It binds actionable/focusable elements, truncated values, technical identifiers, statuses, badges, chart marks, disabled controls, and dynamic pin/unpin state; static body copy and purely decorative nodes are the default exemptions. It preserves the accessible name, supplies stable `aria-describedby` text and `role="tooltip"`, replaces user-facing native `title`, and makes disabled controls keyboard-reachable without allowing activation. `general.interaction.show-tooltips` hides visual paint only; accessibility descriptions remain. Positioning centers above, flips below, clamps to the viewport, and uses the shared overlay root without changing document layout.
+`PMHoverTag`/`HoverTagController` is one shared Final GUI overlay consumer. It binds actionable/focusable elements, truncated values, technical identifiers, statuses, badges, chart marks, disabled controls, and dynamic pin/unpin state; static body copy and purely decorative nodes are the default exemptions. It preserves the accessible name, supplies stable `aria-describedby` text and `role="tooltip"`, replaces user-facing native `title`, and makes disabled controls keyboard-reachable without allowing activation. One exception is documented (DL-157, FinalGUISpec F3-590): inside an open assistant-chat activity bar domain preview, which is itself a hover surface, a control opens no hover tag, because the chat shows one hover surface at a time and a tag would replace the preview card under the pointer; such a control names itself by its visible text or accessible name, and a native `title` it carries there is the only tooltip it has. F3-590 lists the controls this covers. `general.interaction.show-tooltips` hides visual paint only; accessibility descriptions remain. Positioning centers above, flips below, clamps to the viewport, and uses the shared overlay root without changing document layout.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/touch_closure.json, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.production.json
 
@@ -884,11 +884,11 @@ plan_unit_id: UIW-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
-canonical_text: Every touched actionable or focusable control has exactly one canonical command ID or typed local UI action, one availability and disabled-reason contract, one owner route, one tested response and exact return, and a Touch Closure reverse-consumer row. The shared PMHoverTag overlay supplies stable accessible descriptions and theme-native pointer/focus presentation without changing accessible names, enabling disabled actions, dispatching domain work, or changing layout. Native title-only behavior, orphan controls, duplicate keys, missing bindings, inaccessible disabled controls, clipping, stale text, and undocumented exemptions fail the generated census.
+canonical_text: Every touched actionable or focusable control has exactly one canonical command ID or typed local UI action, one availability and disabled-reason contract, one owner route, one tested response and exact return, and a Touch Closure reverse-consumer row. The shared PMHoverTag overlay supplies stable accessible descriptions and theme-native pointer/focus presentation without changing accessible names, enabling disabled actions, dispatching domain work, or changing layout. Native title-only behavior, orphan controls, duplicate keys, missing bindings, inaccessible disabled controls, clipping, stale text, and undocumented exemptions fail the generated census. One exemption is documented (DL-157, F3-590). A control inside an open assistant-chat activity bar domain preview opens no hover tag, since a tag would replace the preview card, and keeps its visible text or accessible name, with a native title where F3-590 lists one; the census counts these as documented exemptions, not missing bindings.
 gui_related: true
 gui_classification_reason: Defines visible control activation, disabled behavior, hover tags, keyboard access, and exact return.
 split_recommended: false
-depends_on: [UIW-012, DR-040, F3-523]
+depends_on: [UIW-012, DR-040, F3-523, F3-590, DL-157]
 unblocks: [WM-046]
 acceptance_criteria:
   - Every touched control has exactly one command or typed local action and one owner route or explicit view-only presentation disposition.
@@ -896,6 +896,7 @@ acceptance_criteria:
   - Disabled controls expose a stable reason, remain accessible to focus/description, and cannot activate.
   - Pointer and keyboard-focus hover opening, Escape, 160 ms departure grace, edge flip/clamp, theme changes, glass transparency, Retro 140 ms, standard 240 ms, and reduced-motion immediate behavior are tested.
   - A generated census rejects missing bindings, duplicate keys, stale text, native-title-only behavior, clipping, inaccessible disabled controls, and undocumented exemptions.
+  - The census treats the controls inside an open activity bar domain preview that F3-590 lists as documented exemptions (DL-157) and still fails a hover tag on any of them.
   - PMConcept7 remains simulation-only until native dispatcher and handler evidence exists.
 validation_surfaces:
   - node Concepts/pm7-tools/verify/hover_tags.mjs
@@ -911,7 +912,7 @@ source_lineage:
   - approved Parallel Canon, Settings, and PMConcept7 Integration Plan
 preserved_exact_tokens: [PMHoverTag, HoverTagController, aria-describedby, role=tooltip, general.interaction.show-tooltips]
 negative_constraints:
-  - Do not rely on native title as the user-facing tooltip.
+  - Do not rely on native title as the user-facing tooltip, except for the controls inside an open activity bar domain preview that F3-590 lists (DL-157).
   - Do not enable a disabled control merely to make it focusable.
   - Do not create commands for hover open, close, positioning, or paint.
   - Do not claim native accessibility or Slint runtime proof from browser checks.
@@ -1995,3 +1996,57 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-485, ContractName:Plans/UI_Wiring_Rules.md#UIW-024, ContractName:Plans/UI_Command_Catalog.md#UCC-188
+
+### UIW-026 - An Exact-Version Opener Opens That Version's Document
+
+A control that names an exact version of a document opens that version, not a details view of it and not whatever version is newest. The first such control with its own command is a bound Goal's Open exact Plan · Vn (DL-157, UI_Command_Catalog UCC-176).
+
+```yaml
+plan_unit_id: UIW-026
+unit_type: wiring_rule
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: >-
+  A control whose label names an exact document version (Open exact Plan · Vn on a bound Goal, F3-593) binds the
+  command that opens that version's document, cmd.chat.plan.open_version, and never a details or lineage route such as
+  cmd.chat.plan.open_details. It dispatches the exact identity it shows (assistant_plan_id, plan_version and plan_hash
+  from the GoalPlanBinding), never a "current" alias resolved at press time. The route opens the Plan's own tab while
+  that version is the Plan's version and the version's retained read-only document once a later version exists; it
+  never substitutes a newer version, and a version that cannot be resolved opens nothing and states why. The label's
+  version and the dispatched version are the same value, so a control drawn for Vn cannot open another version.
+gui_related: true
+gui_classification_reason: "Keeps a version-exact opener bound to the version it names and to the document, not its details."
+split_recommended: false
+depends_on: [UCC-176, UIW-013, DL-157]
+unblocks: [WM-065]
+acceptance_criteria:
+  - "Open exact Plan · Vn dispatches cmd.chat.plan.open_version with the plan_version shown in its label, never cmd.chat.plan.open_details."
+  - "With a later Plan version present, the control still opens Vn's retained document."
+  - "An unresolvable version opens nothing and shows its reason."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: version_exact_opener_drift
+reasoning_tier: medium
+context_scope: goal_bound_plan_open_20261009
+implementation_surfaces:
+  - Plans/UI_Wiring_Rules.md
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: wiring_rule
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-157"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "cmd.chat.plan.open_version"
+  - "Open exact Plan · Vn"
+negative_constraints:
+  - "Do not bind a version-exact opener to a details or lineage route."
+  - "Do not resolve a version-exact opener to the newest version at press time."
+owner_hints:
+  - Plans/UI_Wiring_Rules.md
+```
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-176, ContractName:Plans/UI_Wiring_Rules.md#UIW-013, ContractName:Plans/Decision_Log.md#DL-157
