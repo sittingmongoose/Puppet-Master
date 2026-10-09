@@ -674,16 +674,25 @@
      No line: the callout slices open as usual; no Pod: the corner Pod flies in as usual once the callout stands. */
   let hand = null;
   /* an app hover tag already open (the pointer still on Take the Guided Tour, or later on Restore) must not draw over
-     the hand-over line or the results card. The CSS hides the root while html carries the attribute; this closes the
-     tag so it does not pop back open the moment the attribute goes. */
+     the hand-over line or the results card. The root is taken out of the page by its own class: one small element, so
+     the click's restyle stays local (an attribute on html restyled the whole document inside the click). Two holds
+     share the class, one for the hand-over and one for the card, so the tour closing beneath the card (handGuard
+     off) does not give tags back while the card still shows. dismissHover closes a tag that is already open, so it
+     does not pop back the moment the class goes. */
+  const NOTAGS = 'o55t-notags';
+  let tagsHand = false, tagsCard = false;
+  function hoverTags() {
+    const r = document.getElementById('pm-hover-tag-root');
+    if (r) r.classList.toggle(NOTAGS, tagsHand || tagsCard);
+  }
   function dismissHover() {
     try { const c = window.PM_HOVER_TAG_CONTROLLER; if (c && typeof c.close === 'function') c.close(true); } catch (_) {}
     const tag = document.getElementById('pm-hover-tag-visual') || document.querySelector('#pm-hover-tag-root .pm-hover-tag');
     if (tag && tag.getAttribute('data-open') === 'true') { tag.setAttribute('data-open', 'false'); tag.hidden = true; }
   }
   function handGuard(on) {
-    if (on) { html.setAttribute('data-o55nw-hand', ''); dismissHover(); }
-    else html.removeAttribute('data-o55nw-hand');
+    tagsHand = !!on; hoverTags();
+    if (on) dismissHover();
   }
   TR.on('start', (d) => {
     const fx = FX(), root = st.root;
@@ -797,7 +806,7 @@
     if (f.card) f.card.remove();
     if (f.fly) f.fly.remove();
     const fx = FX(); if (f.line && fx) fx.lineDrop(f.line);
-    html.removeAttribute(RESULTS);
+    html.removeAttribute(RESULTS); tagsCard = false; hoverTags();
     const cp = cornerPod(); if (cp) cp.removeAttribute(AWAY);
     if (st.root) st.root.classList.remove('o55t-nfin', 'o55t-ngone');
   }
@@ -819,7 +828,7 @@
     f.rows = stats(f.keep);
     f.at = c ? c.getBoundingClientRect() : null;
     html.setAttribute(RESULTS, '');
-    dismissHover();
+    tagsCard = true; hoverTags(); dismissHover();
     const cp = cornerPod(); if (cp) cp.setAttribute(AWAY, '');
     cursorOff();
     /* the callout folds to its line at once (no ghost); everything else of the tour steps back in two held steps */
@@ -908,7 +917,7 @@
       if (note && note.isConnected) await fx.lineTo(line, note, { edge: 'top', ms: 280 });
       else { fx.lineDrop(line); line = null; }
     }
-    if (fin === f) { fin = null; html.removeAttribute(RESULTS); }
+    if (fin === f) { fin = null; html.removeAttribute(RESULTS); tagsCard = false; hoverTags(); }
     return line;
   }
 
