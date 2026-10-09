@@ -1,0 +1,44 @@
+{
+  "frozen_at": "2026-10-09T18:28:01.079824+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S03/brief.md",
+      "sha256": "2a61c01e944a06f96cfb299eaa2cc94b7ec5cf31349d35f45c8902bc228c327e",
+      "bytes": 1436
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M09.json",
+      "sha256": "851380dfcd3ceeb7d52fdff86b0d28539c7032c79adaa40352229b0e76cce860",
+      "bytes": 1338
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/assignment.md",
+      "sha256": "7d6221a18374869de392ccaa5e1a1b8e7a14dd6b93dfd82a10776c37efef1a9c",
+      "bytes": 3418
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M09-B/treatment/research/input-map.json",
+      "sha256": "d871fab9e10c9050593586834b9e43c7366fe9c2e556c887ae8a9e29a182d7aa",
+      "bytes": 639
+    }
+  ],
+  "method": {
+    "id": "M09",
+    "version": "v1",
+    "name": "analogical-outline-interviews",
+    "control": "Competent conventional brief-led investigator follows useful leads and prepares cited discovery then plan-comparison draft.",
+    "treatment": "Retrieve TWO analogous real workflows/product feature taxonomies, derive FOUR distinct inquiry lenses including original user obligations. Conduct grounded answer-conditioned follow-up inquiry in each lens: each later question must use the preceding sourced answer, with irrelevant analogy categories explicitly rejected. One investigator context, same tools/time; no added scouts or search cap. Map obligations and discovered alternatives to lens/evidence; ordinary full criticism and revision follow.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Fresh externally researched STORM",
+    "primary_methodology": "https://arxiv.org/abs/2402.14207v2",
+    "novelty": "Query-generation state transitions from analogy-derived lenses + source-conditioned interviews, rather than parallel scout roles/shared flat inventory.",
+    "adaptation_limit": "Paper/implementation mechanisms motivate the intervention; published benchmark gains are NOT ER11 evidence.",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T18:58:01.079824+00:00"
+}

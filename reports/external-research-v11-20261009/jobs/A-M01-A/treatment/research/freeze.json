@@ -1,0 +1,41 @@
+{
+  "frozen_at": "2026-10-09T18:24:42.637651+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S01/brief.md",
+      "sha256": "1cc2f8f9f6ae1205f1f6152fa412d4b1afb153e1a3bb026def3dd25efaa1484d",
+      "bytes": 1479
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M01.json",
+      "sha256": "de4f753f52f16abcde4317adc89dbda6404c5c0314c6281a77a54fe98e27c4e6",
+      "bytes": 683
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/treatment/research/assignment.md",
+      "sha256": "4ed2a97e201ce73e42bf5c9dce95450a147124968fa3c750e8f7027b43fab1a7",
+      "bytes": 3055
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/treatment/research/input-map.json",
+      "sha256": "41ac156cff564c09b9236d5437c2d0f14bffc43925c94dee5a9e35c9ea581c33",
+      "bytes": 640
+    }
+  ],
+  "method": {
+    "id": "M01",
+    "version": "v1",
+    "name": "coherent-batching",
+    "control": "Two competent related-question investigators may run in parallel; each investigates a complementary half, including cross-conditions. Critic and finalizer join both.",
+    "treatment": "One investigator researches related questions together, maintains per-question plus shared governing-condition map. Same critic/reviser and full scope.",
+    "evidence_kind": "full-discovery",
+    "lineage": "ER10 D-M02-B hypothesis; competent control parallelism retained",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T18:54:42.637651+00:00"
+}

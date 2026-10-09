@@ -1,0 +1,322 @@
+{
+  "block": "A-M11-B",
+  "arm": "treatment",
+  "case": "S05",
+  "method": "M11",
+  "stage": "critic",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic",
+  "recorded_at_utc": "2026-10-09T18:48:18Z",
+  "timestamp_note": "C01-C17 were reopened together in the final read-only source-inspection batch recorded at 2026-10-09T18:48:18Z; C18-C19 official documentation was inspected in a later read-only batch recorded at 2026-10-09T18:51:04Z. Paired additional_urls are the corresponding official index/faceting reference pages inspected in those batches.",
+  "source_records": [
+    {
+      "source_id": "C01",
+      "title": "Reconciliation API | OpenRefine",
+      "url": "https://openrefine.org/docs/technical-reference/reconciliation-api",
+      "version_or_revision": "Live documentation, updated 2026-06-06; API v0.2 current stable, supported since OpenRefine 3.3",
+      "commit": null,
+      "locator": "API versions and matching inputs, lines 31-58",
+      "accessed_at_utc": "2026-10-09T18:48:18Z",
+      "observed_operations": [
+        "Opened the exact public primary URL read-only in the web tool and inspected the indicated lines.",
+        "Did not call a reconciliation service, authenticate, download software, or execute product code."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/01-search-and-enrichment.md#c01",
+      "observation_summary": "v0.2 is the current stable protocol supported by OpenRefine; services accept a label and optional service-defined type/property details and resolve within one identifier space."
+    },
+    {
+      "source_id": "C02",
+      "title": "Reconciling | OpenRefine",
+      "url": "https://openrefine.org/docs/manual/reconciling",
+      "version_or_revision": "Live manual page; no product version pinned",
+      "commit": null,
+      "locator": "Overview, service behavior, batch/performance notes, decisions and cell preservation, lines 23-80 and 97-110",
+      "accessed_at_utc": "2026-10-09T18:48:18Z",
+      "observed_operations": [
+        "Opened the exact public primary URL read-only in the web tool and inspected the indicated lines.",
+        "Did not call a reconciliation service, authenticate, download software, or execute product code."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/01-search-and-enrichment.md#c02",
+      "observation_summary": "Matching is semi-automated; service score semantics differ; ambiguous candidates need review; large runs may be slow and have no reconciliation-operation throttle."
+    },
+    {
+      "source_id": "C03",
+      "title": "Meilisearch v1.6",
+      "url": "https://www.meilisearch.com/blog/meilisearch-1-6",
+      "version_or_revision": "Versioned release article dated 2024-01-16; v1.6",
+      "commit": null,
+      "locator": "Hybrid search, embedder options, documentTemplate, semanticRatio and status history, lines 25-55 and hybrid-query section",
+      "accessed_at_utc": "2026-10-09T18:48:18Z",
+      "observed_operations": [
+        "Opened the exact public vendor release URL read-only in the web tool and inspected the indicated sections.",
+        "Did not call a product API, authenticate, download software, or execute product code."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/01-search-and-enrichment.md#c03",
+      "observation_summary": "v1.6 documents semanticRatio 0–1/default 0.5; the article says hybrid became generally available and the experimental toggle was removed in v1.13."
+    },
+    {
+      "source_id": "C04",
+      "title": "Getting started with AI-powered search | Meilisearch documentation",
+      "url": "https://github.com/meilisearch/documentation/blob/main/capabilities/hybrid_search/getting_started.mdx",
+      "version_or_revision": "Mutable main branch documentation; no commit pinned; inspected 2026-10-09",
+      "commit": null,
+      "locator": "Embedder/provider, template, batch/cache and rankingScoreThreshold sections, lines 198-296",
+      "accessed_at_utc": "2026-10-09T18:48:18Z",
+      "observed_operations": [
+        "Opened the exact public documentation URL read-only in the web tool and inspected the indicated lines.",
+        "Did not call a product API or provider, authenticate, download software, or execute product code."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/01-search-and-enrichment.md#c04",
+      "observation_summary": "Templates select embedding fields; the example batches/caches provider embeddings; the guide gives a 0–1 rankingScoreThreshold and recommends tuning around 0.5 on local data."
+    },
+    {
+      "source_id": "C05",
+      "title": "How to implement RBAC with Meilisearch",
+      "url": "https://www.meilisearch.com/blog/role-based-access-guide",
+      "version_or_revision": "Live vendor guide; no engine version or commit pinned",
+      "commit": null,
+      "locator": "Tenant token/filter behavior and permission changes, lines 64-91",
+      "accessed_at_utc": "2026-10-09T18:48:18Z",
+      "observed_operations": [
+        "Opened the exact public vendor guide read-only in the web tool and inspected the indicated lines.",
+        "Did not call a product API, authenticate, download software, or execute product code."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/01-search-and-enrichment.md#c05",
+      "observation_summary": "Signed tenant filters constrain search; document-stored permission changes require reindexing; a separate access-control index is suggested for frequent changes."
+    },
+    {
+      "source_id": "C06",
+      "title": "Adding a null-valued attribute to searchableAttributes changes _rankingScore in hybrid search | Meilisearch issue 6591",
+      "url": "https://github.com/meilisearch/meilisearch/issues/6591",
+      "version_or_revision": "Opened 2026-08-17; issue body reports Meilisearch 1.52; Open at access",
+      "commit": null,
+      "locator": "Issue status and report/reproduction, lines 129-180",
+      "accessed_at_utc": "2026-10-09T18:48:18Z",
+      "observed_operations": [
+        "Opened the exact public issue URL read-only in the web tool and inspected status, report and reproduction.",
+        "Did not reproduce the issue, run Meilisearch, call a product API, or download software."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/01-search-and-enrichment.md#c06",
+      "observation_summary": "Open user report claims a hybrid rank-path/score change after adding a null searchable field in a specific v1.52 configuration; not independently reproduced."
+    },
+    {
+      "source_id": "C07",
+      "title": "Total Hits is wrong when there is rankingScoreThreshold | Meilisearch issue 5274",
+      "url": "https://github.com/meilisearch/meilisearch/issues/5274",
+      "version_or_revision": "Opened 2025-01-23; body reports v1.12; closed and linked under v1.16.0 solved-issues milestone",
+      "commit": null,
+      "locator": "Issue status/milestone, report, and maintainer explanation, lines 128-208",
+      "accessed_at_utc": "2026-10-09T18:48:18Z",
+      "observed_operations": [
+        "Opened the exact public issue URL read-only in the web tool and inspected issue status, version, report and maintainer response.",
+        "Did not reproduce the issue, run Meilisearch, call a product API, or download software."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/01-search-and-enrichment.md#c07",
+      "observation_summary": "Historical v1.12 issue describes thresholded total-hit/facet overestimates under a limit-dependent scoring condition; issue is closed under v1.16.0 milestone, so current behavior is not inferred."
+    },
+    {
+      "source_id": "C08",
+      "title": "Image API 3.0 | IIIF",
+      "url": "https://iiif.io/api/image/3.0/",
+      "version_or_revision": "Specification 3.0.0; page identifies latest stable version",
+      "commit": null,
+      "locator": "Status/scope, request syntax, static resources, profile and authentication/security sections",
+      "accessed_at_utc": "2026-10-09T18:48:18Z",
+      "observed_operations": [
+        "Opened the exact public standards URL read-only in the web tool and inspected status, scope, request and profile sections.",
+        "Did not call an image service, authenticate, download software, or execute code."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/02-image-and-access.md#c08",
+      "observation_summary": "Image API standardizes image and info requests, allows static pre-generated resources, and does not define image management or institutional policy."
+    },
+    {
+      "source_id": "C09",
+      "title": "Presentation API 3.0 | IIIF",
+      "url": "https://iiif.io/api/presentation/3.0/",
+      "version_or_revision": "Specification 3.0.0; current stable page",
+      "commit": null,
+      "locator": "requiredStatement and rights properties, lines 203-228; scope/Manifest description",
+      "accessed_at_utc": "2026-10-09T18:48:18Z",
+      "observed_operations": [
+        "Opened the exact public standards URL read-only in the web tool and inspected rights/display properties.",
+        "Did not generate a manifest, call an image service, authenticate, download software, or execute code."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/02-image-and-access.md#c09",
+      "observation_summary": "requiredStatement must be rendered; rights is informative and may be rendered, so it does not alone enforce access or guarantee visible attribution."
+    },
+    {
+      "source_id": "C10",
+      "title": "Authorization Flow API 2.0 | IIIF",
+      "url": "https://iiif.io/api/auth/2.0/",
+      "version_or_revision": "Specification 2.0.0; page identifies latest stable version",
+      "commit": null,
+      "locator": "Status/introduction, access/token/probe services and security notes",
+      "accessed_at_utc": "2026-10-09T18:48:18Z",
+      "observed_operations": [
+        "Opened the exact public standards URL read-only in the web tool and inspected version, scope and access-flow sections.",
+        "Did not call an auth or image service, authenticate, download software, or execute code."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/02-image-and-access.md#c10",
+      "observation_summary": "IIIF Auth Flow bridges viewers to existing institutional systems; institutions supply policy and must account for resource/cache versions."
+    },
+    {
+      "source_id": "C11",
+      "title": "Headers problem | Cantaloupe discussion 536",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/discussions/536",
+      "version_or_revision": "Discussion dated 2021-11-22; reporter used Cantaloupe 5.0.3",
+      "commit": null,
+      "locator": "Reporter 401 case and maintainer response, lines 143-172",
+      "accessed_at_utc": "2026-10-09T18:48:18Z",
+      "observed_operations": [
+        "Opened the exact public project discussion read-only in the web tool and inspected the report and maintainer response.",
+        "Did not run Cantaloupe or download software."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/02-image-and-access.md#c11",
+      "observation_summary": "Maintainer confirmed the pre_authorize 401 exception bug and said a fix was targeted for 5.0.5; historical, bounded case."
+    },
+    {
+      "source_id": "C12",
+      "title": "Release v5.0.5 | Cantaloupe",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/releases/tag/v5.0.5",
+      "version_or_revision": "Cantaloupe v5.0.5; commit 096ffed; released 2021-12-15",
+      "commit": "096ffed",
+      "locator": "Release notes, lines 150-160",
+      "accessed_at_utc": "2026-10-09T18:48:18Z",
+      "observed_operations": [
+        "Opened the exact public versioned release URL read-only in the web tool and inspected release notes.",
+        "Did not download or run the release."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/02-image-and-access.md#c12",
+      "observation_summary": "Release notes state that an uncaught exception for HTTP 401 from authorization delegates was fixed."
+    },
+    {
+      "source_id": "C13",
+      "title": "Releases | Cantaloupe",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/releases",
+      "version_or_revision": "Mutable release list; v5.0.7 marked Latest at access; short tag commit 55c60b9",
+      "commit": "55c60b9",
+      "locator": "Release list and v5.0.7 release metadata/notes",
+      "accessed_at_utc": "2026-10-09T18:48:18Z",
+      "observed_operations": [
+        "Opened the exact public release-list URL read-only in the web tool and inspected latest tag and release metadata.",
+        "Did not download or run any release."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/02-image-and-access.md#c13",
+      "observation_summary": "v5.0.7 was marked latest at this snapshot; this says nothing by itself about current support, security fitness or museum fit."
+    },
+    {
+      "source_id": "C14",
+      "title": "Rights Statements FAQ",
+      "url": "https://rightsstatements.org/en/documentation/faq.html",
+      "version_or_revision": "Current FAQ; 12 URI-based statements; vocabulary URI version 1.0",
+      "commit": null,
+      "locator": "Purpose, high-level summary, detailed-record relationship and accuracy caveat",
+      "accessed_at_utc": "2026-10-09T18:48:18Z",
+      "observed_operations": [
+        "Opened the exact public primary URL and inspected its FAQ content read-only; a web search result was also used to verify the high-level statement text after line navigation failed.",
+        "Did not make a rights determination or call a service."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/03-rights-and-community.md#c14",
+      "observation_summary": "The 12 statements provide high-level rights summaries, supplement detailed records, and may be inaccurate; they are not access control."
+    },
+    {
+      "source_id": "C15",
+      "title": "Frequently Asked Questions | Local Contexts",
+      "url": "https://localcontexts.org/support/frequently-asked-questions/",
+      "version_or_revision": "Live FAQ; mutable page; inspected 2026-10-09",
+      "commit": null,
+      "locator": "Label/Notice and copyright distinction, lines 91-126; Notice category conditions, lines 139-142",
+      "accessed_at_utc": "2026-10-09T18:48:18Z",
+      "observed_operations": [
+        "Opened the exact public primary URL read-only in the web tool and inspected the indicated sections.",
+        "Did not create a Project, apply a Label/Notice, authenticate, or call the Hub API."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/03-rights-and-community.md#c15",
+      "observation_summary": "Labels are community-controlled; Notices differ by type, with Collections Care requiring engagement with Indigenous community authorities."
+    },
+    {
+      "source_id": "C16",
+      "title": "API Guide (v2) | Local Contexts",
+      "url": "https://localcontexts.org/support/api-guide/v2/",
+      "version_or_revision": "API v2; guide states default since 2025-02-10; live guide",
+      "commit": null,
+      "locator": "Project visibility/API access and update behavior, lines 60-104 and access table",
+      "accessed_at_utc": "2026-10-09T18:48:18Z",
+      "observed_operations": [
+        "Opened the exact public API guide read-only in the web tool and inspected version, access and project visibility requirements.",
+        "Did not create a Hub account, issue a key, call the API, or download data."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/03-rights-and-community.md#c16",
+      "observation_summary": "v2 requires an API key; project visibility/account restrictions apply; private projects are not API-accessible and the API can reflect project updates."
+    },
+    {
+      "source_id": "C17",
+      "title": "The CARE Principles for Indigenous Data Governance | GIDA",
+      "url": "https://www.gida-global.org/careprinciples",
+      "version_or_revision": "Current GIDA page; principles drafted at 2018 workshop; no software version",
+      "commit": null,
+      "locator": "Overview and rationale, lines 64-67 and linked principles materials",
+      "accessed_at_utc": "2026-10-09T18:48:18Z",
+      "observed_operations": [
+        "Opened the exact public primary page read-only in the web tool and inspected the overview/rationale.",
+        "Did not consult a community representative or convert the framework into a local policy."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/03-rights-and-community.md#c17",
+      "observation_summary": "CARE centers Indigenous rights/interests, people and purpose alongside open-data approaches; it is governance guidance, not executable authorization."
+    },
+    {
+      "source_id": "C18",
+      "title": "PostgreSQL 18 Full Text Search documentation",
+      "url": "https://www.postgresql.org/docs/current/textsearch-intro.html",
+      "version_or_revision": "PostgreSQL 18 current documentation; current page lists supported versions 18 through 14",
+      "commit": null,
+      "locator": "§12.1 document construction, normalization/configurations, tsvector/tsquery; §12.9 GIN/GiST index tradeoffs",
+      "accessed_at_utc": "2026-10-09T18:51:04Z",
+      "observed_operations": [
+        "Opened the exact public primary documentation URL read-only in the web tool and inspected the indicated sections.",
+        "Did not run a database/search platform, call a product API, authenticate, download software, or execute code."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/04-search-alternatives.md#c18",
+      "observation_summary": "PostgreSQL provides indexed full-text search with language configuration, dictionaries and ranking; GIN is preferred for regular text search, subject to documented query/index behavior.",
+      "additional_urls": [
+        "https://www.postgresql.org/docs/current/textsearch-indexes.html"
+      ]
+    },
+    {
+      "source_id": "C19",
+      "title": "Apache Solr Reference Guide: Searching and Faceting",
+      "url": "https://solr.apache.org/guide/solr/latest/getting-started/searching-in-solr.html",
+      "version_or_revision": "Official mutable latest guide resolved to Apache Solr 10.0 at access; not pinned to a deployed build",
+      "commit": null,
+      "locator": "Query/filter/faceting overview in Searching in Solr and general facet parameters in the Faceting guide",
+      "accessed_at_utc": "2026-10-09T18:51:04Z",
+      "observed_operations": [
+        "Opened the exact public primary documentation URL read-only in the web tool and inspected the indicated sections.",
+        "Did not run a database/search platform, call a product API, authenticate, download software, or execute code."
+      ],
+      "usage_or_billing_observed": null,
+      "evidence_file": "sources/04-search-alternatives.md#c19",
+      "observation_summary": "Solr offers a separate schema-driven search index with query filters and term faceting; facet activation and indexed field representation are explicit.",
+      "additional_urls": [
+        "https://solr.apache.org/guide/solr/latest/query-guide/faceting.html"
+      ]
+    }
+  ]
+}

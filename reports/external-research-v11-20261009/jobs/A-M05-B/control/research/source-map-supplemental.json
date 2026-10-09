@@ -1,0 +1,16 @@
+{
+  "schema": "er11-source-map-supplement-v1",
+  "purpose": "Post-plan draft citation detail. The pre-plan source-map.json and discovery.md remain unchanged/frozen.",
+  "sources": [
+    {
+      "source_id": "S16",
+      "title": "Understanding Success Criterion 1.2.5: Audio Description (Prerecorded)",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded.html",
+      "version_commit": "WCAG 2.2 Understanding document; informative explanation, page accessed 2026-10-09",
+      "locator": "SC 1.2.5 Level AA; success-criterion text; note that no additional audio description is needed when all important video information is already conveyed in audio",
+      "accessed_at_utc": "2026-10-09T18:41:48Z",
+      "observed_operations": ["web search retrieved the W3C page", "read the returned page excerpt"],
+      "evidence_note": "WAI describes SC 1.2.5 as a Level AA criterion requiring audio description for prerecorded video content in synchronized media, with an exception when important visual information is already provided in audio. This is explanatory guidance; applicability depends on the chosen conformance scope."
+    }
+  ]
+}

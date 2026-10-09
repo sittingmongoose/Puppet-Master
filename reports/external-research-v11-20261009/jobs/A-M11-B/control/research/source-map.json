@@ -1,0 +1,216 @@
+{
+  "assignment": "ER11 source map for A-M11-B/control/research",
+  "generated_at_utc": "2026-10-09T18:32:15Z",
+  "timestamp_note": "access_requested_at_utc is the exact clock time immediately before a single web.open batch of all URLs below. The browser tool returns pages as that call's result but exposes no per-page transport timestamp; do not read these as server-side millisecond timestamps.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "OpenRefine Reconciliation API",
+      "url": "https://openrefine.org/docs/technical-reference/reconciliation-api",
+      "version_or_snapshot": "Official live technical-reference page; page says last updated 2026-06-06. Protocol v0.2 is current stable and supported since OpenRefine 3.3.",
+      "commit": null,
+      "locator": "Headings ‘Reconciliation API’ and ‘API versions supported by OpenRefine’; web-open lines 31-58.",
+      "access_requested_at_utc": "2026-10-09T18:32:15Z",
+      "observed_operations": [
+        "Opened exact URL with web.open.",
+        "Read scope, candidate/entity-ID model, optional types and properties, previews/autocomplete, version-support statements and test-bench note."
+      ],
+      "evidence_file": "sources/02-curation-and-vocabulary.md"
+    },
+    {
+      "id": "S02",
+      "title": "OpenRefine manual: Reconciling",
+      "url": "https://openrefine.org/docs/manual/reconciling/",
+      "version_or_snapshot": "Official live manual, observed 2026-10-09; no software release pinned on page.",
+      "commit": null,
+      "locator": "Overview, working iteratively, and actions; web-open lines 23-38 and additional manual text on candidate scoring/actions.",
+      "access_requested_at_utc": "2026-10-09T18:32:15Z",
+      "observed_operations": [
+        "Opened exact URL with web.open.",
+        "Read semi-automated/human-review caveat, text-search sensitivity and iterative/batched workflow; also inspected candidate-score/judgment facet and ‘use values as identifiers’ behavior from same manual page."
+      ],
+      "evidence_file": "sources/02-curation-and-vocabulary.md"
+    },
+    {
+      "id": "S03",
+      "title": "Getty Vocabularies: Data & Services",
+      "url": "https://www.getty.edu/research-conservation/tools-databases/vocabularies/data-services/",
+      "version_or_snapshot": "Official live service page observed 2026-10-09. AAT, TGN, ULAN; monthly refresh statement; ODC-By 1.0 license. No page release/commit.",
+      "commit": null,
+      "locator": "Online Tools, Linked Open Data Formats, Licensing and Citations, Archived Data and Services; web-open lines 113-188.",
+      "access_requested_at_utc": "2026-10-09T18:32:15Z",
+      "observed_operations": [
+        "Opened exact URL with web.open.",
+        "Read supported vocabularies and access modes, downloadable formats/refresh cadence, license/credit, retirement of XML services and archive cutoff."
+      ],
+      "evidence_file": "sources/02-curation-and-vocabulary.md"
+    },
+    {
+      "id": "S04",
+      "title": "Typesense Vector Search and Embeddings API",
+      "url": "https://typesense.org/docs/30.2/api/vector-search.html",
+      "version_or_snapshot": "Versioned API documentation 30.2; page reports last updated 2026-07-30.",
+      "commit": null,
+      "locator": "Embedding/indexing sections; remote embedding parameters; nearest-neighbor/vector distance; hybrid search, alpha, reranking, threshold, HNSW parameters; web-open lines 124-192 and 356-437, web-find lines 519-727.",
+      "access_requested_at_utc": "2026-10-09T18:32:15Z",
+      "observed_operations": [
+        "Opened exact versioned URL with web.open.",
+        "Used web.find for model_config, distance_threshold, and dimensions; inspected returned sections for vector types, defaults, behavior and model update/troubleshooting notes."
+      ],
+      "evidence_file": "sources/01-search-and-ranking.md"
+    },
+    {
+      "id": "S05",
+      "title": "Qdrant Hybrid and Multi-Stage Queries",
+      "url": "https://qdrant.tech/documentation/search/hybrid-queries/",
+      "version_or_snapshot": "Official live documentation observed 2026-10-09; relevant release floors stated in page: query API v1.10, configurable RRF k v1.16, weighted RRF v1.17.",
+      "commit": null,
+      "locator": "Hybrid/multi-stage queries; RRF defaults; weighted RRF; DBSF and choosing fusion; distributed collections. Web-open lines 289-355, 558-715, 1092 onward.",
+      "access_requested_at_utc": "2026-10-09T18:32:15Z",
+      "observed_operations": [
+        "Opened exact URL with web.open.",
+        "Read prefetch execution and candidate-limit semantics, RRF formula/defaults, version gates, score-normalization caution and distributed fusion caveat."
+      ],
+      "evidence_file": "sources/01-search-and-ranking.md"
+    },
+    {
+      "id": "S06",
+      "title": "PostgreSQL 18: Preferred Index Types for Text Search",
+      "url": "https://www.postgresql.org/docs/18/textsearch-indexes.html",
+      "version_or_snapshot": "PostgreSQL 18 official documentation.",
+      "commit": null,
+      "locator": "Section 12.9 ‘Preferred Index Types for Text Search’; GIN versus GiST properties.",
+      "access_requested_at_utc": "2026-10-09T18:32:15Z",
+      "observed_operations": [
+        "Opened exact version-pinned URL with web.open.",
+        "Read GIN preferred status, lexeme index and weight recheck behavior, and GiST lossy behavior."
+      ],
+      "evidence_file": "sources/01-search-and-ranking.md"
+    },
+    {
+      "id": "S07",
+      "title": "pgvector README",
+      "url": "https://github.com/pgvector/pgvector/blob/v0.8.7/README.md",
+      "version_or_snapshot": "Version-pinned repository tag v0.8.7; short tag commit was not exposed on this README view. Tag is the immutable version reference used here.",
+      "commit": null,
+      "locator": "Indexing; HNSW and IVFFlat defaults/types; filtering; iterative scans. Web-open lines 323-415, 523-560.",
+      "access_requested_at_utc": "2026-10-09T18:32:15Z",
+      "observed_operations": [
+        "Opened version-pinned README URL with web.open.",
+        "Read exact-versus-approximate behavior, supported dimensions/types, HNSW defaults, filter order and iterative-scan limits."
+      ],
+      "evidence_file": "sources/01-search-and-ranking.md"
+    },
+    {
+      "id": "S08",
+      "title": "pgvector issue #719: SELECT WHERE ORDER BY LIMIT no results",
+      "url": "https://github.com/pgvector/pgvector/issues/719",
+      "version_or_snapshot": "Issue opened against pgvector 0.7.0; mutable GitHub discussion snapshot observed 2026-10-09. Comments disclose tests on 0.8.0 and a 40k-record vector/sparse case; issue was marked completed 2025-02-20.",
+      "commit": null,
+      "locator": "Issue body and maintenance discussion, comments at Nov 26-29 2024 and Feb 4-20 2025; web-open lines 180-258, 421-447, 525-540, 968.",
+      "access_requested_at_utc": "2026-10-09T18:32:15Z",
+      "observed_operations": [
+        "Opened issue URL with web.open.",
+        "Read initial reproduction and version, maintainer advice, report that updating to 0.8.0 alone did not fix the query, disabled-by-default iterative scans, and later 40k-row test report."
+      ],
+      "evidence_file": "sources/04-evolution-and-regressions.md"
+    },
+    {
+      "id": "S09",
+      "title": "pgvector 0.8.0 release record",
+      "url": "https://github.com/pgvector/pgvector/releases/tag/v0.8.0",
+      "version_or_snapshot": "Release tag v0.8.0; commit 2627c5f (release record); tagged 2024-10-30.",
+      "commit": "2627c5f",
+      "locator": "Release record lines 130-179; PostgreSQL release announcement ‘pgvector 0.8.0 Released’ lines 19-35.",
+      "access_requested_at_utc": "2026-10-09T18:32:15Z",
+      "observed_operations": [
+        "Opened exact release-tag URL with web.open and read tag/short SHA/date; opened official PostgreSQL announcement and read iterative-scan/filter changes."
+      ],
+      "evidence_file": "sources/04-evolution-and-regressions.md"
+    },
+    {
+      "id": "S10",
+      "title": "IIIF Image API 3.0",
+      "url": "https://iiif.io/api/image/3.0/",
+      "version_or_snapshot": "IIIF Image API 3.0.0, latest stable version stated by specification.",
+      "commit": null,
+      "locator": "Introduction/scope; image request parameters; info.json and profile/capability; rights/service properties; access/scope and server response sections. Web-open around lines 286-302 and broader specification text.",
+      "access_requested_at_utc": "2026-10-09T18:32:15Z",
+      "observed_operations": [
+        "Opened exact versioned specification URL with web.open.",
+        "Read scope (delivery, not image management), request capabilities and info document fields; inspected rights and service structure and response requirements."
+      ],
+      "evidence_file": "sources/03-images-and-access.md"
+    },
+    {
+      "id": "S11",
+      "title": "IIIF Authorization Flow API 2.0",
+      "url": "https://iiif.io/api/auth/2.0/",
+      "version_or_snapshot": "IIIF Authorization Flow API 2.0.0, latest stable version stated by specification.",
+      "commit": null,
+      "locator": "Introduction/security; service declaration for access-controlled image info; HTTPS; probe/token; tiered access/substitute resources. Web-open lines 181-250 and 2.x service sections; searched and opened tiered-access section.",
+      "access_requested_at_utc": "2026-10-09T18:32:15Z",
+      "observed_operations": [
+        "Opened exact versioned specification URL with web.open.",
+        "Read authentication boundary, exact image info/probe rule, HTTPS/security, browser interaction and alternative-tier behavior."
+      ],
+      "evidence_file": "sources/03-images-and-access.md"
+    },
+    {
+      "id": "S12",
+      "title": "Mukurtu manual: Manage Media Access with Cultural Protocols",
+      "url": "https://docs.mukurtu.org/media/ManageMediaAccessWithProtocols/",
+      "version_or_snapshot": "Official current user manual; page explicitly contrasts Mukurtu v3 and v4. Web page observed 2026-10-09; no commit/release hash.",
+      "commit": null,
+      "locator": "User roles and Sync protocols with content, especially lines 253-256.",
+      "access_requested_at_utc": "2026-10-09T18:32:15Z",
+      "observed_operations": [
+        "Opened exact URL with web.open.",
+        "Read protocol inheritance/synchronization, independent media protocols, and public metadata plus restricted-media example."
+      ],
+      "evidence_file": "sources/03-images-and-access.md"
+    },
+    {
+      "id": "S13",
+      "title": "Local Contexts: Traditional Knowledge Labels",
+      "url": "https://localcontexts.org/labels/traditional-knowledge-labels/",
+      "version_or_snapshot": "Official live page observed 2026-10-09; page footer copyright 2010-2026; no version/commit.",
+      "commit": null,
+      "locator": "Scope and purpose; provenance, protocol and permission labels; web-open lines 5-54.",
+      "access_requested_at_utc": "2026-10-09T18:32:15Z",
+      "observed_operations": [
+        "Opened exact URL with web.open.",
+        "Read community-specific, educative label scope and the distinctions between provenance, protocol and permission labels."
+      ],
+      "evidence_file": "sources/03-images-and-access.md"
+    },
+    {
+      "id": "S14",
+      "title": "Cantaloupe release v5.0.5",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/releases/tag/v5.0.5",
+      "version_or_snapshot": "Version tag v5.0.5; commit 096ffed (release record); release entry dated Dec 15 in project release sequence.",
+      "commit": "096ffed",
+      "locator": "Release note: uncaught exception when delegates returned HTTP 401 from pre_authorize()/authorize(); web-open lines 129-159.",
+      "access_requested_at_utc": "2026-10-09T18:32:15Z",
+      "observed_operations": [
+        "Opened exact release-tag URL with web.open.",
+        "Read tag, short commit and fix statement; separately opened current CHANGES.md to inspect evolution of authorize() and image-server changes."
+      ],
+      "evidence_file": "sources/04-evolution-and-regressions.md"
+    },
+    {
+      "id": "S15",
+      "title": "Cantaloupe CHANGES.md",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/blob/develop/CHANGES.md",
+      "version_or_snapshot": "Mutable develop branch as observed 2026-10-09; exact branch commit was not exposed in the page view. Release entry checked against v5.0.5 tag and later releases.",
+      "commit": null,
+      "locator": "v4.1 authorization delegate change, v5.0.5 401 response exception fix, v5.0.6/v5.0.7 entries; web-open around lines 399-407, 5.0.5-5.0.6, plus v5.0.7 release record.",
+      "access_requested_at_utc": "2026-10-09T18:32:15Z",
+      "observed_operations": [
+        "Opened develop CHANGES.md with web.open.",
+        "Read authentication/evolution notes and release entries. Also opened GitHub releases to identify v5.0.7 current observed tag and commit 55c60b9; not interpreted as proof of security."
+      ],
+      "evidence_file": "sources/04-evolution-and-regressions.md"
+    }
+  ]
+}

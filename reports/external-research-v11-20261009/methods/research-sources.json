@@ -1,0 +1,171 @@
+{
+  "research_record": {
+    "prepared_at_utc": "2026-10-09T18:18:56Z",
+    "allowed_brief_sections_read": [
+      1,
+      5,
+      6,
+      7,
+      8
+    ],
+    "excluded": [
+      "candidate jobs",
+      "evaluator outputs",
+      "ER10 history audit",
+      "repository/Git/config changes"
+    ],
+    "note": "Novelty mapping uses only the M01-M16 menu supplied by the user; root owns the final freeze."
+  },
+  "sources": [
+    {
+      "id": "storm-paper",
+      "kind": "primary_methodology_paper",
+      "title": "Assisting in Writing Wikipedia-like Articles From Scratch with Large Language Models",
+      "authors": [
+        "Yijia Shao",
+        "Yucheng Jiang",
+        "Theodore A. Kanell",
+        "Peter Xu",
+        "Omar Khattab",
+        "Monica S. Lam"
+      ],
+      "urls": [
+        "https://arxiv.org/abs/2402.14207v2",
+        "https://aclanthology.org/2024.naacl-long.347.pdf"
+      ],
+      "version": "arXiv:2402.14207v2; NAACL 2024 Main Conference",
+      "accessed_at_utc": "2026-10-09T18:18:56Z",
+      "permitted_facts": [
+        "STORM discovers distinct topic perspectives, simulates grounded multi-turn writer/expert conversations, then curates collected information into an outline.",
+        "FreshWiki comparison reports +25 percentage points in organization and +10 points in breadth versus an outline-driven RAG baseline.",
+        "Expert feedback flags source-bias transfer and over-association of unrelated facts."
+      ],
+      "relevant_mechanism": "Similar-topic article headings seed perspectives; answers to grounded questions create follow-up questions; the resulting conversations guide an outline.",
+      "applicability_limit": "Evaluated on Wikipedia-like article generation and FreshWiki; it does not establish end-to-end gains on product/plan research."
+    },
+    {
+      "id": "storm-implementation",
+      "kind": "open_source_implementation",
+      "title": "Stanford OVAL STORM / knowledge-storm",
+      "urls": [
+        "https://github.com/stanford-oval/storm",
+        "https://pypi.org/project/knowledge-storm/"
+      ],
+      "version": "knowledge-storm 1.1.1; PyPI release 2025-09-29; upstream latest commit observed 2025-09-30",
+      "accessed_at_utc": "2026-10-09T18:18:56Z",
+      "maintenance_observation": "Public modular implementation with release history; latest observed release/commit is about one year old, so maintenance recency is weaker than PaperQA2 or GraphRAG.",
+      "code_mechanism": "STORMWikiRunner exposes do_research and do_generate_outline stages; the package includes configurable language models and web retrievers including Bing, Brave, SearXNG, DuckDuckGo, Tavily, Serper and Google."
+    },
+    {
+      "id": "paperqa-paper",
+      "kind": "primary_methodology_paper",
+      "title": "Language agents achieve superhuman synthesis of scientific knowledge",
+      "authors": [
+        "Michael D. Skarlinski",
+        "Sam Cox",
+        "Jon M. Laurent",
+        "James D. Braza",
+        "Michaela Hinks",
+        "Michael J. Hammerling",
+        "Manvitha Ponnapati",
+        "Samuel G. Rodriques",
+        "Andrew D. White"
+      ],
+      "urls": [
+        "https://arxiv.org/abs/2409.13740v2",
+        "https://arxiv.org/html/2409.13740v2"
+      ],
+      "version": "arXiv:2409.13740v2 (revised 2024-09-26)",
+      "accessed_at_utc": "2026-10-09T18:18:56Z",
+      "permitted_facts": [
+        "The paper evaluates literature retrieval, summarization and contradiction detection against expert researchers.",
+        "PaperQA2 identifies 2.34 ± 1.99 contradictions per paper in a random subset of biology papers; human experts validated 70% of flagged contradictions."
+      ],
+      "relevant_mechanism": "A source-search/gather-evidence/answer workflow with claim-sensitive retrieval and evidence contextualization supports cited synthesis and contradiction checking.",
+      "applicability_limit": "Its evaluation concerns scientific literature; the 70% figure is not a general citation-accuracy estimate."
+    },
+    {
+      "id": "paperqa-implementation",
+      "kind": "maintained_open_source_implementation",
+      "title": "Future-House paper-qa / PaperQA2",
+      "urls": [
+        "https://github.com/Future-House/paper-qa",
+        "https://github.com/Future-House/paper-qa/releases/tag/v2026.08.12"
+      ],
+      "version": "v2026.08.12, commit 57e89f7",
+      "accessed_at_utc": "2026-10-09T18:18:56Z",
+      "maintenance_observation": "Tagged release observed 2026-08-12 with ongoing changes.",
+      "code_mechanism": "Documents candidate papers from a query, ranks top-k chunks for each evidence question, creates relevance-scored contextual summaries, and generates an answer from selected summaries; the agent can choose tool order and follow-up queries.",
+      "applicability_limit": "Package focuses on local scientific documents and code; the web-source recipe adapts its retrieval loop rather than installing or claiming the package directly executes that workflow."
+    },
+    {
+      "id": "graphrag-paper",
+      "kind": "primary_methodology_paper",
+      "title": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization",
+      "urls": [
+        "https://arxiv.org/abs/2404.16130",
+        "https://arxiv.org/html/2404.16130"
+      ],
+      "version": "arXiv:2404.16130, current version checked 2026-10-09",
+      "accessed_at_utc": "2026-10-09T18:18:56Z",
+      "permitted_facts": [
+        "The method derives an entity knowledge graph from source documents and pre-generates community summaries for related entity groups.",
+        "Global queries generate partial responses from community summaries and reduce them into one response.",
+        "The paper reports better comprehensiveness and diversity than naive RAG for global sensemaking questions on corpora around one million tokens."
+      ],
+      "relevant_mechanism": "Entity/relationship graph, community summaries, global map/reduce, and local entity-neighborhood retrieval.",
+      "applicability_limit": "Evidence is for corpus-wide sensemaking; this does not show the method is best for a small product comparison."
+    },
+    {
+      "id": "graphrag-implementation",
+      "kind": "maintained_open_source_implementation",
+      "title": "Microsoft GraphRAG",
+      "urls": [
+        "https://github.com/microsoft/graphrag/releases/tag/v3.3.0",
+        "https://github.com/microsoft/graphrag/blob/main/docs/index.md"
+      ],
+      "version": "v3.3.0, commit 5faaaf4, released 2026-10-08",
+      "accessed_at_utc": "2026-10-09T18:18:56Z",
+      "maintenance_observation": "Recent tagged release and repository activity observed within one day of access.",
+      "code_mechanism": "Indexing creates an entity graph and bottom-up community reports; documented query modes include global community-summary reasoning and local neighborhood fan-out."
+    },
+    {
+      "id": "igrpo-paper",
+      "kind": "primary_methodology_paper",
+      "title": "Information Gain-based Rollout Policy Optimization: An Adaptive Tree-Structured Rollout Approach for Multi-Turn Search Agents",
+      "authors": [
+        "Yijun Zhang",
+        "Fan Xu",
+        "Jiaxin Ding",
+        "Yule Xie",
+        "Xin Ding",
+        "Haoxiang Zhang"
+      ],
+      "urls": [
+        "https://arxiv.org/abs/2607.06223v2",
+        "https://arxiv.org/html/2607.06223"
+      ],
+      "version": "arXiv:2607.06223v2 (2026-10-07)",
+      "accessed_at_utc": "2026-10-09T18:18:56Z",
+      "permitted_facts": [
+        "IGRPO assigns a fixed rollout budget across active search-history nodes using node-level information gain.",
+        "Its operational signal is increase in the policy's normalized likelihood of the ground-truth answer after a search state; nodes receive higher softmax expansion probability when their signal is larger.",
+        "Reported experiments are search-augmented QA benchmarks and concern agent training."
+      ],
+      "relevant_mechanism": "Parent-child search states, an information-gain value per node, and budget-weighted expansion of more informative branches.",
+      "applicability_limit": "The manually scored proposition-status change in the recipe is an adaptation; the paper's answer-likelihood reward and benchmark findings are not reproduced."
+    },
+    {
+      "id": "igrpo-implementation",
+      "kind": "open_source_research_implementation",
+      "title": "e3trange/IGRPO",
+      "urls": [
+        "https://github.com/e3trange/IGRPO"
+      ],
+      "version": "main branch observed 2026-10-09; no tagged releases visible",
+      "accessed_at_utc": "2026-10-09T18:18:56Z",
+      "maintenance_observation": "Official research code linked by the paper; no release tags found. Currentness and long-term maintenance are uncertain.",
+      "code_mechanism": "Research implementation of adaptive tree-structured rollout-budget allocation for training search-augmented LLM agents; its training stack is not a ready-made external research workflow."
+    }
+  ]
+}

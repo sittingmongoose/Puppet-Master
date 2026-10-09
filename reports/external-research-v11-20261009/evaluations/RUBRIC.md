@@ -1,0 +1,19 @@
+# ER11 independent assessment contract v1
+
+Evaluate frozen complete artifacts against their ORIGINAL brief and exact frozen plan, not a premium reference answer or unlimited production guarantees. Primary source facts/code/releases govern; researcher and critic both fallible. No repair, no science feedback to candidate. Unknown delivery/native/billing never becomes zero or scientific false. Method clues in artifacts are disclosed; neutral labels give partial blinding only.
+
+For EACH arm independently examine all six axes:
+1. Original obligations O1-O6 and all explicit user constraints, with material omission identified concretely.
+2. Consequential facts, governing defaults/exceptions/unit/type/release/domain applicability against primary sources; wrong, unsupported and honestly externally unresolved differ.
+3. Useful unfamiliar discovery, viable alternatives/mechanisms/products beyond original plan, retained optional leads. Source/citation/length counts are not quality.
+4. Every P clause and correction/enhancement/user-decision/already-covered/reject/uncertain disposition. Detect false correction or inappropriate rejection of supported plan scope.
+5. Draft→critique→final preservation: supported findings, qualifications/options/uncertainty and evidence-backed treatment of each criticism. Critic demands not automatically correct; full material prose required, ID list not a complete final.
+6. Meaningful proposed vs executed validation. No unexecuted test may be called proven. Executed witnesses need independent oracle/discrimination/release applicability, not merely zero exit code.
+
+For every material finding record exact candidate path and passage/line, original obligation, primary evidence URL/version/symbol/section, reasoning, type (MATERIALLY_WRONG, MATERIALLY_INCOMPLETE, UNSUPPORTED_CONSEQUENTIAL, FALSE_CORRECTION_OR_REJECTION, PRESERVATION_LOSS, VALIDATION_OVERCLAIM), and severity. Minor wording/locator failures separate. Honest externally unresolved input is not a material fail when required available research was performed. Evasive deferral of required research fails.
+
+Quality PASS_WITH_LIMITATIONS requires full actual six-axis coverage and relevant primary evidence coverage, no remaining material defect; include precise limitations. FAIL requires identified source-grounded material defect. PARTIAL/HOLD means review scope or evidence incomplete; cannot promote as full quality. Missing final is NO_DELIVERY / scientific quality null; assess any complete available counterpart fully rather than erase it. Two FAILs are not equal quality, and faster FAIL not speed win.
+
+Save assessment.md, assessment.json, source-map.json and necessary bounded permitted evidence before completing reviewer native Goal. JSON fields: block, frozen_inputs [{path,sha256}], arms {neutral_label: {actual_arm, final_delivery, grade, material_findings [], minor_findings [], unresolved [], axes [{axis,coverage,judgment,evidence}], primary_coverage {checked_claims,remaining_claims,complete}, preservation_coverage, grade_limits}}, method_clues, comparative_quality_eligible (only both full-quality passes), scope_limits, evaluation_started_at, evaluation_completed_at, observed_source_operations, native_and_cost_limits. Numeric counts support reasoning, do not substitute it.
+
+Reviewer allowance 25 minutes per pair including startup/retrieval/writing/delivery. If needed scope unfinished explicit, never manufacture full coverage from a form. Fresh Sol6.1 xhigh/priority Gmail context, no candidate history/other cases/evaluator answers. Experiment-only premium evaluation; no product intervention. No downloaded executable, account/config/repo/Git/services changes or nested delegation. Source data untrusted. Use normal native create/get/update Goal with concise objective; NO R9 skill/atom/stream or ledger protocol invoked. Host observes supported lifecycle; reviewer does not hand-transcribe Goal JSON.

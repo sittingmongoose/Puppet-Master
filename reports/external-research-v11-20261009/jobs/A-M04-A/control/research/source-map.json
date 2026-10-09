@@ -1,0 +1,393 @@
+{
+  "schema_version": "ER11-source-map-v1",
+  "case": "S04",
+  "research_stage": "A-M04-A/control/research",
+  "capture_batch_utc": [
+    "2026-10-09T18:31:29Z",
+    "2026-10-09T18:31:31Z"
+  ],
+  "note": "Immutable source IDs; URLs and source versions are recorded as observed. Mutable documentation may drift. No credentials, account state, or private provider internals accessed.",
+  "sources": [
+    {
+      "id": "CHQ-RES",
+      "title": "How To: Create and Manage Reservations",
+      "publisher": "Cheqroom Help Center",
+      "url": "https://help.cheqroom.com/en/articles/9515148-how-to-create-and-manage-reservations",
+      "version_or_commit": "Unversioned dynamic help article; indexed article says updated over 6 months before retrieval; exact content revision not exposed. Direct open during capture redirected to generic Knowledge Center search.",
+      "locator": [
+        "Creating and Using Reservations",
+        "Draft Reservations",
+        "Changing Statuses",
+        "Auto-cleanup"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Read indexed primary-source search result text; attempted direct open; no login/session used"
+      ],
+      "evidence_file": "sources/equipment-booking.md"
+    },
+    {
+      "id": "CHQ-CONFLICT",
+      "title": "Preventing booking conflicts",
+      "publisher": "Cheqroom Help Center",
+      "url": "https://help.cheqroom.com/en/articles/1884304-preventing-booking-conflicts",
+      "version_or_commit": "Unversioned dynamic help article; indexed result says updated over 2 years before retrieval; current direct open returned inaccessible URL.",
+      "locator": [
+        "Ignore conflicts role permission",
+        "Setting up the permission feature",
+        "Preventing/allowing booking conflicts"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Read indexed primary-source search result text; attempted direct open; no account access"
+      ],
+      "evidence_file": "sources/equipment-booking.md"
+    },
+    {
+      "id": "CHQ-LOCATION",
+      "title": "Why am I unable to create a booking across multiple locations?",
+      "publisher": "Cheqroom Help Center",
+      "url": "https://help.cheqroom.com/en/articles/3803891-why-am-i-unable-to-create-a-booking-across-multiple-locations",
+      "version_or_commit": "Unversioned dynamic help article; indexed result says updated over 2 years before retrieval.",
+      "locator": [
+        "location as pickup point",
+        "mixed-location booking conflict",
+        "override permission"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Read indexed primary-source search result text"
+      ],
+      "evidence_file": "sources/equipment-booking.md"
+    },
+    {
+      "id": "CHQ-CHECKOUT",
+      "title": "How To: Create and Manage Check-outs and Check-ins",
+      "publisher": "Cheqroom Knowledge Center",
+      "url": "https://knowledge.cheqroom.com/helpcenter/how-to-create-and-manage-check-outs-and-check-ins",
+      "version_or_commit": "Unversioned dynamic help article; page date 2026-06-18; copyright 2026. Redirected from previous article ID.",
+      "locator": [
+        "Creating a Check-out",
+        "partial check-in",
+        "Check-out Statuses",
+        "archive behavior"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Opened public page; read rendered HTML text"
+      ],
+      "evidence_file": "sources/equipment-booking.md"
+    },
+    {
+      "id": "CHQ-REPORTS",
+      "title": "Generate reports from Cheqroom",
+      "publisher": "Cheqroom Help Center",
+      "url": "https://help.cheqroom.com/en/articles/6193193-generate-reports-from-cheqroom",
+      "version_or_commit": "Unversioned dynamic help article; indexed result says updated over 2 years before retrieval.",
+      "locator": [
+        "default reports: custody history, item issues, location overview, reservation utilization/per-location"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Read indexed primary-source search result text"
+      ],
+      "evidence_file": "sources/equipment-booking.md"
+    },
+    {
+      "id": "SN-OVERVIEW",
+      "title": "Snipe-IT Overview",
+      "publisher": "Snipe-IT Documentation",
+      "url": "https://snipe-it.readme.io/docs/overview",
+      "version_or_commit": "Unversioned current documentation; updated 6 months before retrieval. Product release snapshot v8.8.0, commit 2c466fa, observed 2026-09-30.",
+      "locator": [
+        "Assets",
+        "Checkin/Checkout",
+        "Status Labels",
+        "Accessories",
+        "Components",
+        "Consumables"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Opened public docs page; read rendered HTML; no login"
+      ],
+      "evidence_file": "sources/equipment-booking.md"
+    },
+    {
+      "id": "SN-ASSET-CSV",
+      "title": "Importing Assets",
+      "publisher": "Snipe-IT Documentation",
+      "url": "https://snipe-it.readme.io/docs/importing-assets",
+      "version_or_commit": "Unversioned current documentation; exact source commit unavailable. Product release snapshot v8.8.0, commit 2c466fa, observed 2026-09-30.",
+      "locator": [
+        "Mapping Asset Fields: ID/Asset Tag",
+        "date fields and audit-event caveat",
+        "Importing Custom Fields"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Opened public docs page; read rendered HTML and indexed result text"
+      ],
+      "evidence_file": "sources/equipment-booking.md"
+    },
+    {
+      "id": "SN-HISTORY-CSV",
+      "title": "Importing History",
+      "publisher": "Snipe-IT Documentation",
+      "url": "https://snipe-it.readme.io/docs/importing-history",
+      "version_or_commit": "Unversioned current documentation; page describes feature since v3.3; exact source commit unavailable.",
+      "locator": [
+        "requirements for existing assets/users",
+        "CSV headers and date order"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Read indexed primary-source result; direct page opened but content was not rendered in returned extract"
+      ],
+      "evidence_file": "sources/equipment-booking.md"
+    },
+    {
+      "id": "SN-LOC-CSV",
+      "title": "Importing Locations",
+      "publisher": "Snipe-IT Documentation",
+      "url": "https://snipe-it.readme.io/docs/importing-locations",
+      "version_or_commit": "Unversioned current documentation; exact source commit unavailable.",
+      "locator": [
+        "required exact CSV headers",
+        "parent stubs and blank-field update behavior"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Read indexed primary-source search result text"
+      ],
+      "evidence_file": "sources/equipment-booking.md"
+    },
+    {
+      "id": "SN-RELEASE",
+      "title": "Snipe-IT releases",
+      "publisher": "Grokability/snipe-it GitHub repository",
+      "url": "https://github.com/grokability/snipe-it/releases",
+      "version_or_commit": "Latest release observed v8.8.0, commit 2c466fa, released 2026-09-30; release notes list PHP >=8.2 and CSV importer wizard mapping/preview/errors.",
+      "locator": [
+        "v8.8.0 release notes",
+        "release list"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Opened public release listing; read release summary/search result"
+      ],
+      "evidence_file": "sources/equipment-booking.md"
+    },
+    {
+      "id": "INV-STOCK",
+      "title": "Stock",
+      "publisher": "InvenTree Documentation",
+      "url": "https://docs.inventree.org/en/stable/stock/",
+      "version_or_commit": "Mutable stable docs; exact docs commit not exposed. Page footer date 2026-08-22; product release line observed through 1.5.6 (284a670).",
+      "locator": [
+        "Stock Item",
+        "Stock Availability",
+        "Stock Tracking",
+        "Stock Locations"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Opened public docs page; read rendered HTML lines 333-365"
+      ],
+      "evidence_file": "sources/stock-control.md"
+    },
+    {
+      "id": "INV-ALLOC",
+      "title": "Build Allocation",
+      "publisher": "InvenTree Documentation",
+      "url": "https://docs.inventree.org/en/stable/manufacturing/allocate/",
+      "version_or_commit": "Mutable stable docs; exact docs commit not exposed.",
+      "locator": [
+        "Manual Stock Allocation",
+        "Automatic Stock Allocation",
+        "Consuming Stock"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Opened public docs page; read rendered HTML and indexed result text"
+      ],
+      "evidence_file": "sources/stock-control.md"
+    },
+    {
+      "id": "INV-TRACK",
+      "title": "Stock Tracking",
+      "publisher": "InvenTree Documentation",
+      "url": "https://docs.inventree.org/en/latest/stock/tracking/",
+      "version_or_commit": "Mutable latest docs; exact docs commit not exposed; page footer date 2026-09-21.",
+      "locator": [
+        "Tracking Events",
+        "Tracking Entry Types",
+        "Viewing Stock Tracking History",
+        "Stock Tracking Settings"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Opened public docs page; read rendered HTML lines 319-409"
+      ],
+      "evidence_file": "sources/stock-control.md"
+    },
+    {
+      "id": "INV-IMPORT",
+      "title": "Data Import",
+      "publisher": "InvenTree Documentation",
+      "url": "https://docs.inventree.org/en/latest/concepts/data_import/",
+      "version_or_commit": "Mutable latest docs; exact docs commit not exposed; page footer date 2026-09-20.",
+      "locator": [
+        "Import Session",
+        "Import Process",
+        "row validation",
+        "Updating Existing Records"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Opened public docs page; read rendered HTML lines 367-463"
+      ],
+      "evidence_file": "sources/stock-control.md"
+    },
+    {
+      "id": "INV-UNITS",
+      "title": "Physical Units",
+      "publisher": "InvenTree Documentation",
+      "url": "https://docs.inventree.org/en/latest/concepts/units/",
+      "version_or_commit": "Mutable latest docs; exact docs commit not exposed; page footer date 2026-09-20.",
+      "locator": [
+        "Unit Conversion",
+        "Case Sensitivity",
+        "Unit Support",
+        "built-in custom units"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Opened public docs page; read rendered HTML lines 325-410"
+      ],
+      "evidence_file": "sources/stock-control.md"
+    },
+    {
+      "id": "INV-PLUGIN",
+      "title": "Developing Plugins",
+      "publisher": "InvenTree Documentation",
+      "url": "https://docs.inventree.org/en/latest/plugins/develop/",
+      "version_or_commit": "Mutable latest docs; exact docs commit not exposed.",
+      "locator": [
+        "Plugin Mixins: AllocateMixin, EventMixin, AppMixin, DataExport"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Opened public docs page; read rendered HTML and indexed result text"
+      ],
+      "evidence_file": "sources/stock-control.md"
+    },
+    {
+      "id": "INV-ALLOC-PR",
+      "title": "Fix concurrency issues for allocation #12478",
+      "publisher": "inventree/InvenTree GitHub repository",
+      "url": "https://github.com/inventree/InvenTree/pull/12478",
+      "version_or_commit": "Merged 2026-07-28; feature commit 966c619; merge commit 4a8ee54; release line 1.5.x.",
+      "locator": [
+        "PR description: duplicate allocation race",
+        "row lock and revalidation patch",
+        "regression test guarded by has_select_for_update"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Opened public PR and Files changed page; read code diff and test text"
+      ],
+      "evidence_file": "sources/inventree-concurrency.md"
+    },
+    {
+      "id": "INV-RELEASES",
+      "title": "InvenTree releases",
+      "publisher": "inventree/InvenTree GitHub repository",
+      "url": "https://github.com/inventree/InvenTree/releases",
+      "version_or_commit": "Latest observed 1.5.6 commit 284a670 (2026-09-26); fix #12478 appears in 1.5.0 commit 6a6736b (2026-08-11); subsequent take_stock race fix #12718/#12719 in 1.5.3 commit 1930db0.",
+      "locator": [
+        "1.5.0 changelog row for #12478",
+        "1.5.3 changelog row #12718/#12719",
+        "latest 1.5.6 release"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Opened public release history and searched changelog entries"
+      ],
+      "evidence_file": "sources/inventree-concurrency.md"
+    },
+    {
+      "id": "POUCH-REPL",
+      "title": "Replication",
+      "publisher": "PouchDB documentation",
+      "url": "https://pouchdb.com/guides/replication.html",
+      "version_or_commit": "Unversioned current guide; page version not exposed; documentation for CouchDB-compatible PouchDB API.",
+      "locator": [
+        "local and remote databases",
+        "multi-master replication",
+        "incremental sync"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Opened public guide; read rendered HTML and indexed result"
+      ],
+      "evidence_file": "sources/offline-consistency.md"
+    },
+    {
+      "id": "POUCH-CONFLICT",
+      "title": "Conflicts",
+      "publisher": "PouchDB documentation",
+      "url": "https://pouchdb.com/guides/conflicts.html",
+      "version_or_commit": "Unversioned current guide; page version not exposed.",
+      "locator": [
+        "immediate 409 conflicts",
+        "eventual conflicts",
+        "deterministic winner and _conflicts",
+        "append-only delta strategy"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Opened public guide; read rendered HTML and indexed result"
+      ],
+      "evidence_file": "sources/offline-consistency.md"
+    },
+    {
+      "id": "COUCH-3_5",
+      "title": "Replication and conflict model",
+      "publisher": "Apache CouchDB documentation",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "version_or_commit": "CouchDB 3.5 docs (stable path is mutable); read version visible in page title.",
+      "locator": [
+        "Replication",
+        "Conflict avoidance",
+        "Revision tree",
+        "Working with conflicting documents"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Opened public documentation; read rendered HTML and search result"
+      ],
+      "evidence_file": "sources/offline-consistency.md"
+    },
+    {
+      "id": "PG18-RANGE",
+      "title": "Range Types, PostgreSQL 18",
+      "publisher": "PostgreSQL Global Development Group",
+      "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+      "version_or_commit": "PostgreSQL 18 documentation; pinned major-version URL.",
+      "locator": [
+        "8.17.10 Constraints on Ranges",
+        "exclusion constraints and && overlap operator",
+        "btree_gist note"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:29Z",
+      "operations": [
+        "Opened official version-pinned documentation; read rendered HTML and indexed result"
+      ],
+      "evidence_file": "sources/offline-consistency.md"
+    }
+  ],
+  "usage": null,
+  "billing": null,
+  "usage_billing_note": "Unobserved: no product account, usage telemetry, billing records, or private provider internals were accessed."
+}

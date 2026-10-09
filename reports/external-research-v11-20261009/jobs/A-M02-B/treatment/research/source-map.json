@@ -1,0 +1,489 @@
+{
+  "schema_version": "ER11-source-map-v1",
+  "block": "A-M02-B",
+  "arm": "treatment",
+  "case": "S08",
+  "method": "M02 v1 progressive-retrieval",
+  "stage": "research",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/input-map.json",
+  "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+  "discovery_frozen_at_utc": "2026-10-09T18:39:24Z",
+  "source_access_batch_requested_at_utc": "2026-10-09T18:31:55Z",
+  "source_id_policy": "S01-S21 are immutable identifiers. A discovered correction or new source must be recorded as a new ID; do not silently rebind an ID.",
+  "access_and_scope": {
+    "operations": "Public primary-source search followed by exact-URL web opens, targeted heading/term navigation, and inspection of public tagged source/release records.",
+    "prohibited_material_read": "No parent, counterpart, evaluator, campaign history, case plan, or private provider internals were read. The own-case plan has not yet been revealed.",
+    "downloads_or_execution": "No external page/source was downloaded to disk; no source code or solver was run; no API/account was used.",
+    "usage": null,
+    "billing": null,
+    "usage_billing_note": "Unobserved; null because no product/API account or billable operation was used."
+  },
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "Better Impact Comprehensive Guide to Activities",
+      "url": "https://support.betterimpact.com/en/articles/8780736-comprehensive-guide-to-activities",
+      "version_or_date": "Mutable vendor help article; no software version; page said updated over a week earlier",
+      "commit": null,
+      "locator": [
+        "Schedule Types",
+        "Shift Templates",
+        "Visibility and Automation",
+        "Adding Shifts",
+        "shift signup limits"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S01-better-impact-activities.md",
+      "evidence_sha256": "712cf65513648cc1252b55a9bf7de7faff67cf77d82137d8e5603fa302442a4d",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Volunteer scheduling product behavior and limits."
+    },
+    {
+      "source_id": "S02",
+      "title": "Better Impact Comprehensive Guide to Scheduling",
+      "url": "https://support.betterimpact.com/en/articles/13192494-comprehensive-guide-to-scheduling",
+      "version_or_date": "Mutable article dated 2026-02-04; no software version",
+      "commit": null,
+      "locator": [
+        "Schedule Settings",
+        "Signup/Assignment/Confirmation",
+        "Pending Signup List",
+        "Anonymous Volunteer Profiles",
+        "overlap handling"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S02-better-impact-scheduling.md",
+      "evidence_sha256": "3c29bad8d7c258316f70e905617e8b9de1dd51ed4989c1ce8366c64ac638ef3b",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Signup lifecycle, defaults, privacy and overlap behavior."
+    },
+    {
+      "source_id": "S03",
+      "title": "Better Impact Comprehensive Guide to User Profiles",
+      "url": "https://support.betterimpact.com/en/articles/12585658-comprehensive-guide-to-user-profiles",
+      "version_or_date": "Mutable article dated 2026-06-23; no software version",
+      "commit": null,
+      "locator": [
+        "Overview",
+        "General Availability",
+        "profile fields"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S03-better-impact-profiles.md",
+      "evidence_sha256": "830d4ed8bef5da4f43f0be13bfe9b0aec9733cdec0e12666b7e2a7cabd5f8c5e",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Availability and profile structure."
+    },
+    {
+      "source_id": "S04",
+      "title": "Better Impact Importing User Profiles",
+      "url": "https://support.betterimpact.com/en/articles/8368729-importing-user-profiles",
+      "version_or_date": "Mutable article; said updated over a month before access",
+      "commit": null,
+      "locator": [
+        "Preparing Your Data for Import",
+        "file format",
+        "worksheet layout",
+        "fees"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S04-better-impact-import.md",
+      "evidence_sha256": "1bf54d045f877395a3c9d6c55625da4f68e021eb9a6f37e9804f2849674d7c15",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Import constraints and fee caveats."
+    },
+    {
+      "source_id": "S05",
+      "title": "Better Impact February 2026 4x13 Update",
+      "url": "https://support.betterimpact.com/en/articles/13716052-february-2026-4x13-update",
+      "version_or_date": "Named update; release notice 2026-02-23 22:00 EDT",
+      "commit": null,
+      "locator": [
+        "Scheduled Emails",
+        "Other Updates/accessibility"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S05-better-impact-release.md",
+      "evidence_sha256": "b0b600a8ef9d67edd618503c4fd1126ea9ba264a25550896a4c7314d119c7b45",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Scheduled email and accessibility release evidence."
+    },
+    {
+      "source_id": "S06",
+      "title": "Better Impact Volunteer Scheduling Software Features",
+      "url": "https://www.betterimpact.com/how-we-help/volunteer-scheduling-software-features",
+      "version_or_date": "Mutable vendor feature page; 2026 copyright notice",
+      "commit": null,
+      "locator": [
+        "self-scheduling question",
+        "plan access question"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S06-better-impact-plan-and-self-schedule.md",
+      "evidence_sha256": "8824586f783f82cd618676e1f9a4f1d532342dd00554a3af260cae170c64ca84",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Control over self-service and plan-tier gating."
+    },
+    {
+      "source_id": "S07",
+      "title": "VolunteerLocal Jobs & Shifts",
+      "url": "https://www.volunteerlocal.com/features/jobs-shifts",
+      "version_or_date": "Mutable vendor feature page; no version/date",
+      "commit": null,
+      "locator": [
+        "Jobs Layer",
+        "Shifts Layer"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S07-volunteerlocal-jobs-shifts.md",
+      "evidence_sha256": "55daf9375d2f9d63c59eccc37d07aef329cd09c1c92a48f627f5b265f4c97d36",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Alternative job/shift model and supported shift forms."
+    },
+    {
+      "source_id": "S08",
+      "title": "VolunteerLocal Reminders",
+      "url": "https://www.volunteerlocal.com/features/reminders",
+      "version_or_date": "Mutable vendor feature page; no version/date",
+      "commit": null,
+      "locator": [
+        "Reminders",
+        "Email + SMS"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S08-volunteerlocal-reminders.md",
+      "evidence_sha256": "5db74e3cd362015b61da3349d0d81d00e4c2330a8dd9af4a4166581bf9090fad",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Reminder timing and channels."
+    },
+    {
+      "source_id": "S09",
+      "title": "VolunteerLocal Mobile App",
+      "url": "https://www.volunteerlocal.com/features/mobile-app",
+      "version_or_date": "Mutable vendor feature page; no version/date",
+      "commit": null,
+      "locator": [
+        "Mobile App"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S09-volunteerlocal-mobile.md",
+      "evidence_sha256": "9047445a6cec6042903f7edcb37dbe3cd751cbd7a32073935c44e0aacdc388b4",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Mobile self-service claims."
+    },
+    {
+      "source_id": "S10",
+      "title": "VolunteerLocal No Password Required",
+      "url": "https://www.volunteerlocal.com/features/no-password-required",
+      "version_or_date": "Mutable vendor feature page; no version/date",
+      "commit": null,
+      "locator": [
+        "No Password Required",
+        "volunteer schedule access"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S10-volunteerlocal-no-password.md",
+      "evidence_sha256": "fe1584b73b547569bae767fe2a5b740448d1ad655903a0af5c635554b16992b9",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Special-link access claim and unknowns."
+    },
+    {
+      "source_id": "S11",
+      "title": "OR-Tools Employee Scheduling Documentation",
+      "url": "https://developers.google.com/optimization/scheduling/employee_scheduling?hl=en",
+      "version_or_date": "Mutable documentation; package version not stated",
+      "commit": null,
+      "locator": [
+        "Assign nurses to shifts",
+        "solver parameters",
+        "shift requests",
+        "invoke solver"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S11-ortools-employee-scheduling-docs.md",
+      "evidence_sha256": "84f531d5ab6535e4c07aeb43ba8ad57f8bfdda43ba086cc90e71dfabddd9b2ac",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Primary CP-SAT scheduling pattern and applicability."
+    },
+    {
+      "source_id": "S12",
+      "title": "OR-Tools v9.15 Python Shift Scheduling Example",
+      "url": "https://github.com/google/or-tools/blob/v9.15/examples/python/shift_scheduling_sat.py",
+      "version_or_date": "tag v9.15",
+      "commit": "551ad10",
+      "locator": [
+        "solve_shift_scheduling",
+        "source lines around 1434-1857",
+        "Boolean assignments/objective around 1584-1663",
+        "requests/sequences around 1485-1537"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S12-ortools-v9.15-source.md",
+      "evidence_sha256": "46a3c3279be65f38b0166633f680144833a90785419ca078766c42d8a6b0c0e5",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Versioned implementation pattern; no execution."
+    },
+    {
+      "source_id": "S13",
+      "title": "OR-Tools v9.15 Release",
+      "url": "https://github.com/google/or-tools/releases/tag/v9.15",
+      "version_or_date": "v9.15 released 2026-01-12",
+      "commit": "551ad10",
+      "locator": [
+        "release heading",
+        "latest release marker",
+        "changed platform/dependencies"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S13-ortools-v9.15-release.md",
+      "evidence_sha256": "11a7b1a29d3bf4b8b3df997560daf80dabcc4aff19c526bf700c2814306eee23",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Reproducible release version for S12."
+    },
+    {
+      "source_id": "S14",
+      "title": "Google Workforce Scheduling API Overview",
+      "url": "https://developers.google.com/optimization/service/scheduling/workforce_scheduling",
+      "version_or_date": "REST API v1; docs last updated 2024-08-06",
+      "commit": null,
+      "locator": [
+        "solver distinction",
+        "constraints/preferences/coverage",
+        "trusted-tester access"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S14-google-workforce-overview.md",
+      "evidence_sha256": "3d4ecf4abef9566ef60b23642bf98cf66b97f4e500e54fb75c628ccc8a50292a",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Hosted employee API access and feature boundary."
+    },
+    {
+      "source_id": "S15",
+      "title": "Google solveShiftScheduling REST Reference",
+      "url": "https://developers.google.com/optimization/service/reference/rest/v1/scheduling/solveShiftScheduling",
+      "version_or_date": "REST API v1; mutable schema reference",
+      "commit": null,
+      "locator": [
+        "request/response",
+        "SolveParameters",
+        "SchedulingConstraint",
+        "CoverageRequirement",
+        "Priority"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S15-google-workforce-rest.md",
+      "evidence_sha256": "c84a6cb38ab215c7756b5f70d365bb86a5646c0a01c147bc95c940b44a230eef",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Defaults, interval endpoints, units, status and timeout behavior."
+    },
+    {
+      "source_id": "S16",
+      "title": "Google DateTime Type",
+      "url": "https://developers.google.com/optimization/service/reference/rest/v1/DateTime",
+      "version_or_date": "REST API v1; last updated 2025-02-06",
+      "commit": null,
+      "locator": [
+        "DateTime definition",
+        "time_offset union",
+        "TimeZone fields"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S16-google-datetime.md",
+      "evidence_sha256": "7f3d85894aaa3783a428b379633012be53800bdb544b92148c81f2adbde94bf9",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Timestamp/timezone/DST semantics."
+    },
+    {
+      "source_id": "S17",
+      "title": "Timefold Solver Load Balancing and Fairness",
+      "url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/load-balancing-and-fairness",
+      "version_or_date": "Docs identify Solver 2.7.1 at access; mutable current docs",
+      "commit": null,
+      "locator": [
+        "What is fair",
+        "Fairness constraints",
+        "BigDecimal rationale"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S17-timefold-fairness.md",
+      "evidence_sha256": "71fa70433644ca68a5dc028b01d51b980da60d1d48abc08610ee0464868eebe5",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Custom solver fairness mechanism and limits."
+    },
+    {
+      "source_id": "S18",
+      "title": "Timefold Solver Non-disruptive Replanning",
+      "url": "https://docs.timefold.ai/timefold-solver/latest/responding-to-change/non-disruptive-replanning",
+      "version_or_date": "Docs identify Solver 2.7.1 at access; mutable current docs",
+      "commit": null,
+      "locator": [
+        "Pinning",
+        "non-disruptive replanning",
+        "change penalty"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S18-timefold-replanning.md",
+      "evidence_sha256": "f82f77317425a2191b3808109835526f349491ea2c9806bb13a437c793b3d67c",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Published assignment protection and change costs."
+    },
+    {
+      "source_id": "S19",
+      "title": "Timefold Employee Shift Scheduling Balance Time Worked",
+      "url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/employee-resource-constraints/fairness/balance-time-worked",
+      "version_or_date": "Managed Employee Shift Scheduling model docs 1.35.x",
+      "commit": null,
+      "locator": [
+        "Balance time worked",
+        "eligibility",
+        "penalty explanation"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S19-timefold-managed-fairness.md",
+      "evidence_sha256": "6aa2cc2dbb93d4d157a10d61ba2fe2af3832acb500f034bad241e951ae452627",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Managed-model metric, not volunteer policy."
+    },
+    {
+      "source_id": "S20",
+      "title": "Timefold Solver PR #2596",
+      "url": "https://github.com/TimefoldAI/timefold-solver/pull/2596",
+      "version_or_date": "Merged 2026-08-18",
+      "commit": "98bb88e",
+      "locator": [
+        "PR overview",
+        "MoveDirector/MoveDirectorTest",
+        "review/merge chronology"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S20-timefold-pr-2596.md",
+      "evidence_sha256": "4d4406b70dccb72ca717a75ab790516e30cab4ecfe0270fc068a42ed952e65ea",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Issue/fix/regression-test evidence."
+    },
+    {
+      "source_id": "S21",
+      "title": "Timefold Solver Releases",
+      "url": "https://github.com/TimefoldAI/timefold-solver/releases",
+      "version_or_date": "v2.6.0 (2026-09-01) and v2.7.1 (2026-10-06)",
+      "commit": "v2.6.0: 7b8284c; v2.7.1: 04d17fc",
+      "locator": [
+        "v2.6.0 changelog/fix #2596",
+        "v2.7.1 regression fix",
+        "Community and commercial editions"
+      ],
+      "accessed_at_utc": "2026-10-09T18:31:55Z",
+      "observed_operations": [
+        "public web open by exact URL",
+        "page headings/targeted terms inspected",
+        "bounded evidence note prepared"
+      ],
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/treatment/research/sources/S21-timefold-releases.md",
+      "evidence_sha256": "9f4748f2366082a991bce1fe59e73a33cdaa68ffb91782f4fa604622654d66c9",
+      "source_kind": "official vendor documentation/source/release record",
+      "relevance": "Release lineage and version boundary."
+    }
+  ],
+  "discovery_sha256": "50372bd6f796bdeede2ad5867bdf66e9e078f3ca89d26b969cc4e0512e6bab6e"
+}

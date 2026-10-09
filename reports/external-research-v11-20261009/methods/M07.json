@@ -1,0 +1,15 @@
+{
+  "id": "M07",
+  "version": "v1",
+  "name": "evidence-on-demand",
+  "control": "Fresh critic/reviser receive conventional draft, source bibliography and complete own-arm captured evidence; may navigate normally.",
+  "treatment": "Same own-arm evidence plus navigable exact-byte source index. Reviewer/reviser retrieve governing context on demand, expand beyond author excerpt to definitions/exceptions/callers. Never treat cache as trusted conclusions; cold capture charged.",
+  "evidence_kind": "full-discovery",
+  "lineage": "Evidence handoff structure; no source removal",
+  "wall_ceiling_s": 3600,
+  "occupied_ceiling_s": 5400,
+  "max_parallel_agents": 2,
+  "research_s": 1800,
+  "critic_s": 720,
+  "reviser_s": 1080
+}

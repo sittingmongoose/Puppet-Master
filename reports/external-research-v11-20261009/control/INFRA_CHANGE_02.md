@@ -1,0 +1,3 @@
+# Prospective dispatch clarification
+
+2026-10-09 after original A-M01-A/treatment research ended with ATOM_CONSUMED_PROTOCOL_FAILURE and no scientific artifact: candidate autonomously applied an uninvoked R9 atom skill, attempted absent atom.py, terminalized, and returned protocol failure. Original attempt and frozen prompt remain unchanged, not rerun. ER11 is neither R9 nor ledger work. Future unstarted stage prompts explicitly state that no R9 skill/atom/stream workflow is invoked or applicable and require reading their scientific assignment directly. This is an infrastructure applicability clarification, not outcome-guided scientific tuning. Exact old prompt/host record and failed disposition retained; no candidate scientific steer or replacement occurred.

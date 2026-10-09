@@ -1,0 +1,44 @@
+{
+  "frozen_at": "2026-10-09T18:28:50.955054+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S05/brief.md",
+      "sha256": "552e4eb0e3aeffb3af6a2f4ff134a1abd6e40384823bef785365dfd63c550e35",
+      "bytes": 1456
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M11.json",
+      "sha256": "573145407d4f75cc3e7b1f09cf0ff2e2b5a5585c07f73555282c86f1adb7e21b",
+      "bytes": 1469
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/assignment.md",
+      "sha256": "c8154071e86020233506b5ca74cbfa50d4b818674eb066e5e0c0693c19824fdd",
+      "bytes": 3048
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/control/research/input-map.json",
+      "sha256": "902e6622598b6bb8bf7f5e68b67f5810b17b1cc83999e86465288c110bbe7954",
+      "bytes": 634
+    }
+  ],
+  "method": {
+    "id": "M11",
+    "version": "v1",
+    "name": "entity-community-research-synthesis",
+    "control": "Independent full discovery with conventional flat source notes and direct complete synthesis, followed by same fresh critic/reviser.",
+    "treatment": "Independent full discovery from same brief; as evidence arrives extract source-backed entity-relation-entity records WITH conditions/date/release, resolve aliases only with evidence, form emergent topical communities, generate complete condition-preserving community reports, and reduce them to coherent draft. Before final, check local source neighborhoods for every consequential recommendation. Keep all original full evidence discoverable and original obligations/alternatives, no graph infrastructure install. Same source depth/time and critic/reviser.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Fresh externally researched GraphRAG",
+    "primary_methodology": "https://arxiv.org/abs/2404.16130",
+    "novelty": "Corpus representation and bottom-up community synthesis changes; beyond semantic rendering of an already-fixed result set. ER11 tests a FULL-DISCOVERY adapted recipe bundle, not isolated shared-source component.",
+    "adaptation_limit": "Paper/implementation mechanisms motivate the intervention; published benchmark gains are NOT ER11 evidence.",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T18:58:50.955054+00:00"
+}

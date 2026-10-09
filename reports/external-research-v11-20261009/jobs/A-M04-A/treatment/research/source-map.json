@@ -1,0 +1,106 @@
+{
+  "case": "S04",
+  "assignment": "ER11 A-M04-A/treatment/research",
+  "observed_at_utc": "2026-10-09T18:29–18:32Z (individual browser retrieval timestamps are not surfaced by the web tool)",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "myTurn — Lending Library Software",
+      "url": "https://myturn.com/lending-libraries/",
+      "publisher": "myTurn (vendor primary source)",
+      "version_or_commit": "Live product page; no release/version identified on page (mutable; observed 2026-10-09)",
+      "locator": "Headings 'Check In/Out', 'Barcode Scanning', 'Locations', 'Reminders', 'Reservations'; page lines 33-55 and feature list below (browser open, 2026-10-09).",
+      "access_timestamp_utc": "2026-10-09 (retrieved in 18:29–18:32 UTC research session; individual browser request timestamps not exposed)",
+      "operations": "Opened the vendor lending-library page and recorded only product-described workflow/features. No account, demo tenant, or API calls.",
+      "observations": "Vendor says it lends/tracks library resources and lists check-in/out, USB/Bluetooth barcode scanning, multiple locations/transfers, reminders and reservations. Marketing claims are not proof of availability correctness, offline behavior, contract, hosting specifics, or fit."
+    },
+    {
+      "id": "S02",
+      "title": "PG&E Energy Centers Tool Lending Library",
+      "url": "https://pge.myturn.com/library/",
+      "publisher": "PG&E public tool-library instance (primary operational example)",
+      "version_or_commit": "Live public program page; mutable, no software version disclosed",
+      "locator": "Reservation process instructions near page top: request, email confirmation, staff approval acknowledgment, stated two-day lead time, staffed pickup/dropoff appointments.",
+      "access_timestamp_utc": "2026-10-09 (retrieved in 18:29–18:32 UTC research session; individual browser request timestamps not exposed)",
+      "operations": "Opened public lending-program page only; did not create an account or submit request.",
+      "observations": "Example of staff-reviewed requests and scheduled handoff; not evidence that every myTurn customer uses this policy or that system prevents conflicting time slots."
+    },
+    {
+      "id": "S03",
+      "title": "Fabman makerspace product page and API documentation",
+      "url": "https://www.fabman.io/ ; https://fabman-api.readthedocs.io/en/stable/index.html",
+      "publisher": "Fabman (vendor primary source)",
+      "version_or_commit": "Marketing page live/no release disclosed; API docs state stable version 1.2.10",
+      "locator": "Product page headings 'Smart bookings & reservations', 'Membership management', 'Easy machine integration'; API class reference list includes Booking (stable API docs index, browser lines 19-56).",
+      "access_timestamp_utc": "2026-10-09 (retrieved in 18:29–18:32 UTC research session; individual browser request timestamps not exposed)",
+      "operations": "Opened public product page and API index; did not authenticate or call an API.",
+      "observations": "Vendor describes machine/room/desk booking together with membership, training, equipment access and optional billing/use charges; API index exposes Booking object. The pages inspected do not establish offline behavior, race protection, repair/consumables, CSV migration, hosting details or price."
+    },
+    {
+      "id": "S04",
+      "title": "Snipe-IT — Overview",
+      "url": "https://snipe-it.readme.io/docs/overview",
+      "publisher": "Snipe-IT official documentation",
+      "version_or_commit": "Unversioned live documentation; docs may move; page opened 2026-10-09",
+      "locator": "Sections Asset Tags, Checkin/Checkout, Status Labels, Accessories, Components, Consumables; browser open lines 32-74.",
+      "access_timestamp_utc": "2026-10-09 (retrieved in 18:29–18:32 UTC research session; individual browser request timestamps not exposed)",
+      "operations": "Opened official guide; no installation or API calls.",
+      "observations": "Unique asset tags, current checkout prevents assigning that asset to another person until return; four status-label characteristics; accessory/component/consumable entity distinctions. This evidence covers custody lifecycle, not future interval reservation semantics."
+    },
+    {
+      "id": "S05",
+      "title": "Snipe-IT — Importing Assets, Getting Started, and Importing History",
+      "url": "https://snipe-it.readme.io/docs/importing-assets ; https://snipe-it.readme.io/docs/getting-started ; https://snipe-it.readme.io/docs/importing-history",
+      "publisher": "Snipe-IT official documentation",
+      "version_or_commit": "Live unversioned docs; history importer says introduced in v3.3; individual page update says 6 months ago as fetched 2026-10-09",
+      "locator": "Asset import lines 46-90 (CSV date/purchase/default location/checkout type, custom fields pre-created/exactly named); history importer lines 18-50 (existing asset/user, headers Date/Asset Tag/Name, extra columns ignored, ascending dates); getting started lines 37-54 and 88-90.",
+      "access_timestamp_utc": "2026-10-09 (retrieved in 18:29–18:32 UTC research session; individual browser request timestamps not exposed)",
+      "operations": "Opened official import guides only; no CSV uploaded or instance accessed.",
+      "observations": "Documents field matching and import constraints useful for messy spreadsheet migration; asset custom fields must already exist; basic history import only. Unversioned page behavior is not assumed universal across editions/releases."
+    },
+    {
+      "id": "S06",
+      "title": "InvenTree — Stock Availability, Physical Units, Stock Tracking and Permissions",
+      "url": "https://docs.inventree.org/en/stable/stock/availability/ ; https://docs.inventree.org/en/latest/concepts/units/ ; https://docs.inventree.org/en/stable/stock/tracking/ ; https://docs.inventree.org/en/stable/settings/permissions/",
+      "publisher": "InvenTree project official documentation",
+      "version_or_commit": "`stable` and `latest` documentation branches; current page footers include Aug/Sep 2026; source tree commit not exposed. Mutable docs explicitly; stable code/release evidence is S07.",
+      "locator": "Availability: headings Required/In Stock/Allocated/Available, formulas and stock location (browser open lines 320-352); Physical Units: Pint conversion, case sensitivity and built-in units (lines 325-410); Stock Tracking: tracking history/settings; Permissions: default user permission/group/role/API behavior.",
+      "access_timestamp_utc": "2026-10-09 (retrieved in 18:29–18:32 UTC research session; individual browser request timestamps not exposed)",
+      "operations": "Opened documentation pages only; no API or live instance operations.",
+      "observations": "Quantities are location-scoped; allocated <= on hand, available = on hand - allocated and amount is consumed on fulfillment. Pint conversion and custom units make fractional consumables possible but add vocabulary/configuration. Stock history retention/deletion and role/API permissions are configurable. These are inventory analogies, not interval booking behavior."
+    },
+    {
+      "id": "S07",
+      "title": "InvenTree stock concurrency regression, fix, backport, release",
+      "url": "https://github.com/inventree/InvenTree/pull/12718 ; https://github.com/inventree/InvenTree/pull/12719 ; https://github.com/inventree/InvenTree/commit/4446c95 ; https://github.com/inventree/InvenTree/releases",
+      "publisher": "InvenTree upstream repository/release (primary code history)",
+      "version_or_commit": "Master fix `2dca27f` (PR #12718); 1.5.x backport commit `4446c95` (PR #12719); 1.5.3 release commit short `1930db0`; release dated 2026-09-08 in GitHub listing. Exact page/commit links retained, no code checkout.",
+      "locator": "PR #12718 body says stale pre-lock cap could cause over-consumption; commit `4446c95` diff at `src/backend/InvenTree/stock/models.py` around `take_stock` lines 3401-3422 moves cap after `lock_quantity()`, and `tests.py` adds `StockItemTakeStockConcurrencyTest` using two threads/DB connections; PR #12719 backport; release 1.5.3 bullet includes fix.",
+      "access_timestamp_utc": "2026-10-09 (retrieved in 18:29–18:32 UTC research session; individual browser request timestamps not exposed)",
+      "operations": "Opened GitHub PR, commit diff, and releases page. Did not clone, execute upstream test, or treat reported checks as my executed checks.",
+      "observations": "Evidence chain: reported concurrency race → row-lock/refresh before capping quantity → cross-transaction test for phantom removal → backport and named release. Relevant to consumable depletion/write serialization, not proof of reservation correctness."
+    },
+    {
+      "id": "S08",
+      "title": "PostgreSQL 18 — Range Types and Overlap Exclusion Constraints",
+      "url": "https://www.postgresql.org/docs/18/rangetypes.html ; https://www.postgresql.org/docs/18/sql-createtable.html ; https://www.postgresql.org/docs/18/sql-set-constraints.html",
+      "publisher": "PostgreSQL official documentation",
+      "version_or_commit": "PostgreSQL 18 docs (version pinned in URL)",
+      "locator": "Range Types §8.17.10 example exclusion on `tsrange` overlap `&&`; pair of ranges rejected and resource equality combined with `btree_gist`; CREATE TABLE exclusion syntax; SET CONSTRAINTS immediate/deferred notes.",
+      "access_timestamp_utc": "2026-10-09 (retrieved in 18:29–18:32 UTC research session; individual browser request timestamps not exposed)",
+      "operations": "Opened official documentation only; no PostgreSQL was run.",
+      "observations": "DB constraint option can enforce non-overlap at commit/storage level; sample uses a time range, GiST, overlap operator, and optionally resource key + `btree_gist`. Constraint expresses only the encoded table rules; app must handle the conflict response, interval conventions, site/item identity, status/cancellation applicability, and retries."
+    },
+    {
+      "id": "S09",
+      "title": "Apache CouchDB 3.5 — Eventual Consistency and Replication Conflicts",
+      "url": "https://docs.couchdb.org/en/stable/intro/consistency.html ; https://docs.couchdb.org/en/stable/replication/conflicts.html ; https://docs.couchdb.org/en/stable/intro/overview.html",
+      "publisher": "Apache CouchDB official documentation",
+      "version_or_commit": "Stable docs state CouchDB 3.5; mutable stable branch, observed 2026-10-09",
+      "locator": "Eventual consistency docs explain independent replicas and app-specific conflicts; conflict model §2.3 describes MVCC revision tree, 409 on stale same-node revision, conflict-preserving replication, and application-specific merge (browser lines 228-236); overview says incremental replication and offline replicas.",
+      "access_timestamp_utc": "2026-10-09 (retrieved in 18:29–18:32 UTC research session; individual browser request timestamps not exposed)",
+      "operations": "Opened official docs only; no CouchDB instance or replication was run.",
+      "observations": "Replication keeps offline replicas useful, but concurrent doc edits can conflict and app-specific resolution is required; a deterministic document winner is not equivalent to global scheduling/unique overlapping-slot enforcement."
+    }
+  ]
+}

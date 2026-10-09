@@ -1,0 +1,160 @@
+{
+  "schema": "er11-source-map-v1",
+  "stage": "A-M05-B/control/research",
+  "case": "S11",
+  "frozen_before_plan_reveal": true,
+  "captured_at_utc": "2026-10-09T18:42:24Z",
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "WCAG 2.2 Quick Reference (time-based media criteria)",
+      "url": "https://www.w3.org/WAI/WCAG22/quickref/",
+      "version_commit": "WCAG 2.2; current Quick Reference page observed 2026-10-09 (page is living guidance)",
+      "locator": "Guideline 1.2; SC 1.2.2, 1.2.3; sufficient techniques and failure notes",
+      "accessed_at_utc": "2026-10-09T18:41:48Z",
+      "observed_operations": ["web search retrieved W3C page", "read returned page excerpt"],
+      "evidence_note": "Synchronized-media captions are SC 1.2.2 Level A; SC 1.2.3 allows audio description or a time-based media alternative for prerecorded synchronized media."
+    },
+    {
+      "source_id": "S02",
+      "title": "Understanding SC 1.2.2: Captions (Prerecorded)",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded",
+      "version_commit": "WCAG 2.2 Understanding document; informative explanation, page accessed 2026-10-09",
+      "locator": "Definition of captions; note describing non-dialogue audio and speaker identification",
+      "accessed_at_utc": "2026-10-09T18:42:24Z",
+      "observed_operations": ["web search retrieved W3C page", "read returned page excerpt"],
+      "evidence_note": "The WAI explanation describes captions as synchronized equivalents for speech and meaningful non-speech audio; it says captions include information such as effects, music, laughter, and speaker identification."
+    },
+    {
+      "source_id": "S03",
+      "title": "WHATWG HTML Standard — Media elements / track element",
+      "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+      "version_commit": "WHATWG HTML Living Standard; page accessed 2026-10-09, mutable standard",
+      "locator": "Track element; text-track kinds; kind, label, srclang and default attributes",
+      "accessed_at_utc": "2026-10-09T18:40:54Z",
+      "observed_operations": ["web search retrieved standard page", "read returned search excerpt"],
+      "evidence_note": "HTML defines text-track kinds including captions, subtitles, chapters, descriptions and metadata; the track label is used by user agents and srclang identifies the track language. At most one caption/subtitle track child may be marked default."
+    },
+    {
+      "source_id": "S04",
+      "title": "WebVTT: The Web Video Text Tracks Format",
+      "url": "https://www.w3.org/TR/webvtt1/",
+      "version_commit": "W3C WebVTT Candidate Recommendation Draft as served 2026-10-09; publication history on W3C WebVTT series page",
+      "locator": "§4.1 WebVTT cue timings; cue start/end constraints and ordering",
+      "accessed_at_utc": "2026-10-09T18:42:24Z",
+      "observed_operations": ["web search retrieved W3C specification", "read returned cue timing excerpt"],
+      "evidence_note": "Cue starts are nondecreasing, each end is after its own start, cue blocks are ordered by start time, and distinct cues may overlap."
+    },
+    {
+      "source_id": "S05",
+      "title": "Able Player official documentation and README",
+      "url": "https://github.com/ableplayer/ableplayer (README: https://github.com/ableplayer/ableplayer/blob/main/README.md)",
+      "version_commit": "README and project docs on mutable main; package.json reports version 5.0.0; no main-branch commit SHA exposed in the inspected page",
+      "locator": "Feature list; Closed Captions; Interactive Transcript; Video Transcript Sorter; YouTube/Vimeo limitations; preferences",
+      "accessed_at_utc": "2026-10-09T18:40:54Z",
+      "observed_operations": ["web search retrieved official repository and project site", "read returned repository documentation excerpt"],
+      "evidence_note": "Docs describe keyboard and screen-reader controls, user caption preferences, WebVTT-only caption tracks, generated/manual transcripts, VTS synchronization aid, and reduced functionality with remote-hosted captions alone."
+    },
+    {
+      "source_id": "S06",
+      "title": "Able Player v5.0.0 release",
+      "url": "https://github.com/ableplayer/ableplayer/releases",
+      "version_commit": "v5.0.0, short commit 8d235f9, released 2026-06-21; release page showed it as latest at access",
+      "locator": "v5.0.0 release notes and release list",
+      "accessed_at_utc": "2026-10-09T18:41:48Z",
+      "observed_operations": ["web search retrieved release page", "read release list and v5.0.0 notes"],
+      "evidence_note": "The release page identifies v5.0.0/8d235f9 and notes fixes including Vimeo error handling, playlist navigation, volume display, seekbar width, and language handling."
+    },
+    {
+      "source_id": "S07",
+      "title": "Able Player issue #775 — develop YouTube regression report",
+      "url": "https://github.com/ableplayer/ableplayer/issues/775",
+      "version_commit": "Issue #775; report references develop regressions originating at 834d003, 2d4a1c2, and 05e9a22; issue page observed 2026-10-09",
+      "locator": "Issue body lines 130-228; issue description, tested-version caveat, regressions, reported repro and demo-test results",
+      "accessed_at_utc": "2026-10-09T18:42:24Z",
+      "observed_operations": ["opened exact public issue URL", "read issue body and activity"],
+      "evidence_note": "Reporter says a freshly built develop version broke YouTube and 17/60 demos, while released 5.0.0 did not; checked-in stale build masked regressions. Results are attributed to the issue reporter, not an independent test here."
+    },
+    {
+      "source_id": "S08",
+      "title": "Able Player PR #778 — Apply fixes for issues with YouTube",
+      "url": "https://github.com/ableplayer/ableplayer/pull/778",
+      "version_commit": "PR #778; commit cd617fc merged into develop on 2026-09-13",
+      "locator": "PR merge event and check summary",
+      "accessed_at_utc": "2026-10-09T18:42:24Z",
+      "observed_operations": ["opened exact public pull request URL", "read merge event"],
+      "evidence_note": "Maintainer merged one commit into develop; the page reports seven checks passed. The inspected release list does not show a later tagged release containing this fix."
+    },
+    {
+      "source_id": "S09",
+      "title": "Subtitle Edit 5 official documentation: FAQ, overview, audio visualizer, STT and formats",
+      "url": "https://github.com/SubtitleEdit/subtitleedit/tree/main/docs (key pages: docs/faq.md, docs/overview.md, docs/features/audio-visualizer.md, docs/features/speech-to-text.md, docs/reference/supported-formats.md)",
+      "version_commit": "Mutable main documentation; no commit SHA exposed in inspected pages; cross-check feature availability against a selected release",
+      "locator": "Waveform/spectrogram; synchronization; supported local and online speech engines; supported WebVTT/SRT/TTML formats",
+      "accessed_at_utc": "2026-10-09T18:41:48Z",
+      "observed_operations": ["web search retrieved official repository docs", "read FAQ/overview/feature excerpts"],
+      "evidence_note": "Documentation describes waveform/spectrogram editing, timing tools, many text/container formats, and both local and online speech-to-text engines; local processing must be selected explicitly."
+    },
+    {
+      "source_id": "S10",
+      "title": "Subtitle Edit v5.2.0 release and changelog",
+      "url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.2.0",
+      "version_commit": "Released version v5.2.0 dated 2026-09-10; exact tag commit not displayed by inspected release page",
+      "locator": "v5.2.0 release page; changelog entries for v5.2.0 and v5.1.0; current v5.3 beta noted separately at releases page",
+      "accessed_at_utc": "2026-10-09T18:42:24Z",
+      "observed_operations": ["opened exact tagged release URL", "read release page"],
+      "evidence_note": "The release page and project changelog identify 5.2.0 as a released version; changelog records 5.1 AI-review, local/remote translation options and engine changes. 5.3 beta is a pre-release, not the selected stable candidate."
+    },
+    {
+      "source_id": "S11",
+      "title": "Amara official support: captions/translations and subtitle upload",
+      "url": "https://support.amara.org/support/solutions/articles/195345-create-captions-and-translations (related: https://support.amara.org/support/solutions/articles/238000-subtitle-options-on-amara)",
+      "version_commit": "Official support documentation; create-captions article modified 2026-06-09; accessed 2026-10-09",
+      "locator": "Create captions and translations; team requests; language selection; upload/export and existing-language replacement details",
+      "accessed_at_utc": "2026-10-09T18:41:48Z",
+      "observed_operations": ["web search retrieved support pages", "read returned support excerpts"],
+      "evidence_note": "Help describes collaborative language editing and team workflow; uploaded tracks can replace an existing version, and some upload workflows mark a track complete."
+    },
+    {
+      "source_id": "S12",
+      "title": "YouTube Help — Edit or remove captions",
+      "url": "https://support.google.com/youtube/answer/2734705?hl=en-GB",
+      "version_commit": "Current help page as retrieved 2026-10-09",
+      "locator": "Edit captions; edit caption timing; download and edit caption files",
+      "accessed_at_utc": "2026-10-09T18:41:48Z",
+      "observed_operations": ["web search retrieved official help page", "read returned page excerpt"],
+      "evidence_note": "YouTube Studio permits text/timestamp changes, a duplicate-and-edit route for automatic captions, publishing, download, external editing, and re-upload."
+    },
+    {
+      "source_id": "S13",
+      "title": "W3C TTML profile comparison overview",
+      "url": "https://www.w3.org/AudioVideo/TT/docs/TTML-Profiles.html",
+      "version_commit": "W3C overview page; page is old and accessed 2026-10-09; used only for format distinction, not current product support",
+      "locator": "WebVTT and TTML overview/profile notes",
+      "accessed_at_utc": "2026-10-09T18:40:54Z",
+      "observed_operations": ["web search retrieved W3C page", "read returned excerpt"],
+      "evidence_note": "The page contrasts text-based WebVTT with XML-based TTML and emphasizes profile/delivery distinctions. Current HTML/WebVTT specifications and chosen distributor requirements should govern implementation."
+    },
+    {
+      "source_id": "S14",
+      "title": "DCMP Captioning Key",
+      "url": "https://dcmp.org/captioningkey/print",
+      "version_commit": "Current web edition retrieved 2026-10-09",
+      "locator": "Captioning Key overview; speaker identification; non-speech sound and music; language mechanics",
+      "accessed_at_utc": "2026-10-09T18:42:24Z",
+      "observed_operations": ["web search retrieved DCMP page", "read returned page excerpt"],
+      "evidence_note": "DCMP describes captions as including dialogue plus speaker identification, sound effects and music description; it is an editorial resource, not the WCAG normative text."
+    },
+    {
+      "source_id": "S15",
+      "title": "17 U.S.C. §106, U.S. Code (2023 edition)",
+      "url": "https://www.govinfo.gov/content/pkg/USCODE-2023-title17/html/USCODE-2023-title17-chap1-sec106.htm",
+      "version_commit": "United States Code 2023 edition, §106; jurisdiction-specific statutory source",
+      "locator": "§106(2), exclusive right to prepare derivative works; §101 definition reference for translation in the official source notes",
+      "accessed_at_utc": "2026-10-09T18:41:48Z",
+      "observed_operations": ["web search retrieved official GovInfo page", "read returned statute excerpt"],
+      "evidence_note": "U.S. law provides a jurisdiction-specific example: §106 lists preparation of derivative works among exclusive rights, subject to statutory limitations and exceptions; the related statutory definition names translation. This is not a global legal conclusion."
+    }
+  ]
+}
+

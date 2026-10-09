@@ -1,0 +1,118 @@
+{
+  "assignment": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/qualification/luna/assignment.md",
+  "artifact": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/qualification/luna/artifact.md",
+  "qualification_type": "bounded ER11 route qualification; public primary-source documentation review",
+  "native_goal": {
+    "goal_id": "01a121e1-3156-7763-8841-e0afb2ca6106",
+    "status_at_last_observation": "active",
+    "last_observation_at_utc": "2026-10-09 18:17 UTC (minute precision; separate tool call)",
+    "reported_tokens_used": 44565,
+    "billing_cost": null
+  },
+  "requested_route": {
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    },
+    "basis": "assignment metadata; native Goal lifecycle did not return a providerInstanceId field"
+  },
+  "sources": [
+    {
+      "id": "sqlite-wal",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_applicability": "Living SQLite documentation. WAL available since SQLite 3.7.0; page describes WAL-reset bug affected versions 3.7.0 through 3.51.2 and fix in 3.51.3+ (backports 3.50.7 and 3.44.6).",
+      "page_updated_at_utc": "2026-08-25 19:42:39Z",
+      "accessed_at_utc": "2026-10-09 18:16:58Z",
+      "operations": [
+        {
+          "at_utc": "2026-10-09 18:16:43Z",
+          "operation": "search_query",
+          "query": "site:sqlite.org/wal.html SQLite Write-Ahead Logging concurrency checkpoint durability"
+        },
+        {
+          "at_utc": "2026-10-09 18:16:58Z",
+          "operation": "open",
+          "details": "Opened https://www.sqlite.org/wal.html and reviewed concurrency, checkpointing, durability, and current WAL-reset bug sections."
+        }
+      ]
+    },
+    {
+      "id": "sqlite-pragma",
+      "url": "https://www.sqlite.org/pragma.html#pragma_synchronous",
+      "version_or_applicability": "Living SQLite PRAGMA documentation covering synchronous levels and wal_checkpoint modes/results.",
+      "page_updated_at_utc": "2026-10-04 10:38:19Z",
+      "accessed_at_utc": "2026-10-09 18:16:58Z",
+      "operations": [
+        {
+          "at_utc": "2026-10-09 18:16:43Z",
+          "operation": "search_query",
+          "query": "site:sqlite.org/pragma.html wal_checkpoint synchronous SQLite WAL durability"
+        },
+        {
+          "at_utc": "2026-10-09 18:16:58Z",
+          "operation": "open",
+          "details": "Opened the official PRAGMA documentation."
+        },
+        {
+          "at_utc": "2026-10-09 18:17:06Z",
+          "operation": "find",
+          "details": "Located synchronous FULL/NORMAL semantics and wal_checkpoint mode/result descriptions."
+        }
+      ]
+    },
+    {
+      "id": "sqlite-compile-options",
+      "url": "https://www.sqlite.org/compile.html#default_wal_synchronous",
+      "version_or_applicability": "Living SQLite compile-time options documentation; SQLITE_DEFAULT_WAL_SYNCHRONOUS and auto-checkpoint defaults are build-dependent.",
+      "page_updated_at_utc": "2026-10-01 12:14:56Z",
+      "accessed_at_utc": "2026-10-09 18:16:58Z",
+      "operations": [
+        {
+          "at_utc": "2026-10-09 18:16:43Z",
+          "operation": "search_query",
+          "query": "site:sqlite.org/compile.html SQLITE_DEFAULT_WAL_SYNCHRONOUS"
+        },
+        {
+          "at_utc": "2026-10-09 18:16:58Z",
+          "operation": "open",
+          "details": "Opened official compile-time options documentation."
+        },
+        {
+          "at_utc": "2026-10-09 18:17:06Z",
+          "operation": "find",
+          "details": "Located SQLITE_DEFAULT_WAL_SYNCHRONOUS and default auto-checkpoint option descriptions."
+        },
+        {
+          "at_utc": "2026-10-09 18:17:38Z",
+          "operation": "find",
+          "details": "Located page last-updated metadata."
+        }
+      ]
+    },
+    {
+      "id": "sqlite-release-3-51-3",
+      "url": "https://www.sqlite.org/releaselog/3_51_3.html",
+      "version_or_applicability": "SQLite 3.51.3 patch release, dated 2026-03-13; release note names the WAL-reset database-corruption fix.",
+      "accessed_at_utc": "2026-10-09 18:17:15Z",
+      "operations": [
+        {
+          "at_utc": "2026-10-09 18:17:15Z",
+          "operation": "open",
+          "details": "Opened official SQLite 3.51.3 release record and verified the listed WAL-reset bug fix."
+        }
+      ]
+    }
+  ],
+  "usage_tokens": {
+    "native_goal_reported": 44565,
+    "provider_metered_usage": null
+  },
+  "billing_cost": null,
+  "notes": [
+    "No target SQLite binary, VFS, filesystem, or application runtime was available; deployment behavior was not directly tested.",
+    "No campaign history, other job, credentials, private internals, installer, executable code, or unrelated configuration was accessed.",
+    "Provider-metered usage and billing were not exposed; those unknowns remain null. The native Goal counter is recorded separately as reported_tokens_used."
+  ]
+}

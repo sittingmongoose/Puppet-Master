@@ -1,0 +1,157 @@
+{
+  "map_version": 1,
+  "case": "S03",
+  "arm": "treatment",
+  "stage": "research",
+  "method": "M09 v1 analogical-outline-interviews",
+  "generated_utc": "2026-10-09T18:38:00Z",
+  "access_context": "All sources are public primary sources chosen independently by the single investigator of this stage. No campaign, history, evaluator, or counterpart material was read. plan-root-only.md was never accessed.",
+  "usage_billing": "null — usage/billing terms were not observed for any source.",
+  "id_policy": "IDs below are immutable for this stage; re-binding an ID to a different URL/version is not permitted (any such change must be recorded as an explicit drift entry).",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "ReviewNB - Jupyter Notebook Code Reviews & Collaboration (product page)",
+      "url": "https://www.reviewnb.com/",
+      "version": "site content as served 2026-10-09 (no version string published)",
+      "commit": null,
+      "locator": "homepage sections: diff rendering, comments, platform integration, self-hosting",
+      "accessed_utc": "2026-10-09T18:32Z (webReader fetch); 2026-10-09T18:35Z (WebFetch extraction)",
+      "operations": ["webReader fetch", "WebFetch question-answering extraction"],
+      "evidence_path": "sources/S01-reviewnb.md"
+    },
+    {
+      "id": "S02",
+      "title": "nbdime - diffing and merging of Jupyter Notebooks (docs)",
+      "url": "https://nbdime.readthedocs.io/en/latest/",
+      "version": "4.0.4 (version string read from page)",
+      "commit": null,
+      "locator": "docs index, project description and nbdiff-web example",
+      "accessed_utc": "2026-10-09T18:32Z",
+      "operations": ["webReader fetch"],
+      "evidence_path": "sources/S02-nbdime.md"
+    },
+    {
+      "id": "S03",
+      "title": "nbgrader - Creating and grading assignments (user guide)",
+      "url": "https://nbgrader.readthedocs.io/en/stable/user_guide/creating_and_grading_assignments.html",
+      "version": "0.9.5 (stable)",
+      "commit": null,
+      "locator": "user guide: assign -> release -> fetch/submit -> autograde -> manual grading; cell metadata/grade ids",
+      "accessed_utc": "2026-10-09T18:32Z",
+      "operations": ["webReader fetch"],
+      "evidence_path": "sources/S03-nbgrader.md"
+    },
+    {
+      "id": "S04",
+      "title": "repo2docker - Configuration Files (docs)",
+      "url": "https://repo2docker.readthedocs.io/en/latest/configuration/index.html",
+      "version": "latest (docs; exact release not shown on page - mutable drift)",
+      "commit": null,
+      "locator": "configuration detection list, 'roughly in the order of build priority'",
+      "accessed_utc": "2026-10-09T18:34Z (redirect stub observed at /config_files.html); 2026-10-09T18:37Z (WebFetch extraction)",
+      "operations": ["webReader fetch (stub)", "WebFetch question-answering extraction"],
+      "evidence_path": "sources/S04-repo2docker-config.md"
+    },
+    {
+      "id": "S05",
+      "title": "repo2docker - Using repo2docker (docs)",
+      "url": "https://repo2docker.readthedocs.io/en/latest/usage.html",
+      "version": "latest (docs; exact release not shown on page - mutable drift)",
+      "commit": null,
+      "locator": "usage overview: builds reproducible computational environment from a Git repository URL",
+      "accessed_utc": "2026-10-09T18:33Z",
+      "operations": ["webReader fetch"],
+      "evidence_path": "sources/S05-repo2docker-usage.md"
+    },
+    {
+      "id": "S06",
+      "title": "nbconvert - Executing notebooks (execute API docs)",
+      "url": "https://nbconvert.readthedocs.io/en/latest/execute_api.html",
+      "version": "7.17.1",
+      "commit": null,
+      "locator": "ExecutePreprocessor defaults: timeout ('The default is 30 s'), allow_errors=False, kernel from notebook metadata",
+      "accessed_utc": "2026-10-09T18:35Z",
+      "operations": ["WebFetch question-answering extraction"],
+      "evidence_path": "sources/S06-nbconvert-execute.md"
+    },
+    {
+      "id": "S07",
+      "title": "renv - Introduction (article)",
+      "url": "https://rstudio.github.io/renv/articles/renv.html",
+      "version": "site content as served 2026-10-09 (no version string published)",
+      "commit": null,
+      "locator": "lockfile contents (R version, repositories, package records incl. hashes/commit SHAs); snapshot/restore; caveats",
+      "accessed_utc": "2026-10-09T18:38Z",
+      "operations": ["WebFetch question-answering extraction"],
+      "evidence_path": "sources/S07-renv.md"
+    },
+    {
+      "id": "S08",
+      "title": "GHSA-hwvq-6gjx-j797 - Special Element Injection in notebook (CVE-2021-32798)",
+      "url": "https://github.com/advisories/GHSA-hwvq-6gjx-j797",
+      "version": "affected <5.7.11 and >=6.0.0,<6.4.1; patched 5.7.11 and 6.4.1",
+      "commit": null,
+      "locator": "advisory impact and patched-versions sections",
+      "accessed_utc": "2026-10-09T18:46Z",
+      "operations": ["WebFetch question-answering extraction"],
+      "evidence_path": "sources/S08-CVE-2021-32798-GHSA.md"
+    },
+    {
+      "id": "S09",
+      "title": "Jupyter blog - CVE-2021-32797 and CVE-2021-32798 remote code execution",
+      "url": "https://blog.jupyter.org/posts/2021/cve-2021-32797-and-cve-2021-32798-remote-code-execution",
+      "version": "post of 2021-08 (patched releases on PyPI 2021-08-05; advisory 2021-08-09)",
+      "commit": null,
+      "locator": "affected projects/versions; trust-mechanism bypass statement; upgrade advice",
+      "accessed_utc": "2026-10-09T18:46Z",
+      "operations": ["WebFetch question-answering extraction"],
+      "evidence_path": "sources/S09-jupyter-blog-cves.md"
+    },
+    {
+      "id": "S10",
+      "title": "Whole Tale documentation",
+      "url": "https://wholetale.readthedocs.io/en/latest/",
+      "version": "1.2.0.0 (announcement on page)",
+      "commit": null,
+      "locator": "landing page: publishing transparent and reproducible computational research; Tale = environment + data + narrative",
+      "accessed_utc": "2026-10-09T18:33Z",
+      "operations": ["webReader fetch"],
+      "evidence_path": "sources/S10-wholetale.md"
+    },
+    {
+      "id": "S11",
+      "title": "Renku - Session Basics (docs.renkulab.io)",
+      "url": "https://docs.renkulab.io/en/0.19.1/topic-guides/session-basics.html",
+      "version": "0.19.1 (URL-pinned docs version)",
+      "commit": null,
+      "locator": "session environments defined using Docker; auto-saving; knowledge graph topic guides; JupyterLab and RStudio images (renkulab-docker)",
+      "accessed_utc": "2026-10-09T18:44Z (via WebSearch extraction; direct fetches of docs.renku.co and renkul.io failed with DNS errors in this sandbox)",
+      "operations": ["WebSearch query + result extraction"],
+      "evidence_path": "sources/S11-renku-sessions.md"
+    },
+    {
+      "id": "S12",
+      "title": "mybinder.org documentation index",
+      "url": "https://mybinder.readthedocs.io/en/latest/",
+      "version": "latest (docs; no version string on page)",
+      "commit": null,
+      "locator": "page structure; absence of resource limits on fetched page (usage guidelines link not fetched)",
+      "accessed_utc": "2026-10-09T18:42Z",
+      "operations": ["WebFetch question-answering extraction"],
+      "evidence_path": "sources/S12-mybinder-docs.md"
+    },
+    {
+      "id": "S13",
+      "title": "Code Ocean product page - NOT ACCESSED (evidence absent)",
+      "url": "https://codeocean.com/",
+      "version": null,
+      "commit": null,
+      "locator": null,
+      "accessed_utc": "2026-10-09T18:41Z (HTTP 404 on /product); 2026-10-09T18:42Z (HTTP 403 on /)",
+      "operations": ["2 WebFetch attempts, both blocked by origin"],
+      "evidence_path": "sources/S13-codeocean-403.md"
+    }
+  ],
+  "index": "sources/INDEX.md"
+}

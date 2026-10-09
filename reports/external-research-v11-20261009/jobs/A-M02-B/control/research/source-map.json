@@ -1,0 +1,412 @@
+{
+  "schema": "er11-source-map-v1",
+  "case": "S08",
+  "block": "A-M02-B",
+  "arm": "control",
+  "method": "M02",
+  "stage": "research",
+  "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M02-B/control/research",
+  "assignment_sha256": "d98439bf6bb52f83e070bb8d7f768c97229c1cd6033d70d0241101d4e327b2bf",
+  "input_map_sha256": "9d92689268725131e8598505292a636d2bd6eb79ed9d4e09ad49ac3ab08aab83",
+  "brief_sha256": "cc962dde020c6c859e7149db1adcdc9b9872bc02c7f7d8566fea32bf8c5e73cf",
+  "discovery_sha256": "ad0bd90a99a66059d7db9e2f8e405675474c64edfca8cfcbc0d85c8b29ec7528",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Better Impact Volunteer Impact product page",
+      "url": "https://www.betterimpact.com/solutions-volunteer-impact?hsCtaAttrib=171143047728",
+      "version": "vendor product page ©2026; mutable; no build/revision",
+      "commit": null,
+      "locator": "Self-scheduling, reminders/mobile, privacy/security, FAQ; accessed render lines 105-148, 247-262.",
+      "accessed_at": "2026-10-09T18:28:29Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read scheduling/mobile/privacy sections"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s01--better-impact-volunteer-impact-product-page",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      }
+    },
+    {
+      "id": "S02",
+      "title": "My Impact mobile guide",
+      "url": "https://siteguide.betterimpact.com/en/articles/9893058-navigating-the-app-and-mobile-interface",
+      "version": "help article dated 2025-01-08; mutable",
+      "commit": null,
+      "locator": "Lines 10-12, 37-60, 63-84.",
+      "accessed_at": "2026-10-09T18:28:29Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read mobile menu/profile sections"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s02--my-impact-mobile-guide",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      }
+    },
+    {
+      "id": "S03",
+      "title": "Better Impact profile import guide",
+      "url": "https://support.betterimpact.com/en/articles/8368729-importing-user-profiles",
+      "version": "support article dated 2026-08-26; mutable",
+      "commit": null,
+      "locator": "Import preparation/submission/result sections; accessed render lines 34-81, 84-124.",
+      "accessed_at": "2026-10-09T18:28:29Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read import requirements"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s03--better-impact-profile-import-guide",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      }
+    },
+    {
+      "id": "S04",
+      "title": "Volgistics schedule overview",
+      "url": "https://www.volgistics.com/help/schedule/schedule-overview/",
+      "version": "unversioned mutable vendor help; no revision/build shown",
+      "commit": null,
+      "locator": "Self-scheduling and coordinator scheduling; accessed render lines 248-260.",
+      "accessed_at": "2026-10-09T18:27:08Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read self-scheduling/coordinator sections"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s04--volgistics-schedule-overview",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      }
+    },
+    {
+      "id": "S05",
+      "title": "Volgistics getting started with self-scheduling",
+      "url": "https://www.volgistics.com/help/schedule/getting-started-with-self-scheduling/",
+      "version": "unversioned mutable vendor help",
+      "commit": null,
+      "locator": "Setup, assignment rules, reminders; accessed render lines 174-212.",
+      "accessed_at": "2026-10-09T18:27:08Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read setup/rules/reminder sections"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s05--volgistics-self-scheduling-setup",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      }
+    },
+    {
+      "id": "S06",
+      "title": "Volgistics self-scheduling settings",
+      "url": "https://www.volgistics.com/help/schedule/self-scheduling-settings-for-vicnet-and-victouch/",
+      "version": "unversioned mutable vendor help",
+      "commit": null,
+      "locator": "Calendar-format limits and advance scheduling; accessed render lines 252-285.",
+      "accessed_at": "2026-10-09T18:27:08Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read limits/date-window settings"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s06--volgistics-self-scheduling-limits",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      }
+    },
+    {
+      "id": "S07",
+      "title": "Volgistics volunteer privacy settings",
+      "url": "https://www.volgistics.com/help/vicnet-portal/volunteer-privacy-settings/",
+      "version": "unversioned mutable vendor help",
+      "commit": null,
+      "locator": "Peer visibility, default, volunteer/coordinator settings; accessed render lines 141-209.",
+      "accessed_at": "2026-10-09T18:27:08Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read privacy sections"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s07--volgistics-volunteer-privacy-settings",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      }
+    },
+    {
+      "id": "S08",
+      "title": "Volgistics import volunteer records",
+      "url": "https://www.volgistics.com/help/volunteer-records/import-volunteer-records/",
+      "version": "unversioned mutable vendor help",
+      "commit": null,
+      "locator": "Formats, new-record semantics, mapping review and staged records; lines 141-180, 200-205.",
+      "accessed_at": "2026-10-09T18:27:08Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read import semantics/validation"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s08--volgistics-volunteer-record-import",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      }
+    },
+    {
+      "id": "S09",
+      "title": "Volgistics recurring schedule edit behavior",
+      "url": "https://www.volgistics.com/help/schedule/edit-a-schedule-entry-or-remove-a-scheduled-volunteer/",
+      "version": "unversioned mutable vendor help",
+      "commit": null,
+      "locator": "Regular recurring-entry edit/removal; lines 143-149, 168-199, 217-240.",
+      "accessed_at": "2026-10-09T18:31:18Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read recurring edit/removal sections"
+      ],
+      "evidence": {
+        "path": "sources/products.md#s09--volgistics-recurring-entry-edit-behavior",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "9aa359d7f956b851ee4dd90033c592dad0d0da6a49c1214ce0cbdf4b3d82db4e"
+      }
+    },
+    {
+      "id": "S10",
+      "title": "Google OR-Tools employee scheduling documentation",
+      "url": "https://developers.google.com/optimization/scheduling/employee_scheduling?hl=en",
+      "version": "rolling docs; no release pin",
+      "commit": null,
+      "locator": "Employee example and request objective; lines 79-92, 143-154 and request section.",
+      "accessed_at": "2026-10-09T18:27:08Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read assignment/coverage/objective"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s10--google-or-tools-employee-scheduling-documentation",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      }
+    },
+    {
+      "id": "S11",
+      "title": "OR-Tools release v9.15",
+      "url": "https://github.com/google/or-tools/releases/tag/v9.15",
+      "version": "v9.15 release dated 2026-01-12",
+      "commit": "551ad10d94835c99e5e1e684500d3db398c0e345",
+      "locator": "Release header and tag/commit metadata.",
+      "accessed_at": "2026-10-09T18:30:19Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read release metadata"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s11--or-tools-v915-release",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      }
+    },
+    {
+      "id": "S12",
+      "title": "OR-Tools v9.15 shift scheduling sample",
+      "url": "https://github.com/google/or-tools/blob/551ad10d94835c99e5e1e684500d3db398c0e345/examples/python/shift_scheduling_sat.py",
+      "version": "OR-Tools v9.15",
+      "commit": "551ad10d94835c99e5e1e684500d3db398c0e345",
+      "locator": "Pinned source lines 1561-1626, 1734-1772, 1781-1795.",
+      "accessed_at": "2026-10-09T18:27:08Z",
+      "observed_operations": [
+        "web open pinned file",
+        "web find",
+        "read model/demand/objective/result"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s12--or-tools-v915-pinned-shift-scheduling-code",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      }
+    },
+    {
+      "id": "S13",
+      "title": "Timefold Employee Shift Scheduling fairness",
+      "url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/employee-resource-constraints/fairness/balance-time-worked",
+      "version": "docs branch 1.35.x; hosted API",
+      "commit": null,
+      "locator": "Rule, tag defaults, history, FTE, formula; lines 21-51, 81-97, 130-153, 208-234.",
+      "accessed_at": "2026-10-09T18:28:42Z",
+      "observed_operations": [
+        "web search_query",
+        "web open versioned docs",
+        "read schema/defaults/formula"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s13--timefold-employee-shift-scheduling-fairness-version-135x",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      }
+    },
+    {
+      "id": "S14",
+      "title": "Timefold Employee Shift Scheduling constraints",
+      "url": "https://docs.timefold.ai/employee-shift-scheduling/1.35.x/user-guide/constraints",
+      "version": "docs branch 1.35.x; hosted API",
+      "commit": null,
+      "locator": "Hard/medium/soft semantics and weight default/cap; lines 25-43, 89-104.",
+      "accessed_at": "2026-10-09T18:31:18Z",
+      "observed_operations": [
+        "web open versioned page",
+        "read scoring/weight sections"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s14--timefold-employee-shift-scheduling-constraints-version-135x",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      }
+    },
+    {
+      "id": "S15",
+      "title": "Timefold quickstart fairness issue #492",
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts/issues/492",
+      "version": "issue opened 2024-06-24; linked PR #517",
+      "commit": null,
+      "locator": "Issue body and timeline; lines 129-180.",
+      "accessed_at": "2026-10-09T18:28:29Z",
+      "observed_operations": [
+        "web search_query",
+        "web open",
+        "read issue/timeline"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s15--timefold-quickstart-issue-492",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      }
+    },
+    {
+      "id": "S16",
+      "title": "Timefold quickstart fairness PR #517",
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts/pull/517",
+      "version": "merged 2024-07-18; three commits; primary implementation S17",
+      "commit": "77b1c335ce47c2026ba2873a646582cfbc091d58; b6528f0; 54629972695a6027418e1eaa65437d6dd7704954",
+      "locator": "Merge/commit history lines 128-200; constraint diff lines 455-472 of files view.",
+      "accessed_at": "2026-10-09T18:28:29Z",
+      "observed_operations": [
+        "web search_query",
+        "web open PR/files view",
+        "read merge history/fairness diff"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s16--timefold-quickstart-pull-request-517",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      }
+    },
+    {
+      "id": "S17",
+      "title": "Timefold quickstart fairness implementation commit",
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts/commit/77b1c33.patch",
+      "version": "merged changeset; implementation commit",
+      "commit": "77b1c335ce47c2026ba2873a646582cfbc091d58",
+      "locator": "Patch lines 110-206; collector lines 196-203; test-file metadata lines 4-17.",
+      "accessed_at": "2026-10-09T18:30:19Z",
+      "observed_operations": [
+        "web open public patch",
+        "read fairness code/test metadata"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s17--timefold-quickstart-fairness-implementation-commit",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      }
+    },
+    {
+      "id": "S18",
+      "title": "Timefold Solver load-balance follow-up PR #980",
+      "url": "https://github.com/TimefoldAI/timefold-solver/pull/980",
+      "version": "merged 2024-07-18; milestone v1.13.0; marked required for #517",
+      "commit": "d6546cc9720df0578c67ec91956ca7a46eaf36c8",
+      "locator": "Merge/required-for metadata; lines 130-183, 208-214.",
+      "accessed_at": "2026-10-09T18:28:42Z",
+      "observed_operations": [
+        "web click from PR #517",
+        "web open",
+        "read merge metadata"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s18--timefold-solver-follow-up-fix-pr-980",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      }
+    },
+    {
+      "id": "S19",
+      "title": "Timefold Solver Python cast fix commit",
+      "url": "https://github.com/TimefoldAI/timefold-solver/commit/d6546cc.patch",
+      "version": "fix merged in milestone v1.13.0",
+      "commit": "d6546cc9720df0578c67ec91956ca7a46eaf36c8",
+      "locator": "Patch lines 0-24; cast changes lines 16-21.",
+      "accessed_at": "2026-10-09T18:30:19Z",
+      "observed_operations": [
+        "web open patch",
+        "read exact cast changes"
+      ],
+      "evidence": {
+        "path": "sources/optimization.md#s19--timefold-solver-python-cast-fix-commit",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "2ff7b1381fc0c02f10aba6fbb61acbbb2f23128252ba0a993cbe3a0405105edc"
+      }
+    },
+    {
+      "id": "S20",
+      "title": "W3C WCAG 2.2 Recommendation",
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "version": "W3C Recommendation 2024-12-12; stable snapshot",
+      "commit": null,
+      "locator": "Abstract/metadata lines 0-47; SC 2.1.1, 1.4.10, 2.5.8 in same doc.",
+      "accessed_at": "2026-10-09T18:31:43Z",
+      "observed_operations": [
+        "web open exact Recommendation snapshot",
+        "web find/open target criteria"
+      ],
+      "evidence": {
+        "path": "sources/accessibility.md#s20--w3c-wcag-22-recommendation",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "37a86317fac5dad8c183ce5bb86c2b78efcf36400db783f9026d09be945396ff"
+      }
+    },
+    {
+      "id": "S21",
+      "title": "RFC 5545: Internet Calendaring and Scheduling Core Object Specification (iCalendar)",
+      "url": "https://www.rfc-editor.org/rfc/rfc5545",
+      "version": "RFC 5545, Standards Track, Proposed Standard, September 2009; RFC Editor lists updates RFC 5546, 6868, 7529, 7953, 7986, 9073, 9074, and 9253",
+      "commit": null,
+      "locator": "Sections 3.3.5 and 3.3.10; §3.3.5 accessed render lines 1849–1889 (fixed UTC/TZID, floating local, repeated/nonexistent local time); §3.3.10 lines 2359–2363 (invalid/nonexistent recurrence instances).",
+      "accessed_at": "2026-10-09T18:38:58Z",
+      "observed_operations": [
+        "web open RFC Editor page at sections 3.3.5 and 3.3.10",
+        "web find repeated/nonexistent local-time and recurrence passages"
+      ],
+      "evidence": {
+        "path": "sources/timezones.md#s21--rfc-5545-icalendar-local-time-and-recurrence-rules",
+        "kind": "locally authored bounded notes; not a full-page mirror or raw browser capture",
+        "sha256": "03e5ca1802dee74c7fd8ab8b9bfcde0d9a5b04d87116b350210e148e93f0dc44"
+      }
+    }
+  ],
+  "usage_billing_observed": null,
+  "external_accounts_or_api_calls": [],
+  "observations": "Source captures are bounded paraphrase/evidence notes. No product account, private volunteer record, paid API, solver runtime, imported roster, or private provider internals were accessed."
+}

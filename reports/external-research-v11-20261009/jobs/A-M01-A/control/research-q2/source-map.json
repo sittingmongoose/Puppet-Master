@@ -1,0 +1,272 @@
+{
+  "case": "S01",
+  "stage": "research-q2",
+  "source_map_version": "1",
+  "access_window_utc": "2026-10-09T18:25:00Z/2026-10-09T18:27:22Z",
+  "access_timestamp_note": "Web tool output did not provide per-page request timestamps; this is the observed research window. The end timestamp is the UTC clock read immediately after the final page inspection.",
+  "sources": [
+    {
+      "source_id": "ODK-COLLECT",
+      "title": "ODK Collect",
+      "publisher": "Get ODK",
+      "url": "https://docs.getodk.org/collect-intro/",
+      "version_or_edition": "Live official docs; accessed 2026-10-09; page does not state a product release tag.",
+      "commit": null,
+      "locator": "Overview and Supported devices, lines 125-132.",
+      "observed_operations": [
+        "web search_query constrained to docs.getodk.org",
+        "web open",
+        "recorded offline, draft, location, image, and Android scope statements"
+      ]
+    },
+    {
+      "source_id": "ODK-CENTRAL-INSTALL",
+      "title": "Installing ODK Central",
+      "publisher": "Get ODK",
+      "url": "https://docs.getodk.org/central-install/",
+      "version_or_edition": "Live official docs; accessed 2026-10-09; install instructions distinguish current self-host operation from managed cloud.",
+      "commit": null,
+      "locator": "Self-hosting and installing elsewhere, lines 141-164.",
+      "observed_operations": [
+        "web search_query constrained to docs.getodk.org",
+        "web open",
+        "recorded self-host prerequisites and operator burden"
+      ]
+    },
+    {
+      "source_id": "ODK-CENTRAL-SUBMISSIONS",
+      "title": "Managing Submissions in Central",
+      "publisher": "Get ODK",
+      "url": "https://docs.getodk.org/central-submissions/",
+      "version_or_edition": "Live official docs; accessed 2026-10-09; content includes version-qualified behavior for Central v1.2+, v1.3, and v2025.1.0+.",
+      "commit": null,
+      "locator": "State/actions and table filters, lines 186-205; CSV attachment layout, lines 208-236; review states and detail/edit workflow, lines 294-317.",
+      "observed_operations": [
+        "web search_query constrained to docs.getodk.org",
+        "web open at three locators",
+        "recorded actual defaults, reviewer actions, history, and export structure"
+      ]
+    },
+    {
+      "source_id": "ODK-CENTRAL-CHANGELOG",
+      "title": "ODK Central API Changelog",
+      "publisher": "Get ODK",
+      "url": "https://docs.getodk.org/central-api-changelog/",
+      "version_or_edition": "Live official changelog; inspected entries through Central v2026.3.1.",
+      "commit": null,
+      "locator": "v2026.3.1 fixes lines 123-140; v1.5 and v1.4 lines 354-381; v1.3 and v1.2 lines 382-429.",
+      "observed_operations": [
+        "web search_query constrained to docs.getodk.org",
+        "web open at changelog locators",
+        "traced review-state, comments, versions/diffs, audit, export, and geodata evolution"
+      ]
+    },
+    {
+      "source_id": "KOBO-COLLECT",
+      "title": "Collecting data using KoboCollect",
+      "publisher": "KoboToolbox",
+      "url": "https://support.kobotoolbox.org/data_collection_kobocollect.html",
+      "version_or_edition": "Official support article last updated 2026-07-17; page describes KoboCollect Android workflow.",
+      "commit": null,
+      "locator": "Form refresh and offline entry/finalization, lines 38-65; saved-data deletion and connectivity troubleshooting, lines 92-96 and 130-133.",
+      "observed_operations": [
+        "web search_query constrained to support.kobotoolbox.org",
+        "web open at workflow locator",
+        "recorded predownload, offline draft, queue/finalization distinctions"
+      ]
+    },
+    {
+      "source_id": "SURVEY123-EDIT",
+      "title": "Prepare for editing existing survey data",
+      "publisher": "Esri ArcGIS Survey123",
+      "url": "https://doc.arcgis.com/en/survey123/create/connect/prepareforediting.htm",
+      "version_or_edition": "Live official docs; feature is stated as available in Survey123 Connect and the field app.",
+      "commit": null,
+      "locator": "Enable editing and Inbox limits/caveat, lines 18-45.",
+      "observed_operations": [
+        "web search_query constrained to doc.arcgis.com",
+        "web open",
+        "recorded Inbox cap, query filtering, and Sent/Inbox behavior caveat"
+      ]
+    },
+    {
+      "source_id": "SURVEY123-OFFLINE",
+      "title": "Submit survey results",
+      "publisher": "Esri ArcGIS Survey123",
+      "url": "https://doc.arcgis.com/en/survey123/capture/mobile/submitsurveyresults.htm",
+      "version_or_edition": "Live official docs; version not stated on page.",
+      "commit": null,
+      "locator": "Draft, Outbox, and reconnect workflow, lines 7-26.",
+      "observed_operations": [
+        "web search_query constrained to doc.arcgis.com",
+        "web open",
+        "recorded explicit offline send path and editability"
+      ]
+    },
+    {
+      "source_id": "QFIELDCLOUD-JOBS",
+      "title": "Jobs - QFieldCloud",
+      "publisher": "OPENGIS.ch / QField Ecosystem",
+      "url": "https://docs.qfield.org/reference/qfieldcloud/jobs/",
+      "version_or_edition": "Live official ecosystem documentation; accessed 2026-10-09.",
+      "commit": null,
+      "locator": "Offline package job, lines 213-228; delta conflicts and policy default, lines 256-288.",
+      "observed_operations": [
+        "web search_query constrained to docs.qfield.org",
+        "web open",
+        "recorded default last-wins/manual resolution and primary-key collision cases"
+      ]
+    },
+    {
+      "source_id": "MERGIN-FORMATS",
+      "title": "Supported Formats",
+      "publisher": "Mergin Maps",
+      "url": "https://merginmaps.com/docs/gis/supported_formats/",
+      "version_or_edition": "Live official docs; accessed 2026-10-09.",
+      "commit": null,
+      "locator": "Mobile vector data format table, lines 255-281.",
+      "observed_operations": [
+        "web search_query constrained to merginmaps.com",
+        "web open",
+        "recorded GeoPackage versus Shapefile/PostGIS offline/collaboration distinctions"
+      ]
+    },
+    {
+      "source_id": "MERGIN-SELECTIVE-SYNC",
+      "title": "Selective Synchronisation",
+      "publisher": "Mergin Maps",
+      "url": "https://merginmaps.com/docs/manage/selective_sync/",
+      "version_or_edition": "Live official docs; accessed 2026-10-09.",
+      "commit": null,
+      "locator": "Behavior and photo example, lines 255-281.",
+      "observed_operations": [
+        "web search_query constrained to merginmaps.com",
+        "web click from official documentation index",
+        "web open",
+        "recorded device-specific media exclusion and setup location"
+      ]
+    },
+    {
+      "source_id": "FULCRUM-EXPORT",
+      "title": "How to Download or Export Data",
+      "publisher": "Fulcrum Help Center",
+      "url": "https://help.fulcrumapp.com/en/articles/73547-how-to-download-or-export-data",
+      "version_or_edition": "Official article published 2026-01-15.",
+      "commit": null,
+      "locator": "Downloader limits/formats and Exporter tradeoffs, lines 11-64.",
+      "observed_operations": [
+        "web search_query constrained to help.fulcrumapp.com",
+        "web open",
+        "compared filtered export, media limits, and available data formats"
+      ]
+    },
+    {
+      "source_id": "ANDROID-ACCESSIBILITY",
+      "title": "Build accessible apps",
+      "publisher": "Android Developers",
+      "url": "https://developer.android.com/guide/topics/ui/accessibility/index.html",
+      "version_or_edition": "Live Android developer guidance; accessed 2026-10-09.",
+      "commit": null,
+      "locator": "Design, develop, and test headings, lines 79-100.",
+      "observed_operations": [
+        "web search_query constrained to developer.android.com",
+        "web open",
+        "recorded labeling, accessible user flows, and scanner/automated test recommendations"
+      ]
+    },
+    {
+      "source_id": "WCAG-ERROR",
+      "title": "Understanding Success Criterion 3.3.1: Error Identification",
+      "publisher": "W3C WAI",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/error-identification",
+      "version_or_edition": "WCAG 2.2 Understanding document; informative guidance for SC 3.3.1 Level A.",
+      "commit": null,
+      "locator": "Error description requirement and validation limitations, lines 55-68.",
+      "observed_operations": [
+        "web search_query constrained to w3.org",
+        "web open",
+        "recorded text identification of detected errors and limitations of generic first-error-only behavior"
+      ]
+    },
+    {
+      "source_id": "WCAG-TARGET",
+      "title": "Understanding Success Criterion 2.5.8: Target Size (Minimum)",
+      "publisher": "W3C WAI",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum",
+      "version_or_edition": "WCAG 2.2 Understanding document; informative guidance for SC 2.5.8 Level AA.",
+      "commit": null,
+      "locator": "24-by-24 CSS-pixel target and spacing exception, lines 68-95.",
+      "observed_operations": [
+        "web search_query constrained to w3.org",
+        "web open",
+        "recorded threshold and applicability units for a web coordinator interface"
+      ]
+    },
+    {
+      "source_id": "WHATWG-HTML-WEBSTORAGE",
+      "title": "HTML Standard, Web storage",
+      "publisher": "WHATWG",
+      "url": "https://html.spec.whatwg.org/multipage/webstorage.html",
+      "version_or_edition": "Living Standard last updated 2026-10-09.",
+      "commit": null,
+      "locator": "Introduction and concurrency caveat, lines 42-83; Storage interface with DOMString key/value, lines 105-115; localStorage getter, lines 409-454.",
+      "accessed_at": "2026-10-09T18:30:39Z",
+      "phase": "post-plan comparison supplement",
+      "observed_operations": [
+        "web search_query for the HTML Standard Web Storage section",
+        "web open at lines 2-205",
+        "reviewed origin scoping, shared state/no locking caveat, and string key/value API"
+      ]
+    },
+    {
+      "source_id": "WHATWG-STORAGE-SNAPSHOT",
+      "title": "Storage Standard, commit snapshot 23f38d8feaf530b9787822e067a7eb6f953af322",
+      "publisher": "WHATWG",
+      "url": "https://storage.spec.whatwg.org/commit-snapshots/23f38d8feaf530b9787822e067a7eb6f953af322/",
+      "version_or_edition": "Commit snapshot last updated 2026-10-06; historical snapshot linked from living standard.",
+      "commit": "23f38d8feaf530b9787822e067a7eb6f953af322",
+      "locator": "Registered storage endpoint quota, lines 144-152; default best-effort local bucket, lines 228-230; persistence permission, lines 295-308; storage pressure and usage/quota, lines 309-326; estimate API usage/quota in bytes, lines 334-359.",
+      "accessed_at": "2026-10-09T18:30:39Z",
+      "phase": "post-plan comparison supplement",
+      "observed_operations": [
+        "web search_query for WHATWG Storage Standard",
+        "web open living standard",
+        "clicked snapshot as of this commit",
+        "opened snapshot at quota and persistence locators"
+      ]
+    },
+    {
+      "source_id": "ODK-CENTRAL-API-UPDATES",
+      "title": "Submission Management",
+      "publisher": "Get ODK",
+      "url": "https://docs.getodk.org/central-api-submission-management/",
+      "version_or_edition": "Live official API documentation; submission-update endpoint introduced in Central v1.2.",
+      "commit": null,
+      "locator": "Updating Submission Data: PUT endpoint, instanceId versioning, deprecatedID current-version precondition and 409 Conflict, full-replacement XML, media-copy rule; lines 587-598.",
+      "accessed_at": "2026-10-09T18:31:30Z",
+      "phase": "post-plan comparison supplement",
+      "observed_operations": [
+        "web open of official API page",
+        "inspected update endpoint schema and version precondition",
+        "recorded status code and attachment behavior"
+      ]
+    },
+    {
+      "source_id": "ODK-CENTRAL-PROJECT-ACCESS",
+      "title": "Managing Projects in Central",
+      "publisher": "Get ODK",
+      "url": "https://docs.getodk.org/central-projects/",
+      "version_or_edition": "Live official documentation; accessed 2026-10-09.",
+      "commit": null,
+      "locator": "Project membership and person-specific project/form access, lines 119-130; role descriptions, lines 157-175; per-App-User form access, lines 179-185.",
+      "accessed_at": "2026-10-09T18:33:32Z",
+      "phase": "post-plan comparison supplement",
+      "observed_operations": [
+        "web search_query constrained to docs.getodk.org",
+        "web open at project membership and role/access locators",
+        "recorded role distinctions and individual form assignment behavior"
+      ]
+    }
+  ],
+  "post_plan_comparison_source_count": 4
+}

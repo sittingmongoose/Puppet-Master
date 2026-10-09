@@ -1,0 +1,64 @@
+{
+  "frozen_at": "2026-10-09T18:44:57.612035+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S05/brief.md",
+      "sha256": "552e4eb0e3aeffb3af6a2f4ff134a1abd6e40384823bef785365dfd63c550e35",
+      "bytes": 1456
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M11.json",
+      "sha256": "573145407d4f75cc3e7b1f09cf0ff2e2b5a5585c07f73555282c86f1adb7e21b",
+      "bytes": 1469
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/assignment.md",
+      "sha256": "acbf49f70ac37d87fa8cd3838beccf62f09ad0e93c81d1283b924cafae061faf",
+      "bytes": 3001
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/critic/input-map.json",
+      "sha256": "38f2e34a3d145f103f3b44ecafdc6ff5ee138ea4a6e674f3c79d5dd33f325ca5",
+      "bytes": 1196
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/draft.md",
+      "sha256": "4f99f30f7900d929fe0410eaad346b7cc958ed6cf3cb4903f1de98dbfa1921d5",
+      "bytes": 20927
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/discovery.md",
+      "sha256": "8ec018f862625feed149fbb833520d1a8f59dfe72accdfcf91a58aca5e04592b",
+      "bytes": 27193
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/source-map.json",
+      "sha256": "b85e9889166fe825493dbe2994a3f75e6efe5da2f5fa7e082afd8db3b1db146c",
+      "bytes": 20794
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-B/treatment/research/revealed-plan.md",
+      "sha256": "422f486c028546be6c5291c5121b59befb143ded6b0afc7858d141e8f60667b1",
+      "bytes": 398
+    }
+  ],
+  "method": {
+    "id": "M11",
+    "version": "v1",
+    "name": "entity-community-research-synthesis",
+    "control": "Independent full discovery with conventional flat source notes and direct complete synthesis, followed by same fresh critic/reviser.",
+    "treatment": "Independent full discovery from same brief; as evidence arrives extract source-backed entity-relation-entity records WITH conditions/date/release, resolve aliases only with evidence, form emergent topical communities, generate complete condition-preserving community reports, and reduce them to coherent draft. Before final, check local source neighborhoods for every consequential recommendation. Keep all original full evidence discoverable and original obligations/alternatives, no graph infrastructure install. Same source depth/time and critic/reviser.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Fresh externally researched GraphRAG",
+    "primary_methodology": "https://arxiv.org/abs/2404.16130",
+    "novelty": "Corpus representation and bottom-up community synthesis changes; beyond semantic rendering of an already-fixed result set. ER11 tests a FULL-DISCOVERY adapted recipe bundle, not isolated shared-source component.",
+    "adaptation_limit": "Paper/implementation mechanisms motivate the intervention; published benchmark gains are NOT ER11 evidence.",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T18:56:57.612035+00:00"
+}

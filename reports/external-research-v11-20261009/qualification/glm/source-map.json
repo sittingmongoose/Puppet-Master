@@ -1,0 +1,94 @@
+{
+  "experiment": "ER11 route qualification (glm)",
+  "artifact": "artifact.md",
+  "generatedAtUTC": "2026-10-09T18:25:00Z",
+  "notesFile": "wal-research-notes.md",
+  "sources": [
+    {
+      "id": "wal",
+      "url": "https://www.sqlite.org/wal.html",
+      "title": "Write-Ahead Logging",
+      "httpStatus": 200,
+      "accessTimesUTC": [
+        "2026-10-09T18:21:51Z"
+      ],
+      "serverDateHeader": "Fri, 09 Oct 2026 18:21:51 GMT",
+      "lastModified": "Fri, 09 Oct 2026 16:36:04 GMT",
+      "pageSelfDeclaredVersion": "This page was last updated on 2026-08-25 19:42:39Z",
+      "contentLengthBytes": 42143,
+      "operations": [
+        "GET via curl -sS",
+        "HTML stripped to text for reading",
+        "full text reviewed",
+        "quotes extracted for concurrency, durability/checkpoint conditions, applicability, WAL-reset bug"
+      ],
+      "sectionsUsed": [
+        "1. Overview",
+        "2. How WAL Works",
+        "2.1. Checkpointing",
+        "2.2. Concurrency",
+        "2.3. Performance Considerations",
+        "3. Activating And Configuring WAL Mode",
+        "5. Read-Only Databases",
+        "6. Avoiding Excessively Large WAL Files",
+        "9. Sometimes Queries Return SQLITE_BUSY In WAL Mode",
+        "10. Backwards Compatibility",
+        "11. The WAL-Reset Bug"
+      ]
+    },
+    {
+      "id": "pragma",
+      "url": "https://www.sqlite.org/pragma.html",
+      "title": "PRAGMA Statements",
+      "httpStatus": 200,
+      "accessTimesUTC": [
+        "2026-10-09T18:22:26Z"
+      ],
+      "serverDateHeader": "Fri, 09 Oct 2026 18:22:26 GMT",
+      "lastModified": "Fri, 09 Oct 2026 16:36:04 GMT",
+      "pageSelfDeclaredVersion": "This page was last updated on 2026-10-04 10:38:19Z",
+      "contentLengthBytes": 139936,
+      "operations": [
+        "GET via curl -sS",
+        "sections extracted and read for PRAGMA journal_mode, journal_size_limit, synchronous, wal_autocheckpoint, wal_checkpoint"
+      ],
+      "sectionsUsed": [
+        "PRAGMA journal_mode",
+        "PRAGMA journal_size_limit",
+        "PRAGMA synchronous",
+        "PRAGMA wal_autocheckpoint",
+        "PRAGMA wal_checkpoint"
+      ]
+    },
+    {
+      "id": "index",
+      "url": "https://www.sqlite.org/index.html",
+      "title": "SQLite Home Page",
+      "httpStatus": 200,
+      "accessTimesUTC": [
+        "2026-10-09T18:22:38Z",
+        "2026-10-09T18:22:44Z"
+      ],
+      "serverDateHeader": "Fri, 09 Oct 2026 18:22:38 GMT",
+      "lastModified": "Fri, 09 Oct 2026 16:36:04 GMT",
+      "pageSelfDeclaredVersion": null,
+      "versionString": "Latest Release Version 3.54.0 (2026-10-09).",
+      "contentLengthBytes": 9008,
+      "operations": [
+        "GET via curl -sS (twice; first version-extraction regex missed, second succeeded)",
+        "release version string extracted"
+      ],
+      "sectionsUsed": [
+        "Latest Release banner"
+      ]
+    }
+  ],
+  "acceptanceCommand": "curl -sS -o - https://www.sqlite.org/wal.html | head",
+  "acceptanceCommandResult": "pipeline exit 0, content flowed; full fetch separately verified exit 0 with HTTP 200",
+  "untrustedSourceHandling": "pages fetched and text-extracted only; no instructions from page content followed",
+  "usage": {
+    "tokens": null,
+    "billing": null,
+    "note": "unknown; preserved as null per assignment, no token cost guesses"
+  }
+}

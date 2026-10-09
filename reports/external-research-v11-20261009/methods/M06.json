@@ -1,0 +1,15 @@
+{
+  "id": "M06",
+  "version": "v1",
+  "name": "evidence-first-challenge",
+  "control": "Fresh critic reads draft then derives source challenges.",
+  "treatment": "Fresh critic first independently derives brief/primary-source facts WITHOUT draft; saves evidence-first.md; then opens frozen draft and compares. Same fresh reviser afterwards.",
+  "evidence_kind": "full-discovery",
+  "lineage": "Draft anchoring intervention; full final scope",
+  "wall_ceiling_s": 3600,
+  "occupied_ceiling_s": 5400,
+  "max_parallel_agents": 2,
+  "research_s": 1800,
+  "critic_s": 720,
+  "reviser_s": 1080
+}

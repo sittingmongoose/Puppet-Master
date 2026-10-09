@@ -1,0 +1,250 @@
+{
+  "case": "S01",
+  "block": "A-M01-A",
+  "arm": "control",
+  "stage": "critic",
+  "source_map_version": "1",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic",
+  "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic",
+  "assignment": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/assignment.md",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/critic/input-map.json",
+  "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S01/brief.md",
+  "reviewed_inputs": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/revealed-plan.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/revealed-plan.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/index.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/android.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/couchdb.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/powersync.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/sources/postgresql.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/sources/source-notes.md"
+  ],
+  "declared_predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q1/revealed-plan.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-A/control/research-q2/revealed-plan.md"
+  ],
+  "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+  "access_timestamp_note": "The web tool did not expose per-request timestamps. This window is bounded by exact UTC clock reads before and after the public-source inspection. Per-source operations and locators are recorded below. Tool outputs identified pages as crawled today/yesterday where shown.",
+  "source_ids_immutable": true,
+  "usage_billing_observed": null,
+  "sources": [
+    {
+      "source_id": "CR01",
+      "title": "HTML Standard — Web storage",
+      "publisher": "WHATWG",
+      "url": "https://html.spec.whatwg.org/multipage/webstorage.html",
+      "version_or_edition": "Living Standard; last updated 2026-10-09",
+      "commit": null,
+      "locator": "§12.1, lines 62–83 (origin storage and no-locking warning); §12.2.1, lines 105–115 (DOMString keys/values); localStorage getter, lines 439–454",
+      "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+      "observed_operations": [
+        "web.open direct URL",
+        "inspected returned specification lines"
+      ],
+      "evidence_path": "sources/observations.md",
+      "claims_used_for": "P1: origin-scoped key/value behavior and concurrency warning; does not decide native versus PWA."
+    },
+    {
+      "source_id": "CR02",
+      "title": "Submission Management API",
+      "publisher": "Get ODK",
+      "url": "https://docs.getodk.org/central-api-submission-management/",
+      "version_or_edition": "Live official ODK Central API documentation; update endpoint introduced in Central 1.2",
+      "commit": null,
+      "locator": "Updating Submission Data, lines 587–598: current-version deprecatedID precondition and 409, full XML replacement, matching media-copy behavior",
+      "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+      "observed_operations": [
+        "web.open direct URL",
+        "web.find for Updating Submission Data, current version, and copied attachments",
+        "inspected returned lines"
+      ],
+      "evidence_path": "sources/observations.md",
+      "claims_used_for": "P2: product-specific version precondition, full replacement and attachment behavior."
+    },
+    {
+      "source_id": "CR03",
+      "title": "ODK Central API Changelog",
+      "publisher": "Get ODK",
+      "url": "https://docs.getodk.org/central-api-changelog/",
+      "version_or_edition": "Live official changelog; entries inspected through Central v2026.3.1",
+      "commit": null,
+      "locator": "v2026.3.1 lines 123–140; v1.4 lines 366–379; v1.3 lines 382–401; v1.2 lines 402–424",
+      "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+      "observed_operations": [
+        "web.open direct URL",
+        "web.find for v1.2, v1.3, v1.4, geodata",
+        "inspected returned changelog entries"
+      ],
+      "evidence_path": "sources/observations.md",
+      "claims_used_for": "O3: documented ODK review/edit, diff/audit, export evolution and later geodata fix; not a reproduced regression."
+    },
+    {
+      "source_id": "CR04",
+      "title": "Jobs — QFieldCloud",
+      "publisher": "OPENGIS.ch / QField Ecosystem",
+      "url": "https://docs.qfield.org/reference/qfieldcloud/jobs/",
+      "version_or_edition": "Live official ecosystem documentation; accessed 2026-10-09",
+      "commit": null,
+      "locator": "Understanding conflicts / delta_apply, policy defaults and resolution, lines 256–288 in predecessor map; returned page content inspected",
+      "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+      "observed_operations": [
+        "web.search_query constrained to docs.qfield.org",
+        "inspected returned official page result"
+      ],
+      "evidence_path": "sources/observations.md",
+      "claims_used_for": "P2 and O2: QFieldCloud-specific timestamp Last Wins behavior; older overlapping changes discarded but retained in history; manual alternative."
+    },
+    {
+      "source_id": "CR05",
+      "title": "Feature Status",
+      "publisher": "PowerSync",
+      "url": "https://docs.powersync.com/resources/feature-status",
+      "version_or_edition": "Live official PowerSync documentation; rolling status table accessed 2026-10-09",
+      "commit": null,
+      "locator": "Feature Status and feature table, lines 133–146 and 185–238",
+      "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+      "observed_operations": [
+        "web.open Client SDK overview",
+        "web.click to Feature Status",
+        "inspected returned table"
+      ],
+      "evidence_path": "sources/observations.md",
+      "claims_used_for": "q1 P06 traceability: Room Kotlin is Beta; Kotlin SDK GA; Kotlin attachment helpers Alpha."
+    },
+    {
+      "source_id": "CR06",
+      "title": "Supported Platforms",
+      "publisher": "PowerSync",
+      "url": "https://docs.powersync.com/resources/supported-platforms",
+      "version_or_edition": "Live official PowerSync documentation; rolling platform table accessed 2026-10-09",
+      "commit": null,
+      "locator": "Kotlin platform table, lines 274–295; Android SDK support versus Kotlin native target labels",
+      "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+      "observed_operations": [
+        "web.open Client SDK overview",
+        "web.click to Supported Platforms",
+        "inspected returned Kotlin rows"
+      ],
+      "evidence_path": "sources/observations.md",
+      "claims_used_for": "Context for PowerSync Android/Kotlin support; SDK platform row is product-specific and should not be confused with native Kotlin/Native targets."
+    },
+    {
+      "source_id": "CR07",
+      "title": "Selective Synchronisation",
+      "publisher": "Mergin Maps",
+      "url": "https://merginmaps.com/docs/manage/selective_sync/",
+      "version_or_edition": "Live official Mergin Maps documentation; accessed 2026-10-09",
+      "commit": null,
+      "locator": "Behavior, example and QGIS setup, lines 255–281",
+      "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+      "observed_operations": [
+        "web.open direct URL",
+        "inspected behavior/example and setup lines"
+      ],
+      "evidence_path": "sources/observations.md",
+      "claims_used_for": "P3/O2: selective sync can omit files such as photos from other devices while feature data remains visible; files remain on origin device/server and are available on web/QGIS."
+    },
+    {
+      "source_id": "CR08",
+      "title": "Prepare for editing existing survey data",
+      "publisher": "Esri ArcGIS Survey123",
+      "url": "https://doc.arcgis.com/en/survey123/create/connect/prepareforediting.htm",
+      "version_or_edition": "Live official Survey123 documentation; feature page says Connect and field app",
+      "commit": null,
+      "locator": "Inbox limit and Sent/Inbox caveat, lines 18–45; image behavior/limitations, lines 114–124",
+      "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+      "observed_operations": [
+        "web.open direct URL",
+        "inspected returned page lines 18–45 and 114–124"
+      ],
+      "evidence_path": "sources/observations.md",
+      "claims_used_for": "M1/O2: cap applies to 5,000 parent records; existing images are not downloaded to Inbox; offline workflows for editing existing images are unsupported."
+    },
+    {
+      "source_id": "CR09",
+      "title": "How to Download or Export Data",
+      "publisher": "Fulcrum Help Center",
+      "url": "https://help.fulcrumapp.com/en/articles/73547-how-to-download-or-export-data",
+      "version_or_edition": "Official article published 2026-01-15",
+      "commit": null,
+      "locator": "Data Downloader and Exporter descriptions/limits/formats, lines 11–64",
+      "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+      "observed_operations": [
+        "web.open direct URL",
+        "inspected returned article lines 11–64"
+      ],
+      "evidence_path": "sources/observations.md",
+      "claims_used_for": "O2: Downloader-specific 10 GB and/or 100,000 media-file ceiling; Exporter has different filtering/geometry tradeoffs."
+    },
+    {
+      "source_id": "CR10",
+      "title": "Understanding Success Criterion 2.5.8: Target Size (Minimum)",
+      "publisher": "W3C WAI",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum",
+      "version_or_edition": "WCAG 2.2 informative Understanding document; SC 2.5.8 Level AA",
+      "commit": null,
+      "locator": "Success Criterion and exceptions, lines 21–64",
+      "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+      "observed_operations": [
+        "web.open direct URL",
+        "inspected returned page"
+      ],
+      "evidence_path": "sources/observations.md",
+      "claims_used_for": "O2: 24-by-24 CSS pixels or stated exceptions; units are relevant to web content and must not be relabeled Android dp."
+    },
+    {
+      "source_id": "CR11",
+      "title": "ODK Central README",
+      "publisher": "Get ODK",
+      "url": "https://github.com/getodk/central/blob/master/README.md",
+      "version_or_edition": "Mutable master branch; repository README accessed 2026-10-09",
+      "commit": null,
+      "locator": "License section, lines 230–232; source code Apache 2.0 and third-party software included under respective licenses",
+      "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+      "observed_operations": [
+        "web.search_query for official getodk/central source",
+        "web.open returned repository README",
+        "inspected License section"
+      ],
+      "evidence_path": "sources/observations.md",
+      "claims_used_for": "Minor licensing precision for q2's ODK Central self-host alternative; not a complete license audit."
+    },
+    {
+      "source_id": "CR12",
+      "title": "CouchDB issue #5422 — Replicating documents with attachments causes target db to grow much larger than source db",
+      "publisher": "Apache CouchDB project on GitHub",
+      "url": "https://github.com/apache/couchdb/issues/5422",
+      "version_or_edition": "Issue opened 2025-02-04; reporter environment CouchDB 3.4.2 / SHA prefix 6e5ad2a5c; page state rendered Closed at critic retrieval",
+      "commit": null,
+      "locator": "Issue/report and reproduction, lines 128–167 and 231–242; visible labels/activity, lines 248–269",
+      "access_window_utc": "2026-10-09T18:43:02Z/2026-10-09T18:46:36Z",
+      "observed_operations": [
+        "web.open direct URL",
+        "inspected status, labels, reproduction, reporter environment, visible activity"
+      ],
+      "evidence_path": "sources/observations.md",
+      "claims_used_for": "M2: mutable current tracker state differs from q1 map's immutable-source classification; closure has no visible explanation/fix/linked PR in returned page."
+    }
+  ],
+  "access_failures": [
+    {
+      "predecessor_source_ref": "research-q2 source WHATWG-STORAGE-SNAPSHOT",
+      "url": "https://storage.spec.whatwg.org/commit-snapshots/23f38d8feaf530b9787822e067a7eb6f953af322/",
+      "version_or_commit": "commit 23f38d8feaf530b9787822e067a7eb6f953af322 as recorded by q2",
+      "observed_operation": "web.open",
+      "result": "tool returned Internal Error / no page content; critic did not independently reverify the 5 × 2^20-byte recommended localStorage quota. The exact prior source-map record was retained as inherited evidence, not rebound."
+    }
+  ]
+}

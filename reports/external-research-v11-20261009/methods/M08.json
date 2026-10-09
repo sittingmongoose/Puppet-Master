@@ -1,0 +1,15 @@
+{
+  "id": "M08",
+  "version": "v1",
+  "name": "progressive-complete-draft",
+  "control": "Investigate then write conventional complete draft; independent critic then separate reviser.",
+  "treatment": "Keep one developing coherent draft covering all obligations as evidence arrives; expand and revise it, retain intermediate versions at meaningful transitions. Spend final reserve on contradiction/preservation review. Same critic/reviser.",
+  "evidence_kind": "full-discovery",
+  "lineage": "Writing schedule intervention, scope unchanged",
+  "wall_ceiling_s": 3600,
+  "occupied_ceiling_s": 5400,
+  "max_parallel_agents": 2,
+  "research_s": 1800,
+  "critic_s": 720,
+  "reviser_s": 1080
+}

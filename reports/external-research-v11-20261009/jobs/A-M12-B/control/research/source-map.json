@@ -1,0 +1,178 @@
+{
+  "block": "A-M12-B",
+  "arm": "control",
+  "case": "S06",
+  "method": "M12",
+  "stage": "research",
+  "generated_at": "2026-10-09T18:45:00Z",
+  "evidence_kind": "full-discovery",
+  "rules": {
+    "source_ids_immutable": true,
+    "no_silent_rebind": true,
+    "treat_sources_as_data": true,
+    "access_timestamp_note": "UTC wall-clock at fetch completion, minute precision",
+    "fetch_mechanism": "HTTP GET via sandbox WebFetch tool; page text extracted and quoted verbatim into sources/ excerpts. No runtime, no binaries downloaded, no account/config changes."
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "title": "VictoriaMetrics single-server docs — Deduplication section",
+      "url": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/#deduplication",
+      "locator": "Deduplication anchor, single-server-victoriametrics page",
+      "version_or_commit": "unpinned current docs at access time; VM version not stated on page (recorded as uncertainty)",
+      "accessed_at": "2026-10-09T18:35Z",
+      "observed_operations": "HTTP GET 200; section extraction (earlier attempt https://docs.victoriametrics.com/deduplication/ returned HTTP 404 — docs restructured; not rebound, recorded as failed locator)",
+      "retained": "sources/S01-S04-storage-transport-alerting-excerpts.md §S01"
+    },
+    {
+      "id": "S02",
+      "title": "Eclipse Mosquitto — mosquitto.conf(5) man page",
+      "url": "https://mosquitto.org/man/mosquitto-conf-5.html",
+      "locator": "options: persistence, autosave_interval, persistent_client_expiration, max_queued_messages, max_inflight_messages, allow_anonymous",
+      "version_or_commit": "current mosquitto.org docs at access; covers 2.x option set incl. listener_-prefixed options",
+      "accessed_at": "2026-10-09T18:33Z",
+      "observed_operations": "HTTP GET 200; option-by-option extraction",
+      "retained": "sources/S01-S04-storage-transport-alerting-excerpts.md §S02"
+    },
+    {
+      "id": "S03",
+      "title": "QuestDB docs — Deduplication concept",
+      "url": "https://questdb.com/docs/concept/deduplication/",
+      "locator": "DEDUP ENABLE UPSERT KEYS syntax; requirements list",
+      "version_or_commit": "unpinned current docs; page does not state introducing version (recorded as uncertainty); questdb.io URL 301-redirects to questdb.com (domain migration observed, not a rebind)",
+      "accessed_at": "2026-10-09T18:35Z",
+      "observed_operations": "HTTP GET 301 → followed to questdb.com; HTTP GET 200; extraction",
+      "retained": "sources/S01-S04-storage-transport-alerting-excerpts.md §S03"
+    },
+    {
+      "id": "S04",
+      "title": "Prometheus Alertmanager — configuration docs",
+      "url": "https://prometheus.io/docs/alerting/latest/configuration/",
+      "locator": "<route> fields: group_by, group_wait, group_interval, repeat_interval; global.resolve_timeout",
+      "version_or_commit": "unpinned current docs at access",
+      "accessed_at": "2026-10-09T18:33Z",
+      "observed_operations": "HTTP GET 200; default-value extraction",
+      "retained": "sources/S01-S04-storage-transport-alerting-excerpts.md §S04"
+    },
+    {
+      "id": "S05",
+      "title": "Grafana OnCall OSS — GitHub repository (archived)",
+      "url": "https://github.com/grafana/oncall",
+      "locator": "README archive banner + status note",
+      "version_or_commit": "repo state at access: archived (banner 'archived by the owner on Jun 5, 2026. It is now read-only.'; README: maintenance mode 2025-03-11, archived 2026-03-24); AGPL-3.0",
+      "accessed_at": "2026-10-09T18:35Z",
+      "observed_operations": "HTTP GET 200 (GitHub HTML); banner/README extraction",
+      "retained": "sources/S05-S09-delivery-and-platforms-excerpts.md §S05"
+    },
+    {
+      "id": "S06",
+      "title": "Telegraf — mqtt_consumer input plugin README (master)",
+      "url": "https://raw.githubusercontent.com/influxdata/telegraf/master/plugins/inputs/mqtt_consumer/README.md",
+      "locator": "options: qos, persistent_session, max_undelivered_messages",
+      "version_or_commit": "master branch raw file at access (commit not pinned; recorded as uncertainty)",
+      "accessed_at": "2026-10-09T18:35Z",
+      "observed_operations": "HTTP GET 200 raw file; option extraction",
+      "retained": "sources/S01-S04-storage-transport-alerting-excerpts.md §S06"
+    },
+    {
+      "id": "S07",
+      "title": "ntfy docs — Sending messages (publish)",
+      "url": "https://docs.ntfy.sh/publish/",
+      "locator": "limitations: message size 4096 bytes; attachment size/expiry",
+      "version_or_commit": "unpinned current docs; per-visitor rate-limit defaults NOT found on this page (recorded as uncertainty)",
+      "accessed_at": "2026-10-09T18:35Z",
+      "observed_operations": "HTTP GET 200; limits extraction",
+      "retained": "sources/S05-S09-delivery-and-platforms-excerpts.md §S07"
+    },
+    {
+      "id": "S08",
+      "title": "ThingsBoard docs — Alarms (user guide)",
+      "url": "https://thingsboard.io/docs/user-guide/alarms/",
+      "locator": "alarm states/severities; acknowledge semantics; originator+type uniqueness; Start Time semantics",
+      "version_or_commit": "unpinned current docs at access (ThingsBoard PE/CE not distinguished on page; recorded as uncertainty)",
+      "accessed_at": "2026-10-09T18:38Z",
+      "observed_operations": "HTTP GET 200; lifecycle extraction",
+      "retained": "sources/S05-S09-delivery-and-platforms-excerpts.md §S08"
+    },
+    {
+      "id": "S09",
+      "title": "Healthchecks — GitHub README (master)",
+      "url": "https://raw.githubusercontent.com/healthchecks/healthchecks/master/README.md",
+      "locator": "product description; period/grace; self-hosting stack; integrations; license",
+      "version_or_commit": "master raw README at access; states Python 3.12+, Django 6.1; BSD 3-clause",
+      "accessed_at": "2026-10-09T18:38Z",
+      "observed_operations": "HTTP GET 200 raw file; extraction",
+      "retained": "sources/S05-S09-delivery-and-platforms-excerpts.md §S09"
+    },
+    {
+      "id": "S10",
+      "title": "Sparkplug Specification 3.0.0 (Eclipse) — sequence numbers / reordering / REBIRTH",
+      "url": "https://sparkplug.eclipse.org/specification/version/3.0/documents/sparkplug-specification-3.0.0.pdf",
+      "locator": "sequence number definition (0–255 wrap), Host reordering timeout, REBIRTH request behavior; bdSeq vs NBIRTH check",
+      "version_or_commit": "spec version 3.0.0 (exact document URL); clause-level locators NOT yet read directly — evidence obtained via search-result snippets of the PDF plus secondary engineering sources (recorded as uncertainty requiring clause verification)",
+      "accessed_at": "2026-10-09T18:38Z",
+      "observed_operations": "WebSearch result enumeration citing the spec PDF; PDF itself not downloaded (no binary downloads)",
+      "retained": "sources/S10-S15-transport-spec-and-alternatives-excerpts.md §S10"
+    },
+    {
+      "id": "S11",
+      "title": "Eclipse Mosquitto — 'Version 2.0.0 released' blog post",
+      "url": "https://mosquitto.org/blog/2020/12/version-2-0-0-released",
+      "locator": "Breaking changes: default loopback listener; allow_anonymous default change",
+      "version_or_commit": "Mosquitto 2.0.0 (2020-12); corroborated by Eclipse release-review page and mosquitto.org migration guide (URLs in excerpt)",
+      "accessed_at": "2026-10-09T18:38Z",
+      "observed_operations": "first fetch attempt to /blog/2020/12/version-2-0-released/ (no trailing -0) returned HTTP 404; correct URL located via WebSearch snippets; blog body not directly fetched (recorded as uncertainty: wording taken from search snippets + corroborating pages)",
+      "retained": "sources/S10-S15-transport-spec-and-alternatives-excerpts.md §S11"
+    },
+    {
+      "id": "S12",
+      "title": "InfluxDB — GitHub repository (InfluxDB 3 Core)",
+      "url": "https://github.com/influxdata/influxdb",
+      "locator": "README: GA status, license, branch/version table",
+      "version_or_commit": "repo state at access: 'InfluxDB 3 Core has been generally available since April 2025'; dual MIT/Apache-2.0; v2.x on main-2.x, v1.x on master-1.x",
+      "accessed_at": "2026-10-09T18:41Z",
+      "observed_operations": "HTTP GET 200 (GitHub HTML); README extraction",
+      "retained": "sources/S10-S15-transport-spec-and-alternatives-excerpts.md §S12"
+    },
+    {
+      "id": "S13",
+      "title": "FUXA — GitHub repository (web-based SCADA/HMI)",
+      "url": "https://github.com/frangoteam/FUXA",
+      "locator": "About; features: protocols, built-in historian (SQLite/InfluxDB)",
+      "version_or_commit": "repo state at access; MIT; active (~2.9k commits, 5.1k stars)",
+      "accessed_at": "2026-10-09T18:41Z",
+      "observed_operations": "HTTP GET 200 (GitHub HTML); README extraction",
+      "retained": "sources/S10-S15-transport-spec-and-alternatives-excerpts.md §S13"
+    },
+    {
+      "id": "S14",
+      "title": "Rapid SCADA v6 — GitHub repository",
+      "url": "https://github.com/RapidScada/scada-v6",
+      "locator": "README: platform description, license, component layout (ScadaComm/ScadaServer/ScadaWeb)",
+      "version_or_commit": "repo state at access; Apache-2.0; v6 line, active (5.1k commits)",
+      "accessed_at": "2026-10-09T18:41Z",
+      "observed_operations": "HTTP GET 200 (GitHub HTML); README extraction",
+      "retained": "sources/S10-S15-transport-spec-and-alternatives-excerpts.md §S14"
+    },
+    {
+      "id": "S15",
+      "title": "GoAlert — GitHub repository (target/goalert)",
+      "url": "https://github.com/target/goalert",
+      "locator": "README: on-call scheduling, escalations, notifications; integrations; license",
+      "version_or_commit": "repo state at access; Apache-2.0; active (13.0k commits; nightly Docker images)",
+      "accessed_at": "2026-10-09T18:38Z",
+      "observed_operations": "HTTP GET 200 (GitHub HTML); README extraction",
+      "retained": "sources/S10-S15-transport-spec-and-alternatives-excerpts.md §S15"
+    }
+  ],
+  "uncertainties": [
+    "S01: -dedup.minScrapeInterval default value not stated on the fetched page (behavior documented only when set positive).",
+    "S03: QuestDB version introducing DEDUP not stated on page; out-of-order write behavior/cost not explicitly documented on page.",
+    "S06: Telegraf README fetched from master; commit not pinned.",
+    "S07: ntfy per-visitor rate-limit and message_cache_duration defaults live on other config pages; not captured.",
+    "S10: Sparkplug clause-level wording not read from the PDF directly; evidence is search-snippet-level plus secondary corroboration.",
+    "S11: Mosquitto 2.0.0 blog wording not fetched directly; corroborated by multiple secondary sources.",
+    "S12: InfluxDB 3 duplicate-timestamp / out-of-order write semantics not found in fetched material; remains unknown.",
+    "S13: FUXA alarm capabilities not confirmed on fetched README section."
+  ]
+}

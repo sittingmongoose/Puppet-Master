@@ -1,0 +1,15 @@
+{
+  "id": "M04",
+  "version": "v1",
+  "name": "amendment-preservation",
+  "control": "Fresh reviser rewrites complete final after critique, preserving supported findings.",
+  "treatment": "Fresh reviser applies targeted evidence-backed amendments to complete draft, then checks every retained material finding/condition and produces COMPLETE self-contained final. Amendment IDs alone insufficient.",
+  "evidence_kind": "full-discovery",
+  "lineage": "Mixed ER10 amendment hypothesis",
+  "wall_ceiling_s": 3600,
+  "occupied_ceiling_s": 5400,
+  "max_parallel_agents": 2,
+  "research_s": 1800,
+  "critic_s": 720,
+  "reviser_s": 1080
+}

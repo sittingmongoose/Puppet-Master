@@ -1,0 +1,91 @@
+{
+  "frozen_at": "2026-10-09T18:38:06.302611+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S07/brief.md",
+      "sha256": "11201a686d012432b0c60757835ab1e0f959b2fdcccd661911f0cac5c3c3bd7a",
+      "bytes": 1426
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M01.json",
+      "sha256": "de4f753f52f16abcde4317adc89dbda6404c5c0314c6281a77a54fe98e27c4e6",
+      "bytes": 683
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/reviser/assignment.md",
+      "sha256": "07b422cf95df2cbe534fdd274c942704b8899b56bf4d756266b7d85dc750b6ce",
+      "bytes": 2850
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/reviser/input-map.json",
+      "sha256": "4b4fa00a26037316ebd7b4667bce7cd6a7c1d47b8822ac48fbd515c5d9cc6d1d",
+      "bytes": 2082
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/draft.md",
+      "sha256": "dd0aaadeebfe92d53c39b90e8e1207659c38ddfcd62a28ec3fc835741067f388",
+      "bytes": 12413
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/discovery.md",
+      "sha256": "dbe97be85defbb98089388bb6a4c414fc14702ad0d11aa99f5f3a8981a39ad3d",
+      "bytes": 19513
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/source-map.json",
+      "sha256": "16bd12dd1ea3fab5a9ceec7b4c8ee8940e24d042c8f76bad4c64aef54172de8b",
+      "bytes": 4091
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q1/revealed-plan.md",
+      "sha256": "906fbabc0e9c4996064d210148f2784a1e161d38cce2f54aea992f2d4f7f7ee6",
+      "bytes": 331
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/draft.md",
+      "sha256": "3cac746e38027645160b47331ffa6b83f2cf599b5706a88bbd7ebfbabdb84dce",
+      "bytes": 13503
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/discovery.md",
+      "sha256": "30a6f58ba6b5e469a213a0465083a934e7a66ec1a957c497e6b7c2ba5bc3df09",
+      "bytes": 20316
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/source-map.json",
+      "sha256": "d5f295cacfd906b0602f472aea404529a1040011739eea1a256ae76c1d4118a2",
+      "bytes": 9753
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/research-q2/revealed-plan.md",
+      "sha256": "906fbabc0e9c4996064d210148f2784a1e161d38cce2f54aea992f2d4f7f7ee6",
+      "bytes": 331
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/critic/source-map.json",
+      "sha256": "dc443b26aabc3500070b99f338e94b05e2af21c85b26a3d1f164d91395f345e3",
+      "bytes": 3028
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M01-B/control/critic/critique.md",
+      "sha256": "cdb0bfd92e5f54ececd447ce372260171ec4ff344c13d9d685e0efbe2dd3a592",
+      "bytes": 9839
+    }
+  ],
+  "method": {
+    "id": "M01",
+    "version": "v1",
+    "name": "coherent-batching",
+    "control": "Two competent related-question investigators may run in parallel; each investigates a complementary half, including cross-conditions. Critic and finalizer join both.",
+    "treatment": "One investigator researches related questions together, maintains per-question plus shared governing-condition map. Same critic/reviser and full scope.",
+    "evidence_kind": "full-discovery",
+    "lineage": "ER10 D-M02-B hypothesis; competent control parallelism retained",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T18:56:06.302611+00:00"
+}

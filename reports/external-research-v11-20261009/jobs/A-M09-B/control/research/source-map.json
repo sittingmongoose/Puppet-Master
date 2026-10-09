@@ -1,0 +1,173 @@
+{
+  "block": "A-M09-B",
+  "arm": "control",
+  "case": "S03",
+  "stage": "research",
+  "method": "M09",
+  "written_utc": "2026-10-09T18:47:00Z",
+  "notes": "Independently chosen public primary sources only. Access timestamps are the WebFetch observation times (UTC). Mutable drift is explicit: all 'latest' doc URLs resolve dynamically; versions recorded where the page stated them. Usage/billing unobserved = null, except ReviewNB public pricing which the page itself publishes (S10).",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "repo2docker documentation",
+      "url": "https://repo2docker.readthedocs.io/en/latest/",
+      "version": "docs 'latest' (dynamic; drift possible)",
+      "access_timestamp_utc": "2026-10-09T18:31:00Z",
+      "observed_operations": ["WebFetch HTTP 200"],
+      "locator": "landing page",
+      "evidence": "sources/S01-repo2docker.md",
+      "usage_billing": null
+    },
+    {
+      "id": "S02",
+      "title": "renv vignette (R environment management)",
+      "url": "https://rstudio.github.io/renv/articles/renv.html",
+      "version": "docs site (dynamic; vignette current at access)",
+      "access_timestamp_utc": "2026-10-09T18:31:00Z",
+      "observed_operations": ["WebFetch HTTP 200"],
+      "locator": "introduction vignette",
+      "evidence": "sources/S02-renv.md",
+      "usage_billing": null
+    },
+    {
+      "id": "S03",
+      "title": "jupyter-resource-usage README",
+      "url": "https://github.com/jupyter-server/jupyter-resource-usage",
+      "version": "README default branch; >=1.0.0 for JupyterLab 4 / Notebook 7 stated",
+      "access_timestamp_utc": "2026-10-09T18:31:00Z",
+      "observed_operations": ["WebFetch HTTP 200"],
+      "locator": "README",
+      "evidence": "sources/S03-jupyter-resource-usage.md",
+      "usage_billing": null
+    },
+    {
+      "id": "S04",
+      "title": "nbdime documentation",
+      "url": "https://nbdime.readthedocs.io/en/latest/",
+      "version": "v4.0.4 (stated on page)",
+      "access_timestamp_utc": "2026-10-09T18:32:00Z",
+      "observed_operations": ["WebFetch HTTP 200"],
+      "locator": "overview page",
+      "evidence": "sources/S04-nbdime.md",
+      "usage_billing": null
+    },
+    {
+      "id": "S05",
+      "title": "JupyterLite documentation",
+      "url": "https://jupyterlite.readthedocs.io/en/latest/",
+      "version": "docs 'latest'; supported releases 0.7.0 and 0.6.0 stated",
+      "access_timestamp_utc": "2026-10-09T18:34:00Z",
+      "observed_operations": ["WebFetch HTTP 200"],
+      "locator": "landing/quickstart",
+      "evidence": "sources/S05-jupyterlite.md",
+      "usage_billing": null
+    },
+    {
+      "id": "S06",
+      "title": "webR documentation",
+      "url": "https://docs.r-wasm.org/webr/latest/",
+      "version": "docs 'latest'; API explicitly subject to change",
+      "access_timestamp_utc": "2026-10-09T18:34:00Z",
+      "observed_operations": ["WebFetch HTTP 200"],
+      "locator": "landing + packages/filesystem sections referenced",
+      "evidence": "sources/S06-webr.md",
+      "usage_billing": null
+    },
+    {
+      "id": "S07",
+      "title": "papermill documentation",
+      "url": "https://papermill.readthedocs.io/en/latest/",
+      "version": "docs 'latest'; supports Python 3.10+",
+      "access_timestamp_utc": "2026-10-09T18:34:00Z",
+      "observed_operations": ["WebFetch HTTP 200"],
+      "locator": "landing page",
+      "evidence": "sources/S07-papermill.md",
+      "usage_billing": null
+    },
+    {
+      "id": "S08",
+      "title": "nbval (computationalmodelling/nbval)",
+      "url": "https://github.com/computationalmodelling/nbval",
+      "version": "README default branch (~452 stars observed)",
+      "access_timestamp_utc": "2026-10-09T18:37:00Z",
+      "observed_operations": ["WebFetch HTTP 200"],
+      "locator": "README",
+      "evidence": "sources/S08-nbval.md",
+      "usage_billing": null
+    },
+    {
+      "id": "S09",
+      "title": "KubeSpawner API docs",
+      "url": "https://jupyterhub-kubespawner.readthedocs.io/en/latest/spawner.html",
+      "version": "docs 'latest'",
+      "access_timestamp_utc": "2026-10-09T18:37:00Z",
+      "observed_operations": ["WebFetch HTTP 200"],
+      "locator": "spawner trait reference",
+      "evidence": "sources/S09-kubespawner.md",
+      "usage_billing": null
+    },
+    {
+      "id": "S10",
+      "title": "ReviewNB product page",
+      "url": "https://www.reviewnb.com/",
+      "version": "live marketing site (dynamic)",
+      "access_timestamp_utc": "2026-10-09T18:38:00Z",
+      "observed_operations": ["WebFetch HTTP 200"],
+      "locator": "landing + pricing",
+      "evidence": "sources/S10-reviewnb.md",
+      "usage_billing": "public pricing observed on page: Team $79/mo (10 users), Business $249/mo (30 users), Enterprise custom/self-hosted, free for open-source/academic with 10 free PRs after trial"
+    },
+    {
+      "id": "S11",
+      "title": "jupytext (mwouts/jupytext)",
+      "url": "https://github.com/mwouts/jupytext",
+      "version": "README default branch (~7.3k stars, MIT observed)",
+      "access_timestamp_utc": "2026-10-09T18:41:00Z",
+      "observed_operations": ["WebFetch HTTP 200; two readthedocs URLs failed earlier (empty content / 404) and were superseded by this capture"],
+      "locator": "README",
+      "evidence": "sources/S11-jupytext.md",
+      "usage_billing": null
+    },
+    {
+      "id": "S12",
+      "title": "repo2docker releases (evolution chain)",
+      "url": "https://github.com/jupyterhub/repo2docker/releases",
+      "version": "releases page at access: 2026.04.0, 2025.12.0, 2025.08.0, 2024.07.0, 2023.06.0",
+      "access_timestamp_utc": "2026-10-09T18:41:00Z",
+      "observed_operations": ["WebFetch HTTP 200"],
+      "locator": "release entries list",
+      "evidence": "sources/S12-repo2docker-releases.md",
+      "usage_billing": null
+    },
+    {
+      "id": "S13",
+      "title": "noWorkflow (gems-uff/noworkflow)",
+      "url": "https://github.com/gems-uff/noworkflow",
+      "version": "README default branch; newest needs clone/manual setup (Python 3.12.4 tested); pip may install older (targets 3.8)",
+      "access_timestamp_utc": "2026-10-09T18:42:00Z",
+      "observed_operations": ["WebFetch HTTP 200"],
+      "locator": "README",
+      "evidence": "sources/S13-noworkflow.md",
+      "usage_billing": null
+    }
+  ],
+  "failed_fetches": [
+    {
+      "url": "https://jupytext.readthedocs.io/en/latest/",
+      "timestamp_utc": "2026-10-09T18:33:00Z",
+      "outcome": "empty page content; no evidence retained; superseded by S11"
+    },
+    {
+      "url": "https://jupytext.readthedocs.io/en/latest/format.html",
+      "timestamp_utc": "2026-10-09T18:36:00Z",
+      "outcome": "HTTP 404; superseded by S11"
+    },
+    {
+      "url": "https://devguide.ropensci.org/softwarerevieworg.html",
+      "timestamp_utc": "2026-10-09T18:42:00Z",
+      "outcome": "HTTP 404; no rOpenSci primary evidence retained; scientific software peer review remains an uncited lead"
+    }
+  ],
+  "immutable_ids": true,
+  "silent_rebind": false
+}

@@ -1,0 +1,160 @@
+{
+  "schema_version": "ER11-source-map-v1",
+  "case": "S04",
+  "research_stage": "A-M04-A/control/critic",
+  "capture_batch_utc": [
+    "2026-10-09T18:41:32Z"
+  ],
+  "note": "Immutable critic-pass source IDs. The complete predecessor evidence packet is referenced without rebinding at the path below. Public primary sources only; no credentials, product accounts, or private provider internals were accessed. Exact observed operations and limits are recorded per source and in sources/independent-checks.md.",
+  "reviewed_material": {
+    "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S04/brief.md",
+    "predecessors": [
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/draft.md",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/discovery.md",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/source-map.json",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/revealed-plan.md"
+    ],
+    "predecessor_source_roots": [
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M04-A/control/research/sources"
+    ],
+    "inherited_source_ids_relied_on": [
+      "CHQ-RES",
+      "CHQ-CONFLICT",
+      "CHQ-LOCATION",
+      "SN-OVERVIEW",
+      "SN-ASSET-CSV",
+      "SN-HISTORY-CSV",
+      "SN-RELEASE",
+      "INV-ALLOC-PR",
+      "INV-RELEASES",
+      "POUCH-CONFLICT",
+      "COUCH-3_5",
+      "PG18-RANGE"
+    ]
+  },
+  "sources": [
+    {
+      "id": "SNIPE-88-RELEASE-CRITIC",
+      "title": "Snipe-IT v8.8.0 release",
+      "publisher": "Grokability/snipe-it GitHub repository",
+      "url": "https://github.com/grokability/snipe-it/releases/tag/v8.8.0",
+      "version_or_commit": "Tag v8.8.0, commit 2c466fa; release page shows 2026-09-30. Current release status observed 2026-10-09.",
+      "locator": [
+        "Unified Calendar: /calendar includes scheduled events and reservations (release page lines 236-239)",
+        "Requestables Overhaul: date-window requests appear on calendar and link to fulfillment (lines 240-246)",
+        "PHP requirement >=8.2 (lines 157-164)"
+      ],
+      "accessed_at_utc": "2026-10-09T18:41:32Z",
+      "operations": [
+        "Opened official release tag URL and read rendered release text; no login/session used"
+      ],
+      "evidence_file": "sources/independent-checks.md"
+    },
+    {
+      "id": "SNIPE-REQUESTABLES-CRITIC",
+      "title": "Requestable Assets",
+      "publisher": "Snipe-IT Documentation",
+      "url": "https://snipe-it.readme.io/docs/requestable-assets",
+      "version_or_commit": "Unversioned mutable documentation; page says updated about six months before access.",
+      "locator": [
+        "Individual assets and asset models can be marked requestable",
+        "Requested Assets management view"
+      ],
+      "accessed_at_utc": "2026-10-09T18:41:32Z",
+      "operations": [
+        "Opened public documentation and read rendered page text; no account access"
+      ],
+      "evidence_file": "sources/independent-checks.md"
+    },
+    {
+      "id": "SNIPE-ASSET-IMPORT-CRITIC",
+      "title": "Importing Assets",
+      "publisher": "Snipe-IT Documentation",
+      "url": "https://snipe-it.readme.io/docs/importing-assets",
+      "version_or_commit": "Unversioned mutable documentation; page says updated about six months before access.",
+      "locator": [
+        "Mapping Asset Fields: ID takes precedence; otherwise Asset Tag matches updates",
+        "Name is described as a common name that changes over time",
+        "Last Audit Date and Next Audit Date imports do not create audit events",
+        "Custom fields must already exist"
+      ],
+      "accessed_at_utc": "2026-10-09T18:41:32Z",
+      "operations": [
+        "Opened public documentation and read rendered text; no login/session used"
+      ],
+      "evidence_file": "sources/independent-checks.md"
+    },
+    {
+      "id": "PG18-RANGE-CRITIC",
+      "title": "Range Types, PostgreSQL 18",
+      "publisher": "PostgreSQL Global Development Group",
+      "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+      "version_or_commit": "Version-pinned PostgreSQL 18 documentation.",
+      "locator": [
+        "8.17.6 range constructor default bounds [)",
+        "8.17.10 exclusion constraints for non-overlap",
+        "btree_gist example combining scalar equality and range overlap"
+      ],
+      "accessed_at_utc": "2026-10-09T18:41:32Z",
+      "operations": [
+        "Opened official PostgreSQL 18 documentation and read range construction and constraint sections"
+      ],
+      "evidence_file": "sources/independent-checks.md"
+    },
+    {
+      "id": "POUCH-CONFLICTS-CRITIC",
+      "title": "Conflicts",
+      "publisher": "PouchDB Documentation",
+      "url": "https://pouchdb.com/guides/conflicts.html",
+      "version_or_commit": "Unversioned current guide; page version not exposed.",
+      "locator": [
+        "Eventual conflicts after two offline replicas edit the same document",
+        "Deterministic winner and discoverable conflicting revisions",
+        "Possible application resolution strategies including last-write-wins",
+        "Append-only delta-document pattern"
+      ],
+      "accessed_at_utc": "2026-10-09T18:41:32Z",
+      "operations": [
+        "Opened public guide and read rendered conflict sections; no account access"
+      ],
+      "evidence_file": "sources/independent-checks.md"
+    },
+    {
+      "id": "COUCH-35-CONFLICTS-CRITIC",
+      "title": "Replication and conflict model",
+      "publisher": "Apache CouchDB Documentation",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "version_or_commit": "CouchDB 3.5 docs; stable URL is mutable.",
+      "locator": [
+        "2.3.3 Revision tree",
+        "2.3.4 deterministic visible winner and conflict retrieval"
+      ],
+      "accessed_at_utc": "2026-10-09T18:41:32Z",
+      "operations": [
+        "Opened public documentation and read revision-tree/conflict sections"
+      ],
+      "evidence_file": "sources/independent-checks.md"
+    },
+    {
+      "id": "INVTREE-12478-PR-CRITIC",
+      "title": "Fix concurrency issues for allocation #12478",
+      "publisher": "inventree/InvenTree GitHub repository",
+      "url": "https://github.com/inventree/InvenTree/pull/12478",
+      "version_or_commit": "Merged 2026-07-28; inherited source map records feature commit 966c619 and merge commit 4a8ee54.",
+      "locator": [
+        "PR issue description: two concurrent full five-unit allocations both succeeded against five units",
+        "Merged status/date"
+      ],
+      "accessed_at_utc": "2026-10-09T18:41:32Z",
+      "operations": [
+        "Opened public PR and read issue description and merged date",
+        "Attempted to open linked commit/diff; browser returned restricted URL failure",
+        "Used inherited bounded diff/test note INV-ALLOC-PR without claiming a new diff inspection"
+      ],
+      "evidence_file": "sources/independent-checks.md"
+    }
+  ],
+  "usage": null,
+  "billing": null,
+  "usage_billing_note": "Unobserved: no product account, usage telemetry, billing records, or private provider internals were accessed."
+}

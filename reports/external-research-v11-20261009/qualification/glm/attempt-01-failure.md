@@ -1,0 +1,3 @@
+# Preserved qualification failure
+
+T3 role=test prepended `Act as the test sub-agent for this task.` before literal /goal, so zcode received it inside an ordinary prompt rather than as the installed slash-command at start. The bound task was cancelled prospectively before scientific delivery; never scored or substituted as native success. Exact dispatch.json and host activity identify this attempt. Narrow repair: use role=general, as the existing ER10 prospective carrier v2 already requires, with a short top-level /goal objective referencing the saved assignment. One fresh qualification retry permitted, preserving this failure and overhead.

@@ -1,0 +1,41 @@
+{
+  "frozen_at": "2026-10-09T18:45:07.863362+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S03/brief.md",
+      "sha256": "2a61c01e944a06f96cfb299eaa2cc94b7ec5cf31349d35f45c8902bc228c327e",
+      "bytes": 1436
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M03.json",
+      "sha256": "dd1a7ef0f180b704ead6e959b35c5414972690525c8ceb925a45c32f77318d6b",
+      "bytes": 576
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M03-A/treatment/research/assignment.md",
+      "sha256": "c42b06a1f71531e0938640b2fc227cf4ad89e55dc7d2931a3e088f975441acfc",
+      "bytes": 3066
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M03-A/treatment/research/input-map.json",
+      "sha256": "3c66b8e26d5a82f1608ebb5e777e8b92f45af8c94251651c827b29e9feb0bab8",
+      "bytes": 640
+    }
+  ],
+  "method": {
+    "id": "M03",
+    "version": "v1",
+    "name": "critic-finalizer",
+    "control": "Researcher then independent critic then separate fresh reviser.",
+    "treatment": "Researcher then fresh independent critic who writes both substantive criticism and the COMPLETE final. All critique dispositions and preservation must be explicit.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Isolated finalization topology; full same scope",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "deadline": "2026-10-09T19:15:07.863362+00:00"
+}
