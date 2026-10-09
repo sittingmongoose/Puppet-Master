@@ -130,7 +130,9 @@
     var shape = (full ? 'f' : mid ? 'm' : 'n') + lines;
     var html = '<div class="pmu-accpol" data-prov="' + esc(p.id) + '" data-shape="' + shape + '"' + (pol.auto ? '' : ' data-off') + '>' +
       '<div class="pmu-polrow">' + polToggle(p) + (mid ? '<span class="pmu-swlabel">Auto-switch</span>' : '') + polStepper(p) + scope + '</div>' + (st ? st.html : '') + '</div>';
-    return { html: html, h: 41 + (lines ? 3 + 18 * lines : 0), shape: shape };
+    /* measured: 41 px in Basic, 45 in NieR and Retro (their switches and the stepper run taller); the plate's last row is
+       folded by the fit pass when the band is under-counted, so the larger one is reserved */
+    return { html: html, h: 46 + (lines ? 3 + 18 * lines : 0), shape: shape };
   }
   /* one string of what the policy shows (a plate whose policy or status changed is patched, never left stale) */
   function polSig(p) {
@@ -579,11 +581,12 @@
   /* the providers whose auto-switch is drawn (item 2: two or more accounts, in scope), in Settings order */
   function polFams() { return PMU.roster.read().providers.filter(function (p) { return switchable(p) && PMU.data.settingsInScope(p.id); }); }
   /* the shared setting, for every provider without its own choice (one quiet line; opens the Settings row) */
-  function sharedLine(cls) {
+  function sharedLine(cls, short) {
     var g = PMU.roster.thresholds(), follow = polFams().filter(function (p) { return !ownAny(polOf(p)); }).map(function (p) { return p.name; });
-    var words = 'Shared: ' + (g.auto ? 'switch at ' + b((100 - g.switchLeft) + '%') : 'auto-switch ' + b('off')) + ' · warn at ' + b((100 - g.warnLeft) + '%') + ' used';
-    return '<p class="pmu-polshared' + (cls ? ' ' + cls : '') + '" data-pmu-act="pol-shared" role="button" tabindex="0"' + C.hover('The shared auto-switch setting', (follow.length ? follow.join(', ') + ' follow' + (follow.length === 1 ? 's' : '') + ' it' : 'Every service here has its own setting') +
-      '. Settings > AI > Providers & Accounts > Limits & switching · ' + t('accounts.not_consent')) + '>' + words + '</p>';
+    var words = short ? 'Shared ' + (g.auto ? b((100 - g.switchLeft) + '%') : b('off'))
+      : 'Shared: ' + (g.auto ? 'switch at ' + b((100 - g.switchLeft) + '%') : 'auto-switch ' + b('off')) + ' · warn at ' + b((100 - g.warnLeft) + '%') + ' used';
+    return '<span class="pmu-polshared' + (cls ? ' ' + cls : '') + '" data-pmu-act="pol-shared" role="button" tabindex="0"' + C.hover('The shared auto-switch setting', (g.auto ? 'Switches at ' + (100 - g.switchLeft) + '% used' : 'Off') + ' · warns at ' + (100 - g.warnLeft) + '% used. ' +
+      (follow.length ? follow.join(', ') + ' follow' + (follow.length === 1 ? 's' : '') + ' it' : 'Every service here has its own setting') + '. Settings > AI > Providers & Accounts > Limits & switching · ' + t('accounts.not_consent')) + '>' + words + '</span>';
   }
   /* Details of the switch strips and the not-set-up lists (CONTENT-3): each provider's own policy and what it is doing,
      the shared setting, each family's most room now */
@@ -665,7 +668,8 @@
     if (cells.length !== fams.length || fams.some(function (p, i) { return cells[i].getAttribute('data-prov') !== p.id; })) return false;
     var named = !!(cells[0] && cells[0].classList.contains('is-named')), reduced = PMU.motion.reduced && PMU.motion.reduced();
     var f = PMU.motion.family ? PMU.motion.family() : 'basic', stp = f === 'retro' || f === 'nier';
-    var tmp = document.createElement('div'); tmp.innerHTML = '<div>' + fams.map(function (p) { return polCell(p, named); }).join('') + sharedLine() + '</div>';
+    var stackedNow = lad.classList.contains('is-stacked');
+    var tmp = document.createElement('div'); tmp.innerHTML = '<div>' + fams.map(function (p) { return polCell(p, named); }).join('') + sharedLine('is-cap', !stackedNow) + '</div>';
     var next = tmp.firstChild;
     patchPolIn(lad, next, ctx);
     Array.prototype.forEach.call(next.querySelectorAll('.pmu-polcell'), function (c1, i) {
@@ -726,9 +730,10 @@
         var fit = C.fit(ctx.tier.bh - 4 - 22 - 26, 30, 0);
         if (fit < fams.length && fit > 0) fit = C.fit(ctx.tier.bh - 4 - 22 - 26 - 25, 30, 0);
         var famHid = fams.slice(fit);
+        var narrowP = ctx.tier.bw < 270;
         body.innerHTML = '<div class="pmu-switch is-panel"' + (fit ? '' : C.foldHover(famFold(famHid))) + '>' +
-          '<div class="pmu-cap pmu-swcap">AUTO-SWITCH · MOST ROOM NOW</div>' + (fams.length ? fams.slice(0, fit).map(function (p, i) { return famHtml(p, i, mrOf(p)); }).join('') + C.more(famHid.length, 'services', ctx.tier.bw < 260, famFold(famHid)) : '<p class="pmu-polshared is-none">' + esc(t('accounts.auto_needs_two')) + '</p>') +
-          sharedLine('is-foot') + '</div>';
+          '<div class="pmu-cap pmu-swcap">' + (narrowP ? 'AUTO-SWITCH' : 'AUTO-SWITCH · MOST ROOM NOW') + '</div>' + (fams.length ? fams.slice(0, fit).map(function (p, i) { return famHtml(p, i, mrOf(p)); }).join('') + C.more(famHid.length, 'services', ctx.tier.bw < 260, famFold(famHid)) : '<p class="pmu-polshared is-none">' + esc(t('accounts.auto_needs_two')) + '</p>') +
+          sharedLine('is-foot', ctx.tier.bw < 330) + '</div>';
       } else {
         /* two lines when the body has the height; on one line the families take what the caption (about 110 px) and the
            shared line (about 250 px) leave, whole families only */
@@ -893,7 +898,7 @@
     /* the policy cells: rows of cells in the side column (or across a stacked card) */
     var namedCols = Math.floor((sideW + 10) / 160), plainCols = Math.floor((sideW + 10) / 110), n = fams.length || 1;
     var cellRows = Math.ceil(n / Math.max(1, Math.min(n, plainCols)));
-    if (stacked) bh -= 66 + 12 + cellRows * 30 + 26;
+    if (stacked) bh -= 66 + 10 + cellRows * 30 + 20;
     var perCol = Math.max(1, Math.floor((bh - capH - footH) / rowH)), cap = perCol * colsN;
     if (rows.length <= cap) perCol = Math.ceil(rows.length / colsN);   /* balanced columns when every row fits */
     var shown = rows.slice(0, cap), top = rows[0];
@@ -919,7 +924,7 @@
         '<i class="pmu-ladnotch"' + (pol.auto ? '' : ' data-off') + ' aria-hidden="true"></i></div>';
     };
     var html = '<div class="pmu-ladder' + (stacked ? ' is-stacked' : '') + '" style="grid-template-columns:' + (stacked ? 'minmax(0,1fr)' : sideW + 'px minmax(0,1fr)') + ';--ln:' + nameCol + 'px">' +
-      '<div class="pmu-ladside">' + head + '<div class="pmu-ladpol"><span class="pmu-cap">' + (stacked ? 'AUTO-SWITCH · EACH SERVICE AT % USED' : 'AUTO-SWITCH AT % USED') + '</span>' + polCells(fams, stacked ? bw : sideW) + '</div>' + sharedLine() + '</div>' +
+      '<div class="pmu-ladside">' + head + '<div class="pmu-ladpol"><div class="pmu-polcap"><span class="pmu-cap">' + (stacked ? 'AUTO-SWITCH · EACH SERVICE AT % USED' : 'AUTO-SWITCH AT % USED') + '</span>' + sharedLine('is-cap', !stacked) + '</div>' + polCells(fams, stacked ? bw : sideW) + '</div></div>' +
       '<div class="pmu-ladmain"><div class="pmu-ladcap"><span class="pmu-cap">MOST ROOM NOW</span><span class="pmu-cap">LEFT IN THE BINDING WINDOW</span></div>' +
       '<div class="pmu-ladcols" style="grid-template-columns:repeat(' + colsN + ',minmax(0,1fr))">' + cols.map(function (cl) {
         return '<div class="pmu-ladcol">' + cl.map(rowHtml).join('') + '</div>';

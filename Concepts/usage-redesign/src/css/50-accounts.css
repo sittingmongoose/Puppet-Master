@@ -267,11 +267,14 @@ html[data-o55-nier="on"] #panel-usage .pmu-acclight { display: none; }
 #panel-usage .pmu-polval[data-off] { color: var(--pmu-ink-3); font-weight: 500; }
 #panel-usage .pmu-polval[disabled] { opacity: .5; cursor: default; }
 #panel-usage .pmu-polcell[data-tone="warn"] .pmu-polval { border-color: color-mix(in srgb, var(--pmu-warn) 60%, var(--pmu-rule)); }
-#panel-usage .pmu-polshared { margin: 0; min-width: 0; font-size: 12px; line-height: 18px; color: var(--pmu-ink-3); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-polshared { display: block; margin: 0; min-width: 0; font-size: 12px; line-height: 18px; color: var(--pmu-ink-3); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #panel-usage .pmu-polshared b { font-weight: 600; color: var(--pmu-ink-2); }
 #panel-usage .pmu-polshared:hover { color: var(--pmu-ink-2); }
 #panel-usage .pmu-polshared.is-none { cursor: default; white-space: normal; }
 #panel-usage .pmu-ladder.is-stacked .pmu-ladpol { flex: 1 1 100%; }
+#panel-usage .pmu-polcap { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; min-width: 0; }
+#panel-usage .pmu-polcap .pmu-cap { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#panel-usage .pmu-polshared.is-cap { flex: none; display: inline; font-size: 12px; }
 
 /* the ladder: each row's notch at its own provider's switch point, in the track column's coordinates (16 + 8 + the name
    column + 8; 104 px = the fixed columns and the four gaps); rows that share a level line up into one dashed line */
@@ -280,7 +283,8 @@ html[data-o55-nier="on"] #panel-usage .pmu-acclight { display: none; }
 #panel-usage .pmu-ladnotch[data-off] { opacity: .22; }
 
 /* the headroom card's provider rows: mark, name, most room now, the provider's own switch */
-#panel-usage .pmu-switch.is-panel .pmu-swfam { grid-template-columns: 16px minmax(54px, 1fr) minmax(44px, 40%) 30px; column-gap: 6px; align-items: center; }
+#panel-usage .pmu-switch.is-panel .pmu-swfam { grid-template-columns: 16px minmax(0, 1fr) minmax(20px, 36%) 30px; column-gap: 6px; align-items: center; }
+#panel-usage .pmu-switch.is-panel .pmu-swfamname { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #panel-usage .pmu-swfam .pmu-toggle { justify-self: end; }
 #panel-usage .pmu-swfam[data-off] .pmu-swbar { opacity: .55; }
 #panel-usage .pmu-swbar.is-none { font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
