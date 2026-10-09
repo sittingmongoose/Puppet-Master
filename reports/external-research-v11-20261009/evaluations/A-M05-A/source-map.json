@@ -1,0 +1,1292 @@
+{
+  "block": "A-M05-A",
+  "scope": "Independent reviewer primary evidence and exact frozen source lineage; candidates unchanged",
+  "sources": [
+    {
+      "id": "E01",
+      "url": "https://typesense.org/docs/30.2/api/search.md",
+      "resolved_url": "https://typesense.org/docs/30.2/api/search.md",
+      "accessed_at": "2026-10-09T20:30:14.836640+00:00",
+      "status": 200,
+      "content_type": "text/markdown; charset=utf-8",
+      "original_sha256": "a2ce3e03fdc39119cd050f481f7fa5ad13ecb905034c225639d5d5781002a23e",
+      "original_bytes": 156324,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E01.txt",
+      "evidence_sha256": "ce401861e49ea54acadd3c9fbeae3fb7c0099920b72447a4b2c7dc5a24c3413e",
+      "selected_lines": 406,
+      "total_lines": 1148,
+      "version": "Typesense 30.2",
+      "locator": "Typo parameters num_typos/min_len_1typo/min_len_2typo; filter_by; filter_curated_hits; prefix",
+      "claims_supported": [
+        "N1-F01",
+        "N1-F02",
+        "N2-F03"
+      ]
+    },
+    {
+      "id": "E02",
+      "url": "https://typesense.org/docs/30.2/api/vector-search.md",
+      "resolved_url": "https://typesense.org/docs/30.2/api/vector-search.md",
+      "accessed_at": "2026-10-09T20:30:14.838306+00:00",
+      "status": 200,
+      "content_type": "text/markdown; charset=utf-8",
+      "original_sha256": "f6c8d3772b6013627c4eee9ee168a6d97d4c858d39d661bc5912b9ec464a30e9",
+      "original_bytes": 101710,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E02.txt",
+      "evidence_sha256": "887b9f0fd39894fd7fbdbe6e043f575f9e9c89ca8083596dfd6c375965bbd64f",
+      "selected_lines": 1150,
+      "total_lines": 3520,
+      "version": "Typesense 30.2",
+      "locator": "Auto-embedding updates and models; hybrid rank_fusion_score/alpha",
+      "claims_supported": [
+        "N1-F02"
+      ]
+    },
+    {
+      "id": "E03",
+      "url": "https://www.sqlite.org/fts5.html",
+      "resolved_url": "https://www.sqlite.org/fts5.html",
+      "accessed_at": "2026-10-09T20:30:14.843627+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "original_sha256": "92b7e721147d5119781a80273b43708f2f146314d150abb4d3e6eff1503d6fe6",
+      "original_bytes": 215354,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E03.txt",
+      "evidence_sha256": "26e4f98cc1fc742aea0a2782d5306a1e3460225027d4df437f2411dad87d4607",
+      "selected_lines": 351,
+      "total_lines": 3513,
+      "version": "SQLite current official FTS5 docs",
+      "locator": "Sections 1, 3.3, 3.5, 4.3.1, 4.3.5, 4.4, 5.1.1, 6.3, 6.12, 7.1.1",
+      "claims_supported": [
+        "N1-F02",
+        "N2-F02"
+      ]
+    },
+    {
+      "id": "E04",
+      "url": "https://raw.githubusercontent.com/pgvector/pgvector/master/CHANGELOG.md",
+      "resolved_url": "https://raw.githubusercontent.com/pgvector/pgvector/master/CHANGELOG.md",
+      "accessed_at": "2026-10-09T20:30:14.844603+00:00",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "original_sha256": "2a33406b276433ec78b998fe1f6d1200f05c638f44fa9ac6517315b290c85aa4",
+      "original_bytes": 7453,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E04.txt",
+      "evidence_sha256": "abce4242f545471782954b7f23fb02b7e06ecce6d5abe9bc2dfd16cb4ab86e56",
+      "selected_lines": 257,
+      "total_lines": 257,
+      "version": "pgvector master CHANGELOG, observed 0.8.7 (2026-10-01)",
+      "locator": "0.5.0, 0.7.0, 0.8.0–0.8.7 entries",
+      "claims_supported": [
+        "N2-F01"
+      ]
+    },
+    {
+      "id": "E05",
+      "url": "https://raw.githubusercontent.com/pgvector/pgvector/master/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/pgvector/pgvector/master/README.md",
+      "accessed_at": "2026-10-09T20:30:14.846267+00:00",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "original_sha256": "19cebadeeb8d3181d01ef00399674ec41bd2f0363850cdccc7685d4260c5a1c6",
+      "original_bytes": 42305,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E05.txt",
+      "evidence_sha256": "b8c137fa718acb6243b58cfddd2290da09fbf2c73f7a59f8230b9493f3c73dab",
+      "selected_lines": 197,
+      "total_lines": 1361,
+      "version": "Access-time current primary source; hash-qualified or failed attempt",
+      "locator": "Relevant selected lines in bounded source file; failures support no scientific facts",
+      "claims_supported": []
+    },
+    {
+      "id": "E06",
+      "url": "https://iiif.io/api/image/3.0/",
+      "resolved_url": "https://iiif.io/api/image/3.0/",
+      "accessed_at": "2026-10-09T20:30:14.848135+00:00",
+      "status": 200,
+      "content_type": "text/html",
+      "original_sha256": "efcbafb8055c5bfb2880def63f1368b7db47db868f6444ac517764ceeb2180c3",
+      "original_bytes": 145643,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E06.txt",
+      "evidence_sha256": "4af1dd34b3da5644edfc65dd71282824a3ac08a511c1fc24fe3fe41766a45ea9",
+      "selected_lines": 1300,
+      "total_lines": 2153,
+      "version": "IIIF Image API 3.0.0 (2020-06-03)",
+      "locator": "Introduction, size errors, rights property and conformance",
+      "claims_supported": [
+        "N2-F04"
+      ]
+    },
+    {
+      "id": "E07",
+      "url": "https://iiif.io/api/auth/1.0/",
+      "resolved_url": "https://iiif.io/api/auth/1.0/",
+      "accessed_at": "2026-10-09T20:30:14.962437+00:00",
+      "status": 200,
+      "content_type": "text/html",
+      "original_sha256": "55d6103db4d716d544b3f5e02467f369cce74eb6f58b6fa1abc60cf5fad6ca5b",
+      "original_bytes": 98339,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E07.txt",
+      "evidence_sha256": "65059a26e310094d422e97c11c3f6b916d2ccf02232db8a5d882994baafdf5cc",
+      "selected_lines": 591,
+      "total_lines": 1292,
+      "version": "IIIF Authentication 1.0.0 (2017-01-19)",
+      "locator": "Obsolescence note; token flow, interaction patterns, 3.2 tiers",
+      "claims_supported": [
+        "N1-F02",
+        "N1-F04"
+      ]
+    },
+    {
+      "id": "E08",
+      "url": "https://www.meilisearch.com/docs/reference/api/settings",
+      "resolved_url": "https://www.meilisearch.com/docs/reference/api/settings/list-all-settings",
+      "accessed_at": "2026-10-09T20:30:14.984564+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "original_sha256": "ca520621d77eb43bffd9fb6b6f75807a4b5f9bb6537ce24b332cf36c5f02ae08",
+      "original_bytes": 813985,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E08.txt",
+      "evidence_sha256": "328c98e7e8ebdfe77c691eb6963d2d9b4c8d1accec1429dd362239742aa1dd5a",
+      "selected_lines": 150,
+      "total_lines": 827,
+      "version": "Meilisearch current settings reference",
+      "locator": "typoTolerance default object and rankingRules",
+      "claims_supported": [
+        "N1-F01"
+      ]
+    },
+    {
+      "id": "E09",
+      "url": "https://www.meilisearch.com/docs/learn/relevancy/typo_tolerance_settings",
+      "resolved_url": "https://www.meilisearch.com/docs/capabilities/full_text_search/relevancy/typo_tolerance_settings",
+      "accessed_at": "2026-10-09T20:30:15.038483+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "original_sha256": "cb608cebc4e6eab4d969f59a69b2bc9667f938243218db7c922194a72721a601",
+      "original_bytes": 734073,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E09.txt",
+      "evidence_sha256": "912b73f8f3d7191b678d7a5d665154943d1f302a8cb26981393607dd9931f012",
+      "selected_lines": 239,
+      "total_lines": 1197,
+      "version": "Meilisearch current typo guide",
+      "locator": "oneTypo/twoTypos constraints, first-character and numerical rules",
+      "claims_supported": []
+    },
+    {
+      "id": "E10",
+      "url": "https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/raw/main/README.md",
+      "resolved_url": "https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/raw/main/README.md",
+      "accessed_at": "2026-10-09T20:30:15.199900+00:00",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "original_sha256": "dcd602d2fd35c203a247304a06fec6654a12f7941b739f9221a064fe8dc3b7f0",
+      "original_bytes": 10502,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E10.txt",
+      "evidence_sha256": "14ccaa99577bb2109842d3eb38ba4073fc2f430a362d51df7c9ed8bad251cff3",
+      "selected_lines": 175,
+      "total_lines": 175,
+      "version": "all-MiniLM-L6-v2 main model card",
+      "locator": "License, dimension, training table and default truncation",
+      "claims_supported": [
+        "N1-F02",
+        "N1-F03"
+      ]
+    },
+    {
+      "id": "E11",
+      "url": "https://raw.githubusercontent.com/rightsstatements/data-model/master/rights-statements.ttl",
+      "resolved_url": "https://raw.githubusercontent.com/rightsstatements/data-model/master/rights-statements.ttl",
+      "accessed_at": "2026-10-09T20:30:15.201508+00:00",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "original_sha256": "d0f1d3236d21d3635d7110090ee976d87aa49ffc375f2ad3b6211dfb17f04cf6",
+      "original_bytes": 7806,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E11.txt",
+      "evidence_sha256": "8e157717f8f5bfcc99626505f4d8fe4178b1316e3f2d5fe0db77ca25286ed1c2",
+      "selected_lines": 240,
+      "total_lines": 240,
+      "version": "RightsStatements master, commit confirmed by E30: 93f161309fd68cc0c9217c3911630aa3a6ea6b72",
+      "locator": "Twelve dcterms:RightsStatement declarations; 2019-06-05 descriptive-label change",
+      "claims_supported": []
+    },
+    {
+      "id": "E12",
+      "url": "https://raw.githubusercontent.com/rightsstatements/data-model/master/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/rightsstatements/data-model/master/README.md",
+      "accessed_at": "2026-10-09T20:30:15.217307+00:00",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "original_sha256": "69114a55f5e7098a4a38995cde139daf3f7da5a17c9ac9a5abff7d41199013b5",
+      "original_bytes": 2540,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E12.txt",
+      "evidence_sha256": "8f68db6bf744c1996dddb507096d2935b1fec8dc50e78ed0b62a2c2724e6ddc9",
+      "selected_lines": 40,
+      "total_lines": 40,
+      "version": "Access-time current primary source; hash-qualified or failed attempt",
+      "locator": "Relevant selected lines in bounded source file; failures support no scientific facts",
+      "claims_supported": []
+    },
+    {
+      "id": "E13",
+      "url": "https://localcontexts.org/labels/traditional-knowledge-labels/",
+      "resolved_url": "https://localcontexts.org/labels/traditional-knowledge-labels/",
+      "accessed_at": "2026-10-09T20:30:15.272477+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "original_sha256": "65e9a53c2bd32c184df4c64d0a97c315ef394e328ff07983bce17cc80db382e1",
+      "original_bytes": 138443,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E13.txt",
+      "evidence_sha256": "7f3ab3eaea9b0b60716b932514ccdc79d32d41ff8fcd8abd0716840dd9993240",
+      "selected_lines": 120,
+      "total_lines": 120,
+      "version": "Local Contexts current TK Labels page",
+      "locator": "Provenance/Protocol/Permission sections; community authority; listed label names",
+      "claims_supported": []
+    },
+    {
+      "id": "E14",
+      "url": "https://raw.githubusercontent.com/cantaloupe-project/cantaloupe/develop/CHANGES.md",
+      "resolved_url": "https://raw.githubusercontent.com/cantaloupe-project/cantaloupe/develop/CHANGES.md",
+      "accessed_at": "2026-10-09T20:30:15.316795+00:00",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "original_sha256": "1ae2a587db691bb1026be66324fd8eb2532c871f7283d6d755dd80f8f46fcc8b",
+      "original_bytes": 45291,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E14.txt",
+      "evidence_sha256": "825747158e35fa7ae30c9d0ca3fd20774ca9430dcb9134f893bbef2ebca8d2af",
+      "selected_lines": 386,
+      "total_lines": 995,
+      "version": "Cantaloupe CHANGES.md develop",
+      "locator": "5.0.1 EXIF/PDFBox, 5.0.3 EXIF, 4.1.2 CVE-2019-0228",
+      "claims_supported": [
+        "N1-F06"
+      ]
+    },
+    {
+      "id": "E15",
+      "url": "https://www.sqlite.org/changes.html",
+      "resolved_url": "https://www.sqlite.org/changes.html",
+      "accessed_at": "2026-10-09T20:30:15.333013+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "original_sha256": "2a178b4db0b79b3c48424ffd5ae1bbac5ebd559079ee002e79a4467350072eb7",
+      "original_bytes": 479741,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E15.txt",
+      "evidence_sha256": "70a5b516b98f08390e50819cca9a918b8cc1b35384e4a757b9ec15f1d47efc20",
+      "selected_lines": 162,
+      "total_lines": 10340,
+      "version": "SQLite official release history 3.44.2 through 3.51.1",
+      "locator": "Seven cited FTS5 release entries/dates",
+      "claims_supported": [
+        "N1-F06"
+      ]
+    },
+    {
+      "id": "E16",
+      "url": "https://mukurtu.org/",
+      "resolved_url": "https://mukurtu.org/",
+      "accessed_at": "2026-10-09T20:30:15.427025+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "original_sha256": "786b0cf2fa0a845275ffc4b30e56a4ad6634bd626820b06f669b1a16089ae520",
+      "original_bytes": 142792,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E16.txt",
+      "evidence_sha256": "7163bcd928dac7b8e5e8de5382ac6f097549779af1cd3c5af8b6d79ea0a4f678",
+      "selected_lines": 10,
+      "total_lines": 10,
+      "version": "Access-time current primary source; hash-qualified or failed attempt",
+      "locator": "Relevant selected lines in bounded source file; failures support no scientific facts",
+      "claims_supported": []
+    },
+    {
+      "id": "E17",
+      "url": "https://mukurtu.org/support/",
+      "resolved_url": "https://mukurtu.org/support/",
+      "accessed_at": "2026-10-09T20:30:15.468628+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "original_sha256": "fb7345baf9f56839c5b347e3574dc2a8ac3eafd900341e7eae4f590b06b69746",
+      "original_bytes": 262173,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E17.txt",
+      "evidence_sha256": "f1b38d815d6bc0299731bb20cbb528e1850e674c12599868975b81ede1c6fd7e",
+      "selected_lines": 187,
+      "total_lines": 187,
+      "version": "Access-time current primary source; hash-qualified or failed attempt",
+      "locator": "Relevant selected lines in bounded source file; failures support no scientific facts",
+      "claims_supported": [
+        "N2-F05"
+      ]
+    },
+    {
+      "id": "E18",
+      "url": "https://lucaong.github.io/minisearch/",
+      "resolved_url": "https://lucaong.github.io/minisearch/",
+      "accessed_at": "2026-10-09T20:30:15.584186+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "original_sha256": "b1cd138e2d3e8383544a68b1bd4a2fc7d86db9dddc4eeb0f496c2ebe5e376e3a",
+      "original_bytes": 39993,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E18.txt",
+      "evidence_sha256": "c25c85e3321957b7dff746cfd57aedbf7d85a44fd0a1bb48709802e3d49f07f4",
+      "selected_lines": 189,
+      "total_lines": 817,
+      "version": "MiniSearch current official docs",
+      "locator": "Feature list including live removal; relative fuzzy example; browser deployment",
+      "claims_supported": [
+        "N1-F02",
+        "N1-F03"
+      ]
+    },
+    {
+      "id": "E19",
+      "url": "https://www.getty.edu/research/tools/vocabularies/aat/about.html",
+      "resolved_url": "https://www.getty.edu/research/tools/vocabularies/aat/about.html",
+      "accessed_at": "2026-10-09T20:30:15.782457+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "original_sha256": "dd8ed9a5cee41c2cc062f374dd9949281068a6409ffda5ae9dfc8b17ef9144d3",
+      "original_bytes": 100572,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E19.txt",
+      "evidence_sha256": "84b8ac9ba38a142bdbaa90ccf3ba8478ee42c6b2495fa0d0c23565b4b5706433",
+      "selected_lines": 241,
+      "total_lines": 981,
+      "version": "Getty AAT current official about page",
+      "locator": "Scope, license, counts, polyhierarchy, formats, refresh",
+      "claims_supported": [
+        "N1-F02",
+        "N1-F03"
+      ]
+    },
+    {
+      "id": "E20",
+      "url": "https://www.wikidata.org/w/api.php?action=help&modules=wbsearchentities",
+      "resolved_url": "https://www.wikidata.org/w/api.php?action=help&modules=wbsearchentities",
+      "accessed_at": "2026-10-09T20:30:15.908439+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "original_sha256": "a511405a24922ab9fd5b5a8cf34f0edaffbaf4988bfcc51aa12fa7df82366748",
+      "original_bytes": 14915,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E20.txt",
+      "evidence_sha256": "41c1aadc188f167c17520779b62037fa6a389f9e9520d2098ed60d6a3337a723",
+      "selected_lines": 87,
+      "total_lines": 87,
+      "version": "Wikibase live wbsearchentities API help",
+      "locator": "language/uselang/strictlanguage; limit; label/alias search",
+      "claims_supported": [
+        "N1-F03"
+      ]
+    },
+    {
+      "id": "E21",
+      "url": "https://raw.githubusercontent.com/asg017/sqlite-vec/main/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/asg017/sqlite-vec/main/README.md",
+      "accessed_at": "2026-10-09T20:30:15.958495+00:00",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "original_sha256": "9116ef6e0b78eb0caf5c6bb6419ccf4f8c6523967eef2045928c33dc66053d64",
+      "original_bytes": 9390,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E21.txt",
+      "evidence_sha256": "1a6fabbe344b0226b6556de5d03e2ec9a476c2593ba300e93a7668fc74704f48",
+      "selected_lines": 160,
+      "total_lines": 160,
+      "version": "sqlite-vec main README",
+      "locator": "vec0 KNN, metadata/partition columns, WASM and pre-v1 warning",
+      "claims_supported": [
+        "N1-F02",
+        "N1-F03"
+      ]
+    },
+    {
+      "id": "E22",
+      "url": "https://api.github.com/repos/asg017/sqlite-vec/releases/latest",
+      "resolved_url": "https://api.github.com/repos/asg017/sqlite-vec/releases/latest",
+      "accessed_at": "2026-10-09T20:30:15.961482+00:00",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "original_sha256": "e5f7e1610d8ab531de5464efd5b0f0034aa5e7715314565b3b829d485e4534dd",
+      "original_bytes": 47354,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E22.txt",
+      "evidence_sha256": "7781f9ccd4ed6935258f0fbf2314335605d52cd7352fa1c17f17696b4e924579",
+      "selected_lines": 1,
+      "total_lines": 1,
+      "selection": "Release tag/name/date/body and target_commitish, or commit metadata; asset binaries omitted",
+      "version": "sqlite-vec v0.1.9, 2026-03-31",
+      "locator": "Release body: issue #274 DELETE error with long (>12 chars) metadata text",
+      "claims_supported": [
+        "N1-F03"
+      ]
+    },
+    {
+      "id": "E23",
+      "url": "https://api.github.com/repos/openseadragon/openseadragon/releases?per_page=20",
+      "resolved_url": "https://api.github.com/repos/openseadragon/openseadragon/releases?per_page=20",
+      "accessed_at": "2026-10-09T20:30:16.042936+00:00",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "original_sha256": "fba26c0c748c890e80e1b453e47b4b051bb75aa578bf6ece3166ddd231f2ed63",
+      "original_bytes": 138887,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E23.txt",
+      "evidence_sha256": "5cbedaed88127b722da0ab4dd9076788b3491fea47e3d1fe032357afc1d193bc",
+      "selected_lines": 1,
+      "total_lines": 1,
+      "selection": "Release tag/name/date/body and target_commitish, or commit metadata; asset binaries omitted",
+      "version": "OpenSeadragon release objects: v5.0.0 2024-08-14, v5.0.1 2024-12-09, v6.1.1 2026-09-09",
+      "locator": "tag_name/published_at/body of v5.0.0, v5.0.1, v6.0.x/v6.1.1",
+      "claims_supported": [
+        "N1-F02",
+        "N1-F06"
+      ]
+    },
+    {
+      "id": "E24",
+      "url": "https://api.github.com/repos/cantaloupe-project/cantaloupe/releases?per_page=20",
+      "resolved_url": "https://api.github.com/repos/cantaloupe-project/cantaloupe/releases?per_page=20",
+      "accessed_at": "2026-10-09T20:30:16.137771+00:00",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "original_sha256": "1ae7858a1375f377aabb05df1336aed1c315e229aad839c82525907d8481b55c",
+      "original_bytes": 94104,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E24.txt",
+      "evidence_sha256": "863534f66801fed90238adade569821bfe055547f13bd60ced9d28ac3049484c",
+      "selected_lines": 1,
+      "total_lines": 1,
+      "selection": "Release tag/name/date/body and target_commitish, or commit metadata; asset binaries omitted",
+      "version": "Cantaloupe release objects: v4.1.9/v5.0.1 2021-05-03, v5.0.6 2024-01-24, v5.0.7 2025-03-13",
+      "locator": "tag_name/published_at/body; v5.0.7 PR #675/CVE-2023-37460; v5.0.1 EXIF/PDFBox",
+      "claims_supported": [
+        "N1-F06"
+      ]
+    },
+    {
+      "id": "E25",
+      "url": "https://collectiveaccess.org/",
+      "resolved_url": "https://collectiveaccess.org/",
+      "accessed_at": "2026-10-09T20:30:16.215845+00:00",
+      "status": 200,
+      "content_type": "text/html",
+      "original_sha256": "37fa351aaa1bbcb09fc2967b594bc4ddbffb540f30f8e0de66034eb474b934fc",
+      "original_bytes": 43971,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E25.txt",
+      "evidence_sha256": "0d8903afc7318f1284e52061cb44a3d7ed5ec4de9d991aade1765f12dc2ee557",
+      "selected_lines": 81,
+      "total_lines": 81,
+      "version": "CollectiveAccess official 2.0.11 landing page",
+      "locator": "Providence/Pawtucket2 roles and batch export",
+      "claims_supported": []
+    },
+    {
+      "id": "E26",
+      "url": "https://omeka.org/s/",
+      "resolved_url": "https://omeka.org/s/",
+      "accessed_at": "2026-10-09T20:30:16.335049+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=UTF-8",
+      "original_sha256": "91604ffcc6b2f98a9dd2949c12815730ae41bbbb7d2af7f4d48bab2b43854751",
+      "original_bytes": 6367,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E26.txt",
+      "evidence_sha256": "6884073fca949e95f082c27c73ca749dd47327ae8c3bc2fdb648a3c6abb8a0ad",
+      "selected_lines": 20,
+      "total_lines": 20,
+      "version": "Omeka S current official landing page",
+      "locator": "Multiple sites, linked data, templates and modules",
+      "claims_supported": []
+    },
+    {
+      "id": "E27",
+      "url": "https://minicomp.github.io/wax/",
+      "resolved_url": "https://minicomp.github.io/wax/",
+      "accessed_at": "2026-10-09T20:30:16.418500+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "original_sha256": "4237ae645749bc065b8cd7cfdbab5cd65fae5ec00aad2301ad1c7a5f64d83363",
+      "original_bytes": 13301,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E27.txt",
+      "evidence_sha256": "bed64f22c512afbc33e43b2bb80fa9e956e96706598408432de32cb02f16bf19",
+      "selected_lines": 18,
+      "total_lines": 18,
+      "version": "Minicomp/Wax current official landing page",
+      "locator": "Minimal computing exhibitions, longevity/cost/flexibility",
+      "claims_supported": [
+        "N1-F02"
+      ]
+    },
+    {
+      "id": "E28",
+      "url": "https://huggingface.co/sentence-transformers/clip-ViT-B-32/raw/main/README.md",
+      "resolved_url": "https://huggingface.co/sentence-transformers/clip-ViT-B-32/raw/main/README.md",
+      "accessed_at": "2026-10-09T20:30:16.423524+00:00",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "original_sha256": "84dc32f9617815fef11181bd6dca41031b7832b7201706fcae6d1776e46a7756",
+      "original_bytes": 1911,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E28.txt",
+      "evidence_sha256": "255224ad3daa00479344d101da3c0482b05ba48c7571097c258144cfd3fe1ebd",
+      "selected_lines": 49,
+      "total_lines": 49,
+      "version": "Access-time current primary source; hash-qualified or failed attempt",
+      "locator": "Relevant selected lines in bounded source file; failures support no scientific facts",
+      "claims_supported": []
+    },
+    {
+      "id": "E29",
+      "url": "https://www.postgresql.org/docs/current/textsearch.html",
+      "resolved_url": "https://www.postgresql.org/docs/current/textsearch.html",
+      "accessed_at": "2026-10-09T20:30:16.438186+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "original_sha256": "e70ed7b4a948234d37537e2f24ea3c874c89a579149babcdf6400aad9823d053",
+      "original_bytes": 17904,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E29.txt",
+      "evidence_sha256": "0a33295f89bda31a9408d2d475d5f344d181fba55ac2d9f1dec02f758db55c41",
+      "selected_lines": 110,
+      "total_lines": 110,
+      "version": "Access-time current primary source; hash-qualified or failed attempt",
+      "locator": "Relevant selected lines in bounded source file; failures support no scientific facts",
+      "claims_supported": []
+    },
+    {
+      "id": "E30",
+      "url": "https://api.github.com/repos/rightsstatements/data-model/commits/master",
+      "resolved_url": "https://api.github.com/repos/rightsstatements/data-model/commits/master",
+      "accessed_at": "2026-10-09T20:30:16.468931+00:00",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "original_sha256": "cb06c5fc5bfea773a745c60ac0e972ea8f903ed7031396a28899bb2b078ad3cd",
+      "original_bytes": 15151,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E30.txt",
+      "evidence_sha256": "d983760ecfd3f26af3e4ce7b565fda9844e6e80c1405ca4c6230286bedeb6a30",
+      "selected_lines": 1,
+      "total_lines": 1,
+      "selection": "Release tag/name/date/body and target_commitish, or commit metadata; asset binaries omitted",
+      "version": "RightsStatements commit 93f161309fd68cc0c9217c3911630aa3a6ea6b72, 2026-09-02",
+      "locator": "sha and commit timestamps",
+      "claims_supported": []
+    },
+    {
+      "id": "E31",
+      "url": "https://raw.githubusercontent.com/pgvector/pgvector/v0.8.7/src/hnsw.c",
+      "resolved_url": "https://raw.githubusercontent.com/pgvector/pgvector/v0.8.7/src/hnsw.c",
+      "accessed_at": "2026-10-09T20:31:55.627075+00:00",
+      "status": 200,
+      "original_sha256": "7ce919554611e817f374a3f5573d7b1f37799cc5a2f3d2cb6a6d155f69c200e4",
+      "original_bytes": 12192,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E31.txt",
+      "evidence_sha256": "d168fc7559276597f57af7cf74967c13e0a5050732c1525711fdb6f7be4fea6d",
+      "selection": "Matched terms with surrounding source lines; code read only, never executed",
+      "version": "pgvector v0.8.7 src/hnsw.c",
+      "locator": "HnswInit, DefineCustomEnumVariable hnsw.iterative_scan default HNSW_ITERATIVE_SCAN_OFF, source lines 97–104",
+      "claims_supported": [
+        "N2-F01"
+      ]
+    },
+    {
+      "id": "E32",
+      "url": "https://raw.githubusercontent.com/pgvector/pgvector/v0.8.7/src/ivfflat.c",
+      "resolved_url": "https://raw.githubusercontent.com/pgvector/pgvector/v0.8.7/src/ivfflat.c",
+      "accessed_at": "2026-10-09T20:31:55.629592+00:00",
+      "status": 200,
+      "original_sha256": "652309192fdd909048371ed24f5026ae0ebd1eecf253ca6512820ce114ea71e0",
+      "original_bytes": 9318,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E32.txt",
+      "evidence_sha256": "342517b56db84d9307c2dbdbe6660a3e0c1729353c2523ca285ba44b3a574860",
+      "selection": "Matched terms with surrounding source lines; code read only, never executed",
+      "version": "pgvector v0.8.7 src/ivfflat.c",
+      "locator": "IvfflatInit, DefineCustomEnumVariable ivfflat.iterative_scan default IVFFLAT_ITERATIVE_SCAN_OFF, lines 49–56",
+      "claims_supported": [
+        "N2-F01"
+      ]
+    },
+    {
+      "id": "E33",
+      "url": "https://iiif.io/api/auth/2.0/",
+      "resolved_url": "https://iiif.io/api/auth/2.0/",
+      "accessed_at": "2026-10-09T20:31:55.635457+00:00",
+      "status": 200,
+      "original_sha256": "3b8556ac46b943b4a25e9e3dfa375f6a77f1c9ae155344c842be79c0695fe82b",
+      "original_bytes": 150767,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E33.txt",
+      "evidence_sha256": "718f3c81acc55d7df83bbe24e8a262683f87dfd82fa2c69c1590d65576dbae33",
+      "selection": "Matched terms with surrounding source lines; code read only, never executed",
+      "version": "IIIF Authorization Flow API 2.0.0 current stable",
+      "locator": "Sections 1.3, access service, token service, probe service, authorization flow",
+      "claims_supported": [
+        "N1-F04"
+      ]
+    },
+    {
+      "id": "E34",
+      "url": "https://openrefine.org/docs/manual/reconciling",
+      "resolved_url": "https://openrefine.org/docs/manual/reconciling",
+      "accessed_at": "2026-10-09T20:31:55.636968+00:00",
+      "status": 200,
+      "original_sha256": "4384e5cfb7aed83e753696bf3417d24e97645fd23886ce5327362c79575cc9e8",
+      "original_bytes": 62376,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E34.txt",
+      "evidence_sha256": "7dfe6ca701ea8cc067238c9d6903ea4c858a92af06e56b6ab81140885f89b620",
+      "selection": "Matched terms with surrounding source lines; code read only, never executed",
+      "version": "OpenRefine current reconciliation manual",
+      "locator": "Semi-automated human review, original cell value retention, service-specific scores and judgment history",
+      "claims_supported": [
+        "N1-F05"
+      ]
+    },
+    {
+      "id": "E35",
+      "url": "https://github.com/cantaloupe-project/cantaloupe/issues/634",
+      "resolved_url": "https://github.com/cantaloupe-project/cantaloupe/issues/634",
+      "accessed_at": "2026-10-09T20:31:55.638278+00:00",
+      "status": 200,
+      "original_sha256": "cb1f0992904d13c1ac0c284c00f29f2db3fa61baa720474192a8d513e2abdf84",
+      "original_bytes": 738607,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E35.txt",
+      "evidence_sha256": "f42d676d6168f47a6cfbd525b24b133d268226bb10c719444ef7f96a80329060",
+      "selection": "Matched terms with surrounding source lines; code read only, never executed",
+      "version": "Access-time current primary source; hash-qualified or failed attempt",
+      "locator": "Relevant selected lines in bounded source file; failures support no scientific facts",
+      "claims_supported": []
+    },
+    {
+      "id": "E36",
+      "url": "https://huggingface.co/sentence-transformers/clip-ViT-B-32/raw/main/0_CLIPModel/config.json",
+      "resolved_url": "https://huggingface.co/sentence-transformers/clip-ViT-B-32/raw/main/0_CLIPModel/config.json",
+      "accessed_at": "2026-10-09T20:31:55.771720+00:00",
+      "status": 200,
+      "original_sha256": "f77ab2f54a03090c5dcac397670c254c39cd7a311611cafb5a79de3b07cd13ff",
+      "original_bytes": 4025,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E36.txt",
+      "evidence_sha256": "be03a912d8a52cf462c468cfb13e60ae3eed6f1aa7f1dd0ebe4d0061ac577804",
+      "selection": "Matched terms with surrounding source lines; code read only, never executed",
+      "version": "clip-ViT-B-32 main 0_CLIPModel/config.json",
+      "locator": "projection_dim=512 and text_config.max_position_embeddings=77; no license inference",
+      "claims_supported": []
+    },
+    {
+      "id": "E37",
+      "url": "https://www.meilisearch.com/docs/learn/relevancy/typo_tolerance_calculations",
+      "resolved_url": "https://www.meilisearch.com/docs/capabilities/full_text_search/relevancy/typo_tolerance_settings#how-typo-tolerance-works",
+      "accessed_at": "2026-10-09T20:31:55.772501+00:00",
+      "status": 200,
+      "original_sha256": "cb608cebc4e6eab4d969f59a69b2bc9667f938243218db7c922194a72721a601",
+      "original_bytes": 734073,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E37.txt",
+      "evidence_sha256": "23c3d6cc60ff386cb14499f04306afc88ffe59e354cacd024b8d9c2757e7625e",
+      "selection": "Matched terms with surrounding source lines; code read only, never executed",
+      "version": "Meilisearch current typo calculations guide",
+      "locator": "Query-word length bands and prefix matching",
+      "claims_supported": [
+        "N1-F01"
+      ]
+    },
+    {
+      "id": "E38",
+      "url": "https://mukurtu.org/support/what-are-communities-cultural-protocols-and-categories/",
+      "resolved_url": "https://mukurtu.org/support/what-are-communities-cultural-protocols-and-categories/",
+      "accessed_at": "2026-10-09T20:33:33.494089+00:00",
+      "status": 200,
+      "original_sha256": "8ec116961e5f27c2bffcb2b348a6150e2ddc8aaa8964396778d6790b77415470",
+      "original_bytes": 172371,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E38.txt",
+      "evidence_sha256": "2c9eaea23271d096709ac69c74b698542cf5a4ba5fda044fe3e64bd63efab0ae",
+      "selection": "Matched terms with surrounding source lines; read only",
+      "version": "Mukurtu support article, updated 2020-02-03",
+      "locator": "Product GPLv3/WSU footer; video-oriented article body",
+      "claims_supported": [
+        "N2-F05"
+      ]
+    },
+    {
+      "id": "E39",
+      "url": "https://mukurtu.org/support/how-to-use-duplicate-and-community-records-to-manage-access/",
+      "resolved_url": "https://mukurtu.org/support/how-to-use-duplicate-and-community-records-to-manage-access/",
+      "accessed_at": "2026-10-09T20:33:33.496629+00:00",
+      "status": 200,
+      "original_sha256": "069f80f25584aa47096c4a5cf62b1431b9209dafa7289913c11e24e32d4e9b66",
+      "original_bytes": 174135,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E39.txt",
+      "evidence_sha256": "af374163ec5383196c10671655b771b4cf415079971105e47d634ebc1e64376c",
+      "selection": "Matched terms with surrounding source lines; read only",
+      "version": "Mukurtu community-record support article, updated 2021-11-09",
+      "locator": "Supplementary community-record protocol plus primary digital heritage item visibility prerequisite",
+      "claims_supported": [
+        "N2-F04",
+        "N2-F05"
+      ]
+    },
+    {
+      "id": "E40",
+      "url": "https://typesense.org/docs/30.2/api/curation.md",
+      "resolved_url": "https://typesense.org/docs/30.2/api/curation.md",
+      "accessed_at": "2026-10-09T20:33:33.502161+00:00",
+      "status": 200,
+      "original_sha256": "41d6b87dc096850b3ea49fe1e6b8823ec2c38d7216f527fc618f0a3c326d9717",
+      "original_bytes": 45861,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E40.txt",
+      "evidence_sha256": "c308bfd8551570c56236e41160e4245053f83d31dec88197689255954e2a8ed7",
+      "selection": "Matched terms with surrounding source lines; read only",
+      "version": "Typesense 30.2 curation reference",
+      "locator": "Curation Parameters filter_curated_hits default false; included-record filtering",
+      "claims_supported": [
+        "N2-F03"
+      ]
+    },
+    {
+      "id": "E41",
+      "url": "https://typesense.org/docs/30.2/api/api-keys.md",
+      "resolved_url": "https://typesense.org/docs/30.2/api/api-keys.md",
+      "accessed_at": "2026-10-09T20:33:33.503350+00:00",
+      "status": 200,
+      "original_sha256": "71c832050873000145ab2d741ea826814a7ceeeb48cc8fb2f7cdd8590aa09bde",
+      "original_bytes": 33563,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E41.txt",
+      "evidence_sha256": "c45637c9c23d9e8b165b836920c786843551acb8d7d1538f44ba3039cb69c260",
+      "selection": "Matched terms with surrounding source lines; read only",
+      "version": "Typesense 30.2 scoped API-key reference",
+      "locator": "Scoped search key embedded filter_by examples",
+      "claims_supported": [
+        "N2-F03"
+      ]
+    },
+    {
+      "id": "E42",
+      "url": "https://www.postgresql.org/docs/18/textsearch-intro.html",
+      "resolved_url": "https://www.postgresql.org/docs/18/textsearch-intro.html",
+      "accessed_at": "2026-10-09T20:33:33.504472+00:00",
+      "status": 200,
+      "original_sha256": "adc691f3a76e3339502107acdb1031715735dcf9d740ec5f5b331f41db1fbe64",
+      "original_bytes": 34748,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E42.txt",
+      "evidence_sha256": "fc039da86ceaefc986893e7b103e9095b72282104ed252ccb8e078315a5bbdd0",
+      "selection": "Matched terms with surrounding source lines; read only",
+      "version": "PostgreSQL 18 section 12.1",
+      "locator": "tsvector/tsquery and native PostgreSQL text-search functions",
+      "claims_supported": [
+        "N2-F02"
+      ]
+    },
+    {
+      "id": "E43",
+      "url": "https://raw.githubusercontent.com/pgvector/pgvector/v0.8.7/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/pgvector/pgvector/v0.8.7/README.md",
+      "accessed_at": "2026-10-09T20:33:33.607301+00:00",
+      "status": 200,
+      "original_sha256": "19cebadeeb8d3181d01ef00399674ec41bd2f0363850cdccc7685d4260c5a1c6",
+      "original_bytes": 42305,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E43.txt",
+      "evidence_sha256": "0ad1333393cca2abd0c3dc8c6bc90e778c3673a7568081da6f127d0c76aecc9b",
+      "selection": "Matched terms with surrounding source lines; read only",
+      "version": "pgvector v0.8.7 README",
+      "locator": "Filtering, Iterative Index Scans, limits and Index Searches troubleshooting",
+      "claims_supported": [
+        "N2-F01",
+        "N2-F04"
+      ]
+    },
+    {
+      "id": "E44",
+      "url": "https://github.com/mukurtucms/mukurtucms",
+      "resolved_url": "https://github.com/mukurtucms/mukurtucms",
+      "accessed_at": "2026-10-09T20:33:33.732595+00:00",
+      "status": 200,
+      "original_sha256": "6d25deace0b981fbd03f68961c89eaff2a71a42fb6ec71bfe4e4de08a6b5d6b0",
+      "original_bytes": 388950,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E44.txt",
+      "evidence_sha256": "39aa0880e1ccb376e2dbcbb9360489737bfb09f931e90780a29b7e7d7d1ca6b4",
+      "selection": "Matched terms with surrounding source lines; read only",
+      "version": "Mukurtu repository Drupal 7 edition, not an unpinned current deployment",
+      "locator": "Drupal 7 requirements/private file path/edition-dependent license",
+      "claims_supported": []
+    },
+    {
+      "id": "E45",
+      "url": "https://www.postgresql.org/docs/18/plpgsql-trigger.html",
+      "resolved_url": "https://www.postgresql.org/docs/18/plpgsql-trigger.html",
+      "accessed_at": "2026-10-09T20:34:53.394856+00:00",
+      "status": 200,
+      "original_sha256": "5e32786b81ade7704e097d493403c50bb05d1b0e6712c4222bea50d7d0fe6841",
+      "original_bytes": 43502,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E45.txt",
+      "evidence_sha256": "76686c52ba7b23560093be6a874af6edf3c5a77d27db79860bf70e9fb2a3d05f",
+      "selection": "Relevant primary-source lines; documentation examples not executed",
+      "version": "PostgreSQL 18 section 41.10, examples 41.4/41.5",
+      "locator": "process_emp_audit/update_emp_view direct-update auditing examples",
+      "claims_supported": [
+        "N1-F05"
+      ]
+    },
+    {
+      "id": "E46",
+      "url": "https://www.w3.org/WAI/tutorials/images/decision-tree/",
+      "resolved_url": "https://www.w3.org/WAI/tutorials/images/decision-tree/",
+      "accessed_at": "2026-10-09T20:34:53.396909+00:00",
+      "status": 200,
+      "original_sha256": "4e9d1d3b85fe92145d990d9a42726a239ee2f971b982f0024312dc01412d5361",
+      "original_bytes": 47021,
+      "evidence_file": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/evidence/E46.txt",
+      "evidence_sha256": "ae1098368501a82b9d3b8abecf3f90c8850af3a0bc2587aba75bd58d5fa19b32",
+      "selection": "Relevant primary-source lines; documentation examples not executed",
+      "version": "W3C WAI image alt decision tree",
+      "locator": "Image purpose and surrounding-text-dependent alternatives",
+      "claims_supported": []
+    },
+    {
+      "id": "E47",
+      "url": "https://openrefine.org/docs/manual/undo-redo",
+      "accessed_at": "2026-10-09T20:34:53.402305+00:00",
+      "error": "HTTP Error 404: Not Found",
+      "version": "Access-time current primary source; hash-qualified or failed attempt",
+      "locator": "Relevant selected lines in bounded source file; failures support no scientific facts",
+      "claims_supported": []
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/assignment.md",
+      "sha256": "bf68234a6964bee49ba81033777e1dfd6f079d6745b75f7aa9011df2a951a6f5",
+      "bytes": 2170
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M05-A/input-map.json",
+      "sha256": "d985e02a659aca949bb1b8e9c3ce8cd87078d8d7bd89db558fea5159108dcf2c",
+      "bytes": 8634
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S05/brief.md",
+      "sha256": "552e4eb0e3aeffb3af6a2f4ff134a1abd6e40384823bef785365dfd63c550e35",
+      "bytes": 1456
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S05/plan-root-only.md",
+      "sha256": "422f486c028546be6c5291c5121b59befb143ded6b0afc7858d141e8f60667b1",
+      "bytes": 398
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/reviser/final.md",
+      "sha256": "7cbc8ec7aece562188c04731146668ec1ebdc6118ed44b6f29d99c4054472b6f",
+      "bytes": 31396,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/reviser/source-map.json",
+      "sha256": "4b7cde693463d8d8a0382b80e2c4da5d02b139acac3ed95c7905853aea9c344f",
+      "bytes": 3946,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/reviser/assignment.md",
+      "sha256": "3e46a6c0071c6bf61c6c233657cb1185899fffaa9d533c86a77f24ca78f10ba0",
+      "bytes": 3041,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/reviser/input-map.json",
+      "sha256": "404228e12a97bffd932c96383045ac45f83be90319ad71148bf523f9555bf2a5",
+      "bytes": 1548,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/critic/critique.md",
+      "sha256": "6efca9e2707a0e4e873c4b03b7055a66d3a865562ed6ceac58e77653f2405965",
+      "bytes": 15189,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/critic/source-map.json",
+      "sha256": "84a05fcd9574bebe898dc5ce57459c22adc44da33f5ce38aa6e9323cd2ff1d48",
+      "bytes": 6547,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/critic/assignment.md",
+      "sha256": "c6fadd38dcc56fcea7ccfc47ed184fd392d336746bdcf195384638d832214a1b",
+      "bytes": 2509,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/critic/input-map.json",
+      "sha256": "9320daebce9ab3d53c2c95f3c607d6e574171d73a7cc4bdc397e9ff4000cd345",
+      "bytes": 1224,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/discovery.md",
+      "sha256": "2b97895a11425bae0599a1956068d312c29041d0ef5802c90f414cf21658cfed",
+      "bytes": 13596,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/draft.md",
+      "sha256": "96d309f0576560d43bb2bf499608f1772dda232f2c19afd82e68ab9795a1cc7f",
+      "bytes": 12041,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/source-map.json",
+      "sha256": "d52bc1811575e5fad1b900f91cc9ec51950b5171fbb3ab4e29c7c01cda3ea60c",
+      "bytes": 6038,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/revealed-plan.md",
+      "sha256": "422f486c028546be6c5291c5121b59befb143ded6b0afc7858d141e8f60667b1",
+      "bytes": 398,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/plan-reveal.json",
+      "sha256": "77d2923fdf4280c4effbeb9d677a52ec7bffbb9ed39d5ab6f3ed324ff201a640",
+      "bytes": 276,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/assignment.md",
+      "sha256": "db671e117c213c8824f83586c16b44ced30d2f9c16dcea615e77da570867344a",
+      "bytes": 2985,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/input-map.json",
+      "sha256": "bb268302b42c4cb4eaf54894b55b96bcef3195f1cf9a9b2a148c793a289a9712",
+      "bytes": 633,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/reviser/sources/SRC-R01-rightsstatements-ttl.md",
+      "sha256": "b104adc20e61f5930d059278f4766f27ad1e9955c6548c2ee8313a309a3172e6",
+      "bytes": 2215,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/reviser/sources/SRC-R02-typesense-search.md",
+      "sha256": "582786a7d8822915f5ad5c674049cf735759415ba917d56cbb9122e5f7681d8d",
+      "bytes": 2143,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/reviser/sources/index.md",
+      "sha256": "d66d037f110712c9ddb96f0076376621e496d5cc67638ca222835713bdd2ba59",
+      "bytes": 1797,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/sources/SRC-01-sqlite-fts5.md",
+      "sha256": "06e2f8fb2a4d9e45b6e4ab89dda4ad6881bf0e897c2dd7f2c7da58fa09a21984",
+      "bytes": 2435,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/sources/SRC-02-pgvector-changelog.md",
+      "sha256": "1dadacac16b16fa41b10f29a6799d7b276cb3d3357727805d4b4dc9aad5e632a",
+      "bytes": 2263,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/sources/SRC-03-meilisearch-typo.md",
+      "sha256": "5c9f8e59d6a552cb215b52bf7c9e75190a4b955439346451b96f5fe5b45e02cb",
+      "bytes": 1677,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/sources/SRC-04-iiif-image-api.md",
+      "sha256": "5594695cd6c32d7dc0b9a2e03a497fc70d39c45c55a30bab431f70b06afc5ff8",
+      "bytes": 2142,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/sources/SRC-05-mukurtu-home.md",
+      "sha256": "220ebf109b05ad987f2e55fad3dbe8f52bd0bbec6135c3f5a251c93cdf67e74a",
+      "bytes": 1348,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/sources/SRC-06-mukurtu-support.md",
+      "sha256": "0dc0a20ccf027038eac885e7e67cbf0b458e15f6b3a99db54f819c71d0cf6435",
+      "bytes": 1627,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/sources/SRC-07-rightsstatements-data-model.md",
+      "sha256": "bb3676b6de44c6a85d1b43d06d1f62e16cc09f9deb0698dbf1aadd033f2348fc",
+      "bytes": 1904,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/sources/SRC-08-typesense-docs.md",
+      "sha256": "54dd37ebc3197f07dfbec4abab6a5912c21574064f04293711730a53245f9964",
+      "bytes": 1995,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/sources/SRC-09-failed-fetches.md",
+      "sha256": "51f898a16f50cc9602f7d6f2096c65150dc2858872c4fa1ccc5dfaaf301fbc99",
+      "bytes": 1861,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/control/research/sources/index.md",
+      "sha256": "0a53f8271863162905ed767f2644e9df3160adb4bcf97666216d6db669d95086",
+      "bytes": 1822,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/critic/critique.md",
+      "sha256": "0a9ebb185295b40e954af392df71af1d1606c6b1acb0e1cfd1b15412a5620555",
+      "bytes": 16688,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/critic/source-map.json",
+      "sha256": "34b40ee7d2d7be5e75c8787e1e6950a3ae23ac58de07442f7cc28ac68f480fa5",
+      "bytes": 6572,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/critic/assignment.md",
+      "sha256": "d69f609a2492e5601d077f778d211f651534b578f1fc7dcacc1eaea968f2ea51",
+      "bytes": 2940,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/critic/input-map.json",
+      "sha256": "91a1ab4f40dbd169c0be467f30636dc2f8a73054374c62a8b1370a2db0f3ace0",
+      "bytes": 1240,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/discovery.md",
+      "sha256": "ea8de49b4cf35c5fac6b4b3ddc84e9a512d4b66a7f0732c74e1f513d66f83459",
+      "bytes": 22020,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/draft.md",
+      "sha256": "c09232dd82685e1d9b2c6f596f9197496e8f84b1f4dd99ca54516615e3ac2030",
+      "bytes": 15649,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/final.md",
+      "sha256": "0d54ccebd901573717250c7d6a6b50ef59ac6f9bf09d7f0c261fff6f623f772e",
+      "bytes": 15391,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/source-map.json",
+      "sha256": "e1d59368654a9acd5b4332856a52950e77c00727c78bfc05746a923416d43845",
+      "bytes": 15785,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/revealed-plan.md",
+      "sha256": "422f486c028546be6c5291c5121b59befb143ded6b0afc7858d141e8f60667b1",
+      "bytes": 398,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/plan-reveal.json",
+      "sha256": "9244ed5812a0400c538305ce42fa013b5314edd7e9b596b857bace34114aac08",
+      "bytes": 276,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/assignment.md",
+      "sha256": "940c326f559ac817d6b238dff719eb4e6d19fdd791b9fec96a9775b843dc4eaf",
+      "bytes": 3689,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/input-map.json",
+      "sha256": "61bb05de33d59c08d3fd40aa7a02c7baf32d313302a67508afae538e06c5fef1",
+      "bytes": 639,
+      "manifest_hash_matched": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/critic/sources/C01-minilm-card-spotcheck.md",
+      "sha256": "500c373ddfb37d726507ce6552918fe4803a016ac13bb0d3ed542b1be8eaa30c",
+      "bytes": 1081,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/critic/sources/C02-sqlite-fts5-spotcheck.md",
+      "sha256": "4e28af4149a2ed13c11c963429e869475a7997223046de4fb7687323333778fc",
+      "bytes": 1775,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/critic/sources/index.md",
+      "sha256": "7a0794e107ffb6e30d443d6aac03a0f1be9c930b4a90e9cb7676725c6df0e217",
+      "bytes": 2323,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S01-sqlite-fts5.md",
+      "sha256": "bf2c993031a7beeaf94c0dde07232e4202021b5cff67ff5085ea4a61998d1236",
+      "bytes": 2812,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S02-iiif-image-api-3.0.md",
+      "sha256": "431fdbae1f0e3b0dc3209c8732ecd9bb2f7b83a7e7ba190914812b71339f731f",
+      "bytes": 2099,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S03-iiif-auth-api-1.0.md",
+      "sha256": "43dabbc45b5fe5dfeb7280c9e895a6d94b6bd19bdfc45f7d5348d93a245ee9e3",
+      "bytes": 2310,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S04-wikidata-wbsearchentities.md",
+      "sha256": "7b755b0eb2f59dd88d0b961e7761f7c4426e5775b4c24a68c43e87c4b7df211b",
+      "bytes": 1729,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S05-getty-aat.md",
+      "sha256": "3cf6819f7c606f7fa69316b47742918e9026449290b823417b9295f6a1c36b6e",
+      "bytes": 2050,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S06-minisearch.md",
+      "sha256": "56895b6c0a5a6663ee332b1904f8b140c29c16f3e21e5d06ccd1e6e3b3dd9520",
+      "bytes": 2233,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S07-meilisearch-settings.md",
+      "sha256": "91ab3b79b43b63aca033a66ef7ad260c26755399d2834ff61f7c3ffac871f61e",
+      "bytes": 1953,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S08-typesense-docs.md",
+      "sha256": "38840554d2b1e88457f8b9c3b5e9044b138674cf125aeb5de36ee6ee44b1a7f3",
+      "bytes": 3276,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S09-minilm-l6-v2.md",
+      "sha256": "e1b843240828cab405b99fca2a33689cbf36876e29d7c3912e663e104c81ca13",
+      "bytes": 1610,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S10-clip-vit-b-32.md",
+      "sha256": "30bc0835047fc593503cadd607742278bea20e92e8ae2d03d21044bbdc897e04",
+      "bytes": 1552,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S11-sqlite-vec.md",
+      "sha256": "56e3a4c277a374ea06499eb5ef2b097dfca35b45e2d315d92b630379efe092cc",
+      "bytes": 2031,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S12-omeka-s.md",
+      "sha256": "bc1cae3da518106d6ef8e9fcf5d0506274803f01b9992b2672e9e99757bed22f",
+      "bytes": 1429,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S13-collectiveaccess.md",
+      "sha256": "544a618bc74b161312de3577c682f21a19ebb56f11f33ecdc3c5275aa2e33508",
+      "bytes": 1595,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S14-wax.md",
+      "sha256": "cbe3b8b4ae873faa709e23143f42d3e1f1aba3bc2153badcfa10905940857179",
+      "bytes": 1539,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S15-rightsstatements-data-model.md",
+      "sha256": "c33c953094d56ef2dbb3c0b39107308ba51423bb531ff10b6f0773694777d4f3",
+      "bytes": 3236,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S16-localcontexts-tk-labels.md",
+      "sha256": "5ac50f91685feaf0c2394bee5820c2489305bd37ca1674a105467b5eecc1678e",
+      "bytes": 2279,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S17-openseadragon-releases.md",
+      "sha256": "727a237a3a0eff24d8f0da2f0d51624a223b8090441dd21aac2a23d74813e990",
+      "bytes": 2720,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S18-cantaloupe-releases.md",
+      "sha256": "9a4f98fc3f8816c0a473ed80f7ba351e51d10065df094cff7540a4604489a82e",
+      "bytes": 2705,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S19-cantaloupe-changes.md",
+      "sha256": "ee067792eb97d4a00170c18bcd3b947fe6fd359cc6eed6f04f919edbd1bceae9",
+      "bytes": 1827,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/S20-sqlite-changes.md",
+      "sha256": "7f102532d11fbedd68f47f15d57c63ff8ae4223ab78bc8bc84d39a1e00c7022e",
+      "bytes": 2108,
+      "scope": "supplied source root"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M05-A/treatment/research/sources/index.md",
+      "sha256": "ac881dede6c1ec20676755d05d12a217e757745899791e4f23edb61255a0639a",
+      "bytes": 4593,
+      "scope": "supplied source root"
+    }
+  ],
+  "observed_web_operations": [
+    {
+      "url": "https://typesense.org/docs/30.2/api/search.md",
+      "result": "Unsupported text/markdown content type in web tool; terminal HTTPS fetch succeeded"
+    },
+    {
+      "url": "https://typesense.org/docs/30.2/api/vector-search.md",
+      "result": "Unsupported text/markdown content type in web tool; terminal HTTPS fetch succeeded"
+    },
+    {
+      "url": "https://www.sqlite.org/fts5.html",
+      "result": "web open succeeded"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/pgvector/pgvector/master/CHANGELOG.md",
+      "result": "web open succeeded"
+    },
+    {
+      "url": "https://iiif.io/api/image/3.0/",
+      "result": "web open succeeded"
+    },
+    {
+      "url": "https://mukurtu.org/",
+      "result": "web open timeout; terminal HTTPS fetched home/support and article content"
+    },
+    {
+      "url": "https://mukurtu.org/support/",
+      "result": "web open 502; terminal HTTPS fetched support/articles"
+    },
+    {
+      "url": "https://typesense.org/docs/30.2/api/search.html",
+      "result": "web open succeeded"
+    },
+    {
+      "url": "https://www.postgresql.org/docs/18/textsearch-intro.html",
+      "result": "web open succeeded"
+    }
+  ],
+  "evidence_policy": "Bounded relevant primary-source excerpts and release-object fields; raw page/asset binaries not retained. Original response hashes and saved excerpt hashes are distinct. No code from sources was executed. Candidate-supplied excerpts are fallible claim records, not substituted for primary sources."
+}

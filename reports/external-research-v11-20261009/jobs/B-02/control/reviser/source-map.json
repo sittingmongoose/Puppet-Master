@@ -1,0 +1,832 @@
+{
+  "schema": "er11-source-map-v1",
+  "block": "B-02",
+  "arm": "control",
+  "case": "I02",
+  "method": "M13",
+  "stage": "reviser",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser",
+  "generated_at_utc": "2026-10-09T20:20:14Z",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/input-map.json",
+  "assignment": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/assignment.md",
+  "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/research/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/research/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/research/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/research/revealed-plan.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/critic/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/critic/critique.md"
+  ],
+  "source_roots": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/research/sources",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/critic/sources"
+  ],
+  "source_index": "sources/index.md",
+  "final_document": "final.md",
+  "scope_note": "Reviser used only the exact assignment, exact input map, exact brief, declared own-arm predecessors and source roots, and the independently checked public primary sources listed below. Inherited ER11-S01–S19 and ER11-C01–C07 IDs and observations are retained without rebinding; new reviser observations use ER11-C08–C11. No campaign/history/evaluator/counterpart material, product tenant, private provider material, or runtime was accessed. Only bounded paraphrase evidence is retained in sources/.",
+  "sources": [
+    {
+      "id": "ER11-S01",
+      "title": "Develop offline-capable canvas apps",
+      "publisher": "Microsoft Learn",
+      "source_type": "official product documentation",
+      "url": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/offline-apps",
+      "version_or_commit": "Rolling documentation page; last updated 2024-03-18 (page footer). No commit identifier exposed.",
+      "commit": null,
+      "locator": "Page lines 31-43 (Dataverse/offline-capable mobile apps; web browser cannot run offline); lines 51-57 (LoadData/SaveData memory and merge limits).",
+      "accessed_at_utc": "2026-10-09T19:42:56Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:learn.microsoft.com power apps offline-first canvas apps Dataverse limitations offline profile",
+          "result_ref": "turn0search1"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/offline-apps",
+          "result_ref": "turn12view0"
+        },
+        {
+          "operation": "web.find",
+          "pattern": "Last updated",
+          "result_ref": "turn11view5"
+        }
+      ],
+      "evidence_file": "sources/research/power-platform.md#er11-s01",
+      "drift": "Documentation is mutable; version/date and retrieval time retained here. Recheck before procurement or design lock."
+    },
+    {
+      "id": "ER11-S02",
+      "title": "Mobile offline limitations for canvas apps",
+      "publisher": "Microsoft Learn",
+      "source_type": "official product documentation",
+      "url": "https://learn.microsoft.com/en-us/power-apps/mobile/limitations-canvas-apps",
+      "version_or_commit": "Rolling documentation page; last updated 2026-06-17 (search result metadata). No commit identifier exposed.",
+      "commit": null,
+      "locator": "Offline limitations table: standalone app and Dataverse restrictions; non-Dataverse connectors and Power Automate flows unsupported offline; 3,000,000-row cap; relationship/function limits; sync foreground behavior.",
+      "accessed_at_utc": "2026-10-09T19:42:56Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:learn.microsoft.com power apps offline-first canvas apps Dataverse limitations offline profile",
+          "result_ref": "turn0search0"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://learn.microsoft.com/en-us/power-apps/mobile/limitations-canvas-apps",
+          "result_ref": "turn6view0"
+        }
+      ],
+      "evidence_file": "sources/research/power-platform.md#er11-s02",
+      "drift": "Rolling product documentation; explicit update date recorded."
+    },
+    {
+      "id": "ER11-S03",
+      "title": "Set up mobile offline for canvas apps",
+      "publisher": "Microsoft Learn",
+      "source_type": "official product documentation",
+      "url": "https://learn.microsoft.com/en-us/power-apps/mobile/canvas-mobile-offline-setup",
+      "version_or_commit": "Rolling documentation page; no revision identifier exposed.",
+      "commit": null,
+      "locator": "Lines 33-41 (Environment Maker/System Administrator/System Customizer privileges and app-in-solution recommendation); lines 71-95 (enable offline profile, filter records, publish/test); lines 112-124 (admin-center profile path).",
+      "accessed_at_utc": "2026-10-09T19:42:56Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:learn.microsoft.com power apps offline-first canvas apps Dataverse limitations offline profile",
+          "result_ref": "turn0search6"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://learn.microsoft.com/en-us/power-apps/mobile/canvas-mobile-offline-setup",
+          "result_ref": "turn6view2"
+        }
+      ],
+      "evidence_file": "sources/research/power-platform.md#er11-s03",
+      "drift": "Rolling product documentation; recheck role names and interface before build."
+    },
+    {
+      "id": "ER11-S04",
+      "title": "New pricing for Power Apps Premium",
+      "publisher": "Microsoft Licensing Resources",
+      "source_type": "official pricing announcement",
+      "url": "https://www.microsoft.com/en-us/licensing/news/power-apps-premium-price-update",
+      "version_or_commit": "Announcement dated 2026-09-09; $20 USD/user/month annual billing before 2027-01-01, then $22 USD/user/month.",
+      "commit": null,
+      "locator": "Lines 10-18 (effective date and price table).",
+      "accessed_at_utc": "2026-10-09T19:42:56Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:microsoft.com Power Apps pricing Premium per user 2026 US",
+          "result_ref": "turn0search7"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://www.microsoft.com/en-us/licensing/news/power-apps-premium-price-update",
+          "result_ref": "turn6view3"
+        }
+      ],
+      "evidence_file": "sources/research/power-platform.md#er11-s04",
+      "drift": "Price changes on 2027-01-01; verify SKU, billing, region, taxes, eligibility, and quote at purchase."
+    },
+    {
+      "id": "ER11-S05",
+      "title": "Create accessible canvas apps",
+      "publisher": "Microsoft Learn",
+      "source_type": "official product documentation",
+      "url": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/accessible-apps",
+      "version_or_commit": "Rolling documentation page; last updated 2022-12-16 (page footer). No commit identifier exposed.",
+      "commit": null,
+      "locator": "Keyboard and screen-reader sections, especially keyboard-only testing and verified reader/browser/player combinations; lines 43-64 in retrieved page.",
+      "accessed_at_utc": "2026-10-09T19:42:56Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:learn.microsoft.com Power Apps accessibility screen reader canvas apps guidelines keyboard color accessibility",
+          "result_ref": "turn2search0"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/accessible-apps",
+          "result_ref": "turn6view4"
+        },
+        {
+          "operation": "web.find",
+          "pattern": "Last updated",
+          "result_ref": "turn11view6"
+        }
+      ],
+      "evidence_file": "sources/research/power-platform.md#er11-s05",
+      "drift": "The page is old relative to this review; platform support can change. Validate the actual screen-reader/browser/version combination with staff."
+    },
+    {
+      "id": "ER11-S06",
+      "title": "HIPAA and HITECH compliance offering",
+      "publisher": "Microsoft Learn",
+      "source_type": "official compliance scope documentation",
+      "url": "https://learn.microsoft.com/en-us/compliance/regulatory/offering-hipaa-hitech",
+      "version_or_commit": "Rolling compliance page; verified 2026-10-09; no revision identifier exposed.",
+      "commit": null,
+      "locator": "Lines 78-94: Microsoft lists Power Apps as an in-scope service; BAA availability through DPA; Microsoft states service use/BAA alone does not ensure customer compliance.",
+      "accessed_at_utc": "2026-10-09T19:42:56Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:learn.microsoft.com Microsoft Power Platform HIPAA BAA Dataverse scope",
+          "result_ref": "turn9search2"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://learn.microsoft.com/en-us/compliance/regulatory/offering-hipaa-hitech",
+          "result_ref": "turn10view3"
+        }
+      ],
+      "evidence_file": "sources/research/governance-and-safety.md#er11-s06",
+      "drift": "Compliance scope and legal terms are mutable; exact purchased service and current terms must be confirmed."
+    },
+    {
+      "id": "ER11-S07",
+      "title": "Guidance on HIPAA & Cloud Computing",
+      "publisher": "U.S. Department of Health and Human Services, Office for Civil Rights",
+      "source_type": "official regulatory guidance",
+      "url": "https://www.hhs.gov/hipaa/for-professionals/special-topics/health-information-technology/cloud-computing/index.html",
+      "version_or_commit": "Unversioned live OCR guidance page; verified 2026-10-09.",
+      "commit": null,
+      "locator": "Lines 57-66: covered entity/BA definitions, cloud vendor BA status when it creates/receives/maintains/transmits ePHI, BAA and customer risk-analysis requirements.",
+      "accessed_at_utc": "2026-10-09T19:42:56Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:hhs.gov HIPAA cloud computing business associate agreement provider covered entity",
+          "result_ref": "turn1search0"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://www.hhs.gov/hipaa/for-professionals/special-topics/health-information-technology/cloud-computing/index.html",
+          "result_ref": "turn6view10"
+        }
+      ],
+      "evidence_file": "sources/research/governance-and-safety.md#er11-s07",
+      "drift": "Regulatory guidance; this brief does not establish clinic jurisdiction or covered-entity status."
+    },
+    {
+      "id": "ER11-S08",
+      "title": "Minimum Necessary Requirement",
+      "publisher": "U.S. Department of Health and Human Services, Office for Civil Rights",
+      "source_type": "official regulatory guidance",
+      "url": "https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/minimum-necessary-requirement/index.html",
+      "version_or_commit": "OCR page last reviewed 2013-07-26; verified live 2026-10-09.",
+      "commit": null,
+      "locator": "Lines 60-72: standard scope/exceptions and workforce-class, PHI-category, job-duty access policy expectations.",
+      "accessed_at_utc": "2026-10-09T19:42:56Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:hhs.gov HIPAA minimum necessary standard role based access staff access",
+          "result_ref": "turn5search0"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/minimum-necessary-requirement/index.html",
+          "result_ref": "turn6view9"
+        }
+      ],
+      "evidence_file": "sources/research/governance-and-safety.md#er11-s08",
+      "drift": "Old guidance page; verify current requirements and factual applicability with clinic compliance/legal staff."
+    },
+    {
+      "id": "ER11-S09",
+      "title": "Does HIPAA require covered entities to keep patients’ medical records for any period of time?",
+      "publisher": "U.S. Department of Health and Human Services, Office for Civil Rights",
+      "source_type": "official regulatory FAQ",
+      "url": "https://www.hhs.gov/hipaa/for-professionals/faq/does-hipaa-require-covered-entities-to-keep-medical-records-for-any-period/index.html",
+      "version_or_commit": "Created 2009-02-18; last reviewed 2013-07-26; verified live 2026-10-09.",
+      "commit": null,
+      "locator": "Lines 84-85: HIPAA Privacy Rule does not include medical-record retention requirements; state law generally governs retention; safeguards continue while information is maintained and through disposal.",
+      "accessed_at_utc": "2026-10-09T19:42:56Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:hhs.gov HIPAA does not require retention medical records state law retention period",
+          "result_ref": "turn8search1"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://www.hhs.gov/hipaa/for-professionals/faq/does-hipaa-require-covered-entities-to-keep-medical-records-for-any-period/index.html",
+          "result_ref": "turn10view2"
+        }
+      ],
+      "evidence_file": "sources/research/governance-and-safety.md#er11-s09",
+      "drift": "Old FAQ and broad generalization; state, licensing-board, contractual, and other requirements remain to be researched after jurisdiction is known."
+    },
+    {
+      "id": "ER11-S10",
+      "title": "How to Get Hearing Aids",
+      "publisher": "U.S. Food and Drug Administration",
+      "source_type": "official device-care guidance",
+      "url": "https://www.fda.gov/medical-devices/hearing-aids/how-get-hearing-aids",
+      "version_or_commit": "Unversioned current FDA guidance page; verified 2026-10-09.",
+      "commit": null,
+      "locator": "Lines 117-126: clean as instructed, avoid solvents/alcohol/water and heat, inspect regularly; page also directs users to professional/manufacturer care instructions.",
+      "accessed_at_utc": "2026-10-09T19:42:56Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:fda.gov hearing aids clean manufacturer's instructions hearing aid infection control",
+          "result_ref": "turn5search2"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://www.fda.gov/medical-devices/hearing-aids/how-get-hearing-aids",
+          "result_ref": "turn6view11"
+        }
+      ],
+      "evidence_file": "sources/research/governance-and-safety.md#er11-s10",
+      "drift": "General consumer guidance is not a model-specific clinical reprocessing protocol; use the device IFU and clinic infection-control policy."
+    },
+    {
+      "id": "ER11-S11",
+      "title": "Understanding Success Criterion 1.4.1: Use of Color",
+      "publisher": "World Wide Web Consortium (W3C) Web Accessibility Initiative",
+      "source_type": "official WCAG understanding document",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html",
+      "version_or_commit": "WCAG 2.2 understanding page updated 2025-09-16; criterion is 1.4.1.",
+      "commit": null,
+      "locator": "Lines 29-48: color is not the only visual means; give another visible indicator/text cue.",
+      "accessed_at_utc": "2026-10-09T19:42:56Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:w3.org/WAI/WCAG22/Understanding/use-of-color.html WCAG 2.2",
+          "result_ref": "turn7search8"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html",
+          "result_ref": "turn10view4"
+        }
+      ],
+      "evidence_file": "sources/research/governance-and-safety.md#er11-s11",
+      "drift": "Understanding document is informative; cite the WCAG Recommendation and confirm any legal conformance target separately."
+    },
+    {
+      "id": "ER11-S12",
+      "title": "Understanding Success Criterion 2.1.1: Keyboard",
+      "publisher": "World Wide Web Consortium (W3C) Web Accessibility Initiative",
+      "source_type": "official WCAG understanding document",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/keyboard",
+      "version_or_commit": "WCAG 2.2 understanding page updated 2026-05-11; criterion is 2.1.1 (Level A).",
+      "commit": null,
+      "locator": "Success Criterion statement at lines 20-24; techniques/failures at lines 78-103.",
+      "accessed_at_utc": "2026-10-09T19:42:56Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:w3.org/WAI/WCAG22/Understanding/keyboard.html WCAG 2.2",
+          "result_ref": "turn7search3"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/keyboard",
+          "result_ref": "turn10view5"
+        }
+      ],
+      "evidence_file": "sources/research/governance-and-safety.md#er11-s12",
+      "drift": "Understanding document is informative; actual app and required legal standard are not tested/established."
+    },
+    {
+      "id": "ER11-S13",
+      "title": "Snipe-IT pricing",
+      "publisher": "Grokability / Snipe-IT",
+      "source_type": "official product pricing",
+      "url": "https://snipeitapp.com/pricing",
+      "version_or_commit": "Dynamic pricing table; verified 2026-10-09. Annual USD list prices shown at time of access.",
+      "commit": null,
+      "locator": "Lines 38-53: self-hosted Free; Basic Hosting $399.99/year; Small Business Hosting $999.99/year; small Dedicated $2,499.99/year; hosted tiers include different maintenance/backup features.",
+      "accessed_at_utc": "2026-10-09T19:43:06Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "Snipe-IT hosted pricing official hosted snipeitapp.com cloud",
+          "result_ref": "turn4search1"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://snipeitapp.com/pricing",
+          "result_ref": "turn12view15"
+        }
+      ],
+      "evidence_file": "sources/research/snipe-it.md#er11-s13",
+      "drift": "Dynamic pricing; no BAA status is established by this page. Request an exact current quote and contract terms."
+    },
+    {
+      "id": "ER11-S14",
+      "title": "Snipe-IT managing assets and lifecycle overview",
+      "publisher": "Snipe-IT documentation",
+      "source_type": "official product documentation",
+      "url": "https://snipe-it.readme.io/docs/overview",
+      "version_or_commit": "Rolling documentation; page says updated 6 months before access. Verified 2026-10-09.",
+      "commit": null,
+      "locator": "Lines 28-56: unique asset tags, preferred checkout targets, check-in/out semantics, status types and assignment gate. Companion managing-assets page lines 18-34 discourages non-person checkout.",
+      "accessed_at_utc": "2026-10-09T19:43:06Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:snipe-it.readme.io/docs Snipe-IT checkout assets user location custom fields",
+          "result_ref": "turn4search3"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://snipe-it.readme.io/docs/overview",
+          "result_ref": "turn13view1"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://snipe-it.readme.io/docs/managing-assets",
+          "result_ref": "turn13view0"
+        }
+      ],
+      "evidence_file": "sources/research/snipe-it.md#er11-s14",
+      "drift": "Rolling docs may not state a software release; feature claims corroborated against repository release page."
+    },
+    {
+      "id": "ER11-S15",
+      "title": "Snipe-IT custom fields",
+      "publisher": "Snipe-IT documentation",
+      "source_type": "official product documentation",
+      "url": "https://snipe-it.readme.io/docs/custom-fields",
+      "version_or_commit": "Rolling documentation; no release version exposed. Verified 2026-10-09.",
+      "commit": null,
+      "locator": "Lines 18-30 (asset fieldsets); lines 38-53 (encryption/search/sort caveat and setup); lines 69 onward (basic validation options).",
+      "accessed_at_utc": "2026-10-09T19:43:06Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:snipe-it.readme.io/docs Snipe-IT maintenance checkin checkout custom fields requirements",
+          "result_ref": "turn4search4"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://snipe-it.readme.io/docs/custom-fields",
+          "result_ref": "turn13view2"
+        }
+      ],
+      "evidence_file": "sources/research/snipe-it.md#er11-s15",
+      "drift": "Current field configuration and database behavior should be validated against the chosen hosted/self-hosted version."
+    },
+    {
+      "id": "ER11-S16",
+      "title": "API checkout endpoints bind live inventory to soft-deleted targets",
+      "publisher": "Grokability / Snipe-IT GitHub Security Advisories",
+      "source_type": "primary software security advisory",
+      "url": "https://github.com/grokability/snipe-it/security/advisories/GHSA-qffp-xpqv-gqr4",
+      "version_or_commit": "GHSA-qffp-xpqv-gqr4; published 2026-08-24; affected <=8.6.3; patched 8.7.0.",
+      "commit": "Fix reference is PR #19330; merge commit 81d0197 (see ER11-S17).",
+      "locator": "Advisory lines 130-148 (release status); lines 148 onward (lookup behavior and API endpoint scope); lines 169-170 (integrity/availability impacts); lines 340-342 (fixed PR).",
+      "accessed_at_utc": "2026-10-09T19:43:06Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:github.com/grokability/snipe-it/releases/tag v8.3.6",
+          "result_ref": "turn3search0"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://github.com/grokability/snipe-it/security/advisories/GHSA-qffp-xpqv-gqr4",
+          "result_ref": "turn12view16"
+        },
+        {
+          "operation": "web.find",
+          "pattern": "8.7.0",
+          "result_ref": "turn7view0"
+        },
+        {
+          "operation": "web.find",
+          "pattern": "References",
+          "result_ref": "turn7view1"
+        }
+      ],
+      "evidence_file": "sources/research/snipe-it.md#er11-s16",
+      "drift": "Advisory is version-specific and API-specific; do not generalize it to web checkouts or infer PHI exposure."
+    },
+    {
+      "id": "ER11-S17",
+      "title": "Checkouts: disallow checkouts to soft-deleted targets, PR #19330",
+      "publisher": "Grokability / Snipe-IT GitHub repository",
+      "source_type": "primary source-code change record",
+      "url": "https://github.com/grokability/snipe-it/pull/19330",
+      "version_or_commit": "Merged 2026-07-20; commits 975824f and 8acedc2; merge commit 81d0197 into develop.",
+      "commit": "81d0197 (merge); constituent commits 975824f, 8acedc2.",
+      "locator": "PR conversation lines 130-165, 174-190: merged date and maintainer description of new exists_undeleted validation on checkout form requests.",
+      "accessed_at_utc": "2026-10-09T19:43:06Z",
+      "observed_operations": [
+        {
+          "operation": "web.click",
+          "target": "PR #19330 from GHSA Fixed section",
+          "result_ref": "turn9view0"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://github.com/grokability/snipe-it/pull/19330",
+          "result_ref": "turn12view17"
+        },
+        {
+          "operation": "web.find",
+          "pattern": "merged",
+          "result_ref": "turn11view0"
+        }
+      ],
+      "evidence_file": "sources/research/snipe-it.md#er11-s17",
+      "drift": "GitHub repository metadata is mutable; commit IDs are retained as stable references."
+    },
+    {
+      "id": "ER11-S18",
+      "title": "Snipe-IT releases",
+      "publisher": "Grokability / Snipe-IT GitHub repository",
+      "source_type": "primary software release record",
+      "url": "https://github.com/grokability/snipe-it/releases",
+      "version_or_commit": "v8.7.0 `1d05a7c`, released 2026-08-11; latest at review v8.8.0 `2c466fa`, released 2026-09-30. v8.8.0 requires PHP >=8.2; PHP 8.4+ recommended.",
+      "commit": "v8.7.0: 1d05a7c; v8.8.0: 2c466fa.",
+      "locator": "Release page lines 152-186 (latest v8.8.0/date/commit/runtime requirement); lines 415-447 (v8.7.0/date/commit/runtime requirement).",
+      "accessed_at_utc": "2026-10-09T19:43:06Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:github.com/grokability/snipe-it/releases/tag/v8.7.0",
+          "result_ref": "turn7search0"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://github.com/grokability/snipe-it/releases",
+          "result_ref": "turn10view1"
+        },
+        {
+          "operation": "web.find",
+          "pattern": "v8.7.0",
+          "result_ref": "turn11view3"
+        }
+      ],
+      "evidence_file": "sources/research/snipe-it.md#er11-s18",
+      "drift": "Latest tag is mutable; commit IDs and version strings preserve the observed releases. Check current tags before an adoption decision."
+    },
+    {
+      "id": "ER11-S19",
+      "title": "How mobile offline works in Power Apps",
+      "publisher": "Microsoft Learn",
+      "source_type": "official product documentation",
+      "url": "https://learn.microsoft.com/en-us/power-apps/mobile/mobile-offline-works-overview",
+      "version_or_commit": "Rolling documentation page; last updated 2026-01-07. No commit identifier exposed.",
+      "commit": null,
+      "locator": "Lines 30-39 (SQLite cache/offline profile); lines 42-59 (sync and local data persistence/no automatic expiry); lines 62-77 (maker controls and pending-sync status).",
+      "accessed_at_utc": "2026-10-09T19:50:15Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:learn.microsoft.com power apps offline-first canvas apps Dataverse limitations offline profile",
+          "result_ref": "turn0search2"
+        },
+        {
+          "operation": "web.search_query",
+          "query": "site:learn.microsoft.com Power Apps mobile offline data encryption local cache SQLite device",
+          "result_ref": "turn15search0"
+        },
+        {
+          "operation": "web.search_query",
+          "query": "site:learn.microsoft.com Power Apps mobile offline profile cache clear sign out retention device data",
+          "result_ref": "turn15search0"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://learn.microsoft.com/en-us/power-apps/mobile/mobile-offline-works-overview",
+          "result_ref": "turn14view0"
+        }
+      ],
+      "evidence_file": "sources/research/power-platform.md#er11-s19",
+      "drift": "Rolling product documentation; page says last updated 2026-01-07. The page does not establish device encryption. Confirm protection and cache-removal behavior on the chosen OS/app version."
+    },
+    {
+      "id": "ER11-C01",
+      "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+      "publisher": "World Wide Web Consortium",
+      "source_type": "normative accessibility recommendation",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "version_or_commit": "W3C Recommendation dated 2024-12-12; versioned snapshot /TR/2024/REC-WCAG22-20241212/.",
+      "commit": null,
+      "locator": "SC 1.4.1 Use of Color; SC 2.1.1 Keyboard; SC 4.1.2 Name, Role, Value; SC 4.1.3 Status Messages.",
+      "accessed_at_utc": "2026-10-09T20:00:49Z",
+      "observed_operations": [
+        {
+          "operation": "web.open",
+          "url": "https://www.w3.org/TR/WCAG22/",
+          "result_ref": "turn1view2"
+        },
+        {
+          "operation": "web.find",
+          "pattern": "1.4.1 Use of Color",
+          "result_ref": "turn2view0"
+        },
+        {
+          "operation": "web.find",
+          "pattern": "2.1.1 Keyboard",
+          "result_ref": "turn2view1"
+        },
+        {
+          "operation": "web.find",
+          "pattern": "4.1.3 Status Messages",
+          "result_ref": "turn2view2"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://www.w3.org/TR/WCAG22/#status-messages",
+          "result_ref": "turn5view0"
+        }
+      ],
+      "evidence_file": "sources/critic/independent-evidence.md#er11-c01",
+      "drift": "Stable versioned Recommendation; check for errata or later versions when choosing a policy conformance target."
+    },
+    {
+      "id": "ER11-C02",
+      "title": "How mobile offline works in Power Apps",
+      "publisher": "Microsoft Learn",
+      "source_type": "official product documentation",
+      "url": "https://learn.microsoft.com/en-us/power-apps/mobile/mobile-offline-works-overview",
+      "version_or_commit": "Rolling page; page footer says last updated 2026-01-07; no commit exposed.",
+      "commit": null,
+      "locator": "Lines 34-39 (offline profile/local SQLite cache); 42-59 (sync behavior, iOS/Android difference, retention); 70-77 (offline UI/pending-sync status).",
+      "accessed_at_utc": "2026-10-09T20:00:49Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:learn.microsoft.com/en-us/power-apps/mobile/mobile-offline-works-overview no retention period offline cache",
+          "result_ref": "turn0search0"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://learn.microsoft.com/en-us/power-apps/mobile/mobile-offline-works-overview",
+          "result_ref": "turn1view0"
+        }
+      ],
+      "evidence_file": "sources/critic/independent-evidence.md#er11-c02",
+      "drift": "Rolling product docs; validate exact behavior on selected device OS/app version. Documentation does not establish encryption or cross-device transaction locking."
+    },
+    {
+      "id": "ER11-C03",
+      "title": "API Checkout Endpoints Bind Live Inventory to Soft-Deleted Targets",
+      "publisher": "Grokability / Snipe-IT GitHub Security Advisory",
+      "source_type": "primary software security advisory",
+      "url": "https://github.com/grokability/snipe-it/security/advisories/GHSA-qffp-xpqv-gqr4",
+      "version_or_commit": "GHSA-qffp-xpqv-gqr4; published 2026-08-24; affected <=8.6.3; patched 8.7.0.",
+      "commit": null,
+      "locator": "Lines 130-155 (scope and web-equivalent difference); 156-170 (impact); 241-300 (fix and regression coverage); 340-342 (fix PR).",
+      "accessed_at_utc": "2026-10-09T20:01:31Z",
+      "observed_operations": [
+        {
+          "operation": "web.open",
+          "url": "https://github.com/grokability/snipe-it/security/advisories/GHSA-qffp-xpqv-gqr4",
+          "result_ref": "turn3view0"
+        }
+      ],
+      "evidence_file": "sources/critic/independent-evidence.md#er11-c03",
+      "drift": "Version-specific advisory; do not infer PHI disclosure or defects outside described API endpoints."
+    },
+    {
+      "id": "ER11-C04",
+      "title": "Checkouts: disallow checkouts to soft-deleted targets, PR 19330",
+      "publisher": "Grokability / Snipe-IT GitHub repository",
+      "source_type": "primary source-code change record",
+      "url": "https://github.com/grokability/snipe-it/pull/19330",
+      "version_or_commit": "Merged 2026-07-20; commits 975824f and 8acedc2; merge commit 81d0197.",
+      "commit": "81d0197",
+      "locator": "Lines 130-165 (merged/fix description); 174-190 (commits and merge ID).",
+      "accessed_at_utc": "2026-10-09T20:01:31Z",
+      "observed_operations": [
+        {
+          "operation": "web.open",
+          "url": "https://github.com/grokability/snipe-it/pull/19330",
+          "result_ref": "turn3view1"
+        }
+      ],
+      "evidence_file": "sources/critic/independent-evidence.md#er11-c04",
+      "drift": "Repository metadata is mutable; commits provide stable references."
+    },
+    {
+      "id": "ER11-C05",
+      "title": "Snipe-IT releases",
+      "publisher": "Grokability / Snipe-IT GitHub repository",
+      "source_type": "primary software release record",
+      "url": "https://github.com/grokability/snipe-it/releases",
+      "version_or_commit": "v8.8.0 at 2c466fa, released 2026-09-30; marked Latest at retrieval.",
+      "commit": "2c466fa",
+      "locator": "Lines 137-185.",
+      "accessed_at_utc": "2026-10-09T20:01:31Z",
+      "observed_operations": [
+        {
+          "operation": "web.open",
+          "url": "https://github.com/grokability/snipe-it/releases",
+          "result_ref": "turn3view2"
+        },
+        {
+          "operation": "web.find",
+          "pattern": "v8.8.0",
+          "result_ref": "turn4view0"
+        },
+        {
+          "operation": "web.find",
+          "pattern": "2c466fa",
+          "result_ref": "turn4view2"
+        }
+      ],
+      "evidence_file": "sources/critic/independent-evidence.md#er11-c05",
+      "drift": "Latest release changes over time; tag and commit preserve this observation."
+    },
+    {
+      "id": "ER11-C06",
+      "title": "New pricing for Power Apps Premium",
+      "publisher": "Microsoft Licensing Resources",
+      "source_type": "official pricing announcement",
+      "url": "https://www.microsoft.com/en-us/licensing/news/power-apps-premium-price-update",
+      "version_or_commit": "Announcement 2026-09-09; annual-billing list prices $20 per user/month before 2027-01-01 and $22 from that date.",
+      "commit": null,
+      "locator": "Lines 5-18; 28-30; 55-60.",
+      "accessed_at_utc": "2026-10-09T20:00:49Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:microsoft.com/licensing/news/power-apps-premium-price-update September 2026 $22",
+          "result_ref": "turn0search1"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://www.microsoft.com/en-us/licensing/news/power-apps-premium-price-update",
+          "result_ref": "turn1view1"
+        }
+      ],
+      "evidence_file": "sources/critic/independent-evidence.md#er11-c06",
+      "drift": "List prices and terms vary by agreement/region and may change; not a quote or entitlement determination."
+    },
+    {
+      "id": "ER11-C07",
+      "title": "How to Get Hearing Aids",
+      "publisher": "U.S. Food and Drug Administration",
+      "source_type": "official device-care guidance",
+      "url": "https://www.fda.gov/medical-devices/hearing-aids/how-get-hearing-aids",
+      "version_or_commit": "Unversioned live FDA guidance page.",
+      "commit": null,
+      "locator": "Lines 118-121.",
+      "accessed_at_utc": "2026-10-09T20:00:49Z",
+      "observed_operations": [
+        {
+          "operation": "web.open",
+          "url": "https://www.fda.gov/medical-devices/hearing-aids/how-get-hearing-aids",
+          "result_ref": "turn1view4"
+        },
+        {
+          "operation": "web.find",
+          "pattern": "Clean the hearing aid",
+          "result_ref": "turn2view3"
+        },
+        {
+          "operation": "web.find",
+          "pattern": "solvents",
+          "result_ref": "turn2view4"
+        }
+      ],
+      "evidence_file": "sources/critic/independent-evidence.md#er11-c07",
+      "drift": "General consumer guidance does not establish a model-specific reusable-device disinfection protocol."
+    },
+    {
+      "id": "ER11-C08",
+      "title": "Manage Dataverse auditing",
+      "publisher": "Microsoft Learn / Power Platform",
+      "source_type": "official product documentation",
+      "url": "https://learn.microsoft.com/en-us/power-platform/admin/manage-dataverse-auditing",
+      "version_or_commit": "Rolling official documentation; page footer says last updated 2026-10-07; no commit identifier exposed.",
+      "commit": null,
+      "locator": "Lines 32-38 (audit coverage and display delay); 47-63 (logged operations); 168-178 (retention); 369-440 (record-level and bulk audit deletion).",
+      "accessed_at_utc": "2026-10-09T20:15:41Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:learn.microsoft.com Dataverse audit logs retention deleted administrators audit records Power Platform",
+          "result_ref": "turn1search1"
+        },
+        {
+          "operation": "web.open",
+          "url": "https://learn.microsoft.com/en-us/power-platform/admin/manage-dataverse-auditing",
+          "locator": "line 350",
+          "result_ref": "turn4view0"
+        }
+      ],
+      "evidence_file": "sources/reviser-independent-evidence.md#er11-c08",
+      "drift": "Rolling product documentation. The page documents configurable auditing, retention and privileged deletion; verify the exact tenant, license, configuration, permissions and contractual controls before relying on it."
+    },
+    {
+      "id": "ER11-C09",
+      "title": "Resolve sync conflicts with the server",
+      "publisher": "Microsoft Learn / Power Apps",
+      "source_type": "official product documentation",
+      "url": "https://learn.microsoft.com/en-us/power-apps/mobile/resolve-sync-conflicts",
+      "version_or_commit": "Rolling official documentation; page footer says last updated 2024-06-14; no commit identifier exposed.",
+      "commit": null,
+      "locator": "Lines 65-88 (offline updates, last-update-per-column behavior, sync errors and the exclusion of canvas apps from conflict-resolution settings).",
+      "accessed_at_utc": "2026-10-09T20:15:41Z",
+      "observed_operations": [
+        {
+          "operation": "web.open",
+          "url": "https://learn.microsoft.com/en-us/power-apps/mobile/resolve-sync-conflicts",
+          "locator": "line 65",
+          "result_ref": "turn4view1"
+        }
+      ],
+      "evidence_file": "sources/reviser-independent-evidence.md#er11-c09",
+      "drift": "Rolling documentation with an older page update date. Its scope is mobile offline sync; confirm the selected app type and version, and exercise the actual two-site workflow."
+    },
+    {
+      "id": "ER11-C10",
+      "title": "Optimistic concurrency",
+      "publisher": "Microsoft Learn / Power Apps",
+      "source_type": "official developer documentation",
+      "url": "https://learn.microsoft.com/en-us/power-apps/developer/data-platform/optimistic-concurrency",
+      "version_or_commit": "Rolling official developer documentation; page footer says last updated 2026-09-02; no commit identifier exposed.",
+      "commit": null,
+      "locator": "Lines 30-38 (row-version concurrency checks and SDK/API requirement); 48-59 (version mismatch and configuration errors).",
+      "accessed_at_utc": "2026-10-09T20:15:41Z",
+      "observed_operations": [
+        {
+          "operation": "web.open",
+          "url": "https://learn.microsoft.com/en-us/power-apps/developer/data-platform/optimistic-concurrency",
+          "locator": "line 28",
+          "result_ref": "turn4view2"
+        }
+      ],
+      "evidence_file": "sources/reviser-independent-evidence.md#er11-c10",
+      "drift": "Developer guidance is product-version sensitive. It describes an available API/SDK mechanism, not a concurrency control already configured in a proposed canvas app."
+    },
+    {
+      "id": "ER11-C11",
+      "title": "How mobile offline works in Power Apps (reviser verification)",
+      "publisher": "Microsoft Learn / Power Apps",
+      "source_type": "official product documentation",
+      "url": "https://learn.microsoft.com/en-us/power-apps/mobile/mobile-offline-works-overview",
+      "version_or_commit": "Rolling official documentation; page footer says last updated 2026-01-07; no commit identifier exposed.",
+      "commit": null,
+      "locator": "Lines 30-39 (device-local SQLite cache and offline profile); 42-59 (iOS/Android sync, local queued writes and retention); 70-77 (offline actions and pending-sync indicator).",
+      "accessed_at_utc": "2026-10-09T20:15:41Z",
+      "observed_operations": [
+        {
+          "operation": "web.open",
+          "url": "https://learn.microsoft.com/en-us/power-apps/mobile/mobile-offline-works-overview",
+          "locator": "line 30",
+          "result_ref": "turn4view3"
+        }
+      ],
+      "evidence_file": "sources/reviser-independent-evidence.md#er11-c11",
+      "drift": "Rolling product documentation. Verify the selected device OS and app version; this page does not establish encryption, an allocation lock, or clinic-side controls."
+    }
+  ],
+  "usage": null,
+  "billing": null,
+  "usage_billing_note": "Native model/tool usage and billing telemetry were not exposed by the authorized inputs or lifecycle tools; null means unobserved, not zero."
+}

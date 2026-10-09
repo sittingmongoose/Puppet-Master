@@ -1,0 +1,288 @@
+{
+  "assignment": "ER11 B-06 treatment critic; exact input-map.json",
+  "captured_access_batch_utc": "2026-10-09T20:34:47Z (clock sample immediately before retrieval batch)",
+  "sources": [
+    {
+      "source_id": "LT-SCHED",
+      "url": "https://libretime.org/docs/user-manual/scheduling-shows/",
+      "version": "Stable 4.x (page label); current documentation",
+      "commit": null,
+      "locator": "Scheduling shows; lines 42, 53-65, 79-95",
+      "access_timestamp_utc": "2026-10-09T20:34:47Z (batch retrieval immediately after clock sample)",
+      "observed_operations": [
+        "Opened official user-manual page",
+        "Inspected version label, workflow, repeat/show time fields, over/underscheduling and playback behavior"
+      ],
+      "retained_evidence": "sources/libretime-scheduling.md"
+    },
+    {
+      "source_id": "LT-REL",
+      "url": "https://github.com/libretime/libretime/releases/tag/4.5.0",
+      "version": "v4.5.0; preceding v4.4.0 also inspected",
+      "commit": "f429339 (v4.5.0 tag); f429339 is short hash as displayed by GitHub",
+      "locator": "v4.5.0 release heading and feature/fix list; v4.4.0 release heading and bug-fix list",
+      "access_timestamp_utc": "2026-10-09T20:34:47Z (batch retrieval immediately after clock sample)",
+      "observed_operations": [
+        "Opened official repository release page",
+        "Inspected v4.5.0 and v4.4.0 notes",
+        "Followed the v4.5.0 newline-metadata fix reference to PR #3160"
+      ],
+      "retained_evidence": "sources/libretime-evolution.md"
+    },
+    {
+      "source_id": "LT-PR",
+      "url": "https://github.com/LibreTime/libretime/pull/3160",
+      "version": "Merged PR; v4.5.0 inclusion",
+      "commit": "d7987bb (merge fix commit listed in v4.5.0 notes)",
+      "locator": "PR description/testing notes and discussion, especially lines 173-199, 273-290, 298-354",
+      "access_timestamp_utc": "2026-10-09T20:34:47Z (batch retrieval immediately after clock sample)",
+      "observed_operations": [
+        "Opened official code-host PR",
+        "Inspected stated cause, reproduction/testing notes, discussion of existing library records, commit and merge state"
+      ],
+      "retained_evidence": "sources/libretime-evolution.md"
+    },
+    {
+      "source_id": "BR-APPVIS",
+      "url": "https://baserow.io/user-docs/application-builder-element-visibility",
+      "version": "Current unversioned product documentation",
+      "commit": null,
+      "locator": "Security and API enforcement / FAQ; lines 297-305 from retrieved page",
+      "access_timestamp_utc": "2026-10-09T20:34:47Z (batch retrieval immediately after clock sample; previous full open captured detail)",
+      "observed_operations": [
+        "Opened official Baserow documentation",
+        "Inspected role-based table/element visibility and API exposure assertions"
+      ],
+      "retained_evidence": "sources/baserow-access.md"
+    },
+    {
+      "source_id": "BR-FIELDS",
+      "url": "https://baserow.io/user-docs/field-level-permissions",
+      "version": "Current unversioned product documentation",
+      "commit": null,
+      "locator": "API access and field-level-vs-hidden-fields; lines 298-333 from retrieved page",
+      "access_timestamp_utc": "2026-10-09T20:34:47Z (batch retrieval immediately after clock sample; previous full open captured detail)",
+      "observed_operations": [
+        "Opened official Baserow field-permission docs",
+        "Inspected role interaction, API behavior, and distinction between edit permission and visibility"
+      ],
+      "retained_evidence": "sources/baserow-access.md"
+    },
+    {
+      "source_id": "BR-HISTORY",
+      "url": "https://baserow.io/user-docs/row-change-history",
+      "version": "Current unversioned product documentation",
+      "commit": null,
+      "locator": "Search result for Row change history; History retention by plan; direct page fetch timed out",
+      "access_timestamp_utc": "2026-10-09T20:34:47Z (batch search/open attempt)",
+      "observed_operations": [
+        "Searched official Baserow docs",
+        "Attempted direct page open twice; both timed out",
+        "Do not rely on claimed retention duration without a successful versioned check"
+      ],
+      "retained_evidence": "Limitation recorded in evidence-first.md; page content not retained"
+    },
+    {
+      "source_id": "GS-OFFLINE",
+      "url": "https://support.google.com/docs/answer/11468464?hl=en",
+      "version": "Current Google Docs Editors Help, no revision identifier exposed",
+      "commit": null,
+      "locator": "How Google Sheets performs calculations; lines 21-24",
+      "access_timestamp_utc": "2026-10-09T20:34:47Z (batch retrieval immediately after clock sample)",
+      "observed_operations": [
+        "Opened official Google support page",
+        "Inspected stated browser-local offline edit and sync behavior"
+      ],
+      "retained_evidence": "sources/sheets-offline.md"
+    },
+    {
+      "source_id": "GS-HISTORY",
+      "url": "https://support.google.com/docs/answer/9331279?hl=en",
+      "version": "Current Google Docs Editors Help, no revision identifier exposed",
+      "commit": null,
+      "locator": "See changes to data / Sheets version history",
+      "access_timestamp_utc": "2026-10-09T20:33:20Z (initial search retrieval; reopened indirectly in source batch)",
+      "observed_operations": [
+        "Searched official Google Docs Editors Help",
+        "Inspected version-history description: editor and time attribution"
+      ],
+      "retained_evidence": "sources/sheets-offline.md"
+    },
+    {
+      "source_id": "SP-SCHEDULE",
+      "url": "https://forum.spinitron.com/t/calendar-concepts/172",
+      "version": "Product-maintained forum post dated 2020-06-07; no software release identifier",
+      "commit": null,
+      "locator": "Shows in the future – playlists in the past; lines 10-32",
+      "access_timestamp_utc": "2026-10-09T20:34:47Z (batch retrieval immediately after clock sample)",
+      "observed_operations": [
+        "Opened Spinitron product-maintained forum source",
+        "Inspected schedule/show/playlist definitions and public vs logged-in page distinction"
+      ],
+      "retained_evidence": "sources/spinitron-schedule.md"
+    },
+    {
+      "source_id": "CR-GRIST-RULES",
+      "url": "https://support.getgrist.com/access-rules/",
+      "version": "Current unversioned Grist help-center documentation",
+      "commit": null,
+      "locator": "Enabling rules lines 342-352; default/private table rules lines 360-372; structure/copy/download rules lines 403-423",
+      "access_timestamp_utc": "2026-10-09T20:37:18Z (clock sample immediately before retrieval batch)",
+      "observed_operations": [
+        "Opened official Grist access-rules documentation",
+        "Inspected disabled/enabled defaults, private table R/U/C/D rule, structure S/formula bypass, and copying/download behavior"
+      ],
+      "evidence_file": "sources/grist-current.md",
+      "evidence_sha256": "53be416060919a8990cd4fd85499ceb5bff7944fc541350e25cd1c96cf1cde0c"
+    },
+    {
+      "source_id": "CR-GRIST-PRICE",
+      "url": "https://www.getgrist.com/pricing/",
+      "version": "Current mutable pricing page",
+      "commit": null,
+      "locator": "Pro/Business/Community listing lines 109-201; nonprofit discount and team-member/guest billing lines 417-453",
+      "access_timestamp_utc": "2026-10-09T20:37:18Z (clock sample immediately before retrieval batch)",
+      "observed_operations": [
+        "Opened official Grist pricing page",
+        "Inspected Pro price and row/snapshot limits, Community listing, nonprofit discount, team-member seats and free guest limit"
+      ],
+      "evidence_file": "sources/grist-current.md",
+      "evidence_sha256": "53be416060919a8990cd4fd85499ceb5bff7944fc541350e25cd1c96cf1cde0c"
+    },
+    {
+      "source_id": "CR-BASEROW-PRICE",
+      "url": "https://baserow.io/pricing",
+      "version": "Current mutable hosted pricing page",
+      "commit": null,
+      "locator": "Free/Premium/Advanced cards lines 76-133; usage rows/history table lines 176-204",
+      "access_timestamp_utc": "2026-10-09T20:37:18Z (clock sample immediately before retrieval batch)",
+      "observed_operations": [
+        "Opened official Baserow hosted pricing page",
+        "Inspected per-workspace row, storage, history limits, Advanced RBAC and annual/monthly prices"
+      ],
+      "evidence_file": "sources/baserow-current.md",
+      "evidence_sha256": "d1df6f0b069b2c74215dbd2115be289e3703abaf65a0320b005a3980bd62b044"
+    },
+    {
+      "source_id": "CR-BASEROW-BILLING",
+      "url": "https://baserow.io/user-docs/subscriptions-overview",
+      "version": "Current unversioned Baserow subscription documentation",
+      "commit": null,
+      "locator": "User billing classifications lines 274-290",
+      "access_timestamp_utc": "2026-10-09T20:37:18Z (clock sample immediately before retrieval batch)",
+      "observed_operations": [
+        "Opened official billing help page",
+        "Inspected Cloud Premium vs Advanced billable role classes and self-hosted Advanced seat descriptions"
+      ],
+      "evidence_file": "sources/baserow-current.md",
+      "evidence_sha256": "d1df6f0b069b2c74215dbd2115be289e3703abaf65a0320b005a3980bd62b044"
+    },
+    {
+      "source_id": "CR-BASEROW-PERMS",
+      "url": "https://baserow.io/user-docs/set-permission-level",
+      "version": "Current unversioned Baserow documentation",
+      "commit": null,
+      "locator": "Paid-feature notice and workspace/database role-level overview",
+      "access_timestamp_utc": "2026-10-09T20:37:18Z (clock sample immediately before retrieval batch)",
+      "observed_operations": [
+        "Opened official Baserow role permissions documentation",
+        "Inspected plan-level RBAC availability and permission scopes"
+      ],
+      "evidence_file": "sources/baserow-current.md",
+      "evidence_sha256": "d1df6f0b069b2c74215dbd2115be289e3703abaf65a0320b005a3980bd62b044"
+    },
+    {
+      "source_id": "CR-WCAG-COLOR",
+      "url": "https://www.w3.org/WAI/WCAG21/Understanding/use-of-color.html",
+      "version": "WCAG 2.1 Understanding SC 1.4.1 page",
+      "commit": null,
+      "locator": "Criterion/in-brief lines 21-38; color/lightness/assistive technology notes lines 43-56",
+      "access_timestamp_utc": "2026-10-09T20:37:18Z (clock sample immediately before retrieval batch)",
+      "observed_operations": [
+        "Opened W3C WAI criterion-understanding page",
+        "Inspected criterion, lightness contrast note, accurate-hue exception, and visible-vs-assistive-technology distinction"
+      ],
+      "evidence_file": "sources/wcag-current.md",
+      "evidence_sha256": "de540509d315ac564a731addcb7bb2b08bc994ca5b8f1d9c5037f400fb3e0a3e"
+    },
+    {
+      "source_id": "CR-LT-3026",
+      "url": "https://github.com/LibreTime/libretime/pull/3026",
+      "version": "Merged LibreTime PR #3026; fix included in 4.2.0",
+      "commit": "2b43e51 listed in v4.2.0 changelog; merge commit not captured from PR view",
+      "locator": "PR description and test notes lines 165-193",
+      "access_timestamp_utc": "2026-10-09T20:37:18Z (clock sample immediately before retrieval batch)",
+      "observed_operations": [
+        "Opened official LibreTime pull request",
+        "Inspected concrete root cause, reproduced scenario, stated before/after dev and production-sample verification, merge date"
+      ],
+      "evidence_file": "sources/libretime-smartblock-3026.md",
+      "evidence_sha256": "27b6c403e7679645400633c5cc7a317cad57e47f48e75aac9c5b6238171601b9"
+    }
+  ],
+  "access_limitations": [
+    "Baserow row-change-history direct page fetch timed out; no retention conclusion retained.",
+    "Product docs are vendor claims, not independent deployment/security/performance tests.",
+    "No predecessor, counterpart, evaluator, campaign history, or private provider internals have been opened.",
+    "The final inventory command listed stage-path filenames, sizes, and output mtimes. It did not open the pre-existing dispatch.json, dispatch-request.json, or freeze.json contents; those filenames are not assignment sources."
+  ],
+  "post_reveal_source_note": "CR-* IDs were appended after opening the same-arm draft/plan. Earlier source IDs were not altered. The source-map timestamps are clock samples immediately before multi-page retrieval batches; individual web fetch seconds are not exposed by the browser tool.",
+  "reviewed_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/critic/assignment.md",
+      "role": "task assignment",
+      "sha256": "e9ca3efbbfeefb81b914cafddcdeaded153ac8e8d3072f2a23256560261f366a",
+      "observed_operation": "Read within declared input-map scope; complete text inspected."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/critic/input-map.json",
+      "role": "exact input map",
+      "sha256": "06078e555fc6db80db3c9b2241045e17d7cc2ca316c966102ca0fb85d6c3ab53",
+      "observed_operation": "Read within declared input-map scope; complete text inspected."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I06/brief.md",
+      "role": "case brief",
+      "sha256": "dd0b06e29ae84b0ee0d4f278d9e6369b54d41d989c0c3edc0085d54f78079997",
+      "observed_operation": "Read within declared input-map scope; complete text inspected."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/draft.md",
+      "role": "complete same-arm predecessor draft",
+      "sha256": "d71f44e6af1862098e507c47a0c138c833532079ce6c007bbdf7f4db8f9c9d9f",
+      "observed_operation": "Read within declared input-map scope; complete text inspected."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/discovery.md",
+      "role": "complete same-arm predecessor discovery",
+      "sha256": "7ef31fd1149bffa534d35c46fb6d2f3baa1ae6bac1336107fb4fdc0b20761cbd",
+      "observed_operation": "Read within declared input-map scope; complete text inspected."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/source-map.json",
+      "role": "same-arm predecessor source map",
+      "sha256": "4347b11799926c1bf0cde13f4aa79071d43f862e17ba1e6718978c003ea2962e",
+      "observed_operation": "Read within declared input-map scope; complete text inspected."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/revealed-plan.md",
+      "role": "exact revealed P plan",
+      "sha256": "acf200fa53ae0202ff0ec1c9e32eda093ac58cdc9098a226188b954f1ea63990",
+      "observed_operation": "Read within declared input-map scope; complete text inspected."
+    }
+  ],
+  "predecessor_source_review": {
+    "paths_read": [
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/index.md",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/FETCH_TIMES.txt",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/libretime-pr3026.json",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/grist-access-rules.html",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/grist-pricing.html",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/baserow-pricing.html",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/wcag-use-of-color.html",
+      "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/treatment/research/sources/libretime-CHANGELOG.md"
+    ],
+    "observed_operations": "Read source index and fetch-time ledger; inspected exact referenced evidence for Grist, Baserow, WCAG and LibreTime O3, then independently reopened current governing primary sources. No files outside the declared same-arm sources root were read."
+  },
+  "artifact_order": "evidence-first.md was saved before the first read of predecessor draft.md, discovery.md, predecessor source-map.json, or revealed-plan.md; critique.md and source-map.json were saved after those reviews."
+}

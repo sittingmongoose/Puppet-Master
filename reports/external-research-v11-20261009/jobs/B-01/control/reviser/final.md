@@ -1,0 +1,132 @@
+# B-01 / I01 reviser final
+
+**Method:** M13 retained-graph-author-with-evidence-first-critic  
+**Scope:** A practical one-route pilot for the two-terminal island ferry operation in the I01 brief. Thirty-six staff cover the ticket desks, loading lanes, and dispatch; there is no dedicated IT employee, storm-related cellular outages occur, and dispatch may use a paper manifest for half a shift. The initial ceiling is $9,000 and the annual ceiling is $1,800. The pilot should preserve a path to a second route without building broader features before the first route proves useful. This document incorporates the revealed P1–P6 plan, the complete research draft and discovery, the independent critique, the bounded primary-source evidence in the declared research and critic roots, and a reviser-stage check of current Firebase documentation. It retains unresolved operator decisions and does not select a product or claim a budget fit.
+
+## Pilot direction
+
+First screen a ferry-specific commercial product such as Hogia BOOKIT with a written quote, current deployment/support details, exit terms, and a live demonstration of the actual disconnected-terminal scenario. Its public material describes ferry booking, route/capacity, check-in, reports, and an API, making it a relevant procurement lead. The official page did not load in the reviewed browser; the available official-domain result does not establish small-operator pricing, offline confirmation, dual-terminal conflict behavior, data export, or low-IT support. Treat it as a lead, not a recommendation to buy [C07](../critic/sources/C07-hogia-bookit.md).
+
+If the vendor cannot meet the operating or budget constraints, compare a managed cloud client with explicit offline behavior against a local-first replicated application. Do not select a database first and infer that its sync model solves capacity authority.
+
+For either build path, represent a reservation and each material change as attributable events keyed to route, sailing/departure, vessel, and capacity profile. Keep passenger places, walk-on counts, vehicle footprint/length or loading class, oversized-vehicle allocation, and any relevant linked passenger count as distinct units. Add other binding units, such as loading-lane, weight, accessible equipment or staffing limits, only if the operator confirms they apply. A generic seat count is not enough if vehicle deck space controls boarding. The brief provides no vessel limits, route schedule, resource units, protected space, or vehicle-change rules, so those inputs must be supplied before capacity checks can be accepted.
+
+Each event should have a collision-resistant immutable ID, terminal and operator identifiers, local event time, action/source, and parent reservation/sailing. A terminal-local sequence alone is not a globally unique ID. Append-only events improve auditability and avoid overwriting unrelated changes, but do not enforce capacity by themselves.
+
+Keep operational status fields distinct:
+
+- **Saved locally** means the device accepted a local record; it does not mean a server has received it.
+- **Server acknowledged** means the selected service acknowledged a write; it does not by itself mean a vehicle slot was reserved under the operator's policy.
+- **Provisional** means the operator has not yet authorized the booking as a confirmed capacity promise.
+- **Capacity confirmed** means the booking consumes capacity under the selected authoritative policy.
+- **Reconciled** records that a human or process reviewed/synchronized the entry. It must not imply a new capacity promise.
+
+Use a visible queue for pending changes and conflicts, with the queued count, sync state, and assigned reconciliation owner. Keep public queue displays separate from staff manifests. Use non-identifying queue tokens; keep names, contact details, revealing reservation IDs, and accommodation notes out of public views. Show an assistance or oversize cue only on an authorized staff view and only to the extent needed for loading. Minimize passenger details copied to shared-device caches and define staff sign-in, lock, and handoff behavior.
+
+## Authority and outage policy
+
+The general manager must decide what staff may promise when the terminals cannot communicate. Preserve two viable policies:
+
+1. **Central authority:** while disconnected, staff can capture changes and reservations locally as provisional. They may not label an offline vehicle claim capacity-confirmed from a stale cache. The operator must set the customer-facing wording and boarding rule for a provisional request, and say how the dispatcher or paper manifest resolves it. Until then, hold to existing confirmed reservations and a controlled exception procedure.
+2. **Preallocated local entitlements:** before service, allocate disjoint per-terminal capacity by sailing and every controlling resource class. A terminal may confirm only within its remaining entitlement. Include walk-on counts and every other way capacity can be admitted, including the multiple shared tablets at one terminal. Either tablets write through one terminal-local authority or receive non-overlapping sub-allocations. A vehicle-size change consumes/relinquishes the relevant units under an explicit rule; an offline cancellation must not silently free capacity for another terminal to spend. Define quota exhaustion, manager escalation, cancellation, sailing/vessel changes, and connected reallocation. This policy bounds independent acceptance but may strand capacity and requires correct units and disciplined dispatch.
+
+A third policy—both terminals confirming from stale views and reconciling later—can create duplicate promises. Reject it unless the operator explicitly accepts and funds a customer recovery/overbooking process. PouchDB's default conflict winner is not a booking-authority rule; Firestore's offline queue or cached query is not a global capacity transaction [C01](../critic/sources/C01-pouchdb-conflicts.md) [C03](../critic/sources/C03-firestore-offline.md) [C04](../critic/sources/C04-firestore-transactions.md).
+
+Retain a controlled paper manifest for an outage lasting the reported half-shift. Time-stamp the starting manifest, assign local identifiers to paper entries, record terminal/operator/time and action, and reconcile each paper event once. The outage procedure must state which entries can be recorded, promised, paid, and boarded against. Paper is an operational fallback, not a parallel untracked authority.
+
+## Exact plan clause dispositions
+
+### P1 — “Provide a route-and-sailing reservation list that staff can use to review passenger and vehicle capacity before boarding.”
+
+**Disposition: Accept; already covered with a capacity-semantics correction.** The list is the right core workflow. Tie every capacity figure to the actual sailing and vessel, identify controlling units, distinguish confirmed from provisional capacity, and show the last server/authority acknowledgement and reconciliation source. Include oversized vehicles and linked passenger counts where they consume separate resources. The manager must provide vessel/departure limits, vehicle classes, protected capacity, units, and conversion rules before a load check can be validated.
+
+A staff manifest with a time-stamped printable copy and warning before boarding is a useful implementation detail. It does not authorize a public display of passenger identity.
+
+### P2 — “Let staff record day-of changes and accommodation needs in a workflow that remains usable during service interruptions.”
+
+**Disposition: Accept; already covered, with explicit outage and conflict behavior.** Preserve each day-of change as an attributable event rather than overwriting a whole reservation and trusting last-write-wins. Define the interruption being handled: loss of cloud/internet, inter-terminal network, power, or a combination. On reconnect, show queued work, paused/active sync, conflicts, and who owns each resolution. PouchDB documents retry/status signals but leaves business conflict resolution to the app; Firestore transactions fail offline [C01](../critic/sources/C01-pouchdb-conflicts.md) [C02](../critic/sources/C02-pouchdb-replication.md) [C04](../critic/sources/C04-firestore-transactions.md).
+
+The half-shift scenario must demonstrate the operating path, not just local form entry: desk work, walk-on counts, vehicle changes, a usable local staff manifest or controlled paper record, a safe statement of what can be promised, loading handoff, and once-only reconciliation without duplicate entry. Preserve walk-on counts separately from named passenger records unless the operator identifies a need to name them. Whether a provisional entry can be promised or boarded against remains part of the unresolved P5 decision.
+
+### P3 — “Keep sensitive passenger notes out of any queue view visible to other travelers.”
+
+**Disposition: Accept; broaden the display rule.** Keep names, contact details, revealing reservation identifiers, and accommodation notes off the public queue, not only free-text “sensitive notes.” Use a non-identifying marker. Put only the operational assistance or oversized-vehicle cue needed to load on an authorized staff view; do not show a wheelchair label publicly. Separate public and staff views, limit shared-device cached fields, and verify that a worker change does not expose the prior session's data. The specific data fields and any retention/legal requirements remain unset because the brief gives no jurisdiction or policy.
+
+### P4 — “Include large-text, high-contrast controls and a short handoff view for seasonal desk staff.”
+
+**Disposition: Corrected; covered as a required plan behavior.** The earlier draft incorrectly called high contrast and the handoff view optional. P4 explicitly includes all three behaviors in the plan, so large text, high contrast, and a short seasonal-staff handoff view are pilot requirements. Keep them in scope and test the complete desk, change, check-in, and manifest flow with enlarged text and high contrast. Numeric contrast, target text scale, tablet model, and guide content are not specified; do not claim formal accessibility compliance. A short role-based checklist should explain confirmed/provisional states and outage recovery without becoming the only place where live operational status appears.
+
+### P5 — “The authority for conflicting reservations entered at disconnected terminals remains an operator decision.”
+
+**Disposition: Accept and retain as an unresolved user decision.** Do not choose central confirmation or local entitlement allocation for the manager. Ask: “During a full inter-terminal outage, may either terminal promise a vehicle space? If yes, what maximum capacity may that terminal independently confirm on each departure and in each resource unit?” Until answered, use provisional wording and the current controlled paper/dispatcher procedure. The selected rule must also cover shared tablets, walk-on counts, vessel swaps, quota exhaustion, and what staff tell customers.
+
+### P6 — “The required retention period and the exact export format for historical manifests are not yet defined.”
+
+**Disposition: Accept and retain the open parameters; add an exit capability.** Do not pick a retention duration without the operator's record obligations and business policy. Distinguish a convenient daily CSV/PDF manifest from a complete history export with stable identifiers, event history, data dictionary, and any linked files actually in scope. Put export access, return/deletion terms, backup expectations, and renewal terms into the procurement discussion. Test that a sample export opens without the selected product and can be restored if restore is part of the agreed exit requirement. No format, volume, attachment policy, retention period, legal hold, backup cadence, or restore target is yet established.
+
+## Alternatives, mechanisms, and evidence limits
+
+### Hogia BOOKIT
+
+Keep BOOKIT as a quote/demo lead because the vendor markets a ferry product with booking, route/capacity, check-in, reporting, and API functions. The reviewed official-domain result did not answer price, disconnected behavior, dual-terminal confirmation, export/exit, current deployment model, or support load; a direct reader open failed. Request a tailored quote and demonstrate the actual storm workflow, including half-shift disconnection, capacity authority, shared tablets, privacy, and history export before comparing it with a build [C07](../critic/sources/C07-hogia-bookit.md).
+
+### Cloud Firestore
+
+Firestore is a managed-backend alternative that can sync client-local changes on reconnect. Its client caches actively used data; multiple changes to one document use last-write-wins. Offline queries use cached documents only, so an empty result cannot prove capacity is free. On the Web, persistent cache is not automatically cleared between sessions. Current docs say Android and Apple persistence is enabled by default, while Web persistence is disabled by default; the current Web v9 example uses memory cache by default and configures persistent IndexedDB cache separately. Web persistence is limited to Chrome, Safari, and Firefox [C03](../critic/sources/C03-firestore-offline.md) [R01](sources/R01-firestore-platform-defaults.md) [R02](sources/R02-firestore-js-api-reference.md).
+
+Firestore transactions can atomically guard shared capacity while online, retry when concurrent writes occur, and fail if the client is offline. The official page documents a 10 MiB request maximum, a 270-second total transaction limit, and a 60-second idle timeout; validate the applicable security-rules access-call limits for the actual operation as well. A queued offline write is not an offline capacity transaction [C04](../critic/sources/C04-firestore-transactions.md). For Web implementations, use a pinned SDK and current cache configuration; the reference marks older IndexedDB persistence calls obsolete in favor of configuring the current local cache [R02](sources/R02-firestore-js-api-reference.md).
+
+The pricing page lists qualifying Standard database free quotas of 50,000 document reads/day, 20,000 writes/day, 20,000 deletes/day, 1 GiB stored data, and 10 GiB/month outbound transfer. Paid cost depends on usage, region, edition, storage, and transfer; backups, PITR, and restore can add cost. These are billing units, not a total price or proof of the $1,800/year ceiling. No route volume, region, retention volume, or support model is provided for a defensible estimate [C05](../critic/sources/C05-firestore-pricing.md).
+
+### PouchDB/CouchDB local-first replication
+
+PouchDB with a CouchDB-compatible service is a local-first alternative: local and remote stores can replicate bidirectionally, live replication can retry after connectivity loss, and paused/active events can expose transport status. Distinguish immediate revision conflicts from eventual same-document divergence after disconnected edits. The default eventual-conflict winner is deterministic but arbitrary, with losing revisions available for explicit resolution. Use immutable append-only change records if this path is chosen, then define the business resolution and capacity rule separately. Replication moves records; it does not make an offline terminal's capacity view current or guarantee a unique slot [C01](../critic/sources/C01-pouchdb-conflicts.md) [C02](../critic/sources/C02-pouchdb-replication.md).
+
+This path adds engineering and operating responsibilities for upgrades, backup, device isolation, conflict review, and support. It is technically worth evaluating but is not an automatic fit for an operator without dedicated IT.
+
+A relevant historical evolution chain is the PouchDB refactor #8450, followed by issue #8581's Chrome/IndexedDB two-window reproduction of a changesHandler this-binding error, fix/test work, and PouchDB 8.0.1 release notes tying the fix to that issue. The release page identifies tag 8.0.1 and short commit fde45b9. If browser-local PouchDB is selected, pin the exact release and test cross-window status/reconnect behavior. This chain motivates regression testing; it is not evidence that a current release or the ferry application is defective [C08](../critic/sources/C08-pouchdb-issue-8581.md) [C09](../critic/sources/C09-pouchdb-release-8.0.1.md).
+
+### Capacity entitlements and paper
+
+Preallocated capacity entitlements and a controlled paper manifest are operating policies, not features automatically supplied by either database. Entitlements can bound independent acceptance only if the resource vector and all admission channels are included. Their cost is reduced flexibility/utilization, extra dispatch work, and a need to handle transfers, cancellations, sailing changes, exhaustion, and reallocation. Paper protects continuity when digital service is unavailable, but must be time-stamped and reconciled once to avoid duplicate records.
+
+## Discriminating validation proposals
+
+No application runtime, selected device fleet, route capacity dataset, vendor test environment, or qualified test sandbox is supplied in the declared material. The following are proposed acceptance checks only; none was executed.
+
+| ID | Scenario | Discriminating pass condition |
+|---|---|---|
+| **V1 — Half-shift continuity and authority** | Sustain the actual outage for the reported half-shift at both terminals. First establish which links fail (cloud/internet, inter-terminal network, power) and what dispatcher/radio/phone path remains. Perform representative desk and loading work: record a vehicle reservation/change, count and alter walk-ons, update assistance, produce a usable local staff manifest, and hand off to loading. At each step, try two shared tablets to claim the same last vehicle slot. | Staff can keep the agreed service path moving using local records or the controlled paper fallback, and every entry has explicit local/provisional/authority status. Under central authority, staff follow written customer-facing and boarding rules without turning stale data into a confirmed slot. Under entitlement authority, each admission—including walk-ons and both tablets—spends a valid non-overlapping entitlement and exhaustion follows the approved route. Reconnection reconciles each paper/digital event once; no silent loss, double entry, or mutually confirmed uncoordinated claim occurs. |
+| **V2 — Reconnect and conflict handling** | Reconnect in both terminal orders after separate edits, a collision on one reservation, cancellation, and vehicle-size change. Repeat after app restart and, if applicable, in another browser tab/window. | Every event appears once with origin/operator/time; sync state and conflicts are visible; the approved business resolution is applied; and an arbitrary database winner never silently becomes the capacity decision. |
+| **V3 — Capacity model and every admission channel** | Load the actual vessel/departure resource vector, actual reservation mix, oversized vehicles, linked passengers, walk-ons, cancellations, and changes. Exercise simultaneous entry on shared tablets and a sailing/vessel assignment. | Every accepted combination respects the authoritative limits in their actual units. Entitlement use cannot be bypassed through a walk-on count, a second tablet, a late size change, or another channel. Conversion rules and remaining capacity are explainable and reproducible. |
+| **V4 — Day-of sailing changes** | Cancel a sailing, swap a vessel, or change a departure time while one terminal or dispatch is isolated. Include affected existing reservations and an assistance change. | Staff can identify which instruction has authority, distinguish stale from current status, record whom they notified, and reconcile each affected booking without losing or duplicating it. |
+| **V5 — Public privacy and shared-device handoff** | Use test records containing name, contact detail, reservation ID, accessibility assistance, and oversize-vehicle information. Inspect the public queue and authorized staff manifest; then switch workers on the shared tablet. | Public view reveals no identifying passenger information or accommodation detail. Staff see only the minimum operational cue needed. The next worker cannot access the prior worker's passenger record or cache through the intended handoff process. |
+| **V6 — Large text, contrast, and seasonal handoff** | Complete booking, change, check-in, and manifest tasks on the actual shared tablet with its large-text setting and high-contrast controls; give a seasonal worker only the short handoff view. | High-frequency controls, totals, warnings, and status labels remain visible and usable; staff correctly explain provisional versus capacity-confirmed and the outage procedure. This tests the P4 requirement without claiming standards compliance. |
+| **V7 — History export and exit** | Export a pilot day containing new reservations, changes, cancellations, reports, and any attachments included in scope. Open the export outside the selected product and restore a copy if restore is an agreed requirement. | Stable references and documented fields preserve the agreed history, and the operator can read/use it without vendor access. Retention, deletion, backup, and attachment behavior match the policy the operator selects. |
+| **V8 — Budget and vendor fit** | Model actual annual reads/writes/deletes, stored data, outbound transfer, backups, devices, support, training, implementation, and renewal assumptions. Obtain a vendor quote with region, taxes, support, and contract/exit terms. | Initial spend remains at or below $9,000 and annual spend at or below $1,800 under stated assumptions. Free quotas are not treated as total cost; excluded backup/restore or support costs are included where applicable. |
+| **V9 — Selected-platform offline lifecycle** | Conditional on the chosen SDK/device, cut connectivity; create and edit records; test page refresh, tab close/reopen, app/process restart, device restart, worker sign-out/in, and reconnect. For Firestore, test the actual Android/Apple/Web path and cache configuration; for Web, pin the SDK, explicitly select memory or IndexedDB persistence and tab manager, and test on the supported browser. Inspect local/server and pending-write indicators through each step. | The operator's restart-survival and data-clearing requirements are written and pass on the actual device. The UI never calls a local or cached write server-acknowledged or capacity-confirmed without the relevant acknowledgement and authority rule. Shared-worker transitions do not expose prior passenger data. Any result is specific to the tested SDK version, platform, cache choice, and device; documentation alone does not count as a pass. |
+
+## Critique disposition record
+
+- **M1 — P4 classification:** accept and correct. Large text, high contrast, and seasonal handoff are P4 plan requirements, not optional additions. Numeric accessibility targets remain uncertain.
+- **M2 — outage continuity:** accept and strengthen V1. Test the complete half-shift desk/loading/handoff path and paper/digital once-only reconciliation under the still-open P5 policy.
+- **M3 — platform durability:** accept as an implementation-conditional V9, with a limit. Official docs distinguish platform defaults and cache APIs, but do not prove this application's survival across app or device restart. Keep that as an acceptance test and operator choice.
+- **Minor finding 1 — statuses:** accept. Local save, server acknowledgement, provisional authority, capacity confirmation, and reconciliation are distinct states.
+- **Minor finding 2 — event identifiers:** accept. Use collision-resistant immutable event IDs with origin attribution; a local sequence is not global uniqueness, and an event log does not enforce capacity.
+- **Minor finding 3 — Firestore API vintage:** accept. Pin the selected SDK and use its current local-cache configuration; the current reference marks older Web persistence calls obsolete.
+- **Minor finding 4 — cost scope:** accept. V8 includes workload, region, egress, backup/restore, vendor quote, and total initial/annual costs.
+
+## Executed work versus proposed work
+
+**Executed document/evidence work:** read the assigned input map and assignment, exact I01 brief, all declared predecessor documents, both predecessor source maps, and all bounded source notes in the declared research and critic roots. Reviewed the revealed P1–P6 clauses. Independently reopened the official Firebase offline-data page and JavaScript API reference and searched the current cache and persistence entries; the new observations are R01–R02 and are separately indexed without rebinding C03/C06.
+
+**Not executed:** no ferry application, runtime, route-capacity calculation, shared tablet, vendor trial or demonstration, price quote, cost model, privacy/accessibility audit, export/restore, or V1–V9 application acceptance check was run. No test result or product guarantee is claimed.
+
+## Obligation coverage
+
+- **O1 — unfamiliar tools and distinct approaches:** retained a ferry-specific commercial lead, managed cloud client/cache, local-first replication, preallocated capacity entitlements, and paper outage procedure, with fit limits and alternatives.
+- **O2 — mechanisms and governing behavior:** described PouchDB conflict/winner and retry behavior; Firestore cached-query, same-document write, persistence defaults, platform/browser applicability, transaction offline failure and limits, and pricing units. The exact SDK/platform and workload remain unresolved.
+- **O3 — issue/fix/release chain:** preserved the historical #8450 refactor → #8581 browser issue/reproduction → fix/tests → 8.0.1 release chain, limited to the relevant browser-local path, and explicitly did not claim a current defect.
+- **O4 — exact plan clauses:** P1–P6 are each quoted and assigned an explicit disposition; P4 is corrected, and P5/P6 remain operator decisions.
+- **O5 — coherent retained scope:** this document contains the constraints, mechanisms, alternatives, conditions, open decisions, rejected policy, criticism dispositions, and uncertainty rather than relying on predecessor IDs to replace their substance.
+- **O6 — discriminating validation:** V1–V9 specify scenarios and outcomes that distinguish safe behavior. Every validation is labeled proposed; executed evidence work is separated from unrun product checks.

@@ -1,0 +1,2799 @@
+{
+  "block": "B-03",
+  "case": "I03",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-03/assignment.md",
+      "sha256": "f5eaa11fa4c0f9d07027f85a233d64e72a7385ed8dcdfe987e1260431dd0d236"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-03/input-map.json",
+      "sha256": "a0cbf6adb541433e11220dcc5a1e29270a0c1f94d5d0acc27328e903419791f4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I03/brief.md",
+      "sha256": "92d2d5a86726ad51aed8d4cd17f1dee57a4b2ecf124d54614de9545f65fa81ff"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I03/plan-root-only.md",
+      "sha256": "97d47a152c435ea24c95a2aede2df3c6782a7aa35ac286df8ae1b4bb747ee2f9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+      "sha256": "7cbe83c55c386774971bcc301080a465763e24a04e0e48802b684adf658d850c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/source-map.json",
+      "sha256": "cd184b9533592eca2c0d51a6cfe40dc508af0c9262363bac6692a1643a12a2a8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/assignment.md",
+      "sha256": "2c49b4fbc96aaac169fb56d9fa2261ef2a34123df07ee537c6d0bd0af9f394ef"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/input-map.json",
+      "sha256": "3e60084f2a0a9057b52ff32d586670962369bf9ef158b6794061cc94e2be2513"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/critique.md",
+      "sha256": "425914c0a3fcf357203229e727cdb136ee2d07d7061b51e4a83208d316c4f019"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/source-map.json",
+      "sha256": "59366014295bd385efa2f55ee16d966292e198aba08796290edad29a4663efaf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/assignment.md",
+      "sha256": "696a957fe70ef3bff028dcc685ee195337cdfbfeb7818fb63495d01b0f20eb2f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/input-map.json",
+      "sha256": "9871b191e16241525264b06c0dba95af3354daaf44ba522d054332a56fedb50a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/discovery.md",
+      "sha256": "64fac821c7773fd24f91b1091348611e794944b15daef9cbfa4f5f39c7fd4815"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/draft.md",
+      "sha256": "9be33b7ad94c5311ce50835deb2af4cfa2dab3f535ba5d0a521b33d42a7e8d90"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/source-map.json",
+      "sha256": "69dd7aa3133cdc0c57e7df4b9d48b8fdf4208f6614c21a49073f1b6b9f34aa82"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/revealed-plan.md",
+      "sha256": "97d47a152c435ea24c95a2aede2df3c6782a7aa35ac286df8ae1b4bb747ee2f9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/plan-reveal.json",
+      "sha256": "cfbc69c37300bb4c6c20bc78fba220c6c23dd078007c23b154764907fc595b18"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/assignment.md",
+      "sha256": "3e213d2f5e38148ab2817ee19965732406e4bc1c9db1c7ba31ec32507f984399"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/input-map.json",
+      "sha256": "1721b69eb2650a5c02564dfb0aaa15aa25d06b4cce850fe692a3d7c1dae9e80d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/sources/README.md",
+      "sha256": "4875dfb8863ab47e8636ac97d14253e179577acdf90e21f70b66ac727740f768"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/sources/primary-evidence.md",
+      "sha256": "d6151e29dcc261ade60397859c85a4a021c6ec98a3a7e5085ec407772ea07a19"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/sources/README.md",
+      "sha256": "d5eccb3391cb989ec5b0ecb4de8331c1d80c8e5bc7389eed3b39be766a74988c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/sources/primary-evidence.md",
+      "sha256": "b145ea9303461460a6e2eb60604704f9be70715ec2792282116886ab09870264"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/sources/README.md",
+      "sha256": "c9bbcfc8f219e8b93f2c7ec220693317f98a3ca0377cb7626fa2a73cc3a73a17"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/sources/erpnext.md",
+      "sha256": "344d09c785ee98ac1c093cf9546c5a491b1c62b89f425f658c0b0678b63c6fed"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/sources/nursery-products.md",
+      "sha256": "5bee0597bf11beda413d5b0b2d05d0a56ef7e61fb28b774493069f29de64e9d1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/sources/odk.md",
+      "sha256": "eaccbfd659b3f74b9bc5a1f2abc81d4ffe4096bae84b8ef02779937dfa9852a0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/sources/rxdb.md",
+      "sha256": "a14380b33fddd69f2c293269e54f8b5fadcc4948b7baccf28e6214bdc8797a86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/critique.md",
+      "sha256": "686f5e29dc1d15302b6bb265e36a53d56983ebde99314d433e139a30d70b8d02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/source-map.json",
+      "sha256": "673ac3ebe8a77157d69646bc99a8a3017cffe67f078d5cdbe0dcbdc6e034529e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/assignment.md",
+      "sha256": "d78d8eff8b988d40d519e4199418ae235da1d6fb26b2838eb9a5ad45440f74bf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/input-map.json",
+      "sha256": "78de55de897529e74638141db9c6962277d83ab6531cfe4ed995c5822208026c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/discovery.md",
+      "sha256": "ee66889867095d37e33036c113e60e5befb1d2a3ee7d54401c7bce25c49a67e2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/draft.md",
+      "sha256": "9dfc04fd0a18bc3ffb929d555756ce5f274141902e466bcd773bba884cd82675"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+      "sha256": "ea36466f31f1222f943e54871247a94294f339d47855d943bd35538d96743acf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/source-map.json",
+      "sha256": "7d975d9215d114b7db59ca6793d0d31fa5c2334078c520e812d9a73f84a65f85"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/revealed-plan.md",
+      "sha256": "97d47a152c435ea24c95a2aede2df3c6782a7aa35ac286df8ae1b4bb747ee2f9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/plan-reveal.json",
+      "sha256": "2df6765a663c44d4720e4ab468329599e1e3d806fa73352d1c1fcc95d59b8784"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/assignment.md",
+      "sha256": "a1946761e4cd45a7838ae161b76e104bebfba4c0e24a18bbf7716231247dcc57"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/input-map.json",
+      "sha256": "728e452cf6decaa9de79c64ccac586143a8f0d7cad9da3e45886eb02e12fc82b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/sources/index.md",
+      "sha256": "7eb277f0b9771c31a4dbf22b3fd7c720c10d88d3bececdabf42377c7cc3be951"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/sources/primary-source-notes.md",
+      "sha256": "ef81e00bc57ff9f67776c41c2edeae861cad265a3835ea0ca2d1cfe684364364"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/sources/index.md",
+      "sha256": "2f7caca472ca7f6a98f6bf4ec82a6643ceae444e4ab75061b9bed6abe6443d7d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/sources/primary-source-notes.md",
+      "sha256": "87672051002204afe6610999a493e39b5fbc88f409ee754731ef40e18c22db1a"
+    }
+  ],
+  "arms": {
+    "N1": {
+      "actual_arm": "treatment",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+      "final_sha256": "ea36466f31f1222f943e54871247a94294f339d47855d943bd35538d96743acf",
+      "grade": "FAIL",
+      "material_findings": [
+        {
+          "id": "N1-M01",
+          "type": "MATERIALLY_WRONG",
+          "severity": "medium",
+          "original_obligation": [
+            "O2",
+            "O5"
+          ],
+          "plan_scope": [
+            "P4"
+          ],
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+            "lines": "43;64;76",
+            "passage": "All devices download all Entities"
+          },
+          "related_candidate_locators": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/critique.md",
+              "lines": "18-22"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/sources/primary-source-notes.md",
+              "lines": "C01 privacy addendum"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "E02",
+              "url": "https://docs.getodk.org/central-entities/",
+              "version_or_release": "Rolling documentation checked 2026-10-09; server filtering corroborated by E03",
+              "locator_or_symbol": "Important limitations; Entity List Access; Filter by property; Managing Entity conflicts"
+            },
+            {
+              "id": "E03",
+              "url": "https://forum.getodk.org/t/odk-central-v2026-2-entities-filtering-and-web-forms-as-default/58254",
+              "version_or_release": "Central v2026.2.0, released 2026-07-03",
+              "locator_or_symbol": "Official announcement opening and Entity filtering sections; GitHub release tag"
+            },
+            {
+              "id": "E04",
+              "url": "https://docs.getodk.org/central-users/",
+              "version_or_release": "Rolling documentation",
+              "locator_or_symbol": "Web User Roles; Managing App Users; App User Properties"
+            }
+          ],
+          "reasoning": "The final treats the default all-record download as an unavoidable current ODK limitation, after accepting critic M1. Independently checked official release evidence establishes server-side Entity filtering before the candidate date. The relevant exception was therefore available research, not an unknown nursery input. It changes which privacy/assignment mechanisms are viable in the selected ODK alternative. The conservative choice to keep fulfillment PII out of worker payloads remains sensible, and string-backed property validation remains correct. Filtering complete rows does not hide sensitive properties on rows a worker legitimately needs, nor does it certify cached-data cleanup. The error is the unconditional product-capability conclusion, not a proven leak in a deployment.",
+          "critic_adjudication": "Reject the universal-download premise of M1; accept its string-type and in-form-choice-filter cautions. No candidate text was repaired."
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N1-m01",
+          "type": "DISPOSITION_PRECISION",
+          "severity": "low",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+            "lines": "19,21,65,95"
+          },
+          "original_obligation": "O4",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I03/plan-root-only.md",
+              "lines": "P1,P3"
+            }
+          ],
+          "reasoning": "P1 already specifies projected readiness and P3 explicitly excludes estimate-as-promise behavior. Calling separation a correction to P1 overstates what the frozen plan gets wrong. The final retains P1 and makes extra lineage/split/event details conditional, so this is redundant labeling rather than a material false rejection."
+        },
+        {
+          "id": "N1-m02",
+          "type": "PRESENTATION_PRESERVATION",
+          "severity": "low",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+            "lines": "67,80"
+          },
+          "related_candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/draft.md",
+            "lines": "23; accessibility validation"
+          },
+          "original_obligation": "O5",
+          "primary_evidence": [
+            {
+              "id": "E24",
+              "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/#use-of-color",
+              "version_or_release": "W3C Recommendation 2024-12-12",
+              "locator_or_symbol": "Web-content scope; SC 1.4.1, Level A"
+            }
+          ],
+          "reasoning": "The final no longer directly repeats the draft’s text/icon/shape/pattern design sentence. Its named-user grayscale test and scoped web criterion retain the substance sufficiently for this planning brief, but the design intent is less immediate in the self-contained final."
+        }
+      ],
+      "unresolved": [
+        {
+          "kind": "external_or_user_input",
+          "scope": "Target phones/OS, actual tags/languages, staff adoption and fulfillment-role boundary",
+          "scientific_effect": "Honest planning limitation; not an unperformed required source review or an assumed deployment result."
+        },
+        {
+          "kind": "external_or_user_input",
+          "scope": "Nursery units/count authority/saleability/hold/partial fulfillment/substitution policy",
+          "scientific_effect": "Honest planning limitation; not an unperformed required source review or an assumed deployment result."
+        },
+        {
+          "kind": "external_or_user_input",
+          "scope": "Missed-window/whole-season communication and outcome, later wholesale access",
+          "scientific_effect": "Honest planning limitation; not an unperformed required source review or an assumed deployment result."
+        },
+        {
+          "kind": "external_or_user_input",
+          "scope": "Current hosting/support/cost quotes and complete $5,500 accounting",
+          "scientific_effect": "Honest planning limitation; not an unperformed required source review or an assumed deployment result."
+        },
+        {
+          "kind": "external_or_user_input",
+          "scope": "Selected ODK/ERP/farmOS release and runtime/cache/conflict tests",
+          "scientific_effect": "Honest planning limitation; not an unperformed required source review or an assumed deployment result."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "name": "Original obligations and constraints",
+          "coverage": "Complete: O1-O6 and all explicit brief constraints examined against the entire final.",
+          "judgment": "Substantive planning coverage is present. O2 has N1-M01; no additional material omission of original nursery constraints found.",
+          "candidate_and_register_locators": "N1 final 7-58,72-99; obligation/constraint registers",
+          "evidence": [
+            {
+              "id": "E02",
+              "url": "https://docs.getodk.org/central-entities/",
+              "version_or_release": "Rolling documentation checked 2026-10-09; server filtering corroborated by E03",
+              "locator_or_symbol": "Important limitations; Entity List Access; Filter by property; Managing Entity conflicts"
+            },
+            {
+              "id": "E14",
+              "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.py",
+              "version_or_release": "v15.121.3; 26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+              "locator_or_symbol": "validate_reservation_based_on_serial_and_batch; validate_stock_reservation_settings; get_available_qty_to_reserve; batch.py get_batch_qty/get_batches"
+            },
+            {
+              "id": "E22",
+              "url": "https://farmos.org/guide/assets/",
+              "version_or_release": "Rolling documentation",
+              "locator_or_symbol": "Plant Assets; movement/location guide; inventory logic measure+unit/reset/increment/decrement"
+            },
+            {
+              "id": "E24",
+              "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/#use-of-color",
+              "version_or_release": "W3C Recommendation 2024-12-12",
+              "locator_or_symbol": "Web-content scope; SC 1.4.1, Level A"
+            }
+          ]
+        },
+        {
+          "axis": 2,
+          "name": "Consequential source facts/defaults/types/release/domain applicability",
+          "coverage": "Complete: all final claim families Q01-Q15 and the consequential stage-source claims were checked.",
+          "judgment": "FAIL on the current ODK download limitation: released server filtering is omitted after accepting critic M1. Other gates, strings, ERP units/vouchers/partial behavior, negative exception, historical fix and farmOS/WCAG scope are supported with qualifications.",
+          "candidate_and_register_locators": "N1-Q01..Q15 and N1-M01",
+          "evidence": [
+            {
+              "id": "E02",
+              "url": "https://docs.getodk.org/central-entities/",
+              "version_or_release": "Rolling documentation checked 2026-10-09; server filtering corroborated by E03",
+              "locator_or_symbol": "Important limitations; Entity List Access; Filter by property; Managing Entity conflicts"
+            },
+            {
+              "id": "E03",
+              "url": "https://forum.getodk.org/t/odk-central-v2026-2-entities-filtering-and-web-forms-as-default/58254",
+              "version_or_release": "Central v2026.2.0, released 2026-07-03",
+              "locator_or_symbol": "Official announcement opening and Entity filtering sections; GitHub release tag"
+            },
+            {
+              "id": "E04",
+              "url": "https://docs.getodk.org/central-users/",
+              "version_or_release": "Rolling documentation",
+              "locator_or_symbol": "Web User Roles; Managing App Users; App User Properties"
+            },
+            {
+              "id": "E06",
+              "url": "https://docs.getodk.org/entities-intro/",
+              "version_or_release": "Central and Collect >=2024.3.0 for offline Entity create/update",
+              "locator_or_symbol": "Technical limitations: registration not immediately visible in follow-up forms"
+            },
+            {
+              "id": "E10",
+              "url": "https://github.com/getodk/collect/issues/4589",
+              "version_or_release": "Issue 4589; merge 12ef1a3f4f2257591cfe912754a44305dd686a2a, 2021-07-07",
+              "locator_or_symbol": "Issue description; PR 4655 merge; EditSavedFormTest.java added"
+            },
+            {
+              "id": "E14",
+              "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.py",
+              "version_or_release": "v15.121.3; 26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+              "locator_or_symbol": "validate_reservation_based_on_serial_and_batch; validate_stock_reservation_settings; get_available_qty_to_reserve; batch.py get_batch_qty/get_batches"
+            },
+            {
+              "id": "E15",
+              "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/serial_and_batch_bundle/serial_and_batch_bundle.py",
+              "version_or_release": "v15.121.3 pinned commit",
+              "locator_or_symbol": "set_incoming_rate_for_outward_transaction lines 684-744; validate_negative_batch and is_stock_reco_for_valuation_adjustment lines 757-778"
+            },
+            {
+              "id": "E17",
+              "url": "https://docs.frappe.io/erpnext/uom",
+              "version_or_release": "Rolling documentation",
+              "locator_or_symbol": "Must be Whole Number; Stock Settings Default Stock UOM; Item Barcodes; Stock Reconciliation Scan Mode"
+            },
+            {
+              "id": "E23",
+              "url": "https://github.com/farmOS/field-kit",
+              "version_or_release": "Mutable develop README and farmOS.js documentation",
+              "locator_or_symbol": "README develop/deploy and dated 2.x description; farmOS.js experimental warning and LWW model"
+            },
+            {
+              "id": "E24",
+              "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/#use-of-color",
+              "version_or_release": "W3C Recommendation 2024-12-12",
+              "locator_or_symbol": "Web-content scope; SC 1.4.1, Level A"
+            }
+          ]
+        },
+        {
+          "axis": 3,
+          "name": "Useful unfamiliar discovery and materially different options",
+          "coverage": "Complete: every substantive discovery alternative traced into final.",
+          "judgment": "Useful ODK longitudinal capture, ERP reservations, farmOS model, custom PWA and paper-first alternatives are genuinely different. Budget/device/support conditions survive. The missed privacy exception narrows ODK knowledge, but does not erase the supported discovery.",
+          "candidate_and_register_locators": "discovery 22-30,67-87; final 11,38-58",
+          "evidence": [
+            {
+              "id": "E07",
+              "url": "https://docs.getodk.org/collect-intro/",
+              "version_or_release": "Rolling documentation; candidate source pin v2026.3.5 separately checked",
+              "locator_or_symbol": "Collect overview and device guidance"
+            },
+            {
+              "id": "E14",
+              "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.py",
+              "version_or_release": "v15.121.3; 26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+              "locator_or_symbol": "validate_reservation_based_on_serial_and_batch; validate_stock_reservation_settings; get_available_qty_to_reserve; batch.py get_batch_qty/get_batches"
+            },
+            {
+              "id": "E22",
+              "url": "https://farmos.org/guide/assets/",
+              "version_or_release": "Rolling documentation",
+              "locator_or_symbol": "Plant Assets; movement/location guide; inventory logic measure+unit/reset/increment/decrement"
+            },
+            {
+              "id": "E23",
+              "url": "https://github.com/farmOS/field-kit",
+              "version_or_release": "Mutable develop README and farmOS.js documentation",
+              "locator_or_symbol": "README develop/deploy and dated 2.x description; farmOS.js experimental warning and LWW model"
+            }
+          ]
+        },
+        {
+          "axis": 4,
+          "name": "Exact P-clause dispositions",
+          "coverage": "Complete: all P1-P6 exact texts and correction/enhancement/decision/already-covered/reject/uncertain treatments reviewed.",
+          "judgment": "No supported plan clause rejected; P5/P6 stay nursery decisions. P1 correction is redundant against P3 (minor), and N1-M01 affects rationale for P4, not P4 itself.",
+          "candidate_and_register_locators": "final 17-26,65; plan_dispositions",
+          "evidence": [
+            {
+              "id": "E02",
+              "url": "https://docs.getodk.org/central-entities/",
+              "version_or_release": "Rolling documentation checked 2026-10-09; server filtering corroborated by E03",
+              "locator_or_symbol": "Important limitations; Entity List Access; Filter by property; Managing Entity conflicts"
+            },
+            {
+              "id": "E03",
+              "url": "https://forum.getodk.org/t/odk-central-v2026-2-entities-filtering-and-web-forms-as-default/58254",
+              "version_or_release": "Central v2026.2.0, released 2026-07-03",
+              "locator_or_symbol": "Official announcement opening and Entity filtering sections; GitHub release tag"
+            },
+            {
+              "id": "E14",
+              "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.py",
+              "version_or_release": "v15.121.3; 26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+              "locator_or_symbol": "validate_reservation_based_on_serial_and_batch; validate_stock_reservation_settings; get_available_qty_to_reserve; batch.py get_batch_qty/get_batches"
+            }
+          ]
+        },
+        {
+          "axis": 5,
+          "name": "Draft/critique/final preservation and criticism adjudication",
+          "coverage": "Complete: full discovery, draft, critique and final compared; every criticism adjudicated independently.",
+          "judgment": "Supported alternatives, policy uncertainty, source limits and validations survive. The blanket ODK criticism was wrongly accepted. The missing-guide removal is defensible; non-color presentation is less explicit but substantively retained.",
+          "candidate_and_register_locators": "preservation_coverage and criticism_adjudications; final 60-70",
+          "evidence": [
+            {
+              "id": "E02",
+              "url": "https://docs.getodk.org/central-entities/",
+              "version_or_release": "Rolling documentation checked 2026-10-09; server filtering corroborated by E03",
+              "locator_or_symbol": "Important limitations; Entity List Access; Filter by property; Managing Entity conflicts"
+            },
+            {
+              "id": "E03",
+              "url": "https://forum.getodk.org/t/odk-central-v2026-2-entities-filtering-and-web-forms-as-default/58254",
+              "version_or_release": "Central v2026.2.0, released 2026-07-03",
+              "locator_or_symbol": "Official announcement opening and Entity filtering sections; GitHub release tag"
+            },
+            {
+              "id": "E10",
+              "url": "https://github.com/getodk/collect/issues/4589",
+              "version_or_release": "Issue 4589; merge 12ef1a3f4f2257591cfe912754a44305dd686a2a, 2021-07-07",
+              "locator_or_symbol": "Issue description; PR 4655 merge; EditSavedFormTest.java added"
+            },
+            {
+              "id": "E14",
+              "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.py",
+              "version_or_release": "v15.121.3; 26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+              "locator_or_symbol": "validate_reservation_based_on_serial_and_batch; validate_stock_reservation_settings; get_available_qty_to_reserve; batch.py get_batch_qty/get_batches"
+            },
+            {
+              "id": "E15",
+              "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/serial_and_batch_bundle/serial_and_batch_bundle.py",
+              "version_or_release": "v15.121.3 pinned commit",
+              "locator_or_symbol": "set_incoming_rate_for_outward_transaction lines 684-744; validate_negative_batch and is_stock_reco_for_valuation_adjustment lines 757-778"
+            },
+            {
+              "id": "E23",
+              "url": "https://github.com/farmOS/field-kit",
+              "version_or_release": "Mutable develop README and farmOS.js documentation",
+              "locator_or_symbol": "README develop/deploy and dated 2.x description; farmOS.js experimental warning and LWW model"
+            },
+            {
+              "id": "E24",
+              "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/#use-of-color",
+              "version_or_release": "W3C Recommendation 2024-12-12",
+              "locator_or_symbol": "Web-content scope; SC 1.4.1, Level A"
+            }
+          ]
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed versus executed validation",
+          "coverage": "Complete: all eleven final proposals and their predecessor families examined; execution assertions checked in authored record.",
+          "judgment": "No validation overclaim. Contention arithmetic and physical/role/forecast tests are discriminating. There are no executed software witnesses or deployment proofs to credit. The ODK test premise needs the applicability exception already recorded.",
+          "candidate_and_register_locators": "final 72-86; validation_coverage",
+          "evidence": [
+            {
+              "id": "E02",
+              "url": "https://docs.getodk.org/central-entities/",
+              "version_or_release": "Rolling documentation checked 2026-10-09; server filtering corroborated by E03",
+              "locator_or_symbol": "Important limitations; Entity List Access; Filter by property; Managing Entity conflicts"
+            },
+            {
+              "id": "E14",
+              "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.py",
+              "version_or_release": "v15.121.3; 26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+              "locator_or_symbol": "validate_reservation_based_on_serial_and_batch; validate_stock_reservation_settings; get_available_qty_to_reserve; batch.py get_batch_qty/get_batches"
+            },
+            {
+              "id": "E15",
+              "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/serial_and_batch_bundle/serial_and_batch_bundle.py",
+              "version_or_release": "v15.121.3 pinned commit",
+              "locator_or_symbol": "set_incoming_rate_for_outward_transaction lines 684-744; validate_negative_batch and is_stock_reco_for_valuation_adjustment lines 757-778"
+            },
+            {
+              "id": "E24",
+              "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/#use-of-color",
+              "version_or_release": "W3C Recommendation 2024-12-12",
+              "locator_or_symbol": "Web-content scope; SC 1.4.1, Level A"
+            }
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "id": "N1-Q01",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "7-9,32-36"
+            },
+            "claim": "Separate physical identity, forecasts, accepted counts, allocations and fulfillment; disconnected requests remain pending.",
+            "independent_judgment": "Supported design inference from the brief and inspected sync behavior. The candidate explicitly allows central authority or physical quotas and does not claim universal offline allocation impossibility. A nursery count/hold policy remains undecided.",
+            "primary_evidence": [
+              {
+                "id": "E02",
+                "url": "https://docs.getodk.org/central-entities/",
+                "version_or_release": "Rolling documentation checked 2026-10-09; server filtering corroborated by E03",
+                "locator_or_symbol": "Important limitations; Entity List Access; Filter by property; Managing Entity conflicts"
+              },
+              {
+                "id": "E06",
+                "url": "https://docs.getodk.org/entities-intro/",
+                "version_or_release": "Central and Collect >=2024.3.0 for offline Entity create/update",
+                "locator_or_symbol": "Technical limitations: registration not immediately visible in follow-up forms"
+              },
+              {
+                "id": "E14",
+                "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.py",
+                "version_or_release": "v15.121.3; 26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+                "locator_or_symbol": "validate_reservation_based_on_serial_and_batch; validate_stock_reservation_settings; get_available_qty_to_reserve; batch.py get_batch_qty/get_batches"
+              },
+              {
+                "id": "E22",
+                "url": "https://farmos.org/guide/assets/",
+                "version_or_release": "Rolling documentation",
+                "locator_or_symbol": "Plant Assets; movement/location guide; inventory logic measure+unit/reset/increment/decrement"
+              }
+            ]
+          },
+          {
+            "id": "N1-Q02",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "43"
+            },
+            "claim": "ODK offline Entity create/update requires Central and Collect 2024.3.0+; parallel and out-of-order updates have special conflict treatment.",
+            "independent_judgment": "Version gate and conflict description supported; neither establishes a reservation lock. The five-day bound is a Central out-of-order-chain policy, not nursery acceptable staleness.",
+            "primary_evidence": [
+              {
+                "id": "E02",
+                "url": "https://docs.getodk.org/central-entities/",
+                "version_or_release": "Rolling documentation checked 2026-10-09; server filtering corroborated by E03",
+                "locator_or_symbol": "Important limitations; Entity List Access; Filter by property; Managing Entity conflicts"
+              },
+              {
+                "id": "E06",
+                "url": "https://docs.getodk.org/entities-intro/",
+                "version_or_release": "Central and Collect >=2024.3.0 for offline Entity create/update",
+                "locator_or_symbol": "Technical limitations: registration not immediately visible in follow-up forms"
+              }
+            ]
+          },
+          {
+            "id": "N1-Q03",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "43,64,76"
+            },
+            "claim": "All devices download all Entities, so Entity Lists cannot provide a device-level privacy boundary.",
+            "independent_judgment": "Materially wrong as an unconditional current limitation. See N1-M01. The string-backed property caution in the same passage is supported. Server-side access filtering is distinct from a choice filter; it still needs deployment/version/role validation.",
+            "primary_evidence": [
+              {
+                "id": "E02",
+                "url": "https://docs.getodk.org/central-entities/",
+                "version_or_release": "Rolling documentation checked 2026-10-09; server filtering corroborated by E03",
+                "locator_or_symbol": "Important limitations; Entity List Access; Filter by property; Managing Entity conflicts"
+              },
+              {
+                "id": "E03",
+                "url": "https://forum.getodk.org/t/odk-central-v2026-2-entities-filtering-and-web-forms-as-default/58254",
+                "version_or_release": "Central v2026.2.0, released 2026-07-03",
+                "locator_or_symbol": "Official announcement opening and Entity filtering sections; GitHub release tag"
+              },
+              {
+                "id": "E04",
+                "url": "https://docs.getodk.org/central-users/",
+                "version_or_release": "Rolling documentation",
+                "locator_or_symbol": "Web User Roles; Managing App Users; App User Properties"
+              }
+            ]
+          },
+          {
+            "id": "N1-Q04",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "48"
+            },
+            "claim": "Collect is Android-oriented; form language/media and barcode capability do not establish nursery phone/tag/language fit.",
+            "independent_judgment": "Supported and correctly qualified. Scanning is optional, actual phones/languages are unknown, and web clients are not silently treated as Collect.",
+            "primary_evidence": [
+              {
+                "id": "E05",
+                "url": "https://docs.getodk.org/central-submissions/",
+                "version_or_release": "Rolling, Central-version-specific documentation",
+                "locator_or_symbol": "Allowing web form users to work offline; Public Access Links; exports"
+              },
+              {
+                "id": "E07",
+                "url": "https://docs.getodk.org/collect-intro/",
+                "version_or_release": "Rolling documentation; candidate source pin v2026.3.5 separately checked",
+                "locator_or_symbol": "Collect overview and device guidance"
+              },
+              {
+                "id": "E08",
+                "url": "https://docs.getodk.org/guide-form-language/",
+                "version_or_release": "Rolling documentation",
+                "locator_or_symbol": "Translation tests; Form language vs application UI language"
+              }
+            ]
+          },
+          {
+            "id": "N1-Q05",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "44,50,66"
+            },
+            "claim": "ERPNext v15 reservations are Sales Order based; municipal allocations may require mapping.",
+            "independent_judgment": "Pinned code supports the voucher restriction. The final leaves municipal fit unresolved rather than assuming every restoration allocation is a sales transaction.",
+            "primary_evidence": [
+              {
+                "id": "E13",
+                "url": "https://docs.frappe.io/erpnext/batch",
+                "version_or_release": "Rolling docs with v15 negative-stock statement",
+                "locator_or_symbol": "Batch requirements, filtering, split/move; Stock Reservation prerequisites"
+              },
+              {
+                "id": "E14",
+                "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.py",
+                "version_or_release": "v15.121.3; 26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+                "locator_or_symbol": "validate_reservation_based_on_serial_and_batch; validate_stock_reservation_settings; get_available_qty_to_reserve; batch.py get_batch_qty/get_batches"
+              }
+            ]
+          },
+          {
+            "id": "N1-Q06",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "44,50,70"
+            },
+            "claim": "Actual batch stock minus reservations, with setting-dependent partial/excess behavior, is a useful comparator rather than germination stock.",
+            "independent_judgment": "Supported in the inspected version. No installed setting, concurrency guarantee or accepted seedling-stock rule is inferred.",
+            "primary_evidence": [
+              {
+                "id": "E14",
+                "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.py",
+                "version_or_release": "v15.121.3; 26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+                "locator_or_symbol": "validate_reservation_based_on_serial_and_batch; validate_stock_reservation_settings; get_available_qty_to_reserve; batch.py get_batch_qty/get_batches"
+              }
+            ]
+          },
+          {
+            "id": "N1-Q07",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "50"
+            },
+            "claim": "Nos is a stock-unit default and whole-number enforcement is separate.",
+            "independent_judgment": "Supported; the nursery units/conversions remain open. The final does not infer fractional plants from ERP quantity types.",
+            "primary_evidence": [
+              {
+                "id": "E17",
+                "url": "https://docs.frappe.io/erpnext/uom",
+                "version_or_release": "Rolling documentation",
+                "locator_or_symbol": "Must be Whole Number; Stock Settings Default Stock UOM; Item Barcodes; Stock Reconciliation Scan Mode"
+              }
+            ]
+          },
+          {
+            "id": "N1-Q08",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "69,81,90"
+            },
+            "claim": "ERPNext negative-batch guard is conditional with a valuation-adjustment exception; all call paths were not traced.",
+            "independent_judgment": "Accurately bounded static observation. Honest remaining deployment work is not an asserted invariant or evasive substitute for the performed code investigation.",
+            "primary_evidence": [
+              {
+                "id": "E15",
+                "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/serial_and_batch_bundle/serial_and_batch_bundle.py",
+                "version_or_release": "v15.121.3 pinned commit",
+                "locator_or_symbol": "set_incoming_rate_for_outward_transaction lines 684-744; validate_negative_batch and is_stock_reco_for_valuation_adjustment lines 757-778"
+              }
+            ]
+          },
+          {
+            "id": "N1-Q09",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "45,52,68,82"
+            },
+            "claim": "farmOS offers useful agricultural concepts; current Field Kit/server pairing is unverified.",
+            "independent_judgment": "The underlying plant/movement/quantity models and client documentation caution are supported. The final does not falsely declare v3 incompatibility or reservation support, and appropriately distinguishes farmOS.js evidence from current Field Kit behavior.",
+            "primary_evidence": [
+              {
+                "id": "E22",
+                "url": "https://farmos.org/guide/assets/",
+                "version_or_release": "Rolling documentation",
+                "locator_or_symbol": "Plant Assets; movement/location guide; inventory logic measure+unit/reset/increment/decrement"
+              },
+              {
+                "id": "E23",
+                "url": "https://github.com/farmOS/field-kit",
+                "version_or_release": "Mutable develop README and farmOS.js documentation",
+                "locator_or_symbol": "README develop/deploy and dated 2.x description; farmOS.js experimental warning and LWW model"
+              }
+            ]
+          },
+          {
+            "id": "N1-Q10",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "52,68"
+            },
+            "claim": "The older Field Kit v1 historical sentence is omitted because its exact source was not preserved.",
+            "independent_judgment": "A permissible removal of an untraceable historical assertion, not a material loss of the viable alternative. The README and currentness caveat remain. This reviewer did not promote the missing guide to independently checked evidence.",
+            "primary_evidence": [
+              {
+                "id": "E23",
+                "url": "https://github.com/farmOS/field-kit",
+                "version_or_release": "Mutable develop README and farmOS.js documentation",
+                "locator_or_symbol": "README develop/deploy and dated 2.x description; farmOS.js experimental warning and LWW model"
+              }
+            ]
+          },
+          {
+            "id": "N1-Q11",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "67,80"
+            },
+            "claim": "WCAG applies to web content; native/print trials are usability checks.",
+            "independent_judgment": "Supported. Color-vision and second-language constraints remain in the named-user test. The final is less explicit than its draft about text/icon/pattern design; this is a minor presentation limitation, not a conformance overclaim.",
+            "primary_evidence": [
+              {
+                "id": "E24",
+                "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/#use-of-color",
+                "version_or_release": "W3C Recommendation 2024-12-12",
+                "locator_or_symbol": "Web-content scope; SC 1.4.1, Level A"
+              },
+              {
+                "id": "E08",
+                "url": "https://docs.getodk.org/guide-form-language/",
+                "version_or_release": "Rolling documentation",
+                "locator_or_symbol": "Translation tests; Form language vs application UI language"
+              }
+            ]
+          },
+          {
+            "id": "N1-Q12",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "70,90,94"
+            },
+            "claim": "Collect issue 4589 led to merged fix 4655 and added tests; current failure frequency was not established.",
+            "independent_judgment": "The issue/merge/test-file history and release pin were independently confirmed. Historical fix evidence is not represented as a nursery test or universal current failed-send rule.",
+            "primary_evidence": [
+              {
+                "id": "E10",
+                "url": "https://github.com/getodk/collect/issues/4589",
+                "version_or_release": "Issue 4589; merge 12ef1a3f4f2257591cfe912754a44305dd686a2a, 2021-07-07",
+                "locator_or_symbol": "Issue description; PR 4655 merge; EditSavedFormTest.java added"
+              },
+              {
+                "id": "E11",
+                "url": "https://github.com/getodk/collect/releases/tag/v2026.3.5",
+                "version_or_release": "v2026.3.5 published 2026-09-28; 87bf04ec0a94e3dec1abc87db73c8326d8667162",
+                "locator_or_symbol": "SaveFormToDisk.java: updateInstanceDatabase, save/finalization/encryption branch"
+              }
+            ]
+          },
+          {
+            "id": "N1-Q13",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "11,40-46,58,84-86"
+            },
+            "claim": "ODK, ERPNext, farmOS, a custom PWA and paper-first operations remain conditional alternatives, with no established $5,500 fit.",
+            "independent_judgment": "Useful materially different mechanisms are retained. Local devices, quotes, hosting and support are genuine unknowns. No selected product or fabricated cost estimate needs correction.",
+            "primary_evidence": [
+              {
+                "id": "E07",
+                "url": "https://docs.getodk.org/collect-intro/",
+                "version_or_release": "Rolling documentation; candidate source pin v2026.3.5 separately checked",
+                "locator_or_symbol": "Collect overview and device guidance"
+              },
+              {
+                "id": "E13",
+                "url": "https://docs.frappe.io/erpnext/batch",
+                "version_or_release": "Rolling docs with v15 negative-stock statement",
+                "locator_or_symbol": "Batch requirements, filtering, split/move; Stock Reservation prerequisites"
+              },
+              {
+                "id": "E14",
+                "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.py",
+                "version_or_release": "v15.121.3; 26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+                "locator_or_symbol": "validate_reservation_based_on_serial_and_batch; validate_stock_reservation_settings; get_available_qty_to_reserve; batch.py get_batch_qty/get_batches"
+              },
+              {
+                "id": "E22",
+                "url": "https://farmos.org/guide/assets/",
+                "version_or_release": "Rolling documentation",
+                "locator_or_symbol": "Plant Assets; movement/location guide; inventory logic measure+unit/reset/increment/decrement"
+              },
+              {
+                "id": "E23",
+                "url": "https://github.com/farmOS/field-kit",
+                "version_or_release": "Mutable develop README and farmOS.js documentation",
+                "locator_or_symbol": "README develop/deploy and dated 2.x description; farmOS.js experimental warning and LWW model"
+              }
+            ]
+          },
+          {
+            "id": "N1-Q14",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "22-24,54-58,83"
+            },
+            "claim": "Floor records use aliases; customer details and user policies remain restricted/undecided.",
+            "independent_judgment": "Meets the original need-to-know and policy constraints, apart from the erroneous ODK download rationale already isolated in N1-M01. Separate fulfillment access and broad testing are retained.",
+            "primary_evidence": [
+              {
+                "id": "E04",
+                "url": "https://docs.getodk.org/central-users/",
+                "version_or_release": "Rolling documentation",
+                "locator_or_symbol": "Web User Roles; Managing App Users; App User Properties"
+              },
+              {
+                "id": "E18",
+                "url": "https://docs.frappe.io/erpnext/permissions",
+                "version_or_release": "Rolling documentation",
+                "locator_or_symbol": "Roles, permission levels, User Permissions; Customer Add addresses and contacts"
+              }
+            ]
+          },
+          {
+            "id": "N1-Q15",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "72-86"
+            },
+            "claim": "Eleven validations are proposals; no implementation/runtime/user/vendor test ran.",
+            "independent_judgment": "No validation overclaim found. The arithmetic contention case, restart/retry, forecast, physical reconciliation, policy, privacy and budget checks have outcome oracles independent of a successful exit code.",
+            "primary_evidence": [
+              {
+                "id": "E02",
+                "url": "https://docs.getodk.org/central-entities/",
+                "version_or_release": "Rolling documentation checked 2026-10-09; server filtering corroborated by E03",
+                "locator_or_symbol": "Important limitations; Entity List Access; Filter by property; Managing Entity conflicts"
+              },
+              {
+                "id": "E14",
+                "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.py",
+                "version_or_release": "v15.121.3; 26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+                "locator_or_symbol": "validate_reservation_based_on_serial_and_batch; validate_stock_reservation_settings; get_available_qty_to_reserve; batch.py get_batch_qty/get_batches"
+              },
+              {
+                "id": "E15",
+                "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/serial_and_batch_bundle/serial_and_batch_bundle.py",
+                "version_or_release": "v15.121.3 pinned commit",
+                "locator_or_symbol": "set_incoming_rate_for_outward_transaction lines 684-744; validate_negative_batch and is_stock_reco_for_valuation_adjustment lines 757-778"
+              },
+              {
+                "id": "E23",
+                "url": "https://github.com/farmOS/field-kit",
+                "version_or_release": "Mutable develop README and farmOS.js documentation",
+                "locator_or_symbol": "README develop/deploy and dated 2.x description; farmOS.js experimental warning and LWW model"
+              },
+              {
+                "id": "E24",
+                "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/#use-of-color",
+                "version_or_release": "W3C Recommendation 2024-12-12",
+                "locator_or_symbol": "Web-content scope; SC 1.4.1, Level A"
+              }
+            ]
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "meaning": "All consequential claims in this bounded final and its revision dependencies were evaluated. Complete coverage is not correctness or deployment certification."
+      },
+      "plan_dispositions": [
+        {
+          "clause": "P1",
+          "exact_text": "Link propagation batches and bench locations to projected readiness windows and customer allocations.",
+          "authored_disposition": "correction",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+            "lines": "19"
+          },
+          "independent_assessment": "Retains the relationship. Label is redundant against P3; only clarification is justified. Lineage/splits/events stay enhancements."
+        },
+        {
+          "clause": "P2",
+          "exact_text": "Record tray moves and fulfillment changes in a phone-friendly workflow that can coexist with paper tags during the pilot.",
+          "authored_disposition": "already-covered",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+            "lines": "20"
+          },
+          "independent_assessment": "Paper tags/calendar, phone moves and fulfillment are retained; scan and sync refinements are conditional."
+        },
+        {
+          "clause": "P3",
+          "exact_text": "Show uncertain readiness and quantity changes without representing estimates as firm promises.",
+          "authored_disposition": "already-covered",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+            "lines": "21"
+          },
+          "independent_assessment": "Correctly preserves uncertainty and tentative-vs-confirmed distinctions; formula is a candidate, with units/hold policy open."
+        },
+        {
+          "clause": "P4",
+          "exact_text": "Restrict customer contact and delivery details to staff who need them for fulfillment.",
+          "authored_disposition": "already-covered",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+            "lines": "22,43,64"
+          },
+          "independent_assessment": "Need-to-know role boundary retained. ODK universal-download rationale is materially wrong (N1-M01), not a reason to reject P4."
+        },
+        {
+          "clause": "P5",
+          "exact_text": "The owner of available-quantity adjustments and the approval for substitutions remain nursery decisions.",
+          "authored_disposition": "user decision",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+            "lines": "23"
+          },
+          "independent_assessment": "Authority and substitution choices are not adopted; hybrid observation/acceptance/fulfillment split remains an option."
+        },
+        {
+          "clause": "P6",
+          "exact_text": "Wholesale access and the handling of missed seasonal windows are not yet specified.",
+          "authored_disposition": "user decision",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+            "lines": "24"
+          },
+          "independent_assessment": "Wholesale deferred and missed-window choices preserved; no silent automatic customer action."
+        }
+      ],
+      "criticism_adjudications": [
+        {
+          "criticism": "M1",
+          "independent_disposition": "partly reject/partly accept",
+          "reasoning": "The universal-download premise is materially wrong for the released current option. The string-backed property caution and warning that in-form choice filters do not prevent download are supported. The final accepted the entire criticism and carries N1-M01.",
+          "critic": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/critique.md",
+            "lines": "18-22"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+            "lines": "64,76"
+          },
+          "primary_evidence": [
+            {
+              "id": "E02",
+              "url": "https://docs.getodk.org/central-entities/",
+              "version_or_release": "Rolling documentation checked 2026-10-09; server filtering corroborated by E03",
+              "locator_or_symbol": "Important limitations; Entity List Access; Filter by property; Managing Entity conflicts"
+            },
+            {
+              "id": "E03",
+              "url": "https://forum.getodk.org/t/odk-central-v2026-2-entities-filtering-and-web-forms-as-default/58254",
+              "version_or_release": "Central v2026.2.0, released 2026-07-03",
+              "locator_or_symbol": "Official announcement opening and Entity filtering sections; GitHub release tag"
+            },
+            {
+              "id": "E04",
+              "url": "https://docs.getodk.org/central-users/",
+              "version_or_release": "Rolling documentation",
+              "locator_or_symbol": "Web User Roles; Managing App Users; App User Properties"
+            }
+          ]
+        },
+        {
+          "criticism": "P1-P6 audit",
+          "independent_disposition": "retain with minor correction-label reservation",
+          "reasoning": "Each clause is preserved and decisions remain open; P1 correction necessity is overstated because P3 already supplies the forecast/promise constraint. No clause warrants rejection.",
+          "critic": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/critique.md",
+            "lines": "24-35"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+            "lines": "19-26,65"
+          },
+          "primary_evidence": []
+        },
+        {
+          "criticism": "m1 Sales Order voucher",
+          "independent_disposition": "accept as conditional applicability check",
+          "reasoning": "The restriction is real, municipal allocation mapping is unknown, and final explicitly adds the case without force-fitting the process.",
+          "critic": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/critique.md",
+            "lines": "39-41"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+            "lines": "50,66,81"
+          },
+          "primary_evidence": [
+            {
+              "id": "E14",
+              "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.py",
+              "version_or_release": "v15.121.3; 26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+              "locator_or_symbol": "validate_reservation_based_on_serial_and_batch; validate_stock_reservation_settings; get_available_qty_to_reserve; batch.py get_batch_qty/get_batches"
+            }
+          ]
+        },
+        {
+          "criticism": "m2 WCAG scope",
+          "independent_disposition": "accept",
+          "reasoning": "The final distinguishes web conformance from native/print usability. The broader color-vision requirement stays relevant.",
+          "critic": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/critique.md",
+            "lines": "43-45"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+            "lines": "67,80"
+          },
+          "primary_evidence": [
+            {
+              "id": "E24",
+              "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/#use-of-color",
+              "version_or_release": "W3C Recommendation 2024-12-12",
+              "locator_or_symbol": "Web-content scope; SC 1.4.1, Level A"
+            }
+          ]
+        },
+        {
+          "criticism": "m3 older Field Kit v1 source",
+          "independent_disposition": "accept omission for provenance",
+          "reasoning": "The untraceable historical guide is dropped; the useful alternative and supported compatibility uncertainty survive. This does not independently establish that the historical sentence was false.",
+          "critic": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/critique.md",
+            "lines": "47-49"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+            "lines": "52,68"
+          },
+          "primary_evidence": [
+            {
+              "id": "E23",
+              "url": "https://github.com/farmOS/field-kit",
+              "version_or_release": "Mutable develop README and farmOS.js documentation",
+              "locator_or_symbol": "README develop/deploy and dated 2.x description; farmOS.js experimental warning and LWW model"
+            }
+          ]
+        },
+        {
+          "criticism": "m4 negative-stock caveat",
+          "independent_disposition": "retain narrow caveat",
+          "reasoning": "The guarded branch and valuation-adjustment exception are real; final does not claim a whole-system invariant or executed sandbox test.",
+          "critic": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/critique.md",
+            "lines": "51-53"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+            "lines": "69,81"
+          },
+          "primary_evidence": [
+            {
+              "id": "E15",
+              "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/serial_and_batch_bundle/serial_and_batch_bundle.py",
+              "version_or_release": "v15.121.3 pinned commit",
+              "locator_or_symbol": "set_incoming_rate_for_outward_transaction lines 684-744; validate_negative_batch and is_stock_reco_for_valuation_adjustment lines 757-778"
+            }
+          ]
+        },
+        {
+          "criticism": "other checks",
+          "independent_disposition": "accept within stated bounds",
+          "reasoning": "Historical Collect fix/test and ERP actual-stock behavior were checked independently. farmOS.js warning is a library/doc scope observation, not proven Field Kit incompatibility.",
+          "critic": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/critique.md",
+            "lines": "55-64"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+            "lines": "70"
+          },
+          "primary_evidence": [
+            {
+              "id": "E10",
+              "url": "https://github.com/getodk/collect/issues/4589",
+              "version_or_release": "Issue 4589; merge 12ef1a3f4f2257591cfe912754a44305dd686a2a, 2021-07-07",
+              "locator_or_symbol": "Issue description; PR 4655 merge; EditSavedFormTest.java added"
+            },
+            {
+              "id": "E11",
+              "url": "https://github.com/getodk/collect/releases/tag/v2026.3.5",
+              "version_or_release": "v2026.3.5 published 2026-09-28; 87bf04ec0a94e3dec1abc87db73c8326d8667162",
+              "locator_or_symbol": "SaveFormToDisk.java: updateInstanceDatabase, save/finalization/encryption branch"
+            },
+            {
+              "id": "E14",
+              "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.py",
+              "version_or_release": "v15.121.3; 26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+              "locator_or_symbol": "validate_reservation_based_on_serial_and_batch; validate_stock_reservation_settings; get_available_qty_to_reserve; batch.py get_batch_qty/get_batches"
+            },
+            {
+              "id": "E23",
+              "url": "https://github.com/farmOS/field-kit",
+              "version_or_release": "Mutable develop README and farmOS.js documentation",
+              "locator_or_symbol": "README develop/deploy and dated 2.x description; farmOS.js experimental warning and LWW model"
+            }
+          ]
+        }
+      ],
+      "preservation_coverage": {
+        "complete": true,
+        "remaining_scope": [],
+        "records": [
+          {
+            "finding_family": "tag/variety/batch/location, forecast/count/allocation separation",
+            "source_stage_locators": "discovery 20-65; draft 9-11,21-26,34-38",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "7-9,19-24,32-36"
+            },
+            "disposition": "retained; implementation policy stays conditional"
+          },
+          {
+            "finding_family": "ODK offline gates/conflicts and client/language/tag caveats",
+            "source_stage_locators": "discovery 24,27-30,71-72; draft 42-46",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "43,48,74-76"
+            },
+            "disposition": "retained; critic introduced the material all-download overstatement rather than fixing a preservation loss"
+          },
+          {
+            "finding_family": "ERP reservation actual stock, units, negative paths",
+            "source_stage_locators": "discovery 25,74,105; draft 38,46,83",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "44,50,69-70,81"
+            },
+            "disposition": "retained and municipal Sales Order fit made explicit"
+          },
+          {
+            "finding_family": "farmOS plant/movement/inventory and compatibility alternative",
+            "source_stage_locators": "discovery 26,73,114; draft 47, alternatives 4",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "45,52,82"
+            },
+            "disposition": "alternative and qualification retained; untraceable v1 history intentionally omitted"
+          },
+          {
+            "finding_family": "PWA/paper-first mechanisms and costs",
+            "source_stage_locators": "discovery 69-81; draft alternatives 1-5",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "11,40-46,58,84"
+            },
+            "disposition": "retained; no fabricated budget fit"
+          },
+          {
+            "finding_family": "count-owner/partial fulfillment/substitution/window/wholesale choices",
+            "source_stage_locators": "discovery 83-87; draft 25-26, unknowns",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "23-24,54-58,79"
+            },
+            "disposition": "retained; no product decision promoted"
+          },
+          {
+            "finding_family": "customer PII aliases and all output/cache access paths",
+            "source_stage_locators": "discovery 89-94; draft 24,82",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "22,58,64,83"
+            },
+            "disposition": "minimization and tests retained; new universal ODK premise is wrong"
+          },
+          {
+            "finding_family": "non-color/language adoption constraints",
+            "source_stage_locators": "discovery 30,89-94; draft 23,48,81",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "48,67,80"
+            },
+            "disposition": "substance retained in tests; explicit visual-design sentence less direct (minor)"
+          },
+          {
+            "finding_family": "historical retry fix and release applicability",
+            "source_stage_locators": "discovery 29,112; draft 45,88",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "70,90,94"
+            },
+            "disposition": "retained, with historical/non-execution limits"
+          },
+          {
+            "finding_family": "nine original discriminating test families",
+            "source_stage_locators": "discovery 96-108; draft 76-84",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "72-86"
+            },
+            "disposition": "all retained in eleven proposed checks, with ODK types/privacy and current Field Kit pairing added"
+          }
+        ],
+        "qualification": "Complete means all substantive finding families and options were traced through the full authored texts. It does not mean every sentence was copied or every criticism was right."
+      },
+      "validation_coverage": {
+        "proposed": [
+          {
+            "name": "disconnected walkthrough",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "74"
+            },
+            "discriminating_oracle": "records survive restart and retain pending/failed/synced distinctions; retries have one effect",
+            "executed": false
+          },
+          {
+            "name": "two-device contention",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "75"
+            },
+            "discriminating_oracle": "ten units and two six-unit requests do not become twelve silently confirmed units; both requests survive either reconnect order",
+            "executed": false
+          },
+          {
+            "name": "ODK boundary/types",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "76"
+            },
+            "discriminating_oracle": "inspect actual downloaded data by role and numeric conversion; proposed test still needs the exception in N1-M01",
+            "executed": false
+          },
+          {
+            "name": "forecast/cohort",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "77"
+            },
+            "discriminating_oracle": "forecast/split does not create allocatable stock; accepted-count rule is the oracle",
+            "executed": false
+          },
+          {
+            "name": "tag/order/fulfillment reconciliation",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "78"
+            },
+            "discriminating_oracle": "physical identity, reservation, picked/short/damaged and remaining quantities balance once",
+            "executed": false
+          },
+          {
+            "name": "missed-window safety",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "79"
+            },
+            "discriminating_oracle": "no unapproved notification/substitution/cancellation/reallocation; chosen policy tested later",
+            "executed": false
+          },
+          {
+            "name": "accessibility/language",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "80"
+            },
+            "discriminating_oracle": "actual coordinator/workers understand status; web criterion separated from print/native trials",
+            "executed": false
+          },
+          {
+            "name": "ERP comparator",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "81"
+            },
+            "discriminating_oracle": "target version/settings/units, household and municipal mapping, partial/excess, permissions and negative paths",
+            "executed": false
+          },
+          {
+            "name": "Field Kit pairing",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "82"
+            },
+            "discriminating_oracle": "exact client/server version, sync/conflict/persistence/hosting pairing must be demonstrated",
+            "executed": false
+          },
+          {
+            "name": "privacy roles",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "83"
+            },
+            "discriminating_oracle": "probe forms/lists/links/outputs/notifications/cache and role changes; aliases remain usable",
+            "executed": false
+          },
+          {
+            "name": "budget/operations",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+              "lines": "84"
+            },
+            "discriminating_oracle": "complete startup/season cost and coordinator effort are compared with the actual ceiling",
+            "executed": false
+          }
+        ],
+        "executed_runtime_witnesses": [],
+        "independent_oracle_assessment": "The proposals target specific unsafe outcomes and human/physical reconciliation. No executed witness exists to grade for release applicability or independent oracle. Historical repository tests and source reading are not runtime execution. This evaluator also ran no candidate software."
+      },
+      "grade_limits": [
+        "Scientific artifact grade only; delivery=true is supplied by the exact map, not inferred from Goal claims.",
+        "No software/runtime/vendor/site/user experiment was executed, and none is required by the brief when unavailable.",
+        "No procurement, accessibility conformance, security deployment or $5,500 fit is certified.",
+        "FAIL here reflects a concrete applicability error, not citation counts, candidate length, or disagreement with the critic."
+      ]
+    },
+    "N2": {
+      "actual_arm": "control",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+      "final_sha256": "7cbe83c55c386774971bcc301080a465763e24a04e0e48802b684adf658d850c",
+      "grade": "PASS_WITH_LIMITATIONS",
+      "material_findings": [],
+      "minor_findings": [
+        {
+          "id": "N2-m01",
+          "type": "DISPOSITION_PRECISION",
+          "severity": "low",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+            "lines": "28-38"
+          },
+          "original_obligation": "O4",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I03/plan-root-only.md",
+              "lines": "P1,P3"
+            }
+          ],
+          "reasoning": "The title says correct the quantity model while the body properly says the relationship is already covered. Forecast/promise separation is already required by P3. Extra model/audit details are implementation interpretation, not evidence that the original P1 is materially false."
+        },
+        {
+          "id": "N2-m02",
+          "type": "SOURCE_ATTRIBUTION",
+          "severity": "low",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+            "lines": "131"
+          },
+          "original_obligation": "O2",
+          "primary_evidence": [
+            {
+              "id": "E13",
+              "url": "https://docs.frappe.io/erpnext/batch",
+              "version_or_release": "Rolling docs with v15 negative-stock statement",
+              "locator_or_symbol": "Batch requirements, filtering, split/move; Stock Reservation prerequisites"
+            },
+            {
+              "id": "E16",
+              "url": "https://github.com/frappe/erpnext/blob/v15.122.0/erpnext/stock/doctype/batch/batch.json",
+              "version_or_release": "v15.122.0, published 2026-10-07; bfd8100d42162048248b7b947f2e21fdf7999a91",
+              "locator_or_symbol": "batch_id/item/parent_batch/batch_qty/stock_uom; batch.py recalculate_batch_qty/split_batch; allow_negative_stock_for_batch"
+            }
+          ],
+          "reasoning": "The per-batch negative-stock override is supported by the pinned Batch schema and bundle helper, rather than the rolling Batch guide’s blanket v15 sentence. The claim is substantively correct and both source families are supplied; attribution should be read with that distinction."
+        },
+        {
+          "id": "N2-m03",
+          "type": "PROCUREMENT_QUALIFICATION",
+          "severity": "low",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+            "lines": "121-123"
+          },
+          "original_obligation": [
+            "O2",
+            "O5"
+          ],
+          "primary_evidence": [
+            {
+              "id": "E27",
+              "url": "https://spriggo.tech/",
+              "version_or_release": "Primary vendor search-index result, current page text extraction empty",
+              "locator_or_symbol": "90 days free, then $300/month; features search result"
+            }
+          ],
+          "reasoning": "The advertised dollar symbol has no independently confirmed currency here, and the trial affects a first-year invoice. The $1,900 residual assumes the same currency and twelve paid months. The final expressly withholds budget fit and requests a quote, so this is an illustrative-arithmetic caveat rather than a material procurement recommendation."
+        }
+      ],
+      "unresolved": [
+        {
+          "kind": "external_or_user_input",
+          "scope": "Target phones/OS, tag quality, staff language/accessibility and workflow timings",
+          "scientific_effect": "Honest planning limitation; not an unperformed required source review or an assumed deployment result."
+        },
+        {
+          "kind": "external_or_user_input",
+          "scope": "Nursery units, owner authority, count/staleness thresholds and substitutions",
+          "scientific_effect": "Honest planning limitation; not an unperformed required source review or an assumed deployment result."
+        },
+        {
+          "kind": "external_or_user_input",
+          "scope": "Missed readiness versus entire season outcomes and future wholesale need",
+          "scientific_effect": "Honest planning limitation; not an unperformed required source review or an assumed deployment result."
+        },
+        {
+          "kind": "external_or_user_input",
+          "scope": "Vendor quotes/currency/tax/trial/seat/device/export/support terms and budget interpretation",
+          "scientific_effect": "Honest planning limitation; not an unperformed required source review or an assumed deployment result."
+        },
+        {
+          "kind": "external_or_user_input",
+          "scope": "Selected product/backend/version and actual privacy/offline/migration execution",
+          "scientific_effect": "Honest planning limitation; not an unperformed required source review or an assumed deployment result."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "name": "Original obligations and constraints",
+          "coverage": "Complete: O1-O6 and all explicit brief constraints examined against the entire final.",
+          "judgment": "No material obligation/constraint omission found. Phone/paper pilot, staffing/budget, germination uncertainty, PII, accessibility/language and open policies are preserved.",
+          "candidate_and_register_locators": "final 9-113,158-196; obligation/constraint registers",
+          "evidence": [
+            {
+              "id": "E01",
+              "url": "https://docs.getodk.org/collect-forms/",
+              "version_or_release": "Rolling documentation; edits introduced Collect 2025.2 / Central 2025.1.4",
+              "locator_or_symbol": "Downloading forms; Sending finalized forms; Editing finalized or sent forms"
+            },
+            {
+              "id": "E16",
+              "url": "https://github.com/frappe/erpnext/blob/v15.122.0/erpnext/stock/doctype/batch/batch.json",
+              "version_or_release": "v15.122.0, published 2026-10-07; bfd8100d42162048248b7b947f2e21fdf7999a91",
+              "locator_or_symbol": "batch_id/item/parent_batch/batch_qty/stock_uom; batch.py recalculate_batch_qty/split_batch; allow_negative_stock_for_batch"
+            },
+            {
+              "id": "E20",
+              "url": "https://rxdb.info/replication.html",
+              "version_or_release": "Rolling, unpinned package documentation",
+              "locator_or_symbol": "Checkpoint iteration; deterministic sort; Error handling; Security; configuration example"
+            },
+            {
+              "id": "E25",
+              "url": "https://www.growflo.com/mobile-commerce/mobile-inventory/",
+              "version_or_release": "Live vendor page, no product pin",
+              "locator_or_symbol": "Works Offline; barcode scanning; stock checks/moves; ERP sync"
+            },
+            {
+              "id": "E26",
+              "url": "https://atlascore.cloud/suite/tally",
+              "version_or_release": "Live vendor page, no product pin",
+              "locator_or_symbol": "Offline mode; dispositions; permission-gated capabilities; Android/iPhone; submitting"
+            },
+            {
+              "id": "E27",
+              "url": "https://spriggo.tech/",
+              "version_or_release": "Primary vendor search-index result, current page text extraction empty",
+              "locator_or_symbol": "90 days free, then $300/month; features search result"
+            }
+          ]
+        },
+        {
+          "axis": 2,
+          "name": "Consequential source facts/defaults/types/release/domain applicability",
+          "coverage": "Complete: all final claim families Q01-Q17 and material revision dependencies independently checked.",
+          "judgment": "No material factual defect found. Release/schema, explicit defaults/exceptions, role boundaries and sync limits are correctly scoped. Attribution of per-batch override and nominal vendor-price arithmetic have minor qualifications.",
+          "candidate_and_register_locators": "N2-Q01..Q17; minor findings",
+          "evidence": [
+            {
+              "id": "E01",
+              "url": "https://docs.getodk.org/collect-forms/",
+              "version_or_release": "Rolling documentation; edits introduced Collect 2025.2 / Central 2025.1.4",
+              "locator_or_symbol": "Downloading forms; Sending finalized forms; Editing finalized or sent forms"
+            },
+            {
+              "id": "E04",
+              "url": "https://docs.getodk.org/central-users/",
+              "version_or_release": "Rolling documentation",
+              "locator_or_symbol": "Web User Roles; Managing App Users; App User Properties"
+            },
+            {
+              "id": "E09",
+              "url": "https://docs.getodk.org/central-encryption/",
+              "version_or_release": "Rolling documentation with explicitly historical v0.6 limitations",
+              "locator_or_symbol": "Encryption limitations; self-supplied and project-managed modes"
+            },
+            {
+              "id": "E12",
+              "url": "https://github.com/getodk/collect/issues/1703",
+              "version_or_release": "Historical comments 2020-09-14 and 2021-10-18; related issue 4489",
+              "locator_or_symbol": "issuecomment-692369777; issuecomment-945531458; issue 4489"
+            },
+            {
+              "id": "E16",
+              "url": "https://github.com/frappe/erpnext/blob/v15.122.0/erpnext/stock/doctype/batch/batch.json",
+              "version_or_release": "v15.122.0, published 2026-10-07; bfd8100d42162048248b7b947f2e21fdf7999a91",
+              "locator_or_symbol": "batch_id/item/parent_batch/batch_qty/stock_uom; batch.py recalculate_batch_qty/split_batch; allow_negative_stock_for_batch"
+            },
+            {
+              "id": "E18",
+              "url": "https://docs.frappe.io/erpnext/permissions",
+              "version_or_release": "Rolling documentation",
+              "locator_or_symbol": "Roles, permission levels, User Permissions; Customer Add addresses and contacts"
+            },
+            {
+              "id": "E19",
+              "url": "https://github.com/frappe/erpnext/issues/38796",
+              "version_or_release": "Reported v15.6.1; fixes merged 2023-12-17; v15.7.0 released 2023-12-20",
+              "locator_or_symbol": "PR 38754 (0743289925d0866a16373c05cfb81825b58e35ba); backport 38806 (8990c48e7bf1c556ad234756259d991519769e09); v15.7.0 release; test_delivery_note.py"
+            },
+            {
+              "id": "E20",
+              "url": "https://rxdb.info/replication.html",
+              "version_or_release": "Rolling, unpinned package documentation",
+              "locator_or_symbol": "Checkpoint iteration; deterministic sort; Error handling; Security; configuration example"
+            },
+            {
+              "id": "E21",
+              "url": "https://rxdb.info/transactions-conflicts-revisions.html",
+              "version_or_release": "Rolling page updated 2026-10-05; package unpinned",
+              "locator_or_symbol": "Why no transactions; single-document atomic write; defaultConflictHandler.resolve"
+            },
+            {
+              "id": "E25",
+              "url": "https://www.growflo.com/mobile-commerce/mobile-inventory/",
+              "version_or_release": "Live vendor page, no product pin",
+              "locator_or_symbol": "Works Offline; barcode scanning; stock checks/moves; ERP sync"
+            },
+            {
+              "id": "E26",
+              "url": "https://atlascore.cloud/suite/tally",
+              "version_or_release": "Live vendor page, no product pin",
+              "locator_or_symbol": "Offline mode; dispositions; permission-gated capabilities; Android/iPhone; submitting"
+            },
+            {
+              "id": "E27",
+              "url": "https://spriggo.tech/",
+              "version_or_release": "Primary vendor search-index result, current page text extraction empty",
+              "locator_or_symbol": "90 days free, then $300/month; features search result"
+            }
+          ]
+        },
+        {
+          "axis": 3,
+          "name": "Useful unfamiliar discovery and materially different options",
+          "coverage": "Complete: nursery-specific leads and capture/ERP/replication/paper approaches evaluated for meaning, not counted.",
+          "judgment": "Domain-specific leads are useful and preserve advertised-vs-demonstrated distinction; ODK/ERP/custom architecture choices differ materially. No product or budget fit selected.",
+          "candidate_and_register_locators": "discovery 12-42; final 22,57-65,115-145",
+          "evidence": [
+            {
+              "id": "E07",
+              "url": "https://docs.getodk.org/collect-intro/",
+              "version_or_release": "Rolling documentation; candidate source pin v2026.3.5 separately checked",
+              "locator_or_symbol": "Collect overview and device guidance"
+            },
+            {
+              "id": "E16",
+              "url": "https://github.com/frappe/erpnext/blob/v15.122.0/erpnext/stock/doctype/batch/batch.json",
+              "version_or_release": "v15.122.0, published 2026-10-07; bfd8100d42162048248b7b947f2e21fdf7999a91",
+              "locator_or_symbol": "batch_id/item/parent_batch/batch_qty/stock_uom; batch.py recalculate_batch_qty/split_batch; allow_negative_stock_for_batch"
+            },
+            {
+              "id": "E20",
+              "url": "https://rxdb.info/replication.html",
+              "version_or_release": "Rolling, unpinned package documentation",
+              "locator_or_symbol": "Checkpoint iteration; deterministic sort; Error handling; Security; configuration example"
+            },
+            {
+              "id": "E25",
+              "url": "https://www.growflo.com/mobile-commerce/mobile-inventory/",
+              "version_or_release": "Live vendor page, no product pin",
+              "locator_or_symbol": "Works Offline; barcode scanning; stock checks/moves; ERP sync"
+            },
+            {
+              "id": "E26",
+              "url": "https://atlascore.cloud/suite/tally",
+              "version_or_release": "Live vendor page, no product pin",
+              "locator_or_symbol": "Offline mode; dispositions; permission-gated capabilities; Android/iPhone; submitting"
+            },
+            {
+              "id": "E27",
+              "url": "https://spriggo.tech/",
+              "version_or_release": "Primary vendor search-index result, current page text extraction empty",
+              "locator_or_symbol": "90 days free, then $300/month; features search result"
+            }
+          ]
+        },
+        {
+          "axis": 4,
+          "name": "Exact P-clause dispositions",
+          "coverage": "Complete: every exact P1-P6 clause and all proposed treatments reviewed.",
+          "judgment": "Retains valid clauses and decisions. Rejects only unsupported assumptions, not plan scope. P1 correction title is redundant (minor); lineage/audit requirements are interpretation rather than proof the thin plan was wrong.",
+          "candidate_and_register_locators": "final 24-113; plan_dispositions",
+          "evidence": [
+            {
+              "id": "E01",
+              "url": "https://docs.getodk.org/collect-forms/",
+              "version_or_release": "Rolling documentation; edits introduced Collect 2025.2 / Central 2025.1.4",
+              "locator_or_symbol": "Downloading forms; Sending finalized forms; Editing finalized or sent forms"
+            },
+            {
+              "id": "E16",
+              "url": "https://github.com/frappe/erpnext/blob/v15.122.0/erpnext/stock/doctype/batch/batch.json",
+              "version_or_release": "v15.122.0, published 2026-10-07; bfd8100d42162048248b7b947f2e21fdf7999a91",
+              "locator_or_symbol": "batch_id/item/parent_batch/batch_qty/stock_uom; batch.py recalculate_batch_qty/split_batch; allow_negative_stock_for_batch"
+            },
+            {
+              "id": "E20",
+              "url": "https://rxdb.info/replication.html",
+              "version_or_release": "Rolling, unpinned package documentation",
+              "locator_or_symbol": "Checkpoint iteration; deterministic sort; Error handling; Security; configuration example"
+            }
+          ]
+        },
+        {
+          "axis": 5,
+          "name": "Draft/critique/final preservation and criticism adjudication",
+          "coverage": "Complete: discovery, complete draft including its post-critique paragraphs, external critique, and full reviser final traced.",
+          "judgment": "No material preservation loss. Specific ERP fix is corrected and bounded. M2/M3 are useful clarifications whose critic material severity is not automatically endorsed; role options/uncertainty and all test families survive.",
+          "candidate_and_register_locators": "preservation_coverage and criticism_adjudications; final 147-156",
+          "evidence": [
+            {
+              "id": "E01",
+              "url": "https://docs.getodk.org/collect-forms/",
+              "version_or_release": "Rolling documentation; edits introduced Collect 2025.2 / Central 2025.1.4",
+              "locator_or_symbol": "Downloading forms; Sending finalized forms; Editing finalized or sent forms"
+            },
+            {
+              "id": "E09",
+              "url": "https://docs.getodk.org/central-encryption/",
+              "version_or_release": "Rolling documentation with explicitly historical v0.6 limitations",
+              "locator_or_symbol": "Encryption limitations; self-supplied and project-managed modes"
+            },
+            {
+              "id": "E12",
+              "url": "https://github.com/getodk/collect/issues/1703",
+              "version_or_release": "Historical comments 2020-09-14 and 2021-10-18; related issue 4489",
+              "locator_or_symbol": "issuecomment-692369777; issuecomment-945531458; issue 4489"
+            },
+            {
+              "id": "E16",
+              "url": "https://github.com/frappe/erpnext/blob/v15.122.0/erpnext/stock/doctype/batch/batch.json",
+              "version_or_release": "v15.122.0, published 2026-10-07; bfd8100d42162048248b7b947f2e21fdf7999a91",
+              "locator_or_symbol": "batch_id/item/parent_batch/batch_qty/stock_uom; batch.py recalculate_batch_qty/split_batch; allow_negative_stock_for_batch"
+            },
+            {
+              "id": "E19",
+              "url": "https://github.com/frappe/erpnext/issues/38796",
+              "version_or_release": "Reported v15.6.1; fixes merged 2023-12-17; v15.7.0 released 2023-12-20",
+              "locator_or_symbol": "PR 38754 (0743289925d0866a16373c05cfb81825b58e35ba); backport 38806 (8990c48e7bf1c556ad234756259d991519769e09); v15.7.0 release; test_delivery_note.py"
+            },
+            {
+              "id": "E20",
+              "url": "https://rxdb.info/replication.html",
+              "version_or_release": "Rolling, unpinned package documentation",
+              "locator_or_symbol": "Checkpoint iteration; deterministic sort; Error handling; Security; configuration example"
+            },
+            {
+              "id": "E21",
+              "url": "https://rxdb.info/transactions-conflicts-revisions.html",
+              "version_or_release": "Rolling page updated 2026-10-05; package unpinned",
+              "locator_or_symbol": "Why no transactions; single-document atomic write; defaultConflictHandler.resolve"
+            }
+          ]
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed versus executed validation",
+          "coverage": "Complete: all fourteen final proposals and original twelve families reviewed with oracles and applicability.",
+          "judgment": "No unexecuted test called proven. Lost-response, receipt/rejection, collisions, skew/catch-up, forecast/physical ledger and role probes are discriminating; quantitative human thresholds appropriately remain staff decisions.",
+          "candidate_and_register_locators": "final 158-175,196; validation_coverage",
+          "evidence": [
+            {
+              "id": "E01",
+              "url": "https://docs.getodk.org/collect-forms/",
+              "version_or_release": "Rolling documentation; edits introduced Collect 2025.2 / Central 2025.1.4",
+              "locator_or_symbol": "Downloading forms; Sending finalized forms; Editing finalized or sent forms"
+            },
+            {
+              "id": "E19",
+              "url": "https://github.com/frappe/erpnext/issues/38796",
+              "version_or_release": "Reported v15.6.1; fixes merged 2023-12-17; v15.7.0 released 2023-12-20",
+              "locator_or_symbol": "PR 38754 (0743289925d0866a16373c05cfb81825b58e35ba); backport 38806 (8990c48e7bf1c556ad234756259d991519769e09); v15.7.0 release; test_delivery_note.py"
+            },
+            {
+              "id": "E20",
+              "url": "https://rxdb.info/replication.html",
+              "version_or_release": "Rolling, unpinned package documentation",
+              "locator_or_symbol": "Checkpoint iteration; deterministic sort; Error handling; Security; configuration example"
+            },
+            {
+              "id": "E21",
+              "url": "https://rxdb.info/transactions-conflicts-revisions.html",
+              "version_or_release": "Rolling page updated 2026-10-05; package unpinned",
+              "locator_or_symbol": "Why no transactions; single-document atomic write; defaultConflictHandler.resolve"
+            }
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "id": "N2-Q01",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "9-20,46-55"
+            },
+            "claim": "Separate local capture, transport receipt, reconciled stock and promise authority.",
+            "independent_judgment": "Supported design inference and a useful explicit lifecycle. It does not incorrectly assign business reconciliation to ODK. Physical quotas/single-writer alternatives remain possible; local observations are not discarded.",
+            "primary_evidence": [
+              {
+                "id": "E01",
+                "url": "https://docs.getodk.org/collect-forms/",
+                "version_or_release": "Rolling documentation; edits introduced Collect 2025.2 / Central 2025.1.4",
+                "locator_or_symbol": "Downloading forms; Sending finalized forms; Editing finalized or sent forms"
+              },
+              {
+                "id": "E05",
+                "url": "https://docs.getodk.org/central-submissions/",
+                "version_or_release": "Rolling, Central-version-specific documentation",
+                "locator_or_symbol": "Allowing web form users to work offline; Public Access Links; exports"
+              },
+              {
+                "id": "E20",
+                "url": "https://rxdb.info/replication.html",
+                "version_or_release": "Rolling, unpinned package documentation",
+                "locator_or_symbol": "Checkpoint iteration; deterministic sort; Error handling; Security; configuration example"
+              },
+              {
+                "id": "E21",
+                "url": "https://rxdb.info/transactions-conflicts-revisions.html",
+                "version_or_release": "Rolling page updated 2026-10-05; package unpinned",
+                "locator_or_symbol": "Why no transactions; single-document atomic write; defaultConflictHandler.resolve"
+              }
+            ]
+          },
+          {
+            "id": "N2-Q02",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "60,127,175"
+            },
+            "claim": "Collect offline finalize/Ready-to-send/Sent behavior and opt-in finalized/sent editing differ from web modes.",
+            "independent_judgment": "Supported. The editing default is stated accurately; web/Enketo differences are scoped and no phone deployment is proven.",
+            "primary_evidence": [
+              {
+                "id": "E01",
+                "url": "https://docs.getodk.org/collect-forms/",
+                "version_or_release": "Rolling documentation; edits introduced Collect 2025.2 / Central 2025.1.4",
+                "locator_or_symbol": "Downloading forms; Sending finalized forms; Editing finalized or sent forms"
+              },
+              {
+                "id": "E05",
+                "url": "https://docs.getodk.org/central-submissions/",
+                "version_or_release": "Rolling, Central-version-specific documentation",
+                "locator_or_symbol": "Allowing web form users to work offline; Public Access Links; exports"
+              },
+              {
+                "id": "E07",
+                "url": "https://docs.getodk.org/collect-intro/",
+                "version_or_release": "Rolling documentation; candidate source pin v2026.3.5 separately checked",
+                "locator_or_symbol": "Collect overview and device guidance"
+              }
+            ]
+          },
+          {
+            "id": "N2-Q03",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "85,170"
+            },
+            "claim": "Data Collectors lack submission browsing, but authorized form data can expose Entities.",
+            "independent_judgment": "Supported form-mediated access warning. Unlike N1, the final makes no unconditional all-Entity-download claim. PII minimization remains useful even when server row filters exist.",
+            "primary_evidence": [
+              {
+                "id": "E04",
+                "url": "https://docs.getodk.org/central-users/",
+                "version_or_release": "Rolling documentation",
+                "locator_or_symbol": "Web User Roles; Managing App Users; App User Properties"
+              },
+              {
+                "id": "E02",
+                "url": "https://docs.getodk.org/central-entities/",
+                "version_or_release": "Rolling documentation checked 2026-10-09; server filtering corroborated by E03",
+                "locator_or_symbol": "Important limitations; Entity List Access; Filter by property; Managing Entity conflicts"
+              },
+              {
+                "id": "E03",
+                "url": "https://forum.getodk.org/t/odk-central-v2026-2-entities-filtering-and-web-forms-as-default/58254",
+                "version_or_release": "Central v2026.2.0, released 2026-07-03",
+                "locator_or_symbol": "Official announcement opening and Entity filtering sections; GitHub release tag"
+              }
+            ]
+          },
+          {
+            "id": "N2-Q04",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "87,152,175"
+            },
+            "claim": "Encryption is optional, version-sensitive and has passphrase, local-data, retroactivity and export consequences.",
+            "independent_judgment": "Supported conditional caveat. No claim that enabling encryption fulfills all privacy controls, and historical v0.6 wording is explicitly qualified.",
+            "primary_evidence": [
+              {
+                "id": "E09",
+                "url": "https://docs.getodk.org/central-encryption/",
+                "version_or_release": "Rolling documentation with explicitly historical v0.6 limitations",
+                "locator_or_symbol": "Encryption limitations; self-supplied and project-managed modes"
+              }
+            ]
+          },
+          {
+            "id": "N2-Q05",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "34,38,131"
+            },
+            "claim": "ERPNext v15.122.0 batch schema has identity, Item/parent links, Float stock balance and item-derived UOM.",
+            "independent_judgment": "Pinned release/schema/code confirm the fields and split/recalculation patterns. The final avoids converting ERP stock into forecast germination or asserting fractional seedlings.",
+            "primary_evidence": [
+              {
+                "id": "E16",
+                "url": "https://github.com/frappe/erpnext/blob/v15.122.0/erpnext/stock/doctype/batch/batch.json",
+                "version_or_release": "v15.122.0, published 2026-10-07; bfd8100d42162048248b7b947f2e21fdf7999a91",
+                "locator_or_symbol": "batch_id/item/parent_batch/batch_qty/stock_uom; batch.py recalculate_batch_qty/split_batch; allow_negative_stock_for_batch"
+              },
+              {
+                "id": "E17",
+                "url": "https://docs.frappe.io/erpnext/uom",
+                "version_or_release": "Rolling documentation",
+                "locator_or_symbol": "Must be Whole Number; Stock Settings Default Stock UOM; Item Barcodes; Stock Reconciliation Scan Mode"
+              }
+            ]
+          },
+          {
+            "id": "N2-Q06",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "131"
+            },
+            "claim": "Version 15 stock restrictions have a per-batch negative-stock override with valuation risk.",
+            "independent_judgment": "Substance supported by the pinned schema and bundle helper. The rolling Batch guide itself does not document that override, so its attribution to documentation is imprecise; see N2-m02. No blanket negative-stock safety guarantee is made.",
+            "primary_evidence": [
+              {
+                "id": "E13",
+                "url": "https://docs.frappe.io/erpnext/batch",
+                "version_or_release": "Rolling docs with v15 negative-stock statement",
+                "locator_or_symbol": "Batch requirements, filtering, split/move; Stock Reservation prerequisites"
+              },
+              {
+                "id": "E16",
+                "url": "https://github.com/frappe/erpnext/blob/v15.122.0/erpnext/stock/doctype/batch/batch.json",
+                "version_or_release": "v15.122.0, published 2026-10-07; bfd8100d42162048248b7b947f2e21fdf7999a91",
+                "locator_or_symbol": "batch_id/item/parent_batch/batch_qty/stock_uom; batch.py recalculate_batch_qty/split_batch; allow_negative_stock_for_batch"
+              }
+            ]
+          },
+          {
+            "id": "N2-Q07",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "131,170"
+            },
+            "claim": "Role, DocType, field and user permissions require explicit address-path testing.",
+            "independent_judgment": "Supported. Permission levels/default and linked contact/address mechanisms were independently checked; source features are not mistaken for tested configuration.",
+            "primary_evidence": [
+              {
+                "id": "E18",
+                "url": "https://docs.frappe.io/erpnext/permissions",
+                "version_or_release": "Rolling documentation",
+                "locator_or_symbol": "Roles, permission levels, User Permissions; Customer Add addresses and contacts"
+              }
+            ]
+          },
+          {
+            "id": "N2-Q08",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "137-139,151,166"
+            },
+            "claim": "RxDB needs reconnect catch-up, deterministic checkpoints, duplicate handling and untrusted-clock safeguards.",
+            "independent_judgment": "Supported as conditional RxDB architecture evidence. Server sequence is a proposed design choice, not an asserted universal requirement or selected library.",
+            "primary_evidence": [
+              {
+                "id": "E20",
+                "url": "https://rxdb.info/replication.html",
+                "version_or_release": "Rolling, unpinned package documentation",
+                "locator_or_symbol": "Checkpoint iteration; deterministic sort; Error handling; Security; configuration example"
+              }
+            ]
+          },
+          {
+            "id": "N2-Q09",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "137,139"
+            },
+            "claim": "Default master-preserving conflicts and lack of cross-client ACID transactions warn against offline shared mutable quantity; documented values are defaults/examples.",
+            "independent_judgment": "Supported, with push 5/pull 10 treated as examples rather than deployment limits. Package pin and backend proof are expressly deferred if adopted.",
+            "primary_evidence": [
+              {
+                "id": "E20",
+                "url": "https://rxdb.info/replication.html",
+                "version_or_release": "Rolling, unpinned package documentation",
+                "locator_or_symbol": "Checkpoint iteration; deterministic sort; Error handling; Security; configuration example"
+              },
+              {
+                "id": "E21",
+                "url": "https://rxdb.info/transactions-conflicts-revisions.html",
+                "version_or_release": "Rolling page updated 2026-10-05; package unpinned",
+                "locator_or_symbol": "Why no transactions; single-document atomic write; defaultConflictHandler.resolve"
+              }
+            ]
+          },
+          {
+            "id": "N2-Q10",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "143"
+            },
+            "claim": "Collect 1703/4489 history supports queue/error states but does not establish every upload fix shipped.",
+            "independent_judgment": "Independent issue/comment retrieval confirms the narrow chronology and the issue-vs-PR distinction. This is meaningful O3 coverage even without a current nursery runtime.",
+            "primary_evidence": [
+              {
+                "id": "E12",
+                "url": "https://github.com/getodk/collect/issues/1703",
+                "version_or_release": "Historical comments 2020-09-14 and 2021-10-18; related issue 4489",
+                "locator_or_symbol": "issuecomment-692369777; issuecomment-945531458; issue 4489"
+              }
+            ]
+          },
+          {
+            "id": "N2-Q11",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "145,149"
+            },
+            "claim": "ERPNext 38796 -> 38754 -> 38806 -> v15.7.0 is a verified specific fix/backport chain.",
+            "independent_judgment": "Supported release history. The separate SCR cancellation fix is kept distinct; actual nursery migration safety is not claimed. Added test code is historical repository evidence, not execution by the author or evaluator.",
+            "primary_evidence": [
+              {
+                "id": "E19",
+                "url": "https://github.com/frappe/erpnext/issues/38796",
+                "version_or_release": "Reported v15.6.1; fixes merged 2023-12-17; v15.7.0 released 2023-12-20",
+                "locator_or_symbol": "PR 38754 (0743289925d0866a16373c05cfb81825b58e35ba); backport 38806 (8990c48e7bf1c556ad234756259d991519769e09); v15.7.0 release; test_delivery_note.py"
+              }
+            ]
+          },
+          {
+            "id": "N2-Q12",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "119"
+            },
+            "claim": "Growflo advertises scanning, moves, offline reconnection sync and ERP integration.",
+            "independent_judgment": "The primary vendor page supports the attributed claims. Collision, export, device, access and total price are deliberately unverified.",
+            "primary_evidence": [
+              {
+                "id": "E25",
+                "url": "https://www.growflo.com/mobile-commerce/mobile-inventory/",
+                "version_or_release": "Live vendor page, no product pin",
+                "locator_or_symbol": "Works Offline; barcode scanning; stock checks/moves; ERP sync"
+              }
+            ]
+          },
+          {
+            "id": "N2-Q13",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "120"
+            },
+            "claim": "Atlas Tally advertises Android/offline stocktake/receiving, plant-label scanning, dispositions and separate permissions; iPhone is future.",
+            "independent_judgment": "The primary page supports these claims. Source-level feature advertising does not prove current nursery tag compatibility or actual device access boundaries.",
+            "primary_evidence": [
+              {
+                "id": "E26",
+                "url": "https://atlascore.cloud/suite/tally",
+                "version_or_release": "Live vendor page, no product pin",
+                "locator_or_symbol": "Offline mode; dispositions; permission-gated capabilities; Android/iPhone; submitting"
+              }
+            ]
+          },
+          {
+            "id": "N2-Q14",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "121-123"
+            },
+            "claim": "Spriggo advertises batch lineage/worker/order workflows and 90 days free then $300/month; $3,600 is twelve paid months at that rate.",
+            "independent_judgment": "Primary vendor search evidence supports advertised features/price and coming-next qualifications. Extraction failure is disclosed. The arithmetic is nominal and conservative, not a confirmed first-year quote; currency/trial/tax billing require explicit qualification (N2-m03). No affordability conclusion is made.",
+            "primary_evidence": [
+              {
+                "id": "E27",
+                "url": "https://spriggo.tech/",
+                "version_or_release": "Primary vendor search-index result, current page text extraction empty",
+                "locator_or_symbol": "90 days free, then $300/month; features search result"
+              }
+            ]
+          },
+          {
+            "id": "N2-Q15",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "22,59-65,117-139,173"
+            },
+            "claim": "Nursery vendors, field-form capture, ERP and custom replication are distinct options; no product is selected.",
+            "independent_judgment": "Useful domain-specific discovery with technically different alternatives, conditioned on training/support, wireless, existing tags and complete budget. A paper-compatible pilot/fallback survives even without a separately named paper-only alternative table.",
+            "primary_evidence": [
+              {
+                "id": "E07",
+                "url": "https://docs.getodk.org/collect-intro/",
+                "version_or_release": "Rolling documentation; candidate source pin v2026.3.5 separately checked",
+                "locator_or_symbol": "Collect overview and device guidance"
+              },
+              {
+                "id": "E13",
+                "url": "https://docs.frappe.io/erpnext/batch",
+                "version_or_release": "Rolling docs with v15 negative-stock statement",
+                "locator_or_symbol": "Batch requirements, filtering, split/move; Stock Reservation prerequisites"
+              },
+              {
+                "id": "E20",
+                "url": "https://rxdb.info/replication.html",
+                "version_or_release": "Rolling, unpinned package documentation",
+                "locator_or_symbol": "Checkpoint iteration; deterministic sort; Error handling; Security; configuration example"
+              },
+              {
+                "id": "E25",
+                "url": "https://www.growflo.com/mobile-commerce/mobile-inventory/",
+                "version_or_release": "Live vendor page, no product pin",
+                "locator_or_symbol": "Works Offline; barcode scanning; stock checks/moves; ERP sync"
+              },
+              {
+                "id": "E26",
+                "url": "https://atlascore.cloud/suite/tally",
+                "version_or_release": "Live vendor page, no product pin",
+                "locator_or_symbol": "Offline mode; dispositions; permission-gated capabilities; Android/iPhone; submitting"
+              },
+              {
+                "id": "E27",
+                "url": "https://spriggo.tech/",
+                "version_or_release": "Primary vendor search-index result, current page text extraction empty",
+                "locator_or_symbol": "90 days free, then $300/month; features search result"
+              }
+            ]
+          },
+          {
+            "id": "N2-Q16",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "95-113,179-190"
+            },
+            "claim": "Quantity authority, substitutions, wholesale and missed-window outcomes stay nursery decisions.",
+            "independent_judgment": "No false forced product decision found. A/B/C count-owner choices, customer-consent options and readiness-vs-entire-season distinction remain visible and no automation default is silently adopted.",
+            "primary_evidence": []
+          },
+          {
+            "id": "N2-Q17",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "158-175,196"
+            },
+            "claim": "Fourteen validations are proposed and no runtime witness was available or executed.",
+            "independent_judgment": "Correct separation; delayed/rejected receipt, collisions, skew/catch-up, privacy, units, procurement and old-data reversal cases discriminate against specific failure modes. No exit-code-only proof or unexecuted acceptance claim.",
+            "primary_evidence": [
+              {
+                "id": "E01",
+                "url": "https://docs.getodk.org/collect-forms/",
+                "version_or_release": "Rolling documentation; edits introduced Collect 2025.2 / Central 2025.1.4",
+                "locator_or_symbol": "Downloading forms; Sending finalized forms; Editing finalized or sent forms"
+              },
+              {
+                "id": "E19",
+                "url": "https://github.com/frappe/erpnext/issues/38796",
+                "version_or_release": "Reported v15.6.1; fixes merged 2023-12-17; v15.7.0 released 2023-12-20",
+                "locator_or_symbol": "PR 38754 (0743289925d0866a16373c05cfb81825b58e35ba); backport 38806 (8990c48e7bf1c556ad234756259d991519769e09); v15.7.0 release; test_delivery_note.py"
+              },
+              {
+                "id": "E20",
+                "url": "https://rxdb.info/replication.html",
+                "version_or_release": "Rolling, unpinned package documentation",
+                "locator_or_symbol": "Checkpoint iteration; deterministic sort; Error handling; Security; configuration example"
+              },
+              {
+                "id": "E21",
+                "url": "https://rxdb.info/transactions-conflicts-revisions.html",
+                "version_or_release": "Rolling page updated 2026-10-05; package unpinned",
+                "locator_or_symbol": "Why no transactions; single-document atomic write; defaultConflictHandler.resolve"
+              }
+            ]
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "meaning": "All consequential claims in this bounded final and its revision dependencies were evaluated. Complete coverage is not correctness or deployment certification."
+      },
+      "plan_dispositions": [
+        {
+          "clause": "P1",
+          "exact_text": "Link propagation batches and bench locations to projected readiness windows and customer allocations.",
+          "authored_disposition": "retain/already-covered plus interpretation",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+            "lines": "28-38"
+          },
+          "independent_assessment": "P1 is valid; units and identity refine it. Correction title is redundant, with no supported clause removed."
+        },
+        {
+          "clause": "P2",
+          "exact_text": "Record tray moves and fulfillment changes in a phone-friendly workflow that can coexist with paper tags during the pilot.",
+          "authored_disposition": "retain/already-covered",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+            "lines": "40-65"
+          },
+          "independent_assessment": "Phone/paper coexistence retained. Rejects only the unsupported assumption of globally accepted offline decrements; preserves physical/single-authority alternatives."
+        },
+        {
+          "clause": "P3",
+          "exact_text": "Show uncertain readiness and quantity changes without representing estimates as firm promises.",
+          "authored_disposition": "retain/already-covered",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+            "lines": "67-77"
+          },
+          "independent_assessment": "Forecast/stock/promise distinctions, stale-state warnings and optional non-color/language labels retain P3."
+        },
+        {
+          "clause": "P4",
+          "exact_text": "Restrict customer contact and delivery details to staff who need them for fulfillment.",
+          "authored_disposition": "retain/already-covered",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+            "lines": "79-89"
+          },
+          "independent_assessment": "Minimization and access tests implement P4; encryption remains optional and version-qualified."
+        },
+        {
+          "clause": "P5",
+          "exact_text": "The owner of available-quantity adjustments and the approval for substitutions remain nursery decisions.",
+          "authored_disposition": "user decision",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+            "lines": "91-103"
+          },
+          "independent_assessment": "All A/B/C owner models and substitution choices remain open; proposed default was removed as anchoring."
+        },
+        {
+          "clause": "P6",
+          "exact_text": "Wholesale access and the handling of missed seasonal windows are not yet specified.",
+          "authored_disposition": "retain deferral/user decision",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+            "lines": "105-113"
+          },
+          "independent_assessment": "Wholesale stays later; missed readiness and missed whole season remain separate open nursery policies."
+        }
+      ],
+      "criticism_adjudications": [
+        {
+          "criticism": "M1 ERPNext fix chain",
+          "independent_disposition": "accept substantive correction",
+          "reasoning": "Draft/discovery understated available fix evidence. Final supplies the specific merged/backported/released resolution while preserving independent migration testing and separating the SCR fix.",
+          "critic": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/critique.md",
+            "lines": "16-22"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+            "lines": "145,149"
+          },
+          "primary_evidence": [
+            {
+              "id": "E19",
+              "url": "https://github.com/frappe/erpnext/issues/38796",
+              "version_or_release": "Reported v15.6.1; fixes merged 2023-12-17; v15.7.0 released 2023-12-20",
+              "locator_or_symbol": "PR 38754 (0743289925d0866a16373c05cfb81825b58e35ba); backport 38806 (8990c48e7bf1c556ad234756259d991519769e09); v15.7.0 release; test_delivery_note.py"
+            }
+          ]
+        },
+        {
+          "criticism": "M2 receipt versus stock",
+          "independent_disposition": "accept clarification; do not adopt critic material severity automatically",
+          "reasoning": "Draft line 10 already required synchronization AND reconciliation and line 34 carried reconciliation status. Ambiguous server-acceptance wording merited harmonization, but the whole draft did not equate upload with inventory. Final four-state wording and rejected/delayed receipt test are useful.",
+          "critic": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/critique.md",
+            "lines": "24-28"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+            "lines": "46-55,150,164"
+          },
+          "primary_evidence": [
+            {
+              "id": "E01",
+              "url": "https://docs.getodk.org/collect-forms/",
+              "version_or_release": "Rolling documentation; edits introduced Collect 2025.2 / Central 2025.1.4",
+              "locator_or_symbol": "Downloading forms; Sending finalized forms; Editing finalized or sent forms"
+            },
+            {
+              "id": "E05",
+              "url": "https://docs.getodk.org/central-submissions/",
+              "version_or_release": "Rolling, Central-version-specific documentation",
+              "locator_or_symbol": "Allowing web form users to work offline; Public Access Links; exports"
+            }
+          ]
+        },
+        {
+          "criticism": "M3 clocks and catch-up",
+          "independent_disposition": "accept conditional refinement; narrow severity",
+          "reasoning": "The critic correctly connects RxDB docs to a custom replication option. This is a conditional architecture refinement, not a demonstrated nursery runtime defect or reason to mandate RxDB. Final carries the clock/checkpoint/retry caveats and tests.",
+          "critic": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/critique.md",
+            "lines": "30-34"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+            "lines": "137-139,151,166"
+          },
+          "primary_evidence": [
+            {
+              "id": "E20",
+              "url": "https://rxdb.info/replication.html",
+              "version_or_release": "Rolling, unpinned package documentation",
+              "locator_or_symbol": "Checkpoint iteration; deterministic sort; Error handling; Security; configuration example"
+            },
+            {
+              "id": "E21",
+              "url": "https://rxdb.info/transactions-conflicts-revisions.html",
+              "version_or_release": "Rolling page updated 2026-10-05; package unpinned",
+              "locator_or_symbol": "Why no transactions; single-document atomic write; defaultConflictHandler.resolve"
+            }
+          ]
+        },
+        {
+          "criticism": "minor 1 encryption lifecycle",
+          "independent_disposition": "accept conditional caveat",
+          "reasoning": "The lost-passphrase, prior-data and historical disablement limits matter if optional encryption is chosen; final retains deployed-version qualification and no mandatory encryption scope.",
+          "critic": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/critique.md",
+            "lines": "51"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+            "lines": "87,152,175"
+          },
+          "primary_evidence": [
+            {
+              "id": "E09",
+              "url": "https://docs.getodk.org/central-encryption/",
+              "version_or_release": "Rolling documentation with explicitly historical v0.6 limitations",
+              "locator_or_symbol": "Encryption limitations; self-supplied and project-managed modes"
+            }
+          ]
+        },
+        {
+          "criticism": "minor 2 acceptance criteria",
+          "independent_disposition": "accept",
+          "reasoning": "Staff must choose quantitative timing/error/staleness thresholds; binary safety oracles already existed. No invented limits or executed results appear.",
+          "critic": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/critique.md",
+            "lines": "52"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+            "lines": "153,160-175"
+          },
+          "primary_evidence": []
+        },
+        {
+          "criticism": "minor 3 P5 anchoring",
+          "independent_disposition": "accept presentation amendment",
+          "reasoning": "The critic treated the qualified default as an anchoring concern, not an adopted policy. Final removes the default, keeps A/B/C options and an optional hybrid.",
+          "critic": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/critique.md",
+            "lines": "53"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+            "lines": "95-103,154"
+          },
+          "primary_evidence": []
+        },
+        {
+          "criticism": "minor 4 terminology",
+          "independent_disposition": "accept",
+          "reasoning": "Project-managed encryption is now the explicit term, preserving mode-specific limits.",
+          "critic": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/critique.md",
+            "lines": "54"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+            "lines": "87,155"
+          },
+          "primary_evidence": [
+            {
+              "id": "E09",
+              "url": "https://docs.getodk.org/central-encryption/",
+              "version_or_release": "Rolling documentation with explicitly historical v0.6 limitations",
+              "locator_or_symbol": "Encryption limitations; self-supplied and project-managed modes"
+            }
+          ]
+        },
+        {
+          "criticism": "no-correction findings",
+          "independent_disposition": "retain independently checked bounds",
+          "reasoning": "Offline modes, narrow Collect history, batch schema, vendor claims and proposed-check distinction remain supported. The historical issue is not used as proof of a present defect.",
+          "critic": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/critique.md",
+            "lines": "56-63"
+          },
+          "final": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+            "lines": "156,192-196"
+          },
+          "primary_evidence": [
+            {
+              "id": "E01",
+              "url": "https://docs.getodk.org/collect-forms/",
+              "version_or_release": "Rolling documentation; edits introduced Collect 2025.2 / Central 2025.1.4",
+              "locator_or_symbol": "Downloading forms; Sending finalized forms; Editing finalized or sent forms"
+            },
+            {
+              "id": "E05",
+              "url": "https://docs.getodk.org/central-submissions/",
+              "version_or_release": "Rolling, Central-version-specific documentation",
+              "locator_or_symbol": "Allowing web form users to work offline; Public Access Links; exports"
+            },
+            {
+              "id": "E12",
+              "url": "https://github.com/getodk/collect/issues/1703",
+              "version_or_release": "Historical comments 2020-09-14 and 2021-10-18; related issue 4489",
+              "locator_or_symbol": "issuecomment-692369777; issuecomment-945531458; issue 4489"
+            },
+            {
+              "id": "E16",
+              "url": "https://github.com/frappe/erpnext/blob/v15.122.0/erpnext/stock/doctype/batch/batch.json",
+              "version_or_release": "v15.122.0, published 2026-10-07; bfd8100d42162048248b7b947f2e21fdf7999a91",
+              "locator_or_symbol": "batch_id/item/parent_batch/batch_qty/stock_uom; batch.py recalculate_batch_qty/split_batch; allow_negative_stock_for_batch"
+            },
+            {
+              "id": "E20",
+              "url": "https://rxdb.info/replication.html",
+              "version_or_release": "Rolling, unpinned package documentation",
+              "locator_or_symbol": "Checkpoint iteration; deterministic sort; Error handling; Security; configuration example"
+            },
+            {
+              "id": "E25",
+              "url": "https://www.growflo.com/mobile-commerce/mobile-inventory/",
+              "version_or_release": "Live vendor page, no product pin",
+              "locator_or_symbol": "Works Offline; barcode scanning; stock checks/moves; ERP sync"
+            },
+            {
+              "id": "E26",
+              "url": "https://atlascore.cloud/suite/tally",
+              "version_or_release": "Live vendor page, no product pin",
+              "locator_or_symbol": "Offline mode; dispositions; permission-gated capabilities; Android/iPhone; submitting"
+            },
+            {
+              "id": "E27",
+              "url": "https://spriggo.tech/",
+              "version_or_release": "Primary vendor search-index result, current page text extraction empty",
+              "locator_or_symbol": "90 days free, then $300/month; features search result"
+            }
+          ]
+        }
+      ],
+      "preservation_coverage": {
+        "complete": true,
+        "remaining_scope": [],
+        "records": [
+          {
+            "finding_family": "original nursery staff/pilot/paper/calendar/privacy/budget framing",
+            "source_stage_locators": "discovery 6-10,44-55; draft 8-12",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "9-22,95-113,160-190"
+            },
+            "disposition": "retained; no replacement tags or customer portal introduced"
+          },
+          {
+            "finding_family": "nursery-specific vendor leads and advertised/future distinctions",
+            "source_stage_locators": "discovery 14-20; draft 12,99,148",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "117-123,173"
+            },
+            "disposition": "all three retained with quote/demo conditions"
+          },
+          {
+            "finding_family": "ERP batch type/UOM/permissions and migration issues",
+            "source_stage_locators": "discovery 22-28; draft 16-26,109,125",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "34-38,129-145,174"
+            },
+            "disposition": "retained; issue resolution corrected without discarding migration risk"
+          },
+          {
+            "finding_family": "ODK lifecycle, data capture and language/PII controls",
+            "source_stage_locators": "discovery 30-36; draft 34-41,63-67,126",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "46-60,85-87,125-127,170-175"
+            },
+            "disposition": "retained and receipt vs business acceptance clarified"
+          },
+          {
+            "finding_family": "RxDB checkpoints, clocks, retries/default conflicts/no ACID",
+            "source_stage_locators": "discovery 38-42; draft 10,34,104",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "137-139,151,163-166"
+            },
+            "disposition": "supported discovery detail restored explicitly; architecture remains conditional"
+          },
+          {
+            "finding_family": "count-owner A/B/C and substitution options",
+            "source_stage_locators": "draft 69-83",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "91-103"
+            },
+            "disposition": "competing options retained; qualified default removed for presentation, not policy reversal"
+          },
+          {
+            "finding_family": "missed readiness vs missed whole season/wholesale deferral",
+            "source_stage_locators": "draft 85-95",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "105-113,185-188"
+            },
+            "disposition": "retained; expanded choices are not automated defaults"
+          },
+          {
+            "finding_family": "non-color, staff-selected language, units and trial conditions",
+            "source_stage_locators": "discovery 48,51,54; draft 53,122-124,146",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "75-77,160,171-173,181-187"
+            },
+            "disposition": "retained; thresholds left to staff"
+          },
+          {
+            "finding_family": "Collect message history and separate specific ERP fix",
+            "source_stage_locators": "discovery 28,57-61; critic 16-22,58-59",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "141-156"
+            },
+            "disposition": "narrow Collect chronology retained; ERP merged fix acknowledged and separate paths not conflated"
+          },
+          {
+            "finding_family": "twelve original validation proposals",
+            "source_stage_locators": "draft 111-126",
+            "final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "158-175"
+            },
+            "disposition": "all retained in fourteen proposals; receipt/rejection and skew/catch-up added"
+          }
+        ],
+        "qualification": "Complete means all substantive finding families and options were traced through the full authored texts. It does not mean every sentence was copied or every criticism was right."
+      },
+      "validation_coverage": {
+        "proposed": [
+          {
+            "name": "paper-tag continuity",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "162"
+            },
+            "discriminating_oracle": "existing tags identify both families and moves/allocations without relabeling; mismatches/time recorded",
+            "executed": false
+          },
+          {
+            "name": "offline/retry",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "163"
+            },
+            "discriminating_oracle": "restart persistence and exactly one accepted effect after lost response/resend",
+            "executed": false
+          },
+          {
+            "name": "receipt without acceptance",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "164"
+            },
+            "discriminating_oracle": "delayed/rejected transport receipt never raises accepted/promiseable stock",
+            "executed": false
+          },
+          {
+            "name": "collision",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "165"
+            },
+            "discriminating_oracle": "both orders preserve events; no silent loss/double effect; balance explained",
+            "executed": false
+          },
+          {
+            "name": "skew/catch-up",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "166"
+            },
+            "discriminating_oracle": "device clocks do not establish authoritative order; missed remote changes are retrieved",
+            "executed": false
+          },
+          {
+            "name": "forecast/promise",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "167"
+            },
+            "discriminating_oracle": "uneven yield/readiness remains forecast until agreed accepted-count rule",
+            "executed": false
+          },
+          {
+            "name": "move/split/lineage",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "168"
+            },
+            "discriminating_oracle": "physical/parent links, units and partial fulfillment stay traceable without double count",
+            "executed": false
+          },
+          {
+            "name": "missed window",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "169"
+            },
+            "discriminating_oracle": "human review occurs and no unchosen customer/policy action",
+            "executed": false
+          },
+          {
+            "name": "privacy",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "170"
+            },
+            "discriminating_oracle": "seasonal account cannot retrieve names/addresses through relevant paths; fulfillment account can operate",
+            "executed": false
+          },
+          {
+            "name": "accessibility/language",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "171"
+            },
+            "discriminating_oracle": "named users identify every state and complete tasks in reviewed language; approved error/time thresholds",
+            "executed": false
+          },
+          {
+            "name": "units",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "172"
+            },
+            "discriminating_oracle": "precision/conversion/rounding/split/short-pick follow a signed-off nursery unit rule",
+            "executed": false
+          },
+          {
+            "name": "procurement",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "173"
+            },
+            "discriminating_oracle": "current quotes and demonstrations include all twenty staff and complete costs, not advertised-price arithmetic alone",
+            "executed": false
+          },
+          {
+            "name": "ERP reversal",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "174"
+            },
+            "discriminating_oracle": "representative old/imported records and ledgers reconcile after cancel/reverse on the selected release",
+            "executed": false
+          },
+          {
+            "name": "ODK lifecycle",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+              "lines": "175"
+            },
+            "discriminating_oracle": "target Android form/version/role/export/event-ID flow works; optional encryption recovery/export checked",
+            "executed": false
+          }
+        ],
+        "executed_runtime_witnesses": [],
+        "independent_oracle_assessment": "The proposals target specific unsafe outcomes and human/physical reconciliation. No executed witness exists to grade for release applicability or independent oracle. Historical repository tests and source reading are not runtime execution. This evaluator also ran no candidate software."
+      },
+      "grade_limits": [
+        "Scientific artifact grade only; delivery=true is supplied by the exact map, not inferred from Goal claims.",
+        "No software/runtime/vendor/site/user experiment was executed, and none is required by the brief when unavailable.",
+        "No procurement, accessibility conformance, security deployment or $5,500 fit is certified.",
+        "Full six-axis PASS_WITH_LIMITATIONS within the small planning brief; remaining local inputs and minor precision issues do not constitute a material defect."
+      ]
+    }
+  },
+  "original_constraint_coverage": [
+    {
+      "constraint": "native seedlings, household and municipal work",
+      "candidate_locators": "N1 7,44,50,66,81; N2 9,185",
+      "assessment": "crop/order identity and municipal mapping retained; no invented universal sales contract"
+    },
+    {
+      "constraint": "twenty spring workers / three off-season coordinators",
+      "candidate_locators": "N1 discovery 12 and final 58,84; N2 99-101,123,173",
+      "assessment": "crew workload/support remain relevant; no assumption of constant full-time technical staff"
+    },
+    {
+      "constraint": "$5,500 startup ceiling",
+      "candidate_locators": "N1 11,58,84; N2 123,173,181",
+      "assessment": "no approach declared affordable; actual ceiling accounting and costs stay gates"
+    },
+    {
+      "constraint": "two structures with poor wireless",
+      "candidate_locators": "N1 9,74-75; N2 18,163-166",
+      "assessment": "offline observations, reconciliation and conflict tests address the named constraint"
+    },
+    {
+      "constraint": "variety/batch/location/readiness/allocation linkage",
+      "candidate_locators": "N1 7,19,32; N2 9,30-38",
+      "assessment": "all requested relationships retained with physical identity and unit qualifications"
+    },
+    {
+      "constraint": "uneven germination / avoid accidental promises",
+      "candidate_locators": "N1 7-9,21,36,77; N2 11-18,69-77,167",
+      "assessment": "forecast remains tentative; accepted quantity policy stays with nursery"
+    },
+    {
+      "constraint": "color-blind coordinator",
+      "candidate_locators": "N1 67,80; N2 75,171",
+      "assessment": "specific non-color comprehension tests retained; N1 final design wording is weaker"
+    },
+    {
+      "constraint": "English as second language",
+      "candidate_locators": "N1 48,58,80; N2 75,171,187",
+      "assessment": "languages are elicited/reviewed, not guessed or machine-translated as proof"
+    },
+    {
+      "constraint": "fulfillment-only customer names and addresses",
+      "candidate_locators": "N1 22,64,83; N2 20,85,170",
+      "assessment": "aliases/minimization and separate authorized paths retained; N1 capability rationale has isolated error"
+    },
+    {
+      "constraint": "phone-friendly adoption without replacing current tags; shared calendar",
+      "candidate_locators": "N1 7,20,46,74,78; N2 9,46,162",
+      "assessment": "tag IDs/calendar and paper coexistence survive; scanning optional"
+    },
+    {
+      "constraint": "adjustment authority, missed readiness and later wholesale remain open",
+      "candidate_locators": "N1 23-24,54-58; N2 91-113,179-190",
+      "assessment": "options remain local decisions, and no customer policy is silently selected"
+    },
+    {
+      "constraint": "two plant families initially",
+      "candidate_locators": "N1 7,11,58,81; N2 9,36,162,174",
+      "assessment": "bounded pilot retained; broad product features are optional leads"
+    }
+  ],
+  "method_clues": "Partial blinding only. Neutral labels were supplied with actual-arm mappings; paths, retained-author language, separate reviser stage and method descriptions disclose treatment/control context. Grading used original obligations and primary evidence, not those clues. No other case/evaluation/campaign content was read.",
+  "comparative_quality_eligible": false,
+  "comparison": "N2 has a full-scope PASS_WITH_LIMITATIONS; N1 has a full-scope FAIL caused by one medium material ODK applicability error. N1 retains useful farmOS/paper alternatives and a numeric contention oracle. This is not a two-FAIL equivalence, a speed/cost win, or a causal claim about the methods.",
+  "scope_limits": [
+    "Complete scientific review of both frozen complete finals, discovery/draft/critique records, mapped source indexes/notes and every exact P clause. No remaining review claim family is being hidden as a local unknown.",
+    "Public source retrieval and static source/code inspection only; source content was not executed. No campaign/other evaluations, nested workers, account/config changes, candidate repair, Git/canon writes, downloaded executable or service startup.",
+    "Initial mandatory workspace orientation read pwd/git status and Plans/00-plans-index.md before assignment restrictions were known. That unrelated repository context was not used as scientific evidence; no repository file was edited.",
+    "Official rolling docs can contradict their own stale summaries; server Entity filtering was resolved with a pre-candidate release announcement and release metadata, not inferred from an unversioned page alone.",
+    "Spriggo live page extraction returned no authored text; independently recovered primary vendor search excerpts support only attributed advertised leads/price. Contractual pricing, currency and runtime capability remain unconfirmed.",
+    "Candidate native/T3 completion and costs were not audited through private records; scientific availability and delivery flags come from the exact input map."
+  ],
+  "evaluation_started_at": "2026-10-09T20:29:07Z",
+  "evaluation_started_at_basis": "First explicit clock observation. Assignment/input-map/workspace orientation occurred shortly before it; this is not a zero-startup or full elapsed-runtime claim. The absolute deadline, including startup, governed all work.",
+  "evaluation_completed_at": "2026-10-09T20:47:25.464798+00:00",
+  "observed_source_operations": {
+    "local": [
+      "Read exact assignment/input map/rubric/brief/frozen plan and full authored stages",
+      "Hash and byte verification of every map-listed file",
+      "Read declared source indexes/notes/maps and extract substantive metadata",
+      "Static comparison across discovery/draft/critique/final and plan clauses"
+    ],
+    "public": [
+      "web open/find/click/search_query of primary sources",
+      "Read-only HTTPS retrieval of public documentation, raw commit/tag source and GitHub issue/PR/release/tag metadata",
+      "In-memory text/JSON parsing, no source execution"
+    ],
+    "record": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-03/retrieval-manifest.json",
+    "scientific_note": "Retrieval success and artifact hashes establish availability/identity, not correctness; judgments depend on inspected defaults, exceptions, source symbols and applicability."
+  },
+  "native_and_cost_limits": {
+    "reviewer_goal": "One actual native Goal created and observed active via create_goal/get_goal; required outputs are saved while active. Completion is requested only after saved-file verification. No R9/ledger protocol or handwritten Goal receipt.",
+    "reviewer_terminal_state_at_scientific_save": null,
+    "candidate_native_completion": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_t3_completion": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_usage": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_billing": {
+      "N1": null,
+      "N2": null
+    },
+    "reviewer_billing": null,
+    "reviewer_final_usage": null,
+    "timing_comparison": null,
+    "qualification": "Unknown is null, never zero or scientific failure. Artifact/source self-reports of native state are not independent lifecycle receipts. No scientific work is authorized after reviewer terminal completion."
+  }
+}

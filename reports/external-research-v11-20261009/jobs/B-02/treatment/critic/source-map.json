@@ -1,0 +1,751 @@
+{
+  "record_type": "ER11 source map",
+  "candidate": "B-02/treatment/critic",
+  "source_id_policy": "IDs are immutable within this candidate. No source has been silently rebound. Sources retrieved directly from official primary documentation or the public project issue/release records.",
+  "accessed_at": "2026-10-09T20:00:36Z (research session; individual requests completed during 20:00 UTC)",
+  "sources": [
+    {
+      "id": "E01",
+      "title": "HHS Minimum Necessary Requirement",
+      "url": "https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/minimum-necessary-requirement/index.html",
+      "version_or_commit": "HHS guidance page; page says last reviewed 2013-07-26",
+      "locator": "How the Rule Works; Uses and Disclosures of, and Requests for, PHI; lines 56-73",
+      "access_timestamp": "2026-10-09T20:00:36Z",
+      "observed_operations": [
+        "Searched official HHS domain",
+        "Opened page",
+        "Read requirements and exceptions"
+      ],
+      "evidence_use": "If the clinic is a covered entity and these records are PHI, access should be limited to the information needed for the job/purpose; treatment-purpose exception means this cannot be reduced to a categorical legal conclusion from the brief alone."
+    },
+    {
+      "id": "E02",
+      "title": "Summary of the HIPAA Security Rule",
+      "url": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html?previewMode=true",
+      "version_or_commit": "Current-rule summary page as accessed 2026-10-09; HHS explicitly says it is not comprehensive legal advice",
+      "locator": "What Information is Protected; access control, audit controls, workstation security, contingency plan and business associate contract sections, lines 89-138",
+      "access_timestamp": "2026-10-09T20:00:36Z",
+      "observed_operations": [
+        "Searched official HHS domain",
+        "Opened page",
+        "Read applicability, safeguards, and caveat"
+      ],
+      "evidence_use": "Conditional basis for privacy, workstation, authorization, audit, incident, contingency, and vendor-contract questions. Must not assert HIPAA applies without covered-entity/PHI facts."
+    },
+    {
+      "id": "E03",
+      "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "version_or_commit": "W3C Recommendation WCAG 2.2",
+      "locator": "Success Criterion 1.4.1 Use of Color; 4.1.3 Status Messages; normative conformance requirements",
+      "access_timestamp": "2026-10-09T20:00:36Z",
+      "observed_operations": [
+        "Searched official W3C domain",
+        "Opened normative Recommendation",
+        "Read criterion text"
+      ],
+      "evidence_use": "Build explicit text/status and keyboard/screen-reader acceptance criteria; use a staff screen reader and keyboard in the real workflow, not a color-only visual review."
+    },
+    {
+      "id": "E04",
+      "title": "Snipe-IT overview",
+      "url": "https://snipe-it.readme.io/docs/overview",
+      "version_or_commit": "Vendor documentation, unversioned page as accessed 2026-10-09",
+      "locator": "Asset Tags; Checkin/Checkout",
+      "access_timestamp": "2026-10-09T20:00:36Z",
+      "observed_operations": [
+        "Searched official Snipe-IT documentation",
+        "Read asset identity and checkout/checkin model"
+      ],
+      "evidence_use": "Unique asset tags and exclusive assigned/in-possession state could cover inventory custody and reduce double-booking in an online central ledger."
+    },
+    {
+      "id": "E05",
+      "title": "Snipe-IT Custom Fields",
+      "url": "https://snipe-it.readme.io/docs/custom-fields",
+      "version_or_commit": "Docs say custom fields available in versions 2.1.0-pre and later; page unversioned",
+      "locator": "Custom Fields and fieldsets; encrypted fields behavior (page lines 16-30 and custom field behavior below)",
+      "access_timestamp": "2026-10-09T20:00:36Z",
+      "observed_operations": [
+        "Opened official docs",
+        "Read custom field scope, fieldsets, and encryption/searchability caveat"
+      ],
+      "evidence_use": "Can add asset attributes, but fitting note and caregiver fields on an asset record create access/retention/design risks; encryption makes the field unsearchable and unsortable and does not establish role separation."
+    },
+    {
+      "id": "E06",
+      "title": "Snipe-IT system notifications",
+      "url": "https://snipe-it.readme.io/docs/notifications-overview",
+      "version_or_commit": "Vendor documentation, unversioned page as accessed 2026-10-09",
+      "locator": "Notification table: checkout/checkin, expected checkin, trigger and delivery type",
+      "access_timestamp": "2026-10-09T20:00:36Z",
+      "observed_operations": [
+        "Opened official notification documentation",
+        "Read recipients, channels, and command triggers"
+      ],
+      "evidence_use": "Checkout/checkin alerts are email/Slack and category-enabled; expected-checkin email depends on a scheduled artisan command. These are not a complete caregiver-preference-aware reminder workflow by themselves."
+    },
+    {
+      "id": "E07",
+      "title": "Snipe-IT issue 18750: checkout and check-in for requested items",
+      "url": "https://github.com/grokability/snipe-it/issues/18750",
+      "version_or_commit": "Reporter says v8.4.0 build 21690, g20382ea5bf; PHP 8.3.6; issue opened 2026-03-23; current issue state displayed Closed when opened",
+      "locator": "Description and reproduction steps, lines 170-239",
+      "access_timestamp": "2026-10-09T20:00:36Z",
+      "observed_operations": [
+        "Opened public project issue",
+        "Read version, reproduced-flow description, reporter's observations, and issue status"
+      ],
+      "evidence_use": "A reporter describes stale/reusable request state after checkout/checkin; it is a reported issue, not independently confirmed defect or verified fix. Read issue comments and release links after draft review if material."
+    },
+    {
+      "id": "E08",
+      "title": "Snipe-IT releases",
+      "url": "https://github.com/grokability/snipe-it/releases",
+      "version_or_commit": "v8.8.0; release commit 2c466fa, dated 2026-09-30 in release page",
+      "locator": "v8.8.0 release notes: beta mobile app and sync adapters; Requestables Overhaul; release header and compatibility notes",
+      "access_timestamp": "2026-10-09T20:00:36Z",
+      "observed_operations": [
+        "Opened official public releases page",
+        "Read latest release metadata and notes"
+      ],
+      "evidence_use": "Shows product evolution and a beta synchronization/mobile direction; does not on the viewed excerpt establish that issue E07 was fixed or that adapters support this clinic's needs."
+    },
+    {
+      "id": "E09",
+      "title": "Google AppSheet pricing",
+      "url": "https://about.appsheet.com/pricing/",
+      "version_or_commit": "Official pricing page as accessed 2026-10-09; prices and included Workspace entitlements are time-sensitive",
+      "locator": "Starter/Core/Enterprise Plus price table; test-user and license-count FAQs",
+      "access_timestamp": "2026-10-09T20:00:36Z",
+      "observed_operations": [
+        "Searched official AppSheet site",
+        "Opened pricing page",
+        "Read current listed prices, seat definition, Workspace and trial notes"
+      ],
+      "evidence_use": "Current list price shows Starter USD 5/user/month and Core USD 10/user/month; 10 separately licensed staff implies USD 600 or USD 1,200 annually before other costs. Some paid Workspace plans include Core; verify current clinic entitlement and vendor terms before choosing."
+    },
+    {
+      "id": "E10",
+      "title": "AppSheet Offline and Sync: The Essentials",
+      "url": "https://support.google.com/appsheet/answer/10107724?hl=en",
+      "version_or_commit": "Official AppSheet Help, unversioned as accessed 2026-10-09",
+      "locator": "Offline launch precondition; local data; delayed sync; prolonged offline caveat; Quick Sync with advanced security filters; browser offline behavior",
+      "access_timestamp": "2026-10-09T20:00:36Z",
+      "observed_operations": [
+        "Searched official AppSheet help",
+        "Opened article",
+        "Read offline cache/sync conditions and security-filter warning"
+      ],
+      "evidence_use": "Offline operation is supported after an online launch and queues changes, but client copies can become stale; multi-day disconnected operation is discouraged because older writes may override others. Browser offline use depends on a loaded page and does not remove local data exposure."
+    },
+    {
+      "id": "E11",
+      "title": "AppSheet Sync: Between the app and backend",
+      "url": "https://support.google.com/appsheet/answer/10108301?hl=en",
+      "version_or_commit": "Official AppSheet Help, unversioned as accessed 2026-10-09",
+      "locator": "Sync process and delayed-sync guidance",
+      "access_timestamp": "2026-10-09T20:00:36Z",
+      "observed_operations": [
+        "Opened official documentation",
+        "Read sync order and delayed-sync recommendation"
+      ],
+      "evidence_use": "Local updates are propagated in execution order before fetching current app definition/data; supports explicitly testing cross-device conflicts and return-to-connectivity workflows."
+    },
+    {
+      "id": "SRC-01",
+      "title": "Lend Engine pricing and plan comparison",
+      "publisher": "The Lend Engine",
+      "url": "https://www.lend-engine.com/pricing?p=usd",
+      "version_or_commit": "Live USD pricing page; no page version/effective date visible",
+      "locator": "Plan matrix, lines 12-64 and 75-77; Plus is $25/month, 2,000 items/contacts, 10 sites; unlimited staff; Plus has check-in/out prompts, member/item custom fields, maintenance, language controls and private member site; backups are listed only in Business tier.",
+      "access_timestamp_utc": "2026-10-09T19:45:49Z",
+      "observed_operations": [
+        "public web search",
+        "opened pricing page",
+        "inspected plan and feature rows"
+      ],
+      "evidence_file": "sources/lending-platforms.md",
+      "limitations": "Vendor-provided marketing/pricing; purchase total and service terms should be confirmed before selection."
+    },
+    {
+      "id": "SRC-02",
+      "title": "Lend Engine loan management",
+      "publisher": "The Lend Engine",
+      "url": "https://www.lend-engine.com/features/loan-management-software",
+      "version_or_commit": "Live feature page; no page version/effective date visible",
+      "locator": "Lines 20-40 and 49-55: staff-operated or self-serve loans, accessibility/assistive technology use cases, customized check-in/out prompts, cleaning/repair routing, and email reminders.",
+      "access_timestamp_utc": "2026-10-09T19:45:49Z",
+      "observed_operations": [
+        "public web search",
+        "opened feature page",
+        "inspected lending and workflow sections"
+      ],
+      "evidence_file": "sources/lending-platforms.md",
+      "limitations": "Product claims are not an observed trial. Exact workflow, child-data suitability, and role behavior remain unverified."
+    },
+    {
+      "id": "SRC-03",
+      "title": "Lend Engine Privacy Policy",
+      "publisher": "The Lend Engine",
+      "url": "https://www.lend-engine.com/privacy-policy",
+      "version_or_commit": "Live policy page; no effective date/version visible",
+      "locator": "Lines 7-11 (PII, removal/anonymization and account retention), 21-40 (EU hosting, providers, SSL and staff access), 45-54 (children's privacy and automated email timing/content).",
+      "access_timestamp_utc": "2026-10-09T19:46:23Z",
+      "observed_operations": [
+        "public web search",
+        "opened policy page at multiple sections",
+        "inspected data, security, child and email clauses"
+      ],
+      "evidence_file": "sources/lending-platforms.md",
+      "limitations": "Policy is mutable and undated. Its under-13 clause and toy-library exception create a suitability question requiring a written vendor answer for this clinic's proposed data."
+    },
+    {
+      "id": "SRC-04",
+      "title": "Blueprint OMS inventory and loaner management",
+      "publisher": "Blueprint Solutions",
+      "url": "https://blueprintsolutions.us/features/inventory/",
+      "version_or_commit": "Live product page; no version/effective date visible",
+      "locator": "Lines 57-88: hearing-aid inventory, multi-location stock, loaner/trial history, loaner agreements, and recalls near return date.",
+      "access_timestamp_utc": "2026-10-09T19:45:49Z",
+      "observed_operations": [
+        "public web search",
+        "opened product page",
+        "inspected inventory and loaner sections"
+      ],
+      "evidence_file": "sources/lending-platforms.md",
+      "limitations": "The public page does not establish price, cleaning-gate behavior, security terms, accessibility, or fit as a standalone pilot system; it is a conditional option if already licensed."
+    },
+    {
+      "id": "SRC-05",
+      "title": "AssetTiger pricing",
+      "publisher": "AssetTiger",
+      "url": "https://www.assettiger.com/pricing",
+      "version_or_commit": "Live pricing page; no effective date/version visible",
+      "locator": "Lines 42-88 and 133-153: paid seats are unlimited; Basic is 500 assets at $20/month or $18/month annual ($220/year shown); paid plans include check-in/out and maintenance scheduling; trial is 250 assets, two users and 30 days.",
+      "access_timestamp_utc": "2026-10-09T19:45:49Z",
+      "observed_operations": [
+        "public web search",
+        "opened pricing page",
+        "inspected prices, trial limits and core features"
+      ],
+      "evidence_file": "sources/asset-trackers.md",
+      "limitations": "Vendor list pricing; no checkout-specific family-data schema or contract terms were verified."
+    },
+    {
+      "id": "SRC-06",
+      "title": "AssetTiger FAQ: permissions, security, exports and offline use",
+      "publisher": "AssetTiger",
+      "url": "https://www.assettiger.com/faq",
+      "version_or_commit": "Live FAQ page; no page version/effective date visible",
+      "locator": "Lines 193-211 and 215-230: role permissions, 2FA/Google sign-in, vendor-described TLS/SOC 2-compliant infrastructure and audit log, export, mobile scanning, and offline scans queued locally until sync.",
+      "access_timestamp_utc": "2026-10-09T19:46:23Z",
+      "observed_operations": [
+        "public web search",
+        "opened FAQ at security and platform sections",
+        "inspected permissions, security, exports and offline behavior"
+      ],
+      "evidence_file": "sources/asset-trackers.md",
+      "limitations": "Vendor FAQ claims only; offline collision behavior and transaction-scoped custom fields were not documented in reviewed sections."
+    },
+    {
+      "id": "SRC-07",
+      "title": "AssetTiger Accessibility Conformance Report",
+      "publisher": "AssetTiger",
+      "url": "https://www.assettiger.com/content/vpat_template_2.5rev_wcag_2025.pdf",
+      "version_or_commit": "AssetTiger report dated 2026-01-06; VPAT 2.5Rev; 7 pages",
+      "locator": "PDF pages 1-2 and 3-5: evaluation method is WAVE; report lists support for color, keyboard, semantic/name-role-value, labels, focus and status-message criteria; other criteria are partial/not supported/not evaluated.",
+      "access_timestamp_utc": "2026-10-09T19:46:23Z",
+      "observed_operations": [
+        "public web search",
+        "opened PDF text",
+        "inspected report date, evaluation method and WCAG rows"
+      ],
+      "evidence_file": "sources/accessibility.md",
+      "limitations": "Vendor-authored conformance report, not an independent task-level screen-reader test; its front matter lists WCAG 2.0 and 2.1 even though some rows mention 2.2-only criteria."
+    },
+    {
+      "id": "SRC-08",
+      "title": "Cheqroom pricing and feature matrix",
+      "publisher": "Cheqroom",
+      "url": "https://www.cheqroom.com/pricing/",
+      "version_or_commit": "Live pricing page; no effective date/version visible",
+      "locator": "Lines 194-286 and feature matrix: Core starts at $184/admin/month, one location; Business at $275/admin/month, up to three locations and custom roles/permissions. Annual billing and minimum admin counts apply. Maintenance and Operations Management are paid add-ons; add-on price is not listed.",
+      "access_timestamp_utc": "2026-10-09T19:45:49Z",
+      "observed_operations": [
+        "public web search",
+        "opened pricing page",
+        "inspected tier, location and add-on rows"
+      ],
+      "evidence_file": "sources/workflow-platforms.md",
+      "limitations": "Starting prices and administration minimums are ambiguous without a quote; maintenance add-on cost is not public on this page."
+    },
+    {
+      "id": "SRC-09",
+      "title": "Cheqroom maintenance and repair workflow",
+      "publisher": "Cheqroom Help Center",
+      "url": "https://knowledge.cheqroom.com/helpcenter/how-do-i-perform-maintenance-and-repair-in-cheqroom",
+      "version_or_commit": "Help article dated 2026-06-18",
+      "locator": "Lines 17-44 and 90-127: cleaning is preventative maintenance; maintenance-user reservation/check-out is recorded; flags may be configured to remove an item from availability; only permitted users clear flags, with a comment/attachment recorded.",
+      "access_timestamp_utc": "2026-10-09T19:45:49Z",
+      "observed_operations": [
+        "public web search",
+        "opened help article",
+        "inspected flag and maintenance-user behavior"
+      ],
+      "evidence_file": "sources/workflow-platforms.md",
+      "limitations": "Requires configuration and a trial test; documentation distinguishes flags from work orders."
+    },
+    {
+      "id": "SRC-10",
+      "title": "Cheqroom Operations and Maintenance Management feature release",
+      "publisher": "Cheqroom Help Center",
+      "url": "https://knowledge.cheqroom.com/helpcenter/feature-release-operations-and-maintenance-management",
+      "version_or_commit": "Feature release dated 2026-06-23",
+      "locator": "Lines 14-30: new operations templates are enabled when added to subscription; account owner/admin configures templates and roles; requests have item/location history.",
+      "access_timestamp_utc": "2026-10-09T19:45:49Z",
+      "observed_operations": [
+        "public web search",
+        "opened feature-release page",
+        "inspected launch and enablement details"
+      ],
+      "evidence_file": "sources/workflow-platforms.md",
+      "limitations": "Release announcement does not specify add-on price or clinic-specific suitability."
+    },
+    {
+      "id": "SRC-11",
+      "title": "Cheqroom Operation Requests Overview",
+      "publisher": "Cheqroom Help Center",
+      "url": "https://knowledge.cheqroom.com/helpcenter/operation-templates-overview",
+      "version_or_commit": "Live Help Center page; no version date visible in reviewed page",
+      "locator": "Lines 15-58: request states Draft/Open/In Progress/Closed; open work orders do not affect item availability; requests are an add-on; work-order roles are defined.",
+      "access_timestamp_utc": "2026-10-09T19:45:49Z",
+      "observed_operations": [
+        "public web search",
+        "opened overview page",
+        "inspected status, availability and permission sections"
+      ],
+      "evidence_file": "sources/workflow-platforms.md",
+      "limitations": "Exact configuration and interaction with availability flags require a vendor trial."
+    },
+    {
+      "id": "SRC-12",
+      "title": "Cheqroom Maintenance Management Work Order defaults",
+      "publisher": "Cheqroom Help Center",
+      "url": "https://knowledge.cheqroom.com/helpcenter/maintenance-management-work-order-overview",
+      "version_or_commit": "Help article dated 2026-08-04",
+      "locator": "Lines 14-41: default fields are Location and Description; Low is default priority; maintenance type is a single-select with Repair/Cleaning/Inspection/Calibration; due date is a Date; fields can be customized and made required.",
+      "access_timestamp_utc": "2026-10-09T19:45:58Z",
+      "observed_operations": [
+        "public web search",
+        "opened help article",
+        "inspected defaults, field types and customization"
+      ],
+      "evidence_file": "sources/workflow-platforms.md",
+      "limitations": "The word 'Date' and type behavior should be verified in a trial; open work orders still do not gate item availability per SRC-11."
+    },
+    {
+      "id": "SRC-13",
+      "title": "Google AppSheet pricing",
+      "publisher": "Google AppSheet",
+      "url": "https://about.appsheet.com/pricing/",
+      "version_or_commit": "Live USD pricing page; no effective date/version visible",
+      "locator": "Lines 16-44 and 100-153: up to 10 test users at no cost; Starter $5, Core $10, Enterprise Plus $20 per user/month; Core includes security controls and AppSheet DB; plan table shows 2,500 rows per database for Starter/Core and 200,000 for Enterprise Plus; notification features are listed.",
+      "access_timestamp_utc": "2026-10-09T19:45:58Z",
+      "observed_operations": [
+        "public web search",
+        "opened pricing page",
+        "inspected pricing and row-limit rows"
+      ],
+      "evidence_file": "sources/low-code.md",
+      "limitations": "List price excludes any additional Workspace, data-source or SMS costs; current entitlement must be confirmed against the clinic's actual Google licenses."
+    },
+    {
+      "id": "SRC-14",
+      "title": "AppSheet Offline and Sync: The Essentials",
+      "publisher": "Google AppSheet Help",
+      "url": "https://support.google.com/appsheet/answer/10107724?hl=en",
+      "version_or_commit": "Live help page; no version date visible",
+      "locator": "Lines 17-22, 56-65 and linked sections: app/data cache locally, initial online launch is required, offline start and delayed sync are configurable; browser must remain loaded for offline use.",
+      "access_timestamp_utc": "2026-10-09T19:45:58Z",
+      "observed_operations": [
+        "public web search",
+        "opened help page",
+        "inspected offline preconditions and configuration"
+      ],
+      "evidence_file": "sources/low-code.md",
+      "limitations": "Offline storage and security-filter behavior depend on app settings, source type and shared-workstation configuration."
+    },
+    {
+      "id": "SRC-15",
+      "title": "AppSheet concurrent usage and conflict resolution",
+      "publisher": "Google AppSheet Help",
+      "url": "https://support.google.com/appsheet/answer/10104702?hl=en",
+      "version_or_commit": "Live help page; no version date visible",
+      "locator": "Lines 17-31: changes queue on client; the unit of change is one row; for same-row concurrent edits, last writer wins.",
+      "access_timestamp_utc": "2026-10-09T19:45:58Z",
+      "observed_operations": [
+        "public web search",
+        "opened help page",
+        "inspected concurrency rules"
+      ],
+      "evidence_file": "sources/low-code.md",
+      "limitations": "This is platform behavior; impact depends on app schema and overlap frequency."
+    },
+    {
+      "id": "SRC-16",
+      "title": "AppSheet Security",
+      "publisher": "Google AppSheet",
+      "url": "https://about.appsheet.com/security/",
+      "version_or_commit": "Live security page; no effective date/version visible",
+      "locator": "Lines 95-103 and 144-166: security filters, app-level access, source data storage, temporary data caching for performance/audit, sign-in provider, SOC2 report availability under NDA, and HIPAA support steps for customers that are subject to HIPAA.",
+      "access_timestamp_utc": "2026-10-09T19:45:58Z",
+      "observed_operations": [
+        "public web search",
+        "opened security page",
+        "inspected data location, authentication and compliance sections"
+      ],
+      "evidence_file": "sources/low-code.md",
+      "limitations": "Vendor says it supports customer compliance; this is not a conclusion about clinic jurisdiction, eligibility, configuration or a signed agreement."
+    },
+    {
+      "id": "SRC-17",
+      "title": "AppSheet SMS automation",
+      "publisher": "Google AppSheet Help",
+      "url": "https://support.google.com/appsheet/answer/11509435?hl=en",
+      "version_or_commit": "Live help page; no version date visible",
+      "locator": "Lines 41-59 and 93-120: SMS tasks use custom Twilio; default AppSheet SMS channel is documented as no longer available after 2025-04-21; templates and recipient expressions are supported; channel/region/length limits apply.",
+      "access_timestamp_utc": "2026-10-09T19:45:58Z",
+      "observed_operations": [
+        "public web search",
+        "opened help page",
+        "inspected channel, recipients, limits and configuration"
+      ],
+      "evidence_file": "sources/low-code.md",
+      "limitations": "SMS entails a separate provider/account/charges and clinic-approved contact preferences; do not use default message content for caregiver reminders."
+    },
+    {
+      "id": "SRC-18",
+      "title": "WCAG Understanding Success Criterion 1.4.1 Use of Color",
+      "publisher": "W3C Web Accessibility Initiative",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html",
+      "version_or_commit": "WCAG 2.2 Understanding document; accessed 2026-10-09",
+      "locator": "Lines 20-40: status/action information cannot rely on color alone; use another visual cue such as text or shape.",
+      "access_timestamp_utc": "2026-10-09T19:45:58Z",
+      "observed_operations": [
+        "public web search",
+        "opened W3C page",
+        "inspected criterion and intent"
+      ],
+      "evidence_file": "sources/accessibility.md",
+      "limitations": "This criterion addresses a specific visual cue; it does not by itself demonstrate screen-reader operability."
+    },
+    {
+      "id": "SRC-19",
+      "title": "WCAG Understanding Success Criterion 2.1.1 Keyboard",
+      "publisher": "W3C Web Accessibility Initiative",
+      "url": "https://www.w3.org/WAI/WCAG21/Understanding/keyboard",
+      "version_or_commit": "WCAG 2.1 Understanding document; criterion remains applicable in WCAG 2.2",
+      "locator": "Lines 21-42: functionality must be operable by keyboard; purpose and benefits for blind users/alternate input are described.",
+      "access_timestamp_utc": "2026-10-09T19:45:58Z",
+      "observed_operations": [
+        "public web search",
+        "opened W3C page",
+        "inspected criterion and intent"
+      ],
+      "evidence_file": "sources/accessibility.md",
+      "limitations": "Informative Understanding text; the normative criterion and task-level usability both still need checking."
+    },
+    {
+      "id": "SRC-20",
+      "title": "WCAG Understanding Success Criterion 4.1.2 Name, Role, Value",
+      "publisher": "W3C Web Accessibility Initiative",
+      "url": "https://www.w3.org/WAI/WCAG21/Understanding/name-role-value",
+      "version_or_commit": "WCAG 2.1 Understanding document; criterion remains applicable in WCAG 2.2",
+      "locator": "Lines 23-43: controls expose name, role, state and value to assistive technologies; scripted/custom controls need particular care.",
+      "access_timestamp_utc": "2026-10-09T19:45:58Z",
+      "observed_operations": [
+        "public web search",
+        "opened W3C page",
+        "inspected criterion and intent"
+      ],
+      "evidence_file": "sources/accessibility.md",
+      "limitations": "Informative guidance; screen-reader testing of the actual workflow remains necessary."
+    },
+    {
+      "id": "SRC-21",
+      "title": "Snipe-IT hosted and self-hosted pricing",
+      "publisher": "Grokability, Inc. / Snipe-IT",
+      "url": "https://snipeitapp.com/pricing",
+      "version_or_commit": "Live USD pricing page; no effective date/version visible",
+      "locator": "Lines 33-57: self-hosted software is free; Basic hosted is $39.99/month or $399.99/year, unlimited users/assets, with server setup, maintenance, upgrades, backups and priority support described as included.",
+      "access_timestamp_utc": "2026-10-09T19:46:23Z",
+      "observed_operations": [
+        "public web search",
+        "opened pricing page",
+        "inspected hosting and limits"
+      ],
+      "evidence_file": "sources/asset-trackers.md",
+      "limitations": "Hosted price is vendor list price; exact service, data terms and healthcare suitability require vendor procurement review."
+    },
+    {
+      "id": "SRC-22",
+      "title": "Snipe-IT asset, status and check-in/check-out overview",
+      "publisher": "Snipe-IT documentation",
+      "url": "https://snipe-it.readme.io/docs/overview",
+      "version_or_commit": "Live docs; page states updated 6 months before retrieval; no release tag attached",
+      "locator": "Lines 32-56 and 81-92: unique asset tags, one active checkout at a time, return status may be set based on condition, and undeployable/pending status types block reassignment.",
+      "access_timestamp_utc": "2026-10-09T19:46:23Z",
+      "observed_operations": [
+        "public web search",
+        "opened documentation page",
+        "inspected asset lifecycle and status labels"
+      ],
+      "evidence_file": "sources/asset-trackers.md",
+      "limitations": "Docs describe configuration semantics, not the clinic's eventual custom workflow."
+    },
+    {
+      "id": "SRC-23",
+      "title": "Snipe-IT custom fields",
+      "publisher": "Snipe-IT documentation",
+      "url": "https://snipe-it.readme.io/docs/custom-fields",
+      "version_or_commit": "Live docs; fieldsets available since v2.1.0-pre; no current release tag on page",
+      "locator": "Lines 15-53: custom fieldsets are assigned at asset-model level; required fields possible; encrypting a field makes it unsearchable and unsortable.",
+      "access_timestamp_utc": "2026-10-09T19:46:23Z",
+      "observed_operations": [
+        "public web search",
+        "opened documentation page",
+        "inspected field scope and encrypted-field trade-off"
+      ],
+      "evidence_file": "sources/asset-trackers.md",
+      "limitations": "Reviewed docs establish fields on assets; they do not establish a caregiver/loan-specific transaction model."
+    },
+    {
+      "id": "SRC-24",
+      "title": "Snipe-IT maintenance attachment permission issue #18951",
+      "publisher": "Grokability Snipe-IT GitHub repository",
+      "url": "https://github.com/grokability/snipe-it/issues/18951",
+      "version_or_commit": "Issue opened 2026-04-28 against v8.4.1 build 22183; closed after linked fix",
+      "locator": "Lines 130-181: a regular user could create maintenance but could not attach/view files; issue reports maintenance file controls appearing to require superuser access.",
+      "access_timestamp_utc": "2026-10-09T19:46:23Z",
+      "observed_operations": [
+        "public web search",
+        "opened issue",
+        "inspected affected version and reported behavior"
+      ],
+      "evidence_file": "sources/release-chain.md",
+      "limitations": "A reported issue in one configuration; not evidence that all installations are affected."
+    },
+    {
+      "id": "SRC-25",
+      "title": "Snipe-IT maintenance permission fix PR #18964",
+      "publisher": "Grokability Snipe-IT GitHub repository",
+      "url": "https://github.com/grokability/snipe-it/pull/18964",
+      "version_or_commit": "Merged 2026-05-04; merge commit bd4150a; two commits including 0daec32 and 1c6c93d",
+      "locator": "Lines 130-174 and 197-212: patch creates a distinct maintenance permission; maintenances inherit asset company/permission context; author notes cross-company history remains a separate concern.",
+      "access_timestamp_utc": "2026-10-09T19:46:23Z",
+      "observed_operations": [
+        "public web search",
+        "opened pull request",
+        "inspected merge state, maintainer explanation and commit references"
+      ],
+      "evidence_file": "sources/release-chain.md",
+      "limitations": "The maintainer explicitly says the patch does not solve the inherited-history case."
+    },
+    {
+      "id": "SRC-26",
+      "title": "Snipe-IT v8.5.0 release notes",
+      "publisher": "Grokability Snipe-IT GitHub repository",
+      "url": "https://github.com/grokability/snipe-it/releases/tag/v8.5.0",
+      "version_or_commit": "v8.5.0, commit 90c8689, released 2026-05-12",
+      "locator": "Release notes include maintenance permission fix #18951/#18964; PHP 8.2 minimum and 8.4 recommended are stated.",
+      "access_timestamp_utc": "2026-10-09T19:46:23Z",
+      "observed_operations": [
+        "public web search",
+        "opened tagged release",
+        "inspected release metadata and change list"
+      ],
+      "evidence_file": "sources/release-chain.md",
+      "limitations": "Historical fix release; use a currently supported release and verify patch state before any deployment."
+    },
+    {
+      "id": "SRC-27",
+      "title": "Snipe-IT current release list",
+      "publisher": "Grokability Snipe-IT GitHub repository",
+      "url": "https://github.com/grokability/snipe-it/releases",
+      "version_or_commit": "v8.8.0 listed as latest, released 2026-09-30, short commit 2c466fa",
+      "locator": "Lines 137-185: latest tag, release date, commit and PHP 8.2 minimum / 8.4 recommended.",
+      "access_timestamp_utc": "2026-10-09T19:46:23Z",
+      "observed_operations": [
+        "public web search",
+        "opened releases list",
+        "inspected latest release and runtime requirements"
+      ],
+      "evidence_file": "sources/release-chain.md",
+      "limitations": "Release status can change; re-check at procurement/deployment."
+    },
+    {
+      "id": "SRC-28",
+      "title": "myTurn lending and asset platform overview",
+      "publisher": "myTurn.com, pbc",
+      "url": "https://myturn.com/home/",
+      "version_or_commit": "Live product page; accessed 2026-10-09; no version/effective date visible",
+      "locator": "Lines 41-57, 85-118 and 143-148: multiple-location asset/lending library positioning, barcode/RFID check-in/out, due/overdue reminders, multi-location tracking; page highlights June 2026 product updates and an assistive-technology library customer testimonial.",
+      "access_timestamp_utc": "2026-10-09T19:46:23Z",
+      "observed_operations": [
+        "public web search",
+        "opened product page",
+        "inspected use cases, capabilities, update list and testimonial"
+      ],
+      "evidence_file": "sources/lending-platforms.md",
+      "limitations": "Marketing page and testimonial; pricing, clinical data handling, screen-reader operation, maintenance gating and outage behavior were not established."
+    },
+    {
+      "id": "E12",
+      "title": "Lend Engine privacy policy",
+      "url": "https://www.lend-engine.com/privacy-policy",
+      "version_or_commit": "Live, undated policy page as accessed 2026-10-09",
+      "locator": "Children’s Privacy, automated emails, retention, hosting and security, lines 10-54",
+      "access_timestamp": "2026-10-09T20:02:16Z",
+      "observed_operations": [
+        "Opened vendor primary policy page directly",
+        "Read child-data clause, staff access, 60-day inactive-account retention, EU hosting, SSL-plan terms and reminder controls"
+      ],
+      "evidence_use": "Material pediatric-data suitability question; no child under 13 use is stated with a toy-library exception. It also describes transactional reminders without a channel preference/opt-out switch other than removing the email, active-account retention, and SSL terms that should be reconciled against current pricing."
+    },
+    {
+      "id": "E13",
+      "title": "Lend Engine loans, rentals and reservations",
+      "url": "https://www.lend-engine.com/features/loan-management-software",
+      "version_or_commit": "Live product page as accessed 2026-10-09",
+      "locator": "Assistive-technology use; check-in/out prompts; return to cleaning/repair; automated reminder and extension language, lines 29-63",
+      "access_timestamp": "2026-10-09T20:02:16Z",
+      "observed_operations": [
+        "Opened vendor product page directly",
+        "Read product scope and workflow claims"
+      ],
+      "evidence_use": "Confirms relevant lending use case and configurable prompts/repair location but does not establish a fail-closed cleaning/inspection gate or loan-scoped clinical settings."
+    },
+    {
+      "id": "E14",
+      "title": "Lend Engine USD pricing matrix",
+      "url": "https://www.lend-engine.com/pricing?p=usd",
+      "version_or_commit": "Live USD price matrix as accessed 2026-10-09",
+      "locator": "Monthly price and tiers, SSL, number of items/contacts/sites, email customization/reminders, staff prompts, child fields and backups, lines 8-51",
+      "access_timestamp": "2026-10-09T20:02:16Z",
+      "observed_operations": [
+        "Opened current vendor USD pricing page directly",
+        "Read plan rows and units"
+      ],
+      "evidence_use": "Shows Plus USD 25/month and Business USD 50/month; unlimited staff; Plus supports two thousand items/contacts and ten sites; Business alone lists automated backups. The price matrix says SSL in all plans while the policy describes Free/Standard as non-SSL, requiring written clarification."
+    },
+    {
+      "id": "E15",
+      "title": "Cheqroom Operation Requests Overview",
+      "url": "https://knowledge.cheqroom.com/helpcenter/operation-templates-overview",
+      "version_or_commit": "Help Center article dated 2026-06-18",
+      "locator": "Operations Requests states, availability, add-on and permissions, lines 14-63",
+      "access_timestamp": "2026-10-09T20:02:16Z",
+      "observed_operations": [
+        "Opened official help article",
+        "Found and read open-work-order availability statement and work-order roles"
+      ],
+      "evidence_use": "The source explicitly states an open work order does not change availability; configured separate unavailable flag/status is required."
+    },
+    {
+      "id": "E16",
+      "title": "AppSheet concurrent usage with multiple users",
+      "url": "https://support.google.com/appsheet/answer/10104702?hl=en",
+      "version_or_commit": "Official AppSheet Help, unversioned page as accessed 2026-10-09",
+      "locator": "Same-row concurrent edits and last-writer-wins; duplicate add window, lines 17-36",
+      "access_timestamp": "2026-10-09T20:02:16Z",
+      "observed_operations": [
+        "Opened official help article",
+        "Read row-level concurrency and duplicate request behavior"
+      ],
+      "evidence_use": "Last-writer-wins applies when clients edit the same row; app design may avoid collisions, but inventory rows need explicit conflict testing. Duplicate request memory is documented for up to 24 hours."
+    },
+    {
+      "id": "E17",
+      "title": "Snipe-IT maintenance permission issue 18951",
+      "url": "https://github.com/grokability/snipe-it/issues/18951",
+      "version_or_commit": "v8.4.1 build 22183; issue opened 2026-04-28, closed 2026-05-04",
+      "locator": "Reporter configuration and behavior; maintainer linked-commit closure, lines 159-181 and 224-263",
+      "access_timestamp": "2026-10-09T20:02:16Z",
+      "observed_operations": [
+        "Opened public issue directly",
+        "Read version, configuration, reporter observations and closure activity"
+      ],
+      "evidence_use": "Issue report concerns a regular user unable to view/attach maintenance files with multi-company/location scoping enabled; bounded configuration-specific finding."
+    },
+    {
+      "id": "E18",
+      "title": "Snipe-IT maintenance permission PR 18964",
+      "url": "https://github.com/grokability/snipe-it/pull/18964",
+      "version_or_commit": "Merged 2026-05-04 into develop; merge commit bd4150a; commits 0daec32 and 1c6c93d",
+      "locator": "Maintainer explanation and merge details, lines 130-174, 197-220, 261-263",
+      "access_timestamp": "2026-10-09T20:02:16Z",
+      "observed_operations": [
+        "Opened public pull request directly",
+        "Read merge target, patch intent, maintainer caveat and commit IDs"
+      ],
+      "evidence_use": "Introduced a distinct maintenance permission; maintainer explicitly says a historical cross-company visibility case remains outside the fix."
+    },
+    {
+      "id": "E19",
+      "title": "Snipe-IT v8.5.0 release notes",
+      "url": "https://github.com/grokability/snipe-it/releases/tag/v8.5.0",
+      "version_or_commit": "v8.5.0, commit 90c8689, released 2026-05-12",
+      "locator": "Release header and changed items; #18951 fixed by #18964 at lines 151-166, 260-261",
+      "access_timestamp": "2026-10-09T20:02:16Z",
+      "observed_operations": [
+        "Opened tagged release directly",
+        "Found #18951 reference in release notes and read release runtime requirements"
+      ],
+      "evidence_use": "Confirms issue/PR shipped in v8.5.0; this does not establish clinic-specific role configuration or the unrelated cross-company history behavior."
+    },
+    {
+      "id": "E20",
+      "title": "Snipe-IT issue 18750 checkout/check-in request state",
+      "url": "https://github.com/grokability/snipe-it/issues/18750",
+      "version_or_commit": "Reporter states v8.4.0 build 21690, g20382ea5bf; opened 2026-03-23; currently displayed Closed; page lists no branches or pull requests",
+      "locator": "Reporter reproduction and status/development metadata, lines 134-239, 323-329",
+      "access_timestamp": "2026-10-09T20:02:16Z",
+      "observed_operations": [
+        "Opened public issue directly",
+        "Read exact version, reproduction, closure and development metadata"
+      ],
+      "evidence_use": "Reporter-described stale reusable request after request/checkout/optional acceptance/check-in. No linked fix is shown on this page; issue closure alone does not prove fixed. Only matters if clinic uses requestables."
+    },
+    {
+      "id": "E21",
+      "title": "WCAG 2.2 Understanding Success Criterion 4.1.3 Status Messages",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html",
+      "version_or_commit": "WCAG 2.2 Understanding document, as accessed 2026-10-09",
+      "locator": "Intent, status-message definition and its scope/limitations, lines 13-30, 63-103 and 233-235",
+      "access_timestamp": "2026-10-09T20:02:16Z",
+      "observed_operations": [
+        "Opened W3C primary understanding document",
+        "Read status-message definition and exceptions/notes"
+      ],
+      "evidence_use": "Supports programmatic announcement of applicable visible status messages but not indiscriminate live announcements of every content change."
+    }
+  ],
+  "predecessor_evidence_catalog": {
+    "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/source-map.json",
+    "lineage": "Imported source records SRC-01 through SRC-28 verbatim from the exact own-arm predecessor source-map named by input-map.json. IDs, URLs, versions, locators, access times, observations and limitations are retained unchanged; they are not new sources or silently rebound.",
+    "predecessor_artifacts_reviewed": [
+      "draft.md",
+      "discovery.md",
+      "source-map.json",
+      "revealed-plan.md",
+      "sources/index.md",
+      "sources/lending-platforms.md",
+      "sources/asset-trackers.md",
+      "sources/workflow-platforms.md",
+      "sources/low-code.md",
+      "sources/accessibility.md",
+      "sources/release-chain.md"
+    ]
+  }
+}

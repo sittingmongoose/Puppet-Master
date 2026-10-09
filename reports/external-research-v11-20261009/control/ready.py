@@ -9,21 +9,23 @@ for k,a in s['arms'].items():
  root=R/'jobs'/a['block']/a['arm'];m=a['method'];arm=a['arm']
  stages=['research-q1','research-q2'] if m=='M01' and arm=='control' else ['research']
  res=all(complete(root/x) and (root/x/'draft.md').exists() for x in stages)
- if m in ('M05','M13') and arm=='treatment':
+ if m in ('M05','M13','M14') and arm=='treatment':
   res=(root/'research/draft.md').exists() and (root/'research/source-map.json').exists()
   nxt='critic' if res and not (root/'critic/assignment.md').exists() else None
  elif res:
   crit='critic-finalizer' if m=='M03' and arm=='treatment' else 'critic'
   nxt=crit if not (root/crit/'assignment.md').exists() else 'reviser' if crit=='critic' and complete(root/crit) and (root/crit/'critique.md').exists() and not (root/'reviser/assignment.md').exists() else None
  else:nxt=None
- if nxt:ready.append({'block':a['block'],'arm':arm,'stage':nxt,'route':a['route']})
+ if nxt:
+  x=next(x for x in q if x['block_id']==a['block']);route=x.get('stage_routes',{}).get(arm,{}).get(nxt,a['route'])
+  ready.append({'block':a['block'],'arm':arm,'stage':nxt,'route':route})
 for x in q:
  if x.get('method') is None:continue
  b=x['block_id'];valid=True
  for arm in ('control','treatment'):
   a=s['arms'].get(b+'/'+arm)
   if not a:valid=False;break
-  root=R/'jobs'/b/arm;f='research' if x['method'] in ('M05','M13') and arm=='treatment' else 'critic-finalizer' if x['method']=='M03' and arm=='treatment' else 'reviser'
+  root=R/'jobs'/b/arm;f='research' if x['method'] in ('M05','M13','M14') and arm=='treatment' else 'critic-finalizer' if x['method']=='M03' and arm=='treatment' else 'reviser'
   if not ((complete(root/f) and (root/f/'final.md').exists()) or (root/'DISPOSITION.json').exists()):valid=False
  if valid and not (R/'evaluations'/b/'assignment.md').exists():evaluations.append(b)
 # Predeclared mechanical terminal handoff for retained v2/M13; no candidate science modified.

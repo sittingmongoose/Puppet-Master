@@ -1,0 +1,423 @@
+{
+  "schema": "er11-independent-assessment-source-map-v1",
+  "block": "B-03",
+  "exact_input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-03/input-map.json",
+  "exact_input_map_sha256": "a0cbf6adb541433e11220dcc5a1e29270a0c1f94d5d0acc27328e903419791f4",
+  "source_policy": "Only B-03 mapped artifacts, declared I03 brief/plan/rubric and public primary evidence were used for scientific judgments. Candidate/critic notes were treated as claims, not independent corroboration. No candidate repair.",
+  "sources": [
+    {
+      "id": "E01",
+      "title": "ODK Collect form lifecycle",
+      "url": "https://docs.getodk.org/collect-forms/",
+      "version_or_release": "Rolling documentation; edits introduced Collect 2025.2 / Central 2025.1.4",
+      "locator_or_symbol": "Downloading forms; Sending finalized forms; Editing finalized or sent forms",
+      "independent_observation": "Offline finalized forms wait for upload; uploaded forms have a sent state. Post-finalization editing is opt-in, disabled by default. None of these states establishes business stock acceptance.",
+      "retrieval_manifest_ids": [],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E02",
+      "title": "ODK Central Entities",
+      "url": "https://docs.getodk.org/central-entities/",
+      "version_or_release": "Rolling documentation checked 2026-10-09; server filtering corroborated by E03",
+      "locator_or_symbol": "Important limitations; Entity List Access; Filter by property; Managing Entity conflicts",
+      "independent_observation": "The limitations note conflicts with the detailed access section. All attached Entities are the default, not an unconditional rule. Server ownership/property filters reduce delivered rows. Property filters cover App Users/Public Links; privileged Web roles bypass them; Data Collector property-filter access is empty. Exact equality and user-defined properties limit filters. String-backed properties and receipt-order/offline-chain conflict handling remain supported.",
+      "retrieval_manifest_ids": [
+        "ODK_ENTITIES_RETRY",
+        "ODK_ENTITY_ACCESS_EXCEPTION"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E03",
+      "title": "ODK Central Entity-filtering release",
+      "url": "https://forum.getodk.org/t/odk-central-v2026-2-entities-filtering-and-web-forms-as-default/58254",
+      "version_or_release": "Central v2026.2.0, released 2026-07-03",
+      "locator_or_symbol": "Official announcement opening and Entity filtering sections; GitHub release tag",
+      "independent_observation": "ODK announced controlling which Entities users download in July 2026. Filtering protects privacy and differs from in-form choice filters. This predates both candidates; it is not a post-evaluation change.",
+      "retrieval_manifest_ids": [
+        "CENTRAL_2026_2_FORUM",
+        "ODK_CENTRAL_2026_2"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E04",
+      "title": "ODK account and form-mediated access",
+      "url": "https://docs.getodk.org/central-users/",
+      "version_or_release": "Rolling documentation",
+      "locator_or_symbol": "Web User Roles; Managing App Users; App User Properties",
+      "independent_observation": "Data Collectors cannot browse submissions. App Users are form-assigned; authorized form data can expose Entities. User properties can govern delivered Entities. Role names and hiding fields alone are insufficient privacy evidence.",
+      "retrieval_manifest_ids": [
+        "ODK_USERS_RETRY"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E05",
+      "title": "ODK web submission modes",
+      "url": "https://docs.getodk.org/central-submissions/",
+      "version_or_release": "Rolling, Central-version-specific documentation",
+      "locator_or_symbol": "Allowing web form users to work offline; Public Access Links; exports",
+      "independent_observation": "ODK Web Forms lack offline submission; Enketo has an offline queue whose automatic send requires an open form on reconnection. CSV/OData and independent submission review states are documented.",
+      "retrieval_manifest_ids": [
+        "ODK_SUBMISSIONS_RETRY"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E06",
+      "title": "ODK offline Entity version gate",
+      "url": "https://docs.getodk.org/entities-intro/",
+      "version_or_release": "Central and Collect >=2024.3.0 for offline Entity create/update",
+      "locator_or_symbol": "Technical limitations: registration not immediately visible in follow-up forms",
+      "independent_observation": "The stated offline minimum and web-form exception are supported. This minimum does not freeze all later server capabilities at 2024.3.",
+      "retrieval_manifest_ids": [
+        "ODK_ENTITIES_INTRO_RETRY"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E07",
+      "title": "ODK client/device and form capabilities",
+      "url": "https://docs.getodk.org/collect-intro/",
+      "version_or_release": "Rolling documentation; candidate source pin v2026.3.5 separately checked",
+      "locator_or_symbol": "Collect overview and device guidance",
+      "independent_observation": "Collect is Android-oriented and offline-capable, with numeric, barcode, media and repeat support. Actual nursery phone/tag fit is not demonstrated.",
+      "retrieval_manifest_ids": [
+        "ODK_INTRO_RETRY",
+        "ODK_BARCODE_RETRY"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E08",
+      "title": "ODK multilingual forms",
+      "url": "https://docs.getodk.org/guide-form-language/",
+      "version_or_release": "Rolling documentation",
+      "locator_or_symbol": "Translation tests; Form language vs application UI language",
+      "independent_observation": "Translated content and app UI language are distinct. Actual worker languages and reviewed translations remain local inputs.",
+      "retrieval_manifest_ids": [
+        "ODK_MULTI_LANGUAGE",
+        "ODK_LANGUAGE_RETRY"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E09",
+      "title": "ODK encryption and local exposure",
+      "url": "https://docs.getodk.org/central-encryption/",
+      "version_or_release": "Rolling documentation with explicitly historical v0.6 limitations",
+      "locator_or_symbol": "Encryption limitations; self-supplied and project-managed modes",
+      "independent_observation": "Lost passphrase, prior-submission coverage, inability to disable in the documented version, export/OData restrictions, and blank/last-saved local-data gaps support conditional caveats. They do not prove a current deployed configuration.",
+      "retrieval_manifest_ids": [
+        "ODK_ENCRYPTION_RETRY",
+        "ODK_SECURITY"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E10",
+      "title": "Collect failed-send retry evolution",
+      "url": "https://github.com/getodk/collect/issues/4589",
+      "version_or_release": "Issue 4589; merge 12ef1a3f4f2257591cfe912754a44305dd686a2a, 2021-07-07",
+      "locator_or_symbol": "Issue description; PR 4655 merge; EditSavedFormTest.java added",
+      "independent_observation": "The same-ID/different-XML failure report and merged failed-send editing restriction are supported. Test code was added; no evaluator or candidate executed it.",
+      "retrieval_manifest_ids": [
+        "COLLECT_ISSUE",
+        "COLLECT_FIX"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E11",
+      "title": "Collect pinned release and save code",
+      "url": "https://github.com/getodk/collect/releases/tag/v2026.3.5",
+      "version_or_release": "v2026.3.5 published 2026-09-28; 87bf04ec0a94e3dec1abc87db73c8326d8667162",
+      "locator_or_symbol": "SaveFormToDisk.java: updateInstanceDatabase, save/finalization/encryption branch",
+      "independent_observation": "Release identity matches the candidate pin. Encrypted finalization disables reopening in the inspected branch; this is not an end-to-end retry guarantee.",
+      "retrieval_manifest_ids": [
+        "COLLECT_2026_3_5",
+        "COLLECT_TAG",
+        "COLLECT_SAVE"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E12",
+      "title": "Collect connectivity-message evolution",
+      "url": "https://github.com/getodk/collect/issues/1703",
+      "version_or_release": "Historical comments 2020-09-14 and 2021-10-18; related issue 4489",
+      "locator_or_symbol": "issuecomment-692369777; issuecomment-945531458; issue 4489",
+      "independent_observation": "The v1.28.0 form-list/individual-download distinction and later manual-download follow-up are supported. Issue 4489 is not a merged PR; the comment does not establish every upload fix shipped.",
+      "retrieval_manifest_ids": [
+        "COLLECT_1703_COMMENTS",
+        "COLLECT_4489"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E13",
+      "title": "ERPNext stock/batch documentation",
+      "url": "https://docs.frappe.io/erpnext/batch",
+      "version_or_release": "Rolling docs with v15 negative-stock statement",
+      "locator_or_symbol": "Batch requirements, filtering, split/move; Stock Reservation prerequisites",
+      "independent_observation": "Batch Item/warehouse/quantity and Sales Order reservation concepts are supported. Documentation is broader than the source exceptions and does not establish nursery offline fit.",
+      "retrieval_manifest_ids": [
+        "ERP_BATCH_DOC",
+        "ERP_BATCH_DOC_EXCEPTION",
+        "ERP_RESERVE_DOC"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E14",
+      "title": "ERPNext N1 reservation implementation",
+      "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.py",
+      "version_or_release": "v15.121.3; 26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+      "locator_or_symbol": "validate_reservation_based_on_serial_and_batch; validate_stock_reservation_settings; get_available_qty_to_reserve; batch.py get_batch_qty/get_batches",
+      "independent_observation": "Sales Order restriction, actual-stock-based batch availability, reserved-stock deduction and conditional excess cap/throw are supported. This is not germination forecasting or an executed concurrency guarantee.",
+      "retrieval_manifest_ids": [
+        "ERP_RESERVATION_N1",
+        "ERP_BATCH_N1",
+        "ERP_15_121_3",
+        "ERP_TAG_N1"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E15",
+      "title": "ERPNext N1 negative-batch code exception",
+      "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/serial_and_batch_bundle/serial_and_batch_bundle.py",
+      "version_or_release": "v15.121.3 pinned commit",
+      "locator_or_symbol": "set_incoming_rate_for_outward_transaction lines 684-744; validate_negative_batch and is_stock_reco_for_valuation_adjustment lines 757-778",
+      "independent_observation": "The inspected guard is conditional and has a defined valuation-adjustment exception. The candidate accurately avoids a system-wide negative-stock guarantee.",
+      "retrieval_manifest_ids": [
+        "ERP_BUNDLE_N1",
+        "ERP_BUNDLE_GUARD_DETAIL"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E16",
+      "title": "ERPNext N2 batch schema and source",
+      "url": "https://github.com/frappe/erpnext/blob/v15.122.0/erpnext/stock/doctype/batch/batch.json",
+      "version_or_release": "v15.122.0, published 2026-10-07; bfd8100d42162048248b7b947f2e21fdf7999a91",
+      "locator_or_symbol": "batch_id/item/parent_batch/batch_qty/stock_uom; batch.py recalculate_batch_qty/split_batch; allow_negative_stock_for_batch",
+      "independent_observation": "Required unique ID, required Item link, optional parent, Float/read-only quantity, read-only item UOM and split/recalculation are supported. The batch override defaults to 0 and warns of valuation risk; bundle source gives it priority over the Stock Setting.",
+      "retrieval_manifest_ids": [
+        "ERP_BATCH_SCHEMA_N2",
+        "ERP_BATCH_N2",
+        "ERP_BUNDLE_N2",
+        "ERP_15_122_0",
+        "ERP_TAG_N2"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E17",
+      "title": "ERPNext units and item barcode semantics",
+      "url": "https://docs.frappe.io/erpnext/uom",
+      "version_or_release": "Rolling documentation",
+      "locator_or_symbol": "Must be Whole Number; Stock Settings Default Stock UOM; Item Barcodes; Stock Reconciliation Scan Mode",
+      "independent_observation": "Nos is a default unit, not proof of integer enforcement. UoM integer rules/conversion are separate; item barcodes do not automatically identify nursery batches. Reconciliation scanning counts, not reserves.",
+      "retrieval_manifest_ids": [
+        "ERP_UOM",
+        "ERP_SETTINGS",
+        "ERP_ITEM",
+        "ERP_RECONCILE_DOC"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E18",
+      "title": "ERPNext permissions and linked customer data",
+      "url": "https://docs.frappe.io/erpnext/permissions",
+      "version_or_release": "Rolling documentation",
+      "locator_or_symbol": "Roles, permission levels, User Permissions; Customer Add addresses and contacts",
+      "independent_observation": "Document/field/action/user permissions and independently linked addresses/contacts support explicit cross-path testing. No installed role configuration has been proven safe.",
+      "retrieval_manifest_ids": [
+        "ERP_PERMISSIONS",
+        "ERP_CUSTOMER"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E19",
+      "title": "ERPNext bundle migration and issue/fix/backport/release",
+      "url": "https://github.com/frappe/erpnext/issues/38796",
+      "version_or_release": "Reported v15.6.1; fixes merged 2023-12-17; v15.7.0 released 2023-12-20",
+      "locator_or_symbol": "PR 38754 (0743289925d0866a16373c05cfb81825b58e35ba); backport 38806 (8990c48e7bf1c556ad234756259d991519769e09); v15.7.0 release; test_delivery_note.py",
+      "independent_observation": "The corrected chain is explicitly supported. The PR modifies test code, including an old serial-number return case; this does not prove comprehensive batch reconciliation safety. The separate SCR cancellation fix remains distinct.",
+      "retrieval_manifest_ids": [
+        "ERP_ISSUE",
+        "ERP_FIX",
+        "ERP_BACKPORT",
+        "ERP_15_7",
+        "ERP_FIX_FILES",
+        "ERP_MIGRATION"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E20",
+      "title": "RxDB replication architecture",
+      "url": "https://rxdb.info/replication.html",
+      "version_or_release": "Rolling, unpinned package documentation",
+      "locator_or_symbol": "Checkpoint iteration; deterministic sort; Error handling; Security; configuration example",
+      "independent_observation": "Reconnect catch-up, stable checkpoint order, duplicate deliveries after lost response, backend handling, untrusted clocks and documented defaults/examples are supported. Push 5/pull 10 are example values, not throughput limits.",
+      "retrieval_manifest_ids": [],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E21",
+      "title": "RxDB transactions/conflicts",
+      "url": "https://rxdb.info/transactions-conflicts-revisions.html",
+      "version_or_release": "Rolling page updated 2026-10-05; package unpinned",
+      "locator_or_symbol": "Why no transactions; single-document atomic write; defaultConflictHandler.resolve",
+      "independent_observation": "No cross-client ACID transaction across intermittently offline clients and master-preserving default conflict handling support the architecture warning, not a universal impossibility claim about every offline protocol.",
+      "retrieval_manifest_ids": [],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E22",
+      "title": "farmOS agricultural model",
+      "url": "https://farmos.org/guide/assets/",
+      "version_or_release": "Rolling documentation",
+      "locator_or_symbol": "Plant Assets; movement/location guide; inventory logic measure+unit/reset/increment/decrement",
+      "independent_observation": "Groups/individual plants, completed movement-derived location and unit-specific quantity adjustments support a domain-model alternative. These sources do not establish customer reservation behavior.",
+      "retrieval_manifest_ids": [
+        "FARM_ASSETS",
+        "FARM_LOCATION",
+        "FARM_INVENTORY"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E23",
+      "title": "farmOS client and compatibility evidence",
+      "url": "https://github.com/farmOS/field-kit",
+      "version_or_release": "Mutable develop README and farmOS.js documentation",
+      "locator_or_symbol": "README develop/deploy and dated 2.x description; farmOS.js experimental warning and LWW model",
+      "independent_observation": "Field Kit advertises an offline PWA with persistence. The reviewed README/library docs do not certify a current v3 pairing. Version ambiguity is real; LWW documentation belongs to farmOS.js and is not proof all Field Kit versions fail.",
+      "retrieval_manifest_ids": [
+        "FIELD_KIT_README",
+        "FARM_JS",
+        "FARM_INSTALL"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E24",
+      "title": "WCAG color criterion",
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/#use-of-color",
+      "version_or_release": "W3C Recommendation 2024-12-12",
+      "locator_or_symbol": "Web-content scope; SC 1.4.1, Level A",
+      "independent_observation": "Non-color redundancy is the relevant criterion. Native and print usability checks are not alone WCAG conformance evidence.",
+      "retrieval_manifest_ids": [
+        "WCAG",
+        "WCAG_COLOR"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E25",
+      "title": "Growflo Mobile Inventory vendor claim",
+      "url": "https://www.growflo.com/mobile-commerce/mobile-inventory/",
+      "version_or_release": "Live vendor page, no product pin",
+      "locator_or_symbol": "Works Offline; barcode scanning; stock checks/moves; ERP sync",
+      "independent_observation": "The advertised capabilities are present. They are vendor statements, not verified collision/privacy/budget behavior.",
+      "retrieval_manifest_ids": [
+        "GROWFLO"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E26",
+      "title": "Atlas Core Tally vendor claim",
+      "url": "https://atlascore.cloud/suite/tally",
+      "version_or_release": "Live vendor page, no product pin",
+      "locator_or_symbol": "Offline mode; dispositions; permission-gated capabilities; Android/iPhone; submitting",
+      "independent_observation": "Android/current and iPhone/future wording, offline jobs, scanning and operation permissions are supported. Submission and Core reconciliation are distinct; installed behavior and price remain untested.",
+      "retrieval_manifest_ids": [
+        "ATLAS"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution"
+    },
+    {
+      "id": "E27",
+      "title": "Spriggo vendor features and advertised price",
+      "url": "https://spriggo.tech/",
+      "version_or_release": "Primary vendor search-index result, current page text extraction empty",
+      "locator_or_symbol": "90 days free, then $300/month; features search result",
+      "independent_observation": "Independent primary-vendor search excerpts describe batch moves/splits/merges and lineage, worker activities and order management. The vendor distinguishes forthcoming production-planning, photo and hold capabilities. The advertised 90-day trial and $300/month price were also independently recovered. Direct live home/features-page extraction returned no authored text; indexed vendor statements are attributed leads, not verified runtime capabilities, a contractual quote, currency confirmation or total-cost estimate. Twelve paid months at the nominal rate is illustrative arithmetic.",
+      "retrieval_manifest_ids": [
+        "SPRIGGO_HOME",
+        "SPRIGGO_FEATURES"
+      ],
+      "operation": "independent public primary-source retrieval and static inspection; no product execution",
+      "additional_primary_url": "https://spriggo.tech/features",
+      "web_evidence_basis": "Primary vendor search-index excerpts independently inspected during this assessment; direct HTTP extraction limitation retained in the retrieval manifest."
+    }
+  ],
+  "retrieval_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-03/retrieval-manifest.json",
+    "sha256": "06737220e18105a9f536dce5bbe673751591a1924fb21bbdec9d31a972223ef5",
+    "meaning": "Recorded independent HTTP operations and response hashes. Bodies were inspected as data in memory, not executed or retained wholesale. Error entries were retried or covered by successful official-source access; HTTP 200 alone is not a scientific verdict."
+  },
+  "web_operations": {
+    "observed": [
+      "open",
+      "find",
+      "click",
+      "search_query"
+    ],
+    "domains_used_as_evidence": [
+      "docs.getodk.org",
+      "forum.getodk.org",
+      "github.com",
+      "api.github.com",
+      "raw.githubusercontent.com",
+      "docs.frappe.io",
+      "rxdb.info",
+      "farmos.org",
+      "w3.org",
+      "growflo.com",
+      "atlascore.cloud",
+      "spriggo.tech"
+    ],
+    "limitations": "Web reference IDs are session locators, not source identities. Direct HTTP exposed newer Entity-access content than an initial web-open extraction; the released feature was corroborated independently with its official July announcement and tag. No private provider or account access."
+  },
+  "candidate_reads": {
+    "N2": {
+      "final": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+      "authored_stages": [
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/final.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/critique.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/discovery.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/draft.md"
+      ],
+      "source_roots": [
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/sources",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/sources",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/sources"
+      ],
+      "hash_result": "Every map-listed file matched its declared bytes and SHA-256 at intake. This establishes identity only, not quality."
+    },
+    "N1": {
+      "final": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md",
+      "authored_stages": [
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/critique.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/discovery.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/draft.md",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/final.md"
+      ],
+      "source_roots": [
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/sources",
+        "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/sources"
+      ],
+      "hash_result": "Every map-listed file matched its declared bytes and SHA-256 at intake. This establishes identity only, not quality."
+    }
+  },
+  "source_drift": "Live docs/search-index excerpts are not immutable release truth. Commit/release pins were used where relevant. The ODK default/exception conflict was resolved using release evidence that predates the candidates."
+}

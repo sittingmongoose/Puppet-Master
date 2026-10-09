@@ -1,0 +1,11 @@
+# I05
+
+A regional interpreting cooperative assigns paid interpreters to hospitals, schools, and public agencies. Twenty-six interpreters and four coordinators work across three counties, often with short-notice changes and long travel gaps. The cooperative has $4,200 for a first release and can support a browser-based tool, but coordinators may need to update the day's schedule from a phone. Client names, meeting topics, and interpreter availability are sensitive; interpreters should receive only the details needed for an assignment. The current process relies on calls and a shared calendar, so two coordinators occasionally offer the same person to different clients. Some interpreters use assistive technology, and several clients require a specific communication mode or access arrangement. The cooperative wants to track request, offer, acceptance, travel estimate, completion, and invoice readiness without becoming a full payroll system. It also needs a clear way to mark a request as unfilled rather than imply that a qualified interpreter is available. Members disagree about whether clients should receive automated confirmations and whether coordinators can reassign accepted work without asking the interpreter. The board will review the first six weeks before approving further spending.
+
+Required deliverable obligations (equal in both arms):
+O1 Independently discover useful unfamiliar tools, products and materially different approaches beyond the thin plan.
+O2 Investigate consequential primary source/code behavior and governing defaults, units/types, limits and applicability for selected mechanisms.
+O3 Investigate at least one relevant issue/fix/regression/release or evolution chain; say when evidence is absent/inapplicable.
+O4 Compare every exact P clause after plan reveal; distinguish correction, optional enhancement, user decision, already-covered, rejected and uncertain findings.
+O5 Retain useful alternatives, conditions, original constraints, disagreement and uncertainty in one self-contained coherent final; do not replace text with IDs.
+O6 Propose meaningful discriminating validations and separate executed checks from proposed work. No runtime available is honest; do not pretend proposals ran. Scope is this small product brief, not unlimited production guarantees.

@@ -1,0 +1,2608 @@
+{
+  "block": "B-02",
+  "case": "I02",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+      "sha256": "4d8c8cb6cb6edb0b11b8bc4bb762929c2381f009afe1e92566bdd61d301c71f5",
+      "expected_sha256": "4d8c8cb6cb6edb0b11b8bc4bb762929c2381f009afe1e92566bdd61d301c71f5",
+      "verified": true,
+      "arm": "N2",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/source-map.json",
+      "sha256": "20a82d3f40a59f060a100e7c44b1ad37de331983205be41646a19b0e8ce5ebf4",
+      "expected_sha256": "20a82d3f40a59f060a100e7c44b1ad37de331983205be41646a19b0e8ce5ebf4",
+      "verified": true,
+      "arm": "N2",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/assignment.md",
+      "sha256": "2857b5ea24e7e02fc83d867c9089894240b2e4b90f8229a1e79f314c9e338d75",
+      "expected_sha256": "2857b5ea24e7e02fc83d867c9089894240b2e4b90f8229a1e79f314c9e338d75",
+      "verified": true,
+      "arm": "N2",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/input-map.json",
+      "sha256": "e3b7f81b0fd83de5e0cabb85b57c2168168d3c9d4e8b0082e20fae69f5d964a1",
+      "expected_sha256": "e3b7f81b0fd83de5e0cabb85b57c2168168d3c9d4e8b0082e20fae69f5d964a1",
+      "verified": true,
+      "arm": "N2",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/critic/critique.md",
+      "sha256": "127d40199368d282494138bbd18da2551ec3535f99865edbd9126f85dda69a50",
+      "expected_sha256": "127d40199368d282494138bbd18da2551ec3535f99865edbd9126f85dda69a50",
+      "verified": true,
+      "arm": "N2",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/critic/source-map.json",
+      "sha256": "51b4072938b1188333395f0bd2ada9efc1196ce058cb91ecdaa09a8bc4eafa8d",
+      "expected_sha256": "51b4072938b1188333395f0bd2ada9efc1196ce058cb91ecdaa09a8bc4eafa8d",
+      "verified": true,
+      "arm": "N2",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/critic/assignment.md",
+      "sha256": "8d6f4d257a7c276ca2d3fba253b7411e74b3f44c900f11933cfc0be6ca701383",
+      "expected_sha256": "8d6f4d257a7c276ca2d3fba253b7411e74b3f44c900f11933cfc0be6ca701383",
+      "verified": true,
+      "arm": "N2",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/critic/input-map.json",
+      "sha256": "f97f420796b0eff9ef2f90800aa9345a3ef8d58772209a48d3fbae3e1740cd74",
+      "expected_sha256": "f97f420796b0eff9ef2f90800aa9345a3ef8d58772209a48d3fbae3e1740cd74",
+      "verified": true,
+      "arm": "N2",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/research/discovery.md",
+      "sha256": "fadf589d514af5a689a9acbf7de417fe5ddc6dd40031474c5f80a9fb8feeee15",
+      "expected_sha256": "fadf589d514af5a689a9acbf7de417fe5ddc6dd40031474c5f80a9fb8feeee15",
+      "verified": true,
+      "arm": "N2",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/research/draft.md",
+      "sha256": "20b5ee1831310e7da42891d188697fb08a97594072492ba1b32d8085ff63baac",
+      "expected_sha256": "20b5ee1831310e7da42891d188697fb08a97594072492ba1b32d8085ff63baac",
+      "verified": true,
+      "arm": "N2",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/research/source-map.json",
+      "sha256": "e2f1784d98514eb7c3db5f83230ebc3019a379444fd9aa4c4b845b5c13a26c28",
+      "expected_sha256": "e2f1784d98514eb7c3db5f83230ebc3019a379444fd9aa4c4b845b5c13a26c28",
+      "verified": true,
+      "arm": "N2",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/research/revealed-plan.md",
+      "sha256": "795daf66f46ae2c4feae6cdcaa2502a7d310f394da00fcdf872cfe33c51a484c",
+      "expected_sha256": "795daf66f46ae2c4feae6cdcaa2502a7d310f394da00fcdf872cfe33c51a484c",
+      "verified": true,
+      "arm": "N2",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/research/plan-reveal.json",
+      "sha256": "f1baa21f44ca5e80a5cff177badc73cd4c33c2c45d549f02f7bf85a65fb44773",
+      "expected_sha256": "f1baa21f44ca5e80a5cff177badc73cd4c33c2c45d549f02f7bf85a65fb44773",
+      "verified": true,
+      "arm": "N2",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/research/assignment.md",
+      "sha256": "13bc4917ab020e7c786f0c0114fb4f6db9db013b2474582cd75ecc7fb665adb4",
+      "expected_sha256": "13bc4917ab020e7c786f0c0114fb4f6db9db013b2474582cd75ecc7fb665adb4",
+      "verified": true,
+      "arm": "N2",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/research/input-map.json",
+      "sha256": "3a8584b3b1468aabf76c19d2178591e7b225f6cae18a64ce3396d1d0390dfca6",
+      "expected_sha256": "3a8584b3b1468aabf76c19d2178591e7b225f6cae18a64ce3396d1d0390dfca6",
+      "verified": true,
+      "arm": "N2",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/sources/critic/independent-evidence.md",
+      "sha256": "c6f61c50aae29a1583ba9bd9352dded4bd661573def26c4004e3d0b14c52f085",
+      "arm": "N2",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/sources/critic/index.md",
+      "sha256": "919c6a351fbb0a89d313155610c9ba1d29051f9794c6fb6c551e66475479174f",
+      "arm": "N2",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/sources/index.md",
+      "sha256": "ff7d22a4d3c1426705a29df3d7fe2d9493eef2c63d2ce46019b9ab775cdf640b",
+      "arm": "N2",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/sources/research/governance-and-safety.md",
+      "sha256": "c5c5572716898df2146d210386f7a306bdac7739a57b1c0c6a91b9a88c1730b4",
+      "arm": "N2",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/sources/research/index.md",
+      "sha256": "49957d63d0ed0ca0ad3dbf3ce5052f7195f1d06fab3adbbc2abdc2095b233b42",
+      "arm": "N2",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/sources/research/power-platform.md",
+      "sha256": "71012ff124453403465db7937227b0e2157ca2a8a4501fe4eedab8aba0501910",
+      "arm": "N2",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/sources/research/snipe-it.md",
+      "sha256": "d34711d3e192f63e5049bf084eb83de07d023f4bc6d5268223e5bddf2c5365f3",
+      "arm": "N2",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/sources/reviser-independent-evidence.md",
+      "sha256": "73790e8aef0706674ba72137f0c95be0168b77eb59b4ea9d8fce078506025ccd",
+      "arm": "N2",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/critic/sources/independent-evidence.md",
+      "sha256": "c6f61c50aae29a1583ba9bd9352dded4bd661573def26c4004e3d0b14c52f085",
+      "arm": "N2",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/critic/sources/index.md",
+      "sha256": "919c6a351fbb0a89d313155610c9ba1d29051f9794c6fb6c551e66475479174f",
+      "arm": "N2",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/research/sources/governance-and-safety.md",
+      "sha256": "c5c5572716898df2146d210386f7a306bdac7739a57b1c0c6a91b9a88c1730b4",
+      "arm": "N2",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/research/sources/index.md",
+      "sha256": "49957d63d0ed0ca0ad3dbf3ce5052f7195f1d06fab3adbbc2abdc2095b233b42",
+      "arm": "N2",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/research/sources/power-platform.md",
+      "sha256": "71012ff124453403465db7937227b0e2157ca2a8a4501fe4eedab8aba0501910",
+      "arm": "N2",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/research/sources/snipe-it.md",
+      "sha256": "d34711d3e192f63e5049bf084eb83de07d023f4bc6d5268223e5bddf2c5365f3",
+      "arm": "N2",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/critique.md",
+      "sha256": "275f3e598dc6313547144297d98c46186b55712ecef9e11d56e32f8ff593e64a",
+      "expected_sha256": "275f3e598dc6313547144297d98c46186b55712ecef9e11d56e32f8ff593e64a",
+      "verified": true,
+      "arm": "N1",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/final.md",
+      "sha256": "c47996a437e025ad74cde813c38d554179c6cb5315371932aa8d17d1d6486d76",
+      "expected_sha256": "c47996a437e025ad74cde813c38d554179c6cb5315371932aa8d17d1d6486d76",
+      "verified": true,
+      "arm": "N1",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/source-map.json",
+      "sha256": "6381ff6b31e5f06e89c2b99e7333106dbbe1377fc876a8e5fe3a3a75cad554e3",
+      "expected_sha256": "6381ff6b31e5f06e89c2b99e7333106dbbe1377fc876a8e5fe3a3a75cad554e3",
+      "verified": true,
+      "arm": "N1",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/evidence-first.md",
+      "sha256": "58fa760c0492c3d348d4934b36308744d590fbd69d111bb21ef414682386d415",
+      "expected_sha256": "58fa760c0492c3d348d4934b36308744d590fbd69d111bb21ef414682386d415",
+      "verified": true,
+      "arm": "N1",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/assignment.md",
+      "sha256": "02b370e716dfee8b831ce46185168da57a00370f8a0be790e1a87e4c1df94a64",
+      "expected_sha256": "02b370e716dfee8b831ce46185168da57a00370f8a0be790e1a87e4c1df94a64",
+      "verified": true,
+      "arm": "N1",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/input-map.json",
+      "sha256": "1328ee8268e00013bfe02d1f464b64dd160fd955891a4a3bc2f2077d134ea597",
+      "expected_sha256": "1328ee8268e00013bfe02d1f464b64dd160fd955891a4a3bc2f2077d134ea597",
+      "verified": true,
+      "arm": "N1",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/discovery.md",
+      "sha256": "10456fac76c006a5568b605a1a0ad8877d8d76bd8d742d5efae339090459ffa2",
+      "expected_sha256": "10456fac76c006a5568b605a1a0ad8877d8d76bd8d742d5efae339090459ffa2",
+      "verified": true,
+      "arm": "N1",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/draft.md",
+      "sha256": "79f442e462c380436d0b5dafcd830fe895a7270ce536b93810160ca2b1fb5026",
+      "expected_sha256": "79f442e462c380436d0b5dafcd830fe895a7270ce536b93810160ca2b1fb5026",
+      "verified": true,
+      "arm": "N1",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+      "sha256": "49ad31887edbf3887de07124f24d3cd5d69b265ec18694a82c766f8e7b6a38c3",
+      "expected_sha256": "49ad31887edbf3887de07124f24d3cd5d69b265ec18694a82c766f8e7b6a38c3",
+      "verified": true,
+      "arm": "N1",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/source-map.json",
+      "sha256": "978c2f0ef58d0eaf826faa34ed38eb91a34083ca4db370433d2b9e2032c0e95b",
+      "expected_sha256": "978c2f0ef58d0eaf826faa34ed38eb91a34083ca4db370433d2b9e2032c0e95b",
+      "verified": true,
+      "arm": "N1",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/revealed-plan.md",
+      "sha256": "795daf66f46ae2c4feae6cdcaa2502a7d310f394da00fcdf872cfe33c51a484c",
+      "expected_sha256": "795daf66f46ae2c4feae6cdcaa2502a7d310f394da00fcdf872cfe33c51a484c",
+      "verified": true,
+      "arm": "N1",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/plan-reveal.json",
+      "sha256": "9109918203efe2a9c027fe20929fb633cd0920170704d20c9a3541e0084f9e1e",
+      "expected_sha256": "9109918203efe2a9c027fe20929fb633cd0920170704d20c9a3541e0084f9e1e",
+      "verified": true,
+      "arm": "N1",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/assignment.md",
+      "sha256": "f6b79c6193f83c99bfac74b5bad7b1d2a6e10851a1444c3a8944bad05d5c2d7d",
+      "expected_sha256": "f6b79c6193f83c99bfac74b5bad7b1d2a6e10851a1444c3a8944bad05d5c2d7d",
+      "verified": true,
+      "arm": "N1",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/input-map.json",
+      "sha256": "b0cd8ce00f3bb5f2c20757e3c435205c4be24d060cfb13ed0239adf9fa15f76b",
+      "expected_sha256": "b0cd8ce00f3bb5f2c20757e3c435205c4be24d060cfb13ed0239adf9fa15f76b",
+      "verified": true,
+      "arm": "N1",
+      "kind": "exact mapped frozen stage artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/sources/index.md",
+      "sha256": "2378c035f4183a3f0a67b9299982dcc70df5996de767411a5d84fac20030b101",
+      "arm": "N1",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/sources/primary-evidence-after-reveal.md",
+      "sha256": "8c7a2030f0585df7429dd80fbe3b8d1adfd96a86baa261d6e8990ee222fefa0d",
+      "arm": "N1",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/sources/primary-evidence.md",
+      "sha256": "37499380d1a8389d334535a0cbf131fb2bdf0d19245c72dfc145ba1ea552d727",
+      "arm": "N1",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/sources/accessibility.md",
+      "sha256": "b87c88e6dc7b8fe54678c18474c642d085d2ffa040c95c5159085905f1060015",
+      "arm": "N1",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/sources/asset-trackers.md",
+      "sha256": "e2e401bb04283d7e76655e17e9ae96e4963e4abd3fa07091d6e32f331e8a5213",
+      "arm": "N1",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/sources/index.md",
+      "sha256": "63ff680df4e92e66bb339b29e94bed65d4e397b3ac1dec3028f9b40ceba9ed3d",
+      "arm": "N1",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/sources/lending-platforms.md",
+      "sha256": "16a570120605619207f7c6d7368d4f46b8f8f17315d69d63926fbeb9984864a7",
+      "arm": "N1",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/sources/low-code.md",
+      "sha256": "6941a6a361360046e6910789b8f40be8ee085824346156bb82587fb7053f229f",
+      "arm": "N1",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/sources/release-chain.md",
+      "sha256": "3002c30253a0c1861662287f9700863612ab793c25482539b32259f7aa0f07b8",
+      "arm": "N1",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/sources/workflow-platforms.md",
+      "sha256": "97753a83412c72d7ceca736e7c85a74385aa97bbb0ac49e1bc3bbd7d28c65cf5",
+      "arm": "N1",
+      "kind": "allowed source-root index/topic evidence; hash observed by reviewer"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-02/assignment.md",
+      "sha256": "e20536618a8dd6053b490ecfbc2d93bf801281f47d3697941ef02288581d3424",
+      "kind": "review assignment or original contract"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-02/input-map.json",
+      "sha256": "31987fe2a6278317708ecc64051ce9949f6d47e9f7cbfbee96a8639224647343",
+      "kind": "review assignment or original contract"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+      "sha256": "40b54d82cf91b93fa6a0ac63a2b2c7926f32edc0c658487b850fda0fbde736f3",
+      "kind": "review assignment or original contract"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/plan-root-only.md",
+      "sha256": "795daf66f46ae2c4feae6cdcaa2502a7d310f394da00fcdf872cfe33c51a484c",
+      "kind": "review assignment or original contract"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "kind": "review assignment or original contract"
+    }
+  ],
+  "arms": {
+    "N2": {
+      "actual_arm": "control",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+      "final_sha256": "4d8c8cb6cb6edb0b11b8bc4bb762929c2381f009afe1e92566bdd61d301c71f5",
+      "grade": "PASS_WITH_LIMITATIONS",
+      "material_findings": [],
+      "minor_findings": [
+        {
+          "id": "N2-minor-01",
+          "type": "CRITIC_SOURCE_LOCATOR_SLIP",
+          "severity": "minor; process-only, not carried into final",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/critic/critique.md",
+          "candidate_lines": "33",
+          "candidate_passage": "P1’s FDA/general cleaning row cites ER11-S07 alongside retained ER11-S10.",
+          "original_obligation": "O2/O5 source-grounded criticism",
+          "primary_evidence": [
+            {
+              "id": "EV37",
+              "url": "https://www.fda.gov/medical-devices/hearing-aids/how-get-hearing-aids",
+              "locator": "Care and cleaning guidance; not clinic reprocessing protocol"
+            }
+          ],
+          "reasoning": "ER11-S07 is the HHS cloud-computing record, while ER11-S10 is the FDA record. The row’s actual caution is supported and the final correctly cites ER11-S10 at line 35; this is a critic-stage navigation slip, not an incorrect final clinical conclusion."
+        }
+      ],
+      "unresolved": [
+        {
+          "issue": "Clinic jurisdiction, legal status and record classification",
+          "classification": "honest external input, not unfinished available-source review",
+          "limits": "No legal determination; HHS guidance is conditional. No dollar-currency inference fixes jurisdiction."
+        },
+        {
+          "issue": "Clinical amendment authority and identifiable retention",
+          "classification": "explicit original user decisions",
+          "limits": "No role or duration chosen; before identifiable use obtain approved policy and contract/backup/delete treatment."
+        },
+        {
+          "issue": "Exact hearing-device IFU and fitting schema/types/units",
+          "classification": "device-specific input absent from brief",
+          "limits": "No generic settings or reprocessing procedure inferred."
+        },
+        {
+          "issue": "Purchased tier/contract, child/family data terms, actual accessibility and runtime fit",
+          "classification": "honest procurement and execution boundary",
+          "limits": "Public sources do not prove actual configured workflow, clinical suitability, quote, data eligibility or acceptance."
+        },
+        {
+          "issue": "Exact Power Apps tenant/SKU, accountable maker/partner, audit and offline configuration",
+          "classification": "conditional implementation/procurement input",
+          "limits": "Not an installed app or proved immutable/history/concurrency design."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "name": "Original obligations and explicit constraints",
+          "coverage": "Complete: O1–O6 and every explicit brief constraint",
+          "judgment": "PASS within brief scope",
+          "reasoning": "The final is a self-contained loan-pilot recommendation rather than a source-ID list. Discovery offers an existing supported clinic module, managed low-code/Dataverse, hosted device-only Snipe-IT, controlled paper and unsupported custom/self-hosted work. It investigates current source behavior, contains a bounded security fix/release chain, compares every P clause, preserves options and open decisions, and proposes discriminating tests. Ten staff, two locations, no sysadmin, annual budget, six-month pilot, five fields, cleaning/check gate, reminders, workstation privacy, screen-reader workflow, no full chart, undecided note authority/retention and unfunded year-one integration all remain explicit. Manual reminder delivery is allowed, but the required reminder outcome is not dropped.",
+          "evidence": {
+            "claim_checks": [
+              "C01",
+              "C02",
+              "C07",
+              "C08",
+              "C10",
+              "C18",
+              "C19"
+            ],
+            "candidate_final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+              "lines": "9–129"
+            },
+            "original_brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+            "exact_plan": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/plan-root-only.md"
+          }
+        },
+        {
+          "axis": 2,
+          "name": "Consequential source facts, defaults, types, units, limits and applicability",
+          "coverage": "Complete for the frozen final’s consequential mechanisms and source conclusions",
+          "judgment": "PASS with externally unresolved implementation/contract facts",
+          "reasoning": "Independently checked native/browser offline distinction, SQLite cache retention, profile/role/flow limits, OS sync behavior, per-column conflict semantics, canvas exclusion and explicit row-version API concurrency. Audit default/privileged deletion and lack of immutable built-in history are checked against the platform, not inferred from the critic. Pricing announcement/effective dates and BAA scope are conditional; fitting units/cleaning procedures are not invented. Snipe API/version/web-impact boundaries and WCAG/HHS scope are accurate. Neither the supported existing clinic module nor tenant terms, device IFUs or jurisdiction can be established from the supplied brief; they are honest external inputs, not a deferral of an available required research task.",
+          "evidence": {
+            "claim_checks": [
+              "C02",
+              "C03",
+              "C04",
+              "C05",
+              "C06",
+              "C07",
+              "C08",
+              "C09",
+              "C10"
+            ],
+            "candidate_final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+              "lines": "9–129"
+            },
+            "original_brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+            "exact_plan": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/plan-root-only.md"
+          }
+        },
+        {
+          "axis": 3,
+          "name": "Useful unfamiliar discovery and materially different alternatives",
+          "coverage": "Complete: retained options and trade-offs reviewed",
+          "judgment": "PASS; useful narrower discovery",
+          "reasoning": "The strongest contribution is mechanism depth for a realistic managed register rather than the number of vendors. Existing service-backed clinic software could avoid new infrastructure; hosted asset software is retained for device custody only; managed low-code can model loan events but needs an accountable owner and exact controls; paper is a protected downtime route. Custom/self-hosted work is set aside for the no-sysadmin pilot, while funded support remains a condition rather than an absolute ban. Costs, privacy/data-model limits and reconciliation burdens are present. The absence of N1’s additional products is not an omission against a brief that sets no exhaustive market-survey requirement.",
+          "evidence": {
+            "claim_checks": [
+              "C02",
+              "C03",
+              "C09",
+              "C18"
+            ],
+            "candidate_final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+              "lines": "9–129"
+            },
+            "original_brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+            "exact_plan": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/plan-root-only.md"
+          }
+        },
+        {
+          "axis": 4,
+          "name": "Every exact P clause and its disposition",
+          "coverage": "Complete: P1–P6 individually adjudicated",
+          "judgment": "PASS; no false correction or unsupported rejection",
+          "reasoning": "P1 correctly distinguishes return from clean-and-check readiness. P2 retains exact fields/minimization and makes coded identity optional. P3 keeps the plan intent while making task acceptance measurable. P4 retains reminders and family privacy, with channel/automation choices open. P5 leaves clinical authority undecided while proposing a separately verified history safeguard. P6 respects undecided retention but uses the original brief to resolve first-year integration exclusion. Correction is defined as adding scope/acceptance detail, not declaring the whole clause wrong. No supported P scope is rejected.",
+          "evidence": {
+            "claim_checks": [
+              "C01",
+              "C05",
+              "C06",
+              "C07",
+              "C08"
+            ],
+            "candidate_final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+              "lines": "9–129"
+            },
+            "original_brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+            "exact_plan": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/plan-root-only.md"
+          }
+        },
+        {
+          "axis": 5,
+          "name": "Draft → critic → final preservation and fallible criticism",
+          "coverage": "Complete: discovery, draft, full critic and final compared; all substantive criticisms adjudicated",
+          "judgment": "PASS; supported findings/options preserved",
+          "reasoning": "The final retains the predecessor’s managed-owner condition, native cache limits, device-only asset option, conditional existing module, paper alternative, true brief fields, native fitting units, physical privacy, open authority/retention and no-chart/integration boundary. M1 is a useful strengthening: no stale offline allocation and nonoverlapping site paper pools. M2 is a valid implementation caveat, while the draft’s safeguard wording should not be inflated into an already-proven platform claim. The final independently checks audit deletion and keeps it proposed. WCAG, pricing, advisory and FDA refinements preserve source bounds. The critic’s FDA ID slip is not carried into the final. No material supported finding disappears into a citation list.",
+          "evidence": {
+            "claim_checks": [
+              "C01",
+              "C03",
+              "C04",
+              "C05",
+              "C06",
+              "C07",
+              "C08",
+              "C10",
+              "C18",
+              "C19"
+            ],
+            "candidate_final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+              "lines": "9–129"
+            },
+            "original_brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+            "exact_plan": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/plan-root-only.md"
+          }
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed versus executed validation",
+          "coverage": "Complete: all proposed checks and executed-work claims reviewed",
+          "judgment": "PASS; no product validation was executed",
+          "reasoning": "Tests target failures rather than merely success screens: attempts from every nonready state, last-ready-unit races, delayed/offline sync, server row-version rejection, cache-loss/revocation, admin audit deletion, paper reconciliation, actual staff keyboard/screen-reader use, wrong recipient/preference/language, shared-workstation/physical viewing and exact IFU/contract/cost gates. Each has a stated discriminating outcome. The final expressly says the research reviewed public documentation and did not run tenant/runtime/clinical/privacy or product acceptance tests. Provenance checks are not presented as a clinical or product oracle. Current configuration/release applicability must be established when the proposals are actually run.",
+          "evidence": {
+            "claim_checks": [
+              "C03",
+              "C04",
+              "C05",
+              "C06",
+              "C07",
+              "C08",
+              "C19"
+            ],
+            "candidate_final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+              "lines": "9–129"
+            },
+            "original_brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+            "exact_plan": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/plan-root-only.md"
+          }
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "id": "C01",
+            "arms": [
+              "N2",
+              "N1"
+            ],
+            "claim": "Brief, obligations and exact plan applicability",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "9–40, 62–118"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "11–79, 103–146"
+              }
+            ],
+            "primary_evidence": [],
+            "original_evidence": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+                "lines": "3, 6–11"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/plan-root-only.md",
+                "lines": "3–8"
+              }
+            ],
+            "judgment": "Both retain the pediatric loan context, ten staff, two sites, $7,500 annual budget, no sysadmin, six-month pilot, all five required loan fields, cleaning AND checking before reassignment, plain reminders, workstation privacy, staff screen-reader use, no full-chart transfer, open amendment/retention policy and first-year integration exclusion. The P1 and P6 clarifications follow explicit brief text, not a newly invented premium specification."
+          },
+          {
+            "id": "C02",
+            "arms": [
+              "N2"
+            ],
+            "claim": "Power Apps pricing, ownership and HIPAA scope",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "9–13, 48–52, 84, 90–99"
+              }
+            ],
+            "primary_evidence": [
+              "EV45",
+              "EV15",
+              "EV41"
+            ],
+            "judgment": "The announced annual-billing list rate is $20/user/month before 2027-01-01 and $22 thereafter: ten seats give $2,400/$2,640 annual license subtotals. The announcement preserves existing subscriptions through their term and applies new pricing to purchases/renewals; the final asks for exact tenant/SKU/current quote and does not promise either subtotal as total pilot cost. Power Apps appears in Microsoft’s covered service list; the BAA does not make the customer compliant. A clinic owner/maker or paid partner remains a prerequisite, appropriate for a clinic without a sysadmin. No actual entitlement or contract was verified."
+          },
+          {
+            "id": "C03",
+            "arms": [
+              "N2"
+            ],
+            "claim": "Canvas browser versus native offline, cache and setup limits",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "13, 21, 80–82, 105–109"
+              }
+            ],
+            "primary_evidence": [
+              "EV18",
+              "EV19",
+              "EV20",
+              "EV21"
+            ],
+            "judgment": "Browser canvas apps cannot run offline. Dataverse offline-first canvas uses native Power Apps Mobile; local SQLite is the primary read/write cache, queued writes synchronize, and cached profile data has no automatic expiry while installed. Profile setup needs Environment Maker, System Administrator or System Customizer; the Basic User alone does not supply all offline-system-table read rights. Published canvas limitations include standalone Dataverse support and no offline Power Automate flows. OS foreground/background differences and cache-loss/revocation are appropriate proposed checks. These facts support online-first pause or separately controlled paper, not a proved native offline assignment solution."
+          },
+          {
+            "id": "C04",
+            "arms": [
+              "N2"
+            ],
+            "claim": "Dataverse conflicts and concurrency mechanism",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "13, 21, 103–108"
+              }
+            ],
+            "primary_evidence": [
+              "EV22",
+              "EV16"
+            ],
+            "judgment": "The mobile conflict documentation describes last update per column and server validation; its conflict-detection setting does not apply to canvas. Optimistic concurrency is an explicit SDK/Web API row-version mechanism (IfRowVersionMatches), not a canvas-form toggle. The final distinguishes stale offline availability from a live server reservation and tests simultaneous assignment, delayed sync and validation rejection. A platform read does not prove the custom gate; the final does not claim it does."
+          },
+          {
+            "id": "C05",
+            "arms": [
+              "N2"
+            ],
+            "claim": "Audit history versus immutable fitting snapshot",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "23, 39, 76, 109"
+              }
+            ],
+            "primary_evidence": [
+              "EV23"
+            ],
+            "judgment": "Dataverse audit configuration is environment/table/column dependent. Default audit retention can be Forever, but privileged deletion and per-record DeleteAuditRecordChangeHistory exist; current native audit export is not supported and retrieval can use Web API/SDK. This is not an immutable clinical snapshot guarantee. The final explicitly treats prior/new-value amendment history as a proposed application safeguard to verify, leaves amendment authority open and proposes user/admin deletion, retention, restore/export tests. No false built-in immutability claim remains."
+          },
+          {
+            "id": "C06",
+            "arms": [
+              "N2",
+              "N1"
+            ],
+            "claim": "WCAG and actual staff accessibility applicability",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "37, 111–113"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "43–51, 86, 142"
+              }
+            ],
+            "primary_evidence": [
+              "EV46",
+              "EV47",
+              "EV48",
+              "EV49",
+              "EV50",
+              "EV51",
+              "EV17",
+              "EV33"
+            ],
+            "judgment": "WCAG 2.2 SC 1.4.1 prohibits color as the only visual means; SC 2.1.1 requires keyboard operation with its path-dependent-input exception; SC 4.1.2 addresses programmatic name/role/value; SC 4.1.3 covers applicable non-focus-changing status messages. It does not require announcing every change or one mandated ARIA implementation. Both finals require actual end-to-end keyboard/screen-reader work, non-color status and focus/error checks. N1 explicitly corrects blanket announcement language. Power Apps accessibility guidance and the Jan 06, 2026 AssetTiger vendor VPAT are useful leads, not proof the clinic’s tasks pass; the latter names WAVE and has mixed support reporting. No accessibility runtime or legal conformance finding is claimed."
+          },
+          {
+            "id": "C07",
+            "arms": [
+              "N2",
+              "N1"
+            ],
+            "claim": "Clinical cleaning, fitting units and scope boundaries",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "35–36, 62–76, 116"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "19–41, 103–114, 137–140"
+              }
+            ],
+            "primary_evidence": [
+              "EV37"
+            ],
+            "judgment": "FDA consumer guidance supports cleaning as instructed and avoiding damaging solvents/alcohol/water; it is not a clinic reprocessing protocol. Neither final invents a disinfection recipe or fitting dB/frequency conversion. Device-specific IFUs and approved clinic procedure are honestly missing external inputs. The functional-check requirement comes directly from the brief. Native fitting field types/units remain device-dependent; operational dates/IDs/events are conceptual model choices. Minimum operational linkage is not declared anonymous and is not a full-record migration."
+          },
+          {
+            "id": "C08",
+            "arms": [
+              "N2",
+              "N1"
+            ],
+            "claim": "Conditional privacy, retention and workstation controls",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "38–40, 80–86, 109–118"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "53–79, 95–97, 131, 137–144"
+              }
+            ],
+            "primary_evidence": [
+              "EV38",
+              "EV39",
+              "EV40",
+              "EV41",
+              "EV15",
+              "EV02"
+            ],
+            "judgment": "HHS states HIPAA itself does not set medical-record retention periods; other applicable law may and safeguards persist through disposal. Minimum-necessary guidance has treatment-disclosure/request exceptions, and internal access must be assessed by role/purpose rather than applying a blanket prohibition to treatment. Cloud ePHI handling can require a BAA even when a provider lacks a decryption key, plus the clinic’s own risk analysis. Both correctly leave jurisdiction, covered-entity status, record classification and actual agreements unresolved. Individual accounts, approved views, physical sight lines, cache/export/session checks are proposed controls, not a demonstrated privacy guarantee. Neither invents a retention duration or funded appointment integration."
+          },
+          {
+            "id": "C09",
+            "arms": [
+              "N2",
+              "N1"
+            ],
+            "claim": "Snipe-IT hosting, data model and status applicability",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "15, 48–56"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "120–123, 145"
+              }
+            ],
+            "primary_evidence": [
+              "EV25",
+              "EV26",
+              "EV27",
+              "EV28"
+            ],
+            "judgment": "Hosted Basic/Small Business/Dedicated pricing is $399.99/$999.99/$2,499.99 annual with unlimited users/assets; public hosting maintenance/update statements do not establish clinical suitability. Unique asset tags and Pending/Undeployable versus Deployable statuses support custody/nonassignability concepts. Custom fieldsets attach through asset models and are not demonstrated per-loan family records; encrypted field limitations/basic validators do not prove a clinical transaction model. Notifications/check-in due mechanisms are product features, not a tested caregiver preference path. Device-only use remains conditional; neither arm declares ordinary asset software a proved pediatric loan system or assumes BAA silence proves no agreement exists."
+          },
+          {
+            "id": "C10",
+            "arms": [
+              "N2"
+            ],
+            "claim": "Snipe-IT API advisory → fix → release chain",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "25, 56"
+              }
+            ],
+            "primary_evidence": [
+              "EV10",
+              "EV07",
+              "EV08"
+            ],
+            "judgment": "GHSA-qffp-xpqv-gqr4 affects versions <=8.6.3 and is patched in 8.7.0. It concerns API checkout validation against soft-deleted targets; the advisory says web equivalents were not vulnerable and reports integrity/availability rather than confidentiality impact. PR #19330 introduced exists_undeleted validation and merged at 81d0197 on July 20, 2026. v8.7.0 was released August 11 (1d05a7c); advisory publication followed August 24. v8.8.0 was listed September 30 at 2c466fa, requiring PHP >=8.2 and recommending 8.4. The final correctly avoids turning this into ordinary-web patient disclosure or product-wide failure. It is a relevant maintenance/evolution chain, not installed-release verification."
+          },
+          {
+            "id": "C18",
+            "arms": [
+              "N2",
+              "N1"
+            ],
+            "claim": "Alternatives, support burden and outage-process logic",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "9–15, 44–52, 80, 90–99"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "90, 99, 114, 120–131"
+              }
+            ],
+            "primary_evidence": [
+              "EV18",
+              "EV21",
+              "EV29",
+              "EV30",
+              "EV34"
+            ],
+            "original_evidence": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+                "lines": "3"
+              }
+            ],
+            "judgment": "Existing supported clinic software, hosted/device-only tooling, managed low-code, a small custom app, existing split lists and controlled paper are materially different approaches, not synonyms for a tracker. N2 narrows custom/self-hosted work for the no-sysadmin pilot but allows a funded accountable partner; N1 retains custom work with support burden. The present split lists are not promoted as a proved solution. N2’s nonoverlapping site device pools/no cross-site movement/paper reconciliation and N1’s pause until current authoritative availability avoid promising simultaneous offline allocation. These are proposed operating controls; no outage process was executed."
+          },
+          {
+            "id": "C19",
+            "arms": [
+              "N2",
+              "N1"
+            ],
+            "claim": "Validation scope and executed/proposed boundary",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "101–129"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "133–159"
+              }
+            ],
+            "primary_evidence": [
+              "EV16",
+              "EV22",
+              "EV23",
+              "EV29",
+              "EV30",
+              "EV44",
+              "EV14",
+              "EV46",
+              "EV50"
+            ],
+            "original_evidence": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+                "lines": "11"
+              }
+            ],
+            "judgment": "Both provide discriminating negative/bypass, sequential-family, two-site conflict, role, workstation, actual staff accessibility, reminder, contract and capacity/support checks. N2 adds platform audit-deletion and OS/cache tests; N1 adds vendor-policy contradictions, preference-removal and optional requestable regression. All are explicitly proposals. Authored executed work is public-source review, reveal and evidence-artifact bookkeeping; no tenant/product/runtime/real-data or clinical/legal test is claimed. Frozen artifacts permit checking the wording and source facts, not independently certifying every historical author operation. Hash/JSON/zero-exit artifacts are provenance checks, not scientific proof of a safe app."
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "meaning": "Complete review of consequential frozen deliverable claims, not production/runtime certification."
+      },
+      "plan_dispositions": [
+        {
+          "clause": "P1",
+          "disposition": "Partly already covered; correction/clarification",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+            "lines": "35, 72–74"
+          },
+          "reasoning": "Cleaning AND a separate functional check must precede availability; incomplete/failed/damaged/uncertain devices stay nonassignable. Retains preparation, assignment and return. Device procedure is not inferred from FDA consumer advice.",
+          "claim_checks": [
+            "C01",
+            "C07",
+            "C19"
+          ],
+          "exact_clause": "P1: Track each loan through preparation, assignment, return, cleaning, and availability for reassignment."
+        },
+        {
+          "clause": "P2",
+          "disposition": "Already-covered minimum-data intent; correction; optional coded key",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+            "lines": "36, 62–68"
+          },
+          "reasoning": "Explicitly retains all five required fields and no full-chart transfer; fitting types/units are IFU-specific. A linkable random loan key is optional and not anonymous; reception visibility remains a decision.",
+          "claim_checks": [
+            "C01",
+            "C07",
+            "C08"
+          ],
+          "exact_clause": "P2: Associate loan records with the minimum patient and caregiver details needed for contact and handoff."
+        },
+        {
+          "clause": "P3",
+          "disposition": "Already-covered intent; measurable acceptance clarification",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+            "lines": "37, 111–113"
+          },
+          "reasoning": "Retains screen-reader labels/non-color cues and adds actual keyboard/focus/error/status/zoom tasks. Applicable WCAG checks and actual user test do not become a vendor conformance guarantee.",
+          "claim_checks": [
+            "C06",
+            "C19"
+          ],
+          "exact_clause": "P3: Provide accessible status controls, including screen-reader labels and cues that do not depend on color."
+        },
+        {
+          "clause": "P4",
+          "disposition": "Already-covered outcomes; clarification; channel/automation choice",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+            "lines": "38, 80–86, 114–115"
+          },
+          "reasoning": "Reminders remain required; a manual due queue is an implementation option rather than dropping them. Plain minimal content, preference/language, approved roles and physical/session privacy are explicit. Automation is conditional.",
+          "claim_checks": [
+            "C01",
+            "C08",
+            "C19"
+          ],
+          "exact_clause": "P4: Support plain-language reminders and a staff view that limits exposure of other families' records."
+        },
+        {
+          "clause": "P5",
+          "disposition": "Explicit clinical user decision; proposed safeguard",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+            "lines": "39, 76, 109"
+          },
+          "reasoning": "No default editor is selected. Snapshot/amendment attribution is a proposed application safeguard, not an immutable Dataverse property or a decided legal requirement; implementation and clinical authority need approval.",
+          "claim_checks": [
+            "C05",
+            "C08"
+          ],
+          "exact_clause": "P5: The role allowed to amend fitting notes after reassignment is a clinical governance decision."
+        },
+        {
+          "clause": "P6",
+          "disposition": "Retention user/legal decision; first-year integration exclusion; optional future scope",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+            "lines": "40, 84–86, 90–99"
+          },
+          "reasoning": "No retention period is invented. Original brief resolves the first-year budget boundary despite the thin plan’s open-scope phrasing; later integration remains separately fundable. No full chart/import or bidirectional sync is added.",
+          "claim_checks": [
+            "C01",
+            "C08"
+          ],
+          "exact_clause": "P6: Identifiable loan-history retention and any appointment-system connection remain open scope choices."
+        }
+      ],
+      "preservation_coverage": {
+        "complete": true,
+        "read_full_stages": [
+          "discovery",
+          "draft",
+          "critic critique",
+          "final"
+        ],
+        "critic_adjudications": [
+          {
+            "id": "M1",
+            "critic_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/critic/critique.md",
+              "lines": "15–21"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+              "lines": "13, 21, 80, 103–108"
+            },
+            "disposition": "Accept substantive strengthening",
+            "reason": "The draft was online-first and warned about offline cache, but did not explicitly prohibit assigning from stale ready state or define nonoverlapping paper pools. EV22/EV16 support the conflict distinction. Final adds pause/no stale allocation, site-pool separation and targeted online/offline race/OS/cache tests without claiming execution.",
+            "claims": [
+              "C03",
+              "C04",
+              "C18",
+              "C19"
+            ]
+          },
+          {
+            "id": "M2",
+            "critic_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/critic/critique.md",
+              "lines": "23–27, 37"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+              "lines": "23, 39, 76, 109"
+            },
+            "disposition": "Accept clarification; do not overread draft as proven platform claim",
+            "reason": "Draft lines 25 and 48–50 proposed history/snapshot/immutable override safeguards, not a demonstrated built-in Dataverse guarantee. Critic is right to demand exact implementation verification; final independently adds audit retention/deletion evidence and user/admin tests. Its clarification is useful, but the critic’s Material label is not itself proof the predecessor made a consequential false platform claim.",
+            "claims": [
+              "C05",
+              "C19"
+            ]
+          },
+          {
+            "id": "P1–P6 and other refinements",
+            "critic_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/critic/critique.md",
+              "lines": "33–46, 50"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+              "lines": "25–40, 56, 101–120"
+            },
+            "disposition": "Substantively retained with appropriate bounds",
+            "reason": "Retains functional check, required fields/native units, actual accessibility, manual/automated reminder distinction, physical workstation privacy, open amendment/retention decisions and integration exclusion. Pricing remains a subtotal; API advisory is not patient disclosure; FDA guidance remains general; jurisdiction/HIPAA are not inferred from dollars. Correct final FDA source ID avoids the critic-stage locator slip.",
+            "claims": [
+              "C01",
+              "C02",
+              "C06",
+              "C07",
+              "C08",
+              "C10",
+              "C19"
+            ]
+          }
+        ],
+        "remaining": [],
+        "material_preservation_loss_found": false
+      },
+      "grade_limits": [
+        "This is a fresh artifact/source assessment of only B-02/I02 and the exact input-map. No other cases, evaluator answers, campaign history or private provider internals were consulted. No candidate artifact was repaired.",
+        "All exact mapped complete stage artifacts and source indexes/topic notes were read; duplicate copied source notes were recognized by hash and substantive content was not counted repeatedly. Full final prose, not citation lists or stage grades, governed the judgments.",
+        "Primary coverage means every consequential source-dependent recommendation, plan disposition, retained alternative and validation boundary in these finals was adjudicated. It does not mean every footer, all external links, all 70 commits of a PR, every vendor SKU or all possible hearing devices were exhaustively audited.",
+        "Relevant public primary pages, normative WCAG, issue comments, PR/release records, vendor VPAT and selected released code were independently retrieved as untrusted text. No downloaded source was executed and no product account/runtime/device, screen-reader, clinical, legal or vendor-contract validation was available.",
+        "The large PR #19539 patch response was not fully reviewed or used as a passing witness; its temporary capture was discarded. The finding rests on the issue comment, PR metadata/body, v8.8.0 release entry and selected released symbols. Web/API/HTML captures can change over time; retained evidence hashes identify this review’s bounded snapshots.",
+        "Authored researcher/critic operation statements were read as claims, not independent proof of their native execution. Input-map delivery flags and saved final hashes establish available scientific artifacts, not candidate native/T3 terminal success, durations, billing or token usage.",
+        "No scientific repair, accounts/configuration/service/Git/canon change, nested delegation, R9 protocol or ledger workflow was performed. All newly retained files are inside the assigned evaluation directory.",
+        "Both full-quality passes permit qualitative comparison under this rubric. They do not establish equal quality, a causal method effect, a speed winner, production readiness or a purchased system."
+      ],
+      "quality_null_reason": null
+    },
+    "N1": {
+      "actual_arm": "treatment",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "final_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+      "final_sha256": "49ad31887edbf3887de07124f24d3cd5d69b265ec18694a82c766f8e7b6a38c3",
+      "grade": "PASS_WITH_LIMITATIONS",
+      "material_findings": [],
+      "minor_findings": [
+        {
+          "id": "N1-minor-01",
+          "type": "SOURCE_HISTORY_OMISSION",
+          "severity": "minor",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+          "candidate_lines": "91, 123, 145",
+          "candidate_passage": "The final says issue #18750 has no linked fix on the reviewed page; the same premise is inherited from critic/critique.md lines 67–69.",
+          "original_obligation": "O2 primary behavior/applicability; O3 evolution; O5 critic-fallible preservation",
+          "primary_evidence": [
+            {
+              "id": "EV04",
+              "url": "https://github.com/grokability/snipe-it/issues/18750",
+              "locator": "Aug 27, 2026 maintainer comment, retained numbered lines 280–287"
+            },
+            {
+              "id": "EV52",
+              "url": "https://github.com/grokability/snipe-it/pull/19539",
+              "version": "Merged 2026-08-22; e2ce943bcbc2ba770fdf4136333fbf6ef8607dd3"
+            },
+            {
+              "id": "EV54",
+              "url": "https://github.com/grokability/snipe-it/releases/tag/v8.8.0",
+              "version": "v8.8.0, published 2026-09-30; Requestables Overhaul and PR #19539"
+            },
+            {
+              "id": "EV55",
+              "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Actions/CheckoutRequests/FulfillCheckoutRequestAction.php",
+              "symbol": "markFullyFulfilled, lines 114–131"
+            },
+            {
+              "id": "EV56",
+              "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Models/CheckoutRequest.php",
+              "symbol": "scopeOpen/scopePending, lines 309–323"
+            }
+          ],
+          "reasoning": "A blank Development panel is not absence of a fix reference in comments. Available merged/released source writes fulfillment state/time and excludes terminal requests from pending scope. This establishes available relevant follow-up, not full runtime resolution of every reporter path. The error is confined to an optional requestables regression rationale; no selected deployment, categorical rejection, budget or clinical gate depends on it, and the #18951 fix chain independently meets O3. Therefore it is minor rather than MATERIALLY_INCOMPLETE. It is disclosed, not repaired in the candidate."
+        },
+        {
+          "id": "N1-minor-02",
+          "type": "CRITIC_FALSE_CORRECTION_PREMISE",
+          "severity": "minor; process-only, not a final factual defect",
+          "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/critique.md",
+          "candidate_lines": "88; compare research/draft.md line 90 and discovery.md line 98",
+          "candidate_passage": "The critic corrects ten AppSheet Core seats to $1,200 rather than $600.",
+          "original_obligation": "O5 evidence-backed treatment of criticism; O2 pricing",
+          "primary_evidence": [
+            {
+              "id": "EV01",
+              "url": "https://about.appsheet.com/pricing/",
+              "locator": "Core $10/user/month; Workspace entitlement caveat"
+            }
+          ],
+          "reasoning": "The predecessor draft already states $1,200 annually and the discovery has the same arithmetic. Thus the $600 correction is unsupported as a finding about that predecessor. The final retains the correct $1,200 conditional amount and useful included-Workspace caveat (lines 98, 125, 146); no material false price is introduced."
+        }
+      ],
+      "unresolved": [
+        {
+          "issue": "Clinic jurisdiction, legal status and record classification",
+          "classification": "honest external input, not unfinished available-source review",
+          "limits": "No legal determination; HHS guidance is conditional. No dollar-currency inference fixes jurisdiction."
+        },
+        {
+          "issue": "Clinical amendment authority and identifiable retention",
+          "classification": "explicit original user decisions",
+          "limits": "No role or duration chosen; before identifiable use obtain approved policy and contract/backup/delete treatment."
+        },
+        {
+          "issue": "Exact hearing-device IFU and fitting schema/types/units",
+          "classification": "device-specific input absent from brief",
+          "limits": "No generic settings or reprocessing procedure inferred."
+        },
+        {
+          "issue": "Purchased tier/contract, child/family data terms, actual accessibility and runtime fit",
+          "classification": "honest procurement and execution boundary",
+          "limits": "Public sources do not prove actual configured workflow, clinical suitability, quote, data eligibility or acceptance."
+        },
+        {
+          "issue": "Vendor age/SSL/backup/region/field-fit questions and quote/add-on/minimum-seat limits",
+          "classification": "primary contradictions or externally unverified procurement facts",
+          "limits": "Lend Engine restricted to synthetic demo; other alternatives remain conditional. #18750 follow-up is available and is assessed as a minor error, not listed as unavailable."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "name": "Original obligations and explicit constraints",
+          "coverage": "Complete: O1–O6 and every explicit brief constraint",
+          "judgment": "PASS within brief scope",
+          "reasoning": "All original outcomes and resource boundaries are retained in complete prose. Broad independent discovery, source/default/code investigations, a valid maintenance issue→fix→release chain, every exact P disposition, criticism adjudication and meaningful proposed checks are present. The final corrects the draft’s treatment of whether reminders belong in the pilot: reminders and preference are required. It does not transfer full records, choose an amendment authority or a retention period, or fund appointment integration. Synthetic demos remain permissible while policy decisions are outstanding; no identifiable-data eligibility or procurement winner is claimed.",
+          "evidence": {
+            "claim_checks": [
+              "C01",
+              "C07",
+              "C08",
+              "C11",
+              "C13",
+              "C18",
+              "C19"
+            ],
+            "candidate_final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+              "lines": "11–159"
+            },
+            "original_brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+            "exact_plan": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/plan-root-only.md"
+          }
+        },
+        {
+          "axis": 2,
+          "name": "Consequential source facts, defaults, types, units, limits and applicability",
+          "coverage": "Complete for the frozen final’s consequential conclusions, including a detected optional-history error",
+          "judgment": "PASS with minor source-history limitation",
+          "reasoning": "Primary sources support Lend Engine’s tier/pricing, >60-day inactive trigger, EU location, age-policy uncertainty, SSL contradiction and email suppression; Blueprint/myTurn marketing-level leads; AssetTiger paid tiers/offline queue/vendor VPAT; Cheqroom work-order/availability separation and quote constraints; AppSheet per-user/Core inclusion, 2,500 database rows, same-row last-writer-wins, loaded-browser/cache limits and SMS discontinuation. WCAG and HHS are applied conditionally. The main Snipe maintenance chain is accurate. The separate #18750 no-linked-fix assertion overlooks a maintainer link, a merged PR and released follow-up code: this is an available-source error, not external uncertainty. It remains minor for the optional workflow and does not overturn the conditional recommendation.",
+          "evidence": {
+            "claim_checks": [
+              "C06",
+              "C07",
+              "C08",
+              "C09",
+              "C11",
+              "C12",
+              "C13",
+              "C14",
+              "C15",
+              "C16",
+              "C17"
+            ],
+            "candidate_final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+              "lines": "11–159"
+            },
+            "original_brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+            "exact_plan": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/plan-root-only.md"
+          }
+        },
+        {
+          "axis": 3,
+          "name": "Useful unfamiliar discovery and materially different alternatives",
+          "coverage": "Complete: all retained product/approach leads reviewed",
+          "judgment": "PASS; useful broad discovery",
+          "reasoning": "Lend Engine supplies an assistive-lending lead with concrete policy obstacles; Blueprint is directly hearing-clinic-related but conditional on existing licensing/no migration; AssetTiger and hosted Snipe can be device-only registries with transaction/privacy limits; Cheqroom exposes the important distinction between maintenance records and unavailability; AppSheet offers a separate Device/Loan model with ownership/licensing/cache risks; myTurn is retained as a marketing-level inquiry. Existing split lists, bespoke work and controlled paper remain with reconciliation/support limits. Lead ordering is no longer a procurement winner. The breadth is useful because different mechanisms are tied to the clinical handoff problem, not because there are more citations.",
+          "evidence": {
+            "claim_checks": [
+              "C09",
+              "C13",
+              "C14",
+              "C15",
+              "C16",
+              "C17",
+              "C18"
+            ],
+            "candidate_final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+              "lines": "11–159"
+            },
+            "original_brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+            "exact_plan": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/plan-root-only.md"
+          }
+        },
+        {
+          "axis": 4,
+          "name": "Every exact P clause and its disposition",
+          "coverage": "Complete: P1–P6 individually adjudicated",
+          "judgment": "PASS; mandatory outcomes separated from optional policy",
+          "reasoning": "P1 adds the clean-and-functional-check gate while making release-role/event implementation optional. P2 retains minimum brief fields without deciding identity/fit-record placement. P3 limits WCAG language to relevant tasks. P4 makes reminders/preference required and channels/consent/interpreter/timeout design decisions. P5 remains clinical governance with optional history. P6 keeps retention open and excludes integration from year one. The final does not accept the critic’s evidence-first clinician-only default as policy and does not reject supported plan intent. Its scope tightening follows the original brief.",
+          "evidence": {
+            "claim_checks": [
+              "C01",
+              "C06",
+              "C07",
+              "C08",
+              "C13"
+            ],
+            "candidate_final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+              "lines": "11–159"
+            },
+            "original_brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+            "exact_plan": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/plan-root-only.md"
+          }
+        },
+        {
+          "axis": 5,
+          "name": "Draft → critic → final preservation and fallible criticism",
+          "coverage": "Complete: discovery/draft, evidence-first packet, full critique/critic final and authored research final compared",
+          "judgment": "PASS with explicitly rejected minor critic premises",
+          "reasoning": "The final retains supported broad alternatives, price/contract conditions, work-order versus gate distinction, AppSheet ownership/collision/cache risk, device-only field-scope caution, proper maintenance permission chain, synthetic-only/real-data boundary and all open decisions. M1–M8 generally refine rather than erase useful findings. Blanket accessibility/role/identity assumptions and optional-reminder wording are corrected. Critic’s $600 Core-price counterexample is not in the predecessor and is rejected as a process-only false premise; correct arithmetic remains. M9’s valid maintenance chain is retained, but its unsupported no-linked-fix premise is inherited and recorded as a minor final error. No supported option is erased merely because the critic did not prefer it.",
+          "evidence": {
+            "claim_checks": [
+              "C01",
+              "C06",
+              "C08",
+              "C11",
+              "C12",
+              "C13",
+              "C14",
+              "C15",
+              "C16",
+              "C17",
+              "C18",
+              "C19"
+            ],
+            "candidate_final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+              "lines": "11–159"
+            },
+            "original_brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+            "exact_plan": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/plan-root-only.md"
+          }
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed versus executed validation",
+          "coverage": "Complete: ten validation groups and execution boundary reviewed",
+          "judgment": "PASS; no product validation was executed",
+          "reasoning": "Synthetic sequential family loans exercise active/history/export/delete/backup leakage. Return/clean/fail/pass/reservation tests distinguish a tracking label or work order from an enforceable gate. Tests cover actual role authority, two-site delayed same-row collisions, waiting-room active/back/cache/export/print/sight-line exposure, actual staff screen-reader/keyboard tasks, wrong/missing preference and email suppression, failed delivery, vendor policy contradictions, version-scoped permission/request regressions and retention-driven capacity/support. Every group is expressly proposed; source review, reveal and hashes/JSON are the only authored executed work. No tenant, trial, reminder, accessibility, outage or release installation is claimed. The #18750 test is still discriminating despite its incomplete historical rationale.",
+          "evidence": {
+            "claim_checks": [
+              "C06",
+              "C08",
+              "C11",
+              "C12",
+              "C13",
+              "C16",
+              "C17",
+              "C19"
+            ],
+            "candidate_final": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+              "lines": "11–159"
+            },
+            "original_brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+            "exact_plan": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/plan-root-only.md"
+          }
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "id": "C01",
+            "arms": [
+              "N2",
+              "N1"
+            ],
+            "claim": "Brief, obligations and exact plan applicability",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "9–40, 62–118"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "11–79, 103–146"
+              }
+            ],
+            "primary_evidence": [],
+            "original_evidence": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+                "lines": "3, 6–11"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/plan-root-only.md",
+                "lines": "3–8"
+              }
+            ],
+            "judgment": "Both retain the pediatric loan context, ten staff, two sites, $7,500 annual budget, no sysadmin, six-month pilot, all five required loan fields, cleaning AND checking before reassignment, plain reminders, workstation privacy, staff screen-reader use, no full-chart transfer, open amendment/retention policy and first-year integration exclusion. The P1 and P6 clarifications follow explicit brief text, not a newly invented premium specification."
+          },
+          {
+            "id": "C06",
+            "arms": [
+              "N2",
+              "N1"
+            ],
+            "claim": "WCAG and actual staff accessibility applicability",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "37, 111–113"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "43–51, 86, 142"
+              }
+            ],
+            "primary_evidence": [
+              "EV46",
+              "EV47",
+              "EV48",
+              "EV49",
+              "EV50",
+              "EV51",
+              "EV17",
+              "EV33"
+            ],
+            "judgment": "WCAG 2.2 SC 1.4.1 prohibits color as the only visual means; SC 2.1.1 requires keyboard operation with its path-dependent-input exception; SC 4.1.2 addresses programmatic name/role/value; SC 4.1.3 covers applicable non-focus-changing status messages. It does not require announcing every change or one mandated ARIA implementation. Both finals require actual end-to-end keyboard/screen-reader work, non-color status and focus/error checks. N1 explicitly corrects blanket announcement language. Power Apps accessibility guidance and the Jan 06, 2026 AssetTiger vendor VPAT are useful leads, not proof the clinic’s tasks pass; the latter names WAVE and has mixed support reporting. No accessibility runtime or legal conformance finding is claimed."
+          },
+          {
+            "id": "C07",
+            "arms": [
+              "N2",
+              "N1"
+            ],
+            "claim": "Clinical cleaning, fitting units and scope boundaries",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "35–36, 62–76, 116"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "19–41, 103–114, 137–140"
+              }
+            ],
+            "primary_evidence": [
+              "EV37"
+            ],
+            "judgment": "FDA consumer guidance supports cleaning as instructed and avoiding damaging solvents/alcohol/water; it is not a clinic reprocessing protocol. Neither final invents a disinfection recipe or fitting dB/frequency conversion. Device-specific IFUs and approved clinic procedure are honestly missing external inputs. The functional-check requirement comes directly from the brief. Native fitting field types/units remain device-dependent; operational dates/IDs/events are conceptual model choices. Minimum operational linkage is not declared anonymous and is not a full-record migration."
+          },
+          {
+            "id": "C08",
+            "arms": [
+              "N2",
+              "N1"
+            ],
+            "claim": "Conditional privacy, retention and workstation controls",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "38–40, 80–86, 109–118"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "53–79, 95–97, 131, 137–144"
+              }
+            ],
+            "primary_evidence": [
+              "EV38",
+              "EV39",
+              "EV40",
+              "EV41",
+              "EV15",
+              "EV02"
+            ],
+            "judgment": "HHS states HIPAA itself does not set medical-record retention periods; other applicable law may and safeguards persist through disposal. Minimum-necessary guidance has treatment-disclosure/request exceptions, and internal access must be assessed by role/purpose rather than applying a blanket prohibition to treatment. Cloud ePHI handling can require a BAA even when a provider lacks a decryption key, plus the clinic’s own risk analysis. Both correctly leave jurisdiction, covered-entity status, record classification and actual agreements unresolved. Individual accounts, approved views, physical sight lines, cache/export/session checks are proposed controls, not a demonstrated privacy guarantee. Neither invents a retention duration or funded appointment integration."
+          },
+          {
+            "id": "C09",
+            "arms": [
+              "N2",
+              "N1"
+            ],
+            "claim": "Snipe-IT hosting, data model and status applicability",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "15, 48–56"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "120–123, 145"
+              }
+            ],
+            "primary_evidence": [
+              "EV25",
+              "EV26",
+              "EV27",
+              "EV28"
+            ],
+            "judgment": "Hosted Basic/Small Business/Dedicated pricing is $399.99/$999.99/$2,499.99 annual with unlimited users/assets; public hosting maintenance/update statements do not establish clinical suitability. Unique asset tags and Pending/Undeployable versus Deployable statuses support custody/nonassignability concepts. Custom fieldsets attach through asset models and are not demonstrated per-loan family records; encrypted field limitations/basic validators do not prove a clinical transaction model. Notifications/check-in due mechanisms are product features, not a tested caregiver preference path. Device-only use remains conditional; neither arm declares ordinary asset software a proved pediatric loan system or assumes BAA silence proves no agreement exists."
+          },
+          {
+            "id": "C11",
+            "arms": [
+              "N1"
+            ],
+            "claim": "Snipe-IT maintenance issue → permission fix → release chain",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "91, 123, 145"
+              }
+            ],
+            "primary_evidence": [
+              "EV05",
+              "EV06",
+              "EV09",
+              "EV08"
+            ],
+            "judgment": "Issue #18951 concerns a regular user’s maintenance attachment/view permission in a v8.4.1 multiple-company/location-scoped setup. PR #18964 added a separate maintenance permission and merged May 4, 2026 at bd4150a. The maintainer expressly left historical cross-company access outside that fix. v8.5.0 at 90c8689 (May 12) lists #18951/#18964. N1 preserves those configuration and historical-access boundaries and treats current v8.8.0 as time-sensitive, not approved for deployment. This satisfies O3 independently of the separate #18750 problem."
+          },
+          {
+            "id": "C12",
+            "arms": [
+              "N1"
+            ],
+            "claim": "Snipe-IT requestable issue #18750 history",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "91, 123, 145"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/critique.md",
+                "lines": "63–69"
+              }
+            ],
+            "primary_evidence": [
+              "EV04",
+              "EV52",
+              "EV54",
+              "EV55",
+              "EV56"
+            ],
+            "judgment": "The no-linked-fix-on-the-page assertion is false: the issue’s Aug 27 maintainer comment links #19539. That PR merged Aug 22 at e2ce943bcbc2ba770fdf4136333fbf6ef8607dd3; v8.8.0’s release body lists Requestables Overhaul and the PR. Released FulfillCheckoutRequestAction::markFullyFulfilled writes state, fulfilled_at, fulfilled_by and checkout_actionlog_id; CheckoutRequest::scopeOpen/scopePending excludes terminal states. This proves available follow-up/fix evidence, not a runtime proof every reporter path is fixed. The final’s conditional current-version regression test remains sensible. The omission is minor because requestables are optional, no product is rejected or selected on this basis, and the separately correct O3 chain is retained. It is not an honestly unavailable source and is recorded as an independent disagreement with the critic."
+          },
+          {
+            "id": "C13",
+            "arms": [
+              "N1"
+            ],
+            "claim": "Lend Engine feature/price/tier and child-data/default-policy tensions",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "53–63, 83, 120, 131, 143–144"
+              }
+            ],
+            "primary_evidence": [
+              "EV42",
+              "EV43",
+              "EV44"
+            ],
+            "judgment": "Plus lists $25/month ($300 annual arithmetic), 10 sites and unlimited staff, with advertised assistive lending/prompts/custom fields/maintenance; this is a demo lead, not proved clinical fit. Policy describes day-before due email and stopping email by removing the address, not a demonstrated preference field. It defines >60 days without administrator access as inactive with permanent account deletion, says EU hosting, and has an under-13 rule/toy-library exception that does not settle staff-entered child-linked clinic data. Pricing marks SSL for all displayed plans whereas policy describes Free/Standard non-SSL and Plus SSL (with a Standard custom-domain exception). Pricing places backups on Business. N1 preserves the conflicts, exact deletion trigger and age/data-location/backup/exit questions; it neither declares the product permitted nor prohibited by law and restricts evaluation to synthetic records."
+          },
+          {
+            "id": "C14",
+            "arms": [
+              "N1"
+            ],
+            "claim": "Blueprint OMS and myTurn domain discoveries",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "121, 126"
+              }
+            ],
+            "primary_evidence": [
+              "EV03",
+              "EV24"
+            ],
+            "judgment": "Blueprint advertises hearing-clinic inventory, multi-location stock, loaner/trial history, agreements and return recalls. No reviewed primary price establishes affordability, and the final appropriately requires existing licensing or a narrow affordable module without practice-management migration. myTurn advertises multi-location lending, barcode/RFID, reminders and assistive-technology use; its highlighted June 2026 update is not claimed to be the latest release. Gate, terms, accessibility and price remain marketing-level unknowns. Retaining these as conditional inquiries is useful discovery rather than evasion or unsupported suitability."
+          },
+          {
+            "id": "C15",
+            "arms": [
+              "N1"
+            ],
+            "claim": "AssetTiger paid-plan scope, offline queue and vendor accessibility report",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "122, 137–146"
+              }
+            ],
+            "primary_evidence": [
+              "EV34",
+              "EV35",
+              "EV33"
+            ],
+            "judgment": "Basic annual price is $220 for up to 500 assets; paid plans list unlimited users, due-date check-in/out and maintenance. The FAQ describes offline scans queued locally without establishing conflict-safe assignment. The January 2026 VPAT is vendor-authored, identifies WAVE and contains support limitations; it is not an actual staff task result. N1 accurately keeps loan-event field scope, quarantine enforcement, collision behavior and family/session privacy as demo questions and device-only use as an option. It does not equate queueing with two-site safety or vendor audit-log marketing with independent immutability proof."
+          },
+          {
+            "id": "C16",
+            "arms": [
+              "N1"
+            ],
+            "claim": "Cheqroom work orders versus actual availability, defaults and cost",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "124, 138, 144"
+              }
+            ],
+            "primary_evidence": [
+              "EV11",
+              "EV12",
+              "EV13",
+              "EV14",
+              "EV36"
+            ],
+            "judgment": "Operations Requests are an add-on, move Draft→Open→In Progress→Closed, and explicitly do not change item availability. A separate maintenance flag can be configured unavailable; users with maintenance permissions can still reserve/check out flagged items, which is why a flag is not a proved clinical release gate. System templates include location/description, default Low priority, typed maintenance/inspection/cleaning fields; they are customizable examples, not a required clinic schema. Business starts at $275/admin/month, covers up to three locations and custom roles: one/two admin arithmetic is $3,300/$6,600 annual before add-ons/minimums/services. N1 calls for a distinct blocking flag AND proving interactions on the actual tier, rather than asserting a universal hard block. The privileged bypass is a useful source qualification, but its omission as an explicit sentence does not create a material guarantee where none was claimed."
+          },
+          {
+            "id": "C17",
+            "arms": [
+              "N1"
+            ],
+            "claim": "AppSheet license, rows, same-row conflict, offline and SMS evolution",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "90, 98, 125, 141, 143, 146"
+              }
+            ],
+            "primary_evidence": [
+              "EV01",
+              "EV02",
+              "EV29",
+              "EV30",
+              "EV31",
+              "EV32"
+            ],
+            "judgment": "Core lists $10/user/month: ten separately purchased seats are $1,200/year; some Workspace entitlements include Core and ten test users can test free. Core AppSheet databases list 2,500 rows/database, not 2,500 generic spreadsheet rows or an unlimited-history allowance. Concurrent changes to one row are last-writer-wins; sync sends queued local changes and refreshes server/app state, with initial-online/loaded-browser/cache constraints and prolonged-offline cautions. This does not prove every offline design unsafe or a normalized schema safe. The default SMS channel was discontinued after 2025-04-21; custom Twilio remains a documented route. N1 accurately limits these claims and keeps costs, ownership, cache privacy and collision tests explicit. Vendor SOC/HIPAA-support statements are not independent legal findings."
+          },
+          {
+            "id": "C18",
+            "arms": [
+              "N2",
+              "N1"
+            ],
+            "claim": "Alternatives, support burden and outage-process logic",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "9–15, 44–52, 80, 90–99"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "90, 99, 114, 120–131"
+              }
+            ],
+            "primary_evidence": [
+              "EV18",
+              "EV21",
+              "EV29",
+              "EV30",
+              "EV34"
+            ],
+            "original_evidence": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+                "lines": "3"
+              }
+            ],
+            "judgment": "Existing supported clinic software, hosted/device-only tooling, managed low-code, a small custom app, existing split lists and controlled paper are materially different approaches, not synonyms for a tracker. N2 narrows custom/self-hosted work for the no-sysadmin pilot but allows a funded accountable partner; N1 retains custom work with support burden. The present split lists are not promoted as a proved solution. N2’s nonoverlapping site device pools/no cross-site movement/paper reconciliation and N1’s pause until current authoritative availability avoid promising simultaneous offline allocation. These are proposed operating controls; no outage process was executed."
+          },
+          {
+            "id": "C19",
+            "arms": [
+              "N2",
+              "N1"
+            ],
+            "claim": "Validation scope and executed/proposed boundary",
+            "candidate_locators": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/control/reviser/final.md",
+                "lines": "101–129"
+              },
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+                "lines": "133–159"
+              }
+            ],
+            "primary_evidence": [
+              "EV16",
+              "EV22",
+              "EV23",
+              "EV29",
+              "EV30",
+              "EV44",
+              "EV14",
+              "EV46",
+              "EV50"
+            ],
+            "original_evidence": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I02/brief.md",
+                "lines": "11"
+              }
+            ],
+            "judgment": "Both provide discriminating negative/bypass, sequential-family, two-site conflict, role, workstation, actual staff accessibility, reminder, contract and capacity/support checks. N2 adds platform audit-deletion and OS/cache tests; N1 adds vendor-policy contradictions, preference-removal and optional requestable regression. All are explicitly proposals. Authored executed work is public-source review, reveal and evidence-artifact bookkeeping; no tenant/product/runtime/real-data or clinical/legal test is claimed. Frozen artifacts permit checking the wording and source facts, not independently certifying every historical author operation. Hash/JSON/zero-exit artifacts are provenance checks, not scientific proof of a safe app."
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "meaning": "Complete review of consequential frozen deliverable claims, not production/runtime certification."
+      },
+      "plan_dispositions": [
+        {
+          "clause": "P1",
+          "disposition": "Already-covered lifecycle; necessary safety correction; optional role/event implementation",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+            "lines": "19–29, 84, 103–114"
+          },
+          "reasoning": "Adds explicit cleaning AND functional-check blocking, including failed/incomplete checks. Does not canonize a guessed release role, actor/time/location schema or automatic release. Preparation/assignment/return intent remains.",
+          "claim_checks": [
+            "C01",
+            "C07",
+            "C16",
+            "C19"
+          ],
+          "exact_clause": "P1: Track each loan through preparation, assignment, return, cleaning, and availability for reassignment."
+        },
+        {
+          "clause": "P2",
+          "disposition": "Already-covered minimization; field/isolation clarification; identity/fit-record/access decisions",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+            "lines": "31–41, 85, 137"
+          },
+          "reasoning": "Retains every brief field and no full clinical transfer. Loan versus approved clinical fit record and patient identifier remain decisions, not invented vendor defaults. Sequential family tests cover prior-loan leakage.",
+          "claim_checks": [
+            "C01",
+            "C07",
+            "C08",
+            "C19"
+          ],
+          "exact_clause": "P2: Associate loan records with the minimum patient and caregiver details needed for contact and handoff."
+        },
+        {
+          "clause": "P3",
+          "disposition": "Already covered; actual-task acceptance; optional controls",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+            "lines": "43–51, 86, 142"
+          },
+          "reasoning": "Correctly narrows blanket announcement/ARIA language to task-relevant WCAG requirements and actual screen-reader/keyboard validation with non-color cues.",
+          "claim_checks": [
+            "C06",
+            "C19"
+          ],
+          "exact_clause": "P3: Provide accessible status controls, including screen-reader labels and cues that do not depend on color."
+        },
+        {
+          "clause": "P4",
+          "disposition": "Required reminder/preference and privacy; correction to separate implementation choices",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+            "lines": "53–63, 87, 95–96, 139, 143"
+          },
+          "reasoning": "Corrects draft language treating whether reminders belong in the pilot as a decision. Channels, consent/opt-out, interpreter path and timeout design remain unresolved; the required outcome and physical family boundary remain.",
+          "claim_checks": [
+            "C01",
+            "C08",
+            "C13",
+            "C19"
+          ],
+          "exact_clause": "P4: Support plain-language reminders and a staff view that limits exposure of other families' records."
+        },
+        {
+          "clause": "P5",
+          "disposition": "Already covered; clinical governance decision; optional attributed history",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+            "lines": "65–69, 88, 140"
+          },
+          "reasoning": "Does not adopt the critic evidence-first suggestion of clinician-only amendment as a default. Actor/time/reason/prior-value history is optional if approved, not a newly mandatory policy.",
+          "claim_checks": [
+            "C01",
+            "C08"
+          ],
+          "exact_clause": "P5: The role allowed to amend fitting notes after reassignment is a clinical governance decision."
+        },
+        {
+          "clause": "P6",
+          "disposition": "Retention user decision; explicit first-year integration exclusion; optional later review",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+            "lines": "71–79, 89, 144"
+          },
+          "reasoning": "No duration invented. Synthetic exploration may proceed while policy is decided; identifiable use awaits approval. Appointment integration is excluded from pilot/first-year budget, not silently reintroduced as a required capability.",
+          "claim_checks": [
+            "C01",
+            "C08"
+          ],
+          "exact_clause": "P6: Identifiable loan-history retention and any appointment-system connection remain open scope choices."
+        }
+      ],
+      "preservation_coverage": {
+        "complete": true,
+        "read_full_stages": [
+          "discovery",
+          "draft",
+          "critic evidence-first",
+          "critic critique",
+          "critic final",
+          "authored research final"
+        ],
+        "critic_adjudications": [
+          {
+            "id": "M1",
+            "critic_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/critique.md",
+              "lines": "9–15"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+              "lines": "83, 120, 131, 143–144"
+            },
+            "disposition": "Accept qualification",
+            "reason": "Adds exact inactive-account deletion trigger, EU region, SSL policy/pricing discrepancy and email-address-removal preference risk. Keeps synthetic-only lead and does not decide staff-entered child data is legal or illegal.",
+            "claims": [
+              "C13"
+            ]
+          },
+          {
+            "id": "M2",
+            "critic_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/critique.md",
+              "lines": "17–23"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+              "lines": "19–29, 84, 138, 140"
+            },
+            "disposition": "Accept scope distinction",
+            "reason": "Cleaning plus functional check is explicit brief scope; release-role/event schema is an implementation choice. Retains the safety outcome while removing unapproved canonization.",
+            "claims": [
+              "C01",
+              "C07",
+              "C19"
+            ]
+          },
+          {
+            "id": "M3",
+            "critic_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/critique.md",
+              "lines": "25–29"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+              "lines": "31–41, 85, 137"
+            },
+            "disposition": "Accept",
+            "reason": "Required fields remain; patient identifier, fit-record location and visibility are not invented. Sequential-loan isolation check retains the useful clinical privacy issue.",
+            "claims": [
+              "C01",
+              "C07",
+              "C08",
+              "C19"
+            ]
+          },
+          {
+            "id": "M4",
+            "critic_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/critique.md",
+              "lines": "31–35"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+              "lines": "43–51, 86, 142"
+            },
+            "disposition": "Accept narrowing",
+            "reason": "Normative WCAG/status guidance does not require every state change announced by a particular ARIA mechanism; final keeps task-relevant name/role/value, focus/error/status and actual user acceptance.",
+            "claims": [
+              "C06",
+              "C19"
+            ]
+          },
+          {
+            "id": "M5",
+            "critic_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/critique.md",
+              "lines": "37–43"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+              "lines": "53–63, 87, 143"
+            },
+            "disposition": "Accept required-versus-optional correction",
+            "reason": "Draft line 54 treated whether reminders were in pilot scope as a decision, contrary to brief. Final explicitly requires reminders/preferences and leaves only delivery/authority/consent/interpreter implementation decisions open.",
+            "claims": [
+              "C01",
+              "C08",
+              "C13",
+              "C19"
+            ]
+          },
+          {
+            "id": "M6",
+            "critic_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/critique.md",
+              "lines": "45–49"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+              "lines": "65–69, 88, 140"
+            },
+            "disposition": "Accept final scope; reject evidence-first default authority as binding",
+            "reason": "Clinical governance decides amendment authority. Optional attributed history is retained without assigning clinician-only or other rights before approval. This prevents a critic suggestion becoming false canon.",
+            "claims": [
+              "C01",
+              "C08"
+            ]
+          },
+          {
+            "id": "M7",
+            "critic_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/critique.md",
+              "lines": "51–55"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+              "lines": "71–79, 89"
+            },
+            "disposition": "Accept distinction",
+            "reason": "Retention remains open and synthetic exploration can continue; integration is expressly excluded from approved first-year spending. No unsupported years or integration budget is introduced.",
+            "claims": [
+              "C01",
+              "C08"
+            ]
+          },
+          {
+            "id": "M8",
+            "critic_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/critique.md",
+              "lines": "57–61, 88"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+              "lines": "90, 98–99, 120–131, 141, 146"
+            },
+            "disposition": "Accept conditional options/Workspace/conflict nuance; reject false $600 correction premise",
+            "reason": "Keeps broad options without procurement winner, verifies possible Workspace-included Core and narrows conflict to same-row last-writer-wins. Draft line 90 already said $1,200 for ten Core seats; critic’s $600 counterexample is not a predecessor error. Final’s arithmetic is correct.",
+            "claims": [
+              "C14",
+              "C15",
+              "C16",
+              "C17",
+              "C18"
+            ]
+          },
+          {
+            "id": "M9",
+            "critic_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/critique.md",
+              "lines": "63–69"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+              "lines": "91, 123, 145"
+            },
+            "disposition": "Accept #18951 chain; reject no-linked-fix claim about #18750",
+            "reason": "Maintenance permission history and its cross-company exclusion are source-correct. The separate issue does link #19539 in a maintainer comment, and v8.8.0 contains related request-state follow-up. Final inherits this minor source-history omission. Optional current-version regression remains justified without treating the issue as wholly unexplained.",
+            "claims": [
+              "C11",
+              "C12"
+            ]
+          },
+          {
+            "id": "Other minor/validation refinements",
+            "critic_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/critic/critique.md",
+              "lines": "82–90"
+            },
+            "final_locator": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-02/treatment/research/final.md",
+              "lines": "95–99, 137–146"
+            },
+            "disposition": "Retained",
+            "reason": "Retains Blueprint/myTurn/split-lists/custom/paper options, synthetic export/delete/backup boundary, exact email suppression, physical viewing-angle/cache/reopen checks and conditional vendor conformance/legal statements. No proposed test becomes executed evidence.",
+            "claims": [
+              "C06",
+              "C08",
+              "C13",
+              "C14",
+              "C18",
+              "C19"
+            ]
+          }
+        ],
+        "remaining": [],
+        "material_preservation_loss_found": false
+      },
+      "grade_limits": [
+        "This is a fresh artifact/source assessment of only B-02/I02 and the exact input-map. No other cases, evaluator answers, campaign history or private provider internals were consulted. No candidate artifact was repaired.",
+        "All exact mapped complete stage artifacts and source indexes/topic notes were read; duplicate copied source notes were recognized by hash and substantive content was not counted repeatedly. Full final prose, not citation lists or stage grades, governed the judgments.",
+        "Primary coverage means every consequential source-dependent recommendation, plan disposition, retained alternative and validation boundary in these finals was adjudicated. It does not mean every footer, all external links, all 70 commits of a PR, every vendor SKU or all possible hearing devices were exhaustively audited.",
+        "Relevant public primary pages, normative WCAG, issue comments, PR/release records, vendor VPAT and selected released code were independently retrieved as untrusted text. No downloaded source was executed and no product account/runtime/device, screen-reader, clinical, legal or vendor-contract validation was available.",
+        "The large PR #19539 patch response was not fully reviewed or used as a passing witness; its temporary capture was discarded. The finding rests on the issue comment, PR metadata/body, v8.8.0 release entry and selected released symbols. Web/API/HTML captures can change over time; retained evidence hashes identify this review’s bounded snapshots.",
+        "Authored researcher/critic operation statements were read as claims, not independent proof of their native execution. Input-map delivery flags and saved final hashes establish available scientific artifacts, not candidate native/T3 terminal success, durations, billing or token usage.",
+        "No scientific repair, accounts/configuration/service/Git/canon change, nested delegation, R9 protocol or ledger workflow was performed. All newly retained files are inside the assigned evaluation directory.",
+        "Both full-quality passes permit qualitative comparison under this rubric. They do not establish equal quality, a causal method effect, a speed winner, production readiness or a purchased system."
+      ],
+      "quality_null_reason": null
+    }
+  },
+  "method_clues": {
+    "partial_blinding": true,
+    "visible_clues": "Neutral labels were supplied, but actual_arm fields, paths and stage contents reveal control fresh-reviser versus treatment retained-author/evidence-first critic structure. These clues were visible before final grading.",
+    "independent_assessment": "Each arm graded against original brief and primary sources independently, not by agreement with critic or counterpart. No other evaluator answer or candidate history consulted.",
+    "causal_inference_limit": "This pair alone does not isolate a method effect, cost or speed."
+  },
+  "comparative_quality_eligible": true,
+  "comparison": {
+    "basis": "Both arms receive independent full-scope PASS_WITH_LIMITATIONS; shared grade is not equal quality.",
+    "N2_strengths": "Deeper Power Apps cache/conflict/audit evidence and explicit site-separated downtime/concurrency/audit tests.",
+    "N1_strengths": "Broader unfamiliar and domain-specific product discovery, concrete vendor policy/default tensions and conditional alternative mechanisms.",
+    "N1_limit": "Minor inherited no-linked-fix source-history error for optional #18750 regression; critic also invents a predecessor $600 price premise.",
+    "winner": null,
+    "speed_or_cost_winner": null
+  },
+  "scope_limits": [
+    "This is a fresh artifact/source assessment of only B-02/I02 and the exact input-map. No other cases, evaluator answers, campaign history or private provider internals were consulted. No candidate artifact was repaired.",
+    "All exact mapped complete stage artifacts and source indexes/topic notes were read; duplicate copied source notes were recognized by hash and substantive content was not counted repeatedly. Full final prose, not citation lists or stage grades, governed the judgments.",
+    "Primary coverage means every consequential source-dependent recommendation, plan disposition, retained alternative and validation boundary in these finals was adjudicated. It does not mean every footer, all external links, all 70 commits of a PR, every vendor SKU or all possible hearing devices were exhaustively audited.",
+    "Relevant public primary pages, normative WCAG, issue comments, PR/release records, vendor VPAT and selected released code were independently retrieved as untrusted text. No downloaded source was executed and no product account/runtime/device, screen-reader, clinical, legal or vendor-contract validation was available.",
+    "The large PR #19539 patch response was not fully reviewed or used as a passing witness; its temporary capture was discarded. The finding rests on the issue comment, PR metadata/body, v8.8.0 release entry and selected released symbols. Web/API/HTML captures can change over time; retained evidence hashes identify this review’s bounded snapshots.",
+    "Authored researcher/critic operation statements were read as claims, not independent proof of their native execution. Input-map delivery flags and saved final hashes establish available scientific artifacts, not candidate native/T3 terminal success, durations, billing or token usage.",
+    "No scientific repair, accounts/configuration/service/Git/canon change, nested delegation, R9 protocol or ledger workflow was performed. All newly retained files are inside the assigned evaluation directory.",
+    "Both full-quality passes permit qualitative comparison under this rubric. They do not establish equal quality, a causal method effect, a speed winner, production readiness or a purchased system."
+  ],
+  "evaluation_started_at": "2026-10-09T20:28:52+00:00",
+  "evaluation_started_at_limit": "Exact pre-Goal startup time is unavailable; reported timestamp is the observed native activation boundary, not a reconstructed author duration or billing value.",
+  "evaluation_completed_at": "2026-10-09T20:44:33.855266+00:00",
+  "assignment_deadline": "2026-10-09T20:52:50.468199+00:00",
+  "observed_source_operations": {
+    "input_reads": "Exact assignment/map/rubric/original brief/frozen plan; every mapped full stage file and allowed source-root index/topic note. Hash verification performed for the supplied mapped files.",
+    "primary_fetches": [
+      {
+        "id": "EV01",
+        "url": "https://about.appsheet.com/pricing/",
+        "retrieved_at_utc": "2026-10-09T20:30:23.744054+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "b6dcbd95e64a040a6ffbd50a4df179fcecf5eb0b39702890950d2a2557b02bbe",
+        "response_bytes": 193146,
+        "retained": true
+      },
+      {
+        "id": "EV02",
+        "url": "https://about.appsheet.com/security/",
+        "retrieved_at_utc": "2026-10-09T20:30:23.746728+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "519f0ca4da4edd82b0e645720cf1e0bb4768b7e9a8f46652f8722b05909530f8",
+        "response_bytes": 164189,
+        "retained": true
+      },
+      {
+        "id": "EV03",
+        "url": "https://blueprintsolutions.us/features/inventory/",
+        "retrieved_at_utc": "2026-10-09T20:30:23.748501+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "9dc9f0c39a3a010610d0209941f3bfcf750d07e624eb130bf37d8434622572eb",
+        "response_bytes": 81182,
+        "retained": true
+      },
+      {
+        "id": "EV04",
+        "url": "https://github.com/grokability/snipe-it/issues/18750",
+        "retrieved_at_utc": "2026-10-09T20:30:23.750610+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "b4cfae59f61894704f8fef89103b7cacf6a6f41ad2c462d0338504b95326bf92",
+        "response_bytes": 381650,
+        "retained": true
+      },
+      {
+        "id": "EV05",
+        "url": "https://github.com/grokability/snipe-it/issues/18951",
+        "retrieved_at_utc": "2026-10-09T20:30:23.752883+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "334c43f47af662701ddb304a2099c8231b881cd58a46cc37d33b28190baa351a",
+        "response_bytes": 311264,
+        "retained": true
+      },
+      {
+        "id": "EV06",
+        "url": "https://github.com/grokability/snipe-it/pull/18964",
+        "retrieved_at_utc": "2026-10-09T20:30:23.754842+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "89e3f82a6f6fdc73d22cca35db01b42d3aa048859465fa2b3dfb7df724f479fe",
+        "response_bytes": 323748,
+        "retained": true
+      },
+      {
+        "id": "EV07",
+        "url": "https://github.com/grokability/snipe-it/pull/19330",
+        "retrieved_at_utc": "2026-10-09T20:30:23.921092+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "b84da0c686ec0152cbd85e353676d90717e6a9ea41411776c91ba5fe2863bbce",
+        "response_bytes": 313883,
+        "retained": true
+      },
+      {
+        "id": "EV08",
+        "url": "https://github.com/grokability/snipe-it/releases",
+        "retrieved_at_utc": "2026-10-09T20:30:24.025899+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "a0a5b626ac34a01d83f1888b5073e248ce7280271f465aaa3d7ca62320360b73",
+        "response_bytes": 709515,
+        "retained": true
+      },
+      {
+        "id": "EV09",
+        "url": "https://github.com/grokability/snipe-it/releases/tag/v8.5.0",
+        "retrieved_at_utc": "2026-10-09T20:30:24.477272+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "c80243f8ec215b8f5713b9427a0d47569968aae91315550c5adca5100b2aa874",
+        "response_bytes": 273368,
+        "retained": true
+      },
+      {
+        "id": "EV10",
+        "url": "https://github.com/grokability/snipe-it/security/advisories/GHSA-qffp-xpqv-gqr4",
+        "retrieved_at_utc": "2026-10-09T20:30:24.621020+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "ab2ef894adcea2675a126c27eff815e4f184ab23a24ffc8b027e6f1e9ccd29e0",
+        "response_bytes": 218405,
+        "retained": true
+      },
+      {
+        "id": "EV11",
+        "url": "https://knowledge.cheqroom.com/helpcenter/feature-release-operations-and-maintenance-management",
+        "retrieved_at_utc": "2026-10-09T20:30:24.625761+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "1fae78c1ec8483f27cd8a56a9e954b96bcb49ef10615a721b3c81ee1e066f6c3",
+        "response_bytes": 122610,
+        "retained": true
+      },
+      {
+        "id": "EV12",
+        "url": "https://knowledge.cheqroom.com/helpcenter/how-do-i-perform-maintenance-and-repair-in-cheqroom",
+        "retrieved_at_utc": "2026-10-09T20:30:24.689156+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "2c19cc2a20b427d8bd1e862f0128d804bae6b966b3e9f6a6d397daac889f052a",
+        "response_bytes": 130812,
+        "retained": true
+      },
+      {
+        "id": "EV13",
+        "url": "https://knowledge.cheqroom.com/helpcenter/maintenance-management-work-order-overview",
+        "retrieved_at_utc": "2026-10-09T20:30:24.715702+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "348aca6041c7af2f533412d8a319ee8c5ae556763e276b5de248bb1658b507a3",
+        "response_bytes": 127629,
+        "retained": true
+      },
+      {
+        "id": "EV14",
+        "url": "https://knowledge.cheqroom.com/helpcenter/operation-templates-overview",
+        "retrieved_at_utc": "2026-10-09T20:30:24.864099+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "d35398792102628678454db235bbaedf70eb4c8d2c1da5bab7e82defb7769969",
+        "response_bytes": 126222,
+        "retained": true
+      },
+      {
+        "id": "EV15",
+        "url": "https://learn.microsoft.com/en-us/compliance/regulatory/offering-hipaa-hitech",
+        "retrieved_at_utc": "2026-10-09T20:30:24.867551+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "e41238b72fba39d2f62fc427e90f5100bc88320127596c27cf57d454a973aef2",
+        "response_bytes": 62313,
+        "retained": true
+      },
+      {
+        "id": "EV16",
+        "url": "https://learn.microsoft.com/en-us/power-apps/developer/data-platform/optimistic-concurrency",
+        "retrieved_at_utc": "2026-10-09T20:30:24.958123+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "1e69998969b63ad6908993384bc0d9f2a4cb17f2f64f34c602814d157750560f",
+        "response_bytes": 53333,
+        "retained": true
+      },
+      {
+        "id": "EV17",
+        "url": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/accessible-apps",
+        "retrieved_at_utc": "2026-10-09T20:30:25.013390+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "074cc1440bdda28971f936ff172cc6dfbb2780acbce31145ffc3014c06b7b7c0",
+        "response_bytes": 53679,
+        "retained": true
+      },
+      {
+        "id": "EV18",
+        "url": "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/offline-apps",
+        "retrieved_at_utc": "2026-10-09T20:30:25.175691+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "e2733bd8699c92c0403bf87ac94783c68222e3872dfd3ec115c547aba823ac3f",
+        "response_bytes": 63642,
+        "retained": true
+      },
+      {
+        "id": "EV19",
+        "url": "https://learn.microsoft.com/en-us/power-apps/mobile/canvas-mobile-offline-setup",
+        "retrieved_at_utc": "2026-10-09T20:30:25.320629+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "fb1ff2d1b652e9eed51d58e419c0f5863f90ff1cc42fbac2d758632304be87c0",
+        "response_bytes": 65024,
+        "retained": true
+      },
+      {
+        "id": "EV20",
+        "url": "https://learn.microsoft.com/en-us/power-apps/mobile/limitations-canvas-apps",
+        "retrieved_at_utc": "2026-10-09T20:30:25.332835+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "d3562b066ec329d4bee3a3fbba5347e9c586e55de99c4252da0e42d91feb6dd1",
+        "response_bytes": 53414,
+        "retained": true
+      },
+      {
+        "id": "EV21",
+        "url": "https://learn.microsoft.com/en-us/power-apps/mobile/mobile-offline-works-overview",
+        "retrieved_at_utc": "2026-10-09T20:30:25.343898+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "cd31e5fd176cb95efba6c679a179aa21adaa44f13e19c9243070298ae2e556fb",
+        "response_bytes": 53767,
+        "retained": true
+      },
+      {
+        "id": "EV22",
+        "url": "https://learn.microsoft.com/en-us/power-apps/mobile/resolve-sync-conflicts",
+        "retrieved_at_utc": "2026-10-09T20:30:25.391110+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "f254e911211b5d4017d2c80efffdf593fec7ff47603ab1576bf0bbea1c8e90a2",
+        "response_bytes": 53005,
+        "retained": true
+      },
+      {
+        "id": "EV23",
+        "url": "https://learn.microsoft.com/en-us/power-platform/admin/manage-dataverse-auditing",
+        "retrieved_at_utc": "2026-10-09T20:30:25.396769+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "c94f562463d1c4f9169e69d18da1292324b4ab7a96a9fa6bf516badd741dc0b3",
+        "response_bytes": 82577,
+        "retained": true
+      },
+      {
+        "id": "EV24",
+        "url": "https://myturn.com/home/",
+        "retrieved_at_utc": "2026-10-09T20:30:25.599911+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "1ff608d336c392ea68659b2ae5b4b6731ab1413c2470c3da91899bc7e302ddc8",
+        "response_bytes": 135786,
+        "retained": true
+      },
+      {
+        "id": "EV25",
+        "url": "https://snipe-it.readme.io/docs/custom-fields",
+        "retrieved_at_utc": "2026-10-09T20:30:25.628693+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "9fe67abfc42d9aeb24ec58ec0449345ae6818fefd08a6b73825b046ddf5006df",
+        "response_bytes": 233824,
+        "retained": true
+      },
+      {
+        "id": "EV26",
+        "url": "https://snipe-it.readme.io/docs/notifications-overview",
+        "retrieved_at_utc": "2026-10-09T20:30:25.638960+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "68a1abbd4877cb6371d599de3935fdf38a4e9d245f658bf4e284f806cd1fa4ed",
+        "response_bytes": 211686,
+        "retained": true
+      },
+      {
+        "id": "EV27",
+        "url": "https://snipe-it.readme.io/docs/overview",
+        "retrieved_at_utc": "2026-10-09T20:30:25.652015+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "2f62b469347a8f1da114477e6d37d9c10a8fe9e3f3ec92a4e5d5261d8faec11a",
+        "response_bytes": 233407,
+        "retained": true
+      },
+      {
+        "id": "EV28",
+        "url": "https://snipeitapp.com/pricing",
+        "retrieved_at_utc": "2026-10-09T20:30:25.771161+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "d7481eb7c962797aa50d7946e055ca97cbf3c6c13b09d131f4d1c74c4790338b",
+        "response_bytes": 34851,
+        "retained": true
+      },
+      {
+        "id": "EV29",
+        "url": "https://support.google.com/appsheet/answer/10104702?hl=en",
+        "retrieved_at_utc": "2026-10-09T20:30:25.859329+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "bd7e1f904fbab22ac2078752889310997b7aa445e57378cb93cab107a5248bde",
+        "response_bytes": 1546526,
+        "retained": true
+      },
+      {
+        "id": "EV30",
+        "url": "https://support.google.com/appsheet/answer/10107724?hl=en",
+        "retrieved_at_utc": "2026-10-09T20:30:25.886271+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "2c7c1a730ac6a8e74774dc6d4dbd6ac13255a503c42910ff4964850bcab035e9",
+        "response_bytes": 1565053,
+        "retained": true
+      },
+      {
+        "id": "EV31",
+        "url": "https://support.google.com/appsheet/answer/10108301?hl=en",
+        "retrieved_at_utc": "2026-10-09T20:30:25.943653+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "87f989d938dc499e74c8831bf4675ba907fc5d4777bab15a07b39eec00794ad3",
+        "response_bytes": 1541281,
+        "retained": true
+      },
+      {
+        "id": "EV32",
+        "url": "https://support.google.com/appsheet/answer/11509435?hl=en",
+        "retrieved_at_utc": "2026-10-09T20:30:26.293689+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "d4f18a3ceee82f3afe8cb9397d93b6961066e6ad5729cad0c4a0f4f486643802",
+        "response_bytes": 1560572,
+        "retained": true
+      },
+      {
+        "id": "EV33",
+        "url": "https://www.assettiger.com/content/vpat_template_2.5rev_wcag_2025.pdf",
+        "retrieved_at_utc": "2026-10-09T20:30:26.296867+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "efc88d6662e94de3db767fbe5f766f7ef21f7a6abe7a1bd2149f90ff6cd16bd7",
+        "response_bytes": 395324,
+        "retained": true
+      },
+      {
+        "id": "EV34",
+        "url": "https://www.assettiger.com/faq",
+        "retrieved_at_utc": "2026-10-09T20:30:26.336853+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "c3a395e5b9c5176fa69a83677c34b331f0ae84d8b493754d4adb34550bfd230e",
+        "response_bytes": 156649,
+        "retained": true
+      },
+      {
+        "id": "EV35",
+        "url": "https://www.assettiger.com/pricing",
+        "retrieved_at_utc": "2026-10-09T20:30:26.413458+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "42fa0574676e0d79891d7a6b2cb2f8880c392a2f8f2189d05a7607eed51273f6",
+        "response_bytes": 125078,
+        "retained": true
+      },
+      {
+        "id": "EV36",
+        "url": "https://www.cheqroom.com/pricing/",
+        "retrieved_at_utc": "2026-10-09T20:30:26.469764+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "c6f9491acb22c68b14e943d93f42556ec50d689c12e8a1a6f76e82f0c1fbdd1a",
+        "response_bytes": 373781,
+        "retained": true
+      },
+      {
+        "id": "EV37",
+        "url": "https://www.fda.gov/medical-devices/hearing-aids/how-get-hearing-aids",
+        "retrieved_at_utc": "2026-10-09T20:30:26.478999+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "42169c071d6f6f9060e5e3c288aa800ae02abaea99def49d6bd12373e3305890",
+        "response_bytes": 42677,
+        "retained": true
+      },
+      {
+        "id": "EV38",
+        "url": "https://www.hhs.gov/hipaa/for-professionals/faq/does-hipaa-require-covered-entities-to-keep-medical-records-for-any-period/index.html",
+        "retrieved_at_utc": "2026-10-09T20:30:26.543951+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "be157ef14e3f4e82728832d02d9ef83bb29a1bf51f019d6f06f4e08a3604c86c",
+        "response_bytes": 181401,
+        "retained": true
+      },
+      {
+        "id": "EV39",
+        "url": "https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/minimum-necessary-requirement/index.html",
+        "retrieved_at_utc": "2026-10-09T20:30:26.576752+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "00af5c413e12dfdfbebadf88ea0400e25f13fc1046a58a55b956cb38b27b6f6d",
+        "response_bytes": 205057,
+        "retained": true
+      },
+      {
+        "id": "EV40",
+        "url": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html?previewMode=true",
+        "retrieved_at_utc": "2026-10-09T20:30:26.648514+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "df5bfae07ff264896689467ff6f1945a7c84313412b7d5c418aeca47973a7ce3",
+        "response_bytes": 241965,
+        "retained": true
+      },
+      {
+        "id": "EV41",
+        "url": "https://www.hhs.gov/hipaa/for-professionals/special-topics/health-information-technology/cloud-computing/index.html",
+        "retrieved_at_utc": "2026-10-09T20:30:26.677101+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "449cb8eb23fa315c8f799b3196089c0517c33a0142aa17ded46e3e0fbb184d16",
+        "response_bytes": 239390,
+        "retained": true
+      },
+      {
+        "id": "EV42",
+        "url": "https://www.lend-engine.com/features/loan-management-software",
+        "retrieved_at_utc": "2026-10-09T20:30:26.793877+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "d9c293dc55eda85c27b983d8fd1dcbdd4d1c36bc01f601d54876a0cae83e3258",
+        "response_bytes": 16003,
+        "retained": true
+      },
+      {
+        "id": "EV43",
+        "url": "https://www.lend-engine.com/pricing?p=usd",
+        "retrieved_at_utc": "2026-10-09T20:30:26.797139+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "11aff43b75acba7d967ce96232af8cd8238fb79ddbadbc039e7e6b63119ca8ae",
+        "response_bytes": 33646,
+        "retained": true
+      },
+      {
+        "id": "EV44",
+        "url": "https://www.lend-engine.com/privacy-policy",
+        "retrieved_at_utc": "2026-10-09T20:30:26.850402+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "cb9fd91e8b04d0779aa45b2fc5d7d03d59dad6b84996648660fd50901ca12a44",
+        "response_bytes": 22178,
+        "retained": true
+      },
+      {
+        "id": "EV45",
+        "url": "https://www.microsoft.com/en-us/licensing/news/power-apps-premium-price-update",
+        "retrieved_at_utc": "2026-10-09T20:30:26.945011+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "39da74c22c65599b2b68e3f7d127865e9d3b23af617a0281773fffe0a5d2346f",
+        "response_bytes": 149872,
+        "retained": true
+      },
+      {
+        "id": "EV46",
+        "url": "https://www.w3.org/TR/WCAG22/",
+        "retrieved_at_utc": "2026-10-09T20:30:27.137131+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "6e3c5fe397257cae509a2fb4752b73062cf8cbeb92c2cec618989b17e4cf7057",
+        "response_bytes": 512457,
+        "retained": true
+      },
+      {
+        "id": "EV47",
+        "url": "https://www.w3.org/WAI/WCAG21/Understanding/keyboard",
+        "retrieved_at_utc": "2026-10-09T20:30:27.222618+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "a2612f32b15665fffe95022da6076fec92df0c3e01b5f5a7fc3acdc3d2f5ba6c",
+        "response_bytes": 44615,
+        "retained": true
+      },
+      {
+        "id": "EV48",
+        "url": "https://www.w3.org/WAI/WCAG21/Understanding/name-role-value",
+        "retrieved_at_utc": "2026-10-09T20:30:27.226155+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "47ccd7f10d8de407ecfcf7e6eb666f972a62429f3c812df2a75cb15b24dbf84d",
+        "response_bytes": 66357,
+        "retained": true
+      },
+      {
+        "id": "EV49",
+        "url": "https://www.w3.org/WAI/WCAG22/Understanding/keyboard",
+        "retrieved_at_utc": "2026-10-09T20:30:27.240384+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "fb44d4faaa9fa54a49aee794e969ccc3b7738f4b09e23aa96e3a3c9d44984feb",
+        "response_bytes": 44620,
+        "retained": true
+      },
+      {
+        "id": "EV50",
+        "url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html",
+        "retrieved_at_utc": "2026-10-09T20:30:27.513087+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "d5a085f7be8814e4f01520db08d41d09b62491f40dc0fb6fb4941ec762cf3746",
+        "response_bytes": 60299,
+        "retained": true
+      },
+      {
+        "id": "EV51",
+        "url": "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html",
+        "retrieved_at_utc": "2026-10-09T20:30:27.544763+00:00",
+        "operation": "requests.GET public primary source, text-only; no executable downloaded",
+        "status_code": 200,
+        "response_sha256": "a9bab2b8f419ee379b1ab37985d70b03bd6568952251d2f8a55036198990c9e8",
+        "response_bytes": 43779,
+        "retained": true
+      },
+      {
+        "id": "EV52",
+        "url": "https://api.github.com/repos/grokability/snipe-it/pulls/19539",
+        "status_code": 200,
+        "retrieved_at_utc": "2026-10-09T20:32:54.537298+00:00",
+        "response_sha256": "351ae38977271653601d96f545d54c1fe633b3af9cd8a95a8f41ac84abe80bc7",
+        "response_bytes": 22351,
+        "operation": "requests.GET public primary metadata/source text; no execution",
+        "retained": true
+      },
+      {
+        "id": "EV53",
+        "url": "https://github.com/grokability/snipe-it/pull/19539.patch",
+        "status_code": 200,
+        "retrieved_at_utc": "2026-10-09T20:32:55.687587+00:00",
+        "response_sha256": "92fe6ad70d0f3bdb9033de69b572cc9e3df7ded320c26b9aaf7947a3d36d0d97",
+        "response_bytes": 12707511,
+        "operation": "requests.GET public primary metadata/source text; no execution",
+        "retained": false,
+        "review_limit": "Only an initial bounded scan; full 12.7 MB patch not reviewed or used for a judgment. Selected released files used instead."
+      },
+      {
+        "id": "EV54",
+        "url": "https://api.github.com/repos/grokability/snipe-it/releases/tags/v8.8.0",
+        "status_code": 200,
+        "retrieved_at_utc": "2026-10-09T20:32:55.885629+00:00",
+        "response_sha256": "7f1d766edb5d9b75f7e3752b4fd8cdf469925dc396429ff6470e4d2a4a8b11ea",
+        "response_bytes": 33808,
+        "operation": "requests.GET public primary metadata/source text; no execution",
+        "retained": true
+      },
+      {
+        "id": "EV55",
+        "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Actions/CheckoutRequests/FulfillCheckoutRequestAction.php",
+        "status_code": 200,
+        "retrieved_at_utc": "2026-10-09T20:36:24.770862+00:00",
+        "response_sha256": "78d4682aad829887b7fee824e12cc9aa1321493640f37933363714240ec0832f",
+        "response_bytes": 5720,
+        "operation": "requests.GET released v8.8.0 PHP source read as text; no execution",
+        "retained": true
+      },
+      {
+        "id": "EV56",
+        "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Models/CheckoutRequest.php",
+        "status_code": 200,
+        "retrieved_at_utc": "2026-10-09T20:36:24.904457+00:00",
+        "response_sha256": "f7d2bb66e723bf0e1248901177e258dd8c4e567242e013cd8de6d43cfe8c5696",
+        "response_bytes": 18492,
+        "operation": "requests.GET released v8.8.0 PHP source read as text; no execution",
+        "retained": true
+      }
+    ],
+    "supplementary_tool_operations": "Public web opens of issue #18750, PR #19539 and v8.8.0 release; one public GitHub PR files API read for symbol discovery, followed by retained released v8.8.0 source files. No private API or executable was used.",
+    "evidence_conversion": "HTML text extraction with scripts/style/navigation omitted where bounded; vendor PDF text extraction; selected released PHP read as text only.",
+    "candidate_execution_verification": "Author statements only; not independently certified. No candidate runtime or proposed test was executed by reviewer.",
+    "grade_basis": "Substantive original-obligation/source/disposition/preservation/validation assessment; counts, citation agreement, hash success and zero exits are not quality grades."
+  },
+  "native_and_cost_limits": {
+    "reviewer_native_goal_activation_observed": true,
+    "reviewer_native_goal_lifecycle_evidence": "Supported create_goal and get_goal tool calls in this thread; assessment saved before update_goal terminal call. No handwritten Goal receipt/JSON is offered.",
+    "reviewer_native_goal_terminal_status_at_scientific_save": null,
+    "candidate_native_goal_completion": {
+      "N2": null,
+      "N1": null
+    },
+    "candidate_t3_delivery_terminal_status": {
+      "N2": null,
+      "N1": null
+    },
+    "candidate_duration_seconds": {
+      "N2": null,
+      "N1": null
+    },
+    "candidate_token_usage": {
+      "N2": null,
+      "N1": null
+    },
+    "candidate_billing_cost": {
+      "N2": null,
+      "N1": null
+    },
+    "reviewer_billing_cost": null,
+    "reviewer_token_usage": null,
+    "limits": "Mapped final_delivery=true is an input delivery qualification; both complete files are available and hash-verified. Native/T3 termination, costs and exact author execution cannot be inferred from prose, timestamps or file length. Later Goal completion is supported lifecycle work after scientific save, not another scientific assessment."
+  },
+  "output_contract": "Scientific assessment and all necessary evidence saved before native Goal completion; no candidate repair.",
+  "evaluation_started_at_definition": "Supported reviewer native Goal activation timestamp from get_goal.createdAt; initial bounded assignment reading preceded this recorded boundary."
+}

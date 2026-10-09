@@ -1,0 +1,24 @@
+{
+  "block": "B-06",
+  "arm": "control",
+  "case": "I06",
+  "method": "M14",
+  "stage": "critic",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/critic",
+  "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I06/brief.md",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/revealed-plan.md"
+  ],
+  "source_roots": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/sources"
+  ],
+  "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/critic",
+  "deadline": "2026-10-09T20:52:00.132178+00:00",
+  "arm_deadline": "2026-10-09T21:37:20.723737+00:00",
+  "native_route": "muse",
+  "evidence_kind": "full-discovery",
+  "resource_version": "75-30-20-25-role-bundle-v1"
+}

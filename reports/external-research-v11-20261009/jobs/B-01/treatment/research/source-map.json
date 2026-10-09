@@ -1,0 +1,457 @@
+{
+  "schema": "ER11-source-map-v1",
+  "block": "B-01",
+  "arm": "treatment",
+  "case": "I01",
+  "stage": "research",
+  "captured_at_utc": "2026-10-09T19:44:17Z",
+  "source_id_policy": "S01-S17 are immutable IDs; S13-S17 were appended during post-critique adjudication. No source was silently rebound.",
+  "usage_billing": null,
+  "usage_billing_note": "Usage and billing were not observed. No vendor quote was received.",
+  "runtime_checks": {
+    "executed": [],
+    "proposed_only": [
+      "See discovery.md validation proposals; no product, offline, capacity, accessibility, export, or runtime witness was executed."
+    ]
+  },
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "Platforms | Compass | Ferry reservation and ticketing solution",
+      "url": "https://www.pdms.com/platforms/compass/",
+      "publisher": "PDMS",
+      "source_type": "vendor product page",
+      "version": "No product release/version declared on page; current public page as accessed.",
+      "commit": null,
+      "mutable_url": true,
+      "locator": "Headings 'Ferry reservations and ticketing', 'Online & Offline', 'Flexible Ticket Options'; lines 79-103.",
+      "accessed_at_utc": "2026-10-09T19:44:17Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "ferry reservation software official vehicle passenger manifest offline terminal"
+        },
+        {
+          "operation": "web.open",
+          "locator": "Lines 79-103; online/offline ferry ticketing, central system and ticket/reservation scope."
+        }
+      ],
+      "bounded_evidence": "Vendor states port ticketing can operate online or offline; lists ferry routes, vessels, fares, ship configurations and multiple booking channels.",
+      "limits": "No implementation/version, price, multi-terminal conflict policy, private queue-display behavior, or export terms observed.",
+      "evidence_file": "sources/evidence.md#s01--pdms-compass"
+    },
+    {
+      "source_id": "S02",
+      "title": "Access One Voyage",
+      "url": "https://accessonevoyage.cyrabyte.com/",
+      "publisher": "Cyrabyte",
+      "source_type": "vendor product page",
+      "version": "No product release/version declared on page.",
+      "commit": null,
+      "mutable_url": true,
+      "locator": "Headings 'Built for Ferry Operations', 'Work Even When Connectivity Is Limited', 'Windows & Android Support', 'Operator-Controlled Data', and 'Security & Accountability'; lines 19-123.",
+      "accessed_at_utc": "2026-10-09T19:44:17Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "ferry ticketing system software operator online booking reservations official terminal offline system"
+        },
+        {
+          "operation": "web.open",
+          "locator": "Lines 19-123; local operations, sync, devices, data control and role/audit claims."
+        }
+      ],
+      "bounded_evidence": "Vendor states supported applications can perform authorized operations on locally available data and synchronize after connectivity returns.",
+      "limits": "Exact authorized offline functions, transaction order, capacity conflict behavior, price, support plan and contractual data export were not observed.",
+      "evidence_file": "sources/evidence.md#s02--access-one-voyage"
+    },
+    {
+      "source_id": "S03",
+      "title": "Ferry Booking Software for Scheduled Ferry Operators",
+      "url": "https://www.zaui.com/solutions/ferry-booking-software",
+      "publisher": "Zaui",
+      "source_type": "vendor product page",
+      "version": "No product release/version declared on page.",
+      "commit": null,
+      "mutable_url": true,
+      "locator": "Headings 'Booking & Ticketing', 'Operations Made Simple', FAQs; lines 66-94 and 190-220.",
+      "accessed_at_utc": "2026-10-09T19:44:17Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "ferry booking software official ferry operators offline vehicle passenger routes"
+        },
+        {
+          "operation": "web.open",
+          "locator": "Features and FAQs for inventory, manifests, schedule changes, onboarding and support."
+        }
+      ],
+      "bounded_evidence": "Vendor advertises separate passenger, vehicle and cabin inventory, manifests, dispatch, schedule updates, onboarding and 24/7 support.",
+      "limits": "Inspected page does not describe offline behavior, disconnected inventory authority, price, queue privacy, or export.",
+      "evidence_file": "sources/evidence.md#s03--zaui"
+    },
+    {
+      "source_id": "S04",
+      "title": "Ferry Cloud — online booking and ticketing system",
+      "url": "https://www.ferrycloud.com/",
+      "publisher": "FerryCloud",
+      "source_type": "vendor product page",
+      "version": "No product release/version declared; page contains dated marker 2019-07-16T12:37:05+01:00.",
+      "commit": null,
+      "mutable_url": true,
+      "locator": "Product features, lines 9-45; dated marker line 13.",
+      "accessed_at_utc": "2026-10-09T19:44:17Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "ferry reservation software official vehicle passenger manifest offline terminal"
+        },
+        {
+          "operation": "web.open",
+          "locator": "Lines 9-45; SaaS, online booking, single/return tickets and real-time inventory claims."
+        }
+      ],
+      "bounded_evidence": "Vendor presents a ferry SaaS with online/multichannel reservations and real-time inventory; page metadata is dated 2019.",
+      "limits": "Current operation/support, actual configuration, price, offline behavior and independent references not observed.",
+      "evidence_file": "sources/evidence.md#s04--ferrycloud-product-page"
+    },
+    {
+      "source_id": "S05",
+      "title": "Pricing — Ferry Cloud",
+      "url": "https://www.ferrycloud.com/pricing/",
+      "publisher": "FerryCloud",
+      "source_type": "vendor pricing page",
+      "version": "No product release/version declared; page contains dated marker 2019-07-12T10:13:58+01:00.",
+      "commit": null,
+      "mutable_url": true,
+      "locator": "Basic Edition and Services, lines 17-48.",
+      "accessed_at_utc": "2026-10-09T19:44:17Z",
+      "observed_operations": [
+        {
+          "operation": "web.click",
+          "locator": "Pricing navigation from FerryCloud homepage"
+        },
+        {
+          "operation": "web.open",
+          "locator": "Lines 17-48; quote request, feature, support-hour and infrastructure labels."
+        }
+      ],
+      "bounded_evidence": "Basic Edition says Request a Quote; lists ticketing, B2C website, standard reporting, CET-hours support and multi-tenant infrastructure.",
+      "limits": "No amount/currency or current quote observed. Page date makes currentness uncertain.",
+      "evidence_file": "sources/evidence.md#s05--ferrycloud-pricing-page"
+    },
+    {
+      "source_id": "S06",
+      "title": "Washington State Ferries Vehicle Reservations System",
+      "url": "https://secureapps.wsdot.wa.gov/Ferries/Reservations/Vehicle/Mobile/MobileVRSDashboard.aspx",
+      "publisher": "Washington State Department of Transportation / Washington State Ferries",
+      "source_type": "public operator workflow page",
+      "version": "Current public route-specific reservation rules as accessed 2026-10-09; no software version declared.",
+      "commit": null,
+      "mutable_url": true,
+      "locator": "Overview and What to Know, lines 8-20.",
+      "accessed_at_utc": "2026-10-09T19:44:17Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "Washington State Ferries vehicle reservation vehicle reservation does not count ticket walk-on"
+        },
+        {
+          "operation": "web.open",
+          "locator": "Lines 8-20; reservation vs ticket, walk-ons, one-way and disruption rules."
+        }
+      ],
+      "bounded_evidence": "WSF says a vehicle reservation is separate from a ticket and that walk-ons need no reservation on the named routes.",
+      "limits": "Rules are route-specific and jurisdiction-specific, not a recommended policy for I01.",
+      "evidence_file": "sources/evidence.md#s06--washington-state-ferries-reservation-workflow"
+    },
+    {
+      "source_id": "S07",
+      "title": "1.3 Eventual Consistency — Apache CouchDB 3.5 Documentation",
+      "url": "https://docs.couchdb.org/en/stable/intro/consistency.html",
+      "publisher": "Apache CouchDB",
+      "source_type": "official technical documentation",
+      "version": "3.5 documentation series per page title; stable URL is a mutable alias.",
+      "commit": null,
+      "mutable_url": true,
+      "locator": "Sections Distributed Consistency and Incremental Replication, lines 74-90.",
+      "accessed_at_utc": "2026-10-09T19:44:17Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:docs.couchdb.org replication conflicts offline eventual consistency"
+        },
+        {
+          "operation": "web.open",
+          "locator": "Lines 74-90; document scope, periodic replication, independent replicas and conflict handling."
+        }
+      ],
+      "bounded_evidence": "CouchDB describes periodic incremental replication and independently usable database replicas.",
+      "limits": "Technical database behavior only; no ferry application or capacity invariant supplied.",
+      "evidence_file": "sources/evidence.md#s07--apache-couchdb-eventual-consistency"
+    },
+    {
+      "source_id": "S08",
+      "title": "2.3 Replication and conflict model — Apache CouchDB 3.5 Documentation",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "publisher": "Apache CouchDB",
+      "source_type": "official technical documentation",
+      "version": "3.5 documentation series per page title; stable URL is a mutable alias.",
+      "commit": null,
+      "mutable_url": true,
+      "locator": "Sections Finding conflicted documents and View map functions, lines 137-223.",
+      "accessed_at_utc": "2026-10-09T19:44:17Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:docs.couchdb.org replication conflicts model 409"
+        },
+        {
+          "operation": "web.open",
+          "locator": "Lines 137-223; conflict enumeration and winning-revision-only views."
+        }
+      ],
+      "bounded_evidence": "CouchDB makes conflicted revisions queryable but standard views consume the winning revision.",
+      "limits": "Application must inspect/resolve conflicts; this does not define a booking or capacity policy.",
+      "evidence_file": "sources/evidence.md#s08--apache-couchdb-conflict-model"
+    },
+    {
+      "source_id": "S09",
+      "title": "RxDB replication guide at tag 17.0.0",
+      "url": "https://github.com/pubkey/rxdb/blob/17.0.0/docs-src/docs/replication.md",
+      "publisher": "RxDB / pubkey",
+      "source_type": "version-pinned source documentation",
+      "version": "17.0.0",
+      "commit": null,
+      "mutable_url": false,
+      "locator": "File version label 17.0.0; sections lines 193-300, 318-346, 522-540.",
+      "accessed_at_utc": "2026-10-09T19:44:17Z",
+      "observed_operations": [
+        {
+          "operation": "web.open",
+          "locator": "Pinned tag 17.0.0; local-first behavior, handler/checkpoint contract, conflict default, retry/idempotency guidance."
+        }
+      ],
+      "bounded_evidence": "Offline local reads/writes and later sync; defaults include live=true, retryTime=5000 ms, waitForLeadership=true, autoStart=true; the documented default conflict handler selects master state.",
+      "limits": "Library behavior needs an application/backend implementation and tests. It does not guarantee unique capacity across independent terminal writes.",
+      "evidence_file": "sources/evidence.md#s09--rxdb-local-first-replication-guide-version-1700"
+    },
+    {
+      "source_id": "S10",
+      "title": "WebRTC Peer Gone issues #5342",
+      "url": "https://github.com/pubkey/rxdb/issues/5342",
+      "publisher": "RxDB / GitHub issue tracker",
+      "source_type": "official project issue and timeline",
+      "version": "Issue opened 2023-12-01; timeline references RxDB 15.0.0-beta.42.",
+      "commit": "Timeline references 28015c6, 997bf8f, and 1d35334 by GitHub short SHA.",
+      "mutable_url": true,
+      "locator": "Opening report and issue timeline/comments, Dec 1-5 2023.",
+      "accessed_at_utc": "2026-10-09T19:44:17Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:github.com/pubkey/rxdb/issues/5342 15.0.0-beta.42 reconnect"
+        },
+        {
+          "operation": "web.open",
+          "locator": "Issue description and timeline; opening sync-stuck report, beta.42 fix note, follow-up and beta status."
+        }
+      ],
+      "bounded_evidence": "One user reports a reconnect fix followed by remaining divergent/missing sync updates in one three-client test; maintainer says WebRTC replication is beta in a later comment.",
+      "limits": "Single issue, single reporter and small workload; not a general failure rate.",
+      "evidence_file": "sources/evidence.md#s10--rxdb-issue-5342"
+    },
+    {
+      "source_id": "S11",
+      "title": "RxDB reconnect fix commit and PR #5348",
+      "url": "https://github.com/pubkey/rxdb/commit/28015c6097fe1e98c902cc5a8edca87c002c94c0",
+      "publisher": "RxDB / pubkey",
+      "source_type": "official code commit and merged pull request",
+      "version": "RxDB v15 prerelease issue context; fix commit dated 2023-12-03.",
+      "commit": "28015c6097fe1e98c902cc5a8edca87c002c94c0",
+      "merge_commit": "997bf8f (short SHA displayed on PR)",
+      "mutable_url": false,
+      "locator": "Commit summary and changed-file list; PR #5348 merge metadata on 2023-12-03.",
+      "accessed_at_utc": "2026-10-09T19:44:17Z",
+      "observed_operations": [
+        {
+          "operation": "web.open",
+          "locator": "Commit and PR pages; reconnect handler, replication pool and test changes."
+        },
+        {
+          "operation": "curl_read",
+          "locator": "Public .patch header only; verified full commit SHA and commit date; no local file saved."
+        }
+      ],
+      "bounded_evidence": "Commit changes five files with 127 additions/88 deletions and includes replication tests; merged PR connects it to issue #5342.",
+      "limits": "Fix scope is dropped WebRTC peer reconnect; it is not a ferry app, booking invariant, or reliability guarantee."
+    },
+    {
+      "source_id": "S12",
+      "title": "RxDB 15.0.0 release notes",
+      "url": "https://rxdb.info/releases/15.0.0.html",
+      "publisher": "RxDB",
+      "source_type": "official release notes",
+      "version": "15.0.0",
+      "commit": null,
+      "mutable_url": true,
+      "locator": "Replication and migration release notes, lines 48-85 and 146-149.",
+      "accessed_at_utc": "2026-10-09T19:44:17Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "RxDB v15 15.0.0 release notes WebRTC moved out of beta"
+        },
+        {
+          "operation": "web.open",
+          "locator": "Release 15.0.0 replication section and change list."
+        }
+      ],
+      "bounded_evidence": "Release notes describe changed replication identifiers and report that WebRTC replication moved out of beta in v15.0.0.",
+      "limits": "Release status is not a product support commitment or proof of correctness for this workload.",
+      "evidence_file": "sources/evidence.md#s12--rxdb-1500-release-evolution"
+    },
+    {
+      "source_id": "S13",
+      "title": "Access data offline — Firestore",
+      "url": "https://firebase.google.com/docs/firestore/manage-data/enable-offline",
+      "publisher": "Google Firebase",
+      "source_type": "official product documentation",
+      "version": "Rolling documentation as accessed 2026-10-09; no product release marker exposed.",
+      "commit": null,
+      "mutable_url": true,
+      "locator": "Offline writes and platform support lines 452-476; stale cache lines 659-660; cached queries and persistence lines 809-817; queued writes lines 857-860.",
+      "accessed_at_utc": "2026-10-09T20:14:03Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:firebase.google.com/docs/firestore/manage-data/enable-offline last write wins cached offline writes"
+        },
+        {
+          "operation": "web.open",
+          "locator": "Official Firebase offline documentation."
+        },
+        {
+          "operation": "web.find",
+          "locator": "Last-write-wins, web persistence defaults/cache retention, stale cache, queued writes."
+        }
+      ],
+      "bounded_evidence": "Firestore caches data and queues offline writes; same-document changes use last-write-wins; cache may be stale/incomplete and web cache is not automatically cleared between sessions.",
+      "limits": "No offline transaction for a shared-capacity read/check/write; rolling docs; not a complete ferry application or price quote.",
+      "evidence_file": "sources/evidence.md#s13--cloud-firestore-offline-data"
+    },
+    {
+      "source_id": "S14",
+      "title": "Transactions and batched writes — Firestore",
+      "url": "https://firebase.google.com/docs/firestore/manage-data/transactions",
+      "publisher": "Google Firebase",
+      "source_type": "official product documentation",
+      "version": "Rolling documentation as accessed 2026-10-09; no product release marker exposed.",
+      "commit": null,
+      "mutable_url": true,
+      "locator": "Atomic operations and offline constraint, lines 450-466.",
+      "accessed_at_utc": "2026-10-09T20:14:03Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:firebase.google.com/docs/firestore/manage-data/transactions offline transaction"
+        },
+        {
+          "operation": "web.open",
+          "locator": "Official Firebase transaction documentation."
+        },
+        {
+          "operation": "web.find",
+          "locator": "Transactions fail when client is offline."
+        }
+      ],
+      "bounded_evidence": "Firestore transactions are atomic online but fail offline; batched writes can execute offline.",
+      "limits": "Offline batched writes do not atomically test shared capacity; no pricing or deployment assessment performed.",
+      "evidence_file": "sources/evidence.md#s14--firestore-transactions"
+    },
+    {
+      "source_id": "S15",
+      "title": "The Session Extension — SQLite",
+      "url": "https://www.sqlite.org/sessionintro.html",
+      "publisher": "SQLite",
+      "source_type": "official technical documentation",
+      "version": "Current official documentation as accessed 2026-10-09; no page version marker exposed. Docs state extension is included since SQLite 3.13.0 but disabled by default.",
+      "commit": null,
+      "mutable_url": true,
+      "locator": "Changeset intro lines 49-57; enabling/limitations lines 58-73; conflict handling lines 99-115.",
+      "accessed_at_utc": "2026-10-09T20:14:03Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:sqlite.org/sessionintro.html changeset primary key disabled by default conflict"
+        },
+        {
+          "operation": "web.open",
+          "locator": "Official SQLite Session Extension documentation."
+        },
+        {
+          "operation": "web.find",
+          "locator": "Default disabled, primary-key requirement, changeset conflicts and application choices."
+        }
+      ],
+      "bounded_evidence": "The extension records and applies changesets to same-schema compatible databases; it is disabled by default, requires declared primary keys, excludes virtual tables, and leaves conflict choices to the application.",
+      "limits": "No transport, online service, booking policy, or capacity guarantee is supplied.",
+      "evidence_file": "sources/evidence.md#s15--sqlite-session-extension"
+    },
+    {
+      "source_id": "S16",
+      "title": "CouchDB 3.5.1 upgrade stability report #5879",
+      "url": "https://github.com/apache/couchdb/issues/5879",
+      "publisher": "Apache CouchDB / GitHub",
+      "source_type": "official project issue",
+      "version": "Reporter targets CouchDB 3.5.1; issue opened 2026-02-03 and remained open/needs-triage at access.",
+      "commit": null,
+      "mutable_url": true,
+      "locator": "Issue description/status lines 129-161, 189-205, and activity lines 214-242.",
+      "accessed_at_utc": "2026-10-09T20:14:03Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:github.com/apache/couchdb/issues/5879 3.5.1 upgrade OOM"
+        },
+        {
+          "operation": "web.open",
+          "locator": "Official issue status, reported version, environment and symptoms."
+        },
+        {
+          "operation": "web.find",
+          "locator": "Open/needs-triage status."
+        }
+      ],
+      "bounded_evidence": "A single reporter describes memory/availability issues during a 3.4.2-to-3.5.1 upgrade at roughly 319k DBs, 640 GB per node, compaction/shard movement, and about 7.6 GB RAM.",
+      "limits": "Workload scale differs sharply from the unspecified small pilot; no fix or applicability to I01 is established.",
+      "evidence_file": "sources/evidence.md#s16--couchdb-issue-5879-bounded-lower-transfer-caution"
+    },
+    {
+      "source_id": "S17",
+      "title": "3.5.x Branch — Apache CouchDB release notes",
+      "url": "https://docs.couchdb.org/en/stable/whatsnew/3.5.html",
+      "publisher": "Apache CouchDB",
+      "source_type": "official release notes",
+      "version": "CouchDB 3.5.x notes list 3.5.2; stable URL is a mutable alias.",
+      "commit": null,
+      "mutable_url": true,
+      "locator": "Version 3.5.2 and 3.5.1 release sections.",
+      "accessed_at_utc": "2026-10-09T20:14:03Z",
+      "observed_operations": [
+        {
+          "operation": "web.search_query",
+          "query": "site:docs.couchdb.org/en/stable/whatsnew/3.5.html 3.5.2 CouchDB release"
+        },
+        {
+          "operation": "web.open",
+          "locator": "Official release notes for the 3.5.x branch."
+        }
+      ],
+      "bounded_evidence": "Official notes list a later CouchDB 3.5.2 release.",
+      "limits": "Inspected notes do not establish that issue #5879 was fixed by that release.",
+      "evidence_file": "sources/evidence.md#s17--couchdb-35-release-notes"
+    }
+  ],
+  "supplemented_at_utc": "2026-10-09T20:14:03Z"
+}

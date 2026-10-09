@@ -1,43 +1,30 @@
 {
   "missing_host_run_paths": [
-    "jobs/A-M10-B/treatment/research",
-    "jobs/A-M10-B/control/research",
-    "jobs/A-M12-B/treatment/research",
-    "jobs/A-M02-A/treatment/research",
-    "jobs/A-M02-A/control/research",
-    "jobs/A-M01-A/treatment/research",
-    "jobs/A-M01-A/control/research-q1",
-    "jobs/A-M01-A/control/research-q2",
-    "jobs/A-M04-A/treatment/research",
-    "jobs/A-M04-A/control/research",
-    "jobs/B-02/treatment/critic",
-    "jobs/B-02/treatment/research",
-    "jobs/B-02/control/critic",
-    "jobs/A-M05-A/treatment/critic",
-    "jobs/A-M05-A/treatment/research",
-    "jobs/A-M05-A/control/reviser",
-    "jobs/A-M03-B/control/research",
-    "jobs/A-M01-B/treatment/research",
-    "jobs/A-M01-B/control/research-q1",
-    "jobs/A-M01-B/control/research-q2",
-    "jobs/A-M01-B/control/critic",
-    "jobs/B-01/treatment/critic",
-    "jobs/B-01/treatment/research",
-    "jobs/B-01/control/reviser",
-    "jobs/B-03/treatment/critic",
-    "jobs/B-03/treatment/research",
-    "jobs/B-03/control/critic",
-    "evaluations/A-M10-B",
-    "evaluations/A-M04-B",
-    "evaluations/A-M02-A",
-    "evaluations/A-M04-A",
-    "evaluations/A-M03-B",
-    "evaluations/A-M01-B"
+    "jobs/A-M08-A/treatment/critic",
+    "jobs/B-06/treatment/research",
+    "jobs/A-M11-A/treatment/critic",
+    "jobs/A-M11-A/control/critic",
+    "evaluations/B-05"
   ],
+  "extra_owned_contexts": [
+    {
+      "threadId": "mcp:1a93aa3c-fc17-4c29-904c-7176e685d9ee",
+      "role": "unrequested_native_verifier",
+      "block": "A-M03-B",
+      "arm": "treatment",
+      "status": "completed_then_stopped_and_settled",
+      "host_run": {
+        "requested_at": "2026-10-09T19:51:08.201Z",
+        "started_at": "2026-10-09T19:51:13.752Z",
+        "completed_at": "2026-10-09T19:52:32.570Z"
+      }
+    }
+  ],
+  "extra_owned_context_occupied_s": 78.818,
   "occupied_total_is_partial": true,
-  "snapshot_at": "2026-10-09T20:08:30.704058+00:00",
+  "snapshot_at": "2026-10-09T20:50:44.043903+00:00",
   "original_logical_rows": 80,
-  "started_rows": 48,
+  "started_rows": 55,
   "rows": [
     {
       "block": "A-M01-A",
@@ -46,6 +33,7 @@
       "method_version": "v1",
       "case": "S01",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
@@ -58,9 +46,9 @@
       "science_last_save_s": 2733.769,
       "delivery_within_whole_deadline": true,
       "science_saved_within_whole_deadline": true,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 1801.001,
-      "occupied_within_90min": null,
+      "occupied_agent_s": 3351.227,
+      "occupied_agent_so_far_s": 3351.227,
+      "occupied_within_90min": true,
       "qualified_result_s": 4273.551,
       "assessment_delivery_at": "2026-10-09T19:35:54.759000+00:00",
       "assessment_occupied_s": 1048.99,
@@ -68,6 +56,16 @@
       "source_map_bytes": 67015,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M01-A/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-A-control-critic-v1",
           "terminal_status": "completed",
@@ -95,15 +93,25 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M01-A/control/research-q1",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-A-control-research-q1-v1",
           "terminal_status": "completed",
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M01-A-control-research-q1-v1:ordinal:1",
+          "started_at": "2026-10-09T18:24:42.160000+00:00",
+          "completed_at": "2026-10-09T18:39:51.700000+00:00",
+          "occupied_s": 909.54,
+          "occupied_so_far_s": 909.54,
+          "accepted_queue_s": 0.299,
           "native_status": "complete",
           "native_goal_cumulative": {
             "status": "complete",
@@ -114,7 +122,7 @@
           },
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T18:44:41.207874+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -122,15 +130,25 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M01-A/control/research-q2",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-A-control-research-q2-v1",
           "terminal_status": "completed",
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M01-A-control-research-q2-v1:ordinal:1",
+          "started_at": "2026-10-09T18:24:42.702000+00:00",
+          "completed_at": "2026-10-09T18:35:23.388000+00:00",
+          "occupied_s": 640.686,
+          "occupied_so_far_s": 640.686,
+          "accepted_queue_s": 0.274,
           "native_status": "complete",
           "native_goal_cumulative": {
             "status": "complete",
@@ -141,7 +159,7 @@
           },
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T18:44:42.110832+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -149,6 +167,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M01-A/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-A-control-reviser-v1",
           "terminal_status": "completed",
@@ -188,6 +216,7 @@
       "method_version": "v1",
       "case": "S01",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "FAILED_DELIVERY_PROTOCOL",
       "final_delivered": false,
@@ -200,9 +229,9 @@
       "science_last_save_s": null,
       "delivery_within_whole_deadline": null,
       "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 0,
-      "occupied_within_90min": null,
+      "occupied_agent_s": 60.95,
+      "occupied_agent_so_far_s": 60.95,
+      "occupied_within_90min": true,
       "qualified_result_s": null,
       "assessment_delivery_at": "2026-10-09T19:35:54.759000+00:00",
       "assessment_occupied_s": 1048.99,
@@ -210,15 +239,25 @@
       "source_map_bytes": null,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M01-A/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-A-treatment-research-v1",
           "terminal_status": "completed",
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M01-A-treatment-research-v1:ordinal:1",
+          "started_at": "2026-10-09T18:24:47.944000+00:00",
+          "completed_at": "2026-10-09T18:25:48.894000+00:00",
+          "occupied_s": 60.95,
+          "occupied_so_far_s": 60.95,
+          "accepted_queue_s": 4.775,
           "native_status": "complete",
           "native_goal_cumulative": {
             "status": "complete",
@@ -229,7 +268,7 @@
           },
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T18:54:42.637651+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -249,6 +288,7 @@
       "method_version": "v1",
       "case": "S07",
       "route": "muse",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
@@ -261,30 +301,39 @@
       "science_last_save_s": 1004.185,
       "delivery_within_whole_deadline": true,
       "science_saved_within_whole_deadline": true,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 236.593,
-      "occupied_within_90min": null,
+      "occupied_agent_s": 1162.037,
+      "occupied_agent_so_far_s": 1162.037,
+      "occupied_within_90min": true,
       "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
+      "assessment_delivery_at": "2026-10-09T19:13:12.771000+00:00",
+      "assessment_occupied_s": 1201.655,
       "final_output_bytes": 39210,
       "source_map_bytes": 3119,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M01-B/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-B-control-critic-v1",
           "terminal_status": "completed",
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M01-B-control-critic-v1:ordinal:1",
+          "started_at": "2026-10-09T18:32:58.823000+00:00",
+          "completed_at": "2026-10-09T18:36:35.782000+00:00",
+          "occupied_s": 216.959,
+          "occupied_so_far_s": 216.959,
+          "accepted_queue_s": 3.889,
           "native_status": "UNKNOWN",
           "native_goal_cumulative": {},
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T18:44:54.520665+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -292,20 +341,29 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M01-B/control/research-q1",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-B-control-research-q1-v1",
           "terminal_status": "completed",
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M01-B-control-research-q1-v1:ordinal:1",
+          "started_at": "2026-10-09T18:24:51.407000+00:00",
+          "completed_at": "2026-10-09T18:29:53.786000+00:00",
+          "occupied_s": 302.379,
+          "occupied_so_far_s": 302.379,
+          "accepted_queue_s": 7.575,
           "native_status": "UNKNOWN",
           "native_goal_cumulative": {},
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T18:44:43.415876+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -313,20 +371,29 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M01-B/control/research-q2",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-B-control-research-q2-v1",
           "terminal_status": "completed",
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M01-B-control-research-q2-v1:ordinal:1",
+          "started_at": "2026-10-09T18:24:54.619000+00:00",
+          "completed_at": "2026-10-09T18:31:40.725000+00:00",
+          "occupied_s": 406.106,
+          "occupied_so_far_s": 406.106,
+          "accepted_queue_s": 9.481,
           "native_status": "UNKNOWN",
           "native_goal_cumulative": {},
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T18:44:44.094458+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -334,6 +401,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M01-B/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-B-control-reviser-v1",
           "terminal_status": "completed",
@@ -367,6 +443,7 @@
       "method_version": "v1",
       "case": "S07",
       "route": "muse",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
       "final_delivered": true,
@@ -379,16 +456,25 @@
       "science_last_save_s": 1595.467,
       "delivery_within_whole_deadline": true,
       "science_saved_within_whole_deadline": true,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 689.539,
-      "occupied_within_90min": null,
+      "occupied_agent_s": 1200.603,
+      "occupied_agent_so_far_s": 1200.603,
+      "occupied_within_90min": true,
       "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
+      "assessment_delivery_at": "2026-10-09T19:13:12.771000+00:00",
+      "assessment_occupied_s": 1201.655,
       "final_output_bytes": 43052,
       "source_map_bytes": 7082,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M01-B/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-B-treatment-critic-v1",
           "terminal_status": "completed",
@@ -410,20 +496,29 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M01-B/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-B-treatment-research-v1",
           "terminal_status": "completed",
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M01-B-treatment-research-v1:ordinal:1",
+          "started_at": "2026-10-09T18:24:55.509000+00:00",
+          "completed_at": "2026-10-09T18:33:26.573000+00:00",
+          "occupied_s": 511.064,
+          "occupied_so_far_s": 511.064,
+          "accepted_queue_s": 8.419,
           "native_status": "UNKNOWN",
           "native_goal_cumulative": {},
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T18:54:45.382757+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -431,6 +526,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M01-B/treatment/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M01-B-treatment-reviser-v1",
           "terminal_status": "completed",
@@ -464,6 +568,7 @@
       "method_version": "v1",
       "case": "S02",
       "route": "glm",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "INVALID_INFRASTRUCTURE_OVERDISPATCH",
       "final_delivered": false,
@@ -476,30 +581,40 @@
       "science_last_save_s": null,
       "delivery_within_whole_deadline": null,
       "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 0,
-      "occupied_within_90min": null,
+      "occupied_agent_s": 136.926,
+      "occupied_agent_so_far_s": 136.926,
+      "occupied_within_90min": true,
       "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
+      "assessment_delivery_at": "2026-10-09T19:23:58.115000+00:00",
+      "assessment_occupied_s": 330.907,
       "final_output_bytes": null,
       "source_map_bytes": null,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M02-A/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-A-control-research-v1",
           "terminal_status": "interrupted",
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M02-A-control-research-v1:ordinal:1",
+          "started_at": "2026-10-09T18:28:18.980000+00:00",
+          "completed_at": "2026-10-09T18:30:35.906000+00:00",
+          "occupied_s": 136.926,
+          "occupied_so_far_s": 136.926,
+          "accepted_queue_s": 14.295,
           "native_status": "paused",
           "native_goal_cumulative": {},
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T18:58:04.185225+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -519,6 +634,7 @@
       "method_version": "v1",
       "case": "S02",
       "route": "glm",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "INVALID_INFRASTRUCTURE_OVERDISPATCH",
       "final_delivered": false,
@@ -531,30 +647,40 @@
       "science_last_save_s": null,
       "delivery_within_whole_deadline": null,
       "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 0,
-      "occupied_within_90min": null,
+      "occupied_agent_s": 135.602,
+      "occupied_agent_so_far_s": 135.602,
+      "occupied_within_90min": true,
       "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
+      "assessment_delivery_at": "2026-10-09T19:23:58.115000+00:00",
+      "assessment_occupied_s": 330.907,
       "final_output_bytes": null,
       "source_map_bytes": null,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M02-A/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-A-treatment-research-v1",
           "terminal_status": "interrupted",
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M02-A-treatment-research-v1:ordinal:1",
+          "started_at": "2026-10-09T18:28:21.833000+00:00",
+          "completed_at": "2026-10-09T18:30:37.435000+00:00",
+          "occupied_s": 135.602,
+          "occupied_so_far_s": 135.602,
+          "accepted_queue_s": 16.379,
           "native_status": "paused",
           "native_goal_cumulative": {},
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T18:58:04.925513+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -574,6 +700,7 @@
       "method_version": "v1",
       "case": "S08",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
@@ -596,6 +723,16 @@
       "source_map_bytes": 42607,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M02-B/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-B-control-critic-v1",
           "terminal_status": "completed",
@@ -623,6 +760,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M02-B/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-B-control-research-v1",
           "terminal_status": "completed",
@@ -650,6 +797,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M02-B/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-B-control-reviser-v1",
           "terminal_status": "completed",
@@ -689,6 +846,7 @@
       "method_version": "v1",
       "case": "S08",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
       "final_delivered": true,
@@ -711,6 +869,16 @@
       "source_map_bytes": 59763,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M02-B/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-B-treatment-critic-v1",
           "terminal_status": "completed",
@@ -738,6 +906,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M02-B/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-B-treatment-research-v1",
           "terminal_status": "completed",
@@ -765,6 +943,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M02-B/treatment/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M02-B-treatment-reviser-v1",
           "terminal_status": "completed",
@@ -804,6 +992,7 @@
       "method_version": "v1",
       "case": "S03",
       "route": "muse",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
@@ -826,6 +1015,15 @@
       "source_map_bytes": 6821,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M03-A/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M03-A-control-critic-v1",
           "terminal_status": "completed",
@@ -847,6 +1045,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M03-A/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M03-A-control-research-v1",
           "terminal_status": "completed",
@@ -868,6 +1075,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M03-A/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M03-A-control-reviser-v1",
           "terminal_status": "completed",
@@ -901,6 +1117,7 @@
       "method_version": "v1",
       "case": "S03",
       "route": "muse",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
       "final_delivered": true,
@@ -923,6 +1140,15 @@
       "source_map_bytes": 1437,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M03-A/treatment/critic-finalizer",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M03-A-treatment-critic-finalizer-v1",
           "terminal_status": "completed",
@@ -944,6 +1170,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M03-A/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M03-A-treatment-research-v1",
           "terminal_status": "completed",
@@ -977,10 +1212,11 @@
       "method_version": "v1",
       "case": "S09",
       "route": "glm",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "INVALID_INFRASTRUCTURE_OVERDISPATCH",
       "final_delivered": false,
-      "grade": null,
+      "grade": "NO_DELIVERY",
       "requested_at": "2026-10-09T18:28:05.710518+00:00",
       "deadline": "2026-10-09T19:28:05.710518+00:00",
       "final_files_saved_at": null,
@@ -989,30 +1225,40 @@
       "science_last_save_s": null,
       "delivery_within_whole_deadline": null,
       "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 0,
-      "occupied_within_90min": null,
+      "occupied_agent_s": 135.966,
+      "occupied_agent_so_far_s": 135.966,
+      "occupied_within_90min": true,
       "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
+      "assessment_delivery_at": "2026-10-09T20:20:27.778000+00:00",
+      "assessment_occupied_s": 1217.154,
       "final_output_bytes": null,
       "source_map_bytes": null,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M03-B/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M03-B-control-research-v1",
           "terminal_status": "interrupted",
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M03-B-control-research-v1:ordinal:1",
+          "started_at": "2026-10-09T18:28:23.646000+00:00",
+          "completed_at": "2026-10-09T18:30:39.612000+00:00",
+          "occupied_s": 135.966,
+          "occupied_so_far_s": 135.966,
+          "accepted_queue_s": 16.475,
           "native_status": "paused",
           "native_goal_cumulative": {},
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T18:58:05.710518+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -1032,10 +1278,11 @@
       "method_version": "v1",
       "case": "S09",
       "route": "glm",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "INVALID_UNDECLARED_NATIVE_VERIFIER",
       "final_delivered": false,
-      "grade": null,
+      "grade": "HOLD",
       "requested_at": "2026-10-09T19:28:46.634199+00:00",
       "deadline": "2026-10-09T20:28:46.634199+00:00",
       "final_files_saved_at": null,
@@ -1048,12 +1295,22 @@
       "occupied_agent_so_far_s": 1535.44,
       "occupied_within_90min": true,
       "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
+      "assessment_delivery_at": "2026-10-09T20:20:27.778000+00:00",
+      "assessment_occupied_s": 1217.154,
       "final_output_bytes": null,
       "source_map_bytes": null,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M03-B/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M03-B-treatment-research-v1",
           "terminal_status": "interrupted",
@@ -1087,6 +1344,7 @@
       "method_version": "v1",
       "case": "S04",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
@@ -1099,16 +1357,26 @@
       "science_last_save_s": 1465.649,
       "delivery_within_whole_deadline": true,
       "science_saved_within_whole_deadline": true,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 846.508,
-      "occupied_within_90min": null,
-      "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
+      "occupied_agent_s": 1179.7060000000001,
+      "occupied_agent_so_far_s": 1179.7060000000001,
+      "occupied_within_90min": true,
+      "qualified_result_s": 3153.636,
+      "assessment_delivery_at": "2026-10-09T19:21:22.480000+00:00",
+      "assessment_occupied_s": 1379.703,
       "final_output_bytes": 23983,
       "source_map_bytes": 28666,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M04-A/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-A-control-critic-v1",
           "terminal_status": "completed",
@@ -1136,15 +1404,25 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M04-A/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-A-control-research-v1",
           "terminal_status": "completed",
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M04-A-control-research-v1:ordinal:1",
+          "started_at": "2026-10-09T18:28:50.612000+00:00",
+          "completed_at": "2026-10-09T18:34:23.810000+00:00",
+          "occupied_s": 333.198,
+          "occupied_so_far_s": 333.198,
+          "accepted_queue_s": 0.503,
           "native_status": "complete",
           "native_goal_cumulative": {
             "status": "complete",
@@ -1155,7 +1433,7 @@
           },
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T18:58:48.843615+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -1163,6 +1441,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M04-A/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-A-control-reviser-v1",
           "terminal_status": "completed",
@@ -1202,6 +1490,7 @@
       "method_version": "v1",
       "case": "S04",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
       "final_delivered": true,
@@ -1214,16 +1503,26 @@
       "science_last_save_s": 1522.469,
       "delivery_within_whole_deadline": true,
       "science_saved_within_whole_deadline": true,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 923.408,
-      "occupied_within_90min": null,
+      "occupied_agent_s": 1406.917,
+      "occupied_agent_so_far_s": 1406.917,
+      "occupied_within_90min": true,
       "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
+      "assessment_delivery_at": "2026-10-09T19:21:22.480000+00:00",
+      "assessment_occupied_s": 1379.703,
       "final_output_bytes": 22938,
       "source_map_bytes": 23368,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M04-A/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-A-treatment-critic-v1",
           "terminal_status": "completed",
@@ -1251,15 +1550,25 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M04-A/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-A-treatment-research-v1",
           "terminal_status": "completed",
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M04-A-treatment-research-v1:ordinal:1",
+          "started_at": "2026-10-09T18:28:51.703000+00:00",
+          "completed_at": "2026-10-09T18:36:55.212000+00:00",
+          "occupied_s": 483.509,
+          "occupied_so_far_s": 483.509,
+          "accepted_queue_s": 1.034,
           "native_status": "complete",
           "native_goal_cumulative": {
             "status": "complete",
@@ -1270,7 +1579,7 @@
           },
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T18:58:50.363520+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -1278,6 +1587,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M04-A/treatment/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-A-treatment-reviser-v1",
           "terminal_status": "completed",
@@ -1317,10 +1636,11 @@
       "method_version": "v1",
       "case": "S10",
       "route": "muse",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
-      "grade": null,
+      "grade": "FAIL",
       "requested_at": "2026-10-09T19:25:30.428055+00:00",
       "deadline": "2026-10-09T20:25:30.428055+00:00",
       "final_files_saved_at": "2026-10-09T19:49:56.142644+00:00",
@@ -1333,12 +1653,21 @@
       "occupied_agent_so_far_s": 1153.963,
       "occupied_within_90min": true,
       "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
+      "assessment_delivery_at": "2026-10-09T20:19:27.864000+00:00",
+      "assessment_occupied_s": 1156.589,
       "final_output_bytes": 64811,
       "source_map_bytes": 4579,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M04-B/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-B-control-critic-v1",
           "terminal_status": "completed",
@@ -1360,6 +1689,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M04-B/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-B-control-research-v1",
           "terminal_status": "completed",
@@ -1381,6 +1719,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M04-B/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-B-control-reviser-v1",
           "terminal_status": "completed",
@@ -1414,10 +1761,11 @@
       "method_version": "v1",
       "case": "S10",
       "route": "muse",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
       "final_delivered": true,
-      "grade": null,
+      "grade": "FAIL",
       "requested_at": "2026-10-09T19:25:39.848988+00:00",
       "deadline": "2026-10-09T20:25:39.848988+00:00",
       "final_files_saved_at": "2026-10-09T19:52:22.598611+00:00",
@@ -1430,12 +1778,21 @@
       "occupied_agent_so_far_s": 1230.421,
       "occupied_within_90min": true,
       "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
+      "assessment_delivery_at": "2026-10-09T20:19:27.864000+00:00",
+      "assessment_occupied_s": 1156.589,
       "final_output_bytes": 38115,
       "source_map_bytes": 4969,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M04-B/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-B-treatment-critic-v1",
           "terminal_status": "completed",
@@ -1457,6 +1814,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M04-B/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-B-treatment-research-v1",
           "terminal_status": "completed",
@@ -1478,6 +1844,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M04-B/treatment/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M04-B-treatment-reviser-v1",
           "terminal_status": "completed",
@@ -1511,28 +1886,39 @@
       "method_version": "v1",
       "case": "S05",
       "route": "glm",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
-      "final_delivered": false,
-      "grade": null,
+      "final_delivered": true,
+      "grade": "FAIL",
       "requested_at": "2026-10-09T19:27:45.873912+00:00",
       "deadline": "2026-10-09T20:27:45.873912+00:00",
-      "final_files_saved_at": null,
-      "delivered_at": null,
-      "candidate_delivery_s": null,
-      "science_last_save_s": null,
-      "delivery_within_whole_deadline": null,
-      "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 1987.43,
-      "occupied_within_90min": null,
+      "final_files_saved_at": "2026-10-09T20:19:04.433705+00:00",
+      "delivered_at": "2026-10-09T20:20:49.600000+00:00",
+      "candidate_delivery_s": 3183.726,
+      "science_last_save_s": 3078.56,
+      "delivery_within_whole_deadline": true,
+      "science_saved_within_whole_deadline": true,
+      "occupied_agent_s": 2920.6130000000003,
+      "occupied_agent_so_far_s": 2920.6130000000003,
+      "occupied_within_90min": true,
       "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
-      "final_output_bytes": null,
-      "source_map_bytes": null,
+      "assessment_delivery_at": "2026-10-09T20:46:28.554000+00:00",
+      "assessment_occupied_s": 1115.775,
+      "final_output_bytes": 31396,
+      "source_map_bytes": 3946,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M05-A/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-A-control-critic-v1",
           "terminal_status": "completed",
@@ -1554,6 +1940,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M05-A/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-A-control-research-v1",
           "terminal_status": "completed",
@@ -1575,20 +1971,30 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M05-A/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-A-control-reviser-v1",
-          "terminal_status": null,
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
-          "native_status": "running",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M05-A-control-reviser-v1:ordinal:1",
+          "started_at": "2026-10-09T20:05:16.417000+00:00",
+          "completed_at": "2026-10-09T20:20:49.600000+00:00",
+          "occupied_s": 933.183,
+          "occupied_so_far_s": 933.183,
+          "accepted_queue_s": 7.01,
+          "native_status": "complete",
           "native_goal_cumulative": {},
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T20:23:08.182476+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -1608,42 +2014,53 @@
       "method_version": "v1",
       "case": "S05",
       "route": "glm",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
-      "final_delivered": false,
-      "grade": null,
+      "final_delivered": true,
+      "grade": "FAIL",
       "requested_at": "2026-10-09T19:27:53.148426+00:00",
       "deadline": "2026-10-09T20:27:53.148426+00:00",
-      "final_files_saved_at": null,
-      "delivered_at": null,
-      "candidate_delivery_s": null,
-      "science_last_save_s": null,
-      "delivery_within_whole_deadline": null,
-      "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 0,
-      "occupied_within_90min": null,
+      "final_files_saved_at": "2026-10-09T20:20:47.459466+00:00",
+      "delivered_at": "2026-10-09T20:24:10.268000+00:00",
+      "candidate_delivery_s": 3377.12,
+      "science_last_save_s": 3174.311,
+      "delivery_within_whole_deadline": true,
+      "science_saved_within_whole_deadline": true,
+      "occupied_agent_s": 4084.8140000000003,
+      "occupied_agent_so_far_s": 4084.8140000000003,
+      "occupied_within_90min": true,
       "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
-      "final_output_bytes": null,
-      "source_map_bytes": 13828,
+      "assessment_delivery_at": "2026-10-09T20:46:28.554000+00:00",
+      "assessment_occupied_s": 1115.775,
+      "final_output_bytes": 15391,
+      "source_map_bytes": 15785,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M05-A/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-A-treatment-critic-v1",
-          "terminal_status": null,
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
-          "native_status": "running",
+          "terminal_status": "interrupted",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M05-A-treatment-critic-v1:ordinal:1",
+          "started_at": "2026-10-09T20:05:05.225000+00:00",
+          "completed_at": "2026-10-09T20:17:06.746000+00:00",
+          "occupied_s": 721.521,
+          "occupied_so_far_s": 721.521,
+          "accepted_queue_s": 5.872,
+          "native_status": "paused",
           "native_goal_cumulative": {},
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T20:16:58.238150+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": false,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -1651,20 +2068,30 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M05-A/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-A-treatment-research-v1",
-          "terminal_status": null,
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
-          "native_status": "running",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M05-A-treatment-research-v1:ordinal:1",
+          "started_at": "2026-10-09T19:28:06.975000+00:00",
+          "completed_at": "2026-10-09T20:24:10.268000+00:00",
+          "occupied_s": 3363.293,
+          "occupied_so_far_s": 3363.293,
+          "accepted_queue_s": 12.895,
+          "native_status": "complete",
           "native_goal_cumulative": {},
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T20:27:53.148426+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -1684,6 +2111,7 @@
       "method_version": "v1",
       "case": "S11",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
@@ -1706,6 +2134,16 @@
       "source_map_bytes": 5714,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M05-B/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-B-control-critic-v1",
           "terminal_status": "completed",
@@ -1733,6 +2171,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M05-B/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-B-control-research-v1",
           "terminal_status": "completed",
@@ -1760,6 +2208,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M05-B/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-B-control-reviser-v1",
           "terminal_status": "completed",
@@ -1799,6 +2257,7 @@
       "method_version": "v1",
       "case": "S11",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
       "final_delivered": true,
@@ -1821,6 +2280,16 @@
       "source_map_bytes": 18820,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M05-B/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-B-treatment-critic-v1",
           "terminal_status": "completed",
@@ -1848,6 +2317,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M05-B/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M05-B-treatment-research-v1",
           "terminal_status": "completed",
@@ -1887,6 +2366,7 @@
       "method_version": "v1",
       "case": "S06",
       "route": "muse",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
@@ -1909,6 +2389,15 @@
       "source_map_bytes": 17952,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M06-A/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-A-control-critic-v1",
           "terminal_status": "completed",
@@ -1930,6 +2419,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M06-A/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-A-control-research-v1",
           "terminal_status": "completed",
@@ -1951,6 +2449,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M06-A/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-A-control-reviser-v1",
           "terminal_status": "completed",
@@ -1984,6 +2491,7 @@
       "method_version": "v1",
       "case": "S06",
       "route": "muse",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
       "final_delivered": true,
@@ -2006,6 +2514,15 @@
       "source_map_bytes": 8129,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M06-A/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-A-treatment-critic-v1",
           "terminal_status": "completed",
@@ -2027,6 +2544,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M06-A/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-A-treatment-research-v1",
           "terminal_status": "completed",
@@ -2048,6 +2574,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M06-A/treatment/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M06-A-treatment-reviser-v1",
           "terminal_status": "completed",
@@ -2081,6 +2616,7 @@
       "method_version": "v1",
       "case": "S12",
       "route": "glm",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -2114,6 +2650,7 @@
       "method_version": "v1",
       "case": "S12",
       "route": "glm",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -2147,6 +2684,7 @@
       "method_version": "v1",
       "case": "S07",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
@@ -2169,6 +2707,16 @@
       "source_map_bytes": 28860,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M07-A/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-A-control-critic-v1",
           "terminal_status": "completed",
@@ -2196,6 +2744,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M07-A/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-A-control-research-v1",
           "terminal_status": "completed",
@@ -2223,6 +2781,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M07-A/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-A-control-reviser-v1",
           "terminal_status": "completed",
@@ -2262,6 +2830,7 @@
       "method_version": "v1",
       "case": "S07",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
       "final_delivered": true,
@@ -2284,6 +2853,16 @@
       "source_map_bytes": 30822,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M07-A/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-A-treatment-critic-v1",
           "terminal_status": "completed",
@@ -2311,6 +2890,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M07-A/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-A-treatment-research-v1",
           "terminal_status": "completed",
@@ -2338,6 +2927,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M07-A/treatment/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-A-treatment-reviser-v1",
           "terminal_status": "completed",
@@ -2377,10 +2976,11 @@
       "method_version": "v1",
       "case": "S01",
       "route": "muse",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
-      "grade": null,
+      "grade": "FAIL",
       "requested_at": "2026-10-09T19:30:16.202878+00:00",
       "deadline": "2026-10-09T20:30:16.202878+00:00",
       "final_files_saved_at": "2026-10-09T19:56:16.364113+00:00",
@@ -2393,12 +2993,21 @@
       "occupied_agent_so_far_s": 1288.252,
       "occupied_within_90min": true,
       "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
+      "assessment_delivery_at": "2026-10-09T20:36:58.926000+00:00",
+      "assessment_occupied_s": 1117.442,
       "final_output_bytes": 51841,
       "source_map_bytes": 1438,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M07-B/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-B-control-critic-v1",
           "terminal_status": "completed",
@@ -2420,6 +3029,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M07-B/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-B-control-research-v1",
           "terminal_status": "completed",
@@ -2441,6 +3059,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M07-B/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-B-control-reviser-v1",
           "terminal_status": "completed",
@@ -2474,28 +3101,38 @@
       "method_version": "v1",
       "case": "S01",
       "route": "muse",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
-      "final_delivered": false,
-      "grade": null,
+      "final_delivered": true,
+      "grade": "FAIL",
       "requested_at": "2026-10-09T19:33:10.889215+00:00",
       "deadline": "2026-10-09T20:33:10.889215+00:00",
-      "final_files_saved_at": null,
-      "delivered_at": null,
-      "candidate_delivery_s": null,
-      "science_last_save_s": null,
-      "delivery_within_whole_deadline": null,
-      "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": 706.716,
-      "occupied_agent_so_far_s": 706.716,
+      "final_files_saved_at": "2026-10-09T20:16:14.242730+00:00",
+      "delivered_at": "2026-10-09T20:16:44.777000+00:00",
+      "candidate_delivery_s": 2613.888,
+      "science_last_save_s": 2583.354,
+      "delivery_within_whole_deadline": true,
+      "science_saved_within_whole_deadline": true,
+      "occupied_agent_s": 973.384,
+      "occupied_agent_so_far_s": 973.384,
       "occupied_within_90min": true,
       "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
-      "final_output_bytes": null,
-      "source_map_bytes": null,
+      "assessment_delivery_at": "2026-10-09T20:36:58.926000+00:00",
+      "assessment_occupied_s": 1117.442,
+      "final_output_bytes": 33181,
+      "source_map_bytes": 12999,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M07-B/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-B-treatment-critic-v1",
           "terminal_status": "completed",
@@ -2517,6 +3154,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M07-B/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-B-treatment-research-v1",
           "terminal_status": "completed",
@@ -2530,6 +3176,36 @@
           "native_goal_cumulative": {},
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T20:03:10.889215+00:00",
+          "delivery_within_stage_deadline": true,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
+        },
+        {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
+          "path": "jobs/A-M07-B/treatment/reviser",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M07-B-treatment-reviser-v1",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M07-B-treatment-reviser-v1:ordinal:1",
+          "started_at": "2026-10-09T20:12:18.109000+00:00",
+          "completed_at": "2026-10-09T20:16:44.777000+00:00",
+          "occupied_s": 266.668,
+          "occupied_so_far_s": 266.668,
+          "accepted_queue_s": 1.712,
+          "native_status": "UNKNOWN",
+          "native_goal_cumulative": {},
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T20:30:13.563243+00:00",
           "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
@@ -2550,6 +3226,7 @@
       "method_version": "v1",
       "case": "S08",
       "route": "glm",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -2583,12 +3260,13 @@
       "method_version": "v1",
       "case": "S08",
       "route": "glm",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
-      "status": "UNSTARTED",
+      "status": "STARTED",
       "final_delivered": false,
       "grade": null,
-      "requested_at": null,
-      "deadline": null,
+      "requested_at": "2026-10-09T20:29:39.076516+00:00",
+      "deadline": "2026-10-09T21:29:39.076516+00:00",
       "final_files_saved_at": null,
       "delivered_at": null,
       "candidate_delivery_s": null,
@@ -2596,14 +3274,77 @@
       "delivery_within_whole_deadline": null,
       "science_saved_within_whole_deadline": null,
       "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 0,
+      "occupied_agent_so_far_s": 806.978,
       "occupied_within_90min": null,
       "qualified_result_s": null,
       "assessment_delivery_at": null,
       "assessment_occupied_s": null,
       "final_output_bytes": null,
       "source_map_bytes": null,
-      "stages": [],
+      "stages": [
+        {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": null,
+          "effective_host_model": null,
+          "path": "jobs/A-M08-A/treatment/critic",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-A-treatment-critic-v1",
+          "terminal_status": null,
+          "run_id": null,
+          "started_at": null,
+          "completed_at": null,
+          "occupied_s": null,
+          "occupied_so_far_s": null,
+          "accepted_queue_s": null,
+          "native_status": "running",
+          "native_goal_cumulative": {},
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T21:02:28.162287+00:00",
+          "delivery_within_stage_deadline": null,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
+        },
+        {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+          "path": "jobs/A-M08-A/treatment/research",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-A-treatment-research-v1",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M08-A-treatment-research-v1:ordinal:1",
+          "started_at": "2026-10-09T20:30:02.457000+00:00",
+          "completed_at": "2026-10-09T20:43:29.435000+00:00",
+          "occupied_s": 806.978,
+          "occupied_so_far_s": 806.978,
+          "accepted_queue_s": 12.378,
+          "native_status": "complete",
+          "native_goal_cumulative": {},
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T20:53:39.076516+00:00",
+          "delivery_within_stage_deadline": true,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
+        }
+      ],
       "experiment_slot_wait_s": null,
       "shared_cold_setup_allocation_s": null,
       "source_operation_count": null,
@@ -2616,6 +3357,7 @@
       "method_version": "v1",
       "case": "S02",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
@@ -2638,6 +3380,16 @@
       "source_map_bytes": 27812,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M08-B/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-B-control-critic-v1",
           "terminal_status": "completed",
@@ -2665,6 +3417,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M08-B/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-B-control-research-v1",
           "terminal_status": "completed",
@@ -2692,6 +3454,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M08-B/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-B-control-reviser-v1",
           "terminal_status": "completed",
@@ -2731,6 +3503,7 @@
       "method_version": "v1",
       "case": "S02",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
       "final_delivered": true,
@@ -2753,6 +3526,16 @@
       "source_map_bytes": 32432,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M08-B/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-B-treatment-critic-v1",
           "terminal_status": "completed",
@@ -2780,6 +3563,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M08-B/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-B-treatment-research-v1",
           "terminal_status": "completed",
@@ -2807,6 +3600,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M08-B/treatment/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M08-B-treatment-reviser-v1",
           "terminal_status": "completed",
@@ -2846,6 +3649,7 @@
       "method_version": "v1",
       "case": "S09",
       "route": "muse",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
@@ -2868,6 +3672,15 @@
       "source_map_bytes": 3704,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M09-A/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-A-control-critic-v1",
           "terminal_status": "completed",
@@ -2889,6 +3702,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M09-A/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-A-control-research-v1",
           "terminal_status": "completed",
@@ -2910,6 +3732,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M09-A/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-A-control-reviser-v1",
           "terminal_status": "completed",
@@ -2943,6 +3774,7 @@
       "method_version": "v1",
       "case": "S09",
       "route": "muse",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
       "final_delivered": true,
@@ -2965,6 +3797,15 @@
       "source_map_bytes": 3308,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M09-A/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-A-treatment-critic-v1",
           "terminal_status": "completed",
@@ -2986,6 +3827,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M09-A/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-A-treatment-research-v1",
           "terminal_status": "completed",
@@ -3007,6 +3857,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M09-A/treatment/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-A-treatment-reviser-v1",
           "terminal_status": "completed",
@@ -3040,6 +3899,7 @@
       "method_version": "v1",
       "case": "S03",
       "route": "glm",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
@@ -3062,6 +3922,16 @@
       "source_map_bytes": 11492,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M09-B/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-B-control-critic-v1",
           "terminal_status": "completed",
@@ -3083,6 +3953,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M09-B/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-B-control-research-v1",
           "terminal_status": "completed",
@@ -3104,6 +3984,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M09-B/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-B-control-reviser-v1",
           "terminal_status": "completed",
@@ -3137,6 +4027,7 @@
       "method_version": "v1",
       "case": "S03",
       "route": "glm",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
       "final_delivered": true,
@@ -3159,6 +4050,16 @@
       "source_map_bytes": 17974,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M09-B/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-B-treatment-critic-v1",
           "terminal_status": "completed",
@@ -3180,6 +4081,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M09-B/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-B-treatment-research-v1",
           "terminal_status": "completed",
@@ -3201,6 +4112,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M09-B/treatment/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M09-B-treatment-reviser-v1",
           "terminal_status": "completed",
@@ -3234,6 +4155,7 @@
       "method_version": "v1",
       "case": "S10",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
@@ -3256,6 +4178,16 @@
       "source_map_bytes": 47516,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M10-A/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-A-control-critic-v1",
           "terminal_status": "completed",
@@ -3283,6 +4215,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M10-A/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-A-control-research-v1",
           "terminal_status": "completed",
@@ -3310,6 +4252,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M10-A/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-A-control-reviser-v1",
           "terminal_status": "completed",
@@ -3349,6 +4301,7 @@
       "method_version": "v1",
       "case": "S10",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
       "final_delivered": true,
@@ -3371,6 +4324,16 @@
       "source_map_bytes": 41125,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M10-A/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-A-treatment-critic-v1",
           "terminal_status": "completed",
@@ -3398,6 +4361,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M10-A/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-A-treatment-research-v1",
           "terminal_status": "completed",
@@ -3425,6 +4398,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M10-A/treatment/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-A-treatment-reviser-v1",
           "terminal_status": "completed",
@@ -3464,6 +4447,7 @@
       "method_version": "v1",
       "case": "S04",
       "route": "muse",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
@@ -3476,16 +4460,25 @@
       "science_last_save_s": 1432.04,
       "delivery_within_whole_deadline": true,
       "science_saved_within_whole_deadline": true,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 625.908,
-      "occupied_within_90min": null,
+      "occupied_agent_s": 1051.106,
+      "occupied_agent_so_far_s": 1051.106,
+      "occupied_within_90min": true,
       "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
+      "assessment_delivery_at": "2026-10-09T19:20:18.672000+00:00",
+      "assessment_occupied_s": 1466.331,
       "final_output_bytes": 39640,
       "source_map_bytes": 6785,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M10-B/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-B-control-critic-v1",
           "terminal_status": "completed",
@@ -3507,20 +4500,29 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M10-B/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-B-control-research-v1",
           "terminal_status": "completed",
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M10-B-control-research-v1:ordinal:1",
+          "started_at": "2026-10-09T18:28:12.178000+00:00",
+          "completed_at": "2026-10-09T18:35:17.376000+00:00",
+          "occupied_s": 425.198,
+          "occupied_so_far_s": 425.198,
+          "accepted_queue_s": 8.89,
           "native_status": "UNKNOWN",
           "native_goal_cumulative": {},
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T18:58:02.976111+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -3528,6 +4530,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M10-B/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-B-control-reviser-v1",
           "terminal_status": "completed",
@@ -3561,6 +4572,7 @@
       "method_version": "v1",
       "case": "S04",
       "route": "muse",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
       "final_delivered": true,
@@ -3573,16 +4585,25 @@
       "science_last_save_s": 1542.308,
       "delivery_within_whole_deadline": true,
       "science_saved_within_whole_deadline": true,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 655.154,
-      "occupied_within_90min": null,
+      "occupied_agent_s": 1112.692,
+      "occupied_agent_so_far_s": 1112.692,
+      "occupied_within_90min": true,
       "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
+      "assessment_delivery_at": "2026-10-09T19:20:18.672000+00:00",
+      "assessment_occupied_s": 1466.331,
       "final_output_bytes": 51035,
       "source_map_bytes": 7739,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M10-B/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-B-treatment-critic-v1",
           "terminal_status": "completed",
@@ -3604,20 +4625,29 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M10-B/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-B-treatment-research-v1",
           "terminal_status": "completed",
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M10-B-treatment-research-v1:ordinal:1",
+          "started_at": "2026-10-09T18:28:13.265000+00:00",
+          "completed_at": "2026-10-09T18:35:50.803000+00:00",
+          "occupied_s": 457.538,
+          "occupied_so_far_s": 457.538,
+          "accepted_queue_s": 9.328,
           "native_status": "UNKNOWN",
           "native_goal_cumulative": {},
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T18:58:03.544425+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -3625,6 +4655,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M10-B/treatment/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M10-B-treatment-reviser-v1",
           "terminal_status": "completed",
@@ -3658,12 +4697,13 @@
       "method_version": "v1",
       "case": "S11",
       "route": "glm",
+      "provider_role_overrides": "{}",
       "arm": "control",
-      "status": "UNSTARTED",
+      "status": "STARTED",
       "final_delivered": false,
       "grade": null,
-      "requested_at": null,
-      "deadline": null,
+      "requested_at": "2026-10-09T20:28:43.148716+00:00",
+      "deadline": "2026-10-09T21:28:43.148716+00:00",
       "final_files_saved_at": null,
       "delivered_at": null,
       "candidate_delivery_s": null,
@@ -3671,14 +4711,77 @@
       "delivery_within_whole_deadline": null,
       "science_saved_within_whole_deadline": null,
       "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 0,
+      "occupied_agent_so_far_s": 1093.027,
       "occupied_within_90min": null,
       "qualified_result_s": null,
       "assessment_delivery_at": null,
       "assessment_occupied_s": null,
       "final_output_bytes": null,
       "source_map_bytes": null,
-      "stages": [],
+      "stages": [
+        {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": null,
+          "effective_host_model": null,
+          "path": "jobs/A-M11-A/control/critic",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-A-control-critic-v1",
+          "terminal_status": null,
+          "run_id": null,
+          "started_at": null,
+          "completed_at": null,
+          "occupied_s": null,
+          "occupied_so_far_s": null,
+          "accepted_queue_s": null,
+          "native_status": "running",
+          "native_goal_cumulative": {},
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T21:06:18.669320+00:00",
+          "delivery_within_stage_deadline": null,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
+        },
+        {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+          "path": "jobs/A-M11-A/control/research",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-A-control-research-v1",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M11-A-control-research-v1:ordinal:1",
+          "started_at": "2026-10-09T20:29:11.550000+00:00",
+          "completed_at": "2026-10-09T20:47:24.577000+00:00",
+          "occupied_s": 1093.027,
+          "occupied_so_far_s": 1093.027,
+          "accepted_queue_s": 26.336,
+          "native_status": "complete",
+          "native_goal_cumulative": {},
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T20:52:43.148716+00:00",
+          "delivery_within_stage_deadline": true,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
+        }
+      ],
       "experiment_slot_wait_s": null,
       "shared_cold_setup_allocation_s": null,
       "source_operation_count": null,
@@ -3691,12 +4794,13 @@
       "method_version": "v1",
       "case": "S11",
       "route": "glm",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
-      "status": "UNSTARTED",
+      "status": "STARTED",
       "final_delivered": false,
       "grade": null,
-      "requested_at": null,
-      "deadline": null,
+      "requested_at": "2026-10-09T20:17:26.495926+00:00",
+      "deadline": "2026-10-09T21:17:26.495926+00:00",
       "final_files_saved_at": null,
       "delivered_at": null,
       "candidate_delivery_s": null,
@@ -3704,14 +4808,77 @@
       "delivery_within_whole_deadline": null,
       "science_saved_within_whole_deadline": null,
       "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 0,
+      "occupied_agent_so_far_s": 936.703,
       "occupied_within_90min": null,
       "qualified_result_s": null,
       "assessment_delivery_at": null,
       "assessment_occupied_s": null,
       "final_output_bytes": null,
       "source_map_bytes": null,
-      "stages": [],
+      "stages": [
+        {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": null,
+          "effective_host_model": null,
+          "path": "jobs/A-M11-A/treatment/critic",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-A-treatment-critic-v1",
+          "terminal_status": null,
+          "run_id": null,
+          "started_at": null,
+          "completed_at": null,
+          "occupied_s": null,
+          "occupied_so_far_s": null,
+          "accepted_queue_s": null,
+          "native_status": "running",
+          "native_goal_cumulative": {},
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T20:52:50.129159+00:00",
+          "delivery_within_stage_deadline": null,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
+        },
+        {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+          "path": "jobs/A-M11-A/treatment/research",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-A-treatment-research-v1",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M11-A-treatment-research-v1:ordinal:1",
+          "started_at": "2026-10-09T20:17:36.159000+00:00",
+          "completed_at": "2026-10-09T20:33:12.862000+00:00",
+          "occupied_s": 936.703,
+          "occupied_so_far_s": 936.703,
+          "accepted_queue_s": 7.949,
+          "native_status": "complete",
+          "native_goal_cumulative": {},
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T20:41:26.495926+00:00",
+          "delivery_within_stage_deadline": true,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
+        }
+      ],
       "experiment_slot_wait_s": null,
       "shared_cold_setup_allocation_s": null,
       "source_operation_count": null,
@@ -3724,6 +4891,7 @@
       "method_version": "v1",
       "case": "S05",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
@@ -3746,6 +4914,16 @@
       "source_map_bytes": 6040,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M11-B/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-B-control-critic-v1",
           "terminal_status": "completed",
@@ -3773,6 +4951,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M11-B/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-B-control-research-v1",
           "terminal_status": "completed",
@@ -3800,6 +4988,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M11-B/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-B-control-reviser-v1",
           "terminal_status": "completed",
@@ -3839,6 +5037,7 @@
       "method_version": "v1",
       "case": "S05",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
       "final_delivered": true,
@@ -3861,6 +5060,16 @@
       "source_map_bytes": 11398,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M11-B/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-B-treatment-critic-v1",
           "terminal_status": "completed",
@@ -3888,6 +5097,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M11-B/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-B-treatment-research-v1",
           "terminal_status": "completed",
@@ -3915,6 +5134,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/A-M11-B/treatment/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M11-B-treatment-reviser-v1",
           "terminal_status": "completed",
@@ -3954,6 +5183,7 @@
       "method_version": "v1",
       "case": "S12",
       "route": "muse",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
@@ -3976,6 +5206,15 @@
       "source_map_bytes": 5910,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M12-A/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-A-control-critic-v1",
           "terminal_status": "completed",
@@ -3997,6 +5236,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M12-A/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-A-control-research-v1",
           "terminal_status": "completed",
@@ -4018,6 +5266,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M12-A/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-A-control-reviser-v1",
           "terminal_status": "completed",
@@ -4051,6 +5308,7 @@
       "method_version": "v1",
       "case": "S12",
       "route": "muse",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
       "final_delivered": true,
@@ -4073,6 +5331,15 @@
       "source_map_bytes": 2515,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M12-A/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-A-treatment-critic-v1",
           "terminal_status": "completed",
@@ -4094,6 +5361,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M12-A/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-A-treatment-research-v1",
           "terminal_status": "completed",
@@ -4115,6 +5391,15 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
           "path": "jobs/A-M12-A/treatment/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-A-treatment-reviser-v1",
           "terminal_status": "completed",
@@ -4148,6 +5433,7 @@
       "method_version": "v1",
       "case": "S06",
       "route": "glm",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
       "final_delivered": true,
@@ -4170,6 +5456,16 @@
       "source_map_bytes": 12220,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M12-B/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-B-control-critic-v1",
           "terminal_status": "completed",
@@ -4191,6 +5487,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M12-B/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-B-control-research-v1",
           "terminal_status": "completed",
@@ -4212,6 +5518,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M12-B/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-B-control-reviser-v1",
           "terminal_status": "completed",
@@ -4245,6 +5561,7 @@
       "method_version": "v1",
       "case": "S06",
       "route": "glm",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "INVALID_INFRASTRUCTURE_OVERDISPATCH",
       "final_delivered": false,
@@ -4257,9 +5574,9 @@
       "science_last_save_s": null,
       "delivery_within_whole_deadline": null,
       "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 0,
-      "occupied_within_90min": null,
+      "occupied_agent_s": 145.37,
+      "occupied_agent_so_far_s": 145.37,
+      "occupied_within_90min": true,
       "qualified_result_s": null,
       "assessment_delivery_at": "2026-10-09T19:45:22.872000+00:00",
       "assessment_occupied_s": 955.9,
@@ -4267,20 +5584,30 @@
       "source_map_bytes": null,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "zcode",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "options": {
+              "mode": "yolo",
+              "thought": "max"
+            }
+          },
+          "effective_host_provider": "zcode",
+          "effective_host_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
           "path": "jobs/A-M12-B/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-A-M12-B-treatment-research-v1",
           "terminal_status": "interrupted",
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-A-M12-B-treatment-research-v1:ordinal:1",
+          "started_at": "2026-10-09T18:28:08.174000+00:00",
+          "completed_at": "2026-10-09T18:30:33.544000+00:00",
+          "occupied_s": 145.37,
+          "occupied_so_far_s": 145.37,
+          "accepted_queue_s": 5.432,
           "native_status": "paused",
           "native_goal_cumulative": {},
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T18:58:02.332673+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -4300,28 +5627,39 @@
       "method_version": "v1",
       "case": "I01",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
-      "final_delivered": false,
-      "grade": null,
+      "final_delivered": true,
+      "grade": "PASS_WITH_LIMITATIONS",
       "requested_at": "2026-10-09T19:38:38.420717+00:00",
       "deadline": "2026-10-09T20:38:38.420717+00:00",
-      "final_files_saved_at": null,
-      "delivered_at": null,
-      "candidate_delivery_s": null,
-      "science_last_save_s": null,
-      "delivery_within_whole_deadline": null,
-      "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 1220.452,
-      "occupied_within_90min": null,
-      "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
-      "final_output_bytes": null,
+      "final_files_saved_at": "2026-10-09T20:10:35.507630+00:00",
+      "delivered_at": "2026-10-09T20:15:17.104000+00:00",
+      "candidate_delivery_s": 2198.683,
+      "science_last_save_s": 1917.087,
+      "delivery_within_whole_deadline": true,
+      "science_saved_within_whole_deadline": true,
+      "occupied_agent_s": 1839.826,
+      "occupied_agent_so_far_s": 1839.826,
+      "occupied_within_90min": true,
+      "qualified_result_s": 3809.56,
+      "assessment_delivery_at": "2026-10-09T20:42:07.981000+00:00",
+      "assessment_occupied_s": 1057.376,
+      "final_output_bytes": 26522,
       "source_map_bytes": 9961,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/B-01/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-01-control-critic-v1",
           "terminal_status": "completed",
@@ -4349,6 +5687,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/B-01/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-01-control-research-v1",
           "terminal_status": "completed",
@@ -4376,26 +5724,36 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/B-01/control/reviser",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-01-control-reviser-v1",
-          "terminal_status": null,
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
-          "native_status": "active",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-01-control-reviser-v1:ordinal:1",
+          "started_at": "2026-10-09T20:04:57.730000+00:00",
+          "completed_at": "2026-10-09T20:15:17.104000+00:00",
+          "occupied_s": 619.374,
+          "occupied_so_far_s": 619.374,
+          "accepted_queue_s": 33.016,
+          "native_status": "complete",
           "native_goal_cumulative": {
-            "status": "active",
-            "tokensUsed": 50490,
+            "status": "complete",
+            "tokensUsed": 124751,
             "tokenBudget": null,
-            "timeUsedSeconds": 52,
+            "timeUsedSeconds": 362,
             "objective_sha256": "75c30e8ab2cd0167f75ba8af02920fed5577b24c29ef9624b93664d83f489512"
           },
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T20:22:18.422875+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -4415,37 +5773,48 @@
       "method_version": "v1",
       "case": "I01",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
-      "final_delivered": false,
-      "grade": null,
+      "final_delivered": true,
+      "grade": "FAIL",
       "requested_at": "2026-10-09T19:38:40.006903+00:00",
       "deadline": "2026-10-09T20:38:40.006903+00:00",
-      "final_files_saved_at": null,
-      "delivered_at": null,
-      "candidate_delivery_s": null,
-      "science_last_save_s": null,
-      "delivery_within_whole_deadline": null,
-      "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 0,
-      "occupied_within_90min": null,
+      "final_files_saved_at": "2026-10-09T20:19:09.466965+00:00",
+      "delivered_at": "2026-10-09T20:20:30.845000+00:00",
+      "candidate_delivery_s": 2510.838,
+      "science_last_save_s": 2429.46,
+      "delivery_within_whole_deadline": true,
+      "science_saved_within_whole_deadline": true,
+      "occupied_agent_s": 3239.957,
+      "occupied_agent_so_far_s": 3239.957,
+      "occupied_within_90min": true,
       "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
-      "final_output_bytes": null,
-      "source_map_bytes": 15048,
+      "assessment_delivery_at": "2026-10-09T20:42:07.981000+00:00",
+      "assessment_occupied_s": 1057.376,
+      "final_output_bytes": 26543,
+      "source_map_bytes": 22805,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/B-01/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-01-treatment-critic-v1",
-          "terminal_status": null,
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-01-treatment-critic-v1:ordinal:1",
+          "started_at": "2026-10-09T19:58:53.645000+00:00",
+          "completed_at": "2026-10-09T20:11:20.776000+00:00",
+          "occupied_s": 747.131,
+          "occupied_so_far_s": 747.131,
+          "accepted_queue_s": 102.516,
           "native_status": "complete",
           "native_goal_cumulative": {
             "status": "complete",
@@ -4456,7 +5825,7 @@
           },
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T20:09:05.579454+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": false,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -4464,26 +5833,36 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/B-01/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-01-treatment-research-v1",
-          "terminal_status": null,
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
-          "native_status": "active",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-01-treatment-research-v1:ordinal:1",
+          "started_at": "2026-10-09T19:38:58.019000+00:00",
+          "completed_at": "2026-10-09T20:20:30.845000+00:00",
+          "occupied_s": 2492.826,
+          "occupied_so_far_s": 2492.826,
+          "accepted_queue_s": 16.832,
+          "native_status": "complete",
           "native_goal_cumulative": {
-            "status": "active",
-            "tokensUsed": 259242,
+            "status": "complete",
+            "tokensUsed": 394388,
             "tokenBudget": null,
-            "timeUsedSeconds": 1587,
+            "timeUsedSeconds": 2412,
             "objective_sha256": "f2f3290b9aa4abb100d962ed1b6df5f63e84ef87ea701a5b0c447066aa11dadf"
           },
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T20:38:40.006903+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -4503,37 +5882,48 @@
       "method_version": "v1",
       "case": "I02",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
-      "final_delivered": false,
-      "grade": null,
+      "final_delivered": true,
+      "grade": "PASS_WITH_LIMITATIONS",
       "requested_at": "2026-10-09T19:38:41.768148+00:00",
       "deadline": "2026-10-09T20:38:41.768148+00:00",
-      "final_files_saved_at": null,
-      "delivered_at": null,
-      "candidate_delivery_s": null,
-      "science_last_save_s": null,
-      "delivery_within_whole_deadline": null,
-      "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 811.373,
-      "occupied_within_90min": null,
-      "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
-      "final_output_bytes": null,
-      "source_map_bytes": null,
+      "final_files_saved_at": "2026-10-09T20:20:24.647973+00:00",
+      "delivered_at": "2026-10-09T20:21:36.996000+00:00",
+      "candidate_delivery_s": 2575.228,
+      "science_last_save_s": 2502.88,
+      "delivery_within_whole_deadline": true,
+      "science_saved_within_whole_deadline": true,
+      "occupied_agent_s": 2065.739,
+      "occupied_agent_so_far_s": 2065.739,
+      "occupied_within_90min": true,
+      "qualified_result_s": 3993.059,
+      "assessment_delivery_at": "2026-10-09T20:45:14.827000+00:00",
+      "assessment_occupied_s": 1036.343,
+      "final_output_bytes": 36358,
+      "source_map_bytes": 41677,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/B-02/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-02-control-critic-v1",
-          "terminal_status": null,
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-02-control-critic-v1:ordinal:1",
+          "started_at": "2026-10-09T19:58:53.744000+00:00",
+          "completed_at": "2026-10-09T20:08:24.558000+00:00",
+          "occupied_s": 570.814,
+          "occupied_so_far_s": 570.814,
+          "accepted_queue_s": 97.86,
           "native_status": "complete",
           "native_goal_cumulative": {
             "status": "complete",
@@ -4544,7 +5934,7 @@
           },
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T20:09:11.698997+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -4552,6 +5942,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/B-02/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-02-control-research-v1",
           "terminal_status": "completed",
@@ -4577,6 +5977,43 @@
           "output_tokens": null,
           "reasoning_output_subset": null,
           "billing": null
+        },
+        {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
+          "path": "jobs/B-02/control/reviser",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-02-control-reviser-v1",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-02-control-reviser-v1:ordinal:1",
+          "started_at": "2026-10-09T20:10:13.444000+00:00",
+          "completed_at": "2026-10-09T20:21:36.996000+00:00",
+          "occupied_s": 683.552,
+          "occupied_so_far_s": 683.552,
+          "accepted_queue_s": 27.57,
+          "native_status": "complete",
+          "native_goal_cumulative": {
+            "status": "complete",
+            "tokensUsed": 145896,
+            "tokenBudget": null,
+            "timeUsedSeconds": 605,
+            "objective_sha256": "34494a10607bc85ef38ec26b1ccd82b2e94782d9db0a46f84c024fcabccb5f7a"
+          },
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T20:27:37.312569+00:00",
+          "delivery_within_stage_deadline": true,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
         }
       ],
       "experiment_slot_wait_s": null,
@@ -4591,48 +6028,59 @@
       "method_version": "v1",
       "case": "I02",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
-      "final_delivered": false,
-      "grade": null,
+      "final_delivered": true,
+      "grade": "PASS_WITH_LIMITATIONS",
       "requested_at": "2026-10-09T19:38:44.259641+00:00",
       "deadline": "2026-10-09T20:38:44.259641+00:00",
-      "final_files_saved_at": null,
-      "delivered_at": null,
-      "candidate_delivery_s": null,
-      "science_last_save_s": null,
-      "delivery_within_whole_deadline": null,
-      "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 0,
-      "occupied_within_90min": null,
-      "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
-      "final_output_bytes": null,
+      "final_files_saved_at": "2026-10-09T20:16:34.570245+00:00",
+      "delivered_at": "2026-10-09T20:19:33.134000+00:00",
+      "candidate_delivery_s": 2448.874,
+      "science_last_save_s": 2270.311,
+      "delivery_within_whole_deadline": true,
+      "science_saved_within_whole_deadline": true,
+      "occupied_agent_s": 3312.732,
+      "occupied_agent_so_far_s": 3312.732,
+      "occupied_within_90min": true,
+      "qualified_result_s": 3990.567,
+      "assessment_delivery_at": "2026-10-09T20:45:14.827000+00:00",
+      "assessment_occupied_s": 1036.343,
+      "final_output_bytes": 33714,
       "source_map_bytes": 24832,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/B-02/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-02-treatment-critic-v1",
-          "terminal_status": null,
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
-          "native_status": "active",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-02-treatment-critic-v1:ordinal:1",
+          "started_at": "2026-10-09T19:58:53.897000+00:00",
+          "completed_at": "2026-10-09T20:13:31.430000+00:00",
+          "occupied_s": 877.533,
+          "occupied_so_far_s": 877.533,
+          "accepted_queue_s": 93.399,
+          "native_status": "complete",
           "native_goal_cumulative": {
-            "status": "active",
-            "tokensUsed": 150317,
+            "status": "complete",
+            "tokensUsed": 181329,
             "tokenBudget": null,
-            "timeUsedSeconds": 371,
+            "timeUsedSeconds": 571,
             "objective_sha256": "0df8fa577ef9f1c741a2c0949b9004ed23e3b09c179349dfcccdb367150a2297"
           },
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T20:09:16.416891+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": false,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -4640,26 +6088,36 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/B-02/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-02-treatment-research-v1",
-          "terminal_status": null,
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
-          "native_status": "active",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-02-treatment-research-v1:ordinal:1",
+          "started_at": "2026-10-09T19:38:57.935000+00:00",
+          "completed_at": "2026-10-09T20:19:33.134000+00:00",
+          "occupied_s": 2435.199,
+          "occupied_so_far_s": 2435.199,
+          "accepted_queue_s": 11.687,
+          "native_status": "complete",
           "native_goal_cumulative": {
-            "status": "active",
-            "tokensUsed": 354533,
+            "status": "complete",
+            "tokensUsed": 420119,
             "tokenBudget": null,
-            "timeUsedSeconds": 1588,
+            "timeUsedSeconds": 2246,
             "objective_sha256": "1ab4a593efe9b49851ca7f074a9348afd4a0a0e5c442a9d52aa892de0471c766"
           },
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T20:38:44.259641+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -4679,48 +6137,59 @@
       "method_version": "v2",
       "case": "I03",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "STARTED",
-      "final_delivered": false,
-      "grade": null,
+      "final_delivered": true,
+      "grade": "PASS_WITH_LIMITATIONS",
       "requested_at": "2026-10-09T19:43:13.922593+00:00",
       "deadline": "2026-10-09T20:43:13.922593+00:00",
-      "final_files_saved_at": null,
-      "delivered_at": null,
-      "candidate_delivery_s": null,
-      "science_last_save_s": null,
-      "delivery_within_whole_deadline": null,
-      "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 1166.25,
-      "occupied_within_90min": null,
-      "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
-      "final_output_bytes": null,
-      "source_map_bytes": null,
+      "final_files_saved_at": "2026-10-09T20:22:45.216616+00:00",
+      "delivered_at": "2026-10-09T20:23:37.273000+00:00",
+      "candidate_delivery_s": 2423.35,
+      "science_last_save_s": 2371.294,
+      "delivery_within_whole_deadline": true,
+      "science_saved_within_whole_deadline": true,
+      "occupied_agent_s": 2163.902,
+      "occupied_agent_so_far_s": 2163.902,
+      "occupied_within_90min": true,
+      "qualified_result_s": 3869.241,
+      "assessment_delivery_at": "2026-10-09T20:47:43.164000+00:00",
+      "assessment_occupied_s": 1150.271,
+      "final_output_bytes": 31475,
+      "source_map_bytes": 32302,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/B-03/control/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-03-control-critic-v1",
-          "terminal_status": null,
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
-          "native_status": "active",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-03-control-critic-v1:ordinal:1",
+          "started_at": "2026-10-09T20:04:57.786000+00:00",
+          "completed_at": "2026-10-09T20:16:18.828000+00:00",
+          "occupied_s": 681.042,
+          "occupied_so_far_s": 681.042,
+          "accepted_queue_s": 26.953,
+          "native_status": "complete",
           "native_goal_cumulative": {
-            "status": "active",
-            "tokensUsed": 32453,
+            "status": "complete",
+            "tokensUsed": 129730,
             "tokenBudget": null,
-            "timeUsedSeconds": 45,
+            "timeUsedSeconds": 457,
             "objective_sha256": "72e322e96a4fa0d65db93cf89717d4f130a5211ab427127dbaaa76e3a3e356a4"
           },
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T20:16:25.230352+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -4728,6 +6197,16 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/B-03/control/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-03-control-research-v1",
           "terminal_status": "completed",
@@ -4753,6 +6232,43 @@
           "output_tokens": null,
           "reasoning_output_subset": null,
           "billing": null
+        },
+        {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
+          "path": "jobs/B-03/control/reviser",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-03-control-reviser-v1",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-03-control-reviser-v1:ordinal:1",
+          "started_at": "2026-10-09T20:18:20.663000+00:00",
+          "completed_at": "2026-10-09T20:23:37.273000+00:00",
+          "occupied_s": 316.61,
+          "occupied_so_far_s": 316.61,
+          "accepted_queue_s": 96.952,
+          "native_status": "complete",
+          "native_goal_cumulative": {
+            "status": "complete",
+            "tokensUsed": 126835,
+            "tokenBudget": null,
+            "timeUsedSeconds": 253,
+            "objective_sha256": "ee8d5283940cff15159746129bd7955b58dca0c60a6a01d49ed36c5bfb5c8152"
+          },
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T20:34:40.730813+00:00",
+          "delivery_within_stage_deadline": true,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
         }
       ],
       "experiment_slot_wait_s": null,
@@ -4767,48 +6283,59 @@
       "method_version": "v2",
       "case": "I03",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "STARTED",
-      "final_delivered": false,
-      "grade": null,
+      "final_delivered": true,
+      "grade": "FAIL",
       "requested_at": "2026-10-09T19:43:15.663076+00:00",
       "deadline": "2026-10-09T20:43:15.663076+00:00",
-      "final_files_saved_at": null,
-      "delivered_at": null,
-      "candidate_delivery_s": null,
-      "science_last_save_s": null,
-      "delivery_within_whole_deadline": null,
-      "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 0,
-      "occupied_within_90min": null,
+      "final_files_saved_at": "2026-10-09T20:18:25.552600+00:00",
+      "delivered_at": "2026-10-09T20:19:36.931000+00:00",
+      "candidate_delivery_s": 2181.268,
+      "science_last_save_s": 2109.89,
+      "delivery_within_whole_deadline": true,
+      "science_saved_within_whole_deadline": true,
+      "occupied_agent_s": 3034.546,
+      "occupied_agent_so_far_s": 3034.546,
+      "occupied_within_90min": true,
       "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
-      "final_output_bytes": null,
-      "source_map_bytes": 42261,
+      "assessment_delivery_at": "2026-10-09T20:47:43.164000+00:00",
+      "assessment_occupied_s": 1150.271,
+      "final_output_bytes": 22101,
+      "source_map_bytes": 55002,
       "stages": [
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/B-03/treatment/critic",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-03-treatment-critic-v1",
-          "terminal_status": null,
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
-          "native_status": "active",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-03-treatment-critic-v1:ordinal:1",
+          "started_at": "2026-10-09T19:58:54.016000+00:00",
+          "completed_at": "2026-10-09T20:13:25.460000+00:00",
+          "occupied_s": 871.444,
+          "occupied_so_far_s": 871.444,
+          "accepted_queue_s": 81.698,
+          "native_status": "complete",
           "native_goal_cumulative": {
-            "status": "active",
-            "tokensUsed": 113098,
+            "status": "complete",
+            "tokensUsed": 162035,
             "tokenBudget": null,
-            "timeUsedSeconds": 399,
+            "timeUsedSeconds": 513,
             "objective_sha256": "0a82de88706ea664c335a6242c513418c6483d3a6422e7360bcb85a3396210e3"
           },
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T20:09:20.975389+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": false,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -4816,26 +6343,36 @@
           "billing": null
         },
         {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
           "path": "jobs/B-03/treatment/research",
           "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-03-treatment-research-v1",
-          "terminal_status": null,
-          "run_id": null,
-          "started_at": null,
-          "completed_at": null,
-          "occupied_s": null,
-          "occupied_so_far_s": null,
-          "accepted_queue_s": null,
-          "native_status": "active",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-03-treatment-research-v1:ordinal:1",
+          "started_at": "2026-10-09T19:43:33.829000+00:00",
+          "completed_at": "2026-10-09T20:19:36.931000+00:00",
+          "occupied_s": 2163.102,
+          "occupied_so_far_s": 2163.102,
+          "accepted_queue_s": 17.308,
+          "native_status": "complete",
           "native_goal_cumulative": {
-            "status": "active",
-            "tokensUsed": 368304,
+            "status": "complete",
+            "tokensUsed": 443267,
             "tokenBudget": null,
-            "timeUsedSeconds": 1308,
+            "timeUsedSeconds": 2086,
             "objective_sha256": "8139054e07d77a1b5a082afa87895ef0b03b5373587094f8a8dc90c82db00426"
           },
           "native_terminal_exact_time": null,
           "deadline": "2026-10-09T20:43:15.663076+00:00",
-          "delivery_within_stage_deadline": null,
+          "delivery_within_stage_deadline": true,
           "input_tokens": null,
           "cached_input_subset": null,
           "output_tokens": null,
@@ -4855,6 +6392,7 @@
       "method_version": "v2",
       "case": "I04",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -4888,6 +6426,7 @@
       "method_version": "v2",
       "case": "I04",
       "route": "luna",
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -4916,32 +6455,124 @@
     },
     {
       "block": "B-05",
-      "phase": "B",
-      "method": null,
+      "phase": "B-development",
+      "method": "M14",
       "method_version": "v1",
-      "case": "B05",
-      "route": null,
+      "case": "I05",
+      "route": "muse",
+      "provider_role_overrides": "{\"treatment\": {\"critic\": \"luna\"}}",
       "arm": "control",
-      "status": "UNSTARTED",
-      "final_delivered": false,
+      "status": "STARTED",
+      "final_delivered": true,
       "grade": null,
-      "requested_at": null,
-      "deadline": null,
-      "final_files_saved_at": null,
-      "delivered_at": null,
-      "candidate_delivery_s": null,
-      "science_last_save_s": null,
-      "delivery_within_whole_deadline": null,
-      "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 0,
-      "occupied_within_90min": null,
+      "requested_at": "2026-10-09T20:20:18.414695+00:00",
+      "deadline": "2026-10-09T21:35:18.414695+00:00",
+      "final_files_saved_at": "2026-10-09T20:45:54.220162+00:00",
+      "delivered_at": "2026-10-09T20:46:28.474000+00:00",
+      "candidate_delivery_s": 1570.059,
+      "science_last_save_s": 1535.805,
+      "delivery_within_whole_deadline": true,
+      "science_saved_within_whole_deadline": true,
+      "occupied_agent_s": 1123.711,
+      "occupied_agent_so_far_s": 1123.711,
+      "occupied_within_90min": true,
       "qualified_result_s": null,
       "assessment_delivery_at": null,
       "assessment_occupied_s": null,
-      "final_output_bytes": null,
-      "source_map_bytes": null,
-      "stages": [],
+      "final_output_bytes": 46027,
+      "source_map_bytes": 2405,
+      "stages": [
+        {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
+          "path": "jobs/B-05/control/critic",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-05-control-critic-v1",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-05-control-critic-v1:ordinal:1",
+          "started_at": "2026-10-09T20:31:51.057000+00:00",
+          "completed_at": "2026-10-09T20:38:30.715000+00:00",
+          "occupied_s": 399.658,
+          "occupied_so_far_s": 399.658,
+          "accepted_queue_s": 4.399,
+          "native_status": "UNKNOWN",
+          "native_goal_cumulative": {},
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T20:51:45.744155+00:00",
+          "delivery_within_stage_deadline": true,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
+        },
+        {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
+          "path": "jobs/B-05/control/research",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-05-control-research-v1",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-05-control-research-v1:ordinal:1",
+          "started_at": "2026-10-09T20:20:35.808000+00:00",
+          "completed_at": "2026-10-09T20:28:19.183000+00:00",
+          "occupied_s": 463.375,
+          "occupied_so_far_s": 463.375,
+          "accepted_queue_s": 8.443,
+          "native_status": "UNKNOWN",
+          "native_goal_cumulative": {},
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T20:50:18.414695+00:00",
+          "delivery_within_stage_deadline": true,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
+        },
+        {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
+          "path": "jobs/B-05/control/reviser",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-05-control-reviser-v1",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-05-control-reviser-v1:ordinal:1",
+          "started_at": "2026-10-09T20:42:07.796000+00:00",
+          "completed_at": "2026-10-09T20:46:28.474000+00:00",
+          "occupied_s": 260.678,
+          "occupied_so_far_s": 260.678,
+          "accepted_queue_s": 13.274,
+          "native_status": "UNKNOWN",
+          "native_goal_cumulative": {},
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T21:06:49.710276+00:00",
+          "delivery_within_stage_deadline": true,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
+        }
+      ],
       "experiment_slot_wait_s": null,
       "shared_cold_setup_allocation_s": null,
       "source_operation_count": null,
@@ -4949,32 +6580,101 @@
     },
     {
       "block": "B-05",
-      "phase": "B",
-      "method": null,
+      "phase": "B-development",
+      "method": "M14",
       "method_version": "v1",
-      "case": "B05",
-      "route": null,
+      "case": "I05",
+      "route": "muse",
+      "provider_role_overrides": "{\"treatment\": {\"critic\": \"luna\"}}",
       "arm": "treatment",
-      "status": "UNSTARTED",
-      "final_delivered": false,
+      "status": "STARTED",
+      "final_delivered": true,
       "grade": null,
-      "requested_at": null,
-      "deadline": null,
-      "final_files_saved_at": null,
-      "delivered_at": null,
-      "candidate_delivery_s": null,
-      "science_last_save_s": null,
-      "delivery_within_whole_deadline": null,
-      "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 0,
-      "occupied_within_90min": null,
+      "requested_at": "2026-10-09T20:20:43.999011+00:00",
+      "deadline": "2026-10-09T21:35:43.999011+00:00",
+      "final_files_saved_at": "2026-10-09T20:47:31.937784+00:00",
+      "delivered_at": "2026-10-09T20:48:16.544000+00:00",
+      "candidate_delivery_s": 1652.545,
+      "science_last_save_s": 1607.939,
+      "delivery_within_whole_deadline": true,
+      "science_saved_within_whole_deadline": true,
+      "occupied_agent_s": 2329.049,
+      "occupied_agent_so_far_s": 2329.049,
+      "occupied_within_90min": true,
       "qualified_result_s": null,
       "assessment_delivery_at": null,
       "assessment_occupied_s": null,
-      "final_output_bytes": null,
-      "source_map_bytes": null,
-      "stages": [],
+      "final_output_bytes": 27854,
+      "source_map_bytes": 7610,
+      "stages": [
+        {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
+          "path": "jobs/B-05/treatment/critic",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-05-treatment-critic-v1",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-05-treatment-critic-v1:ordinal:1",
+          "started_at": "2026-10-09T20:31:53.162000+00:00",
+          "completed_at": "2026-10-09T20:43:54.314000+00:00",
+          "occupied_s": 721.152,
+          "occupied_so_far_s": 721.152,
+          "accepted_queue_s": 3.914,
+          "native_status": "complete",
+          "native_goal_cumulative": {
+            "status": "complete",
+            "tokensUsed": 206811,
+            "tokenBudget": null,
+            "timeUsedSeconds": 645,
+            "objective_sha256": "ee0f73e0746ca973eea75e3da098015497f9e9d4be77084060400d126fe7e73d"
+          },
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T20:51:47.154391+00:00",
+          "delivery_within_stage_deadline": true,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
+        },
+        {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
+          "path": "jobs/B-05/treatment/research",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-05-treatment-research-v1",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-05-treatment-research-v1:ordinal:1",
+          "started_at": "2026-10-09T20:21:28.647000+00:00",
+          "completed_at": "2026-10-09T20:48:16.544000+00:00",
+          "occupied_s": 1607.897,
+          "occupied_so_far_s": 1607.897,
+          "accepted_queue_s": 20.263,
+          "native_status": "UNKNOWN",
+          "native_goal_cumulative": {},
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T21:35:43.999011+00:00",
+          "delivery_within_stage_deadline": true,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
+        }
+      ],
       "experiment_slot_wait_s": null,
       "shared_cold_setup_allocation_s": null,
       "source_operation_count": null,
@@ -4982,32 +6682,124 @@
     },
     {
       "block": "B-06",
-      "phase": "B",
-      "method": null,
+      "phase": "B-development",
+      "method": "M14",
       "method_version": "v1",
-      "case": "B06",
-      "route": null,
+      "case": "I06",
+      "route": "muse",
+      "provider_role_overrides": "{\"treatment\": {\"critic\": \"luna\"}}",
       "arm": "control",
-      "status": "UNSTARTED",
-      "final_delivered": false,
+      "status": "STARTED",
+      "final_delivered": true,
       "grade": null,
-      "requested_at": null,
-      "deadline": null,
-      "final_files_saved_at": null,
-      "delivered_at": null,
-      "candidate_delivery_s": null,
-      "science_last_save_s": null,
-      "delivery_within_whole_deadline": null,
-      "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 0,
-      "occupied_within_90min": null,
+      "requested_at": "2026-10-09T20:22:20.723737+00:00",
+      "deadline": "2026-10-09T21:37:20.723737+00:00",
+      "final_files_saved_at": "2026-10-09T20:47:32.541788+00:00",
+      "delivered_at": "2026-10-09T20:48:13.562000+00:00",
+      "candidate_delivery_s": 1552.838,
+      "science_last_save_s": 1511.818,
+      "delivery_within_whole_deadline": true,
+      "science_saved_within_whole_deadline": true,
+      "occupied_agent_s": 1089.265,
+      "occupied_agent_so_far_s": 1089.265,
+      "occupied_within_90min": true,
       "qualified_result_s": null,
       "assessment_delivery_at": null,
       "assessment_occupied_s": null,
-      "final_output_bytes": null,
-      "source_map_bytes": null,
-      "stages": [],
+      "final_output_bytes": 50256,
+      "source_map_bytes": 15374,
+      "stages": [
+        {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
+          "path": "jobs/B-06/control/critic",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-06-control-critic-v1",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-06-control-critic-v1:ordinal:1",
+          "started_at": "2026-10-09T20:32:43.987000+00:00",
+          "completed_at": "2026-10-09T20:38:13.421000+00:00",
+          "occupied_s": 329.434,
+          "occupied_so_far_s": 329.434,
+          "accepted_queue_s": 41.57,
+          "native_status": "UNKNOWN",
+          "native_goal_cumulative": {},
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T20:52:00.132178+00:00",
+          "delivery_within_stage_deadline": true,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
+        },
+        {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
+          "path": "jobs/B-06/control/research",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-06-control-research-v1",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-06-control-research-v1:ordinal:1",
+          "started_at": "2026-10-09T20:22:30.533000+00:00",
+          "completed_at": "2026-10-09T20:29:13.280000+00:00",
+          "occupied_s": 402.747,
+          "occupied_so_far_s": 402.747,
+          "accepted_queue_s": 4.278,
+          "native_status": "UNKNOWN",
+          "native_goal_cumulative": {},
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T20:52:20.723737+00:00",
+          "delivery_within_stage_deadline": true,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
+        },
+        {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": "muse",
+          "effective_host_model": "muse-spark-1.3-contributor",
+          "path": "jobs/B-06/control/reviser",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-06-control-reviser-v1",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-06-control-reviser-v1:ordinal:1",
+          "started_at": "2026-10-09T20:42:16.478000+00:00",
+          "completed_at": "2026-10-09T20:48:13.562000+00:00",
+          "occupied_s": 357.084,
+          "occupied_so_far_s": 357.084,
+          "accepted_queue_s": 3.006,
+          "native_status": "UNKNOWN",
+          "native_goal_cumulative": {},
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T21:07:12.432074+00:00",
+          "delivery_within_stage_deadline": true,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
+        }
+      ],
       "experiment_slot_wait_s": null,
       "shared_cold_setup_allocation_s": null,
       "source_operation_count": null,
@@ -5015,12 +6807,115 @@
     },
     {
       "block": "B-06",
+      "phase": "B-development",
+      "method": "M14",
+      "method_version": "v1",
+      "case": "I06",
+      "route": "muse",
+      "provider_role_overrides": "{\"treatment\": {\"critic\": \"luna\"}}",
+      "arm": "treatment",
+      "status": "STARTED",
+      "final_delivered": false,
+      "grade": null,
+      "requested_at": "2026-10-09T20:22:57.384622+00:00",
+      "deadline": "2026-10-09T21:37:57.384622+00:00",
+      "final_files_saved_at": null,
+      "delivered_at": null,
+      "candidate_delivery_s": null,
+      "science_last_save_s": null,
+      "delivery_within_whole_deadline": null,
+      "science_saved_within_whole_deadline": null,
+      "occupied_agent_s": null,
+      "occupied_agent_so_far_s": 883.5,
+      "occupied_within_90min": null,
+      "qualified_result_s": null,
+      "assessment_delivery_at": null,
+      "assessment_occupied_s": null,
+      "final_output_bytes": null,
+      "source_map_bytes": 15808,
+      "stages": [
+        {
+          "requested_target": {
+            "providerInstanceId": "codex_gmail",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "priority"
+            }
+          },
+          "effective_host_provider": "codex_gmail",
+          "effective_host_model": "gpt-6-luna",
+          "path": "jobs/B-06/treatment/critic",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-06-treatment-critic-v1",
+          "terminal_status": "completed",
+          "run_id": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A0007e9fc-1f27-441d-9fca-3dd974aab21a%253Adelegate-task%253Aer11-116bb1e4-B-06-treatment-critic-v1:ordinal:1",
+          "started_at": "2026-10-09T20:32:44.089000+00:00",
+          "completed_at": "2026-10-09T20:47:27.589000+00:00",
+          "occupied_s": 883.5,
+          "occupied_so_far_s": 883.5,
+          "accepted_queue_s": 17.189,
+          "native_status": "complete",
+          "native_goal_cumulative": {
+            "status": "complete",
+            "tokensUsed": 231296,
+            "tokenBudget": null,
+            "timeUsedSeconds": 830,
+            "objective_sha256": "ab1766d2030850da1115183d98667caebb2201647f3e563602f381759d068d3c"
+          },
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T20:52:02.925332+00:00",
+          "delivery_within_stage_deadline": true,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
+        },
+        {
+          "requested_target": {
+            "providerInstanceId": "muse",
+            "model": "muse-spark-1.3-contributor",
+            "options": {
+              "reasoningEffort": "max"
+            }
+          },
+          "effective_host_provider": null,
+          "effective_host_model": null,
+          "path": "jobs/B-06/treatment/research",
+          "task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-B-06-treatment-research-v1",
+          "terminal_status": null,
+          "run_id": null,
+          "started_at": null,
+          "completed_at": null,
+          "occupied_s": null,
+          "occupied_so_far_s": null,
+          "accepted_queue_s": null,
+          "native_status": "UNKNOWN",
+          "native_goal_cumulative": {},
+          "native_terminal_exact_time": null,
+          "deadline": "2026-10-09T21:37:57.384622+00:00",
+          "delivery_within_stage_deadline": null,
+          "input_tokens": null,
+          "cached_input_subset": null,
+          "output_tokens": null,
+          "reasoning_output_subset": null,
+          "billing": null
+        }
+      ],
+      "experiment_slot_wait_s": null,
+      "shared_cold_setup_allocation_s": null,
+      "source_operation_count": null,
+      "billing": null
+    },
+    {
+      "block": "B-07",
       "phase": "B",
       "method": null,
       "method_version": "v1",
-      "case": "B06",
+      "case": "B07",
       "route": null,
-      "arm": "treatment",
+      "provider_role_overrides": "{}",
+      "arm": "control",
       "status": "UNSTARTED",
       "final_delivered": false,
       "grade": null,
@@ -5053,39 +6948,7 @@
       "method_version": "v1",
       "case": "B07",
       "route": null,
-      "arm": "control",
-      "status": "UNSTARTED",
-      "final_delivered": false,
-      "grade": null,
-      "requested_at": null,
-      "deadline": null,
-      "final_files_saved_at": null,
-      "delivered_at": null,
-      "candidate_delivery_s": null,
-      "science_last_save_s": null,
-      "delivery_within_whole_deadline": null,
-      "science_saved_within_whole_deadline": null,
-      "occupied_agent_s": null,
-      "occupied_agent_so_far_s": 0,
-      "occupied_within_90min": null,
-      "qualified_result_s": null,
-      "assessment_delivery_at": null,
-      "assessment_occupied_s": null,
-      "final_output_bytes": null,
-      "source_map_bytes": null,
-      "stages": [],
-      "experiment_slot_wait_s": null,
-      "shared_cold_setup_allocation_s": null,
-      "source_operation_count": null,
-      "billing": null
-    },
-    {
-      "block": "B-07",
-      "phase": "B",
-      "method": null,
-      "method_version": "v1",
-      "case": "B07",
-      "route": null,
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5119,6 +6982,7 @@
       "method_version": "v1",
       "case": "B08",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5152,6 +7016,7 @@
       "method_version": "v1",
       "case": "B08",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5185,6 +7050,7 @@
       "method_version": "v1",
       "case": "C01",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5218,6 +7084,7 @@
       "method_version": "v1",
       "case": "C01",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5251,6 +7118,7 @@
       "method_version": "v1",
       "case": "C02",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5284,6 +7152,7 @@
       "method_version": "v1",
       "case": "C02",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5317,6 +7186,7 @@
       "method_version": "v1",
       "case": "C03",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5350,6 +7220,7 @@
       "method_version": "v1",
       "case": "C03",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5383,6 +7254,7 @@
       "method_version": "v1",
       "case": "C04",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5416,6 +7288,7 @@
       "method_version": "v1",
       "case": "C04",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5449,6 +7322,7 @@
       "method_version": "v1",
       "case": "C05",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5482,6 +7356,7 @@
       "method_version": "v1",
       "case": "C05",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5515,6 +7390,7 @@
       "method_version": "v1",
       "case": "C06",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5548,6 +7424,7 @@
       "method_version": "v1",
       "case": "C06",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5581,6 +7458,7 @@
       "method_version": "v1",
       "case": "C07",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5614,6 +7492,7 @@
       "method_version": "v1",
       "case": "C07",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5647,6 +7526,7 @@
       "method_version": "v1",
       "case": "C08",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "control",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5680,6 +7560,7 @@
       "method_version": "v1",
       "case": "C08",
       "route": null,
+      "provider_role_overrides": "{}",
       "arm": "treatment",
       "status": "UNSTARTED",
       "final_delivered": false,
@@ -5910,9 +7791,9 @@
     },
     {
       "block": "B-02",
-      "both_source_pass": false,
-      "descriptive_delivery_saving_fraction": null,
-      "occupied_change_fraction": null,
+      "both_source_pass": true,
+      "descriptive_delivery_saving_fraction": 0.049065,
+      "occupied_change_fraction": 0.603655,
       "strict_time_eligible": false,
       "protocol_eligibility": "UNKNOWN: native activation/terminal, predecessor freeze, effective settings and original invalid dispositions require linked separate qualification; source grades do not establish these."
     },
@@ -6029,8 +7910,8 @@
       "protocol_eligibility": "UNKNOWN: native activation/terminal, predecessor freeze, effective settings and original invalid dispositions require linked separate qualification; source grades do not establish these."
     }
   ],
-  "experiment_observed_distinct_runs": 111,
-  "experiment_additive_occupied_agent_s_so_far": 80820.539,
+  "experiment_observed_distinct_runs": 169,
+  "experiment_additive_occupied_agent_s_so_far": 135852.823,
   "experiment_runs_without_terminal_time": 0,
   "limits": [
     "Artifact mtime is last saved complete final/map, not first complete bytes. Delivery uses actual host terminal timestamp, not root poll time.",

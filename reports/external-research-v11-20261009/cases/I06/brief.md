@@ -1,0 +1,11 @@
+# I06
+
+A nonprofit community radio station schedules music and short spoken segments for two transmitters and a web stream. Nine staff and rotating volunteer hosts prepare shows in a small studio; some programs are assembled days ahead, while local news inserts may change minutes before airtime. The station has a $6,000 annual technology allowance and no in-house developer. Hosts need to see what is cleared for a program, note when a track or spoken clip has a restriction, and hand a show to the next operator without exposing private listener dedications. The current on-air log is printed, and updates made after printing are sometimes missed by the web-stream operator. A staff member with limited color perception needs the status display to use labels as well as color. Internet access is usually stable, but the station wants a manual fallback for transmission interruptions. It is not asking for an automated broadcast system; a reliable planning and handoff aid is enough for now. Management has not decided which role approves changes to a clip's usage notes, how long listener requests should be retained, or whether one schedule should cover both transmitters when their local breaks differ.
+
+Required deliverable obligations (equal in both arms):
+O1 Independently discover useful unfamiliar tools, products and materially different approaches beyond the thin plan.
+O2 Investigate consequential primary source/code behavior and governing defaults, units/types, limits and applicability for selected mechanisms.
+O3 Investigate at least one relevant issue/fix/regression/release or evolution chain; say when evidence is absent/inapplicable.
+O4 Compare every exact P clause after plan reveal; distinguish correction, optional enhancement, user decision, already-covered, rejected and uncertain findings.
+O5 Retain useful alternatives, conditions, original constraints, disagreement and uncertainty in one self-contained coherent final; do not replace text with IDs.
+O6 Propose meaningful discriminating validations and separate executed checks from proposed work. No runtime available is honest; do not pretend proposals ran. Scope is this small product brief, not unlimited production guarantees.

@@ -1,0 +1,21 @@
+{
+  "run_id": "replace-with-a-unique-run-id",
+  "runtime_root": "/tmp/er11-reference/replace-with-a-unique-run-id",
+  "brief_path": "/absolute/caller/path/to/brief.md",
+  "plan_path": "/absolute/caller/path/to/frozen-plan.md",
+  "whole_deadline_utc": "REPLACE_WITH_ABSOLUTE_UTC_DEADLINE",
+  "stage_budgets_s": {
+    "investigator": 1800,
+    "critic": 720,
+    "reviser": 1080
+  },
+  "provider": {
+    "providerInstanceId": "codex_gmail",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "runtime_mode": "full-access"
+}

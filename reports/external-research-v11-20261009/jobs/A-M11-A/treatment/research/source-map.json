@@ -1,0 +1,345 @@
+{
+  "map_version": 1,
+  "case": "S11",
+  "block": "A-M11-A",
+  "arm": "treatment",
+  "method": "M11",
+  "stage": "research",
+  "created_utc": "2026-10-09T20:33:00Z",
+  "timestamp_note": "access_timestamp values are UTC, minute precision, taken from this run's retrieval log rounds; round 1 (search) ~20:19-20:21, round 2 (search) ~20:21-20:23, round 3 (web reader; Able Player releases fully read) ~20:24-20:26, round 4 (search) ~20:26-20:28.",
+  "usage_billing": "unobserved: null (no usage or billing data was observable for any source)",
+  "immutable_ids_note": "Source IDs S01..S22 are immutable for this stage; no rebinding. Any later re-visit must add S<n+1>.",
+  "drift_note": "Mutable targets (main/master branches, hosted pages) were accessed 2026-10-09; versions/commits recorded where the page exposed them. Stable released code (Able Player release tags, Argos 1.11.0) preferred for release evidence.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Able Player — official project site",
+      "url": "https://ableplayer.github.io/ableplayer",
+      "publisher": "Able Player project",
+      "kind": "official project site",
+      "version": "v5 (site, current)",
+      "commit": null,
+      "locator": "home page feature list",
+      "access_timestamp": "2026-10-09T20:19:40Z",
+      "observed_operations": [
+        "web_search result capture (title + feature snippet); page body not fully rendered this run"
+      ],
+      "evidence_file": "sources/S01-able-player-site.md"
+    },
+    {
+      "id": "S02",
+      "title": "Able Player GitHub Releases (full release notes)",
+      "url": "https://github.com/ableplayer/ableplayer/releases",
+      "publisher": "ableplayer (GitHub)",
+      "kind": "primary code releases",
+      "version": "v4.4..v5.0.0-RC1",
+      "commit": null,
+      "locator": "releases list page, entries v5.0.0-RC1, v4.8.0, v4.8.0-rc1, v4.7.0, v4.6.0, v4.5.1, v4.5, v4.4.1, v4.4",
+      "access_timestamp": "2026-10-09T20:24:45Z",
+      "observed_operations": [
+        "web reader fetch of releases page; release notes read for entries listed in locator"
+      ],
+      "evidence_file": "sources/S02-able-player-releases.md"
+    },
+    {
+      "id": "S03",
+      "title": "Able Player issue #282 — Auto-generated transcripts",
+      "url": "https://github.com/ableplayer/ableplayer/issues/282",
+      "publisher": "ableplayer (GitHub)",
+      "kind": "issue thread (primary)",
+      "version": null,
+      "commit": null,
+      "locator": "issue title + opening discussion",
+      "access_timestamp": "2026-10-09T20:19:40Z",
+      "observed_operations": [
+        "web_search result capture (title/snippet only); thread body not fully read this run"
+      ],
+      "evidence_file": "sources/S03-ableplayer-issue-282.md"
+    },
+    {
+      "id": "S04",
+      "title": "OpenAI Whisper — README and CLI usage",
+      "url": "https://github.com/openai/whisper",
+      "publisher": "OpenAI",
+      "kind": "primary code README (main branch)",
+      "version": "main branch (2026-10)",
+      "commit": null,
+      "locator": "README sections: setup/CLI usage (--model, --task, --output_format, available models/outpus)",
+      "access_timestamp": "2026-10-09T20:19:40Z",
+      "observed_operations": [
+        "web_search result capture + retrieval summary of README usage; raw README fetch attempted but not fully rendered this run"
+      ],
+      "evidence_file": "sources/S04-whisper-readme.md"
+    },
+    {
+      "id": "S05",
+      "title": "openai/whisper discussion #388 — CLI usage & default output_format",
+      "url": "https://github.com/openai/whisper/discussions/388",
+      "publisher": "openai/whisper community",
+      "kind": "discussion (primary-adjacent)",
+      "version": null,
+      "commit": null,
+      "locator": "discussion thread re default output format",
+      "access_timestamp": "2026-10-09T20:19:40Z",
+      "observed_operations": [
+        "web_search result capture"
+      ],
+      "evidence_file": "sources/S05-whisper-discussion-388.md"
+    },
+    {
+      "id": "S06",
+      "title": "WebVTT: The Web Video Text Tracks Format — W3C",
+      "url": "https://www.w3.org/TR/webvtt1",
+      "publisher": "W3C",
+      "kind": "specification (primary standard)",
+      "version": "webvtt1 (TR)",
+      "commit": null,
+      "locator": "abstract/introduction",
+      "access_timestamp": "2026-10-09T20:19:40Z",
+      "observed_operations": [
+        "web_search result capture (abstract snippet)"
+      ],
+      "evidence_file": "sources/S06-w3c-webvtt.md"
+    },
+    {
+      "id": "S07",
+      "title": "H95: Using the track element to provide captions — W3C WAI",
+      "url": "https://www.w3.org/WAI/WCAG22/Techniques/html/H95",
+      "publisher": "W3C WAI",
+      "kind": "WCAG technique (primary)",
+      "version": null,
+      "commit": null,
+      "locator": "technique description",
+      "access_timestamp": "2026-10-09T20:19:40Z",
+      "observed_operations": [
+        "web_search result capture"
+      ],
+      "evidence_file": "sources/S07-w3c-h95.md"
+    },
+    {
+      "id": "S08",
+      "title": "MDN — WebVTT API",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API",
+      "publisher": "Mozilla",
+      "kind": "official docs",
+      "version": null,
+      "commit": null,
+      "locator": "guide body",
+      "access_timestamp": "2026-10-09T20:19:40Z",
+      "observed_operations": [
+        "web_search result capture"
+      ],
+      "evidence_file": "sources/S08-mdn-webvtt.md"
+    },
+    {
+      "id": "S09",
+      "title": "WCAG 2.2 Understanding SC 1.2.2 Captions (Prerecorded)",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded.html",
+      "publisher": "W3C WAI",
+      "kind": "primary standard explainer",
+      "version": null,
+      "commit": null,
+      "locator": "intent section",
+      "access_timestamp": "2026-10-09T20:21:30Z",
+      "observed_operations": [
+        "web_search result capture"
+      ],
+      "evidence_file": "sources/S09-wcag122.md"
+    },
+    {
+      "id": "S10",
+      "title": "WCAG 2.2 Understanding SC 1.2.5 Audio Description (Prerecorded)",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded.html",
+      "publisher": "W3C WAI",
+      "kind": "primary standard explainer",
+      "version": null,
+      "commit": null,
+      "locator": "intent section",
+      "access_timestamp": "2026-10-09T20:21:30Z",
+      "observed_operations": [
+        "web_search result capture"
+      ],
+      "evidence_file": "sources/S10-wcag125.md"
+    },
+    {
+      "id": "S11",
+      "title": "Plyr — README (keyboard shortcuts, options)",
+      "url": "https://github.com/sampotts/plyr/blob/master/README.md",
+      "publisher": "sampotts/plyr",
+      "kind": "primary code README (master)",
+      "version": "master (2026-10)",
+      "commit": null,
+      "locator": "README shortcut table + keyboard options",
+      "access_timestamp": "2026-10-09T20:21:30Z",
+      "observed_operations": [
+        "web_search result capture incl. shortcut table"
+      ],
+      "evidence_file": "sources/S11-plyr-readme.md"
+    },
+    {
+      "id": "S12",
+      "title": "Subtitle Edit — open-source subtitle editor",
+      "url": "https://github.com/SubtitleEdit/subtitleedit",
+      "publisher": "SubtitleEdit (GitHub)",
+      "kind": "primary code (search capture)",
+      "version": "(2026-10)",
+      "commit": null,
+      "locator": "project listing/features",
+      "access_timestamp": "2026-10-09T20:21:30Z",
+      "observed_operations": [
+        "web_search result capture (features via result snippet; repo body not fully read this run)"
+      ],
+      "evidence_file": "sources/S12-subtitle-edit.md"
+    },
+    {
+      "id": "S13",
+      "title": "subtitle-editor.org — web-based SRT/VTT editor",
+      "url": "https://subtitle-editor.org",
+      "publisher": "subtitle-editor.org",
+      "kind": "web tool (search capture)",
+      "version": null,
+      "commit": null,
+      "locator": "site description",
+      "access_timestamp": "2026-10-09T20:21:30Z",
+      "observed_operations": [
+        "web_search result capture"
+      ],
+      "evidence_file": "sources/S13-subtitle-editor-org.md"
+    },
+    {
+      "id": "S14",
+      "title": "Amara — online subtitling & translation platform",
+      "url": "https://amara.org",
+      "publisher": "Amara",
+      "kind": "hosted platform (search capture)",
+      "version": null,
+      "commit": null,
+      "locator": "home page / subtitling platform",
+      "access_timestamp": "2026-10-09T20:21:30Z",
+      "observed_operations": [
+        "web_search result capture"
+      ],
+      "evidence_file": "sources/S14-amara.md"
+    },
+    {
+      "id": "S15",
+      "title": "W3C WAI — Selecting Web Accessibility Evaluation Tools",
+      "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting",
+      "publisher": "W3C WAI",
+      "kind": "primary guidance",
+      "version": null,
+      "commit": null,
+      "locator": "key statements section",
+      "access_timestamp": "2026-10-09T20:27:10Z",
+      "observed_operations": [
+        "web_search result capture (key quote)"
+      ],
+      "evidence_file": "sources/S15-wai-selecting-tools.md"
+    },
+    {
+      "id": "S16",
+      "title": "W3C — Challenges with Accessibility Guidelines Conformance and Testing",
+      "url": "https://www.w3.org/TR/accessibility-conformance-challenges",
+      "publisher": "W3C",
+      "kind": "W3C Note (primary)",
+      "version": null,
+      "commit": null,
+      "locator": "automated testing limitations",
+      "access_timestamp": "2026-10-09T20:27:10Z",
+      "observed_operations": [
+        "web_search result capture"
+      ],
+      "evidence_file": "sources/S16-conformance-challenges.md"
+    },
+    {
+      "id": "S17",
+      "title": "WCAG-EM — Website Accessibility Conformance Evaluation Methodology",
+      "url": "https://www.w3.org/TR/WCAG-EM/",
+      "publisher": "W3C",
+      "kind": "W3C WG Note (primary methodology)",
+      "version": null,
+      "commit": null,
+      "locator": "methodology steps overview",
+      "access_timestamp": "2026-10-09T20:27:10Z",
+      "observed_operations": [
+        "web_search result capture"
+      ],
+      "evidence_file": "sources/S17-wcagem.md"
+    },
+    {
+      "id": "S18",
+      "title": "FCC — Closed Captioning on Television (consumer guide)",
+      "url": "https://www.fcc.gov/consumers/guides/closed-captioning-television",
+      "publisher": "FCC",
+      "kind": "regulator guidance (primary US)",
+      "version": null,
+      "commit": null,
+      "locator": "quality standards section",
+      "access_timestamp": "2026-10-09T20:27:10Z",
+      "observed_operations": [
+        "web_search result capture"
+      ],
+      "evidence_file": "sources/S18-fcc-quality.md"
+    },
+    {
+      "id": "S19",
+      "title": "47 CFR Part 79 — Closed captioning of video programming",
+      "url": "https://www.ecfr.gov/current/title-47/chapter-I/subchapter-C/part-79",
+      "publisher": "eCFR (US federal regulation)",
+      "kind": "regulation (primary US)",
+      "version": "current edition (2026-10)",
+      "commit": null,
+      "locator": "part 79 requirements re metrics",
+      "access_timestamp": "2026-10-09T20:27:10Z",
+      "observed_operations": [
+        "web_search result capture"
+      ],
+      "evidence_file": "sources/S19-cfr79.md"
+    },
+    {
+      "id": "S20",
+      "title": "Rev — Closed captioning guidelines",
+      "url": "https://www.rev.com/blog/closed-captioning-guidelines-for-tv-movies-and-video-platforms",
+      "publisher": "Rev.com",
+      "kind": "vendor guidance",
+      "version": null,
+      "commit": null,
+      "locator": "timing/reading-rate guidance",
+      "access_timestamp": "2026-10-09T20:27:10Z",
+      "observed_operations": [
+        "web_search result capture"
+      ],
+      "evidence_file": "sources/S20-rev-guidelines.md"
+    },
+    {
+      "id": "S21",
+      "title": "3Play Media — Caption quality best practices",
+      "url": "https://www.3playmedia.com/blog/best-practices-for-caption-quality",
+      "publisher": "3Play Media",
+      "kind": "vendor guidance",
+      "version": null,
+      "commit": null,
+      "locator": "quality practices",
+      "access_timestamp": "2026-10-09T20:27:10Z",
+      "observed_operations": [
+        "web_search result capture"
+      ],
+      "evidence_file": "sources/S21-3play-practices.md"
+    },
+    {
+      "id": "S22",
+      "title": "Argos Translate — PyPI",
+      "url": "https://pypi.org/project/argostranslate",
+      "publisher": "Argos Open Tech",
+      "kind": "primary package (PyPI)",
+      "version": "1.11.0",
+      "commit": null,
+      "locator": "PyPI project description",
+      "access_timestamp": "2026-10-09T20:27:10Z",
+      "observed_operations": [
+        "web_search result capture"
+      ],
+      "evidence_file": "sources/S22-argos.md"
+    }
+  ]
+}

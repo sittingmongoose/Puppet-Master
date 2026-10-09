@@ -1,0 +1,43 @@
+{
+  "frozen_at": "2026-10-09T20:29:39.076516+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+      "sha256": "cc962dde020c6c859e7149db1adcdc9b9872bc02c7f7d8566fea32bf8c5e73cf",
+      "bytes": 1453
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M08.json",
+      "sha256": "24c84915012ca6e92a3e5c2753185ae4604e8660d2835f24be7dcc24cc40f5fd",
+      "bytes": 689
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/assignment.md",
+      "sha256": "12685bdd14fba9abf3bedc229f63cb4332298ec55e371254664fa746bb8db932",
+      "bytes": 3419
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M08-A/treatment/research/input-map.json",
+      "sha256": "7dfa349f0b284580c3adbe89bb5b3053fe9e08c7fdbb87426bb223fc2f9159b6",
+      "bytes": 680
+    }
+  ],
+  "method": {
+    "id": "M08",
+    "version": "v1",
+    "name": "progressive-complete-draft",
+    "control": "Investigate then write conventional complete draft; independent critic then separate reviser.",
+    "treatment": "Keep one developing coherent draft covering all obligations as evidence arrives; expand and revise it, retain intermediate versions at meaningful transitions. Spend final reserve on contradiction/preservation review. Same critic/reviser.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Writing schedule intervention, scope unchanged",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "resource_version": "glm-24-18-18-v2",
+  "stage_allowance_s": 1440,
+  "deadline": "2026-10-09T20:53:39.076516+00:00"
+}

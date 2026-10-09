@@ -1,0 +1,68 @@
+{
+  "name": "Reviewer mathematical counterexample to N1 V6; no candidate engine execution",
+  "executed_at": "2026-10-09T20:06:10.034483+00:00",
+  "input": [
+    {
+      "id": "A",
+      "amount": "10"
+    },
+    {
+      "id": "B",
+      "amount": "10"
+    }
+  ],
+  "correct_identity_output": [
+    {
+      "id": "A",
+      "amount": "10"
+    },
+    {
+      "id": "B",
+      "amount": "10"
+    }
+  ],
+  "compensating_drop_duplicate_output": [
+    {
+      "id": "A",
+      "amount": "10"
+    },
+    {
+      "id": "A",
+      "amount": "10"
+    }
+  ],
+  "correct_metrics": {
+    "input_data_rows": 2,
+    "accepted_rows": 2,
+    "rejected_rows": 0,
+    "skipped_rows": 0,
+    "per_column_acceptance": {
+      "id": 1.0,
+      "amount": 1.0
+    },
+    "per_column_rejection": {
+      "id": 0.0,
+      "amount": 0.0
+    }
+  },
+  "corrupt_metrics": {
+    "input_data_rows": 2,
+    "accepted_rows": 2,
+    "rejected_rows": 0,
+    "skipped_rows": 0,
+    "per_column_acceptance": {
+      "id": 1.0,
+      "amount": 1.0
+    },
+    "per_column_rejection": {
+      "id": 0.0,
+      "amount": 0.0
+    }
+  },
+  "metrics_equal": true,
+  "independent_oracle": "Identity recipe must preserve the input row multiset. Counter distinguishes A,B from A,A.",
+  "oracle_equal": false,
+  "input_sha256": "c0762ae105d5c6dce32d5c989f7f8536cdf6192f78a4439da377f9cc684a77d4",
+  "input_hash_reused_with_either_output": true,
+  "limitations": "A counterexample to the stated aggregate checks, not a parser run or performance measurement. An output-content hash compared to a separately trusted expected output would be a different check; final V6a explicitly relies on buckets/rates."
+}

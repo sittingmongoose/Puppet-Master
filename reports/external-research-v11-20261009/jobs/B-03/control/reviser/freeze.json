@@ -1,0 +1,75 @@
+{
+  "frozen_at": "2026-10-09T20:16:40.730813+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I03/brief.md",
+      "sha256": "92d2d5a86726ad51aed8d4cd17f1dee57a4b2ecf124d54614de9545f65fa81ff",
+      "bytes": 2303
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M05-v2.json",
+      "sha256": "828e70c1d9c1304fecc179c4f4bfd6a81186a520e6a174065b3bff7f289b6dd8",
+      "bytes": 1126
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/assignment.md",
+      "sha256": "2c49b4fbc96aaac169fb56d9fa2261ef2a34123df07ee537c6d0bd0af9f394ef",
+      "bytes": 2766
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/reviser/input-map.json",
+      "sha256": "3e60084f2a0a9057b52ff32d586670962369bf9ef158b6794061cc94e2be2513",
+      "bytes": 1525
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/draft.md",
+      "sha256": "9be33b7ad94c5311ce50835deb2af4cfa2dab3f535ba5d0a521b33d42a7e8d90",
+      "bytes": 19899
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/discovery.md",
+      "sha256": "64fac821c7773fd24f91b1091348611e794944b15daef9cbfa4f5f39c7fd4815",
+      "bytes": 11227
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/source-map.json",
+      "sha256": "69dd7aa3133cdc0c57e7df4b9d48b8fdf4208f6614c21a49073f1b6b9f34aa82",
+      "bytes": 11929
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/revealed-plan.md",
+      "sha256": "97d47a152c435ea24c95a2aede2df3c6782a7aa35ac286df8ae1b4bb747ee2f9",
+      "bytes": 632
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/source-map.json",
+      "sha256": "59366014295bd385efa2f55ee16d966292e198aba08796290edad29a4663efaf",
+      "bytes": 22279
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/critique.md",
+      "sha256": "425914c0a3fcf357203229e727cdb136ee2d07d7061b51e4a83208d316c4f019",
+      "bytes": 13780
+    }
+  ],
+  "method": {
+    "id": "M05",
+    "version": "v2",
+    "name": "retained-investigator",
+    "control": "Researcher terminalizes after complete draft, fresh critic, separate fresh reviser.",
+    "treatment": "Original researcher retains ONE native Goal and source context through discovery/draft, waits for independent critic, then resolves criticism and writes complete final in SAME context. Waiting/handoff costs count; no early native completion.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Declared retained context; no artificial new Goal at phase boundary",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080,
+    "handoff_rule": "Original author waits for root mechanical READY.json created only after critic native/T3 terminal completion, containing critique/source-map SHA-256. No science after terminal; no new author Goal.",
+    "adaptation_limit": "Successor to source-positive A-M05-B v1; explicit terminal handoff removes unknown freeze-at-read and may reduce its observed latency saving. Not a replication of the missing receipt."
+  },
+  "resource_version": "retained-terminal-handoff-v2",
+  "stage_allowance_s": 1080,
+  "deadline": "2026-10-09T20:34:40.730813+00:00"
+}

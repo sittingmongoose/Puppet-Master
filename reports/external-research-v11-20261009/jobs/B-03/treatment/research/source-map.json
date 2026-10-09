@@ -1,0 +1,941 @@
+{
+  "schema_version": "1.0",
+  "assignment": "ER11 scientific candidate B-03/treatment/research",
+  "block": "B-03",
+  "arm": "treatment",
+  "case": "I03",
+  "method": "M05",
+  "stage": "research",
+  "native_goal_thread_id": "01a12230-f8fd-7d62-b2a6-872810c1f89b",
+  "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research",
+  "source_identity_policy": "Source IDs S01-S31 are immutable references. Do not silently substitute a different version under an existing ID. Rolling documentation pages are mutable and their capture timestamp is recorded; capture a new ID if drift is found.",
+  "access_timestamp_note": "The public-source access timestamps below are exact UTC capture checkpoints recorded immediately after each grouped web-open call. The web interface did not provide per-document HTTP Date headers or subsecond retrieval timestamps; no per-document request time is claimed.",
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "ODK Collect introduction",
+      "source_type": "official documentation",
+      "url": "https://docs.getodk.org/collect-intro/",
+      "version_or_snapshot": "ODK Docs rolling page; no documentation release identifier shown.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "ODK Collect overview; supported devices and offline description",
+      "access_timestamp": "2026-10-09T19:49:37Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official ODK documentation page."
+      ],
+      "observations": [
+        "Collect is an Android form-entry application designed to work offline. The page recommends Android 10+ for best security/performance and notes 4 GB RAM for complex forms or lists with 60k+ elements."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S01"
+    },
+    {
+      "source_id": "S02",
+      "title": "Introduction to Entities",
+      "source_type": "official documentation",
+      "url": "https://docs.getodk.org/entities-intro/",
+      "version_or_snapshot": "ODK Docs rolling page; documents version gates 2024.3.0, 2025.4.3, and Collect 2026.1.0.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Entities overview and limitations; sections on offline Entities and when to use them",
+      "access_timestamp": "2026-10-09T19:49:37Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official ODK documentation page."
+      ],
+      "observations": [
+        "Entity Lists share longitudinal state between forms. Offline Entity creation/update requires Central and Collect 2024.3.0 or later; older Central, Web Forms, and older Collect do not create/update Entities offline. The docs warn that entities add complexity and offline conflict risk."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S02"
+    },
+    {
+      "source_id": "S03",
+      "title": "Managing Entities in Central",
+      "source_type": "official documentation",
+      "url": "https://docs.getodk.org/central-entities/",
+      "version_or_snapshot": "ODK Central/Collect versioned behavior described in the rolling docs; relevant floor is 2024.3.0.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Managing Entities; headings “Addressing parallel updates” and “Conflicts related to Offline Entities”",
+      "access_timestamp": "2026-10-09T19:49:37Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official ODK documentation page."
+      ],
+      "observations": [
+        "Central applies concurrent edits in receipt order (last-write-wins) and surfaces conflict cases. For offline entity chains, Collect tries to submit in creation order; Central can hold out-of-order updates up to five days, then force-process and flag a conflict. Multiple offline users editing the same entity may create difficult-to-understand conflicts."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S03"
+    },
+    {
+      "source_id": "S04",
+      "title": "Form Language",
+      "source_type": "official documentation",
+      "url": "https://docs.getodk.org/form-language/",
+      "version_or_snapshot": "ODK Docs rolling page; no commit/version surfaced.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Form Language; XLSForm language columns and form/UI language distinction",
+      "access_timestamp": "2026-10-09T19:49:37Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official ODK documentation page."
+      ],
+      "observations": [
+        "Question labels, hints, validation messages, and media can have language-specific columns. Collect’s menus and buttons use the application UI language separately from form language. A form may select a default language and users may switch language."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S04"
+    },
+    {
+      "source_id": "S05",
+      "title": "Question Types",
+      "source_type": "official documentation",
+      "url": "https://docs.getodk.org/form-question-types/",
+      "version_or_snapshot": "ODK Docs rolling page; no commit/version surfaced.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Barcode widget; barcode question behavior and example",
+      "access_timestamp": "2026-10-09T19:49:37Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official ODK documentation page."
+      ],
+      "observations": [
+        "XLSForm supports a barcode question; examples show capturing scanned content and optionally decoding it. A tag scan is technically plausible, but on-device scan behavior and camera/label tolerance still need nursery testing."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S05"
+    },
+    {
+      "source_id": "S06",
+      "title": "Managing Submissions in Central",
+      "source_type": "official documentation",
+      "url": "https://docs.getodk.org/central-submissions/",
+      "version_or_snapshot": "ODK Central rolling docs; offline-link instructions differ before/after Central 2025.1.0.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Sections “Making Submissions from the web” and “Allowing web form users to work offline”",
+      "access_timestamp": "2026-10-09T19:49:37Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official ODK documentation page."
+      ],
+      "observations": [
+        "ODK recommends Collect for enumerator-mediated offline work. Web Forms are not offline by default; Enketo offline-capable URLs can save drafts and queue submissions, but queued automatic sending requires the form to remain open when connectivity returns. Web Forms do not support all Collect behavior."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S06"
+    },
+    {
+      "source_id": "S07",
+      "title": "Managing Users in Central",
+      "source_type": "official documentation",
+      "url": "https://docs.getodk.org/central-users/",
+      "version_or_snapshot": "ODK Central rolling docs; page does not show a release commit.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Role table; Data Collector and App User permissions; access to Entities through forms",
+      "access_timestamp": "2026-10-09T19:49:37Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official ODK documentation page."
+      ],
+      "observations": [
+        "App Users may be restricted to selected forms and can submit from mobile; Data Collectors may submit forms but cannot view submissions. Data Collectors/App Users can see entity values through forms they can access, so fields embedded in those forms must not carry customer addresses."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S07"
+    },
+    {
+      "source_id": "S08",
+      "title": "ODK Security",
+      "source_type": "official documentation",
+      "url": "https://docs.getodk.org/security/",
+      "version_or_snapshot": "ODK Docs rolling security page; deployment/version details should be rechecked during implementation.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Sections “Data on server (Central)” and “Data on mobile (Collect)”",
+      "access_timestamp": "2026-10-09T19:49:37Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official ODK documentation page."
+      ],
+      "observations": [
+        "ODK identifies PII as a server risk. The docs state mobile submissions use shared storage, allowing a device user to modify files; local device exposure must be considered. Do not place fulfillment PII in field-worker-accessible forms or local entity lists."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S08"
+    },
+    {
+      "source_id": "S09",
+      "title": "Collect issue #4589: prevent editing submissions that failed to send",
+      "source_type": "official issue/bug report",
+      "url": "https://github.com/getodk/collect/issues/4589",
+      "version_or_snapshot": "Issue #4589; opened 2021-06-02; no source-code commit itself.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Issue description and activity; opened 2021-06-02; linked PR #4655",
+      "access_timestamp": "2026-10-09T19:49:37Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened public official GitHub issue."
+      ],
+      "observations": [
+        "Issue describes Central rejecting a retry when a submission with the same ID arrives with different XML; editing a failed-to-send finalized form could change its contents. The issue links a narrowly scoped fix and discusses avoiding edits after a failed send."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": "Issue report establishes a historical failure mode, not the exact behavior of every current deployment.",
+      "local_evidence": "sources/primary-source-notes.md#S09"
+    },
+    {
+      "source_id": "S10",
+      "title": "Collect merge commit for issue #4589 / PR #4655",
+      "source_type": "source code / merge commit",
+      "url": "https://github.com/getodk/collect/commit/12ef1a3f4f2257591cfe912754a44305dd686a2a",
+      "version_or_snapshot": "Merged 2021-07-07 per public GitHub REST metadata; exact merge commit.",
+      "commit": "12ef1a3f4f2257591cfe912754a44305dd686a2a",
+      "commit_status": "pinned",
+      "locator": "Merge commit header and changed-file list; includes EditSavedFormTest.java",
+      "access_timestamp": "2026-10-09T19:49:37Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened pinned GitHub merge commit page."
+      ],
+      "observations": [
+        "The commit is titled “Prevent editing of submissions that failed to send,” merges PR #4655, and adds EditSavedFormTest coverage. It is a concrete issue-to-fix evolution chain relevant to immutable retries."
+      ],
+      "mutable_drift": false,
+      "drift_policy": "Commit-pinned source; do not rebind this source ID.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S10"
+    },
+    {
+      "source_id": "S11",
+      "title": "ODK Collect v2026.3.5 release",
+      "source_type": "official release",
+      "url": "https://github.com/getodk/collect/releases/tag/v2026.3.5",
+      "version_or_snapshot": "v2026.3.5; published 2026-09-28.",
+      "commit": "87bf04ec0a94e3dec1abc87db73c8326d8667162",
+      "commit_status": "pinned",
+      "locator": "Release header and commit; published 2026-09-28",
+      "access_timestamp": "2026-10-09T19:49:37Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official GitHub release page."
+      ],
+      "observations": [
+        "Pinned the reviewed current stable Collect version as v2026.3.5, commit 87bf04ec0a94e3dec1abc87db73c8326d8667162. This establishes the release snapshot used for source code inspection, not an endorsement or deployment test."
+      ],
+      "mutable_drift": false,
+      "drift_policy": "Commit-pinned source; do not rebind this source ID.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S11"
+    },
+    {
+      "source_id": "S12",
+      "title": "Collect SaveFormToDisk at v2026.3.5",
+      "source_type": "source code",
+      "url": "https://github.com/getodk/collect/blob/87bf04ec0a94e3dec1abc87db73c8326d8667162/collect_app/src/main/java/org/odk/collect/android/tasks/SaveFormToDisk.java",
+      "version_or_snapshot": "Collect v2026.3.5.",
+      "commit": "87bf04ec0a94e3dec1abc87db73c8326d8667162",
+      "commit_status": "pinned",
+      "locator": "SaveFormToDisk.java; finalize/save path and canEditAfterCompleted handling around encryption",
+      "access_timestamp": "2026-10-09T19:49:37Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened code at full commit SHA.",
+        "Searched for canEditAfterCompleted and updateInstanceDatabase."
+      ],
+      "observations": [
+        "The pinned source separates a completed form’s editability flag and sets it false for encrypted submissions, which cannot be reopened after one-way encryption. This supports treating retries, finalized data and encryption behavior as explicit state, not a generic mutable draft."
+      ],
+      "mutable_drift": false,
+      "drift_policy": "Commit-pinned source; do not rebind this source ID.",
+      "caveat": "This inspected code path is not itself proof of every failed-upload retry rule; issue/fix evidence is S09-S10.",
+      "local_evidence": "sources/primary-source-notes.md#S12"
+    },
+    {
+      "source_id": "S13",
+      "title": "ERPNext Batch documentation",
+      "source_type": "official documentation",
+      "url": "https://docs.frappe.io/erpnext/batch",
+      "version_or_snapshot": "Current official docs snapshot; page last-updated marker observed as seven months before access; includes v15 behavior.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Batch requirements, movement/split, expiry and transaction rules",
+      "access_timestamp": "2026-10-09T19:49:43Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official ERPNext documentation page."
+      ],
+      "observations": [
+        "Batch identity is attached to an Item; batched stock transactions require a Batch No. Batch can move between warehouses or split into smaller batches. Batch search may filter by item, warehouse, expiry and actual quantity. The page says global negative stock for serial/batch items was removed in v15."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S13"
+    },
+    {
+      "source_id": "S14",
+      "title": "ERPNext Stock Reservation",
+      "source_type": "official documentation",
+      "url": "https://docs.frappe.io/erpnext/stock-reservation",
+      "version_or_snapshot": "Introduced in ERPNext v15; current official docs snapshot.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "“Introduced in Version 15”; reservation against Sales Order and unreserve paths",
+      "access_timestamp": "2026-10-09T19:49:43Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official ERPNext documentation page."
+      ],
+      "observations": [
+        "Stock Reservation must be enabled in Stock Settings. Sales Order stock can be reserved by warehouse and quantity, and reservations can be unreserved/cancelled. This is a practical allocation comparator; it only acts on recorded stock, so expected crop yield still needs separate semantics."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S14"
+    },
+    {
+      "source_id": "S15",
+      "title": "ERPNext Item documentation",
+      "source_type": "official documentation",
+      "url": "https://docs.frappe.io/erpnext/item",
+      "version_or_snapshot": "Current official docs snapshot; includes v15 negative-stock note.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Item prerequisites, barcode, Has Batch No, Batch Number Series and automatic batch creation",
+      "access_timestamp": "2026-10-09T19:49:43Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official ERPNext documentation page."
+      ],
+      "observations": [
+        "Batching is configured per Item and cannot be turned on after stock transactions exist without migration steps. Barcodes are recorded against Items. Existing paper batch tags therefore need a pilot mapping/migration plan rather than assuming batch codes will scan automatically."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S15"
+    },
+    {
+      "source_id": "S16",
+      "title": "ERPNext Unit of Measure",
+      "source_type": "official documentation",
+      "url": "https://docs.frappe.io/erpnext/uom",
+      "version_or_snapshot": "Current official docs snapshot.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "UoM and “Must be Whole Number”; conversion factor model",
+      "access_timestamp": "2026-10-09T19:49:43Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official ERPNext documentation page."
+      ],
+      "observations": [
+        "UoM supports fractions unless “Must be Whole Number” is enabled; conversion factors are separate records. For seedlings sold as individual plants, configure and test the count UoM rather than assuming decimal rejection."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S16"
+    },
+    {
+      "source_id": "S17",
+      "title": "ERPNext Stock Settings",
+      "source_type": "official documentation",
+      "url": "https://docs.frappe.io/erpnext/stock-settings",
+      "version_or_snapshot": "Current official docs snapshot; settings defaults must be confirmed in target build.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Default Stock UOM and reservation/stock settings",
+      "access_timestamp": "2026-10-09T19:49:43Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official ERPNext documentation page."
+      ],
+      "observations": [
+        "Stock Settings documentation lists Nos as the default stock UoM and allows changing it. Reservations and other behaviors have explicit settings. The default UoM alone does not prove a no-fraction rule."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S17"
+    },
+    {
+      "source_id": "S18",
+      "title": "ERPNext Stock Reconciliation",
+      "source_type": "official documentation",
+      "url": "https://docs.frappe.io/erpnext/stock-reconciliation",
+      "version_or_snapshot": "Current official docs snapshot.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Section “Using a barcode scanner to scan physical inventory”",
+      "access_timestamp": "2026-10-09T19:49:43Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official ERPNext documentation page."
+      ],
+      "observations": [
+        "Scan Mode disables fetching existing quantity and adds quantity incrementally with scans. This is a count workflow, not evidence that an existing greenhouse tray ID maps to batch stock without configuration."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S18"
+    },
+    {
+      "source_id": "S19",
+      "title": "ERPNext Role Based Permissions",
+      "source_type": "official documentation",
+      "url": "https://docs.frappe.io/erpnext/permissions",
+      "version_or_snapshot": "Current official docs snapshot.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Role permissions, document stages, field permission levels 0-9 and exports",
+      "access_timestamp": "2026-10-09T19:49:43Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official ERPNext documentation page."
+      ],
+      "observations": [
+        "ERPNext exposes role, document, field permission levels, reports, export, print, email and user-permission controls. All customer/address paths need explicit role testing; the presence of permission features does not mean an installed account is configured safely."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S19"
+    },
+    {
+      "source_id": "S20",
+      "title": "ERPNext Customer documentation",
+      "source_type": "official documentation",
+      "url": "https://docs.frappe.io/erpnext/customer",
+      "version_or_snapshot": "Current official docs snapshot.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "“Add addresses and contacts”; linked Address and Contact records",
+      "access_timestamp": "2026-10-09T19:49:43Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official ERPNext documentation page."
+      ],
+      "observations": [
+        "Customer records can have linked billing/shipping addresses and multiple contacts. This structure offers a way to separate customer/order data from batch operations, but visibility must be tested across the linked records and print/export paths."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S20"
+    },
+    {
+      "source_id": "S21",
+      "title": "ERPNext v15.121.3 release",
+      "source_type": "official release",
+      "url": "https://github.com/frappe/erpnext/releases/tag/v15.121.3",
+      "version_or_snapshot": "ERPNext v15.121.3; published 2026-09-15.",
+      "commit": "26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+      "commit_status": "pinned",
+      "locator": "Release header; published 2026-09-15; commit",
+      "access_timestamp": "2026-10-09T19:49:43Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official GitHub release page."
+      ],
+      "observations": [
+        "Inspected version v15.121.3 at commit 26f06878346fb6861229ccb1fe3a53dc1bf5bad3 as a pinned v15 code snapshot. This release is a source baseline, not a claim that it is the newest release on access date."
+      ],
+      "mutable_drift": false,
+      "drift_policy": "Commit-pinned source; do not rebind this source ID.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S21"
+    },
+    {
+      "source_id": "S22",
+      "title": "ERPNext batch.py at v15.121.3",
+      "source_type": "source code",
+      "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/batch/batch.py",
+      "version_or_snapshot": "ERPNext v15.121.3.",
+      "commit": "26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+      "commit_status": "pinned",
+      "locator": "get_batch_qty and get_batches; sum of Stock Ledger actual_qty by batch/warehouse",
+      "access_timestamp": "2026-10-09T19:49:43Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened code at release commit SHA.",
+        "Searched for get_batch_qty and actual_qty."
+      ],
+      "observations": [
+        "The batch module calculates batch quantities from stock-ledger actual_qty and filters by item/warehouse parameters. This is transactional stock, not germination forecasts or customer readiness."
+      ],
+      "mutable_drift": false,
+      "drift_policy": "Commit-pinned source; do not rebind this source ID.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S22"
+    },
+    {
+      "source_id": "S23",
+      "title": "ERPNext Stock Reservation Entry at v15.121.3",
+      "source_type": "source code",
+      "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.py",
+      "version_or_snapshot": "ERPNext v15.121.3.",
+      "commit": "26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+      "commit_status": "pinned",
+      "locator": "validate_reservation_based_on_serial_and_batch; get_available_qty_to_reserve; Sales Order-only guard",
+      "access_timestamp": "2026-10-09T19:49:43Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened code at release commit SHA.",
+        "Searched for validation and availability functions."
+      ],
+      "observations": [
+        "The code gates reservation to Sales Orders and computes batch availability via batch/item/warehouse. If a batch-specific requested reservation exceeds actual available-to-reserve quantity, it either reduces to the available amount when allow_partial_reservation is enabled or throws. The code reads the partial-reservation setting; its effective default must be checked in the target configuration."
+      ],
+      "mutable_drift": false,
+      "drift_policy": "Commit-pinned source; do not rebind this source ID.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S23"
+    },
+    {
+      "source_id": "S24",
+      "title": "ERPNext Serial and Batch Bundle at v15.121.3",
+      "source_type": "source code",
+      "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/serial_and_batch_bundle/serial_and_batch_bundle.py",
+      "version_or_snapshot": "ERPNext v15.121.3.",
+      "commit": "26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+      "commit_status": "pinned",
+      "locator": "set_incoming_rate_for_outward_transaction and validate_negative_batch",
+      "access_timestamp": "2026-10-09T19:49:43Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened code at release commit SHA.",
+        "Searched for BatchNegativeStockError and actual_qty."
+      ],
+      "observations": [
+        "The reviewed method checks negative batch quantity only when its allow_negative_stock argument is false. Docs describe v15 as disallowing global negative batch stock, but the call chain/configuration was not traced end-to-end; a candidate deployment should adversarially test every relevant stock-entry route instead of treating the docs statement as a tested invariant."
+      ],
+      "mutable_drift": false,
+      "drift_policy": "Commit-pinned source; do not rebind this source ID.",
+      "caveat": "Static inspection only; did not run ERPNext or trace all callers of the method.",
+      "local_evidence": "sources/primary-source-notes.md#S24"
+    },
+    {
+      "source_id": "S25",
+      "title": "farmOS Managing Assets",
+      "source_type": "official documentation",
+      "url": "https://farmos.org/guide/assets/",
+      "version_or_snapshot": "Current official docs page; exact farmOS version is not surfaced on page.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Asset types; Plants can represent groups or individual plants; crop/variety and logs",
+      "access_timestamp": "2026-10-09T19:49:47Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official farmOS user guide."
+      ],
+      "observations": [
+        "farmOS models things as Assets. Plant Assets can represent groups of plants or individuals and are classified by crops/varieties; this is close to batch/variety identity."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S25"
+    },
+    {
+      "source_id": "S26",
+      "title": "farmOS Movements and location",
+      "source_type": "official documentation",
+      "url": "https://farmos.org/guide/location/",
+      "version_or_snapshot": "Current official docs page; exact farmOS version is not surfaced on page.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Current location from latest done movement Log; bulk Move assets operation",
+      "access_timestamp": "2026-10-09T19:49:47Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official farmOS user guide."
+      ],
+      "observations": [
+        "Current location is inferred from the most recent completed movement log with a date no later than now. Logs can move one or multiple Assets. A move/event history fits location tracing but requires precise timestamps and review of conflicting edits."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S26"
+    },
+    {
+      "source_id": "S27",
+      "title": "farmOS Inventory model",
+      "source_type": "official documentation",
+      "url": "https://farmos.org/model/logic/inventory/",
+      "version_or_snapshot": "Current official docs page; exact farmOS version is not surfaced on page.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Inventory adjustment Quantities: reset, increment, decrement; measure/value/units",
+      "access_timestamp": "2026-10-09T19:49:47Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official farmOS data-model documentation."
+      ],
+      "observations": [
+        "Inventory uses log-attached quantity adjustments: reset, increment or decrement. Calculations aggregate by measure+unit pair starting from latest reset. This resembles an event ledger, but is not the same thing as customer allocation/reservation or readiness forecast."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S27"
+    },
+    {
+      "source_id": "S28",
+      "title": "farmOS Field Kit repository README",
+      "source_type": "official product/source repository",
+      "url": "https://github.com/farmOS/field-kit",
+      "version_or_snapshot": "Repository README snapshot; branch and page are mutable; version compatibility must be verified.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "README: PWA/offline description; release/develop branch guidance",
+      "access_timestamp": "2026-10-09T19:49:47Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official farmOS GitHub repository page."
+      ],
+      "observations": [
+        "README describes a PWA that runs offline and persists data; it distinguishes develop from deploy. The separate v1 guide calls Field Kit v1 a proof of concept and says no major feature updates were planned. No exact running version/commit was pinned in this README inspection."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": "No live build was launched; README does not establish current v3 compatibility.",
+      "local_evidence": "sources/primary-source-notes.md#S28"
+    },
+    {
+      "source_id": "S29",
+      "title": "Installing farmOS",
+      "source_type": "official documentation",
+      "url": "https://farmos.org/hosting/install",
+      "version_or_snapshot": "Current official hosting documentation page.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Server/database requirements, Docker recommendation, SSL and Field Kit requirement",
+      "access_timestamp": "2026-10-09T19:49:47Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official farmOS installation page."
+      ],
+      "observations": [
+        "Current install guide shows a v3 Docker image convention, recommends PostgreSQL and Docker, and says Field Kit requires SSL. Operating farmOS therefore includes hosting/security/backup work; no total cost estimate was sourced."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S29"
+    },
+    {
+      "source_id": "S30",
+      "title": "farmOS.js Introduction",
+      "source_type": "official documentation",
+      "url": "https://farmos.org/development/farmos-js/",
+      "version_or_snapshot": "Documentation snapshot; page text describes farmOS.js 2.0.0 beta and farmOS 2.x; mutable and potentially stale.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Experimental warning, farmOS 2.x support scope, offline sync and last-write-wins conflict strategy",
+      "access_timestamp": "2026-10-09T19:49:47Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened official farmOS.js development documentation.",
+        "Searched “last-write-wins”."
+      ],
+      "observations": [
+        "The docs describe offline operation and last-write-wins merging, while warning that farmOS.js 2.0.0 was still approaching general release and supports farmOS 2.x. LWW is unsafe for concurrent quantity/allocation edits where both values matter; the page is not a pinned production release."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "Do not rebind this source ID. Capture a new ID if its content or version changes.",
+      "caveat": "Treat as an architectural warning and candidate only after checking exact current release compatibility.",
+      "local_evidence": "sources/primary-source-notes.md#S30"
+    },
+    {
+      "source_id": "S31",
+      "title": "WCAG 2.2 Recommendation",
+      "source_type": "standards recommendation",
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/#use-of-color",
+      "version_or_snapshot": "W3C Recommendation 2024-12-12; immutable dated Recommendation URL.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Success Criterion 1.4.1 Use of Color (Level A)",
+      "access_timestamp": "2026-10-09T19:49:47Z",
+      "access_timestamp_basis": "UTC checkpoint recorded immediately after the grouped source-open call; web interface did not expose per-document HTTP timestamps.",
+      "observed_operations": [
+        "Opened W3C Recommendation anchor."
+      ],
+      "observations": [
+        "Color is not the only visual means of conveying information. Use text, icons, shape/pattern or another visible cue alongside color in statuses and tags."
+      ],
+      "mutable_drift": false,
+      "drift_policy": "Commit-pinned source; do not rebind this source ID.",
+      "caveat": null,
+      "local_evidence": "sources/primary-source-notes.md#S31"
+    },
+    {
+      "source_id": "C01",
+      "title": "ODK Central Entities — critic capture",
+      "source_type": "official documentation",
+      "url": "https://docs.getodk.org/central-entities/",
+      "version_or_snapshot": "Rolling ODK documentation, crawled 2026-10-09; no document release identifier shown.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Important limitations lines 178-183; parallel updates lines 571-602; offline ordering lines 608-611.",
+      "access_timestamp": "2026-10-09T20:03:18Z",
+      "access_timestamp_basis": "UTC checkpoint after grouped open/find verification; no per-document HTTP timestamp exposed.",
+      "observed_operations": [
+        "Opened the official page directly.",
+        "Located and read limitation, conflict, and offline-ordering passages."
+      ],
+      "observations": [
+        "All devices always download all Entities; the page warns this may be a privacy concern.",
+        "Entity properties may only be strings; submission values saved to an Entity are converted to strings.",
+        "Central applies received updates in receipt order and marks detected parallel edits as possible conflicts.",
+        "Collect v2024.3.0 or later attempts creation-order sending; Central may hold an out-of-order update chain up to five days before force-processing and marking conflict."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "New critic capture; do not rebind or overwrite S03. Capture another new ID if the page changes.",
+      "caveat": "No prior raw page snapshot was available for a line-by-line drift comparison.",
+      "local_evidence": "sources/primary-source-notes.md#C01",
+      "related_source_ids": [
+        "S03"
+      ]
+    },
+    {
+      "source_id": "C02",
+      "title": "Collect issue #4589 — critic capture",
+      "source_type": "official issue/bug report",
+      "url": "https://github.com/getodk/collect/issues/4589",
+      "version_or_snapshot": "Issue #4589, opened 2021-06-02; issue activity is mutable.",
+      "commit": null,
+      "commit_status": "not applicable: issue is not a source-code commit",
+      "locator": "Issue description lines 158-164; same submission ID with different XML and proposed fix.",
+      "access_timestamp": "2026-10-09T20:03:18Z",
+      "access_timestamp_basis": "UTC checkpoint after grouped open/find verification; no per-document HTTP timestamp exposed.",
+      "observed_operations": [
+        "Opened the official GitHub issue directly.",
+        "Read issue description and linked fix context."
+      ],
+      "observations": [
+        "The issue describes server rejection when a same-ID retry has different XML and proposes preventing edits to finalized failed-to-send submissions."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "New critic capture related to S09; preserve issue number and capture a new ID if its record changes.",
+      "caveat": "Historical issue, not evidence of current failure frequency.",
+      "local_evidence": "sources/primary-source-notes.md#C02",
+      "related_source_ids": [
+        "S09"
+      ]
+    },
+    {
+      "source_id": "C03",
+      "title": "Collect merge commit #4655 — critic capture",
+      "source_type": "source code / merge commit",
+      "url": "https://github.com/getodk/collect/commit/12ef1a3f4f2257591cfe912754a44305dd686a2a",
+      "version_or_snapshot": "Exact merge commit 12ef1a3f4f2257591cfe912754a44305dd686a2a.",
+      "commit": "12ef1a3f4f2257591cfe912754a44305dd686a2a",
+      "commit_status": "pinned",
+      "locator": "Merge title and changed-file tree; added EditSavedFormTest.java.",
+      "access_timestamp": "2026-10-09T20:03:18Z",
+      "access_timestamp_basis": "UTC checkpoint after grouped open/find verification; no per-document HTTP timestamp exposed.",
+      "observed_operations": [
+        "Opened the official GitHub commit at the exact SHA.",
+        "Inspected commit title and added test-file path."
+      ],
+      "observations": [
+        "The merge is titled Prevent editing of submissions that failed to send and includes an added saved-form test file."
+      ],
+      "mutable_drift": false,
+      "drift_policy": "Commit-pinned source; do not rebind.",
+      "caveat": "File presence does not establish a nursery runtime result.",
+      "local_evidence": "sources/primary-source-notes.md#C03",
+      "related_source_ids": [
+        "S10"
+      ]
+    },
+    {
+      "source_id": "C04",
+      "title": "ERPNext Stock Reservation Entry at v15.121.3 — critic capture",
+      "source_type": "source code",
+      "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.py",
+      "version_or_snapshot": "ERPNext v15.121.3 at commit 26f06878346fb6861229ccb1fe3a53dc1bf5bad3.",
+      "commit": "26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+      "commit_status": "pinned",
+      "locator": "Validation lines 2529-2539 and 2633-2688; allowed voucher types and availability helper lines 3005-3021.",
+      "access_timestamp": "2026-10-09T20:03:18Z",
+      "access_timestamp_basis": "UTC checkpoint after grouped open/find verification; no per-document HTTP timestamp exposed.",
+      "observed_operations": [
+        "Opened code at exact release SHA.",
+        "Inspected validation, partial-reservation setting, voucher guard, and availability helper."
+      ],
+      "observations": [
+        "Reservation is restricted to Sales Orders.",
+        "Batch availability is actual quantity minus reserved quantity.",
+        "Code reads Stock Settings allow_partial_reservation and caps or rejects excess based on its value."
+      ],
+      "mutable_drift": false,
+      "drift_policy": "Commit-pinned source; do not rebind.",
+      "caveat": "Static inspection only; no target settings or transactions were tested.",
+      "local_evidence": "sources/primary-source-notes.md#C04",
+      "related_source_ids": [
+        "S23"
+      ]
+    },
+    {
+      "source_id": "C05",
+      "title": "ERPNext batch.py at v15.121.3 — critic capture",
+      "source_type": "source code",
+      "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/batch/batch.py",
+      "version_or_snapshot": "ERPNext v15.121.3 at commit 26f06878346fb6861229ccb1fe3a53dc1bf5bad3.",
+      "commit": "26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+      "commit_status": "pinned",
+      "locator": "get_batches lines 1824-1888; Stock Ledger Entry actual_qty grouped by batch and filtered by item/warehouse.",
+      "access_timestamp": "2026-10-09T20:03:18Z",
+      "access_timestamp_basis": "UTC checkpoint after grouped open/find verification; no per-document HTTP timestamp exposed.",
+      "observed_operations": [
+        "Opened code at exact release SHA.",
+        "Located and inspected get_batches query."
+      ],
+      "observations": [
+        "The query sums non-canceled Stock Ledger Entry actual_qty per batch, filters by item and warehouse, and applies expiry-date filtering."
+      ],
+      "mutable_drift": false,
+      "drift_policy": "Commit-pinned source; do not rebind.",
+      "caveat": "Static code path; no stock transaction was executed.",
+      "local_evidence": "sources/primary-source-notes.md#C05",
+      "related_source_ids": [
+        "S22"
+      ]
+    },
+    {
+      "source_id": "C06",
+      "title": "ERPNext serial_and_batch_bundle.py at v15.121.3 — critic capture",
+      "source_type": "source code",
+      "url": "https://github.com/frappe/erpnext/blob/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/serial_and_batch_bundle/serial_and_batch_bundle.py",
+      "version_or_snapshot": "ERPNext v15.121.3 at commit 26f06878346fb6861229ccb1fe3a53dc1bf5bad3.",
+      "commit": "26f06878346fb6861229ccb1fe3a53dc1bf5bad3",
+      "commit_status": "pinned",
+      "locator": "Negative batch guard lines 3351-3411.",
+      "access_timestamp": "2026-10-09T20:03:18Z",
+      "access_timestamp_basis": "UTC checkpoint after grouped open/find verification; no per-document HTTP timestamp exposed.",
+      "observed_operations": [
+        "Opened code at exact release SHA.",
+        "Inspected allow_negative_stock guard and stock-reconciliation valuation-adjustment exception."
+      ],
+      "observations": [
+        "The reviewed method calls the negative-batch validation only when allow_negative_stock is false; guard has a stock-reconciliation valuation-adjustment exception."
+      ],
+      "mutable_drift": false,
+      "drift_policy": "Commit-pinned source; do not rebind.",
+      "caveat": "Static inspection only; all callers and configuration paths were not traced.",
+      "local_evidence": "sources/primary-source-notes.md#C06",
+      "related_source_ids": [
+        "S24"
+      ]
+    },
+    {
+      "source_id": "C07",
+      "title": "farmOS.js Introduction — critic capture",
+      "source_type": "official documentation",
+      "url": "https://farmos.org/development/farmos-js/",
+      "version_or_snapshot": "Rolling documentation snapshot; experimental warning and no fixed package release identified.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Experimental warning lines 4-7; offline behavior lines 11-12; farmOS 2.x scope lines 14-18.",
+      "access_timestamp": "2026-10-09T20:03:18Z",
+      "access_timestamp_basis": "UTC checkpoint after grouped open/find verification; no per-document HTTP timestamp exposed.",
+      "observed_operations": [
+        "Opened official farmOS documentation.",
+        "Located experimental warning, LWW, and supported data-model passages."
+      ],
+      "observations": [
+        "The page warns of beta breaking changes, states support for the farmOS 2.x data model, and describes last-write-wins merging."
+      ],
+      "mutable_drift": true,
+      "drift_policy": "New critic capture related to S30; do not rebind S30. Capture a new ID if the page changes.",
+      "caveat": "No Field Kit build or current server/client pairing was run.",
+      "local_evidence": "sources/primary-source-notes.md#C07",
+      "related_source_ids": [
+        "S30"
+      ]
+    },
+    {
+      "source_id": "C08",
+      "title": "WCAG 2.2 Recommendation — critic capture",
+      "source_type": "standards recommendation",
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "version_or_snapshot": "W3C Recommendation dated 2024-12-12.",
+      "commit": null,
+      "commit_status": "not applicable: no source-code commit is exposed",
+      "locator": "Web-content scope lines 196-199; SC 1.4.1 lines 462-473.",
+      "access_timestamp": "2026-10-09T20:03:18Z",
+      "access_timestamp_basis": "UTC checkpoint after grouped open/find verification; no per-document HTTP timestamp exposed.",
+      "observed_operations": [
+        "Opened the dated W3C Recommendation.",
+        "Read web-content scope and SC 1.4.1 text."
+      ],
+      "observations": [
+        "WCAG 2.2 defines guidance for web content; SC 1.4.1 is Level A and prohibits color as the only visual means of conveying information."
+      ],
+      "mutable_drift": false,
+      "drift_policy": "Dated Recommendation URL; preserve this edition.",
+      "caveat": "Print/native-app usability checks are not by themselves WCAG conformance determinations.",
+      "local_evidence": "sources/primary-source-notes.md#C08",
+      "related_source_ids": [
+        "S31"
+      ]
+    }
+  ],
+  "critic_recheck_provenance": {
+    "ready_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/READY.json",
+    "critic_source_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic/source-map.json",
+    "critic_source_map_sha256": "673ac3ebe8a77157d69646bc99a8a3017cffe67f078d5cdbe0dcbdc6e034529e",
+    "appended_immutable_source_ids": [
+      "C01",
+      "C02",
+      "C03",
+      "C04",
+      "C05",
+      "C06",
+      "C07",
+      "C08"
+    ],
+    "policy": "Critic captures are copied as distinct IDs; upstream S01-S31 were preserved and not rebound."
+  },
+  "execution_record": {
+    "native_route": "luna",
+    "native_goal_thread_id": "01a12230-f8fd-7d62-b2a6-872810c1f89b",
+    "goal_created_with": "native create_goal tool; status confirmed active by get_goal",
+    "goal_objective": "Execute ER11 assignment B-03 from its exact input-map, save all required scientific artifacts, and complete the native Goal.",
+    "native_goal_state_at_final_artifact_write": "active",
+    "terminal_completion_requested_after_final_artifact_write": true,
+    "t3_completion": "UNKNOWN",
+    "usage_billing": null
+  }
+}

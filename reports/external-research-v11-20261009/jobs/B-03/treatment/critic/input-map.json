@@ -1,0 +1,24 @@
+{
+  "block": "B-03",
+  "arm": "treatment",
+  "case": "I03",
+  "method": "M05",
+  "stage": "critic",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic",
+  "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I03/brief.md",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/revealed-plan.md"
+  ],
+  "source_roots": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/research/sources"
+  ],
+  "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/treatment/critic",
+  "deadline": "2026-10-09T20:09:20.975389+00:00",
+  "arm_deadline": "2026-10-09T20:43:15.663076+00:00",
+  "native_route": "luna",
+  "evidence_kind": "full-discovery",
+  "resource_version": "retained-terminal-handoff-v2"
+}

@@ -1,0 +1,103 @@
+{
+  "map_version": 1,
+  "written_at": "2026-10-09T20:36Z",
+  "note": "Immutable source IDs. No silent rebind: a source whose content must be re-read later keeps its ID and records the re-observation. access timestamps are session-clock UTC, minute precision. Evidence excerpts retained under sources/ per evidence_kind=full-discovery.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "OR-Tools Employee Scheduling documentation",
+      "kind": "primary-vendor-docs",
+      "url": "https://developers.google.com/optimization/scheduling/employee_scheduling",
+      "version_or_commit": "live docs page, no version label on page; linked code described as Apache-2.0",
+      "locator": "on-page CP-SAT nurse examples (basic + shift-requests variant)",
+      "accessed_at": "2026-10-09T20:32:00Z",
+      "observed_operations": ["WebFetch full-page summarization (no JS rendering)", "quoted exact API names and formulas"],
+      "evidence_file": "sources/S01-or-tools-employee-scheduling-docs.md"
+    },
+    {
+      "id": "S02",
+      "title": "Timefold Solver Load balancing and fairness documentation",
+      "kind": "primary-vendor-docs",
+      "url": "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/load-balancing-and-fairness",
+      "version_or_commit": "docs current with release line 2.7.1 (per page footer of docs site)",
+      "locator": "ConstraintCollectors.loadBalance section with fairAssignments code example",
+      "accessed_at": "2026-10-09T20:32:00Z",
+      "observed_operations": ["WebFetch full-page summarization", "quoted exact collector API and metric properties"],
+      "evidence_file": "sources/S02-timefold-load-balance-docs.md"
+    },
+    {
+      "id": "S03",
+      "title": "TimefoldAI/timefold-quickstarts repository",
+      "kind": "primary-code-repo",
+      "url": "https://github.com/TimefoldAI/timefold-quickstarts",
+      "version_or_commit": "default branch 'stable', 544 commits observed on branch; releases page: none",
+      "locator": "use-case listing; Employee Scheduling quickstart description",
+      "accessed_at": "2026-10-09T20:32:00Z",
+      "observed_operations": ["WebFetch repo overview", "WebFetch releases page -> 'There aren't any releases here'"],
+      "evidence_file": "sources/S03-timefold-quickstarts-repo.md"
+    },
+    {
+      "id": "S04",
+      "title": "google/or-tools releases page",
+      "kind": "primary-release-history",
+      "url": "https://github.com/google/or-tools/releases",
+      "version_or_commit": "tags v9.6..v9.15 observed; v9.15 marked latest",
+      "locator": "release notes entries v9.15..v9.6 incl. known issues #4674, #4677",
+      "accessed_at": "2026-10-09T20:33:00Z",
+      "observed_operations": ["WebFetch releases listing; page dates lack years for some rows, inferred years marked in evidence"],
+      "evidence_file": "sources/S04-or-tools-releases.md"
+    },
+    {
+      "id": "S05",
+      "title": "TimefoldAI/timefold-solver releases page",
+      "kind": "primary-release-history",
+      "url": "https://github.com/TimefoldAI/timefold-solver/releases",
+      "version_or_commit": "2.7.1 latest (06 Oct), 2.7.0..2.0.0, plus 1.34.0 maintenance line",
+      "locator": "release notes entries; fairness-adjacent move-selection fixes in 1.34.0 and 2.6.0",
+      "accessed_at": "2026-10-09T20:33:00Z",
+      "observed_operations": ["WebFetch releases listing"],
+      "evidence_file": "sources/S05-timefold-solver-releases.md"
+    },
+    {
+      "id": "S06",
+      "title": "Golden: Top Volunteer Scheduling Platforms for Food Banks",
+      "kind": "vendor-blog-secondary",
+      "url": "https://goldenvolunteer.com/blog/volunteer-scheduling-platforms-food-banks",
+      "version_or_commit": "live blog post, no date visible in fetch",
+      "locator": "three-category framework; feature guidance paragraphs",
+      "accessed_at": "2026-10-09T20:34:00Z",
+      "observed_operations": ["WebFetch full-page summarization; article names no specific products (explicitly recorded)"],
+      "evidence_file": "sources/S06-golden-food-bank-platforms.md"
+    },
+    {
+      "id": "S07",
+      "title": "VolunteerHub features page",
+      "kind": "primary-vendor-product-page",
+      "url": "https://volunteerhub.com/features/",
+      "version_or_commit": "live product page",
+      "locator": "feature name list (Volunteer Scheduling, Email/Text Messaging, Mobile App, Advanced Permissions, ...)",
+      "accessed_at": "2026-10-09T20:34:00Z",
+      "observed_operations": ["WebFetch full-page summarization; explicit absence notes for recurring shifts / roster import"],
+      "evidence_file": "sources/S07-volunteerhub-features.md"
+    },
+    {
+      "id": "S08",
+      "title": "Search-index product and community landscape",
+      "kind": "search-index-secondary",
+      "url": "(aggregated; see evidence file for per-lead URLs)",
+      "version_or_commit": "n/a",
+      "locator": "RallyUp/Guideflow/Communal/Zelos result summaries; or-tools discussion #1543; or.stackexchange #1252",
+      "accessed_at": "2026-10-09T20:31:00Z",
+      "observed_operations": ["WebSearch summaries only; individual pages NOT fetched; recorded as leads not verified claims"],
+      "evidence_file": "sources/S08-search-landscape-secondary.md"
+    }
+  ],
+  "negative_evidence": [
+    {
+      "id": "N01",
+      "what": "raw shift_scheduling_sat.py internals",
+      "detail": "raw.githubusercontent.com/google/or-tools/stable/... and /main/.../ortools/sat/samples/shift_scheduling_sat.py both HTTP 404 at 2026-10-09T20:34Z; the sophisticated example's soft-constraint weighting scheme is UNVERIFIED this session",
+      "accessed_at": "2026-10-09T20:34:00Z"
+    }
+  ]
+}

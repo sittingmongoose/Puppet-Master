@@ -1,0 +1,264 @@
+{
+  "schema": "er11-source-map-v1",
+  "candidate": "B-05/treatment/critic",
+  "evidence_phase": "Independent primary-source phase: CR01-CR11 captured before opening predecessor drafts; CR12-CR15 added after the complete draft and revealed plan were inspected, to verify specific critique points.",
+  "access_timestamp_utc": "2026-10-09T20:39:58Z",
+  "timestamp_precision_note": "Web search/open/find results do not expose per-request wall-clock seconds. This is the observed collection-window endpoint; individual URL access occurred during the preceding 20:32\u201320:33 UTC window. Do not interpret as request-level telemetry. Additional CR12\u2013CR15 sources were collected through 2026-10-09T20:39:58Z.",
+  "sources": [
+    {
+      "id": "CR01",
+      "title": "Interpreter Intelligence Scheduler",
+      "url": "https://interpreterintelligence.zendesk.com/hc/en-us/articles/12922072819483-Scheduler",
+      "publisher": "Interpreter Intelligence support knowledge base",
+      "source_type": "first_party_product_documentation",
+      "version_or_commit": "Page updated 2023-12-06; live mutable article; product build not stated",
+      "locator": "Scheduler; source lines 26-30, 32-58, 62-76",
+      "accessed_at_utc": "2026-10-09T20:33:56Z (collection endpoint; per-request seconds unavailable)",
+      "observed_operations": [
+        "web search_query for Interpreter Intelligence scheduler",
+        "web open direct article",
+        "read lines 26-76"
+      ],
+      "evidence_file": "sources/CR01-interpreter-intelligence-scheduler.md",
+      "notes": "Vendor-reported behavior; not an independent fit/security/price validation."
+    },
+    {
+      "id": "CR02",
+      "title": "Availability and Double Booking Buffers",
+      "url": "https://interpreterintelligence.zendesk.com/hc/en-us/articles/15410092403483-Availability-and-Double-Booking-Buffers",
+      "publisher": "Interpreter Intelligence support knowledge base",
+      "source_type": "first_party_product_documentation",
+      "version_or_commit": "Page updated 2023-09-29; live mutable article; product build not stated",
+      "locator": "Availability Buffer and Double Booking Buffer; source lines 20-33 and 56-60",
+      "accessed_at_utc": "2026-10-09T20:33:56Z (collection endpoint; per-request seconds unavailable)",
+      "observed_operations": [
+        "web search_query for interpreter availability/double-booking buffers",
+        "web open direct article",
+        "read lines 20-60"
+      ],
+      "evidence_file": "sources/CR02-interpreter-intelligence-buffers.md",
+      "notes": "Configuration-specific behavior and stated agency override; do not generalize to other products."
+    },
+    {
+      "id": "CR03",
+      "title": "Interpreter Portal - Desktop Site & Mobile App",
+      "url": "https://interpreterintelligence.zendesk.com/hc/en-us/articles/12922582860955-Interpreter-Portal-Desktop-Site-Mobile-App",
+      "publisher": "Interpreter Intelligence support knowledge base",
+      "source_type": "first_party_product_documentation",
+      "version_or_commit": "Page updated 2026-06-24; live mutable article; product build not stated",
+      "locator": "Availability/default behavior lines 30-39; job close/cancel lines 79-106; mobile workflow lines 122-160",
+      "accessed_at_utc": "2026-10-09T20:33:56Z (collection endpoint; per-request seconds unavailable)",
+      "observed_operations": [
+        "web search_query for Interpreter Intelligence portal/mobile",
+        "web open direct article",
+        "read lines 30-39,79-106,122-160"
+      ],
+      "evidence_file": "sources/CR03-interpreter-intelligence-portal.md",
+      "notes": "Interpreter-facing mobile details do not validate coordinator mobile editing or accessibility."
+    },
+    {
+      "id": "CR04",
+      "title": "Calendar sharing",
+      "url": "https://developers.google.com/workspace/calendar/api/concepts/sharing",
+      "publisher": "Google Workspace Calendar API",
+      "source_type": "official_api_documentation",
+      "version_or_commit": "Live, mutable documentation; no page version or commit",
+      "locator": "ACL and domain restrictions lines 80-89; event visibility/default/recurrence lines 90-102",
+      "accessed_at_utc": "2026-10-09T20:33:56Z (collection endpoint; per-request seconds unavailable)",
+      "observed_operations": [
+        "web search_query for Google Calendar sharing/visibility",
+        "web open direct page",
+        "read lines 88-102"
+      ],
+      "evidence_file": "sources/CR04-google-calendar-sharing.md",
+      "notes": "Google-specific; does not describe app-level authorization or all notification/export paths."
+    },
+    {
+      "id": "CR05",
+      "title": "Freebusy: query",
+      "url": "https://developers.google.com/workspace/calendar/api/v3/reference/freebusy/query",
+      "publisher": "Google Workspace Calendar API",
+      "source_type": "official_api_reference",
+      "version_or_commit": "Calendar API v3 path; live mutable documentation; no frozen page version",
+      "locator": "Request/scopes lines 80-118; documented bounds/errors and interval semantics lines 175-193; search result for optional timezone default UTC",
+      "accessed_at_utc": "2026-10-09T20:33:56Z (collection endpoint; per-request seconds unavailable)",
+      "observed_operations": [
+        "web search_query for Google Calendar freebusy",
+        "web open direct reference",
+        "web find timezone",
+        "web find calendarExpansionMax",
+        "read lines 80-118 and 175-193"
+      ],
+      "evidence_file": "sources/CR05-google-calendar-freebusy.md",
+      "notes": "Availability response is not a reservation; caps are nonbinding at 26 users but error semantics still apply."
+    },
+    {
+      "id": "CR06",
+      "title": "Choose Google Calendar API scopes",
+      "url": "https://developers.google.com/workspace/calendar/api/auth",
+      "publisher": "Google Workspace Calendar API",
+      "source_type": "official_api_documentation",
+      "version_or_commit": "Live, mutable documentation; no version or commit",
+      "locator": "Choose scopes guidance and scope table; free/busy-only scopes",
+      "accessed_at_utc": "2026-10-09T20:33:56Z (collection endpoint; per-request seconds unavailable)",
+      "observed_operations": [
+        "web open direct page",
+        "read Google scope guidance and scope table"
+      ],
+      "evidence_file": "sources/CR06-google-calendar-scopes.md",
+      "notes": "OAuth scope does not replace application record authorization."
+    },
+    {
+      "id": "CR07",
+      "title": "Google Calendar API release notes",
+      "url": "https://developers.google.com/workspace/calendar/release-notes",
+      "publisher": "Google Workspace Calendar API",
+      "source_type": "official_release_notes",
+      "version_or_commit": "Mutable release-note stream; relevant entries dated 2026-07-07, 2026-06-01, 2026-05-01",
+      "locator": "Lines 43-64 and 74-85",
+      "accessed_at_utc": "2026-10-09T20:33:56Z (collection endpoint; per-request seconds unavailable)",
+      "observed_operations": [
+        "web search_query for Google Calendar API permissions/release notes",
+        "web open direct release-notes page",
+        "read lines 43-90"
+      ],
+      "evidence_file": "sources/CR07-google-calendar-release-notes.md",
+      "notes": "Provider evolution; no evidence cooperative uses Google Workspace."
+    },
+    {
+      "id": "CR08",
+      "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "publisher": "W3C",
+      "source_type": "stable_web_standard",
+      "version_or_commit": "W3C Recommendation WCAG 2.2 dated 2024-12-12; stable dated URL",
+      "locator": "SC 2.1.1, 2.5.7, 2.5.8, 3.3.1, 3.3.2, 4.1.2, 4.1.3",
+      "accessed_at_utc": "2026-10-09T20:33:56Z (collection endpoint; per-request seconds unavailable)",
+      "observed_operations": [
+        "web search_query for WCAG 2.2",
+        "web open dated Recommendation",
+        "web find for dragging movements, target size, status messages, keyboard, error identification",
+        "read criterion links/text in dated document"
+      ],
+      "evidence_file": "sources/CR08-wcag22.md",
+      "notes": "Applicability/conformance level not inferred from case brief."
+    },
+    {
+      "id": "CR09",
+      "title": "Cal.com pending-confirmation race issue family (#29958, #29967, #29968)",
+      "url": "https://github.com/calcom/cal.diy/issues/29958",
+      "related_urls": [
+        "https://github.com/calcom/cal.diy/issues/29967",
+        "https://github.com/calcom/cal.diy/issues/29968"
+      ],
+      "publisher": "Cal.com public GitHub issue tracker, calcom/cal.diy",
+      "source_type": "first_party_issue_reports",
+      "version_or_commit": "#29958 opened 2026-08-13; issue body names main branch 2026-08-13; Open at access; no commit SHA; related reports #29967/#29968 also displayed Open",
+      "locator": "#29958 issue body lines 145-179 and discussion lines 192-202; related issue titles/body start around lines 128+",
+      "accessed_at_utc": "2026-10-09T20:33:56Z (collection endpoint; per-request seconds unavailable)",
+      "observed_operations": [
+        "web search_query for Cal.com double-booking race",
+        "web open #29958",
+        "web open related #29967 and #29968",
+        "read issue state, body, linked issue family and concurrency discussion"
+      ],
+      "evidence_file": "sources/CR09-calcom-race-issues.md",
+      "notes": "Open reports/proposed defenses only; no merged PR, commit, release or test evidence verified."
+    },
+    {
+      "id": "CR10",
+      "title": "Interpreter Booking System capabilities",
+      "url": "https://interpreter.io/Capabilities/booking.html",
+      "publisher": "Interpreter.io official product site",
+      "source_type": "first_party_product_capabilities_page",
+      "version_or_commit": "Live mutable page; no version/commit; search index result only",
+      "locator": "Search-result text under \u201cInterpreter Booking System\u201d; direct open returned bot-check",
+      "accessed_at_utc": "2026-10-09T20:33:56Z (collection endpoint; per-request seconds unavailable)",
+      "observed_operations": [
+        "web search_query for interpreter scheduling products",
+        "web open direct page; bot-check response"
+      ],
+      "evidence_file": "sources/CR10-interpreter-io-booking-lead.md",
+      "notes": "Unverified lead only; no claim of price, privacy, accessibility, or current product availability."
+    },
+    {
+      "id": "CR11",
+      "title": "I05 case brief",
+      "url": "file:///home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I05/brief.md",
+      "publisher": "ER11 assignment input",
+      "source_type": "assigned_brief",
+      "version_or_commit": "Exact file named by input-map.json; no external version/commit",
+      "locator": "Full brief and O1-O6 obligations",
+      "accessed_at_utc": "2026-10-09T20:32:40Z",
+      "observed_operations": [
+        "direct cat of exact brief; no predecessor draft/plan opened beforehand"
+      ],
+      "evidence_file": "sources/CR11-case-brief.md",
+      "notes": "Internal assigned source; used to delimit research and validation questions."
+    },
+    {
+      "id": "CR12",
+      "title": "PostgreSQL 18 CREATE TABLE partial exclusion predicate",
+      "url": "https://www.postgresql.org/docs/18/sql-createtable.html",
+      "publisher": "PostgreSQL official documentation",
+      "source_type": "official_database_reference",
+      "version_or_commit": "PostgreSQL 18 stable versioned docs",
+      "locator": "EXCLUDE grammar optional WHERE (predicate); paragraph says it applies to a subset of rows and is a partial index",
+      "accessed_at_utc": "2026-10-09T20:39:58Z (collection endpoint; per-request seconds unavailable)",
+      "observed_operations": [
+        "web search_query for PostgreSQL 18 partial exclusion syntax",
+        "read official search result grammar and explanation"
+      ],
+      "evidence_file": "sources/CR12-postgresql-exclude-predicate.md",
+      "notes": "Resolves the syntax-specific uncertainty in the predecessor draft; still test chosen predicate and runtime."
+    },
+    {
+      "id": "CR13",
+      "title": "Selecting Web Accessibility Evaluation Tools",
+      "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+      "publisher": "W3C Web Accessibility Initiative",
+      "source_type": "official_accessibility_evaluation_guidance",
+      "version_or_commit": "Guidance updated 2024-05-13; live mutable page",
+      "locator": "What Evaluation Tools Can Do and Can Not Do",
+      "accessed_at_utc": "2026-10-09T20:39:58Z (collection endpoint; per-request seconds unavailable)",
+      "observed_operations": [
+        "web search_query for W3C automated accessibility evaluation limits",
+        "read W3C result on automation and human judgment"
+      ],
+      "evidence_file": "sources/CR13-w3c-evaluation-tools.md",
+      "notes": "Automated tools support evaluation but cannot alone establish accessibility or WCAG conformance."
+    },
+    {
+      "id": "CR14",
+      "title": "The history of OptaPlanner",
+      "url": "https://optaplanner.io/the-history-of-optaplanner",
+      "publisher": "OptaPlanner project-history site (maintainer-side narrative)",
+      "source_type": "project_history",
+      "version_or_commit": "Live mutable page; no commit/publication date captured",
+      "locator": "End of life and Continuation sections",
+      "accessed_at_utc": "2026-10-09T20:39:58Z (collection endpoint; per-request seconds unavailable)",
+      "observed_operations": [
+        "web search_query for OptaPlanner lifecycle history",
+        "read official project-history result"
+      ],
+      "evidence_file": "sources/CR14-optaplanner-history.md",
+      "notes": "Better project-history evidence, but not the Red Hat announcement itself; attribute carefully."
+    },
+    {
+      "id": "CR15",
+      "title": "Timefold Solver official repository",
+      "url": "https://github.com/TimefoldAI/timefold-solver",
+      "publisher": "TimefoldAI",
+      "source_type": "official_source_repository",
+      "version_or_commit": "Mutable main; commit SHA not captured",
+      "locator": "README Build from source, Editions, Legal notice",
+      "accessed_at_utc": "2026-10-09T20:39:58Z (collection endpoint; per-request seconds unavailable)",
+      "observed_operations": [
+        "web search_query for Timefold official repository",
+        "read indexed README sections in search result"
+      ],
+      "evidence_file": "sources/CR15-timefold-repository.md",
+      "notes": "Current repo search result requires JDK 21+ and distinguishes Community Apache-2.0 from commercial Enterprise; pin version before relying on build baseline."
+    }
+  ]
+}

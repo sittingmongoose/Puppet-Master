@@ -339,7 +339,7 @@
     "method": "M05",
     "case": "I04",
     "route": "luna",
-    "status": "UNSTARTED_SELECTED",
+    "status": "NOT_PROMOTED_UNSTARTED",
     "kind": "full-discovery",
     "allowance_s": 3600,
     "occupied_ceiling_s": 5400,
@@ -347,29 +347,56 @@
     "method_file": "M05-v2",
     "terminal_critic_handoff": true,
     "resource_version": "retained-terminal-handoff-v2",
-    "purpose": "prospective integrated successor; second starts only after B-03 treatment full-source PASS with 45-minute treatment vs60-minute control"
+    "purpose": "prospective integrated successor; second starts only after B-03 treatment full-source PASS with 45-minute treatment vs60-minute control",
+    "reason": "B-03 treatment failed its locked full-source PASS gate; I04 remains sealed."
   },
   {
     "block_id": "B-05",
-    "phase": "B",
-    "method": null,
-    "case": "B05",
-    "route": null,
-    "status": "UNSTARTED_RESERVED",
+    "phase": "B-development",
+    "method": "M14",
+    "case": "I05",
+    "route": "muse",
+    "status": "READY_DEVELOPMENT",
     "kind": "full-discovery",
-    "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "allowance_s": 4500,
+    "occupied_ceiling_s": 5400,
+    "method_version": "v1",
+    "resource_version": "75-30-20-25-role-bundle-v1",
+    "stage_allowances_s": {
+      "research": 1800,
+      "critic": 1200,
+      "reviser": 1500
+    },
+    "terminal_critic_handoff": true,
+    "stage_routes": {
+      "treatment": {
+        "critic": "luna"
+      }
+    }
   },
   {
     "block_id": "B-06",
-    "phase": "B",
-    "method": null,
-    "case": "B06",
-    "route": null,
-    "status": "UNSTARTED_RESERVED",
+    "phase": "B-development",
+    "method": "M14",
+    "case": "I06",
+    "route": "muse",
+    "status": "READY_DEVELOPMENT",
     "kind": "full-discovery",
-    "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "allowance_s": 4500,
+    "occupied_ceiling_s": 5400,
+    "method_version": "v1",
+    "resource_version": "75-30-20-25-role-bundle-v1",
+    "stage_allowances_s": {
+      "research": 1800,
+      "critic": 1200,
+      "reviser": 1500
+    },
+    "terminal_critic_handoff": true,
+    "stage_routes": {
+      "treatment": {
+        "critic": "luna"
+      }
+    }
   },
   {
     "block_id": "B-07",

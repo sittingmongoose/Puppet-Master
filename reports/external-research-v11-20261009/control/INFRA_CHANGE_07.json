@@ -1,0 +1,19 @@
+{
+  "recorded_at": "2026-10-09T20:50:43.747543+00:00",
+  "incident": "OPERATIONAL_MONITOR_OVERLOADED_T3",
+  "owned_task_id": "node:delegated-task:command%3Amcp%3A0007e9fc-1f27-441d-9fca-3dd974aab21a%3Adelegate-task%3Aer11-116bb1e4-monitor-v2",
+  "actual_task_state": "interrupted",
+  "actual_host_terminal_at": "2026-10-09T20:48:54.705Z",
+  "settlement": "Root read actual terminal status and settled exact owned thread. No relaunch.",
+  "external_report": {
+    "source": "Jared message carrying Claude Code assistant note",
+    "reported_shell_commands_approx": 2500,
+    "reported_T3_reads_approx": 1300,
+    "reported_server_event_bytes_approx": 200000000,
+    "reported_effect": "T3 overload and user app disconnects",
+    "root_independent_event_log_measurement": null
+  },
+  "instruction_vs_actual": "The assignment requested no faster than 60-second polls, but the helper produced excessive incremental writes and tool calls. Root did not catch this operational failure in time.",
+  "response": "No replacement monitor. Routine root observation at most once per 3 minutes using one snapshot script and small exact-owned reads. Completion notifications and necessary mutation-capacity checks are event-driven. No server restart, configuration change, private transcript audit or changes to unrelated sessions.",
+  "scientific_effect": "Workers were not touched per external report; their original clocks, outputs and grades remain. Handoff/overload delay and monitor occupied time are charged overhead, not free. Affordability remains unproved."
+}

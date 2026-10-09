@@ -1,0 +1,473 @@
+{
+  "schema": "er11-source-map-v1",
+  "case": "I03",
+  "block": "B-03",
+  "arm": "control",
+  "stage": "critic",
+  "method": "M05 retained-investigator",
+  "frozen_before_plan_reveal": false,
+  "access_window_utc": {
+    "first_observed_clock": "2026-10-09T20:06:50Z",
+    "last_observed_clock": "2026-10-09T20:08:20Z",
+    "note": "Per-request browser timestamps were not exposed; direct primary-source operations occurred within this observed window (20:06:50Z–20:08:20Z)."
+  },
+  "input_map_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/critic/input-map.json",
+  "inputs_consulted": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I03/brief.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/revealed-plan.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/sources"
+  ],
+  "upstream_source_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research/source-map.json",
+    "base_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-03/control/research",
+    "preservation_note": "Nested unchanged to preserve original immutable source IDs, URLs, versions, locators and research-stage access records; new critic rechecks use new IDs S21-S30.",
+    "map": {
+      "schema": "er11-source-map-v1",
+      "case": "I03",
+      "block": "B-03",
+      "stage": "research",
+      "frozen_before_plan_reveal": true,
+      "access_window_utc": {
+        "first_observed_clock": "2026-10-09T19:43:48Z",
+        "last_observed_clock": "2026-10-09T19:46:57Z",
+        "note": "Individual browser fetch seconds were not exposed; each record was accessed within this observed window."
+      },
+      "sources": [
+        {
+          "id": "ER11-S01",
+          "title": "Managing Forms in Collect — ODK Docs",
+          "url": "https://docs.getodk.org/collect-forms/",
+          "version": "Live official docs accessed 2026-10-09; page references Collect v2025.2 for client-editable submissions; page itself is not release-pinned.",
+          "commit": null,
+          "locator": "Download forms, drafts, finalize, send, edit sections; opened lines 129-203.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "open",
+            "search_result"
+          ],
+          "evidence_file": "sources/odk.md"
+        },
+        {
+          "id": "ER11-S02",
+          "title": "Managing Submissions in Central — ODK Docs",
+          "url": "https://docs.getodk.org/central-submissions/",
+          "version": "Live official docs accessed 2026-10-09; has separate Central v2025.1.0+ and prior instructions; not release-pinned.",
+          "commit": null,
+          "locator": "Offline web forms lines 319-362; Collect use lines 121-140; exports/review lines 201-236, 291-317.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "search_query",
+            "open"
+          ],
+          "evidence_file": "sources/odk.md"
+        },
+        {
+          "id": "ER11-S03",
+          "title": "Managing Users in Central — ODK Docs",
+          "url": "https://docs.getodk.org/central-users/",
+          "version": "Live official docs accessed 2026-10-09; not release-pinned.",
+          "commit": null,
+          "locator": "Roles/entity access lines 130-176; App Users/form assignment lines 242-256.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "search_query",
+            "open",
+            "click"
+          ],
+          "evidence_file": "sources/odk.md"
+        },
+        {
+          "id": "ER11-S04",
+          "title": "Encrypted Forms in Central — ODK Docs",
+          "url": "https://docs.getodk.org/central-encryption/",
+          "version": "Live official docs accessed 2026-10-09; page describes Central v0.6+ features; not release-pinned.",
+          "commit": null,
+          "locator": "Encryption limits and managed/self-supplied modes.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "search_query",
+            "open"
+          ],
+          "evidence_file": "sources/odk.md"
+        },
+        {
+          "id": "ER11-S05",
+          "title": "Multilingual forms — ODK Docs",
+          "url": "https://docs.getodk.org/guide-form-language/",
+          "version": "Live official docs accessed 2026-10-09; not release-pinned.",
+          "commit": null,
+          "locator": "Language-specific labels, form-language selection and translation maintenance.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "search_query",
+            "open"
+          ],
+          "evidence_file": "sources/odk.md"
+        },
+        {
+          "id": "ER11-S06",
+          "title": "Connectivity error messages — getodk/collect issue #1703",
+          "url": "https://github.com/getodk/collect/issues/1703",
+          "version": "Issue history accessed 2026-10-09; original references Collect v1.11.0 and comments discuss v1.28.0.",
+          "commit": null,
+          "locator": "2017 report; 2020 v1.28.0 status; 2021 #4489 follow-up and close.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "search_query",
+            "open"
+          ],
+          "evidence_file": "sources/odk.md"
+        },
+        {
+          "id": "ER11-S07",
+          "title": "Augment Form Download Failed message with source of error — getodk/collect issue #4489",
+          "url": "https://github.com/getodk/collect/issues/4489",
+          "version": "Issue history accessed 2026-10-09; /pull/4489 redirected to issue #4489, so recorded as issue, not merged PR.",
+          "commit": null,
+          "locator": "Comments around Aug-Oct 2021; linked by #1703 as manual-download messaging work.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "open",
+            "find"
+          ],
+          "evidence_file": "sources/odk.md"
+        },
+        {
+          "id": "ER11-S08",
+          "title": "Batch — ERPNext User Manual",
+          "url": "https://docs.frappe.io/erpnext/batch",
+          "version": "Live docs accessed 2026-10-09; text describes v15 behavior; page itself not release-pinned.",
+          "commit": null,
+          "locator": "Batch definition, v15 negative-stock note, filtering, move/split; opened lines 2128-2196.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "search_query",
+            "open",
+            "find"
+          ],
+          "evidence_file": "sources/erpnext.md"
+        },
+        {
+          "id": "ER11-S09",
+          "title": "Batch DocType schema — frappe/erpnext",
+          "url": "https://github.com/frappe/erpnext/blob/v15.122.0/erpnext/stock/doctype/batch/batch.json",
+          "version": "ERPNext v15.122.0; release page displays abbreviated commit bfd8100.",
+          "commit": "bfd8100 (abbreviated commit displayed by GitHub)",
+          "locator": "batch_id, item, parent_batch, manufacturing_date, expiry_date, batch_qty, stock_uom, negative-stock override and role permissions; pinned JSON.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "open",
+            "find"
+          ],
+          "evidence_file": "sources/erpnext.md"
+        },
+        {
+          "id": "ER11-S10",
+          "title": "Batch calculations — frappe/erpnext",
+          "url": "https://github.com/frappe/erpnext/blob/v15.122.0/erpnext/stock/doctype/batch/batch.py",
+          "version": "ERPNext v15.122.0; release page displays abbreviated commit bfd8100.",
+          "commit": "bfd8100 (abbreviated commit displayed by GitHub)",
+          "locator": "get_batch_qty signature/settings, split_batch, recalculate_batch_qty; pinned Python file.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "open",
+            "find"
+          ],
+          "evidence_file": "sources/erpnext.md"
+        },
+        {
+          "id": "ER11-S11",
+          "title": "Role Based Permissions — ERPNext User Manual",
+          "url": "https://docs.frappe.io/erpnext/permissions",
+          "version": "Live official docs accessed 2026-10-09; not release-pinned.",
+          "commit": null,
+          "locator": "Roles, DocTypes, permission levels, lifecycle and User Permissions; opened lines 2161-2219.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "search_query",
+            "open",
+            "find"
+          ],
+          "evidence_file": "sources/erpnext.md"
+        },
+        {
+          "id": "ER11-S12",
+          "title": "Migration Guide to ERPNext version 15 — frappe/erpnext Wiki",
+          "url": "https://github.com/frappe/erpnext/wiki/Migration-Guide-to-ERPNext-version-15",
+          "version": "Live wiki accessed 2026-10-09; mutable and not commit-pinned.",
+          "commit": null,
+          "locator": "Serial and Batch Bundle rationale and transaction link requirement.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "search_query"
+          ],
+          "evidence_file": "sources/erpnext.md"
+        },
+        {
+          "id": "ER11-S13",
+          "title": "v15 Serial and Batch Bundle - Stock Reconciliation broken for old stock? — frappe/erpnext issue #38796",
+          "url": "https://github.com/frappe/erpnext/issues/38796",
+          "version": "Issue search result accessed 2026-10-09; report says ERPNext v15.6.1; activity references #38840.",
+          "commit": null,
+          "locator": "Issue report, stack trace and #38754/#38840 activity/relations as returned in search result.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "search_query"
+          ],
+          "evidence_file": "sources/erpnext.md"
+        },
+        {
+          "id": "ER11-S14",
+          "title": "ERPNext v15.122.0 release",
+          "url": "https://github.com/frappe/erpnext/releases/tag/v15.122.0",
+          "version": "v15.122.0; displayed abbreviated commit bfd8100; release list says 2026-10-07.",
+          "commit": "bfd8100 (abbreviated commit displayed by GitHub)",
+          "locator": "Release identity/date supporting pinned schema and code.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "search_query",
+            "open"
+          ],
+          "evidence_file": "sources/erpnext.md"
+        },
+        {
+          "id": "ER11-S15",
+          "title": "RxDB realtime Sync Engine for Local-First Apps",
+          "url": "https://rxdb.info/replication.html",
+          "version": "Live official docs accessed 2026-10-09; page does not state package version; recheck if adopted.",
+          "commit": null,
+          "locator": "Offline/checkpoints lines 52-67 and 100-155; defaults lines 175-257; retries/clocks lines 402-424.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "search_query",
+            "open"
+          ],
+          "evidence_file": "sources/rxdb.md"
+        },
+        {
+          "id": "ER11-S16",
+          "title": "Transactions, Conflicts and Revisions — RxDB",
+          "url": "https://rxdb.info/transactions-conflicts-revisions.html",
+          "version": "Live official docs, last updated 2026-10-05; package version not stated.",
+          "commit": null,
+          "locator": "No ACID transactions, single-write atomicity, local 409 conflicts, default master resolver; lines 42-121.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "search_query",
+            "open"
+          ],
+          "evidence_file": "sources/rxdb.md"
+        },
+        {
+          "id": "ER11-S17",
+          "title": "Mobile Inventory — Growflo",
+          "url": "https://www.growflo.com/mobile-commerce/mobile-inventory/",
+          "version": "Live vendor page accessed 2026-10-09; no version/commit or public price stated.",
+          "commit": null,
+          "locator": "Scanning, stock movements, offline/reconnect sync claims; opened lines 52-99.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "search_query",
+            "open"
+          ],
+          "evidence_file": "sources/nursery-products.md"
+        },
+        {
+          "id": "ER11-S18",
+          "title": "Tally — Atlas Core Cloud",
+          "url": "https://atlascore.cloud/suite/tally",
+          "version": "Live vendor page accessed 2026-10-09; no version/commit or public price stated.",
+          "commit": null,
+          "locator": "QR/barcode labels, dispositions, offline sync, permissions and Android availability; lines 59-98.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "search_query",
+            "open"
+          ],
+          "evidence_file": "sources/nursery-products.md"
+        },
+        {
+          "id": "ER11-S19",
+          "title": "Spriggo Features — Inventory, Sales & Worker App",
+          "url": "https://spriggo.tech/features",
+          "version": "Live vendor page accessed 2026-10-09; extraction returned zero lines; search-index result retrieved.",
+          "commit": null,
+          "locator": "Search result only: batch lineage, move/split/merge, worker app and current/future capability claims.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "search_query",
+            "open"
+          ],
+          "evidence_file": "sources/nursery-products.md"
+        },
+        {
+          "id": "ER11-S20",
+          "title": "Spriggo nursery software homepage/pricing",
+          "url": "https://spriggo.tech/",
+          "version": "Live vendor homepage search result accessed 2026-10-09; no version/commit stated.",
+          "commit": null,
+          "locator": "Search result advertises 90-day trial then $300/month and active-development note.",
+          "accessed_at_utc": "2026-10-09T19:43:48Z/2026-10-09T19:46:57Z",
+          "observed_operations": [
+            "search_query"
+          ],
+          "evidence_file": "sources/nursery-products.md"
+        }
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "ER11-S21",
+      "title": "Managing Forms in Collect — ODK Docs",
+      "url": "https://docs.getodk.org/collect-forms/",
+      "version": "Live official docs accessed 2026-10-09; references Collect v2025.2 for client-editable submissions; page is not release-pinned.",
+      "commit": null,
+      "locator": "Downloading forms, finalizing offline forms, Ready to send/sent states and editing finalized submissions; lines 124-168 and 181-198.",
+      "accessed_at_utc": "2026-10-09T20:06:50Z/2026-10-09T20:08:20Z",
+      "observed_operations": [
+        "open"
+      ],
+      "rechecks_source_id": "ER11-S01",
+      "evidence_file": "sources/primary-evidence.md"
+    },
+    {
+      "id": "ER11-S22",
+      "title": "Managing Submissions in Central — ODK Docs",
+      "url": "https://docs.getodk.org/central-submissions/",
+      "version": "Live official docs accessed 2026-10-09; Central instructions are version-specific and page is not release-pinned.",
+      "commit": null,
+      "locator": "Central submission scope and recommendation of Collect in offline conditions; ODK Web Forms and Enketo offline behavior; lines 119-140 and 319-330.",
+      "accessed_at_utc": "2026-10-09T20:06:50Z/2026-10-09T20:08:20Z",
+      "observed_operations": [
+        "open",
+        "find"
+      ],
+      "rechecks_source_id": "ER11-S02",
+      "evidence_file": "sources/primary-evidence.md"
+    },
+    {
+      "id": "ER11-S23",
+      "title": "Managing Users in Central — ODK Docs",
+      "url": "https://docs.getodk.org/central-users/",
+      "version": "Live official docs accessed 2026-10-09; not release-pinned.",
+      "commit": null,
+      "locator": "Data Collector submission visibility and authorized-form Entity context; lines 137-164.",
+      "accessed_at_utc": "2026-10-09T20:06:50Z/2026-10-09T20:08:20Z",
+      "observed_operations": [
+        "open",
+        "find"
+      ],
+      "rechecks_source_id": "ER11-S03",
+      "evidence_file": "sources/primary-evidence.md"
+    },
+    {
+      "id": "ER11-S24",
+      "title": "Encrypted Forms in Central — ODK Docs",
+      "url": "https://docs.getodk.org/central-encryption/",
+      "version": "Live official docs accessed 2026-10-09; page describes Central v0.6+ behaviors and is not release-pinned.",
+      "commit": null,
+      "locator": "Encryption effects/limitations and project-managed passphrase mode; lines 124-170 and 176-189.",
+      "accessed_at_utc": "2026-10-09T20:06:50Z/2026-10-09T20:08:20Z",
+      "observed_operations": [
+        "open",
+        "find"
+      ],
+      "rechecks_source_id": "ER11-S04",
+      "evidence_file": "sources/primary-evidence.md"
+    },
+    {
+      "id": "ER11-S25",
+      "title": "Batch DocType schema — frappe/erpnext",
+      "url": "https://github.com/frappe/erpnext/blob/v15.122.0/erpnext/stock/doctype/batch/batch.json",
+      "version": "ERPNext v15.122.0 tag; release page displays abbreviated commit bfd8100.",
+      "commit": "bfd8100 (abbreviated commit displayed by GitHub)",
+      "locator": "batch_id uniqueness/requiredness, item filter, optional parent_batch, read-only Float batch_qty and item-derived stock_uom; lines 887-953 and 1108-1132.",
+      "accessed_at_utc": "2026-10-09T20:06:50Z/2026-10-09T20:08:20Z",
+      "observed_operations": [
+        "open",
+        "find"
+      ],
+      "rechecks_source_id": "ER11-S09",
+      "evidence_file": "sources/primary-evidence.md"
+    },
+    {
+      "id": "ER11-S26",
+      "title": "RxDB realtime Sync Engine for Local-First Apps",
+      "url": "https://rxdb.info/replication.html",
+      "version": "Live official docs accessed 2026-10-09; package version not stated, recheck if adopted.",
+      "commit": null,
+      "locator": "Checkpoint catch-up, deterministic sort, default conflict handler, resend/idempotency and client clock notes; lines 101-116, 143-155 and 405-424.",
+      "accessed_at_utc": "2026-10-09T20:06:50Z/2026-10-09T20:08:20Z",
+      "observed_operations": [
+        "open",
+        "find"
+      ],
+      "rechecks_source_id": "ER11-S15",
+      "evidence_file": "sources/primary-evidence.md"
+    },
+    {
+      "id": "ER11-S27",
+      "title": "Transactions, Conflicts and Revisions — RxDB",
+      "url": "https://rxdb.info/transactions-conflicts-revisions.html",
+      "version": "Live official docs accessed 2026-10-09; page last updated 2026-10-05; package version not stated.",
+      "commit": null,
+      "locator": "No cross-client ACID transaction for intermittently offline devices; single document write atomicity; lines 42-61.",
+      "accessed_at_utc": "2026-10-09T20:06:50Z/2026-10-09T20:08:20Z",
+      "observed_operations": [
+        "open",
+        "find"
+      ],
+      "rechecks_source_id": "ER11-S16",
+      "evidence_file": "sources/primary-evidence.md"
+    },
+    {
+      "id": "ER11-S28",
+      "title": "Connectivity error messages — getodk/collect issue #1703",
+      "url": "https://github.com/getodk/collect/issues/1703",
+      "version": "Issue history accessed 2026-10-09; references Collect v1.28.0 in comment and Oct. 2021 follow-up.",
+      "commit": null,
+      "locator": "v1.28.0 form-list vs individual-form errors and Oct. 2021 #4489 comment/closure; lines 294-312.",
+      "accessed_at_utc": "2026-10-09T20:06:50Z/2026-10-09T20:08:20Z",
+      "observed_operations": [
+        "open",
+        "find"
+      ],
+      "rechecks_source_id": "ER11-S06",
+      "evidence_file": "sources/primary-evidence.md"
+    },
+    {
+      "id": "ER11-S29",
+      "title": "v15 Serial and Batch Bundle - Stock Reconciliation broken for old stock? — frappe/erpnext issue #38796",
+      "url": "https://github.com/frappe/erpnext/issues/38796",
+      "version": "Issue history accessed 2026-10-09; report states ERPNext v15.6.1; activity marks completed in #38754.",
+      "commit": null,
+      "locator": "Issue report/version and close/completion activity; lines 156-177 and 266-282.",
+      "accessed_at_utc": "2026-10-09T20:06:50Z/2026-10-09T20:08:20Z",
+      "observed_operations": [
+        "open",
+        "find"
+      ],
+      "rechecks_source_id": "ER11-S13",
+      "evidence_file": "sources/primary-evidence.md"
+    },
+    {
+      "id": "ER11-S30",
+      "title": "fix: serial and batch bundle return not working — frappe/erpnext PR #38754",
+      "url": "https://github.com/frappe/erpnext/pull/38754",
+      "version": "Merged PR accessed 2026-10-09; merged to develop on 2023-12-17; v15 backport/release activity shown on same page.",
+      "commit": "0743289 (develop merge commit); 8990c48 (v15 backport commit shown in page activity)",
+      "locator": "PR identifies #38796 as fixed; merged status/test; v15 backport #38806 and release 15.7.0 dated 2023-12-20; lines 132-181 and 258-343.",
+      "accessed_at_utc": "2026-10-09T20:06:50Z/2026-10-09T20:08:20Z",
+      "observed_operations": [
+        "click",
+        "open"
+      ],
+      "rechecks_source_id": null,
+      "evidence_file": "sources/primary-evidence.md"
+    }
+  ]
+}

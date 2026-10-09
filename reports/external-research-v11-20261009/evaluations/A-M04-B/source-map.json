@@ -1,0 +1,540 @@
+{
+  "block": "A-M04-B",
+  "method": "Fresh independent six-axis assessment; candidate source notes are lineage, not independent proof",
+  "sources": [
+    {
+      "id": "R01",
+      "url": "https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads",
+      "version": "current, mutable; no installed-engine pin",
+      "locator": "Spilling to Disk; Blocking Operators; Limitations, lines 541–565",
+      "independent_check": "Persistent and in-memory databases both have default spill directories; operator/intermediate exceptions remain. Refutes N2-01.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R02",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "version": "current, mutable",
+      "locator": "Sample Size, lines 523–529; Type Detection",
+      "independent_check": "20480 sampled rows; -1 full sample; regular seekable files sampled at different locations; gzip/stdin sampled at head. Refutes N2-02.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R03",
+      "url": "https://duckdb.org/docs/current/data/csv/overview",
+      "version": "current, mutable",
+      "locator": "Parameter table, lines 573–626",
+      "independent_check": "all_varchar false, auto_detect true, sample_size 20480, strict_mode true, store_rejects false, allow_quoted_nulls true, nullstr scalar/list, force_not_null column list, encodings and 2000000-byte max_line_size; header default subject to detection.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R04",
+      "url": "https://docs.pola.rs/api/python/stable/reference/api/polars.read_csv.html",
+      "version": "stable docs, mutable; candidate py-2.0.0 source pin not separately compiled",
+      "locator": "Signature, infer_schema_length, infer_schema, null_values, empty_string_is_null, try_parse_dates, use_pyarrow, Notes",
+      "independent_check": "100-row default, full inference cost, strings/schema escapes, false date guessing, dict per-column null_values, empty-string control, infer_schema_files 10 and eager/lazy distinction confirmed; historical change introduction not established.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R05",
+      "url": "https://learn.microsoft.com/en-us/power-query/data-types",
+      "version": "current Microsoft Learn",
+      "locator": "Automatic type detection; locale; Using Locale example",
+      "independent_check": "Author OS seeds file locale; explicit culture/column conversion solves ambiguous interpretation. Must read with R06 portability exception.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R06",
+      "url": "https://learn.microsoft.com/en-us/powerquery-m/how-culture-affects-text-formatting",
+      "version": "last updated 2024-10-09",
+      "locator": "Default culture, lines 32–35; Invariant culture",
+      "independent_check": "A query retains author-location default culture when moved to another location. Refutes N2-03; no literal query execution claimed.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R07",
+      "url": "https://learn.microsoft.com/en-us/powerquery-m/culture-current",
+      "version": "current Microsoft Learn",
+      "locator": "Culture.Current; related how-culture link",
+      "independent_check": "Followed governing default-culture documentation rather than infer portability from current-culture wording alone.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R08",
+      "url": "https://learn.microsoft.com/en-us/powerquery-m/table-transformcolumntypes",
+      "version": "last updated 2026-04-30",
+      "locator": "Syntax and Example 4",
+      "independent_check": "Both positional culture and record Culture/MissingField form exist; a May-2025 introduction/minimum host version is not established.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R09",
+      "url": "https://learn.microsoft.com/en-us/power-query/power-query-what-is-power-query",
+      "version": "current Microsoft Learn",
+      "locator": "Transformation/query/refresh product model",
+      "independent_check": "Repeatable M transformations and host integrations corroborate N1 second-competitor discovery; no licensing or installer benchmark asserted.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R10",
+      "url": "https://github.com/tafia/calamine/issues/706",
+      "version": "issue 706; reported calamine 0.36.1, 2026-08-09",
+      "locator": "Reproduction and x15 workbookPr diagnosis",
+      "independent_check": "Modern 1904 xlsx attribute reset causes -1462-day wrong dates; report distinguishes XLS/XLSB scope.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R11",
+      "url": "https://github.com/tafia/calamine/pull/708",
+      "version": "PR 708, merged 2026-08-26",
+      "locator": "Fix discussion and merge",
+      "independent_check": "Fix exists; does not establish chosen downstream package release vehicle.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R12",
+      "url": "https://github.com/tafia/calamine/commit/71af96a5",
+      "version": "commit 71af96a5",
+      "locator": "src/xlsx/mod.rs; tests/test.rs date_xlsx_1904_extlst; tests/date_1904_extlst.xlsx",
+      "independent_check": "Assign date1904 only when attribute present; regression test/fixture added. Read source, did not execute test.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R13",
+      "url": "https://github.com/tafia/calamine/pull/630",
+      "version": "PR 630",
+      "locator": "Epoch exposure API proposal/merge page",
+      "independent_check": "Epoch-exposure lead checked; exact downstream qsv commit b5d4479 and installed API availability remain candidate-qualified leads.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R14",
+      "url": "https://support.microsoft.com/en-us/excel/date-systems-in-excel",
+      "version": "Microsoft Support, current",
+      "locator": "Difference Between the Date Systems; serial example, lines 139–148",
+      "independent_check": "For the same calendar date, the 1900-system serial exceeds the 1904-system serial by 1462. Refutes N2-04.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R15",
+      "url": "https://learn.microsoft.com/en-us/troubleshoot/microsoft-365-apps/excel/wrongly-assumes-1900-is-leap-year",
+      "version": "Microsoft Support historical compatibility article; candidate git pin not fetched separately",
+      "locator": "Cause; More Information",
+      "independent_check": "Intentional Lotus/Excel compatibility explains fictitious 1900 leap day; historical evolution is applicable, not a new import-app release chain.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R16",
+      "url": "https://specs.frictionlessdata.io/table-schema/",
+      "version": "Table Schema v1",
+      "locator": "Missing Values, lines 412–420; field descriptors; bareNumber",
+      "independent_check": "Schema-level pre-cast missingValues default is [empty string]; v1 text does not define field-level replacement semantics. Distinguish extension from later v2 standard.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R17",
+      "url": "https://datapackage.org/standard/table-schema/",
+      "version": "profile /profiles/2.0/tableschema.json",
+      "locator": "Profile line 170; $schema lines 234–238; field missingValues lines 633–665",
+      "independent_check": "v2 explicitly defines field override/replacement; default profile compatibility makes version declaration consequential. Refutes unqualified v1 attribution in N2-05.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R18",
+      "url": "https://openpyxl.readthedocs.io/en/stable/_modules/openpyxl/utils/datetime.html",
+      "version": "openpyxl 3.1.3 source documentation",
+      "locator": "CALENDAR_WINDOWS_1900; CALENDAR_MAC_1904; from_excel; to_excel",
+      "independent_check": "Epoch constants, serial-60 collapse and fractional-day conversion verified from code; not executed under an installed package.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R19",
+      "url": "https://openpyxl.readthedocs.io/en/stable/_modules/openpyxl/reader/workbook.html",
+      "version": "openpyxl 3.1.3 source documentation",
+      "locator": "WorkbookParser.parse, lines 52–57",
+      "independent_check": "Actual parser propagates package.properties.date1904 to wb.epoch, corroborating N1 beyond descriptor/property declarations.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R20",
+      "url": "https://openpyxl.readthedocs.io/en/stable/optimized.html",
+      "version": "openpyxl 3.1.3 docs",
+      "locator": "Read-only mode; Worksheet dimensions; Write-only mode",
+      "independent_check": "Lazy read-only iteration, explicit close, wrong dimension/reset behavior and limited append-only writer supported. No large-file run performed.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R21",
+      "url": "https://openpyxl.readthedocs.io/en/stable/datetime.html",
+      "version": "openpyxl 3.1.3 docs",
+      "locator": "The 1900 and 1904 date systems",
+      "independent_check": "Epoch and fake Feb29 limitations verified; retaining underlying XLSX serial before conversion remains a build integration obligation.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R22",
+      "url": "https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html",
+      "version": "current docs, candidate 3.0.6 pin; not installed",
+      "locator": "dtype; keep_default_na/na_filter matrix; low_memory; chunksize; date_format",
+      "independent_check": "String dtype alone does not disable NA recognition; low_memory still returns a whole frame; chunking needed for bounded processing; mixed dates have documented caveats.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R23",
+      "url": "https://openrefine.org/docs/manual/running/",
+      "version": "current manual",
+      "locator": "History; Reusing operations, lines 395–401",
+      "independent_check": "Extract/Apply operation JSON exists; undo history and single-cell edits are exceptions; stable cross-version JSON semantics not guaranteed here.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R24",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "version": "current, mutable",
+      "locator": "Storing Faulty CSV Lines; reject_errors/reject_scans schemas; projection pushdown",
+      "independent_check": "Two temporary tables, one row per error rather than necessarily per input row, raw line/column/positions/error fields; projected-away columns can hide conversion errors.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R25",
+      "url": "https://docs.python.org/3/library/csv.html",
+      "version": "Python 3.15.0 docs",
+      "locator": "csv.reader; Dialects; field_size_limit; Sniffer",
+      "independent_check": "String cells, newline behavior, field size limit and heuristic header/dialect detection supported; no interpreter run used as parser witness.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R26",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.15.0/Lib/csv.py",
+      "version": "CPython v3.15.0 source",
+      "locator": "Sniffer.preferred; sniff; has_header",
+      "independent_check": "Preferred delimiters resolve candidate ties, not every possible delimiter choice; header heuristic samples limited rows.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R27",
+      "url": "https://github.com/BurntSushi/xsv/releases",
+      "version": "archived 2025-04-24; latest listed 0.13.0",
+      "locator": "Repository archive notice; releases",
+      "independent_check": "N1 maintenance concern and retention of command patterns are reasonable; no benchmark transferred to target laptop.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R28",
+      "url": "https://github.com/BurntSushi/xsv",
+      "version": "current archived README",
+      "locator": "Commands: index, sample, slice; unmaintained notice",
+      "independent_check": "Reservoir sampling uses sample-proportional memory; indexed slices are supported; README now recommends qsv/xan. Reservoir does not inherently erase record positions in a product adapter.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R29",
+      "url": "https://github.com/dathere/qsv",
+      "version": "current README, mutable",
+      "locator": "Origins; command reference",
+      "independent_check": "Maintained fork lineage and command patterns supported; exact workbook metadata change/release not independently pinned.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R30",
+      "url": "https://docs.rs/crate/qsv/1.0.0",
+      "version": "qsv 1.0.0 crate documentation",
+      "locator": "Streaming/full-load command markers; memory management",
+      "independent_check": "Command-dependent memory categories supported; blanket constant-memory promise is not justified and final N2 preserves the distinction.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R31",
+      "url": "https://github.com/pola-rs/polars/pull/1674",
+      "version": "historical PR 1674",
+      "locator": "CSV inference None feature",
+      "independent_check": "Historical full-inference option evolution observed; later infer_schema_files release introduction not body-verified.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R32",
+      "url": "https://github.com/duckdb/duckdb/issues/17599",
+      "version": "issue 17599; reported 1.3.0",
+      "locator": "Late quote reproduction; maintainer explanation; full sample escape",
+      "independent_check": "Quote detection can miss late syntax; reproduction sensitivity and random sampling noted. Not a generic type-flip issue or universal current failure.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R33",
+      "url": "https://github.com/duckdb/duckdb/issues/21000",
+      "version": "issue 21000; reported 1.4.4",
+      "locator": "Late quoted delimiter; sample/explicit quote workaround; later status",
+      "independent_check": "Reported/reproduced quoting problem and escapes verified; proposed follow-up does not establish merged/released fix.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R34",
+      "url": "https://github.com/duckdb/duckdb/issues/6011",
+      "version": "historical issue 6011",
+      "locator": "Header/type sampling recovery report",
+      "independent_check": "Issue lead checked; not treated as proof every all_varchar recovery preserves semantics.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R35",
+      "url": "https://github.com/duckdb/duckdb/pull/14097",
+      "version": "historical PR 14097",
+      "locator": "CSV error presentation",
+      "independent_check": "Error-format evolution lead is applicable; no claim of target runtime test.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R36",
+      "url": "https://github.com/alan-turing-institute/CleverCSV/issues/15",
+      "version": "issue 15 opened 2020-05-19",
+      "locator": "Large FEC-file slowdown report",
+      "independent_check": "Historical performance warning exists; neither measured current performance nor a target-workload ranking.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R37",
+      "url": "https://pypi.org/project/clevercsv/0.5.6/",
+      "version": "CleverCSV 0.5.6 release page",
+      "locator": "Dialect detector algorithm/author benchmark; read/stream helpers",
+      "independent_check": "97% and 21% messy-file improvement are author-reported benchmark statements; not universal accuracy or automatically 21 percentage points.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R38",
+      "url": "https://journals.sagepub.com/doi/10.3233/DS-240062",
+      "version": "Garcia et al. 2024 DOI DS-240062",
+      "locator": "Table 1 simple Pollock Actual(50R) comparison",
+      "independent_check": "Dataset-conditioned comparison 100% vs 94.59% supports retained alternative research lead, not target-data superiority.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R39",
+      "url": "https://duckdb-webbed.readthedocs.io/en/latest/changelog.html",
+      "version": "webbed extension 2.3.0 changelog",
+      "locator": "Sampling/type-inference improvements",
+      "independent_check": "Previously ignored sample_size corrected; default sample enlarged 20→50; extension XML/HTML domain, not a DuckDB CSV core release. Runtime widening not automatically a 2.3.0 CSV guarantee.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R40",
+      "url": "https://www.tableau.com/blog/tableau-prep-conductor-and-data-management-add-on-101614",
+      "version": "Tableau 2019.1 announcement, 2019-02-13",
+      "locator": "Scheduling/sharing flows; server environment",
+      "independent_check": "Historical commercial replay/scheduling analogue verified; current pricing/licensing/desktop RAM claims not inferred.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R41",
+      "url": "https://pypi.org/project/frictionless/3.27.0/",
+      "version": "frictionless 3.27.0, 2020-11-09",
+      "locator": "Purpose; Transform your data; API instability notice",
+      "independent_check": "Describe/extract/validate/transform and pipeline capability supported; historical package not a current API compatibility guarantee.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R42",
+      "url": "https://support.microsoft.com/en-us/excel/change-formula-recalculation-iteration-or-precision-in-excel",
+      "version": "Microsoft Support current; Excel365/2024/2021",
+      "locator": "Precision, line 136",
+      "independent_check": "15-significant-digit storage/calculation precision supports N2 newly retained XLSX identifier-loss warning; original digits may already be irrecoverable.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R43",
+      "url": "https://duckdb.org/2023/10/27/csv-sniffer",
+      "version": "official blog, 2023-10-27",
+      "locator": "Five phases; sequential sample; date candidate formats; refinement",
+      "independent_check": "Genuine historical sniffer evolution; includes DMY and MDY, refuting N1 blanket all-US/ISO characterization. Older post does not nullify current primary sampling docs.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    },
+    {
+      "id": "R44",
+      "url": "https://docs.python.org/3/library/hashlib.html",
+      "version": "Python 3.15.0 docs; SHA256 interface",
+      "locator": "Hash algorithms; update/digest; file_digest",
+      "independent_check": "Digest represents supplied input bytes; input digest alone does not certify output decisions. With executed logical counterexample supports N1-01.",
+      "status": "body_observed",
+      "access_window_utc": "2026-10-09T20:00:41Z/2026-10-09T20:15:53Z",
+      "operation": "web.run open/find/click; read-only primary text",
+      "http_status": null
+    }
+  ],
+  "failed_or_redirected_operations": [
+    {
+      "url": "https://duckdb.org/docs/stable/guides/performance/how_to_tune_workloads.html",
+      "result": "redirect notice; governing current page retrieved as R01"
+    },
+    {
+      "url": "https://duckdb.org/docs/stable/data/csv/auto_detection.html",
+      "result": "redirect notice; governing current page retrieved as R02"
+    },
+    {
+      "url": "https://openpyxl.readthedocs.io/en/stable/_modules/openpyxl/worksheet/_reader.html",
+      "result": "web tool internal error; separate stdlib urllib request returned HTTP403; no reader code asserted from inaccessible body"
+    },
+    {
+      "url": "https://openpyxl.readthedocs.io/en/3.1.3/_modules/openpyxl/worksheet/_reader.html",
+      "result": "web tool internal error"
+    },
+    {
+      "url": null,
+      "result": "Official openpyxl upstream raw-reader route also returned web internal error; exact attempted URL was not retained in this assessment. No body asserted."
+    },
+    {
+      "url": "https://docs.pola.rs/user-guide/releases/upgrade/2/",
+      "result": "web tool internal error; historical v2 introduction remains unverified"
+    },
+    {
+      "url": "https://help.tableau.com/current/prep/en-us/prep_conductor_schedule_flow_task.htm",
+      "result": "web tool internal error; historical vendor R40 retrieved"
+    },
+    {
+      "url": "https://frictionlessdata.io/blog/2021/03/04/pipeline/",
+      "result": "web tool internal error; release-page pipeline capability checked R41"
+    },
+    {
+      "url": "https://datapackage.org/standard/table-schema/",
+      "result": "one invalid click; field missingValues section then independently retrieved by find, R17"
+    }
+  ],
+  "queries": [
+    "\"webbed\" \"v2.3.0\" sample_size",
+    "\"10.3233/DS-240062\" 94.59",
+    "\"openpyxl\" \"parse_cell\" \"from_excel\" 3.1.3"
+  ],
+  "source_policy": "Only mapped frozen artifacts and relevant public primary sources. No other evaluations, campaign, provider internals, candidate repair or downloaded executable. Public source code read as data. No scripts from sources executed.",
+  "retained_primary_evidence": "Bounded source URL/version/section/paraphrase entries plus report locators; complete external HTML not retained. Mutable primary pages can change.",
+  "executed_reviewer_witness": {
+    "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M04-B/validation-counterexample.json",
+    "sha256": "921b30e0c735d1bc6268df11bf754fbe181217d520308bc37a2dcafa74bc7b68",
+    "kind": "Python stdlib mathematical counterexample; independent row-multiset identity oracle; no candidate engine test"
+  }
+}

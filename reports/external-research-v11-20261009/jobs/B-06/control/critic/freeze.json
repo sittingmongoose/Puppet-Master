@@ -1,0 +1,65 @@
+{
+  "frozen_at": "2026-10-09T20:32:00.132178+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I06/brief.md",
+      "sha256": "dd0b06e29ae84b0ee0d4f278d9e6369b54d41d989c0c3edc0085d54f78079997",
+      "bytes": 2211
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M14.json",
+      "sha256": "051ba44d0397c8566ae5fdd5eaa17cb4e5d3d6b90a55ad46ffc00565dcebdb1b",
+      "bytes": 1969
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/critic/assignment.md",
+      "sha256": "d6a14210a8c4db0a2a96506d793616af5f83f3d863c7f7bb9b119127732b024e",
+      "bytes": 2635
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/critic/input-map.json",
+      "sha256": "28fa655b8be56e309a09af72c01b68e44e0bf1f877c2ede9451644d1dd651d47",
+      "bytes": 1208
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/draft.md",
+      "sha256": "4653dbe2fe057ee8b6be3cdb9cf7150f44a3b8b8fa7ae3a5d2bb794da4b6f477",
+      "bytes": 16483
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/discovery.md",
+      "sha256": "814096694ddc1103fd3176399671dd9a36ee8b86130d5bda54830d688b5430b7",
+      "bytes": 16349
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/source-map.json",
+      "sha256": "d652969647ac84dc18133176455e61739ef3a4afc8c8a8ecd93e568bf9366918",
+      "bytes": 7938
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/revealed-plan.md",
+      "sha256": "acf200fa53ae0202ff0ec1c9e32eda093ac58cdc9098a226188b954f1ea63990",
+      "bytes": 549
+    }
+  ],
+  "method": {
+    "id": "M14",
+    "version": "v1",
+    "name": "Muse retained investigator with Luna evidence-first critic",
+    "control": "Muse investigator terminalizes after full discovery and complete draft; fresh Muse critic; fresh Muse reviser writes full final. All source duties and exact plan scope preserved.",
+    "treatment": "Muse original investigator keeps ONE native Goal/context from discovery through complete final; fresh Luna Max/priority critic derives primary facts from brief before draft, then challenges full draft/exact plan; root releases terminal/hash READY. Original Muse investigator independently dispositions criticism with evidence and saves coherent full final before native Goal completion.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Prospective ER11 development bundle prompted by completed Muse source/false-correction failures and retained-author source-positive example. Changes reviewer provider, evidence-first criticism and finalization topology together; cross-provider recipe comparison, not isolated method effect.",
+    "resource_rule": "Equal 75-minute whole-arm envelope, 90 occupied agent-minutes ceiling, max2 concurrent actors per arm. Control research30/critic20/reviser25; retained author75 overall, draft expected within30 then critic20 and full final protected quarter. All startup/queue/tool/retries/handoff/delivery charged. Not repair of started60/12-minute attempts.",
+    "locked_at": "2026-10-09T20:19:43.517Z",
+    "requested_routes": {
+      "investigation_and_finalization": "muse / muse-spark-1.3-contributor / reasoningEffort max",
+      "treatment_critic": "codex_gmail / gpt-6-luna / reasoningEffort max / serviceTier priority",
+      "control_critic": "muse / muse-spark-1.3-contributor / reasoningEffort max"
+    },
+    "promotion_rule": "Development only; no universal reliability or time win. Full source scope and both-PASS paired eligible measurements required for a gain; no holdout tuning or uncounted replacements."
+  },
+  "resource_version": "75-30-20-25-role-bundle-v1",
+  "stage_allowance_s": 1200,
+  "deadline": "2026-10-09T20:52:00.132178+00:00"
+}

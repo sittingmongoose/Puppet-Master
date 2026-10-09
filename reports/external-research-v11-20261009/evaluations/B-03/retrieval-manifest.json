@@ -1,0 +1,528 @@
+[
+  {
+    "id": "ERP_BATCH_SCHEMA_N2",
+    "url": "https://raw.githubusercontent.com/frappe/erpnext/v15.122.0/erpnext/stock/doctype/batch/batch.json",
+    "retrieved_at": "2026-10-09T20:31:01.601946+00:00",
+    "status": 200,
+    "bytes": 6017,
+    "sha256": "23c093a0359f7045596a05f101f103da8272301b17495fe2f96c7df7453c51ca"
+  },
+  {
+    "id": "ERP_RESERVATION_N1",
+    "url": "https://raw.githubusercontent.com/frappe/erpnext/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/stock_reservation_entry/stock_reservation_entry.py",
+    "retrieved_at": "2026-10-09T20:31:01.603833+00:00",
+    "status": 200,
+    "bytes": 37933,
+    "sha256": "76942a03612a3471152f5c11f59c69d982c988f378ca3f8f89cae0bbdda66c32"
+  },
+  {
+    "id": "ERP_BATCH_N1",
+    "url": "https://raw.githubusercontent.com/frappe/erpnext/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/batch/batch.py",
+    "retrieved_at": "2026-10-09T20:31:01.605626+00:00",
+    "status": 200,
+    "bytes": 14311,
+    "sha256": "cccc90acbc5ff1d25ba5eb476dd91333d411bb25d1373212ca872abfcdb13fcf"
+  },
+  {
+    "id": "ERP_BUNDLE_N1",
+    "url": "https://raw.githubusercontent.com/frappe/erpnext/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/serial_and_batch_bundle/serial_and_batch_bundle.py",
+    "retrieved_at": "2026-10-09T20:31:01.607313+00:00",
+    "status": 200,
+    "bytes": 100360,
+    "sha256": "74958c088263cb47212b7ae71620a3723452b3be504910e2920f6f4dd2a082fe"
+  },
+  {
+    "id": "ERP_ISSUE",
+    "url": "https://api.github.com/repos/frappe/erpnext/issues/38796",
+    "retrieved_at": "2026-10-09T20:31:01.608923+00:00",
+    "status": 200,
+    "bytes": 9524,
+    "sha256": "713d47687b9f057ff64ccc12a1f9e38a054b19c8689a763fae48bda12f364042"
+  },
+  {
+    "id": "ERP_FIX",
+    "url": "https://api.github.com/repos/frappe/erpnext/pulls/38754",
+    "retrieved_at": "2026-10-09T20:31:01.609882+00:00",
+    "status": 200,
+    "bytes": 20181,
+    "sha256": "c0b2bcdb6766417f7055309f58d4533b9e77a5759a76c54a240785d0b759d84f"
+  },
+  {
+    "id": "ERP_BACKPORT",
+    "url": "https://api.github.com/repos/frappe/erpnext/pulls/38806",
+    "retrieved_at": "2026-10-09T20:31:01.611112+00:00",
+    "status": 200,
+    "bytes": 23481,
+    "sha256": "c2dee0b3ffa9a3b40ace63483d5f26ef8b54155a80b7b8b255c3825424e4fd5b"
+  },
+  {
+    "id": "ERP_15_7",
+    "url": "https://api.github.com/repos/frappe/erpnext/releases/tags/v15.7.0",
+    "retrieved_at": "2026-10-09T20:31:01.611996+00:00",
+    "status": 200,
+    "bytes": 6608,
+    "sha256": "2ac60d9261b63ceacadf1dde20972de356f92555d6c17b6c806b1b303771b1c5"
+  },
+  {
+    "id": "ODK_ENTITIES",
+    "url": "https://docs.getodk.org/central-entities/",
+    "retrieved_at": "2026-10-09T20:31:25.706160+00:00",
+    "error": "'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte"
+  },
+  {
+    "id": "ODK_ENTITIES_INTRO",
+    "url": "https://docs.getodk.org/entities-intro/",
+    "retrieved_at": "2026-10-09T20:31:25.708111+00:00",
+    "error": "'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte"
+  },
+  {
+    "id": "ODK_SUBMISSIONS",
+    "url": "https://docs.getodk.org/central-submissions/",
+    "retrieved_at": "2026-10-09T20:31:25.709484+00:00",
+    "error": "'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte"
+  },
+  {
+    "id": "ODK_USERS",
+    "url": "https://docs.getodk.org/central-users/",
+    "retrieved_at": "2026-10-09T20:31:25.710895+00:00",
+    "error": "'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte"
+  },
+  {
+    "id": "ODK_ENCRYPTION",
+    "url": "https://docs.getodk.org/central-encryption/",
+    "retrieved_at": "2026-10-09T20:31:25.712508+00:00",
+    "error": "'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte"
+  },
+  {
+    "id": "ODK_LANGUAGE",
+    "url": "https://docs.getodk.org/form-language/",
+    "retrieved_at": "2026-10-09T20:31:25.713935+00:00",
+    "error": "'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte"
+  },
+  {
+    "id": "ODK_BARCODE",
+    "url": "https://docs.getodk.org/form-question-types/",
+    "retrieved_at": "2026-10-09T20:31:25.716287+00:00",
+    "error": "'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte"
+  },
+  {
+    "id": "ODK_INTRO",
+    "url": "https://docs.getodk.org/collect-intro/",
+    "retrieved_at": "2026-10-09T20:31:25.718123+00:00",
+    "error": "'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte"
+  },
+  {
+    "id": "FARM_JS",
+    "url": "https://farmos.org/development/farmos-js/",
+    "retrieved_at": "2026-10-09T20:31:25.952908+00:00",
+    "status": 200,
+    "bytes": 43764,
+    "sha256": "6bebbc9a2820b1ba1ab4a4de9da030ca69c9c2c30c71b3fe0df1d442adfa7218"
+  },
+  {
+    "id": "FARM_ASSETS",
+    "url": "https://farmos.org/guide/assets/",
+    "retrieved_at": "2026-10-09T20:31:25.971710+00:00",
+    "status": 200,
+    "bytes": 44487,
+    "sha256": "cd363a4d92230e472a7ebc35a72acc467ea16356633464a84b4615af7b856a78"
+  },
+  {
+    "id": "FARM_LOCATION",
+    "url": "https://farmos.org/guide/location/",
+    "retrieved_at": "2026-10-09T20:31:26.005097+00:00",
+    "status": 200,
+    "bytes": 27243,
+    "sha256": "efa78d05d436047ed4d5cbe9d0abe57dfd862d70ed17cdd92e7481b3d4bc77f4"
+  },
+  {
+    "id": "FARM_INVENTORY",
+    "url": "https://farmos.org/model/logic/inventory/",
+    "retrieved_at": "2026-10-09T20:31:26.024077+00:00",
+    "status": 200,
+    "bytes": 25569,
+    "sha256": "e41514b0c1886a15c50e90212354c06141069b603cba1994485a384d7f46b0c1"
+  },
+  {
+    "id": "FARM_INSTALL",
+    "url": "https://farmos.org/hosting/install",
+    "retrieved_at": "2026-10-09T20:31:26.038105+00:00",
+    "status": 200,
+    "bytes": 34538,
+    "sha256": "9028436354d7f854ffa0ff78330b3728ba64cb3ce4cd155373481c9190e65b4a"
+  },
+  {
+    "id": "ODK_ENTITIES_RETRY",
+    "url": "https://docs.getodk.org/central-entities/",
+    "retrieved_at": "2026-10-09T20:31:52.685580+00:00",
+    "status": 200,
+    "decoded_bytes": 110072,
+    "sha256": "562853dc44a034855525d022148301bcc55b146503e600a453a52e4e336880ae"
+  },
+  {
+    "id": "ODK_ENTITIES_INTRO_RETRY",
+    "url": "https://docs.getodk.org/entities-intro/",
+    "retrieved_at": "2026-10-09T20:31:52.687675+00:00",
+    "status": 200,
+    "decoded_bytes": 96478,
+    "sha256": "1c1c7856bf6be4d30260d1ed82d8a1e118c7a64c273f99f916a407e1ffd669a9"
+  },
+  {
+    "id": "ODK_SUBMISSIONS_RETRY",
+    "url": "https://docs.getodk.org/central-submissions/",
+    "retrieved_at": "2026-10-09T20:31:52.689015+00:00",
+    "status": 200,
+    "decoded_bytes": 79353,
+    "sha256": "9867abb3f0294f65155bb8e56a91bdc4d9dec7f6630ca1560a3b1375050dd1db"
+  },
+  {
+    "id": "ODK_USERS_RETRY",
+    "url": "https://docs.getodk.org/central-users/",
+    "retrieved_at": "2026-10-09T20:31:52.690144+00:00",
+    "status": 200,
+    "decoded_bytes": 56821,
+    "sha256": "8e4f003d13115424e2bb42c7933c7347a9ce520109d063baff0e1e40ae2463dd"
+  },
+  {
+    "id": "ODK_ENCRYPTION_RETRY",
+    "url": "https://docs.getodk.org/central-encryption/",
+    "retrieved_at": "2026-10-09T20:31:52.691521+00:00",
+    "status": 200,
+    "decoded_bytes": 43542,
+    "sha256": "fe281026fb35347b21854b573bc615a70319ed72afaa2d69634bbe231ee6de6e"
+  },
+  {
+    "id": "ODK_LANGUAGE_RETRY",
+    "url": "https://docs.getodk.org/form-language/",
+    "retrieved_at": "2026-10-09T20:31:52.692599+00:00",
+    "status": 200,
+    "decoded_bytes": 43831,
+    "sha256": "4ea602a0b320a67a184c41d51526ac96ab9fc4082f78c09792fd6a2445d9f6bb"
+  },
+  {
+    "id": "ODK_BARCODE_RETRY",
+    "url": "https://docs.getodk.org/form-question-types/",
+    "retrieved_at": "2026-10-09T20:31:52.694378+00:00",
+    "status": 200,
+    "decoded_bytes": 306950,
+    "sha256": "f79db615a68bd57b7a2bdd02f48bdf89b077d3022a21731f64293fda99fdc2cc"
+  },
+  {
+    "id": "ODK_INTRO_RETRY",
+    "url": "https://docs.getodk.org/collect-intro/",
+    "retrieved_at": "2026-10-09T20:31:52.695640+00:00",
+    "status": 200,
+    "decoded_bytes": 36497,
+    "sha256": "874bcf642d73fa754d11e993bf5a077cb2d466c30ad0f23febad0ee6d6454e40"
+  },
+  {
+    "id": "ODK_SECURITY",
+    "url": "https://docs.getodk.org/security/",
+    "retrieved_at": "2026-10-09T20:31:52.900168+00:00",
+    "status": 200,
+    "decoded_bytes": 51211,
+    "sha256": "eaad723149caa5a540b8b418a8e5793626f7d14cea94415e21564220adc3a580"
+  },
+  {
+    "id": "ODK_MULTI_LANGUAGE",
+    "url": "https://docs.getodk.org/guide-form-language/",
+    "retrieved_at": "2026-10-09T20:31:52.933154+00:00",
+    "status": 200,
+    "decoded_bytes": 67141,
+    "sha256": "c7fa08243d762d264287b90b5ee828ebb7e98952adccea5e366f177aa83db386"
+  },
+  {
+    "id": "ODK_ENTITY_ACCESS_EXCEPTION",
+    "url": "https://docs.getodk.org/central-entities/#entity-list-access",
+    "retrieved_at": "2026-10-09T20:32:36.205170+00:00",
+    "status": 200,
+    "decoded_bytes": 110072,
+    "sha256": "562853dc44a034855525d022148301bcc55b146503e600a453a52e4e336880ae"
+  },
+  {
+    "id": "ODK_CENTRAL_2026_2",
+    "url": "https://api.github.com/repos/getodk/central/releases/tags/v2026.2.0",
+    "retrieved_at": "2026-10-09T20:32:56.675677+00:00",
+    "status": 200,
+    "bytes": 3424,
+    "sha256": "545632f8cbae8c4e95d2040030284958df0faeb1886292b87cb1520eb8f999e1"
+  },
+  {
+    "id": "ODK_CENTRAL_2026_3",
+    "url": "https://api.github.com/repos/getodk/central/releases/tags/v2026.3.0",
+    "retrieved_at": "2026-10-09T20:32:56.677550+00:00",
+    "status": 200,
+    "bytes": 3128,
+    "sha256": "b1bd2608a958e2c84bdfc54230e611a225a344fe42323d32d50c6d159eda1318"
+  },
+  {
+    "id": "COLLECT_ISSUE",
+    "url": "https://api.github.com/repos/getodk/collect/issues/4589",
+    "retrieved_at": "2026-10-09T20:32:56.678542+00:00",
+    "status": 200,
+    "bytes": 4478,
+    "sha256": "0680743b4a0eb615b72d61429ca1cb3af4b63ab5807f20d51c3bf023daeeaad3"
+  },
+  {
+    "id": "COLLECT_FIX",
+    "url": "https://api.github.com/repos/getodk/collect/commits/12ef1a3f4f2257591cfe912754a44305dd686a2a",
+    "retrieved_at": "2026-10-09T20:32:56.680086+00:00",
+    "status": 200,
+    "bytes": 25164,
+    "sha256": "c735ca613898207d06dd8f582d030d6b0d9c00bdef69ba463f2792eaf1dae32d"
+  },
+  {
+    "id": "COLLECT_2026_3_5",
+    "url": "https://api.github.com/repos/getodk/collect/releases/tags/v2026.3.5",
+    "retrieved_at": "2026-10-09T20:32:56.680985+00:00",
+    "status": 200,
+    "bytes": 3612,
+    "sha256": "28fd0e34f6198a7cfa8aed9455c65e3df12155bc2e686e122ed5793484b771c1"
+  },
+  {
+    "id": "ERP_15_121_3",
+    "url": "https://api.github.com/repos/frappe/erpnext/releases/tags/v15.121.3",
+    "retrieved_at": "2026-10-09T20:32:56.682194+00:00",
+    "status": 200,
+    "bytes": 8822,
+    "sha256": "764ef942aedfa0bbd1c4ab131a8f444b0ed0c54791c2518f3741883946047465"
+  },
+  {
+    "id": "ERP_15_122_0",
+    "url": "https://api.github.com/repos/frappe/erpnext/releases/tags/v15.122.0",
+    "retrieved_at": "2026-10-09T20:32:56.683961+00:00",
+    "status": 200,
+    "bytes": 12029,
+    "sha256": "5fb2ccf1de90141e8994ebfee0de9bcb28cfcdbe8b1a2bc6b12c34358366054c"
+  },
+  {
+    "id": "GROWFLO",
+    "url": "https://www.growflo.com/mobile-commerce/mobile-inventory/",
+    "retrieved_at": "2026-10-09T20:33:22.739915+00:00",
+    "status": 200,
+    "decoded_bytes": 19521,
+    "sha256": "ec39c5bdb454fcebfe733a759342f0a8b5174e226a3574384e83fa1cb49edfad"
+  },
+  {
+    "id": "ATLAS",
+    "url": "https://atlascore.cloud/suite/tally",
+    "retrieved_at": "2026-10-09T20:33:22.742638+00:00",
+    "status": 200,
+    "decoded_bytes": 185962,
+    "sha256": "f26b05f459f03b0f602a8fb0929a3f3e5e638c93fb5e2f9b74b272845bbbe2e3"
+  },
+  {
+    "id": "SPRIGGO_HOME",
+    "url": "https://spriggo.tech/",
+    "retrieved_at": "2026-10-09T20:33:22.744288+00:00",
+    "status": 200,
+    "decoded_bytes": 2910,
+    "sha256": "e849b449cbd4b616790f39a72acb2d8139e39896fced4f86d64cf5f18e518c01"
+  },
+  {
+    "id": "SPRIGGO_FEATURES",
+    "url": "https://spriggo.tech/features",
+    "retrieved_at": "2026-10-09T20:33:22.745356+00:00",
+    "status": 200,
+    "decoded_bytes": 2910,
+    "sha256": "e849b449cbd4b616790f39a72acb2d8139e39896fced4f86d64cf5f18e518c01"
+  },
+  {
+    "id": "CENTRAL_2026_2_FORUM",
+    "url": "https://forum.getodk.org/t/58254.json",
+    "retrieved_at": "2026-10-09T20:33:22.746657+00:00",
+    "status": 200,
+    "decoded_bytes": 42359,
+    "sha256": "ed4c275fe78e4d95cf4f19f179939ea1f95d3d19b4473f477e73905f508d1b63"
+  },
+  {
+    "id": "FIELD_KIT",
+    "url": "https://raw.githubusercontent.com/farmOS/field-kit/release/README.md",
+    "retrieved_at": "2026-10-09T20:33:22.747852+00:00",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "id": "ERP_BATCH_DOC",
+    "url": "https://docs.frappe.io/erpnext/batch",
+    "retrieved_at": "2026-10-09T20:34:10.347533+00:00",
+    "status": 200,
+    "decoded_bytes": 2857203,
+    "sha256": "f0d1e4400130d3cb0ca3e12f7d2b31865c4a1f649632efa314c16754943557cf"
+  },
+  {
+    "id": "ERP_UOM",
+    "url": "https://docs.frappe.io/erpnext/uom",
+    "retrieved_at": "2026-10-09T20:34:10.349714+00:00",
+    "status": 200,
+    "decoded_bytes": 2848968,
+    "sha256": "5fd5f88298d36595ca8f087383f586b4656360b16cb2898a424f6351fd4ea1a2"
+  },
+  {
+    "id": "ERP_SETTINGS",
+    "url": "https://docs.frappe.io/erpnext/stock-settings",
+    "retrieved_at": "2026-10-09T20:34:10.351554+00:00",
+    "status": 200,
+    "decoded_bytes": 2875141,
+    "sha256": "02791fc155f2834ac467d579fcf1807bdf8c51f2b414f25b5809e5fbaa045c34"
+  },
+  {
+    "id": "ERP_RESERVE_DOC",
+    "url": "https://docs.frappe.io/erpnext/stock-reservation",
+    "retrieved_at": "2026-10-09T20:34:10.353066+00:00",
+    "status": 200,
+    "decoded_bytes": 2855385,
+    "sha256": "8ae8f33c57a15363a01c776cb12eadb836c76a92a4d051f4108e60f6ab1825f0"
+  },
+  {
+    "id": "ERP_ITEM",
+    "url": "https://docs.frappe.io/erpnext/item",
+    "retrieved_at": "2026-10-09T20:34:10.354579+00:00",
+    "status": 200,
+    "decoded_bytes": 2907444,
+    "sha256": "cac888f95c18457f7adaf49b0ff744709706f05568103b98e9e092fc04806449"
+  },
+  {
+    "id": "ERP_CUSTOMER",
+    "url": "https://docs.frappe.io/erpnext/customer",
+    "retrieved_at": "2026-10-09T20:34:10.355844+00:00",
+    "status": 200,
+    "decoded_bytes": 2879597,
+    "sha256": "35e7ee5c75e5df760ee5e9d10417f4d29b9836fe8618364de6c54cd9aad2b562"
+  },
+  {
+    "id": "ERP_PERMISSIONS",
+    "url": "https://docs.frappe.io/erpnext/permissions",
+    "retrieved_at": "2026-10-09T20:34:10.357261+00:00",
+    "status": 200,
+    "decoded_bytes": 2867871,
+    "sha256": "45d789473f1c6a1e083915533bf2acb6aa7f1e35a6890b1f9c6116dbd2d2e3ae"
+  },
+  {
+    "id": "ERP_MIGRATION",
+    "url": "https://raw.githubusercontent.com/wiki/frappe/erpnext/Migration-Guide-to-ERPNext-version-15.md",
+    "retrieved_at": "2026-10-09T20:34:10.358720+00:00",
+    "status": 200,
+    "decoded_bytes": 7157,
+    "sha256": "f186392ebef8b80ee095c394cff490bf0b5621d1b6d70b926cce1804ee5bc32a"
+  },
+  {
+    "id": "WCAG",
+    "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+    "retrieved_at": "2026-10-09T20:34:10.494240+00:00",
+    "status": 200,
+    "decoded_bytes": 512457,
+    "sha256": "6e3c5fe397257cae509a2fb4752b73062cf8cbeb92c2cec618989b17e4cf7057"
+  },
+  {
+    "id": "ERP_BATCH_DOC_EXCEPTION",
+    "url": "https://docs.frappe.io/erpnext/batch",
+    "retrieved_at": "2026-10-09T20:35:00.561610+00:00",
+    "status": 200,
+    "decoded_bytes": 2857203,
+    "sha256": "f419393aaa7850693adae474a6367a4cb8a7d4ee9a5607d5753165c76be9abc3"
+  },
+  {
+    "id": "ERP_BATCH_N2",
+    "url": "https://raw.githubusercontent.com/frappe/erpnext/v15.122.0/erpnext/stock/doctype/batch/batch.py",
+    "retrieved_at": "2026-10-09T20:35:00.563650+00:00",
+    "status": 200,
+    "decoded_bytes": 14311,
+    "sha256": "cccc90acbc5ff1d25ba5eb476dd91333d411bb25d1373212ca872abfcdb13fcf"
+  },
+  {
+    "id": "ERP_BUNDLE_GUARD_DETAIL",
+    "url": "https://raw.githubusercontent.com/frappe/erpnext/26f06878346fb6861229ccb1fe3a53dc1bf5bad3/erpnext/stock/doctype/serial_and_batch_bundle/serial_and_batch_bundle.py",
+    "retrieved_at": "2026-10-09T20:35:00.565357+00:00",
+    "status": 200,
+    "decoded_bytes": 100360,
+    "sha256": "74958c088263cb47212b7ae71620a3723452b3be504910e2920f6f4dd2a082fe"
+  },
+  {
+    "id": "COLLECT_SAVE",
+    "url": "https://raw.githubusercontent.com/getodk/collect/87bf04ec0a94e3dec1abc87db73c8326d8667162/collect_app/src/main/java/org/odk/collect/android/tasks/SaveFormToDisk.java",
+    "retrieved_at": "2026-10-09T20:35:00.566954+00:00",
+    "status": 200,
+    "decoded_bytes": 21799,
+    "sha256": "4aeafbaebc02a80b525dec7aa5497d062886450846bfb29a60a06599c8164197"
+  },
+  {
+    "id": "COLLECT_1703_COMMENTS",
+    "url": "https://api.github.com/repos/getodk/collect/issues/1703/comments",
+    "retrieved_at": "2026-10-09T20:35:00.568063+00:00",
+    "status": 200,
+    "decoded_bytes": 16065,
+    "sha256": "010a8938217db1fd369e792a5bad60ac8109e03cdbcd4d9a1dcf72ee6e9c2bea"
+  },
+  {
+    "id": "COLLECT_4489",
+    "url": "https://api.github.com/repos/getodk/collect/issues/4489",
+    "retrieved_at": "2026-10-09T20:35:00.569502+00:00",
+    "status": 200,
+    "decoded_bytes": 9176,
+    "sha256": "e0038fe182b3523ee39f51c9c39011d2cd808a7807f7a7aac89cad5b8f5c9f75"
+  },
+  {
+    "id": "FIELD_KIT_README",
+    "url": "https://raw.githubusercontent.com/farmOS/field-kit/develop/README.md",
+    "retrieved_at": "2026-10-09T20:35:00.571108+00:00",
+    "status": 200,
+    "decoded_bytes": 2166,
+    "sha256": "a05beb59b764aee97ff97faa638e4346a5b8afe9aa461707298b4fdaa03d7973"
+  },
+  {
+    "id": "WCAG_COLOR",
+    "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+    "retrieved_at": "2026-10-09T20:35:00.572469+00:00",
+    "status": 200,
+    "decoded_bytes": 512457,
+    "sha256": "6e3c5fe397257cae509a2fb4752b73062cf8cbeb92c2cec618989b17e4cf7057"
+  },
+  {
+    "id": "ERP_BUNDLE_N2",
+    "url": "https://raw.githubusercontent.com/frappe/erpnext/v15.122.0/erpnext/stock/doctype/serial_and_batch_bundle/serial_and_batch_bundle.py",
+    "retrieved_at": "2026-10-09T20:37:29.407156+00:00",
+    "status": 200,
+    "bytes": 109209,
+    "sha256": "eeeeb56fe901c8e0c4ea741ee7745f68c73db6d8533fb5e5d39f5f8e735bfa1d"
+  },
+  {
+    "id": "ERP_TAG_N2",
+    "url": "https://api.github.com/repos/frappe/erpnext/git/ref/tags/v15.122.0",
+    "retrieved_at": "2026-10-09T20:37:29.409157+00:00",
+    "status": 200,
+    "bytes": 343,
+    "sha256": "ed436d3cdded77b680b2e913ba72d5c547823c7e2f157634abb6c06ddbbe1036"
+  },
+  {
+    "id": "ERP_TAG_N1",
+    "url": "https://api.github.com/repos/frappe/erpnext/git/ref/tags/v15.121.3",
+    "retrieved_at": "2026-10-09T20:37:29.410587+00:00",
+    "status": 200,
+    "bytes": 343,
+    "sha256": "845b640e583ed4c4913042ba7267eb79a4bfc36e15689682f88cb8cf953d62a6"
+  },
+  {
+    "id": "COLLECT_TAG",
+    "url": "https://api.github.com/repos/getodk/collect/git/ref/tags/v2026.3.5",
+    "retrieved_at": "2026-10-09T20:37:29.412639+00:00",
+    "status": 200,
+    "bytes": 347,
+    "sha256": "2fb040866d1da05c8890a76ac77123ce10df5d336dc0045e93b43f3ee41ed6d7"
+  },
+  {
+    "id": "ERP_FIX_FILES",
+    "url": "https://api.github.com/repos/frappe/erpnext/pulls/38754/files",
+    "retrieved_at": "2026-10-09T20:37:29.413696+00:00",
+    "status": 200,
+    "bytes": 40220,
+    "sha256": "1b25f1f0e92f666d6749bfce944cb98f8dcf097d6ccbc370a84e82be9d9c0a20"
+  },
+  {
+    "id": "ERP_RECONCILE_DOC",
+    "url": "https://docs.frappe.io/erpnext/stock-reconciliation",
+    "retrieved_at": "2026-10-09T20:37:29.414871+00:00",
+    "status": 200,
+    "bytes": 2865293,
+    "sha256": "28230ebbe77e5e0f4eecb68f6373d03daba8e7cb73a3a4e71e5e662b52758f1a"
+  }
+]

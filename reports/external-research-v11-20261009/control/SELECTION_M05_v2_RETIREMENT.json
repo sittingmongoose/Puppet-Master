@@ -1,0 +1,11 @@
+{
+  "recorded_at": "2026-10-09T20:49:33.082948+00:00",
+  "method": "M05-v2",
+  "decision": "RETIRED_FROM_PROMOTION",
+  "evidence": [
+    "evaluations/B-03/assessment.json",
+    "evaluations/A-M05-A/assessment.json"
+  ],
+  "reason": "B-03 treatment source FAIL from false ODK Entity-filtering capability conclusion inherited from critic; control PASS. B-04 locked first-source-PASS gate did not pass. A-M05-A v1 both failed separately on governing evidence, false corrections and preservation. No 45-minute attempt or confirmation is authorized by the prospective selection rule. Original artifacts/grades unchanged.",
+  "B04_disposition": "NOT_PROMOTED_UNSTARTED"
+}

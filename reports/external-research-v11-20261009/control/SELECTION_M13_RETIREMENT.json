@@ -1,0 +1,18 @@
+{
+  "recorded_at": "2026-10-09T20:46:43.612205+00:00",
+  "method": "M13-v1",
+  "decision": "RETIRED_FROM_PROMOTION",
+  "evidence": [
+    "evaluations/B-01/assessment.json",
+    "evaluations/B-02/assessment.json"
+  ],
+  "reason": "B-01 treatment materially downgraded supported exact-plan scope; B-02 both source PASS but only 4.9% descriptive delivery saving and 60.4% more occupied work, plus critic stage overrun. No original output/grade changed. No confirmation or deployment qualification.",
+  "B02_measured": {
+    "block": "B-02",
+    "both_source_pass": true,
+    "descriptive_delivery_saving_fraction": 0.049065,
+    "occupied_change_fraction": 0.603655,
+    "strict_time_eligible": false,
+    "protocol_eligibility": "UNKNOWN: native activation/terminal, predecessor freeze, effective settings and original invalid dispositions require linked separate qualification; source grades do not establish these."
+  }
+}

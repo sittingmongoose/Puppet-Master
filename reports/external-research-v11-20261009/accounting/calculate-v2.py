@@ -19,7 +19,8 @@ for line in (R/'control/glm-integration-observations.jsonl').read_text().splitli
     v=json.loads(line)
     for ref in v.get('matched_assignment_refs',[]):bridge[str(Path(ref).parent)]=v
 allruns={}
-for p in R.rglob('host-runs.json'):
+known_paths=list((R/'jobs').glob('*/*/*/host-runs.json'))+list((R/'evaluations').glob('*/host-runs.json'))+list((R/'qualification').glob('*/host-runs.json'))+list((R/'helpers').glob('*/host-runs.json'))
+for p in known_paths:
     if '/accounting/' in str(p):continue
     for run in read(p).get('recentRuns',[]):allruns[run['runId']]=run
 def stage(p):
@@ -29,7 +30,7 @@ def stage(p):
     end=dt(run.get('completedAt')) if run else None
     start=dt(run.get('startedAt')) if run else None
     deadline=dt(read(p/'freeze.json').get('deadline'))
-    return {'path':str(p.relative_to(R)), 'task_id':d.get('taskId'), 'terminal_status':result.get('status'),
+    return {'requested_target':d.get('target'),'effective_host_provider':run.get('providerInstanceId') if run else None,'effective_host_model':run.get('model') if run else None,'path':str(p.relative_to(R)), 'task_id':d.get('taskId'), 'terminal_status':result.get('status'),
       'run_id':run.get('runId') if run else None,'started_at':start.isoformat() if start else None,
       'completed_at':end.isoformat() if end else None,'occupied_s':delta(start,end),
       'occupied_so_far_s':delta(start,end or now), 'accepted_queue_s':delta(dt(d.get('acceptedAt')),start),
@@ -44,7 +45,7 @@ for b in q:
     for arm in ['control','treatment']:
         key=b['block_id']+'/'+arm; s=state['arms'].get(key,{})
         stages=[stage(p.parent) for p in sorted((R/'jobs'/key).glob('*/dispatch.json'))]
-        finalstage='research' if b['method'] in ['M05','M13'] and arm=='treatment' else 'critic-finalizer' if b['method']=='M03' and arm=='treatment' else 'reviser'
+        finalstage='research' if b['method'] in ['M05','M13','M14'] and arm=='treatment' else 'critic-finalizer' if b['method']=='M03' and arm=='treatment' else 'reviser'
         fp=R/'jobs'/key/finalstage/'final.md';mp=fp.parent/'source-map.json'
         fs=next((x for x in stages if x['path'].endswith('/'+finalstage)),{})
         end=dt(fs.get('completed_at'));start=dt(s.get('requested_at'));cut=dt(s.get('deadline'))
@@ -54,7 +55,7 @@ for b in q:
         complete_intervals=all(x['occupied_s'] is not None for x in stages) and bool(stages)
         occupied=sum(x['occupied_s'] for x in stages) if complete_intervals else None
         evalend=dt(es.get('completed_at'));qualified=delivered and str(authored.get('grade','')).startswith('PASS')
-        rows.append({'block':b['block_id'],'phase':b['phase'],'method':b['method'],'method_version':b.get('method_version','v1'),'case':b['case'],'route':b['route'],'arm':arm,
+        rows.append({'block':b['block_id'],'phase':b['phase'],'method':b['method'],'method_version':b.get('method_version','v1'),'case':b['case'],'route':b['route'],'provider_role_overrides':json.dumps(b.get('stage_routes',{}),sort_keys=True),'arm':arm,
          'status':s.get('status','UNSTARTED'),'final_delivered':delivered,'grade':authored.get('grade'),
          'requested_at':s.get('requested_at'),'deadline':s.get('deadline'),'final_files_saved_at':saved.isoformat() if saved else None,'delivered_at':end.isoformat() if end else None,
          'candidate_delivery_s':delta(start,end) if delivered else None,'science_last_save_s':delta(start,saved),
@@ -72,7 +73,9 @@ for b in q:
       'occupied_change_fraction':round(t['occupied_agent_s']/c['occupied_agent_s']-1,6) if both and c['occupied_agent_s'] and t['occupied_agent_s'] else None,
       'strict_time_eligible':both and all(x['delivery_within_whole_deadline'] and x['occupied_within_90min'] and all(y['delivery_within_stage_deadline'] for y in x['stages']) for x in [c,t]),
       'protocol_eligibility':'UNKNOWN: native activation/terminal, predecessor freeze, effective settings and original invalid dispositions require linked separate qualification; source grades do not establish these.'})
-elapsed=0; active=0
+extra=read(R/'control/OWNERSHIP.json').get('extra_owned_threads',[])
+extra_s=sum(delta(dt(x.get('host_run',{}).get('started_at')),dt(x.get('host_run',{}).get('completed_at'))) or 0 for x in extra)
+elapsed=extra_s; active=0
 for v in allruns.values():
     start=dt(v.get('startedAt'));end=dt(v.get('completedAt'))
     if start:
@@ -80,7 +83,7 @@ for v in allruns.values():
         active+=not bool(end)
 dispatched=list((R/'jobs').glob('*/*/*/dispatch.json'))+list((R/'evaluations').glob('*/dispatch.json'))
 missing_host=[str(p.parent.relative_to(R)) for p in dispatched if not (p.parent/'host-runs.json').exists()]
-result={'missing_host_run_paths':missing_host,'occupied_total_is_partial':True,'snapshot_at':now.isoformat(),'original_logical_rows':80,'started_rows':sum(x['requested_at'] is not None for x in rows),
+result={'missing_host_run_paths':missing_host,'extra_owned_contexts':extra,'extra_owned_context_occupied_s':extra_s,'occupied_total_is_partial':True,'snapshot_at':now.isoformat(),'original_logical_rows':80,'started_rows':sum(x['requested_at'] is not None for x in rows),
  'rows':rows,'pairs':pairs,'experiment_observed_distinct_runs':len(allruns),'experiment_additive_occupied_agent_s_so_far':round(elapsed,3),'experiment_runs_without_terminal_time':active,
  'limits':['Artifact mtime is last saved complete final/map, not first complete bytes. Delivery uses actual host terminal timestamp, not root poll time.','Additive occupied intervals include retained-author wait; parallel actors each charged. Missing host runs leave arm total null. Shared paired evaluation charged once in experiment, never twice.','Native cumulative Goal counters kept per session, never summed with overlapping token/usage fields. Billing/subscription/input/cache/output/reasoning counters unavailable.','Candidate clocks start at frozen arm setup before accepted dispatch; queue and root handoff delays included. Source acquisition within arms charged. Campaign/bootstrap/case design is experiment overhead, not free or an invented per-arm cold setup allocation.','Stage deadlines measured at host terminal; last-science timestamps can independently be earlier. Native exact completion timestamp unknown. Strict method/native qualification remains separate.','All 80 original cells retained, including unstarted and failures; savings shown only for both-source-PASS delivery pairs with failure-inclusive rows alongside. No confidence/reliability/affordability claim from descriptive ratios.']}
 (OUT/'TIMING.json').write_text(json.dumps(result,indent=2)+'\n')

@@ -1,0 +1,959 @@
+{
+  "schema": "ER11-independent-assessor-source-map-v1",
+  "block": "B-01",
+  "case": "I01",
+  "identity_policy": "E01–E31 identify independent evaluator observations; author S/C/R IDs retain stage-local meaning. No author index is treated as an oracle.",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-01/assignment.md",
+      "sha256": "5db91d4c1c13ae001a3a61dc6e115e7ab3edfaef50969cc0fa6b559d41cbd4b0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-01/input-map.json",
+      "sha256": "2dcd622083122bd32c1ba7e3a9ee51f9a591cae4f33d9901f984ce03c57d9044"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I01/brief.md",
+      "sha256": "592bc98c89079b760e398cfc1dbd890e7d6c34832506c01c34b0642b46cc1491"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I01/plan-root-only.md",
+      "sha256": "2ccbf1363896275e86ba3c6c03ff9985924c731b620c6f4ae06b13e0f6672b5a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/reviser/final.md",
+      "sha256": "71a6d5e4d2139fd0be141603eced04676a70af559f110a47ef481489de14b547"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/reviser/source-map.json",
+      "sha256": "d81324df35486eec149686464dc2d1feb0396ecfde56ef0aa34b609dc0ef9170"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/reviser/assignment.md",
+      "sha256": "8058443151fc06339683b50ea1871b3faea7c5d32ffe9fd6455143c912b129e8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/reviser/input-map.json",
+      "sha256": "6dff046c32e618f2656b2d7407a864a9afdf200babfd19247fd2801882c82e3e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic/critique.md",
+      "sha256": "1dd69dbc13c081dbb648d698074337ee49237fddeabf91fe7efd796cd5262004"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic/source-map.json",
+      "sha256": "f7494b039ab0c705dbccd61cde6e15d8b861077f61e1eeda14b696f4288fa718"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic/assignment.md",
+      "sha256": "0c243c552384e760425036b51dc553244386615807ea375eb6a09bd073194196"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic/input-map.json",
+      "sha256": "336f04dc3b52f79cfae73c3000975557a8c9f93ee422366ffce2336f9ca7619e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/discovery.md",
+      "sha256": "52f13faa4a482a06fbfe2d9d33d239cd1394182bf47464957079de6b44ac5777"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/draft.md",
+      "sha256": "95811279d0604e9b18083ea6b6cfd0f308f4ccd2c4a2dcb760eed6ca71e3e4d7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/source-map.json",
+      "sha256": "afdd4c1f3e605c492d60e6e2fd3053ba09d03e6e516cea256e2ed78c48e024a6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/revealed-plan.md",
+      "sha256": "2ccbf1363896275e86ba3c6c03ff9985924c731b620c6f4ae06b13e0f6672b5a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/plan-reveal.json",
+      "sha256": "54ee6ae55fc91c2786963ff1c1af35e1daa25d0a3904555b83d7911ca629520f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/assignment.md",
+      "sha256": "29cc56d9dc148e99e8b2be93130db27214ca7346f45431765b4f0c0efd137e86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/input-map.json",
+      "sha256": "d3687fb0fdb71e4db7e05cba7e1e49b51d6d4b971306b2a686f01286e88af2bc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/reviser/sources/R01-firestore-platform-defaults.md",
+      "sha256": "798e3049ff55155a2f8749afdf65f054e6f49a53bc13da0e42834c4607f54e35"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/reviser/sources/R02-firestore-js-api-reference.md",
+      "sha256": "58e832c30ae475dd7d8ab8b2bb0ebd51919a7415acd9ed087b5633fa061a82bb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/reviser/sources/README.md",
+      "sha256": "d9b82683e0a7924d96e978deddbb12dd49765d197b2689ff21e5f38aee81b686"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic/sources/C01-pouchdb-conflicts.md",
+      "sha256": "92e04a1363fe81145157032173d243cbf4953207d048221cc77244daf9e76951"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic/sources/C02-pouchdb-replication.md",
+      "sha256": "9c25f339b5e71bc0dbb35a54fbc5c70d74ccec507146501f6269ce82b30063c0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic/sources/C03-firestore-offline.md",
+      "sha256": "cfed162f7414403fa10b2311ba869a07a52e6424755cdc2d6a16ff1ec9a930ae"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic/sources/C04-firestore-transactions.md",
+      "sha256": "5b7b637c5f77c55f1159541e3f306717326c5b8c0aaaf791d7d8c14292778307"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic/sources/C05-firestore-pricing.md",
+      "sha256": "eeb9d430001c54c83aa88115b6b27bff32adb4dde488fb6b69c1399eb55c4c3d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic/sources/C06-firestore-js-reference.md",
+      "sha256": "637550bad481557002f47d17ab26fe9a6f508ea6361933f12e24863cb66365b7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic/sources/C07-hogia-bookit.md",
+      "sha256": "24ba22fcbbc4f1c7a99d53e0c7a5c6b0da321e466cca553a3879509adc6b44f2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic/sources/C08-pouchdb-issue-8581.md",
+      "sha256": "6b5e68e9374ec7594143fc3af36dc9970ace42f53a9545ea4fc63573ceabe8ea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic/sources/C09-pouchdb-release-8.0.1.md",
+      "sha256": "3c29f942964ba62d43f33f89218d835b60d49fbcd17d84f928532e82aff7ed6c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic/sources/README.md",
+      "sha256": "ff1137e8ce93a524e0276f5fb3352c5e7092c7cf7fe6bb314515614c2cd2108b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/sources/README.md",
+      "sha256": "1aaa8619d8160b515d1efca2cd6e61d173307815880b1c70fe739a276799dfaf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/sources/S01-pouchdb-conflicts.md",
+      "sha256": "838a10dd22f79869f369ca9fe6c2b043a22dcd0e4df73f6b8ee7bd8ea3491855"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/sources/S02-pouchdb-replication.md",
+      "sha256": "af73ae0cd66e903250b59db747cb347cadda62e525408580b8d17572143ce46b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/sources/S03-firestore-offline.md",
+      "sha256": "8e01ec9af6cb65476461ff6dad136b09ed37896e5165d5b655641541f102c448"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/sources/S04-firestore-transactions.md",
+      "sha256": "46942e29f46c622bc5c1576a8a235f49f633da6d620a8c1b8dae46fee314af4c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/sources/S05-firestore-pricing.md",
+      "sha256": "f63a2b91aef2873b6c6eca6ec5a362dca4f460078edc6113e9432c06172f3efc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/sources/S06-hogia-bookit.md",
+      "sha256": "6fd1d25831e0cded2069190bfc7a0e86e574f4618cc99afba3672e6ad4b57bba"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/sources/S07-pouchdb-issue-8581.md",
+      "sha256": "63e34db1cd34292c5e8ead8dfbb2927d618459a1de4beccb0e107754b7a627bf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/sources/S08-pouchdb-release-8.0.1.md",
+      "sha256": "1ea8657dc045b2647caadefd3ef977850500d74aaf83c06876f54486ad39a3e2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/critic/critique.md",
+      "sha256": "2912948176399e10ac7503f389a2c9c15fc597968fc71b795bcb6b120e179e18"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/critic/final.md",
+      "sha256": "956e73c40f30a1b1b77d85fb41f86e84af7e83c4afff24a08637f6e1dd7c6c7d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/critic/source-map.json",
+      "sha256": "ff8c6f1db55ba1324c4953193a5f2afdbe66f0405a97eb45c7bf5182136f4eda"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/critic/evidence-first.md",
+      "sha256": "0ea82855a3ac1bd40b8d873128126512cc4f24ffe39b5c2b80be9a5d61cc4b7e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/critic/assignment.md",
+      "sha256": "910ccbc1429139e4e4b97dca2288bd4475429a22644cc7bd24e4e987e2d81f7f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/critic/input-map.json",
+      "sha256": "24eff2d202fcaddbce7a303b9f7f0b7a2056075b88d04f3f8eca505ae8b0ed40"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/research/discovery.md",
+      "sha256": "488912ba31bd215d3e70a12b3ff0d5f480b05d214f816a7f9c1f74e3ea7ee976"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/research/draft.md",
+      "sha256": "7db3c3dc28c6189fb27fa7c54d1cc2caa9db1546d161007ece1f1ba72389b86e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/research/final.md",
+      "sha256": "0ecf14175410c2cf14227019b91f49ce9857e320898b1774ae4b28f5a289544e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/research/source-map.json",
+      "sha256": "e8be7cf4eef673004973b486d245654123fbb8410d21c05e4b540c882930f294"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/research/revealed-plan.md",
+      "sha256": "2ccbf1363896275e86ba3c6c03ff9985924c731b620c6f4ae06b13e0f6672b5a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/research/plan-reveal.json",
+      "sha256": "57567460e49585c03235ba023939f621e6d53c8ad8a880309ada6954cdd90c6e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/research/assignment.md",
+      "sha256": "b893847f43c8a28d2294396080fcf5669cfb5de8ac6bb527986e03199894f4e8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/research/input-map.json",
+      "sha256": "ff9e155f72d191b95935c261ef92b5269a2b9fe26dfea93cdcad68dbb4dbae0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/critic/sources/critic-evidence.md",
+      "sha256": "7544b71f1b20548889a0426a8aadbc25d9eae4aa5873ce4a9acf715c72696029"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/critic/sources/index.md",
+      "sha256": "65679dd5c1606ec5fd572a3b26382249bcaae9c40d98d14284b911ebf3e70b22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/research/sources/evidence.md",
+      "sha256": "4a8d72349e0071c69f5a9c7ac41b37c402263713878423bc5c922ea62ac2e8fb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/research/sources/index.md",
+      "sha256": "3f184191de35fbbc7d00cbc4b02cca6cead59c7f75f276a8be8ff3e4aaddd50b"
+    }
+  ],
+  "sources": [
+    {
+      "id": "E01",
+      "title": "Original I01 brief",
+      "url": null,
+      "version_or_release": "Frozen input",
+      "locator": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I01/brief.md; product paragraph and O1–O6",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Read exact full file",
+        "Hash file"
+      ],
+      "bounded_observation": "Governs the two-terminal pilot, budget, staff, outages, privacy, reports, exit, and original obligations.",
+      "applies_to_arms": [
+        "N1",
+        "N2"
+      ],
+      "limits": null
+    },
+    {
+      "id": "E02",
+      "title": "Exact frozen P1–P6 plan",
+      "url": null,
+      "version_or_release": "Frozen input",
+      "locator": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I01/plan-root-only.md; P1–P6",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Read all six exact clauses",
+        "Compare both revealed-plan files and hashes"
+      ],
+      "bounded_observation": "P4 expressly includes large text, high contrast, and a short seasonal handoff view. P5/P6 explicitly leave authority and retention/export parameters open.",
+      "applies_to_arms": [
+        "N1",
+        "N2"
+      ],
+      "limits": null
+    },
+    {
+      "id": "E03",
+      "title": "Firestore offline access",
+      "url": "https://firebase.google.com/docs/firestore/manage-data/enable-offline?hl=en",
+      "version_or_release": "Rolling official documentation, inspected 2026-10-09",
+      "locator": "Access data offline; Configure offline persistence; Web v9 examples; Listen/Get/Query offline data; Configure offline query indexes (reader lines 452–488, 656–660, 804–817)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Read platform/cache sections",
+        "Find empty-result and indexing sections"
+      ],
+      "bounded_observation": "Confirms cache-only offline scope, same-document last-write-wins, mobile/Web default differences, browser restriction, session cache warning, and disabled automatic indexing.",
+      "applies_to_arms": [
+        "N1",
+        "N2"
+      ],
+      "limits": "No selected SDK/device or application durability witness; Core operations applicability, not Enterprise Pipeline operations."
+    },
+    {
+      "id": "E04",
+      "title": "Firestore transactions and batched writes",
+      "url": "https://firebase.google.com/docs/firestore/manage-data/transactions",
+      "version_or_release": "Rolling official documentation, inspected 2026-10-09",
+      "locator": "Updating data with transactions; Transaction failure; Batched writes (458–466, 1325–1337, 1777–1782)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Find offline failure, 10 MiB, offline batches",
+        "Read matching sections"
+      ],
+      "bounded_observation": "Confirms offline transaction failure, retry/atomicity, request/time limits, and offline batches. Server validation of a later batch is separate from a disconnected capacity promise.",
+      "applies_to_arms": [
+        "N1",
+        "N2"
+      ],
+      "limits": "Documented limits do not establish the ferry invariant or any executed test."
+    },
+    {
+      "id": "E05",
+      "title": "Firestore billing",
+      "url": "https://firebase.google.com/docs/firestore/pricing?hl=en",
+      "version_or_release": "Rolling pricing documentation, inspected 2026-10-09",
+      "locator": "Free quota; one free database; Pricing by location; PITR; Backup/restore; Network bandwidth (466–507, 610–657)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Find quota and backup",
+        "Read egress and exclusions"
+      ],
+      "bounded_observation": "Confirms 1 GiB storage, 50,000 reads/day, 20,000 writes/day and deletes/day, 10 GiB transfer/month, one qualifying database, location/usage dependence, and paid backup/PITR/restore.",
+      "applies_to_arms": [
+        "N2"
+      ],
+      "limits": "No workload, region, currency, or total bill observed."
+    },
+    {
+      "id": "E06",
+      "title": "Firestore JavaScript API reference",
+      "url": "https://firebase.google.com/docs/reference/js/firestore",
+      "version_or_release": "Rolling API reference, inspected 2026-10-09",
+      "locator": "MemoryLocalCache; PersistentLocalCache; enableIndexedDbPersistence; enableMultiTabIndexedDbPersistence; FirestoreSettings.localCache (2422–2427, 2801–2841)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Find obsolete and default-cache entries"
+      ],
+      "bounded_observation": "Memory cache is the default; IndexedDB is separate. Older persistence entry points are obsolete; the recommended setting is localCache.",
+      "applies_to_arms": [
+        "N2"
+      ],
+      "limits": "Current reference, not a pinned implemented SDK."
+    },
+    {
+      "id": "E07",
+      "title": "PouchDB conflicts guide",
+      "url": "https://pouchdb.com/guides/conflicts.html",
+      "version_or_release": "Rolling official guide, inspected 2026-10-09",
+      "locator": "Immediate conflicts; Eventual conflicts; Accountants do not use erasers (5–14, 53–95, 107–118)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:33:50Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Find deterministic winner",
+        "Read conflict/delta sections"
+      ],
+      "bounded_observation": "Confirms immediate revision conflicts versus disconnected same-document conflicts, arbitrary deterministic winning revision, accessible conflict leaves, and create-only delta pattern.",
+      "applies_to_arms": [
+        "N2",
+        "N1"
+      ],
+      "limits": "Conflict resolution on one document does not enforce capacity across distinct booking IDs; not permanent historical-body storage."
+    },
+    {
+      "id": "E08",
+      "title": "PouchDB replication guide",
+      "url": "https://pouchdb.com/guides/replication.html",
+      "version_or_release": "Rolling official guide, inspected 2026-10-09",
+      "locator": "CouchDB sync; Setting up sync; Live replication (12–20, 26–65, 68–97)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:33:50Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Find retry",
+        "Read live/status section"
+      ],
+      "bounded_observation": "Confirms local/remote bidirectional sync and explicitly configured live/retry with paused/active events.",
+      "applies_to_arms": [
+        "N2",
+        "N1"
+      ],
+      "limits": "Retry is a capability configured by the app, not an offline booking-authority mechanism."
+    },
+    {
+      "id": "E09",
+      "title": "PouchDB historical issue #8581",
+      "url": "https://github.com/apache/pouchdb/issues/8581",
+      "version_or_release": "Issue opened 2022-12-27; historical Chrome/IndexedDB browser case",
+      "locator": "Issue Info/Reproduce; fix/test activity; February 2023 merge/release comments (155–175, 292–378)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Read issue environment/reproduction",
+        "Read fix/test/merge/release timeline"
+      ],
+      "bounded_observation": "Confirms two-window storage-event this-binding reproduction and subsequent code/tests, merge acknowledgement, and 8.0.1 release comment.",
+      "applies_to_arms": [
+        "N2"
+      ],
+      "limits": "No current-version or ferry defect inferred."
+    },
+    {
+      "id": "E10",
+      "title": "PouchDB 8.0.1 release",
+      "url": "https://github.com/apache/pouchdb/releases/tag/8.0.1",
+      "version_or_release": "8.0.1; displayed commit fde45b9",
+      "locator": "Fix this of changesHandler; Bugfixes/Testing (152–189)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Read release/tag/commit and changelog"
+      ],
+      "bounded_observation": "Release directly links #8450 refactor, #8581 issue and #8583 fix; lists da5069df and tests.",
+      "applies_to_arms": [
+        "N2"
+      ],
+      "limits": "Historical release only; no project tests run by assessor."
+    },
+    {
+      "id": "E11",
+      "title": "PouchDB fixed source text",
+      "url": "https://raw.githubusercontent.com/apache/pouchdb/da5069df/packages/node_modules/pouchdb-utils/src/changesHandler.js",
+      "version_or_release": "Fix commit da5069df (short commit locator linked by 8.0.1)",
+      "locator": "Changes.constructor storage event callback (source lines 5–15)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Open public released-fix source text",
+        "Inspect callback"
+      ],
+      "bounded_observation": "The storage callback is an arrow function using the Changes instance emit method, corroborating the this-binding fix.",
+      "applies_to_arms": [
+        "N2"
+      ],
+      "limits": "Source read only; neither downloaded executable nor executed test."
+    },
+    {
+      "id": "E12",
+      "title": "PDMS Compass",
+      "url": "https://www.pdms.com/platforms/compass/",
+      "version_or_release": "Live vendor page; no product release displayed",
+      "locator": "Ferry reservations and ticketing; Online & Offline; Flexible Ticket Options (79–103)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Read full feature/qualification sections"
+      ],
+      "bounded_observation": "Vendor describes ferry configuration, central/multichannel booking, printed tickets, and offline port ticketing.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "Vendor claim; public page does not establish simultaneous isolated-terminal capacity allocation, quote, queue privacy, or exit."
+    },
+    {
+      "id": "E13",
+      "title": "Access One Voyage",
+      "url": "https://accessonevoyage.cyrabyte.com/",
+      "version_or_release": "Live vendor page; no product release displayed",
+      "locator": "Work Even When Connectivity Is Limited; Windows & Android Support; Operator-Controlled Data; Security & Accountability (68–123)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Read offline/device/data/security sections"
+      ],
+      "bounded_observation": "Vendor qualifies local work as supported/authorized operations, with later sync, Windows/Android roles, operator data ownership, and configuration-dependent controls.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "No enumerated offline booking contract, price, support SLA, or complete export proven."
+    },
+    {
+      "id": "E14",
+      "title": "Zaui ferry product",
+      "url": "https://www.zaui.com/solutions/ferry-booking-software",
+      "version_or_release": "Live vendor page; no product release displayed",
+      "locator": "Booking & Ticketing; Operations Made Simple; FAQs and support (66–94, 181–220)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Read product features and FAQs"
+      ],
+      "bounded_observation": "Vendor describes distinct passenger/vehicle/cabin inventories, manifests, scheduling, check-in, reports, onboarding and 24/7 support.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "Offline behavior is unspecified in this page; testimonial price is not a comparable quote or operator fit."
+    },
+    {
+      "id": "E15",
+      "title": "FerryCloud product",
+      "url": "https://www.ferrycloud.com/",
+      "version_or_release": "Page marker 2019-07-16T12:37:05+01:00",
+      "locator": "Home marker; Benefits/Main features (13–67)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Find 2019",
+        "Read product features"
+      ],
+      "bounded_observation": "Corroborates dated SaaS/multichannel/real-time inventory claims.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "An old page marker does not prove the business is inactive; currentness is unresolved."
+    },
+    {
+      "id": "E16",
+      "title": "FerryCloud pricing",
+      "url": "https://www.ferrycloud.com/pricing/",
+      "version_or_release": "Page marker 2019-07-12T10:13:58+01:00",
+      "locator": "Basic Edition; Services; Standard Edition (13–76)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Read tier and support sections"
+      ],
+      "bounded_observation": "Basic is quote-only with CET-business-hours support; Standard also requests a quote and lists 24/7 support.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "Final scopes the CET statement to Basic; no amount or current quote established."
+    },
+    {
+      "id": "E17",
+      "title": "Hogia BOOKIT",
+      "url": "https://www2.hogia.se/int/ferry-system/bookit",
+      "version_or_release": "Official-domain search result crawled two weeks before assessment; no release displayed",
+      "locator": "Standard applications; Booking; Check-in; Reporting; Technology; API",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open returned Internal Error",
+        "Search exact official product URL",
+        "Read official-domain result content"
+      ],
+      "bounded_observation": "Official result supports ferry route/capacity/booking/check-in/report/API lead and a potentially dated .NET Framework statement.",
+      "applies_to_arms": [
+        "N2"
+      ],
+      "limits": "Direct reader failure independently reproduced. Search-index evidence supports a qualified lead, not offline/current deployment/budget guarantees."
+    },
+    {
+      "id": "E18",
+      "title": "Washington State Ferries reservation workflow",
+      "url": "https://secureapps.wsdot.wa.gov/Ferries/Reservations/Vehicle/Mobile/MobileVRSDashboard.aspx",
+      "version_or_release": "Public route-specific rules inspected 2026-10-09",
+      "locator": "What to know about vehicle reservations (8–17)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Find ticket distinction",
+        "Read named-route and walk-on rules"
+      ],
+      "bounded_observation": "Vehicle reservation is distinct from a ticket; walk-ons need no reservation on the named reservation routes.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "WSF-specific example; no local law or required I01 fare policy inferred."
+    },
+    {
+      "id": "E19",
+      "title": "CouchDB consistency",
+      "url": "https://docs.couchdb.org/en/stable/intro/consistency.html",
+      "version_or_release": "3.5 documentation series; mutable stable alias",
+      "locator": "Distributed Consistency; Incremental Replication (74–87)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Find independent operation",
+        "Read incremental replication"
+      ],
+      "bounded_observation": "Confirms document-scoped operations, periodic copying, and independently usable disconnected databases that synchronize later in both directions.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "No global ferry booking protocol is supplied."
+    },
+    {
+      "id": "E20",
+      "title": "CouchDB conflicts",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "version_or_release": "3.5 documentation series; mutable stable alias",
+      "locator": "Conflict avoidance; Revision tree; Working with conflicted documents; View map functions (58–132, 197–205)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Find view behavior",
+        "Read conflict/tree/compaction sections"
+      ],
+      "bounded_observation": "Confirms 409 on stale local revisions, conflict leaves, winner-only default reads/views, and explicit conflict retrieval. Non-leaf bodies can be compacted.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "Final does not promise database revisions are a permanent reservation-history archive."
+    },
+    {
+      "id": "E21",
+      "title": "RxDB pinned replication guide",
+      "url": "https://github.com/pubkey/rxdb/blob/17.0.0/docs-src/docs/replication.md",
+      "version_or_release": "17.0.0",
+      "locator": "Sync engine; checkpoints; conflict handling; replicateRxCollection; Multi Tab; Error handling (193–346, 518–540)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Find default conflict/retry/leadership/start entries",
+        "Read handler/checkpoint/retry sections"
+      ],
+      "bounded_observation": "Confirms master-wins default, 5000 ms retry, live/autoStart/leadership defaults, pull/push/checkpoints and duplicate-delivery cautions.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "Leadership applies to instances of the same local database; not cross-terminal capacity authority."
+    },
+    {
+      "id": "E22",
+      "title": "RxDB released replication implementation",
+      "url": "https://raw.githubusercontent.com/pubkey/rxdb/17.0.0/src/plugins/replication/index.ts",
+      "version_or_release": "17.0.0",
+      "locator": "replicateRxCollection; startReplicationOnLeaderShip; masterWrite (323–351, 536–628)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Open version-pinned source text",
+        "Inspect default parameters, leadership branch and retry loop"
+      ],
+      "bounded_observation": "Code defaults agree with the guide: live=true, retryTime=1000*5, waitForLeadership=true, autoStart=true; multiInstance conditions leadership. Push exceptions retry.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "Source inspection only; not a concurrency/durability witness."
+    },
+    {
+      "id": "E23",
+      "title": "RxDB default conflict implementation",
+      "url": "https://raw.githubusercontent.com/pubkey/rxdb/17.0.0/src/replication-protocol/default-conflict-handler.ts",
+      "version_or_release": "17.0.0",
+      "locator": "defaultConflictHandler.resolve (24–30)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Open version-pinned source text",
+        "Inspect resolver"
+      ],
+      "bounded_observation": "Resolver returns realMasterState, corroborating the documented master-wins default.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "Does not assign capacity or customer priority."
+    },
+    {
+      "id": "E24",
+      "title": "RxDB issue #5342",
+      "url": "https://github.com/pubkey/rxdb/issues/5342",
+      "version_or_release": "December 2023 v15 prerelease timeline; beta.42",
+      "locator": "Opening report; beta.42 fix notice; follow-up; beta/custom-handler comments (157–183, 257–325, 355–359)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Find beta.42",
+        "Read follow-up, beta and environment comments"
+      ],
+      "bounded_observation": "Corroborates peer-drop stall, beta.42 reconnect fix and subsequent small three-client divergence report; reporter used modified signaling and custom conflict handling.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "Single reporter/workload, customized connection setup; no general reliability rate or current v17 defect established."
+    },
+    {
+      "id": "E25",
+      "title": "RxDB reconnect fix",
+      "url": "https://github.com/pubkey/rxdb/commit/28015c6097fe1e98c902cc5a8edca87c002c94c0",
+      "version_or_release": "28015c6097fe1e98c902cc5a8edca87c002c94c0",
+      "locator": "Commit summary; connection-handler-simple-peer.ts and replication-webrtc.test.ts diffs",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Inspect changed files and reconnect diff"
+      ],
+      "bounded_observation": "Fix changes reconnect code and tests; exact issue linkage is #5342.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "Code change and tests being authored do not prove ferry capacity or that assessor ran them."
+    },
+    {
+      "id": "E26",
+      "title": "RxDB PR #5348",
+      "url": "https://github.com/pubkey/rxdb/pull/5348",
+      "version_or_release": "Merged 2023-12-03; merge short SHA 997bf8f",
+      "locator": "Merged commits/conversation (147–179)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Read merge metadata"
+      ],
+      "bounded_observation": "Corroborates merge of the reconnect fix and issue linkage.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "No new PR was created or worked on; this is read-only historical source review."
+    },
+    {
+      "id": "E27",
+      "title": "RxDB 15.0.0 release",
+      "url": "https://rxdb.info/releases/15.0.0.html",
+      "version_or_release": "15.0.0 release notes",
+      "locator": "Moved out of beta list (158–162)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Find out-of-beta section"
+      ],
+      "bounded_observation": "Release records WebRTC replication leaving beta.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "Status evolution is not an SLA or complete correctness result."
+    },
+    {
+      "id": "E28",
+      "title": "SQLite Session Extension",
+      "url": "https://www.sqlite.org/sessionintro.html",
+      "version_or_release": "Current official introduction; extension included since 3.13.0",
+      "locator": "Introduction; Obtaining; Limitations; Changesets/Patchsets; Conflicts (49–115)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:33:50Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Find limitations",
+        "Read compatibility/conflict sections"
+      ],
+      "bounded_observation": "Confirms disabled-by-default build, declared primary keys, no virtual tables, compatible schema/start, and application conflict decisions. NULL-key rows are ignored and patchsets detect fewer conflicts.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "Bounded optional primitive; final makes no all-row capture, full audit-history, transport, or offline arbitration guarantee."
+    },
+    {
+      "id": "E29",
+      "title": "CouchDB issue #5879",
+      "url": "https://github.com/apache/couchdb/issues/5879",
+      "version_or_release": "3.4.2 to 3.5.1 upgrade report; opened 2026-02-03; observed Open/needs-triage",
+      "locator": "Version; symptoms; environment (129–205)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Read issue status/version/environment"
+      ],
+      "bounded_observation": "Corroborates reported upgrade instability at about 319k DBs, 640 GB/node and 7.6 GB RAM with compaction/shard movement.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "Reported, not a proven universal bug; applicability to unspecified small pilot not established."
+    },
+    {
+      "id": "E30",
+      "title": "CouchDB 3.5 release notes",
+      "url": "https://docs.couchdb.org/en/stable/whatsnew/3.5.html",
+      "version_or_release": "3.5.x including 3.5.2; mutable stable alias",
+      "locator": "Version 3.5.2 features/performance/bugfixes",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:28:42Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Find 3.5.2 and 5879",
+        "Read relevant release sections"
+      ],
+      "bounded_observation": "Later 3.5.2 notes exist; search for #5879 returned no match, and reviewed release changes establish no fix relationship.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "Absence of explicit linkage does not prove unfixed; candidate correctly says a fix is not established."
+    },
+    {
+      "id": "E31",
+      "title": "CouchDB document design",
+      "url": "https://docs.couchdb.org/en/stable/best-practices/documents.html",
+      "version_or_release": "3.5 documentation series",
+      "locator": "Design considerations, section 4.1.4 (20–65); identity/retry guidance (9–15)",
+      "independently_checked": true,
+      "observation_window_utc": {
+        "first_observed_clock": "2026-10-09T20:25:05Z",
+        "retrieval_complete_by": "2026-10-09T20:33:50Z",
+        "per_request_timestamp": null
+      },
+      "observed_operations": [
+        "Direct open",
+        "Read application conflict discussion"
+      ],
+      "bounded_observation": "Application conflict behavior and explicit history are separate from replication/revision history; compaction does not preserve all prior document bodies. Identity guidance also warns about retry-created duplicate IDs.",
+      "applies_to_arms": [
+        "N1"
+      ],
+      "limits": "Corroborates critic rationale; not an additional ferry product."
+    }
+  ],
+  "bounded_evidence_policy": "Paraphrased notes only; no full-page copies, executables, runtime downloads, or candidate edits. Exact URLs/releases/symbols/sections bind observations.",
+  "source_access_limits": [
+    "Web tool may use cached/crawled page renderings; no independent archive of historical HTTP bytes.",
+    "Hogia direct open failed; official-domain indexed content independently inspected.",
+    "Per-request wall-clock times unavailable; retrieval window is bounded by observed UTC clocks."
+  ]
+}

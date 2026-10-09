@@ -1,0 +1,76 @@
+{
+  "frozen_at": "2026-10-09T20:04:18.422875+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I01/brief.md",
+      "sha256": "592bc98c89079b760e398cfc1dbd890e7d6c34832506c01c34b0642b46cc1491",
+      "bytes": 2274
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M13.json",
+      "sha256": "39f1ead2365c6bb7f318f4084fa8fb731068d29f66badaea37f2a83b5fd78b0c",
+      "bytes": 1999
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/reviser/assignment.md",
+      "sha256": "8058443151fc06339683b50ea1871b3faea7c5d32ffe9fd6455143c912b129e8",
+      "bytes": 2860
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/reviser/input-map.json",
+      "sha256": "6dff046c32e618f2656b2d7407a864a9afdf200babfd19247fd2801882c82e3e",
+      "bytes": 1519
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/draft.md",
+      "sha256": "95811279d0604e9b18083ea6b6cfd0f308f4ccd2c4a2dcb760eed6ca71e3e4d7",
+      "bytes": 18252
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/discovery.md",
+      "sha256": "52f13faa4a482a06fbfe2d9d33d239cd1394182bf47464957079de6b44ac5777",
+      "bytes": 12654
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/source-map.json",
+      "sha256": "afdd4c1f3e605c492d60e6e2fd3053ba09d03e6e516cea256e2ed78c48e024a6",
+      "bytes": 11118
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/research/revealed-plan.md",
+      "sha256": "2ccbf1363896275e86ba3c6c03ff9985924c731b620c6f4ae06b13e0f6672b5a",
+      "bytes": 664
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic/source-map.json",
+      "sha256": "f7494b039ab0c705dbccd61cde6e15d8b861077f61e1eeda14b696f4288fa718",
+      "bytes": 10685
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/control/critic/critique.md",
+      "sha256": "1dd69dbc13c081dbb648d698074337ee49237fddeabf91fe7efd796cd5262004",
+      "bytes": 13417
+    }
+  ],
+  "method": {
+    "id": "M13",
+    "version": "v1",
+    "name": "retained-graph-author-with-evidence-first-critic",
+    "control": "Competent conventional full investigator, fresh independent critic, fresh complete reviser under default 30/12/18 stages and 60-minute whole envelope.",
+    "treatment": "Investigate full brief independently and maintain source-backed relation/condition/release graph and community prose in sources/index.md while producing one complete discovery and draft. Preserve full discovery and alternatives. Original investigator remains in ONE native Goal through final writing. A fresh critic derives consequential facts from brief and public primary sources before opening draft, then challenges the complete draft and exact plan. Investigator adjudicates every criticism against governing source context, explicitly distinguishes necessary corrections from optional product choices, and authors the full self-contained final in its retained context. Critic agreement is not authority; source indexes or IDs cannot replace substantive final prose. No premium assistance, extra agents or reduced obligations.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Prospective development bundle from M11 source-positive graph recipe, M05 context retention and M06 independent evidence-first challenge. Not an isolated topology effect.",
+    "primary_methodology": "https://arxiv.org/abs/2404.16130",
+    "novelty": "Integrated bundle: keep source graph with original investigator across complete draft and final; fresh critic derives facts independently before reading draft; final author waits for terminal frozen critique handoff.",
+    "adaptation_limit": "Manual bounded integrated recipe; no GraphRAG system/training implementation, no prior benchmark gain claim; scope and budget unchanged. Performance and quality must be measured on fresh cases.",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "resource_version": "retained60-critic12-v1",
+  "stage_allowance_s": 1080,
+  "deadline": "2026-10-09T20:22:18.422875+00:00"
+}

@@ -1,0 +1,50 @@
+{
+  "map_version": 1,
+  "case": "S05",
+  "block": "A-M05-A",
+  "arm": "control",
+  "stage": "reviser",
+  "compiled_utc": "2026-10-09T20:17:00Z",
+  "notes": "Reviser-stage source records. The reviser fetched exactly two public primary sources (SRC-R01, SRC-R02), both to resolve concrete criticisms (M2, M3) whose facts the final deliverable asserts; everything else cited by final.md resolves to the predecessor stages' immutable maps, registered under inherited_sources below and read, not re-fetched. IDs SRC-R01/SRC-R02 are immutable within this stage and deliberately distinct from research SRC-01..09 and critic SRC-C01..C09; no silent rebind. Access timestamps approximate to the minute; session clock read 2026-10-09T20:11:46Z immediately after the fetch batch. Mutable drift: SRC-R01 was fetched at branch master (moving target, no commit hash observed by the fetch) and is pinned by full statement enumeration + access date; SRC-R02 is pinned by the versioned docs path 30.2 + access date. Usage/billing for both web sources unobserved: null. Failures: none this stage (both fetches succeeded).",
+  "sources": [
+    {
+      "id": "SRC-R01",
+      "title": "RightsStatements.org data-model — rights-statements.ttl at master (reviser independent fetch)",
+      "url": "https://raw.githubusercontent.com/rightsstatements/data-model/master/rights-statements.ttl",
+      "version": "branch master at access; moving target",
+      "commit_state": "no commit hash observed by fetch; pinned by full statement enumeration (12 statements) + access date 2026-10-09",
+      "locator": "full statement enumeration (InC, InC-OW-EU, InC-RUU, InC-EDU, InC-NC, NoC-NC, NoC-CR, NoC-OKLR, NoC-US, NKC, CNE, UND); UND and NoC-CR dc:identifier declarations; OOC-NC removal comment",
+      "access_timestamp": "2026-10-09T20:10:00Z",
+      "observed_operations": ["WebFetch GET", "statement-enumeration prompt (count/UND/OOC/NoC-CR/verbatim list)"],
+      "status": "retrieved",
+      "evidence_path": "sources/SRC-R01-rightsstatements-ttl.md",
+      "usage_billing": null
+    },
+    {
+      "id": "SRC-R02",
+      "title": "Typesense docs 30.2 — search API parameters reference (reviser independent fetch)",
+      "url": "https://typesense.org/docs/30.2/api/search.md",
+      "version": "docs version 30.2 (versioned path)",
+      "commit_state": "versioned docs path pinned at 30.2 + access date 2026-10-09",
+      "locator": "typo-tolerance parameter defaults (num_typos, min_len_1typo, min_len_2typo, typo_tokens_threshold) and numeric-token typo flags (enable_typos_for_numerical_tokens, enable_typos_for_alpha_numerical_tokens)",
+      "access_timestamp": "2026-10-09T20:10:00Z",
+      "observed_operations": ["WebFetch GET", "parameter-defaults prompt"],
+      "status": "retrieved",
+      "evidence_path": "sources/SRC-R02-typesense-search.md",
+      "usage_billing": null
+    }
+  ],
+  "inherited_sources": {
+    "note": "Predecessor evidence cited by final.md under its own stage's immutable IDs. Read in full this stage; not re-fetched (except SRC-R01/SRC-R02 above, which are new independent fetches, not rebinds of these). Discrepancy on file: the input-map's declared critic source root critic/sources/ does not exist on disk; the critic stage's own source-map records its evidence under critic/notes/, which is what was read.",
+    "research_stage": {
+      "ids": ["SRC-01", "SRC-02", "SRC-03", "SRC-04", "SRC-05", "SRC-06", "SRC-07", "SRC-08", "SRC-09"],
+      "source_map": "../research/source-map.json",
+      "evidence_root": "../research/sources/ (index.md + SRC-01..09, 10 files, all read)"
+    },
+    "critic_stage": {
+      "ids": ["SRC-C01", "SRC-C02", "SRC-C03", "SRC-C04", "SRC-C05", "SRC-C06", "SRC-C07", "SRC-C08", "SRC-C09"],
+      "source_map": "../critic/source-map.json",
+      "evidence_root": "../critic/notes/ (verification-verdicts.md, claim-inventory.md, native-goal-lifecycle.md; first two read in full)"
+    }
+  }
+}

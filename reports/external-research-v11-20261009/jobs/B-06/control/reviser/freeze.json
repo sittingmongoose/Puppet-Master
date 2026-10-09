@@ -1,0 +1,75 @@
+{
+  "frozen_at": "2026-10-09T20:42:12.432074+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I06/brief.md",
+      "sha256": "dd0b06e29ae84b0ee0d4f278d9e6369b54d41d989c0c3edc0085d54f78079997",
+      "bytes": 2211
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M14.json",
+      "sha256": "051ba44d0397c8566ae5fdd5eaa17cb4e5d3d6b90a55ad46ffc00565dcebdb1b",
+      "bytes": 1969
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/assignment.md",
+      "sha256": "480010f1bb295134de3389328f28ae98a3357348aef469c95f922bb93dca3889",
+      "bytes": 2898
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/reviser/input-map.json",
+      "sha256": "ef2a98675dad20fa351b3a43f3adbec9d98b91b87835cfe69e6f08fa34714bfd",
+      "bytes": 1523
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/draft.md",
+      "sha256": "4653dbe2fe057ee8b6be3cdb9cf7150f44a3b8b8fa7ae3a5d2bb794da4b6f477",
+      "bytes": 16483
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/discovery.md",
+      "sha256": "814096694ddc1103fd3176399671dd9a36ee8b86130d5bda54830d688b5430b7",
+      "bytes": 16349
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/source-map.json",
+      "sha256": "d652969647ac84dc18133176455e61739ef3a4afc8c8a8ecd93e568bf9366918",
+      "bytes": 7938
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/research/revealed-plan.md",
+      "sha256": "acf200fa53ae0202ff0ec1c9e32eda093ac58cdc9098a226188b954f1ea63990",
+      "bytes": 549
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/critic/source-map.json",
+      "sha256": "a0d3243be8c85bc702e8bbbce0ba0b097a4650479fb035f20c07c6e0e2770480",
+      "bytes": 5403
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-06/control/critic/critique.md",
+      "sha256": "7a44291d2903800d5ac65f894a31ba9c4708e30a085c671b04bffde6797da747",
+      "bytes": 29889
+    }
+  ],
+  "method": {
+    "id": "M14",
+    "version": "v1",
+    "name": "Muse retained investigator with Luna evidence-first critic",
+    "control": "Muse investigator terminalizes after full discovery and complete draft; fresh Muse critic; fresh Muse reviser writes full final. All source duties and exact plan scope preserved.",
+    "treatment": "Muse original investigator keeps ONE native Goal/context from discovery through complete final; fresh Luna Max/priority critic derives primary facts from brief before draft, then challenges full draft/exact plan; root releases terminal/hash READY. Original Muse investigator independently dispositions criticism with evidence and saves coherent full final before native Goal completion.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Prospective ER11 development bundle prompted by completed Muse source/false-correction failures and retained-author source-positive example. Changes reviewer provider, evidence-first criticism and finalization topology together; cross-provider recipe comparison, not isolated method effect.",
+    "resource_rule": "Equal 75-minute whole-arm envelope, 90 occupied agent-minutes ceiling, max2 concurrent actors per arm. Control research30/critic20/reviser25; retained author75 overall, draft expected within30 then critic20 and full final protected quarter. All startup/queue/tool/retries/handoff/delivery charged. Not repair of started60/12-minute attempts.",
+    "locked_at": "2026-10-09T20:19:43.517Z",
+    "requested_routes": {
+      "investigation_and_finalization": "muse / muse-spark-1.3-contributor / reasoningEffort max",
+      "treatment_critic": "codex_gmail / gpt-6-luna / reasoningEffort max / serviceTier priority",
+      "control_critic": "muse / muse-spark-1.3-contributor / reasoningEffort max"
+    },
+    "promotion_rule": "Development only; no universal reliability or time win. Full source scope and both-PASS paired eligible measurements required for a gain; no holdout tuning or uncounted replacements."
+  },
+  "resource_version": "75-30-20-25-role-bundle-v1",
+  "stage_allowance_s": 1500,
+  "deadline": "2026-10-09T21:07:12.432074+00:00"
+}

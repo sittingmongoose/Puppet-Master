@@ -1,0 +1,2091 @@
+{
+  "block": "A-M07-B",
+  "assignment": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/assignment.md",
+  "exact_input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/input-map.json",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/assignment.md",
+      "sha256": "ed3603c2e91b7b956ddf79a1106137d07b6c0f5d38ebcd7143f62fa0cc9ef16d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/input-map.json",
+      "sha256": "0c4a1a330840c8acea2ac64a070edc6c8e17bea1b8449a42c5d3ae025e389280"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S01/brief.md",
+      "sha256": "1cc2f8f9f6ae1205f1f6152fa412d4b1afb153e1a3bb026def3dd25efaa1484d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S01/plan-root-only.md",
+      "sha256": "82757a00748f375bd341f03520625ba71db51524f4d51bb8b06aeba1baf0e2e5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/final.md",
+      "sha256": "1518d753866b7116f6423e35a09e3fcee88ff42426496b2c7991f21ab4a674e1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/source-map.json",
+      "sha256": "a2e6d2ad1382b92d239e3113837545dd51755bf575e3854e0370b093b0a9d369"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/assignment.md",
+      "sha256": "97ed4c22ac60939b3ebd3d35b009fa57fa7dd68de049d3f195fccc7405968cde"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/input-map.json",
+      "sha256": "4b1e74229a9ce4a3b5ca5b2b315010e97f1acd04645b03be3de195c5e18ad5df"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/critic/critique.md",
+      "sha256": "027bf0da6984a872b67f5d0ed42bdecf035cfe31a5f1ccd1a0d5d5acb2472a29"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/critic/source-map.json",
+      "sha256": "ed8b2708c6f8d9708a6f80bf77351c5bb10ee4868654af59e088b51d71fa49e9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/critic/assignment.md",
+      "sha256": "85db45dd8b860c5211067435546fbfd271218a8f3c451d8efae850272143ea6a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/critic/input-map.json",
+      "sha256": "6ff5c52f41fe2e47878a46d75ef6662aed3f0cafe7c5c890efee56b6f8923bed"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/discovery.md",
+      "sha256": "cd59423e2646d1968efd8d4b6c20335cd38a4703de5feb1b68dd8e1026dd9a6f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/draft.md",
+      "sha256": "b6d168528240c866df9382b8f8f7279df2247ecf42b782a9c974c0012bbe776a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/source-map.json",
+      "sha256": "c38d36b3d1901503a121b09e762d6dad67bbc76bcd538433cba60d06cb12b1d2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/revealed-plan.md",
+      "sha256": "82757a00748f375bd341f03520625ba71db51524f4d51bb8b06aeba1baf0e2e5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/plan-reveal.json",
+      "sha256": "7f33e206637373aa22220c48a7f9206a6a75300fb7bf3c0942be1c9c5ab55365"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/assignment.md",
+      "sha256": "d224fb962eac19917e4ce94a5782061377bda1abf3808dd441fec6217073a880"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/input-map.json",
+      "sha256": "c49a4255eb3a178c737b772772f6428af6fe0a6ac1ec0050e7ddef52b7571033"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/final.md",
+      "sha256": "718b2a9fc46762017dd87262d0f48665358ef530506eaef8045575537d8f648b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/source-map.json",
+      "sha256": "821ea48cb163541b4aabf4e60b91f4c87608efd043bbfa34f960cd4c00b4b078"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/assignment.md",
+      "sha256": "fe9e73538058231f98b85a67e98af94777dcefbf20c1da0d9c7f8688f44e2ea7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/input-map.json",
+      "sha256": "71b1d20b7ef4464067dfbf79f32cd4f5df5acd5ca154959e59573ae9518c1002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/critique.md",
+      "sha256": "044eb36d9635c55e2744bfab1efc889b6f5344e0e475ff6886569bfea7d3c51c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/source-map.json",
+      "sha256": "7c42b7f2af0441c2dc83bb37dff1e3f7617f0529ef22d902b13596aa0f49a6d4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/assignment.md",
+      "sha256": "75501b43e9be6edc8803e65425fa81dd2ab4ae4f3288259858f6b3cf9bd3b186"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/input-map.json",
+      "sha256": "db912ed1e6fafad8db98ce345ffbd291cb102269a2766ff27ed3dae7e9121905"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/discovery.md",
+      "sha256": "c65d152c1ab21226f3a40db0683d5e665105a336b4744cda1999443549453f3f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/draft.md",
+      "sha256": "2513a916761e0b1b52adaf47b7170cb8b1c5208632e795858096d68ad654bf53"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/source-map.json",
+      "sha256": "3115d611fc551300b45bc044e23db83da7294b2040c4372f87a326124aa9b0d6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/revealed-plan.md",
+      "sha256": "82757a00748f375bd341f03520625ba71db51524f4d51bb8b06aeba1baf0e2e5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/plan-reveal.json",
+      "sha256": "456c77f76219a470b08c8d135ec3577498783288ddce88dbf7d84589a0b841b7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/assignment.md",
+      "sha256": "b20bc28718b2ed2bd3cf8a09c3ae53a4d176e0fe7b4c76547569d52646ea439a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/input-map.json",
+      "sha256": "83207c0bd7edc964d7209d37817626284d92ffd103552285446d737e16afadd9"
+    }
+  ],
+  "frozen_evidence": [
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/sources/index.md",
+      "bytes": 3861,
+      "sha256": "a5df37f382be9ff6af5ef7fdc18ea642c9e6c4c97f6dc718b7c285f440c54206"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/sources/verification-log.md",
+      "bytes": 4411,
+      "sha256": "10f618784be6a9923e9f01a05a53853e1c25d383e7beaf1604163131dd29fd27"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/critic/sources/C01-powersync-update-conflicts.md",
+      "bytes": 1744,
+      "sha256": "b7c9dfb3163d1f708f3246ac0663fe30bc8fafeb8788d47123b1154fa7629f02"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/critic/sources/C02-pocketbase-files.md",
+      "bytes": 1032,
+      "sha256": "688cb025b722a77a25271a84791570e753f891e38361d9c4483a8eb96ef82a91"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/critic/sources/C03-pocketbase-intro.md",
+      "bytes": 1108,
+      "sha256": "edad6f17e7b7c2e559d3ce288f6aa60a71b4ae8521aed59e4926b6f82055e105"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/critic/sources/C04-pouchdb-conflicts.md",
+      "bytes": 1336,
+      "sha256": "969c109a494cb80c134cc2d1de114fc24e010030a1c7725d2ac4294c1f029553"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/critic/sources/C05-couchdb-conflicts.md",
+      "bytes": 1244,
+      "sha256": "7646575a603ec459b80ac6b380a0970ad7ff78be627b103c172d56100f43db1f"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/critic/sources/C06-w3c-forms.md",
+      "bytes": 852,
+      "sha256": "d264e11726960a1e7c014154102bd8d65edc61c72ed72d261f66d3353b6d0479"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/critic/sources/C07-odk-entities-central.md",
+      "bytes": 1332,
+      "sha256": "547c7fea3ac3406dee99c7f41d2b8df467d3652d1728aa3798f9cca90823f34a"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/critic/sources/C08-powersync-attachments.md",
+      "bytes": 1389,
+      "sha256": "9b6348a675051f0735a38cceb43e1fe39f63db3ba307fbb862ea35771bf41be7"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/critic/sources/index.md",
+      "bytes": 1506,
+      "sha256": "0c82351b266086886c89d4b61c03f0f06b9344adda375548f035b7d15435e80e"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/sources/S01-getodk-home.md",
+      "bytes": 769,
+      "sha256": "57cd0ca63e3c6566862ced41144bf0251511a35fb618a86554181c8f1aff0319"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/sources/S02-odk-central-install.md",
+      "bytes": 673,
+      "sha256": "83cf728e990cde382cf09ace72c4abd7c6bc007966295deb342493bb05696ec2"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/sources/S03-odk-entities-intro.md",
+      "bytes": 412,
+      "sha256": "518b44d3579560829983a09bbfc1039518757d527bdc05166d9f4b077509e762"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/sources/S04-odk-offline-maps.md",
+      "bytes": 398,
+      "sha256": "f55ece6484b36be2f3e30995d5a00dd4247d77b2ace7154db8eb9ec39e08c9d8"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/sources/S05-powersync-overview.md",
+      "bytes": 725,
+      "sha256": "af0d9bf90c37c31e7f8b82fb8c41797b8442720e5a09f5f17dc5f59b9fc2417a"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/sources/S06-powersync-update-conflicts.md",
+      "bytes": 1050,
+      "sha256": "bf2b3641ddc895fb3deabd1a88f98c4790d8f2cab050119c7efffd34fa0666ab"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/sources/S07-powersync-custom-conflicts.md",
+      "bytes": 761,
+      "sha256": "af878ee28d062daeffb08b854f9ea700f01ec0b60ba1c42a26ad51175fda4be9"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/sources/S08-powersync-attachments.md",
+      "bytes": 781,
+      "sha256": "b6ce98c7bb480fb05dbaa4a5015ad70749e78218ec4a3c3969841567322498b2"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/sources/S09-pocketbase-intro.md",
+      "bytes": 835,
+      "sha256": "3ddfd087118c6179d644b6ba604bf1b03f28f309aa6ac4384eb7d67671c63d11"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/sources/S10-pocketbase-files.md",
+      "bytes": 679,
+      "sha256": "c377296a7c0d2cf5d764927f5c2b46f5c042c70e5e653fdc86b514b295afdeb0"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/sources/S11-pocketbase-production.md",
+      "bytes": 688,
+      "sha256": "d909354f13fe7b3bf3c7818315a2d821c8abc7a14b2cffe0a4ab10b4d202d7c1"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/sources/S12-pouchdb-conflicts.md",
+      "bytes": 800,
+      "sha256": "2f77882815b050bd5205c04a2db6f823c35149bee0c572382677794c3c41fe28"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/sources/S13-couchdb-replication.md",
+      "bytes": 1175,
+      "sha256": "4240cfd775db95c1999ce8187b3dd3b6b9630fa0fbf042aea2a23ea848e3b86e"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/sources/S14-w3c-forms.md",
+      "bytes": 462,
+      "sha256": "647a58bb324ee0dce2b3727fad96579d68aa859f752e0d53ba1f851d62dcf1e3"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/sources/S15-pocketbase-changelog.md",
+      "bytes": 476,
+      "sha256": "db5226916c20e59031308ee07768afad85d539a871d0ad95628c8b368cfbe72b"
+    },
+    {
+      "neutral_label": "N2",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/research/sources/index.md",
+      "bytes": 1603,
+      "sha256": "9cfe2b9b9844f9b0a6bccf82e2df10e99fce473f1765fa56e2393a1d68ee7284"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/sources/S01-couchdb-conflicts.html",
+      "bytes": 79028,
+      "sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/sources/S02-powersync-sync-rules.md",
+      "bytes": 8599,
+      "sha256": "15973485df9fdf50d5653c86c1bd305ed3e8680aa88db73eba2ec7675eaad112"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/sources/S03-pocketbase-api-rules.html",
+      "bytes": 48070,
+      "sha256": "2449d93c1e547a0c52587c295ec79650c48089afe2d93616474ed9ec5b867ef7"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/sources/S04-pocketbase-intro.html",
+      "bytes": 24956,
+      "sha256": "d7c969a8e1cceaf9c7a9451bedc40e03d147c49d71bd3d42fba6cc447c8d5625"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/sources/S05-odk-central-users.html",
+      "bytes": 56821,
+      "sha256": "8e4f003d13115424e2bb42c7933c7347a9ce520109d063baff0e1e40ae2463dd"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/sources/S06-odk-central-projects.html",
+      "bytes": 46278,
+      "sha256": "df0dcf2cbd8ec6b6ef8680fdd329d938d52fdea3a6746da5aca605dc13a89228"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/sources/S07-rxdb-couchdb.html",
+      "bytes": 70046,
+      "sha256": "2e5be7b6b6c11c3fcefa86545be439340c96ef4ada2edcb97918d1a1be33bb71"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/sources/S08-odk-collect-offline-maps.html",
+      "bytes": 50755,
+      "sha256": "2fb9ba0db7639e2688029818cd841f26b019d01c53f40930308ba24bfa66bc3f"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/sources/S09-w3c-forms.html",
+      "bytes": 43236,
+      "sha256": "c82b6c34a71783f214a7167a5f684377ff1b5e9816c8ad5b711b502ba9b18f94"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/sources/S10-pb-changelog.md",
+      "bytes": 6970,
+      "sha256": "2c058c706276c2c2963f83a0c2f0e625bacca5771744f795840190ab4eeb16a9"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/sources/S11-garage-quickstart.html",
+      "bytes": 82359,
+      "sha256": "d9b4f5c43429fc2003643ae06787f5de7c4bc2c0134c114683ed37693e3e023d"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/sources/S12-w3c-labels.html",
+      "bytes": 60135,
+      "sha256": "3f7998acef0c97e7214ff11703df0a015303cbe0a1b09385a5a134c44e271d57"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/sources/S13-odk-collect-intro.html",
+      "bytes": 36497,
+      "sha256": "874bcf642d73fa754d11e993bf5a077cb2d466c30ad0f23febad0ee6d6454e40"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/sources/S14-automerge.html",
+      "bytes": 75701,
+      "sha256": "3dc4930f859f457f42de36620e9c545289a32f4119889383b689ab716a360cc5"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/sources/S15-electric-intro.md",
+      "bytes": 71578,
+      "sha256": "014fe345b25f385b4847d22ccc5a581e0b4c72de8e61cb9a0f39e37d723b828e"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/sources/index.md",
+      "bytes": 4130,
+      "sha256": "797ebd874775c333a835dc5307fbe64d71ba7bced0711d96eef69c74b9104fce"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/sources/S01-couchdb-conflicts.html",
+      "bytes": 79028,
+      "sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/sources/S02-powersync-sync-rules.md",
+      "bytes": 8599,
+      "sha256": "15973485df9fdf50d5653c86c1bd305ed3e8680aa88db73eba2ec7675eaad112"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/sources/S03-pocketbase-api-rules.html",
+      "bytes": 48070,
+      "sha256": "2449d93c1e547a0c52587c295ec79650c48089afe2d93616474ed9ec5b867ef7"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/sources/S04-pocketbase-intro.html",
+      "bytes": 24956,
+      "sha256": "d7c969a8e1cceaf9c7a9451bedc40e03d147c49d71bd3d42fba6cc447c8d5625"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/sources/S05-odk-central-users.html",
+      "bytes": 56821,
+      "sha256": "8e4f003d13115424e2bb42c7933c7347a9ce520109d063baff0e1e40ae2463dd"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/sources/S06-odk-central-projects.html",
+      "bytes": 46278,
+      "sha256": "df0dcf2cbd8ec6b6ef8680fdd329d938d52fdea3a6746da5aca605dc13a89228"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/sources/S07-rxdb-couchdb.html",
+      "bytes": 70046,
+      "sha256": "2e5be7b6b6c11c3fcefa86545be439340c96ef4ada2edcb97918d1a1be33bb71"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/sources/S08-odk-collect-offline-maps.html",
+      "bytes": 50755,
+      "sha256": "2fb9ba0db7639e2688029818cd841f26b019d01c53f40930308ba24bfa66bc3f"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/sources/S09-w3c-forms.html",
+      "bytes": 43236,
+      "sha256": "c82b6c34a71783f214a7167a5f684377ff1b5e9816c8ad5b711b502ba9b18f94"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/sources/S10-pb-changelog.md",
+      "bytes": 6970,
+      "sha256": "2c058c706276c2c2963f83a0c2f0e625bacca5771744f795840190ab4eeb16a9"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/sources/S11-garage-quickstart.html",
+      "bytes": 82359,
+      "sha256": "d9b4f5c43429fc2003643ae06787f5de7c4bc2c0134c114683ed37693e3e023d"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/sources/S12-w3c-labels.html",
+      "bytes": 60135,
+      "sha256": "3f7998acef0c97e7214ff11703df0a015303cbe0a1b09385a5a134c44e271d57"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/sources/S13-odk-collect-intro.html",
+      "bytes": 36497,
+      "sha256": "874bcf642d73fa754d11e993bf5a077cb2d466c30ad0f23febad0ee6d6454e40"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/sources/S14-automerge.html",
+      "bytes": 75701,
+      "sha256": "3dc4930f859f457f42de36620e9c545289a32f4119889383b689ab716a360cc5"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/sources/S15-electric-intro.md",
+      "bytes": 71578,
+      "sha256": "014fe345b25f385b4847d22ccc5a581e0b4c72de8e61cb9a0f39e37d723b828e"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/critic/sources/index.md",
+      "bytes": 4033,
+      "sha256": "934a49741fbb04df8ae91a08bb33d449531683e17d6fea9762cbd24f7d313f79"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/sources/S01-couchdb-conflicts.html",
+      "bytes": 79028,
+      "sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/sources/S02-powersync-sync-rules.md",
+      "bytes": 8599,
+      "sha256": "15973485df9fdf50d5653c86c1bd305ed3e8680aa88db73eba2ec7675eaad112"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/sources/S03-pocketbase-api-rules.html",
+      "bytes": 48070,
+      "sha256": "2449d93c1e547a0c52587c295ec79650c48089afe2d93616474ed9ec5b867ef7"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/sources/S04-pocketbase-intro.html",
+      "bytes": 24956,
+      "sha256": "d7c969a8e1cceaf9c7a9451bedc40e03d147c49d71bd3d42fba6cc447c8d5625"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/sources/S05-odk-central-users.html",
+      "bytes": 56821,
+      "sha256": "8e4f003d13115424e2bb42c7933c7347a9ce520109d063baff0e1e40ae2463dd"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/sources/S06-odk-central-projects.html",
+      "bytes": 46278,
+      "sha256": "df0dcf2cbd8ec6b6ef8680fdd329d938d52fdea3a6746da5aca605dc13a89228"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/sources/S07-rxdb-couchdb.html",
+      "bytes": 70046,
+      "sha256": "2e5be7b6b6c11c3fcefa86545be439340c96ef4ada2edcb97918d1a1be33bb71"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/sources/S08-odk-collect-offline-maps.html",
+      "bytes": 50755,
+      "sha256": "2fb9ba0db7639e2688029818cd841f26b019d01c53f40930308ba24bfa66bc3f"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/sources/S09-w3c-forms.html",
+      "bytes": 43236,
+      "sha256": "c82b6c34a71783f214a7167a5f684377ff1b5e9816c8ad5b711b502ba9b18f94"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/sources/S10-pb-changelog.md",
+      "bytes": 6970,
+      "sha256": "2c058c706276c2c2963f83a0c2f0e625bacca5771744f795840190ab4eeb16a9"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/sources/S11-garage-quickstart.html",
+      "bytes": 82359,
+      "sha256": "d9b4f5c43429fc2003643ae06787f5de7c4bc2c0134c114683ed37693e3e023d"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/sources/S12-w3c-labels.html",
+      "bytes": 60135,
+      "sha256": "3f7998acef0c97e7214ff11703df0a015303cbe0a1b09385a5a134c44e271d57"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/sources/S13-odk-collect-intro.html",
+      "bytes": 36497,
+      "sha256": "874bcf642d73fa754d11e993bf5a077cb2d466c30ad0f23febad0ee6d6454e40"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/sources/S14-automerge.html",
+      "bytes": 75701,
+      "sha256": "3dc4930f859f457f42de36620e9c545289a32f4119889383b689ab716a360cc5"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/sources/S15-electric-intro.md",
+      "bytes": 71578,
+      "sha256": "014fe345b25f385b4847d22ccc5a581e0b4c72de8e61cb9a0f39e37d723b828e"
+    },
+    {
+      "neutral_label": "N1",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/research/sources/index.md",
+      "bytes": 2870,
+      "sha256": "010ea0466d6a46971f91e2f5174bdd20a4700c6820c761ad17c6b740e53ea814"
+    }
+  ],
+  "independently_retrieved_primary_sources": [
+    {
+      "id": "E01",
+      "url": "https://rxdb.info/replication.html",
+      "resolved_url": "https://rxdb.info/replication.html",
+      "access_timestamp": "2026-10-09T20:21:10.883245+00:00",
+      "http_status": 200,
+      "response_bytes": 166268,
+      "response_sha256": "8d5fd2fb2dfc7ad58ff6525ea7955d773551925717d3e0d0d358d6927f853fff",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E01.txt",
+      "sha256": "803467f11e46a7c5a00468135e0df4079fd2fc19524f391cc87b929e0a8e6af4",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 9313,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E02",
+      "url": "https://rxdb.info/replication-couchdb.html",
+      "resolved_url": "https://rxdb.info/replication-couchdb.html",
+      "access_timestamp": "2026-10-09T20:21:10.813800+00:00",
+      "http_status": 200,
+      "response_bytes": 70046,
+      "response_sha256": "2e5be7b6b6c11c3fcefa86545be439340c96ef4ada2edcb97918d1a1be33bb71",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E02.txt",
+      "sha256": "78718f19fbc184e0031ecba098037e1df15a631d67d491a3344fcd982ca51ea9",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 6717,
+      "version": "RxDB docs page last updated 2026-03-31; capture equals treatment frozen S07"
+    },
+    {
+      "id": "E03",
+      "url": "https://pouchdb.com/api.html",
+      "resolved_url": "https://pouchdb.com/api.html",
+      "access_timestamp": "2026-10-09T20:21:11.217995+00:00",
+      "http_status": 200,
+      "response_bytes": 477798,
+      "response_sha256": "16afc219c39a51e15ef844342a46e80da3889a1cf5c462dc04982d48cc536be6",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E03.txt",
+      "sha256": "d04f12369068659b5298a1527512e5d07192211611a3c67731af8caf4d2a481e",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 1111,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E04",
+      "url": "https://docs.couchdb.org/en/stable/api/database/security.html",
+      "resolved_url": "https://docs.couchdb.org/en/stable/api/database/security.html",
+      "access_timestamp": "2026-10-09T20:21:13.050596+00:00",
+      "http_status": 200,
+      "response_bytes": 33012,
+      "response_sha256": "196640ddf0c9b921cbb9673933be51a12ca95d19f40b986d29ef9fb88799e74f",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E04.txt",
+      "sha256": "19ea030bc7893e65aff4cd48e6e83b0d763c5a5a7857fe245435263d7fb017f2",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 2145,
+      "version": "Apache CouchDB 3.5 stable-channel documentation; capture-pinned, mutable channel"
+    },
+    {
+      "id": "E05",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria",
+      "resolved_url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria",
+      "access_timestamp": "2026-10-09T20:21:10.948272+00:00",
+      "http_status": 200,
+      "response_bytes": 164720,
+      "response_sha256": "a30073bce593080a7f5be0fdc78b6bd2444309628a7b1fe25c66bd6aa775df1e",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E05.txt",
+      "sha256": "9325880a05bd09bfe9867722ff4689736c2f11beab6381a157a2fd7adee400fb",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 13037,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E06",
+      "url": "https://docs.getodk.org/central-users/",
+      "resolved_url": "https://docs.getodk.org/central-users/",
+      "access_timestamp": "2026-10-09T20:35:52.664514+00:00",
+      "http_status": 200,
+      "response_bytes": 12358,
+      "response_sha256": "0c8831852ba992adf164ecfe3d735c1a5ae572c78613c918f908831a36eafaa6",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E06.txt",
+      "sha256": "b95078355fc76d38fb505425aae9b0cc8ad5d190a905815284ef37d31d888635",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed; gzip decoded if applicable",
+      "usage_billing": null,
+      "bytes": 16256,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E07",
+      "url": "https://docs.getodk.org/entities-intro/",
+      "resolved_url": "https://docs.getodk.org/entities-intro/",
+      "access_timestamp": "2026-10-09T20:21:54.130319+00:00",
+      "http_status": 200,
+      "response_bytes": 22544,
+      "response_sha256": "56355e6cb64e11c9e1b5fc1113a6027ec14b8cc89cffe62f99d7b3b836b28738",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E07.txt",
+      "sha256": "a3299bd16c96895ab14e0ed776c85c289cb68e3f5b4008670d160c369cf92342",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed; gzip response decoded before text parsing",
+      "usage_billing": null,
+      "bytes": 7424,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E08",
+      "url": "https://docs.getodk.org/central-submissions/",
+      "resolved_url": "https://docs.getodk.org/central-submissions/",
+      "access_timestamp": "2026-10-09T20:21:54.279155+00:00",
+      "http_status": 200,
+      "response_bytes": 18174,
+      "response_sha256": "710d2d5687ebee69d74e5114daea6ba73d79630fb666b133783c0215d9d910a7",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E08.txt",
+      "sha256": "a19e96c766d8ad138511460b3353791fbfe4fb19e939cfa146ebea67647654af",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed; gzip response decoded before text parsing",
+      "usage_billing": null,
+      "bytes": 14631,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E09",
+      "url": "https://docs.getodk.org/central-install-digital-ocean/",
+      "resolved_url": "https://docs.getodk.org/central-install-digital-ocean/",
+      "access_timestamp": "2026-10-09T20:21:54.226835+00:00",
+      "http_status": 200,
+      "response_bytes": 24879,
+      "response_sha256": "84fbc45aab466bbbd1290239d5056e68e4830a88a2cb5d87888c04cf7028be06",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E09.txt",
+      "sha256": "463f74818411b544bdc43b7e4d3882755a705aa8580416a8a29caeb3d85e077c",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed; gzip response decoded before text parsing",
+      "usage_billing": null,
+      "bytes": 4980,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E10",
+      "url": "https://docs.getodk.org/central-backup/",
+      "resolved_url": "https://docs.getodk.org/central-backup/",
+      "access_timestamp": "2026-10-09T20:21:54.226690+00:00",
+      "http_status": 200,
+      "response_bytes": 12159,
+      "response_sha256": "d8dce1b14a2b1632c2b941ba9bfc86b56a4a8e98adb94ea5dc8ebd51769b6b36",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E10.txt",
+      "sha256": "336531940804bffa24a9d95165b8c282eb6f3c3934a4d83e4bad2ca8dd5ae8a8",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed; gzip response decoded before text parsing",
+      "usage_billing": null,
+      "bytes": 6404,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E11",
+      "url": "https://docs.powersync.com/handling-writes/handling-update-conflicts.md",
+      "resolved_url": "https://docs.powersync.com/handling-writes/handling-update-conflicts.md",
+      "access_timestamp": "2026-10-09T20:21:11.302283+00:00",
+      "http_status": 200,
+      "response_bytes": 3286,
+      "response_sha256": "5f8942e35c2368b8956de59f940397b197283be438e50e4addc244b45d52cbba",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E11.txt",
+      "sha256": "e728845f01a19a80058d1832f6b9cb7e6306595636b711f623e5b827b6f70ead",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 3287,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E12",
+      "url": "https://docs.powersync.com/handling-writes/custom-conflict-resolution.md",
+      "resolved_url": "https://docs.powersync.com/handling-writes/custom-conflict-resolution.md",
+      "access_timestamp": "2026-10-09T20:21:11.318697+00:00",
+      "http_status": 200,
+      "response_bytes": 39496,
+      "response_sha256": "62f45516ace677d356f0de7cbc96164434770b224e2d8d2d8751ad2e6bd163c2",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E12.txt",
+      "sha256": "3d4400506a5af727e7795d38821e1c18a43e4bc26029e98d48fadcea00e283fc",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 7754,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E13",
+      "url": "https://docs.powersync.com/client-sdks/advanced/attachments.md",
+      "resolved_url": "https://docs.powersync.com/client-sdks/advanced/attachments.md",
+      "access_timestamp": "2026-10-09T20:21:11.501569+00:00",
+      "http_status": 200,
+      "response_bytes": 92967,
+      "response_sha256": "2ae25f6938b58074542bb894f4189f0bce6ff5afe9b552bb60254992f452b51f",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E13.txt",
+      "sha256": "1e038a1cab663277512a3f116a27918c6693f2d4378f8ee43fd1bb6932bef66b",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 11895,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E14",
+      "url": "https://docs.powersync.com/sync/rules/overview.md",
+      "resolved_url": "https://docs.powersync.com/sync/rules/overview.md",
+      "access_timestamp": "2026-10-09T20:21:11.330810+00:00",
+      "http_status": 200,
+      "response_bytes": 8599,
+      "response_sha256": "15973485df9fdf50d5653c86c1bd305ed3e8680aa88db73eba2ec7675eaad112",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E14.txt",
+      "sha256": "42fc9bce0418161784a4d7a7ae129c05785245fb97fe17bf1af1ab19378b0774",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 8600,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E15",
+      "url": "https://docs.powersync.com/llms.txt",
+      "resolved_url": "https://docs.powersync.com/llms.txt",
+      "access_timestamp": "2026-10-09T20:21:54.032117+00:00",
+      "http_status": 200,
+      "response_bytes": 35031,
+      "response_sha256": "631502344d1cf5d05cc137a9777dcd33979a46801e9dac24141689914cf17b64",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E15.txt",
+      "sha256": "acb33639abea4f350b359ba137ae7c818b2face14ea50cc71679825c5bed9710",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 6331,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E16",
+      "url": "https://pocketbase.io/docs/files-handling/",
+      "resolved_url": "https://pocketbase.io/docs/files-handling/",
+      "access_timestamp": "2026-10-09T20:21:11.912902+00:00",
+      "http_status": 200,
+      "response_bytes": 61976,
+      "response_sha256": "64299f16c1182f1b54eeb21ec75d64c4749ef4d6f19f41d38909e5a301c96fc7",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E16.txt",
+      "sha256": "34895d09041012183d0b466b326b174f15120c68838a7995160f4289439d2479",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 3938,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E17",
+      "url": "https://pocketbase.io/docs/going-to-production/",
+      "resolved_url": "https://pocketbase.io/docs/going-to-production/",
+      "access_timestamp": "2026-10-09T20:21:12.060303+00:00",
+      "http_status": 200,
+      "response_bytes": 41759,
+      "response_sha256": "6ed01143117462a41ccd27565d327717369d6abfaa8047e99c35173110cd8356",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E17.txt",
+      "sha256": "41d00d70aea8d8db2a1a47d3e224f1b3c67e6f68eae0be1bb2db4b1a87aeb503",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 4929,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E18",
+      "url": "https://pocketbase.io/docs/api-rules-and-filters/",
+      "resolved_url": "https://pocketbase.io/docs/api-rules-and-filters/",
+      "access_timestamp": "2026-10-09T20:21:12.187186+00:00",
+      "http_status": 200,
+      "response_bytes": 48070,
+      "response_sha256": "2449d93c1e547a0c52587c295ec79650c48089afe2d93616474ed9ec5b867ef7",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E18.txt",
+      "sha256": "3bd92d15935e9695e438a3d9dd72000f57baedee5bfb0786d9410156f1222bfe",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 3590,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E19",
+      "url": "https://raw.githubusercontent.com/pocketbase/pocketbase/v0.40.5/CHANGELOG.md",
+      "resolved_url": "https://raw.githubusercontent.com/pocketbase/pocketbase/v0.40.5/CHANGELOG.md",
+      "access_timestamp": "2026-10-09T20:21:11.621097+00:00",
+      "http_status": 200,
+      "response_bytes": 6970,
+      "response_sha256": "2c058c706276c2c2963f83a0c2f0e625bacca5771744f795840190ab4eeb16a9",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E19.txt",
+      "sha256": "eece823cdccdc37e3dfbe77b5d7d9040435267bb3eda57465744fe72cca58822",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 6971,
+      "version": "PocketBase released tag v0.40.5; exact text equals treatment frozen S10",
+      "frozen_body_sha256_match": true
+    },
+    {
+      "id": "E20",
+      "url": "https://garagehq.deuxfleurs.fr/documentation/quick-start/",
+      "resolved_url": "https://garagehq.deuxfleurs.fr/documentation/quick-start/",
+      "access_timestamp": "2026-10-09T20:21:12.217595+00:00",
+      "http_status": 200,
+      "response_bytes": 82359,
+      "response_sha256": "d9b4f5c43429fc2003643ae06787f5de7c4bc2c0134c114683ed37693e3e023d",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E20.txt",
+      "sha256": "ebece5202c9ab1a73e157c00b1ded15722b199773457ab1db218451fb85d23c5",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 10022,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E21",
+      "url": "https://electric-sql.com/docs/sync.md",
+      "resolved_url": "https://electric.ax/docs/sync.md",
+      "access_timestamp": "2026-10-09T20:21:12.109708+00:00",
+      "http_status": 200,
+      "response_bytes": 2862,
+      "response_sha256": "30022c46188863942f6cc26a95fb316d56305b4c4a82405c03b2c3b0198cfb22",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E21.txt",
+      "sha256": "093b3fa1ec6113f8e2800fa94090a19919e7ea04d596d0dc6dc83ff0ab1f2355",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 2863,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E22",
+      "url": "https://automerge.org/",
+      "resolved_url": "https://automerge.org/",
+      "access_timestamp": "2026-10-09T20:21:12.027485+00:00",
+      "http_status": 200,
+      "response_bytes": 76068,
+      "response_sha256": "2eb078ae9bd3d5ca9662ba3fec52cff159b539beb5e3783ec45d2ba34186150a",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E22.txt",
+      "sha256": "92d0f8e5d5b358faa7fda51112eeea9ff356a9321ee018872d2005686606ecca",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 4041,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E23",
+      "url": "https://www.w3.org/WAI/tutorials/forms/validation/",
+      "resolved_url": "https://www.w3.org/WAI/tutorials/forms/validation/",
+      "access_timestamp": "2026-10-09T20:21:12.141900+00:00",
+      "http_status": 200,
+      "response_bytes": 58224,
+      "response_sha256": "2c9b5bb71478cea0bb8b86d71631781f682b9558a4f6a212ca4a3b28885b01e4",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E23.txt",
+      "sha256": "fb64afcd605110c4804dbb1d04376a22a4ef2ceef8a1bfe9ea39192620bd368d",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 8439,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E24",
+      "url": "https://www.w3.org/WAI/tutorials/forms/notifications/",
+      "resolved_url": "https://www.w3.org/WAI/tutorials/forms/notifications/",
+      "access_timestamp": "2026-10-09T20:21:12.160252+00:00",
+      "http_status": 200,
+      "response_bytes": 75329,
+      "response_sha256": "7c6e4494b3ec9c13f5f197e4ca4921ee836b126332add4345d2c55047b595457",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E24.txt",
+      "sha256": "36b3622ee5bcfba38fa43f1bd6ad051e29d5aca85f41775bf3594f0a5a60b68a",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 7383,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E25",
+      "url": "https://developer.android.com/develop/background-work/background-tasks/persistent",
+      "resolved_url": "https://developer.android.com/develop/background-work/background-tasks/persistent",
+      "access_timestamp": "2026-10-09T20:21:54.888958+00:00",
+      "http_status": 200,
+      "response_bytes": 289546,
+      "response_sha256": "9079e7d6f71495f50b2070c1df3f5d50e24af5ad2e8b56414b64559ea0e68b2f",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E25.txt",
+      "sha256": "7cc3715ebee505eb6ebaebd65ea4061846e39792ffae806131a7a65aa320d84d",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 3668,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E26",
+      "url": "https://docs.getodk.org/central-entities/",
+      "resolved_url": "https://docs.getodk.org/central-entities/",
+      "access_timestamp": "2026-10-09T20:21:54.522969+00:00",
+      "http_status": 200,
+      "response_bytes": 25157,
+      "response_sha256": "2a45cc7ec3f2755e1bb7fef48b38eb6aa2c978a2d40bb6622fefb7753bd3e86a",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E26.txt",
+      "sha256": "35acbc671c97e494b998e772efd0e1fc11ac46ac0e8cfcad462236aa0f583cd4",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed; gzip response decoded before text parsing",
+      "usage_billing": null,
+      "bytes": 17826,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E27",
+      "url": "https://pocketbase.io/faq/",
+      "resolved_url": "https://pocketbase.io/faq/",
+      "access_timestamp": "2026-10-09T20:21:54.772612+00:00",
+      "http_status": 200,
+      "response_bytes": 17526,
+      "response_sha256": "f2a4ba9c2330cfde5e2927d305aed4eb8f15363028be218ed0a435239c033c8c",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E27.txt",
+      "sha256": "8dc44211cd664d903324f982d4fbcd7ea01aa79d66ff03ecb5e0a2313a321183",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 843,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E28",
+      "url": "https://pouchdb.com/guides/conflicts.html",
+      "resolved_url": "https://pouchdb.com/guides/conflicts.html",
+      "access_timestamp": "2026-10-09T20:21:54.417457+00:00",
+      "http_status": 200,
+      "response_bytes": 28467,
+      "response_sha256": "57609df8ae2496a0315c814e04d6e34455ebba6ceef737ba15de470a33c771e0",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E28.txt",
+      "sha256": "b1977ee525dd7ca4a486c690003b89d7c0c020f19a6117d51dec7b1a09fd4e44",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 7163,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E29",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "resolved_url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "access_timestamp": "2026-10-09T20:21:54.358850+00:00",
+      "http_status": 200,
+      "response_bytes": 79028,
+      "response_sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E29.txt",
+      "sha256": "dbf96387a4618eefd1f44ccc2c33d1e4f033bc9c8ed5373141baa387107e04f7",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 10814,
+      "version": "Apache CouchDB 3.5 stable-channel documentation; capture-pinned, mutable channel"
+    },
+    {
+      "id": "E30",
+      "url": "https://docs.powersync.com/sync/streams/overview.md",
+      "resolved_url": "https://docs.powersync.com/sync/streams/overview.md",
+      "access_timestamp": "2026-10-09T20:21:54.424859+00:00",
+      "http_status": 200,
+      "response_bytes": 5684,
+      "response_sha256": "2a6d41ebbaa940ede5b8dde96a9b5a5af537b98dd469c637f87a1c4258a2f2d0",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E30.txt",
+      "sha256": "863c9ed6155f14e3851bda20b1fbbb22024eb6d863ec494d10cf3da79a322671",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 5685,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E31",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API",
+      "resolved_url": "https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API",
+      "access_timestamp": "2026-10-09T20:21:54.621714+00:00",
+      "http_status": 200,
+      "response_bytes": 155465,
+      "response_sha256": "2eb064938a0e99734c47935109d9774a0f10e6d1844ad629469246b20b7969cf",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E31.txt",
+      "sha256": "4857e22e95f03643fb245dcc9b2d0c76a0cfaf9299d5271544bcf72a28fb0eae",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 4517,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E32",
+      "url": "https://developer.android.com/develop/background-work/background-tasks/persistent/how-to/long-running",
+      "resolved_url": "https://developer.android.com/develop/background-work/background-tasks/persistent/how-to/long-running",
+      "access_timestamp": "2026-10-09T20:21:54.783308+00:00",
+      "http_status": 200,
+      "response_bytes": 323957,
+      "response_sha256": "4114e1bd6ce5a237100fdb5b88234587ed3a2f51eb7570b31971f9f8a387bcd4",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E32.txt",
+      "sha256": "c562e6d4613b517885cff6668cf3dc01e096e07c7cc05845b76758e4837d6e28",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 2067,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E33",
+      "url": "https://docs.powersync.com/configuration/source-db/setup.md",
+      "resolved_url": "https://docs.powersync.com/configuration/source-db/setup.md",
+      "access_timestamp": "2026-10-09T20:23:01.768349+00:00",
+      "http_status": 200,
+      "response_bytes": 55559,
+      "response_sha256": "e4c68365fc44457c463feb2e798261ab093555dbb9bf1ce969ad0fc77fe5a0a0",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E33.txt",
+      "sha256": "c7ce962f58bf03f2056d5a823630eae3282d837233e805741ac493d56c29737f",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 874,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E34",
+      "url": "https://docs.powersync.com/intro/powersync-overview.md",
+      "resolved_url": "https://docs.powersync.com/intro/powersync-overview.md",
+      "access_timestamp": "2026-10-09T20:23:01.893355+00:00",
+      "http_status": 200,
+      "response_bytes": 4250,
+      "response_sha256": "ca5f8629b2db4b2595f94433b2b3bc1e6f5dd88b277e74c51dc34aa8297c893b",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E34.txt",
+      "sha256": "80372ea0fd97eff12e21da58f03d2f71d37f39df2533b470544ce475f490568b",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 4251,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E35",
+      "url": "https://docs.powersync.com/configuration/app-backend/setup.md",
+      "resolved_url": "https://docs.powersync.com/configuration/app-backend/setup.md",
+      "access_timestamp": "2026-10-09T20:23:02.027414+00:00",
+      "http_status": 200,
+      "response_bytes": 5641,
+      "response_sha256": "6de408b111bbae55d3824655c141452f45ca707b5b02460beb8a83db424cefdf",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E35.txt",
+      "sha256": "2a05aaef611fed5c9ff0983f7a2a2924fc6c7b5be5004cf2c0f9ac3dc27edc97",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 5642,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E36",
+      "url": "https://garagehq.deuxfleurs.fr/documentation/reference-manual/s3-compatibility/",
+      "resolved_url": "https://garagehq.deuxfleurs.fr/documentation/reference-manual/s3-compatibility/",
+      "access_timestamp": "2026-10-09T20:23:02.634041+00:00",
+      "http_status": 200,
+      "response_bytes": 106109,
+      "response_sha256": "9cf4088b24b209f7dccfe70af9f0fd08be50eed86f8a13db4f458bec12e64de1",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E36.txt",
+      "sha256": "066e44c4c03b3568c49f974cd51b14a80aaa1ade1c927594654c32c93e9c9cdb",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed",
+      "usage_billing": null,
+      "bytes": 6089,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    },
+    {
+      "id": "E37",
+      "url": "https://docs.getodk.org/central-projects/",
+      "resolved_url": "https://docs.getodk.org/central-projects/",
+      "access_timestamp": "2026-10-09T20:35:52.869605+00:00",
+      "http_status": 200,
+      "response_bytes": 10443,
+      "response_sha256": "dd3dc6224b1b8dda35c529c2f2d29ee161dc8b31dd3f060ad51356273d14ff94",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E37.txt",
+      "sha256": "1b1163f9f28de6e7839d83c686ace9437bdc5216f15b303803b9c57b381d901e",
+      "evidence_kind": "bounded relevant primary text excerpt; exact response SHA-256 recorded separately",
+      "observed_operation": "independent HTTPS GET, decode/parse text only; no source instructions executed; gzip decoded if applicable",
+      "usage_billing": null,
+      "bytes": 3140,
+      "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed"
+    }
+  ],
+  "claim_maps": {
+    "N2": [
+      {
+        "claim_id": "N2-C01",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/final.md",
+        "lines": [
+          16,
+          20
+        ],
+        "sources": [
+          {
+            "source_id": "E07",
+            "url": "https://docs.getodk.org/entities-intro/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Entity workflows and supported versions",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E07.txt",
+            "sha256": "a3299bd16c96895ab14e0ed776c85c289cb68e3f5b4008670d160c369cf92342"
+          },
+          {
+            "source_id": "E08",
+            "url": "https://docs.getodk.org/central-submissions/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Submission table, media and review",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E08.txt",
+            "sha256": "a19e96c766d8ad138511460b3353791fbfe4fb19e939cfa146ebea67647654af"
+          }
+        ]
+      },
+      {
+        "claim_id": "N2-C02",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/final.md",
+        "lines": [
+          43,
+          71
+        ],
+        "sources": [
+          {
+            "source_id": "E05",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Web Storage versus other storage; eviction/persistence",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E05.txt",
+            "sha256": "9325880a05bd09bfe9867722ff4689736c2f11beab6381a157a2fd7adee400fb"
+          },
+          {
+            "source_id": "E31",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "IndexedDB transactional blobs",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E31.txt",
+            "sha256": "4857e22e95f03643fb245dcc9b2d0c76a0cfaf9299d5271544bcf72a28fb0eae"
+          },
+          {
+            "source_id": "E25",
+            "url": "https://developer.android.com/develop/background-work/background-tasks/persistent",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Persistent work",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E25.txt",
+            "sha256": "7cc3715ebee505eb6ebaebd65ea4061846e39792ffae806131a7a65aa320d84d"
+          }
+        ]
+      },
+      {
+        "claim_id": "N2-C03",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/final.md",
+        "lines": [
+          82,
+          105
+        ],
+        "sources": [
+          {
+            "source_id": "E11",
+            "url": "https://docs.powersync.com/handling-writes/handling-update-conflicts.md",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Handling Update Conflicts",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E11.txt",
+            "sha256": "e728845f01a19a80058d1832f6b9cb7e6306595636b711f623e5b827b6f70ead"
+          },
+          {
+            "source_id": "E12",
+            "url": "https://docs.powersync.com/handling-writes/custom-conflict-resolution.md",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Data Flow and conflict strategies",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E12.txt",
+            "sha256": "3d4400506a5af727e7795d38821e1c18a43e4bc26029e98d48fadcea00e283fc"
+          }
+        ]
+      },
+      {
+        "claim_id": "N2-C04",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/final.md",
+        "lines": [
+          107,
+          123
+        ],
+        "sources": [
+          {
+            "source_id": "E28",
+            "url": "https://pouchdb.com/guides/conflicts.html",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Immediate and eventual conflicts",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E28.txt",
+            "sha256": "b1977ee525dd7ca4a486c690003b89d7c0c020f19a6117d51dec7b1a09fd4e44"
+          },
+          {
+            "source_id": "E29",
+            "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+            "version": "Apache CouchDB 3.5 stable-channel documentation; capture-pinned, mutable channel",
+            "section_or_symbol": "Conflict avoidance; revision tree; working with conflicts",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E29.txt",
+            "sha256": "dbf96387a4618eefd1f44ccc2c33d1e4f033bc9c8ed5373141baa387107e04f7"
+          }
+        ]
+      },
+      {
+        "claim_id": "N2-C05",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/final.md",
+        "lines": [
+          125,
+          133
+        ],
+        "sources": [
+          {
+            "source_id": "E08",
+            "url": "https://docs.getodk.org/central-submissions/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Review states and editing",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E08.txt",
+            "sha256": "a19e96c766d8ad138511460b3353791fbfe4fb19e939cfa146ebea67647654af"
+          },
+          {
+            "source_id": "E26",
+            "url": "https://docs.getodk.org/central-entities/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Entity conflicts and offline ordering",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E26.txt",
+            "sha256": "35acbc671c97e494b998e772efd0e1fc11ac46ac0e8cfcad462236aa0f583cd4"
+          }
+        ]
+      },
+      {
+        "claim_id": "N2-C06",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/final.md",
+        "lines": [
+          137,
+          155
+        ],
+        "sources": [
+          {
+            "source_id": "E13",
+            "url": "https://docs.powersync.com/client-sdks/advanced/attachments.md",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Metadata + storage provider; workflow; SDK reference",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E13.txt",
+            "sha256": "1e038a1cab663277512a3f116a27918c6693f2d4378f8ee43fd1bb6932bef66b"
+          },
+          {
+            "source_id": "E28",
+            "url": "https://pouchdb.com/guides/conflicts.html",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Attachment APIs in conflict model",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E28.txt",
+            "sha256": "b1977ee525dd7ca4a486c690003b89d7c0c020f19a6117d51dec7b1a09fd4e44"
+          }
+        ]
+      },
+      {
+        "claim_id": "N2-C07",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/final.md",
+        "lines": [
+          157,
+          166
+        ],
+        "sources": [
+          {
+            "source_id": "E16",
+            "url": "https://pocketbase.io/docs/files-handling/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "File upload; filenames; storage options",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E16.txt",
+            "sha256": "34895d09041012183d0b466b326b174f15120c68838a7995160f4289439d2479"
+          }
+        ]
+      },
+      {
+        "claim_id": "N2-C08",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/final.md",
+        "lines": [
+          168,
+          197
+        ],
+        "sources": [
+          {
+            "source_id": "E08",
+            "url": "https://docs.getodk.org/central-submissions/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "CSV ZIP with repeat tables and media; OData; review states",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E08.txt",
+            "sha256": "a19e96c766d8ad138511460b3353791fbfe4fb19e939cfa146ebea67647654af"
+          },
+          {
+            "source_id": "E10",
+            "url": "https://docs.getodk.org/central-backup/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Backup scope and restore version constraints",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E10.txt",
+            "sha256": "336531940804bffa24a9d95165b8c282eb6f3c3934a4d83e4bad2ca8dd5ae8a8"
+          }
+        ]
+      },
+      {
+        "claim_id": "N2-C09",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/final.md",
+        "lines": [
+          199,
+          227
+        ],
+        "sources": [
+          {
+            "source_id": "E04",
+            "url": "https://docs.couchdb.org/en/stable/api/database/security.html",
+            "version": "Apache CouchDB 3.5 stable-channel documentation; capture-pinned, mutable channel",
+            "section_or_symbol": "Database membership reads",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E04.txt",
+            "sha256": "19ea030bc7893e65aff4cd48e6e83b0d763c5a5a7857fe245435263d7fb017f2"
+          },
+          {
+            "source_id": "E03",
+            "url": "https://pouchdb.com/api.html",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Filtered replication warning",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E03.txt",
+            "sha256": "d04f12369068659b5298a1527512e5d07192211611a3c67731af8caf4d2a481e"
+          },
+          {
+            "source_id": "E18",
+            "url": "https://pocketbase.io/docs/api-rules-and-filters/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "API rules",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E18.txt",
+            "sha256": "3bd92d15935e9695e438a3d9dd72000f57baedee5bfb0786d9410156f1222bfe"
+          }
+        ]
+      },
+      {
+        "claim_id": "N2-C10",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/final.md",
+        "lines": [
+          277,
+          288
+        ],
+        "sources": [
+          {
+            "source_id": "E23",
+            "url": "https://www.w3.org/WAI/tutorials/forms/validation/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Validation guidance",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E23.txt",
+            "sha256": "fb64afcd605110c4804dbb1d04376a22a4ef2ceef8a1bfe9ea39192620bd368d"
+          },
+          {
+            "source_id": "E24",
+            "url": "https://www.w3.org/WAI/tutorials/forms/notifications/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Error notifications and confirmation",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E24.txt",
+            "sha256": "36b3622ee5bcfba38fa43f1bd6ad051e29d5aca85f41775bf3594f0a5a60b68a"
+          },
+          {
+            "source_id": "E31",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Browser API applicability",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E31.txt",
+            "sha256": "4857e22e95f03643fb245dcc9b2d0c76a0cfaf9299d5271544bcf72a28fb0eae"
+          }
+        ]
+      },
+      {
+        "claim_id": "N2-C11",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/final.md",
+        "lines": [
+          313,
+          335
+        ],
+        "sources": [
+          {
+            "source_id": "E09",
+            "url": "https://docs.getodk.org/central-install-digital-ocean/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Server size and Docker install",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E09.txt",
+            "sha256": "463f74818411b544bdc43b7e4d3882755a705aa8580416a8a29caeb3d85e077c"
+          },
+          {
+            "source_id": "E17",
+            "url": "https://pocketbase.io/docs/going-to-production/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Minimal setup and systemd",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E17.txt",
+            "sha256": "41d00d70aea8d8db2a1a47d3e224f1b3c67e6f68eae0be1bb2db4b1a87aeb503"
+          },
+          {
+            "source_id": "E27",
+            "url": "https://pocketbase.io/faq/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "SQLite storage",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E27.txt",
+            "sha256": "8dc44211cd664d903324f982d4fbcd7ea01aa79d66ff03ecb5e0a2313a321183"
+          },
+          {
+            "source_id": "E34",
+            "url": "https://docs.powersync.com/intro/powersync-overview.md",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Source database matrix",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E34.txt",
+            "sha256": "80372ea0fd97eff12e21da58f03d2f71d37f39df2533b470544ce475f490568b"
+          }
+        ]
+      },
+      {
+        "claim_id": "N2-C12",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/final.md",
+        "lines": [
+          337,
+          347
+        ],
+        "sources": [
+          {
+            "source_id": "E09",
+            "url": "https://docs.getodk.org/central-install-digital-ocean/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "ODK Cloud managed alternative",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E09.txt",
+            "sha256": "463f74818411b544bdc43b7e4d3882755a705aa8580416a8a29caeb3d85e077c"
+          },
+          {
+            "source_id": "E34",
+            "url": "https://docs.powersync.com/intro/powersync-overview.md",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "PowerSync service and setup options",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E34.txt",
+            "sha256": "80372ea0fd97eff12e21da58f03d2f71d37f39df2533b470544ce475f490568b"
+          }
+        ]
+      },
+      {
+        "claim_id": "N2-C13",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/final.md",
+        "lines": [
+          349,
+          381
+        ],
+        "sources": [
+          {
+            "source_id": "E13",
+            "url": "https://docs.powersync.com/client-sdks/advanced/attachments.md",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Deprecation, SDK minima and migration notes",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E13.txt",
+            "sha256": "1e038a1cab663277512a3f116a27918c6693f2d4378f8ee43fd1bb6932bef66b"
+          },
+          {
+            "source_id": "E19",
+            "url": "https://raw.githubusercontent.com/pocketbase/pocketbase/v0.40.5/CHANGELOG.md",
+            "version": "PocketBase released tag v0.40.5; exact text equals treatment frozen S10",
+            "section_or_symbol": "PocketBase released v0.40.5 changelog",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E19.txt",
+            "sha256": "eece823cdccdc37e3dfbe77b5d7d9040435267bb3eda57465744fe72cca58822"
+          }
+        ]
+      },
+      {
+        "claim_id": "N2-C14",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/final.md",
+        "lines": [
+          383,
+          456
+        ],
+        "sources": [
+          {
+            "source_id": "E11",
+            "url": "https://docs.powersync.com/handling-writes/handling-update-conflicts.md",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Custom-policy boundary",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E11.txt",
+            "sha256": "e728845f01a19a80058d1832f6b9cb7e6306595636b711f623e5b827b6f70ead"
+          },
+          {
+            "source_id": "E13",
+            "url": "https://docs.powersync.com/client-sdks/advanced/attachments.md",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Alpha attachment helpers",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E13.txt",
+            "sha256": "1e038a1cab663277512a3f116a27918c6693f2d4378f8ee43fd1bb6932bef66b"
+          },
+          {
+            "source_id": "E21",
+            "url": "https://electric-sql.com/docs/sync.md",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Electric read-path scope",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E21.txt",
+            "sha256": "093b3fa1ec6113f8e2800fa94090a19919e7ea04d596d0dc6dc83ff0ab1f2355"
+          },
+          {
+            "source_id": "E26",
+            "url": "https://docs.getodk.org/central-entities/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Entity workflows",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E26.txt",
+            "sha256": "35acbc671c97e494b998e772efd0e1fc11ac46ac0e8cfcad462236aa0f583cd4"
+          }
+        ]
+      },
+      {
+        "claim_id": "N2-C15",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/control/reviser/final.md",
+        "lines": [
+          482,
+          555
+        ],
+        "sources": [
+          {
+            "source_id": "E16",
+            "url": "https://pocketbase.io/docs/files-handling/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "File-field default and suffix",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E16.txt",
+            "sha256": "34895d09041012183d0b466b326b174f15120c68838a7995160f4289439d2479"
+          },
+          {
+            "source_id": "E11",
+            "url": "https://docs.powersync.com/handling-writes/handling-update-conflicts.md",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Idempotency",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E11.txt",
+            "sha256": "e728845f01a19a80058d1832f6b9cb7e6306595636b711f623e5b827b6f70ead"
+          },
+          {
+            "source_id": "E25",
+            "url": "https://developer.android.com/develop/background-work/background-tasks/persistent",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Persistent work scheduling",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E25.txt",
+            "sha256": "7cc3715ebee505eb6ebaebd65ea4061846e39792ffae806131a7a65aa320d84d"
+          },
+          {
+            "source_id": "E08",
+            "url": "https://docs.getodk.org/central-submissions/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Export semantics",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E08.txt",
+            "sha256": "a19e96c766d8ad138511460b3353791fbfe4fb19e939cfa146ebea67647654af"
+          }
+        ]
+      }
+    ],
+    "N1": [
+      {
+        "claim_id": "N1-C01",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/final.md",
+        "lines": [
+          127,
+          161
+        ],
+        "sources": [
+          {
+            "source_id": "E05",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Quotas/persistence",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E05.txt",
+            "sha256": "9325880a05bd09bfe9867722ff4689736c2f11beab6381a157a2fd7adee400fb"
+          },
+          {
+            "source_id": "E31",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "IndexedDB files and indexes",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E31.txt",
+            "sha256": "4857e22e95f03643fb245dcc9b2d0c76a0cfaf9299d5271544bcf72a28fb0eae"
+          }
+        ]
+      },
+      {
+        "claim_id": "N1-C02",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/final.md",
+        "lines": [
+          140,
+          158
+        ],
+        "sources": [
+          {
+            "source_id": "E06",
+            "url": "https://docs.getodk.org/central-users/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "App and Web Users",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E06.txt",
+            "sha256": "b95078355fc76d38fb505425aae9b0cc8ad5d190a905815284ef37d31d888635"
+          },
+          {
+            "source_id": "E02",
+            "url": "https://rxdb.info/replication-couchdb.html",
+            "version": "RxDB docs page last updated 2026-03-31; capture equals treatment frozen S07",
+            "section_or_symbol": "RxDB CouchDB endpoint and storage neutrality",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E02.txt",
+            "sha256": "78718f19fbc184e0031ecba098037e1df15a631d67d491a3344fcd982ca51ea9"
+          },
+          {
+            "source_id": "E27",
+            "url": "https://pocketbase.io/faq/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "SQLite-only PocketBase",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E27.txt",
+            "sha256": "8dc44211cd664d903324f982d4fbcd7ea01aa79d66ff03ecb5e0a2313a321183"
+          }
+        ]
+      },
+      {
+        "claim_id": "N1-C03",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/final.md",
+        "lines": [
+          163,
+          179
+        ],
+        "sources": [
+          {
+            "source_id": "E29",
+            "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+            "version": "Apache CouchDB 3.5 stable-channel documentation; capture-pinned, mutable channel",
+            "section_or_symbol": "CouchDB leaf conflicts",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E29.txt",
+            "sha256": "dbf96387a4618eefd1f44ccc2c33d1e4f033bc9c8ed5373141baa387107e04f7"
+          },
+          {
+            "source_id": "E02",
+            "url": "https://rxdb.info/replication-couchdb.html",
+            "version": "RxDB docs page last updated 2026-03-31; capture equals treatment frozen S07",
+            "section_or_symbol": "RxCollection conflictHandler",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E02.txt",
+            "sha256": "78718f19fbc184e0031ecba098037e1df15a631d67d491a3344fcd982ca51ea9"
+          },
+          {
+            "source_id": "E01",
+            "url": "https://rxdb.info/replication.html",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Master-wins default",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E01.txt",
+            "sha256": "803467f11e46a7c5a00468135e0df4079fd2fc19524f391cc87b929e0a8e6af4"
+          }
+        ]
+      },
+      {
+        "claim_id": "N1-C04",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/final.md",
+        "lines": [
+          181,
+          211
+        ],
+        "sources": [
+          {
+            "source_id": "E20",
+            "url": "https://garagehq.deuxfleurs.fr/documentation/quick-start/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Garage quick start",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E20.txt",
+            "sha256": "ebece5202c9ab1a73e157c00b1ded15722b199773457ab1db218451fb85d23c5"
+          },
+          {
+            "source_id": "E02",
+            "url": "https://rxdb.info/replication-couchdb.html",
+            "version": "RxDB docs page last updated 2026-03-31; capture equals treatment frozen S07",
+            "section_or_symbol": "Attachment exclusion",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E02.txt",
+            "sha256": "78718f19fbc184e0031ecba098037e1df15a631d67d491a3344fcd982ca51ea9"
+          },
+          {
+            "source_id": "E08",
+            "url": "https://docs.getodk.org/central-submissions/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "CSV download includes media ZIP",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E08.txt",
+            "sha256": "a19e96c766d8ad138511460b3353791fbfe4fb19e939cfa146ebea67647654af"
+          }
+        ]
+      },
+      {
+        "claim_id": "N1-C05",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/final.md",
+        "lines": [
+          213,
+          230
+        ],
+        "sources": [
+          {
+            "source_id": "E18",
+            "url": "https://pocketbase.io/docs/api-rules-and-filters/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Locked/public/filter rules and HTTP responses",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E18.txt",
+            "sha256": "3bd92d15935e9695e438a3d9dd72000f57baedee5bfb0786d9410156f1222bfe"
+          },
+          {
+            "source_id": "E14",
+            "url": "https://docs.powersync.com/sync/rules/overview.md",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Signed auth versus untrusted client parameters",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E14.txt",
+            "sha256": "42fc9bce0418161784a4d7a7ae129c05785245fb97fe17bf1af1ab19378b0774"
+          },
+          {
+            "source_id": "E26",
+            "url": "https://docs.getodk.org/central-entities/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Entity access filters",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E26.txt",
+            "sha256": "35acbc671c97e494b998e772efd0e1fc11ac46ac0e8cfcad462236aa0f583cd4"
+          }
+        ]
+      },
+      {
+        "claim_id": "N1-C06",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/final.md",
+        "lines": [
+          289,
+          294
+        ],
+        "sources": [
+          {
+            "source_id": "E29",
+            "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+            "version": "Apache CouchDB 3.5 stable-channel documentation; capture-pinned, mutable channel",
+            "section_or_symbol": "CouchDB replication, winner-only views and _conflicts",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E29.txt",
+            "sha256": "dbf96387a4618eefd1f44ccc2c33d1e4f033bc9c8ed5373141baa387107e04f7"
+          }
+        ]
+      },
+      {
+        "claim_id": "N1-C07",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/final.md",
+        "lines": [
+          295,
+          308
+        ],
+        "sources": [
+          {
+            "source_id": "E18",
+            "url": "https://pocketbase.io/docs/api-rules-and-filters/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "API rules",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E18.txt",
+            "sha256": "3bd92d15935e9695e438a3d9dd72000f57baedee5bfb0786d9410156f1222bfe"
+          },
+          {
+            "source_id": "E27",
+            "url": "https://pocketbase.io/faq/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "SQLite WAL storage",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E27.txt",
+            "sha256": "8dc44211cd664d903324f982d4fbcd7ea01aa79d66ff03ecb5e0a2313a321183"
+          },
+          {
+            "source_id": "E19",
+            "url": "https://raw.githubusercontent.com/pocketbase/pocketbase/v0.40.5/CHANGELOG.md",
+            "version": "PocketBase released tag v0.40.5; exact text equals treatment frozen S10",
+            "section_or_symbol": "Released v0.40.5 changelog",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E19.txt",
+            "sha256": "eece823cdccdc37e3dfbe77b5d7d9040435267bb3eda57465744fe72cca58822"
+          }
+        ]
+      },
+      {
+        "claim_id": "N1-C08",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/final.md",
+        "lines": [
+          309,
+          314
+        ],
+        "sources": [
+          {
+            "source_id": "E02",
+            "url": "https://rxdb.info/replication-couchdb.html",
+            "version": "RxDB docs page last updated 2026-03-31; capture equals treatment frozen S07",
+            "section_or_symbol": "Pros, Cons, Conflict handling and Limitations",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E02.txt",
+            "sha256": "78718f19fbc184e0031ecba098037e1df15a631d67d491a3344fcd982ca51ea9"
+          }
+        ]
+      },
+      {
+        "claim_id": "N1-C09",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/final.md",
+        "lines": [
+          315,
+          319
+        ],
+        "sources": [
+          {
+            "source_id": "E14",
+            "url": "https://docs.powersync.com/sync/rules/overview.md",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Bucket/parameter definitions; authentication/client parameters; migration",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E14.txt",
+            "sha256": "42fc9bce0418161784a4d7a7ae129c05785245fb97fe17bf1af1ab19378b0774"
+          },
+          {
+            "source_id": "E30",
+            "url": "https://docs.powersync.com/sync/streams/overview.md",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Sync Streams queries, subscriptions, implicit buckets and offline SQLite",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E30.txt",
+            "sha256": "863c9ed6155f14e3851bda20b1fbbb22024eb6d863ec494d10cf3da79a322671"
+          }
+        ]
+      },
+      {
+        "claim_id": "N1-C10",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/final.md",
+        "lines": [
+          320,
+          331
+        ],
+        "sources": [
+          {
+            "source_id": "E06",
+            "url": "https://docs.getodk.org/central-users/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Accounts and App User Properties",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E06.txt",
+            "sha256": "b95078355fc76d38fb505425aae9b0cc8ad5d190a905815284ef37d31d888635"
+          },
+          {
+            "source_id": "E26",
+            "url": "https://docs.getodk.org/central-entities/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Entity access filters",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E26.txt",
+            "sha256": "35acbc671c97e494b998e772efd0e1fc11ac46ac0e8cfcad462236aa0f583cd4"
+          }
+        ]
+      },
+      {
+        "claim_id": "N1-C11",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/final.md",
+        "lines": [
+          332,
+          341
+        ],
+        "sources": [
+          {
+            "source_id": "E23",
+            "url": "https://www.w3.org/WAI/tutorials/forms/validation/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Accessible validation",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E23.txt",
+            "sha256": "fb64afcd605110c4804dbb1d04376a22a4ef2ceef8a1bfe9ea39192620bd368d"
+          },
+          {
+            "source_id": "E24",
+            "url": "https://www.w3.org/WAI/tutorials/forms/notifications/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Notifications",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E24.txt",
+            "sha256": "36b3622ee5bcfba38fa43f1bd6ad051e29d5aca85f41775bf3594f0a5a60b68a"
+          },
+          {
+            "source_id": "E20",
+            "url": "https://garagehq.deuxfleurs.fr/documentation/quick-start/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Garage workflow/permissions",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E20.txt",
+            "sha256": "ebece5202c9ab1a73e157c00b1ded15722b199773457ab1db218451fb85d23c5"
+          }
+        ]
+      },
+      {
+        "claim_id": "N1-C12",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/final.md",
+        "lines": [
+          343,
+          365
+        ],
+        "sources": [
+          {
+            "source_id": "E14",
+            "url": "https://docs.powersync.com/sync/rules/overview.md",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Legacy notice",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E14.txt",
+            "sha256": "42fc9bce0418161784a4d7a7ae129c05785245fb97fe17bf1af1ab19378b0774"
+          },
+          {
+            "source_id": "E19",
+            "url": "https://raw.githubusercontent.com/pocketbase/pocketbase/v0.40.5/CHANGELOG.md",
+            "version": "PocketBase released tag v0.40.5; exact text equals treatment frozen S10",
+            "section_or_symbol": "v0.40.0 through v0.40.5",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E19.txt",
+            "sha256": "eece823cdccdc37e3dfbe77b5d7d9040435267bb3eda57465744fe72cca58822"
+          },
+          {
+            "source_id": "E02",
+            "url": "https://rxdb.info/replication-couchdb.html",
+            "version": "RxDB docs page last updated 2026-03-31; capture equals treatment frozen S07",
+            "section_or_symbol": "Protocol rationale",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E02.txt",
+            "sha256": "78718f19fbc184e0031ecba098037e1df15a631d67d491a3344fcd982ca51ea9"
+          }
+        ]
+      },
+      {
+        "claim_id": "N1-C13",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/final.md",
+        "lines": [
+          367,
+          426
+        ],
+        "sources": [
+          {
+            "source_id": "E02",
+            "url": "https://rxdb.info/replication-couchdb.html",
+            "version": "RxDB docs page last updated 2026-03-31; capture equals treatment frozen S07",
+            "section_or_symbol": "Plugin CouchDB endpoint",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E02.txt",
+            "sha256": "78718f19fbc184e0031ecba098037e1df15a631d67d491a3344fcd982ca51ea9"
+          },
+          {
+            "source_id": "E21",
+            "url": "https://electric-sql.com/docs/sync.md",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Electric read-path",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E21.txt",
+            "sha256": "093b3fa1ec6113f8e2800fa94090a19919e7ea04d596d0dc6dc83ff0ab1f2355"
+          },
+          {
+            "source_id": "E22",
+            "url": "https://automerge.org/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Automerge Repo/history lead",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E22.txt",
+            "sha256": "92d0f8e5d5b358faa7fda51112eeea9ff356a9321ee018872d2005686606ecca"
+          },
+          {
+            "source_id": "E26",
+            "url": "https://docs.getodk.org/central-entities/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "ODK property filtering",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E26.txt",
+            "sha256": "35acbc671c97e494b998e772efd0e1fc11ac46ac0e8cfcad462236aa0f583cd4"
+          }
+        ]
+      },
+      {
+        "claim_id": "N1-C14",
+        "candidate_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M07-B/treatment/reviser/final.md",
+        "lines": [
+          428,
+          496
+        ],
+        "sources": [
+          {
+            "source_id": "E01",
+            "url": "https://rxdb.info/replication.html",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "RxDB conflict default",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E01.txt",
+            "sha256": "803467f11e46a7c5a00468135e0df4079fd2fc19524f391cc87b929e0a8e6af4"
+          },
+          {
+            "source_id": "E18",
+            "url": "https://pocketbase.io/docs/api-rules-and-filters/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "PB status-code oracle",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E18.txt",
+            "sha256": "3bd92d15935e9695e438a3d9dd72000f57baedee5bfb0786d9410156f1222bfe"
+          },
+          {
+            "source_id": "E20",
+            "url": "https://garagehq.deuxfleurs.fr/documentation/quick-start/",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Photo permission and persistence",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E20.txt",
+            "sha256": "ebece5202c9ab1a73e157c00b1ded15722b199773457ab1db218451fb85d23c5"
+          },
+          {
+            "source_id": "E25",
+            "url": "https://developer.android.com/develop/background-work/background-tasks/persistent",
+            "version": "mutable official documentation accessed 2026-10-09; no installed candidate release assumed",
+            "section_or_symbol": "Persistent scheduling",
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M07-B/evidence/E25.txt",
+            "sha256": "7cc3715ebee505eb6ebaebd65ea4061846e39792ffae806131a7a65aa320d84d"
+          }
+        ]
+      }
+    ]
+  },
+  "provenance_limits": "Original candidate source IDs are stage-scoped and remain unchanged. E01–E37 are evaluator-owned independent captures/excerpts. Response SHA hashes describe retrieved transport bodies; evidence SHA hashes describe bounded parsed text. gzip was decoded for ODK. Byte identity is not scientific correctness. No candidate/native event receipt was handwritten."
+}

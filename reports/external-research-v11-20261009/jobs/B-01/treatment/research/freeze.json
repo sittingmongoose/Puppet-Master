@@ -1,0 +1,46 @@
+{
+  "frozen_at": "2026-10-09T19:38:40.006903+00:00",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I01/brief.md",
+      "sha256": "592bc98c89079b760e398cfc1dbd890e7d6c34832506c01c34b0642b46cc1491",
+      "bytes": 2274
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/methods/M13.json",
+      "sha256": "39f1ead2365c6bb7f318f4084fa8fb731068d29f66badaea37f2a83b5fd78b0c",
+      "bytes": 1999
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/research/assignment.md",
+      "sha256": "b893847f43c8a28d2294396080fcf5669cfb5de8ac6bb527986e03199894f4e8",
+      "bytes": 4386
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-01/treatment/research/input-map.json",
+      "sha256": "ff9e155f72d191b95935c261ef92b5269a2b9fe26dfea93cdcad68dbb4dbae0c",
+      "bytes": 679
+    }
+  ],
+  "method": {
+    "id": "M13",
+    "version": "v1",
+    "name": "retained-graph-author-with-evidence-first-critic",
+    "control": "Competent conventional full investigator, fresh independent critic, fresh complete reviser under default 30/12/18 stages and 60-minute whole envelope.",
+    "treatment": "Investigate full brief independently and maintain source-backed relation/condition/release graph and community prose in sources/index.md while producing one complete discovery and draft. Preserve full discovery and alternatives. Original investigator remains in ONE native Goal through final writing. A fresh critic derives consequential facts from brief and public primary sources before opening draft, then challenges the complete draft and exact plan. Investigator adjudicates every criticism against governing source context, explicitly distinguishes necessary corrections from optional product choices, and authors the full self-contained final in its retained context. Critic agreement is not authority; source indexes or IDs cannot replace substantive final prose. No premium assistance, extra agents or reduced obligations.",
+    "evidence_kind": "full-discovery",
+    "lineage": "Prospective development bundle from M11 source-positive graph recipe, M05 context retention and M06 independent evidence-first challenge. Not an isolated topology effect.",
+    "primary_methodology": "https://arxiv.org/abs/2404.16130",
+    "novelty": "Integrated bundle: keep source graph with original investigator across complete draft and final; fresh critic derives facts independently before reading draft; final author waits for terminal frozen critique handoff.",
+    "adaptation_limit": "Manual bounded integrated recipe; no GraphRAG system/training implementation, no prior benchmark gain claim; scope and budget unchanged. Performance and quality must be measured on fresh cases.",
+    "wall_ceiling_s": 3600,
+    "occupied_ceiling_s": 5400,
+    "max_parallel_agents": 2,
+    "research_s": 1800,
+    "critic_s": 720,
+    "reviser_s": 1080
+  },
+  "resource_version": "retained60-critic12-v1",
+  "stage_allowance_s": 3600,
+  "deadline": "2026-10-09T20:38:40.006903+00:00"
+}
