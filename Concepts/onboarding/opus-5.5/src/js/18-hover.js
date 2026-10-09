@@ -89,7 +89,7 @@
     ];
 
     var T = {}, probe = null, tokensDirty = true, tokenFrame = 0;
-    var stats = { frames: 0, rects: 0, writes: 0, scopes: 0, tokenReads: 0, lastFrameMs: 0, maxFrameMs: 0, errors: 0, slow: [] };
+    var stats = { frames: 0, rects: 0, writes: 0, scopes: 0, tokenReads: 0, lastFrameMs: 0, maxFrameMs: 0, errors: 0, slow: [], totalMs: 0, hist: { lt1: 0, lt2: 0, lt4: 0, lt8: 0, ge8: 0 } };
     var phase = { tokens: false, scope: false, rects: 0 };   /* what the current frame did, for stats.slow */
     var raf = window.requestAnimationFrame.bind(window);
     var M = window.O55 && window.O55.motion;
@@ -293,7 +293,8 @@
         running = false; return;
       }
       var ms = performance.now() - t0;
-      stats.frames++; stats.lastFrameMs = Math.round(ms * 1000) / 1000;
+      stats.frames++; stats.lastFrameMs = Math.round(ms * 1000) / 1000; stats.totalMs += ms;
+      stats.hist[ms < 1 ? 'lt1' : ms < 2 ? 'lt2' : ms < 4 ? 'lt4' : ms < 8 ? 'lt8' : 'ge8']++;
       if (ms > stats.maxFrameMs) stats.maxFrameMs = stats.lastFrameMs;
       /* the last few frames over 4 ms, with what they did (a token read or a rect read flushes style the page had
          left dirty, so that cost is the page's pending style, met early in the frame) */
@@ -688,7 +689,7 @@
       resolve: resolve,
       kindOf: function (el) { return el ? kindOf(el) : null; },
       retoken: function () { readTokens(); return JSON.parse(JSON.stringify(T)); },
-      stats: function () { var o = {}; for (var k in stats) o[k] = stats[k]; o.slow = stats.slow.slice(); o.running = running; o.springs = springs.size; o.lit = lit.size; return o; },
+      stats: function () { var o = {}; for (var k in stats) o[k] = stats[k]; o.slow = stats.slow.slice(); o.hist = Object.assign({}, stats.hist); o.totalMs = Math.round(stats.totalMs * 100) / 100; o.running = running; o.springs = springs.size; o.lit = lit.size; return o; },
       state: function () {
         var hs = hover ? ST.get(hover) : null;
         return {
