@@ -16,6 +16,10 @@
 .o55fm-layer .o55-cur-l { transform-origin: 0% 50%; }
 .o55fm-layer .o55-cur-r { transform-origin: 100% 50%; }
 
+/* Basic's Ready inks its troupe faster when its curtain call plays (A.famCall.inkFast), so the bows start on finished
+   heads; the rest of the drawing inks as always */
+.o55-f-basic.o55fm-inkfast .o55-ens-h .o55-draw { animation-duration: 640ms, 400ms; animation-delay: var(--d, 0ms), calc(var(--d, 0ms) + 380ms); }
+
 /* the wake's start states, written before the first screen is built (open()) and gone when the stage is awake:
    Friendly's paper troupe lies folded flat behind the closed curtain; Retro's sprites and their strings are not there
    until they spawn */

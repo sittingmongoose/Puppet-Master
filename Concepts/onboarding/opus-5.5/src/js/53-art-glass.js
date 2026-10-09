@@ -38,14 +38,16 @@
     const armL = pose === 'carry' ? 'M-13 -40 L-9 -30 L-3 -27' : 'M-13 -40 L-18 -28 L-19 -18';
     const orb = pose === 'carry' ? `${glow(ctx, 'amber', 14, 0, -28)}<circle cx="0" cy="-28" r="6" ${G(ctx)}/><circle cx="0" cy="-28" r="2.4" fill="${p.core}"/>` : '';
     /* the arms and the body above the legs are .o55-up groups, in the drawing's own paint order, so a bow can pitch the
-       upper body toward the audience about the hips (66-family-window.js) while the legs stand */
+       upper body toward the audience about the hips (66-family-window.js) while the legs stand; the sphere of the head
+       and the knot on it are .o55-hd groups inside them (the eyes an .o55-fc group in the head), so the bow keeps the
+       head round, sends it down and tips the eyes toward the floor */
     return `<g>${str}<ellipse cx="0" cy="1" rx="16" ry="3.5" fill="${p.shade}"/>`
       + `<g class="o55-up"><path d="${armL}${armR ? ' M' + armR.slice(1) : ''}" fill="none" stroke="${ctx.url('edge')}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>`
       + `<path d="${armL}${armR ? ' M' + armR.slice(1) : ''}" fill="none" stroke="${p[tint]}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>` + waveArm + '</g>'
       + `<path d="M-7 -12 L-8 0 M7 -12 L8 0" stroke="${ctx.url('edge')}" stroke-width="4.5" stroke-linecap="round"/>`
       + `<g class="o55-up"><path d="M0 -46 L15 -38 L12 -14 L0 -8 L-12 -14 L-15 -38 Z" ${G(ctx)}/>${glow(ctx, tint, 13, 0, -27)}<circle cx="0" cy="-27" r="3.2" fill="${p.core}" class="o55-core"/>`
-      + hl('M-11 -37 L-3 -41') + `<circle cx="0" cy="-57" r="11.5" ${G(ctx)}/>${hl('M-7 -62 A8 8 0 0 1 2 -65.5')}`
-      + `<circle cx="-3.6" cy="-57" r="1.4" fill="${p.core}"/><circle cx="3.6" cy="-57" r="1.4" fill="${p.core}"/>${orb}${knot}</g></g>`;
+      + hl('M-11 -37 L-3 -41') + `<g class="o55-hd"><circle cx="0" cy="-57" r="11.5" ${G(ctx)}/>${hl('M-7 -62 A8 8 0 0 1 2 -65.5')}`
+      + `<g class="o55-fc"><circle cx="-3.6" cy="-57" r="1.4" fill="${p.core}"/><circle cx="3.6" cy="-57" r="1.4" fill="${p.core}"/></g></g>${orb}${knot ? `<g class="o55-hd">${knot}</g>` : ''}</g></g>`;
   };
 
   /* The light that travels along a filament: a short bright streak carried along the curve by transform keyframes

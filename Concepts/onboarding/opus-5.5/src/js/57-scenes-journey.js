@@ -201,6 +201,7 @@
       const nier = ctx.family === 'nier';
       const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: nier ? null : 'rise' }].concat(A.ensemble(ctx, { poses: ['stand', 'wave', ctx.family === 'retro' ? 'aim' : 'point'], standing: nier }));
       if (!nier && A.famCall) items.push(...A.famCall.emblems(ctx));
+      if (!nier && A.famCall && A.famCall.inkFast && A.famCall.inkFast(ctx)) ctx.sceneCls = 'o55fm-inkfast';
       items.push({ key: 'sign', prop: 'badge', x: 240, y: nier && ctx.band ? BAND_SIGN : A.metrics(ctx.family).signY || 64, s: R(ctx) ? 1 : 1.5, layer: 'front', anim: 'drop', delay: 700, opts: { label: L('ready', 'ready'), glyph: 'check', accent: true } });
       items.push(...sparks([[80, 180, 0], [404, 160, 1], [96, 420, 2], [398, 410, 3], [240, 540, 0]], 900));
       /* it opens on the troupe (NieR's, on the narrow band, is centred on what the band shows: its plate in view) */

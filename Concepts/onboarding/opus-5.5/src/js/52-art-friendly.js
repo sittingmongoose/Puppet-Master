@@ -39,16 +39,18 @@
       + `<path d="M-13 -24 Q0 -20 13 -24" fill="none" stroke="${p.ink}" stroke-width="1.4" stroke-linecap="round" opacity="0.35"/>`
       + arm(-1, angles[0]) + (pose === 'wave' ? `<g class="o55-arm" data-pivot="15 -40">${arm(1, angles[1], true)}</g>` : arm(1, angles[1]))
       + `<path d="M-7 -44 Q0 -39 7 -44" fill="${p.cream}" ${OL(p, 1.6)}/>`
-      + `<circle cx="0" cy="-56" r="13" fill="${skin}" ${OL(p)}/>`
+      + `<g class="o55-hd"><circle cx="0" cy="-56" r="13" fill="${skin}" ${OL(p)}/>`
       + `<path d="M-11 -62 Q-8 -73 1 -71 Q10 -74 11 -62 Q6 -67 0 -65 Q-6 -67 -11 -62Z" fill="${hair}" ${OL(p, 1.6)}/>`
-      + `<ellipse cx="-4.6" cy="-56.5" rx="1.7" ry="2.2" fill="${p.ink}"/><ellipse cx="4.6" cy="-56.5" rx="1.7" ry="2.2" fill="${p.ink}"/>`
+      + `<g class="o55-fc"><ellipse cx="-4.6" cy="-56.5" rx="1.7" ry="2.2" fill="${p.ink}"/><ellipse cx="4.6" cy="-56.5" rx="1.7" ry="2.2" fill="${p.ink}"/>`
       + `<ellipse cx="-8.3" cy="-51.5" rx="2.6" ry="1.6" fill="${p.cheek}" opacity="0.7"/><ellipse cx="8.3" cy="-51.5" rx="2.6" ry="1.6" fill="${p.cheek}" opacity="0.7"/>`
-      + `<path d="M-3.4 -50.5 Q0 -47.5 3.4 -50.5" fill="none" stroke="${p.ink}" stroke-width="1.6" stroke-linecap="round"/>` + sheet
+      + `<path d="M-3.4 -50.5 Q0 -47.5 3.4 -50.5" fill="none" stroke="${p.ink}" stroke-width="1.6" stroke-linecap="round"/></g></g>` + sheet
       /* tied to the bar: the string ends in a little paper loop tied into the hair */
-      + (o.rig ? `<circle cx="0" cy="-71.5" r="2.3" fill="none" stroke="${p.paper}" stroke-width="1.5"/><circle cx="0" cy="-71.5" r="3.4" fill="none" stroke="${p.ink}" stroke-width="0.8" opacity="0.5"/>` : '');
+      + (o.rig ? `<g class="o55-hd"><circle cx="0" cy="-71.5" r="2.3" fill="none" stroke="${p.paper}" stroke-width="1.5"/><circle cx="0" cy="-71.5" r="3.4" fill="none" stroke="${p.ink}" stroke-width="0.8" opacity="0.5"/></g>` : '');
     /* everything above the feet (and its paper shadow) is in .o55-up groups, in the drawing's own paint order, so a bow can
-       pitch it toward the audience about the hips (66-family-window.js) while the feet stay on the boards */
-    return `<g>${str}<g class="o55-up">${sh(p, `<path d="M-15 -42 Q-19 -24 -18 -8 Q0 -2 18 -8 Q19 -24 15 -42 Q0 -48 -15 -42Z"/><circle cx="0" cy="-56" r="13"/>`)}</g>${feet}<g class="o55-up">${figure}</g></g>`;
+       pitch it toward the audience about the hips (66-family-window.js) while the feet stay on the boards; the head, its
+       shadow and the loop in its hair are .o55-hd groups inside them (the face an .o55-fc group in the head), so the bow
+       keeps the head round, sends it down and tips the face toward the boards */
+    return `<g>${str}<g class="o55-up">${sh(p, '<path d="M-15 -42 Q-19 -24 -18 -8 Q0 -2 18 -8 Q19 -24 15 -42 Q0 -48 -15 -42Z"/>')}<g class="o55-hd">${sh(p, '<circle cx="0" cy="-56" r="13"/>')}</g></g>${feet}<g class="o55-up">${figure}</g></g>`;
   };
 
   const scallops = (p, w, y, r, fill) => {
