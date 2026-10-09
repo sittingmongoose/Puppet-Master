@@ -517,6 +517,16 @@
       }, reducedNow() ? 0 : 340 * speedNow());
     }
     slot.appendChild(pv.el);
+    /* the stage gives way where the menu would not fit beside its anchor (a card near the window's top or bottom edge):
+       the view shrinks to 100 px at least, so every size row shows without the menu scrolling (the menu's own room:
+       45-menu.js place, 6 px gap and 8 px edge) */
+    var appEl = document.getElementById('pmuApp'), anc = h.anchor && h.anchor.isConnected ? h.anchor.getBoundingClientRect() : null;
+    if (appEl && anc && pv.view) {
+      var hostR = appEl.getBoundingClientRect(), roomM = Math.max(hostR.bottom - anc.bottom, anc.top - hostR.top) - 6 - 8;
+      pv.view.style.height = '';
+      var over = h.el.offsetHeight - roomM;
+      if (over > 0) pv.view.style.height = Math.max(100, 160 - over) + 'px';
+    }
     if (!h.el._pmuSzWired) {
       h.el._pmuSzWired = true;
       /* one miniature a frame, the last row asked for (a fast sweep down the rows renders where it stops) */
