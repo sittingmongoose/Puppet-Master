@@ -1,0 +1,73 @@
+/* ---- 79. Agents (lane F) --------------------------------------------------------------------------------------------
+   The subagent rows are run rows (78-testing). The waiting / elapsed line joins the row head as its quiet last line. The
+   needs-input question is a warm tint, not a bordered card. Lane capacity and queued work are sections of their shelf
+   under a hairline, with a sentence-case heading and a plain count. Model names are words, not capsules. */
+§@agents .sh-run-h .sh-agtime {
+  display: block !important; margin: 0 !important; padding: 0 !important; min-width: 0;
+  font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; letter-spacing: 0 !important; color: var(--d-text-3) !important;
+}
+§@agents .sh-run-h .sh-agtime .sh-k { font: inherit !important; color: inherit !important; }
+§@agents .sh-run-h .sh-agtime b { font: 600 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-2) !important; font-variant-numeric: tabular-nums; }
+/* changed since you last looked: a small accent mark on the name line */
+§@agents .sh-run-h > .sh-chgdot { flex: none; width: 6px; height: 6px; margin-top: 6px; border-radius: 50%; background: var(--accent-primary); }
+§{retro}@agents .sh-run-h > .sh-chgdot, §{nier}@agents .sh-run-h > .sh-chgdot { border-radius: 0; }
+§{nier}@agents .sh-run-h > .sh-chgdot { background: var(--o55-nier-ink); }
+§@agents .sh-run-h > .pm-rmetric { display: none !important; }
+/* details */
+§@agents .sh-agdetail { padding: 0 !important; row-gap: 0 !important; }
+§@agents .sh-agask {
+  margin: 2px 0 6px !important; padding: 5px 8px !important; border: 0 !important; border-radius: var(--d-r) !important;
+  background: color-mix(in srgb, var(--d-warn) 10%, transparent) !important;
+}
+§@agents .sh-agask > .sh-kv { padding: 2px 0 !important; }
+§@agents .sh-kv.sh-kv-stack { grid-template-columns: minmax(0, 1fr) !important; row-gap: 1px !important; }
+§@agents .sh-kv.sh-kv-stack > .sh-v { color: var(--d-text) !important; line-height: 1.45 !important; }
+§@agents .sh-modelmark {
+  display: inline; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: none !important;
+  font: 600 var(--d-fs-meta)/1.3 var(--body-font) !important; letter-spacing: 0 !important; color: var(--d-text) !important;
+}
+§@agents .sh-agdetail > .pm-occ { padding: 4px 0 !important; margin: 0 !important; }
+/* the summaries: sections of the shelf, not cards inside it */
+§@agents .pm-sumcard {
+  margin: 6px 0 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: none !important; box-shadow: none !important;
+  border-top: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-line), transparent) !important;
+}
+§@agents .pm-sumcard + .pm-sumcard { margin-top: 2px !important; }
+§@agents .pm-sumcard-h {
+  display: flex !important; flex-wrap: wrap; align-items: center; gap: 0 var(--d-gap) !important; min-height: var(--d-row-h); margin: 2px 0 0 !important; padding: 4px var(--d-pad) !important;
+  border: 0 !important; border-radius: var(--d-r) !important;
+  font: var(--d-w-label) var(--d-fs-label)/1.3 var(--display-font, var(--body-font)) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text) !important;
+  transition: background-color var(--d-t1) var(--d-ease);
+}
+§@agents .pm-sumcard[data-acc] > .pm-sumcard-h { cursor: pointer; }
+§@agents .pm-sumcard[data-acc] > .pm-sumcard-h:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+§@agents .pm-sumcard[data-acc].open > .pm-sumcard-h { border-radius: var(--d-r) var(--d-r) 0 0 !important; }
+§@agents .pm-sumcard[data-acc].open { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-open), transparent) !important; }
+§@agents .pm-sumcard-h > .sh-accchev { flex: none; width: 9px !important; height: 9px !important; color: var(--d-text-3) !important; }
+§@agents .pm-sumcard-h > .c {
+  display: inline-flex; align-items: center; gap: 4px; margin-left: auto; flex: none;
+  font: 500 var(--d-fs-meta)/1.3 var(--body-font) !important; letter-spacing: 0 !important; font-variant-numeric: tabular-nums; color: var(--d-text-2) !important;
+}
+§@agents .pm-sumcard-h > .c[data-d-st="warn"] { color: var(--d-warn) !important; }
+§@agents .pm-sumcard[data-acc] > .sh-accb { padding: 0 var(--d-pad) 0 calc(var(--d-pad) + 13px) !important; }
+§@agents .pm-sumcard[data-acc] > .sh-accb > .pm-acc-inner > :last-child { margin-bottom: 6px !important; }
+§@agents .pm-sumcard .pm-occ {
+  grid-template-columns: minmax(0, 1fr) auto !important; grid-template-areas: "nm v" "bar bar"; row-gap: 4px !important; padding: 4px 0 !important;
+}
+§@agents .pm-sumcard .pm-occ .nm { grid-area: nm; color: var(--d-text-2) !important; }
+§@agents .pm-sumcard .pm-occ .bar { grid-area: bar; }
+§@agents .pm-sumcard .pm-occ .v { grid-area: v; }
+§@agents .pm-sumcard > .sh-run { margin: 0 0 2px !important; }
+/* "3 more ...": a quiet line under the rows, text aligned with the names, wrapping instead of running off the shelf */
+§@agents .sh-body > .sh-row.flat {
+  display: block !important; min-height: 0 !important; margin: 4px 0 0 !important; padding: 4px var(--d-pad) 4px calc(var(--d-pad) + 29px) !important;
+  border-radius: var(--d-r) !important; cursor: pointer; transform: none !important;
+}
+§@agents .sh-body > .sh-row.flat:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+§@agents .sh-body > .sh-row.flat > .sh-meta {
+  display: inline !important; white-space: normal !important; overflow: visible !important; text-overflow: clip !important;
+  font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-2) !important;
+}
+§@agents .sh-body > .pm-footnote { margin-top: 4px; }
+/* NieR capitals: the count stays a number in plain case and drops under the heading when both do not fit */
+§R[data-o55-nier="on"] #panel-agents .pm-sumcard-h > .c { text-transform: none !important; letter-spacing: 0 !important; }

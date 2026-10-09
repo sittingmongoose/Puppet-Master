@@ -886,6 +886,211 @@
 [data-rail-skin="d"] #panel-docker .sh-imgsum { align-items: flex-start !important; }
 [data-rail-skin="d"] #panel-docker .sh-imgsum .pm-chipbtn { margin-top: 1px; }
 
+/* ---- 78. Testing (lane F), and the run rows Testing and Agents share ---------------------------------------------------
+   A run row is flat in its shelf like every D row (no card inside a card, no coloured border on the live run): its hover
+   and open fills are its own box, inset from the shelf edge with the inner radius. Line one: chevron, the row's one
+   status glyph (.lf-lead, 55-testing.js), the name, which wraps instead of being cut. Line two: the status word (.lf-state,
+   the shell's chip, coloured, glyph-less) and the facts, at most three lines. Details open under the chevron column. */
+[data-rail-skin="d"] #panel-testing .sh-run, [data-rail-skin="d"] #panel-agents .sh-run {
+  position: relative; width: auto !important; margin: 0 0 2px !important; padding: 0 !important; overflow: clip !important;
+  border: 0 !important; border-radius: var(--d-r) !important; background: transparent !important; box-shadow: none !important;
+  transition: background-color var(--d-t2) var(--d-ease);
+}
+[data-rail-skin="d"] #panel-testing .sh-run:last-child, [data-rail-skin="d"] #panel-agents .sh-run:last-child { margin-bottom: 0 !important; }
+[data-rail-skin="d"] #panel-testing .sh-run.open, [data-rail-skin="d"] #panel-agents .sh-run.open { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-open), transparent) !important; }
+[data-rail-skin="d"] #panel-testing .sh-run-h, [data-rail-skin="d"] #panel-agents .sh-run-h {
+  display: flex !important; align-items: flex-start; gap: var(--d-gap); min-height: var(--d-row-h); margin: 0 !important;
+  padding: 5px var(--d-pad) !important; border-radius: var(--d-r) !important; background: transparent; box-shadow: none !important;
+  transform: none !important; line-height: var(--d-lh) !important; transition: background-color var(--d-t1) var(--d-ease);
+}
+[data-rail-skin="d"] #panel-testing .sh-run-h:hover, [data-rail-skin="d"] #panel-agents .sh-run-h:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+[data-rail-skin="d"] #panel-testing .sh-run.open > .sh-run-h, [data-rail-skin="d"] #panel-agents .sh-run.open > .sh-run-h { border-radius: var(--d-r) var(--d-r) 0 0 !important; }
+[data-rail-skin="d"] #panel-testing .sh-run-h:focus-visible, [data-rail-skin="d"] #panel-agents .sh-run-h:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+[data-rail-skin="d"] #panel-testing .sh-run-h > .sh-accchev, [data-rail-skin="d"] #panel-agents .sh-run-h > .sh-accchev { flex: none; width: 9px !important; height: 9px !important; margin-top: 5px; color: var(--d-text-3) !important; }
+/* the shell's dot steps aside for the row's one glyph */
+[data-rail-skin="d"] #panel-testing .sh-run-h > .sh-dot, [data-rail-skin="d"] #panel-agents .sh-run-h > .sh-dot { display: none !important; }
+[data-rail-skin="d"] #panel-testing .sh-run-h > .lf-lead, [data-rail-skin="d"] #panel-agents .sh-run-h > .lf-lead { margin-top: 3.5px; }
+[data-rail-skin="d"] #panel-testing .sh-run-h > .sh-main, [data-rail-skin="d"] #panel-agents .sh-run-h > .sh-main { display: flex !important; flex-direction: column; gap: 1px; flex: 1 1 auto; min-width: 0; }
+/* the name: whole, wrapped at its natural breaks */
+[data-rail-skin="d"] #panel-testing .sh-run-h .sh-name, [data-rail-skin="d"] #panel-agents .sh-run-h .sh-name {
+  display: block !important; max-width: none !important; overflow: visible !important; white-space: normal !important; text-overflow: clip !important;
+}
+[data-rail-skin="d"] #panel-testing .sh-run-h .sh-name > .sh-nm-txt, [data-rail-skin="d"] #panel-agents .sh-run-h .sh-name > .sh-nm-txt {
+  display: inline; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: break-word;
+}
+/* line two: the status word, then the facts; three lines at most */
+[data-rail-skin="d"] #panel-testing .sh-run-h > .sh-main > :is(.sh-runmeta, .sh-meta), [data-rail-skin="d"] #panel-agents .sh-run-h > .sh-main > :is(.sh-runmeta, .sh-meta) {
+  display: -webkit-box !important; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden !important;
+  flex: none !important; max-width: none !important; max-height: none !important; white-space: normal !important; text-overflow: clip !important;
+  overflow-wrap: break-word; font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; letter-spacing: 0 !important; color: var(--d-text-3) !important;
+}
+[data-rail-skin="d"] #panel-testing .sh-run-h .lf-state, [data-rail-skin="d"] #panel-agents .sh-run-h .lf-state { display: inline !important; max-width: none !important; white-space: nowrap; vertical-align: baseline; font-weight: 600 !important; }
+[data-rail-skin="d"] #panel-testing .sh-run-h .lf-state > .d-gl, [data-rail-skin="d"] #panel-agents .sh-run-h .lf-state > .d-gl { display: none !important; }
+[data-rail-skin="d"] #panel-testing .sh-run-h .lf-state > .chip-full, [data-rail-skin="d"] #panel-agents .sh-run-h .lf-state > .chip-full { display: inline !important; }
+[data-rail-skin="d"] #panel-testing .sh-run-h .lf-state::after, [data-rail-skin="d"] #panel-agents .sh-run-h .lf-state::after { content: '\00B7'; margin: 0 5px; font-weight: 400; color: var(--d-text-3); }
+[data-rail-skin="d"] #panel-testing [data-d-st="errored"], [data-rail-skin="d"] #panel-agents [data-d-st="errored"] { color: var(--accent-orange, var(--d-fail)) !important; }
+/* status words take their state's colour (the shared chip rule's :is() list outranks the shared state colours, so the
+   colours are restated here at the chip rule's weight; see the lane F report) */
+[data-rail-skin="d"] #panel-testing .pm-chip:is([data-d-st="ok"], [data-d-st="live"]), [data-rail-skin="d"] #panel-agents .pm-chip:is([data-d-st="ok"], [data-d-st="live"]) { color: var(--d-ok) !important; }
+[data-rail-skin="d"] #panel-testing .pm-chip[data-d-st="run"], [data-rail-skin="d"] #panel-agents .pm-chip[data-d-st="run"] { color: var(--d-run) !important; }
+[data-rail-skin="d"] #panel-testing .pm-chip:is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]), [data-rail-skin="d"] #panel-agents .pm-chip:is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]) { color: var(--d-warn) !important; }
+[data-rail-skin="d"] #panel-testing .pm-chip:is([data-d-st="fail"], [data-d-st="blocked"]), [data-rail-skin="d"] #panel-agents .pm-chip:is([data-d-st="fail"], [data-d-st="blocked"]) { color: var(--d-fail) !important; }
+[data-rail-skin="d"] #panel-testing .pm-chip:is([data-d-st="pending"], [data-d-st="info"]), [data-rail-skin="d"] #panel-agents .pm-chip:is([data-d-st="pending"], [data-d-st="info"]) { color: var(--d-pend) !important; }
+[data-rail-skin="d"] #panel-testing .pm-chip:is([data-d-st="idle"], [data-d-st="unknown"]), [data-rail-skin="d"] #panel-agents .pm-chip:is([data-d-st="idle"], [data-d-st="unknown"]) { color: var(--d-idle) !important; }
+[data-rail-skin="d"] #panel-testing .pm-chip[data-d-st="errored"], [data-rail-skin="d"] #panel-agents .pm-chip[data-d-st="errored"] { color: var(--accent-orange, var(--d-fail)) !important; }
+/* details: under the chevron column, like the other D rows */
+[data-rail-skin="d"] #panel-testing .sh-run > .sh-accb, [data-rail-skin="d"] #panel-agents .sh-run > .sh-accb { padding: 0 var(--d-pad) 0 calc(var(--d-pad) + 13px) !important; }
+[data-rail-skin="d"] #panel-testing .sh-run > .sh-accb > .pm-acc-inner > :first-child, [data-rail-skin="d"] #panel-agents .sh-run > .sh-accb > .pm-acc-inner > :first-child { margin-top: 1px !important; }
+[data-rail-skin="d"] #panel-testing .sh-run > .sh-accb > .pm-acc-inner > :last-child, [data-rail-skin="d"] #panel-agents .sh-run > .sh-accb > .pm-acc-inner > :last-child { margin-bottom: 9px !important; }
+/* facts: one label column per opened row (a subgrid), as wide as its longest label up to 42 % (a longer label wraps), so
+   the values line up and keep most of the width */
+[data-rail-skin="d"] #panel-testing .sh-run > .sh-accb > .pm-acc-inner, [data-rail-skin="d"] #panel-testing .sh-shelf > .sh-accb > .pm-acc-inner,
+[data-rail-skin="d"] #panel-agents .sh-run > .sh-accb > .pm-acc-inner, [data-rail-skin="d"] #panel-agents .sh-run > .sh-accb > .pm-acc-inner > .sh-agdetail {
+  display: grid !important; grid-template-columns: fit-content(42%) minmax(0, 1fr); column-gap: 8px; align-content: start;
+}
+[data-rail-skin="d"] #panel-testing .sh-run > .sh-accb > .pm-acc-inner > *, [data-rail-skin="d"] #panel-testing .sh-shelf > .sh-accb > .pm-acc-inner > *,
+[data-rail-skin="d"] #panel-agents .sh-run > .sh-accb > .pm-acc-inner > *, [data-rail-skin="d"] #panel-agents .sh-agdetail > *, [data-rail-skin="d"] #panel-agents .sh-agask > * { grid-column: 1 / -1; min-width: 0; }
+[data-rail-skin="d"] #panel-testing .sh-run > .sh-accb > .pm-acc-inner > .sh-kv, [data-rail-skin="d"] #panel-testing .sh-shelf > .sh-accb > .pm-acc-inner > .sh-kv,
+[data-rail-skin="d"] #panel-agents .sh-run > .sh-accb > .pm-acc-inner > .sh-kv, [data-rail-skin="d"] #panel-agents .sh-agdetail > .sh-kv:not(.sh-kv-stack), [data-rail-skin="d"] #panel-agents .sh-agask > .sh-kv:not(.sh-kv-stack) {
+  grid-template-columns: subgrid !important; column-gap: 8px !important;
+}
+[data-rail-skin="d"] #panel-agents .sh-agdetail > .sh-agask { display: grid !important; grid-template-columns: subgrid !important; column-gap: 8px; }
+[data-rail-skin="d"] #panel-testing .sh-run .sh-kv > .sh-k, [data-rail-skin="d"] #panel-agents .sh-run .sh-kv > .sh-k, [data-rail-skin="d"] #panel-testing .sh-shelf > .sh-accb .sh-kv > .sh-k { white-space: normal !important; min-width: 0 !important; }
+[data-rail-skin="d"] #panel-testing .sh-run .sh-kv, [data-rail-skin="d"] #panel-agents .sh-run .sh-kv { padding: 3px 0 !important; }
+[data-rail-skin="d"] #panel-testing .sh-run .sh-kv > .sh-v, [data-rail-skin="d"] #panel-agents .sh-run .sh-kv > .sh-v { font-size: var(--d-fs-meta) !important; color: var(--d-text-2) !important; }
+[data-rail-skin="d"] #panel-testing .sh-run .sh-kv > .sh-v.sh-mono, [data-rail-skin="d"] #panel-agents .sh-run .sh-kv > .sh-v.sh-mono { font-size: var(--d-fs-small) !important; }
+[data-rail-skin="d"] #panel-testing .sh-run .sh-acts, [data-rail-skin="d"] #panel-agents .sh-run .sh-acts, [data-rail-skin="d"] #panel-testing .sh-shelf > .sh-accb .sh-acts {
+  margin-top: 8px !important; padding-top: 0 !important; border-top: 0 !important; gap: 6px !important;
+}
+
+/* ---- Testing --------------------------------------------------------------------------------------------------------- */
+/* header status: the word and its count ("Live · 214 passing"), not only the light */
+[data-rail-skin="d"] #panel-testing .sh-bstatus .sh-bextra.lf-show { display: inline !important; min-width: 0; color: var(--d-text-2); }
+/* last run: the result word, then the counts, which move under it rather than being cut */
+[data-rail-skin="d"] #panel-testing .sh-lrline {
+  display: flex !important; flex-wrap: wrap; align-items: baseline; gap: 2px 8px !important; margin: 0 !important; padding: 4px var(--d-pad) 2px !important;
+}
+[data-rail-skin="d"] #panel-testing .sh-lrline > .pm-chip { align-self: center; }
+[data-rail-skin="d"] #panel-testing .sh-lrsum {
+  min-width: 0; white-space: normal !important; overflow: visible !important; text-overflow: clip !important;
+  font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; letter-spacing: 0 !important; color: var(--d-text-2) !important;
+}
+[data-rail-skin="d"] #panel-testing .sh-shelf > .sh-body > .pm-btnrow { margin-top: var(--d-g) !important; }
+[data-rail-skin="d"] #panel-testing .sh-shelf > .sh-body > .pm-btnrow + .sh-run { margin-top: 4px !important; }
+/* a failure log is the one box inside a row: code, a faint failure tint, lines that wrap instead of being cut */
+[data-rail-skin="d"] #panel-testing .sh-log {
+  margin: 4px 0 6px !important; padding: 6px 8px !important; border: 0 !important; border-radius: var(--d-r) !important;
+  background: color-mix(in srgb, var(--d-fail) 8%, transparent) !important;
+  font: 400 var(--d-fs-small)/1.45 var(--mono-font) !important; color: var(--d-text-2) !important;
+}
+[data-rail-skin="d"] #panel-testing .sh-log > div { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere; }
+[data-rail-skin="d"] #panel-testing .sh-log > .fail { color: var(--d-fail) !important; }
+/* the evidence note sits between the head and the collapsed body: an info tint concentric with the shelf */
+[data-rail-skin="d"] #panel-testing .sh-shelf > .pm-note {
+  display: flex; align-items: flex-start; margin: var(--d-in) !important; padding: 6px var(--d-pad) !important; gap: 6px !important;
+  border: 0 !important; border-radius: var(--d-r) !important; background: color-mix(in srgb, var(--d-pend) 10%, transparent) !important;
+  font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-2) !important;
+}
+[data-rail-skin="d"] #panel-testing .sh-shelf > .pm-note .pm-note-glyph { flex: none; width: 13px !important; height: 13px !important; margin-top: 1px; color: var(--d-pend) !important; }
+[data-rail-skin="d"] #panel-testing .sh-shelf > .pm-note .pm-note-glyph svg { width: 13px; height: 13px; }
+[data-rail-skin="d"] #panel-testing .sh-shelf > .sh-accb > .pm-acc-inner > :is(.sh-kv, .pm-footnote) { padding-left: var(--d-pad) !important; padding-right: var(--d-pad) !important; }
+[data-rail-skin="d"] #panel-testing .sh-shelf > .sh-accb > .pm-acc-inner > .sh-acts { padding: 0 var(--d-pad) !important; }
+[data-rail-skin="d"] #panel-testing .sh-shelf > .sh-body > .sh-kv { padding: 4px var(--d-pad) !important; }
+
+/* Glass draws its chrome without a blur (blur only on boxes), so the header plate alone would let scrolled rows read
+   through it: in these header-only panels the rows fade out under the header instead */
+[data-rail-skin="d"][data-theme^="glass"] #panel-testing > .sh-scroll, [data-rail-skin="d"][data-theme^="glass"] #panel-agents > .sh-scroll {
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, transparent calc(var(--pm6-shrun-banner-h, 42px) - 6px), #000 calc(var(--pm6-shrun-banner-h, 42px) + 6px));
+  mask-image: linear-gradient(180deg, transparent 0, transparent calc(var(--pm6-shrun-banner-h, 42px) - 6px), #000 calc(var(--pm6-shrun-banner-h, 42px) + 6px));
+}
+
+/* ---- NieR: headers in capitals -------------------------------------------------------------------------------------- */
+[data-rail-skin="d"][data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(#panel-testing, #panel-agents) :is(.sh-hlabel, .sh-title, .pm-sumcard-h) {
+  text-transform: uppercase !important; letter-spacing: .14em !important;
+}
+
+/* ---- reduced motion: nothing in these panels moves ------------------------------------------------------------------- */
+[data-rail-skin="d"][data-motion="reduced"] :is(#panel-testing, #panel-agents) *, [data-rail-skin="d"][data-reduced-motion="1"] :is(#panel-testing, #panel-agents) * {
+  transition: none !important; animation: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-rail-skin="d"] :is(#panel-testing, #panel-agents) * { transition: none !important; animation: none !important; }
+}
+
+/* ---- 79. Agents (lane F) --------------------------------------------------------------------------------------------
+   The subagent rows are run rows (78-testing). The waiting / elapsed line joins the row head as its quiet last line. The
+   needs-input question is a warm tint, not a bordered card. Lane capacity and queued work are sections of their shelf
+   under a hairline, with a sentence-case heading and a plain count. Model names are words, not capsules. */
+[data-rail-skin="d"] #panel-agents .sh-run-h .sh-agtime {
+  display: block !important; margin: 0 !important; padding: 0 !important; min-width: 0;
+  font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; letter-spacing: 0 !important; color: var(--d-text-3) !important;
+}
+[data-rail-skin="d"] #panel-agents .sh-run-h .sh-agtime .sh-k { font: inherit !important; color: inherit !important; }
+[data-rail-skin="d"] #panel-agents .sh-run-h .sh-agtime b { font: 600 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-2) !important; font-variant-numeric: tabular-nums; }
+/* changed since you last looked: a small accent mark on the name line */
+[data-rail-skin="d"] #panel-agents .sh-run-h > .sh-chgdot { flex: none; width: 6px; height: 6px; margin-top: 6px; border-radius: 50%; background: var(--accent-primary); }
+[data-rail-skin="d"][data-theme^="retro"] #panel-agents .sh-run-h > .sh-chgdot, [data-rail-skin="d"][data-o55-nier="on"] #panel-agents .sh-run-h > .sh-chgdot { border-radius: 0; }
+[data-rail-skin="d"][data-o55-nier="on"] #panel-agents .sh-run-h > .sh-chgdot { background: var(--o55-nier-ink); }
+[data-rail-skin="d"] #panel-agents .sh-run-h > .pm-rmetric { display: none !important; }
+/* details */
+[data-rail-skin="d"] #panel-agents .sh-agdetail { padding: 0 !important; row-gap: 0 !important; }
+[data-rail-skin="d"] #panel-agents .sh-agask {
+  margin: 2px 0 6px !important; padding: 5px 8px !important; border: 0 !important; border-radius: var(--d-r) !important;
+  background: color-mix(in srgb, var(--d-warn) 10%, transparent) !important;
+}
+[data-rail-skin="d"] #panel-agents .sh-agask > .sh-kv { padding: 2px 0 !important; }
+[data-rail-skin="d"] #panel-agents .sh-kv.sh-kv-stack { grid-template-columns: minmax(0, 1fr) !important; row-gap: 1px !important; }
+[data-rail-skin="d"] #panel-agents .sh-kv.sh-kv-stack > .sh-v { color: var(--d-text) !important; line-height: 1.45 !important; }
+[data-rail-skin="d"] #panel-agents .sh-modelmark {
+  display: inline; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: none !important;
+  font: 600 var(--d-fs-meta)/1.3 var(--body-font) !important; letter-spacing: 0 !important; color: var(--d-text) !important;
+}
+[data-rail-skin="d"] #panel-agents .sh-agdetail > .pm-occ { padding: 4px 0 !important; margin: 0 !important; }
+/* the summaries: sections of the shelf, not cards inside it */
+[data-rail-skin="d"] #panel-agents .pm-sumcard {
+  margin: 6px 0 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: none !important; box-shadow: none !important;
+  border-top: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-line), transparent) !important;
+}
+[data-rail-skin="d"] #panel-agents .pm-sumcard + .pm-sumcard { margin-top: 2px !important; }
+[data-rail-skin="d"] #panel-agents .pm-sumcard-h {
+  display: flex !important; flex-wrap: wrap; align-items: center; gap: 0 var(--d-gap) !important; min-height: var(--d-row-h); margin: 2px 0 0 !important; padding: 4px var(--d-pad) !important;
+  border: 0 !important; border-radius: var(--d-r) !important;
+  font: var(--d-w-label) var(--d-fs-label)/1.3 var(--display-font, var(--body-font)) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text) !important;
+  transition: background-color var(--d-t1) var(--d-ease);
+}
+[data-rail-skin="d"] #panel-agents .pm-sumcard[data-acc] > .pm-sumcard-h { cursor: pointer; }
+[data-rail-skin="d"] #panel-agents .pm-sumcard[data-acc] > .pm-sumcard-h:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+[data-rail-skin="d"] #panel-agents .pm-sumcard[data-acc].open > .pm-sumcard-h { border-radius: var(--d-r) var(--d-r) 0 0 !important; }
+[data-rail-skin="d"] #panel-agents .pm-sumcard[data-acc].open { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-open), transparent) !important; }
+[data-rail-skin="d"] #panel-agents .pm-sumcard-h > .sh-accchev { flex: none; width: 9px !important; height: 9px !important; color: var(--d-text-3) !important; }
+[data-rail-skin="d"] #panel-agents .pm-sumcard-h > .c {
+  display: inline-flex; align-items: center; gap: 4px; margin-left: auto; flex: none;
+  font: 500 var(--d-fs-meta)/1.3 var(--body-font) !important; letter-spacing: 0 !important; font-variant-numeric: tabular-nums; color: var(--d-text-2) !important;
+}
+[data-rail-skin="d"] #panel-agents .pm-sumcard-h > .c[data-d-st="warn"] { color: var(--d-warn) !important; }
+[data-rail-skin="d"] #panel-agents .pm-sumcard[data-acc] > .sh-accb { padding: 0 var(--d-pad) 0 calc(var(--d-pad) + 13px) !important; }
+[data-rail-skin="d"] #panel-agents .pm-sumcard[data-acc] > .sh-accb > .pm-acc-inner > :last-child { margin-bottom: 6px !important; }
+[data-rail-skin="d"] #panel-agents .pm-sumcard .pm-occ {
+  grid-template-columns: minmax(0, 1fr) auto !important; grid-template-areas: "nm v" "bar bar"; row-gap: 4px !important; padding: 4px 0 !important;
+}
+[data-rail-skin="d"] #panel-agents .pm-sumcard .pm-occ .nm { grid-area: nm; color: var(--d-text-2) !important; }
+[data-rail-skin="d"] #panel-agents .pm-sumcard .pm-occ .bar { grid-area: bar; }
+[data-rail-skin="d"] #panel-agents .pm-sumcard .pm-occ .v { grid-area: v; }
+[data-rail-skin="d"] #panel-agents .pm-sumcard > .sh-run { margin: 0 0 2px !important; }
+/* "3 more ...": a quiet line under the rows, text aligned with the names, wrapping instead of running off the shelf */
+[data-rail-skin="d"] #panel-agents .sh-body > .sh-row.flat {
+  display: block !important; min-height: 0 !important; margin: 4px 0 0 !important; padding: 4px var(--d-pad) 4px calc(var(--d-pad) + 29px) !important;
+  border-radius: var(--d-r) !important; cursor: pointer; transform: none !important;
+}
+[data-rail-skin="d"] #panel-agents .sh-body > .sh-row.flat:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+[data-rail-skin="d"] #panel-agents .sh-body > .sh-row.flat > .sh-meta {
+  display: inline !important; white-space: normal !important; overflow: visible !important; text-overflow: clip !important;
+  font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-2) !important;
+}
+[data-rail-skin="d"] #panel-agents .sh-body > .pm-footnote { margin-top: 4px; }
+/* NieR capitals: the count stays a number in plain case and drops under the heading when both do not fit */
+[data-rail-skin="d"][data-o55-nier="on"] #panel-agents .pm-sumcard-h > .c { text-transform: none !important; letter-spacing: 0 !important; }
+
 /* ---- 10. Activity bar: one tile marks the open panel and glides to the next ---------------------------------------
    The tile (.d-abind, placed by JS) is the size of an icon's symbol box, so hover and active are the same box. The
    chat and home toggles keep their own colour state (they are switches, not the open panel). */
@@ -923,6 +1128,83 @@
 }
 [data-rail-skin="d"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label::first-letter { text-transform: uppercase; }
 [data-rail-skin="d"] #activityBar .icon[data-target].active .icon-label { color: var(--d-text) !important; }
+/* the expand / collapse toggle: a chevron in the same tile as the icons (the shell writes ">" or "<" into it; the text
+   stays for other code, the chevron is drawn and turns when the bar shows its names) */
+[data-rail-skin="d"] #activityBar > .activity-bar-toggle {
+  position: relative; flex: none; width: 28px !important; height: 28px; margin: auto auto 0 !important; padding: 0 !important;
+  border: 0 !important; border-radius: var(--d-Rbar) !important; background: none; box-shadow: none !important;
+  font-size: 0 !important; line-height: 0; color: var(--d-text-3) !important; cursor: pointer;
+  transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease);
+}
+[data-rail-skin="d"] #activityBar > .activity-bar-toggle::before {
+  content: ''; position: absolute; inset: 0; margin: auto; width: 14px; height: 14px; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+  transition: transform var(--d-t3) var(--d-spring);
+}
+[data-rail-skin="d"] #activityBar:not(.collapsed) > .activity-bar-toggle::before { transform: rotate(180deg); }
+[data-rail-skin="d"] #activityBar > .activity-bar-toggle:hover { background: var(--d-hover) !important; color: var(--d-text) !important; }
+[data-rail-skin="d"] #activityBar > .activity-bar-toggle:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+[data-rail-skin="d"][data-o55-nier="on"] #activityBar > .activity-bar-toggle:hover { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
+
+/* drag to reorder or hide: the ghost is the icon's tile lifted off the bar; the drop line is the accent, square in Retro
+   and NieR */
+[data-rail-skin="d"] .pm-ab-ghost {
+  display: flex !important; align-items: center; justify-content: center; width: 32px !important; height: 32px; padding: 0 !important;
+  border-radius: var(--d-Rbar); background: var(--surface-elevated); color: var(--accent-primary); opacity: .92 !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .28), inset 0 0 0 1px var(--d-ctl-line);
+}
+[data-rail-skin="d"] .pm-ab-ghost .icon-label { display: none !important; }
+[data-rail-skin="d"] .pm-ab-ghost .symbol { display: flex; align-items: center; justify-content: center; }
+[data-rail-skin="d"][data-o55-nier="on"] .pm-ab-ghost { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: 3px 3px 0 rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .3); }
+[data-rail-skin="d"][data-theme^="retro"] .pm-ab-ghost { box-shadow: 2px 2px 0 color-mix(in srgb, var(--accent-primary) 45%, transparent), inset 0 0 0 1px var(--accent-primary); }
+[data-rail-skin="d"] .pm-ab-drop-indicator { background: var(--accent-primary) !important; border-radius: 1px !important; }
+[data-rail-skin="d"][data-theme^="retro"] .pm-ab-drop-indicator { border-radius: 0 !important; }
+[data-rail-skin="d"][data-o55-nier="on"] .pm-ab-drop-indicator { background: var(--o55-nier-ink) !important; border-radius: 0 !important; }
+
+/* the rail's resizer keeps the shell's grab light, which follows the pointer; Retro gets a hard square light with a
+   dashed streak, NieR a plain ink mark with a hairline: no soft blob in either */
+[data-rail-skin="d"][data-theme^="retro"] #leftPanelResizer::before {
+  width: 4px; height: 56px; border-radius: 0 !important; animation: none !important;
+  background: var(--accent-primary) !important; box-shadow: 2px 2px 0 color-mix(in srgb, var(--accent-primary) 40%, transparent);
+}
+[data-rail-skin="d"][data-theme^="retro"] #leftPanelResizer::after {
+  width: 2px; height: 240px; animation: none !important;
+  background: repeating-linear-gradient(180deg, color-mix(in srgb, var(--accent-primary) 70%, transparent) 0 4px, transparent 4px 8px) !important;
+}
+[data-rail-skin="d"][data-theme^="retro"] #leftPanelResizer:is(:hover, .resizing)::before, [data-rail-skin="d"][data-theme^="retro"] #leftPanelResizer:is(:hover, .resizing)::after {
+  transition: opacity var(--d-t1) steps(2, end), transform var(--d-t1) steps(2, end) !important;
+}
+[data-rail-skin="d"][data-o55-nier="on"] #leftPanelResizer::before { width: 3px; height: 48px; border-radius: 0 !important; animation: none !important; background: var(--o55-nier-ink) !important; }
+[data-rail-skin="d"][data-o55-nier="on"] #leftPanelResizer::after {
+  width: 1px; height: 240px; animation: none !important;
+  background: linear-gradient(180deg, transparent, rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .5) 30%, rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .5) 70%, transparent) !important;
+}
+
+/* ---- 81. The More button and its tray (lane F) ------------------------------------------------------------------------
+   The tray opens as PMR.menu beside the button (41-more.js). The shell's own tray (.pm-ab-tray) still exists while it is
+   open, because picking and dragging hand back to its rows, but it is never seen. The button sits in the same tile as
+   the other icons: hover tile, pressed while its menu is open, an accent tile while a dragged icon hovers it to hide. */
+[data-rail-skin="d"] .pm-ab-tray { visibility: hidden !important; pointer-events: none !important; }
+[data-rail-skin="d"] #activityBar > #abMoreBtn .symbol {
+  width: 28px !important; height: 28px !important; border-radius: var(--d-Rbar) !important;
+  transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease), box-shadow var(--d-t1) var(--d-ease) !important;
+}
+[data-rail-skin="d"] #activityBar > #abMoreBtn:hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
+[data-rail-skin="d"] #activityBar > #abMoreBtn.is-menu-open { color: var(--d-text) !important; opacity: 1; }
+[data-rail-skin="d"] #activityBar > #abMoreBtn.is-menu-open .symbol { background: var(--d-press) !important; }
+[data-rail-skin="d"] #activityBar > #abMoreBtn.pm-ab-drop-hot { background: none !important; color: var(--accent-primary) !important; }
+[data-rail-skin="d"] #activityBar > #abMoreBtn.pm-ab-drop-hot .symbol {
+  background: color-mix(in srgb, var(--accent-primary) 20%, transparent) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 50%, transparent) !important;
+}
+[data-rail-skin="d"][data-o55-nier="on"] #activityBar > #abMoreBtn:is(.is-menu-open, .pm-ab-drop-hot) .symbol { background: var(--o55-nier-ink) !important; box-shadow: none !important; }
+[data-rail-skin="d"][data-o55-nier="on"] #activityBar > #abMoreBtn:is(.is-menu-open, .pm-ab-drop-hot) { color: var(--o55-nier-on-ink) !important; }
+/* the menu: the bar's own icon drawings at the menu's icon size */
+[data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-mi-ico svg { width: 15px; height: 15px; }
+[data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-menu-empty { max-width: 220px; padding: 10px 10px; font-size: 12px; line-height: 1.45; color: var(--text-secondary); }
+/* its heading is a sentence, not a capitals micro label */
+[data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-menu-glabel { text-transform: none !important; letter-spacing: 0 !important; font: 500 12px/1.3 var(--body-font) !important; color: var(--text-muted) !important; }
 
 /* ---- 11. Family accents ----------------------------------------------------------------------------------------------
    The geometry and the type are shared; each family keeps one signature. Basic is flat and crisp. Friendly lifts its

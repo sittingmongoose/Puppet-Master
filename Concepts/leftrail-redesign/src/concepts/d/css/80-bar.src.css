@@ -35,3 +35,55 @@
 }
 §R:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label::first-letter { text-transform: uppercase; }
 §B .icon[data-target].active .icon-label { color: var(--d-text) !important; }
+/* the expand / collapse toggle: a chevron in the same tile as the icons (the shell writes ">" or "<" into it; the text
+   stays for other code, the chevron is drawn and turns when the bar shows its names) */
+§B > .activity-bar-toggle {
+  position: relative; flex: none; width: 28px !important; height: 28px; margin: auto auto 0 !important; padding: 0 !important;
+  border: 0 !important; border-radius: var(--d-Rbar) !important; background: none; box-shadow: none !important;
+  font-size: 0 !important; line-height: 0; color: var(--d-text-3) !important; cursor: pointer;
+  transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease);
+}
+§B > .activity-bar-toggle::before {
+  content: ''; position: absolute; inset: 0; margin: auto; width: 14px; height: 14px; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+  transition: transform var(--d-t3) var(--d-spring);
+}
+§B:not(.collapsed) > .activity-bar-toggle::before { transform: rotate(180deg); }
+§B > .activity-bar-toggle:hover { background: var(--d-hover) !important; color: var(--d-text) !important; }
+§B > .activity-bar-toggle:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+§R[data-o55-nier="on"] #activityBar > .activity-bar-toggle:hover { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
+
+/* drag to reorder or hide: the ghost is the icon's tile lifted off the bar; the drop line is the accent, square in Retro
+   and NieR */
+§R .pm-ab-ghost {
+  display: flex !important; align-items: center; justify-content: center; width: 32px !important; height: 32px; padding: 0 !important;
+  border-radius: var(--d-Rbar); background: var(--surface-elevated); color: var(--accent-primary); opacity: .92 !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .28), inset 0 0 0 1px var(--d-ctl-line);
+}
+§R .pm-ab-ghost .icon-label { display: none !important; }
+§R .pm-ab-ghost .symbol { display: flex; align-items: center; justify-content: center; }
+§R[data-o55-nier="on"] .pm-ab-ghost { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: 3px 3px 0 rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .3); }
+§R[data-theme^="retro"] .pm-ab-ghost { box-shadow: 2px 2px 0 color-mix(in srgb, var(--accent-primary) 45%, transparent), inset 0 0 0 1px var(--accent-primary); }
+§R .pm-ab-drop-indicator { background: var(--accent-primary) !important; border-radius: 1px !important; }
+§R[data-theme^="retro"] .pm-ab-drop-indicator { border-radius: 0 !important; }
+§R[data-o55-nier="on"] .pm-ab-drop-indicator { background: var(--o55-nier-ink) !important; border-radius: 0 !important; }
+
+/* the rail's resizer keeps the shell's grab light, which follows the pointer; Retro gets a hard square light with a
+   dashed streak, NieR a plain ink mark with a hairline: no soft blob in either */
+§R[data-theme^="retro"] #leftPanelResizer::before {
+  width: 4px; height: 56px; border-radius: 0 !important; animation: none !important;
+  background: var(--accent-primary) !important; box-shadow: 2px 2px 0 color-mix(in srgb, var(--accent-primary) 40%, transparent);
+}
+§R[data-theme^="retro"] #leftPanelResizer::after {
+  width: 2px; height: 240px; animation: none !important;
+  background: repeating-linear-gradient(180deg, color-mix(in srgb, var(--accent-primary) 70%, transparent) 0 4px, transparent 4px 8px) !important;
+}
+§R[data-theme^="retro"] #leftPanelResizer:is(:hover, .resizing)::before, §R[data-theme^="retro"] #leftPanelResizer:is(:hover, .resizing)::after {
+  transition: opacity var(--d-t1) steps(2, end), transform var(--d-t1) steps(2, end) !important;
+}
+§R[data-o55-nier="on"] #leftPanelResizer::before { width: 3px; height: 48px; border-radius: 0 !important; animation: none !important; background: var(--o55-nier-ink) !important; }
+§R[data-o55-nier="on"] #leftPanelResizer::after {
+  width: 1px; height: 240px; animation: none !important;
+  background: linear-gradient(180deg, transparent, rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .5) 30%, rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .5) 70%, transparent) !important;
+}
