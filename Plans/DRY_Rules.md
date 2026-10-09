@@ -2605,9 +2605,11 @@ canonical_text: >-
   ACD-469; the chat, its projections and any port consume it and never restate it. The accent budget
   is a theme-token role rule owned with the theme tokens (ACD-469, FinalGUISpec section 6); surfaces
   pick token roles and never hard-code an accent choice. Motion voices are per theme family tokens
-  (ACD-475) with no per-view or per-theme override setting. Chat sound cues use the Notifications &
-  Sounds owner's mapping, switch and assets (UCC-103, F3-564); the chat has no local sound registry,
-  volume or setting. The busy-send default is read from general.interaction.queue-behavior only. The
+  (ACD-475) with no per-view or per-theme override setting. Chat sound cues, the onboarding and Guided
+  Tour cues and the NieR Mode parts' menu sounds use the Notifications & Sounds owner's mapping,
+  switch, assets and one player (UCC-103, F3-564, F3-599); the chat, onboarding, the Tour and
+  the NieR Mode parts have no local sound registry, volume, setting or second player. The busy-send
+  default is read from general.interaction.queue-behavior only. The
   assistant-turn presentation vocabulary (segment roles, subject statuses, terminal states) is
   defined once in EP-128; other owners, including collaboration runs, reference it and do not
   redefine it.
@@ -2617,7 +2619,7 @@ split_recommended: false
 depends_on: [ACD-469, ACD-475, EP-128, UCC-103]
 unblocks: []
 acceptance_criteria:
-  - "No second family map, accent rule, voice setting, chat sound registry or queue default exists."
+  - "No second family map, accent rule, voice setting, chat, onboarding, tour or NieR sound registry, sound player or queue default exists."
   - "Other owners reference EP-128's vocabulary instead of redefining it."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -2642,7 +2644,7 @@ preserved_exact_tokens:
   - "general.interaction.queue-behavior"
 negative_constraints:
   - "Do not restate the family map outside ACD-469."
-  - "Do not add a chat-local sound or motion registry."
+  - "Do not add a chat-, onboarding-, tour- or NieR-local sound or motion registry, or a second sound player."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/assistant-chat-design.md
