@@ -235,6 +235,9 @@ html[data-theme^="retro"] #panel-usage .pmu-caveat, html[data-o55-nier="on"] #pa
 #panel-usage .pmu-budgetof { font-size: 12.5px; color: var(--pmu-ink-2); white-space: nowrap; }
 #panel-usage .pmu-budgetest { font-size: 12.5px; color: var(--pmu-ink-3); white-space: nowrap; }
 #panel-usage .pmu-budget.is-compact .pmu-budgetest { flex-basis: 100%; }
+/* (lane c-presets) a compact hero is three whole lines (the value, "of budget", the month-end estimate): the 52 px cap
+   cut the estimate in half behind the plot in the 6 x 7 Compact preset */
+#panel-usage .pmu-budget.is-compact .pmu-budgethero { max-height: 66px; }
 #panel-usage .pmu-budgetmix { flex: none; }
 
 /* ------------------------------------------------------------------ the Atlas kinds */

@@ -1610,7 +1610,11 @@
       var side = C.w(ctx, 'm') && ctx.tier.bh >= 90;
       var ring = Math.max(56, Math.min(side ? 96 : 88, ctx.tier.bh - (side ? 8 : 60)));
       var rows = side ? C.fit(ctx.tier.bh, 27) : C.fit(ctx.tier.bh - ring - 8, 27);
-      body.innerHTML = '<div class="pmu-gauge' + (side ? ' is-side' : '') + '"><div class="pmu-gaugering" style="width:' + ring + 'px;height:' + ring + 'px"></div>' +
+      /* (lane c-presets) the facts with no room are counted in the head (+N, its hover tag lists them), never dropped
+         silently: the size presets read the count (an 8 x 4 "every fact" gauge showed the ring alone) */
+      var gHid = (m.facts || []).slice(rows).map(C.factText);
+      C.headMore(ctx, body, gHid);
+      body.innerHTML = '<div class="pmu-gauge' + (side ? ' is-side' : '') + '"' + (ctx.head ? '' : C.foldHover(gHid)) + '><div class="pmu-gaugering" style="width:' + ring + 'px;height:' + ring + 'px"></div>' +
         '<div class="pmu-gaugefacts">' + C.facts(m.facts || [], rows) + '</div></div>';
       C.chart(body, 'gauge', body.querySelector('.pmu-gaugering'), { value: m.value, max: m.max || 100, centre: m.centre, caption: m.caption, idx: 1, token: 'calm' }, { label: ctx.def.title });
     }

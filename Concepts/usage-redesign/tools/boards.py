@@ -112,8 +112,8 @@ KINDS = {
     'columns': (4, None, 4, 16, [
         P('compact', 'Compact', 5, 6, 'Labelled bars, a few buckets'),
         P('standard', 'Standard', 8, 8, 'Labelled bars with the caption'),
-        P('wide', 'Wide', WIDE(), 9, 'More buckets, caption and facts'),
-        P('full', 'Full width', 'full', 9, 'Every bucket across the board', frm='M')]),
+        P('wide', 'Wide', WIDE(), 10, 'More buckets, caption, legend and facts'),
+        P('full', 'Full width', 'full', 10, 'Every bucket across the board', frm='M')]),
     'budget': (5, None, 5, 16, [
         P('compact', 'Compact', 6, 7, 'Spend, estimate and a small line'),
         P('standard', 'Standard', 8, 10, 'Projection chart and burn facts'),

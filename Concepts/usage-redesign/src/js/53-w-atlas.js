@@ -191,7 +191,11 @@
       var collapsed = (C.view(ctx.id, 'collapsed', '') || '').split(',').filter(Boolean);
       var open = openRows[ctx.id] || '';
       var rowH = mid ? 36 : 40, headH = 36, focusH = 236;
-      var budget = ctx.tier.bh - 22 - (q.noWindows.length ? 34 : 0) - (open ? focusH : 0);
+      /* the foot's own height: it wraps to two lines in a 368 px card (lane c-presets: the 34 px of one line let the
+         "N more accounts" line run under a two-line foot) */
+      var noWin = q.noWindows.length ? listWords(q.noWindows) + (q.noWindows.length > 1 ? ' expose' : ' exposes') + ' no quota windows.' : '';
+      var footH = noWin ? 16 + 18 * Math.min(2, C.wrapLines(noWin, bw - 24 - 22, 12.5)) : 0;
+      var budget = ctx.tier.bh - 22 - footH - (open ? focusH : 0);
       var used = 0, hiddenRows = 0, out = [], rowsDrawn = [], hiddenNames = [];
       var tlW = wide ? bw * 0.66 - 230 : mid ? bw * 0.64 - 200 : bw * 0.6 - 110;
       var axis = axisTicks(q, Math.max(1, Math.ceil(7 * 34 / Math.max(60, tlW))), tlW);
