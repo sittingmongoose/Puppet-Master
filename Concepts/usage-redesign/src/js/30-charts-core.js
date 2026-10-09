@@ -897,6 +897,11 @@
       $$('.pmu-mark[data-key]', root).forEach(function (m) { m.classList.toggle('is-cold', !!k && m.getAttribute('data-key') !== k); });
     }
     function parts() { return [xh, band, readoutCard()].concat(dotEls); }
+    /* every part is placed with the `translate` property, never `transform` (Jared 2026-10-09, item 3: "The blue dot is far to
+       the left of the pink and doesn't follow its line"): CSS applies translate, rotate, scale and then transform, so a dot
+       placed by transform under the individual `scale` (.8 when it is not the hovered series) had its position scaled too
+       and sat at 0.8x its coordinates, off its line and left of the hot dot; the readout's .96 pop did the same toward the
+       viewport's corner. With translate the scale applies around the part's own centre (or origin) after it is placed. */
     function place(i, instant) {
       var card = readoutCard();
       /* reads first: the plot's rect (cached for 120 ms), then the card's size once its words changed */
@@ -918,11 +923,11 @@
       });
       last = i;
       xh.style.height = cfg.pad.h + 'px';
-      xh.style.transform = 'translate(' + r1(x) + 'px,' + r1(top) + 'px)';
+      xh.style.translate = r1(x) + 'px ' + r1(top) + 'px';
       var bw = Math.max(4, bandW());
       band.style.height = cfg.pad.h + 'px';
       band.style.width = r1(bw) + 'px';
-      band.style.transform = 'translate(' + r1(x - bw / 2) + 'px,' + r1(top) + 'px)';
+      band.style.translate = r1(x - bw / 2) + 'px ' + r1(top) + 'px';
       var dots = cfg.dots ? cfg.dots(i) : [], nearest = -1, nd = Infinity;
       while (dotEls.length < dots.length) dotEls.push(H('i', 'pmu-xdot', box));
       dotEls.forEach(function (d, k) {
@@ -932,7 +937,7 @@
         ['data-tk', 'data-vendor', 'data-series-index', 'data-tone', 'data-dot'].forEach(function (a) { if (d.hasAttribute(a)) d.removeAttribute(a); });
         key(d, p.key);
         if (p.ink) d.setAttribute('data-dot', 'ink');
-        d.style.transform = 'translate(' + r1(x) + 'px,' + r1(p.y) + 'px)';
+        d.style.translate = r1(x) + 'px ' + r1(p.y) + 'px';
         if (py >= 0 && Math.abs(p.y - py) < nd) { nd = Math.abs(p.y - py); nearest = k; }
       });
       dotEls.forEach(function (d, k) { d.classList.toggle('is-hot', dots.length < 2 || k === nearest); });
@@ -950,7 +955,7 @@
       var y = clamp(sy, 4, Math.max(4, vh - ch - 4));
       card.classList.toggle('is-flip', was !== side && !instant);
       card.style.transformOrigin = side > 0 ? '0 12px' : '100% 12px';
-      card.style.transform = 'translate(' + Math.round(left) + 'px,' + Math.round(y) + 'px)';
+      card.style.translate = Math.round(left) + 'px ' + Math.round(y) + 'px';
     }
     function move(e) {
       if (!cfg.n) return;

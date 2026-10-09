@@ -359,7 +359,10 @@
     var base = new Array(N).fill(Y(0));
     var cs = cost ? costSamples(cost, mids, YB, N, x0, x1) : null;
     var geo = { W: W, H: Hh, pad: pad, pw: pw, ph: ph, x0: x0, x1: x1, lv: lv, tot: tot, base: base, cs: cs, N: N, sc: sc, compact: compact, split: split,
-      stacked: stacked, token: m.token, keys: incSeries.map(function (s) { return s._tk || ('S' + s._i); }) };
+      stacked: stacked, token: m.token, keys: incSeries.map(function (s) { return s._tk || ('S' + s._i); }),
+      /* the token total line's own colour: one token series (the savings trend's cache reads) keeps its type's colour, so its
+         end dot, NOW halo and crosshair dot wear the colour of the line they sit on, never the all-tokens blue */
+      totTk: m.token && m.series.length === 1 ? m.series[0]._tk : 'all' };
     /* axes */
     if (!compact) {
       var xt = charts.xTicks(dom.t0, t1, dom.bucket, pw).map(function (tk) { return { x: X(tk.t), label: tk.label, major: tk.major }; });
@@ -478,7 +481,7 @@
   function endDots(c, geo, m, totals, cost, Y, YB, mids, slide) {
     var P = c.P, s = '';
     var li = lastFinite(totals);
-    if (geo.token && li >= 0) s += charts.dotHtml(mids[li], Y(totals[li]), { tk: 'all' }, { key: 'all', halo: true });
+    if (geo.token && li >= 0) s += charts.dotHtml(mids[li], Y(totals[li]), { tk: geo.totTk }, { key: 'all', halo: true });
     else if (!geo.token) {
       geo.keys.forEach(function (k, j) {
         var row = m.series[j] && m.series[j].values || [];
@@ -590,7 +593,7 @@
       xAt: function (i) { return mids[i]; },
       dots: function (i) {
         var out = [];
-        if (geo.token || geo.stacked) { if (finite(totals[i])) out.push({ y: Y(totals[i]), key: geo.token ? { tk: 'all' } : { idx: incSeries[incSeries.length - 1].idx }, dk: geo.token ? 'all' : null }); }
+        if (geo.token || geo.stacked) { if (finite(totals[i])) out.push({ y: Y(totals[i]), key: geo.token ? { tk: geo.totTk } : { idx: incSeries[incSeries.length - 1].idx }, dk: geo.token ? 'all' : null }); }
         else incSeries.forEach(function (s, j) { var v = (s.values || [])[i]; out.push({ y: finite(v) ? Y(v) : null, key: { idx: s.idx != null ? s.idx : j, vendor: s.vendor }, dk: geo.keys[j] }); });
         if (cost) out.push({ y: finite(cost[i]) ? YB(cost[i]) : null, key: c._ov.key, ink: c._ov.key.idx === 'ink', dk: 'cost' });
         return out;
