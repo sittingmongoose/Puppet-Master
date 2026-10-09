@@ -733,7 +733,9 @@
       if (f === 'basic') return [{ key: 'fm-stamp', prop: 'fmStamp', x: nar ? 404 : 318, y: nar ? 343 : sign + 34, r: -7, layer: 'front' }];
       if (f === 'friendly') return (nar ? [[184, 420], [296, 424], [372, 428]] : [[148, floor + 44], [262, floor + 50], [374, floor + 44]]).map(([x, y], i) => ({ key: 'fm-rose' + i, prop: 'fmRose', x, y, s: nar ? 2 : 3.5, r: (nar ? [-60, 40, 70] : [-70, 18, 74])[i], layer: 'front', opts: { v: i } }));
       if (f === 'glass') return [-1, 0, 1].map((s, i) => ({ key: 'fm-spot' + i, prop: 'fmSpot', x: 240 + s * 112, y: floor + 4, layer: 'back', opts: { v: i, top: 30 - floor, tint: ['lav', 'pink', 'mint'][i] } }));
-      if (f === 'retro') return [{ key: 'fm-clear', prop: 'fmClear', x: 240, y: nar ? 328 : 262, layer: 'front', opts: { size: nar ? 18 : 26 } }, { key: 'fm-score', prop: 'fmScore', x: 240, y: floor + 72, layer: 'front' }, { key: 'fm-arrow', prop: 'fmArrow', x: nar ? 422 : 426, y: nar ? 398 : floor - 26, layer: 'front' }];
+      /* (on the band ALL CLEAR sits just inside its top, about y 318, clear of h1's crown through its one-step hop, with
+         the gap between its words on h1's string) */
+      if (f === 'retro') return [{ key: 'fm-clear', prop: 'fmClear', x: nar ? 251 : 240, y: nar ? 333 : 262, layer: 'front', opts: { size: nar ? 18 : 26 } }, { key: 'fm-score', prop: 'fmScore', x: 240, y: floor + 72, layer: 'front' }, { key: 'fm-arrow', prop: 'fmArrow', x: nar ? 422 : 426, y: nar ? 398 : floor - 26, layer: 'front' }];
       return [];
     }
   };
