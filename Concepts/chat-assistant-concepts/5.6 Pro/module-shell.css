@@ -981,7 +981,8 @@ p.pmx-meta, .pmx-meta{margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-r
 /* J-2: 32 px actions with 10 px sides; wrapped rows keep 12 px; boxed neighbours keep 10 px (text buttons carry their own padding) */
 .pmx-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px 6px;min-height:32px;width:100%;min-width:0;}
 .pmx-act{height:32px;min-height:32px;padding:0 10px;border-radius:8px;font:var(--pmx-w-560) 12px/16px var(--font-ui);white-space:nowrap;}
-.pmx-actions > :is(.primary-button, .soft-button) + .primary-button, .pmx-actions > :is(.primary-button, .soft-button) + .soft-button{margin-left:4px;}
+/* the Plan card's Build (.pd-build, plans.js) is a boxed primary too (C56, DR-047) */
+.pmx-actions > :is(.primary-button, .soft-button, .pd-build) + :is(.primary-button, .soft-button, .pd-build){margin-left:4px;}
 .pmx-act.text-button{color:var(--muted);background:none;}
 .pmx-act.text-button:hover{color:var(--text);background:var(--surface-3);}
 .pmx-act.primary-button{height:32px;min-height:32px;padding:0 14px;}

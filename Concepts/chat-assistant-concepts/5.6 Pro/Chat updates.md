@@ -1388,6 +1388,29 @@ The Plan is a transcript card because it is a human-readable deliverable. It is
 - Actions as eligible: **Revise**, **Build With Crew**, **Build At…**,
   **Send To Planning Wizard**, **Export**, **Cancel**, **Details**, and
   **Open To-Dos** while building.
+- **The transcript card's layout.** Kicker (`Plan` · `V5 · Thorough`), the
+  title and a two-line summary, then one hairline that opens the card's status
+  zone: the schedule line when the Plan has a scheduled build, the step count
+  and status ("6 steps · Ready"), and the action row. The action row is
+  **Build**, **Revise** (only while the Plan is Ready) and **Open plan**. It
+  sits on the card's content edge with the card's own padding below it. There
+  is no tinted band and no inset of its own.
+- **One action row everywhere a Plan shows actions.** The transcript card's
+  footer, the editor's sticky footer and its More row, the compact
+  Completed/Canceled card, a Building plan's attention actions (Resume,
+  Details, Cancel build), the schedule line's decision (Use V6, Cancel
+  schedule) and the Build-started receipt's Open plan all use the shared
+  `.pmx-actions` row and `.pmx-act` button. Every button is 32px tall with
+  12px type. Boxed buttons sit 10px apart and text actions 6px apart. Build
+  keeps the primary 14px sides and every other button 10px. `Building…`,
+  `Completed` and `Canceled` keep full contrast; only their cursor shows they
+  are disabled. Retro squares every corner and NieR keeps its own square,
+  flat buttons; neither changes a button's size.
+- While building, the To-Do count ("0 of 6 steps done", or "Updating
+  progress…" while the projection catches up) is plain words at the action
+  row's right end, never a chip. A wait or attention line takes its own row
+  under the buttons: the mark sits in a 16px column 10px from the copy, and
+  the line's admitted actions form an action row under the copy.
 - **Revise**, never Edit. It targets the ordinary composer at the current
   Plan/version and the composer chrome visibly changes; the user submits prose
   and the agent writes a complete new version. `V4 → V5`. Earlier versions stay
@@ -2188,13 +2211,28 @@ and deliberately not in the Multi-Agent Workflows group. It is never a card.
   priority "Coming up · Next: 10:00 PM · '…' · +1 more · [Show]".
 - **The Plan card's schedule line** sits beside the Build control and never
   replaces its `Building…`. Each secondary state leads with its canon token:
-  "Builds weeknights 10 PM–2 AM · next: tonight" with a night ribbon; "Building
+  "Builds weeknights 10 PM–2 AM (Chicago time) · next: tonight" with a night ribbon; "Building
   now · wraps up 1:50 AM"; "**Outside execution window** · paused for the
   night, continues Mon 10 PM"; "**Schedule needs update** · You edited this
   plan (now V3). Build V3 instead? [Use V3] [Cancel schedule]"; "**Waiting for
   Usage** · resets 4:00 AM (from Anthropic), continues Mon 10 PM", with no
-  countdown when the reset is unknown; and "**Paused** · …" for a build you
-  paused. The next morning one receipt sums up the night: "Overnight: built 2
+  countdown when the reset is unknown; "**Paused** · …" for a build you
+  paused; and "**Schedule ended** · you started this build now, so the
+  schedule won’t start a second one." after Build runs the version the
+  schedule was bound to. That last state offers no "Use V…": there is no new
+  version to rebind to, so its link reads Details rather than Review.
+- **Its layout.** The canon token is the first row, in the text colour, with
+  **Details** (**Review** when a new version is waiting) beside it. Details
+  is a 32px text action centred on that row, its label on the card's right
+  content edge. The detail ("next: tonight") follows on the row below, then
+  the night ribbon and the steps built, wrapping together as the width
+  allows. A decision's buttons get their own action row under the sentence,
+  so they never squeeze it into a narrow column. A zone in parentheses
+  ("(Chicago time)") never breaks inside them. The " · " between the token
+  and the detail stays in the text for screen readers. On a card narrower
+  than 360px, Details moves under the sentence. In the transcript card the
+  line has no hairline of its own: the card's status-zone hairline sits above
+  it. The next morning one receipt sums up the night: "Overnight: built 2
   of 5 steps (10:00 PM–1:52 AM, paused safely) · sent 1 scheduled message · 1
   message needs you · Open".
 - **The Scheduled manager** (wide): the next 48 hours as a plate, where hovering

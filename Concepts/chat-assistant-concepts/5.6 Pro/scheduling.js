@@ -1155,13 +1155,16 @@
     /* "continues Mon 10:00 PM": the weekday is always named, even tonight */
     var nextDay=Number.isFinite(nextMs)&&nextMs?(function(p){return p?DAY_LABELS[T0.weekday(p)]+' '+clockAt(nextMs,zone):'';})(zp(zone,nextMs)):'';
     /* a slot set in another zone than the viewer's names it once (its times are that zone's wall times) */
-    var oz=otherZone(zone),zt=oz?' ('+esc(oz)+')':'';
+    var oz=otherZone(zone),zt=oz?' ('+esc(nb(oz))+')':'';  /* the zone never breaks inside its parentheses (C56) */
     var rep=api&&api.executionReport&&b.dispatchReceipt?api.executionReport(planId):null,cs=rep&&rep.completion_summary,steps=cs&&cs.leaf_steps?cs.resolved+' of '+cs.leaf_steps+' steps':'';
     var slot=one?'':nightsWord(b.days_of_week)+' '+slotText(b.local_start,b.local_pause);
-    if(b.state==='invalidated'){
+    /* Build (or an ended run) invalidates the schedule without a new version: nothing to rebind, so the line says the
+       schedule is over instead of offering "Use V" for a version that does not exist */
+    if(b.state==='invalidated'&&b.pendingVersion==null){tone='done';lead='Schedule ended';say=/^Build Now/.test(b.invalidated_reason||'')?'you started this build now, so the schedule won’t start a second one.':'the build it was set for has ended, so it won’t start again.';}
+    else if(b.state==='invalidated'){
       tone='update';lead='Schedule needs update';say='You edited this plan (now V'+esc(b.pendingVersion)+'). <b>Build V'+esc(b.pendingVersion)+' instead?</b>';
-      acts='<button type="button" class="soft-button" data-action="sched-rebind-build" data-id="'+id+'" data-version="'+esc(b.pendingVersion)+'" data-hash="'+esc(b.pendingHash)+'" data-revision="'+b.revision+'">Use V'+esc(b.pendingVersion)+'</button>'+
-        '<button type="button" class="text-button" data-action="sched-cancel-build" data-id="'+id+'" data-revision="'+b.revision+'" data-currentness="'+esc(buildCurrent(b))+'">Cancel schedule</button>';
+      acts='<button type="button" class="soft-button pmx-act" data-action="sched-rebind-build" data-id="'+id+'" data-version="'+esc(b.pendingVersion)+'" data-hash="'+esc(b.pendingHash)+'" data-revision="'+b.revision+'">Use V'+esc(b.pendingVersion)+'</button>'+
+        '<button type="button" class="text-button pmx-act" data-action="sched-cancel-build" data-id="'+id+'" data-revision="'+b.revision+'" data-currentness="'+esc(buildCurrent(b))+'">Cancel schedule</button>';
     }else if(b.state==='canceled'||b.state==='cancelled'){tone='done';lead='Schedule canceled';say='V'+esc(b.exact_target_version)+' won’t be built on a schedule.';}
     else if(b.state==='held'){tone='update';lead='Held';say=esc(buildHeldWords(b));}
     else if(b.state==='expired'){tone='done';lead='Skipped';say='it was more than '+Math.round((b.grace_seconds||SCHED_DEFAULTS.build.graceMinutes*60)/60)+' min late.';}
@@ -1183,10 +1186,14 @@
     else{ribbon=true;lead='Builds '+esc(slot)+zt;say=nextSay?'next: '+esc(nextWords({kind:'recurring_window',timezone:zone,days:b.days_of_week,startTime:b.local_start,pauseTime:b.local_pause},now)||nextSay):'';}
     var foot=ribbon||steps?'<span class="plan-sched-foot">'+(ribbon?nightRibbon(b,now):'')+(steps&&tone!=='done'?'<span>'+esc(steps)+'</span>':'')+'</span>':'';
     /* 8.8 "the next morning, one receipt": what the night did, once the slot has paused it safely */
-    if(lead==='Outside execution window')foot+=overnightReceipt(b,steps);
+    var night=lead==='Outside execution window'?overnightReceipt(b,steps):'';
+    /* C56: the lead is the line's first row and Details sits beside it; what follows the lead (the detail, then the
+       night ribbon) flows on the row below, and a decision's buttons get a row of their own under the sentence, so
+       neither ever squeezes the sentence into a narrow column. The " · " stays in the text for screen readers. */
     return '<div class="plan-schedule-line" data-plan-schedule="'+id+'" data-tone="'+tone+'"><span class="plan-sched-mark">'+SH.pmxKindMark('build-at',16)+'</span>'+
-      '<p class="plan-sched-say"><b>'+lead+'</b>'+(say?' · '+say:'')+'</p><span class="plan-sched-acts">'+acts+
-      '<button type="button" class="text-button" data-action="sched-open-plan-record" data-id="'+id+'">'+(b.state==='invalidated'?'Review':'Details')+'</button></span>'+foot+'</div>';
+      '<p class="plan-sched-say"><b>'+lead+'</b>'+(say?'<span class="plan-sched-sep"> · </span><span class="plan-sched-detail">'+say+'</span>':'')+foot+'</p>'+
+      '<span class="plan-sched-acts"><button type="button" class="text-button pmx-act" data-action="sched-open-plan-record" data-id="'+id+'">'+(b.state==='invalidated'&&b.pendingVersion!=null?'Review':'Details')+'</button></span>'+
+      (acts?'<span class="plan-sched-decide pmx-actions">'+acts+'</span>':'')+night+'</div>';
   }
   function overnightReceipt(b,steps){
     /* the night began when the run was admitted (its receipt) or, on a later night, when the slot reopened */
