@@ -101,28 +101,37 @@
     /* the identity column: the widest nickname, state word or plan (AAC: sized to the widest identity; the meta line wraps
        at its middle dot), never under 96 px and never so wide that a window column falls under 92 px. Columns only where
        the identity keeps its longest word whole ("sittingmongoose" was broken inside the word at 138 px) */
-    var wantId = Math.ceil(24 + Math.max.apply(null, accs.map(function (a) { return Math.max(tw(a.nickname, 13.5, 600), tw(a.stateWord, 12, 600), tw(a.plan || '', 12)); })));
+    var metaW = function (a) { return tw(a.stateWord, 12, 600) + (a.plan ? tw(' · ' + a.plan, 12) : '') + (a.fresh && a.fresh.stale ? tw(' · M ' + a.ageText, 12) : 0); };
+    var amtText = function (a) { var x = a.amounts[0]; return x ? x.label + ' ' + (x.value || x.word) + ' ' + (x.suffix || '') : ''; };
+    var wantId = Math.ceil(24 + Math.max.apply(null, accs.map(function (a) { return Math.max(tw(a.nickname, 13.5, 600), metaW(a), a.amounts.length && n && !allHiddenP(a) ? tw(amtText(a), 12) : 0); })));
     var longWord = Math.ceil(24 + Math.max.apply(null, accs.map(function (a) { return Math.max.apply(null, String(a.nickname).split(/\s+/).map(function (x) { return tw(x, 13.5, 600); }).concat(
       String(a.stateWord + ' ' + (a.plan || '')).split(/\s+/).map(function (x) { return tw(x, 12, 600); }))); })));
     var cols = n > 0 && bw - n * (PWIN + PGAP) >= Math.max(PIDENT, longWord);
-    var identW = cols ? Math.max(PIDENT, longWord, Math.min(wantId, 200, bw - n * (PWIN + PGAP))) : bw;
+    /* the identity yields to the windows: a window column keeps about 118 px where the plate has it ("resets in 1h 41m"
+       and "Reset at 21:56 ·" on one line each), the identity's meta line wraps at its dot instead */
+    /* (the identity still keeps its nickname and its state word on one line each where the windows' minimum allows) */
+    var nickW = Math.ceil(24 + Math.max.apply(null, accs.map(function (a) { return Math.max(tw(a.nickname, 13.5, 600), tw(a.stateWord, 12, 600)); })));
+    var identW = cols ? Math.max(PIDENT, longWord, Math.min(wantId, 200, bw - n * (PWIN + PGAP), Math.max(nickW, bw - n * (118 + PGAP)))) : bw;
     var winW = cols ? (bw - identW - n * PGAP) / n : 0;
     /* stacked: the window meters of an account side by side where they fit (at least 88 px each), else in rows */
     var perLine = cols ? n : Math.max(1, Math.min(Math.max(1, n), Math.floor((bw + 10) / (88 + 10))));
     var cellW = cols ? winW : (bw - 10 * (perLine - 1)) / perLine;
     var textW = (cols ? identW : bw) - 24;
+    /* the meta line's words are measured as drawn (the state word 600, the rest 400), so a wrap is counted where it happens */
     var identH = function (a) {
-      var am = a.amounts.length && n && !allHiddenP(a) ? 16 * C.wrapLines(a.amounts[0].label + ' ' + (a.amounts[0].value || a.amounts[0].word) + ' ' + (a.amounts[0].suffix || ''), textW, 12) : 0;
-      return 18 * C.wrapLines(a.nickname, textW, 13.5, 600) + 16 * C.wrapLines(metaText(a), textW, 12) + am;
+      var am = a.amounts.length && n && !allHiddenP(a) ? 16 * C.wrapLines(amtText(a), textW, 12) : 0;
+      return 18 * C.wrapLines(a.nickname, textW, 13.5, 600) + 16 * Math.max(1, Math.ceil(metaW(a) * 1.02 / Math.max(40, textW))) + am;
     };
     /* one window cell: the value line (17), the track (14), the reset line (14 a line, wrapped in its column) */
     var cellH = function (a, w) {
-      if (w.pct === null) return 6 + 17 * Math.min(3, C.wrapLines(PMU.roster.vsWord(w), cellW - 20, 12.5, 520));
-      return 17 + 14 + 4 + 14 * Math.min(3, C.wrapLines(PMU.fmt.resetLine(w).text, cellW, 12)) + (w.amount ? 14 : 0);
+      if (w.pct === null) return 8 + (w.resetPending ? 15 : 17) * Math.min(4, C.wrapLines(PMU.roster.vsWord(w), cellW - 20, w.resetPending ? 12 : 13, 520));
+      /* the meter foot puts the reset and the amount ("105 / 300 requests") side by side, each wrapping in its half */
+      var half = w.amount ? (cellW - 8) / 2 : cellW;
+      return 17 + 14 + 4 + 14 * Math.min(4, Math.max(C.wrapLines(PMU.fmt.resetLine(w).text, half, 12), w.amount ? C.wrapLines(w.amount, half, 12) : 0));
     };
     var rowH = function (a) {
       if (!n || allHiddenP(a)) return Math.max(56, Math.max(identH(a), 22 * Math.min(3, a.amounts.length + 1)) + 18);
-      if (cols) return Math.max(60, Math.ceil(Math.max(identH(a), Math.max.apply(null, a.windows.map(function (w) { return cellH(a, w); }))) + 18));
+      if (cols) return Math.max(64, Math.ceil(Math.max(identH(a), Math.max.apply(null, a.windows.map(function (w) { return cellH(a, w); }))) + 22));
       var lines = Math.ceil(n / perLine), mh = 0;
       for (var li = 0; li < lines; li++) mh += 6 + Math.max.apply(null, a.windows.slice(li * perLine, li * perLine + perLine).map(function (w) { return Math.max(42, cellH(a, w)); }));
       return Math.ceil(identH(a) + mh + 16);
@@ -156,14 +165,22 @@
         '<i class="pmu-acclight" aria-hidden="true"></i>' + ident + cells + '</div>';
     }).join('');
     var foldItems = folded.map(foldLine);
-    /* the provider's plan facts in the room the rows leave (two columns where pairs fit), the rest counted in the head */
-    var room = bh - used - 8, facts = (m.facts || []).slice(), footOk = m.foot && room >= 34 + 30;
+    /* the provider's plan facts in the room the rows leave (two columns where pairs fit), the rest counted in the head. The
+       row estimates lean long so an account row is never cut; the facts and the foot take the room by the rows' likely
+       height instead (each a little shorter), and the fit pass trims a fact or the foot that does not fit, exactly */
+    var tight = 0; shown.forEach(function (a, i) { tight += hs[i] - (cols ? 4 : 8); });
+    var room = bh - bandH - tight - (folded.length ? MORE : 0) - 4, facts = (m.facts || []).slice(), footOk = m.foot && room >= 34 + 4;
     if (footOk) room -= 34;
     var lay = facts.length ? C.factLayout(facts, bw) : null, fr = lay && !folded.length ? lay.fit(room) : { n: 0, used: 0 };
     var headItems = facts.slice(fr.n).map(C.factText).concat(m.foot && !footOk ? [String(m.foot).replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim()] : []);
     C.headMore(ctx, body, headItems);
     body.innerHTML = '<div class="pmu-acc is-group pmu-planplate" data-mode="' + (cols ? 'full' : 'stack') + '"' + (folded.length || C.smallCard(ctx) || !headItems.length ? '' : C.foldHover(headItems)) + '>' + band + '<div class="pmu-accrows">' + rows + '</div>' +
       (folded.length ? C.more(folded.length, folded.length === 1 ? 'account' : 'accounts', false, foldItems) : '') + (fr.n ? lay.html(fr.n) : '') + '</div>' + (footOk ? C.foot(m.foot, m.footGlyph) : '');
+    /* the facts and the foot give way before any account row (the engine's fit pass takes [data-fit-first] lines first, the
+       last first: the foot, then the facts from the end). Without this a foot that ran 6 px past the body cost the plate
+       its last account (Copilot at 1920, Basic Dark: 1 of 2 rows); what gives way joins the head count's hover tag */
+    Array.prototype.forEach.call(body.querySelectorAll('.pmu-planplate > .pmu-facts > .pmu-fact, .pmu-cardfoot'), function (el) { el.setAttribute('data-fit-first', ''); });
+    if (headItems.length && !folded.length) body._pmuHeadFold = true;
     shown.forEach(function (a) {
       var row = body.querySelector('.pmu-planrow[data-acct="' + a.key + '"]');
       if (!row || !n || allHiddenP(a)) return;

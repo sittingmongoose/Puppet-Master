@@ -79,7 +79,7 @@
   var GROUP_WORD = { plan: 'subscription · plan allowance', use: 'pay as you go', own: 'your own route' };
   function planInScope(v) { return v.legacyId ? D.inScope(v.legacyId) : D.settingsInScope(v.settingsId); }
   function planModel(id) {
-    return function () {
+    return function (ctx) {
       var v = D.planView(id); if (!v || !planInScope(v)) return null;
       var p = v.legacy, a = v.account, x = PLAN_EXTRA[v.legacyId] || null, rp = v.provider, multi = !!(rp && rp.accounts.length > 1);
       var amounts = a && !multi ? a.amounts.slice() : [];
@@ -98,7 +98,9 @@
       }
       return { name: v.name, settingsId: v.settingsId, provider: rp, account: a, windows: v.windows, binding: v.binding,
         /* a single account's plan and its nickname (a nickname that only repeats the provider's name is left out: "Muse") */
-        plan: multi ? '' : (a && a.plan ? a.plan : v.plan) + (a && !C.nickRepeats(a.nickname, v.name) ? ' · ' + a.nickname : ''),
+        plan: multi ? '' : (a && a.plan ? a.plan : v.plan) + (a && !C.nickRepeats(a.nickname, v.name) ? ' · ' + a.nickname : '') +
+          /* the state word where the head's right has no room for it (said once: the aside or here) */
+          (a && ctx && ctx.tier && ctx.tier.bw && !stateFitsAside(ctx, v.name, a.stateWord) ? ' · ' + a.stateWord : ''),
         requests: p && !multi ? v.costs.requests || p.requests : null, tokens: p && !multi ? (v.costs.input + v.costs.output) || p.tokens : null, amounts: amounts, facts: facts,
         foot: foot, footGlyph: 'info' };
     };

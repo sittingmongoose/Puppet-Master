@@ -283,15 +283,15 @@ B = {
     # provider's plate lists every account: Claude (4) and ChatGPT / Codex (3) as wide row plates, Qwen (3 windows) wide,
     # the single-account providers as plan cards
     'plans': {
-        'S': 'plans-timeline 12x18 plan-claude 12x15 plan-codex 12x13 plan-qwen 12x10 plan-copilot 12x8 plan-kimi 8x10 '
+        'S': 'plans-timeline 12x18 plan-claude 12x15 plan-codex 12x13 plan-qwen 12x11 plan-copilot 12x9 plan-kimi 8x10 '
              'plan-gemini 4x10 plan-muse 4x10 plan-opencode-go 4x10 plan-anthropic-api 4x10 plan-antigravity 4x10 plan-cursor-cli 4x10 '
              'plan-zai-coding 4x10 reset-map 12x14 quota-history 12x31 plan-settlement 12x17 '
              'plan-pressure 6x12 plan-authority 6x12 allowance-attribution 12x8 counting-basis 6x14 native-allowance-units 6x14',
-        'M': 'plans-timeline 20x18 plan-claude 10x15 plan-codex 10x15 plan-qwen 10x11 plan-copilot 5x11 plan-kimi 5x11 '
+        'M': 'plans-timeline 20x18 plan-claude 10x16 plan-codex 10x16 plan-qwen 10x11 plan-copilot 5x11 plan-kimi 5x11 '
              'plan-gemini 4x9 plan-muse 4x9 plan-opencode-go 4x9 plan-anthropic-api 4x9 plan-cursor-cli 4x9 '
              'plan-antigravity 4x12 plan-zai-coding 4x12 reset-map 12x12 quota-history 20x30 plan-settlement 20x12 '
              'plan-pressure 7x12 plan-authority 7x12 allowance-attribution 6x12 counting-basis 10x13 native-allowance-units 10x13',
-        'L': 'plans-timeline 24x18 plan-claude 12x15 plan-codex 12x15 plan-qwen 12x11 plan-copilot 6x11 plan-kimi 6x11 '
+        'L': 'plans-timeline 24x18 plan-claude 12x16 plan-codex 12x16 plan-qwen 12x11 plan-copilot 6x11 plan-kimi 6x11 '
              'plan-gemini 4x9 plan-muse 4x9 plan-opencode-go 4x9 plan-anthropic-api 4x9 plan-cursor-cli 4x9 plan-antigravity 4x9 '
              'plan-zai-coding 4x12 reset-map 20x12 quota-history 24x30 plan-settlement 24x12 '
              'plan-pressure 8x12 plan-authority 8x12 allowance-attribution 8x12 counting-basis 12x13 native-allowance-units 12x13',
