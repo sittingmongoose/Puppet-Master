@@ -198,7 +198,7 @@
          APPROVED stamp, Friendly's paper roses, Glass's spotlights, Retro's ALL CLEAR) is part of the picture, so
          Reduced Motion and a reopened window show it; the call holds it back until its rise. */
       const nier = ctx.family === 'nier';
-      const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: nier ? null : 'rise' }].concat(A.ensemble(ctx, { poses: ['stand', 'wave', 'point'], standing: nier }));
+      const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: nier ? null : 'rise' }].concat(A.ensemble(ctx, { poses: ['stand', 'wave', ctx.family === 'retro' ? 'aim' : 'point'], standing: nier }));
       if (!nier && A.famCall) items.push(...A.famCall.emblems(ctx));
       items.push({ key: 'sign', prop: 'badge', x: 240, y: nier && ctx.band ? BAND_SIGN : A.metrics(ctx.family).signY || 64, s: R(ctx) ? 1 : 1.5, layer: 'front', anim: 'drop', delay: 700, opts: { label: L('ready', 'ready'), glyph: 'check', accent: true } });
       items.push(...sparks([[80, 180, 0], [404, 160, 1], [96, 420, 2], [398, 410, 3], [240, 540, 0]], 900));
