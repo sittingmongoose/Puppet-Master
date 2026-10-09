@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8261-L8331
+Source lines: L8274-L8344
 
-Source SHA256: `96296f9a137b515ccb5cae5c4cb35c0f3a73485e35952c0cd9ec86e775083dc5`
+Source SHA256: `75ef9520d55f87c05e24760444ca65aef7113934c49f8a37c0e2d2eed55300bb`
 
 ---
 
