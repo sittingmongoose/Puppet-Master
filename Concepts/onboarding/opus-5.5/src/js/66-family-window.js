@@ -168,11 +168,12 @@
   /* the rail held in its old state walks to the new chapter in the family's way: Basic draws a dimension line from the
      old chapter's node to the new one, Friendly hops a paper pennant, Glass runs a light pulse along the bar, Retro
      jumps its cursor block in two steps. Reads in the read phase; the marker moves by transform only. */
-  function railWalk(f, done) {
+  function railWalk(f, done, instant) {
     const r = rootEl(), s = O55.S;
     const nav = r && r.querySelector('.o55-rail');
     if (s) s.railHold = null;
-    if (!nav || calm() || !shown()) { O55.ui.renderRail(); if (done) done(); return; }
+    /* (instant: a moment snapped by a key or a press: the rail is simply at its end) */
+    if (!nav || instant || calm() || !shown()) { O55.ui.renderRail(); if (done) done(); return; }
     measure(() => {
       const from = nav.querySelector('.o55-railitem[data-state="current"] .o55-railnode');
       const a = from ? from.getBoundingClientRect() : null;
@@ -427,13 +428,13 @@
     const st = stageEl(); if (!st) { railWalk(f); return; }
     const p = perf('card');
     let landed = false, L = null;
-    const land = () => {
+    const land = (instant) => {
       if (landed) return; landed = true;
       const sd = O55.sound.context ? O55.sound.context() : {};
       play('chapter', { chapter: claim.to, depth: sd && Number.isFinite(sd.depth) ? sd.depth : undefined });
-      railWalk(f);
+      railWalk(f, null, instant);
     };
-    p.end(() => { if (!quiet) land(); if (L) L.div.remove(); });
+    p.end(() => { if (!quiet) land(true); if (L) L.div.remove(); });
     measure(() => {
       if (p.done) return null;
       const svg = sceneOf(st), vb = (svg && svg.getAttribute('viewBox')) || '0 0 480 600', r = st.getBoundingClientRect();
@@ -483,6 +484,7 @@
     p.at(170, () => railWalk(f, () => restamp(f)));
     /* the finale's emblem waits for the rise (Glass's spotlights come on one by one with the bows) */
     const finale = FINALE[f](p, svg, em, els);
+    p.end(() => { if (!quiet && s.railHold) { s.railHold = null; O55.ui.renderRail(); } });
     hs.forEach((g, i) => {
       const el = els[i]; if (!el) return;
       p.at(CC.bows[i] != null ? CC.bows[i] : CC.bows[2] + (i - 2) * 150, () => {
@@ -776,7 +778,18 @@
     p.at(1720, () => play('chapter', { chapter: 'welcome', depth: 0, intensity: 0.45 }));
     p.at(2300, () => p.finish());
   }
+  /* while the stage is asleep a key or a press anywhere wakes it at once (the window takes focus only once its first
+     screen shows, and on a slow computer that is a while: the window's own snap would not hear it) */
+  let coldOff = null;
+  function coldInput(on) {
+    if (coldOff) { coldOff(); coldOff = null; }
+    if (!on) return;
+    const snap = (e) => { if (e.type === 'keydown' && /^(Shift|Control|Alt|Meta|CapsLock|Fn)$/.test(e.key)) return; snapAll(); endCold(); };
+    document.addEventListener('keydown', snap, true); document.addEventListener('pointerdown', snap, true);
+    coldOff = () => { document.removeEventListener('keydown', snap, true); document.removeEventListener('pointerdown', snap, true); };
+  }
   function endCold() {
+    coldInput(false);
     const R = runState(), cold = R.cold, st = stageEl();
     if (st && st.hasAttribute('data-o55fm-wake')) st.removeAttribute('data-o55fm-wake');
     if (cold) { cold.done = true; if (cold.L && cold.L.div.isConnected) cold.L.div.remove(); R.cold = null; }
@@ -799,6 +812,7 @@
       addProps();
       const cold = R.cold = { f, done: false, L: null };
       st.setAttribute('data-o55fm-wake', f);
+      coldInput(true);
       if (WAKE0[f]) {
         const nar = isNarrow(), band = A.scenes.hero && A.scenes.hero.band, vb = nar && band ? band.join(' ') : `0 0 ${A.W} ${A.H}`;
         cold.L = makeLayer(st, f, vb, famCtx(f, st));
