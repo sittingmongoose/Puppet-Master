@@ -9,8 +9,11 @@
   const ROOT_ID = 'pm-o55-onboarding';
   const KEY = 'onboarding';
   /* NieR Mode's skin of the window (66-nier-window.js, O55.nierWindow) hears the window's moments here and answers
-     only while NieR Mode is painted; a hook that answers true has drawn the moment its own way */
-  const skin = (name, a, b) => { const k = O55.nierWindow; if (!k || !k[name]) return false; try { return k[name](a, b); } catch (e) { console.warn('O55: NieR skin', name, e); return false; } };
+     only while NieR Mode is painted; a hook that answers true has drawn the moment its own way. The four looks' own
+     hero moments (66-family-window.js, O55.famWindow) are asked after it, only when its answer is falsy, and stand
+     down themselves while NieR Mode is painted: NieR's hooks run exactly as before, and NieR always wins. */
+  const ask = (k, who, name, a, b) => { if (!k || !k[name]) return false; try { return k[name](a, b); } catch (e) { console.warn('O55: ' + who + ' skin', name, e); return false; } };
+  const skin = (name, a, b) => ask(O55.nierWindow, 'NieR', name, a, b) || ask(O55.famWindow, 'family', name, a, b);
 
   const S = O55.S = {
     env: null, sess: null, root: null, open: false, busyNav: false,

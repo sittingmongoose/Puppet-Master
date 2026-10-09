@@ -103,11 +103,12 @@
     /* the end of the flow: once the curtain scene has arrived, the troupe celebrates. Its celebration is the one sound
        of that moment (it played a commit on top); Reduced Motion has no celebration, and so no sound then either. */
     /* (under NieR's art the troupe takes a curtain call instead, and points at the next step: O55.nierWindow.ready, hero
-       spec H4b; no second confetti) */
+       spec H4b; no second confetti. The four looks take theirs too: O55.famWindow.ready, asked through the same skin
+       after NieR's; this celebration remains for Reduced Motion and a low-resource computer) */
     mounted(S, layer, fresh) {
       /* the look waiting to be saved (O55.shell.commitLook) is written once Ready's moment and Pod's line are over */
       if (fresh) O55.shell.flushLook(4000);
-      if (!fresh || (O55.nierWindow && O55.nierWindow.ready && O55.nierWindow.ready(layer, fresh))) return;
+      if (!fresh || O55.ui.skin('ready', layer, fresh)) return;
       O55.motion.after(1250, () => { if (S.open && S.sess.screen === 'ready' && O55.art.celebrate) O55.art.celebrate(S.root.querySelector('.o55-stage'), { big: true, count: 46, at: [240, 260] }); });
     },
     eyebrow: () => T('ready.eyebrow'),
