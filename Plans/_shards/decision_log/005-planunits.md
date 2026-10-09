@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3384-L11766
+Source lines: L3414-L11845
 
-Source SHA256: `e3792b33109db9b96f0cef6bee55b0369c15407a43e5af00569dad39f487fd8c`
+Source SHA256: `fd1f15a8a859f0397e4f09993254166305de3086ab5e6bef6d1742c28d15cb8a`
 
 ---
 
@@ -8390,4 +8390,53 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
+```
+
+### DL-161 - PMConcept7 Carries Its Own Fonts
+
+```yaml
+plan_unit_id: DL-161
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-161 records the owner request of 2026-10-09 that PMConcept7 have all its fonts built in. PMConcept7 embeds
+  Inter, Poppins with Nunito behind it, and IBM Plex Mono, at the weights and italics its looks use, as Latin woff2
+  data, and Gelasio stands in under the name Georgia for the info-badge glyph because Georgia cannot be embedded
+  (F3-430). Its Inter, Poppins and IBM Plex Mono files are the 5.6 Pro chat concept's, byte for byte (DR-050).
+  Orbitron, Rajdhani and JetBrains Mono are not embedded because no text draws in them, and platform font names
+  stay the computer's.
+gui_related: true
+gui_classification_reason: Records an owner request on the concepts' fonts.
+split_recommended: false
+depends_on: [F3-430]
+unblocks: [DR-050]
+acceptance_criteria:
+  - "Every theme face PMConcept7 draws in Basic, Glass, Friendly and Retro comes from embedded data."
+  - "The owner's request is recorded in plain words with its source hashes."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: theme_token_drift
+reasoning_tier: standard
+context_scope: concept_web_fonts
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 d6286edbbe34d3dec3d41b9f330faf80aa2006bc823e15e6e875ef148fd0d91d"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/proof-after.json, SHA-256 bfda89d92f00e53a7ad8dec195de68ff5ef1774443e4fb70868ce32bc061a82a"
+preserved_exact_tokens:
+  - "DL-161"
+  - "Gelasio"
+  - "Georgia"
+negative_constraints:
+  - "Do not load a concept font from the network."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
 ```

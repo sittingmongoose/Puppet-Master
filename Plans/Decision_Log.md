@@ -3375,6 +3375,36 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-onb-20261007/JARED-RE
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-082, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/Settings_System.md#SSYS-043
 
+### DL-161: PMConcept7 carries its own fonts
+
+**Question:** Should PMConcept7 carry the fonts its looks name, instead of borrowing whatever the computer has?
+
+**Why it came up:** PMConcept7's looks name Inter, Poppins, Nunito, IBM Plex Mono and Georgia, but the page carried only NieR Mode's two faces. On a computer without those fonts every look fell back to the machine's own sans or mono (DejaVu on the test VM), so Basic, Glass, Friendly and Retro looked different from one computer to the next. Jared asked on 2026-10-09 that PMConcept7 have all its fonts built in.
+
+**What you get:**
+- Basic and Glass in Inter, Friendly in Poppins (with Nunito behind it), Retro in IBM Plex Mono, on every computer and with no font download. Each face is the Latin set, stored inside the page.
+- The weights and slants the looks use: Inter at every weight and in italic, Poppins 400 to 800 and italic 400 and 600, IBM Plex Mono 400 to 700 and italic 400 and 600.
+- Georgia, which the page names only for the bold italic "i" on its info badges, is a paid font that cannot be built in. Gelasio, a free font drawn to Georgia's measurements, stands in under the name Georgia.
+- PMConcept7 and the 5.6 Pro chat use the same Inter, Poppins and IBM Plex Mono files, byte for byte, so both draw the same letters. PMConcept7's build check fails if the two drift apart.
+
+**What it costs:**
+- PMConcept7 grows by 408,446 bytes (about 4%), to 10.7 MB.
+- Symbols outside the Latin set (the close cross and the turn arrow among them) and any non-Latin script still use the computer's own fonts.
+- Code text in Basic, Glass and Friendly still uses the computer's own monospace, because those looks name it on purpose; Retro's code text is IBM Plex Mono.
+
+**Options considered:** Not built in: Orbitron and Rajdhani (the page's starting defaults, which every look replaces, retired as theme faces by DL-138) and JetBrains Mono (behind IBM Plex Mono with the same letters, so it never draws; its file is already in the page as NieR Mode's mono). Roboto, Segoe UI, SF Pro, SF Mono, Menlo, Consolas, Cascadia Mono and system-ui name the computer's own fonts on purpose. For Georgia, leaving the computer's own serif would differ by machine; Gelasio is the free face made to Georgia's measurements.
+
+**What the owner decided** (in plain words):
+- 2026-10-09, in his request: "Make sure PMConcept7 has all its fonts built in." The choice of faces, weights and slants, the Gelasio stand-in and the shared files are agent choices under that request.
+
+**What the spec now says:**
+1. **The concepts' fonts** (`Plans/FinalGUISpec.md#F3-430`, amended): PMConcept7 embeds the theme faces, Nunito and the Gelasio stand-in for Georgia as Latin woff2 data, declared in `Concepts/onboarding/opus-5.5/src/css/01-webfonts.css`.
+2. **One set of font files for both concepts** (`Plans/DRY_Rules.md#DR-050`).
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md`, SHA-256 `d6286edbbe34d3dec3d41b9f330faf80aa2006bc823e15e6e875ef148fd0d91d` (the request and the evidence index); `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/proof-after.json`, SHA-256 `bfda89d92f00e53a7ad8dec195de68ff5ef1774443e4fb70868ce32bc061a82a` (the fonts Chrome drew in every look on the P1000 VM, which has none of these fonts installed).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-430, ContractName:Plans/DRY_Rules.md#DR-050
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -11763,6 +11793,55 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
+```
+
+### DL-161 - PMConcept7 Carries Its Own Fonts
+
+```yaml
+plan_unit_id: DL-161
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-161 records the owner request of 2026-10-09 that PMConcept7 have all its fonts built in. PMConcept7 embeds
+  Inter, Poppins with Nunito behind it, and IBM Plex Mono, at the weights and italics its looks use, as Latin woff2
+  data, and Gelasio stands in under the name Georgia for the info-badge glyph because Georgia cannot be embedded
+  (F3-430). Its Inter, Poppins and IBM Plex Mono files are the 5.6 Pro chat concept's, byte for byte (DR-050).
+  Orbitron, Rajdhani and JetBrains Mono are not embedded because no text draws in them, and platform font names
+  stay the computer's.
+gui_related: true
+gui_classification_reason: Records an owner request on the concepts' fonts.
+split_recommended: false
+depends_on: [F3-430]
+unblocks: [DR-050]
+acceptance_criteria:
+  - "Every theme face PMConcept7 draws in Basic, Glass, Friendly and Retro comes from embedded data."
+  - "The owner's request is recorded in plain words with its source hashes."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: theme_token_drift
+reasoning_tier: standard
+context_scope: concept_web_fonts
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 d6286edbbe34d3dec3d41b9f330faf80aa2006bc823e15e6e875ef148fd0d91d"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/proof-after.json, SHA-256 bfda89d92f00e53a7ad8dec195de68ff5ef1774443e4fb70868ce32bc061a82a"
+preserved_exact_tokens:
+  - "DL-161"
+  - "Gelasio"
+  - "Georgia"
+negative_constraints:
+  - "Do not load a concept font from the network."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
 ```
 
 ## Migration Coverage
