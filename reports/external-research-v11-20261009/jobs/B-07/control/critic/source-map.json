@@ -1,0 +1,543 @@
+{
+  "case": "I07",
+  "block": "B-07",
+  "arm": "control",
+  "method": "M15",
+  "stage": "critic",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic",
+  "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I07/brief.md",
+  "assignment": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic/assignment.md",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic/input-map.json",
+  "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/draft.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/discovery.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/source-map.json",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/critique.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/revealed-plan.md"
+  ],
+  "source_roots": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/sources"
+  ],
+  "captured_at_utc": "2026-10-09T21:35:05Z",
+  "source_ids_are_immutable": true,
+  "access_timestamp_note": "The web tool does not expose per-URL HTTP timestamps. Each window brackets browser calls with UTC clock readings; group windows state that per-URL times were unavailable. These are observation times, not server timestamps.",
+  "native_goal_activation": {
+    "operation": "create_goal",
+    "thread_id": "01a1228d-acb7-7920-978f-eebd2cb1e0ee",
+    "status_returned": "active",
+    "created_at_epoch": 1791581099
+  },
+  "usage_billing": {
+    "usage": null,
+    "billing": null
+  },
+  "scope_guardrails": {
+    "mapped_predecessors_and_declared_source_root_only": true,
+    "parent_counterpart_evaluator_history_material_read": false,
+    "nested_agents_used": false,
+    "private_provider_internals_or_accounts_accessed": false,
+    "product_runtime_or_witness_executed": false
+  },
+  "read_artifact_sha256": {
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic/assignment.md": "e3db932d75b4b3042e30e748646124aeb3872ea4d2d3ed16bafba6eac9ead0cc",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/critic/input-map.json": "f4db96abc8eb78db046f5ac7ba2e6b8b1d8852f149476dbb530c5aabcf3ed2b4",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I07/brief.md": "e2c0f99132caf5bc7e509651bb078b602f5f6f9ef6b217777daaa2e679689cbd",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/draft.md": "8691fb895b1fdc05084bde14faa6ea28c256677b438bae14d7744b114fa8260a",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/discovery.md": "061e11f8d26ba540d6b91932b1afee960d45ebecb5e31e948faa2dc237aadfaa",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/source-map.json": "8a662cca59816e20676a794612fc81fc9df2e620fbc730116bdf38326c16b6f0",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/critique.md": "aba4e2ea18af7b05fb9f648ab042bc97b9284019db40b21b536d8e7a4933714d",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/revealed-plan.md": "dee05cfa57badf5d2fa98859d53ea2f9e04c5c2fd2fc38b41913dda5b4205193",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/sources/index.md": "b5d42ece4e1a6412b42e26924708f9ba16913ae83a5133bf3a50c38b1ec33f16",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/sources/evidence-notes.md": "2bcb9d621dd24edde067295cc70ac72bd6bbd606f5870918a0d27083854725ca",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/sources/source-access-log.json": "712ff64964c1468c2e5ceb0196c4e95bda6f1037bc6db2e811df402718c82b59"
+  },
+  "sources": [
+    {
+      "id": "FC-01",
+      "title": "The Food Corridor product overview",
+      "url": "https://www.thefoodcorridor.com/",
+      "version_or_commit": "Live vendor product page; no version or publication date; mutable.",
+      "locator": "Product overview; shared-kitchen management, self-service booking, reservable equipment, reporting.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:25:09Z",
+          "response_observed_utc": "2026-10-09T21:25:57Z",
+          "precision": "Exact URLs opened during one batch; per-URL times unavailable."
+        }
+      ],
+      "observed_operations": [
+        "Opened exact official URL; reviewed product overview."
+      ],
+      "evidence_use": "Supports discovery of a kitchen-specific SaaS path.",
+      "limitations": "Marketing claims are not independently verified.",
+      "retained_evidence": "sources/evidence-notes.md"
+    },
+    {
+      "id": "FC-02",
+      "title": "The Food Corridor signup plan selector",
+      "url": "https://app.thefoodcorridor.com/en/signup",
+      "version_or_commit": "Live plan selector observed 2026-10-09; no version; mutable.",
+      "locator": "Select Your Plan and All Plans Include, lines 30-101.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:25:09Z",
+          "response_observed_utc": "2026-10-09T21:25:57Z",
+          "precision": "Exact URLs opened during one batch; per-URL times unavailable."
+        }
+      ],
+      "observed_operations": [
+        "Opened exact URL; read plan prices, client caps, fees, currency selector, included features, and first-month-free offer."
+      ],
+      "evidence_use": "Starter $129/month/up to five clients/4% fee; Annual $206/month billed annually/unlimited clients/2% ACH or 4% card fee; 12 \u00d7 $206 = $2,472 list arithmetic.",
+      "limitations": "Currency selector not changed; promotion treatment in annual invoice is unclear; not a quote.",
+      "retained_evidence": "sources/evidence-notes.md"
+    },
+    {
+      "id": "FC-03",
+      "title": "How do I reserve equipment?",
+      "url": "https://help.thefoodcorridor.com/en/articles/1414032-how-do-i-reserve-equipment",
+      "version_or_commit": "Live article dated 2023-03-29; no app version; mutable.",
+      "locator": "Reserve Equipment steps 1-9.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:25:09Z",
+          "response_observed_utc": "2026-10-09T21:25:57Z",
+          "precision": "Exact URLs opened during one batch; per-URL times unavailable."
+        }
+      ],
+      "observed_operations": [
+        "Opened exact official URL; reviewed space-booking and equipment subrange steps."
+      ],
+      "evidence_use": "Equipment may be booked for the full space block or different time ranges.",
+      "limitations": "No setup/cleanup buffers, precise granularity, race behavior, or later signoff established.",
+      "retained_evidence": "sources/evidence-notes.md"
+    },
+    {
+      "id": "FC-04",
+      "title": "What does a food business account look like?",
+      "url": "https://help.thefoodcorridor.com/en/articles/1812934-what-does-a-food-business-account-look-like",
+      "version_or_commit": "Live article dated 2023-06-07; no app version; mutable.",
+      "locator": "Bookings, Calendars, Reporting, Community, Business Profile.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:25:09Z",
+          "response_observed_utc": "2026-10-09T21:25:57Z",
+          "precision": "Exact URLs opened during one batch; per-URL times unavailable."
+        }
+      ],
+      "observed_operations": [
+        "Opened exact URL; inspected tenant views and business profile fields."
+      ],
+      "evidence_use": "Docs show PIN, Daily View, reports, Community viewing/messaging, and profile fields for business name/category/product/contact/social/home kitchen.",
+      "limitations": "Exact cross-tenant exposure and disabling options are not documented; no evidence of recipe/customer/volume exposure.",
+      "retained_evidence": "sources/evidence-notes.md"
+    },
+    {
+      "id": "FC-05",
+      "title": "Can I use Onboarding Flows for more than new clients?",
+      "url": "https://help.thefoodcorridor.com/en/articles/8880860-can-i-use-onboarding-flows-for-more-than-new-clients",
+      "version_or_commit": "Live article dated 2024-02-05; mutable.",
+      "locator": "Ensure Kitchen Hygiene; monthly checklists, station tasks, deep-clean schedule.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:25:09Z",
+          "response_observed_utc": "2026-10-09T21:25:57Z",
+          "precision": "Exact URLs opened during one batch; per-URL times unavailable."
+        },
+        {
+          "request_started_utc": "2026-10-09T21:25:57Z",
+          "response_observed_utc": "2026-10-09T21:25:58Z",
+          "precision": "Exact pages reopened with relevant locators; clock brackets the browser operation."
+        }
+      ],
+      "observed_operations": [
+        "Opened exact URL; reopened relevant lines 15-42."
+      ],
+      "evidence_use": "Vendor describes monthly client cleaning checklists.",
+      "limitations": "Not proof of per-block, per-equipment, tenant-authored signoff/history/export.",
+      "retained_evidence": "sources/evidence-notes.md"
+    },
+    {
+      "id": "FC-06",
+      "title": "How can I approve bookings?",
+      "url": "https://help.thefoodcorridor.com/en/articles/1413916-how-can-i-approve-bookings",
+      "version_or_commit": "Live article dated 2023-03-28; mutable.",
+      "locator": "Submitted Bookings and Auto Approve.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:25:09Z",
+          "response_observed_utc": "2026-10-09T21:25:57Z",
+          "precision": "Exact URLs opened during one batch; per-URL times unavailable."
+        },
+        {
+          "request_started_utc": "2026-10-09T21:25:57Z",
+          "response_observed_utc": "2026-10-09T21:25:58Z",
+          "precision": "Exact pages reopened with relevant locators; clock brackets the browser operation."
+        }
+      ],
+      "observed_operations": [
+        "Opened exact URL; reopened lines 15-35."
+      ],
+      "evidence_use": "Managers may approve/decline/edit; clients may be auto-approved individually.",
+      "limitations": "Not a missing-signoff restriction rule.",
+      "retained_evidence": "sources/evidence-notes.md"
+    },
+    {
+      "id": "FC-07",
+      "title": "What information is in the Reporting tab?",
+      "url": "https://help.thefoodcorridor.com/en/articles/2322739-what-information-is-in-the-reporting-tab",
+      "version_or_commit": "Live article updated over three weeks before access; mutable.",
+      "locator": "Report list, All Bookings, CSV and filters, sign-in reports.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:25:09Z",
+          "response_observed_utc": "2026-10-09T21:25:57Z",
+          "precision": "Exact URLs opened during one batch; per-URL times unavailable."
+        },
+        {
+          "request_started_utc": "2026-10-09T21:25:57Z",
+          "response_observed_utc": "2026-10-09T21:25:58Z",
+          "precision": "Exact pages reopened with relevant locators; clock brackets the browser operation."
+        },
+        {
+          "request_started_utc": "2026-10-09T21:27:54Z",
+          "response_observed_utc": "2026-10-09T21:27:55Z",
+          "precision": "Exact page reopened at report lines."
+        }
+      ],
+      "observed_operations": [
+        "Opened exact URL; reviewed CSV/filter and sign-in sections."
+      ],
+      "evidence_use": "CSV reports can be filtered by client/date; All Bookings covers current-year past/future booking states; sign-in data records attendance/time.",
+      "limitations": "Manager report behavior does not prove tenant-owned full export of handoff records.",
+      "retained_evidence": "sources/evidence-notes.md"
+    },
+    {
+      "id": "SK-01",
+      "title": "Buffer time",
+      "url": "https://support.skedda.com/en/articles/3653032-buffer-time",
+      "version_or_commit": "Live article dated 2025-03-04; mutable.",
+      "locator": "Rule creation and FAQ for granularity, before/after, overlap, roles.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:25:09Z",
+          "response_observed_utc": "2026-10-09T21:25:57Z",
+          "precision": "Exact URLs opened during one batch; per-URL times unavailable."
+        },
+        {
+          "request_started_utc": "2026-10-09T21:25:57Z",
+          "response_observed_utc": "2026-10-09T21:25:58Z",
+          "precision": "Exact pages reopened with relevant locators; clock brackets the browser operation."
+        }
+      ],
+      "observed_operations": [
+        "Opened exact URL; reopened lines 16-51."
+      ],
+      "evidence_use": "Per-space buffer; 15-minute minimum; future bookings only; max conflicting rule; symmetric before/after; system-user override.",
+      "limitations": "Current plan limits and configured behavior still need a trial.",
+      "retained_evidence": "sources/evidence-notes.md"
+    },
+    {
+      "id": "SK-02",
+      "title": "Access and Visibility",
+      "url": "https://support.skedda.com/en/articles/105728-access-and-visibility",
+      "version_or_commit": "Live article dated 2026-04-20; mutable.",
+      "locator": "Private access, booking access, content visibility rules.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:25:09Z",
+          "response_observed_utc": "2026-10-09T21:25:57Z",
+          "precision": "Exact URLs opened during one batch; per-URL times unavailable."
+        },
+        {
+          "request_started_utc": "2026-10-09T21:25:57Z",
+          "response_observed_utc": "2026-10-09T21:25:58Z",
+          "precision": "Exact pages reopened with relevant locators; clock brackets the browser operation."
+        }
+      ],
+      "observed_operations": [
+        "Opened exact URL; reopened lines 15-60."
+      ],
+      "evidence_use": "Private access requires login; booking can be tag-limited; default regular-user visibility is date/time/space; system users see holder/title/custom fields.",
+      "limitations": "Occupancy patterns remain visible; role configuration needs a trial.",
+      "retained_evidence": "sources/evidence-notes.md"
+    },
+    {
+      "id": "SK-03",
+      "title": "Custom Fields",
+      "url": "https://support.skedda.com/en/articles/2934389-custom-fields",
+      "version_or_commit": "Live article dated 2025-03-04; limits may change.",
+      "locator": "Overview, required fields, visibility, inclusion conditions, field propagation.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:25:09Z",
+          "response_observed_utc": "2026-10-09T21:25:57Z",
+          "precision": "Exact URLs opened during one batch; per-URL times unavailable."
+        },
+        {
+          "request_started_utc": "2026-10-09T21:25:57Z",
+          "response_observed_utc": "2026-10-09T21:25:58Z",
+          "precision": "Exact pages reopened with relevant locators; clock brackets the browser operation."
+        },
+        {
+          "request_started_utc": "2026-10-09T21:27:54Z",
+          "response_observed_utc": "2026-10-09T21:27:55Z",
+          "precision": "Exact page reopened at report lines."
+        }
+      ],
+      "observed_operations": [
+        "Opened exact URL; reopened lines 56-76."
+      ],
+      "evidence_use": "Booking fields can be required/admin-only/holder-visible and included conditionally; article says values appear in email, exports, print, search, schedule, and Zapier surfaces.",
+      "limitations": "Creation-time fields do not prove later signoff, append-only history, or tenant archive.",
+      "retained_evidence": "sources/evidence-notes.md"
+    },
+    {
+      "id": "SK-04",
+      "title": "Export or print booking data",
+      "url": "https://support.skedda.com/en/articles/105786-export-or-print-booking-data",
+      "version_or_commit": "Live article dated 2026-09-08; mutable.",
+      "locator": "Filter, Export, and regular-user FAQ.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:25:09Z",
+          "response_observed_utc": "2026-10-09T21:25:57Z",
+          "precision": "Exact URLs opened during one batch; per-URL times unavailable."
+        },
+        {
+          "request_started_utc": "2026-10-09T21:25:57Z",
+          "response_observed_utc": "2026-10-09T21:25:58Z",
+          "precision": "Exact pages reopened with relevant locators; clock brackets the browser operation."
+        }
+      ],
+      "observed_operations": [
+        "Opened exact URL; reopened lines 15-98."
+      ],
+      "evidence_use": "System users can filter and export XLSX/CSV; regular users lack described report filters and see own/visible bookings.",
+      "limitations": "Does not establish tenant self-export of later handoff records.",
+      "retained_evidence": "sources/evidence-notes.md"
+    },
+    {
+      "id": "WCAG-01",
+      "title": "Web Content Accessibility Guidelines 2.2",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "version_or_commit": "W3C Recommendation dated 2023-10-05.",
+      "locator": "SC 2.1.1, 2.5.8, 4.1.2, 4.1.3.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:25:09Z",
+          "response_observed_utc": "2026-10-09T21:25:57Z",
+          "precision": "Exact URLs opened during one batch; per-URL times unavailable."
+        },
+        {
+          "request_started_utc": "2026-10-09T21:25:57Z",
+          "response_observed_utc": "2026-10-09T21:25:58Z",
+          "precision": "Exact pages reopened with relevant locators; clock brackets the browser operation."
+        },
+        {
+          "request_started_utc": "2026-10-09T21:27:00Z",
+          "response_observed_utc": "2026-10-09T21:27:01Z",
+          "precision": "Exact latest/release URL or criterion lookup; clock brackets operation."
+        }
+      ],
+      "observed_operations": [
+        "Opened exact W3C URL; searched and inspected relevant criteria."
+      ],
+      "evidence_use": "Keyboard operation; 24\u00d724 CSS-pixel pointer target subject to exceptions; programmatic name/role/state/value; status messages without focus.",
+      "limitations": "Criteria do not establish task success with a screen reader or wet hands.",
+      "retained_evidence": "sources/evidence-notes.md"
+    },
+    {
+      "id": "LB-01",
+      "title": "LibreBooking administration guide",
+      "url": "https://librebooking.readthedocs.io/en/latest/ADMINISTRATION.html",
+      "version_or_commit": "Docs label LibreBooking 7.0.0; latest URL mutable; v7.0.0 tag separately pinned.",
+      "locator": "Schedule concurrency/double-book defaults; public visibility; resource configuration and public access.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:26:06Z",
+          "response_observed_utc": "2026-10-09T21:26:07Z",
+          "precision": "Exact URLs opened in one batch; per-URL times unavailable."
+        }
+      ],
+      "observed_operations": [
+        "Opened exact project documentation; read schedule and resource sections."
+      ],
+      "evidence_use": "Resources cannot double-book by default; schedule-wide concurrent reservations can be enabled, affecting all its resources and removing Schedule View; defaults also cover approval, duration, access, capacity, admin exemption, and public access.",
+      "limitations": "Buffer units/direction are unspecified in the cited documentation.",
+      "retained_evidence": "sources/evidence-notes.md"
+    },
+    {
+      "id": "LB-02",
+      "title": "LibreBooking v7.0.0 release",
+      "url": "https://github.com/LibreBooking/librebooking/releases/tag/v7.0.0",
+      "version_or_commit": "v7.0.0 dated 2026-10-06; release commit 422b4b0223335d18c7d5f005ffcdd93719575c20.",
+      "locator": "Release title, date, tag, and abbreviated commit.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:26:06Z",
+          "response_observed_utc": "2026-10-09T21:26:07Z",
+          "precision": "Exact URLs opened in one batch; per-URL times unavailable."
+        },
+        {
+          "request_started_utc": "2026-10-09T21:27:00Z",
+          "response_observed_utc": "2026-10-09T21:27:01Z",
+          "precision": "Exact latest/release URL or criterion lookup; clock brackets operation."
+        }
+      ],
+      "observed_operations": [
+        "Opened exact release URL; checked latest route redirect."
+      ],
+      "evidence_use": "Pins code/doc inspection to the v7.0.0 release.",
+      "limitations": "Latest-release observation is time-bound.",
+      "retained_evidence": "sources/evidence-notes.md"
+    },
+    {
+      "id": "LB-03",
+      "title": "Buffer item ID issue/fix/release chain",
+      "url": "https://github.com/LibreBooking/librebooking/issues/1008",
+      "version_or_commit": "Issue #1008 opened 2026-02-14/closed 2026-03-13; PR #1140 merged 2026-03-13; fix b1394612e9e5311d0b6662cffa8e2e528667d6c3; merge 4bc0cf5dd17b5cbacae2fd4540800f04ea371c1e; v4.3.0 on 2026-04-03; v7 code checked.",
+      "locator": "Issue, PR, commit diffs, v4.3.0 release, and v7 ReservationListItem.php.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:26:06Z",
+          "response_observed_utc": "2026-10-09T21:26:07Z",
+          "precision": "Exact URLs opened in one batch; per-URL times unavailable."
+        },
+        {
+          "request_started_utc": "2026-10-09T21:33:26Z",
+          "response_observed_utc": "2026-10-09T21:33:27Z",
+          "precision": "Full-SHA fix and merge commit URLs reopened."
+        }
+      ],
+      "observed_operations": [
+        "Opened exact issue/PR/release/code URLs; inspected issue, merge, diff, and release entry; reopened commits by full SHA."
+      ],
+      "evidence_use": "Fix delegates buffer ID to wrapped reservation item and adds begin/end assertions; later release notes list fix and pinned v7 retains it.",
+      "limitations": "Narrow rendering/list-item chain; not evidence of conflict correctness.",
+      "retained_evidence": "sources/evidence-notes.md",
+      "related_source_records": [
+        {
+          "url": "https://github.com/LibreBooking/librebooking/issues/1008",
+          "version_or_commit": "Issue #1008; opened 2026-02-14; closed 2026-03-13",
+          "locator": "Description and closure activity",
+          "access_window_utc": [
+            "2026-10-09T21:26:06Z",
+            "2026-10-09T21:26:07Z"
+          ]
+        },
+        {
+          "url": "https://github.com/LibreBooking/librebooking/pull/1140",
+          "version_or_commit": "PR #1140; merged 2026-03-13; fix commit b1394612e9e5311d0b6662cffa8e2e528667d6c3",
+          "locator": "Merged status, commit, change summary",
+          "access_window_utc": [
+            "2026-10-09T21:26:06Z",
+            "2026-10-09T21:26:07Z"
+          ]
+        },
+        {
+          "url": "https://github.com/LibreBooking/librebooking/commit/b1394612e9e5311d0b6662cffa8e2e528667d6c3",
+          "version_or_commit": "b1394612e9e5311d0b6662cffa8e2e528667d6c3",
+          "locator": "ReservationListItem.php one-line fix and regression test assertions",
+          "access_window_utc": [
+            "2026-10-09T21:33:26Z",
+            "2026-10-09T21:33:27Z"
+          ]
+        },
+        {
+          "url": "https://github.com/LibreBooking/librebooking/commit/4bc0cf5dd17b5cbacae2fd4540800f04ea371c1e",
+          "version_or_commit": "4bc0cf5dd17b5cbacae2fd4540800f04ea371c1e",
+          "locator": "Merge commit and same fix diff",
+          "access_window_utc": [
+            "2026-10-09T21:33:26Z",
+            "2026-10-09T21:33:27Z"
+          ]
+        },
+        {
+          "url": "https://github.com/LibreBooking/librebooking/releases/tag/v4.3.0",
+          "version_or_commit": "v4.3.0; 2026-04-03",
+          "locator": "Release note: avoid recursive buffer item IDs",
+          "access_window_utc": [
+            "2026-10-09T21:26:06Z",
+            "2026-10-09T21:26:07Z"
+          ]
+        },
+        {
+          "url": "https://github.com/LibreBooking/librebooking/blob/v7.0.0/lib/Application/Schedule/ReservationListItem.php",
+          "version_or_commit": "v7.0.0; release commit 422b4b0223335d18c7d5f005ffcdd93719575c20",
+          "locator": "BufferItem::Id delegates to wrapped reservation item",
+          "access_window_utc": [
+            "2026-10-09T21:26:06Z",
+            "2026-10-09T21:26:07Z"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LB-04",
+      "title": "LibreBooking mutable deployment/security notes",
+      "url": "https://github.com/LibreBooking/librebooking",
+      "version_or_commit": "Mutable develop README observed 2026-10-09; no commit pin.",
+      "locator": "Security notices and Manual Installation requirements.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:26:06Z",
+          "response_observed_utc": "2026-10-09T21:26:07Z",
+          "precision": "Exact URLs opened in one batch; per-URL times unavailable."
+        },
+        {
+          "request_started_utc": "2026-10-09T21:27:00Z",
+          "response_observed_utc": "2026-10-09T21:27:01Z",
+          "precision": "Exact latest/release URL or criterion lookup; clock brackets operation."
+        }
+      ],
+      "observed_operations": [
+        "Opened project repository; inspected security note and PHP/Apache/database requirements."
+      ],
+      "evidence_use": "At access, README planned a high-impact security release for Oct 13, described pre-v7 admin takeover issue, and gave deployment requirements.",
+      "limitations": "Does not establish v7.0.0 exposure to undisclosed issue; recheck before deployment.",
+      "retained_evidence": "sources/evidence-notes.md"
+    },
+    {
+      "id": "LB-05",
+      "title": "LibreBooking v7.0.0 regression test",
+      "url": "https://github.com/LibreBooking/librebooking/blob/v7.0.0/tests/Application/Schedule/ReservationListingTest.php",
+      "version_or_commit": "Pinned v7.0.0, release commit 422b4b0223335d18c7d5f005ffcdd93719575c20.",
+      "locator": "testBufferItemIdUsesWrappedReservationId; lines 775-790.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:26:06Z",
+          "response_observed_utc": "2026-10-09T21:26:07Z",
+          "precision": "Exact URLs opened in one batch; per-URL times unavailable."
+        }
+      ],
+      "observed_operations": [
+        "Opened exact pinned test; found WithBufferTime(3600) and before/after assertions."
+      ],
+      "evidence_use": "Confirms the regression test in pinned v7.",
+      "limitations": "Inspected excerpt does not state 3600 unit; tests ID construction, not booking conflicts.",
+      "retained_evidence": "sources/evidence-notes.md"
+    },
+    {
+      "id": "LB-06",
+      "title": "LibreBooking latest release route",
+      "url": "https://github.com/LibreBooking/librebooking/releases/latest",
+      "version_or_commit": "Mutable latest-release route observed redirecting to v7.0.0.",
+      "locator": "Redirect destination.",
+      "access_windows_utc": [
+        {
+          "request_started_utc": "2026-10-09T21:27:00Z",
+          "response_observed_utc": "2026-10-09T21:27:01Z",
+          "precision": "Exact latest/release URL or criterion lookup; clock brackets operation."
+        }
+      ],
+      "observed_operations": [
+        "Opened exact URL; observed redirect to v7.0.0."
+      ],
+      "evidence_use": "Supports latest version as observed at that time.",
+      "limitations": "Can change after access.",
+      "retained_evidence": "sources/evidence-notes.md"
+    }
+  ]
+}

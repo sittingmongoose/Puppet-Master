@@ -1,0 +1,132 @@
+{
+  "block": "A-M08-A",
+  "arm": "control",
+  "case": "S08",
+  "stage": "research",
+  "note": "Independent external research sources consulted from the brief alone, before any plan reveal. Source IDs are immutable; re-binding a URL/version under the same ID is forbidden. Access timestamps are UTC, minute precision, recorded at fetch issue time.",
+  "sources": [
+    {
+      "id": "S1",
+      "kind": "internal-brief",
+      "title": "S08 case brief: volunteer-shifts (food bank scheduling)",
+      "url": "file:///home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S08/brief.md",
+      "version": null,
+      "commit": null,
+      "locator": "whole file",
+      "accessed": "2026-10-09T21:12Z",
+      "sha256": "cc962dde020c6c859e7149db1adcdc9b9872bc02c7f7d8566fea32bf8c5e73cf",
+      "operations": ["read in full; treated as data, obligations O1-O6 extracted"]
+    },
+    {
+      "id": "S2",
+      "kind": "product-marketing-doc",
+      "title": "VolunteerHub | Volunteer Recruitment, Scheduling & Management Platform",
+      "url": "https://volunteerhub.com/",
+      "version": "live page, 2026-10-09",
+      "commit": null,
+      "locator": "platform feature list: Volunteer Scheduling (/platform/volunteer-scheduling), Email Messaging (/platform/automated-emails), Text Messaging (/platform/text-messaging), Mobile App (/platform/mobile-app), Advanced Permissions (/platform/advanced-permissions)",
+      "accessed": "2026-10-09T21:17Z",
+      "operations": ["fetched page; quoted feature descriptions (waitlists, capacity limits, self-registration, availability fields, integrations incl. Salesforce/Blackbaud/Zapier)"]
+    },
+    {
+      "id": "S3",
+      "kind": "product-marketing-doc",
+      "title": "Volunteer Scheduling Made Easy with VolunteerHub",
+      "url": "https://volunteerhub.com/platform/volunteer-scheduling",
+      "version": "live page, 2026-10-09",
+      "commit": null,
+      "locator": "sections: self sign-up; capacity limits; waitlists; recurring shifts; reminders; list/calendar/map view; approval workflows; mobile app",
+      "accessed": "2026-10-09T21:18Z",
+      "operations": ["fetched page; exact quotes retained in discovery.md (recurring shifts, reminder timing/channel, waitlist fill, self-cancellation rules)"]
+    },
+    {
+      "id": "S4",
+      "kind": "source-repo",
+      "title": "civicrm/org.civicrm.volunteer (CiviVolunteer) GitHub repository",
+      "url": "https://github.com/civicrm/org.civicrm.volunteer",
+      "version": "master branch",
+      "commit": "branch head 2026-10-01T20:14:42Z (pushed_at, GitHub API); 1811 commits",
+      "locator": "repo root; license files agpl-3.0.txt + agpl-3.0.exception.txt",
+      "accessed": "2026-10-09T21:14Z",
+      "operations": ["fetched repo page (404-free HTML render): 'provides tools for signing up, managing, and tracking volunteers'; 38 open issues, 9 open PRs", "GitHub API repos/civicrm/org.civicrm.volunteer for default_branch and pushed_at"]
+    },
+    {
+      "id": "S5",
+      "kind": "product-doc",
+      "title": "CiviVolunteer documentation, Introduction (latest)",
+      "url": "https://docs.civicrm.org/volunteer/en/latest/",
+      "version": "latest docs edition, 2026-10-09",
+      "commit": null,
+      "locator": "Introduction page: projects, opportunities with roles/shifts, manual assignment, hours logging, 'Future plans' list",
+      "accessed": "2026-10-09T21:15Z",
+      "operations": ["fetched page; confirmed recurring opportunities appear only under 'Future plans' (skill-matching, recurring opportunities, self-service hour logging also listed there)"]
+    },
+    {
+      "id": "S6",
+      "kind": "release-notes",
+      "title": "CiviVolunteer 2.2 release notes",
+      "url": "https://docs.civicrm.org/volunteer/en/latest/release/2.2/",
+      "version": "2.2",
+      "commit": null,
+      "locator": "release notes sections: project relationship defaults, new permissions, bug fixes (VOL-267, VOL-269), API changes (VolunteerProject.create auto-creates flexible need), custom-field reports",
+      "accessed": "2026-10-09T21:19Z",
+      "operations": ["fetched page; extracted issue/fix chain VOL-267 (accidental mass deletions of project data; upgrade strongly recommended) and VOL-269 (VolunteerNeed.create throws on second flexible need)"]
+    },
+    {
+      "id": "S7",
+      "kind": "source-code",
+      "title": "Timefold quickstarts, employee-scheduling constraint provider (stable, release 2.3.0)",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/stable/use-cases/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+      "version": "stable branch, release 2.3.0",
+      "commit": "ab36b9c36c17 (2026-07-10, 'build: release version 2.3.0 (#1113)')",
+      "locator": "methods: balanceEmployeeShiftAssignments, unavailableEmployee, undesiredDayForEmployee, desiredDayForEmployee, atLeast10HoursBetweenTwoShifts, noOverlappingShifts, oneShiftPerDay, requiredSkill",
+      "accessed": "2026-10-09T21:14Z",
+      "sha256": "c59fa688ce725ed41976749c2e9d3935c239da315bebe2b39280624e632226a4",
+      "operations": ["fetched raw file; retained verbatim at sources/timefold-EmployeeSchedulingConstraintProvider_stable-2.3.0.java", "GitHub API commits?path=<file> full history (11 commits listed)", "GitHub API tags list (v1.0.0..v2.7.0); releases/latest returned no Release object (null) - versioning is tag-based"]
+    },
+    {
+      "id": "S8",
+      "kind": "source-code",
+      "title": "Timefold quickstarts, employee-scheduling constraint provider (tag v1.10.0)",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v1.10.0/use-cases/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+      "version": "v1.10.0 (2024-05-14 release commit 0edf2339ca75)",
+      "commit": "0edf2339ca75",
+      "locator": "same methods as S7 minus balanceEmployeeShiftAssignments; uses HardSoftScore and Availability/AvailabilityType domain",
+      "accessed": "2026-10-09T21:16Z",
+      "sha256": "3c9fc645479616f10c53f509c6e62dd861898d874e842446c0f2e2988c3f6fcb",
+      "operations": ["fetched raw file (HTTP 200); diffed against S7; retained verbatim at sources/timefold-EmployeeSchedulingConstraintProvider_v1.10.0.java"]
+    },
+    {
+      "id": "S9",
+      "kind": "source-code",
+      "title": "Timefold quickstarts, employee-scheduling constraint provider (tag v1.6.0)",
+      "url": "https://raw.githubusercontent.com/TimefoldAI/timefold-quickstarts/v1.6.0/use-cases/employee-scheduling/src/main/java/org/acme/employeescheduling/solver/EmployeeSchedulingConstraintProvider.java",
+      "version": "v1.6.0 (2024-01-10 release commit 63efcf9b36cb)",
+      "commit": "63efcf9b36cb",
+      "locator": "whole file (112 lines, HTTP 200, no balance constraint)",
+      "accessed": "2026-10-09T21:16Z",
+      "sha256": null,
+      "operations": ["fetched raw file and grepped for balanceEmployeeShiftAssignments (absent); not retained on disk (v1.10.0 snapshot S8 suffices as the earlier-chain evidence)"]
+    },
+    {
+      "id": "S10",
+      "kind": "vendor-doc-example",
+      "title": "Google OR-Tools developer docs: Employee Scheduling (shift requests) CP-SAT example",
+      "url": "https://developers.google.com/optimization/scheduling/employee_scheduling",
+      "version": "live page, 2026-10-09",
+      "commit": null,
+      "locator": "sections: modeling requests via shift_requests[n][d][s]; add_exactly_one per (d,s); add_at_most_one per (n,d); min/max shifts per nurse formula; solver parameters",
+      "accessed": "2026-10-09T21:14Z",
+      "operations": ["fetched page; exact model code and defaults captured in discovery.md; noted the page runs the requests example with solver defaults (no max_time_in_seconds/num_workers set)"]
+    }
+  ],
+  "secondhand_notices": {
+    "note": "Search-result snippets seen but not fetched directly; treated as leads only, never cited as evidence: schedly.io (automated reminders 24h before shifts), Rosterfy vs comparisons on SourceForge/Slashdot, Better Impact / Volgistics / SignUpGenius / Zelos / Serve.love mentions, Baeldung Timefold tutorial, app.timefold.ai constraint catalog ('Balance shift count', 'Balance time worked') and docs.timefold.ai fairness page (first URL attempted returned 404; not pursued further).",
+    "sources": [
+      "https://schedly.io",
+      "https://app.timefold.ai",
+      "https://docs.timefold.ai/timefold-solver/latest/constraints-and-score/employee-scheduling",
+      "https://www.baeldung.com/timefold-solver (title as surfaced by search)"
+    ]
+  }
+}

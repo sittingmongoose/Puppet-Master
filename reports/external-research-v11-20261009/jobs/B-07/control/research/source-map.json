@@ -1,0 +1,392 @@
+{
+  "case": "I07",
+  "block": "B-07",
+  "arm": "control",
+  "method": "M15",
+  "stage": "research",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research",
+  "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I07/brief.md",
+  "assignment": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/assignment.md",
+  "input_map": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/control/research/input-map.json",
+  "captured_at_utc": "2026-10-09T21:02:27Z",
+  "access_timestamp_note": "The web tool did not expose per-request timestamps. The sources below were opened during the bounded live-research session 2026-10-09T20:59:24Z through 2026-10-09T21:02:27Z; captured_at_utc is the exact system-clock read used to freeze this map. Do not treat it as a server-side HTTP timestamp.",
+  "source_ids_are_immutable": true,
+  "sources": [
+    {
+      "id": "FC-01",
+      "title": "The Food Corridor product overview",
+      "url": "https://www.thefoodcorridor.com/",
+      "source_type": "Vendor product page",
+      "version_or_commit": "Live web product page; no software version or page publication date stated; mutable.",
+      "locator": "Product overview, shared kitchen management, renter onboarding, self-service booking, equipment, reporting sections.",
+      "accessed_at_utc": null,
+      "observed_operations": [
+        "web search for official shared-kitchen management product",
+        "opened official result",
+        "read overview sections"
+      ],
+      "evidence_use": "Discover a domain-specific SaaS path. Vendor describes reservations, billing, onboarding, renter management, reservable spaces/equipment, storage, and reporting. Marketing claims are not independently verified.",
+      "change_or_caveat": "Live marketing page; feature availability and pricing must be confirmed against current account/plan.",
+      "initial_access_timestamp_precision": "Unknown per-request UTC time; initial browser opens occurred during 2026-10-09T20:59:24Z/2026-10-09T21:02:27Z.",
+      "revalidated_access_window_utc": {
+        "request_started": "2026-10-09 21:16:02 UTC",
+        "response_observed": "2026-10-09 21:16:03 UTC",
+        "status": "open request succeeded"
+      }
+    },
+    {
+      "id": "FC-02",
+      "title": "The Food Corridor signup plan and pricing page",
+      "url": "https://app.thefoodcorridor.com/en/signup",
+      "source_type": "Vendor plan selector",
+      "version_or_commit": "Live plan selector; no version/date shown; mutable, prices observed 2026-10-09.",
+      "locator": "Select Your Plan and All Plans Include, including client limits, monthly price, platform fees, equipment reservation, digital sign-in/out, and document management.",
+      "accessed_at_utc": null,
+      "observed_operations": [
+        "opened official plan selector",
+        "read plan and fee details"
+      ],
+      "evidence_use": "Displayed Starter at $129/month, up to five clients, 4% platform fee; displayed Annual at $206/month billed annually, unlimited clients, 2% ACH or 4% card fee; equipment reservations and digital sign-in/out were listed as included. $206 x 12 = $2,472 for the displayed base subscription before platform/payment costs.",
+      "change_or_caveat": "Currency selector exists and was not changed; page did not state the budget period. Do not treat this as a total cost quote or infer that sign-in/out is a cleaning attestation.",
+      "initial_access_timestamp_precision": "Unknown per-request UTC time; initial browser opens occurred during 2026-10-09T20:59:24Z/2026-10-09T21:02:27Z.",
+      "revalidated_access_window_utc": {
+        "request_started": "2026-10-09 21:16:03 UTC",
+        "response_observed": "2026-10-09 21:16:04 UTC",
+        "status": "open request succeeded"
+      }
+    },
+    {
+      "id": "FC-03",
+      "title": "How to reserve equipment",
+      "url": "https://help.thefoodcorridor.com/en/articles/1414032-how-do-i-reserve-equipment",
+      "source_type": "Vendor help article",
+      "version_or_commit": "Live Help Center article, dated 2023-03-29; no app version stated; mutable.",
+      "locator": "Reserve Equipment steps 1-9.",
+      "accessed_at_utc": null,
+      "observed_operations": [
+        "web search in vendor help center",
+        "opened official article",
+        "read equipment time-range steps"
+      ],
+      "evidence_use": "A food business creates a space booking, chooses an equipment time range, sees equipment available in that range, and can add more equipment for distinct ranges within the booking. This is a useful per-resource conflict-avoidance mechanism.",
+      "change_or_caveat": "Documentation does not establish setup/cleanup buffers, per-item cleaning records, or whether blocks reserve a before/after interval.",
+      "initial_access_timestamp_precision": "Unknown per-request UTC time; initial browser opens occurred during 2026-10-09T20:59:24Z/2026-10-09T21:02:27Z.",
+      "revalidated_access_window_utc": {
+        "request_started": "2026-10-09 21:16:04 UTC",
+        "response_observed": "2026-10-09 21:16:05 UTC",
+        "status": "open request succeeded"
+      }
+    },
+    {
+      "id": "FC-04",
+      "title": "What does a food business account look like?",
+      "url": "https://help.thefoodcorridor.com/en/articles/1812934-what-does-a-food-business-account-look-like",
+      "source_type": "Vendor help article",
+      "version_or_commit": "Live Help Center article, dated 2023-06-07; no app version stated; mutable.",
+      "locator": "Bookings, Calendars, Documents, Reporting, Community sections.",
+      "accessed_at_utc": null,
+      "observed_operations": [
+        "searched official help center",
+        "opened food-business account article",
+        "read tenant-facing functions"
+      ],
+      "evidence_use": "A food-business account can view its own submitted/approved/declined/cancelled bookings, has a four-digit sign-in PIN, sees a Daily View snapshot of space/equipment booked on a day, has own business reports, and can view/message fellow clients in Community.",
+      "change_or_caveat": "Daily View and Community create privacy questions; docs do not specify whether either can be disabled or exactly which other-tenant fields are exposed. The page does not promise an exportable tenant-owned year-end archive.",
+      "initial_access_timestamp_precision": "Unknown per-request UTC time; initial browser opens occurred during 2026-10-09T20:59:24Z/2026-10-09T21:02:27Z.",
+      "revalidated_access_window_utc": {
+        "request_started": "2026-10-09 21:16:05 UTC",
+        "response_observed": "2026-10-09 21:16:05 UTC",
+        "status": "open request succeeded"
+      }
+    },
+    {
+      "id": "FC-05",
+      "title": "Can I use Onboarding Flows for more than new clients?",
+      "url": "https://help.thefoodcorridor.com/en/articles/8880860-can-i-use-onboarding-flows-for-more-than-new-clients",
+      "source_type": "Vendor help article",
+      "version_or_commit": "Live Help Center article, dated 2024-02-05; no app version stated; mutable.",
+      "locator": "How else can I use Onboarding Flows? / Ensure Kitchen Hygiene.",
+      "accessed_at_utc": null,
+      "observed_operations": [
+        "searched official help center",
+        "opened checklist article",
+        "read cleaning-checklist examples"
+      ],
+      "evidence_use": "Vendor documents configurable checklists that can be used for kitchen cleaning policies, with monthly client cleaning checklists, station tasks, and deep-cleaning schedules; also mentions equipment refresh training.",
+      "change_or_caveat": "A monthly/station checklist is not evidence of a per-production-block equipment use and cleanup handoff, immutable audit history, tenant-defined templates, required fields, or a booking gate. Confirm in a demo.",
+      "initial_access_timestamp_precision": "Unknown per-request UTC time; initial browser opens occurred during 2026-10-09T20:59:24Z/2026-10-09T21:02:27Z.",
+      "revalidated_access_window_utc": {
+        "request_started": "2026-10-09 21:16:05 UTC",
+        "response_observed": "2026-10-09 21:16:06 UTC",
+        "status": "open request succeeded"
+      }
+    },
+    {
+      "id": "FC-06",
+      "title": "How can I approve bookings?",
+      "url": "https://help.thefoodcorridor.com/en/articles/1413916-how-can-i-approve-bookings",
+      "source_type": "Vendor help article",
+      "version_or_commit": "Live Help Center article, dated 2023-03-28; no app version stated; mutable.",
+      "locator": "Submitted Bookings and Auto Approve sections.",
+      "accessed_at_utc": null,
+      "observed_operations": [
+        "searched official help center",
+        "opened approval instructions"
+      ],
+      "evidence_use": "Kitchen admins can approve/decline/edit submitted requests; auto-approve can be enabled per client. This is a configurable decision point, not an answer to whether missing signoff blocks future bookings.",
+      "change_or_caveat": "The policy requested by the brief remains a kitchen-board decision.",
+      "initial_access_timestamp_precision": "Unknown per-request UTC time; initial browser opens occurred during 2026-10-09T20:59:24Z/2026-10-09T21:02:27Z.",
+      "revalidated_access_window_utc": {
+        "request_started": "2026-10-09 21:16:06 UTC",
+        "response_observed": "2026-10-09 21:16:07 UTC",
+        "status": "open request succeeded"
+      }
+    },
+    {
+      "id": "FC-07",
+      "title": "What information is in the Reporting tab?",
+      "url": "https://help.thefoodcorridor.com/en/articles/2322739-what-information-is-in-the-reporting-tab",
+      "source_type": "Vendor help article",
+      "version_or_commit": "Live Help Center article, updated over a week ago at time of access; no app version stated; mutable.",
+      "locator": "Available Reports; Booking Reports; Sign-In reports.",
+      "accessed_at_utc": null,
+      "observed_operations": [
+        "searched official help center",
+        "opened report inventory",
+        "read export and filter semantics"
+      ],
+      "evidence_use": "Manager reports are downloadable CSV and can be filtered by client/date; All Bookings covers current-year past/future bookings including approved, billed, declined, cancelled, deleted and identifies the booked-for client and creation time. Sign-in sheet and reconciliation reports are listed.",
+      "change_or_caveat": "This establishes manager-side report/export and filters, not a tenant's own complete year-end export for every record type. Sign-in/out is not cleaning signoff.",
+      "initial_access_timestamp_precision": "Unknown per-request UTC time; initial browser opens occurred during 2026-10-09T20:59:24Z/2026-10-09T21:02:27Z.",
+      "revalidated_access_window_utc": {
+        "request_started": "2026-10-09 21:16:07 UTC",
+        "response_observed": "2026-10-09 21:16:07 UTC",
+        "status": "open request succeeded"
+      }
+    },
+    {
+      "id": "SK-01",
+      "title": "Buffer time",
+      "url": "https://support.skedda.com/en/articles/3653032-buffer-time",
+      "source_type": "Vendor support article",
+      "version_or_commit": "Live Support article dated 2025-03-04; current behavior may change.",
+      "locator": "Create a buffer time rule; FAQs about granularity, overlap, and before/after behavior.",
+      "accessed_at_utc": null,
+      "observed_operations": [
+        "web search for booking buffer rules",
+        "opened official support article",
+        "read rules and FAQs"
+      ],
+      "evidence_use": "Rules can vary by space; durations use platform time granularity. They affect only bookings made after implementation. If multiple conflicting rules apply to one space, the maximum is used. Rules add buffer before and after symmetrically; regular users are blocked but system users may book through; the smallest available step is 15 minutes.",
+      "change_or_caveat": "Symmetric setup/cleanup reservation can overblock in one-sided cases; existing bookings are not retroactively changed; admin override and plan caps require a pilot test.",
+      "initial_access_timestamp_precision": "Unknown per-request UTC time; initial browser opens occurred during 2026-10-09T20:59:24Z/2026-10-09T21:02:27Z.",
+      "revalidated_access_window_utc": {
+        "request_started": "2026-10-09 21:16:07 UTC",
+        "response_observed": "2026-10-09 21:16:08 UTC",
+        "status": "open request succeeded"
+      }
+    },
+    {
+      "id": "SK-02",
+      "title": "Access and Visibility",
+      "url": "https://support.skedda.com/en/articles/105728-access-and-visibility",
+      "source_type": "Vendor support article",
+      "version_or_commit": "Live Support article dated 2026-04-20; current behavior may change.",
+      "locator": "Venue access; Booking access; Content visibility rules, especially default regular-user visibility and system-user exception.",
+      "accessed_at_utc": null,
+      "observed_operations": [
+        "opened official article",
+        "read access, tag, and content visibility rules"
+      ],
+      "evidence_use": "Private venue access requires login. Booking can be tag-limited. With no visibility rules, regular users see only dates, times, and spaces for other bookings; system users always see booking holder, title, and custom fields.",
+      "change_or_caveat": "This could reduce cross-tenant detail exposure if configured and tested; occupancy/time/space patterns remain visible; administrator confidentiality and role scope need separate checks.",
+      "initial_access_timestamp_precision": "Unknown per-request UTC time; initial browser opens occurred during 2026-10-09T20:59:24Z/2026-10-09T21:02:27Z.",
+      "revalidated_access_window_utc": {
+        "request_started": "2026-10-09 21:16:08 UTC",
+        "response_observed": "2026-10-09 21:16:09 UTC",
+        "status": "open request succeeded"
+      }
+    },
+    {
+      "id": "SK-03",
+      "title": "Custom Fields",
+      "url": "https://support.skedda.com/en/articles/2934389-custom-fields",
+      "source_type": "Vendor support article",
+      "version_or_commit": "Live Support article dated 2025-03-04; current plan limits may change.",
+      "locator": "Overview; required fields; admin-only versus holder visibility; inclusion conditions.",
+      "accessed_at_utc": null,
+      "observed_operations": [
+        "searched official support docs",
+        "opened custom-field article",
+        "read field visibility and inclusion conditions"
+      ],
+      "evidence_use": "Fields store booking information; fields may be required; values may be admin-only or also visible to booking holder; conditional inclusion can depend on space or user tags. Field count depends on subscription plan.",
+      "change_or_caveat": "A field captured at booking creation is not by itself proof of a later cleanup attestation workflow, append-only audit, or yearly tenant export.",
+      "initial_access_timestamp_precision": "Unknown per-request UTC time; initial browser opens occurred during 2026-10-09T20:59:24Z/2026-10-09T21:02:27Z.",
+      "revalidated_access_window_utc": {
+        "request_started": "2026-10-09 21:16:09 UTC",
+        "response_observed": "2026-10-09 21:16:10 UTC",
+        "status": "open request succeeded"
+      }
+    },
+    {
+      "id": "SK-04",
+      "title": "Export or print booking data",
+      "url": "https://support.skedda.com/en/articles/105786-export-or-print-booking-data",
+      "source_type": "Vendor support article",
+      "version_or_commit": "Live Support article dated 2026-09-08; current behavior may change.",
+      "locator": "Filter and Export sections; FAQ on regular-user access.",
+      "accessed_at_utc": null,
+      "observed_operations": [
+        "searched official support docs",
+        "opened export article",
+        "read fields, file types, and access limits"
+      ],
+      "evidence_use": "System users can export filtered List-view booking data to XLSX/CSV with booking times, duration in minutes, spaces, holder, contact fields, tags, and custom fields. Regular users cannot use those report filters; they see only their own bookings plus other bookings made visible by configured visibility rules.",
+      "change_or_caveat": "Do not assume the article guarantees tenant self-export of all year-end records; record scope, retention, and export permissions should be demonstrated.",
+      "initial_access_timestamp_precision": "Unknown per-request UTC time; initial browser opens occurred during 2026-10-09T20:59:24Z/2026-10-09T21:02:27Z.",
+      "revalidated_access_window_utc": {
+        "request_started": "2026-10-09 21:16:10 UTC",
+        "response_observed": "2026-10-09 21:16:11 UTC",
+        "status": "open request succeeded"
+      }
+    },
+    {
+      "id": "WCAG-01",
+      "title": "Web Content Accessibility Guidelines 2.2",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "source_type": "W3C Recommendation",
+      "version_or_commit": "WCAG 2.2, W3C Recommendation 2023-10-05; normative success criteria.",
+      "locator": "SC 2.1.1 Keyboard; 2.5.8 Target Size (Minimum); 4.1.2 Name, Role, Value; 4.1.3 Status Messages.",
+      "accessed_at_utc": null,
+      "observed_operations": [
+        "searched official W3C specification",
+        "opened recommendation",
+        "located target-size and AT success criteria"
+      ],
+      "evidence_use": "Keyboard operation is required for all functionality (2.1.1). Pointer targets are at least 24 by 24 CSS pixels unless an exception applies (2.5.8). UI names/roles/states/values must be exposed to assistive technology (4.1.2); status messages must be programmatically exposed without focus (4.1.3).",
+      "change_or_caveat": "WCAG target size is a conformance floor, not a wet-hands usability prescription. Choose larger, well-spaced controls and test with the actual tablet, screen reader, coordinator, and hands-on workflow.",
+      "initial_access_timestamp_precision": "Unknown per-request UTC time; initial browser opens occurred during 2026-10-09T20:59:24Z/2026-10-09T21:02:27Z.",
+      "revalidated_access_window_utc": {
+        "request_started": "2026-10-09 21:16:11 UTC",
+        "response_observed": "2026-10-09 21:16:11 UTC",
+        "status": "open request succeeded"
+      }
+    },
+    {
+      "id": "LB-01",
+      "title": "LibreBooking 7.0 administration guide",
+      "url": "https://librebooking.readthedocs.io/en/latest/ADMINISTRATION.html",
+      "source_type": "Project administration documentation",
+      "version_or_commit": "Documentation labels product LibreBooking 7.0.0; latest URL is mutable; source release tag v7.0.0 at commit 422b4b0223335d18c7d5f005ffcdd93719575c20 was separately checked.",
+      "locator": "Public Schedule Visibility and Resource Configuration.",
+      "accessed_at_utc": null,
+      "observed_operations": [
+        "searched official docs",
+        "opened administration guide",
+        "read public visibility, buffer, approval, permissions, check-in/out defaults"
+      ],
+      "evidence_use": "Unauthenticated schedule viewing is off by default; if public schedule is enabled, reservation details are still hidden by default. Resource constraints: min/max duration default to none; approval defaults off; new-user access to a resource defaults on; bookings may run up to now by default; check-in/out can be required; autorelease requires a configured job. Buffer is described as enforcing time apart, but the page does not specify unit/direction here. Administrators are exempt from usage constraints.",
+      "change_or_caveat": "Potentially useful self-hosted resource-calendar approach; do not promote defaults as tenant isolation. Test resource ACLs, role views, units, kiosk/public tablet exposure, and exact buffer semantics.",
+      "initial_access_timestamp_precision": "Unknown per-request UTC time; initial browser opens occurred during 2026-10-09T20:59:24Z/2026-10-09T21:02:27Z.",
+      "revalidated_access_window_utc": {
+        "request_started": "2026-10-09 21:16:11 UTC",
+        "response_observed": "2026-10-09 21:16:12 UTC",
+        "status": "open request succeeded"
+      }
+    },
+    {
+      "id": "LB-02",
+      "title": "LibreBooking 7.0.0 release",
+      "url": "https://github.com/LibreBooking/librebooking/releases/tag/v7.0.0",
+      "source_type": "Pinned source release",
+      "version_or_commit": "v7.0.0, release commit 422b4b0223335d18c7d5f005ffcdd93719575c20, dated 2026-10-06.",
+      "locator": "Release title and dated changelog.",
+      "accessed_at_utc": null,
+      "observed_operations": [
+        "opened official GitHub release",
+        "followed release commit to full SHA"
+      ],
+      "evidence_use": "Pins the version used for code/doc inspection; release notes include a correction to German check-in/check-out wording and state legacy web migration removal.",
+      "change_or_caveat": "Self-hosted upgrade and migration path should be tested; 7.0.0 is the release observed at research time.",
+      "initial_access_timestamp_precision": "Unknown per-request UTC time; initial browser opens occurred during 2026-10-09T20:59:24Z/2026-10-09T21:02:27Z.",
+      "revalidated_access_window_utc": {
+        "request_started": "2026-10-09 21:16:12 UTC",
+        "response_observed": "2026-10-09 21:16:13 UTC",
+        "status": "open request succeeded"
+      }
+    },
+    {
+      "id": "LB-03",
+      "title": "LibreBooking issue, fix, regression test, and release chain for buffer item ID",
+      "url": "https://github.com/LibreBooking/librebooking/issues/1008",
+      "source_type": "Project issue, merged pull request, code and release records",
+      "version_or_commit": "Issue #1008 opened 2026-02-14; PR #1140 merged 2026-03-13; fix commit b1394612e9e5311d0b6662cffa8e2e528667d6c3; merge commit 4bc0cf5dd17b5cbacae2fd4540800f04ea371c1e; release v4.3.0 dated 2026-04-03; current v7.0.0 code checked.",
+      "locator": "Issue description/closure; PR #1140 change; v4.3.0 release notes; ReservationListItem.php at v7.0.0.",
+      "accessed_at_utc": null,
+      "observed_operations": [
+        "opened issue",
+        "followed associated PR",
+        "read change and test",
+        "located release note",
+        "checked pinned v7.0.0 code",
+        "resolved exact fix and merge commit SHAs through public GitHub REST API"
+      ],
+      "evidence_use": "A reported infinite recursion in BufferItem::Id() could crash callers. The fix switched ID construction to the wrapped reservation item and added begin/end ID assertions. The regression test passes 3600 to WithBufferTime; the inspected test excerpt does not state the unit. The issue was closed, fix merged, and included in a release; v7 code still uses the wrapped reservation item's ID.",
+      "change_or_caveat": "This verifies one narrow buffer-rendering regression/fix only. It does not validate conflict rules, kitchen handoffs, or tenant-scoped access.",
+      "initial_access_timestamp_precision": "Unknown per-request UTC time; initial browser opens occurred during 2026-10-09T20:59:24Z/2026-10-09T21:02:27Z.",
+      "commit_urls_and_full_shas": [
+        {
+          "url": "https://api.github.com/repos/LibreBooking/librebooking/commits/b139461",
+          "sha": "b1394612e9e5311d0b6662cffa8e2e528667d6c3"
+        },
+        {
+          "url": "https://api.github.com/repos/LibreBooking/librebooking/commits/4bc0cf5",
+          "sha": "4bc0cf5dd17b5cbacae2fd4540800f04ea371c1e"
+        }
+      ]
+    },
+    {
+      "id": "LB-04",
+      "title": "LibreBooking repository security and deployment notes",
+      "url": "https://github.com/LibreBooking/librebooking",
+      "source_type": "Project repository README and deployment guide",
+      "version_or_commit": "Mutable develop branch as observed 2026-10-09; no commit pin exposed for this README observation.",
+      "locator": "README security warnings and Manual Installation requirements.",
+      "accessed_at_utc": null,
+      "observed_operations": [
+        "opened repository overview and README",
+        "read release/security notices and deployment prerequisites"
+      ],
+      "evidence_use": "Repository currently announces a high-impact security release planned for 2026-10-13 and says versions before 7.0.0 had an unauthenticated administrator-takeover issue; security fixes are not backported. Manual requirements include PHP >= 8.2, Apache >= 2.4 (other servers not project-supported/tested), and MySQL >= 8 or MariaDB >= 10.6.",
+      "change_or_caveat": "Security notice is mutable and does not disclose the upcoming issue. Recheck before any deployment and budget for patching, backup, and server ownership.",
+      "initial_access_timestamp_precision": "Unknown per-request UTC time; initial browser opens occurred during 2026-10-09T20:59:24Z/2026-10-09T21:02:27Z.",
+      "revalidated_access_window_utc": {
+        "request_started": "2026-10-09 21:16:15 UTC",
+        "response_observed": "2026-10-09 21:16:16 UTC",
+        "status": "open request succeeded"
+      }
+    },
+    {
+      "id": "LB-05",
+      "title": "LibreBooking v7.0.0 regression test for buffer ID",
+      "url": "https://github.com/LibreBooking/librebooking/blob/v7.0.0/tests/Application/Schedule/ReservationListingTest.php",
+      "source_type": "Pinned project test source",
+      "version_or_commit": "v7.0.0, release commit 422b4b0223335d18c7d5f005ffcdd93719575c20.",
+      "locator": "testBufferItemIdUsesWrappedReservationId; lines 775-790 in the GitHub rendered source.",
+      "accessed_at_utc": null,
+      "initial_access_timestamp_precision": "Not part of pre-reveal discovery; first opened after plan reveal for unit verification.",
+      "revalidated_access_window_utc": {
+        "request_started": "2026-10-09T21:21:48Z",
+        "response_observed": "2026-10-09T21:21:49Z",
+        "status": "open request succeeded"
+      },
+      "observed_operations": [
+        "opened exact version-pinned test source",
+        "read test invocation and before/after ID assertions"
+      ],
+      "evidence_use": "The pinned v7.0.0 test calls WithBufferTime(3600) and asserts the before/after generated IDs. The viewed test does not say whether 3600 is seconds or another unit.",
+      "change_or_caveat": "This checks the regression assertion, not the booking conflict engine or kitchen workflow."
+    }
+  ]
+}

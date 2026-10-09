@@ -1,0 +1,20 @@
+{
+  "block": "B-07",
+  "arm": "treatment",
+  "case": "I07",
+  "method": "M15",
+  "stage": "verifier",
+  "stage_path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier",
+  "brief": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I07/brief.md",
+  "predecessors": [
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/verification-questions.md",
+    "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/revealed-plan.md"
+  ],
+  "source_roots": [],
+  "allowed_write_root": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/verifier",
+  "deadline": "2026-10-09T21:43:19.130903+00:00",
+  "arm_deadline": "2026-10-09T22:13:58.512742+00:00",
+  "native_route": "luna",
+  "evidence_kind": "full-discovery",
+  "resource_version": "75-30-parallel20+15-25-v1"
+}

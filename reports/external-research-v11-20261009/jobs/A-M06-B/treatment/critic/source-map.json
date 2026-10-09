@@ -1,0 +1,172 @@
+{
+  "block": "A-M06-B",
+  "arm": "treatment",
+  "case": "S12",
+  "method": "M06",
+  "stage": "critic",
+  "generated_utc": "2026-10-09T21:35:00Z",
+  "id_rule": "IDs are immutable once assigned; re-binding a URL to an existing ID is forbidden - add a new ID instead. Critic stage uses the C-namespace to avoid any collision with the research stage's S-namespace (S01-S16 remain owned by research/source-map.json; no rebinding across namespaces).",
+  "sources": [
+    {
+      "id": "C01",
+      "title": "RFC 8493 - The BagIt File Packaging Format V1.0",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "version": "RFC 8493, Informational, Independent Submission, published October 2018",
+      "commit": null,
+      "locator": "specification body: bagit.txt, manifests, Payload-Oxum, checksum algorithm support, security considerations",
+      "accessed_utc": "2026-10-09T21:27:53Z",
+      "evidence_file": "sources/dossier-rfc8493.md#c01",
+      "observed_operations": ["direct page fetch (HTTP GET, content extraction)"],
+      "claims": [
+        "Bag 1.0 tools MUST support SHA-256 and SHA-512; SHA-512 recommended default for new bags; MD5/SHA-1 optional (SHOULD, backwards compat)",
+        "valid bag = all manifest checksums verify; Payload-Oxum is a fast completeness pre-check only; full checksum validation still REQUIRED",
+        "not designed to be secure against active attacks; tamper protection needs additional measures such as digital signatures; bag-info.txt intended primarily for human use",
+        "published October 2018 (corrects research-stage S04's 'November 2018')"
+      ],
+      "drift": "static RFC document; none expected",
+      "cross_check_vs_research": [
+        "S04: agrees on MUST/SHOULD algorithm content; disagrees on publication month (October, not November 2018)"
+      ]
+    },
+    {
+      "id": "C02",
+      "title": "NDSA Levels of Digital Preservation (version page)",
+      "url": "https://ndsa.org/publications/levels-of-digital-preservation/",
+      "version": "page at access: created 2013, V2.0 2019, V2.1 March 2026",
+      "commit": null,
+      "locator": "version history and supporting-resources list",
+      "accessed_utc": "2026-10-09T21:27:53Z",
+      "evidence_file": "sources/dossier-ndsa-levels.md#c02",
+      "observed_operations": ["direct page fetch"],
+      "claims": [
+        "fixity verification and provenance/information content are separate functional areas with staged maturity",
+        "V2.1 released March 2026 (environmental-sustainability focus); matrix itself hosted on OSF and NOT fetched"
+      ],
+      "drift": "page mutable; only version dates retained as evidence-backed",
+      "cross_check_vs_research": ["absent from research-stage sources; used in critique m-5"]
+    },
+    {
+      "id": "C03",
+      "title": "Archivematica releases (artefactual/archivematica)",
+      "url": "https://github.com/artefactual/archivematica/releases",
+      "version": "page state at access: latest v1.18.0 (Sep 26, 2026 per page context) with Storage Service 0.24.0 release notes; history back to v1.12.2",
+      "commit": null,
+      "locator": "releases list",
+      "accessed_utc": "2026-10-09T21:27:53Z",
+      "evidence_file": "sources/dossier-archivematica-releases.md#c03",
+      "observed_operations": ["direct page fetch"],
+      "claims": [
+        "v1.18.0 is the latest release, paired with Storage Service 0.24.0",
+        "release cadence ~1-2 minor/patch per year; release notes hosted on project wiki",
+        "license and system requirements NOT stated on this page (absence recorded)"
+      ],
+      "drift": "mutable rolling page; claims pinned to the v1.18.0 snapshot at access time",
+      "cross_check_vs_research": [
+        "S01: contradicts its 'current stable docs site' label on /docs/1.8.1/ pages - current release line is 1.18.x (critique M3)"
+      ]
+    },
+    {
+      "id": "C04",
+      "title": "ClamAV documentation (docs.clamav.net)",
+      "url": "https://docs.clamav.net/",
+      "version": "current docs site at access time",
+      "commit": null,
+      "locator": "supported platforms; system requirements; freshclam/database pages",
+      "accessed_utc": "2026-10-09T21:27:53Z",
+      "evidence_file": "sources/dossier-clamav.md#c04",
+      "observed_operations": ["direct page fetch"],
+      "claims": [
+        "minimum 3 GiB+ RAM (3-4 GiB advised for Docker-like environments), 1 CPU >=2.0 GHz, 5 GiB disk",
+        "supported platform list: Ubuntu 22.04/24.04, Debian 12/13, AlmaLinux 9/10, Alpine 3.22, Fedora 41/42, openSUSE 15, FreeBSD 13/14, macOS 13-15, Windows 10/11; older/uncommon platforms unsupported",
+        "signature changes after submissions take at least 48 hours to propagate; updater is scripted, digitally signed, DNS version queries",
+        "no version EOL policy or guaranteed update cadence stated on the page (absence recorded)"
+      ],
+      "drift": "docs site mutable; platform list current at access",
+      "cross_check_vs_research": [
+        "S14: complementary - adds resource floor and 48 h propagation latency; no conflict"
+      ]
+    },
+    {
+      "id": "C05",
+      "title": "Siegfried file format identification tool (richardlehane/siegfried)",
+      "url": "https://github.com/richardlehane/siegfried",
+      "version": "default-branch page at access; latest release v1.11.9 dated 2026-09-27; Apache-2.0",
+      "commit": null,
+      "locator": "README: PRONOM signatures, sf -droid output, roy custom signatures, sf -serve, packaging",
+      "accessed_utc": "2026-10-09T21:28:30Z",
+      "evidence_file": "sources/dossier-siegfried-verapdf.md#c05",
+      "observed_operations": ["direct page fetch"],
+      "claims": [
+        "PRONOM-based identification (also freedesktop MIME-info, LOC FDD, Wikidata beta); full-file scans by default",
+        "DROID-compatible output via sf -droid; server mode sf -serve; v1.11.9 released 2026-09-27",
+        "Go-based (library >= Go 1.25); packaged for Homebrew, Ubuntu/Debian APT, FreeBSD pkg, Arch AUR, Windows, WASM"
+      ],
+      "drift": "default branch mutable; release tag v1.11.9 pinned from page content at access",
+      "cross_check_vs_research": [
+        "named unsourced in research discovery O5 harness list; this is the first evidence-backed dossier for it (critique m-2)"
+      ]
+    },
+    {
+      "id": "C06",
+      "title": "veraPDF parser repository (veraPDF/veraPDF-parser)",
+      "url": "https://github.com/veraPDF/veraPDF-parser",
+      "version": "default branch 'integration' (1,792 commits); Releases section empty in fetch - NO release version pinned (explicit gap)",
+      "commit": null,
+      "locator": "repo description, license badges, build instructions",
+      "accessed_utc": "2026-10-09T21:28:30Z",
+      "evidence_file": "sources/dossier-siegfried-verapdf.md#c06",
+      "observed_operations": ["direct page fetch"],
+      "claims": [
+        "dual-licensed GPLv3+ / MPLv2+; build needs Java 8/11/17/21/25 + Maven 3+; artifacts on Maven Central",
+        "PDF/A versions validated and endorsement status NOT stated on the page - UNCONFIRMED (verapdf.org unfetched)"
+      ],
+      "drift": "moving 'integration' branch; nothing pinned to a release - treat all claims as provisional",
+      "cross_check_vs_research": ["absent from research-stage sources; recorded as partial evidence only"]
+    },
+    {
+      "id": "C07",
+      "title": "TNA DROID page (FAILED fetch)",
+      "url": "https://www.nationalarchives.gov.uk/information-manage/preserving-digital-records/droid/",
+      "version": "UNAVAILABLE - HTTP 404 at access",
+      "commit": null,
+      "locator": null,
+      "accessed_utc": "2026-10-09T21:28:30Z",
+      "evidence_file": "sources/dossier-failed-fetches.md#c07",
+      "observed_operations": ["direct page fetch FAILED (HTTP 404 Not Found)"],
+      "claims": ["no evidence retained; DROID current version unverified in this arm"],
+      "drift": "n/a (fetch failed)",
+      "cross_check_vs_research": [
+        "research S12 DROID/TNA claims remain search-level only; corroborated by no stage (critique m-6)"
+      ]
+    },
+    {
+      "id": "C08",
+      "title": "Archivematica shipped processingMCP.xml (FAILED fetches, two paths)",
+      "url": "https://raw.githubusercontent.com/archivematica/archivematica/stable/1.18.x/src/MCPClient/lib/clientScripts/processingMCP.xml ; https://raw.githubusercontent.com/archivematica/archivematica/main/src/MCPClient/lib/clientScripts/processingMCP.xml",
+      "version": "UNAVAILABLE - HTTP 404 on both attempted paths",
+      "commit": null,
+      "locator": null,
+      "accessed_utc": "2026-10-09T21:31:00Z",
+      "evidence_file": "sources/dossier-failed-fetches.md#c08",
+      "observed_operations": ["direct raw-file fetch FAILED x2 (HTTP 404 Not Found; branch/file path not located without repository browsing)"],
+      "claims": ["shipped default quarantine duration remains UNRESOLVED; critic-stage attempts recorded as known-bad paths"],
+      "drift": "n/a (fetches failed); next attempt should locate the correct branch/path via repository browsing",
+      "cross_check_vs_research": [
+        "research source-map 'unresolved' list item 2 stays open; supports critique M4"
+      ]
+    }
+  ],
+  "inspected_predecessors": [
+    {"path": "jobs/A-M06-B/treatment/research/draft.md", "mtime_utc": "2026-10-09T21:22:52Z", "role": "frozen draft under critique"},
+    {"path": "jobs/A-M06-B/treatment/research/discovery.md", "mtime_utc": "2026-10-09T21:19:59Z", "role": "frozen discovery under critique"},
+    {"path": "jobs/A-M06-B/treatment/research/source-map.json", "mtime_utc": "2026-10-09T21:17:37Z", "role": "predecessor source registry (S-namespace, read-only)"},
+    {"path": "jobs/A-M06-B/treatment/research/evidence-first.md", "mtime_utc": "2026-10-09T21:14:49Z", "role": "predecessor evidence-first pass"},
+    {"path": "jobs/A-M06-B/treatment/research/revealed-plan.md", "mtime_utc": "2026-10-09T21:21:06Z", "role": "exact revealed plan text"}
+  ],
+  "unresolved": [
+    "Archivematica shipped processingMCP.xml default quarantine days value (C08 fetches 404; branch/path still unlocated)",
+    "veraPDF release version and PDF/A validation scope (C06 no release pinned)",
+    "DROID current version (C07 404; no stage has verified it)"
+  ],
+  "usage_billing_observed": null
+}

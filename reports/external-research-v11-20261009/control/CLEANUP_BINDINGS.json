@@ -1,0 +1,18 @@
+{
+  "observed_at": "2026-10-09T21:21:52.134599+00:00",
+  "current_app_binding": {
+    "attached": true,
+    "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-f19dd729",
+    "host_branch_field": "t3/f19dd729",
+    "actual_git_branch": "research/external-research-v11-20261009",
+    "decision": "RETAIN active app-bound cwd; do not delete or alter binding"
+  },
+  "old_ER10_inventory": {
+    "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-ce3f519f",
+    "branch": "t3/research/er10-research-efficiency-campaign",
+    "source": "t3_worktree_list exact returned ref",
+    "decision": "RETAIN: exact worktree remains registered; owner/active app binding unresolved. No further historical cleanup audit or deletion.",
+    "thread_search": "Single supported titleContains=ER10 root-thread query returned no matches; not a complete binding audit."
+  },
+  "rule": "No active cwd/app-bound worktree deletion, no unrelated changes, no server restart."
+}

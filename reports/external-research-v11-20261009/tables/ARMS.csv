@@ -21,7 +21,7 @@ A-M05-B,A,M05,v1,default-30-12-18-v1,S11,luna,{},control,STARTED,True,PASS_WITH_
 A-M05-B,A,M05,v1,default-30-12-18-v1,S11,luna,{},treatment,STARTED,True,PASS_WITH_LIMITATIONS,jobs/A-M05-B/treatment/research/final.md,2026-10-09T18:39:30.502703+00:00,2026-10-09T19:39:30.502703+00:00
 A-M06-A,A,M06,v1,default-30-12-18-v1,S06,muse,{},control,STARTED,True,FAIL,jobs/A-M06-A/control/reviser/final.md,2026-10-09T18:57:49.357967+00:00,2026-10-09T19:57:49.357967+00:00
 A-M06-A,A,M06,v1,default-30-12-18-v1,S06,muse,{},treatment,STARTED,True,FAIL,jobs/A-M06-A/treatment/reviser/final.md,2026-10-09T19:02:34.548436+00:00,2026-10-09T20:02:34.548436+00:00
-A-M06-B,A,M06,v1,glm-24-18-18-v2,S12,glm,{},control,STARTED,False,,,2026-10-09T20:53:52.979033+00:00,2026-10-09T21:53:52.979033+00:00
+A-M06-B,A,M06,v1,glm-24-18-18-v2,S12,glm,{},control,FAILED_CRITIC_DELIVERY_DEADLINE,False,,,2026-10-09T20:53:52.979033+00:00,2026-10-09T21:53:52.979033+00:00
 A-M06-B,A,M06,v1,glm-24-18-18-v2,S12,glm,{},treatment,STARTED,False,,,2026-10-09T21:11:16.428948+00:00,2026-10-09T22:11:16.428948+00:00
 A-M07-A,A,M07,v1,default-30-12-18-v1,S07,luna,{},control,STARTED,True,PASS_WITH_LIMITATIONS,jobs/A-M07-A/control/reviser/final.md,2026-10-09T18:39:36.154255+00:00,2026-10-09T19:39:36.154255+00:00
 A-M07-A,A,M07,v1,default-30-12-18-v1,S07,luna,{},treatment,STARTED,True,FAIL,jobs/A-M07-A/treatment/reviser/final.md,2026-10-09T18:39:43.084419+00:00,2026-10-09T19:39:43.084419+00:00
@@ -39,8 +39,8 @@ A-M10-A,A,M10,v1,default-30-12-18-v1,S10,luna,{},control,STARTED,True,PASS_WITH_
 A-M10-A,A,M10,v1,default-30-12-18-v1,S10,luna,{},treatment,STARTED,True,FAIL,jobs/A-M10-A/treatment/reviser/final.md,2026-10-09T18:40:39.323584+00:00,2026-10-09T19:40:39.323584+00:00
 A-M10-B,A,M10,v1,default-30-12-18-v1,S04,muse,{},control,STARTED,True,FAIL,jobs/A-M10-B/control/reviser/final.md,2026-10-09T18:28:02.976111+00:00,2026-10-09T19:28:02.976111+00:00
 A-M10-B,A,M10,v1,default-30-12-18-v1,S04,muse,{},treatment,STARTED,True,FAIL,jobs/A-M10-B/treatment/reviser/final.md,2026-10-09T18:28:03.544425+00:00,2026-10-09T19:28:03.544425+00:00
-A-M11-A,A,M11,v1,glm-24-18-18-v2,S11,glm,{},control,STARTED,True,,jobs/A-M11-A/control/reviser/final.md,2026-10-09T20:28:43.148716+00:00,2026-10-09T21:28:43.148716+00:00
-A-M11-A,A,M11,v1,glm-24-18-18-v2,S11,glm,{},treatment,FAILED_CRITIC_DELIVERY_DEADLINE,False,,,2026-10-09T20:17:26.495926+00:00,2026-10-09T21:17:26.495926+00:00
+A-M11-A,A,M11,v1,glm-24-18-18-v2,S11,glm,{},control,STARTED,True,FAIL,jobs/A-M11-A/control/reviser/final.md,2026-10-09T20:28:43.148716+00:00,2026-10-09T21:28:43.148716+00:00
+A-M11-A,A,M11,v1,glm-24-18-18-v2,S11,glm,{},treatment,FAILED_CRITIC_DELIVERY_DEADLINE,False,NO_DELIVERY,,2026-10-09T20:17:26.495926+00:00,2026-10-09T21:17:26.495926+00:00
 A-M11-B,A,M11,v1,default-30-12-18-v1,S05,luna,{},control,STARTED,True,FAIL,jobs/A-M11-B/control/reviser/final.md,2026-10-09T18:28:50.955054+00:00,2026-10-09T19:28:50.955054+00:00
 A-M11-B,A,M11,v1,default-30-12-18-v1,S05,luna,{},treatment,STARTED,True,PASS_WITH_LIMITATIONS,jobs/A-M11-B/treatment/reviser/final.md,2026-10-09T18:28:52.038615+00:00,2026-10-09T19:28:52.038615+00:00
 A-M12-A,A,M12,v1,default-30-12-18-v1,S12,muse,{},control,STARTED,True,FAIL,jobs/A-M12-A/control/reviser/final.md,2026-10-09T18:53:07.250513+00:00,2026-10-09T19:53:07.250513+00:00
@@ -61,12 +61,12 @@ B-06,B-development,M14,v1,75-30-20-25-role-bundle-v1,I06,muse,"{""treatment"": {
 B-06,B-development,M14,v1,75-30-20-25-role-bundle-v1,I06,muse,"{""treatment"": {""critic"": ""luna""}}",treatment,STARTED,True,FAIL,jobs/B-06/treatment/research/final.md,2026-10-09T20:22:57.384622+00:00,2026-10-09T21:37:57.384622+00:00
 B-07,B-development,M15,v1,75-30-parallel20+15-25-v1,I07,luna,{},control,STARTED,False,,,2026-10-09T20:58:55.462771+00:00,2026-10-09T22:13:55.462771+00:00
 B-07,B-development,M15,v1,75-30-parallel20+15-25-v1,I07,luna,{},treatment,STARTED,False,,,2026-10-09T20:58:58.512742+00:00,2026-10-09T22:13:58.512742+00:00
-B-08,B-development,M15,v1,75-30-parallel20+15-25-v1,I08,muse,{},control,STARTED,False,,,2026-10-09T20:59:08.770413+00:00,2026-10-09T22:14:08.770413+00:00
-B-08,B-development,M15,v1,75-30-parallel20+15-25-v1,I08,muse,{},treatment,STARTED,False,,,2026-10-09T20:59:19.391482+00:00,2026-10-09T22:14:19.391482+00:00
-C-01,C,,v1,default-30-12-18-v1,C01,,{},control,UNSTARTED,False,,,,
-C-01,C,,v1,default-30-12-18-v1,C01,,{},treatment,UNSTARTED,False,,,,
-C-02,C,,v1,default-30-12-18-v1,C02,,{},control,UNSTARTED,False,,,,
-C-02,C,,v1,default-30-12-18-v1,C02,,{},treatment,UNSTARTED,False,,,,
+B-08,B-development,M15,v1,75-30-parallel20+15-25-v1,I08,muse,{},control,STARTED,True,FAIL,jobs/B-08/control/reviser/final.md,2026-10-09T20:59:08.770413+00:00,2026-10-09T22:14:08.770413+00:00
+B-08,B-development,M15,v1,75-30-parallel20+15-25-v1,I08,muse,{},treatment,STARTED,True,FAIL,jobs/B-08/treatment/reviser/final.md,2026-10-09T20:59:19.391482+00:00,2026-10-09T22:14:19.391482+00:00
+C-01,C-development,M16,v1,budget-75vs60-v1,H01,luna,{},control,STARTED,False,,,2026-10-09T21:37:32.734901+00:00,2026-10-09T22:52:32.734901+00:00
+C-01,C-development,M16,v1,budget-75vs60-v1,H01,luna,{},treatment,STARTED,False,,,2026-10-09T21:37:34.418337+00:00,2026-10-09T22:37:34.418337+00:00
+C-02,C-development,M16,v1,budget-75vs60-v1,H02,luna,{},control,STARTED,False,,,2026-10-09T21:37:37.734702+00:00,2026-10-09T22:52:37.734702+00:00
+C-02,C-development,M16,v1,budget-75vs60-v1,H02,luna,{},treatment,STARTED,False,,,2026-10-09T21:37:40.303378+00:00,2026-10-09T22:37:40.303378+00:00
 C-03,C,,v1,default-30-12-18-v1,C03,,{},control,UNSTARTED,False,,,,
 C-03,C,,v1,default-30-12-18-v1,C03,,{},treatment,UNSTARTED,False,,,,
 C-04,C,,v1,default-30-12-18-v1,C04,,{},control,UNSTARTED,False,,,,

@@ -1,0 +1,412 @@
+{
+  "block": "B-07",
+  "arm": "treatment",
+  "case": "I07",
+  "method": "M15",
+  "stage": "research",
+  "source_map_version": 1,
+  "accessed_date_utc": "2026-10-09",
+  "usage_billing_observed": null,
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Buffer time | Skedda Support",
+      "url": "https://support.skedda.com/en/articles/3653032-buffer-time",
+      "source_type": "vendor support documentation",
+      "version_or_release": "Live help article, dated March 4, 2025; no product build version stated",
+      "commit": null,
+      "locator": "Sections 'Create a buffer time rule', 'How users see buffer times', and FAQs; lines 19, 27-49 in capture",
+      "accessed_at": "2026-10-09T21:01:44Z",
+      "observed_operations": [
+        "web search for Skedda setup/teardown buffer rules",
+        "opened the article and read rule semantics and FAQs"
+      ],
+      "evidence_path": "sources/index.md#s01-skedda-buffer-time"
+    },
+    {
+      "id": "S02",
+      "title": "Booking Requests & Approvals | Skedda Support",
+      "url": "https://support.skedda.com/en/articles/11774950-booking-requests-approvals",
+      "source_type": "vendor support documentation",
+      "version_or_release": "Live help article, dated July 7, 2026; no product build version stated",
+      "commit": null,
+      "locator": "Overview, setup, managing requests, and FAQs; lines 22-28, 43-52, 64-88, 124-150 in capture",
+      "accessed_at": "2026-10-09T21:01:44Z",
+      "observed_operations": [
+        "web search for official booking-approval behavior",
+        "opened the article and read approval and exception behavior"
+      ],
+      "evidence_path": "sources/index.md#s02-skedda-approvals"
+    },
+    {
+      "id": "S03",
+      "title": "Access and Visibility | Skedda Support",
+      "url": "https://support.skedda.com/en/articles/105728-access-and-visibility",
+      "source_type": "vendor support documentation",
+      "version_or_release": "Live help article, dated April 20, 2026; no product build version stated",
+      "commit": null,
+      "locator": "Venue access, booking access, and content visibility rules; lines 25-55 in capture",
+      "accessed_at": "2026-10-09T21:01:44Z",
+      "observed_operations": [
+        "web search for schedule visibility and tenant privacy settings",
+        "opened the article and read default visibility and user-tag rules"
+      ],
+      "evidence_path": "sources/index.md#s03-skedda-access-and-visibility"
+    },
+    {
+      "id": "S04",
+      "title": "Export or print booking data | Skedda Support",
+      "url": "https://support.skedda.com/en/articles/105786-export-or-print-booking-data",
+      "source_type": "vendor support documentation",
+      "version_or_release": "Live help article; page displayed 'updated over a month ago' on access; no product build version stated",
+      "commit": null,
+      "locator": "Export section and FAQ on regular-user access and tablet availability; lines 13-32, 34-73, 94-104 in capture",
+      "accessed_at": "2026-10-09T21:02:11Z",
+      "observed_operations": [
+        "web search for booking data export",
+        "opened the page, inspected export fields and regular-user/tablet constraints"
+      ],
+      "evidence_path": "sources/index.md#s04-skedda-export"
+    },
+    {
+      "id": "S05",
+      "title": "Skedda pricing",
+      "url": "https://www.skedda.com/pricing",
+      "source_type": "vendor pricing and feature matrix",
+      "version_or_release": "Live pricing page; no effective date or software build version stated",
+      "commit": null,
+      "locator": "Regional and product plan sections; space-based pricing, plan/feature comparison, and booking data retention; lines 143-243, 286-303, 490-518 in capture",
+      "accessed_at": "2026-10-09T21:05:14Z",
+      "observed_operations": [
+        "web search for official booking-export and product feature information",
+        "opened pricing page and inspected regional/product qualification and plan matrix"
+      ],
+      "evidence_path": "sources/index.md#s05-skedda-pricing"
+    },
+    {
+      "id": "S06",
+      "title": "Pricing | The Food Corridor",
+      "url": "https://www.thefoodcorridor.com/pricing/",
+      "source_type": "vendor pricing and feature page",
+      "version_or_release": "Live pricing page; no effective date or software build version stated",
+      "commit": null,
+      "locator": "USD plans, platform fees, scheduling, equipment, sign-in/out, and onboarding; lines 90-150, 165-198, 220-225, 279-290 in capture",
+      "accessed_at": "2026-10-09T21:05:14Z",
+      "observed_operations": [
+        "web search for shared-kitchen booking and equipment scheduling options",
+        "opened pricing page and inspected plan and fee conditions"
+      ],
+      "evidence_path": "sources/index.md#s06-food-corridor-pricing"
+    },
+    {
+      "id": "S07",
+      "title": "How do I book in my kitchen? | The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/1413904-how-do-i-book-in-my-kitchen",
+      "source_type": "vendor support documentation",
+      "version_or_release": "Live help article, dated November 21, 2023; no product build version stated",
+      "commit": null,
+      "locator": "Food-business account flow, approved-booking visibility, equipment selection, recurring bookings, and submitted booking state; lines 11-46 in capture",
+      "accessed_at": "2026-10-09T21:02:11Z",
+      "observed_operations": [
+        "web search for tenant booking and calendar visibility",
+        "opened the help article and read client workflow"
+      ],
+      "evidence_path": "sources/index.md#s07-food-corridor-tenant-booking"
+    },
+    {
+      "id": "S08",
+      "title": "How do I reserve equipment? | The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/1414032-how-do-i-reserve-equipment",
+      "source_type": "vendor support documentation",
+      "version_or_release": "Live help article, dated March 29, 2023; no product build version stated",
+      "commit": null,
+      "locator": "Equipment reservation as part of a space booking and equipment-specific time range; lines 12-20 and following booking steps in capture",
+      "accessed_at": "2026-10-09T21:01:44Z",
+      "observed_operations": [
+        "web search for equipment booking behavior",
+        "opened the help article and read scope and time-range behavior"
+      ],
+      "evidence_path": "sources/index.md#s08-food-corridor-equipment"
+    },
+    {
+      "id": "S09",
+      "title": "How can I approve bookings? | The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/1413916-how-can-i-approve-bookings",
+      "source_type": "vendor support documentation",
+      "version_or_release": "Live help article, dated March 28, 2023; no product build version stated",
+      "commit": null,
+      "locator": "Submitted bookings view, individual calendars, approval actions, and per-client auto-approval; lines 12-42 in capture",
+      "accessed_at": "2026-10-09T21:01:44Z",
+      "observed_operations": [
+        "web search for official booking approval behavior",
+        "opened the article and inspected approval workflow"
+      ],
+      "evidence_path": "sources/index.md#s09-food-corridor-approvals"
+    },
+    {
+      "id": "S10",
+      "title": "What Information is in the Reporting Tab? | The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/2322739-what-information-is-in-the-reporting-tab",
+      "source_type": "vendor support documentation",
+      "version_or_release": "Live help article, displayed as updated over three weeks before access; no product build version stated",
+      "commit": null,
+      "locator": "CSV export/filter behavior, booking reports and client fields, and sign-in reports; lines 9-20, 35-51, 65-89 in capture",
+      "accessed_at": "2026-10-09T21:02:11Z",
+      "observed_operations": [
+        "web search for per-client booking export",
+        "opened article and inspected CSV filters and report content"
+      ],
+      "evidence_path": "sources/index.md#s10-food-corridor-reports"
+    },
+    {
+      "id": "S11",
+      "title": "Shared kitchen management software | Spacebring",
+      "url": "https://www.spacebring.com/solutions/shared-kitchen-management-software",
+      "source_type": "vendor product page",
+      "version_or_release": "Live product page; no page date or software build version stated",
+      "commit": null,
+      "locator": "Kitchen and equipment booking, room preparation time, membership approval, app, and analytics; lines 84-90 and 135-154 in capture",
+      "accessed_at": "2026-10-09T21:01:44Z",
+      "observed_operations": [
+        "web search for purpose-built shared-kitchen tools",
+        "opened product page and inspected claimed workflow and capabilities"
+      ],
+      "evidence_path": "sources/index.md#s11-spacebring"
+    },
+    {
+      "id": "S12",
+      "title": "PostgreSQL 18: Range Types",
+      "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+      "source_type": "versioned official technical documentation",
+      "version_or_release": "PostgreSQL 18 documentation; supported version as of access",
+      "commit": null,
+      "locator": "Section 8.17: built-in tstzrange, [) two-argument constructor, and §8.17.10 exclusion constraints using range overlap and btree_gist; lines 31-49, 121-130, 191-229 in capture",
+      "accessed_at": "2026-10-09T21:06:03Z",
+      "observed_operations": [
+        "web search for PostgreSQL time-range and overlap constraints",
+        "opened versioned PostgreSQL 18 documentation and inspected range types, bounds, and exclusion example"
+      ],
+      "evidence_path": "sources/index.md#s12-postgresql-range-types"
+    },
+    {
+      "id": "S13",
+      "title": "PostgreSQL 18: Row Security Policies",
+      "url": "https://www.postgresql.org/docs/18/ddl-rowsecurity.html",
+      "source_type": "versioned official technical documentation",
+      "version_or_release": "PostgreSQL 18 documentation; supported version as of access",
+      "commit": null,
+      "locator": "Section 5.9, enabled-policy default-deny behavior, table-owner and BYPASSRLS exceptions, USING/WITH CHECK examples; lines 19-46",
+      "accessed_at": "2026-10-09T21:06:03Z",
+      "observed_operations": [
+        "web search for tenant-row access controls",
+        "opened versioned PostgreSQL 18 documentation and inspected policy defaults and bypass conditions"
+      ],
+      "evidence_path": "sources/index.md#s13-postgresql-row-security"
+    },
+    {
+      "id": "S14",
+      "title": "eventOverlap | FullCalendar Docs",
+      "url": "https://fullcalendar.io/docs/eventOverlap",
+      "source_type": "official software documentation",
+      "version_or_release": "Docs identify FullCalendar v7.1.1, released October 6, 2026",
+      "commit": null,
+      "locator": "Event Dragging & Resizing > eventOverlap; lines 84-104 and version footer 116",
+      "accessed_at": "2026-10-09T21:02:11Z",
+      "observed_operations": [
+        "web search for calendar overlap behavior",
+        "opened current docs and inspected scope, default value, and callback semantics"
+      ],
+      "evidence_path": "sources/index.md#s14-fullcalendar-event-overlap"
+    },
+    {
+      "id": "S15",
+      "title": "Events in dayGridDay view overlapping when eventOrderStrict: true | FullCalendar issue #6393",
+      "url": "https://github.com/fullcalendar/fullcalendar/issues/6393",
+      "source_type": "official source-code repository issue tracker",
+      "version_or_release": "Issue reports reproduction on FullCalendar 5.8.0; opened June 23, 2021; milestone v5.9.0",
+      "commit": null,
+      "locator": "Issue description and milestone metadata; lines 158-179 and 204 in capture",
+      "accessed_at": "2026-10-09T21:01:44Z",
+      "observed_operations": [
+        "web search for overlap regression and fix evidence",
+        "opened issue, inspected reported version, rendering symptom, status, and milestone"
+      ],
+      "evidence_path": "sources/index.md#s15-fullcalendar-issue-6393"
+    },
+    {
+      "id": "S16",
+      "title": "Release v5.9.0 | FullCalendar",
+      "url": "https://github.com/fullcalendar/fullcalendar/releases/tag/v5.9.0",
+      "source_type": "official software release",
+      "version_or_release": "FullCalendar v5.9.0, released July 28, 2021; release commit 620efb5e9c023f229a22af31e10b8b810fa5b2ba",
+      "commit": "620efb5e9c023f229a22af31e10b8b810fa5b2ba",
+      "locator": "Tagged release notes list the #6393 rendering fix; lines 130-160 in capture; exact commit page is separately indexed as S19",
+      "accessed_at": "2026-10-09T21:02:11Z",
+      "observed_operations": [
+        "web search for issue resolution/release chain",
+        "opened the tagged release and inspected its date and fix list"
+      ],
+      "evidence_path": "sources/index.md#s16-fullcalendar-release-590"
+    },
+    {
+      "id": "S17",
+      "title": "Food Code 2026 | FDA",
+      "url": "https://www.fda.gov/food/fda-food-code/food-code-2026",
+      "source_type": "official government model-code page",
+      "version_or_release": "FDA Food Code 2026 edition; offered as a model for jurisdictional adoption",
+      "commit": null,
+      "locator": "Food Code description and adoption statement; lines 71-78 in capture",
+      "accessed_at": "2026-10-09T21:02:11Z",
+      "observed_operations": [
+        "web search for official food-safety code status and applicability",
+        "opened the 2026 FDA Food Code page and inspected model/adoption scope"
+      ],
+      "evidence_path": "sources/index.md#s17-fda-food-code-2026"
+    },
+    {
+      "id": "S18",
+      "title": "Web Content Accessibility Guidelines 2.2 | W3C",
+      "url": "https://www.w3.org/TR/WCAG22/#target-size-minimum",
+      "source_type": "official W3C Recommendation",
+      "version_or_release": "WCAG 2.2; Success Criterion 2.5.8 Target Size (Minimum), Level AA",
+      "commit": null,
+      "locator": "Success Criterion 2.5.8 and WAI explanation of pointer targets, exceptions, and touch use; lines 1142-1151 in Recommendation and lines 91-105, 129 in Understanding document",
+      "accessed_at": "2026-10-09T21:01:44Z",
+      "observed_operations": [
+        "web search for touch target and accessibility criteria",
+        "opened official WCAG 2.2 criterion and its WAI explanatory page"
+      ],
+      "evidence_path": "sources/index.md#s18-wcag-22"
+    },
+    {
+      "id": "S19",
+      "title": "FullCalendar v5.9.0 release commit",
+      "url": "https://github.com/fullcalendar/fullcalendar/commit/620efb5e9c023f229a22af31e10b8b810fa5b2ba",
+      "source_type": "official source-code repository commit referenced by tagged release",
+      "version_or_release": "FullCalendar v5.9.0 release target",
+      "commit": "620efb5e9c023f229a22af31e10b8b810fa5b2ba",
+      "locator": "Commit page header and change tree; short SHA and full SHA in URL; opened via the v5.9.0 release commit link",
+      "accessed_at": "2026-10-09T21:17:35Z",
+      "observed_operations": [
+        "opened the tagged release",
+        "followed its commit link",
+        "inspected commit identity and changed-file list"
+      ],
+      "evidence_path": "sources/index.md#s19-fullcalendar-release-commit"
+    },
+    {
+      "id": "S20",
+      "title": "Booking and Visit Data Retention | Skedda Support",
+      "url": "https://support.skedda.com/en/articles/5707504-booking-and-visit-data-retention",
+      "source_type": "vendor support documentation",
+      "version_or_release": "Live help article, dated March 4, 2025; no build version stated",
+      "commit": null,
+      "locator": "Default retention, plan changes, unsupported retention and recurring-booking FAQs",
+      "accessed_at": "2026-10-09T21:16:49Z",
+      "observed_operations": [
+        "web search at 21:16:28 UTC",
+        "opened and read the public support article"
+      ],
+      "evidence_path": "sources/index.md#s20-skedda-retention"
+    },
+    {
+      "id": "S21",
+      "title": "Pricing | Spacebring",
+      "url": "https://www.spacebring.com/pricing",
+      "source_type": "vendor pricing page",
+      "version_or_release": "Mutable live pricing; euro-billed; no effective date/build stated",
+      "commit": null,
+      "locator": "Business plan commitment, active-user counting, currency and mobile/API add-ons",
+      "accessed_at": "2026-10-09T21:16:49Z",
+      "observed_operations": [
+        "web search at 21:16:28 UTC",
+        "opened and read pricing page"
+      ],
+      "evidence_path": "sources/index.md#s21-spacebring-pricing"
+    },
+    {
+      "id": "S22",
+      "title": "FullCalendar fix commit for issue #6393",
+      "url": "https://github.com/fullcalendar/fullcalendar/commit/6acf6b2",
+      "source_type": "official source-code repository commit",
+      "version_or_release": "Fix commit abbreviated SHA 6acf6b2; associated with v5.9.0 fix chain",
+      "commit": "6acf6b2",
+      "locator": "Commit message and seg-hierarchy.ts/event-placement.ts diffs",
+      "accessed_at": "2026-10-09T21:15:57Z",
+      "observed_operations": [
+        "followed the issue/release evidence to the public commit",
+        "opened the commit page and inspected diff"
+      ],
+      "evidence_path": "sources/index.md#s22-fullcalendar-fix"
+    },
+    {
+      "id": "S23",
+      "title": "Understanding Success Criterion 2.5.7: Dragging Movements | W3C",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html",
+      "source_type": "official W3C explanatory document",
+      "version_or_release": "WCAG 2.2 explanatory guidance for SC 2.5.7",
+      "commit": null,
+      "locator": "Single-pointer alternative requirement and distinction from keyboard support",
+      "accessed_at": "2026-10-09T21:15:38Z",
+      "observed_operations": [
+        "opened and read W3C explanation",
+        "targeted read of single-pointer requirement"
+      ],
+      "evidence_path": "sources/index.md#s23-wcag-dragging"
+    },
+    {
+      "id": "S24",
+      "title": "What does a food business account look like? | The Food Corridor",
+      "url": "https://help.thefoodcorridor.com/en/articles/1812934-what-does-a-food-business-account-look-like",
+      "source_type": "vendor help documentation",
+      "version_or_release": "Article dated June 7, 2023",
+      "commit": null,
+      "locator": "Bookings, Calendars, Community and Reports sections; verifier observed Community visibility/messaging",
+      "accessed_at": null,
+      "access_date": "2026-10-09",
+      "access_time_precision": "Verifier reported date only; per-fetch clock time unavailable",
+      "observed_operations": [
+        "independent verifier searched and fetched the public help article; exact per-fetch time not exposed"
+      ],
+      "evidence_path": "sources/index.md#s24-food-corridor-account"
+    },
+    {
+      "id": "S25",
+      "title": "How do I delete my account? | The Food Corridor",
+      "url": "https://help.thefoodcorridor.com/en/articles/1935331-how-do-i-delete-my-account",
+      "source_type": "vendor help documentation",
+      "version_or_release": "Article dated June 22, 2020",
+      "commit": null,
+      "locator": "Section on leaving a kitchen while keeping an account; past invoices and reports",
+      "accessed_at": null,
+      "access_date": "2026-10-09",
+      "access_time_precision": "Verifier reported date only; per-fetch clock time unavailable",
+      "observed_operations": [
+        "independent verifier searched and fetched the public help article; exact per-fetch time not exposed"
+      ],
+      "evidence_path": "sources/index.md#s25-food-corridor-inactive"
+    },
+    {
+      "id": "S26",
+      "title": "What is digital sign-in/sign-out? | The Food Corridor",
+      "url": "https://help.thefoodcorridor.com/en/articles/1413890-what-is-digital-sign-in-sign-out",
+      "source_type": "vendor help documentation",
+      "version_or_release": "Article dated September 23, 2022",
+      "commit": null,
+      "locator": "Client PIN and sign-in station; verifier observed PIN is account-level, not individual identity",
+      "accessed_at": null,
+      "access_date": "2026-10-09",
+      "access_time_precision": "Verifier reported date only; per-fetch clock time unavailable",
+      "observed_operations": [
+        "independent verifier searched and fetched the public help article; exact per-fetch time not exposed"
+      ],
+      "evidence_path": "sources/index.md#s26-food-corridor-pin"
+    }
+  ],
+  "mutable_source_policy": "Vendor help/product/pricing pages are mutable and captured only as observed at the access timestamps above; identifiers and URLs are not silently rebound. Where stable releases matter, use the versioned PostgreSQL 18 docs or the tagged FullCalendar release. Re-check current vendor behavior and price with an account/demo before procurement.",
+  "billing_and_model_usage": {
+    "usage": null,
+    "billing": null,
+    "reason": "Not observed by the investigator."
+  }
+}

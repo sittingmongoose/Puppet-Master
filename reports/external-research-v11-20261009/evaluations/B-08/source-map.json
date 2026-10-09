@@ -1,0 +1,1770 @@
+{
+  "block": "B-08",
+  "input_map": {
+    "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/input-map.json",
+    "sha256": "ed07d2b4c91b0cda2cd5b244415d115ea2421fb97d6300316c57a09de2175931"
+  },
+  "source_id_policy": "EV IDs unique and immutable within this fresh evaluator; candidate source IDs remain stage-qualified, never rebound. SHA-256 identifies retained text transformations, not original HTML bytes.",
+  "access_policy": "Scientific evidence restricted to mapped local inputs/source roots and independently selected public primary data. Repository startup also read Plans/00-plans-index.md under the supplied AGENTS instruction. That governance index was not used as scientific evidence or a candidate/reference answer; no repository file changed. No fetched code executed and no other evaluation read.",
+  "sources": [
+    {
+      "id": "EV01",
+      "url": "https://support.getgrist.com/access-rules/",
+      "accessed_at": "2026-10-09T21:28:27.560986+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://support.getgrist.com/access-rules/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV01.txt",
+      "sha256": "5a93172da9f592797fe791508cb32c80077ca2f26fdbac75ba2d9a03b283f0ff",
+      "bytes": 24942,
+      "locator": "Access rules defaults, user attributes/row/column rules; Structure permission S warning at165–198",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV02",
+      "url": "https://support.getgrist.com/self-managed/",
+      "accessed_at": "2026-10-09T21:28:27.562311+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://support.getgrist.com/self-managed/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV02.txt",
+      "sha256": "986c1469f67823146b3606db6cce87c2e6ee92787b7bbca3ca2a37ce15e2904e",
+      "bytes": 32998,
+      "locator": "Self-managed authentication options and deployment ownership",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV03",
+      "url": "https://support.getgrist.com/install/authentication-overview/",
+      "accessed_at": "2026-10-09T21:28:27.570450+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://support.getgrist.com/install/authentication-overview/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV03.txt",
+      "sha256": "1ecb95e4d9d56f06da21e013cff76f89f20a4a7da2b08ba0f9289e74ec871bea",
+      "bytes": 3083,
+      "locator": "Authentication overview: external identity3–17, activation-key OIDC/SAML20–35, external forwarded proxy38–43",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV04",
+      "url": "https://support.getgrist.com/install/grist-builder-edition/",
+      "accessed_at": "2026-10-09T21:28:27.572559+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://support.getgrist.com/install/grist-builder-edition/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV04.txt",
+      "sha256": "dae07114f12b40ced39bd2a4d0c183b14cc9ec7aec75ed3d98f65fa732e2383b",
+      "bytes": 3127,
+      "locator": "Builder Edition Authentication setup42–48 uses Authelia for username/password",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV05",
+      "url": "https://pocketbase.io/docs/api-rules-and-filters/",
+      "accessed_at": "2026-10-09T21:28:27.574009+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://pocketbase.io/docs/api-rules-and-filters/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV05.txt",
+      "sha256": "598c228b302f2e1c0fcea78ac548455ffd7650d7db5f4ab03d9de872e3b9b9b5",
+      "bytes": 11954,
+      "locator": "API rules null/empty/filter and HTTP results22–59; filter syntax",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV06",
+      "url": "https://pocketbase.io/docs/authentication/",
+      "accessed_at": "2026-10-09T21:28:27.574896+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://pocketbase.io/docs/authentication/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV06.txt",
+      "sha256": "6666e2bbc6ff9d5d0006d3d265c4459f5af247bfb2f57a2485c931734ad7443b",
+      "bytes": 17009,
+      "locator": "Stateless auth/no logout10–15; OAuth providers415–442; MFA1134–1152",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV07",
+      "url": "https://pocketbase.io/docs/collections/",
+      "accessed_at": "2026-10-09T21:28:27.694600+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://pocketbase.io/docs/collections/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV07.txt",
+      "sha256": "da79d7676d3a26b1c2eb87e2c10f1315b1aada5266a649842d10b3a023cb57d2",
+      "bytes": 9091,
+      "locator": "Fields non-null zero-default153–165; DateField datetime-string239–255; Base/View/Auth collections",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV08",
+      "url": "https://pocketbase.io/docs/files-handling/",
+      "accessed_at": "2026-10-09T21:28:27.732707+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://pocketbase.io/docs/files-handling/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV08.txt",
+      "sha256": "2b447be89567d938262d85e5c0d9cad1c35ee7642b3f5b1dab21526511959ff7",
+      "bytes": 9950,
+      "locator": "File names/default size; Protected files707–727 public full-URL default, Protected/token/View rule",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV09",
+      "url": "https://pocketbase.io/docs/",
+      "accessed_at": "2026-10-09T21:28:27.736224+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://pocketbase.io/docs/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV09.txt",
+      "sha256": "3655013779f51d173a520b79ed2686601a68bc52cbd68c5a5438bfb3a4a6242e",
+      "bytes": 2259,
+      "locator": "Introduction v0.40.5 pre-1.0 manual migration warning",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV10",
+      "url": "https://docs.inventree.org/en/stable/stock/status/",
+      "accessed_at": "2026-10-09T21:28:27.747645+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://docs.inventree.org/en/stable/stock/status/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV10.txt",
+      "sha256": "290ecfae66d4d9997fb3a599c1aecbb7c01c9fe1d80903b48452aa857b6078e6",
+      "bytes": 2035,
+      "locator": "Stock status table1–34, default OK; Damaged Available Yes, Quarantined No",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV11",
+      "url": "https://docs.inventree.org/en/stable/concepts/custom_states/",
+      "accessed_at": "2026-10-09T21:28:27.910941+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://docs.inventree.org/en/stable/concepts/custom_states/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV11.txt",
+      "sha256": "58d9a5f2ab27689ab2c47921018ef09a26d0acefa277e05244a3eec15cf75940",
+      "bytes": 2747,
+      "locator": "Display-only/logical-key rule7–10, state key/name fields",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV12",
+      "url": "https://docs.inventree.org/en/latest/part/test/",
+      "accessed_at": "2026-10-09T21:28:28.007382+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://docs.inventree.org/en/latest/part/test/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV12.txt",
+      "sha256": "a0af1a71ce55933ad8ce9726ac3e3f5be3f60fbaab70ec6d1e71feb9c2c024ae",
+      "bytes": 2777,
+      "locator": "Part Test Templates names/test keys/delete/cascade; mutable latest docs",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV13",
+      "url": "https://docs.inventree.org/en/latest/stock/test/",
+      "accessed_at": "2026-10-09T21:28:28.106264+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://docs.inventree.org/en/latest/stock/test/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV13.txt",
+      "sha256": "2ffcf693be50b3db420fc8018673a26fc44ec7a72a61ba3fc2a4640a8085d1ac",
+      "bytes": 1971,
+      "locator": "Stock test Boolean/value/attachment latest-result headline and API",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV14",
+      "url": "https://snipeitapp.com/product",
+      "accessed_at": "2026-10-09T21:28:28.149396+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://snipeitapp.com/product",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV14.txt",
+      "sha256": "996fb5507fbde88ddf6329f85799edd4b45350a27230d02cbedab986d18a89b4",
+      "bytes": 8779,
+      "locator": "Product asset/status/UI features; marketing scope",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV15",
+      "url": "https://api.github.com/repos/grokability/snipe-it/releases/tags/v8.8.0",
+      "accessed_at": "2026-10-09T21:28:28.162149+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://api.github.com/repos/grokability/snipe-it/releases/tags/v8.8.0",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV15.txt",
+      "sha256": "f04d4782b53a188c273a5f8cffc232f5779467de4e7d13c152deabf7157ae92b",
+      "bytes": 34077,
+      "locator": "v8.8.0 release body FD-57297/#19655, concurrent/deleted-target fixes and PHP8.2 floor",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV16",
+      "url": "https://studentprivacy.ed.gov/faq/under-ferpa-may-educational-agency-or-institution-disclose-education-records-any-its-employees",
+      "accessed_at": "2026-10-09T21:28:28.173842+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://studentprivacy.ed.gov/faq/under-ferpa-may-educational-agency-or-institution-disclose-education-records-any-its-employees",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV16.txt",
+      "sha256": "b2a2ec0d4ab9cf2c602e26c26dcf4a3205e5f09ba29d53b93017503e9b3547bd",
+      "bytes": 675,
+      "locator": "FERPA school-official legitimate-educational-interest exception, 34CFR99.31(a)(1)",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV17",
+      "url": "https://studentprivacy.ed.gov/faq/may-educational-agency-or-institution-disclose-directory-information-without-prior-consent",
+      "accessed_at": "2026-10-09T21:28:28.177686+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://studentprivacy.ed.gov/faq/may-educational-agency-or-institution-disclose-directory-information-without-prior-consent",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV17.txt",
+      "sha256": "471dbddb644a8adad6fa38e2fc1ef6efd5a8f652804b17a5a984f9364529177b",
+      "bytes": 1522,
+      "locator": "Directory info designation/public notice/opt-out and former-student exception",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV18",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "accessed_at": "2026-10-09T21:28:28.209863+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://www.w3.org/TR/WCAG22/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV18.txt",
+      "sha256": "9251c8c0a5c908c87eb05bcf70ba2967347b263abab018c3780745ee323a5338",
+      "bytes": 151955,
+      "locator": "WCAG2.2 SC1.4.4 and1.4.10 normative dimensions/notes/exceptions",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV19",
+      "url": "https://n8n.io/pricing/",
+      "accessed_at": "2026-10-09T21:28:28.265823+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://n8n.io/pricing/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV19.txt",
+      "sha256": "f5ed1d94a70bc2e7620ede558df69182b2cabc6066e4b1dfb6ba79b6c9cc52dd",
+      "bytes": 13913,
+      "locator": "Pricing annual EUR Starter20/2500 Pro50/10000 and unlimited users/workflows",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV20",
+      "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.emailSend/",
+      "accessed_at": "2026-10-09T21:28:28.330654+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 404,
+      "final_url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.emailsend",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV20.txt",
+      "sha256": "aff8deff03caa6b19665e308274fcd37c472fdfb6c48a201e32c6a33dff679e7",
+      "bytes": 8,
+      "locator": "Retrieval attempt only; no governing scientific reliance",
+      "used_for_assessment": false,
+      "retained": false,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee",
+      "removed_reason": "Failed/empty retrieval or redundant clipped HTML RFC; necessary full RFC EV43 retained"
+    },
+    {
+      "id": "EV21",
+      "url": "https://www.rfc-editor.org/rfc/rfc5321.html",
+      "accessed_at": "2026-10-09T21:28:28.337867+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://www.rfc-editor.org/rfc/rfc5321.html",
+      "truncated": true,
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV21.txt",
+      "sha256": "04f99dd815d44165f91dadb7a1884496f5cdecd1767e6b3ba51e14027a0405e1",
+      "bytes": 160003,
+      "locator": "Retrieval attempt only; no governing scientific reliance",
+      "used_for_assessment": false,
+      "retained": false,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee",
+      "removed_reason": "Failed/empty retrieval or redundant clipped HTML RFC; necessary full RFC EV43 retained"
+    },
+    {
+      "id": "EV22",
+      "url": "https://www.lend-engine.com/pricing",
+      "accessed_at": "2026-10-09T21:28:28.404890+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://www.lend-engine.com/pricing",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV22.txt",
+      "sha256": "04831e5a9915c14dd9445845f22b18ce3fd2621f98f4dbc204d47c36167e2b2e",
+      "bytes": 4244,
+      "locator": "Pricing separate items/contacts caps100/500/2000/10000 and sites1/1/10/30; language rows",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV23",
+      "url": "https://www.lend-engine.com/features/maintenance-and-servicing",
+      "accessed_at": "2026-10-09T21:28:28.429817+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://www.lend-engine.com/features/maintenance-and-servicing",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV23.txt",
+      "sha256": "50d654e4212434c629b20e31cb462f718c613274c6a491739e039a86ab2500f6",
+      "bytes": 1844,
+      "locator": "Lending maintenance/servicing feature description",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV24",
+      "url": "https://goauthentik.io/blog/2025-10-28-authentik-version-2025-10/",
+      "accessed_at": "2026-10-09T21:28:28.517625+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://goauthentik.io/blog/2025-10-28-authentik-version-2025-10/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV24.txt",
+      "sha256": "0f7769e00cb0324971bde0d2f79624bb9fc7b9d509201c68742c67a7c15302ef",
+      "bytes": 4294,
+      "locator": "2025.10 release post Redis removed; prior tasks Postgres; server/worker/database",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV25",
+      "url": "https://docs.goauthentik.io/releases/2025.12/",
+      "accessed_at": "2026-10-09T21:28:28.597451+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://docs.goauthentik.io/releases/2025.12/",
+      "truncated": true,
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV25.txt",
+      "sha256": "5be8e15493b4998a79d91c53d1d8e5e834515988414d16afe2229163e93267e3",
+      "bytes": 161498,
+      "locator": "2025.12 release File storage changes61–88 /media→/data and /data/media",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV26",
+      "url": "https://docs.powersync.com/configuration/app-backend/client-side-integration",
+      "accessed_at": "2026-10-09T21:28:28.602881+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://docs.powersync.com/configuration/app-backend/client-side-integration",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV26.txt",
+      "sha256": "eddd2585c887d65d79b3a49c153ccb87e540ecb693b5890d978db87e85598f2c",
+      "bytes": 11750,
+      "locator": "Backend connector/uploadData; connected-only325–326; queued writes and application backend",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV27",
+      "url": "https://docs.frappe.io/erpnext/asset-repair",
+      "accessed_at": "2026-10-09T21:28:28.909910+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://docs.frappe.io/erpnext/asset-repair",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV27.txt",
+      "sha256": "973b8b28712cf61fde4a7966b21f8088d2585d8af11802ce22eef77aa67faa73",
+      "bytes": 2370,
+      "locator": "Asset Repair failures, completion, parts/cost/capitalization; domain Asset",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV28",
+      "url": "https://docs.frappe.io/erpnext/asset-maintenance",
+      "accessed_at": "2026-10-09T21:28:28.912506+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://docs.frappe.io/erpnext/asset-maintenance",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV28.txt",
+      "sha256": "dda6811b55a64dbc2cc5daf63c60bdfdee77877a8b8f706a0d6313dd5298487a",
+      "bytes": 1998,
+      "locator": "Asset Maintenance planned tasks vs failure repair",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV29",
+      "url": "https://nocodb.com/docs/self-hosting/purchase-license",
+      "accessed_at": "2026-10-09T21:28:28.917095+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://nocodb.com/docs/self-hosting/purchase-license",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV29.txt",
+      "sha256": "4dae2f9774c93d18039e2883ad4cf0ac85795161d6bc56c715662a034ebc2771",
+      "bytes": 3728,
+      "locator": "Self-host purchase-license Business/Scale menu and activation backend prerequisites",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV30",
+      "url": "https://nocodb.com/docs/product/collaboration/table-permissions",
+      "accessed_at": "2026-10-09T21:28:28.920659+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://nocodb.com/docs/product/collaboration/table-permissions",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV30.txt",
+      "sha256": "ec67db78f19fbb14d9767bad01163a416c2aa608f248cac9cb48e42f6d24f145",
+      "bytes": 6432,
+      "locator": "Table Visibility vs record create/delete; relational lookup leak; Availability",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV31",
+      "url": "https://nocodb.com/docs/product/collaboration/field-permissions",
+      "accessed_at": "2026-10-09T21:28:28.948652+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://nocodb.com/docs/product/collaboration/field-permissions",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV31.txt",
+      "sha256": "3527ffed6c8982b70e7ce867036559a9684fa347c46375b19cd30d7fba66b411",
+      "bytes": 4071,
+      "locator": "Field permissions edit-only, not visibility; Availability",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV32",
+      "url": "https://nocodb.com/docs/product/collaboration/record-level-security",
+      "accessed_at": "2026-10-09T21:28:28.949863+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://nocodb.com/docs/product/collaboration/record-level-security",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV32.txt",
+      "sha256": "0ad9e12e74920b86ebac30d396f084ad68b1293a4008387fad12a35491f20532",
+      "bytes": 11152,
+      "locator": "RLS scoped/default policies, Show-all fallback and Scale Availability",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV33",
+      "url": "https://nocodb.com/docs/product/account-settings/api-tokens",
+      "accessed_at": "2026-10-09T21:28:29.106504+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://nocodb.com/docs/product/account-settings/api-tokens",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV33.txt",
+      "sha256": "2f86da76091195a0ad97c5cecf8818d65cbe737ec5ae3e5025b37411bb082a12",
+      "bytes": 13457,
+      "locator": "Community tokens all resources/no expiry91,190,209–210; creator-role intersection; SSO424–443",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV34",
+      "url": "https://nocodb.com/docs/product/collaboration/teams",
+      "accessed_at": "2026-10-09T21:28:29.123204+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://nocodb.com/docs/product/collaboration/teams",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV34.txt",
+      "sha256": "18c269dbc706c702cdb982a5c7c6133ac01de4cc6f180c92082fc5369ce07fcb",
+      "bytes": 9632,
+      "locator": "Workspace vs org Teams and self-host Scale Availability",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV35",
+      "url": "https://nocodb.com/docs/product/workspaces/workspace-audit",
+      "accessed_at": "2026-10-09T21:28:29.134036+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://nocodb.com/docs/product/workspaces/workspace-audit",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV35.txt",
+      "sha256": "04d7af852fb5f8b671e26dc4d375a869f536266fa47f130f8967d0a5f29881da",
+      "bytes": 4119,
+      "locator": "Workspace audit logs Owner-only and Scale Availability",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV36",
+      "url": "https://nocodb.com/docs/product/account-settings/authentication",
+      "accessed_at": "2026-10-09T21:28:29.149023+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://nocodb.com/docs/product/account-settings/authentication",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV36.txt",
+      "sha256": "6329202ef071f957774ac213995e789e37b7d551c3f3da3feead6c7b350b871a",
+      "bytes": 8613,
+      "locator": "Authentication SSO tiers, fallback defaults, self-host/cloud difference",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV37",
+      "url": "https://api.github.com/repos/nocodb/nocodb/releases/tags/0.301.5",
+      "accessed_at": "2026-10-09T21:28:29.326227+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://api.github.com/repos/nocodb/nocodb/releases/tags/0.301.5",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV37.txt",
+      "sha256": "2e6ef20ace76277afaf17dc3129470fe92bb1c847c0ff0581bd2b64ebea4bba7",
+      "bytes": 28227,
+      "locator": "0.301.5 release Workspace-Level Roles & Permission Inheritance, free self-host access and preserved base roles",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV38",
+      "url": "https://support.getgrist.com/install/audit-logs-overview/",
+      "accessed_at": "2026-10-09T21:28:29.344101+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 404,
+      "final_url": "https://support.getgrist.com/install/audit-logs-overview/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV38.txt",
+      "sha256": "53c6279bf75b5b7abf1fa6349de51bf3284ee5de7cf0c720cd131303b6a6859e",
+      "bytes": 15,
+      "locator": "Retrieval attempt only; no governing scientific reliance",
+      "used_for_assessment": false,
+      "retained": false,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee",
+      "removed_reason": "Failed/empty retrieval or redundant clipped HTML RFC; necessary full RFC EV43 retained"
+    },
+    {
+      "id": "EV39",
+      "url": "https://support.getgrist.com/document-history/",
+      "accessed_at": "2026-10-09T21:28:29.377719+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 200,
+      "final_url": "https://support.getgrist.com/document-history/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV39.txt",
+      "sha256": "cfce443b5764b033ff7c95bc298f53540bf708acf765dc315c62843044f66c8b",
+      "bytes": 951,
+      "locator": "Document history change history; not per-row read logging",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV40",
+      "url": "https://docs.n8n.io/sustainable-use-license/",
+      "accessed_at": "2026-10-09T21:28:29.391127+00:00",
+      "operation": "independent HTTPS GET; text data only; not executed",
+      "status_code": 404,
+      "final_url": "https://docs.n8n.io/sustainable-use-license",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV40.txt",
+      "sha256": "aff8deff03caa6b19665e308274fcd37c472fdfb6c48a201e32c6a33dff679e7",
+      "bytes": 8,
+      "locator": "Retrieval attempt only; no governing scientific reliance",
+      "used_for_assessment": false,
+      "retained": false,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee",
+      "removed_reason": "Failed/empty retrieval or redundant clipped HTML RFC; necessary full RFC EV43 retained"
+    },
+    {
+      "id": "EV41",
+      "url": "https://support.getgrist.com/install/audit-log-overview/",
+      "accessed_at": "2026-10-09T21:29:52.844961+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://support.getgrist.com/install/audit-log-overview/",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV41.txt",
+      "bytes": 1850,
+      "sha256": "f3f354493e07ca101d409c4c79a9656e6250fb8843ce079e307c60db343ef945",
+      "locator": "Audit log overview installation activity, edition/applicability boundary",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV42",
+      "url": "https://raw.githubusercontent.com/n8n-io/n8n/master/packages/nodes-base/nodes/EmailSend/v2/send.operation.ts",
+      "accessed_at": "2026-10-09T21:29:52.845762+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://raw.githubusercontent.com/n8n-io/n8n/master/packages/nodes-base/nodes/EmailSend/v2/send.operation.ts",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV42.txt",
+      "bytes": 7954,
+      "sha256": "f45a85c4d3839033bdcb434be00fe242fc15ec6de1b7e6bae7fc64843b8f59bb",
+      "locator": "Email Send v2 operation SMTP sendMail283, return/errors285–305 (mutable master)",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV43",
+      "url": "https://www.rfc-editor.org/rfc/rfc5321.txt",
+      "accessed_at": "2026-10-09T21:29:52.849111+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://www.rfc-editor.org/rfc/rfc5321.txt",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV43.txt",
+      "bytes": 225929,
+      "sha256": "7d560eddff1b213c17d4e1e5f95005728b2f05bc2b3947f0fcc91717c6707634",
+      "locator": "RFC5321 §4.5.3.2.6 lines3656–3664; §6.1 lines4008–4011 acceptance/timeout duplicates",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "RFC5321 published standard"
+    },
+    {
+      "id": "EV44",
+      "url": "https://raw.githubusercontent.com/n8n-io/n8n/master/LICENSE.md",
+      "accessed_at": "2026-10-09T21:29:52.852732+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://raw.githubusercontent.com/n8n-io/n8n/master/LICENSE.md",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV44.txt",
+      "bytes": 4445,
+      "sha256": "d2f621f59aa4c10eab79b6333e59d9d3d5b53307dcfd16dbd75e40e679e84965",
+      "locator": "Sustainable Use License internal business/non-commercial clauses32–35 (mutable master)",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV45",
+      "url": "https://docs.frappe.io/erpnext/downtime-entry",
+      "accessed_at": "2026-10-09T21:29:52.855402+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://docs.frappe.io/erpnext/downtime-entry",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV45.txt",
+      "bytes": 479,
+      "sha256": "17a3cdf1aa2282c38c4c354999338e93a8c13397ece4706aea85e54fd535a8fb",
+      "locator": "Manufacturing > Production Downtime Entry; manually recorded minutes2–4",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV46",
+      "url": "https://docs.frappe.io/erpnext/downtime-analysis",
+      "accessed_at": "2026-10-09T21:29:52.857704+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://docs.frappe.io/erpnext/downtime-analysis",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV46.txt",
+      "bytes": 390,
+      "sha256": "3e43c49aea941224988dae633cc8623c8f69d99a0a81cdfb738be980bfdf373c",
+      "locator": "Manufacturing > Reports Downtime Analysis; hours2–4",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV47",
+      "url": "https://api.github.com/repos/grokability/snipe-it/issues/19174",
+      "accessed_at": "2026-10-09T21:29:52.944701+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://api.github.com/repos/grokability/snipe-it/issues/19174",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV47.txt",
+      "bytes": 5289,
+      "sha256": "e075f3b05ffaaeee2e8637c40c7e28a8d61eca9406732aa8b7b73a6a84941907",
+      "locator": "Snipe issue19174 OPEN, created2026-06-11, global upload workaround/no event linkage",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV48",
+      "url": "https://snipe-it.readme.io/docs/overview",
+      "accessed_at": "2026-10-09T21:29:52.965250+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://snipe-it.readme.io/docs/overview",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV48.txt",
+      "bytes": 5564,
+      "sha256": "f292df51c2390e5c56f617f91d5f9d2a313ef99276e3970d202a6bd21013fead",
+      "locator": "Snipe Overview tags/exclusive checkout19 and four status meta-types22–44, admin2FA",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV49",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Http/Controllers/Api/AssetsController.php",
+      "accessed_at": "2026-10-09T21:29:52.969732+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Http/Controllers/Api/AssetsController.php",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV49.txt",
+      "bytes": 88178,
+      "sha256": "a0104d36aa0736063d1aab0333bee284f86c805e44e60f130bd5bf13eb0c7770",
+      "locator": "v8.8.0 AssetsController checkout1364+ lock1456; checkin1480+; audit image1849; not master equivalence",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV50",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Http/Controllers/Api/UploadedFilesController.php",
+      "accessed_at": "2026-10-09T21:29:53.009736+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Http/Controllers/Api/UploadedFilesController.php",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV50.txt",
+      "bytes": 11325,
+      "sha256": "41077672dee65771fea1c16ced5c137b8f0db31ed8f35b1bfbae55cce75e9794",
+      "locator": "v8.8.0 UploadedFilesController::store96–129 manageFiles/multipart and logUpload",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV51",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Models/Traits/Loggable.php",
+      "accessed_at": "2026-10-09T21:29:53.156351+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Models/Traits/Loggable.php",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV51.txt",
+      "bytes": 19296,
+      "sha256": "60ac251ac524ba434f7c599449f084669d7884335caf0f1e472a5e8139705d71",
+      "locator": "v8.8.0 Loggable::logUpload541–561 new uploaded Actionlog not specific checkout entry",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV52",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Http/Requests/AssetCheckoutRequest.php",
+      "accessed_at": "2026-10-09T21:29:53.164349+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Http/Requests/AssetCheckoutRequest.php",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV52.txt",
+      "bytes": 2042,
+      "sha256": "42eaacd5ef2d05b55ca9761feb08628ea18260f99486196eb3f199ddb525ba69",
+      "locator": "v8.8.0 AssetCheckoutRequest::rules target XOR/undeleted/date fields",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV53",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/routes/api.php",
+      "accessed_at": "2026-10-09T21:29:53.170725+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/routes/api.php",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV53.txt",
+      "bytes": 47785,
+      "sha256": "27c018a97893baf2d6b450a3ee4d84f1cb26c18b923f68fedbcb546706b36df1",
+      "locator": "v8.8.0 routes hardware checkout/checkin and /files uploaded routes1534–1571",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV54",
+      "url": "https://api.github.com/repos/frappe/erpnext/releases/tags/v15.117.0",
+      "accessed_at": "2026-10-09T21:29:53.303452+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://api.github.com/repos/frappe/erpnext/releases/tags/v15.117.0",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV54.txt",
+      "bytes": 4740,
+      "sha256": "52d486f53651640e390de7ef547e2706f10eef6315aefea5f70d803ac5aadbce",
+      "locator": "ERPNext release tag v15.117.0 published2026-07-15 Asset Repair fully-depreciated release bullet and backport link",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV55",
+      "url": "https://raw.githubusercontent.com/frappe/erpnext/v15.117.0/erpnext/assets/doctype/asset_repair/asset_repair.py",
+      "accessed_at": "2026-10-09T21:29:53.312367+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://raw.githubusercontent.com/frappe/erpnext/v15.117.0/erpnext/assets/doctype/asset_repair/asset_repair.py",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV55.txt",
+      "bytes": 19069,
+      "sha256": "f5b7cb6e65f1199adcb766879cfb26bb17704ca61b6870e6924f5408ce278e66",
+      "locator": "v15.117.0 validate_asset79–88; before_submit118–159; increase_asset_value222–230; get_downtime482–484",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV56",
+      "url": "https://raw.githubusercontent.com/frappe/erpnext/v15.117.0/erpnext/assets/doctype/asset_repair/asset_repair.js",
+      "accessed_at": "2026-10-09T21:29:53.337746+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://raw.githubusercontent.com/frappe/erpnext/v15.117.0/erpnext/assets/doctype/asset_repair/asset_repair.js",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV56.txt",
+      "bytes": 5596,
+      "sha256": "30aefa55fc50ddd61928e6af7000bbbb71552a160a17bd1ae74aa55977d69869",
+      "locator": "v15.117.0 refresh capitalize_repair_cost read_only on Fully Depreciated",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV57",
+      "url": "https://raw.githubusercontent.com/frappe/erpnext/v15.117.0/erpnext/assets/doctype/asset/asset.js",
+      "accessed_at": "2026-10-09T21:29:53.468608+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://raw.githubusercontent.com/frappe/erpnext/v15.117.0/erpnext/assets/doctype/asset/asset.js",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV57.txt",
+      "bytes": 24080,
+      "sha256": "f11765415019aedbfca1d0562b0c5d61f515ee9281df41f9f93141bffb7da2af",
+      "locator": "v15.117.0 Asset form Repair under Manage for submitted assets",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV58",
+      "url": "https://raw.githubusercontent.com/frappe/erpnext/v15.117.0/erpnext/assets/doctype/asset/asset.py",
+      "accessed_at": "2026-10-09T21:29:53.478667+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://raw.githubusercontent.com/frappe/erpnext/v15.117.0/erpnext/assets/doctype/asset/asset.py",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV58.txt",
+      "bytes": 47452,
+      "sha256": "0b3fdadd34d723640f836e4bf7ca82e4b78d80a5cd1e9d4f492cd0e1df83d2dc",
+      "locator": "v15.117.0 Asset.get_status derived depreciation status",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV59",
+      "url": "https://api.github.com/repos/frappe/erpnext/releases/tags/v16.28.0",
+      "accessed_at": "2026-10-09T21:29:53.483924+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://api.github.com/repos/frappe/erpnext/releases/tags/v16.28.0",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV59.txt",
+      "bytes": 7384,
+      "sha256": "4eea37f4645af59bbc3707296bec62809e846b8a67980ff769db1be9d0a0583c",
+      "locator": "ERPNext release tag v16.28.0 published2026-07-15 Asset Repair fully-depreciated release bullet and backport link",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV60",
+      "url": "https://raw.githubusercontent.com/frappe/erpnext/v16.28.0/erpnext/assets/doctype/asset_repair/asset_repair.py",
+      "accessed_at": "2026-10-09T21:29:53.607155+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://raw.githubusercontent.com/frappe/erpnext/v16.28.0/erpnext/assets/doctype/asset_repair/asset_repair.py",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV60.txt",
+      "bytes": 19223,
+      "sha256": "35d4cbfaa454ffe01f5e47bc37d006522d9d245eb4f6f80eb14be26261141569",
+      "locator": "v16.28.0 validate_asset72–81; on_submit202–227; get_downtime454–456",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV61",
+      "url": "https://raw.githubusercontent.com/frappe/erpnext/v16.28.0/erpnext/assets/doctype/asset_repair/asset_repair.js",
+      "accessed_at": "2026-10-09T21:29:53.618116+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://raw.githubusercontent.com/frappe/erpnext/v16.28.0/erpnext/assets/doctype/asset_repair/asset_repair.js",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV61.txt",
+      "bytes": 6757,
+      "sha256": "406ec986ecadd205b702bfcf5a681757d69a3bf7150d65fb5e0766e00daad2e5",
+      "locator": "v16.28.0 refresh capitalize read_only guard",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV62",
+      "url": "https://raw.githubusercontent.com/frappe/erpnext/v16.28.0/erpnext/assets/doctype/asset/asset.js",
+      "accessed_at": "2026-10-09T21:29:53.645934+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://raw.githubusercontent.com/frappe/erpnext/v16.28.0/erpnext/assets/doctype/asset/asset.js",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV62.txt",
+      "bytes": 26725,
+      "sha256": "a16721ca46480696b22b312d92680103f0bcbe679c4c9dcfa7cd6a9c33f4fcfb",
+      "locator": "v16.28.0 Asset form Fully Depreciated repair branch150–158",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV63",
+      "url": "https://raw.githubusercontent.com/frappe/erpnext/v16.28.0/erpnext/assets/doctype/asset/asset.py",
+      "accessed_at": "2026-10-09T21:29:53.767581+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://raw.githubusercontent.com/frappe/erpnext/v16.28.0/erpnext/assets/doctype/asset/asset.py",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV63.txt",
+      "bytes": 53507,
+      "sha256": "fd72250a9410611dad3f2beb2f963d09b3b280558650c7791bf3bc090946a7ec",
+      "locator": "v16.28.0 Asset.get_status derived status",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV64",
+      "url": "https://api.github.com/repos/frappe/erpnext/pulls/55276",
+      "accessed_at": "2026-10-09T21:29:53.773561+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://api.github.com/repos/frappe/erpnext/pulls/55276",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV64.txt",
+      "bytes": 23333,
+      "sha256": "2821657c437188f43311f2bda75659d3dc9416114611f993e706a74efc8bf6fb",
+      "locator": "PR55276 merged2026-07-12 rationale repair fully-depreciated without value/life increase",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV65",
+      "url": "https://api.github.com/repos/frappe/erpnext/pulls/57110",
+      "accessed_at": "2026-10-09T21:29:53.779272+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://api.github.com/repos/frappe/erpnext/pulls/57110",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV65.txt",
+      "bytes": 22111,
+      "sha256": "3ae874e0cbc1b03ecf10d1cd42ec7d142d0304b904482a587a0d423d3632a9fa",
+      "locator": "PR57110 v15 backport merged2026-07-13, existing button no asset.js change",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV66",
+      "url": "https://api.github.com/repos/frappe/erpnext/pulls/57077",
+      "accessed_at": "2026-10-09T21:29:53.926646+00:00",
+      "operation": "independent HTTPS GET; text only; not executed",
+      "status_code": 200,
+      "final_url": "https://api.github.com/repos/frappe/erpnext/pulls/57077",
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV66.txt",
+      "bytes": 24725,
+      "sha256": "bce4cef65054b006ed1668de65a6afd767eeb6b72290e2c0e575f34bdd6f5a8c",
+      "locator": "PR57077 v16 backport merged2026-07-13",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV67",
+      "url": "https://nocodb.com/docs/product/collaboration/roles-and-permissions.md",
+      "accessed_at": "2026-10-09T21:34:46.462942+00:00",
+      "status": 200,
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV67.txt",
+      "sha256": "f4887778d273b3a75dbc4ad652eabf60f6f8144ed4fd96e956f3a0faabdb7a79",
+      "bytes": 20530,
+      "operation": "HTTP GET; text retained as data; not executed",
+      "locator": "Workspace/project roles and No Access; role precedence; Availability only Teams paid",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV68",
+      "url": "https://nocodb.com/docs/product/projects/private-project.md",
+      "accessed_at": "2026-10-09T21:34:46.436562+00:00",
+      "status": 200,
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV68.txt",
+      "sha256": "6a276321118b2e5e16e184e2fc5c82746c9a314a19b5a87a1ad9b5d9c3061b62",
+      "bytes": 4973,
+      "operation": "HTTP GET; text retained as data; not executed",
+      "locator": "Private Project explicit invite controls; Availability86–88 Business+",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV69",
+      "url": "https://raw.githubusercontent.com/frappe/erpnext/v15.117.0/erpnext/assets/doctype/asset_repair/asset_repair.json",
+      "accessed_at": "2026-10-09T21:34:46.472518+00:00",
+      "status": 200,
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV69.txt",
+      "sha256": "01bf0030bb42694756e10345cf835157ebdb603d29d6421ba8ee788577673a64",
+      "bytes": 6573,
+      "operation": "HTTP GET; text retained as data; not executed",
+      "locator": "v15.117.0 Asset Repair JSON downtime field Data/read_only1",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV70",
+      "url": "https://raw.githubusercontent.com/frappe/erpnext/v16.28.0/erpnext/assets/doctype/asset_repair/asset_repair.json",
+      "accessed_at": "2026-10-09T21:34:46.447116+00:00",
+      "status": 200,
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV70.txt",
+      "sha256": "13a4cca79db8c37e5578c6b5d77a26e6bc833fba5264dfe6226d319a77e4feb4",
+      "bytes": 6935,
+      "operation": "HTTP GET; text retained as data; not executed",
+      "locator": "v16.28.0 Asset Repair JSON downtime field Data/read_only1",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Pinned released tag/code or immutable release/PR record"
+    },
+    {
+      "id": "EV71",
+      "url": "https://support.getgrist.com/understanding-access-rules/",
+      "accessed_at": "2026-10-09T21:34:46.428111+00:00",
+      "status": 404,
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV71.txt",
+      "sha256": "e2aa204f618c826a4312d41bd83bffa970b54d70d501542567fc4ad3f9346b61",
+      "bytes": 4595,
+      "operation": "HTTP GET; text retained as data; not executed",
+      "locator": "Retrieval attempt only; no governing scientific reliance",
+      "used_for_assessment": false,
+      "retained": false,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee",
+      "removed_reason": "Failed/empty retrieval or redundant clipped HTML RFC; necessary full RFC EV43 retained"
+    },
+    {
+      "id": "EV72",
+      "url": "https://docs.powersync.com/intro",
+      "accessed_at": "2026-10-09T21:34:46.663890+00:00",
+      "status": 200,
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV72.txt",
+      "sha256": "211fd6b32301e002b6a49d094be9d17c04ce4ddce02d21363516467f1c6084c3",
+      "bytes": 3544,
+      "operation": "HTTP GET; text retained as data; not executed",
+      "locator": "Intro SDK/backend matrix; SQLite/backend/service topology; mutable docs",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV73",
+      "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.sendemail/",
+      "accessed_at": "2026-10-09T21:34:46.640339+00:00",
+      "status": 200,
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV73.txt",
+      "sha256": "1c330e1cc6e4d238b02ff3f82a1a2e63cc253653accac43f6543b16084c53e67",
+      "bytes": 8501,
+      "operation": "HTTP GET; text retained as data; not executed",
+      "locator": "Email Send node SMTP docs; not exactly-once provider guarantee",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV74",
+      "url": "https://raw.githubusercontent.com/gristlabs/grist-core/master/documentation/database.md",
+      "accessed_at": "2026-10-09T21:35:39.561475+00:00",
+      "status": 200,
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV74.txt",
+      "sha256": "54d35285dc65f53c3cb32e8f07b4f88cb363cb70f7625e9c8231ee74a1236af7",
+      "bytes": 29729,
+      "operation": "HTTP GET text retained as data; not executed",
+      "locator": "Database document Home vs Document ACL8–21; mutable master",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV75",
+      "url": "https://raw.githubusercontent.com/gristlabs/grist-help/master/help/en/docs/self-managed.md",
+      "accessed_at": "2026-10-09T21:35:39.585500+00:00",
+      "status": 200,
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV75.txt",
+      "sha256": "8884904141cec24f8a914aed24399b9f777631c6a9218b38abc2e748a4926fd2",
+      "bytes": 37577,
+      "operation": "HTTP GET text retained as data; not executed",
+      "locator": "Self-managed Community features, external auth and ALLOWED_WEBHOOK_DOMAINS506–510; mutable master",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV76",
+      "url": "https://raw.githubusercontent.com/gristlabs/grist-help/master/help/en/docs/newsletters/2026-07.md",
+      "accessed_at": "2026-10-09T21:35:39.595478+00:00",
+      "status": 200,
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV76.txt",
+      "sha256": "e4f63a7ece8bcaf5731d2b6346d853fd305750330adafd9dcb2566925608887f",
+      "bytes": 11160,
+      "operation": "HTTP GET text retained as data; not executed",
+      "locator": "2026-07 newsletter125–128 hosted free API3000/month/team effectiveAug31; mutable master",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV77",
+      "url": "https://docs.goauthentik.io/integrations/services/snipe-it/",
+      "accessed_at": "2026-10-09T21:35:39.892967+00:00",
+      "status": 200,
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV77.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "operation": "HTTP GET text retained as data; not executed",
+      "locator": "Retrieval attempt only; no governing scientific reliance",
+      "used_for_assessment": false,
+      "retained": false,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee",
+      "removed_reason": "Failed/empty retrieval or redundant clipped HTML RFC; necessary full RFC EV43 retained"
+    },
+    {
+      "id": "EV78",
+      "url": "https://www.getgrist.com/pricing/",
+      "accessed_at": "2026-10-09T21:35:39.824441+00:00",
+      "status": 200,
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV78.txt",
+      "sha256": "4bd9da1c3e47ebfe0890b9ac6fd16c901fe590eb5b41e65d745c63935633d0a8",
+      "bytes": 13019,
+      "operation": "HTTP GET text retained as data; not executed",
+      "locator": "Pricing Pro8 annual/10 monthly/user and Business24/30, guests/free/paid distinctions",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV79",
+      "url": "https://docs.goauthentik.io/add-secure-apps/providers/proxy/",
+      "accessed_at": "2026-10-09T21:35:40.575455+00:00",
+      "status": 200,
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV79.txt",
+      "sha256": "6f4c11c06071269a5356c958482f0660fbe7e2cee119f3bb4c56f5a14b856ebf",
+      "bytes": 8112,
+      "operation": "HTTP GET text retained as data; not executed",
+      "locator": "Proxy provider forwards authenticated identity; application mapping/spoof protection conditional",
+      "used_for_assessment": true,
+      "retained": true,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee"
+    },
+    {
+      "id": "EV80",
+      "url": "https://docs.powersync.com/client-sdks/sdk-support-policy",
+      "accessed_at": "2026-10-09T21:35:39.863265+00:00",
+      "status": 404,
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV80.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "operation": "HTTP GET text retained as data; not executed",
+      "locator": "Retrieval attempt only; no governing scientific reliance",
+      "used_for_assessment": false,
+      "retained": false,
+      "version_applicability": "Mutable docs/pricing/main observation at accessed_at; no unnamed deployment guarantee",
+      "removed_reason": "Failed/empty retrieval or redundant clipped HTML RFC; necessary full RFC EV43 retained"
+    }
+  ],
+  "claim_coverage": [
+    {
+      "id": "C01",
+      "arm": "N2",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+        "lines": "39–58; 192–206"
+      },
+      "subject": "Snipe product lifecycle, status/identity, PHP floor and FD-57297 release chain",
+      "source_ids": [
+        "EV14",
+        "EV15",
+        "EV48"
+      ],
+      "judgment": "Supported lifecycle and release linkage; highest-churn ranking bounded as minor.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "C02",
+      "arm": "N2",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+        "lines": "60–90; 477–489"
+      },
+      "subject": "InvenTree availability defaults, logical/display states and Quarantined amendment",
+      "source_ids": [
+        "EV10",
+        "EV11"
+      ],
+      "judgment": "Damaged Available-Yes and Quarantined Available-No verified; separate filtering unresolved honestly.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "C03",
+      "arm": "N2",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+        "lines": "60–90; 251–260"
+      },
+      "subject": "InvenTree test types, name normalization, deletion cascade, latest-result-wins",
+      "source_ids": [
+        "EV12",
+        "EV13"
+      ],
+      "judgment": "Supported optional test mechanism; unique-instrument variant irrelevance over-broad minor.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "C04",
+      "arm": "N2",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+        "lines": "92–120; 148–168"
+      },
+      "subject": "PocketBase release caveat, stateless auth, OAuth providers, superuser and API rule oracles",
+      "source_ids": [
+        "EV05",
+        "EV06",
+        "EV09"
+      ],
+      "judgment": "Core facts and corrected HTTP oracle supported; MFA available despite over-broad uncertainty.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "C05",
+      "arm": "N2",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+        "lines": "150–157; 241–245"
+      },
+      "subject": "PocketBase expected-return storage/defaults and calendar/nullable semantics",
+      "source_ids": [
+        "EV07"
+      ],
+      "judgment": "Materially incomplete branch-specific native type/default applicability (N2-F1).",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "C06",
+      "arm": "N2",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+        "lines": "99–102; 161–165"
+      },
+      "subject": "PocketBase file size/name and public/protected access defaults",
+      "source_ids": [
+        "EV08"
+      ],
+      "judgment": "Size/name supported; public-default behavior omitted, scoped minor.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "C07",
+      "arm": "N2",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+        "lines": "269–321"
+      },
+      "subject": "PocketBase read-only SELECT views, projection and rule enforcement requirement",
+      "source_ids": [
+        "EV07",
+        "EV05"
+      ],
+      "judgment": "Projection supports reducing visible columns; no executed view isolation claimed. Deployment proof remains open.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "C08",
+      "arm": "N2",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+        "lines": "169–180; 323–361"
+      },
+      "subject": "WCAG resize/reflow dimensions and two-dimensional exceptions",
+      "source_ids": [
+        "EV18"
+      ],
+      "judgment": "200% Resize Text, 320/256 CSS px Reflow and table-not-cell exception supported.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "C09",
+      "arm": "N2",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+        "lines": "181–190; 269–321"
+      },
+      "subject": "Directory information public notice, opt-out, former-student scope and internal access",
+      "source_ids": [
+        "EV17",
+        "EV16"
+      ],
+      "judgment": "Directory-information exception supported; internal legitimate-interest and jurisdiction scope remain qualification.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "C10",
+      "arm": "N2",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+        "lines": "122–146; 428–473"
+      },
+      "subject": "Hosted-category rejection, summer maintenance, budget assumptions",
+      "source_ids": [
+        "EV78",
+        "EV22",
+        "EV09",
+        "EV15"
+      ],
+      "judgment": "Budget/category rejection unsupported (F2); upgrade cautions and proposed summer controls are appropriately proposals.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "C11",
+      "arm": "N2",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+        "lines": "224–267; 363–426; 570–615"
+      },
+      "subject": "States, capture target, live pilot gate, approval/reporting decisions and discriminating validations",
+      "source_ids": [
+        "EV10",
+        "EV11",
+        "EV05",
+        "EV18"
+      ],
+      "judgment": "Product design, not vendor fact: explicit targets/user decisions and conditional tests retained; no runtime pass.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T01",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "50–76; 224–280; 535–570"
+      },
+      "subject": "Grist content/user/row/column rules, default permissions, structure bypass",
+      "source_ids": [
+        "EV01"
+      ],
+      "judgment": "Content-rule mechanism and S-bypass supported; old discovery default-deny claim is not final promise.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T02",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "50–76; 640–661"
+      },
+      "subject": "Grist Home vs Document authorization and webhook allowlist",
+      "source_ids": [
+        "EV74",
+        "EV75"
+      ],
+      "judgment": "Supported primary architecture and SSRF/allowlist distinction; snapshot main is mutable.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T03",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "91–103; 400–441"
+      },
+      "subject": "Grist Core local account/MFA applicability and external authentication dependency",
+      "source_ids": [
+        "EV03",
+        "EV04",
+        "EV02"
+      ],
+      "judgment": "Missing selected day-one auth component is material F1; Builder shows possibility, not proof of chosen Core stack.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T04",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "50–76; 782–788"
+      },
+      "subject": "Grist write history versus per-row read audit",
+      "source_ids": [
+        "EV39",
+        "EV41"
+      ],
+      "judgment": "Properly downgraded; installation activity/write history does not establish per-row Core read logging.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T05",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "78–89; 807–810"
+      },
+      "subject": "Notifier batching, log-first crash/retry guarantee and SMTP acceptance",
+      "source_ids": [
+        "EV42",
+        "EV43",
+        "EV73"
+      ],
+      "judgment": "Claimed crash safety contradicted by two commit windows (F2); test remains proposed.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T06",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "240–258; 495–505"
+      },
+      "subject": "NocoDB table/field/row permission defaults, edition gating and leakage",
+      "source_ids": [
+        "EV29",
+        "EV30",
+        "EV31",
+        "EV32"
+      ],
+      "judgment": "Detailed gating and edit-versus-visibility distinctions supported; categorical rejection F3 is stronger than facts.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T07",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "240–258; 495–505; 832–838"
+      },
+      "subject": "NocoDB free workspace/base access and private project availability",
+      "source_ids": [
+        "EV37",
+        "EV67",
+        "EV68"
+      ],
+      "judgment": "Community compatible separation option lost; verifier private-project sub-option itself paid.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T08",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "240–258; 552–560"
+      },
+      "subject": "NocoDB token scope/expiry/role intersection, SSO token effects, teams and audit tiers",
+      "source_ids": [
+        "EV33",
+        "EV34",
+        "EV35",
+        "EV36"
+      ],
+      "judgment": "Token/RLS caveats supported; generic-vs-detailed team tier conflict is minor procurement qualification.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T09",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "152–222; 443–465; 839–848"
+      },
+      "subject": "Snipe unique tags, four status categories, checkout exclusivity, concurrent guard and soft-delete targets",
+      "source_ids": [
+        "EV48",
+        "EV49",
+        "EV52",
+        "EV53",
+        "EV15"
+      ],
+      "judgment": "Supported by release v8.8.0 controller/request/routes; Archived scope appropriately narrowed.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T10",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "152–222; 572–610; 839–848"
+      },
+      "subject": "Snipe checkout/checkin attachments, global upload log linkage and still-open issue",
+      "source_ids": [
+        "EV47",
+        "EV49",
+        "EV50",
+        "EV51",
+        "EV53"
+      ],
+      "judgment": "Core attachment gap supported on tagged code as well as issue; /files versus old /uploads drift acknowledged.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T11",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "467–493; 572–610; 849–862"
+      },
+      "subject": "ERPNext planned maintenance vs repairs, parts/cost and capitalization policy",
+      "source_ids": [
+        "EV27",
+        "EV28",
+        "EV55",
+        "EV60"
+      ],
+      "judgment": "Useful native repair alternative; policy and stock paths differ by version, no runtime guarantee.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T12",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "467–493; 572–610; V7"
+      },
+      "subject": "ERPNext Fully Depreciated allowed repairs, forced zeroing, UI guards, Sold/Scrapped exceptions and PR/release chain",
+      "source_ids": [
+        "EV54",
+        "EV55",
+        "EV56",
+        "EV57",
+        "EV58",
+        "EV59",
+        "EV60",
+        "EV61",
+        "EV62",
+        "EV63",
+        "EV64",
+        "EV65",
+        "EV66"
+      ],
+      "judgment": "Release rationale/guards/buttons supported at both tags; persisted v15 stock-only value effect not executed and not overruled from in-memory mutation alone.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T13",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "565–567; 824–825"
+      },
+      "subject": "ERPNext Manufacturing downtime versus Asset Repair downtime types/units",
+      "source_ids": [
+        "EV45",
+        "EV46",
+        "EV55",
+        "EV60",
+        "EV69",
+        "EV70"
+      ],
+      "judgment": "Cross-domain minutes entry claim is material F4; Asset Repair derives hours.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T14",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "400–441; 572–610"
+      },
+      "subject": "Authentik 2025.10 Redis removal, prior task migration, server/worker/Postgres topology, 2025.12 path drift",
+      "source_ids": [
+        "EV24",
+        "EV25",
+        "EV79"
+      ],
+      "judgment": "Official change/path supported; broker/header/certificate mapping is conditional design, not claimed tested integration.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T15",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "507–517"
+      },
+      "subject": "PowerSync local SQLite/offline reads, upload-only-while-connected, backend SDK matrix and non-P2P topology",
+      "source_ids": [
+        "EV26",
+        "EV72"
+      ],
+      "judgment": "Buffered upload and backend application write path supported. Node stage status flagged honestly; no release-certified LAN impossibility claim needed for simpler pilot recommendation.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T16",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "443–493; 776–781; V8"
+      },
+      "subject": "Lend-Engine lending/maintenance, costs, item/contact/site caps and language capabilities",
+      "source_ids": [
+        "EV22",
+        "EV23"
+      ],
+      "judgment": "Viable conditional alternative retained; independent item/contact caps and notice-level uncertainty matter.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T17",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "519–528; 746–751"
+      },
+      "subject": "n8n annual EUR prices/execution counts, internal self-host license and batching",
+      "source_ids": [
+        "EV19",
+        "EV44"
+      ],
+      "judgment": "Prices/currency and license scope supported as access-date facts; re-verify at procurement.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T18",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "282–330; 568–570; V5"
+      },
+      "subject": "WCAG reflow versus operational 200% proxy and wider keyboard/print acceptance",
+      "source_ids": [
+        "EV18"
+      ],
+      "judgment": "Reflow cited correctly; explicitly weaker operational test is not conformance proof.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T19",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "123–125; 612–638; minor m5"
+      },
+      "subject": "Managed Grist free API 3,000/month/team cap, self-host scope",
+      "source_ids": [
+        "EV76",
+        "EV75"
+      ],
+      "judgment": "Newsletter rule independently confirmed; self-host primary unaffected; mutable procurement caveat retained.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    },
+    {
+      "id": "T20",
+      "arm": "N1",
+      "candidate": {
+        "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+        "lines": "332–398; 640–736"
+      },
+      "subject": "District decisions, pilot gates, replacement/reporting branches, all V1–V9 and verifier companions",
+      "source_ids": [
+        "EV01",
+        "EV49",
+        "EV55",
+        "EV60",
+        "EV18",
+        "EV22",
+        "EV33"
+      ],
+      "judgment": "Meaningful conditional proposals preserve intent; no application witness executed; notifier crash oracle incomplete relative to F2.",
+      "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+    }
+  ],
+  "candidate_source_inventory": {
+    "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/candidate-source-inventory.json",
+    "sha256": "f7657993708452d6efa9409b6c86832516694e4ff828a7dda2ad79af0c39f3cc"
+  },
+  "observed_operations": {
+    "local": "Read-only declared assignment/input map/rubric/brief/plan, all narrative stages, source maps/indexes, and relevant permitted source evidence; verified all 35 map entries before and after assessment.",
+    "http_gets": 80,
+    "retrieval_manifest": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/retrievals.json",
+    "web": "Public primary official docs/releases/code accessed through web and independent HTTP text GETs. Search results used to locate primary pages; third-party guides not used as governing fact evidence.",
+    "executed_application_witnesses": 0,
+    "static_analysis": "Compared tagged methods/defaults/units/permissions and constructed source-grounded counterexamples; no fetched code executed.",
+    "failed_retrievals": [
+      {
+        "id": "EV20",
+        "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.emailSend/",
+        "status": 404
+      },
+      {
+        "id": "EV38",
+        "url": "https://support.getgrist.com/install/audit-logs-overview/",
+        "status": 404
+      },
+      {
+        "id": "EV40",
+        "url": "https://docs.n8n.io/sustainable-use-license/",
+        "status": 404
+      },
+      {
+        "id": "EV71",
+        "url": "https://support.getgrist.com/understanding-access-rules/",
+        "status": 404
+      },
+      {
+        "id": "EV77",
+        "url": "https://docs.goauthentik.io/integrations/services/snipe-it/",
+        "status": 200
+      },
+      {
+        "id": "EV80",
+        "url": "https://docs.powersync.com/client-sdks/sdk-support-policy",
+        "status": 404
+      }
+    ],
+    "truncated_sources": [
+      "EV21 redundant clipped HTML RFC snapshot; full EV43 used",
+      "EV25 clipped after 160k; relevant 2025.12 path-migration section at lines61–88 retained before clipping"
+    ],
+    "repository_changes": 0,
+    "candidate_changes": 0,
+    "delegated_workers": 0,
+    "startup_governance_read": "Repository startup also read Plans/00-plans-index.md under the supplied AGENTS instruction. That governance index was not used as scientific evidence or a candidate/reference answer; no repository file changed."
+  },
+  "coverage_limits": [
+    "This is a complete six-axis independent source assessment of the exact frozen B-08/I08 finals and their declared lineage. It is not a production certification, an exhaustive audit of all vendor source files, an exhaustive market search, or an assessment of any other case/arm history.",
+    "All complete narrative artifacts and all seven source indexes were read. Source-map entries and governing sections/symbols were compared. Retained code captures were read at relevant symbols or independently re-retrieved at the same release; not every line of every retained source file was audited.",
+    "Primary current docs/pricing/main snapshots are observations at recorded access times; tagged ERPNext/Snipe code and releases are version anchors. Mutable docs are not silently treated as capabilities of an unnamed installed version.",
+    "No candidate was edited or repaired. No application/server/browser/witness was started. Independent witnesses in this assessment are source/control-flow counterexamples, not runtime executions.",
+    "All material findings identify concrete consequential errors/omissions/over-rejections within the brief. Runtime absence, externally unspecified district choices and full implementation details are not themselves grounds for failure.",
+    "Native/candidate T3 delivery, billing and hidden tool/provider usage remain separate and null when unobserved. Artifact existence and hashes establish scope, not scientific quality."
+  ]
+}

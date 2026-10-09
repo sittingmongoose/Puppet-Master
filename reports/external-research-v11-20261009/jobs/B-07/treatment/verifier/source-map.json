@@ -1,0 +1,276 @@
+{
+  "schema": "ER11-independent-source-map-v1",
+  "case": "I07",
+  "block": "B-07",
+  "arm": "treatment",
+  "method": "M15",
+  "stage": "verifier",
+  "resource_version": "75-30-parallel20+15-25-v1",
+  "scope": "Independent verification of the three questions in the exact predecessor verification-questions.md. No investigator draft, discovery source map/index, critic output, parent, counterpart, evaluator, or history material was opened.",
+  "inputs_read": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I07/brief.md",
+      "role": "original brief"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/revealed-plan.md",
+      "role": "exact released plan"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-07/treatment/research/verification-questions.md",
+      "role": "exact neutral verification questions"
+    }
+  ],
+  "external_source_selection": "Independently selected official vendor support/product pages and FDA primary materials. No source_roots were declared in the input map.",
+  "retrieval_record": {
+    "access_timestamp_utc": "2026-10-09T21:35:34Z",
+    "timestamp_semantics": "Completion time recorded immediately after the final web-open batch. The 11 URLs below were opened in that batch between 2026-10-09T21:35:32Z and 2026-10-09T21:35:34Z. The browser tool does not expose per-request server timestamps; this is the observed access-batch completion time.",
+    "operations": [
+      "Searched public web results for official Skedda support/product materials, Food Corridor Help Center materials, and FDA Food Code 2026 materials.",
+      "Opened each listed canonical URL, including a final reread batch for all 11 listed sources.",
+      "Used page heading/section and PDF-page locators; source excerpts were paraphrased into sources/index.md.",
+      "No vendor account was logged into and no live product operation was performed."
+    ],
+    "search_queries_observed": [
+      "site:help.skedda.com buffer time booking approval pending approved changed resource availability",
+      "site:help.foodcorridor.com export bookings equipment signoffs inactive account tenant visibility",
+      "site:foodcorridor.com support export records bookings equipment cleaning signoff inactive tenant",
+      "site:fda.gov 2026 Food Code adoption jurisdictions status model code",
+      "site:help.thefoodcorridor.com/en/articles Reports tab download food business",
+      "site:support.skedda.com System users buffer admin booking over buffer"
+    ]
+  },
+  "source_files": {
+    "evidence_index": "sources/index.md",
+    "verification": "verification.md"
+  },
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "Booking Requests & Approvals",
+      "publisher": "Skedda Support",
+      "url": "https://support.skedda.com/en/articles/11774950-booking-requests-approvals",
+      "version": "Article published 2026-07-07; page content observed as served at access time; no product build/version or source commit exposed.",
+      "commit": null,
+      "commit_note": "Vendor help page publishes no source commit identifier. Preserve this source ID and access timestamp; if the page changes, record a new observation rather than rebinding this record.",
+      "locator": [
+        "Overview and plan requirement, web extraction lines 19-31",
+        "Submitting a booking request, lines 43-59",
+        "Manage booking requests as an admin, lines 76-88",
+        "FAQs on scheduler visibility, conflicts, edits, and custom admins, lines 124-145"
+      ],
+      "access_timestamp_utc": "2026-10-09T21:35:34Z",
+      "mutable_source": true,
+      "observed_operations": [
+        "Public web search surfaced the official support article.",
+        "Opened the canonical URL in the final read batch and inspected the locators listed above."
+      ],
+      "evidence": "sources/index.md#s01"
+    },
+    {
+      "source_id": "S02",
+      "title": "Buffer time",
+      "publisher": "Skedda Support",
+      "url": "https://support.skedda.com/en/articles/3653032-buffer-time",
+      "version": "Article published 2025-03-04; page content observed as served at access time; no product build/version or source commit exposed.",
+      "commit": null,
+      "commit_note": "Vendor help page publishes no source commit identifier. Preserve this source ID and access timestamp; if the page changes, record a new observation rather than rebinding this record.",
+      "locator": [
+        "Create a buffer time rule, web extraction lines 27-33",
+        "How users see buffer times, lines 34-39",
+        "Do buffer times overlap? and after-booking setup/cleanup example, lines 47-52"
+      ],
+      "access_timestamp_utc": "2026-10-09T21:35:34Z",
+      "mutable_source": true,
+      "observed_operations": [
+        "Public web search surfaced the official support article.",
+        "Opened the canonical URL in the final read batch and inspected the locators listed above."
+      ],
+      "evidence": "sources/index.md#s02"
+    },
+    {
+      "source_id": "S03",
+      "title": "User Access Levels / Types: Regular and System Users",
+      "publisher": "Skedda Support",
+      "url": "https://support.skedda.com/en/articles/2218760-user-access-levels-types-regular-and-system-users",
+      "version": "Article dated 2024-10-13; page content observed as served at access time; no product build/version or source commit exposed.",
+      "commit": null,
+      "commit_note": "Vendor help page publishes no source commit identifier. Preserve this source ID and access timestamp; if the page changes, record a new observation rather than rebinding this record.",
+      "locator": [
+        "System User types, web extraction lines 19-32",
+        "Booking Admin permissions, lines 44-49",
+        "System Admin and Owner permissions, lines 52-61"
+      ],
+      "access_timestamp_utc": "2026-10-09T21:35:34Z",
+      "mutable_source": true,
+      "observed_operations": [
+        "Opened via the System users link on S02.",
+        "Opened the canonical URL in the final read batch and inspected the locators listed above."
+      ],
+      "evidence": "sources/index.md#s03"
+    },
+    {
+      "source_id": "S04",
+      "title": "Skedda Launches Booking Approvals",
+      "publisher": "Skedda",
+      "url": "https://www.skedda.com/blog/booking-approvals",
+      "version": "Published 2026-01-22; updated 2026-06-29; feature release/evolution article; no product build or source commit exposed.",
+      "commit": null,
+      "commit_note": "Marketing/product article publishes no source commit identifier. The observed dates identify this release/evolution snapshot.",
+      "locator": [
+        "Publication/update dates and feature summary, web extraction lines 2-23",
+        "Request-first workflow and non-blocking requests, lines 33-47",
+        "Outlook sync and approval-note update, lines 68-74"
+      ],
+      "access_timestamp_utc": "2026-10-09T21:35:34Z",
+      "mutable_source": true,
+      "observed_operations": [
+        "Public web search surfaced the official Skedda article.",
+        "Opened the canonical URL in the final read batch and inspected the locators listed above."
+      ],
+      "evidence": "sources/index.md#s04"
+    },
+    {
+      "source_id": "S05",
+      "title": "What does a food business account look like?",
+      "publisher": "The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/1812934-what-does-a-food-business-account-look-like",
+      "version": "Article dated 2023-06-07; page content observed as served at access time; no application build/version or source commit exposed.",
+      "commit": null,
+      "commit_note": "Help Center article has no application build or source commit identifier. Its age is retained as an applicability limitation.",
+      "locator": [
+        "Tenant's own space/equipment bookings and PIN, web extraction lines 20-23",
+        "Kitchen calendar and Daily View, lines 24-27",
+        "Tenant Reports tab, lines 40-42",
+        "Community clients, lines 44-46"
+      ],
+      "access_timestamp_utc": "2026-10-09T21:35:34Z",
+      "mutable_source": true,
+      "observed_operations": [
+        "Public web search on food-business account features surfaced the Help Center article.",
+        "Opened the canonical URL in the final read batch and inspected the locators listed above."
+      ],
+      "evidence": "sources/index.md#s05"
+    },
+    {
+      "source_id": "S06",
+      "title": "Can a Kitchen Admin have view-only permissions?",
+      "publisher": "The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/1530570-can-a-kitchen-admin-have-view-only-permissions",
+      "version": "Article dated 2020-05-20; page content observed as served at access time; no application build/version or source commit exposed.",
+      "commit": null,
+      "commit_note": "This is older guidance and is used only as corroboration; current field-level visibility remains unverified.",
+      "locator": [
+        "Client account access to kitchen calendars and active-client Community list, web extraction lines 27-31"
+      ],
+      "access_timestamp_utc": "2026-10-09T21:35:34Z",
+      "mutable_source": true,
+      "observed_operations": [
+        "Public web search surfaced the official Help Center article.",
+        "Opened the canonical URL in the final read batch and inspected the locator listed above."
+      ],
+      "evidence": "sources/index.md#s06"
+    },
+    {
+      "source_id": "S07",
+      "title": "How do I digitally sign-in/out at my kitchen?",
+      "publisher": "The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/1414030-how-do-i-digitally-sign-in-out-at-my-kitchen",
+      "version": "Article dated 2026-04-24; page content observed as served at access time; no application build/version or source commit exposed.",
+      "commit": null,
+      "commit_note": "Help Center article has no application build or source commit identifier.",
+      "locator": [
+        "PIN sign-in/out workflow, web extraction lines 22-46",
+        "Notes about cleanliness/equipment concerns, lines 47-57"
+      ],
+      "access_timestamp_utc": "2026-10-09T21:35:34Z",
+      "mutable_source": true,
+      "observed_operations": [
+        "Public web search surfaced the official Help Center article.",
+        "Opened the canonical URL in the final read batch and inspected the locators listed above."
+      ],
+      "evidence": "sources/index.md#s07"
+    },
+    {
+      "source_id": "S08",
+      "title": "I'm leaving my kitchen — what happens to my account and charges?",
+      "publisher": "The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/14695452-i-m-leaving-my-kitchen-what-happens-to-my-account-and-charges",
+      "version": "Article dated 2026-04-21; page content observed as served at access time; no application build/version or source commit exposed.",
+      "commit": null,
+      "commit_note": "Help Center article has no application build or source commit identifier.",
+      "locator": [
+        "Inactive versus fully deleted, web extraction lines 41-48",
+        "Offboarding steps, lines 49-57"
+      ],
+      "access_timestamp_utc": "2026-10-09T21:35:34Z",
+      "mutable_source": true,
+      "observed_operations": [
+        "Public web search surfaced the official Help Center article.",
+        "Opened the canonical URL in the final read batch and inspected the locators listed above."
+      ],
+      "evidence": "sources/index.md#s08"
+    },
+    {
+      "source_id": "S09",
+      "title": "What Information is in the Reporting Tab?",
+      "publisher": "The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/2322739-what-information-is-in-the-reporting-tab",
+      "version": "Living article; page displayed Updated over 3 weeks ago at access; exact revision date, application build, and source commit are not exposed.",
+      "commit": null,
+      "commit_note": "This page is mutable. The captured page wording and access timestamp are preserved; a later page version must receive a new observation.",
+      "locator": [
+        "Kitchen Reporting dashboard and CSV/date filters, web extraction lines 18-51",
+        "Current-year All Bookings and space/equipment usage reports, lines 65-72",
+        "Sign-in reports, lines 82-89"
+      ],
+      "access_timestamp_utc": "2026-10-09T21:35:34Z",
+      "mutable_source": true,
+      "observed_operations": [
+        "Public web search surfaced the official Help Center article.",
+        "Opened the canonical URL in the final read batch and inspected the locators listed above."
+      ],
+      "evidence": "sources/index.md#s09"
+    },
+    {
+      "source_id": "S10",
+      "title": "Food Code 2026",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/food/fda-food-code/food-code-2026",
+      "version": "FDA Food Code 2026 landing page; edition 2026; page content observed as served at access time.",
+      "commit": null,
+      "commit_note": "FDA landing page publishes no source commit identifier; the edition is explicitly versioned 2026.",
+      "locator": [
+        "Model status, adoption audience, equivalent alternatives, and adoption encouragement, web extraction lines 63-84"
+      ],
+      "access_timestamp_utc": "2026-10-09T21:35:34Z",
+      "mutable_source": true,
+      "observed_operations": [
+        "Public web search surfaced the official FDA landing page.",
+        "Opened the canonical URL in the final read batch and inspected the locator listed above."
+      ],
+      "evidence": "sources/index.md#s10"
+    },
+    {
+      "source_id": "S11",
+      "title": "FDA Food Code 2026",
+      "publisher": "U.S. Food and Drug Administration",
+      "url": "https://www.fda.gov/media/194741/download",
+      "version": "Released edition FDA Food Code 2026; 732-page PDF; edition is stable and versioned 2026.",
+      "commit": null,
+      "commit_note": "PDF publishes an edition, not a software commit. Preserve the URL, edition, PDF page, and section locator; any replacement PDF at this URL requires a new source observation.",
+      "locator": [
+        "Preface Introduction, PDF pages 7-8 / extraction lines 158-180",
+        "Preface §7 Code Adoption/Certified Copies, PDF page 12 / extraction lines 350-369",
+        "Annex 3 Food Establishment — commissary, PDF pages 347-348 / extraction lines 23737-23775"
+      ],
+      "access_timestamp_utc": "2026-10-09T21:35:34Z",
+      "mutable_source": false,
+      "observed_operations": [
+        "Public web search surfaced the FDA PDF.",
+        "Opened the PDF, searched the text for model status/adoption and commissary, and reopened it in the final read batch."
+      ],
+      "evidence": "sources/index.md#s11"
+    }
+  ]
+}

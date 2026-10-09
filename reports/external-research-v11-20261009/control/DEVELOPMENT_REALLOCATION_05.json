@@ -1,0 +1,30 @@
+{
+  "locked_at": "2026-10-09T21:37:32.336912+00:00",
+  "original_cells": [
+    {
+      "block_id": "C-01",
+      "phase": "C",
+      "method": null,
+      "case": "C01",
+      "route": null,
+      "status": "UNSTARTED_RESERVED",
+      "kind": "full-discovery",
+      "allowance_s": 3600,
+      "occupied_ceiling_s": 5400
+    },
+    {
+      "block_id": "C-02",
+      "phase": "C",
+      "method": null,
+      "case": "C02",
+      "route": null,
+      "status": "UNSTARTED_RESERVED",
+      "kind": "full-discovery",
+      "allowance_s": 3600,
+      "occupied_ceiling_s": 5400
+    }
+  ],
+  "new_assignment": "C01/C02 become development M16-v1 on still-sealed H01/H02, not confirmation",
+  "reason": "No optimizer is yet qualified; use two unstarted cells to test intermediate budget allocation on the best-supported source-assessed reference. Original80cell envelope and all failed attempts retained. H03-H08 remain inaccessible. Sole contrast budgets75vs60, same LunaMaxpriority/science scope/prompt topology.",
+  "confirmation_capacity": "One remaining complete four-case finalist; first independently qualified completed M15/M16 under locked gates may releaseH03-H06. No evaluator feedback reaches active candidates."
+}

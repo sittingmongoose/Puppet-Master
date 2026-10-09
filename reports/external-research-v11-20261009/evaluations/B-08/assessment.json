@@ -1,0 +1,2346 @@
+{
+  "block": "B-08",
+  "case": "I08",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+      "sha256": "b915e6b223aa2fdc80ba7f5aea5e3f2b5d551e63b9147e5c0481ae2d224c8542",
+      "expected_sha256": "b915e6b223aa2fdc80ba7f5aea5e3f2b5d551e63b9147e5c0481ae2d224c8542",
+      "bytes": 39696,
+      "map_match": true,
+      "arm": "N2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/source-map.json",
+      "sha256": "eedc1553bfc6ccc4595f0e6a86fc49155df6a66f5311802936e3564f7faf36de",
+      "expected_sha256": "eedc1553bfc6ccc4595f0e6a86fc49155df6a66f5311802936e3564f7faf36de",
+      "bytes": 5537,
+      "map_match": true,
+      "arm": "N2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/assignment.md",
+      "sha256": "b3986cdb8adbfeb29e17e6b96628c935b5462d433edb35da7fce25cd9c0ba268",
+      "expected_sha256": "b3986cdb8adbfeb29e17e6b96628c935b5462d433edb35da7fce25cd9c0ba268",
+      "bytes": 2849,
+      "map_match": true,
+      "arm": "N2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/input-map.json",
+      "sha256": "9e73498794d09b8f7a5d1631186a5b5881a5e5b8dd9151e10045314af8be1e8d",
+      "expected_sha256": "9e73498794d09b8f7a5d1631186a5b5881a5e5b8dd9151e10045314af8be1e8d",
+      "bytes": 1522,
+      "map_match": true,
+      "arm": "N2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/critic/critique.md",
+      "sha256": "b360d64902f6ec7df77eb90632cf51091bccfa1e1026c2452429c18f7a41f3d5",
+      "expected_sha256": "b360d64902f6ec7df77eb90632cf51091bccfa1e1026c2452429c18f7a41f3d5",
+      "bytes": 32209,
+      "map_match": true,
+      "arm": "N2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/critic/source-map.json",
+      "sha256": "a793ef556b9ee1b05307048b572403c57accc98aa2cb93e320f771e22b9b08c4",
+      "expected_sha256": "a793ef556b9ee1b05307048b572403c57accc98aa2cb93e320f771e22b9b08c4",
+      "bytes": 5293,
+      "map_match": true,
+      "arm": "N2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/critic/assignment.md",
+      "sha256": "24c1eeae08f58d3d82d7584754a17efc9b23e9c66a344e692817b7d3a9191155",
+      "expected_sha256": "24c1eeae08f58d3d82d7584754a17efc9b23e9c66a344e692817b7d3a9191155",
+      "bytes": 2586,
+      "map_match": true,
+      "arm": "N2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/critic/input-map.json",
+      "sha256": "47ca86a3fe6a61df20397bbb5d02a261bba7ded86fc94e5c5babd35f7773aee0",
+      "expected_sha256": "47ca86a3fe6a61df20397bbb5d02a261bba7ded86fc94e5c5babd35f7773aee0",
+      "bytes": 1207,
+      "map_match": true,
+      "arm": "N2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/research/discovery.md",
+      "sha256": "f96bdd49b2f2720be8bd26e176336c70df88b64f0df88b133356981b834c3a1b",
+      "expected_sha256": "f96bdd49b2f2720be8bd26e176336c70df88b64f0df88b133356981b834c3a1b",
+      "bytes": 28295,
+      "map_match": true,
+      "arm": "N2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/research/draft.md",
+      "sha256": "b2d0ad0ec042a2d35000394658c2e7c1d88f95fd59b3e71f897b59bba597152e",
+      "expected_sha256": "b2d0ad0ec042a2d35000394658c2e7c1d88f95fd59b3e71f897b59bba597152e",
+      "bytes": 19417,
+      "map_match": true,
+      "arm": "N2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/research/source-map.json",
+      "sha256": "0968434be0329765e35f6d267de69bcb2f5cfef76af58aee0a7b19ed380881d0",
+      "expected_sha256": "0968434be0329765e35f6d267de69bcb2f5cfef76af58aee0a7b19ed380881d0",
+      "bytes": 9433,
+      "map_match": true,
+      "arm": "N2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/research/revealed-plan.md",
+      "sha256": "74d894f9ebd434142296153f511d47dc937d62f835fd73c02bc0e052b08f59ae",
+      "expected_sha256": "74d894f9ebd434142296153f511d47dc937d62f835fd73c02bc0e052b08f59ae",
+      "bytes": 569,
+      "map_match": true,
+      "arm": "N2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/research/plan-reveal.json",
+      "sha256": "2b0f52a34e6cf90a47febe7828e2bb18ba04fdfe8ddfae78d7019f33ed3722c7",
+      "expected_sha256": "2b0f52a34e6cf90a47febe7828e2bb18ba04fdfe8ddfae78d7019f33ed3722c7",
+      "bytes": 276,
+      "map_match": true,
+      "arm": "N2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/research/assignment.md",
+      "sha256": "599956ac5a7484f10ed918b489b989f52ad69dfba5cd371acbca0d9a6b75c772",
+      "expected_sha256": "599956ac5a7484f10ed918b489b989f52ad69dfba5cd371acbca0d9a6b75c772",
+      "bytes": 3059,
+      "map_match": true,
+      "arm": "N2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/research/input-map.json",
+      "sha256": "bf2e923483702fa764e53ae6d5f846119e21bd47ef4f70a503ac562e3aeace75",
+      "expected_sha256": "bf2e923483702fa764e53ae6d5f846119e21bd47ef4f70a503ac562e3aeace75",
+      "bytes": 676,
+      "map_match": true,
+      "arm": "N2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+      "sha256": "2b308f40a76b2f173da764a353f5425772cd686283b8d957e095e0e13a7ed330",
+      "expected_sha256": "2b308f40a76b2f173da764a353f5425772cd686283b8d957e095e0e13a7ed330",
+      "bytes": 62764,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/source-map.json",
+      "sha256": "65b6e5cd927489bf4e74ee48d1fc7d451d86c98118d33eebb305cf164ef0e5b8",
+      "expected_sha256": "65b6e5cd927489bf4e74ee48d1fc7d451d86c98118d33eebb305cf164ef0e5b8",
+      "bytes": 12458,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/assignment.md",
+      "sha256": "44059ec37f2271972d4deac9c35b78712b8328a5bd0418d85a15d70f44662bd1",
+      "expected_sha256": "44059ec37f2271972d4deac9c35b78712b8328a5bd0418d85a15d70f44662bd1",
+      "bytes": 3597,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/input-map.json",
+      "sha256": "87990faefeb3856da9c890ed334c624e70dfa674cde723e51ff81f8842c6a009",
+      "expected_sha256": "87990faefeb3856da9c890ed334c624e70dfa674cde723e51ff81f8842c6a009",
+      "bytes": 1994,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/critic/critique.md",
+      "sha256": "670ef646a41faf1d8398b55dbcf8693b51fa33d0aa4b8e4e488629449f13f154",
+      "expected_sha256": "670ef646a41faf1d8398b55dbcf8693b51fa33d0aa4b8e4e488629449f13f154",
+      "bytes": 30824,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/critic/source-map.json",
+      "sha256": "a5fbc950b42003d5bb006236954cf1549b3e0a6305748bb6d45e308a08eaa1f3",
+      "expected_sha256": "a5fbc950b42003d5bb006236954cf1549b3e0a6305748bb6d45e308a08eaa1f3",
+      "bytes": 8445,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/critic/assignment.md",
+      "sha256": "3e334a8fdd6c5a6907f4518d69aeaeb35df0ca8f6fdf116c7e7620a10c69e5cf",
+      "expected_sha256": "3e334a8fdd6c5a6907f4518d69aeaeb35df0ca8f6fdf116c7e7620a10c69e5cf",
+      "bytes": 3042,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/critic/input-map.json",
+      "sha256": "f04241744b9d873062c46c2ebb75d97c009ec2ce534159ff5c708496f165a7fa",
+      "expected_sha256": "f04241744b9d873062c46c2ebb75d97c009ec2ce534159ff5c708496f165a7fa",
+      "bytes": 1449,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/research/discovery.md",
+      "sha256": "b9daa236b1349091eeac3a1ef511b7ae8a79449c2af384d61f70a39ea4b6db75",
+      "expected_sha256": "b9daa236b1349091eeac3a1ef511b7ae8a79449c2af384d61f70a39ea4b6db75",
+      "bytes": 37760,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/research/draft.md",
+      "sha256": "6a8b764b7a65e015d6079babbf90bd72377745b82fa3d62bd2f209833ae09fb8",
+      "expected_sha256": "6a8b764b7a65e015d6079babbf90bd72377745b82fa3d62bd2f209833ae09fb8",
+      "bytes": 35175,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/research/source-map.json",
+      "sha256": "071f33b27ddc85c907b1d61580debf65524d38dcc36d29d0b9890f773d098ecc",
+      "expected_sha256": "071f33b27ddc85c907b1d61580debf65524d38dcc36d29d0b9890f773d098ecc",
+      "bytes": 10262,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/research/verification-questions.md",
+      "sha256": "599b48dbcb5e3d86f60d77b4165d31c341938baf9dc526d12e0932d888733fd7",
+      "expected_sha256": "599b48dbcb5e3d86f60d77b4165d31c341938baf9dc526d12e0932d888733fd7",
+      "bytes": 1198,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/research/revealed-plan.md",
+      "sha256": "74d894f9ebd434142296153f511d47dc937d62f835fd73c02bc0e052b08f59ae",
+      "expected_sha256": "74d894f9ebd434142296153f511d47dc937d62f835fd73c02bc0e052b08f59ae",
+      "bytes": 569,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/research/plan-reveal.json",
+      "sha256": "b552eae0f452a339c5d62a0fefb21de3d2b515acaccb190dcf4c3a5260d2680d",
+      "expected_sha256": "b552eae0f452a339c5d62a0fefb21de3d2b515acaccb190dcf4c3a5260d2680d",
+      "bytes": 276,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/research/assignment.md",
+      "sha256": "9fc5ec0be8fd85a0a8e338cacb6dc40d50b522015ebda0137dca3b3d22f3a336",
+      "expected_sha256": "9fc5ec0be8fd85a0a8e338cacb6dc40d50b522015ebda0137dca3b3d22f3a336",
+      "bytes": 4108,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/research/input-map.json",
+      "sha256": "e07b36045aadee0d292c7c61242acabf9166b86e2823fb2ad83eae9aa60fc55b",
+      "expected_sha256": "e07b36045aadee0d292c7c61242acabf9166b86e2823fb2ad83eae9aa60fc55b",
+      "bytes": 682,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/verifier/source-map.json",
+      "sha256": "e6eee469210b07b83e0daf1c75186b6aaca99c86ea75470a375808a79904a47d",
+      "expected_sha256": "e6eee469210b07b83e0daf1c75186b6aaca99c86ea75470a375808a79904a47d",
+      "bytes": 15868,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/verifier/verification.md",
+      "sha256": "776915e3b9faac1cac45b3ec79ad204b670e564a38f86b26bcfce544d4a089fc",
+      "expected_sha256": "776915e3b9faac1cac45b3ec79ad204b670e564a38f86b26bcfce544d4a089fc",
+      "bytes": 32319,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/verifier/assignment.md",
+      "sha256": "4d5f484e58636ffd942d27a247d167d0ce206b57bc525192ecf6219a1d20a809",
+      "expected_sha256": "4d5f484e58636ffd942d27a247d167d0ce206b57bc525192ecf6219a1d20a809",
+      "bytes": 3420,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/verifier/input-map.json",
+      "sha256": "4432596382ad2eccb78c49bd21c77013a0862c2f4820c1bb3a575f18d53a6ae2",
+      "expected_sha256": "4432596382ad2eccb78c49bd21c77013a0862c2f4820c1bb3a575f18d53a6ae2",
+      "bytes": 919,
+      "map_match": true,
+      "arm": "N1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/assignment.md",
+      "sha256": "a96f65fac95b40dc0846c94f2820920f66de1e4d8dc1344291cffb655c307675",
+      "bytes": 2164,
+      "role": "governing evaluator input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/input-map.json",
+      "sha256": "ed07d2b4c91b0cda2cd5b244415d115ea2421fb97d6300316c57a09de2175931",
+      "bytes": 10921,
+      "role": "governing evaluator input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "bytes": 3939,
+      "role": "governing evaluator input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I08/brief.md",
+      "sha256": "ff13f85a0530534a1a2754869f6317493258ab9b2e32c528b178a1ec14649237",
+      "bytes": 2215,
+      "role": "governing evaluator input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I08/plan-root-only.md",
+      "sha256": "74d894f9ebd434142296153f511d47dc937d62f835fd73c02bc0e052b08f59ae",
+      "bytes": 569,
+      "role": "governing evaluator input"
+    }
+  ],
+  "arms": {
+    "N1": {
+      "actual_arm": "treatment",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "grade": "FAIL",
+      "scientific_quality": "FAIL",
+      "material_findings": [
+        {
+          "id": "N1-F1",
+          "type": "MATERIALLY_INCOMPLETE",
+          "related_types": [
+            "UNSUPPORTED_CONSEQUENTIAL"
+          ],
+          "severity": "high",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+            "lines": "91–103; 409–437; 864–884"
+          },
+          "passage": "Start identity with local accounts plus multi-factor authentication; pilot ships with local accounts and MFA, while the broker is conditional/deferred.",
+          "original_obligation": "O2 mechanism applicability; summer help-desk closure; P6 unfunded integration; $8,000 budget",
+          "primary_evidence": [
+            {
+              "source_id": "EV03",
+              "url": "https://support.getgrist.com/install/authentication-overview/",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV03.txt",
+              "sha256": "1ecb95e4d9d56f06da21e013cff76f89f20a4a7da2b08ba0f9289e74ec871bea"
+            },
+            {
+              "source_id": "EV04",
+              "url": "https://support.getgrist.com/install/grist-builder-edition/",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV04.txt",
+              "sha256": "dae07114f12b40ced39bd2a4d0c183b14cc9ec7aec75ed3d98f65fa732e2383b"
+            },
+            {
+              "source_id": "EV02",
+              "url": "https://support.getgrist.com/self-managed/",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV02.txt",
+              "sha256": "986c1469f67823146b3606db6cce87c2e6ee92787b7bbca3ca2a37ce15e2904e"
+            },
+            {
+              "source_id": "EV75",
+              "url": "https://raw.githubusercontent.com/gristlabs/grist-help/master/help/en/docs/self-managed.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV75.txt",
+              "sha256": "8884904141cec24f8a914aed24399b9f777631c6a9218b38abc2e748a4926fd2"
+            }
+          ],
+          "reasoning": "The chosen primary is self-hosted Grist Core, but no component is selected to own local passwords, MFA enrollment/reset, recovery, or identity assertions. Official Grist authentication documentation describes external authentication, including getgrist.com and an external proxy. The separate Builder Edition documents username/password through Authelia. Consequently, a detailed recovery checklist is not evidence that the selected Core stack supplies the promised local account/MFA path. An omitted day-one authentication dependency bears directly on summer operation, maintenance effort and the conditional recommendation.",
+          "qualification": "This is an incomplete, unsupported deployment mechanism, not a claim that Grist can never support local accounts. An external proxy/IdP could provide it. No production implementation or successful runtime test was required by the brief; the required investigation is the available governing component and its applicability."
+        },
+        {
+          "id": "N1-F2",
+          "type": "MATERIALLY_WRONG",
+          "related_types": [
+            "UNSUPPORTED_CONSEQUENTIAL"
+          ],
+          "severity": "high",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+            "lines": "78–89; 807–810; V3 at 687–696"
+          },
+          "passage": "A repeat run in the same cycle with the same state-hash sends nothing; each send-record is written before its send so a mid-batch crash reruns without partial duplicates.",
+          "original_obligation": "O2 consequential notifier behavior; O5 coherent handoffs; O6 discriminating crash validation; P3 caregiver delay messages",
+          "primary_evidence": [
+            {
+              "source_id": "EV42",
+              "url": "https://raw.githubusercontent.com/n8n-io/n8n/master/packages/nodes-base/nodes/EmailSend/v2/send.operation.ts",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV42.txt",
+              "sha256": "f45a85c4d3839033bdcb434be00fe242fc15ec6de1b7e6bae7fc64843b8f59bb"
+            },
+            {
+              "source_id": "EV43",
+              "url": "https://www.rfc-editor.org/rfc/rfc5321.txt",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV43.txt",
+              "sha256": "7d560eddff1b213c17d4e1e5f95005728b2f05bc2b3947f0fcc91717c6707634"
+            },
+            {
+              "source_id": "EV73",
+              "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.sendemail/",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV73.txt",
+              "sha256": "1c330e1cc6e4d238b02ff3f82a1a2e63cc253653accac43f6543b16084c53e67"
+            }
+          ],
+          "reasoning": "A local delivery-log write and an SMTP send are different commits. If the process stops after the pre-send record but before sendMail, the stated same-cycle rule suppresses an unsent notice. If pending rows are retried instead, a stop after SMTP acceptance but before recording success permits a duplicate. RFC 5321 §4.5.3.2.6 and §6.1 explicitly recognize the acceptance/acknowledgement duplicate window; the n8n send operation awaits SMTP sendMail and returns the result without a transaction with the loan log. The described ordering does not establish the asserted crash-safe behavior.",
+          "qualification": "This is a specification/control-flow counterexample grounded in the selected delivery mechanism, not an executed witness. Delivery-status fields alone do not resolve the two crash windows. V3 is correctly labeled proposed; therefore this finding is not VALIDATION_OVERCLAIM."
+        },
+        {
+          "id": "N1-F3",
+          "type": "FALSE_CORRECTION_OR_REJECTION",
+          "related_types": [
+            "PRESERVATION_LOSS",
+            "UNSUPPORTED_CONSEQUENTIAL"
+          ],
+          "severity": "medium",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+            "lines": "240–258; 495–505; 832–838"
+          },
+          "passage": "Do not use the community spreadsheet-database path for this constraint without its paid license; only viable for minimization if the license is funded.",
+          "original_obligation": "O1 viable alternatives; O4 exact P2 need-to-know scope; O5 preservation of verifier conditions/options",
+          "primary_evidence": [
+            {
+              "source_id": "EV37",
+              "url": "https://api.github.com/repos/nocodb/nocodb/releases/tags/0.301.5",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV37.txt",
+              "sha256": "2e6ef20ace76277afaf17dc3129470fe92bb1c847c0ff0581bd2b64ebea4bba7"
+            },
+            {
+              "source_id": "EV67",
+              "url": "https://nocodb.com/docs/product/collaboration/roles-and-permissions.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV67.txt",
+              "sha256": "f4887778d273b3a75dbc4ad652eabf60f6f8144ed4fd96e956f3a0faabdb7a79"
+            },
+            {
+              "source_id": "EV68",
+              "url": "https://nocodb.com/docs/product/projects/private-project.md",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV68.txt",
+              "sha256": "6a276321118b2e5e16e184e2fc5c82746c9a314a19b5a87a1ad9b5d9c3061b62"
+            },
+            {
+              "source_id": "EV33",
+              "url": "https://nocodb.com/docs/product/account-settings/api-tokens",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV33.txt",
+              "sha256": "2f86da76091195a0ad97c5cecf8818d65cbe737ec5ae3e5025b37411bb082a12"
+            },
+            {
+              "source_id": "EV31",
+              "url": "https://nocodb.com/docs/product/collaboration/field-permissions",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV31.txt",
+              "sha256": "3527ffed6c8982b70e7ce867036559a9684fa347c46375b19cd30d7fba66b411"
+            },
+            {
+              "source_id": "EV32",
+              "url": "https://nocodb.com/docs/product/collaboration/record-level-security",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV32.txt",
+              "sha256": "0ad9e12e74920b86ebac30d396f084ad68b1293a4008387fad12a35491f20532"
+            }
+          ],
+          "reasoning": "Fine-grained controls on one shared NocoDB table are indeed gated and field-edit permissions do not hide fields. That does not make paid fine-grained redaction a necessary condition for every P2 design. Release 0.301.5 makes workspace-level access control available to self-hosted deployments, and role documentation distinguishes access to whole bases/projects from finer row/field controls. The verifier explicitly retained separation, fewer members, or API-side redaction as alternatives (verification.md:74–76). The final acknowledges workspace separation but discounts it because it does not redact rows/columns, even though the original P2 does not require teachers and restricted contacts in the same table/workspace. It loses the compatible separation option while reporting Q1 as wholly strengthening the rejection.",
+          "qualification": "The verifier is also fallible: its specific Private Project suggestion is paid under current Private Project Availability (Business+), so that particular option cannot be credited as a proven free feature. The supported narrower option is separation by permitted workspace/base access or an independently verified redacting API; no claim is made that such a deployment has already passed privacy tests or is cheapest."
+        },
+        {
+          "id": "N1-F4",
+          "type": "MATERIALLY_WRONG",
+          "related_types": [],
+          "severity": "medium",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+            "lines": "565–567; 824–825; discovery S08 and critic m6"
+          },
+          "passage": "Downtime in minutes at entry and hours in analysis where that product is used; mixed units are a defect.",
+          "original_obligation": "O2 governing units/types and domain applicability for ERPNext Asset Repair; O5 preservation of correct qualifications",
+          "primary_evidence": [
+            {
+              "source_id": "EV45",
+              "url": "https://docs.frappe.io/erpnext/downtime-entry",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV45.txt",
+              "sha256": "17a3cdf1aa2282c38c4c354999338e93a8c13397ece4706aea85e54fd535a8fb"
+            },
+            {
+              "source_id": "EV46",
+              "url": "https://docs.frappe.io/erpnext/downtime-analysis",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV46.txt",
+              "sha256": "3e43c49aea941224988dae633cc8623c8f69d99a0a81cdfb738be980bfdf373c"
+            },
+            {
+              "source_id": "EV55",
+              "url": "https://raw.githubusercontent.com/frappe/erpnext/v15.117.0/erpnext/assets/doctype/asset_repair/asset_repair.py",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV55.txt",
+              "sha256": "f5b7cb6e65f1199adcb766879cfb26bb17704ca61b6870e6924f5408ce278e66"
+            },
+            {
+              "source_id": "EV60",
+              "url": "https://raw.githubusercontent.com/frappe/erpnext/v16.28.0/erpnext/assets/doctype/asset_repair/asset_repair.py",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV60.txt",
+              "sha256": "35d4cbfaa454ffe01f5e47bc37d006522d9d245eb4f6f80eb14be26261141569"
+            },
+            {
+              "source_id": "EV69",
+              "url": "https://raw.githubusercontent.com/frappe/erpnext/v15.117.0/erpnext/assets/doctype/asset_repair/asset_repair.json",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV69.txt",
+              "sha256": "01bf0030bb42694756e10345cf835157ebdb603d29d6421ba8ee788577673a64"
+            },
+            {
+              "source_id": "EV70",
+              "url": "https://raw.githubusercontent.com/frappe/erpnext/v16.28.0/erpnext/assets/doctype/asset_repair/asset_repair.json",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV70.txt",
+              "sha256": "13a4cca79db8c37e5578c6b5d77a26e6bc833fba5264dfe6226d319a77e4feb4"
+            }
+          ],
+          "reasoning": "The minutes-entry/hours-report documentation is explicitly Home > Manufacturing > Production/Reports and concerns machine Downtime Entry/Analysis. The investigated repair mechanism is Asset Repair. Both pinned Asset Repair implementations use get_downtime() with time_diff_in_hours; both schemas make downtime a read-only Data field. Applying the Manufacturing entry rule to instrument Asset Repair is a domain error. The critic explicitly preserved it without re-verifying, and the final carries it forward as a governing unit rule.",
+          "qualification": "The Manufacturing statement is correct in its own domain. This finding is confined to its application to the selected Asset Repair alternative; it does not contradict the correct days/calendar-date rules or claim an actual factor-60 runtime error was observed. A proposed later unit check does not ground the current assertion."
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N1-m1",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+            "lines": "243–246 versus 499–505 and 752–755"
+          },
+          "issue": "License-level wording is inconsistent: detailed text says self-hosted workspace teams Scale+, while later generic purchase-license prose says Business teams.",
+          "evidence": [
+            "EV29",
+            "EV34",
+            "EV67"
+          ],
+          "reasoning": "Official generic tier marketing and the detailed Workspace Teams Availability are not identical. The final should not imply Business is verified for workspace teams; this is a procurement locator/qualification issue separate from F3."
+        },
+        {
+          "id": "N1-m2",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+            "lines": "718–724"
+          },
+          "issue": "Instrument-plus-contact counts vs 2,000 can read as one summed cap.",
+          "evidence": [
+            "EV22"
+          ],
+          "reasoning": "The pricing table gives separate item and contact caps. The final elsewhere lists both, so this ambiguity is minor, not proof of under-budget viability."
+        },
+        {
+          "id": "N1-m3",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+            "lines": "282–330; 801–806; V5"
+          },
+          "issue": "The 200% operational zoom proxy is weaker than the cited 320 CSS px/400% reflow scenario.",
+          "evidence": [
+            "EV18"
+          ],
+          "reasoning": "The final explicitly says proxy and does not claim WCAG conformance. Large print is the original constraint; adoption of a weaker test is a limitation, not a false executed pass."
+        },
+        {
+          "id": "N1-m4",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+            "lines": "133–148"
+          },
+          "issue": "Broad statement that lending record systems lack locale-aware idempotent notices is not established for all alternatives.",
+          "evidence": [
+            "EV22",
+            "EV23"
+          ],
+          "reasoning": "Language and reminder features exist; per-message locale and idempotency remain unverified. A separate notifier is a defensible recommendation but universal absence should remain bounded to the investigated behavior."
+        }
+      ],
+      "unresolved": [
+        "District provider, claims, mandatory sign-in policy, approval role/thresholds, second language, direct-reporting policy and actual inventory/contact/site counts are not supplied; these are honest external inputs, not source research omissions.",
+        "Itemized 12-month TCO/admin allocation, selected Grist release/auth component, runtime rule/export/attachment visibility, print/restore drills and caregiver comprehension are unexecuted deployment/selection work.",
+        "Lend-Engine notice-level locale fallback and idempotency, portal fine-grained visibility, Node SDK exact stage, and Core per-row read logging are explicitly unverified. Primary sources justify capability-level boundaries, not an installed pass.",
+        "v15 ERPNext stock-only paths mutate in-memory asset value outside capitalization guard (EV55:123–152,222–230), whereas save is inside the guard. No persisted value uplift is concluded without a release-specific witness; both releases state intended no-value/life behavior."
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "COMPLETE: O1–O6 and every explicit brief constraint compared to full final; constraint matrix in assessment.md",
+          "judgment": "Substantial full deliverable, no field/P-clause disappearance. Available-mechanism gaps and unsupported conclusions identified rather than erased.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "1–903"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I08/brief.md",
+              "lines": "3–11"
+            },
+            "N1-F1",
+            "N1-F2",
+            "N1-F3",
+            "N1-F4"
+          ]
+        },
+        {
+          "axis": 2,
+          "coverage": "COMPLETE for consequential final claim clusters, including defaults/types/units/edition/release/domain and corrected or uncertain assertions; independent primary coverage catalog below",
+          "judgment": "Material defects: N1-F1, N1-F2, N1-F3, N1-F4. Correct facts and honest external unknowns separately preserved.",
+          "evidence": [
+            "T01",
+            "T02",
+            "T03",
+            "T04",
+            "T05",
+            "T06",
+            "T07",
+            "T08",
+            "T09",
+            "T10",
+            "T11",
+            "T12",
+            "T13",
+            "T14",
+            "T15",
+            "T16",
+            "T17",
+            "T18",
+            "T19",
+            "T20"
+          ]
+        },
+        {
+          "axis": 3,
+          "coverage": "COMPLETE: discovery/draft/final mechanisms and optional leads compared; no exhaustive product-universe requirement imposed",
+          "judgment": "Grist rules, Snipe checkout, lending-native Lend-Engine, ERPNext, conditional broker/sync/notifier provide useful different approaches. Community separation wrongly discarded (F3).",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "443–534"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/research/discovery.md",
+              "lines": "1–228"
+            }
+          ]
+        },
+        {
+          "axis": 4,
+          "coverage": "COMPLETE: P1–P6 and each correction/enhancement/user-decision/covered/reject/uncertain disposition individually audited",
+          "judgment": "P intent preserved; Noco paid-only correction exceeds P2. P6 local-MFA correction not tied to primary component.",
+          "evidence": [
+            [
+              "P1",
+              "152–222",
+              "already-covered intent; state/availability correction; optional QR/repair-parts; uncertainties",
+              "Every field retained and six-state queue with Diagnosed flag reconciled. Snipe Archived rule limited to that product; attachment gap and multipart/global-log caveats retained. Flat-status rejection rejects loss of repair stages, not phased rollout."
+            ],
+            [
+              "P2",
+              "224–280",
+              "already-covered intent; enforcement correction; NocoDB rejection; read-audit uncertainty",
+              "Grist content separation and S bypass prohibition address need-to-know. Correct fine-grained licensing facts become an excessive paid-only requirement (F3), losing verifier separation option. Read logging properly downgraded."
+            ],
+            [
+              "P3",
+              "282–330",
+              "already-covered intent; accessibility/template corrections; locale/channel uncertainty",
+              "Large-print and two liaison-reviewed language templates preserved; language UI distinguished from notice generation. 200% proxy limitation explicit; billing/locale fallback/portal rerun covered."
+            ],
+            [
+              "P4",
+              "332–365",
+              "already-covered pilot intent; gate correction; SLA pending district confirmation",
+              "One room/selected schools and expand-only-on-clear-handoffs preserved. Two-week overdue, teacher access, restore, printing, stress tests and all-must-pass gate proposed; one-day SLA now a district proposal."
+            ],
+            [
+              "P5",
+              "367–398",
+              "district user decisions; approval guard; two reporting branches",
+              "No premature district approval answer. Roles/thresholds and interim recorded approver are prerequisites; staff-mediated versus caregiver entry remain selectable; future portal gets own-row/bilingual negative tests."
+            ],
+            [
+              "P6",
+              "400–441",
+              "already-covered unfunded intent; local+MFA correction; conditional broker; integration uncertainties",
+              "No roster/grade sync and no funded-SSO promise. Broker dependency/path drift and claims tests retained. Required local-account/MFA component remains absent in primary Grist stack (F1)."
+            ]
+          ]
+        },
+        {
+          "axis": 5,
+          "coverage": "COMPLETE: full discovery→draft→critique→final; all M1–M14 and every minor; N1 Q1–Q3/verifier package; every supported option/condition/open input compared",
+          "judgment": "Most corrections and useful alternatives preserved; Community separation qualification lost and unverified downtime fact retained. Agreement is not verification.",
+          "evidence": {
+            "critic_adjudications": [
+              [
+                "M1",
+                "ACCEPT source/currency correction",
+                "EV19, EV44",
+                "Official annual EUR/executions confirms final; critic non-primary guide is not itself the oracle."
+              ],
+              [
+                "M2",
+                "AMEND",
+                "EV29–EV37, EV67–EV68; F3",
+                "Gating facts correct; mandatory paid-only P2 conclusion and loss of separation alternatives not supported."
+              ],
+              [
+                "M3",
+                "ACCEPT",
+                "EV24–EV25",
+                "Official Redis removal and version/path caveats support revision."
+              ],
+              [
+                "M4",
+                "ACCEPT with limitation",
+                "EV54–EV66",
+                "Both releases and forced-zeroing behavior confirmed; no PR-number-only proof. v15 stock-only persisted effect remains unexecuted, not inferred from release alone."
+              ],
+              [
+                "M5",
+                "ACCEPT",
+                "EV47–EV53, EV48",
+                "Attachment gap, correct /files route, Archived product scope and reconciled state vocabulary are supported."
+              ],
+              [
+                "M6",
+                "ACCEPT",
+                "EV22–EV23",
+                "Caps and site-language existence correctly narrow uncertainty; message locale/dedupe remains open."
+              ],
+              [
+                "M7",
+                "ACCEPT downgrade",
+                "EV39, EV41",
+                "Document history/installation audit does not establish per-row Core read audit; verify-or-drop is justified."
+              ],
+              [
+                "M8",
+                "ACCEPT direction; incomplete result",
+                "EV03–EV04; F1",
+                "Reset/custody/session/provisioning detail useful, but no selected auth mechanism means summer promise still unsupported."
+              ],
+              [
+                "M9",
+                "ACCEPT relabel",
+                "brief:3; final:332–365",
+                "One-day triage is a proposed district target, not evidence-backed user requirement."
+              ],
+              [
+                "M10",
+                "ACCEPT downgrade",
+                "EV19, EV22, EV29; final V8",
+                "No itemized TCO exists; expected-to-fit pending V8 is honest, not a proven budget fit."
+              ],
+              [
+                "M11",
+                "ACCEPT with limitation",
+                "EV18; final:282–330",
+                "W3C reflow grounding valid; 200% proxy explicitly weaker, no conformance assertion."
+              ],
+              [
+                "M12",
+                "ACCEPT need; REJECT adequacy",
+                "EV42–EV43; F2",
+                "A dedupe mechanism is needed, but pre-send log does not prove no-loss/no-duplicate crash behavior."
+              ],
+              [
+                "M13",
+                "ACCEPT bounded omission",
+                "final:120–131",
+                "Baserow/Directus not investigated is honest; brief does not require exhaustive product universe."
+              ],
+              [
+                "M14",
+                "ACCEPT scope diagnosis",
+                "verification-questions.md:1–9; EV01, EV74–EV75",
+                "Three neutral questions target alternatives, not primary Grist; primary rules independently checked here. No inference that extra verifier guarantees whole final."
+              ],
+              [
+                "m1",
+                "ACCEPT",
+                "final:42–46",
+                "Six repair states plus Diagnosed sub-flag reconcile drift."
+              ],
+              [
+                "m2",
+                "ACCEPT",
+                "EV19",
+                "EUR correction included; procurement recheck retained."
+              ],
+              [
+                "m3",
+                "ACCEPT",
+                "EV22",
+                "Caps/language rows retained; separate-cap ambiguity remains minor."
+              ],
+              [
+                "m4",
+                "RETAIN uncertainty",
+                "EV72",
+                "Node beta/stable ambiguity explicitly stated; web-first pilot does not depend on Node."
+              ],
+              [
+                "m5",
+                "ACCEPT mutable qualification",
+                "EV76",
+                "Managed API cap confirmed independently; self-host not subject to stated hosted cap."
+              ],
+              [
+                "m6",
+                "REJECT applicability",
+                "EV45–EV46, EV55, EV60; F4",
+                "Critic did not verify domain; Manufacturing minutes entry cannot govern Asset Repair hours."
+              ],
+              [
+                "m7",
+                "ACCEPT proposal",
+                "EV01",
+                "Periodic no-S-rights audit is meaningful for rule-bypass risk, not claimed executed."
+              ],
+              [
+                "m8",
+                "ACCEPT scoped rejection",
+                "frozen P1/P4; final:152–222",
+                "Rejecting undifferentiated repair status does not reject a phased pilot."
+              ],
+              [
+                "m9",
+                "ACCEPT proposal",
+                "frozen P5; final V9",
+                "Re-run privacy/bilingual tests when caregiver entry opens; preserves deferred decision."
+              ],
+              [
+                "m10",
+                "ACCEPT provenance discipline",
+                "seven stage source maps",
+                "Stage namespaces disjoint; source IDs not silently rebound. No scientific pass inferred from IDs."
+              ],
+              [
+                "Q1",
+                "AMEND",
+                "EV29–EV37, EV67–EV68",
+                "Fine controls/gating correct. Separation option must survive; Private Project specifically paid. Reviewer wording partly fallible."
+              ],
+              [
+                "Q2",
+                "ACCEPT core answer; qualify tag drift",
+                "EV47–EV53",
+                "Tagged checkout/checkin and upload linkage support gap. Audit positive-control multipart alias must be frozen to chosen version; master is not automatically release code."
+              ],
+              [
+                "Q3",
+                "ACCEPT central guards; qualify persistence scope",
+                "EV54–EV70",
+                "Both tagged validate_asset and UI/button paths support fully-depreciated expense tracking; no executed stock/invoice matrix or persisted value/life witness."
+              ]
+            ],
+            "paths": [
+              "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/research/discovery.md",
+              "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/research/draft.md",
+              "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/critic/critique.md",
+              "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md"
+            ],
+            "additional_verifier": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/verifier/verification.md"
+          }
+        },
+        {
+          "axis": 6,
+          "coverage": "COMPLETE: every final validation and claimed execution reviewed; meaningful counterexamples evaluated against relevant source behavior/version",
+          "judgment": "All V1–V9 and verifier companion checks are explicitly proposed. No candidate application witness observed. Notification crash test omits acceptance/log boundaries needed for its asserted behavior (F2), but is not claimed executed.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "640–736"
+            },
+            "EV42",
+            "EV43",
+            "EV49",
+            "EV55",
+            "EV60"
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "id": "T01",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "50–76; 224–280; 535–570"
+            },
+            "subject": "Grist content/user/row/column rules, default permissions, structure bypass",
+            "source_ids": [
+              "EV01"
+            ],
+            "judgment": "Content-rule mechanism and S-bypass supported; old discovery default-deny claim is not final promise.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T02",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "50–76; 640–661"
+            },
+            "subject": "Grist Home vs Document authorization and webhook allowlist",
+            "source_ids": [
+              "EV74",
+              "EV75"
+            ],
+            "judgment": "Supported primary architecture and SSRF/allowlist distinction; snapshot main is mutable.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T03",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "91–103; 400–441"
+            },
+            "subject": "Grist Core local account/MFA applicability and external authentication dependency",
+            "source_ids": [
+              "EV03",
+              "EV04",
+              "EV02"
+            ],
+            "judgment": "Missing selected day-one auth component is material F1; Builder shows possibility, not proof of chosen Core stack.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T04",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "50–76; 782–788"
+            },
+            "subject": "Grist write history versus per-row read audit",
+            "source_ids": [
+              "EV39",
+              "EV41"
+            ],
+            "judgment": "Properly downgraded; installation activity/write history does not establish per-row Core read logging.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T05",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "78–89; 807–810"
+            },
+            "subject": "Notifier batching, log-first crash/retry guarantee and SMTP acceptance",
+            "source_ids": [
+              "EV42",
+              "EV43",
+              "EV73"
+            ],
+            "judgment": "Claimed crash safety contradicted by two commit windows (F2); test remains proposed.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T06",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "240–258; 495–505"
+            },
+            "subject": "NocoDB table/field/row permission defaults, edition gating and leakage",
+            "source_ids": [
+              "EV29",
+              "EV30",
+              "EV31",
+              "EV32"
+            ],
+            "judgment": "Detailed gating and edit-versus-visibility distinctions supported; categorical rejection F3 is stronger than facts.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T07",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "240–258; 495–505; 832–838"
+            },
+            "subject": "NocoDB free workspace/base access and private project availability",
+            "source_ids": [
+              "EV37",
+              "EV67",
+              "EV68"
+            ],
+            "judgment": "Community compatible separation option lost; verifier private-project sub-option itself paid.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T08",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "240–258; 552–560"
+            },
+            "subject": "NocoDB token scope/expiry/role intersection, SSO token effects, teams and audit tiers",
+            "source_ids": [
+              "EV33",
+              "EV34",
+              "EV35",
+              "EV36"
+            ],
+            "judgment": "Token/RLS caveats supported; generic-vs-detailed team tier conflict is minor procurement qualification.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T09",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "152–222; 443–465; 839–848"
+            },
+            "subject": "Snipe unique tags, four status categories, checkout exclusivity, concurrent guard and soft-delete targets",
+            "source_ids": [
+              "EV48",
+              "EV49",
+              "EV52",
+              "EV53",
+              "EV15"
+            ],
+            "judgment": "Supported by release v8.8.0 controller/request/routes; Archived scope appropriately narrowed.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T10",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "152–222; 572–610; 839–848"
+            },
+            "subject": "Snipe checkout/checkin attachments, global upload log linkage and still-open issue",
+            "source_ids": [
+              "EV47",
+              "EV49",
+              "EV50",
+              "EV51",
+              "EV53"
+            ],
+            "judgment": "Core attachment gap supported on tagged code as well as issue; /files versus old /uploads drift acknowledged.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T11",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "467–493; 572–610; 849–862"
+            },
+            "subject": "ERPNext planned maintenance vs repairs, parts/cost and capitalization policy",
+            "source_ids": [
+              "EV27",
+              "EV28",
+              "EV55",
+              "EV60"
+            ],
+            "judgment": "Useful native repair alternative; policy and stock paths differ by version, no runtime guarantee.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T12",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "467–493; 572–610; V7"
+            },
+            "subject": "ERPNext Fully Depreciated allowed repairs, forced zeroing, UI guards, Sold/Scrapped exceptions and PR/release chain",
+            "source_ids": [
+              "EV54",
+              "EV55",
+              "EV56",
+              "EV57",
+              "EV58",
+              "EV59",
+              "EV60",
+              "EV61",
+              "EV62",
+              "EV63",
+              "EV64",
+              "EV65",
+              "EV66"
+            ],
+            "judgment": "Release rationale/guards/buttons supported at both tags; persisted v15 stock-only value effect not executed and not overruled from in-memory mutation alone.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T13",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "565–567; 824–825"
+            },
+            "subject": "ERPNext Manufacturing downtime versus Asset Repair downtime types/units",
+            "source_ids": [
+              "EV45",
+              "EV46",
+              "EV55",
+              "EV60",
+              "EV69",
+              "EV70"
+            ],
+            "judgment": "Cross-domain minutes entry claim is material F4; Asset Repair derives hours.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T14",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "400–441; 572–610"
+            },
+            "subject": "Authentik 2025.10 Redis removal, prior task migration, server/worker/Postgres topology, 2025.12 path drift",
+            "source_ids": [
+              "EV24",
+              "EV25",
+              "EV79"
+            ],
+            "judgment": "Official change/path supported; broker/header/certificate mapping is conditional design, not claimed tested integration.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T15",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "507–517"
+            },
+            "subject": "PowerSync local SQLite/offline reads, upload-only-while-connected, backend SDK matrix and non-P2P topology",
+            "source_ids": [
+              "EV26",
+              "EV72"
+            ],
+            "judgment": "Buffered upload and backend application write path supported. Node stage status flagged honestly; no release-certified LAN impossibility claim needed for simpler pilot recommendation.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T16",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "443–493; 776–781; V8"
+            },
+            "subject": "Lend-Engine lending/maintenance, costs, item/contact/site caps and language capabilities",
+            "source_ids": [
+              "EV22",
+              "EV23"
+            ],
+            "judgment": "Viable conditional alternative retained; independent item/contact caps and notice-level uncertainty matter.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T17",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "519–528; 746–751"
+            },
+            "subject": "n8n annual EUR prices/execution counts, internal self-host license and batching",
+            "source_ids": [
+              "EV19",
+              "EV44"
+            ],
+            "judgment": "Prices/currency and license scope supported as access-date facts; re-verify at procurement.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T18",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "282–330; 568–570; V5"
+            },
+            "subject": "WCAG reflow versus operational 200% proxy and wider keyboard/print acceptance",
+            "source_ids": [
+              "EV18"
+            ],
+            "judgment": "Reflow cited correctly; explicitly weaker operational test is not conformance proof.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T19",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "123–125; 612–638; minor m5"
+            },
+            "subject": "Managed Grist free API 3,000/month/team cap, self-host scope",
+            "source_ids": [
+              "EV76",
+              "EV75"
+            ],
+            "judgment": "Newsletter rule independently confirmed; self-host primary unaffected; mutable procurement caveat retained.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "T20",
+            "arm": "N1",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/treatment/reviser/final.md",
+              "lines": "332–398; 640–736"
+            },
+            "subject": "District decisions, pilot gates, replacement/reporting branches, all V1–V9 and verifier companions",
+            "source_ids": [
+              "EV01",
+              "EV49",
+              "EV55",
+              "EV60",
+              "EV18",
+              "EV22",
+              "EV33"
+            ],
+            "judgment": "Meaningful conditional proposals preserve intent; no application witness executed; notifier crash oracle incomplete relative to F2.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "definition": "Complete coverage of consequential final claim/disposition clusters at relevant primary governing sections, including claims judged unsupported and honest unresolved conditions; not complete vendor code or installed-system verification. External/deployment uncertainties listed separately."
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "narrative_stages_read": {
+          "discovery": 228,
+          "draft": 227,
+          "critique": 399,
+          "final": 903,
+          "verification": 524
+        },
+        "all_plan_clauses": [
+          [
+            "P1",
+            "152–222",
+            "already-covered intent; state/availability correction; optional QR/repair-parts; uncertainties",
+            "Every field retained and six-state queue with Diagnosed flag reconciled. Snipe Archived rule limited to that product; attachment gap and multipart/global-log caveats retained. Flat-status rejection rejects loss of repair stages, not phased rollout."
+          ],
+          [
+            "P2",
+            "224–280",
+            "already-covered intent; enforcement correction; NocoDB rejection; read-audit uncertainty",
+            "Grist content separation and S bypass prohibition address need-to-know. Correct fine-grained licensing facts become an excessive paid-only requirement (F3), losing verifier separation option. Read logging properly downgraded."
+          ],
+          [
+            "P3",
+            "282–330",
+            "already-covered intent; accessibility/template corrections; locale/channel uncertainty",
+            "Large-print and two liaison-reviewed language templates preserved; language UI distinguished from notice generation. 200% proxy limitation explicit; billing/locale fallback/portal rerun covered."
+          ],
+          [
+            "P4",
+            "332–365",
+            "already-covered pilot intent; gate correction; SLA pending district confirmation",
+            "One room/selected schools and expand-only-on-clear-handoffs preserved. Two-week overdue, teacher access, restore, printing, stress tests and all-must-pass gate proposed; one-day SLA now a district proposal."
+          ],
+          [
+            "P5",
+            "367–398",
+            "district user decisions; approval guard; two reporting branches",
+            "No premature district approval answer. Roles/thresholds and interim recorded approver are prerequisites; staff-mediated versus caregiver entry remain selectable; future portal gets own-row/bilingual negative tests."
+          ],
+          [
+            "P6",
+            "400–441",
+            "already-covered unfunded intent; local+MFA correction; conditional broker; integration uncertainties",
+            "No roster/grade sync and no funded-SSO promise. Broker dependency/path drift and claims tests retained. Required local-account/MFA component remains absent in primary Grist stack (F1)."
+          ]
+        ],
+        "critic_adjudications": [
+          [
+            "M1",
+            "ACCEPT source/currency correction",
+            "EV19, EV44",
+            "Official annual EUR/executions confirms final; critic non-primary guide is not itself the oracle."
+          ],
+          [
+            "M2",
+            "AMEND",
+            "EV29–EV37, EV67–EV68; F3",
+            "Gating facts correct; mandatory paid-only P2 conclusion and loss of separation alternatives not supported."
+          ],
+          [
+            "M3",
+            "ACCEPT",
+            "EV24–EV25",
+            "Official Redis removal and version/path caveats support revision."
+          ],
+          [
+            "M4",
+            "ACCEPT with limitation",
+            "EV54–EV66",
+            "Both releases and forced-zeroing behavior confirmed; no PR-number-only proof. v15 stock-only persisted effect remains unexecuted, not inferred from release alone."
+          ],
+          [
+            "M5",
+            "ACCEPT",
+            "EV47–EV53, EV48",
+            "Attachment gap, correct /files route, Archived product scope and reconciled state vocabulary are supported."
+          ],
+          [
+            "M6",
+            "ACCEPT",
+            "EV22–EV23",
+            "Caps and site-language existence correctly narrow uncertainty; message locale/dedupe remains open."
+          ],
+          [
+            "M7",
+            "ACCEPT downgrade",
+            "EV39, EV41",
+            "Document history/installation audit does not establish per-row Core read audit; verify-or-drop is justified."
+          ],
+          [
+            "M8",
+            "ACCEPT direction; incomplete result",
+            "EV03–EV04; F1",
+            "Reset/custody/session/provisioning detail useful, but no selected auth mechanism means summer promise still unsupported."
+          ],
+          [
+            "M9",
+            "ACCEPT relabel",
+            "brief:3; final:332–365",
+            "One-day triage is a proposed district target, not evidence-backed user requirement."
+          ],
+          [
+            "M10",
+            "ACCEPT downgrade",
+            "EV19, EV22, EV29; final V8",
+            "No itemized TCO exists; expected-to-fit pending V8 is honest, not a proven budget fit."
+          ],
+          [
+            "M11",
+            "ACCEPT with limitation",
+            "EV18; final:282–330",
+            "W3C reflow grounding valid; 200% proxy explicitly weaker, no conformance assertion."
+          ],
+          [
+            "M12",
+            "ACCEPT need; REJECT adequacy",
+            "EV42–EV43; F2",
+            "A dedupe mechanism is needed, but pre-send log does not prove no-loss/no-duplicate crash behavior."
+          ],
+          [
+            "M13",
+            "ACCEPT bounded omission",
+            "final:120–131",
+            "Baserow/Directus not investigated is honest; brief does not require exhaustive product universe."
+          ],
+          [
+            "M14",
+            "ACCEPT scope diagnosis",
+            "verification-questions.md:1–9; EV01, EV74–EV75",
+            "Three neutral questions target alternatives, not primary Grist; primary rules independently checked here. No inference that extra verifier guarantees whole final."
+          ],
+          [
+            "m1",
+            "ACCEPT",
+            "final:42–46",
+            "Six repair states plus Diagnosed sub-flag reconcile drift."
+          ],
+          [
+            "m2",
+            "ACCEPT",
+            "EV19",
+            "EUR correction included; procurement recheck retained."
+          ],
+          [
+            "m3",
+            "ACCEPT",
+            "EV22",
+            "Caps/language rows retained; separate-cap ambiguity remains minor."
+          ],
+          [
+            "m4",
+            "RETAIN uncertainty",
+            "EV72",
+            "Node beta/stable ambiguity explicitly stated; web-first pilot does not depend on Node."
+          ],
+          [
+            "m5",
+            "ACCEPT mutable qualification",
+            "EV76",
+            "Managed API cap confirmed independently; self-host not subject to stated hosted cap."
+          ],
+          [
+            "m6",
+            "REJECT applicability",
+            "EV45–EV46, EV55, EV60; F4",
+            "Critic did not verify domain; Manufacturing minutes entry cannot govern Asset Repair hours."
+          ],
+          [
+            "m7",
+            "ACCEPT proposal",
+            "EV01",
+            "Periodic no-S-rights audit is meaningful for rule-bypass risk, not claimed executed."
+          ],
+          [
+            "m8",
+            "ACCEPT scoped rejection",
+            "frozen P1/P4; final:152–222",
+            "Rejecting undifferentiated repair status does not reject a phased pilot."
+          ],
+          [
+            "m9",
+            "ACCEPT proposal",
+            "frozen P5; final V9",
+            "Re-run privacy/bilingual tests when caregiver entry opens; preserves deferred decision."
+          ],
+          [
+            "m10",
+            "ACCEPT provenance discipline",
+            "seven stage source maps",
+            "Stage namespaces disjoint; source IDs not silently rebound. No scientific pass inferred from IDs."
+          ],
+          [
+            "Q1",
+            "AMEND",
+            "EV29–EV37, EV67–EV68",
+            "Fine controls/gating correct. Separation option must survive; Private Project specifically paid. Reviewer wording partly fallible."
+          ],
+          [
+            "Q2",
+            "ACCEPT core answer; qualify tag drift",
+            "EV47–EV53",
+            "Tagged checkout/checkin and upload linkage support gap. Audit positive-control multipart alias must be frozen to chosen version; master is not automatically release code."
+          ],
+          [
+            "Q3",
+            "ACCEPT central guards; qualify persistence scope",
+            "EV54–EV70",
+            "Both tagged validate_asset and UI/button paths support fully-depreciated expense tracking; no executed stock/invoice matrix or persisted value/life witness."
+          ]
+        ],
+        "losses": [
+          "N1-F3"
+        ]
+      },
+      "grade_limits": [
+        "Source-grounded FAIL for the listed material defects after full six-axis review. Not a numerical quality score or an equivalence statement.",
+        "District provider, claims, mandatory sign-in policy, approval role/thresholds, second language, direct-reporting policy and actual inventory/contact/site counts are not supplied; these are honest external inputs, not source research omissions.",
+        "Itemized 12-month TCO/admin allocation, selected Grist release/auth component, runtime rule/export/attachment visibility, print/restore drills and caregiver comprehension are unexecuted deployment/selection work.",
+        "Lend-Engine notice-level locale fallback and idempotency, portal fine-grained visibility, Node SDK exact stage, and Core per-row read logging are explicitly unverified. Primary sources justify capability-level boundaries, not an installed pass.",
+        "v15 ERPNext stock-only paths mutate in-memory asset value outside capitalization guard (EV55:123–152,222–230), whereas save is inside the guard. No persisted value uplift is concluded without a release-specific witness; both releases state intended no-value/life behavior."
+      ]
+    },
+    "N2": {
+      "actual_arm": "control",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "grade": "FAIL",
+      "scientific_quality": "FAIL",
+      "material_findings": [
+        {
+          "id": "N2-F1",
+          "type": "MATERIALLY_INCOMPLETE",
+          "related_types": [],
+          "severity": "medium",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+            "lines": "96–120; 150–157; 241–245; 543–547"
+          },
+          "passage": "Expected return is an indexed nullable date, not text; date-vs-datetime and null-means-no-deadline fixed in the schema.",
+          "original_obligation": "O2 governing field types/defaults and applicability for the viable PocketBase core; P1 expected return; O6 no-deadline/overdue oracle",
+          "primary_evidence": [
+            {
+              "source_id": "EV07",
+              "url": "https://pocketbase.io/docs/collections/",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV07.txt",
+              "sha256": "da79d7676d3a26b1c2eb87e2c10f1315b1aada5266a649842d10b3a023cb57d2"
+            },
+            {
+              "source_id": "EV09",
+              "url": "https://pocketbase.io/docs/",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV09.txt",
+              "sha256": "3655013779f51d173a520b79ed2686601a68bc52cbd68c5a5438bfb3a4a6242e"
+            }
+          ],
+          "reasoning": "The final carries PocketBase as a viable core and cites its collections page, but does not investigate the governing type mismatch for its central expected-return requirement. PocketBase Fields specifies non-nullable fields except JSONField, zero-default fallbacks, and a DateField storing a datetime string with empty-string default and full-string comparisons. The final supplies a platform-neutral nullable calendar-DATE rule without identifying this native behavior or qualifying how absent deadlines and school-local date boundaries apply on the PocketBase branch. Applying the written overdue comparison directly to the native default can classify an empty deadline as before today.",
+          "qualification": "The desired nullable calendar-date business semantics are reasonable. This is not proof that they cannot be implemented or a demand for a complete adapter. It is an omitted, available consequential type/default investigation on a retained alternative; the other cores are not asserted to share this defect."
+        },
+        {
+          "id": "N2-F2",
+          "type": "UNSUPPORTED_CONSEQUENTIAL",
+          "related_types": [
+            "FALSE_CORRECTION_OR_REJECTION"
+          ],
+          "severity": "medium",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+            "lines": "122–146, especially 127–129"
+          },
+          "passage": "Per-seat SaaS is rejected for the pilot on recurring seat cost plus data-residency review against $8k and unfunded integration.",
+          "original_obligation": "O1 materially different viable approaches; O2 consequential cost/applicability; O4 inappropriate rejection; original $8,000 budget and unfunded formal integration",
+          "primary_evidence": [
+            {
+              "source_id": "EV78",
+              "url": "https://www.getgrist.com/pricing/",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV78.txt",
+              "sha256": "4bd9da1c3e47ebfe0890b9ac6fd16c901fe590eb5b41e65d745c63935633d0a8"
+            },
+            {
+              "source_id": "EV22",
+              "url": "https://www.lend-engine.com/pricing",
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/EV22.txt",
+              "sha256": "04831e5a9915c14dd9445845f22b18ce3fd2621f98f4dbc204d47c36167e2b2e"
+            }
+          ],
+          "reasoning": "The final rejects the per-seat hosted category without a named priced candidate, teacher/paid-seat count, district residency rule, or integration requirement establishing the rejection. The brief supplies a budget and an unfunded integration request, not a ban on subscription hosting. Official Grist pricing demonstrates that per-seat hosted products have concrete modest starting prices ($8 annual/$10 monthly Pro per user); those prices alone do not establish a district fit, but they defeat recurring-seat cost as an inherent incompatibility. Official Lend-Engine pricing separately demonstrates a lending-native hosted category worth conditionally assessing. The final makes a stronger conclusion than its evidence supports.",
+          "qualification": "This assessment does not infer the district has 20 teachers, approve any vendor, or declare a hosted product fully compliant. A self-hosted preference could be reasonable. The defect is a categorical consequential rejection on uninvestigated cost/policy assumptions, not failure to discover one particular product."
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N2-m1",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+            "lines": "435–441; 499–501"
+          },
+          "issue": "MFA is treated as unsupported across every core although the cited PocketBase auth page documents MFA.",
+          "evidence": [
+            "EV06",
+            "EV48"
+          ],
+          "reasoning": "EV06:1134–1152 documents v0.23+ optional MFA requiring two different auth methods; Snipe overview also advertises 2FA. District recovery mapping is still unresolved. The critic was right to reject an unverified per-core promise, but withdrawing the available capability itself overstates uncertainty."
+        },
+        {
+          "id": "N2-m2",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+            "lines": "545–552"
+          },
+          "issue": "State machine returns to checked_in, but checked_in is absent from the preceding status enum.",
+          "evidence": [
+            "frozen P1"
+          ],
+          "reasoning": "This is a local specification inconsistency, not a source fact. The intended lend/return path remains understandable."
+        },
+        {
+          "id": "N2-m3",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+            "lines": "99–102; 161–165; P2 privacy surface list"
+          },
+          "issue": "PocketBase file handling records random suffix/size but not the public-by-default URL behavior.",
+          "evidence": [
+            "EV08"
+          ],
+          "reasoning": "EV08:707–727 specifies public full-URL access unless Protected/token/view rules are configured. Repair photos are optional and no student-photo requirement exists, so a privacy leak is not asserted to have occurred; this is a useful omitted governing default."
+        },
+        {
+          "id": "N2-m4",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+            "lines": "138–140; 181–190; 549; 558–559"
+          },
+          "issue": "Directory-information framing lacks an explicit US-jurisdiction/internal school-official qualification.",
+          "evidence": [
+            "EV16",
+            "EV17"
+          ],
+          "reasoning": "The ED directory-information account is correct for that exception. Internal school-official disclosure has a separate legitimate-educational-interest route; the district country and policy are unstated. Stronger minimization can be a deliberate policy. No consent requirement or legal impossibility is inferred from the brief."
+        },
+        {
+          "id": "N2-m5",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+            "lines": "251–260; 520–521"
+          },
+          "issue": "Unique instruments do not by themselves establish variant cascade is inapplicable.",
+          "evidence": [
+            "EV12"
+          ],
+          "reasoning": "Part/model variants may exist despite unique stock instances. This critic demand was accepted too broadly, but the useful test template option and deletion warning survive."
+        },
+        {
+          "id": "N2-m6",
+          "candidate": {
+            "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+            "lines": "192–220"
+          },
+          "issue": "Highest-churn checkout/notify ranking is not proved by one release note.",
+          "evidence": [
+            "EV15"
+          ],
+          "reasoning": "The FD-57297/#19655 regression test chain is real; it does not provide a comparative churn measurement. The later caregiver-message contract is properly labeled engineering inference."
+        }
+      ],
+      "unresolved": [
+        "District jurisdiction/privacy/retention schedule, sign-in policy/provider/claims, approval thresholds, second language and chosen channel, actual contact/instrument/staff counts and hosting cost are not supplied.",
+        "Core selection remains open. Snipe contact visibility, InvenTree separate custom-state filtering and PocketBase projected-view isolation are conditional pending verification; no installed test is claimed.",
+        "No executed recovery/performance/large-print/comprehension/approval/retention/loan-concurrency tests or itemized TCO exist; this is allowed by O6 and is not silently credited as a pass.",
+        "Generic OIDC beyond named PocketBase OAuth providers and district-role mapping remain unresolved; available native DateField/MFA/file-default facts are distinguished from genuinely external choices."
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "COMPLETE: O1–O6 and every explicit brief constraint compared to full final; constraint matrix in assessment.md",
+          "judgment": "Substantial full deliverable, no field/P-clause disappearance. Available-mechanism gaps and unsupported conclusions identified rather than erased.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+              "lines": "1–629"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/I08/brief.md",
+              "lines": "3–11"
+            },
+            "N2-F1",
+            "N2-F2"
+          ]
+        },
+        {
+          "axis": 2,
+          "coverage": "COMPLETE for consequential final claim clusters, including defaults/types/units/edition/release/domain and corrected or uncertain assertions; independent primary coverage catalog below",
+          "judgment": "Material defects: N2-F1, N2-F2. Correct facts and honest external unknowns separately preserved.",
+          "evidence": [
+            "C01",
+            "C02",
+            "C03",
+            "C04",
+            "C05",
+            "C06",
+            "C07",
+            "C08",
+            "C09",
+            "C10",
+            "C11"
+          ]
+        },
+        {
+          "axis": 3,
+          "coverage": "COMPLETE: discovery/draft/final mechanisms and optional leads compared; no exhaustive product-universe requirement imposed",
+          "judgment": "Snipe checkout, InvenTree stock/test states and PocketBase custom core offer useful unfamiliar discovery. Concrete ticket/library paths honestly omitted; hosted-category rejection unsupported (F2).",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+              "lines": "39–146"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/research/discovery.md",
+              "lines": "1–177"
+            }
+          ]
+        },
+        {
+          "axis": 4,
+          "coverage": "COMPLETE: P1–P6 and each correction/enhancement/user-decision/covered/reject/uncertain disposition individually audited",
+          "judgment": "P intent preserved and partial corrections explicit. Desired calendar-date rule reasonable but native PocketBase applicability incomplete. No compulsory single-label rule imposed.",
+          "evidence": [
+            [
+              "P1",
+              "224–267",
+              "correction (partial), optional test enhancement, core uncertainty",
+              "All assignment/issue/state/date/availability fields retained; waiting-parts and pickup separated. InvenTree amendment valid and conditional, time target relabeled. PocketBase type gap F1 remains; state enum minor."
+            ],
+            [
+              "P2",
+              "269–321",
+              "correction (partial), retention/policy user decision, Snipe uncertainty",
+              "Need-to-know contacts and schedule projected apart; no grades/discipline, notes guard, named leakage surfaces. Corrected rule oracle supported; retention no longer invented. US legal scope minor."
+            ],
+            [
+              "P3",
+              "323–361",
+              "correction (partial), staff UI optional, language/channel decisions",
+              "Large-print dimensions and wider keyboard/print coverage, two-language owned templates, fallback/inbound/channel costing retained. Staff localization is correctly not caregiver translation."
+            ],
+            [
+              "P4",
+              "363–396",
+              "correction (partial), pilot gate, conditional expansion",
+              "Single room + selected 2–3 schools, representative selection, physical handoff, restore, live audit and comprehension evidence retained. Partial expansion is a proposed operational choice, not original requirement."
+            ],
+            [
+              "P5",
+              "398–426",
+              "user decision, approval/reporting options and prerequisites",
+              "District approver and direct-reporting decision remain open; thresholds, denial tests, three reporting options, abuse/capacity/reset conditions supplied. Starting staff-mediated is a revisitable recommendation."
+            ],
+            [
+              "P6",
+              "428–473",
+              "correction (partial), funded follow-up, user inputs, uncertainty",
+              "District requirement request, no unfunded integration promise, named OAuth mechanism vs claims mapping, summer recovery/freeze/off-host custody retained. MFA available capability over-withdrawn; local password-plus-lockout still untested."
+            ]
+          ]
+        },
+        {
+          "axis": 5,
+          "coverage": "COMPLETE: full discovery→draft→critique→final; all M1–M14 and every minor; N1 Q1–Q3/verifier package; every supported option/condition/open input compared",
+          "judgment": "Broad preservation successful, invalid HTTP and evolution facts properly removed, OAuth restored. Critic MFA/label/variant demands partly over-broad; final retains useful uncertainty and options.",
+          "evidence": {
+            "critic_adjudications": [
+              [
+                "M1",
+                "AMEND accepted revision",
+                "EV10–EV11",
+                "Damaged cannot enforce unavailability; neutral Quarantined exists. Distinct-label filtering not proved, accurately conditional."
+              ],
+              [
+                "M2",
+                "ACCEPT",
+                "EV10–EV11",
+                "Mixed old/master provenance cannot establish evolution; stable behavioral facts replace temporal chain."
+              ],
+              [
+                "M3",
+                "ACCEPT",
+                "EV05",
+                "200-empty list, 400 create, 404 view/update/delete, 403 locked rules correct false universal-403 oracle."
+              ],
+              [
+                "M4",
+                "ACCEPT",
+                "EV06",
+                "Named OAuth providers present; mechanism supported while district mapping/generic provider compatibility remain open."
+              ],
+              [
+                "M5",
+                "AMEND",
+                "EV17, EV16; final:269–321",
+                "Invented retention interval withdrawn appropriately. Manual retention audit does not conflict inherently with structural contact access; critic overreach not a new final defect."
+              ],
+              [
+                "M6",
+                "AMEND",
+                "EV06, EV48",
+                "Per-core roles and recovery evidence needed; withdrawing all MFA capability ignores available docs. Final uncertainty over-broad minor."
+              ],
+              [
+                "M7",
+                "ACCEPT relabel",
+                "brief:3; final:244–250",
+                "60 seconds/no-training not user evidence. Proposed target, orientation and no-loss fallback appropriately labeled."
+              ],
+              [
+                "M8",
+                "ACCEPT proposals",
+                "EV09, EV15; final:363–396, 428–473",
+                "Off-host restore custody, host source, minimized paper and manual-upgrade freeze address summer constraint; unexecuted."
+              ],
+              [
+                "M9",
+                "ACCEPT open-cost treatment",
+                "brief:3; final:323–361, 428–473",
+                "Channel choice/cost, encoding and staff-time assumptions explicit; no concrete SMS cost claimed verified."
+              ],
+              [
+                "M10",
+                "ACCEPT scoped requirement",
+                "frozen P5; final:398–426",
+                "Approval enforcement and negative checks meaningful; core-specific mechanisms remain marked unproved."
+              ],
+              [
+                "M11",
+                "REJECT as compulsory label rule; accept clarity",
+                "frozen P1–P6; rubric axis4",
+                "Thin-plan intent may be already covered while details require correction. Final partial-correction labels are clear; original dual labels were not intrinsically material failure."
+              ],
+              [
+                "M12",
+                "AMEND",
+                "EV18",
+                "Platform baseline and wider large-print scope useful. W3C Understanding reproduces SC text; demanding normative URL alone was not proof old threshold wrong."
+              ],
+              [
+                "M13",
+                "ACCEPT proposal",
+                "brief:3; frozen P5; final:398–426",
+                "Abuse/identity/capacity options preserve district choice; no mandate to implement caregiver portal."
+              ],
+              [
+                "M14",
+                "ACCEPT downgrade",
+                "EV09, EV15",
+                "Fetched warning is not multi-release chain. Snipe regression chain remains and satisfies O3 minimum."
+              ],
+              [
+                "m1",
+                "AMEND",
+                "EV12–EV13",
+                "Latest-result/history/disable-not-delete and owner/burden notes supported. Unique individual instruments do not prove model variant cascade impossible."
+              ],
+              [
+                "m2",
+                "ACCEPT proposal",
+                "brief:3; final:269–321",
+                "Safe identifier, staff join and notes-smuggling guard preserve minimization and classroom usability."
+              ],
+              [
+                "m3",
+                "ACCEPT",
+                "EV18",
+                "2D exception includes data tables and necessary toolbar, not carte blanche for every cell."
+              ],
+              [
+                "m4",
+                "ACCEPT scoped feature",
+                "EV14",
+                "Staff locale only on Snipe path; district second-language coverage still a setup question."
+              ],
+              [
+                "m5",
+                "ACCEPT optional operational elaboration",
+                "final:363–396",
+                "Selection/comprehension owner and limited expansion useful; brief did not require partial-expansion scheme."
+              ],
+              [
+                "m6",
+                "ACCEPT scope limitation",
+                "EV05, EV08; final:269–321",
+                "Named page/API/export/search plus backup/log/cache/print risks distinguish tested surface from residual risk; no total privacy proof."
+              ],
+              [
+                "m7",
+                "ACCEPT need; incomplete applicability",
+                "EV07; F1",
+                "Timezone/no-deadline/tag/photo-cap semantics supplied, but PocketBase native type/default absent."
+              ],
+              [
+                "m8",
+                "ACCEPT bounded omissions",
+                "EV48, EV10–EV13; final:122–146",
+                "Domain mappings qualified. Library and concrete ticket alternatives admitted omitted; no exhaustiveness requirement."
+              ],
+              [
+                "m9",
+                "ACCEPT inference label",
+                "EV15",
+                "Webhook payload regression supports message-contract engineering analogy, not specific caregiver wording."
+              ],
+              [
+                "m10",
+                "ACCEPT narrow applicability",
+                "EV17",
+                "Former-student rule conditional on alumni loans; not assumed current pilot population."
+              ],
+              [
+                "m11",
+                "AMEND as future recommendation",
+                "frozen O3; final:323–361",
+                "Future channel-specific chain useful; original O3 requires at least one relevant chain, not every eventual channel."
+              ],
+              [
+                "m12",
+                "ACCEPT proposal",
+                "brief:3; final:363–396, 570–615",
+                "Live pilot audit replaces arbitrary 20 seeded items; no actual shelf audit claimed."
+              ]
+            ],
+            "paths": [
+              "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/research/discovery.md",
+              "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/research/draft.md",
+              "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/critic/critique.md",
+              "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md"
+            ],
+            "additional_verifier": null
+          }
+        },
+        {
+          "axis": 6,
+          "coverage": "COMPLETE: every final validation and claimed execution reviewed; meaningful counterexamples evaluated against relevant source behavior/version",
+          "judgment": "Eleven proposed gates discriminate privacy/state/deadline/accessibility/bilingual/cost/recovery/approval/retention/pilot. Executed work explicitly documentation only; PocketBase type/default oracle gap F1 remains.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+              "lines": "570–629"
+            },
+            "EV05",
+            "EV07",
+            "EV18"
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "id": "C01",
+            "arm": "N2",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+              "lines": "39–58; 192–206"
+            },
+            "subject": "Snipe product lifecycle, status/identity, PHP floor and FD-57297 release chain",
+            "source_ids": [
+              "EV14",
+              "EV15",
+              "EV48"
+            ],
+            "judgment": "Supported lifecycle and release linkage; highest-churn ranking bounded as minor.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "C02",
+            "arm": "N2",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+              "lines": "60–90; 477–489"
+            },
+            "subject": "InvenTree availability defaults, logical/display states and Quarantined amendment",
+            "source_ids": [
+              "EV10",
+              "EV11"
+            ],
+            "judgment": "Damaged Available-Yes and Quarantined Available-No verified; separate filtering unresolved honestly.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "C03",
+            "arm": "N2",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+              "lines": "60–90; 251–260"
+            },
+            "subject": "InvenTree test types, name normalization, deletion cascade, latest-result-wins",
+            "source_ids": [
+              "EV12",
+              "EV13"
+            ],
+            "judgment": "Supported optional test mechanism; unique-instrument variant irrelevance over-broad minor.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "C04",
+            "arm": "N2",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+              "lines": "92–120; 148–168"
+            },
+            "subject": "PocketBase release caveat, stateless auth, OAuth providers, superuser and API rule oracles",
+            "source_ids": [
+              "EV05",
+              "EV06",
+              "EV09"
+            ],
+            "judgment": "Core facts and corrected HTTP oracle supported; MFA available despite over-broad uncertainty.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "C05",
+            "arm": "N2",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+              "lines": "150–157; 241–245"
+            },
+            "subject": "PocketBase expected-return storage/defaults and calendar/nullable semantics",
+            "source_ids": [
+              "EV07"
+            ],
+            "judgment": "Materially incomplete branch-specific native type/default applicability (N2-F1).",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "C06",
+            "arm": "N2",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+              "lines": "99–102; 161–165"
+            },
+            "subject": "PocketBase file size/name and public/protected access defaults",
+            "source_ids": [
+              "EV08"
+            ],
+            "judgment": "Size/name supported; public-default behavior omitted, scoped minor.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "C07",
+            "arm": "N2",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+              "lines": "269–321"
+            },
+            "subject": "PocketBase read-only SELECT views, projection and rule enforcement requirement",
+            "source_ids": [
+              "EV07",
+              "EV05"
+            ],
+            "judgment": "Projection supports reducing visible columns; no executed view isolation claimed. Deployment proof remains open.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "C08",
+            "arm": "N2",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+              "lines": "169–180; 323–361"
+            },
+            "subject": "WCAG resize/reflow dimensions and two-dimensional exceptions",
+            "source_ids": [
+              "EV18"
+            ],
+            "judgment": "200% Resize Text, 320/256 CSS px Reflow and table-not-cell exception supported.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "C09",
+            "arm": "N2",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+              "lines": "181–190; 269–321"
+            },
+            "subject": "Directory information public notice, opt-out, former-student scope and internal access",
+            "source_ids": [
+              "EV17",
+              "EV16"
+            ],
+            "judgment": "Directory-information exception supported; internal legitimate-interest and jurisdiction scope remain qualification.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "C10",
+            "arm": "N2",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+              "lines": "122–146; 428–473"
+            },
+            "subject": "Hosted-category rejection, summer maintenance, budget assumptions",
+            "source_ids": [
+              "EV78",
+              "EV22",
+              "EV09",
+              "EV15"
+            ],
+            "judgment": "Budget/category rejection unsupported (F2); upgrade cautions and proposed summer controls are appropriately proposals.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          },
+          {
+            "id": "C11",
+            "arm": "N2",
+            "candidate": {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/B-08/control/reviser/final.md",
+              "lines": "224–267; 363–426; 570–615"
+            },
+            "subject": "States, capture target, live pilot gate, approval/reporting decisions and discriminating validations",
+            "source_ids": [
+              "EV10",
+              "EV11",
+              "EV05",
+              "EV18"
+            ],
+            "judgment": "Product design, not vendor fact: explicit targets/user decisions and conditional tests retained; no runtime pass.",
+            "coverage": "Relevant governing sections/symbols checked; no runtime execution"
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "definition": "Complete coverage of consequential final claim/disposition clusters at relevant primary governing sections, including claims judged unsupported and honest unresolved conditions; not complete vendor code or installed-system verification. External/deployment uncertainties listed separately."
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "narrative_stages_read": {
+          "discovery": 177,
+          "draft": 215,
+          "critique": 481,
+          "final": 629,
+          "verification": null
+        },
+        "all_plan_clauses": [
+          [
+            "P1",
+            "224–267",
+            "correction (partial), optional test enhancement, core uncertainty",
+            "All assignment/issue/state/date/availability fields retained; waiting-parts and pickup separated. InvenTree amendment valid and conditional, time target relabeled. PocketBase type gap F1 remains; state enum minor."
+          ],
+          [
+            "P2",
+            "269–321",
+            "correction (partial), retention/policy user decision, Snipe uncertainty",
+            "Need-to-know contacts and schedule projected apart; no grades/discipline, notes guard, named leakage surfaces. Corrected rule oracle supported; retention no longer invented. US legal scope minor."
+          ],
+          [
+            "P3",
+            "323–361",
+            "correction (partial), staff UI optional, language/channel decisions",
+            "Large-print dimensions and wider keyboard/print coverage, two-language owned templates, fallback/inbound/channel costing retained. Staff localization is correctly not caregiver translation."
+          ],
+          [
+            "P4",
+            "363–396",
+            "correction (partial), pilot gate, conditional expansion",
+            "Single room + selected 2–3 schools, representative selection, physical handoff, restore, live audit and comprehension evidence retained. Partial expansion is a proposed operational choice, not original requirement."
+          ],
+          [
+            "P5",
+            "398–426",
+            "user decision, approval/reporting options and prerequisites",
+            "District approver and direct-reporting decision remain open; thresholds, denial tests, three reporting options, abuse/capacity/reset conditions supplied. Starting staff-mediated is a revisitable recommendation."
+          ],
+          [
+            "P6",
+            "428–473",
+            "correction (partial), funded follow-up, user inputs, uncertainty",
+            "District requirement request, no unfunded integration promise, named OAuth mechanism vs claims mapping, summer recovery/freeze/off-host custody retained. MFA available capability over-withdrawn; local password-plus-lockout still untested."
+          ]
+        ],
+        "critic_adjudications": [
+          [
+            "M1",
+            "AMEND accepted revision",
+            "EV10–EV11",
+            "Damaged cannot enforce unavailability; neutral Quarantined exists. Distinct-label filtering not proved, accurately conditional."
+          ],
+          [
+            "M2",
+            "ACCEPT",
+            "EV10–EV11",
+            "Mixed old/master provenance cannot establish evolution; stable behavioral facts replace temporal chain."
+          ],
+          [
+            "M3",
+            "ACCEPT",
+            "EV05",
+            "200-empty list, 400 create, 404 view/update/delete, 403 locked rules correct false universal-403 oracle."
+          ],
+          [
+            "M4",
+            "ACCEPT",
+            "EV06",
+            "Named OAuth providers present; mechanism supported while district mapping/generic provider compatibility remain open."
+          ],
+          [
+            "M5",
+            "AMEND",
+            "EV17, EV16; final:269–321",
+            "Invented retention interval withdrawn appropriately. Manual retention audit does not conflict inherently with structural contact access; critic overreach not a new final defect."
+          ],
+          [
+            "M6",
+            "AMEND",
+            "EV06, EV48",
+            "Per-core roles and recovery evidence needed; withdrawing all MFA capability ignores available docs. Final uncertainty over-broad minor."
+          ],
+          [
+            "M7",
+            "ACCEPT relabel",
+            "brief:3; final:244–250",
+            "60 seconds/no-training not user evidence. Proposed target, orientation and no-loss fallback appropriately labeled."
+          ],
+          [
+            "M8",
+            "ACCEPT proposals",
+            "EV09, EV15; final:363–396, 428–473",
+            "Off-host restore custody, host source, minimized paper and manual-upgrade freeze address summer constraint; unexecuted."
+          ],
+          [
+            "M9",
+            "ACCEPT open-cost treatment",
+            "brief:3; final:323–361, 428–473",
+            "Channel choice/cost, encoding and staff-time assumptions explicit; no concrete SMS cost claimed verified."
+          ],
+          [
+            "M10",
+            "ACCEPT scoped requirement",
+            "frozen P5; final:398–426",
+            "Approval enforcement and negative checks meaningful; core-specific mechanisms remain marked unproved."
+          ],
+          [
+            "M11",
+            "REJECT as compulsory label rule; accept clarity",
+            "frozen P1–P6; rubric axis4",
+            "Thin-plan intent may be already covered while details require correction. Final partial-correction labels are clear; original dual labels were not intrinsically material failure."
+          ],
+          [
+            "M12",
+            "AMEND",
+            "EV18",
+            "Platform baseline and wider large-print scope useful. W3C Understanding reproduces SC text; demanding normative URL alone was not proof old threshold wrong."
+          ],
+          [
+            "M13",
+            "ACCEPT proposal",
+            "brief:3; frozen P5; final:398–426",
+            "Abuse/identity/capacity options preserve district choice; no mandate to implement caregiver portal."
+          ],
+          [
+            "M14",
+            "ACCEPT downgrade",
+            "EV09, EV15",
+            "Fetched warning is not multi-release chain. Snipe regression chain remains and satisfies O3 minimum."
+          ],
+          [
+            "m1",
+            "AMEND",
+            "EV12–EV13",
+            "Latest-result/history/disable-not-delete and owner/burden notes supported. Unique individual instruments do not prove model variant cascade impossible."
+          ],
+          [
+            "m2",
+            "ACCEPT proposal",
+            "brief:3; final:269–321",
+            "Safe identifier, staff join and notes-smuggling guard preserve minimization and classroom usability."
+          ],
+          [
+            "m3",
+            "ACCEPT",
+            "EV18",
+            "2D exception includes data tables and necessary toolbar, not carte blanche for every cell."
+          ],
+          [
+            "m4",
+            "ACCEPT scoped feature",
+            "EV14",
+            "Staff locale only on Snipe path; district second-language coverage still a setup question."
+          ],
+          [
+            "m5",
+            "ACCEPT optional operational elaboration",
+            "final:363–396",
+            "Selection/comprehension owner and limited expansion useful; brief did not require partial-expansion scheme."
+          ],
+          [
+            "m6",
+            "ACCEPT scope limitation",
+            "EV05, EV08; final:269–321",
+            "Named page/API/export/search plus backup/log/cache/print risks distinguish tested surface from residual risk; no total privacy proof."
+          ],
+          [
+            "m7",
+            "ACCEPT need; incomplete applicability",
+            "EV07; F1",
+            "Timezone/no-deadline/tag/photo-cap semantics supplied, but PocketBase native type/default absent."
+          ],
+          [
+            "m8",
+            "ACCEPT bounded omissions",
+            "EV48, EV10–EV13; final:122–146",
+            "Domain mappings qualified. Library and concrete ticket alternatives admitted omitted; no exhaustiveness requirement."
+          ],
+          [
+            "m9",
+            "ACCEPT inference label",
+            "EV15",
+            "Webhook payload regression supports message-contract engineering analogy, not specific caregiver wording."
+          ],
+          [
+            "m10",
+            "ACCEPT narrow applicability",
+            "EV17",
+            "Former-student rule conditional on alumni loans; not assumed current pilot population."
+          ],
+          [
+            "m11",
+            "AMEND as future recommendation",
+            "frozen O3; final:323–361",
+            "Future channel-specific chain useful; original O3 requires at least one relevant chain, not every eventual channel."
+          ],
+          [
+            "m12",
+            "ACCEPT proposal",
+            "brief:3; final:363–396, 570–615",
+            "Live pilot audit replaces arbitrary 20 seeded items; no actual shelf audit claimed."
+          ]
+        ],
+        "losses": []
+      },
+      "grade_limits": [
+        "Source-grounded FAIL for the listed material defects after full six-axis review. Not a numerical quality score or an equivalence statement.",
+        "District jurisdiction/privacy/retention schedule, sign-in policy/provider/claims, approval thresholds, second language and chosen channel, actual contact/instrument/staff counts and hosting cost are not supplied.",
+        "Core selection remains open. Snipe contact visibility, InvenTree separate custom-state filtering and PocketBase projected-view isolation are conditional pending verification; no installed test is claimed.",
+        "No executed recovery/performance/large-print/comprehension/approval/retention/loan-concurrency tests or itemized TCO exist; this is allowed by O6 and is not silently credited as a pass.",
+        "Generic OIDC beyond named PocketBase OAuth providers and district-role mapping remain unresolved; available native DateField/MFA/file-default facts are distinguished from genuinely external choices."
+      ]
+    }
+  },
+  "method_clues": {
+    "neutral_to_actual": {
+      "N2": "control",
+      "N1": "treatment"
+    },
+    "blinding": "Partial only: exact input map exposes actual_arm; paths and stage assignments expose M15 and the treatment verifier context. These clues were unavoidable and disclosed; not a blinded comparison.",
+    "candidate_method": "Control investigator/full critic/full reviser; treatment additionally has three neutral verification questions and independent verifier package. Neither agreement nor number of contexts is a quality oracle.",
+    "assessment_independence": "Fresh assessment from specified inputs and independently selected public primary evidence; no campaign/private history, other cases/evaluations, nested worker or candidate feedback."
+  },
+  "comparative_quality_eligible": false,
+  "comparative_judgment": "No quality/speed/cost winner: both have identified material defects; two FAIL grades do not imply equal quality. Treatment has additional viable lending/ERP/sync/broker discovery; control has explicit stable-stock and nullable-deadline requirements. These descriptive differences are not a ranking.",
+  "scope_limits": [
+    "This is a complete six-axis independent source assessment of the exact frozen B-08/I08 finals and their declared lineage. It is not a production certification, an exhaustive audit of all vendor source files, an exhaustive market search, or an assessment of any other case/arm history.",
+    "All complete narrative artifacts and all seven source indexes were read. Source-map entries and governing sections/symbols were compared. Retained code captures were read at relevant symbols or independently re-retrieved at the same release; not every line of every retained source file was audited.",
+    "Primary current docs/pricing/main snapshots are observations at recorded access times; tagged ERPNext/Snipe code and releases are version anchors. Mutable docs are not silently treated as capabilities of an unnamed installed version.",
+    "No candidate was edited or repaired. No application/server/browser/witness was started. Independent witnesses in this assessment are source/control-flow counterexamples, not runtime executions.",
+    "All material findings identify concrete consequential errors/omissions/over-rejections within the brief. Runtime absence, externally unspecified district choices and full implementation details are not themselves grounds for failure.",
+    "Native/candidate T3 delivery, billing and hidden tool/provider usage remain separate and null when unobserved. Artifact existence and hashes establish scope, not scientific quality."
+  ],
+  "evaluation_started_at": "2026-10-09T21:26:17.000Z",
+  "evaluation_completed_at": "2026-10-09T21:43:09.173577+00:00",
+  "evaluation_deadline": "2026-10-09T21:50:44.079709+00:00",
+  "observed_source_operations": {
+    "local": "Read-only declared assignment/input map/rubric/brief/plan, all narrative stages, source maps/indexes, and relevant permitted source evidence; verified all 35 map entries before and after assessment.",
+    "http_gets": 80,
+    "retrieval_manifest": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/B-08/evidence/retrievals.json",
+    "web": "Public primary official docs/releases/code accessed through web and independent HTTP text GETs. Search results used to locate primary pages; third-party guides not used as governing fact evidence.",
+    "executed_application_witnesses": 0,
+    "static_analysis": "Compared tagged methods/defaults/units/permissions and constructed source-grounded counterexamples; no fetched code executed.",
+    "failed_retrievals": [
+      {
+        "id": "EV20",
+        "url": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.emailSend/",
+        "status": 404
+      },
+      {
+        "id": "EV38",
+        "url": "https://support.getgrist.com/install/audit-logs-overview/",
+        "status": 404
+      },
+      {
+        "id": "EV40",
+        "url": "https://docs.n8n.io/sustainable-use-license/",
+        "status": 404
+      },
+      {
+        "id": "EV71",
+        "url": "https://support.getgrist.com/understanding-access-rules/",
+        "status": 404
+      },
+      {
+        "id": "EV77",
+        "url": "https://docs.goauthentik.io/integrations/services/snipe-it/",
+        "status": 200
+      },
+      {
+        "id": "EV80",
+        "url": "https://docs.powersync.com/client-sdks/sdk-support-policy",
+        "status": 404
+      }
+    ],
+    "truncated_sources": [
+      "EV21 redundant clipped HTML RFC snapshot; full EV43 used",
+      "EV25 clipped after 160k; relevant 2025.12 path-migration section at lines61–88 retained before clipping"
+    ],
+    "repository_changes": 0,
+    "candidate_changes": 0,
+    "delegated_workers": 0,
+    "startup_governance_read": "Repository startup also read Plans/00-plans-index.md under the supplied AGENTS instruction. That governance index was not used as scientific evidence or a candidate/reference answer; no repository file changed."
+  },
+  "native_and_cost_limits": {
+    "reviewer_lifecycle": "Actual create_goal and get_goal were called before scientific work; active status observed. These saved science artifacts precede the requested terminal update. Actual terminal result belongs to the native tool trace, not a handwritten receipt.",
+    "reviewer_native_completion": null,
+    "candidate_native_completion": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_t3_completion": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_final_delivery": "Both true according to exact evaluator input map; not inferred from native receipt.",
+    "reviewer_token_usage": null,
+    "candidate_token_usage": {
+      "N1": null,
+      "N2": null
+    },
+    "billing": null,
+    "cost": null,
+    "timing_quality": "Evaluation timestamps are local observed UTC. No candidate speed, lower cost, or native protocol success ranking is inferred.",
+    "usage_observation_limit": "get_goal exposes a Goal tokensUsed counter; it is not attributed API input/output billing or candidate usage and is not converted into cost."
+  },
+  "evaluation_started_at_basis": "Actual reviewer native Goal createdAt returned by supported get_goal; earlier assignment-reading startup is not independently timestamped."
+}

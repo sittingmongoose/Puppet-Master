@@ -1,0 +1,243 @@
+{
+  "block": "B-07",
+  "arm": "treatment",
+  "case": "I07",
+  "method": "M15",
+  "stage": "critic",
+  "source_map_version": 1,
+  "accessed_date_utc": "2026-10-09",
+  "usage_billing_observed": null,
+  "sources": [
+    {
+      "id": "C01",
+      "title": "Booking Requests & Approvals | Skedda Support",
+      "url": "https://support.skedda.com/en/articles/11774950-booking-requests-approvals",
+      "source_type": "vendor support documentation",
+      "version_or_release": "Live article dated July 7, 2026; no product build version stated",
+      "commit": null,
+      "locator": "Overview and plan requirement; booking request submission; FAQ on conflicting requests, custom-admin exceptions, and Outlook edits",
+      "accessed_at": "2026-10-09T21:32:52Z",
+      "observed_operations": [
+        "opened official Skedda help page",
+        "read request state, plan gating, role exceptions, conflicting pending request, and Outlook-edit sections"
+      ],
+      "evidence_path": "sources/index.md#c01-booking-requests-approvals-skedda-support"
+    },
+    {
+      "id": "C02",
+      "title": "Buffer time | Skedda Support",
+      "url": "https://support.skedda.com/en/articles/3653032-buffer-time",
+      "source_type": "vendor support documentation",
+      "version_or_release": "Live article dated March 4, 2025; no product build version stated",
+      "commit": null,
+      "locator": "Create rule, how users see buffers, time granularity, system-user exceptions, and FAQ on before/after semantics",
+      "accessed_at": "2026-10-09T21:32:52Z",
+      "observed_operations": [
+        "opened official Skedda help page",
+        "read buffer scope, configuration, timing, and exceptions"
+      ],
+      "evidence_path": "sources/index.md#c02-buffer-time-skedda-support"
+    },
+    {
+      "id": "C03",
+      "title": "What does a food business account look like? | The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/1812934-what-does-a-food-business-account-look-like",
+      "source_type": "vendor help documentation",
+      "version_or_release": "Article dated June 7, 2023; no product build version stated",
+      "commit": null,
+      "locator": "Bookings, Calendars, Reports, Community, Business Profile, and My Account sections",
+      "accessed_at": "2026-10-09T21:32:52Z",
+      "observed_operations": [
+        "opened official Food Corridor help page",
+        "read tenant schedule, profile/community visibility, reporting, and account credential sections"
+      ],
+      "evidence_path": "sources/index.md#c03-food-business-account-the-food-corridor-help-center"
+    },
+    {
+      "id": "C04",
+      "title": "What is Digital Sign-In / Sign-Out? | The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/1413890-what-is-digital-sign-in-sign-out",
+      "source_type": "vendor help documentation",
+      "version_or_release": "Article dated September 23, 2022; no product build version stated",
+      "commit": null,
+      "locator": "Client PIN and sign-in methods; kitchen view/add/edit and hour-reconciliation sections",
+      "accessed_at": "2026-10-09T21:32:52Z",
+      "observed_operations": [
+        "opened official Food Corridor help page",
+        "read account PIN, entry methods, and administrator reconciliation/edit behavior"
+      ],
+      "evidence_path": "sources/index.md#c04-digital-sign-in-sign-out-the-food-corridor-help-center"
+    },
+    {
+      "id": "C05",
+      "title": "What Information is in the Reporting Tab? | The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/2322739-what-information-is-in-the-reporting-tab",
+      "source_type": "vendor help documentation",
+      "version_or_release": "Live article displayed as updated over three weeks before access; no product build version stated",
+      "commit": null,
+      "locator": "CSV download/filter section; All Bookings current-year table; client and sign-in report tables",
+      "accessed_at": "2026-10-09T21:32:52Z",
+      "observed_operations": [
+        "opened official Food Corridor help page",
+        "read report formats, filter behavior, date range, record categories, and account-side scope"
+      ],
+      "evidence_path": "sources/index.md#c05-reporting-tab-the-food-corridor-help-center"
+    },
+    {
+      "id": "C06",
+      "title": "How do I delete my account? | The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/1935331-how-do-i-delete-my-account",
+      "source_type": "vendor help documentation",
+      "version_or_release": "Article dated June 22, 2020; no product build version stated",
+      "commit": null,
+      "locator": "Section describing access after leaving a kitchen and being marked inactive",
+      "accessed_at": "2026-10-09T21:32:52Z",
+      "observed_operations": [
+        "opened official Food Corridor help page",
+        "read inactive-client account/report-access statement and its limited scope"
+      ],
+      "evidence_path": "sources/index.md#c06-inactive-food-corridor-account-the-food-corridor-help-center"
+    },
+    {
+      "id": "C07",
+      "title": "Food Code 2026 | FDA",
+      "url": "https://www.fda.gov/food/fda-food-code/food-code-2026",
+      "source_type": "government model-code page",
+      "version_or_release": "FDA Food Code 2026 edition; adoption offered to governmental jurisdictions",
+      "commit": null,
+      "locator": "Model description and statement that the code is offered for jurisdictional adoption",
+      "accessed_at": "2026-10-09T21:32:52Z",
+      "observed_operations": [
+        "opened FDA Food Code 2026 page",
+        "read the code's status and adoption scope"
+      ],
+      "evidence_path": "sources/index.md#c07-food-code-2026-us-fda"
+    },
+    {
+      "id": "C08",
+      "title": "Web Content Accessibility Guidelines (WCAG) 2.2 | W3C",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "source_type": "official W3C Recommendation",
+      "version_or_release": "WCAG 2.2; SC 2.5.7 and SC 2.5.8, Level AA",
+      "commit": null,
+      "locator": "Success Criteria 2.5.7 Dragging Movements and 2.5.8 Target Size (Minimum)",
+      "accessed_at": "2026-10-09T21:32:52Z",
+      "observed_operations": [
+        "opened W3C WCAG 2.2 Recommendation",
+        "inspected normative wording and listed exceptions for single-pointer alternative and target size"
+      ],
+      "evidence_path": "sources/index.md#c08-web-content-accessibility-guidelines-wcag-22-w3c"
+    },
+    {
+      "id": "C09",
+      "title": "PostgreSQL 18: Range Types",
+      "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+      "source_type": "versioned official technical documentation",
+      "version_or_release": "PostgreSQL 18 documentation",
+      "commit": null,
+      "locator": "Sections 8.17.3, 8.17.6, and 8.17.10; standard [) constructor and exclusion constraint example",
+      "accessed_at": "2026-10-09T21:32:52Z",
+      "observed_operations": [
+        "opened versioned PostgreSQL documentation",
+        "inspected range bounds, empty/unbounded cases, and overlap-exclusion example"
+      ],
+      "evidence_path": "sources/index.md#c09-postgresql-18-range-types"
+    },
+    {
+      "id": "C10",
+      "title": "eventOverlap | FullCalendar Docs",
+      "url": "https://fullcalendar.io/docs/eventOverlap",
+      "source_type": "official software documentation",
+      "version_or_release": "Current documentation identifies FullCalendar v7.1.1, released October 6, 2026",
+      "commit": null,
+      "locator": "Definition, drag/resize scope, default value, and version footer",
+      "accessed_at": "2026-10-09T21:32:52Z",
+      "observed_operations": [
+        "opened FullCalendar documentation",
+        "read the option scope and default"
+      ],
+      "evidence_path": "sources/index.md#c10-eventoverlap-fullcalendar-docs"
+    },
+    {
+      "id": "C11",
+      "title": "Events in dayGridDay view overlapping when eventOrderStrict: true | FullCalendar issue #6393",
+      "url": "https://github.com/fullcalendar/fullcalendar/issues/6393",
+      "source_type": "official source-code repository issue tracker",
+      "version_or_release": "Issue reports FullCalendar 5.8.0; opened June 23, 2021; milestone v5.9.0",
+      "commit": null,
+      "locator": "Issue title, reproduction description, Confirmed/Event Rendering labels, and v5.9.0 milestone",
+      "accessed_at": "2026-10-09T21:32:52Z",
+      "observed_operations": [
+        "opened official GitHub issue",
+        "read reported symptom, affected version, labels, and milestone"
+      ],
+      "evidence_path": "sources/index.md#c11-fullcalendar-issue-6393"
+    },
+    {
+      "id": "C12",
+      "title": "FullCalendar fix commit for issue #6393",
+      "url": "https://github.com/fullcalendar/fullcalendar/commit/6acf6b2",
+      "source_type": "official source-code repository commit",
+      "version_or_release": "FullCalendar fix commit 6acf6b2, associated with the v5.9.0 issue chain",
+      "commit": "6acf6b2",
+      "locator": "Commit header/message and changed-file tree for seg-hierarchy.ts and event-placement.ts",
+      "accessed_at": "2026-10-09T21:32:52Z",
+      "observed_operations": [
+        "opened official GitHub commit page",
+        "inspected commit message and changed-file tree"
+      ],
+      "evidence_path": "sources/index.md#c12-fullcalendar-fix-commit-6acf6b2"
+    },
+    {
+      "id": "C13",
+      "title": "Pricing | Spacebring",
+      "url": "https://www.spacebring.com/pricing",
+      "source_type": "vendor pricing page",
+      "version_or_release": "Mutable live pricing; Business plan page rendered USD at access; no effective date/build stated",
+      "commit": null,
+      "locator": "Business plan monthly price and minimum term; included active users; member mobile app and API add-on sections",
+      "accessed_at": "2026-10-09T21:32:52Z",
+      "observed_operations": [
+        "opened official Spacebring pricing page",
+        "inspected rendered currency, Business term, active-user count, and add-on prices"
+      ],
+      "evidence_path": "sources/index.md#c13-pricing-spacebring"
+    },
+    {
+      "id": "C14",
+      "title": "Booking and Visit Data Retention | Skedda Support",
+      "url": "https://support.skedda.com/en/articles/5707504-booking-and-visit-data-retention",
+      "source_type": "vendor support documentation",
+      "version_or_release": "Live article dated March 4, 2025; no product build version stated",
+      "commit": null,
+      "locator": "Data retention period and plan qualification; recurring booking and export FAQs",
+      "accessed_at": "2026-10-09T21:32:52Z",
+      "observed_operations": [
+        "opened official Skedda help page",
+        "read default retention, plan downgrade behavior, unsupported period, and export guidance"
+      ],
+      "evidence_path": "sources/index.md#c14-booking-and-visit-data-retention-skedda-support"
+    },
+    {
+      "id": "C15",
+      "title": "How do I book in my kitchen? | The Food Corridor Help Center",
+      "url": "https://help.thefoodcorridor.com/en/articles/1413904-how-do-i-book-in-my-kitchen",
+      "source_type": "vendor help documentation",
+      "version_or_release": "Article dated November 21, 2023; no product build version stated",
+      "commit": null,
+      "locator": "Schedule visibility, booking creation, distinct equipment time range, recurring bookings, and approval workflow",
+      "accessed_at": "2026-10-09T21:32:52Z",
+      "observed_operations": [
+        "opened official Food Corridor help page",
+        "read tenant booking workflow and vendor-documented boundaries"
+      ],
+      "evidence_path": "sources/index.md#c15-how-do-i-book-in-my-kitchen-the-food-corridor-help-center"
+    }
+  ],
+  "mutable_source_policy": "Vendor help, product, and pricing pages are mutable and describe only public stated behavior at access. Preserve prior IDs and observations; do not silently rebind or overwrite them. Resolve current product fit, region/currency, plan entitlement, retention, and pricing with a dated written quote and demonstration.",
+  "billing_and_model_usage": {
+    "usage": null,
+    "billing": null,
+    "reason": "Not observed by the critic."
+  }
+}

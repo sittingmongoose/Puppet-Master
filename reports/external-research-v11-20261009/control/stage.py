@@ -10,7 +10,7 @@ state=json.loads((R/'control/state.json').read_text()); key=f'{block}/{arm}'
 route=q.get('stage_routes',{}).get(arm,{}).get(stage,q['route'])
 now=datetime.datetime.now(datetime.timezone.utc)
 if key not in state['arms']:
- state['arms'][key]={'block':block,'arm':arm,'case':q['case'],'method':q['method'],'route':q['route'],'requested_at':now.isoformat(),'deadline':(now+datetime.timedelta(seconds=q['allowance_s'])).isoformat(),'stages':{},'status':'STARTED','kind':q['kind']}
+ state['arms'][key]={'block':block,'arm':arm,'case':q['case'],'method':q['method'],'route':q['route'],'requested_at':now.isoformat(),'deadline':(now+datetime.timedelta(seconds=q.get('arm_wall_ceiling_s',{}).get(arm,q['allowance_s']))).isoformat(),'stages':{},'status':'STARTED','kind':q['kind']}
 a=state['arms'][key]
 p=R/'jobs'/block/arm/stage;p.mkdir(parents=True,exist_ok=True)
 assert not (p/'assignment.md').exists(),'refuse replacement'
@@ -18,6 +18,7 @@ isresearch=stage.startswith('research')
 reviser=stage in ('reviser','critic-finalizer')
 allowance=1800 if isresearch else 1080 if reviser else 720
 if q.get('stage_allowances_s'):allowance=q['stage_allowances_s'].get('research' if isresearch else stage,allowance)
+if q.get('arm_stage_allowances_s'):allowance=q['arm_stage_allowances_s'].get(arm,{}).get('research' if isresearch else stage,allowance)
 if q['method']=='M01' and arm=='control' and isresearch: allowance=1200
 if stage=='critic-finalizer':allowance=1800
 if q['method'] in ('M05','M13','M14') and arm=='treatment' and isresearch:allowance=q['allowance_s']

@@ -438,25 +438,61 @@
   },
   {
     "block_id": "C-01",
-    "phase": "C",
-    "method": null,
-    "case": "C01",
-    "route": null,
-    "status": "UNSTARTED_RESERVED",
+    "phase": "C-development",
+    "method": "M16",
+    "case": "H01",
+    "route": "luna",
+    "status": "UNSTARTED",
     "kind": "full-discovery",
-    "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "allowance_s": 4500,
+    "occupied_ceiling_s": 5400,
+    "method_version": "v1",
+    "resource_version": "budget-75vs60-v1",
+    "arm_wall_ceiling_s": {
+      "control": 4500,
+      "treatment": 3600
+    },
+    "arm_stage_allowances_s": {
+      "control": {
+        "research": 1800,
+        "critic": 1200,
+        "reviser": 1500
+      },
+      "treatment": {
+        "research": 1440,
+        "critic": 1080,
+        "reviser": 1080
+      }
+    }
   },
   {
     "block_id": "C-02",
-    "phase": "C",
-    "method": null,
-    "case": "C02",
-    "route": null,
-    "status": "UNSTARTED_RESERVED",
+    "phase": "C-development",
+    "method": "M16",
+    "case": "H02",
+    "route": "luna",
+    "status": "UNSTARTED",
     "kind": "full-discovery",
-    "allowance_s": 3600,
-    "occupied_ceiling_s": 5400
+    "allowance_s": 4500,
+    "occupied_ceiling_s": 5400,
+    "method_version": "v1",
+    "resource_version": "budget-75vs60-v1",
+    "arm_wall_ceiling_s": {
+      "control": 4500,
+      "treatment": 3600
+    },
+    "arm_stage_allowances_s": {
+      "control": {
+        "research": 1800,
+        "critic": 1200,
+        "reviser": 1500
+      },
+      "treatment": {
+        "research": 1440,
+        "critic": 1080,
+        "reviser": 1080
+      }
+    }
   },
   {
     "block_id": "C-03",

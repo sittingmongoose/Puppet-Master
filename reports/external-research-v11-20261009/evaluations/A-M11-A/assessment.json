@@ -1,0 +1,2518 @@
+{
+  "block": "A-M11-A",
+  "case": "S11",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M11-A/assignment.md",
+      "sha256": "58a2654ab94d11c143b9e532f84f5455210ce8dade35ee93ad4dc01d7ea5db41",
+      "kind": "governing_input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M11-A/input-map.json",
+      "sha256": "564e9d536c55f8c7ab584fbc47cc6f096a5472c8ecc4ff0c68d3023127c78158",
+      "kind": "governing_input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "kind": "governing_input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S11/brief.md",
+      "sha256": "da5e0032e5ce6e30ca840d7b65d3d1a4104e87dbad54081d3b65ff9bfb059314",
+      "kind": "governing_input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S11/plan-root-only.md",
+      "sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "kind": "governing_input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+      "sha256": "6a1e94c48963a948e117dc684e013168f2c48279218fda32e09045721019ddb1",
+      "expected_sha256": "6a1e94c48963a948e117dc684e013168f2c48279218fda32e09045721019ddb1",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/source-map.json",
+      "sha256": "8ca360f5864c571e575b0a52bf9f0e576a68be9a42de2cf4a3e3c112ee77d160",
+      "expected_sha256": "8ca360f5864c571e575b0a52bf9f0e576a68be9a42de2cf4a3e3c112ee77d160",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/assignment.md",
+      "sha256": "ea8677c7b5a8b760ba693480ac59cf043209df41d1d1756cd90d23b0825f7742",
+      "expected_sha256": "ea8677c7b5a8b760ba693480ac59cf043209df41d1d1756cd90d23b0825f7742",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/input-map.json",
+      "sha256": "62afb832cd5ca8c0d752fadadc0b0a61f88d28845eceb149f4526098fb54d954",
+      "expected_sha256": "62afb832cd5ca8c0d752fadadc0b0a61f88d28845eceb149f4526098fb54d954",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/critic/critique.md",
+      "sha256": "a65acc91a5189b77da87cd27f77aca41b35d068aaf1b84ca6b4b0ff3bda0bb7d",
+      "expected_sha256": "a65acc91a5189b77da87cd27f77aca41b35d068aaf1b84ca6b4b0ff3bda0bb7d",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/critic/source-map.json",
+      "sha256": "7af78151b82c496b352338d71a89c570103851a2a76950f65983778cd809404b",
+      "expected_sha256": "7af78151b82c496b352338d71a89c570103851a2a76950f65983778cd809404b",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/critic/assignment.md",
+      "sha256": "381870abf13577e9cfe14c331b9a466ab6dae7d8adacd04322bebe6df36b3296",
+      "expected_sha256": "381870abf13577e9cfe14c331b9a466ab6dae7d8adacd04322bebe6df36b3296",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/critic/input-map.json",
+      "sha256": "384826bdbd0266c24fc9157489d213e224aa130f499b438669b16d24084653a6",
+      "expected_sha256": "384826bdbd0266c24fc9157489d213e224aa130f499b438669b16d24084653a6",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/discovery.md",
+      "sha256": "d0c19c6324a3b23b265833263010965de551b10fad4e0ef0d050619cf2770551",
+      "expected_sha256": "d0c19c6324a3b23b265833263010965de551b10fad4e0ef0d050619cf2770551",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/draft.md",
+      "sha256": "729dbce303a0fdcc88361ca21e4ef2a4e5aa965ddf4815f1e6e42514a1dad4da",
+      "expected_sha256": "729dbce303a0fdcc88361ca21e4ef2a4e5aa965ddf4815f1e6e42514a1dad4da",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/final.md",
+      "sha256": "97fa8eb4b22df8ec0f3b6040b126f824981918357271472783646047d7d262d4",
+      "expected_sha256": "97fa8eb4b22df8ec0f3b6040b126f824981918357271472783646047d7d262d4",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/source-map.json",
+      "sha256": "c61e59735657f89b178dd4805926fd98a45a574b0a6a7a77505408b3d8e5de98",
+      "expected_sha256": "c61e59735657f89b178dd4805926fd98a45a574b0a6a7a77505408b3d8e5de98",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/revealed-plan.md",
+      "sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "expected_sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/plan-reveal.json",
+      "sha256": "cb1a6de5328747a7adb1853c7a4660251e2474c0f6e6e6340f96135ee28b5480",
+      "expected_sha256": "cb1a6de5328747a7adb1853c7a4660251e2474c0f6e6e6340f96135ee28b5480",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/assignment.md",
+      "sha256": "16fa6cd0bdf8e8efe768985de17492f86893e4f426eca96acb70538b6abae5ec",
+      "expected_sha256": "16fa6cd0bdf8e8efe768985de17492f86893e4f426eca96acb70538b6abae5ec",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/input-map.json",
+      "sha256": "03a43187220e8563221232279ac2076165f1862980fbdb9421d2f642960feb05",
+      "expected_sha256": "03a43187220e8563221232279ac2076165f1862980fbdb9421d2f642960feb05",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/sources/S12-reviser-reattempt.md",
+      "sha256": "9e619fbed4f34aa945f36bcf1a001c43faa82c5359f7246c0de2199bfdf985cc",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/sources/index.md",
+      "sha256": "460a210b3829b6570ec8c91a2b5a61dd2f28e516e70a2a47ffd469f463a2596d",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S01-webvtt-spec.md",
+      "sha256": "5721a6b3850b6f6157b90dcad2a2bfccc33a58083408fde2f1bb1e469ca4d634",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S02-wai-media-av.md",
+      "sha256": "7d40bd3d49d51dd93c9542a0ee104bb38336b21c8e3782bd286d2f4f60de54aa",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S03-videojs-accessibility-docs.md",
+      "sha256": "045a613b6d191e2e2c3e91c24a99e387f3be7e0507ad000950b98643b4a921b6",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S04-videojs-issue-2746.md",
+      "sha256": "31e2dc0d3d170036086d7a2ecb7005266a825749c9b0138fa1e4c123a476238a",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S05-videojs-releases.md",
+      "sha256": "026fcccb8783b1f9b89977a9f3d7c715eae7b28a7f7676728e7a0bdc889458c9",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S06-wcag-122-captions.md",
+      "sha256": "8d2cc61784badd3c94ab785c1198dd80efd020bc606d646967aac2756401fc65",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S07-wcag-125-audio-description.md",
+      "sha256": "016c60c1cd10f709d9ca3cb44e4e6dd8734128bd58ead3abfebfa727a92b431b",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S08-mdn-webvtt-api.md",
+      "sha256": "16138b49b6c3779a9ec580d8d6b9c52a0bcf6b8288a6fd4fa079b2f7b9515759",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S09-subtitle-edit-releases.md",
+      "sha256": "6dca1364eb69e3f31884ad38f309d8de7b7aa2ee7506b2ba4910c9d224181e64",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S10-wai-test-evaluate.md",
+      "sha256": "e318a18d5e6587499a16f90b703d3e117fc2aec65258cf21ae3fcf6ae0730bf7",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S11-plyr.md",
+      "sha256": "ef8d2b41a5c59329d833b0ce69c0cc0a0afcb5d6aa66bc9c7882d67156040f8e",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S12-bbc-subtitle-guidelines.md",
+      "sha256": "339c431e43559940b989f548b082f4a5059b6f4b1b870f656460a0904ca924eb",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S13-amara.md",
+      "sha256": "67ac8450371a22e3596310400a5e4fabb1ca7d81266b6ceff2f69dac605058b1",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/index.md",
+      "sha256": "c5d067bf0fd28f689e2c049c15d633241e99847144c4dfd8c727d4bcecbcd5f0",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/critic/critique.md",
+      "sha256": "c0fccfcb917eb55318b133834898cf7a973a855e3b853a91836b409ba54f0ebf",
+      "expected_sha256": "c0fccfcb917eb55318b133834898cf7a973a855e3b853a91836b409ba54f0ebf",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/critic/source-map.json",
+      "sha256": "728706798c1e6590dc285ae50734ebf54a54c7a0404e2a0a618160e21d019366",
+      "expected_sha256": "728706798c1e6590dc285ae50734ebf54a54c7a0404e2a0a618160e21d019366",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/critic/assignment.md",
+      "sha256": "90f5c8bc7937c73ffe3e6943b7836be9199b1984310a85fa3f02024db9a5a3ba",
+      "expected_sha256": "90f5c8bc7937c73ffe3e6943b7836be9199b1984310a85fa3f02024db9a5a3ba",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/critic/input-map.json",
+      "sha256": "da947bb2fe1840e5d9522f7920dd5015e38edf750a5360af4751fdb03d19fc6b",
+      "expected_sha256": "da947bb2fe1840e5d9522f7920dd5015e38edf750a5360af4751fdb03d19fc6b",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/discovery.md",
+      "sha256": "e3fff5dbeb1774277521e2abbfb92ac0cdcbc5d3f565e71dfb27908c2f6ba6e6",
+      "expected_sha256": "e3fff5dbeb1774277521e2abbfb92ac0cdcbc5d3f565e71dfb27908c2f6ba6e6",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/draft.md",
+      "sha256": "8ac0254bd54cc01ba0e84ec85c2631d9092748e9354a47cc178fe6e7ab09fcb8",
+      "expected_sha256": "8ac0254bd54cc01ba0e84ec85c2631d9092748e9354a47cc178fe6e7ab09fcb8",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/source-map.json",
+      "sha256": "6cf438a6199488584a6f4f984a1215eab27c3902844bfccf1240163781b0281e",
+      "expected_sha256": "6cf438a6199488584a6f4f984a1215eab27c3902844bfccf1240163781b0281e",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/revealed-plan.md",
+      "sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "expected_sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/plan-reveal.json",
+      "sha256": "b037fa65b6d78591d8dbdc68b1cbfae4ade88ba3c465021e543d2604f58b3353",
+      "expected_sha256": "b037fa65b6d78591d8dbdc68b1cbfae4ade88ba3c465021e543d2604f58b3353",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/assignment.md",
+      "sha256": "ce729d9ef41a78f34a8b65b5624e6a104d558dc4adc9bb7570e68214bdcdf0de",
+      "expected_sha256": "ce729d9ef41a78f34a8b65b5624e6a104d558dc4adc9bb7570e68214bdcdf0de",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/input-map.json",
+      "sha256": "b3133c31132e5a6e55aee2e34a053dbe53ae7e0da57742027c88ad5e885db9ec",
+      "expected_sha256": "b3133c31132e5a6e55aee2e34a053dbe53ae7e0da57742027c88ad5e885db9ec",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/critic/sources/S23-S34-critic-verifications.md",
+      "sha256": "56460d4b9f22866e828c080e37857210e163bfac65d34d22012140bb907a73b0",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/critic/sources/index.md",
+      "sha256": "3600d69b65e4d102fee7add94c3ea625969375dc24d1b989beb5e3d8a2593276",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S01-able-player-site.md",
+      "sha256": "e5cf2a2158b344df9bb96c60c42cc908604733eb6198053844eb3e13fe68f591",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S02-able-player-releases.md",
+      "sha256": "fa42f25de7989526cdd799cd11e1215e96d0df2f8d6c1010fd7f9aa1e1a0aed8",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S03-ableplayer-issue-282.md",
+      "sha256": "7d4349b4f5a62162bc1e9ea2370b9463e96afcf91e527c60fc910523045bff1c",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S04-whisper-readme.md",
+      "sha256": "fc2167fcdd8051c6a479cfe74a6a69efcf06d547606ff9d3f216197094d49816",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S05-whisper-discussion-388.md",
+      "sha256": "11bb0ad784504966c35cc9825950c2d592f89082aa4d7b433c816cd17cbdcaaf",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S06-w3c-webvtt.md",
+      "sha256": "219abff7cc46824398f30715cad34fb7e12f3e4cc745889449bbada59108832a",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S07-w3c-h95.md",
+      "sha256": "7300136c8287aeb95c38a2fef9df8a0f34178e942ce34d761cb2494ee094c2c1",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S08-mdn-webvtt.md",
+      "sha256": "efe13738a2af1a0c3833557b568a80742353b9d7120114315fbc7706f8f70882",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S09-wcag122.md",
+      "sha256": "0462167d1a87af7e916d09d783b479a1de4878cbf2fa726239cd27b9bb4435f2",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S10-wcag125.md",
+      "sha256": "ef1a09f22aa980c87778d75edda3bb9928f662405d5388f8885b562aecc7d0ab",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S11-plyr-readme.md",
+      "sha256": "977f7b39bc2afa5001473bfec9d3fbaa99e96c8dc279f27454609b5668fa4cc3",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S12-subtitle-edit.md",
+      "sha256": "2bcf381540c9f8806026dc73bc17f8ec9b6be4c8feb7fe4495d6d5976ddce649",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S13-subtitle-editor-org.md",
+      "sha256": "c87c8726c4d8664b2e817f03340cb19ac4026aa6c53e0f05e071a007ee5d543d",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S14-amara.md",
+      "sha256": "68a2fc9734004ea4d3ce82e416e2aea863940290e722e0b0ffb8cfeb21ea6aae",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S15-wai-selecting-tools.md",
+      "sha256": "bab199e56d52a9f8c138b23e3f9937811fa160ca97fc40f5455b4dbf1f1772ef",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S16-conformance-challenges.md",
+      "sha256": "624b418fb86ebc19665dc15c3fe18e819884b3d5328e8e89b8625b63f2b352ab",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S17-wcagem.md",
+      "sha256": "c1feae9c53201eb669dcd0fdc95ca8c5f4908540f9948817f6308e658ded9a68",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S18-fcc-quality.md",
+      "sha256": "617f12b7c4394b04b6c1a7af2a55d916785215c6571b807ecfacabd62045d384",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S19-cfr79.md",
+      "sha256": "fee94d75a751a34795ea551f9947e73e3c22f605393210aae034fc5ab29cf1e2",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S20-rev-guidelines.md",
+      "sha256": "59ce783a31d03d171625f292f2f6e21672406ae3bfd75d039b628c5cf4a4e811",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S21-3play-practices.md",
+      "sha256": "87d62741ae3afebcf73dddca1101922a004c8a29ecb0eb87a916e86998ba6ae3",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S22-argos.md",
+      "sha256": "e00b1e2eb4d97d28486411d30b132e81adc10331a95f2e2cfe3b1eead0c54d88",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    }
+  ],
+  "arms": {
+    "N2": {
+      "actual_arm": "control",
+      "final_delivery": true,
+      "scientific_artifact_available": true,
+      "grade": "FAIL",
+      "scientific_quality": "FAIL",
+      "material_findings": [
+        {
+          "id": "N2-F1",
+          "type": "MATERIALLY_WRONG",
+          "severity": "high",
+          "original_obligations": [
+            "O2",
+            "O3",
+            "O6"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 20,
+              "passage": "Video.js deliberately ships no caption-appearance settings menu"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 85,
+              "passage": "acceptance testing must specifically traverse that dialog"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 118,
+              "passage": "completes play/pause, caption toggle, and the captions settings dialog"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V02",
+              "url": "https://videojs.org/docs/framework/html/guides/accessibility",
+              "version_or_domain": "Video.js v10 framework HTML guide; concepts URL redirects here",
+              "locator": "Keyboard interaction; Focus management; Status announcements; Captions and subtitles; Testing"
+            },
+            {
+              "id": "V03",
+              "url": "https://api.github.com/repos/videojs/video.js/issues/2746",
+              "version_or_domain": "Issue opened 2015-10-27, closed 2017-02-21",
+              "locator": "created_at, closed_at, body; issue #2746"
+            },
+            {
+              "id": "V04",
+              "url": "https://api.github.com/repos/videojs/video.js/pulls/4050",
+              "version_or_domain": "Merged 2017-02-21; 0d0dea4da820a75f7e8190d99b7838c250bb3a9d",
+              "locator": "merge_commit_sha, merged_at, body; ModalDialog inheritance"
+            },
+            {
+              "id": "V05",
+              "url": "https://api.github.com/repos/videojs/video.js/releases?per_page=100",
+              "version_or_domain": "video.js@10.0.1; v8.24.2 prerelease",
+              "locator": "tag_name, published_at, prerelease; release bodies"
+            }
+          ],
+          "reasoning": "The final simultaneously documents that the chosen v10 player lacks the appearance menu and makes the historic caption-settings dialog a mandatory acceptance task. #2746/#4050 concern the 2017 implementation, not an established v10 control. No selected custom appearance panel is supplied; it is explicitly optional. A test requiring a nonexistent control cannot validate this chosen stock player. The historical regression remains a useful focus/label lesson, but its exact control and branch cannot be transferred without an applicability check. This is a substantive validation/domain error, not a missing citation or a demand to execute unavailable runtime.",
+          "scope": "authored final"
+        },
+        {
+          "id": "N2-F2",
+          "type": "MATERIALLY_INCOMPLETE",
+          "severity": "medium",
+          "original_obligations": [
+            "O2",
+            "O5",
+            "O6"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 42,
+              "passage": "No BBC-class editorial numbers ... any timing standards ... must either find a new authoritative source or stand as explicit internal policy"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 121,
+              "passage": "spot-check ten published videos against it with Easy Checks"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 123,
+              "passage": "authoritative editorial timing defaults post-BBC-failure ... still 404"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V06",
+              "url": "https://www.bbc.co.uk/accessibility/forproducts/guides/subtitles/",
+              "version_or_domain": "BBC authoring guidance; voluntary comparator for this nonprofit",
+              "locator": "§4 Timing, §4.1, §5 Synchronisation, §6 Matching shots; WAI outgoing BBC link"
+            },
+            {
+              "id": "V12",
+              "url": "https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded.html",
+              "version_or_domain": "WCAG 2.2 Understanding, SC 1.2.2 Level A",
+              "locator": "SC, Intent, Techniques, Failures F8/F74/F75, captions definition"
+            },
+            {
+              "id": "V17",
+              "url": "https://www.w3.org/WAI/test-evaluate/preliminary/",
+              "version_or_domain": "Easy Checks first review, links to a newer draft",
+              "locator": "Scope; multimedia alternatives"
+            }
+          ],
+          "reasoning": "The brief expressly requests practical timing constraints. Millisecond file syntax does not investigate reading time, synchronization or the conditions of an editorial rule. The only editorial attempt repeatedly targets a dead BBC GitHub URL, and the final leaves the entire useful domain for future work. The already consulted WAI captions page links the current official BBC guidance, which independently retrieved successfully. Its §4–§6 contain applicable comparator guidance and contextual exceptions. Honest failed access is retained and is not fabrication; the defect is the absence of alternative available research and the substitution of future policy for the requested investigation. No universal numerical rule or BBC legal duty is required by this finding.",
+          "scope": "authored final"
+        },
+        {
+          "id": "N2-F3",
+          "type": "MATERIALLY_INCOMPLETE",
+          "severity": "medium",
+          "original_obligations": [
+            "O2",
+            "O5"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 7,
+              "passage": "Rights and licensing specifics are unaddressed by the captured sources ... an org legal task"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 100,
+              "passage": "rights specifics unaddressed ... licensing/ownership review is an org legal task"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 110,
+              "passage": "rights/licensing specifics (org legal task)"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V33",
+              "url": "https://www.copyright.gov/help/faq/faq-fairuse.html",
+              "version_or_domain": "U.S. Copyright Office guidance; jurisdiction-specific comparator",
+              "locator": "Permission, derivative works and fair use questions"
+            },
+            {
+              "id": "V34",
+              "url": "https://www.govinfo.gov/content/pkg/USCODE-2024-title17/html/USCODE-2024-title17.htm",
+              "version_or_domain": "Official 2024 Title 17; illustrative U.S. domain only",
+              "locator": "§101 derivative works, §106 rights, §107 exceptions"
+            }
+          ],
+          "reasoning": "No rights primary or even bounded investigation of ownership, hosting/distribution, translation authorization or an applicable licensing exception appears in the declared source set. The requirement to investigate rights constraints is deferred wholesale. The missing organization jurisdiction and video provenance make a legal conclusion legitimately unresolved, but they do not prevent conditional research of basic rights categories. The cited official U.S. sources demonstrate an available primary research route and are explicitly not imposed as the organization’s law. This is incomplete required research, not a demand for legal advice or an assumption that the recordings are unlicensed.",
+          "scope": "authored final"
+        },
+        {
+          "id": "N2-F4",
+          "type": "MATERIALLY_INCOMPLETE",
+          "severity": "medium",
+          "original_obligations": [
+            "O2",
+            "O5",
+            "O6"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 67,
+              "passage": "the correction path is the controlled workflow under P4/P5"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 73,
+              "passage": "every file exported for publication passes the P1 validity gate ... whether corrections also flow through a versioned store ... user decision"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 79,
+              "passage": "transcript is linked from the same page as the player"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V07",
+              "url": "https://amara.org/",
+              "version_or_domain": "Current product page, Enterprise workflow description",
+              "locator": "Workflows; Team Management Tools; Import and Export"
+            },
+            {
+              "id": "V11",
+              "url": "https://www.w3.org/WAI/media/av/",
+              "version_or_domain": "WAI page updated 2024-09-17",
+              "locator": "Planning; Transcripts; Sign Languages"
+            },
+            {
+              "id": "V12",
+              "url": "https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded.html",
+              "version_or_domain": "WCAG 2.2 Understanding, SC 1.2.2 Level A",
+              "locator": "SC, Intent, Techniques, Failures F8/F74/F75, captions definition"
+            }
+          ],
+          "reasoning": "P4/P5 do not specify the asserted controlled correction workflow: they describe an editor, syntax validity, optional versioned storage and transcript presentation. The translation-draft review gate does not state who may amend a published caption, who approves that change, or how the published transcript stays consistent with corrected captions. S13’s access failure is disclosed, but neither an investigated substitute nor a coherent minimum author/reviewer/publish process replaces it. Amara’s current primary documents provide an example of role permissions and final approval; using Amara, buying Enterprise, Git storage or a full audit system is not required. The material omission is the brief’s controlled-author behavior itself, particularly post-publication corrections.",
+          "scope": "authored final"
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N2-m1",
+          "type": "MATERIALLY_WRONG",
+          "severity": "low",
+          "original_obligations": [
+            "O2"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 27,
+              "passage": "if a <track> carries kind it must also carry srclang"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 55,
+              "passage": "a kind attribute requires srclang"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V08",
+              "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+              "version_or_domain": "HTML Living Standard retrieved 2026-10-09",
+              "locator": "track srclang/kind/default requirements; media controls interface"
+            },
+            {
+              "id": "V09",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API",
+              "version_or_domain": "Live MDN reference",
+              "locator": "Adding WebVTT in HTML; interfaces; cue-region support"
+            }
+          ],
+          "reasoning": "This accurately repeats the captured MDN sentence, but the HTML Living Standard requires srclang specifically for subtitles state. Applying a language tag to these caption tracks is sensible and does not damage this small site, so the overgeneralized normative claim is minor in this context. It is a primary/reference disagreement that the critic’s re-attribution did not resolve.",
+          "scope": "authored final"
+        },
+        {
+          "id": "N2-m2",
+          "type": "FALSE_CORRECTION_OR_REJECTION",
+          "severity": "low",
+          "original_obligations": [
+            "O4"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 59,
+              "passage": "Disposition: correction"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 61,
+              "passage": "no comparative measurement showing native browser controls are insufficient"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V02",
+              "url": "https://videojs.org/docs/framework/html/guides/accessibility",
+              "version_or_domain": "Video.js v10 framework HTML guide; concepts URL redirects here",
+              "locator": "Keyboard interaction; Focus management; Status announcements; Captions and subtitles; Testing"
+            },
+            {
+              "id": "V08",
+              "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+              "version_or_domain": "HTML Living Standard retrieved 2026-10-09",
+              "locator": "track srclang/kind/default requirements; media controls interface"
+            }
+          ],
+          "reasoning": "The final restores a legitimate native fallback and explicitly admits no native deficit. That removes the draft’s hard rejection. Calling the positive Video.js recommendation a correction still implies more necessity than the evidence supports; an optional enhancement/player decision is the more faithful interpretation. Because the qualifying prose preserves supported native scope, this is a classification limitation rather than a material rejection.",
+          "scope": "authored final"
+        },
+        {
+          "id": "N2-m3",
+          "type": "UNSUPPORTED_CONSEQUENTIAL",
+          "severity": "low",
+          "original_obligations": [
+            "O3"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 37,
+              "passage": "a 16-month accessibility-fix latency is realistic planning data for volunteer dev-time budgets"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V03",
+              "url": "https://api.github.com/repos/videojs/video.js/issues/2746",
+              "version_or_domain": "Issue opened 2015-10-27, closed 2017-02-21",
+              "locator": "created_at, closed_at, body; issue #2746"
+            },
+            {
+              "id": "V04",
+              "url": "https://api.github.com/repos/videojs/video.js/pulls/4050",
+              "version_or_domain": "Merged 2017-02-21; 0d0dea4da820a75f7e8190d99b7838c250bb3a9d",
+              "locator": "merge_commit_sha, merged_at, body; ModalDialog inheritance"
+            }
+          ],
+          "reasoning": "The interval for one historic issue is verified, but it does not establish a typical current latency for a different player architecture or a volunteer team. It is a cautionary example, not a planning estimate.",
+          "scope": "authored final"
+        },
+        {
+          "id": "N2-m4",
+          "type": "UNSUPPORTED_CONSEQUENTIAL",
+          "severity": "low",
+          "original_obligations": [
+            "O6"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 119,
+              "passage": "if corrections fall below the org’s threshold on two consecutive batches, review depth can be safely reduced"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V12",
+              "url": "https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded.html",
+              "version_or_domain": "WCAG 2.2 Understanding, SC 1.2.2 Level A",
+              "locator": "SC, Intent, Techniques, Failures F8/F74/F75, captions definition"
+            },
+            {
+              "id": "V16",
+              "url": "https://www.w3.org/WAI/test-evaluate/",
+              "version_or_domain": "WAI evaluation overview",
+              "locator": "Introduction; Tools; Conformance Evaluation and Reports; People"
+            }
+          ],
+          "reasoning": "A draft-to-review comparison can measure observed edits, but the proposal does not define an independent semantic reference, sampling coverage, severity weighting or a criterion for the word safely. Low edit counts can reflect missed errors. This is an overstrong interpretation of a proposed small pilot, not a claim that a test ran; it is not used to require production-grade statistics.",
+          "scope": "authored final"
+        },
+        {
+          "id": "N2-m5",
+          "type": "UNSUPPORTED_CONSEQUENTIAL",
+          "severity": "low",
+          "original_obligations": [
+            "O6"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 121,
+              "passage": "spot-check ten published videos against [timing policy] with Easy Checks"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V17",
+              "url": "https://www.w3.org/WAI/test-evaluate/preliminary/",
+              "version_or_domain": "Easy Checks first review, links to a newer draft",
+              "locator": "Scope; multimedia alternatives"
+            },
+            {
+              "id": "V06",
+              "url": "https://www.bbc.co.uk/accessibility/forproducts/guides/subtitles/",
+              "version_or_domain": "BBC authoring guidance; voluntary comparator for this nonprofit",
+              "locator": "§4 Timing, §4.1, §5 Synchronisation, §6 Matching shots; WAI outgoing BBC link"
+            }
+          ],
+          "reasoning": "Easy Checks is a preliminary barrier review, not an editorial cue-duration/reading-speed/sync oracle. A timing-policy comparison is a useful proposal, but the referenced checklist does not provide its measurement method.",
+          "scope": "authored final"
+        },
+        {
+          "id": "N2-m6",
+          "type": "MATERIALLY_WRONG",
+          "severity": "low",
+          "original_obligations": [
+            "O2",
+            "O3"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+              "line": 11,
+              "passage": "v10.0.1 ... (2026-10-02)"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V05",
+              "url": "https://api.github.com/repos/videojs/video.js/releases?per_page=100",
+              "version_or_domain": "video.js@10.0.1; v8.24.2 prerelease",
+              "locator": "tag_name, published_at, prerelease; release bodies"
+            }
+          ],
+          "reasoning": "The stable version exists. October 2 is its changelog heading; the API publication timestamp is October 6. This is release-date precision, not a nonexistent product or a failure of the player recommendation.",
+          "scope": "authored final"
+        }
+      ],
+      "unresolved": [
+        {
+          "topic": "Organization jurisdiction, recording ownership/permissions, conformance target, languages and staff",
+          "qualification": "Product inputs unknown; no binding legal/conformance conclusion invented. Missing rights investigation is separately N2-F3."
+        },
+        {
+          "topic": "ASR/MT error rates, actual browser/AT behavior, native integration, MP4 codec/CDN and SRT conversions",
+          "qualification": "No runtime or inventory supplied; no proof inferred."
+        },
+        {
+          "topic": "First shipped release for historic #2746 fix",
+          "qualification": "Merge verified, exact release boundary not supplied; final labels it unknown. Not silently repaired."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "complete original-brief and constraint review",
+          "judgment": "O1 discovery and O3 issue history are substantive; O4–O6 receive full prose. Required timing/rights investigation and controlled post-publication correction remain materially incomplete. All forty-recording/public/nonprofit/caption/keyboard/transcript/draft/no-score constraints are carried; delivery is available.",
+          "evidence": [
+            "N2-F2",
+            "N2-F3",
+            "N2-F4",
+            "V11",
+            "V12",
+            "plan_dispositions"
+          ]
+        },
+        {
+          "axis": 2,
+          "coverage": "complete consequential-claim inventory checked against primary/reference evidence",
+          "judgment": "Most format/player/spec facts hold. Historic dialog does not apply to selected v10; srclang governing source differs from MDN. User target/accuracy/rights inputs remain honestly unknown but required available research is not completed in several domains.",
+          "evidence": [
+            "N2-F1",
+            "N2-m1",
+            "V01",
+            "V02",
+            "V05",
+            "V08",
+            "V09",
+            "V13",
+            "V21",
+            "checked_claims"
+          ]
+        },
+        {
+          "axis": 3,
+          "coverage": "complete discovery and option review",
+          "judgment": "Meaningful findings include descriptive transcripts, future integrated description, platform caption preference design, cross-platform editing and manual/deferral/sign-language options. They are useful, not graded by source count. Ecosystem consolidation does not make every alternative obsolete.",
+          "evidence": [
+            "V02",
+            "V10",
+            "V11",
+            "V14",
+            "V21",
+            "preservation_coverage"
+          ]
+        },
+        {
+          "axis": 4,
+          "coverage": "all six exact P clauses adjudicated",
+          "judgment": "Every clause has retained intent and explicit disposition. P1 sound; P2 recommendation exceeds demonstrated necessity but native remains allowed; P3 drafts are coherent; P4 guard is useful; P5 benefit conditional; P6 layers are right but one task is inapplicable.",
+          "evidence": [
+            "plan_dispositions",
+            "N2-F1",
+            "N2-m2",
+            "V15",
+            "V16"
+          ]
+        },
+        {
+          "axis": 5,
+          "coverage": "complete mapped discovery/draft/research-final/critique/reviser-final comparison and all twelve criticism items",
+          "judgment": "Full material prose, alternatives and uncertainty survive, with filming and sign-language content restored. No terminal preservation loss is found. Reviser accepted a critic’s mistaken normative srclang baseline and did not test historic-dialog applicability; retention is not scientific correctness.",
+          "evidence": [
+            "preservation_coverage",
+            "criticism_adjudication",
+            "N2-m1",
+            "N2-F1"
+          ]
+        },
+        {
+          "axis": 6,
+          "coverage": "complete proposed/executed and oracle/domain review",
+          "judgment": "No product validation is claimed executed. Source retrieval, artifact checks and reveal ordering are not product quality witnesses. Negative VTT tests and keyboard/SR/content review are meaningful proposals; missing v10 dialog and weak safety/timing interpretation limit them.",
+          "evidence": [
+            "N2-F1",
+            "N2-m4",
+            "N2-m5",
+            "validation_review",
+            "V01",
+            "V17"
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "id": "C2-01",
+            "claim_group": "WebVTT UTF-8/MIME/header, timestamp units, order/end, IDs, arrow/blank-line rules, settings and markup",
+            "candidate_locators": [
+              "control/reviser/final.md:25,55,73,117"
+            ],
+            "primary_refs": [
+              "V01"
+            ],
+            "judgment": "supported for caption/subtitle authoring; optional BOM nuance and metadata payload domain should not be broadened"
+          },
+          {
+            "id": "C2-02",
+            "claim_group": "HTML kind/srclang/default and text-track APIs/compatibility",
+            "candidate_locators": [
+              "control/reviser/final.md:27,55"
+            ],
+            "primary_refs": [
+              "V08",
+              "V09"
+            ],
+            "judgment": "API/compatibility supported at documentation depth; broader language requirement wrong governing scope (minor)"
+          },
+          {
+            "id": "C2-03",
+            "claim_group": "Caption requirement/exception, non-speech information, techniques/failures",
+            "candidate_locators": [
+              "control/reviser/final.md:29,55,85"
+            ],
+            "primary_refs": [
+              "V12",
+              "V15"
+            ],
+            "judgment": "supported; correct content, not merely label, is conformance-bearing"
+          },
+          {
+            "id": "C2-04",
+            "claim_group": "AA audio description and static talking-head alternative",
+            "candidate_locators": [
+              "control/reviser/final.md:18–19,29,79"
+            ],
+            "primary_refs": [
+              "V13",
+              "V14"
+            ],
+            "judgment": "supported with no-time-based-visual-information condition; no inventory proof of forty-video applicability"
+          },
+          {
+            "id": "C2-05",
+            "claim_group": "Video.js keyboard/ARIA/focus/store, tooltip, customizer duties, platform captions, i18n/motion/contrast",
+            "candidate_locators": [
+              "control/reviser/final.md:11,20,31,61"
+            ],
+            "primary_refs": [
+              "V02"
+            ],
+            "judgment": "documented design supported, not executed integration; historical appearance-dialog acceptance task inapplicable"
+          },
+          {
+            "id": "C2-06",
+            "claim_group": "Plyr consolidation/deprecation and keyboard baseline",
+            "candidate_locators": [
+              "control/reviser/final.md:11,61,104"
+            ],
+            "primary_refs": [
+              "V10"
+            ],
+            "judgment": "supported; does not establish every other player is a dead end"
+          },
+          {
+            "id": "C2-07",
+            "claim_group": "Stable v10.0.1, pa11y branch note, Subtitle Edit betas/platforms/stable gap",
+            "candidate_locators": [
+              "control/reviser/final.md:11,13,39,73"
+            ],
+            "primary_refs": [
+              "V05",
+              "V21",
+              "V22",
+              "V23"
+            ],
+            "judgment": "stable and platform facts supported; release-date nuance minor, selected stable editor left unresearched"
+          },
+          {
+            "id": "C2-08",
+            "claim_group": "2015–2017 captions dialog report/merge chain and latency/applicability",
+            "candidate_locators": [
+              "control/reviser/final.md:37,85,118,120"
+            ],
+            "primary_refs": [
+              "V03",
+              "V04",
+              "V02"
+            ],
+            "judgment": "historical chain verified; menu transfer wrong and typical-latency extrapolation unsupported"
+          },
+          {
+            "id": "C2-09",
+            "claim_group": "Descriptive transcripts, future integrated description, sign-language option",
+            "candidate_locators": [
+              "control/reviser/final.md:16–21,79"
+            ],
+            "primary_refs": [
+              "V11",
+              "V13",
+              "V14"
+            ],
+            "judgment": "supported with audience/content/future-filming conditions"
+          },
+          {
+            "id": "C2-10",
+            "claim_group": "Evaluation overview, no single score, mixed/manual/user evaluation",
+            "candidate_locators": [
+              "control/reviser/final.md:33,67,85"
+            ],
+            "primary_refs": [
+              "V16",
+              "V18",
+              "V19",
+              "V20"
+            ],
+            "judgment": "supported for conformance; MT analogy honestly labeled"
+          },
+          {
+            "id": "C2-11",
+            "claim_group": "Timing/BBC access failure and editorial deferral",
+            "candidate_locators": [
+              "control/reviser/final.md:42,85,110,121,123"
+            ],
+            "primary_refs": [
+              "V06",
+              "V12",
+              "V17"
+            ],
+            "judgment": "historic bad-URL failure not independently disproved; available official alternative and required domain remain uninvestigated"
+          },
+          {
+            "id": "C2-12",
+            "claim_group": "Controlled author correction and Amara access gap",
+            "candidate_locators": [
+              "control/reviser/final.md:43,67,73,79,123"
+            ],
+            "primary_refs": [
+              "V07",
+              "V11",
+              "V12"
+            ],
+            "judgment": "access gap disclosed; referenced controlled post-publication workflow not supplied"
+          },
+          {
+            "id": "C2-13",
+            "claim_group": "Rights research, unknown target/languages/staffing, codec/SRT/accuracy gaps",
+            "candidate_locators": [
+              "control/reviser/final.md:7,55,67,79,98–110"
+            ],
+            "primary_refs": [
+              "V33",
+              "V34",
+              "V13",
+              "V20",
+              "V22"
+            ],
+            "judgment": "unknown product inputs/accuracy not assumed false; rights required investigation absent; technical unknowns not represented as proven"
+          },
+          {
+            "id": "C2-14",
+            "claim_group": "Five proposed validations and executed-artifact distinction",
+            "candidate_locators": [
+              "control/reviser/final.md:112–123"
+            ],
+            "primary_refs": [
+              "V01",
+              "V02",
+              "V12",
+              "V16",
+              "V17"
+            ],
+            "judgment": "honest no execution; applicability and oracle limitations independently reviewed"
+          }
+        ],
+        "remaining_claims": [],
+        "complete": true,
+        "definition": "Complete review of every consequential claim group, every plan disposition and every criticism in the mapped authored final. A supported omission finding is reviewed scope, not newly completed candidate research."
+      },
+      "preservation_coverage": {
+        "complete": true,
+        "transitions": [
+          {
+            "topic": "Format/API rules and qualifiers",
+            "discovery": "control/research/discovery.md:24–26",
+            "draft": "control/research/draft.md:17",
+            "final": "control/reviser/final.md:25–27,55",
+            "judgment": "Retained in full; blank-line condition restored. Governing srclang disagreement remains minor."
+          },
+          {
+            "topic": "Player capabilities, customizer duties and native fallback",
+            "discovery": "control/research/discovery.md:11,30",
+            "draft": "control/research/draft.md:21–23",
+            "final": "control/reviser/final.md:11,20,31,59–61",
+            "judgment": "Substantive positive case and fallback retained; rejection narrowed. Historic-dialog applicability remains materially wrong."
+          },
+          {
+            "topic": "Editor maintenance and feature/stable uncertainty",
+            "discovery": "control/research/discovery.md:13,55",
+            "draft": "control/research/draft.md:33–35",
+            "final": "control/reviser/final.md:13,71–73,110",
+            "judgment": "Retained; current stable no longer pretended known. No invented format/translation proof."
+          },
+          {
+            "topic": "Translation drafts, review, manual/deferral options",
+            "discovery": "control/research/discovery.md:43,48",
+            "draft": "control/research/draft.md:27–29",
+            "final": "control/reviser/final.md:65–67,104–110",
+            "judgment": "Review gate, alternative staffing/language choices and accuracy uncertainty retained; legal and workflow research still missing."
+          },
+          {
+            "topic": "Descriptive transcript, future integrated description, sign language",
+            "discovery": "control/research/discovery.md:16–19; source S02",
+            "draft": "control/research/draft.md:39–41",
+            "final": "control/reviser/final.md:16–21,77–79",
+            "judgment": "Filming approach lost in draft and restored; sign-language lead added from retained source. G203 conditional domain retained."
+          },
+          {
+            "topic": "Issue chain, branch notes, timing/rights/Amara gaps",
+            "discovery": "control/research/discovery.md:36–55",
+            "draft": "control/research/draft.md:47,64,77",
+            "final": "control/reviser/final.md:37–45,85,100,110,123",
+            "judgment": "Evidence-backed history and uncertainty survive. Retention does not resolve an omitted required research domain."
+          },
+          {
+            "topic": "Validation and execution distinction",
+            "discovery": "control/research/discovery.md:32",
+            "draft": "control/research/draft.md:66–77",
+            "final": "control/reviser/final.md:112–123",
+            "judgment": "Proposals and no-runtime qualification retained, not replaced by IDs. No product proof was claimed."
+          }
+        ],
+        "terminal_preservation_loss_found": false,
+        "criticism_items_checked": 12
+      },
+      "criticism_adjudication": [
+        {
+          "criticism": "M1",
+          "independent_disposition": "accept with remaining label limitation",
+          "evidence": [
+            "V02",
+            "V08"
+          ],
+          "reasoning": "Positive player documentation does not disprove native controls. Reviser restores native fallback and caveat; correction label still overstates necessity.",
+          "final_lines": [
+            59,
+            61
+          ]
+        },
+        {
+          "criticism": "M2",
+          "independent_disposition": "accept",
+          "evidence": [
+            "V16",
+            "V12"
+          ],
+          "reasoning": "Site-evaluation limits do not directly govern MT accuracy. Reviser correctly grounds reviewed drafts in the brief and labels the analogy.",
+          "final_lines": [
+            33,
+            65,
+            67
+          ]
+        },
+        {
+          "criticism": "M3",
+          "independent_disposition": "accept as traceability limitation, severity reduced",
+          "evidence": [
+            "V03",
+            "V04"
+          ],
+          "reasoning": "Mirror has no registered URL. Independent issue/PR verify the merge; first shipped release remains unasserted. Missing boundary is not scientific fabrication.",
+          "final_lines": [
+            37,
+            85,
+            110
+          ]
+        },
+        {
+          "criticism": "M4",
+          "independent_disposition": "accept",
+          "evidence": [
+            "V13",
+            "V20"
+          ],
+          "reasoning": "The organization’s AA target is unknown; reviser surfaces it. A standard success criterion does not itself supply the organization’s legal duty.",
+          "final_lines": [
+            29,
+            79
+          ]
+        },
+        {
+          "criticism": "M5",
+          "independent_disposition": "accept",
+          "evidence": [
+            "V11"
+          ],
+          "reasoning": "Integrated description was present in discovery and lost from draft; final restores it with future-recording scope.",
+          "final_lines": [
+            17,
+            79
+          ]
+        },
+        {
+          "criticism": "m1",
+          "independent_disposition": "amend; attribution fixed but normative rule still wrong",
+          "evidence": [
+            "V08",
+            "V09"
+          ],
+          "reasoning": "The sentence belongs to MDN, but governing HTML has the narrower subtitles condition. A matching capture is not sufficient scientific verification.",
+          "final_lines": [
+            27,
+            55
+          ]
+        },
+        {
+          "criticism": "m2",
+          "independent_disposition": "accept",
+          "evidence": [
+            "V01"
+          ],
+          "reasoning": "Blank-line cue termination is relevant to author spot edits and is restored.",
+          "final_lines": [
+            25,
+            55,
+            117
+          ]
+        },
+        {
+          "criticism": "m3",
+          "independent_disposition": "accept qualification, not a required invention",
+          "evidence": [
+            "V01",
+            "V22"
+          ],
+          "reasoning": "Unverified SRT conversion hazard is retained as such; no runtime conversion is claimed.",
+          "final_lines": [
+            25,
+            55,
+            110
+          ]
+        },
+        {
+          "criticism": "m4",
+          "independent_disposition": "accept captured-scope observation",
+          "evidence": [
+            "V21"
+          ],
+          "reasoning": "Captured feed contains betas; final avoids claiming a selected stable release. A stable API source was available but the final leaves it open.",
+          "final_lines": [
+            13,
+            73
+          ]
+        },
+        {
+          "criticism": "m5",
+          "independent_disposition": "accept",
+          "evidence": [
+            "V11"
+          ],
+          "reasoning": "Audience-dependent sign-language lead is restored without making it a universal requirement.",
+          "final_lines": [
+            21,
+            67,
+            79
+          ]
+        },
+        {
+          "criticism": "m6",
+          "independent_disposition": "accept as trivial provenance precision",
+          "evidence": [],
+          "reasoning": "The source-map generated timestamp is 20:36:30Z. The final corrects it; this is not a scientific-grade determinant.",
+          "final_lines": [
+            114
+          ]
+        },
+        {
+          "criticism": "m7",
+          "independent_disposition": "accept concern; attempted response insufficient for domain coverage",
+          "evidence": [
+            "V06",
+            "V12"
+          ],
+          "reasoning": "The reviser retries the same dead URL. WAI’s current official BBC link provides a meaningful alternative. N2-F2 addresses investigation coverage, not the honesty of the failed request.",
+          "final_lines": [
+            42,
+            123
+          ]
+        }
+      ],
+      "plan_dispositions": [
+        {
+          "clause": "P1: Host MP4 files and WebVTT captions.",
+          "candidate_disposition": "already-covered",
+          "locator": "final.md:51–55",
+          "judgment": "Sound substrate; authoring syntax conditions generally verified. srclang generalization is minor; no codec/CDN claim is invented."
+        },
+        {
+          "clause": "P2: Use the browser default player.",
+          "candidate_disposition": "correction; native fallback retained",
+          "locator": "final.md:57–61",
+          "judgment": "Positive library case is supported; native remains viable and unmeasured. Mandatory-change classification is weaker than optional enhancement/user decision."
+        },
+        {
+          "clause": "P3: Generate translations automatically.",
+          "candidate_disposition": "correction to drafts plus human review",
+          "locator": "final.md:63–67",
+          "judgment": "Coherent reading of brief; automatic drafting is already compatible with P3. No direct MT quality threshold is proven; mechanism research is thin but no unsupported implementation claim is invented."
+        },
+        {
+          "clause": "P4: Edit captions in a text editor.",
+          "candidate_disposition": "correction; guarded spot-edit fallback",
+          "locator": "final.md:69–73",
+          "judgment": "Dedicated editor is useful and maintained. Text editing is not inherently prohibited; validity gate and fallback preserve plan scope. Controlled correction process remains incomplete."
+        },
+        {
+          "clause": "P5: Publish one transcript per video.",
+          "candidate_disposition": "correction to descriptive transcript; user target/depth choice",
+          "locator": "final.md:75–79",
+          "judgment": "Baseline retained and accessibility improvement supported. G203 is conditional to static talking-head visuals; broader video inventory applicability and publishing consistency are unresolved."
+        },
+        {
+          "clause": "P6: Run an automated accessibility scanner.",
+          "candidate_disposition": "correction to layered evaluation",
+          "locator": "final.md:81–85",
+          "judgment": "Scanner retained and no-single-score constraint honored. P6 never explicitly mandated scanner-only; layers are useful conditions. Caption-dialog task is inapplicable to chosen stock v10."
+        }
+      ],
+      "validation_review": {
+        "executed_product_checks": [],
+        "executed_artifact_claims": [
+          "HTTP retrieval and source capture records",
+          "source-register/ordering/reveal records; hash checks support frozen inputs but do not prove execution of undisclosed commands"
+        ],
+        "candidate_execution_assertions_qualification": "Accepted as authored records only; no private provider log or native/billing telemetry inspected.",
+        "proposed_checks": [
+          {
+            "name": "VTT negative publish-gate cases",
+            "judgment": "Meaningful against 2026 authoring invariants; tolerant browser parsing is not the oracle. Blank-line payload case needs a known intended cue, since an arbitrary blank line can instead separate valid cues."
+          },
+          {
+            "name": "Keyboard and screen-reader playback/captions/dialog",
+            "judgment": "Playback/toggle tasks meaningful; old caption-settings dialog absent from stock selected v10 (N2-F1). No browser/AT matrix has run."
+          },
+          {
+            "name": "Machine draft versus reviewed translation edits",
+            "judgment": "Pilot can measure observed changes; reducing review safely is not established by two low-edit batches without an independent semantic reference."
+          },
+          {
+            "name": "Release-note regression watch",
+            "judgment": "Useful proposed maintenance step; v8/2017 defect classes require explicit v10 applicability rather than assuming controls survive."
+          },
+          {
+            "name": "Timing-policy pilot with Easy Checks",
+            "judgment": "Policy comparison could discriminate, but Easy Checks is not a timing measurement protocol and the policy research was deferred."
+          }
+        ],
+        "candidate_runtime_reported_available": false,
+        "candidate_runtime_available_independently_observed": null,
+        "product_witness_supplied": false
+      },
+      "grade_limits": [
+        "FAIL is grounded in selected-player applicability and material required-scope omissions; not citation count, agreement, release date polish or absence of runtime execution.",
+        "Captures are candidate-authored bounded summaries, not raw proof of remote responses. Reviewer independently checked governing primary evidence and preserved source conflicts.",
+        "This is a complete scoped source assessment of the modest brief, not an exhaustive production security/compliance certification."
+      ]
+    },
+    "N1": {
+      "actual_arm": "treatment",
+      "final_delivery": false,
+      "scientific_artifact_available": false,
+      "grade": "NO_DELIVERY",
+      "scientific_quality": null,
+      "available_stage_quality": "FAIL",
+      "available_stage_quality_scope": "discovery/draft only; neither this value nor critic’s content is imputed to a nonexistent final",
+      "material_findings": [
+        {
+          "id": "N1-D1",
+          "type": "MATERIALLY_WRONG",
+          "severity": "high",
+          "original_obligations": [
+            "O2",
+            "O5"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/discovery.md",
+              "line": 31,
+              "passage": "--defaults-to--> --model small"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/draft.md",
+              "line": 168,
+              "passage": "Whisper CLI defaults (model small, output all, en-only translate)"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V27",
+              "url": "https://raw.githubusercontent.com/openai/whisper/v20250625/whisper/transcribe.py",
+              "version_or_domain": "Released v20250625 source; corroborated against main",
+              "locator": "cli() argparse --model, --task, --output_format"
+            },
+            {
+              "id": "V28",
+              "url": "https://raw.githubusercontent.com/openai/whisper/main/README.md",
+              "version_or_domain": "Live main; no installed candidate build was provided",
+              "locator": "Command-line usage; turbo translation caveat"
+            }
+          ],
+          "reasoning": "The selected current-main default is turbo; released v20250625 corroborates that this is not a change introduced after the candidate. The small-default claim drives model-tier guidance and omits turbo. The candidate’s re-verify flag is honest, but the available primary source was not adequately investigated. Critic M1 is accepted. No installed older pin is supplied.",
+          "scope": "available discovery/draft; not an inferred final"
+        },
+        {
+          "id": "N1-D2",
+          "type": "MATERIALLY_INCOMPLETE",
+          "severity": "high",
+          "original_obligations": [
+            "O2",
+            "O6"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/discovery.md",
+              "line": 95,
+              "passage": "whisper --task translate for English"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/draft.md",
+              "line": 84,
+              "passage": "Whisper --task translate for English"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V27",
+              "url": "https://raw.githubusercontent.com/openai/whisper/v20250625/whisper/transcribe.py",
+              "version_or_domain": "Released v20250625 source; corroborated against main",
+              "locator": "cli() argparse --model, --task, --output_format"
+            },
+            {
+              "id": "V28",
+              "url": "https://raw.githubusercontent.com/openai/whisper/main/README.md",
+              "version_or_domain": "Live main; no installed candidate build was provided",
+              "locator": "Command-line usage; turbo translation caveat"
+            }
+          ],
+          "reasoning": "The path omits a consequential model condition: the actual default turbo is documented to retain the original language even when translate is requested. The candidate offers other medium/large-tier advice elsewhere but does not bind it as a condition of this translation path. Critic M6 identifies a real applicability failure in the available draft, not an executed failure or proof of every installation’s behavior.",
+          "scope": "available discovery/draft; not an inferred final"
+        },
+        {
+          "id": "N1-D3",
+          "type": "MATERIALLY_WRONG",
+          "severity": "medium",
+          "original_obligations": [
+            "O2",
+            "O3",
+            "O4"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/discovery.md",
+              "line": 72,
+              "passage": "v5 is at RC status ... pin the stable v4.8.x line"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/draft.md",
+              "line": 65,
+              "passage": "Able Player v4.8.x stable line ... v5.0.0-RC1 ... do not adopt an RC silently"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V25",
+              "url": "https://api.github.com/repos/ableplayer/ableplayer/releases?per_page=20",
+              "version_or_domain": "v4.4 through v5.1.0-beta2; v5.0.0 stable",
+              "locator": "tag_name, published_at, prerelease; release bodies"
+            },
+            {
+              "id": "V26",
+              "url": "https://raw.githubusercontent.com/ableplayer/ableplayer/main/README.md",
+              "version_or_domain": "Live main README, separately from released version choices",
+              "locator": "Features; Interactive transcript; description; keyboard preferences"
+            }
+          ],
+          "reasoning": "v5.0.0 stable was released June 21, before the candidate. Pinning v4.8.0 can be an intentional supported choice, but excluding the current stable successor because v5 is only an RC is a false premise and materially changes the player comparison. The ESM/breaking-change budget remains valid. Critic M2 is accepted.",
+          "scope": "available discovery/draft; not an inferred final"
+        },
+        {
+          "id": "N1-D4",
+          "type": "MATERIALLY_INCOMPLETE",
+          "severity": "medium",
+          "original_obligations": [
+            "O2",
+            "O5"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/draft.md",
+              "line": 88,
+              "passage": "no primary legal source retrieved this run"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/draft.md",
+              "line": 172,
+              "passage": "Derivative-work/rights specifics ... no primary legal source retrieved"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V33",
+              "url": "https://www.copyright.gov/help/faq/faq-fairuse.html",
+              "version_or_domain": "U.S. Copyright Office guidance; jurisdiction-specific comparator",
+              "locator": "Permission, derivative works and fair use questions"
+            },
+            {
+              "id": "V34",
+              "url": "https://www.govinfo.gov/content/pkg/USCODE-2024-title17/html/USCODE-2024-title17.htm",
+              "version_or_domain": "Official 2024 Title 17; illustrative U.S. domain only",
+              "locator": "§101 derivative works, §106 rights, §107 exceptions"
+            }
+          ],
+          "reasoning": "The rights/consent checklist is a useful conditional lead, but there is no primary rights investigation despite the brief expressly requiring it. The unknown jurisdiction/provenance justifies withholding a legal conclusion, not excluding the research domain. Critic’s refusal to demand legal certainty is right; treating zero legal research as sufficient for the original investigation obligation is not.",
+          "scope": "available discovery/draft; not an inferred final"
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "N1-dm1",
+          "type": "MATERIALLY_WRONG",
+          "severity": "low",
+          "original_obligations": [
+            "O3"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/discovery.md",
+              "line": 27,
+              "passage": "2023-11-16 (v4.4) ... v4.4.1 2023-11-21"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/draft.md",
+              "line": 67,
+              "passage": "v4.4 ... 2023-11-16"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V25",
+              "url": "https://api.github.com/repos/ableplayer/ableplayer/releases?per_page=20",
+              "version_or_domain": "v4.4 through v5.1.0-beta2; v5.0.0 stable",
+              "locator": "tag_name, published_at, prerelease; release bodies"
+            }
+          ],
+          "reasoning": "The older release years are off by two: 2021 for v4.4/v4.4.1, 2022 for v4.5. Bodies and relative evolution survive. Critic M3 is accepted as a factual correction but its material severity is reduced; this does not by itself invalidate the genuine fix chain.",
+          "scope": "available discovery/draft"
+        },
+        {
+          "id": "N1-dm2",
+          "type": "UNSUPPORTED_CONSEQUENTIAL",
+          "severity": "low",
+          "original_obligations": [
+            "O2"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/draft.md",
+              "line": 82,
+              "passage": "Argos Translate 1.11.0 ... explicitly draft-grade (S22)"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V29",
+              "url": "https://pypi.org/project/argostranslate/",
+              "version_or_domain": "Argos Translate 1.11.0; PyPI release metadata",
+              "locator": "Description; language packages; pivot translation; package metadata"
+            }
+          ],
+          "reasoning": "Argos does not explicitly use that wording. Human-review/draft policy is reasonable for the brief. Critic M4 is accepted as an attribution defect, with lower severity than the default-model failure.",
+          "scope": "available draft"
+        },
+        {
+          "id": "N1-dm3",
+          "type": "MATERIALLY_INCOMPLETE",
+          "severity": "low",
+          "original_obligations": [
+            "O1",
+            "O2"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/draft.md",
+              "line": 103,
+              "passage": "Subtitle Edit (open source, Windows; ...)"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V21",
+              "url": "https://api.github.com/repos/SubtitleEdit/subtitleedit/releases/latest",
+              "version_or_domain": "v5.2.0 non-prerelease, published 2026-09-10",
+              "locator": "latest stable API; beta26 release/platform assets"
+            },
+            {
+              "id": "V22",
+              "url": "https://subtitleedit.github.io/subtitleedit/reference/supported-formats.html",
+              "version_or_domain": "Current official Subtitle Edit documentation",
+              "locator": "Supported formats table"
+            },
+            {
+              "id": "V23",
+              "url": "https://subtitleedit.github.io/subtitleedit/features/audio-visualizer.html",
+              "version_or_domain": "Current official Subtitle Edit documentation",
+              "locator": "Display modes; Subtitle Timing"
+            }
+          ],
+          "reasoning": "Windows support is true; the phrase does not say Windows-only. macOS/Linux availability is a useful omitted capability. Critic M5 is amended: accept portability omission, reject the literal claim that this parenthesis alone states exclusivity.",
+          "scope": "available draft"
+        },
+        {
+          "id": "N1-dm4",
+          "type": "MATERIALLY_WRONG",
+          "severity": "low",
+          "original_obligations": [
+            "O2"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/discovery.md",
+              "line": 24,
+              "passage": "I ... PiP ... per-action disable via keyboard option"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/draft.md",
+              "line": 71,
+              "passage": "per-action keyboard config"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V10",
+              "url": "https://github.com/sampotts/plyr",
+              "version_or_domain": "Plyr README, 3.8.5 CDN references; deprecated project",
+              "locator": "Deprecation notice; options keyboard and seekTime; Shortcuts"
+            }
+          ],
+          "reasoning": "The current documented table uses L for loop, and keyboard config specifies focused/global flags, not per-action disabling. These are descriptive alternative details and do not break the selected Able Player path.",
+          "scope": "available discovery/draft"
+        },
+        {
+          "id": "N1-dm5",
+          "type": "FALSE_CORRECTION_OR_REJECTION",
+          "severity": "low",
+          "original_obligations": [
+            "O4"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/draft.md",
+              "line": 34,
+              "passage": "Correction (must apply): captions must be tagged kind=captions"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/draft.md",
+              "line": 79,
+              "passage": "Publishing raw machine translations ... rejected"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V08",
+              "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+              "version_or_domain": "HTML Living Standard retrieved 2026-10-09",
+              "locator": "track srclang/kind/default requirements; media controls interface"
+            },
+            {
+              "id": "V15",
+              "url": "https://www.w3.org/WAI/WCAG22/Techniques/html/H95",
+              "version_or_domain": "WCAG 2.2 technique with G87",
+              "locator": "Description; regional kind=subtitles note; Tests"
+            }
+          ],
+          "reasoning": "The plan does not prescribe the wrong kind or raw translation publication. Correct semantic caption labeling and reviewed translation drafts are good conditions, but the rejection/correction must be scoped to the hypothetical harmful reading. H95 also admits full-information subtitle-kind tracks can conform. Critic m3/m9 are accepted; critic’s assertion that every disposition needs no qualification is too broad.",
+          "scope": "available draft"
+        },
+        {
+          "id": "N1-dm6",
+          "type": "UNSUPPORTED_CONSEQUENTIAL",
+          "severity": "low",
+          "original_obligations": [
+            "O2"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/draft.md",
+              "line": 31,
+              "passage": "SRT fails silently"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V08",
+              "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+              "version_or_domain": "HTML Living Standard retrieved 2026-10-09",
+              "locator": "track srclang/kind/default requirements; media controls interface"
+            },
+            {
+              "id": "V09",
+              "url": "https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API",
+              "version_or_domain": "Live MDN reference",
+              "locator": "Adding WebVTT in HTML; interfaces; cue-region support"
+            }
+          ],
+          "reasoning": "WebVTT is the supported native track resource format. Neither the selected reference nor an executed browser witness establishes every browser’s error surface as silent. Critic m1 is accepted.",
+          "scope": "available draft"
+        },
+        {
+          "id": "N1-dm7",
+          "type": "MATERIALLY_INCOMPLETE",
+          "severity": "low",
+          "original_obligations": [
+            "O2",
+            "O5"
+          ],
+          "candidate_passages": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/draft.md",
+              "line": 90,
+              "passage": "hosted team translation/review with versioning via Amara"
+            }
+          ],
+          "primary_evidence": [
+            {
+              "id": "V07",
+              "url": "https://amara.org/",
+              "version_or_domain": "Current product page, Enterprise workflow description",
+              "locator": "Workflows; Team Management Tools; Import and Export"
+            },
+            {
+              "id": "V24",
+              "url": "https://subtitle-editor.org/faq",
+              "version_or_domain": "Current author FAQ; basic editor scope",
+              "locator": "Why another editor; media formats; non-goals"
+            }
+          ],
+          "reasoning": "Amara is a viable team-workflow lead, but free-editor availability does not establish free advanced team review/approval. The alternative browser editor has browser-codec and complex-caption limits. These are retained options with unresearched deployment conditions, not proof that either selected workflow has run.",
+          "scope": "available draft"
+        }
+      ],
+      "unresolved": [
+        {
+          "topic": "Authored final, critic-to-final resolutions and terminal preservation",
+          "qualification": "Unavailable by exact frozen map. No repair or reconstruction attempted."
+        },
+        {
+          "topic": "Installed Whisper/Able Player build, actual accessibility tests and specific rights status",
+          "qualification": "No runtime or installation exists in the supplied artifacts; behavior claims are scoped to cited released/current code."
+        },
+        {
+          "topic": "Current exact FCC regulatory text and jurisdiction applicability",
+          "qualification": "Current FCC/eCFR requests were not usable substantive evidence; historical official 2025 comparator verified, no current legal conclusion."
+        }
+      ],
+      "axes": [
+        {
+          "axis": 1,
+          "coverage": "complete for available discovery/draft/critique; final unavailable",
+          "judgment": "Available stages address all O headings and original constraints with useful options; rights research is missing. No authored final is available, so final coherence/obligation satisfaction cannot be graded.",
+          "evidence": [
+            "N1-D4",
+            "plan_dispositions",
+            "preservation_coverage"
+          ]
+        },
+        {
+          "axis": 2,
+          "coverage": "complete available-stage consequential-claim review; final unavailable",
+          "judgment": "Whisper default/translation and stable Able Player premise fail primary verification; real parser/security behavior and vendor timing guidance hold. Critic findings are independently checked and severity qualified.",
+          "evidence": [
+            "N1-D1",
+            "N1-D2",
+            "N1-D3",
+            "V25",
+            "V27",
+            "V28",
+            "V30",
+            "V31"
+          ]
+        },
+        {
+          "axis": 3,
+          "coverage": "complete available-stage discovery/options review",
+          "judgment": "Broader practical discovery includes Able Player VTT transcript/description, sanitization/parser evolution, offline ASR/MT, two editor approaches, hosted review and static/native fallback. Their actual deployment/accessibility is not proven; no final retention can be inferred.",
+          "evidence": [
+            "V24",
+            "V25",
+            "V26",
+            "V29",
+            "preservation_coverage"
+          ]
+        },
+        {
+          "axis": 4,
+          "coverage": "all six P clauses in available draft adjudicated; final unavailable",
+          "judgment": "Every P clause is compared; raw-publication and wrong-kind readings are added assumptions, qualified here. Choice/fallback preservation is useful. Stable-player premise and Whisper command affect substantive recommendations.",
+          "evidence": [
+            "plan_dispositions",
+            "N1-D2",
+            "N1-D3",
+            "N1-dm5"
+          ]
+        },
+        {
+          "axis": 5,
+          "coverage": "complete discovery-to-draft and critique review; draft-to-final unobservable",
+          "judgment": "Supported approaches/conditions mostly survive synthesis. Critic catches important defaults/releases and leaves some support unverified. All M1–M6 and m1–m11 were adjudicated here, including amendments; no acceptance/rejection by an absent reviser is invented.",
+          "evidence": [
+            "preservation_coverage",
+            "criticism_adjudication"
+          ]
+        },
+        {
+          "axis": 6,
+          "coverage": "complete available proposed/executed/oracle review; final unavailable",
+          "judgment": "Candidate explicitly disclaims product execution. Native-vs-Able keyboard comparison and source-audio content checks are meaningful. Timing/linter QA can fail on bad outputs. These do not prove semantic translations, released behavior or global conformance.",
+          "evidence": [
+            "validation_review",
+            "V16",
+            "V19",
+            "V30",
+            "V31"
+          ]
+        }
+      ],
+      "primary_coverage": {
+        "checked_claims": [
+          {
+            "id": "C1-01",
+            "claim_group": "Able Player VTT transcripts, navigation, description, spoken captions, keyboard preference",
+            "candidate_locators": [
+              "treatment/research/discovery.md:19–28,72,92,100",
+              "treatment/research/draft.md:53–75,114–121,158–160"
+            ],
+            "primary_refs": [
+              "V25",
+              "V26"
+            ],
+            "judgment": "features supported; transcript keyboard enablement and release choices condition them"
+          },
+          {
+            "id": "C1-02",
+            "claim_group": "Able Player security/hour-leniency/internal timestamp/keyboard/evolution dates",
+            "candidate_locators": [
+              "treatment/research/discovery.md:27,39–41,57",
+              "treatment/research/draft.md:45–48,61–73"
+            ],
+            "primary_refs": [
+              "V01",
+              "V25"
+            ],
+            "judgment": "fix bodies and branches supported; old years wrong; v5 stable omitted"
+          },
+          {
+            "id": "C1-03",
+            "claim_group": "Whisper defaults/output/task/models and English translation pipeline",
+            "candidate_locators": [
+              "treatment/research/discovery.md:31–34,75,93–95",
+              "treatment/research/draft.md:80–85,145,168–170"
+            ],
+            "primary_refs": [
+              "V27",
+              "V28"
+            ],
+            "judgment": "small default wrong; turbo condition missing; English/output direction supported with release distinction"
+          },
+          {
+            "id": "C1-04",
+            "claim_group": "Argos/LibreTranslate offline MT, installed targets, draft characterization",
+            "candidate_locators": [
+              "treatment/research/discovery.md:45–48,78",
+              "treatment/research/draft.md:81–94"
+            ],
+            "primary_refs": [
+              "V29"
+            ],
+            "judgment": "offline and API relationship supported; explicit draft-grade wording false attribution; installed packages/pivots limit targets"
+          },
+          {
+            "id": "C1-05",
+            "claim_group": "WebVTT/kind/native SRT unsupported and caption coverage",
+            "candidate_locators": [
+              "treatment/research/discovery.md:22–23,53–55",
+              "treatment/research/draft.md:28–51"
+            ],
+            "primary_refs": [
+              "V01",
+              "V08",
+              "V09",
+              "V12",
+              "V15"
+            ],
+            "judgment": "format and appropriate semantics hold; silent error surface not proven; regional conformance and plan-silent-kind qualification required"
+          },
+          {
+            "id": "C1-06",
+            "claim_group": "Plyr shortcut/keyboard fallback",
+            "candidate_locators": [
+              "treatment/research/discovery.md:24,72",
+              "treatment/research/draft.md:70–71"
+            ],
+            "primary_refs": [
+              "V10"
+            ],
+            "judgment": "basic focused/global/seek features hold; I/PiP and per-action disabling mismatch current documented interface; deprecation omitted"
+          },
+          {
+            "id": "C1-07",
+            "claim_group": "Subtitle Edit format/waveform/OCR/platform and browser editor",
+            "candidate_locators": [
+              "treatment/research/discovery.md:35–36,75",
+              "treatment/research/draft.md:103–110"
+            ],
+            "primary_refs": [
+              "V21",
+              "V22",
+              "V23",
+              "V24"
+            ],
+            "judgment": "core editor direction supported; Windows-only critic inference overstrong; rich-VTT roundtrip/editor accessibility not proven"
+          },
+          {
+            "id": "C1-08",
+            "claim_group": "Hosted review versus self-hosted versioning/states/attribution",
+            "candidate_locators": [
+              "treatment/research/discovery.md:37,48,78,96",
+              "treatment/research/draft.md:90–94,163"
+            ],
+            "primary_refs": [
+              "V07"
+            ],
+            "judgment": "proposed control approach coherent; advanced hosted tier/cost not established"
+          },
+          {
+            "id": "C1-09",
+            "claim_group": "Vendor duration/CPS/line/name editorial rules and FCC comparator",
+            "candidate_locators": [
+              "treatment/research/discovery.md:38,56,75,81",
+              "treatment/research/draft.md:42–44,98–101,146"
+            ],
+            "primary_refs": [
+              "V30",
+              "V31",
+              "V32"
+            ],
+            "judgment": "vendor values supported as internal policy; current exact regulation not verified; no automatic nonprofit duty established"
+          },
+          {
+            "id": "C1-10",
+            "claim_group": "WCAG audio description/media alternative/transcript scope",
+            "candidate_locators": [
+              "treatment/research/discovery.md:53–55,80–81,94",
+              "treatment/research/draft.md:114–126,158–160"
+            ],
+            "primary_refs": [
+              "V11",
+              "V13",
+              "V14",
+              "V15"
+            ],
+            "judgment": "target choice useful; full visual alternative cannot be inferred from plain captions alone"
+          },
+          {
+            "id": "C1-11",
+            "claim_group": "WAI/tool selection/automation limitations/WCAG-EM and vendor percentage disagreement",
+            "candidate_locators": [
+              "treatment/research/discovery.md:61–65,83–84",
+              "treatment/research/draft.md:128–150,171"
+            ],
+            "primary_refs": [
+              "V16",
+              "V18",
+              "V19",
+              "V20"
+            ],
+            "judgment": "mixed-method conclusion supported independently of unverified vendor percentages"
+          },
+          {
+            "id": "C1-12",
+            "claim_group": "Rights/consent generalization and jurisdiction gap",
+            "candidate_locators": [
+              "treatment/research/discovery.md:49,78,98,102",
+              "treatment/research/draft.md:87–88,172"
+            ],
+            "primary_refs": [
+              "V33",
+              "V34"
+            ],
+            "judgment": "useful conditional lead; no candidate primary research; organization-specific legal conclusion unavailable"
+          },
+          {
+            "id": "C1-13",
+            "claim_group": "Validation battery and no runtime claim",
+            "candidate_locators": [
+              "treatment/research/draft.md:138–150,177–182"
+            ],
+            "primary_refs": [
+              "V01",
+              "V16",
+              "V19",
+              "V30",
+              "V31"
+            ],
+            "judgment": "proposal/execute separation honest; external audio/human oracles and released-version applicability are necessary, no passed product witness supplied"
+          }
+        ],
+        "remaining_claims": [
+          "Authored final and post-critique changes are unavailable; not a research task the reviewer may infer or repair."
+        ],
+        "complete": false,
+        "available_stage_complete": true,
+        "definition": "All consequential available-stage claim groups checked; full final coverage is impossible because no final is available."
+      },
+      "preservation_coverage": {
+        "complete": false,
+        "available_transitions_complete": true,
+        "transitions": [
+          {
+            "topic": "Able Player transcript/description/keyboard and fallback",
+            "discovery": "treatment/research/discovery.md:19–28,72,92",
+            "draft": "treatment/research/draft.md:53–75,114–121",
+            "judgment": "Useful mechanism and native fallback retained into draft; stale version premise remains. No final to judge critic resolution."
+          },
+          {
+            "topic": "ASR/MT defaults and translation conditions",
+            "discovery": "treatment/research/discovery.md:31–47,75–78,93–95",
+            "draft": "treatment/research/draft.md:77–94,168–170",
+            "judgment": "Pipeline and uncertainty retained, but incorrect default and missing turbo condition persist. Critic detects them; final unavailable."
+          },
+          {
+            "topic": "Security/parser release chain and timing vendor guidance",
+            "discovery": "treatment/research/discovery.md:38–41,56,75",
+            "draft": "treatment/research/draft.md:42–48,98–110,146–149",
+            "judgment": "Conditions survive prose reduction. Wrong older dates and some config details survive too; vendor timing researched and supported."
+          },
+          {
+            "topic": "Controlled correction states, languages, rights lead and options",
+            "discovery": "treatment/research/discovery.md:48–49,78,96,98",
+            "draft": "treatment/research/draft.md:87–94,155–175",
+            "judgment": "Versioning/review-state/attribution approach and hosted alternative remain. Rights source research remains absent."
+          },
+          {
+            "topic": "Transcripts, optional interactive/static presentations, description target",
+            "discovery": "treatment/research/discovery.md:80–81,94",
+            "draft": "treatment/research/draft.md:112–126,158–160",
+            "judgment": "Useful options retained. Spoken captions is less explicit in draft prose, while v5 migration remains a lead; no final preservation inference."
+          },
+          {
+            "topic": "Mixed validation and disagreement/uncertainty",
+            "discovery": "treatment/research/discovery.md:59–65,83–84,97,102–104",
+            "draft": "treatment/research/draft.md:128–150,165–182",
+            "judgment": "No score gate and no-runtime distinction retained; capture-level and third-party disagreement remain visibly qualified."
+          }
+        ],
+        "final_transition": "unavailable",
+        "terminal_preservation_loss_found": null,
+        "criticism_items_checked": "M1–M6 and m1–m11 plus critic uncertainty/invalid-demand qualifications"
+      },
+      "criticism_adjudication": [
+        {
+          "criticism": "M1",
+          "independent_disposition": "accept",
+          "evidence": [
+            "V27",
+            "V28"
+          ],
+          "reasoning": "Default turbo independently verified in released and main code; draft qualification does not make small correct.",
+          "final_lines": null
+        },
+        {
+          "criticism": "M2",
+          "independent_disposition": "accept",
+          "evidence": [
+            "V25"
+          ],
+          "reasoning": "Stable v5.0.0 predated candidate. Keep upgrade budgeting; reject RC-only premise.",
+          "final_lines": null
+        },
+        {
+          "criticism": "M3",
+          "independent_disposition": "accept factual correction; reduce material severity",
+          "evidence": [
+            "V25"
+          ],
+          "reasoning": "Old years are wrong; real release bodies and ordering remain useful.",
+          "final_lines": null
+        },
+        {
+          "criticism": "M4",
+          "independent_disposition": "accept attribution defect; reduce severity",
+          "evidence": [
+            "V29"
+          ],
+          "reasoning": "Draft-grade wording is the candidate policy rather than PyPI wording.",
+          "final_lines": null
+        },
+        {
+          "criticism": "M5",
+          "independent_disposition": "amend",
+          "evidence": [
+            "V21",
+            "V22",
+            "V23"
+          ],
+          "reasoning": "Cross-platform lead is omitted, but Windows parenthesis is not a literal Windows-only assertion.",
+          "final_lines": null
+        },
+        {
+          "criticism": "M6",
+          "independent_disposition": "accept",
+          "evidence": [
+            "V27",
+            "V28"
+          ],
+          "reasoning": "Default turbo translation condition is necessary for the proposed command path.",
+          "final_lines": null
+        },
+        {
+          "criticism": "m1",
+          "independent_disposition": "accept",
+          "evidence": [
+            "V08",
+            "V09"
+          ],
+          "reasoning": "Unsupported format is supported; universal silent failure is not established.",
+          "final_lines": null
+        },
+        {
+          "criticism": "m2",
+          "independent_disposition": "accept attribution precision",
+          "evidence": [
+            "V12",
+            "V15"
+          ],
+          "reasoning": "Speaker identification is explicit in Understanding; H95 supports relevant audio coverage.",
+          "final_lines": null
+        },
+        {
+          "criticism": "m3",
+          "independent_disposition": "accept",
+          "evidence": [
+            "V15"
+          ],
+          "reasoning": "Correct semantics are not the only conforming regional labeling pattern.",
+          "final_lines": null
+        },
+        {
+          "criticism": "m4",
+          "independent_disposition": "accept locator precision",
+          "evidence": [
+            "V18"
+          ],
+          "reasoning": "Quote belongs to video transcript.",
+          "final_lines": null
+        },
+        {
+          "criticism": "m5",
+          "independent_disposition": "accept immaterial timezone qualification",
+          "evidence": [
+            "V25"
+          ],
+          "reasoning": "February 6/7 and May 28/29 are consistent with UTC display offsets.",
+          "final_lines": null
+        },
+        {
+          "criticism": "m6",
+          "independent_disposition": "accept only for declared main; retain release distinction",
+          "evidence": [
+            "V27"
+          ],
+          "reasoning": "main has jsonl; released v20250625 does not. Missing it is not false for every pinned release.",
+          "final_lines": null
+        },
+        {
+          "criticism": "m7",
+          "independent_disposition": "amend",
+          "evidence": [
+            "V10"
+          ],
+          "reasoning": "Independent checking found actual shortcut/config mismatches, beyond a depth note.",
+          "final_lines": null
+        },
+        {
+          "criticism": "m8",
+          "independent_disposition": "accept; not a defect",
+          "evidence": [
+            "V25"
+          ],
+          "reasoning": "Unused target-size evidence is neither omission nor harmful advice.",
+          "final_lines": null
+        },
+        {
+          "criticism": "m9",
+          "independent_disposition": "accept",
+          "evidence": [
+            "V15"
+          ],
+          "reasoning": "P3 auto-generation includes the legitimate draft reading; raw publication rejection must be scoped.",
+          "final_lines": null
+        },
+        {
+          "criticism": "m10",
+          "independent_disposition": "amend",
+          "evidence": [
+            "V16",
+            "V19"
+          ],
+          "reasoning": "QA checks can discriminate valid from invalid output without comparing products; no blanket demand for A/B pairs. Their oracles still need explicit expectations.",
+          "final_lines": null
+        },
+        {
+          "criticism": "m11",
+          "independent_disposition": "accept qualification",
+          "evidence": [
+            "V11",
+            "V13",
+            "V14"
+          ],
+          "reasoning": "A plain audio transcript does not necessarily provide the full visual media alternative.",
+          "final_lines": null
+        },
+        {
+          "criticism": "timing uncertainty",
+          "independent_disposition": "verified, not unresolved by reviewer",
+          "evidence": [
+            "V30",
+            "V31"
+          ],
+          "reasoning": "Vendor timing values are supported as voluntarily adopted editorial guidance, not regulation.",
+          "final_lines": null
+        },
+        {
+          "criticism": "no executed validations demand",
+          "independent_disposition": "reject demand",
+          "evidence": [
+            "V16"
+          ],
+          "reasoning": "Runtime is unavailable and proposals are labeled. No execution is required to fulfill the brief.",
+          "final_lines": null
+        },
+        {
+          "criticism": "legal certainty demand",
+          "independent_disposition": "reject demand, retain investigation omission",
+          "evidence": [
+            "V33",
+            "V34"
+          ],
+          "reasoning": "No jurisdiction-specific verdict is required, but the original brief still demands rights investigation.",
+          "final_lines": null
+        },
+        {
+          "criticism": "blanket live recheck demand",
+          "independent_disposition": "reject demand as a general grading rule",
+          "evidence": [],
+          "reasoning": "Source count and live-fetch count do not grade quality. Consequential contested facts need governing evidence; available-stage claims were independently checked here.",
+          "final_lines": null
+        }
+      ],
+      "plan_dispositions": [
+        {
+          "clause": "P1: Host MP4 files and WebVTT captions.",
+          "candidate_disposition": "already-covered plus kind correction/conditions",
+          "locator": "draft.md:28–51",
+          "judgment": "Substrate and editorial quality direction are supported. Correct semantics are a condition of unspecified implementation; not proof the original plan used the wrong kind. H95 conformance exception retained in assessment."
+        },
+        {
+          "clause": "P2: Use the browser default player.",
+          "candidate_disposition": "correction plus retained native and user decision",
+          "locator": "draft.md:53–75",
+          "judgment": "Able Player accessibility features are useful and native route stays open. Stable/RC premise is stale; an intentional v4.8.0 pin remains possible."
+        },
+        {
+          "clause": "P3: Generate translations automatically.",
+          "candidate_disposition": "reject raw publication, retain drafts/review",
+          "locator": "draft.md:77–94",
+          "judgment": "Publication rejection applies only to an added harmful reading. Drafting remains viable; selected Whisper command misses actual-default turbo condition."
+        },
+        {
+          "clause": "P4: Edit captions in a text editor.",
+          "candidate_disposition": "correction plus guarded fallback",
+          "locator": "draft.md:96–110",
+          "judgment": "Waveform alternatives and text-edit validation conditions are useful. Format/platform features verified independently; Windows-only critic reading is overstrong."
+        },
+        {
+          "clause": "P5: Publish one transcript per video.",
+          "candidate_disposition": "already-covered plus interactive/static enhancement",
+          "locator": "draft.md:112–126",
+          "judgment": "Per-video transcript baseline retained with caption update consistency. Plain captions may omit visual information needed by a full descriptive alternative."
+        },
+        {
+          "clause": "P6: Run an automated accessibility scanner.",
+          "candidate_disposition": "correction to mixed battery",
+          "locator": "draft.md:128–151",
+          "judgment": "No-score constraint honored; meaningful keyboard/native-vs-library and content audits proposed. Linter/timing QA can discriminate acceptable output without being product A/B trials."
+        }
+      ],
+      "validation_review": {
+        "executed_product_checks": [],
+        "executed_artifact_claims": [
+          "Source retrieval/captures",
+          "JSON and reveal/hash/grep checks described by available draft"
+        ],
+        "candidate_execution_assertions_qualification": "No product or pipeline witness supplied; no actual candidate runtime installation inspected.",
+        "proposed_checks": [
+          {
+            "name": "Native versus Able Player keyboard/AT tasks",
+            "judgment": "Useful discriminating alternative comparison, pending pinned-version/browser/AT setup and expected states."
+          },
+          {
+            "name": "Static versus interactive transcript screen-reader task",
+            "judgment": "Useful accessibility choice test; evaluate all visual information as well as text navigation."
+          },
+          {
+            "name": "Ten-video source-audio transcript audit/model/editor comparison",
+            "judgment": "Meaningful with audio and human judgment as external reference; sample result cannot establish all forty videos or translation accuracy."
+          },
+          {
+            "name": "All-file timing/CPS QA",
+            "judgment": "Vendor guidance verified as editorial policy. A duration minimum alone is insufficient for long text; combine with readability and sync review."
+          },
+          {
+            "name": "Linter plus player-render smoke after edits",
+            "judgment": "Meaningful syntax/rendering checks, separate from semantic correctness and safe rich-VTT round trips."
+          },
+          {
+            "name": "Scanner delta after fix",
+            "judgment": "Useful triage trend, not proof of conformance or evidence that captions convey the right meaning."
+          }
+        ],
+        "candidate_runtime_reported_available": false,
+        "candidate_runtime_available_independently_observed": null,
+        "product_witness_supplied": false
+      },
+      "grade_limits": [
+        "No authored final: final scientific quality is null, not FAIL or zero.",
+        "Available draft defects remain authored-stage observations; later fixes are unknown.",
+        "No symmetric two-FAIL comparison or faster-FAIL speed win is claimed."
+      ]
+    }
+  },
+  "method_clues": "Partial blinding only. Exact paths and assignments disclose control flat synthesis versus treatment entity/relation communities; original artifacts also disclose provider/native-route clues. Neutral labels do not provide full blinding. No campaign, other case/evaluation answer, private provider internals or nested workers were read/used.",
+  "comparative_quality_eligible": false,
+  "scope_limits": [
+    "Exact evaluator input map is authoritative; all 27 listed artifact hashes matched. Only this case’s original brief/plan, mapped files and declared source roots were assessed.",
+    "N2 authored final received complete six-axis source-grounded review; N1 all available stages received independent six-axis review but its final remains missing.",
+    "No candidate repair, source-map rebinding, product intervention, Git/canon/account/config change, downloaded executable or nested delegation.",
+    "Independent primary retrievals are dated and hashed; mutable main/live sources may differ from the frozen candidate captures. Released Whisper source corroborates the important default rather than assuming all drift occurred during the interval.",
+    "A successful HTTP status is not treated as source truth: unusable FCC/eCFR pages are explicitly qualified and an official released CFR comparator is separately recorded.",
+    "The current BBC page is accessible during this assessment and linked by the candidate’s WAI source. This does not prove every network route was available at every candidate timestamp.",
+    "No actual site/video/translation/player accessibility test was run. Assessment is of research and proposed validations, not implementation acceptance."
+  ],
+  "evaluation_started_at": "2026-10-09T21:11:57+00:00",
+  "evaluation_started_at_qualification": "First precisely observed native activation timestamp; initial governing-input reads immediately preceded it, with no separately captured exact start timestamp. The assignment deadline was not reset.",
+  "evaluation_completed_at": "2026-10-09T21:25:35.236031+00:00",
+  "observed_source_operations": {
+    "local": "Complete mapped artifact/source/index reads; exact artifact SHA-256 verification; no scientific grade derived from hashes or JSON validity.",
+    "primary_operation_log": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M11-A/primary-operations.json",
+    "independent_primary_sources": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M11-A/source-map.json",
+    "web_operations": "Official-page browsing and bounded source discovery, including explicitly failed FCC/eCFR/BBC web routes. Independent requests retrieval furnished BBC and released CFR content.",
+    "product_execution": []
+  },
+  "native_and_cost_limits": {
+    "reviewer_native_goal_active_observed": true,
+    "save_before_native_completion": true,
+    "reviewer_native_terminal_receipt": "Recorded only by actual supported update_goal tool after all artifacts are saved; no handwritten Goal receipt.",
+    "candidate_native_completion": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_T3_completion": {
+      "N1": null,
+      "N2": null
+    },
+    "candidate_elapsed_time_seconds": {
+      "N1": null,
+      "N2": null
+    },
+    "usage_tokens": null,
+    "billing": null,
+    "source_access_cost": null,
+    "qualification": "Exact map final-delivery flags are recorded separately from scientific artifacts, native/T3 completion, elapsed timing and unknown usage/billing. Textual candidate lifecycle claims are not promoted to observed telemetry."
+  }
+}

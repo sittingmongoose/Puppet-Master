@@ -1,0 +1,1678 @@
+{
+  "schema_version": 1,
+  "block": "A-M11-A",
+  "created_at": "2026-10-09T21:25:35.236031+00:00",
+  "scope": "Fresh independent evaluator; own V IDs do not replace candidate S IDs",
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M11-A/assignment.md",
+      "sha256": "58a2654ab94d11c143b9e532f84f5455210ce8dade35ee93ad4dc01d7ea5db41",
+      "kind": "governing_input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M11-A/input-map.json",
+      "sha256": "564e9d536c55f8c7ab584fbc47cc6f096a5472c8ecc4ff0c68d3023127c78158",
+      "kind": "governing_input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/RUBRIC.md",
+      "sha256": "971a9640008175b47e34cdb2c7b4734579044d78425855dce760b3a870db883d",
+      "kind": "governing_input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S11/brief.md",
+      "sha256": "da5e0032e5ce6e30ca840d7b65d3d1a4104e87dbad54081d3b65ff9bfb059314",
+      "kind": "governing_input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/cases/S11/plan-root-only.md",
+      "sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "kind": "governing_input"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/final.md",
+      "sha256": "6a1e94c48963a948e117dc684e013168f2c48279218fda32e09045721019ddb1",
+      "expected_sha256": "6a1e94c48963a948e117dc684e013168f2c48279218fda32e09045721019ddb1",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/source-map.json",
+      "sha256": "8ca360f5864c571e575b0a52bf9f0e576a68be9a42de2cf4a3e3c112ee77d160",
+      "expected_sha256": "8ca360f5864c571e575b0a52bf9f0e576a68be9a42de2cf4a3e3c112ee77d160",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/assignment.md",
+      "sha256": "ea8677c7b5a8b760ba693480ac59cf043209df41d1d1756cd90d23b0825f7742",
+      "expected_sha256": "ea8677c7b5a8b760ba693480ac59cf043209df41d1d1756cd90d23b0825f7742",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/input-map.json",
+      "sha256": "62afb832cd5ca8c0d752fadadc0b0a61f88d28845eceb149f4526098fb54d954",
+      "expected_sha256": "62afb832cd5ca8c0d752fadadc0b0a61f88d28845eceb149f4526098fb54d954",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/critic/critique.md",
+      "sha256": "a65acc91a5189b77da87cd27f77aca41b35d068aaf1b84ca6b4b0ff3bda0bb7d",
+      "expected_sha256": "a65acc91a5189b77da87cd27f77aca41b35d068aaf1b84ca6b4b0ff3bda0bb7d",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/critic/source-map.json",
+      "sha256": "7af78151b82c496b352338d71a89c570103851a2a76950f65983778cd809404b",
+      "expected_sha256": "7af78151b82c496b352338d71a89c570103851a2a76950f65983778cd809404b",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/critic/assignment.md",
+      "sha256": "381870abf13577e9cfe14c331b9a466ab6dae7d8adacd04322bebe6df36b3296",
+      "expected_sha256": "381870abf13577e9cfe14c331b9a466ab6dae7d8adacd04322bebe6df36b3296",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/critic/input-map.json",
+      "sha256": "384826bdbd0266c24fc9157489d213e224aa130f499b438669b16d24084653a6",
+      "expected_sha256": "384826bdbd0266c24fc9157489d213e224aa130f499b438669b16d24084653a6",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/discovery.md",
+      "sha256": "d0c19c6324a3b23b265833263010965de551b10fad4e0ef0d050619cf2770551",
+      "expected_sha256": "d0c19c6324a3b23b265833263010965de551b10fad4e0ef0d050619cf2770551",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/draft.md",
+      "sha256": "729dbce303a0fdcc88361ca21e4ef2a4e5aa965ddf4815f1e6e42514a1dad4da",
+      "expected_sha256": "729dbce303a0fdcc88361ca21e4ef2a4e5aa965ddf4815f1e6e42514a1dad4da",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/final.md",
+      "sha256": "97fa8eb4b22df8ec0f3b6040b126f824981918357271472783646047d7d262d4",
+      "expected_sha256": "97fa8eb4b22df8ec0f3b6040b126f824981918357271472783646047d7d262d4",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/source-map.json",
+      "sha256": "c61e59735657f89b178dd4805926fd98a45a574b0a6a7a77505408b3d8e5de98",
+      "expected_sha256": "c61e59735657f89b178dd4805926fd98a45a574b0a6a7a77505408b3d8e5de98",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/revealed-plan.md",
+      "sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "expected_sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/plan-reveal.json",
+      "sha256": "cb1a6de5328747a7adb1853c7a4660251e2474c0f6e6e6340f96135ee28b5480",
+      "expected_sha256": "cb1a6de5328747a7adb1853c7a4660251e2474c0f6e6e6340f96135ee28b5480",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/assignment.md",
+      "sha256": "16fa6cd0bdf8e8efe768985de17492f86893e4f426eca96acb70538b6abae5ec",
+      "expected_sha256": "16fa6cd0bdf8e8efe768985de17492f86893e4f426eca96acb70538b6abae5ec",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/input-map.json",
+      "sha256": "03a43187220e8563221232279ac2076165f1862980fbdb9421d2f642960feb05",
+      "expected_sha256": "03a43187220e8563221232279ac2076165f1862980fbdb9421d2f642960feb05",
+      "matches_exact_map": true,
+      "neutral_label": "N2",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/sources/S12-reviser-reattempt.md",
+      "sha256": "9e619fbed4f34aa945f36bcf1a001c43faa82c5359f7246c0de2199bfdf985cc",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/reviser/sources/index.md",
+      "sha256": "460a210b3829b6570ec8c91a2b5a61dd2f28e516e70a2a47ffd469f463a2596d",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S01-webvtt-spec.md",
+      "sha256": "5721a6b3850b6f6157b90dcad2a2bfccc33a58083408fde2f1bb1e469ca4d634",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S02-wai-media-av.md",
+      "sha256": "7d40bd3d49d51dd93c9542a0ee104bb38336b21c8e3782bd286d2f4f60de54aa",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S03-videojs-accessibility-docs.md",
+      "sha256": "045a613b6d191e2e2c3e91c24a99e387f3be7e0507ad000950b98643b4a921b6",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S04-videojs-issue-2746.md",
+      "sha256": "31e2dc0d3d170036086d7a2ecb7005266a825749c9b0138fa1e4c123a476238a",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S05-videojs-releases.md",
+      "sha256": "026fcccb8783b1f9b89977a9f3d7c715eae7b28a7f7676728e7a0bdc889458c9",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S06-wcag-122-captions.md",
+      "sha256": "8d2cc61784badd3c94ab785c1198dd80efd020bc606d646967aac2756401fc65",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S07-wcag-125-audio-description.md",
+      "sha256": "016c60c1cd10f709d9ca3cb44e4e6dd8734128bd58ead3abfebfa727a92b431b",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S08-mdn-webvtt-api.md",
+      "sha256": "16138b49b6c3779a9ec580d8d6b9c52a0bcf6b8288a6fd4fa079b2f7b9515759",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S09-subtitle-edit-releases.md",
+      "sha256": "6dca1364eb69e3f31884ad38f309d8de7b7aa2ee7506b2ba4910c9d224181e64",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S10-wai-test-evaluate.md",
+      "sha256": "e318a18d5e6587499a16f90b703d3e117fc2aec65258cf21ae3fcf6ae0730bf7",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S11-plyr.md",
+      "sha256": "ef8d2b41a5c59329d833b0ce69c0cc0a0afcb5d6aa66bc9c7882d67156040f8e",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S12-bbc-subtitle-guidelines.md",
+      "sha256": "339c431e43559940b989f548b082f4a5059b6f4b1b870f656460a0904ca924eb",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/S13-amara.md",
+      "sha256": "67ac8450371a22e3596310400a5e4fabb1ca7d81266b6ceff2f69dac605058b1",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/control/research/sources/index.md",
+      "sha256": "c5d067bf0fd28f689e2c049c15d633241e99847144c4dfd8c727d4bcecbcd5f0",
+      "neutral_label": "N2",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/critic/critique.md",
+      "sha256": "c0fccfcb917eb55318b133834898cf7a973a855e3b853a91836b409ba54f0ebf",
+      "expected_sha256": "c0fccfcb917eb55318b133834898cf7a973a855e3b853a91836b409ba54f0ebf",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/critic/source-map.json",
+      "sha256": "728706798c1e6590dc285ae50734ebf54a54c7a0404e2a0a618160e21d019366",
+      "expected_sha256": "728706798c1e6590dc285ae50734ebf54a54c7a0404e2a0a618160e21d019366",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/critic/assignment.md",
+      "sha256": "90f5c8bc7937c73ffe3e6943b7836be9199b1984310a85fa3f02024db9a5a3ba",
+      "expected_sha256": "90f5c8bc7937c73ffe3e6943b7836be9199b1984310a85fa3f02024db9a5a3ba",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/critic/input-map.json",
+      "sha256": "da947bb2fe1840e5d9522f7920dd5015e38edf750a5360af4751fdb03d19fc6b",
+      "expected_sha256": "da947bb2fe1840e5d9522f7920dd5015e38edf750a5360af4751fdb03d19fc6b",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/discovery.md",
+      "sha256": "e3fff5dbeb1774277521e2abbfb92ac0cdcbc5d3f565e71dfb27908c2f6ba6e6",
+      "expected_sha256": "e3fff5dbeb1774277521e2abbfb92ac0cdcbc5d3f565e71dfb27908c2f6ba6e6",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/draft.md",
+      "sha256": "8ac0254bd54cc01ba0e84ec85c2631d9092748e9354a47cc178fe6e7ab09fcb8",
+      "expected_sha256": "8ac0254bd54cc01ba0e84ec85c2631d9092748e9354a47cc178fe6e7ab09fcb8",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/source-map.json",
+      "sha256": "6cf438a6199488584a6f4f984a1215eab27c3902844bfccf1240163781b0281e",
+      "expected_sha256": "6cf438a6199488584a6f4f984a1215eab27c3902844bfccf1240163781b0281e",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/revealed-plan.md",
+      "sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "expected_sha256": "93ba5630e4041ec09dc9c7a6dd6d7c84b3ff6cb2d8c46237b5804d6f1134eab9",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/plan-reveal.json",
+      "sha256": "b037fa65b6d78591d8dbdc68b1cbfae4ade88ba3c465021e543d2604f58b3353",
+      "expected_sha256": "b037fa65b6d78591d8dbdc68b1cbfae4ade88ba3c465021e543d2604f58b3353",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/assignment.md",
+      "sha256": "ce729d9ef41a78f34a8b65b5624e6a104d558dc4adc9bb7570e68214bdcdf0de",
+      "expected_sha256": "ce729d9ef41a78f34a8b65b5624e6a104d558dc4adc9bb7570e68214bdcdf0de",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/input-map.json",
+      "sha256": "b3133c31132e5a6e55aee2e34a053dbe53ae7e0da57742027c88ad5e885db9ec",
+      "expected_sha256": "b3133c31132e5a6e55aee2e34a053dbe53ae7e0da57742027c88ad5e885db9ec",
+      "matches_exact_map": true,
+      "neutral_label": "N1",
+      "kind": "mapped_frozen_artifact"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/critic/sources/S23-S34-critic-verifications.md",
+      "sha256": "56460d4b9f22866e828c080e37857210e163bfac65d34d22012140bb907a73b0",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/critic/sources/index.md",
+      "sha256": "3600d69b65e4d102fee7add94c3ea625969375dc24d1b989beb5e3d8a2593276",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S01-able-player-site.md",
+      "sha256": "e5cf2a2158b344df9bb96c60c42cc908604733eb6198053844eb3e13fe68f591",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S02-able-player-releases.md",
+      "sha256": "fa42f25de7989526cdd799cd11e1215e96d0df2f8d6c1010fd7f9aa1e1a0aed8",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S03-ableplayer-issue-282.md",
+      "sha256": "7d4349b4f5a62162bc1e9ea2370b9463e96afcf91e527c60fc910523045bff1c",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S04-whisper-readme.md",
+      "sha256": "fc2167fcdd8051c6a479cfe74a6a69efcf06d547606ff9d3f216197094d49816",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S05-whisper-discussion-388.md",
+      "sha256": "11bb0ad784504966c35cc9825950c2d592f89082aa4d7b433c816cd17cbdcaaf",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S06-w3c-webvtt.md",
+      "sha256": "219abff7cc46824398f30715cad34fb7e12f3e4cc745889449bbada59108832a",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S07-w3c-h95.md",
+      "sha256": "7300136c8287aeb95c38a2fef9df8a0f34178e942ce34d761cb2494ee094c2c1",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S08-mdn-webvtt.md",
+      "sha256": "efe13738a2af1a0c3833557b568a80742353b9d7120114315fbc7706f8f70882",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S09-wcag122.md",
+      "sha256": "0462167d1a87af7e916d09d783b479a1de4878cbf2fa726239cd27b9bb4435f2",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S10-wcag125.md",
+      "sha256": "ef1a09f22aa980c87778d75edda3bb9928f662405d5388f8885b562aecc7d0ab",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S11-plyr-readme.md",
+      "sha256": "977f7b39bc2afa5001473bfec9d3fbaa99e96c8dc279f27454609b5668fa4cc3",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S12-subtitle-edit.md",
+      "sha256": "2bcf381540c9f8806026dc73bc17f8ec9b6be4c8feb7fe4495d6d5976ddce649",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S13-subtitle-editor-org.md",
+      "sha256": "c87c8726c4d8664b2e817f03340cb19ac4026aa6c53e0f05e071a007ee5d543d",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S14-amara.md",
+      "sha256": "68a2fc9734004ea4d3ce82e416e2aea863940290e722e0b0ffb8cfeb21ea6aae",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S15-wai-selecting-tools.md",
+      "sha256": "bab199e56d52a9f8c138b23e3f9937811fa160ca97fc40f5455b4dbf1f1772ef",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S16-conformance-challenges.md",
+      "sha256": "624b418fb86ebc19665dc15c3fe18e819884b3d5328e8e89b8625b63f2b352ab",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S17-wcagem.md",
+      "sha256": "c1feae9c53201eb669dcd0fdc95ca8c5f4908540f9948817f6308e658ded9a68",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S18-fcc-quality.md",
+      "sha256": "617f12b7c4394b04b6c1a7af2a55d916785215c6571b807ecfacabd62045d384",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S19-cfr79.md",
+      "sha256": "fee94d75a751a34795ea551f9947e73e3c22f605393210aae034fc5ab29cf1e2",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S20-rev-guidelines.md",
+      "sha256": "59ce783a31d03d171625f292f2f6e21672406ae3bfd75d039b628c5cf4a4e811",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S21-3play-practices.md",
+      "sha256": "87d62741ae3afebcf73dddca1101922a004c8a29ecb0eb87a916e86998ba6ae3",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/jobs/A-M11-A/treatment/research/sources/S22-argos.md",
+      "sha256": "e00b1e2eb4d97d28486411d30b132e81adc10331a95f2e2cfe3b1eead0c54d88",
+      "neutral_label": "N1",
+      "kind": "source_root_capture_or_index",
+      "qualification": "Reviewer read-time hash; exact input map does not supply individual root-file expected hashes."
+    }
+  ],
+  "independent_primary_sources": [
+    {
+      "id": "V01",
+      "url": "https://www.w3.org/TR/webvtt1/",
+      "version_or_domain": "20 May 2026 Candidate Recommendation Draft",
+      "locator": "§4.1 file structure, cue identifier/timings/timestamp; §4.2 payload; §4.4 settings; §6 parser",
+      "independent_conclusion": "UTF-8/text-vtt, optional BOM, WEBVTT signature, three fractional digits, ordered starts, end after start, unique authoring IDs and arrow restrictions are supported. Conforming authoring and tolerant parsing are different.",
+      "operation_refs": [
+        "R01",
+        "R49",
+        "R74",
+        "R91",
+        "R94"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:21.656728+00:00",
+        "2026-10-09T21:14:30.535338+00:00",
+        "2026-10-09T21:15:37.096834+00:00",
+        "2026-10-09T21:17:36.812247+00:00",
+        "2026-10-09T21:25:12.286951+00:00"
+      ],
+      "response_sha256": [
+        "1fd10e09adc72c7545671eadec72282124699b5192d3dff9028020dfa785d154",
+        "1fd10e09adc72c7545671eadec72282124699b5192d3dff9028020dfa785d154",
+        "1fd10e09adc72c7545671eadec72282124699b5192d3dff9028020dfa785d154",
+        "1fd10e09adc72c7545671eadec72282124699b5192d3dff9028020dfa785d154",
+        "1fd10e09adc72c7545671eadec72282124699b5192d3dff9028020dfa785d154"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V02",
+      "url": "https://videojs.org/docs/framework/html/guides/accessibility",
+      "version_or_domain": "Video.js v10 framework HTML guide; concepts URL redirects here",
+      "locator": "Keyboard interaction; Focus management; Status announcements; Captions and subtitles; Testing",
+      "independent_conclusion": "Keyboard/ARIA/store announcements, custom-layout duties and platform cue rendering are documented. The v10 player has no caption appearance menu. That prevents treating the old caption-settings dialog as an existing stock v10 control.",
+      "operation_refs": [
+        "R03",
+        "R52",
+        "R90"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:21.658633+00:00",
+        "2026-10-09T21:14:30.543477+00:00",
+        "2026-10-09T21:17:36.645594+00:00"
+      ],
+      "response_sha256": [
+        "02ae391bde74a2323b16159d78f791523c45ad2bccd833efa724708c6f41d6aa",
+        "02ae391bde74a2323b16159d78f791523c45ad2bccd833efa724708c6f41d6aa",
+        "02ae391bde74a2323b16159d78f791523c45ad2bccd833efa724708c6f41d6aa"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V03",
+      "url": "https://api.github.com/repos/videojs/video.js/issues/2746",
+      "version_or_domain": "Issue opened 2015-10-27, closed 2017-02-21",
+      "locator": "created_at, closed_at, body; issue #2746",
+      "independent_conclusion": "The historic label/focus/Escape defects and approximately sixteen-month interval are real. One issue is not an estimate of typical current maintenance latency.",
+      "operation_refs": [
+        "R04",
+        "R62"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:21.665084+00:00",
+        "2026-10-09T21:15:11.383174+00:00"
+      ],
+      "response_sha256": [
+        "396b4046e0f24f9591402338ff2c1b02d4e237a4840e46566146d9c09a86b4cd",
+        "1172fbee7cbd15afcde8cbfd4fd9c543e26c7b18cceff20efd9363fe82fae678"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V04",
+      "url": "https://api.github.com/repos/videojs/video.js/pulls/4050",
+      "version_or_domain": "Merged 2017-02-21; 0d0dea4da820a75f7e8190d99b7838c250bb3a9d",
+      "locator": "merge_commit_sha, merged_at, body; ModalDialog inheritance",
+      "independent_conclusion": "The fix connects the caption-settings dialog to modal focus management. Its historical merge does not establish an applicable v10 menu or the first shipped release.",
+      "operation_refs": [
+        "R63"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:15:11.636605+00:00"
+      ],
+      "response_sha256": [
+        "1c6ecfb33dc09df98182d016320290494c68a66d22ea1d5f3bdbeecb8a4a68f1"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V05",
+      "url": "https://api.github.com/repos/videojs/video.js/releases?per_page=100",
+      "version_or_domain": "video.js@10.0.1; v8.24.2 prerelease",
+      "locator": "tag_name, published_at, prerelease; release bodies",
+      "independent_conclusion": "video.js@10.0.1 is non-prerelease, published 2026-10-06 with changelog heading 2026-10-02. The pa11y change belongs to the v8.24.2 branch; it is maintenance history, not proof that a v10 integration passed testing.",
+      "operation_refs": [
+        "R05",
+        "R43"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:21.667754+00:00",
+        "2026-10-09T21:13:23.851291+00:00"
+      ],
+      "response_sha256": [
+        "49b501411be29daa505e8bdcd8f3a3a97a50dc59c97b44d2f8434c59b7bf0a02",
+        "964a848e2c442bfda14bea2a42b9e434a0bddd67c30ac93e669c6c50c10a28a8"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V06",
+      "url": "https://www.bbc.co.uk/accessibility/forproducts/guides/subtitles/",
+      "version_or_domain": "BBC authoring guidance; voluntary comparator for this nonprofit",
+      "locator": "§4 Timing, §4.1, §5 Synchronisation, §6 Matching shots; WAI outgoing BBC link",
+      "independent_conclusion": "The official page is accessible by independent HTTP retrieval and contains reading-rate, contextual timing and synchronization guidance. Its BBC commissioning context is not a legal obligation for the brief.",
+      "operation_refs": [
+        "R67",
+        "R87",
+        "R93"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:15:37.077613+00:00",
+        "2026-10-09T21:17:35.852601+00:00",
+        "2026-10-09T21:18:18.056537+00:00"
+      ],
+      "response_sha256": [
+        "b4b6ddd16051abbee16f83582797185d865a9d6dda2719783c20b79fed0fadec",
+        "b4b6ddd16051abbee16f83582797185d865a9d6dda2719783c20b79fed0fadec",
+        "25bb5c531779c3f6358ee45886daa35e33bf6b9fd48a9613f5f28b6cfc84b183"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V07",
+      "url": "https://amara.org/",
+      "version_or_domain": "Current product page, Enterprise workflow description",
+      "locator": "Workflows; Team Management Tools; Import and Export",
+      "independent_conclusion": "Review/final approval and permission-bearing roles are documented. Hosted workflow is a viable optional approach; advanced capabilities must not be represented as necessarily free or proven in the candidate site.",
+      "operation_refs": [
+        "R24",
+        "R57"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:22.772707+00:00",
+        "2026-10-09T21:14:30.677052+00:00"
+      ],
+      "response_sha256": [
+        "8819d22421f723675e1a3cd9cfac6119b054f8fe9aa15b94832d7ec29a0f8a8c",
+        "8819d22421f723675e1a3cd9cfac6119b054f8fe9aa15b94832d7ec29a0f8a8c"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V08",
+      "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+      "version_or_domain": "HTML Living Standard retrieved 2026-10-09",
+      "locator": "track srclang/kind/default requirements; media controls interface",
+      "independent_conclusion": "srclang is required for subtitles state, not for every specified kind. Native controls are a standards-supported route; their actual browser/AT usability remains a task-test question.",
+      "operation_refs": [
+        "R46",
+        "R50"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:23.922927+00:00",
+        "2026-10-09T21:14:30.536403+00:00"
+      ],
+      "response_sha256": [
+        "8985ba3b7767ba4fb0af25dda5b8f72c13343a232f3f50f3c49f68dc64c71c1f",
+        "8985ba3b7767ba4fb0af25dda5b8f72c13343a232f3f50f3c49f68dc64c71c1f"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V09",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API",
+      "version_or_domain": "Live MDN reference",
+      "locator": "Adding WebVTT in HTML; interfaces; cue-region support",
+      "independent_conclusion": "The candidate accurately repeated MDN’s broader kind/srclang sentence, but that sentence conflicts with the governing HTML rule. The stated cue-region compatibility limitation and API examples are supported at documentation depth.",
+      "operation_refs": [
+        "R08",
+        "R51"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:21.673001+00:00",
+        "2026-10-09T21:14:30.537309+00:00"
+      ],
+      "response_sha256": [
+        "f1fb660d145c96d1077c3fba1333fac44ce642a297e297890ad43583f8a6ff91",
+        "f1fb660d145c96d1077c3fba1333fac44ce642a297e297890ad43583f8a6ff91"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V10",
+      "url": "https://github.com/sampotts/plyr",
+      "version_or_domain": "Plyr README, 3.8.5 CDN references; deprecated project",
+      "locator": "Deprecation notice; options keyboard and seekTime; Shortcuts",
+      "independent_conclusion": "Deprecation and consolidation into Video.js 10 are explicit. Focus/global controls and ten-second seek are documented; current shortcut table has L for loop, not the candidate N1 I/PiP entry. Per-action disabling is not specified by the documented keyboard option.",
+      "operation_refs": [
+        "R11",
+        "R21",
+        "R64",
+        "R75"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:21.760902+00:00",
+        "2026-10-09T21:13:22.673676+00:00",
+        "2026-10-09T21:15:11.775104+00:00",
+        "2026-10-09T21:15:37.244720+00:00"
+      ],
+      "response_sha256": [
+        "e0a10c7542fd1a6fb17e618e9280b2f46d7663fb9dd4644291535182b0730041",
+        "151aac5d2eb6084eb6d9d85c62af803e4e60a522b6065a566132e19414cf55b3",
+        "796b3bded21fd52c5c25026e9a16c045e06374da907162791aa39cc275809633",
+        "796b3bded21fd52c5c25026e9a16c045e06374da907162791aa39cc275809633"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V11",
+      "url": "https://www.w3.org/WAI/media/av/",
+      "version_or_domain": "WAI page updated 2024-09-17",
+      "locator": "Planning; Transcripts; Sign Languages",
+      "independent_conclusion": "Descriptive transcripts, integrated description during scripting and audience-dependent sign-language provision are supported. Guidance about future filming is useful but conditional for a prerecorded backlog.",
+      "operation_refs": [
+        "R02",
+        "R79",
+        "R89"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:21.657734+00:00",
+        "2026-10-09T21:16:35.389262+00:00",
+        "2026-10-09T21:17:36.340989+00:00"
+      ],
+      "response_sha256": [
+        "a03d29cc27e3c9af8da3d876d6acde6ced0b1c250290773e800a15aba28d11e9",
+        "a03d29cc27e3c9af8da3d876d6acde6ced0b1c250290773e800a15aba28d11e9",
+        "a03d29cc27e3c9af8da3d876d6acde6ced0b1c250290773e800a15aba28d11e9"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V12",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded.html",
+      "version_or_domain": "WCAG 2.2 Understanding, SC 1.2.2 Level A",
+      "locator": "SC, Intent, Techniques, Failures F8/F74/F75, captions definition",
+      "independent_conclusion": "Caption speech/non-speech coverage and the clearly labeled media-alternative exception are supported. Caption accuracy requires content review, not merely a valid text track.",
+      "operation_refs": [
+        "R06",
+        "R76"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:21.669750+00:00",
+        "2026-10-09T21:16:35.413111+00:00"
+      ],
+      "response_sha256": [
+        "25bb5c531779c3f6358ee45886daa35e33bf6b9fd48a9613f5f28b6cfc84b183",
+        "25bb5c531779c3f6358ee45886daa35e33bf6b9fd48a9613f5f28b6cfc84b183"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V13",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded.html",
+      "version_or_domain": "WCAG 2.2 Understanding, SC 1.2.5 Level AA",
+      "locator": "Intent note; Techniques G78/G173/G226/G8/G203",
+      "independent_conclusion": "An additional described track is unnecessary when all important visual information already occurs in the main audio. A descriptive transcript is not a general replacement for required AA audio description.",
+      "operation_refs": [
+        "R07",
+        "R77"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:21.671481+00:00",
+        "2026-10-09T21:16:35.375203+00:00"
+      ],
+      "response_sha256": [
+        "19b2cd4a324b697a1792b472e0abc46e849dc9b533f022b0b8af956de3fdb5a2",
+        "19b2cd4a324b697a1792b472e0abc46e849dc9b533f022b0b8af956de3fdb5a2"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V14",
+      "url": "https://www.w3.org/WAI/WCAG22/Techniques/general/G203",
+      "version_or_domain": "WCAG 2.2 technique; static talking-head visual context",
+      "locator": "Applicability; Description; Tests",
+      "independent_conclusion": "Static text describes an unchanging visual environment with no important time-based visual information. N2’s talking-head condition is supported, but its broader backlog cost prediction is not evidence about these forty videos.",
+      "operation_refs": [
+        "R45"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:23.861498+00:00"
+      ],
+      "response_sha256": [
+        "805928a311f6c80a3a1e9d6f39158fb2e36a5c861627bd750761810941ba5b05"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V15",
+      "url": "https://www.w3.org/WAI/WCAG22/Techniques/html/H95",
+      "version_or_domain": "WCAG 2.2 technique with G87",
+      "locator": "Description; regional kind=subtitles note; Tests",
+      "independent_conclusion": "kind=captions is the appropriate semantic recommendation. A subtitle-kind track carrying the full relevant audio information can still meet SC 1.2.2; the plan’s silence is not evidence of a wrong existing kind.",
+      "operation_refs": [
+        "R20",
+        "R53"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:22.464002+00:00",
+        "2026-10-09T21:14:30.546802+00:00"
+      ],
+      "response_sha256": [
+        "16ce3aa1feaf52d85571be8e34557a687a01367ec71d0af5aa004f5892950f3d",
+        "16ce3aa1feaf52d85571be8e34557a687a01367ec71d0af5aa004f5892950f3d"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V16",
+      "url": "https://www.w3.org/WAI/test-evaluate/",
+      "version_or_domain": "WAI evaluation overview",
+      "locator": "Introduction; Tools; Conformance Evaluation and Reports; People",
+      "independent_conclusion": "Mixed human/tool evaluation is required for site accessibility assessment. It is not a direct MT quality threshold, and the report tool does not itself perform the evaluation.",
+      "operation_refs": [
+        "R10",
+        "R78"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:21.676883+00:00",
+        "2026-10-09T21:16:35.346279+00:00"
+      ],
+      "response_sha256": [
+        "f9f815e1b593a99583f473f49efc06dfbfc5a545542d32ba51038341c42f4d83",
+        "f9f815e1b593a99583f473f49efc06dfbfc5a545542d32ba51038341c42f4d83"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V17",
+      "url": "https://www.w3.org/WAI/test-evaluate/preliminary/",
+      "version_or_domain": "Easy Checks first review, links to a newer draft",
+      "locator": "Scope; multimedia alternatives",
+      "independent_conclusion": "Quick checks cover only a few barriers and can pass despite significant barriers. They are not a caption reading-speed or synchronization measurement protocol.",
+      "operation_refs": [
+        "R73"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:15:37.094564+00:00"
+      ],
+      "response_sha256": [
+        "658bc2aa259643954bd52a38d0caaae9d96c22e187c5ffe8da29670a1fb1d24a"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V18",
+      "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+      "version_or_domain": "WAI tool selection guide",
+      "locator": "Video transcript; manual evaluation limits",
+      "independent_conclusion": "The quoted manual-intervention point is supported. Locator mismatch in N1 is minor; the scientific mixed-method conclusion holds.",
+      "operation_refs": [
+        "R25",
+        "R35"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:22.892561+00:00",
+        "2026-10-09T21:13:23.512731+00:00"
+      ],
+      "response_sha256": [
+        "2b88dab7a3af34719fab6794fcb4040374d403195e3d3b1262d3d72da496fc52",
+        "2b88dab7a3af34719fab6794fcb4040374d403195e3d3b1262d3d72da496fc52"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V19",
+      "url": "https://www.w3.org/TR/accessibility-conformance-challenges",
+      "version_or_domain": "W3C conformance/testing note",
+      "locator": "Appendix A.9 Audio Control; automation limitations",
+      "independent_conclusion": "The cited example of manual judgment about pause/stop/independent audio volume is present. This supports a mixed-method battery without relying on vendor coverage percentages.",
+      "operation_refs": [
+        "R26",
+        "R59",
+        "R83"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:23.055393+00:00",
+        "2026-10-09T21:14:30.733886+00:00",
+        "2026-10-09T21:16:35.480022+00:00"
+      ],
+      "response_sha256": [
+        "fec1fc25390c50dd96070a397da96a54e8a80d72cc50fdd9820add06e3b1c97d",
+        "fec1fc25390c50dd96070a397da96a54e8a80d72cc50fdd9820add06e3b1c97d",
+        "fec1fc25390c50dd96070a397da96a54e8a80d72cc50fdd9820add06e3b1c97d"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V20",
+      "url": "https://www.w3.org/TR/WCAG-EM/",
+      "version_or_domain": "Current methodology document; live redirect/version may evolve",
+      "locator": "Evaluation procedure steps 1–5 and scope/conformance target",
+      "independent_conclusion": "Scope, explore, representative sample, evaluate and report are supported. The brief does not supply the organization’s conformance target.",
+      "operation_refs": [
+        "R27",
+        "R82"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:23.152344+00:00",
+        "2026-10-09T21:16:35.413792+00:00"
+      ],
+      "response_sha256": [
+        "601a2613e2bc5c766e8107acf0c6ded0c031d0658dcb40d231f915b7bd9978e3",
+        "601a2613e2bc5c766e8107acf0c6ded0c031d0658dcb40d231f915b7bd9978e3"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V21",
+      "url": "https://api.github.com/repos/SubtitleEdit/subtitleedit/releases/latest",
+      "version_or_domain": "v5.2.0 non-prerelease, published 2026-09-10",
+      "locator": "latest stable API; beta26 release/platform assets",
+      "independent_conclusion": "The active cross-platform editor and beta26 build are supported. A stable channel exists; N2 correctly admits its captured beta-only evidence did not identify it, but this is an avoidable rollout research gap.",
+      "operation_refs": [
+        "R09",
+        "R22",
+        "R44",
+        "R92"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:21.675625+00:00",
+        "2026-10-09T21:13:22.675747+00:00",
+        "2026-10-09T21:13:23.852279+00:00",
+        "2026-10-09T21:18:17.983363+00:00"
+      ],
+      "response_sha256": [
+        "6993e419ff5b321a7e207dea7d6f1fc0ea65d12bfa31cd233ca57b2554587c77",
+        "2eee69eb6756832bd33891f1af742f8d1d154e2c999f139808ae508b50ca1e1c",
+        "06339ae5138b468f2283b4b59abb503dc55471ce19ee7d2c325a0322be33b1b8",
+        "4bd9304512d52b38ecc34015a06b1f0840ce41e1dc6bac61f4a80ea01dd8e331"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V22",
+      "url": "https://subtitleedit.github.io/subtitleedit/reference/supported-formats.html",
+      "version_or_domain": "Current official Subtitle Edit documentation",
+      "locator": "Supported formats table",
+      "independent_conclusion": "SubRip, WebVTT, ASS/SSA, MicroDVD SUB and STL families are documented. N1’s selected editor feature direction is supported; N2’s claim of uncertainty reflects limited captured scope, not a proven lack of support.",
+      "operation_refs": [
+        "R71",
+        "R84"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:15:37.089611+00:00",
+        "2026-10-09T21:16:35.534511+00:00"
+      ],
+      "response_sha256": [
+        "f52bb1ed2177dd2746a5b2224fcc05cf29fe9f595f2c7ff647760c44c8dc7518",
+        "f52bb1ed2177dd2746a5b2224fcc05cf29fe9f595f2c7ff647760c44c8dc7518"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V23",
+      "url": "https://subtitleedit.github.io/subtitleedit/features/audio-visualizer.html",
+      "version_or_domain": "Current official Subtitle Edit documentation",
+      "locator": "Display modes; Subtitle Timing",
+      "independent_conclusion": "Waveform/spectrogram and visual cue timing are documented. Desktop waveform editing is a meaningful alternative to editing timestamps blindly.",
+      "operation_refs": [
+        "R72"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:15:37.091582+00:00"
+      ],
+      "response_sha256": [
+        "25545f352e3dd25286e64d56d91ada6a59e773262dd76813536ad8cb6e2d491a"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V24",
+      "url": "https://subtitle-editor.org/faq",
+      "version_or_domain": "Current author FAQ; basic editor scope",
+      "locator": "Why another editor; media formats; non-goals",
+      "independent_conclusion": "The browser/no-install and waveform lead is supported. Media decode depends on the browser and complex caption workflows are non-goals. Rich-VTT round-trip preservation and production accessibility were not established.",
+      "operation_refs": [
+        "R23",
+        "R56",
+        "R70",
+        "R85"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:22.691428+00:00",
+        "2026-10-09T21:14:30.553866+00:00",
+        "2026-10-09T21:15:37.087379+00:00",
+        "2026-10-09T21:16:35.601949+00:00"
+      ],
+      "response_sha256": [
+        "ddfc5b635716da638bfcca455dd8f2948e6e3a1cb082df20a0fc73cf01b64aec",
+        "ddfc5b635716da638bfcca455dd8f2948e6e3a1cb082df20a0fc73cf01b64aec",
+        "78f7a3b4da91eb487fabe5af9247e495a6198baf22f9713fc623a5cbe1968d15",
+        "78f7a3b4da91eb487fabe5af9247e495a6198baf22f9713fc623a5cbe1968d15"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V25",
+      "url": "https://api.github.com/repos/ableplayer/ableplayer/releases?per_page=20",
+      "version_or_domain": "v4.4 through v5.1.0-beta2; v5.0.0 stable",
+      "locator": "tag_name, published_at, prerelease; release bodies",
+      "independent_conclusion": "v5.0.0 stable shipped 2026-06-21. v4.4/v4.4.1/v4.5 dates are 2021/2021/2022, not 2023/2023/2024. Sanitization, nonstandard-hour tolerance, internal timestamp and keyboard fixes are supported with their release domains.",
+      "operation_refs": [
+        "R15",
+        "R36",
+        "R37",
+        "R38",
+        "R39",
+        "R88"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:21.904501+00:00",
+        "2026-10-09T21:13:23.532076+00:00",
+        "2026-10-09T21:13:23.544589+00:00",
+        "2026-10-09T21:13:23.550716+00:00",
+        "2026-10-09T21:13:23.602713+00:00",
+        "2026-10-09T21:17:36.249991+00:00"
+      ],
+      "response_sha256": [
+        "16ec6fba93244aac8338ae021bbf710f7101085e216cd5c1433ac2c4b6038ac9",
+        "4d9f4d50593de04d0f1447f9da18cc3cc193fc58b89ffd1f3959378cb9eb5801",
+        "129af00472f9a8a2d7b030d6592b1dfcd378a9b98ca01aff01a98510aaec10d0",
+        "5e417001b5678a666b2a47fe792acccdf2c3872878113c026d91fdb5755a8aa8",
+        "f6d446050404729b270bbd999b1e5789d6d43ff558b7dfc1a10c08b26cc33f3f",
+        "4d9f4d50593de04d0f1447f9da18cc3cc193fc58b89ffd1f3959378cb9eb5801"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V26",
+      "url": "https://raw.githubusercontent.com/ableplayer/ableplayer/main/README.md",
+      "version_or_domain": "Live main README, separately from released version choices",
+      "locator": "Features; Interactive transcript; description; keyboard preferences",
+      "independent_conclusion": "Transcripts derive from supplied VTT rather than recognizing video audio. Keyboard enablement and user preferences condition the experience. Description, chapters, spoken captions and caption preferences are viable accessibility-specific alternatives.",
+      "operation_refs": [
+        "R14",
+        "R16",
+        "R33"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:21.832331+00:00",
+        "2026-10-09T21:13:21.966676+00:00",
+        "2026-10-09T21:13:23.406152+00:00"
+      ],
+      "response_sha256": [
+        "051b40c30b88c715f518fdd9dfab1cb2a6b84878890e543e491fee39906a164c",
+        "cc689627f9726d1a1709ec0fee8687347039c4350b766d96acc9dc131031215f",
+        "85e7c645f39f244ceb879d1b4a3ee0c4a7eafdbf2c3bba57cd30e1e32d2ad14f"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V27",
+      "url": "https://raw.githubusercontent.com/openai/whisper/v20250625/whisper/transcribe.py",
+      "version_or_domain": "Released v20250625 source; corroborated against main",
+      "locator": "cli() argparse --model, --task, --output_format",
+      "independent_conclusion": "Released default model is turbo, task is transcribe, and default output is all. The released format choices omit main’s newer jsonl; translation task output domain is English.",
+      "operation_refs": [
+        "R40",
+        "R60",
+        "R65"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:23.711496+00:00",
+        "2026-10-09T21:14:30.795413+00:00",
+        "2026-10-09T21:15:11.828547+00:00"
+      ],
+      "response_sha256": [
+        "176f5ab30e961bec2a7872f5701a1f5bf3cbfc77946e50512f0f0cf00a1ceacf",
+        "848b82877500d6fb8f0b91bee7a08ac67ef670a113591d11b494848d263ad0f6",
+        "176f5ab30e961bec2a7872f5701a1f5bf3cbfc77946e50512f0f0cf00a1ceacf"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V28",
+      "url": "https://raw.githubusercontent.com/openai/whisper/main/README.md",
+      "version_or_domain": "Live main; no installed candidate build was provided",
+      "locator": "Command-line usage; turbo translation caveat",
+      "independent_conclusion": "Default turbo is not trained for translation and is documented to return the original language with task translate. The candidate did not provide an installed older release that would make its small-default statement applicable.",
+      "operation_refs": [
+        "R17",
+        "R41",
+        "R61"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:21.974058+00:00",
+        "2026-10-09T21:13:23.746569+00:00",
+        "2026-10-09T21:14:31.009756+00:00"
+      ],
+      "response_sha256": [
+        "e2c01b9f785525990203b4831c34dfc74686ef06cd688deccd3b4b3461c92cc4",
+        "38c180c2a8d8ba628a3e131ad42bf06c8a51bb681efb30fbe28d5a0f4b65f288",
+        "38c180c2a8d8ba628a3e131ad42bf06c8a51bb681efb30fbe28d5a0f4b65f288"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V29",
+      "url": "https://pypi.org/project/argostranslate/",
+      "version_or_domain": "Argos Translate 1.11.0; PyPI release metadata",
+      "locator": "Description; language packages; pivot translation; package metadata",
+      "independent_conclusion": "Offline Python/library/CLI/GUI and LibreTranslate relationship hold. Installed language models/pivot availability condition the output. The page does not call the product explicitly draft-grade; human-review policy is the author’s choice, not that source wording.",
+      "operation_refs": [
+        "R32",
+        "R42",
+        "R58",
+        "R66"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:23.339981+00:00",
+        "2026-10-09T21:13:23.819199+00:00",
+        "2026-10-09T21:14:30.694707+00:00",
+        "2026-10-09T21:15:11.899057+00:00"
+      ],
+      "response_sha256": [
+        "32ed63159c77e21ee19ca1b9aa3213ccf0218eb59539560b132a8e68ef0e18ea",
+        "4634cffa2d03af838869f3f3ea1b437fe466cf502ac4b3e60720f5be7cc34ad1",
+        "4634cffa2d03af838869f3f3ea1b437fe466cf502ac4b3e60720f5be7cc34ad1",
+        "ebd51ff4966238d9eca8539c0f1dd0e9e7143999f126bad6dcfa00b459cf509f"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V30",
+      "url": "https://www.rev.com/blog/closed-captioning-guidelines-for-tv-movies-and-video-platforms",
+      "version_or_domain": "Vendor editorial guidance, not nonprofit legal duty",
+      "locator": "Formatting/reading-rate bullets",
+      "independent_conclusion": "Twenty-to-thirty characters per second and keeping names/titles together are supported as editorial guidance. This is not a mandatory WebVTT format limit.",
+      "operation_refs": [
+        "R30",
+        "R54"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:23.281787+00:00",
+        "2026-10-09T21:14:30.548297+00:00"
+      ],
+      "response_sha256": [
+        "fbba56f0f676671633cc012c84d124aab905583e87c4df99a9733af66951b871",
+        "fbba56f0f676671633cc012c84d124aab905583e87c4df99a9733af66951b871"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V31",
+      "url": "https://www.3playmedia.com/blog/best-practices-for-caption-quality",
+      "version_or_domain": "Vendor editorial practice",
+      "locator": "Caption Frame and Characters Per Line",
+      "independent_conclusion": "Typical two-line frames, 32-character default and half-second duration floor are supported with customization/readability qualifications. A half-second cue can still be unreadable for its text length.",
+      "operation_refs": [
+        "R31",
+        "R55"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:13:23.309886+00:00",
+        "2026-10-09T21:14:30.551110+00:00"
+      ],
+      "response_sha256": [
+        "bbcac8dce4aa605954fe9b8df758b6c51ab2cc6c5ee0ae0f33c464cbc119599e",
+        "bbcac8dce4aa605954fe9b8df758b6c51ab2cc6c5ee0ae0f33c464cbc119599e"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V32",
+      "url": "https://www.govinfo.gov/content/pkg/CFR-2025-title47-vol4/xml/CFR-2025-title47-vol4-sec79-1.xml",
+      "version_or_domain": "Official 2025 CFR edition, §79.1(j)(2), not a claimed current legal opinion",
+      "locator": "Captioning quality standards; definitions/application",
+      "independent_conclusion": "Accuracy, synchronicity, completeness and placement are verified in an official published regulation. Current FCC/eCFR fetches did not provide usable substantive text, so present-day exact legal applicability stays unconfirmed. The candidate’s voluntary-quality framing is supported in direction.",
+      "operation_refs": [
+        "R86"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:16:57.915241+00:00"
+      ],
+      "response_sha256": [
+        "ed1bb549c8bef168a3736f6c2ba532ae9838929ca0f9bbce2c3f7c5d4d1a7359"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V33",
+      "url": "https://www.copyright.gov/help/faq/faq-fairuse.html",
+      "version_or_domain": "U.S. Copyright Office guidance; jurisdiction-specific comparator",
+      "locator": "Permission, derivative works and fair use questions",
+      "independent_conclusion": "Ownership/authorization and exceptions can be investigated without inventing this organization’s jurisdiction or rights status. This is evidence of available basic rights research, not an adjudication of any particular recording.",
+      "operation_refs": [
+        "R68"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:15:37.078892+00:00"
+      ],
+      "response_sha256": [
+        "6187e726d94e1efaa4e656e7c0de5d7e95fcce69df3fdeed389d359d7f48049b"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    },
+    {
+      "id": "V34",
+      "url": "https://www.govinfo.gov/content/pkg/USCODE-2024-title17/html/USCODE-2024-title17.htm",
+      "version_or_domain": "Official 2024 Title 17; illustrative U.S. domain only",
+      "locator": "§101 derivative works, §106 rights, §107 exceptions",
+      "independent_conclusion": "Translation/derivative-work and distribution/performance rights are distinct questions with exceptions. The brief lacks the facts needed for a legal conclusion; that does not excuse doing no rights research.",
+      "operation_refs": [
+        "R69"
+      ],
+      "accessed_at": [
+        "2026-10-09T21:15:37.082890+00:00"
+      ],
+      "response_sha256": [
+        "5e42106e930d973551182ccf2b122311aff6a6a42642e269509b14527b250acd"
+      ],
+      "limitations": "Live retrieval is separately hashed; it is not silently substituted into a candidate source ID."
+    }
+  ],
+  "authored_checked_claims": {
+    "N2": [
+      {
+        "id": "C2-01",
+        "claim_group": "WebVTT UTF-8/MIME/header, timestamp units, order/end, IDs, arrow/blank-line rules, settings and markup",
+        "candidate_locators": [
+          "control/reviser/final.md:25,55,73,117"
+        ],
+        "primary_refs": [
+          "V01"
+        ],
+        "judgment": "supported for caption/subtitle authoring; optional BOM nuance and metadata payload domain should not be broadened"
+      },
+      {
+        "id": "C2-02",
+        "claim_group": "HTML kind/srclang/default and text-track APIs/compatibility",
+        "candidate_locators": [
+          "control/reviser/final.md:27,55"
+        ],
+        "primary_refs": [
+          "V08",
+          "V09"
+        ],
+        "judgment": "API/compatibility supported at documentation depth; broader language requirement wrong governing scope (minor)"
+      },
+      {
+        "id": "C2-03",
+        "claim_group": "Caption requirement/exception, non-speech information, techniques/failures",
+        "candidate_locators": [
+          "control/reviser/final.md:29,55,85"
+        ],
+        "primary_refs": [
+          "V12",
+          "V15"
+        ],
+        "judgment": "supported; correct content, not merely label, is conformance-bearing"
+      },
+      {
+        "id": "C2-04",
+        "claim_group": "AA audio description and static talking-head alternative",
+        "candidate_locators": [
+          "control/reviser/final.md:18–19,29,79"
+        ],
+        "primary_refs": [
+          "V13",
+          "V14"
+        ],
+        "judgment": "supported with no-time-based-visual-information condition; no inventory proof of forty-video applicability"
+      },
+      {
+        "id": "C2-05",
+        "claim_group": "Video.js keyboard/ARIA/focus/store, tooltip, customizer duties, platform captions, i18n/motion/contrast",
+        "candidate_locators": [
+          "control/reviser/final.md:11,20,31,61"
+        ],
+        "primary_refs": [
+          "V02"
+        ],
+        "judgment": "documented design supported, not executed integration; historical appearance-dialog acceptance task inapplicable"
+      },
+      {
+        "id": "C2-06",
+        "claim_group": "Plyr consolidation/deprecation and keyboard baseline",
+        "candidate_locators": [
+          "control/reviser/final.md:11,61,104"
+        ],
+        "primary_refs": [
+          "V10"
+        ],
+        "judgment": "supported; does not establish every other player is a dead end"
+      },
+      {
+        "id": "C2-07",
+        "claim_group": "Stable v10.0.1, pa11y branch note, Subtitle Edit betas/platforms/stable gap",
+        "candidate_locators": [
+          "control/reviser/final.md:11,13,39,73"
+        ],
+        "primary_refs": [
+          "V05",
+          "V21",
+          "V22",
+          "V23"
+        ],
+        "judgment": "stable and platform facts supported; release-date nuance minor, selected stable editor left unresearched"
+      },
+      {
+        "id": "C2-08",
+        "claim_group": "2015–2017 captions dialog report/merge chain and latency/applicability",
+        "candidate_locators": [
+          "control/reviser/final.md:37,85,118,120"
+        ],
+        "primary_refs": [
+          "V03",
+          "V04",
+          "V02"
+        ],
+        "judgment": "historical chain verified; menu transfer wrong and typical-latency extrapolation unsupported"
+      },
+      {
+        "id": "C2-09",
+        "claim_group": "Descriptive transcripts, future integrated description, sign-language option",
+        "candidate_locators": [
+          "control/reviser/final.md:16–21,79"
+        ],
+        "primary_refs": [
+          "V11",
+          "V13",
+          "V14"
+        ],
+        "judgment": "supported with audience/content/future-filming conditions"
+      },
+      {
+        "id": "C2-10",
+        "claim_group": "Evaluation overview, no single score, mixed/manual/user evaluation",
+        "candidate_locators": [
+          "control/reviser/final.md:33,67,85"
+        ],
+        "primary_refs": [
+          "V16",
+          "V18",
+          "V19",
+          "V20"
+        ],
+        "judgment": "supported for conformance; MT analogy honestly labeled"
+      },
+      {
+        "id": "C2-11",
+        "claim_group": "Timing/BBC access failure and editorial deferral",
+        "candidate_locators": [
+          "control/reviser/final.md:42,85,110,121,123"
+        ],
+        "primary_refs": [
+          "V06",
+          "V12",
+          "V17"
+        ],
+        "judgment": "historic bad-URL failure not independently disproved; available official alternative and required domain remain uninvestigated"
+      },
+      {
+        "id": "C2-12",
+        "claim_group": "Controlled author correction and Amara access gap",
+        "candidate_locators": [
+          "control/reviser/final.md:43,67,73,79,123"
+        ],
+        "primary_refs": [
+          "V07",
+          "V11",
+          "V12"
+        ],
+        "judgment": "access gap disclosed; referenced controlled post-publication workflow not supplied"
+      },
+      {
+        "id": "C2-13",
+        "claim_group": "Rights research, unknown target/languages/staffing, codec/SRT/accuracy gaps",
+        "candidate_locators": [
+          "control/reviser/final.md:7,55,67,79,98–110"
+        ],
+        "primary_refs": [
+          "V33",
+          "V34",
+          "V13",
+          "V20",
+          "V22"
+        ],
+        "judgment": "unknown product inputs/accuracy not assumed false; rights required investigation absent; technical unknowns not represented as proven"
+      },
+      {
+        "id": "C2-14",
+        "claim_group": "Five proposed validations and executed-artifact distinction",
+        "candidate_locators": [
+          "control/reviser/final.md:112–123"
+        ],
+        "primary_refs": [
+          "V01",
+          "V02",
+          "V12",
+          "V16",
+          "V17"
+        ],
+        "judgment": "honest no execution; applicability and oracle limitations independently reviewed"
+      }
+    ],
+    "N1": [
+      {
+        "id": "C1-01",
+        "claim_group": "Able Player VTT transcripts, navigation, description, spoken captions, keyboard preference",
+        "candidate_locators": [
+          "treatment/research/discovery.md:19–28,72,92,100",
+          "treatment/research/draft.md:53–75,114–121,158–160"
+        ],
+        "primary_refs": [
+          "V25",
+          "V26"
+        ],
+        "judgment": "features supported; transcript keyboard enablement and release choices condition them"
+      },
+      {
+        "id": "C1-02",
+        "claim_group": "Able Player security/hour-leniency/internal timestamp/keyboard/evolution dates",
+        "candidate_locators": [
+          "treatment/research/discovery.md:27,39–41,57",
+          "treatment/research/draft.md:45–48,61–73"
+        ],
+        "primary_refs": [
+          "V01",
+          "V25"
+        ],
+        "judgment": "fix bodies and branches supported; old years wrong; v5 stable omitted"
+      },
+      {
+        "id": "C1-03",
+        "claim_group": "Whisper defaults/output/task/models and English translation pipeline",
+        "candidate_locators": [
+          "treatment/research/discovery.md:31–34,75,93–95",
+          "treatment/research/draft.md:80–85,145,168–170"
+        ],
+        "primary_refs": [
+          "V27",
+          "V28"
+        ],
+        "judgment": "small default wrong; turbo condition missing; English/output direction supported with release distinction"
+      },
+      {
+        "id": "C1-04",
+        "claim_group": "Argos/LibreTranslate offline MT, installed targets, draft characterization",
+        "candidate_locators": [
+          "treatment/research/discovery.md:45–48,78",
+          "treatment/research/draft.md:81–94"
+        ],
+        "primary_refs": [
+          "V29"
+        ],
+        "judgment": "offline and API relationship supported; explicit draft-grade wording false attribution; installed packages/pivots limit targets"
+      },
+      {
+        "id": "C1-05",
+        "claim_group": "WebVTT/kind/native SRT unsupported and caption coverage",
+        "candidate_locators": [
+          "treatment/research/discovery.md:22–23,53–55",
+          "treatment/research/draft.md:28–51"
+        ],
+        "primary_refs": [
+          "V01",
+          "V08",
+          "V09",
+          "V12",
+          "V15"
+        ],
+        "judgment": "format and appropriate semantics hold; silent error surface not proven; regional conformance and plan-silent-kind qualification required"
+      },
+      {
+        "id": "C1-06",
+        "claim_group": "Plyr shortcut/keyboard fallback",
+        "candidate_locators": [
+          "treatment/research/discovery.md:24,72",
+          "treatment/research/draft.md:70–71"
+        ],
+        "primary_refs": [
+          "V10"
+        ],
+        "judgment": "basic focused/global/seek features hold; I/PiP and per-action disabling mismatch current documented interface; deprecation omitted"
+      },
+      {
+        "id": "C1-07",
+        "claim_group": "Subtitle Edit format/waveform/OCR/platform and browser editor",
+        "candidate_locators": [
+          "treatment/research/discovery.md:35–36,75",
+          "treatment/research/draft.md:103–110"
+        ],
+        "primary_refs": [
+          "V21",
+          "V22",
+          "V23",
+          "V24"
+        ],
+        "judgment": "core editor direction supported; Windows-only critic inference overstrong; rich-VTT roundtrip/editor accessibility not proven"
+      },
+      {
+        "id": "C1-08",
+        "claim_group": "Hosted review versus self-hosted versioning/states/attribution",
+        "candidate_locators": [
+          "treatment/research/discovery.md:37,48,78,96",
+          "treatment/research/draft.md:90–94,163"
+        ],
+        "primary_refs": [
+          "V07"
+        ],
+        "judgment": "proposed control approach coherent; advanced hosted tier/cost not established"
+      },
+      {
+        "id": "C1-09",
+        "claim_group": "Vendor duration/CPS/line/name editorial rules and FCC comparator",
+        "candidate_locators": [
+          "treatment/research/discovery.md:38,56,75,81",
+          "treatment/research/draft.md:42–44,98–101,146"
+        ],
+        "primary_refs": [
+          "V30",
+          "V31",
+          "V32"
+        ],
+        "judgment": "vendor values supported as internal policy; current exact regulation not verified; no automatic nonprofit duty established"
+      },
+      {
+        "id": "C1-10",
+        "claim_group": "WCAG audio description/media alternative/transcript scope",
+        "candidate_locators": [
+          "treatment/research/discovery.md:53–55,80–81,94",
+          "treatment/research/draft.md:114–126,158–160"
+        ],
+        "primary_refs": [
+          "V11",
+          "V13",
+          "V14",
+          "V15"
+        ],
+        "judgment": "target choice useful; full visual alternative cannot be inferred from plain captions alone"
+      },
+      {
+        "id": "C1-11",
+        "claim_group": "WAI/tool selection/automation limitations/WCAG-EM and vendor percentage disagreement",
+        "candidate_locators": [
+          "treatment/research/discovery.md:61–65,83–84",
+          "treatment/research/draft.md:128–150,171"
+        ],
+        "primary_refs": [
+          "V16",
+          "V18",
+          "V19",
+          "V20"
+        ],
+        "judgment": "mixed-method conclusion supported independently of unverified vendor percentages"
+      },
+      {
+        "id": "C1-12",
+        "claim_group": "Rights/consent generalization and jurisdiction gap",
+        "candidate_locators": [
+          "treatment/research/discovery.md:49,78,98,102",
+          "treatment/research/draft.md:87–88,172"
+        ],
+        "primary_refs": [
+          "V33",
+          "V34"
+        ],
+        "judgment": "useful conditional lead; no candidate primary research; organization-specific legal conclusion unavailable"
+      },
+      {
+        "id": "C1-13",
+        "claim_group": "Validation battery and no runtime claim",
+        "candidate_locators": [
+          "treatment/research/draft.md:138–150,177–182"
+        ],
+        "primary_refs": [
+          "V01",
+          "V16",
+          "V19",
+          "V30",
+          "V31"
+        ],
+        "judgment": "proposal/execute separation honest; external audio/human oracles and released-version applicability are necessary, no passed product witness supplied"
+      }
+    ]
+  },
+  "authored_findings_preservation": {
+    "N2": {
+      "material_ids": [
+        "N2-F1",
+        "N2-F2",
+        "N2-F3",
+        "N2-F4"
+      ],
+      "minor_ids": [
+        "N2-m1",
+        "N2-m2",
+        "N2-m3",
+        "N2-m4",
+        "N2-m5",
+        "N2-m6"
+      ]
+    },
+    "N1": {
+      "available_stage_material_ids": [
+        "N1-D1",
+        "N1-D2",
+        "N1-D3",
+        "N1-D4"
+      ],
+      "available_stage_minor_ids": [
+        "N1-dm1",
+        "N1-dm2",
+        "N1-dm3",
+        "N1-dm4",
+        "N1-dm5",
+        "N1-dm6",
+        "N1-dm7"
+      ],
+      "final_quality": null
+    }
+  },
+  "operation_log": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M11-A/primary-operations.json",
+  "operation_log_sha256": "0302904bb9a7223896a9854c05222faa3215cda6ba9bfcd45599f19beca85ed0",
+  "limits": [
+    "Exact evaluator input map is authoritative; all 27 listed artifact hashes matched. Only this case’s original brief/plan, mapped files and declared source roots were assessed.",
+    "N2 authored final received complete six-axis source-grounded review; N1 all available stages received independent six-axis review but its final remains missing.",
+    "No candidate repair, source-map rebinding, product intervention, Git/canon/account/config change, downloaded executable or nested delegation.",
+    "Independent primary retrievals are dated and hashed; mutable main/live sources may differ from the frozen candidate captures. Released Whisper source corroborates the important default rather than assuming all drift occurred during the interval.",
+    "A successful HTTP status is not treated as source truth: unusable FCC/eCFR pages are explicitly qualified and an official released CFR comparator is separately recorded.",
+    "The current BBC page is accessible during this assessment and linked by the candidate’s WAI source. This does not prove every network route was available at every candidate timestamp.",
+    "No actual site/video/translation/player accessibility test was run. Assessment is of research and proposed validations, not implementation acceptance."
+  ],
+  "saved_assessment_outputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M11-A/assessment.md",
+      "sha256": "6dfcbffb57c8122a02d57d4b685122f4fe62418c4f4368a24aa9ad0c3107efaf",
+      "bytes": 68702
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/er11-20261009-116bb1e4/evaluations/A-M11-A/assessment.json",
+      "sha256": "990ee7ab0aaaf056436385838acd59c55bb218e997599e1f2342d1f493767700",
+      "bytes": 123761
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "block": "A-M08-A",
+  "arm": "control",
+  "case": "S08",
+  "stage": "research",
+  "recorded_at": "2026-10-09T21:24:18Z",
+  "native_route": "glm",
+  "lifecycle": {
+    "native_loop": "active",
+    "evidence": "Top-level /goal continuation loop is driving this session: 'Goal loop dispatch (ticket 4/5)' and prior dispatch/verification rounds for tickets 1-3 arrived through the installed harness; assignment §5 infrastructure guard confirms the top-level /goal already activated the installed driver.",
+    "forbidden_calls_made": {
+      "goal_start": false,
+      "t3_thread_launch": false,
+      "create_threads": false,
+      "delegate_task": false,
+      "new_verifier_session_or_context": false
+    },
+    "handwritten_receipt_json": false,
+    "goal_objective_source": "top-level /goal objective referring to assignment.md (<=4000 chars), issued by the loop, not handwritten here",
+    "terminal_completion_at": "UNKNOWN",
+    "native_goal_id": "UNKNOWN",
+    "native_provider_session_id": "UNKNOWN",
+    "goal_activation_receipt": "UNKNOWN (no receipt artifact exposed by this harness; none handwritten)"
+  },
+  "science_before_terminal": {
+    "discovery.md": {
+      "mtime_utc": "2026-10-09T21:20:22Z",
+      "sha256": "9d2798f92a80c2247e997c661b72f4d94740422b93fe1a2d2fa9eca1f4819384",
+      "frozen_by_reveal": true
+    },
+    "source-map.json": {
+      "mtime_utc": "2026-10-09T21:18:51Z",
+      "sha256": "2bf7839c1efef1240e9b0f9abb4e73eb6b2065fa144dc87e324c7b3043595ad7"
+    },
+    "draft.md": {
+      "mtime_utc": "2026-10-09T21:23:19Z"
+    },
+    "ordering_note": "All three science artifacts were saved and verified (tickets 1-3, each PASS) before any terminal completion; terminal completion occurs only after the final mechanical delivery round (ticket 5).",
+    "completion_policy": "Complete native Goal only after required science is saved (satisfied); after terminal, mechanical delivery only; short status never replaces the final answer."
+  },
+  "process_hygiene": {
+    "stray_session_or_verifier_processes_created": false,
+    "evidence": "ps of the session user at 2026-10-09T21:24:18Z shows only this command's transient bash/ps/tail processes plus pre-existing Chrome processes belonging to an unrelated workspace (pm-scratch/nier-next-20261009/acc2), which this goal loop did not create.",
+    "background_jobs_started": false
+  }
+}

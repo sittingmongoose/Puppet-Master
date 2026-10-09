@@ -1,0 +1,1740 @@
+[
+  {
+    "url": "https://www.w3.org/TR/webvtt1/",
+    "candidate_source_refs": [
+      "control:S01"
+    ],
+    "accessed_at": "2026-10-09T21:13:21.656728+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://www.w3.org/TR/webvtt1/",
+    "response_sha256": "1fd10e09adc72c7545671eadec72282124699b5192d3dff9028020dfa785d154",
+    "response_bytes": 834970,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R01"
+  },
+  {
+    "url": "https://www.w3.org/WAI/media/av/",
+    "candidate_source_refs": [
+      "control:S02"
+    ],
+    "accessed_at": "2026-10-09T21:13:21.657734+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://www.w3.org/WAI/media/av/",
+    "response_sha256": "a03d29cc27e3c9af8da3d876d6acde6ced0b1c250290773e800a15aba28d11e9",
+    "response_bytes": 43349,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R02"
+  },
+  {
+    "url": "https://videojs.org/docs/framework/html/concepts/accessibility",
+    "candidate_source_refs": [
+      "control:S03"
+    ],
+    "accessed_at": "2026-10-09T21:13:21.658633+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://videojs.org/docs/framework/html/guides/accessibility",
+    "response_sha256": "02ae391bde74a2323b16159d78f791523c45ad2bccd833efa724708c6f41d6aa",
+    "response_bytes": 279938,
+    "content_type": "text/html; charset=UTF-8",
+    "id": "R03"
+  },
+  {
+    "url": "https://github.com/videojs/video.js/issues/2746",
+    "candidate_source_refs": [
+      "control:S04"
+    ],
+    "accessed_at": "2026-10-09T21:13:21.665084+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://github.com/videojs/video.js/issues/2746",
+    "response_sha256": "396b4046e0f24f9591402338ff2c1b02d4e237a4840e46566146d9c09a86b4cd",
+    "response_bytes": 387009,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R04"
+  },
+  {
+    "url": "https://github.com/videojs/video.js/releases",
+    "candidate_source_refs": [
+      "control:S05"
+    ],
+    "accessed_at": "2026-10-09T21:13:21.667754+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://github.com/videojs/video.js/releases",
+    "response_sha256": "49b501411be29daa505e8bdcd8f3a3a97a50dc59c97b44d2f8434c59b7bf0a02",
+    "response_bytes": 425057,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R05"
+  },
+  {
+    "url": "https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded.html",
+    "candidate_source_refs": [
+      "control:S06",
+      "treatment:S09"
+    ],
+    "accessed_at": "2026-10-09T21:13:21.669750+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded.html",
+    "response_sha256": "25bb5c531779c3f6358ee45886daa35e33bf6b9fd48a9613f5f28b6cfc84b183",
+    "response_bytes": 52751,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R06"
+  },
+  {
+    "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded.html",
+    "candidate_source_refs": [
+      "control:S07",
+      "treatment:S10"
+    ],
+    "accessed_at": "2026-10-09T21:13:21.671481+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded.html",
+    "response_sha256": "19b2cd4a324b697a1792b472e0abc46e849dc9b533f022b0b8af956de3fdb5a2",
+    "response_bytes": 44126,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R07"
+  },
+  {
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API",
+    "candidate_source_refs": [
+      "control:S08",
+      "treatment:S08"
+    ],
+    "accessed_at": "2026-10-09T21:13:21.673001+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API",
+    "response_sha256": "f1fb660d145c96d1077c3fba1333fac44ce642a297e297890ad43583f8a6ff91",
+    "response_bytes": 169970,
+    "content_type": "text/html",
+    "id": "R08"
+  },
+  {
+    "url": "https://github.com/SubtitleEdit/subtitleedit/releases",
+    "candidate_source_refs": [
+      "control:S09"
+    ],
+    "accessed_at": "2026-10-09T21:13:21.675625+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://github.com/SubtitleEdit/subtitleedit/releases",
+    "response_sha256": "6993e419ff5b321a7e207dea7d6f1fc0ea65d12bfa31cd233ca57b2554587c77",
+    "response_bytes": 457447,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R09"
+  },
+  {
+    "url": "https://www.w3.org/WAI/test-evaluate/",
+    "candidate_source_refs": [
+      "control:S10"
+    ],
+    "accessed_at": "2026-10-09T21:13:21.676883+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://www.w3.org/WAI/test-evaluate/",
+    "response_sha256": "f9f815e1b593a99583f473f49efc06dfbfc5a545542d32ba51038341c42f4d83",
+    "response_bytes": 50404,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R10"
+  },
+  {
+    "url": "https://github.com/sampotts/plyr",
+    "candidate_source_refs": [
+      "control:S11"
+    ],
+    "accessed_at": "2026-10-09T21:13:21.760902+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://github.com/sampotts/plyr",
+    "response_sha256": "e0a10c7542fd1a6fb17e618e9280b2f46d7663fb9dd4644291535182b0730041",
+    "response_bytes": 709606,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R11"
+  },
+  {
+    "url": "https://bbc.github.io/subtitle-guidelines/",
+    "candidate_source_refs": [
+      "control:S12"
+    ],
+    "accessed_at": "2026-10-09T21:13:21.800818+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "access_failed",
+    "http_status": 404,
+    "final_url": "https://bbc.github.io/subtitle-guidelines/",
+    "response_sha256": "e79e7cc22272b2b92c25b61d9d21d2cf8853080fa387d1b57feb7bf89ef4cee7",
+    "response_bytes": 7146,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R12"
+  },
+  {
+    "url": "https://amara.org/en/about/",
+    "candidate_source_refs": [
+      "control:S13"
+    ],
+    "accessed_at": "2026-10-09T21:13:21.806569+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "access_failed",
+    "http_status": 404,
+    "final_url": "https://amara.org/about/",
+    "response_sha256": "1d76f251a3ddfcadab45324d75f8f75c6059ab4cbf2201cd2cf5be3559c9ef0b",
+    "response_bytes": 194683,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R13"
+  },
+  {
+    "url": "https://ableplayer.github.io/ableplayer",
+    "candidate_source_refs": [
+      "treatment:S01"
+    ],
+    "accessed_at": "2026-10-09T21:13:21.832331+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://ableplayer.github.io/ableplayer/",
+    "response_sha256": "051b40c30b88c715f518fdd9dfab1cb2a6b84878890e543e491fee39906a164c",
+    "response_bytes": 77149,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R14"
+  },
+  {
+    "url": "https://github.com/ableplayer/ableplayer/releases",
+    "candidate_source_refs": [
+      "treatment:S02"
+    ],
+    "accessed_at": "2026-10-09T21:13:21.904501+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://github.com/ableplayer/ableplayer/releases",
+    "response_sha256": "16ec6fba93244aac8338ae021bbf710f7101085e216cd5c1433ac2c4b6038ac9",
+    "response_bytes": 473171,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R15"
+  },
+  {
+    "url": "https://github.com/ableplayer/ableplayer/issues/282",
+    "candidate_source_refs": [
+      "treatment:S03"
+    ],
+    "accessed_at": "2026-10-09T21:13:21.966676+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://github.com/ableplayer/ableplayer/issues/282",
+    "response_sha256": "cc689627f9726d1a1709ec0fee8687347039c4350b766d96acc9dc131031215f",
+    "response_bytes": 309704,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R16"
+  },
+  {
+    "url": "https://github.com/openai/whisper",
+    "candidate_source_refs": [
+      "treatment:S04"
+    ],
+    "accessed_at": "2026-10-09T21:13:21.974058+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://github.com/openai/whisper",
+    "response_sha256": "e2c01b9f785525990203b4831c34dfc74686ef06cd688deccd3b4b3461c92cc4",
+    "response_bytes": 330255,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R17"
+  },
+  {
+    "url": "https://github.com/openai/whisper/discussions/388",
+    "candidate_source_refs": [
+      "treatment:S05"
+    ],
+    "accessed_at": "2026-10-09T21:13:22.187871+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://github.com/openai/whisper/discussions/388",
+    "response_sha256": "a1cf36369a1ce7e876877ee4bb0bf6ac081b5a7ae84d05335a8d50c2a7edb27f",
+    "response_bytes": 305728,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R18"
+  },
+  {
+    "url": "https://www.w3.org/TR/webvtt1",
+    "candidate_source_refs": [
+      "treatment:S06"
+    ],
+    "accessed_at": "2026-10-09T21:13:22.215471+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://www.w3.org/TR/webvtt1/",
+    "response_sha256": "1fd10e09adc72c7545671eadec72282124699b5192d3dff9028020dfa785d154",
+    "response_bytes": 834970,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R19"
+  },
+  {
+    "url": "https://www.w3.org/WAI/WCAG22/Techniques/html/H95",
+    "candidate_source_refs": [
+      "treatment:S07",
+      "treatment:S32"
+    ],
+    "accessed_at": "2026-10-09T21:13:22.464002+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://www.w3.org/WAI/WCAG22/Techniques/html/H95",
+    "response_sha256": "16ce3aa1feaf52d85571be8e34557a687a01367ec71d0af5aa004f5892950f3d",
+    "response_bytes": 35940,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R20"
+  },
+  {
+    "url": "https://github.com/sampotts/plyr/blob/master/README.md",
+    "candidate_source_refs": [
+      "treatment:S11"
+    ],
+    "accessed_at": "2026-10-09T21:13:22.673676+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://github.com/sampotts/plyr/blob/master/README.md",
+    "response_sha256": "151aac5d2eb6084eb6d9d85c62af803e4e60a522b6065a566132e19414cf55b3",
+    "response_bytes": 804584,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R21"
+  },
+  {
+    "url": "https://github.com/SubtitleEdit/subtitleedit",
+    "candidate_source_refs": [
+      "treatment:S12",
+      "treatment:S33"
+    ],
+    "accessed_at": "2026-10-09T21:13:22.675747+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://github.com/SubtitleEdit/subtitleedit",
+    "response_sha256": "2eee69eb6756832bd33891f1af742f8d1d154e2c999f139808ae508b50ca1e1c",
+    "response_bytes": 320692,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R22"
+  },
+  {
+    "url": "https://subtitle-editor.org",
+    "candidate_source_refs": [
+      "treatment:S13"
+    ],
+    "accessed_at": "2026-10-09T21:13:22.691428+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://subtitle-editor.org/",
+    "response_sha256": "ddfc5b635716da638bfcca455dd8f2948e6e3a1cb082df20a0fc73cf01b64aec",
+    "response_bytes": 29701,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R23"
+  },
+  {
+    "url": "https://amara.org",
+    "candidate_source_refs": [
+      "treatment:S14"
+    ],
+    "accessed_at": "2026-10-09T21:13:22.772707+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://amara.org/",
+    "response_sha256": "8819d22421f723675e1a3cd9cfac6119b054f8fe9aa15b94832d7ec29a0f8a8c",
+    "response_bytes": 210544,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R24"
+  },
+  {
+    "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting",
+    "candidate_source_refs": [
+      "treatment:S15"
+    ],
+    "accessed_at": "2026-10-09T21:13:22.892561+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+    "response_sha256": "2b88dab7a3af34719fab6794fcb4040374d403195e3d3b1262d3d72da496fc52",
+    "response_bytes": 50749,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R25"
+  },
+  {
+    "url": "https://www.w3.org/TR/accessibility-conformance-challenges",
+    "candidate_source_refs": [
+      "treatment:S16"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.055393+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://www.w3.org/TR/accessibility-conformance-challenges/",
+    "response_sha256": "fec1fc25390c50dd96070a397da96a54e8a80d72cc50fdd9820add06e3b1c97d",
+    "response_bytes": 145205,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R26"
+  },
+  {
+    "url": "https://www.w3.org/TR/WCAG-EM/",
+    "candidate_source_refs": [
+      "treatment:S17"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.152344+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://www.w3.org/TR/WCAG-EM/",
+    "response_sha256": "601a2613e2bc5c766e8107acf0c6ded0c031d0658dcb40d231f915b7bd9978e3",
+    "response_bytes": 152540,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R27"
+  },
+  {
+    "url": "https://www.fcc.gov/consumers/guides/closed-captioning-television",
+    "candidate_source_refs": [
+      "treatment:S18"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.226304+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://www.fcc.gov/consumers/guides/closed-captioning-television",
+    "response_sha256": "60a0ef528d707cb126b5bf170e4581f2ba9c5f59c3644ae4fe26b3a5ff4219ce",
+    "response_bytes": 69275,
+    "content_type": "text/html; charset=UTF-8",
+    "id": "R28",
+    "content_usability": "requested page text not available through raw fetch; status 200 insufficient to establish claimed substantive regulatory content"
+  },
+  {
+    "url": "https://www.ecfr.gov/current/title-47/chapter-I/subchapter-C/part-79",
+    "candidate_source_refs": [
+      "treatment:S19"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.269918+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://unblock.federalregister.gov",
+    "response_sha256": "be6197aed4bf8eedc37b88d4570fe933c1cb3b3549626c10ccb26dc9d2b27187",
+    "response_bytes": 10596,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R29",
+    "content_usability": "requested page text not available through raw fetch; status 200 insufficient to establish claimed substantive regulatory content"
+  },
+  {
+    "url": "https://www.rev.com/blog/closed-captioning-guidelines-for-tv-movies-and-video-platforms",
+    "candidate_source_refs": [
+      "treatment:S20"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.281787+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://www.rev.com/blog/closed-captioning-guidelines-for-tv-movies-and-video-platforms",
+    "response_sha256": "fbba56f0f676671633cc012c84d124aab905583e87c4df99a9733af66951b871",
+    "response_bytes": 192699,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R30"
+  },
+  {
+    "url": "https://www.3playmedia.com/blog/best-practices-for-caption-quality",
+    "candidate_source_refs": [
+      "treatment:S21"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.309886+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://www.3playmedia.com/blog/best-practices-for-caption-quality/",
+    "response_sha256": "bbcac8dce4aa605954fe9b8df758b6c51ab2cc6c5ee0ae0f33c464cbc119599e",
+    "response_bytes": 110175,
+    "content_type": "text/html",
+    "id": "R31"
+  },
+  {
+    "url": "https://pypi.org/project/argostranslate",
+    "candidate_source_refs": [
+      "treatment:S22"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.339981+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://pypi.org/project/argostranslate",
+    "response_sha256": "32ed63159c77e21ee19ca1b9aa3213ccf0218eb59539560b132a8e68ef0e18ea",
+    "response_bytes": 3038,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R32"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/ableplayer/ableplayer/main/README.md",
+    "candidate_source_refs": [
+      "treatment:S23"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.406152+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://raw.githubusercontent.com/ableplayer/ableplayer/main/README.md",
+    "response_sha256": "85e7c645f39f244ceb879d1b4a3ee0c4a7eafdbf2c3bba57cd30e1e32d2ad14f",
+    "response_bytes": 53671,
+    "content_type": "text/plain; charset=utf-8",
+    "id": "R33"
+  },
+  {
+    "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track",
+    "candidate_source_refs": [
+      "treatment:S24"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.493760+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/track",
+    "response_sha256": "899d810fe1234c0f96c5a6df791a03c27214769357d974cbda6b700b3984d3b1",
+    "response_bytes": 191441,
+    "content_type": "text/html",
+    "id": "R34"
+  },
+  {
+    "url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+    "candidate_source_refs": [
+      "treatment:S25"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.512731+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://www.w3.org/WAI/test-evaluate/tools/selecting/",
+    "response_sha256": "2b88dab7a3af34719fab6794fcb4040374d403195e3d3b1262d3d72da496fc52",
+    "response_bytes": 50749,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R35"
+  },
+  {
+    "url": "https://api.github.com/repos/ableplayer/ableplayer/releases?per_page=20",
+    "candidate_source_refs": [
+      "treatment:S26"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.532076+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://api.github.com/repos/ableplayer/ableplayer/releases?per_page=20",
+    "response_sha256": "4d9f4d50593de04d0f1447f9da18cc3cc193fc58b89ffd1f3959378cb9eb5801",
+    "response_bytes": 73996,
+    "content_type": "application/json; charset=utf-8",
+    "release_metadata": [
+      {
+        "tag_name": "v5.0.0",
+        "published_at": "2026-06-21T21:27:21Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/ableplayer/ableplayer/releases/tag/v5.0.0"
+      },
+      {
+        "tag_name": "v5.0.0-RC1",
+        "published_at": "2026-05-29T01:41:41Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/ableplayer/ableplayer/releases/tag/v5.0.0-RC1"
+      },
+      {
+        "tag_name": "v4.8.0",
+        "published_at": "2026-02-07T02:23:47Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/ableplayer/ableplayer/releases/tag/v4.8.0"
+      },
+      {
+        "tag_name": "v4.8.0-rc1",
+        "published_at": "2026-01-11T19:13:18Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/ableplayer/ableplayer/releases/tag/v4.8.0-rc1"
+      },
+      {
+        "tag_name": "v4.7.0",
+        "published_at": "2025-09-28T16:44:32Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/ableplayer/ableplayer/releases/tag/v4.7.0"
+      },
+      {
+        "tag_name": "v4.7.0-beta1",
+        "published_at": "2025-08-11T22:40:09Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/ableplayer/ableplayer/releases/tag/v4.7.0-beta1"
+      },
+      {
+        "tag_name": "v4.6.0",
+        "published_at": "2025-06-23T20:29:20Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/ableplayer/ableplayer/releases/tag/v4.6.0"
+      },
+      {
+        "tag_name": "v4.5.1",
+        "published_at": "2025-03-25T14:07:12Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/ableplayer/ableplayer/releases/tag/v4.5.1"
+      },
+      {
+        "tag_name": "v4.5",
+        "published_at": "2022-11-11T21:52:55Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/ableplayer/ableplayer/releases/tag/v4.5"
+      },
+      {
+        "tag_name": "v4.4.1",
+        "published_at": "2021-11-21T20:03:32Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/ableplayer/ableplayer/releases/tag/v4.4.1"
+      },
+      {
+        "tag_name": "v4.4",
+        "published_at": "2021-11-16T22:37:45Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/ableplayer/ableplayer/releases/tag/v4.4"
+      }
+    ],
+    "id": "R36"
+  },
+  {
+    "url": "https://api.github.com/repos/ableplayer/ableplayer/releases/tags/v4.4",
+    "candidate_source_refs": [
+      "treatment:S27"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.544589+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://api.github.com/repos/ableplayer/ableplayer/releases/tags/v4.4",
+    "response_sha256": "129af00472f9a8a2d7b030d6592b1dfcd378a9b98ca01aff01a98510aaec10d0",
+    "response_bytes": 2276,
+    "content_type": "application/json; charset=utf-8",
+    "release_metadata": [
+      {
+        "tag_name": "v4.4",
+        "published_at": "2021-11-16T22:37:45Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/ableplayer/ableplayer/releases/tag/v4.4"
+      }
+    ],
+    "id": "R37"
+  },
+  {
+    "url": "https://api.github.com/repos/ableplayer/ableplayer/releases/tags/v5.0.0",
+    "candidate_source_refs": [
+      "treatment:S28"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.550716+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://api.github.com/repos/ableplayer/ableplayer/releases/tags/v5.0.0",
+    "response_sha256": "5e417001b5678a666b2a47fe792acccdf2c3872878113c026d91fdb5755a8aa8",
+    "response_bytes": 6713,
+    "content_type": "application/json; charset=utf-8",
+    "release_metadata": [
+      {
+        "tag_name": "v5.0.0",
+        "published_at": "2026-06-21T21:27:21Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/ableplayer/ableplayer/releases/tag/v5.0.0"
+      }
+    ],
+    "id": "R38"
+  },
+  {
+    "url": "https://api.github.com/repos/ableplayer/ableplayer/releases/tags/v4.5",
+    "candidate_source_refs": [
+      "treatment:S29"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.602713+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://api.github.com/repos/ableplayer/ableplayer/releases/tags/v4.5",
+    "response_sha256": "f6d446050404729b270bbd999b1e5789d6d43ff558b7dfc1a10c08b26cc33f3f",
+    "response_bytes": 2598,
+    "content_type": "application/json; charset=utf-8",
+    "release_metadata": [
+      {
+        "tag_name": "v4.5",
+        "published_at": "2022-11-11T21:52:55Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/ableplayer/ableplayer/releases/tag/v4.5"
+      }
+    ],
+    "id": "R39"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/openai/whisper/main/whisper/transcribe.py",
+    "candidate_source_refs": [
+      "treatment:S30"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.711496+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://raw.githubusercontent.com/openai/whisper/main/whisper/transcribe.py",
+    "response_sha256": "176f5ab30e961bec2a7872f5701a1f5bf3cbfc77946e50512f0f0cf00a1ceacf",
+    "response_bytes": 30375,
+    "content_type": "text/plain; charset=utf-8",
+    "id": "R40"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/openai/whisper/main/README.md",
+    "candidate_source_refs": [
+      "treatment:S31"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.746569+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://raw.githubusercontent.com/openai/whisper/main/README.md",
+    "response_sha256": "38c180c2a8d8ba628a3e131ad42bf06c8a51bb681efb30fbe28d5a0f4b65f288",
+    "response_bytes": 8246,
+    "content_type": "text/plain; charset=utf-8",
+    "id": "R41"
+  },
+  {
+    "url": "https://pypi.org/project/argostranslate/",
+    "candidate_source_refs": [
+      "treatment:S34"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.819199+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://pypi.org/project/argostranslate/",
+    "response_sha256": "4634cffa2d03af838869f3f3ea1b437fe466cf502ac4b3e60720f5be7cc34ad1",
+    "response_bytes": 115101,
+    "content_type": "text/html; charset=UTF-8",
+    "id": "R42"
+  },
+  {
+    "url": "https://api.github.com/repos/videojs/video.js/releases?per_page=100",
+    "candidate_source_refs": [
+      "independent"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.851291+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://api.github.com/repos/videojs/video.js/releases?per_page=100",
+    "response_sha256": "964a848e2c442bfda14bea2a42b9e434a0bddd67c30ac93e669c6c50c10a28a8",
+    "response_bytes": 323857,
+    "content_type": "application/json; charset=utf-8",
+    "release_metadata": [
+      {
+        "tag_name": "v8.24.2",
+        "published_at": "2026-10-06T22:47:01Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/v8.24.2"
+      },
+      {
+        "tag_name": "video.js@10.0.1",
+        "published_at": "2026-10-06T21:33:44Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/video.js%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/youtube-video@10.0.1",
+        "published_at": "2026-10-06T21:33:41Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/youtube-video%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/wistia-video@10.0.1",
+        "published_at": "2026-10-06T21:33:38Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/wistia-video%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/vimeo-video@10.0.1",
+        "published_at": "2026-10-06T21:33:35Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/vimeo-video%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/utils@10.0.1",
+        "published_at": "2026-10-06T21:33:32Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/utils%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/twitch-video@10.0.1",
+        "published_at": "2026-10-06T21:33:29Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/twitch-video%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/tiktok-video@10.0.1",
+        "published_at": "2026-10-06T21:33:26Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/tiktok-video%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/store@10.0.1",
+        "published_at": "2026-10-06T21:33:23Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/store%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/spotify-audio@10.0.1",
+        "published_at": "2026-10-06T21:33:19Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/spotify-audio%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/spf@10.0.1",
+        "published_at": "2026-10-06T21:33:16Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/spf%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/skins@10.0.1",
+        "published_at": "2026-10-06T21:33:13Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/skins%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/shaka-video@10.0.1",
+        "published_at": "2026-10-06T21:33:10Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/shaka-video%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/react@10.0.1",
+        "published_at": "2026-10-06T21:33:07Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/react%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/native-hls-video@10.0.1",
+        "published_at": "2026-10-06T21:33:04Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/native-hls-video%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/mux-video@10.0.1",
+        "published_at": "2026-10-06T21:33:01Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/mux-video%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/mux-data@10.0.1",
+        "published_at": "2026-10-06T21:32:58Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/mux-data%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/mux-audio@10.0.1",
+        "published_at": "2026-10-06T21:32:55Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/mux-audio%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/media@10.0.1",
+        "published_at": "2026-10-06T21:32:52Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/media%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/installation@10.0.1",
+        "published_at": "2026-10-06T21:32:49Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/installation%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/icons@10.0.1",
+        "published_at": "2026-10-06T21:32:46Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/icons%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/html@10.0.1",
+        "published_at": "2026-10-06T21:32:43Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/html%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/hlsjs-video@10.0.1",
+        "published_at": "2026-10-06T21:32:40Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/hlsjs-video%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/google-cast@10.0.1",
+        "published_at": "2026-10-06T21:32:37Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/google-cast%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/element@10.0.1",
+        "published_at": "2026-10-06T21:32:34Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/element%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/dash-video@10.0.1",
+        "published_at": "2026-10-06T21:32:31Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/dash-video%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/core@10.0.1",
+        "published_at": "2026-10-06T21:32:28Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/core%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/cloudflare-video@10.0.1",
+        "published_at": "2026-10-06T21:32:25Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/cloudflare-video%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/cli@10.0.1",
+        "published_at": "2026-10-06T21:32:22Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/cli%4010.0.1"
+      },
+      {
+        "tag_name": "@videojs/cdn@10.0.1",
+        "published_at": "2026-10-06T21:32:16Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/videojs/video.js/releases/tag/%40videojs/cdn%4010.0.1"
+      }
+    ],
+    "id": "R43"
+  },
+  {
+    "url": "https://api.github.com/repos/SubtitleEdit/subtitleedit/releases?per_page=100",
+    "candidate_source_refs": [
+      "independent"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.852279+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://api.github.com/repos/SubtitleEdit/subtitleedit/releases?per_page=100",
+    "response_sha256": "06339ae5138b468f2283b4b59abb503dc55471ce19ee7d2c325a0322be33b1b8",
+    "response_bytes": 2773771,
+    "content_type": "application/json; charset=utf-8",
+    "release_metadata": [
+      {
+        "tag_name": "v5.3.0-beta26",
+        "published_at": "2026-10-09T06:53:13Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta26"
+      },
+      {
+        "tag_name": "v5.3.0-beta25",
+        "published_at": "2026-10-08T05:47:21Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta25"
+      },
+      {
+        "tag_name": "v5.3.0-beta24",
+        "published_at": "2026-10-07T06:39:07Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta24"
+      },
+      {
+        "tag_name": "v5.3.0-beta23",
+        "published_at": "2026-10-06T03:43:54Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta23"
+      },
+      {
+        "tag_name": "v5.3.0-beta22",
+        "published_at": "2026-10-05T05:02:04Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta22"
+      },
+      {
+        "tag_name": "v5.3.0-beta21",
+        "published_at": "2026-10-04T06:13:24Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta21"
+      },
+      {
+        "tag_name": "v5.3.0-beta20",
+        "published_at": "2026-10-03T06:02:55Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta20"
+      },
+      {
+        "tag_name": "v5.3.0-beta19",
+        "published_at": "2026-10-02T05:28:21Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta19"
+      },
+      {
+        "tag_name": "v5.3.0-beta18",
+        "published_at": "2026-10-01T06:21:00Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta18"
+      },
+      {
+        "tag_name": "v5.3.0-beta17",
+        "published_at": "2026-09-30T07:52:41Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta17"
+      },
+      {
+        "tag_name": "v5.3.0-beta16",
+        "published_at": "2026-09-29T04:46:41Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta16"
+      },
+      {
+        "tag_name": "v5.3.0-beta15",
+        "published_at": "2026-09-28T06:05:35Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta15"
+      },
+      {
+        "tag_name": "v5.3.0-beta14",
+        "published_at": "2026-09-27T09:13:20Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta14"
+      },
+      {
+        "tag_name": "v5.3.0-beta13",
+        "published_at": "2026-09-26T05:58:04Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta13"
+      },
+      {
+        "tag_name": "v5.3.0-beta12",
+        "published_at": "2026-09-25T04:32:26Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta12"
+      },
+      {
+        "tag_name": "v5.3.0-beta11",
+        "published_at": "2026-09-24T06:11:21Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta11"
+      },
+      {
+        "tag_name": "v5.3.0-beta10",
+        "published_at": "2026-09-23T06:41:43Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta10"
+      },
+      {
+        "tag_name": "v5.3.0-beta9",
+        "published_at": "2026-09-22T04:50:44Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta9"
+      },
+      {
+        "tag_name": "v5.3.0-beta8",
+        "published_at": "2026-09-21T06:02:29Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta8"
+      },
+      {
+        "tag_name": "v5.3.0-beta7",
+        "published_at": "2026-09-20T07:14:58Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta7"
+      },
+      {
+        "tag_name": "v5.3.0-beta6",
+        "published_at": "2026-09-19T07:22:40Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta6"
+      },
+      {
+        "tag_name": "v5.3.0-beta5",
+        "published_at": "2026-09-18T05:30:23Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta5"
+      },
+      {
+        "tag_name": "v5.3.0-beta4",
+        "published_at": "2026-09-17T04:23:03Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta4"
+      },
+      {
+        "tag_name": "v5.3.0-beta3",
+        "published_at": "2026-09-16T07:45:37Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta3"
+      },
+      {
+        "tag_name": "v5.3.0-beta2",
+        "published_at": "2026-09-15T05:26:54Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta2"
+      },
+      {
+        "tag_name": "v5.3.0-beta1",
+        "published_at": "2026-09-14T07:50:29Z",
+        "prerelease": true,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.3.0-beta1"
+      },
+      {
+        "tag_name": "v5.0.0",
+        "published_at": "2026-06-22T14:18:48Z",
+        "prerelease": false,
+        "target_commitish": "main",
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.0.0"
+      }
+    ],
+    "id": "R44"
+  },
+  {
+    "url": "https://www.w3.org/WAI/WCAG22/Techniques/general/G203",
+    "candidate_source_refs": [
+      "independent"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.861498+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://www.w3.org/WAI/WCAG22/Techniques/general/G203",
+    "response_sha256": "805928a311f6c80a3a1e9d6f39158fb2e36a5c861627bd750761810941ba5b05",
+    "response_bytes": 31244,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R45"
+  },
+  {
+    "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+    "candidate_source_refs": [
+      "independent"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.922927+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+    "response_sha256": "8985ba3b7767ba4fb0af25dda5b8f72c13343a232f3f50f3c49f68dc64c71c1f",
+    "response_bytes": 836500,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R46"
+  },
+  {
+    "url": "https://www.w3.org/WAI/media/av/captions/",
+    "candidate_source_refs": [
+      "independent"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.928667+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://www.w3.org/WAI/media/av/captions/",
+    "response_sha256": "e3815f7d446511b6e9c2d2b266a69044bfd4bb19604e69dcdeb5ed791e51dff7",
+    "response_bytes": 53562,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R47"
+  },
+  {
+    "url": "https://www.w3.org/WAI/media/av/transcripts/",
+    "candidate_source_refs": [
+      "independent"
+    ],
+    "accessed_at": "2026-10-09T21:13:23.949752+00:00",
+    "operation": "independent requests HTTPS GET; parse only, never execute",
+    "status": "retrieved",
+    "http_status": 200,
+    "final_url": "https://www.w3.org/WAI/media/av/transcripts/",
+    "response_sha256": "9293a2ad5cc51c401fac1c82d6ee7504b1615ccdb9e36d38d6fcb246c8c84fa0",
+    "response_bytes": 56670,
+    "content_type": "text/html; charset=utf-8",
+    "id": "R48"
+  },
+  {
+    "url": "https://www.w3.org/TR/webvtt1/",
+    "accessed_at": "2026-10-09T21:14:30.535338+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://www.w3.org/TR/webvtt1/",
+    "response_sha256": "1fd10e09adc72c7545671eadec72282124699b5192d3dff9028020dfa785d154",
+    "response_bytes": 834970,
+    "id": "R49"
+  },
+  {
+    "url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+    "accessed_at": "2026-10-09T21:14:30.536403+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://html.spec.whatwg.org/multipage/media.html#the-track-element",
+    "response_sha256": "8985ba3b7767ba4fb0af25dda5b8f72c13343a232f3f50f3c49f68dc64c71c1f",
+    "response_bytes": 836500,
+    "id": "R50"
+  },
+  {
+    "url": "https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API",
+    "accessed_at": "2026-10-09T21:14:30.537309+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API",
+    "response_sha256": "f1fb660d145c96d1077c3fba1333fac44ce642a297e297890ad43583f8a6ff91",
+    "response_bytes": 169970,
+    "id": "R51"
+  },
+  {
+    "url": "https://videojs.org/docs/framework/html/concepts/accessibility",
+    "accessed_at": "2026-10-09T21:14:30.543477+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://videojs.org/docs/framework/html/guides/accessibility",
+    "response_sha256": "02ae391bde74a2323b16159d78f791523c45ad2bccd833efa724708c6f41d6aa",
+    "response_bytes": 279938,
+    "id": "R52"
+  },
+  {
+    "url": "https://www.w3.org/WAI/WCAG22/Techniques/html/H95",
+    "accessed_at": "2026-10-09T21:14:30.546802+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://www.w3.org/WAI/WCAG22/Techniques/html/H95",
+    "response_sha256": "16ce3aa1feaf52d85571be8e34557a687a01367ec71d0af5aa004f5892950f3d",
+    "response_bytes": 35940,
+    "id": "R53"
+  },
+  {
+    "url": "https://www.rev.com/blog/closed-captioning-guidelines-for-tv-movies-and-video-platforms",
+    "accessed_at": "2026-10-09T21:14:30.548297+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://www.rev.com/blog/closed-captioning-guidelines-for-tv-movies-and-video-platforms",
+    "response_sha256": "fbba56f0f676671633cc012c84d124aab905583e87c4df99a9733af66951b871",
+    "response_bytes": 192699,
+    "id": "R54"
+  },
+  {
+    "url": "https://www.3playmedia.com/blog/best-practices-for-caption-quality",
+    "accessed_at": "2026-10-09T21:14:30.551110+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://www.3playmedia.com/blog/best-practices-for-caption-quality/",
+    "response_sha256": "bbcac8dce4aa605954fe9b8df758b6c51ab2cc6c5ee0ae0f33c464cbc119599e",
+    "response_bytes": 110175,
+    "id": "R55"
+  },
+  {
+    "url": "https://subtitle-editor.org",
+    "accessed_at": "2026-10-09T21:14:30.553866+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://subtitle-editor.org/",
+    "response_sha256": "ddfc5b635716da638bfcca455dd8f2948e6e3a1cb082df20a0fc73cf01b64aec",
+    "response_bytes": 29701,
+    "id": "R56"
+  },
+  {
+    "url": "https://amara.org",
+    "accessed_at": "2026-10-09T21:14:30.677052+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://amara.org/",
+    "response_sha256": "8819d22421f723675e1a3cd9cfac6119b054f8fe9aa15b94832d7ec29a0f8a8c",
+    "response_bytes": 210544,
+    "id": "R57"
+  },
+  {
+    "url": "https://pypi.org/project/argostranslate/",
+    "accessed_at": "2026-10-09T21:14:30.694707+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://pypi.org/project/argostranslate/",
+    "response_sha256": "4634cffa2d03af838869f3f3ea1b437fe466cf502ac4b3e60720f5be7cc34ad1",
+    "response_bytes": 115101,
+    "id": "R58"
+  },
+  {
+    "url": "https://www.w3.org/TR/accessibility-conformance-challenges",
+    "accessed_at": "2026-10-09T21:14:30.733886+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://www.w3.org/TR/accessibility-conformance-challenges/",
+    "response_sha256": "fec1fc25390c50dd96070a397da96a54e8a80d72cc50fdd9820add06e3b1c97d",
+    "response_bytes": 145205,
+    "id": "R59"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/openai/whisper/v20250625/whisper/transcribe.py",
+    "accessed_at": "2026-10-09T21:14:30.795413+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://raw.githubusercontent.com/openai/whisper/v20250625/whisper/transcribe.py",
+    "response_sha256": "848b82877500d6fb8f0b91bee7a08ac67ef670a113591d11b494848d263ad0f6",
+    "response_bytes": 30366,
+    "id": "R60"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/openai/whisper/main/README.md",
+    "accessed_at": "2026-10-09T21:14:31.009756+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://raw.githubusercontent.com/openai/whisper/main/README.md",
+    "response_sha256": "38c180c2a8d8ba628a3e131ad42bf06c8a51bb681efb30fbe28d5a0f4b65f288",
+    "response_bytes": 8246,
+    "id": "R61"
+  },
+  {
+    "id": "R62",
+    "url": "https://api.github.com/repos/videojs/video.js/issues/2746",
+    "accessed_at": "2026-10-09T21:15:11.383174+00:00",
+    "http_status": 200,
+    "status": "retrieved",
+    "operation": "independent targeted HTTPS GET",
+    "response_bytes": 7995,
+    "response_sha256": "1172fbee7cbd15afcde8cbfd4fd9c543e26c7b18cceff20efd9363fe82fae678"
+  },
+  {
+    "id": "R63",
+    "url": "https://api.github.com/repos/videojs/video.js/pulls/4050",
+    "accessed_at": "2026-10-09T21:15:11.636605+00:00",
+    "http_status": 200,
+    "status": "retrieved",
+    "operation": "independent targeted HTTPS GET",
+    "response_bytes": 18965,
+    "response_sha256": "1c6ecfb33dc09df98182d016320290494c68a66d22ea1d5f3bdbeecb8a4a68f1"
+  },
+  {
+    "id": "R64",
+    "url": "https://raw.githubusercontent.com/sampotts/plyr/master/README.md",
+    "accessed_at": "2026-10-09T21:15:11.775104+00:00",
+    "http_status": 200,
+    "status": "retrieved",
+    "operation": "independent targeted HTTPS GET",
+    "response_bytes": 97985,
+    "response_sha256": "796b3bded21fd52c5c25026e9a16c045e06374da907162791aa39cc275809633"
+  },
+  {
+    "id": "R65",
+    "url": "https://raw.githubusercontent.com/openai/whisper/main/whisper/transcribe.py",
+    "accessed_at": "2026-10-09T21:15:11.828547+00:00",
+    "http_status": 200,
+    "status": "retrieved",
+    "operation": "independent targeted HTTPS GET",
+    "response_bytes": 30375,
+    "response_sha256": "176f5ab30e961bec2a7872f5701a1f5bf3cbfc77946e50512f0f0cf00a1ceacf"
+  },
+  {
+    "id": "R66",
+    "url": "https://pypi.org/pypi/argostranslate/1.11.0/json",
+    "accessed_at": "2026-10-09T21:15:11.899057+00:00",
+    "http_status": 200,
+    "status": "retrieved",
+    "operation": "independent targeted HTTPS GET",
+    "response_bytes": 12047,
+    "response_sha256": "ebd51ff4966238d9eca8539c0f1dd0e9e7143999f126bad6dcfa00b459cf509f"
+  },
+  {
+    "url": "https://www.bbc.co.uk/accessibility/forproducts/guides/subtitles/",
+    "accessed_at": "2026-10-09T21:15:37.077613+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://www.bbc.co.uk/accessibility/forproducts/guides/subtitles/",
+    "response_bytes": 986692,
+    "response_sha256": "b4b6ddd16051abbee16f83582797185d865a9d6dda2719783c20b79fed0fadec",
+    "id": "R67"
+  },
+  {
+    "url": "https://www.copyright.gov/help/faq/faq-fairuse.html",
+    "accessed_at": "2026-10-09T21:15:37.078892+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://www.copyright.gov/help/faq/faq-fairuse.html",
+    "response_bytes": 38845,
+    "response_sha256": "6187e726d94e1efaa4e656e7c0de5d7e95fcce69df3fdeed389d359d7f48049b",
+    "id": "R68"
+  },
+  {
+    "url": "https://www.govinfo.gov/content/pkg/USCODE-2024-title17/html/USCODE-2024-title17.htm",
+    "accessed_at": "2026-10-09T21:15:37.082890+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://www.govinfo.gov/content/pkg/USCODE-2024-title17/html/USCODE-2024-title17.htm",
+    "response_bytes": 2051701,
+    "response_sha256": "5e42106e930d973551182ccf2b122311aff6a6a42642e269509b14527b250acd",
+    "id": "R69"
+  },
+  {
+    "url": "https://subtitle-editor.org/faq",
+    "accessed_at": "2026-10-09T21:15:37.087379+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://subtitle-editor.org/faq",
+    "response_bytes": 32848,
+    "response_sha256": "78f7a3b4da91eb487fabe5af9247e495a6198baf22f9713fc623a5cbe1968d15",
+    "id": "R70"
+  },
+  {
+    "url": "https://subtitleedit.github.io/subtitleedit/reference/supported-formats.html",
+    "accessed_at": "2026-10-09T21:15:37.089611+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://subtitleedit.github.io/subtitleedit/reference/supported-formats.html",
+    "response_bytes": 13529,
+    "response_sha256": "f52bb1ed2177dd2746a5b2224fcc05cf29fe9f595f2c7ff647760c44c8dc7518",
+    "id": "R71"
+  },
+  {
+    "url": "https://subtitleedit.github.io/subtitleedit/features/audio-visualizer.html",
+    "accessed_at": "2026-10-09T21:15:37.091582+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://subtitleedit.github.io/subtitleedit/features/audio-visualizer.html",
+    "response_bytes": 17879,
+    "response_sha256": "25545f352e3dd25286e64d56d91ada6a59e773262dd76813536ad8cb6e2d491a",
+    "id": "R72"
+  },
+  {
+    "url": "https://www.w3.org/WAI/test-evaluate/preliminary/",
+    "accessed_at": "2026-10-09T21:15:37.094564+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://www.w3.org/WAI/test-evaluate/preliminary/",
+    "response_bytes": 129840,
+    "response_sha256": "658bc2aa259643954bd52a38d0caaae9d96c22e187c5ffe8da29670a1fb1d24a",
+    "id": "R73"
+  },
+  {
+    "url": "https://www.w3.org/TR/webvtt1/",
+    "accessed_at": "2026-10-09T21:15:37.096834+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://www.w3.org/TR/webvtt1/",
+    "response_bytes": 834970,
+    "response_sha256": "1fd10e09adc72c7545671eadec72282124699b5192d3dff9028020dfa785d154",
+    "id": "R74"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/sampotts/plyr/master/README.md",
+    "accessed_at": "2026-10-09T21:15:37.244720+00:00",
+    "operation": "independent targeted HTTPS GET and text inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://raw.githubusercontent.com/sampotts/plyr/master/README.md",
+    "response_bytes": 97985,
+    "response_sha256": "796b3bded21fd52c5c25026e9a16c045e06374da907162791aa39cc275809633",
+    "id": "R75"
+  },
+  {
+    "url": "https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded.html",
+    "accessed_at": "2026-10-09T21:16:35.413111+00:00",
+    "operation": "independent focused primary-section inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded.html",
+    "response_sha256": "25bb5c531779c3f6358ee45886daa35e33bf6b9fd48a9613f5f28b6cfc84b183",
+    "response_bytes": 52751,
+    "id": "R76"
+  },
+  {
+    "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded.html",
+    "accessed_at": "2026-10-09T21:16:35.375203+00:00",
+    "operation": "independent focused primary-section inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded.html",
+    "response_sha256": "19b2cd4a324b697a1792b472e0abc46e849dc9b533f022b0b8af956de3fdb5a2",
+    "response_bytes": 44126,
+    "id": "R77"
+  },
+  {
+    "url": "https://www.w3.org/WAI/test-evaluate/",
+    "accessed_at": "2026-10-09T21:16:35.346279+00:00",
+    "operation": "independent focused primary-section inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://www.w3.org/WAI/test-evaluate/",
+    "response_sha256": "f9f815e1b593a99583f473f49efc06dfbfc5a545542d32ba51038341c42f4d83",
+    "response_bytes": 50404,
+    "id": "R78"
+  },
+  {
+    "url": "https://www.w3.org/WAI/media/av/",
+    "accessed_at": "2026-10-09T21:16:35.389262+00:00",
+    "operation": "independent focused primary-section inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://www.w3.org/WAI/media/av/",
+    "response_sha256": "a03d29cc27e3c9af8da3d876d6acde6ced0b1c250290773e800a15aba28d11e9",
+    "response_bytes": 43349,
+    "id": "R79"
+  },
+  {
+    "url": "https://www.fcc.gov/consumers/guides/closed-captioning-television",
+    "accessed_at": "2026-10-09T21:16:35.336124+00:00",
+    "operation": "independent focused primary-section inspection",
+    "http_status": 403,
+    "status": "access_failed",
+    "final_url": "https://www.fcc.gov/consumers/guides/closed-captioning-television",
+    "response_sha256": "4db850040b70b566202e1cd64225fa5b409e1edb4681009ed0cb58bc82f1bc02",
+    "response_bytes": 426,
+    "id": "R80",
+    "content_usability": "requested page text not available through raw fetch; status 200 insufficient to establish claimed substantive regulatory content"
+  },
+  {
+    "url": "https://www.ecfr.gov/current/title-47/chapter-I/subchapter-C/part-79",
+    "accessed_at": "2026-10-09T21:16:35.466036+00:00",
+    "operation": "independent focused primary-section inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://unblock.federalregister.gov",
+    "response_sha256": "be6197aed4bf8eedc37b88d4570fe933c1cb3b3549626c10ccb26dc9d2b27187",
+    "response_bytes": 10596,
+    "id": "R81",
+    "content_usability": "requested page text not available through raw fetch; status 200 insufficient to establish claimed substantive regulatory content"
+  },
+  {
+    "url": "https://www.w3.org/TR/WCAG-EM/",
+    "accessed_at": "2026-10-09T21:16:35.413792+00:00",
+    "operation": "independent focused primary-section inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://www.w3.org/TR/WCAG-EM/",
+    "response_sha256": "601a2613e2bc5c766e8107acf0c6ded0c031d0658dcb40d231f915b7bd9978e3",
+    "response_bytes": 152540,
+    "id": "R82"
+  },
+  {
+    "url": "https://www.w3.org/TR/accessibility-conformance-challenges",
+    "accessed_at": "2026-10-09T21:16:35.480022+00:00",
+    "operation": "independent focused primary-section inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://www.w3.org/TR/accessibility-conformance-challenges/",
+    "response_sha256": "fec1fc25390c50dd96070a397da96a54e8a80d72cc50fdd9820add06e3b1c97d",
+    "response_bytes": 145205,
+    "id": "R83"
+  },
+  {
+    "url": "https://subtitleedit.github.io/subtitleedit/reference/supported-formats.html",
+    "accessed_at": "2026-10-09T21:16:35.534511+00:00",
+    "operation": "independent focused primary-section inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://subtitleedit.github.io/subtitleedit/reference/supported-formats.html",
+    "response_sha256": "f52bb1ed2177dd2746a5b2224fcc05cf29fe9f595f2c7ff647760c44c8dc7518",
+    "response_bytes": 13529,
+    "id": "R84"
+  },
+  {
+    "url": "https://subtitle-editor.org/faq",
+    "accessed_at": "2026-10-09T21:16:35.601949+00:00",
+    "operation": "independent focused primary-section inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "final_url": "https://subtitle-editor.org/faq",
+    "response_sha256": "78f7a3b4da91eb487fabe5af9247e495a6198baf22f9713fc623a5cbe1968d15",
+    "response_bytes": 32848,
+    "id": "R85"
+  },
+  {
+    "id": "R86",
+    "url": "https://www.govinfo.gov/content/pkg/CFR-2025-title47-vol4/xml/CFR-2025-title47-vol4-sec79-1.xml",
+    "accessed_at": "2026-10-09T21:16:57.915241+00:00",
+    "operation": "independent official released CFR XML retrieval",
+    "http_status": 200,
+    "status": "retrieved",
+    "response_bytes": 80003,
+    "response_sha256": "ed1bb549c8bef168a3736f6c2ba532ae9838929ca0f9bbce2c3f7c5d4d1a7359"
+  },
+  {
+    "id": "R87",
+    "url": "https://www.bbc.co.uk/accessibility/forproducts/guides/subtitles/",
+    "accessed_at": "2026-10-09T21:17:35.852601+00:00",
+    "operation": "independent consequential-claim confirmation",
+    "http_status": 200,
+    "status": "retrieved",
+    "response_bytes": 986692,
+    "response_sha256": "b4b6ddd16051abbee16f83582797185d865a9d6dda2719783c20b79fed0fadec"
+  },
+  {
+    "id": "R88",
+    "url": "https://api.github.com/repos/ableplayer/ableplayer/releases?per_page=20",
+    "accessed_at": "2026-10-09T21:17:36.249991+00:00",
+    "operation": "independent consequential-claim confirmation",
+    "http_status": 200,
+    "status": "retrieved",
+    "response_bytes": 73996,
+    "response_sha256": "4d9f4d50593de04d0f1447f9da18cc3cc193fc58b89ffd1f3959378cb9eb5801"
+  },
+  {
+    "id": "R89",
+    "url": "https://www.w3.org/WAI/media/av/",
+    "accessed_at": "2026-10-09T21:17:36.340989+00:00",
+    "operation": "independent consequential-claim confirmation",
+    "http_status": 200,
+    "status": "retrieved",
+    "response_bytes": 43349,
+    "response_sha256": "a03d29cc27e3c9af8da3d876d6acde6ced0b1c250290773e800a15aba28d11e9"
+  },
+  {
+    "id": "R90",
+    "url": "https://videojs.org/docs/framework/html/concepts/accessibility",
+    "accessed_at": "2026-10-09T21:17:36.645594+00:00",
+    "operation": "independent consequential-claim confirmation",
+    "http_status": 200,
+    "status": "retrieved",
+    "response_bytes": 279938,
+    "response_sha256": "02ae391bde74a2323b16159d78f791523c45ad2bccd833efa724708c6f41d6aa"
+  },
+  {
+    "id": "R91",
+    "url": "https://www.w3.org/TR/webvtt1/",
+    "accessed_at": "2026-10-09T21:17:36.812247+00:00",
+    "operation": "independent consequential-claim confirmation",
+    "http_status": 200,
+    "status": "retrieved",
+    "response_bytes": 834970,
+    "response_sha256": "1fd10e09adc72c7545671eadec72282124699b5192d3dff9028020dfa785d154"
+  },
+  {
+    "id": "R92",
+    "url": "https://api.github.com/repos/SubtitleEdit/subtitleedit/releases/latest",
+    "accessed_at": "2026-10-09T21:18:17.983363+00:00",
+    "operation": "independent stable-release or source-link inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "response_sha256": "4bd9304512d52b38ecc34015a06b1f0840ce41e1dc6bac61f4a80ea01dd8e331",
+    "response_bytes": 27730,
+    "release_metadata": [
+      {
+        "tag_name": "v5.2.0",
+        "published_at": "2026-09-10T08:09:13Z",
+        "prerelease": false,
+        "html_url": "https://github.com/SubtitleEdit/subtitleedit/releases/tag/v5.2.0"
+      }
+    ]
+  },
+  {
+    "id": "R93",
+    "url": "https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded.html",
+    "accessed_at": "2026-10-09T21:18:18.056537+00:00",
+    "operation": "independent stable-release or source-link inspection",
+    "http_status": 200,
+    "status": "retrieved",
+    "response_sha256": "25bb5c531779c3f6358ee45886daa35e33bf6b9fd48a9613f5f28b6cfc84b183",
+    "response_bytes": 52751
+  },
+  {
+    "id": "R94",
+    "url": "https://www.w3.org/TR/webvtt1/",
+    "accessed_at": "2026-10-09T21:25:12.286951+00:00",
+    "operation": "focused authoring setting multiplicity confirmation",
+    "status": "retrieved",
+    "http_status": 200,
+    "response_sha256": "1fd10e09adc72c7545671eadec72282124699b5192d3dff9028020dfa785d154",
+    "response_bytes": 834970
+  }
+]
