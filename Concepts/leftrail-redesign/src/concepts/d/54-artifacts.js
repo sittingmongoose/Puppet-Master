@@ -7,7 +7,7 @@
      width tier gate chrome, never label text);
    - states the shared vocabulary reads wrongly: "expired" is stale (a clock), not pending; provenance words
      ("agent judgment") and the Investigation facts are plain facts, not states;
-   - full words for "15 rec", "EVIDENCE", "x2", "Ok" and the UPPERCASE stat labels;
+   - full words for "15 rec", "EVIDENCE", "x2", "Ok", "Prov", "6d" / "7d", "12k" and the UPPERCASE stat labels;
    - a card whose family and state word do not fit on one line puts the state under the family (measured, never cut);
    - motion the shared code cannot see: this panel has no [data-pane], so the cards deal in on open, on a tab change
      (from the side of the tab you came from) and after a sort.
@@ -20,7 +20,14 @@
     'EVIDENCE': 'Evidence',
     'x2': '2 runs',
     'Ok': 'OK',
+    'Prov': 'Provenance',
+    'expires in 6d · pin to keep': 'expires in 6 days · pin to keep',
+    'retention window (7d) starts at completion': 'retention window (7 days) starts at completion',
+    'retry 2/2 · lane-b': 'Retry 2/2 · lane-b',
+    'lane-c verifier · capture cap 12k lines · auto-redact on': 'lane-c verifier · capture cap 12,000 lines · auto-redact on',
   };
+  /* fact lines whose parts never break inside (refs keep their hyphens, counts their words) */
+  const KEEP_ART = '.sh-rmeta, .sh-liveline > span, .sh-time, .sh-retn, .sh-row.flat > .sh-meta, .sh-kv > .sh-v:not(.sh-mono)';
   /* provenance and grouping words that are facts, not states */
   const FACT_CHIPS = '.sh-chiprow > .pm-chip, .sh-prov > .pm-chip:not(.pm-chip-ok):not(.pm-chip-err):not(.pm-chip-warn)';
 
@@ -35,7 +42,7 @@
   }
   function labels(panel) {
     panel.querySelectorAll('.sh-fam, .sh-liveline > span:not(.dot):not(.d-gl)').forEach(LANE_E.capOwn);
-    panel.querySelectorAll('.sh-retn').forEach(LANE_E.capOwn);
+    panel.querySelectorAll('.sh-retn, .sh-row.flat > .sh-meta').forEach(LANE_E.capOwn);
     panel.querySelectorAll('.sh-sortlab').forEach(el => { const t = ownText(el); if (t && !/[a-z]/.test(t)) setOwnText(el, sentence(t)); });
   }
 
@@ -49,7 +56,7 @@
       if (!fam || !widths[i] || (!force && r._dStackW === widths[i])) return;
       r._dStackW = widths[i];
       r.removeAttribute('data-d-stack');
-      if (fam.scrollWidth > fam.clientWidth + 1) r.setAttribute('data-d-stack', '');
+      if (LANE_E.inkOver(fam)) r.setAttribute('data-d-stack', '');
     });
   }
 
@@ -88,7 +95,7 @@
 
   panelHook(PANEL, {
     apply(panel) {
-      LANE_E.words(panel, WORDS_ART);
+      LANE_E.words(panel, WORDS_ART, KEEP_ART);
       labels(panel);
       states(panel);
       LANE_E.cursor(panel, '.sh-card > .sh-r1, .sh-row.flat[data-demo-action]');

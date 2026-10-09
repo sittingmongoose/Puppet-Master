@@ -1,8 +1,9 @@
 /* ---- 14. Runtime artifacts (#panel-artifacts, lane E) ----------------------------------------------------------------
    Each receipt card keeps its coloured box (today's structure) and is drawn like a shelf: the box is the only box, its
    identity row sits one inset from the edge with the inner radius, so the hover fill is concentric with the card. The
-   row reads label (and age) on line 1, the family and the state word on line 2; what the card holds when open is a
-   quiet stack of facts and small text buttons. The Investigation shelf lists its trail as words, not tags. */
+   row reads the label on line 1 (the whole width is its room), the family · age and the state word on line 2, the way
+   a run row in Actions & pipelines reads; what the card holds when open is a quiet stack of facts and small text
+   buttons. The Investigation shelf lists its trail as words, not tags. */
 
 /* the sort line: what the list is, how many, and the order (a chat-style dropdown) */
 §@artifacts .sh-sortrow { display: flex !important; flex-wrap: wrap; align-items: center; gap: 4px 6px !important; padding: 0 2px var(--d-g) !important; min-width: 0; }
@@ -19,6 +20,8 @@
 §@artifacts .sh-sortrow .pm6-tb-menu-trigger > .pm-ico { width: 12px !important; height: 12px !important; color: var(--d-text-3); transition: transform var(--d-t2) var(--d-spring); }
 §@artifacts .sh-sortrow .pm6-tb-menu-trigger.is-menu-open > .pm-ico { transform: rotate(180deg); }
 §@artifacts .sh-sortrow .pm6-tb-menu-label { font: inherit !important; color: inherit !important; }
+/* the sort menu's items in the rail's face (see the same rule for the Actions menus in section 13) */
+§R .pmr-menu[data-pmr-menu="d-shArtSort"] .pmr-mi { font-family: inherit; }
 
 /* ---- the card: a shelf-like box ---- */
 §@artifacts .sh-card {
@@ -34,20 +37,20 @@
 §{nier}@artifacts .sh-card { border-color: var(--d-line-2) !important; box-shadow: none !important; }
 §@artifacts .sh-card:hover { transform: none !important; }
 §@artifacts .sh-card.expired { opacity: .72 !important; }
-/* the identity row: label and age, then family and state */
+/* the identity row: the label, then family · age and the state word */
 §@artifacts .sh-card > .sh-r1 {
-  display: grid !important; grid-template-columns: 9px minmax(0, 1fr) auto auto;
-  grid-template-areas: "chev label label age" "chev fam state state"; column-gap: var(--d-gap) !important; row-gap: 1px; align-items: center;
+  display: grid !important; grid-template-columns: calc(9px + var(--d-gap)) minmax(0, max-content) auto minmax(0, 1fr) auto;
+  grid-template-areas: "chev label label label label" "chev fam age . state"; column-gap: 0 !important; row-gap: 1px; align-items: center;
   min-height: 0; margin: var(--d-in) !important; padding: 4px var(--d-pad) !important; cursor: pointer;
   border-radius: var(--d-r) !important; background: transparent; transition: background-color var(--d-t1) var(--d-ease);
 }
 §@artifacts .sh-card > .sh-r1:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
 §@artifacts .sh-card.open > .sh-r1 { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-open), transparent); }
 §@artifacts .sh-card > .sh-r1:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
-§@artifacts .sh-r1 > .sh-accchev { grid-area: chev; align-self: start; width: 9px !important; height: 9px !important; margin-top: 4px; color: var(--d-text-3) !important; }
+§@artifacts .sh-r1 > .sh-accchev { grid-area: chev; align-self: start; justify-self: start; width: 9px !important; height: 9px !important; margin-top: 4px; color: var(--d-text-3) !important; }
 §@artifacts .sh-r1 > .sh-rlabel {
   grid-area: label; min-width: 0; font: 600 var(--d-fs-name)/var(--d-lh) var(--body-font) !important; color: var(--d-text) !important;
-  white-space: normal !important; overflow: visible !important; overflow-wrap: anywhere; text-overflow: clip !important;
+  white-space: normal !important; overflow: visible !important; overflow-wrap: anywhere; text-overflow: clip !important; text-wrap: pretty;
 }
 /* the family is the card's kind: always shown (the shell hides it below 250 px), a word, not a tag */
 §@artifacts .sh-card .sh-r1 > .sh-fam {
@@ -55,14 +58,15 @@
   font: 500 var(--d-fs-meta)/1.35 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text-2) !important;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-§@artifacts .sh-r1 > .pm-chip { grid-area: state; justify-self: end; margin-left: 6px; }
+§@artifacts .sh-r1 > .pm-chip { grid-area: state; justify-self: end; margin-left: 8px; }
 §@artifacts .sh-r1 > .sh-age {
-  grid-area: age; align-self: start; justify-self: end; display: inline-flex !important; gap: 0 !important; margin: 2px 0 0 6px !important;
+  grid-area: age; align-self: center; justify-self: start; display: inline-flex !important; align-items: baseline; gap: 0 !important; margin: 0 !important;
   font: 400 var(--d-fs-small)/1.35 var(--mono-font) !important; color: var(--d-text-3) !important; font-variant-numeric: tabular-nums; white-space: nowrap;
 }
+§@artifacts .sh-r1 > .sh-age::before { content: '\00B7'; margin: 0 5px; font-family: var(--body-font); color: var(--d-text-3); }
 §@artifacts .sh-r1 > .sh-age > :is(.dot, .d-gl) { display: none !important; }
-/* when the family and the state word do not fit on one line, the state goes under the family (measured, JS) */
-§@artifacts .sh-card > .sh-r1[data-d-stack] { grid-template-areas: "chev label label age" "chev fam fam fam" "chev state state state"; }
+/* when family · age and the state word do not fit on one line, the state goes under them (measured, JS) */
+§@artifacts .sh-card > .sh-r1[data-d-stack] { grid-template-areas: "chev label label label label" "chev fam age . ." "chev state state state state"; }
 §@artifacts .sh-card > .sh-r1[data-d-stack] > .pm-chip { justify-self: start; margin-left: 0; }
 /* lines that stay visible on a closed card: the failing test, the live stream */
 §@artifacts .sh-card > :is(.sh-logline, .sh-liveline) {
@@ -81,6 +85,9 @@
 /* ---- an open card: a quiet stack of facts, small text buttons at the end ---- */
 §@artifacts .sh-card > .sh-accb { padding: 0 calc(var(--d-in) + var(--d-pad)) 0 calc(var(--d-in) + var(--d-pad) + 9px + var(--d-gap)) !important; }
 §@artifacts .sh-card > .sh-accb > .pm-acc-inner { display: flex; flex-direction: column; gap: 5px; }
+/* the accordion grows its body from zero height: a fact never shrinks to fit the body mid-open (the thumbnail would
+   grow out of nothing and push the facts down) */
+§@artifacts .sh-card > .sh-accb > .pm-acc-inner > * { flex-shrink: 0; }
 §@artifacts .sh-card > .sh-accb > .pm-acc-inner > :first-child { margin-top: 2px !important; }
 §@artifacts .sh-card > .sh-accb > .pm-acc-inner > :last-child { margin-bottom: 9px !important; }
 §@artifacts .sh-card .sh-accb > .pm-acc-inner > * { margin-top: 0 !important; padding-left: 0 !important; }
@@ -92,6 +99,9 @@
   font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-3) !important;
   white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere;
 }
+/* fact lines wrap between their parts (JS keeps a ref or a count whole), in even lines, so an age or a word is never
+   left alone on a line (Chrome's text-wrap: pretty leaves "2h" alone there; balance does not) */
+§@artifacts :is(.sh-rmeta, .sh-liveline > span, .sh-time, .sh-retn, .sh-row.flat > .sh-meta, .sh-kv > .sh-v:not(.sh-mono)) { text-wrap: balance; }
 §@artifacts .sh-thumb { height: 56px; border-radius: var(--d-r) !important; border: 1px solid var(--d-line) !important; }
 §@artifacts .sh-vals { display: flex !important; flex-wrap: wrap; align-items: baseline; gap: 4px 14px !important; margin: 0 !important; }
 §@artifacts .sh-val { display: inline-flex !important; flex-direction: row !important; align-items: baseline; gap: 4px; }
@@ -142,9 +152,9 @@
 
 /* ---- Investigation: the head states the outcome; the facts are words; each step a row ---- */
 §@artifacts .sh-head > .pm-chip { margin-left: auto; }
-§@artifacts .sh-chiprow { display: flex !important; flex-wrap: wrap; gap: 0 !important; margin: 0 !important; padding: 4px var(--d-pad) 4px !important; }
+/* the facts sit apart by space, not by separators, so a wrapped line never ends on a dangling dot */
+§@artifacts .sh-chiprow { display: flex !important; flex-wrap: wrap; gap: 2px 12px !important; margin: 0 !important; padding: 4px var(--d-pad) 4px !important; }
 §@artifacts .sh-chiprow > .pm-chip { font: 500 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-2) !important; }
-§@artifacts .sh-chiprow > .pm-chip:not(:last-child)::after { content: '\00B7'; margin: 0 6px; color: var(--d-text-3); }
 /* a step reads like every other row: its word on line 1, what it is on line 2 */
 §@artifacts .sh-shelf .sh-row.flat {
   display: grid !important; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "fam badge" "meta meta"; column-gap: 6px; row-gap: 1px; align-items: baseline;

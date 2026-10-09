@@ -10,29 +10,74 @@
      a ring, queued the turning ring) instead of the shell's colour-only dots, which applyDots reads as "live";
    - a disabled dispatch keeps its reason inline (FinalGUISpec disabled-control model);
    - ids and paths that do not fit keep both ends (RELEASE_…_PASSPHRASE, src/…/mixed_fractions.rs);
+   - a run whose facts would wrap beside its state word puts the state under them; a shelf head cut by under a pixel
+     stacks its summary too (the shared stackHeads tolerates 1 px);
+   - the automation plate under the header joins the panel's entrance cascade between the header and the tabs;
    - the provider view rises in when the service changes.
    Every DOM change goes through remember() / setAttr() / addClass() / inject() / setOwnText(), so "Current" is
    byte-identical after a switch. LANE_E is shared with 54-artifacts.js (the files share the wrapper scope). */
 
 const LANE_E = (() => {
   /* whole-text replacements over one panel's text nodes, plus the ASCII arrow; the shell's hidden sprout menus are
-     skipped (their labels feed PMR.menu as written) */
-  function words(root, map) {
+     skipped (their labels feed PMR.menu as written). A " · " separator is glued to the word before it (no-break space),
+     so a line that wraps ends on the dot instead of starting with it ("Live · 6 actions ·" / "streaming").
+     In the fact lines that keep (keep: a selector), a part never breaks inside: a ref keeps its hyphens (a word joiner
+     after each: "import-fixes", "v1.4.2-rc.1", "lane-c") and a count keeps its word ("6 actions"). Never used on the
+     ids midFit cuts (it rewrites their text whole). */
+  /* a token longer than this is a path or a URL: it keeps its hyphens as break points (better than a cut anywhere) */
+  const KEEP_MAX = 24;
+  function words(root, map, keep) {
     const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     const hits = [];
     for (let n = w.nextNode(); n; n = w.nextNode()) {
       const p = n.parentElement;
       if (!p || p.closest('.pm6-tb-menu')) continue;
       const t = n.nodeValue.trim();
-      if (t && (Object.prototype.hasOwnProperty.call(map, t) || t.indexOf(' -> ') >= 0)) hits.push(n);
+      if (t && (Object.prototype.hasOwnProperty.call(map, t) || t.indexOf(' -> ') >= 0 || t.indexOf(' · ') >= 0 || (keep && p.closest(keep)))) hits.push(n);
     }
     hits.forEach(n => {
       const orig = n.nodeValue, t = orig.trim();
       let v = Object.prototype.hasOwnProperty.call(map, t) ? orig.replace(t, map[t]) : orig;
-      v = v.replace(/ -> /g, ' → ');
+      v = v.replace(/ -> /g, ' → ').replace(/ · /g, '\u00A0· ');
+      if (keep && n.parentElement.closest(keep)) {
+        v = v.replace(/\S+/g, w => (w.length <= KEEP_MAX ? w.replace(/([0-9A-Za-z])-(?=[0-9A-Za-z])/g, '$1-\u2060') : w))
+          .replace(/(\d) (?=[a-z])/g, '$1\u00A0');
+      }
       if (v === orig) return;
       n.nodeValue = v;
       remember(() => { n.nodeValue = orig; });
+    });
+  }
+  /* does the text overflow its box at all? scrollWidth is rounded, so a cut of under a pixel (an ellipsis all the same)
+     reads as a fit there; the text's own range is measured to the subpixel */
+  function inkOver(el) {
+    if (el.scrollWidth > el.clientWidth) return true;
+    const cs = getComputedStyle(el);
+    const room = el.getBoundingClientRect().width - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0)
+      - (parseFloat(cs.borderLeftWidth) || 0) - (parseFloat(cs.borderRightWidth) || 0);
+    const r = document.createRange();
+    r.selectNodeContents(el);
+    return r.getBoundingClientRect().width > room + .05;
+  }
+  /* a shelf head whose label is cut by less than the 1 px the shared stackHeads (20-fit.js) tolerates stacks too. It
+     carries the lane's own attribute, so the shared pass, which re-measures with its tolerance, never undoes it; the
+     inline offset restores the head's style attribute exactly on a concept switch */
+  function stackTight(root) {
+    root.querySelectorAll('.sh-shelf > .sh-head').forEach(h => {
+      const l = h.querySelector(':scope > .sh-hlabel'), c = h.querySelector(':scope > .sh-hcount');
+      if (!l || !c || !h.offsetWidth) return;
+      const key = h.offsetWidth + '|' + l.textContent + '|' + c.textContent + '|' + getComputedStyle(l).font + '|' + h.hasAttribute('data-d-stack');
+      if (h._dETight === key) return;
+      h._dETight = key;
+      h.removeAttribute('data-d-e-stack');
+      if (h.hasAttribute('data-d-stack') || !(inkOver(l) || h.scrollWidth > h.clientWidth)) return;
+      if (!h.hasAttribute('data-d-e-sx')) {
+        const had = h.getAttribute('style');
+        h.setAttribute('data-d-e-sx', '');
+        remember(() => { h.removeAttribute('data-d-e-stack'); h.removeAttribute('data-d-e-sx'); delete h._dETight; if (had == null) h.removeAttribute('style'); else h.setAttribute('style', had); });
+      }
+      h.setAttribute('data-d-e-stack', '');
+      h.style.setProperty('--d-e-stack-x', Math.max(0, l.offsetLeft - (parseFloat(getComputedStyle(h).paddingLeft) || 0)) + 'px');
     });
   }
   /* a lane glyph as a direct child of host (default: first), its state written on it so it takes the state colour */
@@ -73,7 +118,7 @@ const LANE_E = (() => {
       el._dEFit = el.clientWidth + '|' + getComputedStyle(el).font + '|' + (el._dFull != null ? el._dFull : el.textContent);
     });
   }
-  function clearMid(root) { root.querySelectorAll('*').forEach(el => { delete el._dEFit; }); }
+  function clearMid(root) { root.querySelectorAll('*').forEach(el => { delete el._dEFit; delete el._dETight; delete el._dEStack; }); }
   /* refit on rail width, theme, NieR and text size changes (the shared watcher refits only its own selectors) */
   function watch(panel, refit) {
     if (panel._dEWatch) return;
@@ -102,14 +147,29 @@ const LANE_E = (() => {
   }
   /* the panel's rows take the NieR cursor (ink bar + square cursor) like the shared rows do */
   function cursor(panel, sel) { panel.querySelectorAll(sel).forEach(el => addClass(el, 'pmr-cur')); }
-  return { words, mark, chipAs, capOwn, mid, clearMid, watch, headStates, cursor };
+  /* the panel comes in: the shared entrance (30-motion.js enterPanel) cascades the header, Source's context plate and
+     the tabs; a lane panel's own plate under the header joins that cascade in its place, with the same timing, so the
+     middle of the panel never stands still before its title. The header keeps the animation enterPanel gave it (the
+     same frame); the plate takes the second step and the tabs, restarted by cascade(), the third. */
+  function chromeIn(panel, plateSel) {
+    const plate = panel.querySelector(':scope > ' + plateSel);
+    if (reduced() || !visible(plate)) return;
+    const head = panel.querySelector(':scope > .sh-banner');
+    const rest = [plate, panel.querySelector(':scope > .pm-segtab')].filter(visible);
+    const f = spec(), step = Math.round(f.step * .6);
+    cascade(rest, { dy: f.wipe ? 0 : Math.max(2, Math.round(f.dy / 2)), step, delay: visible(head) ? step : 0, durK: .8 });
+  }
+  return { words, mark, chipAs, capOwn, mid, clearMid, watch, headStates, cursor, inkOver, stackTight, chromeIn };
 })();
 
 (() => {
   const PANEL = 'panel-git';
   const WORDS_GIT = {
-    '4 - 2 - 1': '4 passed · 2 failed · 1 running',
+    /* a count keeps its word on a wrap (no-break spaces); the Readiness fact counts the same runs in the same words */
+    '4 - 2 - 1': '4\u00A0passed · 2\u00A0failed · 1\u00A0running',
+    '4 success · 2 failed · 1 running': '4\u00A0passed · 2\u00A0failed · 1\u00A0running',
     '7 · 5 refs': '7 runs · 5 refs',
+    'push · PR · manual': 'push · pull request · manual',
     '4 · 2 dispatchable': '4 workflows · 2 dispatchable',
     'on:': 'Triggers',
     'MANUAL DISPATCH': 'Manual dispatch',
@@ -119,6 +179,8 @@ const LANE_E = (() => {
   };
   /* ids and paths that keep their two ends: secret names, workflow files, changed paths */
   const MID_GIT = '.sh-kvwrap > .sh-k.sh-mono, .sh-kv > .sh-v.sh-mono';
+  /* fact lines whose parts never break inside (refs keep their hyphens, counts their words) */
+  const KEEP_GIT = '.sh-run-h .sh-meta, .sh-kv > .sh-v:not(.sh-mono), .pm7-post-kv > dd:not(.sh-mono), .pm7-automation-run-copy > small';
 
   /* a job's state from the shell's dot colour and its duration word */
   function jobState(dot, dur) {
@@ -192,7 +254,27 @@ const LANE_E = (() => {
     });
   }
 
-  function fit(panel, force) { LANE_E.mid(panel, MID_GIT, force); }
+  /* a run whose number · ref · age wraps beside its state word puts the state under it (fit by layout): the facts
+     get the row's whole width and break only between their parts. The attribute is the shared data-d-stack, which
+     clearFit() removes on a concept switch; the measure is cached on room, font and text. */
+  function lines(el) {
+    const r = document.createRange();
+    r.selectNodeContents(el);
+    return new Set(Array.from(r.getClientRects()).filter(x => x.width > 0).map(x => Math.round(x.top))).size;
+  }
+  function stackRuns(panel, force) {
+    panel.querySelectorAll('.sh-run-h').forEach(h => {
+      const meta = h.querySelector('.sh-meta'), chip = h.querySelector(':scope > .pm-chip');
+      if (!meta || !chip || !h.offsetParent) return;
+      const key = h.clientWidth + '|' + getComputedStyle(meta).font + '|' + meta.textContent + '|' + chip.textContent;
+      if (!force && h._dEStack === key) return;
+      h._dEStack = key;
+      h.removeAttribute('data-d-stack');
+      if (lines(meta) > 1) h.setAttribute('data-d-stack', '');
+    });
+  }
+
+  function fit(panel, force) { LANE_E.mid(panel, MID_GIT, force); LANE_E.stackTight(panel); stackRuns(panel, force); }
 
   function onClick(ev) {
     if (!D.on) return;
@@ -203,8 +285,8 @@ const LANE_E = (() => {
 
   panelHook(PANEL, {
     apply(panel) {
-      LANE_E.words(panel, WORDS_GIT);
-      panel.querySelectorAll('.sh-dfrow > .sh-k, .sh-chk').forEach(LANE_E.capOwn);
+      LANE_E.words(panel, WORDS_GIT, KEEP_GIT);
+      panel.querySelectorAll('.sh-dfrow > .sh-k, .sh-chk, .sh-head > .sh-hcount, [data-pane="workflows"] .sh-run-h .sh-meta').forEach(LANE_E.capOwn);
       LANE_E.headStates(panel);
       jobs(panel);
       reasons(panel);
@@ -218,7 +300,10 @@ const LANE_E = (() => {
         remember(() => { delete panel._dEClick; });
       }
     },
-    show(panel) { fit(panel, false); },
+    show(panel, info) {
+      if (info && (info.reason === 'switch' || info.reason === 'concept')) LANE_E.chromeIn(panel, '.pm7-automation-context');
+      fit(panel, false);
+    },
     unmount(panel) { LANE_E.clearMid(panel); },
   });
 })();
