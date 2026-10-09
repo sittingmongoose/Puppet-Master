@@ -437,13 +437,9 @@
       aside: function (ctx) {
         var r = PMU.roster.provider(p.id); if (!r || !r.accounts.length) return '';
         if (r.accounts.length > 1) {
-          if (ctx && ctx.form === 'plate' && r.group === 'plan' && r.windows.length) { var th = PMU.roster.thresholds();
-            var tw = ctx.tier ? ctx.tier.w : 'l'; if (tw === 'xs' || tw === 's') return '';
-            /* the long words only where the subtitle beside them stays whole (Retro 2026-10-02: "4 accounts · Work Claude ...") */
-            var longW = 'Auto-switch at ' + (100 - th.switchLeft) + '% used', metaT = providerMeta(p.id)();
-            var longOk = tw !== 'm' && C.wrapLines(metaT, (ctx.tier.bw || 0) - 44 - C.wrapW(longW, 12.5) - 40, 12.5) <= 1;
-            var words = th.auto ? (longOk ? longW : 'Switch at ' + (100 - th.switchLeft) + '%') : 'Auto-switch off';
-            return { html: '<span class="pmu-asw"' + C.hover('Auto-switch', (th.auto ? 'Switches at ' + (100 - th.switchLeft) + '% used. ' : '') + 'Shared with Settings; change it in the Auto-switch strip or in Settings') + '>' + SVG.notch + esc(words) + '</span>' }; }
+          /* d-switch (item 2): the plate's own policy band (54-w-accounts.js) carries the provider's switch and switch
+             level, so the head no longer repeats them (each state said once, LOOK-REVIEW-2 16) */
+          if (ctx && ctx.form === 'plate' && r.group === 'plan' && r.windows.length) return '';
           return r.accounts.length + ' accounts';
         }
         var a = r.accounts[0];

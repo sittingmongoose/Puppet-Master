@@ -28,6 +28,49 @@
       invalidate(); emit('write:' + id);
       return ok;
     },
+    /* ---- per-provider auto-switch (item 2): the provider-scope values live in the Settings owner (PM51.providerPolicy,
+       the providers manager: p.props[id], scope providers-service). own(providerId, ids) -> the provider's OWN values,
+       keyed like ids ({auto: id, ...} -> {auto: value}); a key without an own value is absent (the global applies). */
+    providerPolicy: function (providerId, ids) {
+      var p = pm51(), out = {}, api = p && p.providerPolicy, own = null;
+      try { own = api && typeof api.own === 'function' ? api.own(providerId) : null; } catch (error) { own = null; }
+      if (!own) {   /* read-only fallback: the Settings state itself */
+        var prov = snapshot().providers.filter(function (x) { return x.id === providerId; })[0];
+        own = {}; if (prov && prov.props) Object.keys(prov.props).forEach(function (k) { var v = prov.props[k]; if (v !== null && v !== undefined && v !== '') own[k] = v; });
+      }
+      Object.keys(ids || {}).forEach(function (k) { if (Object.prototype.hasOwnProperty.call(own, ids[k])) out[k] = own[ids[k]]; });
+      return out;
+    },
+    /* an account's own value (the account scope, e.g. ai.accounts.account-threshold-override); undefined = none */
+    accountValue: function (providerId, accountId, id) {
+      var prov = snapshot().providers.filter(function (x) { return x.id === providerId; })[0];
+      var acc = prov && (prov.accounts || []).filter(function (a) { return a.id === accountId; })[0];
+      var v = acc && acc.props ? acc.props[id] : undefined;
+      return v === '' || v === null ? undefined : v;
+    },
+    providerWritable: function () { var p = pm51(); return !!(p && p.providerPolicy && typeof p.providerPolicy.set === 'function'); },
+    /* one provider-scope write, as a Settings transaction (canon SSYS-009/018, UCC: cmd.settings.transaction.preview then
+       .apply with scope=provider): both go through the page's command seam (a host may cancel either; a cancelled
+       dispatch writes nothing), then the Settings owner applies the change (PM51.providerPolicy.set, the same write the
+       Settings rows make). value null = the provider follows the shared value again. -> {ok, receipt, preview} */
+    setProvider: function (providerId, id, value, source) {
+      var p = pm51(), api = p && p.providerPolicy;
+      if (!api || typeof api.set !== 'function') return { ok: false, reason: 'Settings is not available' };
+      var before = null; try { before = api.get(providerId, id); } catch (error) { before = null; }
+      var change = { setting_id: id, scope: 'provider', scope_id: providerId, value: value === undefined ? null : value, inherit: value === null || value === undefined,
+        previous: before ? (before.own ? before.value : null) : null, previous_effective: before ? before.value : null };
+      var payload = { scope: 'provider', provider_id: providerId, changes: [change], source: source || 'usage.accounts' };
+      var preview = command('cmd.settings.transaction.preview', payload, { valid: true, conflicts: [], effective_after: change.inherit ? (before ? before.shared : null) : change.value });
+      if (preview.dispatch_accepted === false) return { ok: false, preview: preview, receipt: preview };
+      var receipt = command('cmd.settings.transaction.apply', Object.assign({ preview_receipt_id: preview.receipt_id }, payload), { applied: true });
+      if (receipt.dispatch_accepted === false) return { ok: false, preview: preview, receipt: receipt };
+      var ok = false;
+      try { ok = api.set(providerId, id, change.inherit ? null : value) !== false; } catch (error) { ok = false; }
+      /* the roster's providers and accounts did not change (the policy is read live from the owner): the snapshot is kept,
+         so the click task does not pay for another copy of the Settings state */
+      emit('write:' + id + '@' + providerId);
+      return { ok: ok, preview: preview, receipt: receipt };
+    },
     useNext: function (providerId, accountId) {
       var k = kimi(); if (!k || typeof k.dispatchAction !== 'function') return false;
       try { k.dispatchAction('pm51-providers-account-next', { provider: providerId, account: accountId }); } catch (error) { return false; }

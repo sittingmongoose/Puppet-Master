@@ -236,3 +236,59 @@ html[data-theme$="-light"] #panel-usage .pmu-acclight { background: radial-gradi
 #panel-usage .pmu-accrow > :not(.pmu-acclight) { position: relative; z-index: 1; }
 html[data-theme^="retro"] #panel-usage .pmu-acclight { background: linear-gradient(90deg, color-mix(in srgb, var(--pmu-s0) 10%, transparent), transparent 60%); }
 html[data-o55-nier="on"] #panel-usage .pmu-acclight { display: none; }
+
+/* ------------------------------------------------------------------ per-provider auto-switch (Jared 2026-10-09 item 2)
+   Each provider with two or more accounts carries its own switch and switch level: the plate's policy band (between the
+   rows and the foot, on the foot's hairline), one cell per provider in the Auto-switch hero, a switch on each provider row
+   of the headroom card; every ladder row carries its own provider's notch. No fills, no pills: the band is a ruled row. */
+#panel-usage .pmu-accpol { display: flex; flex-direction: column; gap: 2px; flex: none; min-width: 0; margin: auto -14px 0; padding: 6px 14px 4px; border-top: 1px solid var(--pmu-rule-2); }
+#panel-usage .pmu-accpol + .pmu-accfoot { margin-top: 0; border-top: 0; padding-top: 2px; }
+#panel-usage .pmu-card[data-head="plate"] > .pmu-cardbody > .pmu-accpol:last-child { margin-bottom: -12px; padding-bottom: 8px; }
+#panel-usage .pmu-polrow { display: flex; align-items: center; gap: 7px; height: 30px; min-width: 0; font-size: 12.5px; }
+#panel-usage .pmu-polrow .pmu-swlabel { margin-right: 0; }
+#panel-usage .pmu-polscope { margin-left: auto; padding-left: 10px; font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; }
+#panel-usage .pmu-accpol[data-off] .pmu-stepper, #panel-usage .pmu-accpol[data-off] .pmu-swat { opacity: .55; }
+#panel-usage .pmu-polstat { display: flex; align-items: flex-start; gap: 8px; min-width: 0; font-size: 12.5px; line-height: 18px; color: var(--pmu-ink-2); }
+#panel-usage .pmu-polstat > .pmu-glyph { flex: none; width: 16px; height: 16px; margin-top: 1px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-polstat[data-tone="warn"] > .pmu-glyph { color: var(--pmu-ink-warn); }
+#panel-usage .pmu-polstat > span { min-width: 0; overflow-wrap: break-word; }
+#panel-usage .pmu-polnow { display: inline-flex; align-items: center; height: 22px; margin: -2px 0 0 6px; padding: 0 8px; font-size: 12px; vertical-align: middle; }
+
+/* the hero's side column: one cell per provider (mark, switch, level), then the shared setting */
+#panel-usage .pmu-ladpol { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+#panel-usage .pmu-polcells { display: grid; gap: 2px 12px; min-width: 0; }
+#panel-usage .pmu-polcell { display: flex; align-items: center; gap: 7px; height: 28px; min-width: 0; }
+#panel-usage .pmu-polmark { display: inline-flex; align-items: center; gap: 6px; flex: 0 1 auto; min-width: 16px; overflow: hidden; }
+#panel-usage .pmu-polname { min-width: 0; font-size: 12.5px; color: var(--pmu-ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-polcell .pmu-toggle { margin-left: 2px; }
+#panel-usage .pmu-polval { flex: none; height: 24px; min-width: 42px; padding: 0 6px; border: 1px solid var(--pmu-rule); border-radius: 7px; background: transparent; color: var(--pmu-ink);
+  font: inherit; font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums; cursor: pointer; transition: background-color 140ms, color 140ms, border-color 140ms; }
+#panel-usage .pmu-polval:hover:not([disabled]) { background: var(--pmu-row-hover); }
+#panel-usage .pmu-polval[data-off] { color: var(--pmu-ink-3); font-weight: 500; }
+#panel-usage .pmu-polval[disabled] { opacity: .5; cursor: default; }
+#panel-usage .pmu-polcell[data-tone="warn"] .pmu-polval { border-color: color-mix(in srgb, var(--pmu-warn) 60%, var(--pmu-rule)); }
+#panel-usage .pmu-polshared { margin: 0; min-width: 0; font-size: 12px; line-height: 18px; color: var(--pmu-ink-3); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-polshared b { font-weight: 600; color: var(--pmu-ink-2); }
+#panel-usage .pmu-polshared:hover { color: var(--pmu-ink-2); }
+#panel-usage .pmu-polshared.is-none { cursor: default; white-space: normal; }
+#panel-usage .pmu-ladder.is-stacked .pmu-ladpol { flex: 1 1 100%; }
+
+/* the ladder: each row's notch at its own provider's switch point, in the track column's coordinates (16 + 8 + the name
+   column + 8; 104 px = the fixed columns and the four gaps); rows that share a level line up into one dashed line */
+#panel-usage .pmu-ladnotch { position: absolute; top: 4px; bottom: 4px; width: 2px; margin-left: -1px; border-radius: 1px; pointer-events: none; z-index: 2;
+  background: color-mix(in srgb, var(--pmu-ink) 72%, transparent); left: calc(32px + var(--ln, 110px) + (100% - 104px - var(--ln, 110px)) * var(--swf, .1)); }
+#panel-usage .pmu-ladnotch[data-off] { opacity: .22; }
+
+/* the headroom card's provider rows: mark, name, most room now, the provider's own switch */
+#panel-usage .pmu-switch.is-panel .pmu-swfam { grid-template-columns: 16px minmax(54px, 1fr) minmax(44px, 40%) 30px; column-gap: 6px; align-items: center; }
+#panel-usage .pmu-swfam .pmu-toggle { justify-self: end; }
+#panel-usage .pmu-swfam[data-off] .pmu-swbar { opacity: .55; }
+#panel-usage .pmu-swbar.is-none { font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-switch.is-panel .pmu-polshared.is-foot { margin-top: 4px; }
+#panel-usage .pmu-switch:not(.is-panel) .pmu-polshared { flex: none; }
+
+html[data-theme^="retro"] #panel-usage :is(.pmu-polval, .pmu-ladnotch) { border-radius: 0; }
+html[data-o55-nier="on"] #panel-usage .pmu-polval { border-radius: 0; border-color: var(--o55-nier-ink); color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #panel-usage .pmu-polval:hover:not([disabled]) { background: var(--o55-nier-ink); color: var(--o55-nier-paper, var(--pmu-card)); }
+html[data-o55-nier="on"] #panel-usage .pmu-ladnotch { border-radius: 0; background: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #panel-usage .pmu-accpol { border-top-style: dashed; }

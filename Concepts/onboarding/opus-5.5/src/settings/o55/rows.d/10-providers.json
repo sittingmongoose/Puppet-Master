@@ -518,7 +518,8 @@
   },
   "ai.accounts.multi-account-switching": {
    "label": "Switch accounts by themselves",
-   "help": "When one account hits its limit, the next one carries on."
+   "help": "The shared setting: when one account hits its limit, the next one carries on. A service with its own choice uses that instead.",
+   "why": "Each service with two or more accounts can switch on its own terms: under Services in its This service section, or in Auto-switch policies on this tab."
   },
   "ai.accounts.soft-switch": {
    "label": "Switch at a natural break",
@@ -526,11 +527,11 @@
   },
   "ai.accounts.soft-warning-level": {
    "label": "Warn when this much is left",
-   "help": "A heads-up before an account runs low."
+   "help": "The shared heads-up before an account runs low. A service can have its own."
   },
   "ai.accounts.hard-switch-level": {
    "label": "Switch when this much is left",
-   "help": "Below this, work moves to the next account."
+   "help": "The shared level: below this, work moves to the next account. A service, or one account, can have its own."
   },
   "ai.accounts.default-account": {
    "label": "Which account goes first",
