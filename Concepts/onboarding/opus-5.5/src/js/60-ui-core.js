@@ -643,6 +643,23 @@
   const warm = () => { try { O55.motion.softwareRendered(); } catch (_) {} };
   if (typeof window.requestIdleCallback === 'function') window.requestIdleCallback(warm, { timeout: 6000 }); else window.setTimeout(warm, 3000);
 
+  /* A new install's window opens by itself about 140 ms after the page has loaded (95-boot.js), and Settings paints the
+     Project's stored theme as the page loads (DOMContentLoaded): the look a new install starts in, Basic Dark (the head
+     painted it from the first frame, window.PM_O55_BOOT.install), is held until the window opens and its own look takes
+     over (syncTheme). A paint of anything else is put back in the same task, so no frame shows it. */
+  let installHold = null;
+  if (window.PM_O55_BOOT && window.PM_O55_BOOT.install) {
+    const html = document.documentElement;
+    installHold = new MutationObserver(() => {
+      if (S.open) { installHold.disconnect(); installHold = null; return; }
+      if (html.getAttribute('data-theme') !== 'basic-dark') {
+        try { window.PM_THEME.setFamily('basic', { persist: false }); window.PM_THEME.setMode('dark', { persist: false }); }
+        catch (_) { html.setAttribute('data-theme', 'basic-dark'); }
+      }
+      if (html.style.colorScheme && html.style.colorScheme !== 'dark') html.style.colorScheme = 'dark';
+    });
+    installHold.observe(html, { attributes: true, attributeFilter: ['data-theme', 'style'] });
+  }
   let openGen = 0, pendingMount = null;
   function clearOpenScrim() { const n = document.getElementById('o55-open-scrim'); if (n) n.remove(); }
   /* A caller that opens the window and drives it in the same turn (go, back, refresh: the demo bar, the film and
@@ -692,6 +709,10 @@
     S.sess = live ? S.sess : resumable ? Object.assign(freshSession(), saved) : freshSession();
     if (opts.fresh || (saved && (saved.status === 'done' || saved.status === 'skipped'))) S.sess = freshSession();
     S.resumed = !!(saved && !opts.fresh && saved.status === 'closed');
+    /* A new install (95-boot: ?o55=fresh or the first open; the demo's Reset) starts in Basic Dark whatever look the
+       browser showed before (Jared, 2026-10-09). Run Onboarding Again (the Settings row, the Home menu, the demo's
+       Restart) starts in the look on screen, NieR Mode included, and preselects it: its drafts take the painted look. */
+    if (opts.install && (opts.fresh || !resumable)) installLook();
     /* facts the person established earlier (a trusted device, an installed key) are re-applied to the fixture world */
     (O55.onOpen || []).forEach((fn) => { try { fn(S); } catch (_) {} });
     S.sess.status = 'active';
@@ -700,6 +721,7 @@
     S.resumedShownOn = S.resumed ? S.sess.screen : null;
     returnFocus = opts.returnFocus || document.activeElement;
     S.open = true; S.save();
+    if (installHold) { installHold.disconnect(); installHold = null; }
     const r = S.root; r.hidden = false; r.setAttribute('data-open', 'true');
     document.documentElement.setAttribute('data-o55-open', 'true');
     if (window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.pause) { try { window.PM_DEMO.clock.pause(); S.pausedClock = true; } catch (_) {} }
@@ -735,6 +757,20 @@
     if (waitNote) O55.motion.after(700, () => O55.ui.toast(T('chrome.startOverWait')));
     window.dispatchEvent(new CustomEvent('o55:onboarding', { detail: { type: 'opened', screen: S.sess.screen, resumed: S.resumed } }));
     return true;
+  }
+  /* Basic Dark as the window's look preview (persist: false, as a pick on Pick a look), a NieR Mode that is on turned
+     into an off preview at once (writes nothing; kit.d/18-nier.js already started a new install's page that way), and
+     Basic Dark preselected on Pick a look, in both drafts and in the session's NieR choice */
+  function installLook() {
+    const n = window.PM_NIER;
+    if (n && n.preview && (n.wanted ? n.wanted() : n.on())) { try { n.preview({ on: false }, { within: null, instant: true, sound: false }); } catch (_) {} }
+    const th = O55.theme();
+    if (th.chosen !== 'basic' || th.mode !== 'dark') {
+      try { window.PM_THEME.setFamily('basic', { persist: false }); window.PM_THEME.setMode('dark', { persist: false }); }
+      catch (_) { document.documentElement.setAttribute('data-theme', 'basic-dark'); }
+    }
+    Object.values(S.sess.drafts).forEach((d) => O55.draft.set(d, { theme_family: 'basic', theme_mode: 'dark' }));
+    if (n && n.parts && n.background) S.sess.look = { nier: false, parts: n.parts().slice(), background: n.background() };
   }
   /* A reopened run shows its own look again (a reload painted the saved theme while the drafts kept the pick): the
      family and mode from the drafts, and NieR Mode from the session (O55.nierLook), still previews */

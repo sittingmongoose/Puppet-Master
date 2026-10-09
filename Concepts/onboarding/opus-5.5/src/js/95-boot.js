@@ -70,12 +70,14 @@
        or tour bar renders its control from it */
     if (O55.sound && O55.sound.refresh) { try { O55.sound.refresh('boot'); } catch (_) {} }
     if (sw === 'off') return;
-    if (sw === 'fresh') { O55.store.clear('onboarding'); return O55.ui.open({ fresh: true }); }
+    /* a new install (?o55=fresh, or no onboarding record yet: the window opens by itself) starts in Basic Dark; the
+       head painted Basic Dark for it too (window.PM_O55_BOOT.install) */
+    if (sw === 'fresh') { O55.store.clear('onboarding'); return O55.ui.open({ fresh: true, install: true }); }
     if (sw.startsWith('screen=')) return O55.ui.open({ screen: sw.slice(7) });
     if (sw === 'tour') return O55.tour && O55.tour.start && O55.tour.start({ source: 'switch' });
     const saved = O55.store.get('onboarding', null);
     tourChip();
-    if (!saved) return O55.ui.open({});
+    if (!saved) return O55.ui.open({ install: true });
     if (saved.status === 'closed') chip();
   }
   const kick = () => O55.motion.real.setTimeout(start, 140);

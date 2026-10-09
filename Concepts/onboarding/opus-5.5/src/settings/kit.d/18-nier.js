@@ -136,22 +136,30 @@ function o55NierWanted() { return o55NierPv && typeof o55NierPv.on === 'boolean'
 function o55NierIsPainted() {
   if (o55NierPainted === null) {
     if (!o55NierReady()) return false;
+    /* A new install's onboarding starts in Basic Dark whatever is stored (Jared, 2026-10-09): the head decided so
+       (window.PM_O55_BOOT.install, tools/build.py first_paint_patches) and painted Basic Dark. A stored NieR Mode then
+       starts as an off preview, which writes nothing (the window keeps it as its own look), and the stored look is not
+       painted ahead of the window. */
+    const install = o55BootInstall();
+    if (install && !o55NierPv && o55NierStoredOn()) o55NierPv = { on: false };
     o55NierPainted = o55NierWanted();
     o55NierWriteAttrs();
-    if (o55NierPainted) { o55NierPaintStored(); window.queueMicrotask(() => o55NierEmit('init')); }
+    if (!install) o55NierPaintStored();
+    if (o55NierPainted) window.queueMicrotask(() => o55NierEmit('init'));
   }
   return o55NierPainted;
 }
-/* The app opens in Basic Dark (the head's boot paint), and the Settings engine paints the stored theme only once the
-   page has loaded (DOMContentLoaded, then a timeout: about 3 s into a heavy open). Under NieR Mode that left a person
-   on Light in NieR Dark for those seconds: the boot log tore away onto the dark app, which then flipped to parchment
-   (film finding TM-07). So when NieR Mode is on as the Settings state loads, the stored theme is painted at once,
-   before the boot log's first frame. PM_THEME's own boot (wireTheme, a DOMContentLoaded listener) then adopts Basic
-   Dark: its write to <html> is held back for that one call (o55NierHoldBootDark), and a listener on window, which runs
+const o55BootInstall = () => { try { return !!(window.PM_O55_BOOT && window.PM_O55_BOOT.install); } catch (e) { return false; } };
+/* The head's boot paint (tools/build.py first_paint_patches) paints the look stored for the Project the page opens on
+   before the first frame, but the Settings engine itself paints the stored theme only once the page has loaded
+   (DOMContentLoaded, then a timeout: about 3 s into a heavy open), and PM_THEME's own boot (wireTheme, a
+   DOMContentLoaded listener) adopts its default, Basic Dark, in between. Under NieR Mode that left a person on Light in
+   NieR Dark for those seconds (film finding TM-07); a Light family showed Basic Dark for about 3 s. So the stored look
+   is painted at once as the Settings state loads, every look alike (a same-value write after the head's paint), and
+   PM_THEME's Basic Dark adoption is held back for that one call (o55NierHoldBootDark); a listener on window, which runs
    after every one on document in the same task, gives PM_THEME the stored family and mode. Letting the write through
-   and painting Light back there showed no frame either, but it restyled the whole page twice inside the open (about
-   130 to 420 ms). The engine's later pass then finds nothing to change. The four families keep the engine's own
-   timing. */
+   and painting the look back there showed no frame either, but it restyled the whole page twice inside the open (about
+   130 to 420 ms). The engine's later pass then finds nothing to change. */
 let o55NierStoredPaintArmed = false;
 function o55NierPaintStored() {
   const T = window.PM7_SETTINGS_TOME;
