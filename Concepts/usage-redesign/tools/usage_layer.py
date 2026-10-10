@@ -241,12 +241,13 @@ def filter_css(css: str, stats: dict, keep_ctx_only: bool = False) -> str:
 
 HOST_ANCHOR = '#panel-usage'
 HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
-# The census of the rewrite: 2,625 anchors at a501fc00f6 and the 6 of the hosted rules D10 6.4 appends. A Usage CSS
+# The census of the rewrite: 2,625 anchors at a501fc00f6, less the 7 hover rules PMH retired on main (2,618 at
+# 75a3814574), and the 6 of the hosted rules D10 6.4 appends. A Usage CSS
 # edit that adds or removes an anchored rule moves 'rewritten': look at what the new rules style (a hosted board gets
 # them too), then re-pin the number here. Any other use of #panel-usage (a child or sibling combinator, a rule for the
 # panel itself, an anchor outside a selector) stops the build: it would be Usage-only, or not a selector, without
 # saying so.
-HOST_SCOPE_EXPECT = {'rewritten': 2631, 'compound': 1}
+HOST_SCOPE_EXPECT = {'rewritten': 2624, 'compound': 1}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 
@@ -646,13 +647,9 @@ APP_PATCHES = [
     ('    :is(.pm6-sb-active, :hover) { --pm6-sb-ink: var(--pm6-sb-thumb); }\n',
      '    .pm6-sb-active, body:not(.pmu-page-active) :hover { --pm6-sb-ink: var(--pm6-sb-thumb); } /* usage layer A1: no hover reveal while Usage shows */\n',
      'A1 scrollbar hover reveal'),
-    # A3: the PM8 pointer field reads the rect of every PM8_SEL box and writes inherited custom properties per frame; during
-    # a Usage arrival or room change (html[data-pmu-moment]) it rests like it does for a resizer drag and restarts on the
-    # next pointer event.
-    ('      if (document.body.classList.contains(\'pm-resizing\')) {\n        baseDirty = true;\n        requestAnimationFrame(tick);\n        return;\n      }\n',
-     '      if (document.documentElement.hasAttribute(\'data-pmu-moment\')) { baseDirty = true; running = false; return; } /* usage layer A3 */\n'
-     '      if (document.body.classList.contains(\'pm-resizing\')) {\n        baseDirty = true;\n        requestAnimationFrame(tick);\n        return;\n      }\n',
-     'A3 pointer field rests during a Usage moment'),
+    # (A3, dropped 2026-10-10: it rested the PM8 pointer field's tick() during a Usage moment. PM8 is off now
+    # (opus-5.5 build.py 'pmh: pm8 engine off', so that tick() is dead code), and the merged hover engine PMH
+    # (opus-5.5 src/js/18-hover.js) rests on html[data-pmu-moment] itself, as it does for every gesture of the board.)
     # A6: the NieR scan sweep crosses the window every 12 s on every page (45-104 compositor draws in 3 s of idle); while
     # Usage shows it waits (Usage's own live beats are the only idle motion there).
     ('    sweepTimer = 0; if (!sweep) return;\n    if (!document.hidden && !still() && !onboarding()) {\n',

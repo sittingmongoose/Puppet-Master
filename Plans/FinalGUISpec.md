@@ -2008,7 +2008,7 @@ User-facing selector contract:
 | **border-radius** | 0px | 0px | 4px | 4px |
 | **display-font** | IBM Plex Mono Bold | IBM Plex Mono Bold | Inter / system-ui | Inter / system-ui |
 | **body-font** | IBM Plex Mono | IBM Plex Mono | Inter / system-ui | Inter / system-ui |
-| **mono-font** | System monospace | System monospace | System monospace | System monospace |
+| **mono-font** | IBM Plex Mono | IBM Plex Mono | JetBrains Mono (embedded) | JetBrains Mono (embedded) |
 | **base-font-size** | 14px | 14px | 15px | 15px |
 | **line-height** | 1.4 | 1.4 | 1.6 | 1.6 |
 | **letter-spacing** | default | default | 0.02em | 0.02em |
@@ -29838,6 +29838,13 @@ thread is told so PMConcept7 can match. Retro focus follows F3-201: lime on Retr
 These remain the app's only Retro tables (DR-043); the chat paints them through F3-597. Geometry, motion and type
 size rows already matched PMConcept7 and are unchanged.
 
+Amended 2026-10-09 (DL-161, the owner's code-face follow-up): the root contract's `--mono-font`, which the Basic,
+Glass and Friendly tables inherit, leads with `'JetBrains Mono'`, the code face the home redesign's D17 designates for
+every look, embedded under that name (F3-430). The Retro tables' `--mono-font` rows are unchanged: Retro's code text
+stays IBM Plex Mono, the face of its whole interface (owner, 2026-10-10, "Keep IBM Plex Mono"), and NieR Mode keeps
+its own PM NieR Mono, the same letters as JetBrains Mono. These are the code-text tokens; the home redesign's editor
+and terminal faces are decided separately (its D17, which its Plans thread records).
+
 ### F3-427 - Glass Composition Single-Blur Contract
 
 ```yaml
@@ -30049,7 +30056,15 @@ canonical_text: >-
   Concepts/onboarding/opus-5.5/src/css/01-webfonts.css from its src/fonts files and OFL-*.txt licences, and
   Gelasio, an SIL OFL face drawn to Georgia's metrics, stands in under the family name Georgia for the
   info-badge glyph because Georgia cannot be embedded. Its Inter, Poppins and IBM Plex Mono files are the
-  bytes the 5.6 Pro chat concept embeds (DR-050). The page's symbol characters (arrows, check and cross marks,
+  bytes the 5.6 Pro chat concept embeds (DR-050). Since 2026-10-09 (DL-161 amended) each embedded family also
+  carries the other scripts it supports, as unicode-range slices declared before its unchanged Latin file: Inter
+  Latin Extended, Vietnamese, Cyrillic and Greek with their extended blocks; Poppins Latin Extended and Devanagari;
+  Nunito and IBM Plex Mono Latin Extended, Vietnamese and Cyrillic; PM NieR Sans Latin Extended and Vietnamese; PM
+  NieR Mono those and Cyrillic and Greek. Scripts no family carries use the computer's fonts. Code text follows the
+  look's code face, the --mono-font token: JetBrains Mono, embedded under that name with PM NieR Mono's files and
+  slices and, in PMConcept7, JetBrains Mono's own italic with the same slices, in Basic, Glass and Friendly (the home redesign's D17), IBM Plex Mono in Retro, its whole face (owner,
+  2026-10-10), and PM NieR Mono in NieR Mode; both concepts set their code blocks, inline code, file paths and logs
+  through that token. The home redesign's editor and terminal faces are decided separately (its D17, which its Plans thread records). The page's symbol characters (arrows, check and cross marks,
   triangles, the warning sign, dots, math signs, the command key and box lines) are PM Symbols, drawn as SVG in
   src/fonts/symbols/svg and built into a proportional and a monospace variable font that are attached to every
   embedded text face for those characters only, with each face's own family, style and weight
@@ -30065,6 +30080,7 @@ acceptance_criteria:
   - "Inter, Poppins, Nunito and IBM Plex Mono are bundled locally and no runtime font CDN request is made."
   - "PMConcept7 draws Basic and Glass in Inter, Friendly in Poppins and Retro in IBM Plex Mono, and the info-badge glyph in the Gelasio stand-in for Georgia, from embedded data on a machine with none of those fonts installed; its Inter, Poppins and IBM Plex Mono files are byte-identical to 5.6 Pro's."
   - "PMConcept7 draws every symbol character it uses from PM Symbols in every look, and its buttons, inputs and menus in the look's face."
+  - "Both concepts draw every script an embedded family carries from embedded data on a machine with no fonts installed, and code text in Basic, Glass and Friendly in the embedded JetBrains Mono."
   - "The Friendly ground renders the paper texture with an 18px dot grid, and frosted 14px chrome blur is limited to the title bar, status bar, and bottom panel."
   - "The five category pastels (mint, sky, coral, lavender, butter) drive category surface tinting."
   - "Cross-family theme switches that change Retro or Friendly font families require restart, while same-family and Glass/Basic Inter switches stay live."
@@ -30083,6 +30099,7 @@ node_compile_hint:
 source_lineage:
   - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "Plans/Decision_Log.md#DL-161 (owner request, 2026-10-09)"
+  - "Plans/Decision_Log.md#DL-161 (owner follow-ups, 2026-10-09 and 2026-10-10: scripts and the code face)"
   - "Plans/FinalGUISpec.md:964"
   - "Plans/FinalGUISpec.md:7647"
   - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
@@ -30101,6 +30118,8 @@ preserved_exact_tokens:
   - "DR-050"
   - "DL-161"
   - "JetBrains Mono"
+  - "unicode-range"
+  - "--mono-font"
   - "M PLUS 1"
   - "PM NieR Mono"
   - "PM NieR Sans"
@@ -30228,7 +30247,7 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | `--sheen-dur` | `.6s` |
 | `--display-font` | `'IBM Plex Mono', monospace` |
 | `--body-font` | `'IBM Plex Mono', monospace` |
-| `--mono-font` | `ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace` |
+| `--mono-font` | `'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace` (JetBrains Mono embedded; DL-161 amended 2026-10-09) |
 | `--base-font-size` | `14px` |
 | `--line-height` | `1.4` |
 | `--letter-spacing` | `normal` |
@@ -31455,6 +31474,15 @@ provider controls (`Plans/usage-feature.md#UF-107`); both are the same row, writ
 `cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with `scope=provider` (SSYS-009, SSYS-018,
 SSYS-044), and neither surface keeps a copy.
 
+Amended 2026-10-10 (owner decision USG-1, `Plans/Decision_Log.md#DL-174`, owner `Plans/Multi-Account.md#MA-073`):
+`ai.accounts.account-threshold-override` is retired. An account's own switch level is `ai.accounts.hard-switch-level`
+at scope account, so every threshold resolves through one scope ladder, global, project, provider and account, the
+most specific set value winning. The retired row stays in the registry marked superseded, as
+`general.visual.basic-color-scheme` is, only so that a stored value can be read once and carried to
+`ai.accounts.hard-switch-level` at scope account; no surface reads or writes it after that, Settings offers no control
+for it and lists it, as All Settings lists every registry row, only as an older setting that points to the account's
+own switch level, and the row count stays 916.
+
 ### F3-442 - Project Settings Modal Reconciliation
 
 ```yaml
@@ -31709,22 +31737,25 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Shell elements carrying the sheen treatment, approximately 40 shell elements, receive a
-  hover-lift with a sheen highlight, driven by event delegation from a shared pointer
-  handler and executed as time-bounded animation primitives rather than per-frame style
-  writes. Pointer parallax on background layers runs only while the glass theme family's
-  depth background mode is active, and all document-level pointer-move work, including
-  parallax sampling and the F3-465 magnet spotlight driver, is merged into a single shared
-  document pointer-move handler. Both effects are fully disabled under reduced motion.
+  Shell elements carrying the sheen treatment, approximately 40 shell elements, keep their place as hover targets:
+  the sheen class marks them into the F3-465 merged hover system, which owns their whole hover look and motion. The
+  former sheen hover-lift and its glow (the base, Friendly and Glass `.pm-sheen:hover` lift, border and glow) are
+  retired in favour of F3-465 (DL-171), and no sheen element carries a hover-lift or glow of its own. Hover is driven
+  by event delegation from a shared pointer handler and executed through compositor-friendly writes rather than
+  per-frame style writes. Pointer parallax on background layers runs only while the glass theme family's depth
+  background mode is active, and all document-level pointer-move work, including parallax sampling and the F3-465
+  hover driver, is merged into a single shared document pointer-move handler (`window.PM7_PMOVE` in the concept)
+  that every consumer hooks into rather than listening itself. Parallax is fully disabled under reduced motion, and
+  F3-465 sets the hover's reduced-motion form.
 gui_related: true
-gui_classification_reason: This unit defines visible sheen hover-lift and parallax motion on shell controls.
+gui_classification_reason: This unit defines the sheen hover targets, glass depth parallax and the single merged pointer-move handler on shell controls.
 split_recommended: false
 depends_on: [F3-428]
-unblocks: []
+unblocks: [F3-465]
 acceptance_criteria:
-- "Sheen-treated shell elements receive the hover-lift and sheen highlight on hover."
-- "Pointer parallax runs only in the glass depth background mode, and exactly one merged document pointer-move handler services parallax, delegated hover effects, and the F3-465 magnet spotlight driver."
-- "With reduced motion active, sheen hover-lift and parallax are both disabled."
+- "Sheen-treated shell elements are F3-465 hover targets and show F3-465's hover; no `.pm-sheen:hover` lift, border or glow of their own remains in any family."
+- "Pointer parallax runs only in the glass depth background mode, and exactly one merged document pointer-move handler services parallax, delegated hover effects, and the F3-465 hover driver."
+- "With reduced motion active, parallax is disabled and the sheen elements show F3-465's reduced-motion hover."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -31740,6 +31771,7 @@ node_compile_hint:
 source_lineage:
 - "Plans/FinalGUISpec.md:5482"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/onboarding/opus-5.5/tools/build.py, the `pmh:` PATCHES that keep the dispatcher and retire the sheen hover (concept lineage only)"
 preserved_exact_tokens:
 - "sheen"
 - "parallax"
@@ -31747,11 +31779,14 @@ preserved_exact_tokens:
 negative_constraints:
 - "Do not attach per-control pointer-move listeners or multiple document pointer-move handlers for these effects."
 - "Do not run pointer parallax outside the glass depth background mode."
+- "Do not restore a sheen hover-lift or glow beside the F3-465 hover."
 compatibility_only_notes:
-- "Slint portability: the hover-lift maps to animated hover states on opaque precomputed surfaces with no per-frame style writes; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+- "Slint portability: the sheen elements' hover follows F3-465's Slint notes; parallax maps to a translate on opaque precomputed background layers with no per-frame style writes; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
-- "The one-shot hover jiggle wobble on designated shell controls is retired per PMConcept7 rev 7, superseded by the F3-465 magnet spotlight hover system on the same selector set; the sheen hover-lift and glass depth parallax remain live and stay reduced-motion-disabled."
-owner_boundary_notes: []
+- "The one-shot hover jiggle wobble on designated shell controls is retired per PMConcept7 rev 7, superseded by the F3-465 magnet spotlight hover system on the same selector set; glass depth parallax remains live and stays reduced-motion-disabled."
+- "Retired 2026-10-10 by DL-171: the sheen hover-lift and its glow (`.pm-sheen:hover` in the base, Friendly and Glass), in favour of the F3-465 merged hover system."
+owner_boundary_notes:
+- "F3-465 owns the hover look and motion of every sheen element; this unit owns the sheen targets' place, glass depth parallax and the single merged document pointer-move handler."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -32443,38 +32478,65 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The selector set formerly covered by the one-shot hover jiggle runs a pointer-tracking
-  magnet and spotlight hover system. The hovered box translates a few pixels toward the
-  pointer via a spring using the standalone translate channel only, never transform-matrix
-  composition that fights entrance animations. A continuous-intensity pointer-local accent
-  ring renders as a border band with a soft interior wash and an outward bloom, and
-  intensity ramps continuously from a bleed distance outside the box to full inside with
-  no snap at edges. Overlaying panels must not light boxes beneath them, and nested
-  targets resolve to the outer box. Per-theme feel knobs cover ring size and softness,
-  magnet strength, and spring stiffness and damping: retro is stiff with a small hard
-  ring, basic is restrained, glass has a wide soft ring and stronger magnet, and friendly
-  is springy with micro-overshoot, with the accent color riding the theme accent. Reduced
-  motion kills the entire system by clearing translate and glow and stopping the engine.
-  One shared animation driver services the system, effect writes are compositor-friendly
-  translate and opacity writes, and the driver self-suspends when nothing is hovered,
-  settling, or glowing. On magnetic Usage cards, the painted move and resize controls define
-  measured base-relative corner zones. Magnet translation attenuates continuously to zero as
-  the pointer enters either zone, while body magnetism remains unchanged elsewhere. A short
-  pointer-id-, time-, and bounds-scoped lease may hand an otherwise displaced corner control
-  to the existing drag/resize controller from document capture; unrelated buttons, links,
-  fields, pointer ids, expired leases, and points outside the corridor never activate it. Every
-  direct or rescued transaction clears the lease before capture and resets latent magnet state
-  on cleanup.
+  Every hoverable card, row, tile and icon in PMConcept7, the Usage plates included, runs one merged magnet and
+  spotlight hover system (PMH, DL-171). It replaces both the PM8 magnet, ring, wash and bloom and the Usage page's own
+  plate lift and pointer sheen, and DR-072 makes it the single owner of the hover grammar. One shared self-suspending
+  animation driver rides the single merged document pointer-move handler that F3-446 owns (`window.PM7_PMOVE` in the
+  concept); no element has a pointer-move listener of its own. The driver runs only while a spring is unsettled, the
+  NieR reticle travels, or a pointer or scroll change is pending, so it stops once a pointer resting on a box has
+  settled, and nothing animates at idle. Box rects are read when the hover enters a scope and after a scroll, a resize
+  or a change inside that scope, never for every box on every frame. Targets are the outermost match of the set:
+  markup that opts in with `data-pmh` (its value names the kind, card, row, tile or icon, and an empty value means
+  card), every sheen-treated element, and the listed card, row, tile and icon classes. `data-pmh="off"` takes an
+  element out of the set even when its class matches, and nothing inside `[data-pm-hover-exempt]` is a target or
+  hovers one. Nested targets resolve to the outer box, and overlaying panels do not light boxes beneath them
+  (occlusion). Intensity is one continuous field: 0 at the bleed distance outside a box, partial at its edge and full
+  a short ramp inside, with no snap at edges, so a neighbour inside the bleed catches the light on its near edge and
+  gets no magnet and no plate. In Basic, Friendly and Glass the hovered box leans toward the pointer by a small magnet,
+  2 to 2.5 px at an edge, on a spring that writes the standalone translate channel only, never transform-matrix
+  composition that fights entrance animations; tiles lean less, rows by a token amount, and icons and the Usage
+  plates get no magnet. The spotlight is a small soft pointer light, a radius of about 90 to 100 px with a Gaussian
+  roll-off (smaller on tiles and rows), that reveals a pre-painted sheen tint and a hairline along the border, under
+  the box's content; only the light's centre moves with the pointer. The emitted glow is halved from PM8's bloom and
+  pre-painted with a short elevation shadow on a plate that stays at the box's rest rect, never moving with the
+  magnet, and animates by opacity only. The family voices stay: Basic crisp with no overshoot, Friendly a warm pool
+  and a soft band with a gentle settle, Glass a slow drift and a bright specular hairline, the accent riding the
+  theme accent. Retro and NieR use no soft light, glow, blur, lean or neighbour light, and nothing follows the pointer
+  inside a box. Retro's form is Raise: the hovered card's plate rises 2 px up and to the left in one hard cut while
+  its own hard offset shadow grows from 3 to 5 px, so the shadow's far edge stays where it was; one 33 ms tick later a
+  1 px phosphor rule in the accent appears 1 px inside the border; on leaving, the rule goes first and the plate drops
+  one tick later; tiles rise 1 px with no rule, rows take the left rail's stepped row fill, and a 2 px edge hold keeps
+  the raise from toggling at the edge it moved off. NieR's form is Lock-on: one page-level reticle of four 8 px ink
+  corner brackets is placed on the card's rest rect in whole device pixels, opens 4 px outside the border and steps
+  closed to 3 px in two steps over 90 ms, then a 1 px ink line at .6 lands over the card's own border; between cards
+  the reticle cuts and never glides, and the card itself never changes. The corners are NieR's brackets part (Target
+  brackets); with brackets off the lock is the ink line alone on the same beat. NieR tiles and rows take the left
+  rail's NieR row ink fill. Under Reduced Motion there is no magnet, no travel, no pointer-following light and no
+  neighbour light, and the hovered box shows its hover state instantly: a static half-strength hairline and the plate
+  in Basic, Friendly and Glass, the raised shadow and rule without the rise in Retro, the closed lock in NieR. On a
+  software-rendered path the field, the light and the plate are off and the magnet stops, and the hovered box shows the
+  same static hairline. A gesture rest (a resize, a tab or panel drag, a Usage board operation or moment) drops the
+  hover and settles the magnet to 0, and a held pointer button keeps the hover state but calms the magnet. A hover
+  writes no inherited property and restyles no subtree: the continuous values are registered non-inherited
+  properties that the host's own pseudo-elements read, effects are pre-painted layers whose opacity changes plus the
+  translate, and no box-shadow or filter animates on a large element. The boundary: tab strips, resize dividers and
+  editor and terminal text surfaces are never targets and get no magnet, light or glow, at most a static hover tint;
+  icons keep their own quiet hover tint and nothing more from this system.
 gui_related: true
-gui_classification_reason: This unit defines visible magnet lean, spotlight ring, wash, and bloom hover behavior on shell boxes.
+gui_classification_reason: This unit defines the visible magnet lean, pointer light, emitted glow and the Retro and NieR hover forms on PMConcept7's cards, rows, tiles and icons.
 split_recommended: false
-depends_on: []
-unblocks: []
+depends_on: [F3-446, DL-171]
+unblocks: [DR-072]
 acceptance_criteria:
-- "Every box in the former jiggle selector set runs the magnet and spotlight hover system with spring translate toward the pointer and a continuous-intensity accent ring, interior wash, and outward bloom; Usage move/resize corner acquisition measures the painted controls in the card's base coordinates, continuously attenuates only card translation to zero near those controls, preserves body magnetism elsewhere, scopes rescue to one live pointer id plus a short time/bounds corridor, excludes other interactive controls, and clears the lease and latent magnet state on direct activation, rescued activation, commit, cancellation, and no-op cleanup."
-- "Intensity ramps continuously from a bleed distance outside the box with no snap at edges; overlaying panels do not light boxes beneath them, and nested targets resolve to the outer box."
-- "Per-theme knobs give retro a stiff small hard ring, basic restraint, glass a wide soft ring with stronger magnet, and friendly springy micro-overshoot, with the accent color riding the theme accent."
-- "Reduced motion clears translate and glow and stops the engine; one shared self-suspending driver performs compositor-friendly translate and opacity writes."
+- "Every card, row, tile and icon target in PMConcept7, the Usage plates included, takes its hover from this one system; no surface keeps a second hover engine, a `.pm-sheen:hover` lift or glow, or a pointer sheen of its own."
+- "One shared driver services every target through the single merged document pointer-move handler and adds no pointer-move listener; two seconds after the pointer leaves there is no hover-owned animation frame or running hover animation, and a pointer resting still inside a box adds no driver frames once the spring has settled."
+- "In Basic, Friendly and Glass the magnet moves a hovered card at most about 2.5 px at an edge, through the standalone translate channel only; icons and the Usage plates never move."
+- "The pointer light is a small soft pool, about 90 to 100 px in radius on cards, revealing a pre-painted sheen and hairline under the content; the emitted glow is half of PM8's bloom, pre-painted, opacity-only, and stays at the box's rest rect while the box leans."
+- "Intensity ramps continuously from the bleed distance outside the box with no snap at edges; neighbours inside the bleed light only their near edge; overlaying panels do not light boxes beneath them, and nested targets resolve to the outer box."
+- "Retro shows Raise (a 2 px hard-cut rise on a 3 to 5 px hard shadow whose far edge stays put, then a 1 px phosphor rule one 33 ms tick later, released in the reverse order) and NieR shows Lock-on (four 8 px ink corners stepping closed in two steps over 90 ms, then an ink line at .6, cutting between cards), gated by the brackets part with the ink-line fallback; neither shows a soft light, glow, blur, lean or neighbour light."
+- "Under Reduced Motion there is no magnet, travel, pointer-following light or neighbour light, and every family shows its hover state instantly; on a software-rendered path the field, light and plate are off and the magnet stops."
+- "A hover writes no inherited custom property and restyles no subtree beyond the hovered box and its lit neighbours, and no box-shadow or filter animates on a large element."
+- "`data-pmh` opts markup in with a kind, `data-pmh=\"off\"` opts it out, nothing inside `[data-pm-hover-exempt]` hovers, and tab strips, resize dividers and editor and terminal text surfaces get at most a static hover tint."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -32484,12 +32546,19 @@ reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
 - "Plans/FinalGUISpec.md"
+- "Concepts/onboarding/opus-5.5/src/js/18-hover.js"
+- "Concepts/onboarding/opus-5.5/src/css/22-hover.css"
 node_compile_hint:
   mode: magnet_spotlight_hover_system
   create_worknodes: false
 source_lineage:
 - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
 - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+- "Concepts/onboarding/opus-5.5/src/js/18-hover.js and src/css/22-hover.css (the PMH engine and its look; concept lineage only)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/ENGINE.md, SHA-256 bd3480ac65c053210ebc6d9193480acc3c04c6592276607332817615fd76de5e"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/FAMILY-SPEC.md, SHA-256 d66b09a302226c0682a59786d92c74d703cbdf7fc28f9bc63ffb509a07f321e8"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/RETRO-FINAL.md, SHA-256 49546103ce230dc1db08440e01bb7dc21b02d153c74138b7618cc491b4ddba81"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/NIER-FINAL.md, SHA-256 e647d369534c83251d9d8ba904765491db2338154f80a91ca12759a771c8e233"
 preserved_exact_tokens:
 - "magnet"
 - "spotlight"
@@ -32497,14 +32566,20 @@ preserved_exact_tokens:
 - "translate"
 negative_constraints:
 - "Do not compose the magnet through transform-matrix writes that fight entrance animations; use the standalone translate channel."
-- "Do not attach per-element pointer-move listeners; one shared driver services the whole selector set through the merged document pointer-move handler."
-- "Do not disable Usage card magnetism globally, synthesize a second pointerdown, or let a stale/foreign acquisition lease activate through another interactive control."
+- "Do not attach per-element pointer-move listeners; one shared driver services every target through the merged document pointer-move handler."
+- "Do not give icons or the Usage plates a magnet, and do not let the emitted glow move with the magnet."
+- "Do not animate box-shadow or filter on a large element, write an inherited custom property on hover, or keep the driver running at idle."
+- "Do not draw a soft light, glow or blur under Retro or NieR."
+- "Do not give tab strips, resize dividers or editor and terminal text surfaces a magnet, light or glow."
 compatibility_only_notes:
-- "Slint portability: the magnet maps to translate plus an animated spring, pointer tracking maps to TouchArea.mouse-cursor-position, the ring renders as a radial-gradient Rectangle with an inner cover instead of a mask, the wash is a second under-content Rectangle, and the bloom is a drop-shadow on the box (ScrollView clips automatically with no fixed proxy needed); no blend modes, filters, or canvas."
+- "Slint portability: the magnet maps to translate plus an animated spring, and pointer tracking maps to TouchArea.mouse-cursor-position. The concept draws the pointer light as one radial mask over a pre-painted sheen and hairline; Slint has no mask, so the hairline renders as a radial-gradient Rectangle centred on the pointer with an inner cover rectangle over it, inset by the line width and filled with the box's own fill, so that only the border band shows, and the sheen is a second, fainter radial-gradient Rectangle under the content; both are clipped to the box and take the field intensity as opacity. The plate is a drop-shadow on a sibling Rectangle at the rest geometry whose opacity animates (ScrollView clips automatically, with no fixed proxy needed). Retro's Raise is a translate plus a hard offset Rectangle and a 1 px inner border Rectangle; NieR's Lock-on is four corner Rectangles and a 1 px border Rectangle on stepped animations. No blend modes, filters, canvas or arbitrary-content backdrop blur."
 stale_retired_dispositions:
-- "The F3-446 one-shot hover jiggle wobble is retired on its entire selector set and superseded by this magnet and spotlight system; the F3-446 sheen hover-lift and glass depth parallax remain live."
+- "The F3-446 one-shot hover jiggle wobble is retired on its entire selector set and superseded by this magnet and spotlight system."
+- "Retired 2026-10-10 by DL-171: the PM8 accent ring, interior wash and offset bloom proxy, the F3-446 sheen hover-lift and glow, the Usage page's own plate lift and 280 px pointer sheen, and the per-theme knobs that gave retro a stiff small hard ring and glass a wide soft ring with a stronger magnet."
+- "Retired 2026-10-10: the Usage `.pm7u-card` corner-zone magnet attenuation and the pointer-scoped acquisition lease to the drag/resize controller; those cards no longer exist after the Usage port, and the Usage `.pmu-card` plates carry no magnet, so no lease is needed."
 owner_boundary_notes:
-- "F3-446 owns the sheen hover-lift, glass depth parallax, and the single merged document pointer-move handler this system rides on."
+- "F3-446 owns glass depth parallax and the single merged document pointer-move handler this system rides on; DR-072 makes this unit the single owner of the hover grammar."
+- "Tab silhouettes and tab hover belong to their tab owners (F3-505, F3-466); the resizers keep their own grab glow; the left rail's rows and icons keep their owner's hover."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -35183,7 +35258,7 @@ canonical_text: >-
   up to settle-time gravity: the accepted layout equals the last-painted preview exactly except that the Usage board
   gravity of WS-019 (DL-176) slides shown cards other than the active one up into space freed above them, committed
   in the same single settled transaction and never as a later step,
-  direct and rescued magnetic-control
+  direct control
   acquisition, cancellation/no-op cleanup, stable mounted reorder peers, and black/empty-frame detection.
   The acquisition evidence includes a real top-layer occluder and transaction reentrancy probes, while settled
   reorder evidence proves preview-only board extent does not survive or compound after commit.
@@ -35198,7 +35273,7 @@ acceptance_criteria:
   - "The canonical Usage and shared PM7 fixture trees exist in the repository and concept demo reports are not used as substitutes for them."
   - "Every fixture records stable identity, owner PlanUnits, source lineage, affected surfaces, must assertions, and must-not assertions."
   - "Fixture files and their must/must_not lists grant static representation only and do not prove runtime, visual, motion, or migration behavior; visual certification requires fresh browser execution, raw receipts, screenshots/contact sheets, and independent actual-pixel review in addition to DOM, state, and geometry assertions."
-  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence binds one exact generated artifact and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, preview-to-accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), Dashboard-frozen resize peers, direct and displaced-handle acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
+  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence binds one exact generated artifact and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, preview-to-accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), Dashboard-frozen resize peers, direct control acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
   - "No accessibility acceptance expansion, WorkNode, NodeSeed, executable queue, implementation task, or production code is created by this evidence contract."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
@@ -35732,6 +35807,7 @@ acceptance_criteria:
   - "When Product Onboarding or Guided Tour is open, outside anchors cannot open or retain a tag, outside descriptions are temporarily removed from tooltip/accessibility semantics, and both bindings and semantics restore when the active overlay closes; tags inside the active overlay remain available."
   - "One bounded startup pass and incremental live binding preserve same-frame pointer/focus acknowledgement; exact old/current attribute reassertions schedule no tag work, while real attribute, character-data, insertion, removal, and subtree changes remain observable and auditable."
   - "A generated census fails on missing bindings, undocumented exemptions, duplicate keys, stale text, clipping, inaccessible disabled controls, or native-title-only behavior."
+  - "The controls inside an open assistant-chat activity bar domain preview that F3-590 lists are a documented exemption (DL-157): they open no tag, because a tag would replace the preview card, and the census counts them as exempt rather than as missing bindings."
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (separate 1600 ms pointer-residence, 1100 ms stationary-intent, 5 px radius, 1000 ms visual-focus dwell, immediate accessible-description binding, and 160 ms departure-grace fields are required for current acceptance)"
   - Concepts/pm7-tools/global_hover_tags_source.py authored guards
@@ -40681,15 +40757,29 @@ canonical_text: >-
   tags: a pointer opens one only after a deliberate dwell, long enough that passing between the composer and the bar
   opens none; keyboard focus on a domain opens its preview at once; moving to another domain while a preview is open
   switches at once; and a preview closes after the same short departure grace as a tag. The preview dwell the concept
-  measures is a lab value (ACD-474).
+  measures is a lab value (ACD-474). Previews are the one exception to the hover tag rule (owner decision of 2026-10-09,
+  DL-157): the chat shows one hover surface at a time, so a tag opened inside an open preview would replace the
+  preview card under the pointer, and no control inside an open activity bar domain preview opens a hover tag. Such a
+  control names itself by its visible text or accessible name, and a native title it carries there is the only
+  tooltip it has. As the 5.6 Pro concept draws them today: the Subagents preview's rows carry the native title Open
+  followed by the agent's name, the Artifacts preview's rows Open followed by the artifact's title, the Changes
+  preview's rows the file's path and its change summary, and the Crew preview's member rows, drawn while no Crew run
+  is live, the member's name; the Goal preview's controls (Pause or Resume, Edit, whose accessible name stays Edit
+  objective, Cancel Goal, Open exact Plan · Vn, Revise Plan and the Objective history disclosure), the To-Do
+  preview's rows and its more-items and blocked-count lines, a collaboration kind's run rows, a live Crew run's rows and every preview's
+  head carry neither a native title nor a tag. The exception covers only controls inside an open preview: the
+  activity bar's domain triggers, Activity Detail and every other chat surface keep the rule, so the Goal panel's Edit
+  objective and a To-Do row in Activity Detail keep their hover tags.
 gui_related: true
 gui_classification_reason: Defines how the assistant chat's icon controls name themselves and when its activity previews open.
 split_recommended: false
-depends_on: [DL-145, F3-523, ACD-474]
+depends_on: [DL-145, F3-523, ACD-474, DL-157]
 unblocks: []
 acceptance_criteria:
   - "No icon control in the assistant chat exposes its name only through a native title, and no chat tag opens before F3-523's thresholds."
   - "A pointer passing between the composer and the activity bar opens no preview; keyboard focus on a domain opens its preview at once."
+  - "No control inside an open activity bar domain preview opens a hover tag, and the preview stays open while the pointer rests on any of them (DL-157)."
+  - "Outside an open preview the hover tag rule holds unchanged: the Goal panel's Edit objective and a To-Do row in Activity Detail keep their hover tags."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -40712,8 +40802,10 @@ preserved_exact_tokens:
   - "PMHoverTag"
   - "native title"
   - "deliberate dwell"
+  - "Previews are the one exception"
 negative_constraints:
   - "Do not restate or change F3-523's thresholds in this unit."
+  - "Do not open a hover tag inside an open activity bar domain preview, and do not extend the preview exception to any other surface."
   - "Do not add a hand-off that opens a second tag faster than F3-523 allows."
   - "Do not open an activity preview for a pointer passing through."
 compatibility_only_notes: []
@@ -40723,7 +40815,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-145, ContractName:Plans/FinalGUISpec.md#F3-523, ContractName:Plans/assistant-chat-design.md#ACD-474
+ContractRef: ContractName:Plans/Decision_Log.md#DL-145, ContractName:Plans/FinalGUISpec.md#F3-523, ContractName:Plans/assistant-chat-design.md#ACD-474, ContractName:Plans/Decision_Log.md#DL-157
 
 ### F3-591 — Opening More Keeps The Message Chrome On Its Row
 
@@ -40856,7 +40948,10 @@ canonical_text: >-
   Goal (DL-147; behaviour GRS-055): Goal Activity Detail shows the objective, then one control row, Pause or Resume
   and Edit objective together at its start and Cancel Goal alone at the far edge in the danger tone, so the
   destructive action never sits in the safe group; a narrow panel may shorten Edit objective's visible label, never
-  its accessible name. A bound Goal adds the Plan row (Open exact Plan · Vn, and Revise Plan when blocked), and the
+  its accessible name. A bound Goal adds the Plan row (Open exact Plan · Vn, and Revise Plan when blocked; Open exact Plan · Vn is
+  cmd.chat.plan.open_version (DL-157), which opens that exact version's document, the Plan's own tab while Vn is still
+  its version and Vn's retained read-only document once a later version exists, and never Plan Details or a newer
+  version), and the
   footer is an Objective history disclosure with the revision count, which opens the revision list in place. Editing
   shows the text-only objective editor with Save and Cancel edit. There is no View Goal route to a separate Goal
   document and no Ask for a replacement control; a replacement the agent proposes after the user asks for one in the
@@ -40894,10 +40989,11 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the Goal, To-Dos and Subagents Activity Detail presentation and the subagent live transcript's look.
 split_recommended: false
-depends_on: [DL-147, GRS-055, TDR-007, TDR-011, ACD-485, ACD-469, ACD-473, F3-580, F3-585, DL-160]
+depends_on: [DL-147, GRS-055, TDR-007, TDR-011, ACD-485, ACD-469, ACD-473, F3-580, F3-585, DL-160, DL-157]
 unblocks: []
 acceptance_criteria:
   - "Goal Activity Detail renders one control row with Cancel Goal alone at the far edge and an Objective history footer; no View Goal route or Ask for a replacement control exists."
+  - "On a bound Goal, Open exact Plan · Vn in Goal Activity Detail and in the Goal preview opens Plan Vn's document through cmd.chat.plan.open_version, never Plan Details (DL-157)."
   - "Every To-Do row is one line with no button, shows an explicit assignment only when one exists, and Open work appears only in the selected detail."
   - "The To-Do navigation line holds the visible count and Expand all only, and no Last item control exists in the panel (DL-160)."
   - "A subagent's live transcript renders in the Turn Stage presentation with no composer, only Copy, More details and Expand or Collapse on messages, and each stretch of work as one collapsed row with a count."
@@ -40929,6 +41025,7 @@ preserved_exact_tokens:
   - "Read-only child thread"
   - "Step Rail"
 negative_constraints:
+  - "Do not bind Open exact Plan · Vn to Plan Details (cmd.chat.plan.open_details) or to a newer Plan version."
   - "Do not give a To-Do row a Start work, Run work or other mutation button."
   - "Do not drop a To-Do's explicit assignment from Activity Detail."
   - "Do not give the subagent live transcript a composer or a control that acts on the child or the parent thread."
@@ -40944,7 +41041,7 @@ owner_hints:
   - Plans/assistant-chat-design.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-147, ContractName:Plans/Goal_Runtime_System.md#GRS-055, ContractName:Plans/ToDo_Runtime.md#TDR-011, ContractName:Plans/assistant-chat-design.md#ACD-485, ContractName:Plans/FinalGUISpec.md#F3-580, ContractName:Plans/Decision_Log.md#DL-160
+ContractRef: ContractName:Plans/Decision_Log.md#DL-147, ContractName:Plans/Goal_Runtime_System.md#GRS-055, ContractName:Plans/ToDo_Runtime.md#TDR-011, ContractName:Plans/assistant-chat-design.md#ACD-485, ContractName:Plans/FinalGUISpec.md#F3-580, ContractName:Plans/Decision_Log.md#DL-160, ContractName:Plans/Decision_Log.md#DL-157
 
 ### F3-594 — Agents Are Puppets
 
@@ -41735,7 +41832,8 @@ canonical_text: >-
   The transcript Plan card reads, top to bottom: its kicker (Plan, the version and strategy), the title and a summary
   of at most two lines, then one hairline that opens the card's status zone. The zone holds the schedule line when
   the Plan has a scheduled build (F3-607), the step count with the Plan's status in words ("6 steps · Ready"), and
-  the action row. The action row is Build, Revise only while the Plan is Ready, and Open plan. It sits on the card's
+  the action row. The action row is Build, Revise only while the Plan is Ready, and Open plan, which opens the
+  version the card shows (cmd.chat.plan.open_version, DL-157). It sits on the card's
   content edge with the card's own padding below it: no tinted band, no inset of its own and no second hairline.
   Every place a Plan shows actions uses one action row (DR-047): the transcript card, the editor's sticky footer and
   its More row, the compact Completed or Canceled card, a Building plan's attention actions, the schedule line's
@@ -41756,6 +41854,7 @@ depends_on: [DL-156, DR-047, F3-566, F3-597, F3-589]
 unblocks: [F3-607]
 acceptance_criteria:
   - "Build, Revise, Open plan and every other control in a Plan action row have the same height and type size in all ten themes."
+  - "Open plan on the card, on a Build-started or Plan-revised receipt and on a build schedule's row opens the version that surface names through cmd.chat.plan.open_version, never Plan Details (DL-157)."
   - "The transcript card's action row starts on the card's content edge with no tinted band, and one hairline separates the summary from the status zone."
   - "Building…, Completed and Canceled render at full contrast while disabled."
   - "The To-Do count while building is plain words, not a chip, and an attention line's actions sit on their own row under its copy."
@@ -42084,6 +42183,73 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-153, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/DRY_Rules.md#DR-056
+
+## DL-159 — The Assistant Chat Paints The Stored Look From Its First Frame (2026-10-09)
+
+This addendum compiles the owner decision DL-159: the 5.6 Pro assistant chat concept opened on the browser's dark default and showed the viewer's stored look only when its first render ran, 1.3 to 1.7 seconds in, which flashed the whole window for a Light theme. The chat now applies the boot paint of F3-468 to its own page, as PMConcept7 does for its Project's look. The look's owners are unchanged: the theme token tables of F3-426, NieR Mode's contract (SSYS-043, F3-441) and the chat under NieR Mode (F3-589). The unit below owns the chat's first paint only. The concept is source lineage only: its store keys, its build script, its class names and every measured timing outside this unit are not canon.
+
+### F3-612 — The Assistant Chat Paints The Stored Look From Its First Frame
+
+```yaml
+plan_unit_id: F3-612
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  When the assistant chat opens as a page of its own, its first painted frame is the viewer's stored look (DL-159,
+  F3-468): the stored theme in its family and mode, Basic Dark when nothing is stored, and with NieR Mode on, Basic in
+  the stored mode under NieR Mode's attributes with the installed parts listed, so the ground of every family, NieR
+  Mode's parchment or ink and Glass's backdrop are right before the chat's content draws. A reader that runs before
+  the first frame reads the chat's own look store and never writes it. It stores nothing new, keeps no app-global
+  copy of the theme, and writes only what the chat's renderer and NieR Mode's engine write on their first render,
+  which still own the look and write the same values. No large surface changes colour between the first frame and
+  the rendered chat. Reduced motion is the system's setting and is not read from the store. NieR Mode's boot log plays
+  only when the chat opens in NieR Mode with the Boot sequence part installed and motion allowed, as it did; it
+  arrives with the first render, so the chat never shows before it, and the reboot moment never plays on a reload. A
+  pinned history drawer is in place from the first frame. When the chat is ported into PMConcept7 (the home
+  redesign), PMConcept7's head boot script owns first paint for the page and the chat's own reader is dropped
+  (DR-054).
+gui_related: true
+gui_classification_reason: Defines what the assistant chat paints in its first frame and which reader paints it.
+split_recommended: false
+depends_on: [DL-159, F3-468, F3-589]
+unblocks: []
+acceptance_criteria:
+  - "The first painted frame of the chat's page shows the stored look in each of the ten themes, in NieR Light and NieR Dark with all parts, no parts or Boot sequence removed, and under reduced motion; with nothing stored it shows Basic Dark."
+  - "Opening the page writes no look setting and adds no stored key; no global holds the theme."
+  - "No large surface changes colour between the first frame and the rendered chat, and the chat never shows before NieR Mode's boot log when the log plays."
+  - "The reboot moment does not play on a reload, and the pinned history drawer is in place from the first frame."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: first_paint_drift
+reasoning_tier: standard
+context_scope: chat_fixes_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-159"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/REQUEST.md, SHA-256 8dcfcde107fc2d97bd3a884477a63dda5606ee04af23feba897a015474fd92be"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/MEASUREMENTS.md, SHA-256 edee5055e6a1ce894478b13a0c63a0103f5ef4ae0c20c615213a082b696469b7"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md, First paint: the stored look from the first frame (concept lineage only)"
+preserved_exact_tokens:
+  - "first frame"
+  - "Boot sequence"
+negative_constraints:
+  - "Do not write the look store, or a copy of the theme, while painting the first frame."
+  - "Do not keep the chat's own first-paint reader once the chat is a part of PMConcept7's page."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-159, ContractName:Plans/FinalGUISpec.md#F3-468, ContractName:Plans/FinalGUISpec.md#F3-589, ContractName:Plans/DRY_Rules.md#DR-054
 
 ## DL-162 — The Left Rail Takes The Polish Design (2026-10-09)
 

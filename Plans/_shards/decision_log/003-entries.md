@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L3863
+Source lines: L13-L3934
 
-Source SHA256: `36e7647491089d6e43cbef806a39aeb1fa67a4b241be7daa9846e75f36f4045d`
+Source SHA256: `b1132a18b51eed37ac79fbd1982f7bfcd241371df1048fb05fec6a409e2bacf5`
 
 ---
 
@@ -3420,7 +3420,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-600, ContractName:Plans/Final
 **Why it came up:** PMConcept7's looks name Inter, Poppins, Nunito, IBM Plex Mono and Georgia, but the page carried only NieR Mode's two faces. On a computer without those fonts every look fell back to the machine's own sans or mono (DejaVu on the test VM), so Basic, Glass, Friendly and Retro looked different from one computer to the next. Jared asked on 2026-10-09 that PMConcept7 have all its fonts built in.
 
 **What you get:**
-- Basic and Glass in Inter, Friendly in Poppins (with Nunito behind it), Retro in IBM Plex Mono, on every computer and with no font download. Each face is the Latin set, stored inside the page.
+- Basic and Glass in Inter, Friendly in Poppins (with Nunito behind it), Retro in IBM Plex Mono, on every computer and with no font download. Each face is stored inside the page with every script its family carries (see the follow-ups below).
 - The weights and slants the looks use: Inter at every weight and in italic, Poppins 400 to 800 and italic 400 and 600, IBM Plex Mono 400 to 700 and italic 400 and 600.
 - Georgia, which the page names only for the bold italic "i" on its info badges, is a paid font that cannot be built in. Gelasio, a free font drawn to Georgia's measurements, stands in under the name Georgia.
 - PMConcept7 and the 5.6 Pro chat use the same Inter, Poppins and IBM Plex Mono files, byte for byte, so both draw the same letters. PMConcept7's build check fails if the two drift apart.
@@ -3429,23 +3429,26 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-600, ContractName:Plans/Final
 
 **What it costs:**
 - PMConcept7 grows by 463,484 bytes (about 4.5%), to 10.8 MB: 408,446 for the fonts, 54,449 for the symbols and 589 for the control rule.
-- Any non-Latin script still uses the computer's own fonts.
-- Code text in Basic, Glass and Friendly still uses the computer's own monospace, because those looks name it on purpose; only its symbols are ours. Retro's code text is IBM Plex Mono.
+- Scripts no embedded family carries (Arabic, Hebrew, Thai, Chinese, Japanese, Korean and the like) still use the computer's own fonts; see the follow-ups below for what embedding them would cost.
 - A new symbol in the page needs a drawing: until one is added to PM Symbols it falls back to the computer's font.
 
-**Options considered:** Not built in: Orbitron and Rajdhani (the page's starting defaults, which every look replaces, retired as theme faces by DL-138) and JetBrains Mono (behind IBM Plex Mono with the same letters, so it never draws; its file is already in the page as NieR Mode's mono). Roboto, Segoe UI, SF Pro, SF Mono, Menlo, Consolas, Cascadia Mono and system-ui name the computer's own fonts on purpose. For Georgia, leaving the computer's own serif would differ by machine; Gelasio is the free face made to Georgia's measurements.
+**Options considered:** Not built in: Orbitron and Rajdhani (the page's starting defaults, which every look replaces, retired as theme faces by DL-138). JetBrains Mono was left out at first (behind IBM Plex Mono with the same letters); the second follow-up below makes it the code face. Roboto, Segoe UI, SF Pro, SF Mono, Menlo, Consolas, Cascadia Mono and system-ui name the computer's own fonts on purpose. For Georgia, leaving the computer's own serif would differ by machine; Gelasio is the free face made to Georgia's measurements.
 
 **What the owner decided** (in plain words):
 - 2026-10-09, in his request: "Make sure PMConcept7 has all its fonts built in." The choice of faces, weights and slants, the Gelasio stand-in and the shared files are agent choices under that request.
 - 2026-10-09, follow-up: the symbols are custom SVG drawings built into a font, rather than icons placed in the page or the computer's own glyphs, and form controls get a CSS rule so they use the look's font ("svg for 1 and css rule for the second", then "SVG glyphs as a font"). The glyph designs are agent choices under that answer.
+- 2026-10-09, two more follow-ups (Jared's, relayed by the 5.6 Pro chat orchestrator thread). First, wider-than-Latin coverage, approved: each embedded family carries the scripts it supports, split the way Google Fonts splits them, with a size budget of about 1.5 MB, and scripts no family covers are measured, not embedded. Second, about code text: "I want it to follow the themes fonts, so whatever was supposed to be designated by the theme." The designation is the home redesign's D17, which Jared approved: "JetBrains Mono becomes the code face for the editor and the terminal in every look." Basic, Glass and Friendly take it.
+- 2026-10-10, Retro's code face: "Keep IBM Plex Mono. Retro's whole interface is Plex Mono, so code matches everything around it, and nothing else in Retro changes. The home redesign's editor and terminal can still use JetBrains Mono or VT323 there." Retro's tokens are unchanged, and NieR Mode keeps PM NieR Mono. The home redesign's editor and terminal faces are decided separately (its D17, which its Plans thread records). The slicing, the family name 'JetBrains Mono' (agreed with the home redesign, whose `--pm-font-code` names it) and the list of code surfaces are agent choices under those answers.
 
 **What the spec now says:**
 1. **The concepts' fonts** (`Plans/FinalGUISpec.md#F3-430`, amended): PMConcept7 embeds the theme faces, Nunito and the Gelasio stand-in for Georgia as Latin woff2 data, declared in `Concepts/onboarding/opus-5.5/src/css/01-webfonts.css`; its symbols are PM Symbols (`src/css/03-symbols.css`), and its form controls take the look's face (`src/css/02-control-fonts.css`).
 2. **One set of font files for both concepts** (`Plans/DRY_Rules.md#DR-050`).
+3. **Scripts** (`Plans/FinalGUISpec.md#F3-430`, amended 2026-10-09): every embedded family carries the scripts it supports as `unicode-range` slices, so the browser decodes only what a page uses. Inter adds Latin Extended, Vietnamese, Cyrillic and Greek, both with their extended blocks. Poppins adds Latin Extended and Devanagari. Nunito and IBM Plex Mono add Latin Extended, Vietnamese and Cyrillic. NieR Mode's faces add Latin Extended and Vietnamese, and PM NieR Mono also adds Cyrillic and Greek. Gelasio stays Latin, since it sets one "i". The Latin files are unchanged and declared last. Cost: PMConcept7 grows by 1,511,344 bytes and the 5.6 Pro standalone by 776,530. Not embedded, with the cost measured: M PLUS 1's Japanese (2,599,644 bytes of woff2, about 3.5 MB inline) and Noto faces for the scripts no family carries; the figures are in the SourceRef's README.
+4. **The code face** (`Plans/FinalGUISpec.md#F3-430` and `#F3-426`, amended 2026-10-09): code text in Basic, Glass and Friendly is JetBrains Mono, embedded under its own name with the same slices and the same bytes as NieR Mode's PM NieR Mono, plus JetBrains Mono's own italic with the same slices in PMConcept7 (2026-10-10, at the home redesign's request; its Latin file is the terminal thread's, byte for byte), so italic code is drawn, not slanted. This covers code blocks, inline code, the editor, the terminal, file paths, branch names, logs and command text, in PMConcept7 and in the 5.6 Pro chat. Retro's code text stays IBM Plex Mono, its whole face, with its tokens unchanged (Jared, 2026-10-10), and NieR Mode keeps PM NieR Mono. The home redesign's editor and terminal faces are decided separately (its D17, which its Plans thread records). Cost: PMConcept7 +244,805 bytes (132,488 of them the italic), the 5.6 Pro standalone +105,255.
 
-SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md`, SHA-256 `51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4` (the request and the evidence index); `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/proof-after.json`, SHA-256 `bfda89d92f00e53a7ad8dec195de68ff5ef1774443e4fb70868ce32bc061a82a` (the fonts Chrome drew in every look on the P1000 VM, which has none of these fonts installed); `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/symbols-proof.json`, SHA-256 `e0f74c7c89eb6d80a7f48776822310df03989c1cf4e9d421cfe962af30f8ceae` (every symbol drawn from PM Symbols in every look and text context).
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md`, SHA-256 `51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4` (the request and the evidence index); `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/proof-after.json`, SHA-256 `bfda89d92f00e53a7ad8dec195de68ff5ef1774443e4fb70868ce32bc061a82a` (the fonts Chrome drew in every look on the P1000 VM, which has none of these fonts installed); `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/symbols-proof.json`, SHA-256 `e0f74c7c89eb6d80a7f48776822310df03989c1cf4e9d421cfe962af30f8ceae` (every symbol drawn from PM Symbols in every look and text context); `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/README.md`, SHA-256 `352dfdc3063e90c0ad68361057c6be9e089fd3835470baba6347d0590cd268ae` (the two follow-ups, Jared's words, the size and Noto cost tables and the evidence index); `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/pm7-final-verdict.json`, SHA-256 `47f3eccae609f6926e4e8240211a79b1032aab93184ed68a5dc0a923b6354006`, and `/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/pro-final-verdict.json`, SHA-256 `10aadd340894dc9bff422b2252828c48c04c9f7ac9a240f84b215c9a91792188` (per look, role and script, whether every character drew from an embedded face, on the P1000 VM with none of these fonts installed).
 
-ContractRef: ContractName:Plans/FinalGUISpec.md#F3-430, ContractName:Plans/DRY_Rules.md#DR-050
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-430, ContractName:Plans/FinalGUISpec.md#F3-426, ContractName:Plans/DRY_Rules.md#DR-050
 
 ### DL-158: The Ask Card fits long answers
 
@@ -3524,7 +3527,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-601, ContractName:Plans/Final
 - Build is a little taller than before (32 px, like every other button in the chat's cards). The card grows by a few pixels.
 - The scheduled-build line can take one more row on a wide card, because its detail now sits under the lead rather than beside it.
 
-**Options considered:** Keep the grey band, but stretch it to the card's edges with its own padding. Not chosen: no other chat card uses a band, and the wand modules' cards put their actions on the content edge. Put the step count at the right end of the button row. Not chosen: in Retro's wider type it wrapped at the card's usual width. The "Schedule ended" wording is the lead's ruling: Build already ends the schedule, and the old notice offered a version that did not exist. Jared may want to confirm it.
+**Options considered:** Keep the grey band, but stretch it to the card's edges with its own padding. Not chosen: no other chat card uses a band, and the wand modules' cards put their actions on the content edge. Put the step count at the right end of the button row. Not chosen: in Retro's wider type it wrapped at the card's usual width. The "Schedule ended" wording was first the lead's ruling: Build already ends the schedule, and the old notice offered a version that did not exist. Jared approved the wording on 2026-10-09 (DL-157).
 
 **What Jared asked (2026-10-09, relayed with his screenshot by the orchestrator thread):** that the Plan card's buttons, which did not line up well, be designed for the space in every theme. The record states his request in plain words rather than quoting it (decision card 2 of 2026-10-07, recorded in DL-145).
 
@@ -3538,6 +3541,36 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-601, ContractName:Plans/Final
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-20261009/JARED_REQUEST.md`, SHA-256 `4454066fa6584209b779ebf33441037b484f09f452599fcbef3477383782a93d` (the owner request); `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-20261009/JARED-SCREENSHOT-retro-light.png`, SHA-256 `e668fe203ee8aeeb9c9ed1e8aa2f263f525188ce14d4a837958074aace4b839b` (his screenshot).
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-606, ContractName:Plans/FinalGUISpec.md#F3-607, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-015, ContractName:Plans/DRY_Rules.md#DR-047
+
+### DL-159: The chat opens in the look you chose, from its first frame
+
+**Question:** What should the assistant chat show in its first moments, before it has drawn itself?
+
+**Why it came up:** The 5.6 Pro chat concept opened on the browser's own dark grey and switched to the look a person had chosen only when the chat first drew itself, 1.3 to 1.7 seconds in. For a Light theme the whole window went from dark to light; for NieR Mode the dark grey came before the parchment or ink and the boot log. PMConcept7 had just fixed the same thing for its own page (its boot paint, F3-468, DL-153), and Jared approved doing the same for the chat on 2026-10-09.
+
+**What you get:**
+- The chat opens in the look you chose from its very first frame, in all ten themes, NieR Mode with any parts, and with reduced motion on. With nothing chosen yet it opens in Basic Dark.
+- No flash: nothing large changes colour while the chat draws itself.
+- Nothing new is stored. The first frame reads the chat's own saved look and changes nothing; the chat and NieR Mode still own the look.
+- NieR Mode's boot log plays as before, only when the chat opens in NieR Mode with Boot sequence installed and motion allowed, and the chat never shows before it. The reboot moment still plays only when you turn NieR Mode on or off, never on a reload.
+- The pinned history drawer stays in place from the first frame.
+
+**What it costs:**
+- The chat's page carries a small reader of its own for now. When the chat is ported into PMConcept7, PMConcept7's boot paint takes over and the chat's reader is removed.
+
+**Options considered:** None were offered; the request named PMConcept7's pattern. Painting only a background colour first was not chosen: the attributes the chat already uses paint every family's ground, NieR Mode's included, with no colour table to keep in step.
+
+**What the owner decided** (in plain words):
+- 2026-10-09, relayed by the round's orchestrator thread: the chat should paint the viewer's stored look before its first frame, as PMConcept7 does, reading its own store and never writing it.
+
+**What the spec now says:**
+1. **The chat's first paint** (`Plans/FinalGUISpec.md#F3-612`), applying the boot paint of `Plans/FinalGUISpec.md#F3-468` to the chat's own page.
+2. **One first-paint reader per page** (`Plans/DRY_Rules.md#DR-054`): the reader reads the look owner's store and never writes it, and the chat's reader is dropped when the chat becomes part of PMConcept7's page.
+3. **Unchanged:** the look's owners, NieR Mode's contract and the chat under NieR Mode (`Plans/FinalGUISpec.md#F3-589`). No command, action id, setting, settings key or wiring entry is added, changed or removed, so `Plans/UI_Command_Catalog.md`, `Plans/Commands_System.md`, `Plans/UI_Wiring_Rules.md` and both Wiring Matrix files are untouched.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/REQUEST.md`, SHA-256 `8dcfcde107fc2d97bd3a884477a63dda5606ee04af23feba897a015474fd92be` (the owner request as relayed); `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/MEASUREMENTS.md`, SHA-256 `edee5055e6a1ce894478b13a0c63a0103f5ef4ae0c20c615213a082b696469b7` (frame 1 before and after, per stored look).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-612, ContractName:Plans/FinalGUISpec.md#F3-468, ContractName:Plans/DRY_Rules.md#DR-054
 
 ### DL-162: The left rail takes the Polish design
 
@@ -3668,7 +3701,7 @@ ContractRef: ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/Fina
 **What you get:**
 - Account cards act in place. Use this account makes that account the active one; it is labelled as an override and shown only where the provider supports choosing the active account by hand.
 - Each provider with two or more accounts has its own Auto-switch toggle and switch level on its card; its warning level and rest period show there as read values and are changed in Settings. They are the same settings Settings shows, not a Usage copy: changing them on the card changes the real setting, previewed and applied through Settings, and Settings shows the new value at once. Open in Settings goes to the same setting.
-- Auto-switch, its switch level, its warning level and its rest period after a rate limit can each be set per provider in Settings. A provider without its own value uses the global value, which is the default for all four; the rest period, which until now was set only per account, gains a global value for this. An account's own override still wins over its provider's value, in the order the multi-account spec sets out.
+- Auto-switch, its switch level, its warning level and its rest period after a rate limit can each be set per provider in Settings. A provider without its own value uses the global value, which is the default for all four; the rest period, which until now was set only per account, gains a global value for this. An account's own value still wins over its provider's value, in the order the multi-account spec sets out (made one ladder by the owner decision of 2026-10-10 below).
 - How the switch decides, as the AI Account Center does it: a provider with one account keeps auto-switch off until a second account is signed in; every meter of a provider carries a notch at that provider's switch point; only a fresh reading tied to the account's identity may trigger a switch, while a stale or estimated reading, an account that must sign in again, or a reset that has passed with no new reading blocks it with a named reason; the switch goes to the eligible account with the most left; it waits until the tool is idle and never switches in the middle of work; a warning shows when paid credit is being drawn; and making an account active by hand when it is already past its provider's switch point asks first, and the automatic switch never treats that confirmation as consent.
 - One roster with Settings: the room reads providers and accounts from Settings, uses Settings' display names and order, groups providers as Settings does (Subscriptions and plans, Pay as you go, Free and your own) and takes each provider's windows from its Settings definition, with no invented windows. A provider that is not set up or not installed shows as one compact line with a way to set it up, never as a large empty card.
 - Plans & limits shows one row per account, grouped by provider, so all three Codex accounts appear, each with its own windows and history.
@@ -3690,6 +3723,10 @@ ContractRef: ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/Fina
 5. **Commands and wiring** (`Plans/UI_Command_Catalog.md#UCC-147`, dispositions): Use this account dispatches the existing `cmd.account.select_profile`, the toggle and level dispatch the Settings transaction pair, and Open in Settings reuses `cmd.settings.open` with `target_type=setting`. No command is added; the existing production wiring rows for these commands (`catalog.account_select_profile`, `catalog.settings_transaction_preview`, `catalog.settings_transaction_apply`) name the Accounts room controls in their locations (`Plans/Wiring_Matrix.md#WM-043`).
 6. **Every account of a provider** (`Plans/Multi-Account.md#MA-049`, consumed by `Plans/usage-feature.md#UF-107`): Usage never flattens a provider's accounts into one label, and Plans & limits lists one row per account.
 7. **Unchanged:** choosing the active account by hand stays an override (`Plans/Multi-Account.md#MA-022`), and only providers whose capability allows it offer it (`supports_manual_set_active`, `Plans/Models_System.md`).
+
+**Owner decision 2026-10-10 (USG-1):** Jared kept the account scope on `ai.accounts.hard-switch-level` and retired `ai.accounts.account-threshold-override`. There is one scope ladder for every threshold, global, then project, then provider, then account, and the most specific set value wins. An account's own switch level is `ai.accounts.hard-switch-level` at scope account; a value stored under the retired id is read once and carried there. The spec now says so in `Plans/Multi-Account.md#MA-073` and section 5, `Plans/Settings_System.md` section 8 and the 2026-10-10 amendment of `Plans/FinalGUISpec.md#F3-441`; the inventory row is marked superseded and kept only for that one carry.
+
+**Owner decision 2026-10-10 (USG-2):** Jared asked for MA-073's status states to be written as a mapping: each state is defined by a set of section 5 reason codes. `Plans/Multi-Account.md` now carries the MA-073 state table, read top to bottom, with no new code and no stored status.
 
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md`, SHA-256 `fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008` (answer 1, the provider catalog and the demo roster); `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md`, SHA-256 `d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5` (Jared's notes 2 and 4 of 2026-10-09 in section 2, and the AI Account Center's switching rules in section 5).
 
@@ -3859,3 +3896,37 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/Final
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md`, SHA-256 `fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008` (the menus and logos decisions of 2026-10-02, Direction B's point 6, the bar, and the coordinator's rulings 2 and 5); `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md`, SHA-256 `d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5` (Jared's notes 5 and 8 of 2026-10-09 in section 2).
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/DRY_Rules.md#DR-058, ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/usage-feature.md#UF-089, ContractName:Plans/Decision_Log.md#DL-113, ContractName:Plans/Decision_Log.md#DL-115
+
+### DL-157: Three answers from Jared: the Schedule ended wording, a command to open the exact Plan, and previews keep their own labels
+
+**Question:** Three follow-ups to the 5.6 Pro chat round waited on Jared, and a fourth followed from the second. Is the "Schedule ended" wording right? What should Open exact Plan · Vn on a Goal run, given that no command opened a Plan's document, and should the Plan card's own Open plan button use the same command? And may the controls inside an activity preview keep their native labels, when the rule says every chat control names itself through the app's hover tag?
+
+**Why it came up:** The Plan card thread chose the "Schedule ended" wording itself and recorded it as the lead's ruling, pending Jared (DL-156). The Plans audit of the round found the other two. A Goal that is bound to a Plan shows Open exact Plan · Vn, but no command opens a Plan's document: the concept ran Plan Details' opener for it, which opens the Plan's current version rather than Vn. F3-590 and UIW-013 said a chat control never uses a native title, yet inside an open activity preview the concept's rows keep native titles or have no label, because the chat shows one hover surface at a time and a hover tag there would replace the preview card under the pointer.
+
+**What you get:**
+- After you press Build on a Plan that had a schedule, the line reads "Schedule ended · you started this build now, so the schedule won't start a second one." This is now your decision, not the lead's.
+- Open exact Plan · Vn on a bound Goal, in the Goal panel and in the Goal preview, opens that version of the Plan: the Plan's own tab while Vn is still its version, or Vn's saved read-only copy once a newer version exists. It never opens Plan Details and never jumps to a newer version. Opening it from the preview closes the preview.
+- Every Open plan button works the same way: on the Plan card it opens the version the card shows, on a "Build started" or "Plan revised" line the version that line names, and on a build schedule's row in Scheduled the version the schedule is bound to. So after you revise a Plan, Open plan on the earlier "Build started" line still shows the version that was built. The Plan's title, Expand and Details links are unchanged.
+- Inside an open activity preview, nothing opens a hover tag. The Subagents, Artifacts and Changes rows keep their native titles ("Open" with the agent's or artifact's name, or the file's path and change summary), and so do the Crew member rows shown before a Crew run starts. The Goal preview's buttons (Edit included), the To-Do rows and the collaboration run rows have no label beyond their own text. Everywhere else in the chat, the hover-tag rule is unchanged.
+
+**What it costs:**
+- One more command and one more wiring row to build: `cmd.chat.plan.open_version`.
+- A preview row's native title looks like the system's tooltip, not the app's.
+
+**Options considered:** For the Plan control, reusing Plan Details' command (refused: Details is a different view and would not show Vn's document), or a Goal-owned opener (refused: opening a Plan document belongs to the Plan's owner, beside its other commands). For the previews, giving the rows hover tags (refused: a tag replaces the preview card) or removing their titles (not asked).
+
+**What the owner decided** (in plain words):
+- 2026-10-09: the "Schedule ended" wording is approved.
+- 2026-10-09: Open exact Plan · Vn gets a new command ("Get a new command"). Its name and form follow the Plan commands beside it, an agent choice under that answer.
+- 2026-10-10: the same command covers the Plan card's Open plan button too ("yes cover the button too"). Applying it to every Open plan button, the receipts' and a schedule row's included, is an agent choice under that answer.
+- 2026-10-09: previews are an exception to the hover-tag rule ("Previews as exception"). The list of controls it covers describes the concept as it is today.
+
+**What the spec now says:**
+1. **Schedule ended** (`Plans/Scheduling_and_Quota_Resume.md#SQR-015`, amended; DL-156 notes the approval).
+2. **The new command** `cmd.chat.plan.open_version`, a navigation_wrapper owned by `Plans/Assistant_Plan_Runtime.md` with handler `handlers::assistant_plan::plan_open_version` and request `AssistantPlanVersionRoute` returning `RouteResult` (`Plans/UI_Command_Catalog.md#UCC-176`, `Plans/Commands_System.md#CS-088`, `Plans/Wiring_Matrix.md#WM-065` and the production entry `assistant.redesign.cmd.chat_plan_open_version`, `Plans/UI_Wiring_Rules.md#UIW-026`). The Goal panel's Plan row uses it (`Plans/FinalGUISpec.md#F3-593`), and so does every Open plan button (`Plans/FinalGUISpec.md#F3-606`, `Plans/Assistant_Plan_Runtime.md` APR-014); UCC-188 and CS-093 note it as the one command added after the round.
+3. **Previews as the exception** (`Plans/FinalGUISpec.md#F3-590`, `Plans/UI_Wiring_Rules.md#UIW-013`, and F3-523's census, which counts them as documented exemptions).
+4. **Unchanged:** `cmd.chat.plan.open_details` and its wiring row, every other hover tag, and every setting.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/JARED_DECISIONS.md`, SHA-256 `4a23e31ad4aa68385092c9f16132cf765c59f9da1d890dfdab1f8c33ac8b3208` (the three answers as relayed); `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/JARED_DECISION_20261010.md`, SHA-256 `49590354c89d8c6bae54ff77eea7fc252a70d27716fccdc3a46086057c2df498` (his answer of 2026-10-10 on the Open plan button); `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/preview-title-census.json`, SHA-256 `c05c8ca808724193643af423b228fdeb9d6df7800940d7f47d1ab07b041d9048` (the native titles and hover tags inside each open preview, and the new route's checks, on GPU Chrome; the Crew preview was read from source because the fixture has no Crew).
+
+ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-015, ContractName:Plans/UI_Command_Catalog.md#UCC-176, ContractName:Plans/Commands_System.md#CS-088, ContractName:Plans/Wiring_Matrix.md#WM-065, ContractName:Plans/UI_Wiring_Rules.md#UIW-026, ContractName:Plans/FinalGUISpec.md#F3-593, ContractName:Plans/FinalGUISpec.md#F3-590, ContractName:Plans/UI_Wiring_Rules.md#UIW-013

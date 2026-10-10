@@ -1,10 +1,10 @@
-# Shard 092: DL-162 — The Left Rail Takes The Polish Design (2026-10-09)
+# Shard 093: DL-162 — The Left Rail Takes The Polish Design (2026-10-09)
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42088-L42543
+Source lines: L42254-L42709
 
-Source SHA256: `531f33841911f4b489578d3196daf49d16ffb0c03c93684d88fe8aaeddd22662`
+Source SHA256: `643904c4950b638495bc1a59e09b9d865935e2f1ad7298fb093789150d3f4b73`
 
 ---
 

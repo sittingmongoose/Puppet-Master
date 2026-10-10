@@ -1572,6 +1572,70 @@
         "No EventRecord may be emitted for cmd.chat.plan.open_details until its Event Authority is adjudicated centrally; assert zero unregistered event emissions."
       ]
     },
+    "assistant.redesign.cmd.chat_plan_open_version": {
+      "ui_element_id": "assistant.redesign.cmd.chat_plan_open_version",
+      "ui_location": "Puppet Master Assistant > plan_card, schedule_manager, goal_activity, goal_hover",
+      "ui_command_id": "cmd.chat.plan.open_version",
+      "handler_location": "handlers::assistant_plan::plan_open_version",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.chat.plan.open_version dispatches the typed request AssistantPlanVersionRoute and returns RouteResult; the surfaces that may raise it are exactly: plan_card, schedule_manager, goal_activity, goal_hover.",
+        "Read state.assistant_redesign.chat_plan_open_version.availability and state.assistant_redesign.chat_plan_open_version.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
+        "The durable effect is the owner typed result, receipt or projection under Plans/Assistant_Plan_Runtime.md. Emit no unregistered EventRecord.",
+        "DL-157 (UCC-176, WM-065): a bound Goal's Open exact Plan · Vn sends the GoalPlanBinding's assistant_plan_id, plan_version and plan_hash, and the route opens that version's document: the Plan's own editor tab, focused rather than duplicated, while Vn is the Plan's version, otherwise Vn's retained read-only document. It never opens Plan Details and never substitutes a newer version.",
+        "DL-157 (owner's answer of 2026-10-10): every Open plan button raises this entry with the version its surface names: the Plan card's action row (the card's version), a Build-started or Plan-revised receipt (the receipt's version) and a build schedule's row in the Scheduled manager (the schedule's bound version). The Plan title, Expand and Details links keep their existing route.",
+        "Negative path is enforced: an unretained or hash-mismatched version, or an unavailable or denied dispatch, opens nothing, changes nothing and states its exact reason.",
+        "A press from the activity bar's Goal preview closes the preview; the route changes no Plan, run, Goal, To-Do or artifact state.",
+        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+      ],
+      "evidence_required": "Future production evidence for cmd.chat.plan.open_version: source-hashed native dispatcher and sole handler handlers::assistant_plan::plan_open_version, typed AssistantPlanVersionRoute/RouteResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage from plan_card, schedule_manager, goal_activity and goal_hover, current-version and retained-version routes, stale-version and hash-mismatch negatives, and exact return. Owner refs: Plans/Assistant_Plan_Runtime.md, Plans/UI_Command_Catalog.md#UCC-176, Plans/Decision_Log.md#DL-157. The owner binding and this production-intent row prove none of those runtime facts.",
+      "state_selector": "state.assistant_redesign.chat_plan_open_version.availability",
+      "disabled_reason_projection": "state.assistant_redesign.chat_plan_open_version.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Owner typed result and projection under Plans/Assistant_Plan_Runtime.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "receipt_or_event_refs": [
+          "Plans/Assistant_Plan_Runtime.md",
+          "RouteResult projection"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "Expose a stable role, name, description and current state for cmd.chat.plan.open_version; the visible name is Open plan, or Open exact Plan · Vn on a bound Goal.",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed request for cmd.chat.plan.open_version only when available.",
+        "focus_management": "Retain invoking focus while pending and settle on the opened document, or return to the initiating route and focus when nothing opens.",
+        "disabled_announcement": "Announce state.assistant_redesign.chat_plan_open_version.disabled_reason, including handler_unavailable and command_not_registered, without secrets or raw output."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.assistant_redesign.chat_plan_open_version.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove cmd.chat.plan.open_version reaches only handlers::assistant_plan::plan_open_version; the target string itself is not proof."
+        },
+        {
+          "test_id": "wiring.assistant_redesign.chat_plan_open_version.state",
+          "evidence_kind": "state_projection",
+          "requirement": "Prove exact availability and disabled reason, including handler_unavailable before native evidence, and fail closed on a stale or unretained version."
+        },
+        {
+          "test_id": "wiring.assistant_redesign.chat_plan_open_version.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Prove the route opens exactly the bound version's document (the Plan's tab while current, the retained document otherwise), never Plan Details or a newer version, with typed receipt correlation and zero unregistered EventRecord effects."
+        },
+        {
+          "test_id": "wiring.assistant_redesign.chat_plan_open_version.negative",
+          "evidence_kind": "state_projection",
+          "requirement": "Negative path. Prove an unretained or hash-mismatched version, or an unavailable or denied dispatch, opens nothing and reports its exact reason."
+        },
+        {
+          "test_id": "wiring.assistant_redesign.chat_plan_open_version.a11y",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove role, name, state, keyboard parity and disabled announcement for this element."
+        }
+      ],
+      "event_test_requirements": [
+        "No EventRecord may be emitted for cmd.chat.plan.open_version until its Event Authority is adjudicated centrally; assert zero unregistered event emissions."
+      ]
+    },
     "assistant.redesign.cmd.chat_plan_view_set": {
       "ui_element_id": "assistant.redesign.cmd.chat_plan_view_set",
       "ui_location": "Puppet Master Assistant > plan_card",

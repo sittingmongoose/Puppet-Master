@@ -838,7 +838,7 @@
    "count": 1,
    "error": "missing_ref",
    "fingerprints": [
-    "71bc7ba39ea0"
+    "3b42a94f84ff"
    ],
    "path": "Plans/00-plans-index.md",
    "subcheck": "support_refs"
@@ -1018,7 +1018,7 @@
    "count": 1,
    "error": "missing_ref",
    "fingerprints": [
-    "71bc7ba39ea0"
+    "3b42a94f84ff"
    ],
    "path": "Plans/00-plans-index.md",
    "subcheck": "lint_contractrefs"
@@ -1737,7 +1737,7 @@
    }
   }
  },
- "commit": "e4306f817dc83ea14f5cc7691e2bed6243172fca",
+ "commit": "eaf8ef508f29637569a226d0f15bbbe72471d90a",
  "export_buckets": [
   {
    "check": "audit-governance",
@@ -2860,8 +2860,8 @@
   }
  ],
  "max_fingerprints_per_bucket": 200,
- "recorded_at_utc": "2026-10-10T15:55:42Z",
- "run_dir": "Plans/.plan_migration/pds-20261010-003-current-planunit-snapshot",
+ "recorded_at_utc": "2026-10-10T20:12:58Z",
+ "run_dir": "Plans/.plan_migration/pds-20261010-005-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"

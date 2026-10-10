@@ -1523,7 +1523,6 @@
     function beginGesture(g) {
       completeStream();
       flushGravity();
-      sheenOff();
       claimGesture();
       gesture = g;
       if (PMU.menu) PMU.menu.close();
@@ -1891,55 +1890,14 @@
       }
       if (onCard && (event.key === 'r' || event.key === 'R')) { event.preventDefault(); keyboard(card.getAttribute('data-widget'), 'resize'); }
     }
-    /* ---- the pointer sheen (WOW-SPEC 3.17): a 280 px radial light inside the hovered plate, under its content, moved by
-       transform only (one rAF write per pointer frame, the card's rect read once on entry), fading out 200 on leave ---- */
-    var sheen = { card: null, el: null, rect: null, x: 0, y: 0, raf: 0 };
-    /* the sheen layer is made once per card, on its first hover, and kept (PERF-3): inserting it on every hover changed
-       the card's child list, and the app's positional rules then restyled the card's whole subtree (14 ms per hover on the
-       VM); leaving only turns it off */
-    function sheenOff() {
-      var el = sheen.el;
-      sheen.card = null; sheen.rect = null; sheen.el = null;
-      if (!el) return;
-      el.classList.remove('on');
-    }
-    function sheenMove() {
-      sheen.raf = 0;
-      if (!sheen.el || !sheen.card) return;
-      if (!sheen.rect) sheen.rect = sheen.card.getBoundingClientRect();
-      sheen.el.firstChild.style.transform = 'translate(' + (sheen.x - sheen.rect.left).toFixed(1) + 'px,' + (sheen.y - sheen.rect.top).toFixed(1) + 'px)';
-    }
-    function onSheen(e) {
-      if (e.pointerType === 'touch') return;
-      var card = gesture || reduced() ? null : (e.target.closest ? e.target.closest('.pmu-card') : null);
-      if (card && (card.parentNode !== boardEl || isLeaving(card) || card.hasAttribute('data-pending') || card.getAttribute('data-head') === 'band')) card = null;
-      if (card !== sheen.card) {
-        sheenOff();
-        if (card && PMU.theme.look().nier) card = null;
-        if (card) {
-          var el = card._pmuSheen;
-          if (!el || el.parentNode !== card) {
-            el = card._pmuSheen = document.createElement('i'); el.className = 'pmu-sheen'; el.setAttribute('aria-hidden', 'true'); el.appendChild(document.createElement('i'));
-            card.insertBefore(el, card.firstChild);
-          }
-          sheen.card = card; sheen.el = el; sheen.x = e.clientX; sheen.y = e.clientY;
-          /* the rect is read in the next frame's rAF, never in the pointer event (a read here forced the hover's style
-             recalc into the event: 14 ms on the VM) */
-          if (!sheen.raf) sheen.raf = requestAnimationFrame(function () { sheenMove(); if (sheen.el === el) el.classList.add('on'); });
-          return;
-        }
-      }
-      if (card) { sheen.x = e.clientX; sheen.y = e.clientY; if (!sheen.raf) sheen.raf = requestAnimationFrame(sheenMove); }
-    }
+    /* (the hover is PMH's, the merged hover engine of PMConcept7, opus-5.5 src/js/18-hover.js: it rides the app's one
+       pointer-move dispatcher, rests through every gesture of this board and lights a plate from CSS only;
+       20-board.css. The board has no pointer-move listener of its own.) */
     /* the listeners sit on the scroll pane: a room change swaps the board element (the old one leaves as the ghost); the
        document's Escape and selectstart listeners are the module's, for the board that holds the gesture (D10 2.10) */
-    var onScrollSheen = function () { sheen.rect = null; };
     var onScrollKey = function (event) { if (boardEl.contains(event.target)) onKeyDown(event); };
     var onDragStart = function (event) { if (event.target.closest && event.target.closest('.pmu-card')) event.preventDefault(); };
     if (boardEl && scroll) {
-      scroll.addEventListener('pointermove', onSheen, { passive: true });
-      scroll.addEventListener('pointerleave', sheenOff);
-      scroll.addEventListener('scroll', onScrollSheen, { passive: true });
       scroll.addEventListener('pointerdown', onPointerDown);
       scroll.addEventListener('keydown', onScrollKey);
       scroll.addEventListener('dragstart', onDragStart);
@@ -2244,7 +2202,6 @@
       if (liveQ) { liveStop(); dirty = true; }   /* a beat's patch cut short: the show refreshes */
       clearTimeout(holdT); holdT = 0;
       if (roTimer) { clearTimeout(roTimer); roTimer = 0; sizeDirty = true; }
-      sheenOff();
     }
     /* show: mount if pending; a size that came while hidden is read now; data that moved while hidden (the epoch, a
        refresh cut short) re-reads Settings and the roster and refreshes in slices, in view first; then the preset hold */
@@ -2532,17 +2489,12 @@
       clearTimeout(saveTimer); clearTimeout(holdT); clearTimeout(gravityT); clearTimeout(filmEndT); clearTimeout(roTimer);
       saveTimer = holdT = gravityT = filmEndT = roTimer = 0; gravityMap = null;
       if (roPending) { cancelAnimationFrame(roPending); roPending = 0; }
-      if (sheen.raf) { cancelAnimationFrame(sheen.raf); sheen.raf = 0; }
-      sheenOff();
       buildToken++; streaming = null; lateHeld = null;
       if (refreshQ) { refreshQ.cancelled = true; refreshQ = null; }
       liveStop(); liveKeys = null;
       if (ro) { ro.disconnect(); ro = null; }
       if (scroll) {
         scroll.removeEventListener('scroll', onScrollView, { passive: true });
-        scroll.removeEventListener('pointermove', onSheen, { passive: true });
-        scroll.removeEventListener('pointerleave', sheenOff);
-        scroll.removeEventListener('scroll', onScrollSheen, { passive: true });
         scroll.removeEventListener('pointerdown', onPointerDown);
         scroll.removeEventListener('keydown', onScrollKey);
         scroll.removeEventListener('dragstart', onDragStart);

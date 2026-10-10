@@ -1,10 +1,10 @@
-# Shard 035: Usage presentation grammar single owner — 2026-10-09
+# Shard 036: Usage presentation grammar single owner — 2026-10-09
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3149-L3225
+Source lines: L3205-L3281
 
-Source SHA256: `ce1c0950746900f4fe598e1550fa055d5e636be6a93eb3a2121269cb14a5e117`
+Source SHA256: `ba9cf0aa7fbf57a2ac900f58bb6007c9f61ee301264b329566297a4c9c4843c3`
 
 ---
 
