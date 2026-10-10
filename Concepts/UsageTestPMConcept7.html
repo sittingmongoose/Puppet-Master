@@ -37368,7 +37368,9 @@ var PMU_SERIES = {
     o = o || {};
     if (!el) return { cancel: function () {} };
     if (el._pmuDecode) el._pmuDecode.cancel();
-    if (reduced() || !text) { el.classList.remove('pmu-dec-wait'); el.textContent = text; return { cancel: function () {} }; }
+    /* a card title's nowrap spans (42-cards.js nbHyphen, item 9) come back when the decode lands */
+    var html0 = el.firstElementChild && el.textContent === text ? el.innerHTML : null, land = function () { if (html0 != null) el.innerHTML = html0; else el.textContent = text; };
+    if (reduced() || !text) { el.classList.remove('pmu-dec-wait'); land(); return { cancel: function () {} }; }
     var n = text.length, per = Math.min(35, 420 / Math.max(1, n)), total = per * n + 60, lastBucket = -1;
     var same = o.from != null && String(o.from).length === n ? String(o.from) : null;
     function glyphs(ms, bucket) {
@@ -37393,7 +37395,7 @@ var PMU_SERIES = {
         var bucket = Math.floor(ms / 30); if (bucket === lastBucket) return; lastBucket = bucket;
         el.textContent = glyphs(ms, bucket);
       },
-      done: function () { show(); el.textContent = text; if (el._pmuDecode === handle) el._pmuDecode = null; } });
+      done: function () { show(); land(); if (el._pmuDecode === handle) el._pmuDecode = null; } });
     var handle = { cancel: function () { tw.cancel(); show(); if (el._pmuDecode === handle) el._pmuDecode = null; } };
     el._pmuDecode = handle;
     return handle;
@@ -40139,7 +40141,43 @@ var PMU_SERIES = {
   };
 
   /* ---------- text width without layout: canvas measure of the theme faces, cached per look ---------- */
-  var cv = null, fontKey = '', faces = { mono: 'monospace', font: 'sans-serif' };
+  /* Embedded faces (DL-161: data-URI woff2, font-display: swap) load on first use, and a canvas measure never waits for
+     one: a face or weight that is still loading measures in the fallback face (Jared's item 9, 2026-10-09: a Friendly
+     switch rendered the board while Poppins 500 was still loading). So every measure asks first whether its face is
+     ready (document.fonts.check, once per font string), asks for it when it is not, and counts the miss; a memo never
+     keeps a measure that missed (50-w-common.js wrapLines). When the faces asked for have landed, every measure is
+     redone once: the charts.onFaces listeners run (the wrap memo clears, the board's bodies re-render at their size,
+     the heads and the room subtitle re-fit). The sample holds a Latin letter and two PM Symbols, so the symbol faces
+     mirrored on each text face (unicode-range) are asked for together with it. */
+  var FACE_SAMPLE = 'Ag0 ≈→';
+  var cv = null, fontKey = '', faces = { mono: 'monospace', font: 'sans-serif' }, faceOk = {}, faceAsked = {}, missN = 0, missAt = 0, faceFns = [], landT = 0;
+  function faceReady(font) {
+    if (faceOk[font]) return true;
+    var fs = document.fonts;
+    if (!fs || typeof fs.check !== 'function' || typeof fs.load !== 'function') { faceOk[font] = true; return true; }
+    if (!faceAsked[font]) {
+      var ok = true;
+      try { ok = fs.check(font, FACE_SAMPLE); } catch (error) { ok = true; }
+      if (ok) { faceOk[font] = true; return true; }
+      faceAsked[font] = true;
+      /* settled either way: a face that failed to load is final too (the fallback is then what the page draws) */
+      var done = function () { faceOk[font] = true; delete faceAsked[font]; landed(); };
+      try { fs.load(font, FACE_SAMPLE).then(done, done); } catch (error) { done(); }
+    }
+    missN++;
+    return false;
+  }
+  function landed() {
+    if (landT) return;
+    /* one batch for the faces that land together (a look's regular and bold cuts arrive within a few ms) */
+    landT = setTimeout(function () {
+      landT = 0;
+      if (Object.keys(faceAsked).length) return;   /* the last face to land runs the batch */
+      if (missN === missAt) return;
+      missAt = missN; fontKey = '';
+      faceFns.slice().forEach(function (fn) { try { fn(); } catch (error) { console.error('[pm-usage] faces listener', error); } });
+    }, 16);
+  }
   function textW(str, px, mono, weight) {
     var look = PMU.theme.look().key;
     if (fontKey !== look) {
@@ -40149,9 +40187,16 @@ var PMU_SERIES = {
     }
     if (!cv) cv = document.createElement('canvas').getContext('2d');
     cv.font = (weight || 400) + ' ' + (px || 11) + 'px ' + (mono ? faces.mono : faces.font);
+    faceReady(cv.font);
     return cv.measureText(String(str)).width * (mono ? 0.9 : 1);
   }
   charts.textW = textW;
+  /* a font string ('600 13px Inter, system-ui'), ready to measure? (false: a fallback measure, counted; the face is asked for) */
+  charts.faceReady = faceReady;
+  /* the miss count so far: a caller that memoizes compares it before and after its measures */
+  charts.faceMisses = function () { return missN; };
+  /* fn() once the faces a missed measure asked for have landed */
+  charts.onFaces = function (fn) { faceFns.push(fn); };
 
   /* ---------- scales ---------- */
   function niceStep(raw) {
@@ -45693,9 +45738,10 @@ var PMU_SERIES = {
     while (parts.length > 1 && PMU.charts.textW(out, 12, false, 400) * k > avail) { parts.pop(); out = parts.join(' · '); }
     return out;
   }
-  /* a title never breaks at a word's own hyphen (final fix M9b: "Headroom and auto- / switch" in the 4-track tile): the
-     shown text joins hyphenated words with U+2011; the hover tag, the menus and search keep the plain hyphen */
-  function nbHyphen(s) { return String(s == null ? '' : s).replace(/(\S)-(?=\S)/g, '$1\u2011'); }
+  /* a title never breaks at a word's own hyphen (final fix M9b: "Headroom and auto- / switch" in the 4-track tile): a
+     hyphenated word is set in one nowrap span with its plain hyphen. Item 9 (embedded fonts): U+2011 is in none of the
+     embedded faces (Inter, Poppins, IBM Plex Mono, M PLUS 1), so it was drawn from a system face inside the title. */
+  function nbHyphen(s) { return esc(String(s == null ? '' : s)).replace(/[^\s<>]*\S-\S[^\s<>]*/g, function (w) { return '<span style="white-space:nowrap">' + w + '</span>'; }); }
   function syncHead(card, ctx) {
     var def = ctx.def, form = card.getAttribute('data-head') || 'line', tier = ctx.tier || {};
     var titleEl = card.querySelector('.pmu-cardtitle'), subEl = card.querySelector('.pmu-cardsub'), asideEl = card.querySelector('.pmu-cardmeta'), keyEl = card.querySelector('.pmu-cardkey');
@@ -45706,9 +45752,9 @@ var PMU_SERIES = {
     var full = text(def.title, ctx), sub = text(def.meta, ctx);
     /* the short title only where the whole title does not fit its line (final fix M8: provider tiles keep their Settings
        names wherever they fit) */
-    var want = nbHyphen((tier.w === 'xs' || tier.w === 's') && def.short && !titleFits(card, full, form) ? text(def.short, ctx) : full);
+    var want = (tier.w === 'xs' || tier.w === 's') && def.short && !titleFits(card, full, form) ? text(def.short, ctx) : full;
     if (titleEl) {
-      if (titleEl.textContent !== want) titleEl.textContent = want;
+      if (titleEl.textContent !== want) titleEl.innerHTML = nbHyphen(want);
       if (titleEl.getAttribute('data-pm-hover-label') !== full) titleEl.setAttribute('data-pm-hover-label', full);
       if ((titleEl.getAttribute('data-pm-hover-detail') || '') !== sub) titleEl.setAttribute('data-pm-hover-detail', sub);
     }
@@ -45857,6 +45903,7 @@ var PMU_SERIES = {
   function resyncSoon() { if (headT) return; headT = requestAnimationFrame(function () { headT = 0; resyncHeads(); }); }
   if (PMU.theme && PMU.theme.onChange) PMU.theme.onChange(resyncSoon);
   try { if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', resyncSoon); } catch (error) {}
+  if (PMU.charts && PMU.charts.onFaces) PMU.charts.onFaces(resyncSoon);   /* a face that landed after a measure (item 9) */
   PMU.cards = {
     HEAD_PX: HEAD_PX,
     headForm: headForm,
@@ -45877,7 +45924,7 @@ var PMU_SERIES = {
       var base = ctxBase(id, room), title = text(def.title, base), sub = text(def.meta, base);
       card.setAttribute('aria-label', title);
       card.innerHTML = '<header class="pmu-cardhead"><span class="pmu-cardkey" hidden></span>' +
-        '<div class="pmu-cardtitles"><h3 class="pmu-cardtitle" data-pm-hover-label="' + esc(title) + '" data-pm-hover-detail="' + esc(sub) + '">' + esc(nbHyphen(title)) + '</h3>' +
+        '<div class="pmu-cardtitles"><h3 class="pmu-cardtitle" data-pm-hover-label="' + esc(title) + '" data-pm-hover-detail="' + esc(sub) + '">' + nbHyphen(title) + '</h3>' +
         '<span class="pmu-cardsub">' + esc(sub) + '</span></div>' +
         '<span class="pmu-cardmeta"></span><span class="pmu-headtools"></span>' +
         '<span class="pmu-cardtools">' +
@@ -46708,6 +46755,7 @@ var PMU_SERIES = {
   function textW(text, face) {
     if (!fitCtx) { try { fitCtx = document.createElement('canvas').getContext('2d'); } catch (error) { return 0; } }
     fitCtx.font = face.font;
+    if (PMU.charts && PMU.charts.faceReady) PMU.charts.faceReady(face.font);   /* a face still loading is asked for; it re-fits when it lands */
     var s0 = face.tt === 'uppercase' ? String(text).toUpperCase() : String(text);
     return fitCtx.measureText(s0).width + (parseFloat(face.ls) || 0) * s0.length;
   }
@@ -46738,6 +46786,8 @@ var PMU_SERIES = {
     tbW = w; fitDesc();
   }).observe(tbEl);
   if (PMU.theme && PMU.theme.onChange) PMU.theme.onChange(function () { faces = null; requestAnimationFrame(fitDesc); });
+  /* an embedded face that landed after a measure (30-charts-core.js faceReady): measure again in it */
+  if (PMU.charts && PMU.charts.onFaces) PMU.charts.onFaces(function () { faces = null; faceKey = null; fitDesc(); });
   function setView(patch, source) {
     var changed = Object.keys(patch).filter(function (k) { return patch[k] !== undefined && st[k] !== patch[k]; });
     if (!changed.length) return false;
@@ -47057,6 +47107,11 @@ var PMU_SERIES = {
     /* measured (VM 1920, plan card): head padding 28, the key 18 + its 8 px gap, the count about 44 + its 8 px gap */
     var avail = (+card.dataset.w || 0) * cls.pitchX - 8 - 28 - (card.querySelector('.pmu-cardkey:not([hidden])') ? 26 : 0) - 4
       - (aside ? PMU.charts.textW(aside, 12.5, false, 500) * k + 10 : 0) - 52;
+    /* a plate's subtitle shares the title's column: the count stays in the body where it would cut the subtitle (item 9,
+       embedded fonts: Inter's narrower title let the count in and Muse Code's "alex@orbit.example" ended in an ellipsis at
+       Basic 1440); NieR's plate ticks keep 34 px at the subtitle's right */
+    var sub = form === 'plate' ? ((card.querySelector('.pmu-cardsub') || {}).textContent || '').trim() : '';
+    if (sub && PMU.charts.textW(sub, 12, false, 400) * k > avail - (nier ? 34 : 0)) return false;
     if (tw(title) <= avail) return true;
     if (form !== 'tile') return false;
     var words = title.split(/\s+/), lines = 1, cur = 0;
@@ -47185,6 +47240,7 @@ var PMU_SERIES = {
     width = Math.max(24, width || 0);
     var key = text + '|' + Math.round(width) + '|' + (px || 13) + '|' + (weight || 400) + '|' + PMU.theme.look().key;
     if (wrapMemo[key]) return wrapMemo[key];
+    var miss0 = PMU.charts && PMU.charts.faceMisses ? PMU.charts.faceMisses() : 0;
     var tw = function (s) { return PMU.charts && PMU.charts.textW ? PMU.charts.textW(s, px || 13, false, weight || 400) * 1.06 : s.length * (px || 13) * 0.55; };
     var words = text.split(/(?<=[\s·/_:])/), lines = 1, cur = 0;
     words.forEach(function (w) {
@@ -47193,6 +47249,8 @@ var PMU_SERIES = {
       else { lines += 1; cur = ww; }
       while (cur > width + 0.5 && tw(w.replace(/\s+$/, '')) > width) { lines += 1; cur -= width; }
     });
+    /* a count measured in a fallback face (an embedded face still loading) is used once and never kept */
+    if (PMU.charts && PMU.charts.faceMisses && PMU.charts.faceMisses() !== miss0) return lines;
     if (++wrapN > 4000) { wrapMemo = {}; wrapN = 0; }
     wrapMemo[key] = lines;
     return lines;
@@ -47649,6 +47707,39 @@ var PMU_SERIES = {
       requestAnimationFrame(fitSettled);
     });
   } catch (error) {}
+  /* an embedded face that landed after the board measured in its fallback (30-charts-core.js faceReady; item 9): the
+     wrap memo forgets every count, and each body re-renders at its size in place (no entrance, no count roll), so its
+     rows, short names and line counts are chosen again in the real face; the fit pass follows each render. In slices of
+     about 6 ms a frame, the cards in view first (a whole board in one task was 100-250 ms on the CPU-only VM); never inside
+     a moment or a gesture (it waits for their end, about 10 s at most), never on a hidden page. */
+  var refaceT = 0, refaceTries = 0, refaceQ = null;
+  function reface() {
+    refaceT = 0;
+    var panel = document.getElementById('panel-usage');
+    if (!panel || !panel.classList.contains('active')) { refaceTries = 0; return; }
+    var busy = (PMU.film && PMU.film.moment && PMU.film.moment()) || (PMU.board && PMU.board.gesture && PMU.board.gesture());
+    if (busy && ++refaceTries < 40) { refaceT = setTimeout(reface, 250); return; }
+    refaceTries = 0;
+    var cards = Array.prototype.slice.call(document.querySelectorAll('#pmuBoard > .pmu-card')), inV = PMU.board && PMU.board.inView;
+    if (inV) cards = cards.filter(function (c) { return inV(c); }).concat(cards.filter(function (c) { return !inV(c); }));
+    var q = refaceQ = { list: cards };
+    (function slice() {
+      if (refaceQ !== q) return;
+      var t0 = performance.now(), run = function () {
+        while (q.list.length && performance.now() - t0 < 6) {
+          var card = q.list.shift(), body = card.isConnected && card.querySelector(':scope > .pmu-cardbody'), tier = body && body._pmuCtx && body._pmuCtx.tier;
+          if (!tier || !body._pmuKind || card._pmuLeaving || card.hasAttribute('data-leaving')) continue;
+          try { PMU.cards.resizeBody(card, tier); if (PMU.charts.flush) PMU.charts.flush(); } catch (error) { console.error('[pm-usage] reface', error); }
+        }
+      };
+      if (PMU.board && PMU.board.fitSliced) PMU.board.fitSliced(run); else run();
+      if (q.list.length) requestAnimationFrame(slice); else if (refaceQ === q) refaceQ = null;
+    })();
+  }
+  if (PMU.charts && PMU.charts.onFaces) PMU.charts.onFaces(function () {
+    wrapMemo = {}; wrapN = 0;
+    if (!refaceT) refaceT = setTimeout(reface, 0);
+  });
   /* a card at its kind's tallest size cannot show more rows: the line then points at Details (the inspector) */
   function atMax(b) {
     var card = b.closest('.pmu-card'); if (!card) return false;
@@ -48476,8 +48567,12 @@ var PMU_SERIES = {
       /* two-line rows when they show every row; otherwise the one-line form whenever it shows more rows */
       var fit2 = C.fit(ctx.tier.bh, 48, 4), fit1 = C.fit(ctx.tier.bh, 34, 4);
       var inline = !C.w(ctx, 'm') || (fit2 < rows.length && fit1 > fit2), rowH = inline ? 34 : 48;
-      var footOk = m.foot && C.fit(ctx.tier.bh, rowH, 38) >= rows.length;
-      var fit = C.fit(ctx.tier.bh, rowH, (footOk ? 38 : 0) + 4);
+      /* the foot's real height: a plate's foot takes up to two lines (17.5 px each) plus 17 px of padding and rule and the
+         body's 12 px above it, and a row can run a px past rowH (item 9, embedded fonts: Provider value at Basic 1440 kept
+         a two-line foot that its one-line 38 px reserve did not hold, 2 px past the body until the room's moment ended) */
+      var footRes = !m.foot ? 0 : (ctx.card && ctx.card.getAttribute('data-head') === 'plate' ? 29 + 17.5 * Math.min(2, C.wrapLines(String(m.foot).replace(/<[^>]+>/g, ''), ctx.tier.bw - 4, 12.5)) : 38) + rows.length;
+      var footOk = m.foot && C.fit(ctx.tier.bh, rowH, footRes) >= rows.length;
+      var fit = C.fit(ctx.tier.bh, rowH, (footOk ? footRes : 0) + 4);
       var shown = rows.length > fit ? rows.slice(0, Math.max(1, fit * rowH + 22 + 4 <= ctx.tier.bh ? fit : fit - 1)) : rows;
       /* the rows past the card and a foot that gave way are listed in the "N more" line's hover tag, or the host's (CONTENT-3) */
       var rankFold = rows.slice(shown.length).map(function (r) { return r.name + ' ' + (r.valueText || '') + (r.role ? ' · ' + r.role : ''); });
