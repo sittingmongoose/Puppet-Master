@@ -1843,6 +1843,7 @@ Rules:
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md
 ### Terminal section presentation rules
 
+Superseded 2026-10-09 (DL-181): this block is lineage. A terminal is one tab kind holding one session in any panel, with its chrome in F3-640 and its features in F3-641; there are no terminal sections, workgroups, sub-tabs, in-tab split grids or editor-hosted terminal stacks, and side-by-side terminals are panels (F3-630). F3-062 is superseded by F3-640; F3-063, F3-064 and F3-065 are amended to keep only their surviving rules (no second session for a second presentation, no split-parent fade, drag cleanup, Reduced Motion).
 
 The bottom runtime zone uses a workgroup-first terminal information architecture.
 
@@ -8634,9 +8635,15 @@ owner_hints:
 ```yaml
 plan_unit_id: F3-062
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/FinalGUISpec.md
+superseded_by: F3-640
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The bottom runtime zone's
+  workgroup-first strip, its leaf-pane sub-tabs and its split-pane trees retire: a terminal is one tab kind holding
+  one session in any panel, with the shared header row inside the tab, and there is no fixed bottom runtime zone
+  (F3-630, SMPFS-180). The text below is retained verbatim for lineage and audit and must not be accepted or indexed
+  as active current-product truth. Superseded by F3-640 (DL-181).
   The bottom runtime zone uses workgroup-first terminal information architecture with workgroups,
   leaf-pane subtabs, optional split-pane trees, left/center/right regions, and a retired
   command-log strip.
@@ -8644,7 +8651,7 @@ gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -8676,6 +8683,7 @@ negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "The separate command-log strip is retired from the canonical layout."
+- "Superseded 2026-10-09 (DL-181): workgroups, sub-tabs and the in-zone split-pane tree retire with the bottom runtime zone; the terminal tab's chrome is F3-640, and side-by-side terminals are panels (F3-630)."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Command_Catalog.md"
 owner_hints:
@@ -8690,20 +8698,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Terminal split grids use visible gutters/resizers, workgroup accents, no split-parent opacity
-  enter animation, and editor-hosted stacks that reference existing terminal leaf panes rather
-  than creating second terminal sessions.
+  Terminals side by side are panels of the panel split tree, with its visible dividers and resizing (F3-630); a
+  terminal tab has no split grid of its own (F3-640). Terminal tabs use no split-parent opacity enter animation that
+  dims them during reorder or drag. A second presentation of a terminal never creates a second terminal session: a
+  session has one terminal tab (SMPFS-180), and the chat's command cards stay read-only previews of that session
+  (F3-357 to F3-361). Workgroup accents and the editor-hosted terminal stack retire (DL-181).
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181, F3-640, SMPFS-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "No terminal tab draws a split grid, a workgroup accent or an editor-hosted terminal stack, and no second presentation of a terminal starts a second session."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -8717,6 +8728,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0048"
+- "Plans/Decision_Log.md#DL-181"
 preserved_exact_tokens:
 - "gutters"
 - "resizers"
@@ -8725,9 +8737,11 @@ preserved_exact_tokens:
 - "existing terminal leaf pane"
 - "second terminal session"
 negative_constraints:
-- "The terminal grid must not use a split-parent opacity enter animation that dims all children during reorder or drag operations."
-compatibility_only_notes: []
-stale_retired_dispositions: []
+- "Terminal tabs must not use a split-parent opacity enter animation that dims all children during reorder or drag operations."
+compatibility_only_notes:
+- "Earlier text, lineage only: Terminal split grids use visible gutters/resizers, workgroup accents, no split-parent opacity enter animation, and editor-hosted stacks that reference existing terminal leaf panes rather than creating second terminal sessions."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): the terminal split grid, its workgroup accents and the editor-hosted terminal stack retire; terminals side by side are panels, and no second presentation starts a second session."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md"
 owner_hints:
@@ -8742,19 +8756,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Terminal drag-and-drop accepts pane, subtab, and workgroup payloads, handles same-group pane
-  reorder, workgroup drops to editor, stale hover/opacity cleanup, and pane-body drop targets.
+  A terminal tab drags like every other tab (F3-630, F3-631): it reorders in its strip, moves to another panel, or
+  drops on a panel's edge to split, and moving it never touches its session (SMPFS-180). Pane, sub-tab and workgroup
+  payloads, same-group pane reorder and workgroup drops on the editor retire with workgroups (DL-181). Drag cleanup
+  still clears stale hover, opacity and drag classes after a rebuild or a drag end, so no terminal stays dimmed, and
+  a tab dragged over a terminal's screen still reaches the panel's landing zones: the screen never swallows the drag.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181, F3-630, F3-631, SMPFS-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Dragging a terminal tab to another strip or a panel edge keeps its session, and a drag over a terminal's screen still shows the panel's landing zones."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -8768,6 +8786,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0049"
+- "Plans/Decision_Log.md#DL-181"
 preserved_exact_tokens:
 - "pane"
 - "subtab"
@@ -8776,10 +8795,13 @@ preserved_exact_tokens:
 - "stale hover"
 - "opacity"
 - "pane-body content"
-negative_constraints: []
-compatibility_only_notes: []
+negative_constraints:
+- "Moving a terminal tab must not end, restart or duplicate its session."
+compatibility_only_notes:
+- "Earlier text, lineage only: Terminal drag-and-drop accepts pane, subtab, and workgroup payloads, handles same-group pane reorder, workgroup drops to editor, stale hover/opacity cleanup, and pane-body drop targets; drag handlers for pane drop targets work when the cursor is over pane-body content, not only over outer chrome."
 stale_retired_dispositions:
 - "DnD cleanup must clear stale hover, opacity, and drag classes after rebuild or dragend."
+- "Amended 2026-10-09 (DL-181): pane, sub-tab and workgroup drag payloads retire; a terminal tab drags as a panel tab, keeping the cleanup and body hit-test rules."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md"
 owner_hints:
@@ -8795,18 +8817,21 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Reduced motion applies to terminal enter animations where still used, while removed split-parent
-  fade effects remain removed.
+  fade effects remain removed. It also covers every terminal tab and every terminal effect: under Reduced Motion
+  every moving part of a terminal is off, cursor blink, trail, smooth scrolling, effects, bell flashes, progress
+  sweeps and image animation included, and only the static looks stay (F3-643, F3-645).
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-183, F3-643]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "With Reduced Motion on, no part of any terminal tab moves, and its static looks stay."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -8820,13 +8845,15 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0050"
+- "Plans/Decision_Log.md#DL-183"
 preserved_exact_tokens:
 - "reduced motion"
 - "terminal enter animations"
 - "split-parent fade effects"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-183): reduced motion now covers every terminal tab and every terminal effect, not only enter animations."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md"
 owner_hints:
@@ -31866,19 +31893,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Terminal workgroups and individual terminals support user customization from terminal tab
-  context and customize menus: per-workgroup rename, per-terminal rename, an accent color
-  chosen from an 8-color swatch, and an icon chosen from a 20-icon catalog. Chosen names,
-  colors, and icons render on the corresponding workgroup and terminal tabs.
+  Renaming a terminal is the panel tab rename (`cmd.panel_tab.rename`, F3-631): from the tab's menu the user sets a
+  label that replaces the terminal's own label (F3-640) until it is cleared. Workgroups retire, and workgroup rename
+  with them (DL-181). The 8-color accent swatch and the 20-icon catalog are not drawn on the redesigned strip, which
+  marks a tab only with its silhouette and the one mark set (F3-631, DL-141); whether a terminal tab may carry a
+  user-chosen icon or colour is an open owner question, and no such choice may ever be drawn as a coloured border or
+  stripe (DR-069).
 gui_related: true
 gui_classification_reason: This unit defines visible terminal tab rename, color, and icon customization controls.
 split_recommended: false
-depends_on: [F3-062, F3-063]
+depends_on: [DL-181, F3-640, F3-631]
 unblocks: []
 acceptance_criteria:
-- "Workgroups and terminals can each be renamed from their tab context or customize menus."
-- "The accent swatch offers exactly 8 colors and the icon catalog offers exactly 20 icons."
-- "Chosen names, colors, and icons render on the corresponding workgroup and terminal tabs."
+- "A terminal tab can be renamed from its tab menu through cmd.panel_tab.rename, and clearing the label restores the terminal's own label."
+- "No workgroup rename, accent swatch or icon catalog is drawn for terminal tabs, and no tab colour is drawn as a coloured border or stripe."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -31902,7 +31930,9 @@ negative_constraints:
 - "Do not expose customization through hidden gestures only; the tab context or customize menu is the canonical entry point."
 compatibility_only_notes:
 - "Slint portability: context and customize menus render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+- "Earlier text, lineage only: Terminal workgroups and individual terminals support user customization from terminal tab context and customize menus: per-workgroup rename, per-terminal rename, an accent color chosen from an 8-color swatch, and an icon chosen from a 20-icon catalog. Chosen names, colors, and icons render on the corresponding workgroup and terminal tabs."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): workgroup rename retires, terminal rename becomes the panel tab rename, and the accent swatch and icon catalog are held off the strip until the owner decides."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -31913,16 +31943,22 @@ owner_hints:
 ```yaml
 plan_unit_id: F3-450
 unit_type: constraint
-status: accepted
+status: superseded
 owner_doc: Plans/FinalGUISpec.md
+superseded_by: F3-640
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The four-pane cap and the 2x2 grid inside
+  a terminal workgroup section retire: a terminal tab holds one session and no panes, Split opens a new panel by the
+  panels' split fit rule, and four terminals side by side are the Terminals 2x2 named layout of four panels (F3-630,
+  SMPFS-180). The text below is retained verbatim for lineage and audit and must not be accepted or indexed as
+  active current-product truth. Superseded by F3-640 (DL-181).
   A terminal workgroup section holds at most 4 leaf panes, arranged in a 2x2 grid at
   capacity. When a section is at the 4-pane cap, split affordances render disabled with a
   visible reason instead of disappearing or failing silently.
 gui_related: true
 gui_classification_reason: This unit constrains visible terminal split layout and split affordance states.
 split_recommended: false
-depends_on: [F3-063]
+depends_on: [F3-063, DL-181]
 unblocks: []
 acceptance_criteria:
 - "No split action can create a fifth pane in a terminal workgroup section."
@@ -31950,7 +31986,8 @@ negative_constraints:
 - "Split affordances must not silently no-op or disappear at the pane cap; they disable with a reason."
 compatibility_only_notes:
 - "Slint portability: disabled split affordances and their reason presentation render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Superseded 2026-10-09 (DL-181): one session per tab and no splits inside a terminal; the four-section and four-pane caps retire, and Terminals 2x2 is a named layout of four panels."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
