@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4745-L4823
+Source lines: L4745-L4837
 
-Source SHA256: `1b8a5ba9c99e33b99cfaa8c515874821f5b2dd5cc5ec7f923de243418c1d5d4d`
+Source SHA256: `66b67be5f108e166ccde44690b9cb4ba4b6784ac3b0e7261322001bb32415aa5`
 
 ---
 
@@ -38,7 +38,16 @@ canonical_text: >-
   a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id and retains the event, provider, account,
   and runtime refs as correlation. Current PMConcept7 aggregate provider/account/panel cards remain local inspectors and
   dispatch no command; and a Settings change dispatches cmd.settings.open with the Settings-owned
-  `pm.settings_route_request.v1` target and exact-return identity.
+  `pm.settings_route_request.v1` target and exact-return identity. The one exception (2026-10-09,
+  Plans/Decision_Log.md#DL-174) is a bound Settings control that the redesigned Usage Accounts room hosts in
+  place, which UF-092 carves out and SSYS-044 owns: each provider's Auto-switch toggle and switch level commit
+  through the Settings owner's cmd.settings.transaction.preview and then cmd.settings.transaction.apply at scope
+  provider, and Usage keeps no copy of the value; every other Settings change on the page, the provider's warning
+  level and rest period included, still dispatches cmd.settings.open. On the same room an account's Use this
+  account control dispatches the existing account profile selection command, cmd.account.select_profile, as a
+  labelled override; it is an explicit account action, shown only where the provider supports choosing the active
+  account by hand, and never a page-scope pick. Live / Paused is view state like disclosure and range, and adds no
+  command (UF-107).
 gui_related: true
 gui_classification_reason: The family decides which Usage affordances dispatch a command, what their disabled and busy announcements say, and which affordances are view-local.
 depends_on: [CS-066, UF-092]
@@ -49,6 +58,7 @@ acceptance_criteria:
   - A forecast result is a labelled projection and is never presented as a quota run-out date or a countdown.
   - Disclosure, scope, range, and filter selections dispatch no command, and a page-scope pick never dispatches the account profile selection command; event-primary Usage callers use cmd.nav.open_usage_subject with usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries no OpenSubject. Current aggregate provider/account/panel cards stay local with no command, receipt, or event.
   - A persisted Usage widget layout mutation dispatches the existing widget command family with a layout revision expectation and an idempotency key rather than writing layout storage directly.
+  - "Every Usage Settings change dispatches cmd.settings.open except a provider's Auto-switch toggle and switch level on the Accounts room, which dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply at scope provider and leave no Usage copy; Use this account dispatches cmd.account.select_profile only as an explicit labelled action, and Live / Paused dispatches nothing."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -69,9 +79,12 @@ source_lineage:
   - "Concepts/usage-concepts/QwenUsageConcept/u11-prism.html (u11 Prism II Usage concept; source-lineage-only)"
   - Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/handoff/PORT_HANDOFF_PLANS_ROUTE.md
   - Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/handoff/HANDOFF_CORRECTIONS.md
+  - Plans/Decision_Log.md#DL-174
 preserved_exact_tokens:
   - cmd.usage.forecast.request
   - cmd.settings.open
+  - cmd.settings.transaction.preview
+  - cmd.settings.transaction.apply
   - pm.settings_route_request.v1
   - none_pending_event_authority
   - missing_event_registration
@@ -81,6 +94,7 @@ negative_constraints:
   - Do not present a forecast as a quota run-out date or a countdown.
   - Do not promote a view-local disclosure, scope, range, or filter selection into a command.
   - Do not dispatch the account profile selection command for a read-only view-scope change.
+  - Do not write a Settings-owned value from Usage except through the Settings owner's transaction for a bound control SSYS-044 names.
   - Do not dispatch cmd.nav.open_usage_subject without the stable selector required by its event-primary or attempt-primary branch, attach OpenSubject to either cmd.nav selector branch, or promote a current PMConcept7 aggregate card presentation id into route identity; the pre-existing artifact route/open bridge remains separately owned.
 owner_hints:
   - Plans/Commands_System.md

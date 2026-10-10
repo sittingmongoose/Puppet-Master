@@ -1,0 +1,642 @@
+/* Usage redesign B v2 + A1: every token the page reads, defined once per theme (owner: engine; DESIGN-SPEC section 9,
+   DESIGN-SPEC-ATLAS sections 2.1, 4 and 8.1; the A1 blocks follow the B v2 blocks and win where both declare a name).
+   Generated from the spec tables, then kept by hand. Charts and widgets read only --pmu-* tokens and never name a theme
+   family. --accent-primary is never re-declared here, so the person's Accent colour reaches Usage; color-mix() appears
+   only in these token definitions. NieR Mode (an overlay over Basic) re-declares the tokens at the end of this file. */
+#panel-usage .pmu-shell {
+  /* grid and motion (DESIGN-SPEC 2 and 8.1) */
+  --pmu-gap: 8px; --pmu-row: 22px; --pmu-row-pitch: 30px; --pmu-head-h: 32px; --pmu-rail-w: 184px;
+  --pmu-dur-exit: 140ms; --pmu-dur-enter: 380ms; --pmu-dur-title: 220ms; --pmu-dur-draw: 680ms; --pmu-dur-rise: 560ms;
+  --pmu-dur-grow: 520ms; --pmu-dur-fill: 620ms; --pmu-dur-sweep: 720ms; --pmu-dur-count: 700ms; --pmu-dur-value: 520ms;
+  --pmu-dur-pulse: 420ms; --pmu-dur-morph: 480ms; --pmu-dur-slide: 260ms; --pmu-dur-lift: 140ms; --pmu-dur-settle: 220ms;
+  --pmu-dur-morph-size: 260ms; --pmu-dur-cancel: 300ms; --pmu-dur-hover: 160ms; --pmu-dur-pop: 180ms; --pmu-dur-insp: 320ms;
+  --pmu-ease-out: cubic-bezier(.22,1,.36,1); --pmu-ease-settle: cubic-bezier(.17,.84,.29,.99); --pmu-ease-pop: cubic-bezier(.2,.8,.2,1);
+  --pmu-ground: var(--background, var(--bg)); --pmu-accent: var(--accent-primary);
+  --pmu-font: var(--body-font, inherit); --pmu-mono: var(--mono-font, ui-monospace, monospace);
+  --pmu-elev-hover: var(--elev-hover, 0 6px 18px rgba(0,0,0,.25)); --pmu-elev-lift: var(--elev-3, 0 16px 40px rgba(0,0,0,.35));
+  --pmu-tone-calm: var(--pmu-accent); --pmu-tone-calm-b: var(--pmu-accent-b);
+  /* basic-dark is the default look */
+  --pmu-s0: #64B5F6; --pmu-s0-b: #9FD3FF;
+  --pmu-s1: #3DD68C; --pmu-s1-b: #8BF0BE;
+  --pmu-s2: #FFA347; --pmu-s2-b: #FFC88C;
+  --pmu-s3: #FF6FB5; --pmu-s3-b: #FFA6D1;
+  --pmu-s4: #B39DFF; --pmu-s4-b: #D3C6FF;
+  --pmu-s5: #4DD0E1; --pmu-s5-b: #96E9F3;
+  --pmu-s6: #E8C547; --pmu-s6-b: #F3DE8E;
+  --pmu-s7: #7D8796; --pmu-s7-b: #A9B1BD;
+  --pmu-ink: #E8E8E8;
+  --pmu-ink-2: #D0D6DF;
+  --pmu-ink-3: #AEB7C2;
+  --pmu-ink-ok: #78CFA8;
+  --pmu-ink-warn: #FFBF69;
+  --pmu-ink-error: #FF91B8;
+  --pmu-card: #1E1E1E;
+  --pmu-hairline: #333333;
+  --pmu-track: rgba(255,255,255,.08);
+  --pmu-grid: rgba(255,255,255,.06);
+  --pmu-hover: rgba(255,255,255,.04);
+  --pmu-tone-watch: #E6D36A; --pmu-tone-watch-b: #F0E3A0;
+  --pmu-tone-warn: #FFB74D; --pmu-tone-warn-b: #FFD08A;
+  --pmu-tone-hot: #FF7A59; --pmu-tone-hot-b: #FFA68E;
+  --pmu-tone-exhausted: #EF5350; --pmu-tone-exhausted-b: #EF5350;
+  --pmu-r-card: 8px; --pmu-r-sm: 4px; --pmu-bw: 1px;
+  --pmu-accent-b: color-mix(in srgb, var(--accent-primary) 58%, #fff);
+}
+html[data-theme="basic-light"] #panel-usage .pmu-shell {
+  --pmu-s0: #1565C0; --pmu-s0-b: #5B9BE0;
+  --pmu-s1: #0B8043; --pmu-s1-b: #3FB37A;
+  --pmu-s2: #E06A00; --pmu-s2-b: #F59A4A;
+  --pmu-s3: #C2185B; --pmu-s3-b: #E3628F;
+  --pmu-s4: #6A4FC8; --pmu-s4-b: #9B86E3;
+  --pmu-s5: #00838F; --pmu-s5-b: #3FB3BE;
+  --pmu-s6: #A07800; --pmu-s6-b: #CFA735;
+  --pmu-s7: #6B7480; --pmu-s7-b: #9AA2AC;
+  --pmu-ink: #1A1A1A;
+  --pmu-ink-2: #35414C;
+  --pmu-ink-3: #48545F;
+  --pmu-ink-ok: #17613F;
+  --pmu-ink-warn: #6B4200;
+  --pmu-ink-error: #8F1F3D;
+  --pmu-card: #FFFFFF;
+  --pmu-hairline: #DADDE1;
+  --pmu-track: rgba(0,0,0,.07);
+  --pmu-grid: rgba(0,0,0,.06);
+  --pmu-hover: rgba(0,0,0,.035);
+  --pmu-tone-watch: #9A7B00; --pmu-tone-watch-b: #C9A633;
+  --pmu-tone-warn: #E65100; --pmu-tone-warn-b: #F2873F;
+  --pmu-tone-hot: #C62828; --pmu-tone-hot-b: #E35D5D;
+  --pmu-tone-exhausted: #B71C1C; --pmu-tone-exhausted-b: #B71C1C;
+  --pmu-r-card: 8px; --pmu-r-sm: 4px; --pmu-bw: 1px;
+  --pmu-accent-b: color-mix(in srgb, var(--accent-primary) 62%, #fff);
+}
+html[data-theme="friendly-light"] #panel-usage .pmu-shell {
+  --pmu-s0: #3F9CC7; --pmu-s0-b: #8CCBE8;
+  --pmu-s1: #2FA183; --pmu-s1-b: #7DD3BA;
+  --pmu-s2: #F07A55; --pmu-s2-b: #F8B39C;
+  --pmu-s3: #9678C9; --pmu-s3-b: #C6B2E8;
+  --pmu-s4: #D9A62A; --pmu-s4-b: #F0D07A;
+  --pmu-s5: #E57A9E; --pmu-s5-b: #F4B3C9;
+  --pmu-s6: #3BA7A0; --pmu-s6-b: #8AD3CE;
+  --pmu-s7: #9A93A0; --pmu-s7-b: #C4BEC8;
+  --pmu-ink: #4A4550;
+  --pmu-ink-2: #38424D;
+  --pmu-ink-3: #4A5562;
+  --pmu-ink-ok: #17613F;
+  --pmu-ink-warn: #744400;
+  --pmu-ink-error: #8F1F3D;
+  --pmu-card: #FFFFFF;
+  --pmu-hairline: rgba(74,69,80,.10);
+  --pmu-track: rgba(74,69,80,.08);
+  --pmu-grid: rgba(74,69,80,.07);
+  --pmu-hover: rgba(150,120,201,.06);
+  --pmu-tone-watch: #D9A62A; --pmu-tone-watch-b: #EBC566;
+  --pmu-tone-warn: #F08A3C; --pmu-tone-warn-b: #F6B07A;
+  --pmu-tone-hot: #E8654C; --pmu-tone-hot-b: #F29A88;
+  --pmu-tone-exhausted: #D84B3A; --pmu-tone-exhausted-b: #D84B3A;
+  --pmu-r-card: 16px; --pmu-r-sm: 4px; --pmu-bw: 1px;
+  --pmu-accent-b: color-mix(in srgb, var(--accent-primary) 62%, #fff);
+}
+html[data-theme="friendly-dark"] #panel-usage .pmu-shell {
+  --pmu-s0: #6FC6E8; --pmu-s0-b: #A9E0F4;
+  --pmu-s1: #6FDABC; --pmu-s1-b: #A8ECD8;
+  --pmu-s2: #FFAD93; --pmu-s2-b: #FFD0C1;
+  --pmu-s3: #C3B1E4; --pmu-s3-b: #DED3F1;
+  --pmu-s4: #FFD97F; --pmu-s4-b: #FFE9B5;
+  --pmu-s5: #F4A3C0; --pmu-s5-b: #F9CADB;
+  --pmu-s6: #7FD6CF; --pmu-s6-b: #B4E8E4;
+  --pmu-s7: #8A8494; --pmu-s7-b: #B1ACB9;
+  --pmu-ink: #F0EDF4;
+  --pmu-ink-2: #D6D0DC;
+  --pmu-ink-3: #B4ADBD;
+  --pmu-ink-ok: #82D5AD;
+  --pmu-ink-warn: #FFC36D;
+  --pmu-ink-error: #FF9FBD;
+  --pmu-card: #2A2731;
+  --pmu-hairline: rgba(240,237,244,.09);
+  --pmu-track: rgba(240,237,244,.09);
+  --pmu-grid: rgba(240,237,244,.07);
+  --pmu-hover: rgba(240,237,244,.05);
+  --pmu-tone-watch: #FFD97F; --pmu-tone-watch-b: #FFE9B5;
+  --pmu-tone-warn: #FFB074; --pmu-tone-warn-b: #FFCDA3;
+  --pmu-tone-hot: #FF8A73; --pmu-tone-hot-b: #FFB3A4;
+  --pmu-tone-exhausted: #FF7360; --pmu-tone-exhausted-b: #FF7360;
+  --pmu-r-card: 16px; --pmu-r-sm: 4px; --pmu-bw: 1px;
+  --pmu-accent-b: color-mix(in srgb, var(--accent-primary) 58%, #fff);
+}
+html[data-theme="glass-dark"] #panel-usage .pmu-shell {
+  --pmu-s0: #64D9FF; --pmu-s0-b: #B0EEFF;
+  --pmu-s1: #68F2BD; --pmu-s1-b: #B2F9DD;
+  --pmu-s2: #FFB36D; --pmu-s2-b: #FFD4AA;
+  --pmu-s3: #B18CFF; --pmu-s3-b: #D6C3FF;
+  --pmu-s4: #FF8FC8; --pmu-s4-b: #FFC2E1;
+  --pmu-s5: #7AA8FF; --pmu-s5-b: #B6CFFF;
+  --pmu-s6: #FFE27A; --pmu-s6-b: #FFF0B5;
+  --pmu-s7: rgba(226,215,245,.55); --pmu-s7-b: rgba(226,215,245,.8);
+  --pmu-ink: #F1F4F7;
+  --pmu-ink-2: #D3D8E0;
+  --pmu-ink-3: #B9C1CC;
+  --pmu-ink-ok: #78CFA8;
+  --pmu-ink-warn: #FFBF69;
+  --pmu-ink-error: #FF91B8;
+  --pmu-card: rgba(37,28,57,.62);
+  --pmu-hairline: rgba(232,220,255,.14);
+  --pmu-track: rgba(232,220,255,.10);
+  --pmu-grid: rgba(232,220,255,.08);
+  --pmu-hover: rgba(232,220,255,.06);
+  --pmu-tone-watch: #FFE27A; --pmu-tone-watch-b: #FFF0B5;
+  --pmu-tone-warn: #FFB36D; --pmu-tone-warn-b: #FFD4AA;
+  --pmu-tone-hot: #FF7893; --pmu-tone-hot-b: #FFB0C0;
+  --pmu-tone-exhausted: #FF5C7A; --pmu-tone-exhausted-b: #FF5C7A;
+  --pmu-r-card: 14px; --pmu-r-sm: 4px; --pmu-bw: 1px;
+  --pmu-accent-b: color-mix(in srgb, var(--accent-primary) 58%, #fff);
+}
+html[data-theme="glass-light"] #panel-usage .pmu-shell {
+  --pmu-s0: #0078D8; --pmu-s0-b: #5AAEF0;
+  --pmu-s1: #087F67; --pmu-s1-b: #3DB89C;
+  --pmu-s2: #BA5D20; --pmu-s2-b: #E08D55;
+  --pmu-s3: #7659C7; --pmu-s3-b: #A58EE3;
+  --pmu-s4: #B8407A; --pmu-s4-b: #DB7BA9;
+  --pmu-s5: #2F5FC4; --pmu-s5-b: #6E93E0;
+  --pmu-s6: #8A6D00; --pmu-s6-b: #BFA03A;
+  --pmu-s7: rgba(27,43,51,.5); --pmu-s7-b: rgba(27,43,51,.3);
+  --pmu-ink: #17222A;
+  --pmu-ink-2: #303C46;
+  --pmu-ink-3: #2D3740;
+  --pmu-ink-ok: #0B4F31;
+  --pmu-ink-warn: #603600;
+  --pmu-ink-error: #7C1730;
+  --pmu-card: rgba(255,255,255,.62);
+  --pmu-hairline: rgba(255,255,255,.60);
+  --pmu-track: rgba(23,34,42,.08);
+  --pmu-grid: rgba(23,34,42,.07);
+  --pmu-hover: rgba(255,255,255,.35);
+  --pmu-tone-watch: #8A6D00; --pmu-tone-watch-b: #BFA03A;
+  --pmu-tone-warn: #BA5D20; --pmu-tone-warn-b: #E08D55;
+  --pmu-tone-hot: #C44258; --pmu-tone-hot-b: #E07A8C;
+  --pmu-tone-exhausted: #A8213B; --pmu-tone-exhausted-b: #A8213B;
+  --pmu-r-card: 14px; --pmu-r-sm: 4px; --pmu-bw: 1px;
+  --pmu-accent-b: color-mix(in srgb, var(--accent-primary) 62%, #fff);
+}
+html[data-theme="retro-dark"] #panel-usage .pmu-shell {
+  --pmu-s0: #B8D066; --pmu-s0-b: #D6E89A;
+  --pmu-s1: #9DB4D0; --pmu-s1-b: #C3D3E6;
+  --pmu-s2: #E9853F; --pmu-s2-b: #F4B07E;
+  --pmu-s3: #D8B93C; --pmu-s3-b: #EAD480;
+  --pmu-s4: #7FC8A9; --pmu-s4-b: #AEE0CA;
+  --pmu-s5: #D77A9A; --pmu-s5-b: #EAAFC3;
+  --pmu-s6: #C9C27E; --pmu-s6-b: #E0DBAA;
+  --pmu-s7: #7C866B; --pmu-s7-b: #A3AB95;
+  --pmu-ink: #DFE6CF;
+  --pmu-ink-2: #D0D6DF;
+  --pmu-ink-3: #AEB7C2;
+  --pmu-ink-ok: #78CFA8;
+  --pmu-ink-warn: #FFBF69;
+  --pmu-ink-error: #FF91B8;
+  --pmu-card: #171A14;
+  --pmu-hairline: #4A533A;
+  --pmu-track: rgba(223,230,207,.10);
+  --pmu-grid: rgba(223,230,207,.12);
+  --pmu-hover: rgba(184,208,102,.08);
+  --pmu-tone-watch: #D8B93C; --pmu-tone-watch-b: #D8B93C;
+  --pmu-tone-warn: #E9853F; --pmu-tone-warn-b: #E9853F;
+  --pmu-tone-hot: #E2694F; --pmu-tone-hot-b: #E2694F;
+  --pmu-tone-exhausted: #E2694F; --pmu-tone-exhausted-b: #E2694F;
+  --pmu-r-card: 0px; --pmu-r-sm: 0px; --pmu-bw: 2px;
+  --pmu-accent-b: color-mix(in srgb, var(--accent-primary) 58%, #fff);
+}
+html[data-theme="retro-light"] #panel-usage .pmu-shell {
+  --pmu-s0: #2F7A3D; --pmu-s0-b: #5FA86C;
+  --pmu-s1: #0047AB; --pmu-s1-b: #4A7FCC;
+  --pmu-s2: #C25A00; --pmu-s2-b: #E38A3D;
+  --pmu-s3: #8A6D00; --pmu-s3-b: #B89A2E;
+  --pmu-s4: #00695C; --pmu-s4-b: #3A9A8D;
+  --pmu-s5: #A2275E; --pmu-s5-b: #CC6491;
+  --pmu-s6: #5D5B1E; --pmu-s6-b: #8E8B48;
+  --pmu-s7: #524F49; --pmu-s7-b: #807C75;
+  --pmu-ink: #1A1A1A;
+  --pmu-ink-2: #3F4548;
+  --pmu-ink-3: #50575B;
+  --pmu-ink-ok: #17613F;
+  --pmu-ink-warn: #6B4200;
+  --pmu-ink-error: #8F1F3D;
+  --pmu-card: #FAF7F2;
+  --pmu-hairline: #4A463F;
+  --pmu-track: rgba(26,26,26,.08);
+  --pmu-grid: rgba(26,26,26,.10);
+  --pmu-hover: rgba(47,122,61,.07);
+  --pmu-tone-watch: #8A6D00; --pmu-tone-watch-b: #8A6D00;
+  --pmu-tone-warn: #C25A00; --pmu-tone-warn-b: #C25A00;
+  --pmu-tone-hot: #D32F2F; --pmu-tone-hot-b: #D32F2F;
+  --pmu-tone-exhausted: #B71C1C; --pmu-tone-exhausted-b: #B71C1C;
+  --pmu-r-card: 0px; --pmu-r-sm: 0px; --pmu-bw: 2px;
+  --pmu-accent-b: color-mix(in srgb, var(--accent-primary) 62%, #fff);
+}
+html[data-theme^="retro"] #panel-usage .pmu-shell { --pmu-tone-calm: var(--pmu-s0); --pmu-tone-calm-b: var(--pmu-s0); }
+/* ---- Amendment A1 tokens (DESIGN-SPEC-ATLAS 2.1, 4.1 to 4.5, 8.1), generated from the spec tables ---- */
+#panel-usage .pmu-shell {
+  /* A1 aliases (DESIGN-SPEC-ATLAS 4): the B v2 names builders already use */
+  --pmu-hairline: var(--pmu-rule); --pmu-hover: var(--pmu-row-hover); --pmu-ink-ok: var(--pmu-ink-good); --pmu-ink-error: var(--pmu-ink-crit);
+  --pmu-elev-hover: var(--pmu-shadow-2); --pmu-elev-lift: var(--pmu-shadow-pop);
+  --pmu-tk-cost: var(--pmu-ink);
+  --pmu-tk-in-soft: color-mix(in srgb, var(--pmu-tk-in) 42%, transparent); --pmu-tk-out-soft: color-mix(in srgb, var(--pmu-tk-out) 42%, transparent); --pmu-tk-rsn-soft: color-mix(in srgb, var(--pmu-tk-rsn) 42%, transparent); --pmu-tk-cw-soft: color-mix(in srgb, var(--pmu-tk-cw) 42%, transparent); --pmu-tk-cr-soft: color-mix(in srgb, var(--pmu-tk-cr) 42%, transparent); --pmu-tk-all-soft: color-mix(in srgb, var(--pmu-tk-all) 42%, transparent);
+  --pmu-v-anthropic-2: color-mix(in srgb, var(--pmu-v-anthropic) 66%, var(--pmu-card)); --pmu-v-anthropic-3: color-mix(in srgb, var(--pmu-v-anthropic) 42%, var(--pmu-card)); --pmu-v-anthropic-4: color-mix(in srgb, var(--pmu-v-anthropic) 24%, var(--pmu-card)); --pmu-v-openai-2: color-mix(in srgb, var(--pmu-v-openai) 66%, var(--pmu-card)); --pmu-v-openai-3: color-mix(in srgb, var(--pmu-v-openai) 42%, var(--pmu-card)); --pmu-v-openai-4: color-mix(in srgb, var(--pmu-v-openai) 24%, var(--pmu-card)); --pmu-v-google-2: color-mix(in srgb, var(--pmu-v-google) 66%, var(--pmu-card)); --pmu-v-google-3: color-mix(in srgb, var(--pmu-v-google) 42%, var(--pmu-card)); --pmu-v-google-4: color-mix(in srgb, var(--pmu-v-google) 24%, var(--pmu-card)); --pmu-v-alibaba-2: color-mix(in srgb, var(--pmu-v-alibaba) 66%, var(--pmu-card)); --pmu-v-alibaba-3: color-mix(in srgb, var(--pmu-v-alibaba) 42%, var(--pmu-card)); --pmu-v-alibaba-4: color-mix(in srgb, var(--pmu-v-alibaba) 24%, var(--pmu-card)); --pmu-v-moonshot-2: color-mix(in srgb, var(--pmu-v-moonshot) 66%, var(--pmu-card)); --pmu-v-moonshot-3: color-mix(in srgb, var(--pmu-v-moonshot) 42%, var(--pmu-card)); --pmu-v-moonshot-4: color-mix(in srgb, var(--pmu-v-moonshot) 24%, var(--pmu-card)); --pmu-v-github-2: color-mix(in srgb, var(--pmu-v-github) 66%, var(--pmu-card)); --pmu-v-github-3: color-mix(in srgb, var(--pmu-v-github) 42%, var(--pmu-card)); --pmu-v-github-4: color-mix(in srgb, var(--pmu-v-github) 24%, var(--pmu-card));
+  --pmu-heat-zero: var(--pmu-track);
+  --pmu-heat-1: color-mix(in srgb, var(--pmu-tk-all) 6%, var(--pmu-heat-lo)); --pmu-heat-2: color-mix(in srgb, var(--pmu-tk-all) 45%, var(--pmu-heat-lo)); --pmu-heat-3: color-mix(in srgb, var(--pmu-tk-all) 63%, var(--pmu-heat-lo)); --pmu-heat-4: color-mix(in srgb, var(--pmu-tk-all) 77%, var(--pmu-heat-lo)); --pmu-heat-5: color-mix(in srgb, var(--pmu-tk-all) 89%, var(--pmu-heat-lo)); --pmu-heat-6: color-mix(in srgb, var(--pmu-tk-all) 100%, var(--pmu-heat-lo));
+  /* motion tokens (DESIGN-SPEC-ATLAS 8.1) */
+  --pmu-t-fast: 140ms; --pmu-t-med: 260ms; --pmu-t-slow: 520ms; --pmu-t-draw: 900ms; --pmu-stagger: 32ms;
+  --pmu-ease-out: cubic-bezier(.2,.8,.2,1); --pmu-ease-io: cubic-bezier(.65,0,.35,1); --pmu-ease-spring: cubic-bezier(.34,1.45,.64,1);
+  --pmu-ease-soft: cubic-bezier(.3,1.22,.6,1); --pmu-ease-panel: cubic-bezier(.32,1.12,.52,1); --pmu-ease-in: cubic-bezier(.4,0,1,1);
+  --pmu-ease-slide: cubic-bezier(.22,1,.36,1); --pmu-ease-settle: cubic-bezier(.17,.84,.29,.99); --pmu-ease-pop: cubic-bezier(.2,.8,.2,1);
+  --pmu-dur-exit: 140ms; --pmu-dur-enter: 520ms; --pmu-dur-title: 220ms; --pmu-dur-draw: 900ms; --pmu-dur-rise: 520ms; --pmu-dur-grow: 760ms;
+  --pmu-dur-fill: 900ms; --pmu-dur-sweep: 900ms; --pmu-dur-count: 1000ms; --pmu-dur-value: 520ms; --pmu-dur-pulse: 420ms; --pmu-dur-morph: 520ms;
+  --pmu-dur-slide: 260ms; --pmu-dur-lift: 140ms; --pmu-dur-settle: 220ms; --pmu-dur-morph-size: 260ms; --pmu-dur-cancel: 300ms; --pmu-dur-hover: 260ms;
+  --pmu-dur-pop: 260ms; --pmu-dur-insp: 520ms; --pmu-dur-toggle: 260ms; --pmu-dur-readout: 140ms; --pmu-dur-flash: 620ms;
+  /* the room-change camera and the voices (MOTION-4; 15-film.js CAMV mirrors these): the pan P by rail distance (a
+     neighbour, two or three rooms, four or more; no GPU 24 px) and each voice's curve. Basic ink settles, Friendly hop
+     springs (plates only, never a value), Glass depth comes out of focus; values roll on --pmu-ease-roll in every voice */
+  --pmu-cam-p1: 40px; --pmu-cam-p2: 56px; --pmu-cam-p3: 72px; --pmu-cam-soft: 24px;
+  --pmu-ease-ink: cubic-bezier(.17,.84,.29,.99); --pmu-ease-hop: cubic-bezier(.34,1.56,.64,1); --pmu-ease-depth: cubic-bezier(.05,.7,.1,1);
+  --pmu-ease-roll: cubic-bezier(.16,1,.3,1); --pmu-ease-stepback: cubic-bezier(.3,0,.5,1);
+  --pmu-dur-cam-ink: 520ms; --pmu-dur-cam-hop: 600ms; --pmu-dur-cam-depth: 560ms;
+  /* plate geometry (DESIGN-SPEC-ATLAS 3.1) */
+  --pmu-head-plate: 52px; --pmu-head-line: 34px; --pmu-head-tile: 30px;
+  --pmu-card-2: #232323;
+  --pmu-card-3: #2A2A2A;
+  --pmu-rule: #333333;
+  --pmu-rule-2: #2B2B2B;
+  --pmu-rule-strong: #4A4A4A;
+  --pmu-grid: #2A2A2A;
+  --pmu-track: #2E2E2E;
+  --pmu-track-hover: #363636;
+  --pmu-track-tick: #1E1E1E;
+  --pmu-row-hover: #252525;
+  --pmu-row-sel: color-mix(in srgb, var(--accent-primary) 12%, var(--pmu-card));
+  --pmu-flash: color-mix(in srgb, var(--accent-primary) 22%, var(--pmu-card));
+  --pmu-shadow-1: 0 1px 3px rgba(0,0,0,.35);
+  --pmu-shadow-2: 0 14px 30px rgba(0,0,0,.45);
+  --pmu-shadow-pop: 0 18px 44px rgba(0,0,0,.55);
+  --pmu-r-card: 12px;
+  --pmu-calm: #46C7B2;
+  --pmu-warn: #F3B743;
+  --pmu-crit: #FF6D50;
+  --pmu-over: #FF5C93;
+  --pmu-wash: rgba(18,18,18,.50);
+  --pmu-ink-good: #5AD3BF;
+  --pmu-ink-warn: #F5C35D;
+  --pmu-ink-crit: #FF8469;
+  --pmu-ink-over: #FF7AA6;
+  --pmu-tk-in: #3CC8C0;
+  --pmu-tk-out: #B18EFF;
+  --pmu-tk-rsn: #D3C2FF;
+  --pmu-tk-cw: #FF7DB4;
+  --pmu-tk-cr: #7FA3D2;
+  --pmu-tk-all: #86ABFF;
+  --pmu-mark-ink: #121212;
+  --pmu-v-anthropic: #E88D69; --pmu-v-openai: #D3DBE4; --pmu-v-google: #7AA6F7; --pmu-v-alibaba: #9C94FF; --pmu-v-moonshot: #5FD0DA; --pmu-v-github: #56D364; --pmu-v-meta: #5C9DFF; --pmu-v-xai: #C8C8D0; --pmu-v-zai: #AAB6C4; --pmu-v-minimax: #FF7FA6; --pmu-v-opencode: #C4BBB2; --pmu-v-cursor: #BDB7AA; --pmu-v-community: #9AA2AC; --pmu-v-network: #9AA2AC;
+  --pmu-heat-lo: color-mix(in srgb, var(--pmu-tk-all) 30%, var(--pmu-heat-zero));
+}
+html[data-theme="basic-light"] #panel-usage .pmu-shell {
+  --pmu-hairline: var(--pmu-rule); --pmu-hover: var(--pmu-row-hover); --pmu-ink-ok: var(--pmu-ink-good); --pmu-ink-error: var(--pmu-ink-crit);
+  --pmu-elev-hover: var(--pmu-shadow-2); --pmu-elev-lift: var(--pmu-shadow-pop);
+  --pmu-card-2: #F5F7F9;
+  --pmu-card-3: #EEF1F4;
+  --pmu-rule: #D9DEE3;
+  --pmu-rule-2: #E7EBEE;
+  --pmu-rule-strong: #B8C1CA;
+  --pmu-grid: #E6EAEE;
+  --pmu-track: #E6EAEE;
+  --pmu-track-hover: #DCE2E7;
+  --pmu-track-tick: #FFFFFF;
+  --pmu-row-hover: #F3F6F8;
+  --pmu-row-sel: color-mix(in srgb, var(--accent-primary) 9%, var(--pmu-card));
+  --pmu-flash: color-mix(in srgb, var(--accent-primary) 16%, var(--pmu-card));
+  --pmu-shadow-1: 0 1px 3px rgba(21,32,43,.07);
+  --pmu-shadow-2: 0 12px 28px rgba(21,32,43,.13);
+  --pmu-shadow-pop: 0 16px 40px rgba(21,32,43,.18);
+  --pmu-r-card: 12px;
+  --pmu-calm: #23907F;
+  --pmu-warn: #C98410;
+  --pmu-crit: #CF4127;
+  --pmu-over: #8C1D48;
+  --pmu-wash: rgba(255,255,255,.55);
+  --pmu-ink-good: #1C7D6E;
+  --pmu-ink-warn: #9A6100;
+  --pmu-ink-crit: #BC3219;
+  --pmu-ink-over: #8C1D48;
+  --pmu-tk-in: #0E8A8C;
+  --pmu-tk-out: #7A4CD9;
+  --pmu-tk-rsn: #A98BEA;
+  --pmu-tk-cw: #D2468A;
+  --pmu-tk-cr: #5C86B8;
+  --pmu-tk-all: #2552CC;
+  --pmu-mark-ink: #FFFFFF;
+  --pmu-v-anthropic: #C25E3B; --pmu-v-openai: #2E3B4A; --pmu-v-google: #3A77E0; --pmu-v-alibaba: #4B3EEF; --pmu-v-moonshot: #0E9AA7; --pmu-v-github: #1F883D; --pmu-v-meta: #0B5FD3; --pmu-v-xai: #3A3A40; --pmu-v-zai: #4C5A6C; --pmu-v-minimax: #D6336C; --pmu-v-opencode: #7A716A; --pmu-v-cursor: #6B665C; --pmu-v-community: #6B7480; --pmu-v-network: #6B7480;
+  --pmu-heat-lo: color-mix(in srgb, var(--pmu-tk-all) 12%, var(--pmu-heat-zero));
+}
+html[data-theme="friendly-light"] #panel-usage .pmu-shell {
+  --pmu-hairline: var(--pmu-rule); --pmu-hover: var(--pmu-row-hover); --pmu-ink-ok: var(--pmu-ink-good); --pmu-ink-error: var(--pmu-ink-crit);
+  --pmu-elev-hover: var(--pmu-shadow-2); --pmu-elev-lift: var(--pmu-shadow-pop);
+  --pmu-card-2: #FBF7F3;
+  --pmu-card-3: #F4EEE9;
+  --pmu-rule: #EAE2EE;
+  --pmu-rule-2: #F1ECF4;
+  --pmu-rule-strong: #CFC3D6;
+  --pmu-grid: #F0EAF2;
+  --pmu-track: #EFE9F1;
+  --pmu-track-hover: #E7E0EA;
+  --pmu-track-tick: #FFFFFF;
+  --pmu-row-hover: #FAF6FB;
+  --pmu-row-sel: color-mix(in srgb, var(--accent-primary) 9%, var(--pmu-card));
+  --pmu-flash: color-mix(in srgb, var(--accent-primary) 16%, var(--pmu-card));
+  --pmu-shadow-1: 0 1px 3px rgba(74,69,80,.08);
+  --pmu-shadow-2: 0 12px 28px rgba(74,69,80,.14);
+  --pmu-shadow-pop: 0 16px 40px rgba(74,69,80,.18);
+  --pmu-r-card: 16px;
+  --pmu-calm: #2FA183;
+  --pmu-warn: #D9A62A;
+  --pmu-crit: #E8654C;
+  --pmu-over: #B8407A;
+  --pmu-wash: rgba(255,255,255,.55);
+  --pmu-ink-good: #1E7F66;
+  --pmu-ink-warn: #8A5A00;
+  --pmu-ink-crit: #B8432D;
+  --pmu-ink-over: #9E3366;
+  --pmu-tk-in: #1F9C93;
+  --pmu-tk-out: #8A63D2;
+  --pmu-tk-rsn: #B79DE6;
+  --pmu-tk-cw: #D9578F;
+  --pmu-tk-cr: #6F8FBF;
+  --pmu-tk-all: #4A6FD6;
+  --pmu-mark-ink: #FFFFFF;
+  --pmu-v-anthropic: #C25E3B; --pmu-v-openai: #2E3B4A; --pmu-v-google: #3A77E0; --pmu-v-alibaba: #4B3EEF; --pmu-v-moonshot: #0E9AA7; --pmu-v-github: #1F883D; --pmu-v-meta: #0B5FD3; --pmu-v-xai: #3A3A40; --pmu-v-zai: #4C5A6C; --pmu-v-minimax: #D6336C; --pmu-v-opencode: #7A716A; --pmu-v-cursor: #6B665C; --pmu-v-community: #6B7480; --pmu-v-network: #6B7480;
+  --pmu-heat-lo: color-mix(in srgb, var(--pmu-tk-all) 12%, var(--pmu-heat-zero));
+}
+html[data-theme="friendly-dark"] #panel-usage .pmu-shell {
+  --pmu-hairline: var(--pmu-rule); --pmu-hover: var(--pmu-row-hover); --pmu-ink-ok: var(--pmu-ink-good); --pmu-ink-error: var(--pmu-ink-crit);
+  --pmu-elev-hover: var(--pmu-shadow-2); --pmu-elev-lift: var(--pmu-shadow-pop);
+  --pmu-card-2: #2F2B37;
+  --pmu-card-3: #36323F;
+  --pmu-rule: #3A3642;
+  --pmu-rule-2: #33303B;
+  --pmu-rule-strong: #514B5C;
+  --pmu-grid: #35313E;
+  --pmu-track: #3A3644;
+  --pmu-track-hover: #423D4D;
+  --pmu-track-tick: #2A2731;
+  --pmu-row-hover: #302C38;
+  --pmu-row-sel: color-mix(in srgb, var(--accent-primary) 12%, var(--pmu-card));
+  --pmu-flash: color-mix(in srgb, var(--accent-primary) 22%, var(--pmu-card));
+  --pmu-shadow-1: 0 1px 3px rgba(0,0,0,.30);
+  --pmu-shadow-2: 0 14px 30px rgba(0,0,0,.42);
+  --pmu-shadow-pop: 0 18px 44px rgba(0,0,0,.5);
+  --pmu-r-card: 16px;
+  --pmu-calm: #6FDABC;
+  --pmu-warn: #FFD97F;
+  --pmu-crit: #FF8A73;
+  --pmu-over: #FF8FC0;
+  --pmu-wash: rgba(33,30,38,.45);
+  --pmu-ink-good: #7FE0C4;
+  --pmu-ink-warn: #FFD27A;
+  --pmu-ink-crit: #FF9A86;
+  --pmu-ink-over: #FF9CC6;
+  --pmu-tk-in: #6FD6CC;
+  --pmu-tk-out: #C3A8F5;
+  --pmu-tk-rsn: #DCCCFA;
+  --pmu-tk-cw: #FF9CC4;
+  --pmu-tk-cr: #9DB7DE;
+  --pmu-tk-all: #9DB8FF;
+  --pmu-mark-ink: #121212;
+  --pmu-v-anthropic: #E88D69; --pmu-v-openai: #D3DBE4; --pmu-v-google: #7AA6F7; --pmu-v-alibaba: #9C94FF; --pmu-v-moonshot: #5FD0DA; --pmu-v-github: #56D364; --pmu-v-meta: #5C9DFF; --pmu-v-xai: #C8C8D0; --pmu-v-zai: #AAB6C4; --pmu-v-minimax: #FF7FA6; --pmu-v-opencode: #C4BBB2; --pmu-v-cursor: #BDB7AA; --pmu-v-community: #9AA2AC; --pmu-v-network: #9AA2AC;
+  --pmu-heat-lo: color-mix(in srgb, var(--pmu-tk-all) 30%, var(--pmu-heat-zero));
+}
+html[data-theme="glass-dark"] #panel-usage .pmu-shell {
+  --pmu-hairline: var(--pmu-rule); --pmu-hover: var(--pmu-row-hover); --pmu-ink-ok: var(--pmu-ink-good); --pmu-ink-error: var(--pmu-ink-crit);
+  --pmu-elev-hover: var(--pmu-shadow-2); --pmu-elev-lift: var(--pmu-shadow-pop);
+  --pmu-card-2: rgba(232,220,255,.05);
+  --pmu-card-3: rgba(232,220,255,.08);
+  --pmu-rule: rgba(232,220,255,.14);
+  --pmu-rule-2: rgba(232,220,255,.08);
+  --pmu-rule-strong: rgba(232,220,255,.26);
+  --pmu-grid: rgba(232,220,255,.08);
+  --pmu-track: rgba(232,220,255,.10);
+  --pmu-track-hover: rgba(232,220,255,.15);
+  --pmu-track-tick: rgba(37,28,57,.9);
+  --pmu-row-hover: rgba(232,220,255,.06);
+  --pmu-row-sel: color-mix(in srgb, var(--accent-primary) 14%, var(--pmu-card));
+  --pmu-flash: color-mix(in srgb, var(--accent-primary) 24%, var(--pmu-card));
+  --pmu-shadow-1: inset 0 1px 0 rgba(255,255,255,.10), 0 1px 3px rgba(0,0,0,.30);
+  --pmu-shadow-2: inset 0 1px 0 rgba(255,255,255,.14), 0 16px 34px rgba(8,4,20,.45);
+  --pmu-shadow-pop: 0 18px 44px rgba(8,4,20,.55);
+  --pmu-r-card: 14px;
+  --pmu-calm: #68F2BD;
+  --pmu-warn: #FFD173;
+  --pmu-crit: #FF7893;
+  --pmu-over: #FF6FD0;
+  --pmu-wash: rgba(36,27,54,.45);
+  --pmu-ink-good: #7FF5C8;
+  --pmu-ink-warn: #FFD88A;
+  --pmu-ink-crit: #FF8FA6;
+  --pmu-ink-over: #FF8AD8;
+  --pmu-tk-in: #5CE6DA;
+  --pmu-tk-out: #C4A2FF;
+  --pmu-tk-rsn: #E0D0FF;
+  --pmu-tk-cw: #FF8CC6;
+  --pmu-tk-cr: #8FB4F0;
+  --pmu-tk-all: #8FB8FF;
+  --pmu-mark-ink: #121212;
+  --pmu-v-anthropic: #E88D69; --pmu-v-openai: #D3DBE4; --pmu-v-google: #7AA6F7; --pmu-v-alibaba: #9C94FF; --pmu-v-moonshot: #5FD0DA; --pmu-v-github: #56D364; --pmu-v-meta: #5C9DFF; --pmu-v-xai: #C8C8D0; --pmu-v-zai: #AAB6C4; --pmu-v-minimax: #FF7FA6; --pmu-v-opencode: #C4BBB2; --pmu-v-cursor: #BDB7AA; --pmu-v-community: #9AA2AC; --pmu-v-network: #9AA2AC;
+  --pmu-heat-lo: color-mix(in srgb, var(--pmu-tk-all) 30%, var(--pmu-heat-zero));
+}
+html[data-theme="glass-light"] #panel-usage .pmu-shell {
+  --pmu-hairline: var(--pmu-rule); --pmu-hover: var(--pmu-row-hover); --pmu-ink-ok: var(--pmu-ink-good); --pmu-ink-error: var(--pmu-ink-crit);
+  --pmu-elev-hover: var(--pmu-shadow-2); --pmu-elev-lift: var(--pmu-shadow-pop);
+  --pmu-card-2: rgba(255,255,255,.40);
+  --pmu-card-3: rgba(23,34,42,.05);
+  --pmu-rule: rgba(255,255,255,.60);
+  --pmu-rule-2: rgba(23,34,42,.07);
+  --pmu-rule-strong: rgba(23,34,42,.18);
+  --pmu-grid: rgba(23,34,42,.07);
+  --pmu-track: rgba(23,34,42,.08);
+  --pmu-track-hover: rgba(23,34,42,.12);
+  --pmu-track-tick: rgba(255,255,255,.75);
+  --pmu-row-hover: rgba(255,255,255,.38);
+  --pmu-row-sel: color-mix(in srgb, var(--accent-primary) 10%, var(--pmu-card));
+  --pmu-flash: color-mix(in srgb, var(--accent-primary) 18%, var(--pmu-card));
+  --pmu-shadow-1: inset 0 1px 0 rgba(255,255,255,.70), 0 1px 3px rgba(23,34,42,.06);
+  --pmu-shadow-2: inset 0 1px 0 rgba(255,255,255,.80), 0 12px 28px rgba(23,34,42,.12);
+  --pmu-shadow-pop: 0 16px 40px rgba(23,34,42,.16);
+  --pmu-r-card: 14px;
+  --pmu-calm: #087F67;
+  --pmu-warn: #B07A10;
+  --pmu-crit: #C44258;
+  --pmu-over: #8E2C6E;
+  --pmu-wash: rgba(255,255,255,.50);
+  --pmu-ink-good: #0B6E59;
+  --pmu-ink-warn: #7D5300;
+  --pmu-ink-crit: #A8213B;
+  --pmu-ink-over: #7A1F5E;
+  --pmu-tk-in: #08807E;
+  --pmu-tk-out: #6E43CF;
+  --pmu-tk-rsn: #9F82E2;
+  --pmu-tk-cw: #C23A7F;
+  --pmu-tk-cr: #4F79AE;
+  --pmu-tk-all: #1F4FC2;
+  --pmu-mark-ink: #FFFFFF;
+  --pmu-v-anthropic: #C25E3B; --pmu-v-openai: #2E3B4A; --pmu-v-google: #3A77E0; --pmu-v-alibaba: #4B3EEF; --pmu-v-moonshot: #0E9AA7; --pmu-v-github: #1F883D; --pmu-v-meta: #0B5FD3; --pmu-v-xai: #3A3A40; --pmu-v-zai: #4C5A6C; --pmu-v-minimax: #D6336C; --pmu-v-opencode: #7A716A; --pmu-v-cursor: #6B665C; --pmu-v-community: #6B7480; --pmu-v-network: #6B7480;
+  --pmu-heat-lo: color-mix(in srgb, var(--pmu-tk-all) 12%, var(--pmu-heat-zero));
+}
+html[data-theme="retro-dark"] #panel-usage .pmu-shell {
+  --pmu-hairline: var(--pmu-rule); --pmu-hover: var(--pmu-row-hover); --pmu-ink-ok: var(--pmu-ink-good); --pmu-ink-error: var(--pmu-ink-crit);
+  --pmu-elev-hover: var(--pmu-shadow-2); --pmu-elev-lift: var(--pmu-shadow-pop);
+  --pmu-card-2: #1E2219;
+  --pmu-card-3: #252A1F;
+  --pmu-rule: #4A533A;
+  --pmu-rule-2: #2E3424;
+  --pmu-rule-strong: #6B7556;
+  --pmu-grid: rgba(223,230,207,.12);
+  --pmu-track: #262B1E;
+  --pmu-track-hover: #2E3424;
+  --pmu-track-tick: #171A14;
+  --pmu-row-hover: rgba(184,208,102,.08);
+  --pmu-row-sel: color-mix(in srgb, var(--accent-primary) 12%, var(--pmu-card));
+  --pmu-flash: color-mix(in srgb, var(--accent-primary) 22%, var(--pmu-card));
+  --pmu-shadow-1: 3px 3px 0 rgba(223,230,207,.25);
+  --pmu-shadow-2: 5px 5px 0 rgba(223,230,207,.30);
+  --pmu-shadow-pop: 5px 5px 0 rgba(223,230,207,.30);
+  --pmu-r-card: 0px;
+  --pmu-calm: #86C46A;
+  --pmu-warn: #D8B93C;
+  --pmu-crit: #E2694F;
+  --pmu-over: #D77A9A;
+  --pmu-wash: transparent;
+  --pmu-ink-good: #9FD388;
+  --pmu-ink-warn: #E6CB5E;
+  --pmu-ink-crit: #EC836B;
+  --pmu-ink-over: #E596B2;
+  --pmu-tk-in: #7FC8A9;
+  --pmu-tk-out: #C3A6E0;
+  --pmu-tk-rsn: #DCCBEF;
+  --pmu-tk-cw: #E58FB0;
+  --pmu-tk-cr: #9DB4D0;
+  --pmu-tk-all: #B8D066;
+  --pmu-mark-ink: #121212;
+  --pmu-v-anthropic: #E88D69; --pmu-v-openai: #D3DBE4; --pmu-v-google: #7AA6F7; --pmu-v-alibaba: #9C94FF; --pmu-v-moonshot: #5FD0DA; --pmu-v-github: #56D364; --pmu-v-meta: #5C9DFF; --pmu-v-xai: #C8C8D0; --pmu-v-zai: #AAB6C4; --pmu-v-minimax: #FF7FA6; --pmu-v-opencode: #C4BBB2; --pmu-v-cursor: #BDB7AA; --pmu-v-community: #9AA2AC; --pmu-v-network: #9AA2AC;
+  --pmu-heat-lo: color-mix(in srgb, var(--pmu-tk-all) 30%, var(--pmu-heat-zero));
+}
+html[data-theme="retro-light"] #panel-usage .pmu-shell {
+  --pmu-hairline: var(--pmu-rule); --pmu-hover: var(--pmu-row-hover); --pmu-ink-ok: var(--pmu-ink-good); --pmu-ink-error: var(--pmu-ink-crit);
+  --pmu-elev-hover: var(--pmu-shadow-2); --pmu-elev-lift: var(--pmu-shadow-pop);
+  --pmu-card-2: #F2EDE4;
+  --pmu-card-3: #EAE4D9;
+  --pmu-rule: #4A463F;
+  --pmu-rule-2: #DDD6CB;
+  --pmu-rule-strong: #8A847A;
+  --pmu-grid: rgba(26,26,26,.10);
+  --pmu-track: #E8E2D7;
+  --pmu-track-hover: #DFD8CC;
+  --pmu-track-tick: #FAF7F2;
+  --pmu-row-hover: rgba(47,122,61,.07);
+  --pmu-row-sel: color-mix(in srgb, var(--accent-primary) 10%, var(--pmu-card));
+  --pmu-flash: color-mix(in srgb, var(--accent-primary) 18%, var(--pmu-card));
+  --pmu-shadow-1: 3px 3px 0 rgba(26,26,26,.25);
+  --pmu-shadow-2: 5px 5px 0 rgba(26,26,26,.30);
+  --pmu-shadow-pop: 5px 5px 0 rgba(26,26,26,.30);
+  --pmu-r-card: 0px;
+  --pmu-calm: #2F7A3D;
+  --pmu-warn: #C27C0E;
+  --pmu-crit: #D32F2F;
+  --pmu-over: #A2275E;
+  --pmu-wash: transparent;
+  --pmu-ink-good: #2F7A3D;
+  --pmu-ink-warn: #8A5300;
+  --pmu-ink-crit: #B71C1C;
+  --pmu-ink-over: #8C1D48;
+  --pmu-tk-in: #00695C;
+  --pmu-tk-out: #5B3FA8;
+  --pmu-tk-rsn: #8C76C4;
+  --pmu-tk-cw: #A2275E;
+  --pmu-tk-cr: #3F5F8A;
+  --pmu-tk-all: #2F7A3D;
+  --pmu-mark-ink: #FFFFFF;
+  --pmu-v-anthropic: #C25E3B; --pmu-v-openai: #2E3B4A; --pmu-v-google: #3A77E0; --pmu-v-alibaba: #4B3EEF; --pmu-v-moonshot: #0E9AA7; --pmu-v-github: #1F883D; --pmu-v-meta: #0B5FD3; --pmu-v-xai: #3A3A40; --pmu-v-zai: #4C5A6C; --pmu-v-minimax: #D6336C; --pmu-v-opencode: #7A716A; --pmu-v-cursor: #6B665C; --pmu-v-community: #6B7480; --pmu-v-network: #6B7480;
+  --pmu-heat-lo: color-mix(in srgb, var(--pmu-tk-all) 12%, var(--pmu-heat-zero));
+}
+/* vendor hue on any element that names a vendor (DESIGN-SPEC-ATLAS 4.4); paint rules read var(--pv) */
+#panel-usage [data-vendor="anthropic"] { --pv: var(--pmu-v-anthropic); } #panel-usage [data-vendor="openai"] { --pv: var(--pmu-v-openai); } #panel-usage [data-vendor="google"] { --pv: var(--pmu-v-google); } #panel-usage [data-vendor="alibaba"] { --pv: var(--pmu-v-alibaba); } #panel-usage [data-vendor="moonshot"] { --pv: var(--pmu-v-moonshot); } #panel-usage [data-vendor="github"] { --pv: var(--pmu-v-github); } #panel-usage [data-vendor="meta"] { --pv: var(--pmu-v-meta); } #panel-usage [data-vendor="xai"] { --pv: var(--pmu-v-xai); } #panel-usage [data-vendor="zai"] { --pv: var(--pmu-v-zai); } #panel-usage [data-vendor="minimax"] { --pv: var(--pmu-v-minimax); } #panel-usage [data-vendor="opencode"] { --pv: var(--pmu-v-opencode); } #panel-usage [data-vendor="cursor"] { --pv: var(--pmu-v-cursor); } #panel-usage [data-vendor="community"] { --pv: var(--pmu-v-community); } #panel-usage [data-vendor="network"] { --pv: var(--pmu-v-network); }
+/* NieR Mode: an overlay over Basic; every series is ink, told apart by pattern (DESIGN-SPEC 9.1, 13). */
+html[data-o55-nier="on"] #panel-usage .pmu-shell {
+  --pmu-s0: var(--o55-nier-ink); --pmu-s0-b: rgba(var(--o55-nier-ink-rgb), .6);
+  --pmu-s1: var(--o55-nier-ink); --pmu-s1-b: rgba(var(--o55-nier-ink-rgb), .6);
+  --pmu-s2: var(--o55-nier-ink); --pmu-s2-b: rgba(var(--o55-nier-ink-rgb), .6);
+  --pmu-s3: var(--o55-nier-ink); --pmu-s3-b: rgba(var(--o55-nier-ink-rgb), .6);
+  --pmu-s4: var(--o55-nier-ink); --pmu-s4-b: rgba(var(--o55-nier-ink-rgb), .6);
+  --pmu-s5: var(--o55-nier-ink); --pmu-s5-b: rgba(var(--o55-nier-ink-rgb), .6);
+  --pmu-s6: var(--o55-nier-ink); --pmu-s6-b: rgba(var(--o55-nier-ink-rgb), .6);
+  --pmu-s7: var(--o55-nier-ink); --pmu-s7-b: rgba(var(--o55-nier-ink-rgb), .6);
+  --pmu-ink: var(--o55-nier-ink); --pmu-ink-2: var(--text-secondary); --pmu-ink-3: var(--text-muted);
+  --pmu-ink-ok: var(--o55-nier-ok-text, var(--o55-nier-ok)); --pmu-ink-warn: var(--o55-nier-warn-text, var(--o55-nier-warn)); --pmu-ink-error: var(--o55-nier-error-text, var(--o55-nier-error));
+  --pmu-card: var(--surface); --pmu-hairline: var(--border); --pmu-track: rgba(var(--o55-nier-ink-rgb), .10); --pmu-grid: rgba(var(--o55-nier-ink-rgb), .12);
+  --pmu-hover: rgba(var(--o55-nier-ink-rgb), .06);
+  --pmu-tone-watch: var(--o55-nier-ink); --pmu-tone-watch-b: var(--o55-nier-ink); --pmu-tone-warn: var(--o55-nier-warn); --pmu-tone-warn-b: var(--o55-nier-warn);
+  --pmu-tone-hot: var(--o55-nier-error); --pmu-tone-hot-b: var(--o55-nier-error); --pmu-tone-exhausted: var(--o55-nier-error); --pmu-tone-exhausted-b: var(--o55-nier-error);
+  --pmu-tone-calm: var(--o55-nier-ink); --pmu-tone-calm-b: var(--o55-nier-ink);
+  --pmu-accent-b: var(--o55-nier-ink); --pmu-r-card: 0px; --pmu-r-sm: 0px; --pmu-bw: 1px;
+}
+/* NieR A1 tokens (DESIGN-SPEC-ATLAS 12): no hue but ink, warn and error; heat by ink opacity; marks are outlined */
+html[data-o55-nier="on"] #panel-usage .pmu-shell {
+  --pmu-card-2: rgba(var(--o55-nier-ink-rgb), .05); --pmu-card-3: rgba(var(--o55-nier-ink-rgb), .08);
+  --pmu-rule: var(--border); --pmu-rule-2: rgba(var(--o55-nier-ink-rgb), .14); --pmu-rule-strong: rgba(var(--o55-nier-ink-rgb), .42);
+  --pmu-track-hover: rgba(var(--o55-nier-ink-rgb), .16); --pmu-track-tick: var(--surface);
+  --pmu-row-hover: rgba(var(--o55-nier-ink-rgb), .06); --pmu-row-sel: rgba(var(--o55-nier-ink-rgb), .10); --pmu-flash: rgba(var(--o55-nier-ink-rgb), .16);
+  --pmu-shadow-1: none; --pmu-shadow-2: 3px 3px 0 rgba(var(--o55-nier-ink-rgb), .22); --pmu-shadow-pop: 5px 5px 0 rgba(var(--o55-nier-ink-rgb), .26);
+  --pmu-elev-hover: var(--pmu-shadow-2); --pmu-elev-lift: var(--pmu-shadow-pop);
+  --pmu-calm: var(--o55-nier-ink); --pmu-warn: var(--o55-nier-warn); --pmu-crit: var(--o55-nier-error); --pmu-over: var(--o55-nier-error); --pmu-wash: transparent;
+  --pmu-ink-good: var(--o55-nier-ok-text, var(--o55-nier-ok)); --pmu-ink-crit: var(--o55-nier-error-text, var(--o55-nier-error)); --pmu-ink-over: var(--pmu-ink-crit);
+  --pmu-tk-in: var(--o55-nier-ink); --pmu-tk-out: var(--o55-nier-ink); --pmu-tk-rsn: var(--o55-nier-ink); --pmu-tk-cw: var(--o55-nier-ink); --pmu-tk-cr: var(--o55-nier-ink); --pmu-tk-all: var(--o55-nier-ink);
+  --pmu-tk-in-soft: rgba(var(--o55-nier-ink-rgb), .42); --pmu-tk-out-soft: rgba(var(--o55-nier-ink-rgb), .42); --pmu-tk-rsn-soft: rgba(var(--o55-nier-ink-rgb), .42);
+  --pmu-tk-cw-soft: rgba(var(--o55-nier-ink-rgb), .42); --pmu-tk-cr-soft: rgba(var(--o55-nier-ink-rgb), .42); --pmu-tk-all-soft: rgba(var(--o55-nier-ink-rgb), .42);
+  --pmu-mark-ink: var(--o55-nier-ink);
+  --pmu-v-anthropic: var(--o55-nier-ink); --pmu-v-openai: var(--o55-nier-ink); --pmu-v-google: var(--o55-nier-ink); --pmu-v-alibaba: var(--o55-nier-ink); --pmu-v-moonshot: var(--o55-nier-ink); --pmu-v-github: var(--o55-nier-ink); --pmu-v-meta: var(--o55-nier-ink); --pmu-v-xai: var(--o55-nier-ink); --pmu-v-zai: var(--o55-nier-ink); --pmu-v-minimax: var(--o55-nier-ink); --pmu-v-opencode: var(--o55-nier-ink); --pmu-v-cursor: var(--o55-nier-ink); --pmu-v-community: var(--o55-nier-ink); --pmu-v-network: var(--o55-nier-ink);
+  --pmu-v-anthropic-2: rgba(var(--o55-nier-ink-rgb), .66); --pmu-v-anthropic-3: rgba(var(--o55-nier-ink-rgb), .42); --pmu-v-anthropic-4: rgba(var(--o55-nier-ink-rgb), .24); --pmu-v-openai-2: rgba(var(--o55-nier-ink-rgb), .66); --pmu-v-openai-3: rgba(var(--o55-nier-ink-rgb), .42); --pmu-v-openai-4: rgba(var(--o55-nier-ink-rgb), .24); --pmu-v-google-2: rgba(var(--o55-nier-ink-rgb), .66); --pmu-v-google-3: rgba(var(--o55-nier-ink-rgb), .42); --pmu-v-google-4: rgba(var(--o55-nier-ink-rgb), .24); --pmu-v-alibaba-2: rgba(var(--o55-nier-ink-rgb), .66); --pmu-v-alibaba-3: rgba(var(--o55-nier-ink-rgb), .42); --pmu-v-alibaba-4: rgba(var(--o55-nier-ink-rgb), .24); --pmu-v-moonshot-2: rgba(var(--o55-nier-ink-rgb), .66); --pmu-v-moonshot-3: rgba(var(--o55-nier-ink-rgb), .42); --pmu-v-moonshot-4: rgba(var(--o55-nier-ink-rgb), .24); --pmu-v-github-2: rgba(var(--o55-nier-ink-rgb), .66); --pmu-v-github-3: rgba(var(--o55-nier-ink-rgb), .42); --pmu-v-github-4: rgba(var(--o55-nier-ink-rgb), .24);
+  --pmu-heat-zero: var(--pmu-track); --pmu-heat-1: rgba(var(--o55-nier-ink-rgb), .06); --pmu-heat-2: rgba(var(--o55-nier-ink-rgb), .18); --pmu-heat-3: rgba(var(--o55-nier-ink-rgb), .32);
+  --pmu-heat-4: rgba(var(--o55-nier-ink-rgb), .48); --pmu-heat-5: rgba(var(--o55-nier-ink-rgb), .66); --pmu-heat-6: rgba(var(--o55-nier-ink-rgb), .86);
+  --pmu-r-card: 0px;
+}
+
+/* ---- WOW round 3 at-rest light tokens (WOW-SPEC-3 4.1; values chosen in infra/wow3/proto-final.css with --w3-* renamed
+   --pmu-l-*). Engine owns the tokens; the key light (05-film.css) and the plates (20-board.css) read them here, charts read
+   the ramp, track and tip tokens (30-charts.css), content the ink tokens (40-widgets.css .pmu-heronum). Static values:
+   nothing here animates. ---- */
+#panel-usage .pmu-shell {
+  --pmu-l-key: var(--pmu-accent); --pmu-l-key-a: 40%; --pmu-l-key-b: 18%;
+  --pmu-l-plate-hi: rgba(255,255,255,.06);
+  --pmu-l-rim: rgba(255,255,255,.10); --pmu-l-rim-key: 78%;
+  --pmu-l-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 1px 2px rgba(0,0,0,.55), 0 26px 50px -26px rgba(0,0,0,.85);
+  --pmu-l-hero-spot: 16%;
+  --pmu-l-ink-top: #FFFFFF; --pmu-l-ink-bot: color-mix(in oklab, var(--pmu-accent) 52%, #fff);
+  --pmu-l-r0: #6F7BFF; --pmu-l-r1: #27BEE8; --pmu-l-r2: #34E0A6;
+  --pmu-l-track-in: inset 0 1px 2px rgba(0,0,0,.55);
+  --pmu-l-tip: 0 0 10px 3px;
+}
+html[data-theme$="-light"] #panel-usage .pmu-shell {
+  --pmu-l-key-a: 20%; --pmu-l-key-b: 12%;
+  --pmu-l-plate-hi: rgba(255,255,255,0);
+  --pmu-l-rim: rgba(255,255,255,.95); --pmu-l-rim-key: 40%;
+  --pmu-l-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 1px 2px rgba(21,32,43,.08), 0 18px 36px -20px rgba(21,32,43,.28);
+  --pmu-l-hero-spot: 9%;
+  --pmu-l-ink-top: color-mix(in oklab, var(--pmu-ink) 92%, var(--pmu-accent)); --pmu-l-ink-bot: color-mix(in oklab, var(--pmu-accent) 78%, #000);
+  --pmu-l-r0: #7C83E6; --pmu-l-r1: #1593BD; --pmu-l-r2: #0E9A6C;
+  --pmu-l-track-in: inset 0 1px 2px rgba(21,32,43,.12);
+  --pmu-l-tip: 0 0 4px 0;
+}
+html[data-theme="friendly-light"] #panel-usage .pmu-shell {
+  --pmu-l-key: #FF8F6B; --pmu-l-key-a: 30%; --pmu-l-key-b: 22%;
+  --pmu-l-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 1px 2px rgba(120,72,52,.08), 0 20px 38px -20px rgba(150,86,60,.30);
+  --pmu-l-ink-top: #C2557A; --pmu-l-ink-bot: #2E8F86;
+  --pmu-l-r0: #9A86E8; --pmu-l-r1: #3AA7D6; --pmu-l-r2: #2FB38B;
+}
+html[data-theme="friendly-dark"] #panel-usage .pmu-shell { --pmu-l-key: #FF9F7A; --pmu-l-ink-top: #FF9DC0; --pmu-l-ink-bot: #7FE0D2; }
+html[data-theme^="glass"] #panel-usage .pmu-shell { --pmu-l-key-a: 26%; --pmu-l-ink-top: #FFFFFF; --pmu-l-ink-bot: #B9E6FF; --pmu-l-r0: #8D7BFF; --pmu-l-r1: #4FD2FF; --pmu-l-r2: #6CF5C2; }
+html[data-theme="glass-light"] #panel-usage .pmu-shell { --pmu-l-key-a: 20%; --pmu-l-ink-top: #17222A; --pmu-l-ink-bot: #2F5FC4; --pmu-l-r0: #6E62D8; --pmu-l-r1: #0F86C6; --pmu-l-r2: #0A8A66; }
+html[data-theme^="retro"] #panel-usage .pmu-shell { --pmu-l-key: var(--pmu-s0); --pmu-l-key-a: 10%; --pmu-l-key-b: 6%; --pmu-l-plate-hi: transparent; --pmu-l-hero-spot: 0%;
+  --pmu-l-r0: var(--pmu-s1); --pmu-l-r1: var(--pmu-s4); --pmu-l-r2: var(--pmu-s0); --pmu-l-track-in: none; --pmu-l-tip: 0 0 8px 1px; }

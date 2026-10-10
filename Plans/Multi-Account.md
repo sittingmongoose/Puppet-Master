@@ -386,7 +386,7 @@ Signal weighting order:
 6. log-derived heuristics or heuristic/inferred local pressure only
 
 For authoritative remaining counters, PM drives `threshold_reached` at `<= configured switch threshold` and drives `exhausted` at `0 remaining` or explicit provider exhaustion. Provider `/accounts` may override these defaults, but the scheduler must not leave the state transition undefined when authoritative remaining quota is available.
-Default threshold-aware policy uses warning threshold `20% remaining` and default auto-switch threshold `10% remaining` unless provider/account overrides say otherwise. Per-account observed `/provider-reported` effective limits outrank generic provider-doc defaults, while provider docs preserve documented/default expectations when effective observed state differs. Providers with named windows preserve provider window keys such as `fiveHour` and `weekly`, and authoritative Gemini quota or `/reset` data outranks runtime token stats when deciding whether to recover back to a primary account. For coding-plan direct providers, official `/reset` and `/remains` endpoints and documented windows are authoritative defaults until observed account-specific divergence wins. Runtime token stats alone can influence pressure, but they must not become a `hard_block` or exhausted state without explicit quota, refusal, cooldown, or equivalent authoritative evidence.
+Default threshold-aware policy uses warning threshold `20% remaining` and default auto-switch threshold `10% remaining` unless provider/account overrides say otherwise. The provider layer of those overrides, the per-provider auto-switch on/off and rest period, and the order in which account, provider, project and global values resolve are owned by MA-073 (Per-Provider Auto-Switch, 2026-10-09). Per-account observed `/provider-reported` effective limits outrank generic provider-doc defaults, while provider docs preserve documented/default expectations when effective observed state differs. Providers with named windows preserve provider window keys such as `fiveHour` and `weekly`, and authoritative Gemini quota or `/reset` data outranks runtime token stats when deciding whether to recover back to a primary account. For coding-plan direct providers, official `/reset` and `/remains` endpoints and documented windows are authoritative defaults until observed account-specific divergence wins. Runtime token stats alone can influence pressure, but they must not become a `hard_block` or exhausted state without explicit quota, refusal, cooldown, or equivalent authoritative evidence.
 Default account routing prefers `sticky-primary`, `threshold-based-preemptive-switch`, and `reason-coded-failover`; naive `round-robin` may exist only as an advanced/debug strategy and is not PM's main provider-account routing policy.
 Vertex/Gemini dynamic shared quota without a stable remaining counter stays in the softer `pattern_only_or_inferred` bucket until stronger provider evidence appears.
 For softer provider/runtime evidence, one weak signal is informational, repeated soft signals move the account/profile to `approaching_threshold`, and explicit refusal, cooldown, or lockout moves it to `exhausted` or a blocked state.
@@ -3138,6 +3138,7 @@ compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Priority and stickiness rules align GUI ordering with requested/effective runtime selection.
+- "Refined 2026-10-09 by MA-073 for a provider's threshold auto-switch: the target there is the eligible account of the same provider with the most remaining, and this unit's priority order, then the account id, only breaks ties; MA-073 owns that rule."
 owner_hints:
 - Plans/Multi-Account.md
 preserved_contractrefs:
@@ -3893,7 +3894,10 @@ owner_doc: Plans/Multi-Account.md
 canonical_text: Usage and status surfaces show current effective account/profile, effective auth mode, billing/entity context,
   pressure/cooldown state, source-confidence/stale/estimated labels, and switch/failover reason. Plans/usage-feature.md
   consumes this account/provider owner contract and must not reintroduce stale buckets or flatten direct-provider quota
-  context into one generic account label.
+  context into one generic account label. Usage's Accounts room and its Plans & limits room (consumer note 2026-10-09,
+  Plans/Decision_Log.md#DL-174) show one row per account of each provider, every account signed in to that provider and
+  not only the active one, grouped under the provider in the Settings provider catalog's order, each with its own
+  windows, reading source and freshness; per-provider auto-switch on those rows follows MA-073.
 gui_related: true
 gui_classification_reason: The unit defines user-visible usage/status surface fields and labels.
 split_recommended: false
@@ -3904,6 +3908,7 @@ acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - Usage/status surfaces show account, auth, billing/entity, pressure/cooldown, confidence, and switch reason fields.
 - Plans/usage-feature.md remains a consumer and does not flatten provider quota context.
+- Usage's Accounts and Plans & limits rooms list every account of a provider as its own row (for example three ChatGPT / Codex accounts as three rows), never only the active account.
 - Usage rows prefer plain-language statuses or concrete failure reasons over transport-internal terminology.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
@@ -3937,6 +3942,7 @@ stale_retired_dispositions:
 - source-confidence, stale, or estimated labels are retained when data is not authoritative.
 owner_boundary_notes:
 - Plans/usage-feature.md consumes the Multi-Account account/provider owner contract.
+- Plans/usage-feature.md#UF-107 consumes the one-row-per-account rule for the Usage Accounts and Plans & limits rooms; Plans/Multi-Account.md#MA-073 owns the per-provider auto-switch those rows show.
 owner_hints:
 - Plans/Multi-Account.md
 preserved_contractrefs:
@@ -5367,3 +5373,111 @@ owner_hints: [Plans/Multi-Account.md]
 ```
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/Permissions_System.md
+
+## Per-Provider Auto-Switch Addendum (2026-10-09)
+
+Auto-switch between accounts is set per AI provider (`Plans/Decision_Log.md#DL-174`). Before this, one global on/off and one switch point applied to every provider, and section 5's "unless provider/account overrides say otherwise" named a provider layer that no unit or setting gave. Four Settings rows now carry a provider scope beside their existing scopes: `ai.accounts.multi-account-switching` (auto-switch on or off), `ai.accounts.hard-switch-level` (the switch point, in percent left), `ai.accounts.soft-warning-level` (the warning level, in percent left) and `ai.accounts.cooldown-policy` (how long an account rests). `ai.accounts.cooldown-policy`, which was set per account only, also gains the global and project scopes, so each of the four rows has a global value and resolves through the same order, and a provider that has no value of its own follows the shared value, the project value where one is set and otherwise the global value; the rest period's global value starts at its inventory default, the provider's own defaults. The provider value is one Settings value, edited in Settings > Providers & Accounts, where all four rows appear in the provider's own section, and on the Usage page's Accounts room, which hosts the auto-switch toggle and the switch point for each provider, through the same Settings transaction (`Plans/Settings_System.md#SSYS-044`), so the two always show the same value. The switching rules below follow the AI Account Center's per-provider policy (Codex and Antigravity), adapted to Puppet Master's attempt-boundary, reason-code and manual-override rules in section 5.
+
+### MA-073 - Per-Provider Auto-Switch
+
+```yaml
+plan_unit_id: MA-073
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Auto-switch between accounts is set per provider. ai.accounts.multi-account-switching,
+  ai.accounts.hard-switch-level, ai.accounts.soft-warning-level and ai.accounts.cooldown-policy each carry a provider
+  scope in addition to their existing scopes, ai.accounts.cooldown-policy also carries the global and project
+  scopes, and each resolves through the scopes its row has in the order account override, then provider, then
+  project, then global; a provider without its own value follows the resolved shared value (the project value where
+  one is set, otherwise the global value), never the inventory default, and
+  ai.accounts.account-threshold-override stays the per-account layer that wins over the provider value. Levels are
+  stored as percent left and shown as percent used. A provider's switch level always stays below its warning level:
+  neither surface offers a level that would cross them (on Usage the stepper stops and the menu disables levels at or
+  past the warning level; Settings disables a crossing choice with the reason, Settings_System section 8). A
+  provider's value is one Settings value: Settings > Providers & Accounts edits all four rows in the provider's own
+  section, and the Usage Accounts room hosts the provider's auto-switch toggle and switch point; both edit it through
+  the Settings owner with cmd.settings.transaction.preview and then cmd.settings.transaction.apply at scope provider
+  for that provider id (Plans/Settings_System.md#SSYS-044), and neither surface keeps a copy. For each
+  provider: auto-switch acts only while the provider has two or more signed-in accounts, and with one account it
+  reads off until a second account is signed in while its stored value is kept, its notch drawn dim on every meter,
+  and Usage shows auto-switch controls only where Settings does, for a provider of a kind with accounts that has two
+  or more; every meter of that provider, and only of that provider, carries a notch at the provider's switch point; only a fresh, identity-bound reading reported
+  by the provider for the active account may trigger a threshold switch, and a missing reading, a local estimate, a
+  reading older than the provider's freshness limit, an account that must sign in again, or a window whose reset has
+  passed without a new reading blocks it with that reason shown in plain words; the target is the eligible account of
+  the same provider with the most remaining, with the account priority order of MA-036 and then the stable account id
+  breaking ties, and an account is not eligible while it needs signing in, failed its sign-in renewal, has a
+  mismatched identity, has an incomplete or stale reading, is cooling down, or is hard blocked; the switch waits for
+  the attempt or message boundary of section 5, and meanwhile Usage and Settings say which account it will switch to
+  once the provider is idle; after a switch the provider's cooldown-policy keeps it from switching straight back; when
+  the active account has no plan quota left, no eligible account remains and the provider would draw paid credit or
+  extra usage, Usage and Settings say so plainly; and a manual Use this account (cmd.account.select_profile) on an
+  account already past its provider's switch point asks first, naming its reading and the switch point, at that
+  account's Use control or, when no row of it is shown, centred over the page, and that confirmation covers that one
+  manual choice only and is never read by automatic switching as consent for anything. An account exactly at its
+  switch point is said to be at it, one beyond it past it, and one at 100% used has run out; the line for an
+  exhausted account promises another account only when one qualifies under this rule. Each provider's auto-switch
+  status is one of a closed set of states, one account, no windows, off, unread, watching, waiting for idle, due and
+  no candidate, each shown in plain words as a projection of the scheduler's normalized reason codes of section 5,
+  never a second stored status vocabulary.
+gui_related: true
+gui_classification_reason: Settings shows and edits each provider's auto-switch, switch point, warning level and rest period; the Usage Accounts room edits the auto-switch and switch point and shows the warning level and rest period read-only, with the notches, status and confirmations.
+depends_on: [MA-036, MA-049, MA-069, SSYS-009, SSYS-018, SSYS-044]
+unblocks: []
+acceptance_criteria:
+  - "The four rows resolve, for every provider, account override over provider over project over global wherever the row has that scope; every one of the four has global, project and provider scopes, and a provider with no value of its own shows and uses the resolved shared value, labelled as the shared value."
+  - "Changing a provider's auto-switch, switch point, warning level or rest period in Settings, or its auto-switch or switch point on the Usage Accounts room, commits one Settings transaction at scope provider for that provider id, and the other surface shows the new value without a reload, before its next paint; neither surface holds its own copy."
+  - "Neither surface offers a switch level at or past the provider's warning level, or a warning level at or below its switch level."
+  - "A provider with one account shows a dim notch on every meter and no auto-switch controls on Usage or in Settings."
+  - "A provider with one signed-in account reads off until a second account is signed in, without changing its stored value; with two or more it acts on its own values only."
+  - "Every meter of a provider carries a notch at that provider's switch point and no other provider's notch."
+  - "A missing, locally estimated, stale, sign-in-required or reset-passed-without-reading active account never triggers a threshold switch, and the block reason is shown in plain words."
+  - "The threshold switch picks the eligible account of the same provider with the most remaining, ties broken by account priority and then account id, never switches mid-attempt, shows the waiting target until the boundary, and does not switch back while the rest period runs."
+  - "With no plan quota left and no eligible account, a provider that would draw paid credit or extra usage says so on Usage and in Settings."
+  - "Use this account on an account past its provider's switch point asks first; declining changes nothing, and accepting dispatches one cmd.account.select_profile that section 5 treats as the manual override."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Plans/settings_inventory.json (provider scope on the four ai.accounts rows, and global and project scopes on ai.accounts.cooldown-policy)
+  - future per-provider auto-switch resolution and eligibility fixtures
+risk_class: provider_auto_switch_scope_or_copy_drift
+reasoning_tier: high
+context_scope: multi_account_per_provider_auto_switch
+implementation_surfaces:
+  - Plans/Multi-Account.md
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+  - Plans/usage-feature.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: multi_account_per_provider_auto_switch
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-174
+  - "AIAccountCenter main 04c252fb: src/web-server/services/codex-auto-switch-service.ts and src/antigravity/auto-switch/policy.ts (per-provider auto-switch reference; external, read-only)"
+  - "AIAccountCenter main 04c252fb: web-dashboard/public/accounts-view.mjs and view-model.mjs (per-provider policy rows, meter notches, past-switch-point confirmation; external, read-only)"
+  - "Concepts/usage-redesign/src/js/54-w-accounts.js (Usage redesign Accounts room; source-lineage-only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/d-switch-REPORT.md, SHA-256 30eab667e56fdaf329c6bfa1a137f3ff2947cea903b811eae7b5208379a1291a (per-provider auto-switch as built; approval of the scope changes: Jared 2026-10-09 item 2)"
+preserved_exact_tokens:
+  - ai.accounts.multi-account-switching
+  - ai.accounts.hard-switch-level
+  - ai.accounts.soft-warning-level
+  - ai.accounts.cooldown-policy
+  - ai.accounts.account-threshold-override
+  - cmd.settings.transaction.preview
+  - cmd.settings.transaction.apply
+  - cmd.account.select_profile
+negative_constraints:
+  - Do not keep a Usage-local or provider-manager copy of a provider's auto-switch values, or write them past the Settings transaction.
+  - Do not trigger a threshold switch from a stale, estimated, unbound or reset-passed reading.
+  - Do not switch to an account of another provider under a provider's auto-switch, or switch mid-attempt.
+  - Do not let automatic switching treat a manual confirmation as consent.
+  - Do not invent a second auto-switch status vocabulary beside the scheduler's normalized reason codes.
+owner_hints:
+  - Plans/Multi-Account.md
+  - Plans/Settings_System.md
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-044, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Settings_System.md#SSYS-018, ContractName:Plans/FinalGUISpec.md#F3-441, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/Decision_Log.md#DL-174

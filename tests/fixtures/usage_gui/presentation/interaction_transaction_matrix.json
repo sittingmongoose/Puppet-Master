@@ -8,7 +8,10 @@
     "UIW-012",
     "ATS-037",
     "ATS-039",
-    "ATS-040"
+    "ATS-040",
+    "F3-518",
+    "F3-628",
+    "UF-107"
   ],
   "source_lineage": [
     "Plans/Widget_System.md#WS-019",
@@ -18,7 +21,11 @@
     "Plans/UI_Wiring_Rules.md#UIW-012",
     "Plans/Automated_Testing_System.md#ATS-037",
     "Plans/Automated_Testing_System.md#ATS-039",
-    "Plans/Automated_Testing_System.md#ATS-040"
+    "Plans/Automated_Testing_System.md#ATS-040",
+    "Plans/FinalGUISpec.md#F3-518",
+    "Plans/FinalGUISpec.md#F3-628",
+    "Plans/usage-feature.md#UF-107",
+    "Plans/Decision_Log.md#DL-176"
   ],
   "surfaces": [
     "Usage widget grid",
@@ -70,7 +77,14 @@
     "keyboard_pickup_move_drop",
     "keyboard_visible_picked_card_outline_without_required_pointer_clone",
     "truthful_aria_grabbed",
-    "complete_cleanup"
+    "complete_cleanup",
+    "usage_settled_layout_equals_last_painted_preview_plus_board_gravity",
+    "usage_board_gravity_floats_shown_cards_other_than_the_active_one_into_holes_above_keeping_order",
+    "usage_board_gravity_committed_inside_the_operation_single_command_with_one_receipt",
+    "usage_board_gravity_on_move_resize_preset_hide_and_show",
+    "usage_tidy_one_cmd_widget_move_with_arrange_mode_tidy_and_detail",
+    "usage_tidy_and_gravity_each_animate_as_one_movement",
+    "usage_release_morphs_into_place_without_overshoot_then_gravity_peers_float_up"
   ],
   "must_not": [
     "preview_command",
@@ -94,6 +108,61 @@
     "settled_event_or_successful_store_write_after_adapter_failure",
     "pointerup_retarget",
     "persisted_preview_footprint",
-    "outer_presentation_grid_mutation_owner"
+    "outer_presentation_grid_mutation_owner",
+    "usage_gravity_second_commit_or_later_step",
+    "usage_per_card_move_command_for_tidy_or_gravity",
+    "usage_new_layout_command_for_tidy_or_gravity"
+  ],
+  "usage_board_transactions": [
+    {
+      "operation": "pointer_or_keyboard_move",
+      "command": "cmd.widget.move",
+      "board_gravity": "applied_inside_the_same_command",
+      "commands": 1,
+      "receipts": 1
+    },
+    {
+      "operation": "pointer_or_keyboard_resize",
+      "command": "cmd.widget.resize",
+      "board_gravity": "applied_inside_the_same_command",
+      "commands": 1,
+      "receipts": 1
+    },
+    {
+      "operation": "size_preset",
+      "command": "cmd.widget.resize",
+      "carries": "preset_id",
+      "board_gravity": "applied_inside_the_same_command",
+      "commands": 1,
+      "receipts": 1
+    },
+    {
+      "operation": "hide",
+      "command": "cmd.widget.remove",
+      "board_gravity": "applied_inside_the_same_command",
+      "commands": 1,
+      "receipts": 1
+    },
+    {
+      "operation": "show",
+      "command": "cmd.widget.add",
+      "board_gravity": "applied_inside_the_same_command",
+      "commands": 1,
+      "receipts": 1
+    },
+    {
+      "operation": "tidy",
+      "command": "cmd.widget.move",
+      "carries": "arrange {mode: tidy, detail}",
+      "board_gravity": "full_repack_of_the_room_shown_cards_of_detail_first",
+      "commands": 1,
+      "receipts": 1
+    }
+  ],
+  "token_dispositions": [
+    {
+      "token": "obstructing_usage_pointer_resize_peers_repack_during_preview_and_match_accepted_settlement",
+      "disposition": "Read with usage_settled_layout_equals_last_painted_preview_plus_board_gravity: the accepted settlement matches the preview up to the settle-time board gravity of WS-019, committed in the same single settled transaction (ATS-039, F3-518). The token name is pinned by scripts/pm-validate-pm7-gui-fixtures.py."
+    }
   ]
 }

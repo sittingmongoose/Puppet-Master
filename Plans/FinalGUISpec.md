@@ -31461,6 +31461,19 @@ rows, all scope `global` and tier `simple`: `general.visual.nier-mode` (toggle, 
 the Basic family, not a ninth theme: the eight built-in variants of F3-425 are unchanged, and while it is on NieR
 decides the accent color and the app font. Its parts and background rows show only while it is on.
 
+Amended 2026-10-09 (per-provider auto-switch, `Plans/Decision_Log.md#DL-174`, owner `Plans/Multi-Account.md#MA-073`):
+four rows gain the `provider` scope beside the scopes they already have, `ai.accounts.cooldown-policy` also gains
+the `global` and `project` scopes so that each of the four has a global value and resolves through the same order,
+and the row count stays 916:
+`ai.accounts.multi-account-switching` (global, project, provider), `ai.accounts.hard-switch-level` and
+`ai.accounts.soft-warning-level` (global, project, provider, account), and `ai.accounts.cooldown-policy` (global,
+project, provider, account). MA-073 owns the order in which these scopes resolve, the shared value that a provider
+without a value of its own follows, and the switching rules. The provider value is set in the provider's own section of
+Settings > AI > Providers & Accounts and, for the toggle and the switch level, also on the Usage Accounts room's
+provider controls (`Plans/usage-feature.md#UF-107`); both are the same row, written only through the Settings owner's
+`cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with `scope=provider` (SSYS-009, SSYS-018,
+SSYS-044), and neither surface keeps a copy.
+
 ### F3-442 - Project Settings Modal Reconciliation
 
 ```yaml
@@ -34870,7 +34883,11 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   PMConcept7 Usage projects the thirteen canonical rooms and the exact At a glance, Detailed, and Diagnostics
-  disclosure ladder from the Usage owner into a balanced twelve-track widget workspace. Curated defaults,
+  disclosure ladder from the Usage owner into a balanced widget workspace whose track count follows the board's
+  measured width on the 12, 20, 24 and 30 track ladder of UF-094, which replaces the earlier fixed twelve-track
+  board (DL-176). Default boards use many narrow widgets, every widget kind has narrow widths that show the same
+  information, every size preset shows a complete content tier, and facts a size cannot show fold behind "N more"
+  with hover and Details rather than being dropped (UF-096). Curated defaults,
   provider-heavy narrow-and-tall cards, partial-row alignment, semantic size identities, complete-or-hidden
   content tiers, chart and meter lanes, source-confidence copy, Raw versus Curated views, Context details, and
   humanized Ledger labels must remain readable at supported sizes. Wider or taller widgets earn their footprint
@@ -34895,7 +34912,11 @@ canonical_text: >-
   `usage_event_ref`, normalize to `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`, keep
   the event/provider/account/runtime identities as correlation, and carry no `OpenSubject`. Event-primary callers
   retain usage_event/usage_event_ref. Aggregate provider, account, and panel cards open their existing local
-  inspector with no route command, receipt, or domain event.
+  inspector with no route command, receipt, or domain event. The Accounts room's explicit in-place controls are the
+  one exception, and only as UF-093 and UF-107 set out: Use this account dispatches cmd.account.select_profile, and
+  a provider's Auto-switch toggle and switch level are bound Settings controls committed through the Settings
+  owner's transaction; opening a card or its Details stays local. The redesigned page's look, its move and resize
+  previews, its menus, marks, heroes, charts and motion are owned by F3-628.
 gui_related: true
 gui_classification_reason: This unit governs the visible Usage room, widget, chart, meter, Context, and Ledger presentation.
 split_recommended: false
@@ -34904,9 +34925,10 @@ unblocks: [F3-515, F3-518, ATS-036, ATS-038]
 acceptance_criteria:
   - "Overview, Plans & limits, Costs, Accounts, Free models, Context, Analytics, Ledger, Attention, Prompt cache, Tools, Signals, and Source authority are all addressable, in that order and at every supported physical width, with only At a glance, Detailed, and Diagnostics as user-facing disclosure labels; Source authority mounts exactly 4/6/8 panels, and provider setup absence renders exact Provider Setup Required copy, explicit Host/Environment, preserved operation/continuation identity, and a cmd.settings.open CTA with target_type setting and setting_id ai.accounts.provider-connections."
   - "Every room has a non-empty curated default; partial final rows retain intentional widths and provider-heavy boards prefer narrower, taller, information-dense cards."
+  - "The board's track count follows its measured width on the 12, 20, 24 and 30 track ladder; every size preset of every widget kind shows a complete content tier, and facts a size cannot show fold behind N more with hover and Details."
   - "Each semantic size presents a complete tier or hides the tier entirely, chooses that tier from measured rendered width, and larger sizes reveal additional useful facts, rows, columns, or plots rather than blank area; reorder placeholders use measured rendered width and height rather than stale nominal spans, preview spans do not become settled layout fields, and supported curated sizes have no routine widget-body scrolling, clipped corners, value collisions, partial bars, bottom-content peeking, or partially exposed next-tier content."
   - "Every painted vertical bar, including a zero bar, has exactly one visible label inside the plot; labels remain horizontally associated with their own bars, measured direct or vertical-lane placement prevents clipping and pair overlap without suppressing data, accessible text retains the complete ordered series, values use the declared metric formatter and display unit, attempt-charge integer cents render with exactly two currency decimals rather than raw cents, and the title plus Latest and distinct peak remain complete in one row or a narrow two-row composition; reorder ghosts remain above cards until cleanup."
-  - "Source authority/confidence, unknown versus zero, Raw/Curated redaction, Context composition, and humanized Ledger attempt labels remain semantically truthful and visually legible; a PMConcept7 Ledger attempt routes by attempt_id as object_kind usage_attempt, preserves usage_event_ref plus provider/account/runtime correlation, and carries no OpenSubject, while provider/account/panel aggregate detail cards remain local inspectors and leave route-command, command-receipt, and domain-event counts unchanged."
+  - "Source authority/confidence, unknown versus zero, Raw/Curated redaction, Context composition, and humanized Ledger attempt labels remain semantically truthful and visually legible; a PMConcept7 Ledger attempt routes by attempt_id as object_kind usage_attempt, preserves usage_event_ref plus provider/account/runtime correlation, and carries no OpenSubject, while provider/account/panel aggregate detail cards remain local inspectors and leave route-command, command-receipt, and domain-event counts unchanged; only the Accounts room's Use this account and provider auto-switch controls dispatch, each through its existing owner."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
   - "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures"
@@ -34931,7 +34953,8 @@ source_lineage:
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
   - Plans/usage-feature.md#uf-093---usage-rooms-disclosure-and-local-projection-state
   - Plans/Widget_System.md#ws-017---kind-aware-curated-size-and-adaptive-content-contract
-preserved_exact_tokens: [Overview, Plans & limits, Costs, Accounts, Free models, Context, Analytics, Ledger, Attention, Prompt cache, Tools, Signals, Source authority, At a glance, Detailed, Diagnostics, Provider Setup Required, Host/Environment, cmd.settings.open, ai, ai.accounts.provider-connections, twelve-track, complete-or-hidden, Raw, Curated]
+  - "Concepts/usage-redesign/src/js/40-board.js and 42-cards.js (the redesigned board's width classes, narrow tiers and size presets; source-lineage-only)"
+preserved_exact_tokens: [Overview, Plans & limits, Costs, Accounts, Free models, Context, Analytics, Ledger, Attention, Prompt cache, Tools, Signals, Source authority, At a glance, Detailed, Diagnostics, Provider Setup Required, Host/Environment, cmd.settings.open, ai, ai.accounts.provider-connections, twelve-track, complete-or-hidden, Raw, Curated, N more]
 negative_constraints:
   - "Do not revive Essen, Std, Adv, essentials, standard, or advanced as user-facing disclosure labels."
   - "Do not stretch lone cards across a row or preserve wide empty space merely because the grid permits it."
@@ -34959,8 +34982,9 @@ canonical_text: >-
   candidate model with live interruptible peer displacement while peer nodes remain mounted and fully painted;
   entrance animations do not restart and the accepted settlement reconciles DOM order once. Usage pointer resize
   advances its real target footprint through the same deterministic slot projection, visibly repacks only
-  obstructed peers during the held preview, and retains that last-painted topology on acceptance without remounting
-  peers; Usage keyboard resize remains an atomic changed-only settlement per supported directional key intent, and Dashboard resize keeps peer rectangles frozen. Horizontal pointer or keyboard intent advances strictly on the requested supported curated
+  obstructed peers during the held preview, and on acceptance retains that last-painted topology with Usage board
+  gravity applied at settle, as WS-019 sets out (DL-176), without remounting peers; Usage Tidy and gravity settle
+  inside one existing widget command with one receipt, never one command per card (WS-019); Usage keyboard resize remains an atomic changed-only settlement per supported directional key intent, and Dashboard resize keeps peer rectangles frozen. Horizontal pointer or keyboard intent advances strictly on the requested supported curated
   axis at the far right, far left, and middle while minimizing companion-axis drift; an edge-constrained deliberate
   drag can express one step, and an in-viewport release commits the last painted supported size even after
   same-direction overshoot. A changed reorder
@@ -34983,7 +35007,7 @@ split_recommended: false
 depends_on: [F3-514, WS-019, CS-068, UCC-147, WM-045, UIW-012]
 unblocks: [ATS-037, ATS-039, ATS-040]
 acceptance_criteria:
-  - "While a pointer or keyboard preview is active, command, result, receipt, persisted-event, and storage-write spies remain empty; Usage pointer resize advances the target footprint and visibly displaces only obstructed peers while Dashboard resize peers remain frozen, and reorder peers visibly displace around the same stable two-dimensional candidate, including empty same-footprint cavities and lower rows, without peer-node remount, opacity loss, board blackout, child-list churn, or entrance-animation replay; Usage pointer targeting aligns the ghost's anchored top-left with one stable candidate origin under a geometric hysteresis margin so overlapping multi-span rectangles cannot steal the target, and keyboard pickup exposes truthful aria-grabbed plus a visible picked-card outline while traversing the same candidate set."
+  - "While a pointer or keyboard preview is active, command, result, receipt, persisted-event, and storage-write spies remain empty; Usage pointer resize advances the target footprint and visibly displaces only obstructed peers, with Usage board gravity applied only at settle as WS-019 sets out, while Dashboard resize peers remain frozen, and reorder peers visibly displace around the same stable two-dimensional candidate, including empty same-footprint cavities and lower rows, without peer-node remount, opacity loss, board blackout, child-list churn, or entrance-animation replay; Usage pointer targeting aligns the ghost's anchored top-left with one stable candidate origin under a geometric hysteresis margin so overlapping multi-span rectangles cannot steal the target, and keyboard pickup exposes truthful aria-grabbed plus a visible picked-card outline while traversing the same candidate set."
   - "A changed reorder release/drop commits the last painted intent without pointer-up re-hit-testing or retargeting; horizontal-only resize advances strictly along the requested supported curated axis at right/left/middle positions, minimizes companion-axis drift, admits an edge-limited one-step gesture, and commits an in-viewport last-painted maximum despite same-direction overshoot; it and every other changed final-coordinate release or semantic activation dispatch exactly one existing command and reconcile exactly one settled owner outcome without duplicate effects."
   - "Escape, pointercancel, lostpointercapture, blur, invalid target, stale revision, no-change release/drop, popup dismissal, and pre-dispatch validation failure restore the prior authoritative state with no command or receipt and clear capture, ghosts, placeholders, portals, classes, animation frames, and transient listeners; an owner-rejected or post-dispatch adapter-failed attempt retains exactly one command and one rejected/failed receipt but no settled event or successful owner-store write; changed pointer and keyboard reorder restore the exact pre-transaction inline board minimum height, leave scroll extent bounded to settled card geometry without a compounding blank tail, and exclude concurrent resize/reorder acquisition until the sole owner terminates."
   - "The current workspace.layout_changed 1.1.0 payload is emitted only for an applicable changed committed layout, requires settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted result and receipt references, prior/new revisions, mutation, final target and settled-layout data, and the required nullable semantic_size_preset_id through its closed schema."
@@ -35174,7 +35198,10 @@ canonical_text: >-
   browser execution, raw receipts, and independent review. Final certification combines deterministic build
   proof, machine-readable geometry and state assertions, actual-pixel review, and frame-by-frame motion review.
   The widget interaction slice binds the exact generated artifact hash and covers repeated right-edge (primary),
-  left-edge, and middle pointer/keyboard resize settlement plus pointer-only live occupied-peer preview repack with accepted-settlement parity,
+  left-edge, and middle pointer/keyboard resize settlement plus pointer-only live occupied-peer preview repack with accepted-settlement parity
+  up to settle-time gravity: the accepted layout equals the last-painted preview exactly except that the Usage board
+  gravity of WS-019 (DL-176) slides shown cards other than the active one up into space freed above them, committed
+  in the same single settled transaction and never as a later step,
   direct and rescued magnetic-control
   acquisition, cancellation/no-op cleanup, stable mounted reorder peers, and black/empty-frame detection.
   The acquisition evidence includes a real top-layer occluder and transaction reentrancy probes, while settled
@@ -35190,7 +35217,7 @@ acceptance_criteria:
   - "The canonical Usage and shared PM7 fixture trees exist in the repository and concept demo reports are not used as substitutes for them."
   - "Every fixture records stable identity, owner PlanUnits, source lineage, affected surfaces, must assertions, and must-not assertions."
   - "Fixture files and their must/must_not lists grant static representation only and do not prove runtime, visual, motion, or migration behavior; visual certification requires fresh browser execution, raw receipts, screenshots/contact sheets, and independent actual-pixel review in addition to DOM, state, and geometry assertions."
-  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence binds one exact generated artifact and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, exact preview-to-accepted-settlement topology parity, Dashboard-frozen resize peers, direct and displaced-handle acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
+  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence binds one exact generated artifact and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, preview-to-accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), Dashboard-frozen resize peers, direct and displaced-handle acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
   - "No accessibility acceptance expansion, WorkNode, NodeSeed, executable queue, implementation task, or production code is created by this evidence contract."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
@@ -42271,8 +42298,10 @@ canonical_text: >-
   a shelf tint or a selected row. Colours are token roles: done and live --graph-passed, running --graph-running,
   warning, stale and changed --accent-warning, failed and blocked --graph-failed, pending and info --accent-blue,
   idle, unknown and immutable the muted text colour, paused --accent-warning, conflict --accent-magenta, orphaned
-  and errored --accent-orange, and current --accent-primary, the selection colour; under NieR Mode done, live,
-  idle and paused draw in the NieR ink. In the light looks and NieR Mode dark the word takes a deeper tone of its
+  and errored --accent-orange, and current --accent-primary, the selection colour; under NieR Mode every state
+  glyph and word draws in the NieR ink, running, stale, warning, orphaned and errored included (amended 2026-10-09
+  after the shared cleanup, DL-162; until then only done, live, idle and paused did), and only the failure colour
+  (failed and blocked) and conflict keep NieR's red, the shape telling the inked states apart. In the light looks and NieR Mode dark the word takes a deeper tone of its
   colour, mixed toward the text colour, so it reads at about 4:1, while the glyph keeps more of the colour. Shape
   and word always carry the state, so it
   never rests on colour alone. Counts are plain numbers in tabular figures, right-aligned in one column across a
@@ -42308,6 +42337,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-162"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06"
   - "Concepts/leftrail-redesign/src/concepts/d/00-d.js and css/50-status.src.css (concept lineage only, commit c93e341606)"
+  - "Concepts/leftrail-redesign/src/concepts/d/css/10-tokens.src.css, NieR state colours in ink (shared cleanup lane commit a136797dad; concept lineage only)"
 preserved_exact_tokens:
   - "glyph and word"
   - "tabular figures"
@@ -42353,7 +42383,9 @@ canonical_text: >-
   at the current rail width and redone on a resize, a theme change and a tab change, and a panel shown again at an
   unchanged width is not refitted. This amends F3-480 (3) for the rail, whose fit ladder loses its abbreviated form,
   and replaces F3-445's scroll-and-ellipsis recipe for the rail's segmented strips; the width tiers still gate chrome
-  only (F3-498).
+  only (F3-498). Amended 2026-10-09 after the shared cleanup (DL-162): no abbreviation applies to ages either; ages
+  and durations are spelled out in words ("4 minutes", "2 hours ago", "1 minute 48 seconds"), never cut to unit
+  letters, while a decimal measurement keeps its unit symbol ("3.4s").
 gui_related: true
 gui_classification_reason: Defines how labels, names and tabs fit the narrow left rail.
 split_recommended: false
@@ -42384,6 +42416,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-162"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06"
   - "Concepts/leftrail-redesign/src/concepts/d/20-fit.js (concept lineage only, commit c93e341606)"
+  - "Concepts/leftrail-redesign/src/concepts/d/00-d.js AGE_RX and 10-skin.js applyWords, ages spelled out (shared cleanup lane commit a136797dad; concept lineage only)"
 preserved_exact_tokens:
   - "never abbreviated"
   - "keeps its head and its end"
@@ -42437,7 +42470,16 @@ canonical_text: >-
   which a chosen tab no longer takes, moves to the new box's centre and fades out. Every rail animation follows
   general.visual.animation-speed, lands at its end state at
   once under reduced motion (general.visual.reduce-animations or the operating system), and none persists on the
-  active view (F3-480 (4)).
+  active view (F3-480 (4)). Amended 2026-10-09 after the shared cleanup (DL-162): Arrow Left and Right, Home and
+  End move along every rail tab strip and choose the tab they reach, focus following it, in Files, Search, Source
+  Control's Git and Jujutsu strips (F3-623), Actions & Pipelines, Docker Manager, Runtime Artifacts, Testing and
+  Debug & Run; under NieR Mode the Target brackets lock onto the tab chosen by a key move exactly as after a click.
+  NieR Mode's entrance wipe never blocks input: a click on a tab strip during a panel's entrance always chooses the
+  tab. When the home layer folds the rail in a narrow window and opens the side panel as an overlay over the
+  centre, the rail draws that overlay in each family's voice, an opaque plate with a hairline edge all round and the
+  family's shadow and entrance, Glass keeping the shell's frosted box and nothing moving under reduced motion, and
+  its fitting follows the overlay's width; when the side panel eases or folds, and Pin, belong to the home layer,
+  and the fold is view-local, never saved, with no command or wiring row.
 gui_related: true
 gui_classification_reason: Defines the left rail's dropdown look and its motion in each theme family.
 split_recommended: false
@@ -42448,6 +42490,7 @@ acceptance_criteria:
   - "Under reduced motion every rail animation is instant, and Animation speed scales every scripted rail animation."
   - "Under Glass no rail row animates a blur and no rail element adds a backdrop blur."
   - "In Retro, at every frame of a tab change, at most one tab shows the chosen colours; under NieR Mode the target brackets settle on the chosen tab's final box."
+  - "On every rail tab strip Arrow Left and Right, Home and End choose the tab they reach and focus follows; under NieR Mode the brackets settle on a tab chosen by key, and a click during a NieR entrance chooses its tab."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -42467,6 +42510,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06"
   - "Concepts/leftrail-redesign/src/js/20-menu.js and src/concepts/d/10-skin.js, 30-motion.js, 40-bar.js (concept lineage only, commit c93e341606)"
   - "Concepts/leftrail-redesign/src/concepts/d/31-tabs.js and css/22-tabs.src.css, tab switches redone per family for the owner's issue 3 of 2026-10-09 (lane commits 9e8e75acab and 95e0259ab1; concept lineage only)"
+  - "Concepts/leftrail-redesign/src/concepts/d/ shared cleanup: keys on every strip and the NieR wipe as a mask (lane commits a136797dad and b56efb00cc), and css/24-fold.src.css with 20-fit.js for the narrow-window overlay (commit 2f3a4ac7df); concept lineage only"
 preserved_exact_tokens:
   - "chat's picker style"
   - "general.visual.animation-speed"
@@ -42477,9 +42521,11 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept times its motion with the theme tokens it has (about 240, 420, 480 and 200 ms); the product's motion tokens own exact durations and the beats and voices here bind."
   - "The concept reaches NieR Mode's Menu cursor and Target brackets parts through two hooks in the NieR kit (opus-5.5 settings kit, 19-nier-parts.js): .pmr-cur in its cursor selector list, and a .pmr-lock branch in its bracket placement that places the brackets after the click lands; the hooks are concept plumbing, the behaviour above is canon."
+  - "In the concept the home layer writes data-pm-rail-fold, eased or overlay, on #sidePanelSlot and dispatches pm:rail-fold with the mode and width, and the rail styles and refits from them; the attribute and event are concept plumbing agreed with the home redesign thread on 2026-10-09."
 stale_retired_dispositions: []
 owner_boundary_notes:
   - "ACD-439 owns the sprout motion and the chat pickers' look; this unit applies them to the rail and adds only placement and keyboard."
+  - "The home redesign owns the narrow-window behaviour (the side panel eased to 240 px, then below a 760 px centre the rail folded to its icon bar with the side panel as an overlay, Pin restoring docking, never saved); its canon is not on main at this amendment (DL-180 on plans/home-panels-terminal-canon-20261009). This unit owns only how the rail draws and fits in that overlay."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
@@ -42625,7 +42671,8 @@ canonical_text: >-
   relabelled, and Git's strip, list and footer are hidden in Jujutsu mode while the Jujutsu view is hidden in Git
   mode. Both strips are the rail's one tab component (F3-618 to F3-621), each with its own tablist name ("Jujutsu
   views" for Jujutsu), tabs that carry their selected state and controlled pane, and Left, Right, Home and End
-  moving between tabs, focus following once the chosen tab has settled. Operation Log's tab icon is a list; the
+  choosing along the strip with focus following, as on every rail strip (F3-621, amended 2026-10-09 after the
+  shared cleanup, DL-163; until then focus waited for the chosen tab to settle). Operation Log's tab icon is a list; the
   undo arrow is kept for the Undo action alone, so no view tab looks like a button that rewrites, and Fetch's
   download icon differs from Refresh's. Selecting a tab of either strip is cmd.source_control.select_tab with that engine's tab set;
   it changes no repository state. Slots 1 to 4 sit in the same positions in both strips (Changes; Worktrees or
@@ -42673,6 +42720,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-163"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06 (issue 2)"
   - "Concepts/leftrail-redesign/src/concepts/d/15-jj.js and css/71-source.src.css, css/73-jj.src.css (lane commits 8693996260 and 2f77b78710; concept lineage only)"
+  - "Concepts/leftrail-redesign/src/concepts/d/15-jj.js and css/22-tabs.src.css, the Jujutsu strip on the rail's tab engine with Arrow, Home and End choosing (shared cleanup lane commit a136797dad; concept lineage only)"
 preserved_exact_tokens:
   - "Operation Log"
   - "cmd.source_control.select_tab"
@@ -42789,3 +42837,187 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-163, ContractName:Plans/FinalGUISpec.md#F3-623, ContractName:Plans/Jujutsu_Integration.md#JJI-003, ContractName:Plans/Jujutsu_Integration.md#JJI-012, ContractName:Plans/Jujutsu_Integration.md#JJI-014, ContractName:Plans/Jujutsu_Integration.md#JJI-019, ContractName:Plans/Decision_Log.md#DL-057
+
+## DL-173 to DL-179 — The Redesigned Usage Page In PMConcept7 (2026-10-09)
+
+This addendum compiles the owner decisions DL-173 to DL-179: Jared approved the redesigned Usage page, asked for it to replace the old one in PMConcept7, and added notes of 2026-10-09. Behaviour stays with its owners: `Plans/usage-feature.md#UF-107` and the Usage units it amends (what the page shows and does), `Plans/Multi-Account.md#MA-073` (per-provider auto-switch), `Plans/Widget_System.md#WS-017` to `#WS-020` (sizes, presets and the board transaction), `#F3-514` and `#F3-515` above (rooms, sizes and the settled-interaction boundary), `#F3-465` with `#F3-446` (hover), and `Plans/assistant-chat-design.md#ACD-475` (motion voices). The unit below owns the page's presentation only, and `Plans/DRY_Rules.md#DR-058` makes it the single owner of the Usage presentation grammar. The concept under `Concepts/usage-redesign/` is source lineage only: its class names, keys, switches, harness hooks and measured timings outside this unit are not canon.
+
+### F3-628 — The Redesigned Usage Page's Presentation
+
+```yaml
+plan_unit_id: F3-628
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The redesigned Usage page (DL-173) is calm, polished and dense: it shows far more data per screen than the page it
+  replaces and never trades a fact for space. It reads like the Daylight Atlas reference: a clear type hierarchy,
+  small-caps micro-labels, row tables whose window columns line up, plate titles with one subtitle line, semantic
+  colour pairs, and series colours by token type. There are no pills, no coloured side bars, no tinted side boxes
+  and no emoji; icons are inline SVG, and the hero key light below is the one approved tint. Sizes are readable at a
+  desktop distance (DL-175): values and body text 13 to 14 px, chart ticks, legends and small captions never below
+  11 px, and rows and buttons 28 to 32 px tall for a mouse. Type is the theme family's own font from the app's one
+  embedded font set (DR-058), and every fit is measured again once a face finishes loading, so a late face never
+  leaves a label truncated or overflowing: no measurement taken in a fallback face is kept, the refit runs in slices
+  with the cards in view first so that it never makes a long task, and text uses only glyphs the embedded faces
+  carry. Each room has one explicit hero plate (DL-178). A soft top-left radial key light
+  falls on the hero plate at 16% strength in dark themes and 9% in light themes; on arrival and on a room change
+  only the hero number rolls, like an odometer, while supporting values appear final with a short fade, and rolls
+  stay for live changes and for range and scope changes. Below the warn line, meters and skyline towers shade by
+  value along a calm spectrum from indigo through cyan to mint; at and above the warn line the tones of the Settings
+  thresholds take over, and every meter of a provider carries a notch at that provider's switch point (MA-073).
+  Charts are one family (area, line, columns, budget and stacked) with gradient fills, soft depth on lines and
+  marks, rounded caps, readable axes and legends, a hover crosshair with a readout card, draw-on with a leading
+  glow, and morphs that read as one continuous shape, live changes included. Each series' end marker sits on that
+  series' own last point, and chart values keep the value states of F3-418, so unknown never paints as zero. Every
+  mark that sits on a line (hover dots, end and now dots with their glows, cost dots) moves on that line's own path
+  tween, with its timing and progress, and is never animated beside it on its own; during a range morph a mark with
+  no earlier position (a new series, a callout) appears when the morph finishes, and leaving cost dots shrink on the
+  tween's frames over a fading copy of their old line, which cross-fades into the new one. A crosshair or readout
+  mark that changes size keeps its anchor point. A plot of one token type, such as the savings trend, colours its
+  line, end dot and hover dot with that token type, shows no all-tokens row in its readout and takes no part in the
+  token trend's room-change flight. When a
+  size cannot show every fact, the rest fold behind an "N more" control that opens on hover and in Details. Every
+  provider row, legend, group header, chart series key and account card shows the provider's official mark, never
+  recoloured, filtered, tinted or redrawn and never set on a disc or plate other than a published app-icon plate,
+  in its light or dark variant where the provider publishes one, contained in a square box at its own optical
+  scale; Free Models and Local model server use neutral interface icons, and a monogram is used only where no mark
+  exists. Every dropdown on the page (scope, disclosure, range overflow, the card menu, the size menu, chart type and
+  options, thresholds, provider and account filters, Export and the Live menu) is a menu of the chat assistant's menu
+  family (F3-531's menus, portaled as F3-424 sets out, opening with the corner-origin sprout of F3-461), with arrows,
+  Enter, Escape and type-to-search. The Accounts room groups providers as the Settings catalog does, one plate per
+  provider with its mark and name and, for a provider with two or more accounts, its Auto-switch toggle and switch
+  level in the plate head; each account is one row with its window columns aligned, and a provider not set up is one
+  compact line. Plans & limits shows one row per account. The Live / Paused control sits beside the page name in
+  the rail head as the word Live or Paused, with a small live dot and a chevron that opens its menu. A room change plays a camera move, a shared-element flight for the
+  elements the two rooms share, the hero's reveal and the room's own signature beat; every room's entrance from
+  every neighbour is visible and rich, and it may vary by direction or by what the rooms share but is never a plain
+  cut. Its beats run in one order in every voice: camera, frames, the hero with its number first, the supporting
+  plates, then the signature beat, the hero landing within about 200 ms of the click and the beat at about 1.1 s.
+  The camera move is one visible move scaled to the distance along the rail; the old room fades only once the new
+  room's frames are on the board, so no blank moment shows, and the first change after Usage opens meets the same
+  floor as later ones. The signature beat is held until its time and plays on every entry, from any room. A shared
+  element flies only from one fill to the matching fill, and one with no match dissolves into its home plate.
+  Moving a widget lifts the card to follow the pointer one to one while a landing placeholder sits in the exact
+  target slot and the peers in its way slide to make room; resizing shows a live outline of the snapped target size
+  with its size name and its width by height while the peers in its way reflow; release morphs the card into place,
+  after which board gravity floats the other cards up into the holes above them, and Escape glides it back.
+  Width resizes from the right edge, the left edge and the corners at every board width. Tidy and board gravity
+  (WS-019) each move the cards into place as one movement. The size menu previews each preset with its name before it
+  is chosen. A card's head actions never cover its title or the head tools and always fit inside the card head at
+  every width, taking the widest form that fits: all four tools, then the grip and the menu, then the menu alone,
+  which then holds size, configure, details, move, resize, Tidy and hide. Showing or hiding them never reflows the
+  head, whether the pointer enters or leaves: a title that gives room keeps its resting lines and ends in an
+  ellipsis, a title whose word would break shows one line that ends in an ellipsis, centred level with the provider
+  mark, the title takes its full lines back only once its room has returned, and the full title stays reachable in
+  its hover tag, the card menu's title and Details.
+  Hover on the page is the shell's one hover system (F3-465 driven through F3-446's single pointer handler), with no
+  Usage-only hover engine; a hovered plate lifts by whole pixels only, with no scale and no lasting compositing
+  layer, so its text stays sharp, and Retro and NieR plates do not lift. No blur outlives its moment: hover leaves
+  no blurred or scaled raster behind, an entrance's blur ends with the entrance, a plate keeps an entrance's
+  compositing layer only for its own entrance, and nothing on the page stays blurred at rest. Motion takes the theme
+  family's voice from ACD-475, which owns each voice's character, Friendly's and Glass's distinctness from Basic
+  included; Usage adds no voice and no per-view override (DR-043), and a rolling or counting value never
+  overshoots its final value. Under NieR Mode the page is the app's NieR, with no second vocabulary and no colour of
+  its own: it takes NieR's parts, tokens, timing and grammar (SSYS-043, F3-589, F3-598) and mirrors the page parts of
+  DL-152, and it never plays the onboarding window's NieR effects (its page wipe, boot log and banner) or the reboot
+  plate, which stays DR-056's one plate. A room change decodes the room title only, under the Text decode part; no
+  other text on the page decodes. The menu cursor marks the rail's room buttons, menu rows and the range strip as an
+  ink bar with paper text, the bar and the text changing in the same frame with no colour fade; a count or an
+  official mark inside the bar sits on a square paper cell, never recoloured and never a pill; and the chosen range
+  takes the target brackets. The rail kicker ([ROOM nn/13]) is a label and keeps the 11 px floor. The inspector
+  opens from a line across its middle and closes back to it in three steps, refresh is a hollow diamond making one
+  half turn per refresh and never a loop, the chart readout is the intel card with its ink band unfolding from the
+  left, and the stage note speaks as Report:. Charts, heroes and motion are stepped, in ink and paper, with no glow,
+  filter or blur, and under Reduce Motion, from the app's setting or the operating system's, NieR on Usage is
+  instant. While Usage shows, the app's NieR idle loops (the scene parts and the Pod's bob) pause in place and the
+  drifting motes hide, so nothing on Usage moves, or sits frozen mid-motion, at idle except a Live change; every
+  other page keeps them as before. Continuous motion runs only on transform and opacity and targets 60 frames a
+  second on a computer without a GPU; nothing loops at idle, the only motion at rest being one live change per
+  applied batch while Live is on (UF-107); a room click never runs a main-thread task longer than about 50 ms,
+  because the new room is built in slices and then released; and on a computer without a GPU, Glass shows its solid
+  pane instead of the live backdrop blur while Usage is open. Reduce Motion is instant (DL-115): every beat lands
+  at its end state, and every close path, Escape included, works under it. The Slint portability limits recorded
+  for earlier Usage units do not bind this page's look (DL-173, after DL-139), and framework version pins are
+  unchanged.
+gui_related: true
+gui_classification_reason: Defines the look, menus, marks, heroes, charts, previews, hover and motion of the redesigned Usage page.
+split_recommended: false
+depends_on: [DL-173, DL-174, DL-175, DL-176, DL-177, DL-178, DL-179, DL-115, DL-139, DL-152, UF-107, F3-418, F3-424, F3-446, F3-461, F3-465, F3-514, F3-515, F3-531, F3-589, F3-598, ACD-475, SSYS-043, MA-073, WS-019, DR-056]
+unblocks: []
+acceptance_criteria:
+  - "No pill, coloured side bar, tinted side box or emoji appears on the page; values and body text are 13 to 14 px, no tick, legend or caption is below 11 px, and rows and buttons are 28 to 32 px tall."
+  - "Fits are measured again after the fonts finish loading, and no label is truncated or overflows once they have."
+  - "Each room has one hero plate with the top-left key light at 16% in dark themes and 9% in light themes; on arrival and on a room change only the hero number rolls."
+  - "Below the warn line, meters and skyline towers shade from indigo through cyan to mint; at and above it the Settings threshold tones apply, and every meter of a provider shows that provider's switch-point notch."
+  - "In every dual-series chart, in every look and size, each series' end marker sits on that series' own last point."
+  - "Facts a size cannot show are reachable through N more on hover and in Details."
+  - "Every provider mark is the official mark, unrecoloured and unfiltered, in a square box; only Free Models and Local model server use neutral icons."
+  - "Every dropdown on the page is a chat-family menu with arrows, Enter, Escape and type-to-search."
+  - "The Accounts room shows one plate per provider in Settings order with one row per account and aligned window columns; Plans & limits shows one row per account."
+  - "Every room entered from every neighbour plays a visible entrance and never a plain cut, except under Reduce Motion, where it is instant."
+  - "Moving and resizing show the lifted card, the landing placeholder or the live size outline with the size name and width by height, peers move live, release morphs into place and Escape glides back; width resizes from both edges and the corners at every board width."
+  - "A card's head actions never overlap its title at any width, and showing or hiding them never reflows the head; a shortened title stays reachable in full in its hover tag, the card menu and Details."
+  - "A hovered plate lifts by whole pixels with no scale, and Retro and NieR plates do not lift."
+  - "A room change runs camera, frames, the hero with its number first, the supporting plates and the beat in that order, shows no blank moment between rooms, and the first change after Usage opens meets the same floor as later ones."
+  - "Every mark on a line moves on that line's path tween; a mark with no earlier position appears when the morph finishes; a single-token plot uses its token colour and shows no all-tokens row."
+  - "No label is truncated, and no measurement from a fallback face is kept, after an embedded face finishes loading late, and the refit makes no long task."
+  - "After hover ends and after an entrance ends, nothing on the page stays blurred."
+  - "Usage motion under Friendly and Glass is ACD-475's voice for that family, visibly distinct from Basic as ACD-475 requires, with no Usage-only voice, and no rolling or counting value overshoots its final value."
+  - "Under NieR Mode the page draws no glow, filter or blur and the menu cursor marks the rail's room buttons, menu rows and range strip; a room change decodes only the room title; the onboarding window's NieR effects and the reboot plate never play on Usage; the rail kicker is at least 11 px; and the app's NieR idle loops are paused while Usage shows."
+  - "Nothing animates at idle except one live change per applied batch while Live is on; no room click runs a main-thread task over about 50 ms; on a computer without a GPU, Glass shows its solid pane while Usage is open."
+  - "Under Reduce Motion every beat lands at its end state and every close path, Escape included, works."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures
+  - python3 scripts/pm-plans-verify.py validate-pm7-gui-fixtures
+risk_class: usage_redesign_presentation_drift
+reasoning_tier: high
+context_scope: usage_redesign_presentation
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/usage-feature.md
+  - Plans/Widget_System.md
+  - Plans/DRY_Rules.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-173"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md section 2, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
+  - "Concepts/usage-redesign/ (src/js, src/css, marks/sources.json; concept lineage only; branch concept/usage-pm7-20261009)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/b-motion-REPORT.md, SHA-256 a1f292802f9ae740765c721f8f6196b44ad98ec3a41271f208528c7c03fed87a (room-change floor)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/f-nier-REPORT.md, SHA-256 a25c0fc054711548cb82c14722dbe4664eae478a1e6d718bfbf9cabe884ef28b (NieR on Usage)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/g-fonts-REPORT.md, SHA-256 5886a8634de013933fe565badc478ee439afb232714fcf2bb0e97c3afddd080d (embedded fonts and fit)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/b-fix-REPORT.md, SHA-256 906a62d86051f7dea06d179a072d8cdf1a6af2c10532a6438852e06f98f572a3 (hover lift, blur and card-head actions)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/e-charts-REPORT.md, SHA-256 1c2f643776e5063f92bb62c1216ea5f7a152b1b33f1b8f1bf884471b46f14883 (marks riding the path tween)"
+preserved_exact_tokens:
+  - "N more"
+  - "16%"
+  - "9%"
+  - "Live / Paused"
+  - "50 ms"
+  - "[ROOM nn/13]"
+  - "Report:"
+negative_constraints:
+  - "Do not use pills, coloured side bars, tinted side boxes or emoji, and do not tint a box or plate other than the hero plate's key light."
+  - "Do not recolour, filter, tint or redraw a provider mark, and do not draw a monogram where a mark exists."
+  - "Do not build a Usage-only menu style, hover engine or motion voice."
+  - "Do not leave a blur on after hover or an entrance ends, or loop any animation at idle."
+  - "Do not let a rolling or counting value overshoot its final value."
+  - "Do not play the onboarding window's NieR effects or the reboot plate on Usage, or decode any text there but the room title."
+  - "Do not animate a mark that sits on a line apart from that line's path tween."
+  - "Do not scale a hovered plate or keep a compositing layer on it after its entrance."
+compatibility_only_notes: []
+stale_retired_dispositions:
+  - "The two-letter monogram system of the earlier Atlas design notes is retired wherever an official mark exists."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/usage-feature.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-173, ContractName:Plans/Decision_Log.md#DL-175, ContractName:Plans/Decision_Log.md#DL-176, ContractName:Plans/Decision_Log.md#DL-178, ContractName:Plans/Decision_Log.md#DL-179, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/FinalGUISpec.md#F3-531, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Settings_System.md#SSYS-043, ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/DRY_Rules.md#DR-058, ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/DRY_Rules.md#DR-056, ContractName:Plans/Decision_Log.md#DL-152

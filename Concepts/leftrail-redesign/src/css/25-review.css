@@ -1,0 +1,33 @@
+/* Review copy only (rail_layer.apply_review): the view concepts' sections replace the three redesigned panels while
+   their original is .active; the six other panels and "Original" (id current) stay exactly as the shell draws them. */
+.pmr-view { display: none; }
+html[data-rail-concept]:not([data-rail-concept="current"]):not([data-rail-skin]) #sidePanelSlot > :is(#panel-files, #panel-source, #panel-docker) { display: none !important; }
+html[data-rail-concept]:not([data-rail-concept="current"]):not([data-rail-skin]) #sidePanelSlot > #panel-files.active ~ .pmr-view[data-pmr-for="panel-files"],
+html[data-rail-concept]:not([data-rail-concept="current"]):not([data-rail-skin]) #sidePanelSlot > #panel-source.active ~ .pmr-view[data-pmr-for="panel-source"],
+html[data-rail-concept]:not([data-rail-concept="current"]):not([data-rail-skin]) #sidePanelSlot > #panel-docker.active ~ .pmr-view[data-pmr-for="panel-docker"] {
+  display: flex;
+}
+.pmr-view {
+  position: relative; flex-direction: column; flex: 1 1 auto; height: 100%; min-height: 0; min-width: 0; overflow: hidden;
+  background: var(--surface); color: var(--pmr-text); font-family: var(--pmr-font); font-size: var(--pmr-fs-name); line-height: var(--pmr-lh);
+  -webkit-font-smoothing: antialiased; contain: layout style;
+}
+html[data-theme^="glass"] .pmr-view { background: transparent; }
+.pmr-view *, .pmr-view *::before, .pmr-view *::after { box-sizing: border-box; }
+.pmr-missing { padding: 16px var(--pmr-pad-x); color: var(--pmr-text-3); font-size: var(--pmr-fs-meta); }
+
+/* the transient layer beside the rail (Lens): above the editor, below menus and hover tags */
+#pmr-overlay { position: fixed; left: 0; top: 0; width: 0; height: 0; z-index: 900; }
+
+/* the switcher, inside the shell's status bar: one more status item, no pill */
+.pmr-switch-group { margin-right: 4px; }
+.pmr-switch { gap: 5px; }
+.pmr-switch .pmr-ico { width: 13px; height: 13px; }
+.pmr-switch .pmr-switch-k { color: var(--text-muted); }
+.pmr-switch .pmr-switch-chev { width: 11px; height: 11px; opacity: .7; }
+.pmr-switch.is-menu-open { background: color-mix(in srgb, var(--text-primary) 8%, transparent); }
+
+/* Review copy only: the onboarding "Concept demo" pill sits fixed at the bottom-left, over the rail and the switcher.
+   Here it moves to the bottom centre of the window so the rail's bottom edge stays visible. */
+html[data-rail-concept] .o55-demo:not([data-o55-narrow]) { left: 50%; bottom: 34px; transform: translateX(-50%); }
+html[data-rail-concept] .o55-demo:not([data-o55-narrow]) .o55-demomenu { left: 50%; transform: translateX(-50%); }

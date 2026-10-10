@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L3693
+Source lines: L13-L3930
 
-Source SHA256: `7cc9b9fe9f92aba3c6f70d676e3c04e1241c53343e92233257cd1ede67f13306`
+Source SHA256: `c3437db1bd98d1080dbb098500df82055faa88646a17c509f52314f178674641`
 
 ---
 
@@ -3655,6 +3655,243 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/Final
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md`, SHA-256 `4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06` (the owner request, verbatim, issue 2); the left-rail build's Jujutsu tab decision, revision 2 of 2026-10-09, folded with two reviews and summarised in this entry (not a repository file); the concept source `Concepts/leftrail-redesign/src/concepts/d/` from lane commits 8693996260 and 2f77b78710 (concept lineage only).
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-623, ContractName:Plans/FinalGUISpec.md#F3-624, ContractName:Plans/Source_Control_System.md#SCS-005, ContractName:Plans/Jujutsu_Integration.md#JJI-006, ContractName:Plans/FinalGUISpec.md#F3-529
+
+### DL-173: The Usage page is redesigned and replaces the old one
+
+**Question:** Does the redesigned Usage page replace the current one in PMConcept7, and what of it does the spec now hold?
+
+**Why it came up:** On 2026-10-01 Jared asked for the Usage page to be redesigned: a polished look, every chart redone and animated, better moving and resizing of widgets, far more data on screen at once, a rebuilt Accounts room and full NieR Mode support, without dropping anything the page shows today. It was built in a review copy, `Concepts/UsageTestPMConcept7.html`, so that PMConcept7 stayed untouched until he approved it. On 2026-10-09 he approved the review copy and asked for it to be brought into PMConcept7 with eleven tweaks, for the review copy to go away afterwards, and for the plans, the DRY rules, the commands and the wiring to be updated to match. None of the redesign's decisions was in the spec yet.
+
+**What you get:**
+- PMConcept7's Usage page is the redesigned one: the calm, polished direction (Direction B) with the readability of the Daylight Atlas concept: a clear type hierarchy, plate titles with a one-line subtitle, row tables with aligned window columns, paired meaning colours and Atlas-style analytics.
+- The rail of rooms on the left and the overall layout stay, and so do the thirteen rooms, the three disclosure levels and the board made of widgets.
+- No pills, no coloured side bars or tinted side boxes, and no emoji; icons are drawn inline.
+- Every chart and graph is redrawn and animated, and much more data is visible at once.
+- Every fact the old page showed is still on the new one, in its natural widget; adding is allowed.
+- NieR Mode is fully supported on Usage and matches the app's newest NieR look, including NieR's ink-bar cursor on the Usage rail and menu rows.
+- Usage measures its text fits with the fonts the app embeds, not with fallback faces, and measures again once those fonts have loaded.
+- The bar is that the page impresses: clean, correct and readable is the floor, with rich motion and light on top of it.
+
+**What it costs:**
+- A much richer page to keep in step across the eight themes and NieR Mode, in pictures and in motion, while holding 60 frames a second on a computer without a GPU.
+- The review copy `Concepts/UsageTestPMConcept7.html` is deleted once the port has landed. The repository rule that nothing under `Concepts/` is deleted is set aside for this one file, on Jared's instruction; the redesign's sources under `Concepts/usage-redesign/` stay.
+- The concept's look is no longer held to the Slint portability notes in the Usage and hover units. Those notes stay where they are as compatibility notes for the native port, the native renderer stays as DL-139 decided, and no framework version pin changes.
+
+**Options considered:** Three mockups were shown on 2026-10-01: A, a precision instrument; B, calm polish; C, a living system. Jared chose B as the base and asked for better charts, real move and resize previews, much narrower widgets, horizontal resizing that works, and much more motion and colour; A and C remain sources of ideas only. On 2026-10-02 he asked that the Atlas concept be followed wherever it and the Usage design differ on look and readability. Building in a review copy first and replacing PMConcept7 only after approval was the plan from the start; the approval of 2026-10-09 completes it.
+
+**What Jared asked (2026-10-01 to 2026-10-09):** on 2026-10-01, the redesign described above, his answers to four open questions (what the Accounts room can do, how pace is shown, how dense the page is, and which demo accounts it shows; recorded in DL-174 and DL-175), and that the Slint limits no longer constrain the concept's look while the plans' framework pins stay as they are. On 2026-10-02, Direction B with the Atlas readability, the chat assistant's menus and the official provider logos (DL-179), and that the page should amaze people with film-level motion; later that day he said yes to the five feature questions put to him (DL-177 and DL-178). On 2026-10-09 he approved the review copy, asked for it to be brought into PMConcept7, which had changed a lot since, for the review copy to be retired afterwards and for the plans, DRY rules, commands and wiring to follow. His eleven notes of that day are recorded in the entries they decide: auto-switch per provider and every account in Plans & limits in DL-174; the size presets and the card head actions in DL-176; the room entrances and the savings trend's end dots in DL-178; the Friendly and Glass motion and the lingering blur in DL-179; NieR and the embedded fonts here. The hover spotlight, the magnet and their glow are a separate decision, handled by a separate thread. The record states his requests in plain words, without quoting him.
+
+**What the spec now says:**
+1. **The redesign's requirements** (`Plans/usage-feature.md#UF-107`): the redesigned page, its rooms and widgets, the Settings provider catalog, the Live readings, folded facts and the concept-only demo controls.
+2. **The Usage presentation** (`Plans/FinalGUISpec.md#F3-628`): the Atlas readability, the menus, the provider marks, the heroes and their light, the charts, the room motion, the profile for computers without a GPU and NieR Mode on Usage; the concept's look is not bound by the Slint portability notes, and framework version pins are untouched.
+3. **One owner for the Usage presentation grammar** (`Plans/DRY_Rules.md#DR-058`): charts, meters and their colour ramps, hero plates, the number roll, folded facts, provider marks, the one formatter for numbers, times and costs, and the menus are each defined once and reused, never copied per room or per widget; menus, hover, motion voices, sounds, NieR and fonts are reused from their own owners.
+4. **The review copy is retired:** `Concepts/UsageTestPMConcept7.html` is deleted after the port lands, the one exception to the rule that nothing under `Concepts/` is deleted; `Concepts/usage-redesign/` stays as the redesign's source.
+5. **Unchanged:** the thirteen rooms and three disclosure levels (`Plans/usage-feature.md#UF-093`), counting honesty, where unknown never reads as zero (`Plans/usage-feature.md#UF-092`), the board made of widgets (`Plans/usage-feature.md#UF-055`), and the native renderer (DL-139).
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md`, SHA-256 `fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008` (Jared's decisions on the Usage redesign of 2026-10-01 and 2026-10-02, with the coordinator's rulings marked as such); `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md`, SHA-256 `d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5` (Jared's notes of 2026-10-09, word for word in its section 2, and the canon plan in its section 6).
+
+ContractRef: ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/DRY_Rules.md#DR-058, ContractName:Plans/usage-feature.md#UF-093, ContractName:Plans/usage-feature.md#UF-092, ContractName:Plans/Decision_Log.md#DL-139
+
+### DL-174: The Accounts room acts in place through the real Settings, auto-switch is set per provider, and every account of a provider is shown
+
+**Question:** What can be done from the Usage page's Accounts room, is the automatic account switch one setting or one per provider, and how are several accounts of one provider shown?
+
+**Why it came up:** The redesign rebuilt the fourth room, Accounts, as a card per provider with its accounts, after the AI Account Center Jared uses. The room could either only show account facts or act on them. On 2026-10-09 Jared added two notes: the auto-switch settings should be per provider, and Plans & limits showed only one account per provider, so his three Codex accounts did not all appear. The AI Account Center already keeps one auto-switch policy per provider; the spec had one global switch with a project override and mentioned provider overrides only in passing.
+
+**What you get:**
+- Account cards act in place. Use this account makes that account the active one; it is labelled as an override and shown only where the provider supports choosing the active account by hand.
+- Each provider with two or more accounts has its own Auto-switch toggle and switch level on its card; its warning level and rest period show there as read values and are changed in Settings. They are the same settings Settings shows, not a Usage copy: changing them on the card changes the real setting, previewed and applied through Settings, and Settings shows the new value at once. Open in Settings goes to the same setting.
+- Auto-switch, its switch level, its warning level and its rest period after a rate limit can each be set per provider in Settings. A provider without its own value uses the global value, which is the default for all four; the rest period, which until now was set only per account, gains a global value for this. An account's own override still wins over its provider's value, in the order the multi-account spec sets out.
+- How the switch decides, as the AI Account Center does it: a provider with one account keeps auto-switch off until a second account is signed in; every meter of a provider carries a notch at that provider's switch point; only a fresh reading tied to the account's identity may trigger a switch, while a stale or estimated reading, an account that must sign in again, or a reset that has passed with no new reading blocks it with a named reason; the switch goes to the eligible account with the most left; it waits until the tool is idle and never switches in the middle of work; a warning shows when paid credit is being drawn; and making an account active by hand when it is already past its provider's switch point asks first, and the automatic switch never treats that confirmation as consent.
+- One roster with Settings: the room reads providers and accounts from Settings, uses Settings' display names and order, groups providers as Settings does (Subscriptions and plans, Pay as you go, Free and your own) and takes each provider's windows from its Settings definition, with no invented windows. A provider that is not set up or not installed shows as one compact line with a way to set it up, never as a large empty card.
+- Plans & limits shows one row per account, grouped by provider, so all three Codex accounts appear, each with its own windows and history.
+
+**What it costs:**
+- Four account settings gain a provider scope and the rest period also a global one, so the settings inventory and the Settings pages change, and the order in which a value is resolved gains a level.
+- A Usage card now writes a real setting, through the full Settings preview-and-apply transaction rather than a direct write.
+- Plans & limits grows longer for someone with many accounts.
+
+**Options considered:** For the room's actions: a read-only room with links to Settings, or acting in place; Jared chose acting in place, wired to Settings. For auto-switch: one global policy with a project override, the spec's earlier state, or one policy per provider; Jared chose per provider. The coordinator ruled the details: the provider scope covers the toggle, the switch level, the warning level and the cooldown; the global value is the default for all four, so the cooldown, which had only a per-account value, gains a global one; the Usage card hosts the toggle and the switch level, as the AI Account Center's provider sections do, while all four stay editable in Settings; and the Usage card and Settings edit one value through the Settings owner. These are the coordinator's rulings on Jared's request, not his own answers.
+
+**What Jared asked (2026-10-01 and 2026-10-09):** on 2026-10-01, answering the open question on what the Accounts room can do: act in place, wired to Settings, with Use this account as a labelled override and the auto-switch toggle and threshold as the same live controls as in Settings. Also on 2026-10-01: every provider name on the Usage page comes from the provider catalog of Settings, and the Accounts room reads the same roster as Settings so that both pages always agree. His demo roster (four Claude accounts, three Codex accounts and the other providers he uses, with made-up identities) is concept fixture data only. On 2026-10-09: auto-switch settings per provider, and every account of a provider shown in Plans & limits.
+
+**What the spec now says:**
+1. **Per-provider auto-switch** (`Plans/Multi-Account.md#MA-073`): the provider scope, the order in which account, provider, project and global values apply, the global value as the default for all four, one value edited by the Usage card and by Settings through the Settings owner, and the switching rules above.
+2. **The provider scope in the settings inventory** (`Plans/FinalGUISpec.md#F3-441`, amended, and `Plans/settings_inventory.json`): `ai.accounts.multi-account-switching`, `ai.accounts.hard-switch-level`, `ai.accounts.soft-warning-level` and `ai.accounts.cooldown-policy` gain the `provider` scope, and `ai.accounts.cooldown-policy` also the `global` and `project` scopes.
+3. **Settings controls shown on Usage commit through Settings** (`Plans/Settings_System.md#SSYS-044`, over `#SSYS-009` and `#SSYS-018`): the card's toggle and level dispatch `cmd.settings.transaction.preview` and then `cmd.settings.transaction.apply` with `scope=provider`; Usage keeps no copy of the value.
+4. **The Accounts room acts in place** (`Plans/usage-feature.md#UF-093`, amended, and `#UF-107`): an account card's body and Details stay a local inspector that dispatches nothing; Use this account and the provider's Auto-switch toggle and switch level are the owner-routed actions carved out of that rule (`Plans/Commands_System.md#CS-067`, amended).
+5. **Commands and wiring** (`Plans/UI_Command_Catalog.md#UCC-147`, dispositions): Use this account dispatches the existing `cmd.account.select_profile`, the toggle and level dispatch the Settings transaction pair, and Open in Settings reuses `cmd.settings.open` with `target_type=setting`. No command is added; the existing production wiring rows for these commands (`catalog.account_select_profile`, `catalog.settings_transaction_preview`, `catalog.settings_transaction_apply`) name the Accounts room controls in their locations (`Plans/Wiring_Matrix.md#WM-043`).
+6. **Every account of a provider** (`Plans/Multi-Account.md#MA-049`, consumed by `Plans/usage-feature.md#UF-107`): Usage never flattens a provider's accounts into one label, and Plans & limits lists one row per account.
+7. **Unchanged:** choosing the active account by hand stays an override (`Plans/Multi-Account.md#MA-022`), and only providers whose capability allows it offer it (`supports_manual_set_active`, `Plans/Models_System.md`).
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md`, SHA-256 `fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008` (answer 1, the provider catalog and the demo roster); `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md`, SHA-256 `d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5` (Jared's notes 2 and 4 of 2026-10-09 in section 2, and the AI Account Center's switching rules in section 5).
+
+ContractRef: ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/Multi-Account.md#MA-049, ContractName:Plans/Multi-Account.md#MA-022, ContractName:Plans/FinalGUISpec.md#F3-441, ContractName:Plans/Settings_System.md#SSYS-044, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Settings_System.md#SSYS-018, ContractName:Plans/usage-feature.md#UF-093, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/UI_Command_Catalog.md#UCC-147, ContractName:Plans/Commands_System.md#CS-067, ContractName:Plans/Wiring_Matrix.md#WM-043
+
+### DL-175: Usage shows pace without countdowns, at sizes that are easy to read
+
+**Question:** How does the Usage page say how fast a window is being used, and how large are its text and controls?
+
+**Why it came up:** The first redesign drafts said how long until a window ran out, as a clock or a runway in hours, and used the wand's large touch-sized rows. Both were put to Jared as open questions on 2026-10-01.
+
+**What you get:**
+- No countdown to running out anywhere: no time-to-empty clock, no runway in hours and no time left before a limit. Headroom as a percentage, such as 31 % left, is fine.
+- Pace is said in one unit everywhere: points ahead of or behind the window's even pace, for example plus 11 points against the norm.
+- Month-end spend appears only as an estimate labelled as one.
+- Values and body text are 13 to 14 px; chart ticks, legends and small captions may go down to 11 px and never below. Rows and buttons are sized for a desktop mouse, about 28 to 32 px, not the wand's 52 px.
+- Unknown still never reads as zero, and no fact is invented to fill a gap.
+
+**What it costs:**
+- Someone who wants to know when a window will run out has to read it from the headroom and the pace; the page does not guess a time.
+- Dense rooms need careful fitting at 11 px for the smallest labels.
+
+**Options considered:** Countdown clocks to running out were dropped, matching the earlier rejection of a run-out projection, for which no honest source exists. Large touch-sized rows were dropped for a desktop mouse size. The coordinator ruled that pace has one unit everywhere, the points against the norm; that is the coordinator's ruling, not Jared's answer.
+
+**What Jared asked (2026-10-01):** answering the open question on pace: relative pace, no countdowns to running out, percentage headroom allowed, month-end spend only as a labelled estimate. Answering the open question on density: values at 13 to 14 px, small labels at 11 px, and rows and buttons sized for a desktop mouse. No phone widths and no work done only for accessibility.
+
+**What the spec now says:**
+1. **Pace, headroom and sizes on Usage** (`Plans/usage-feature.md#UF-107`): no run-out countdowns, headroom percentages allowed, pace in points against the norm, month-end spend only as a labelled estimate.
+2. **How they look** (`Plans/FinalGUISpec.md#F3-628`): the type sizes and row heights above.
+3. **Unchanged:** the run-out projection stays rejected (`Plans/DRY_Rules.md#DR-038`), and counting honesty stays as written (`Plans/usage-feature.md#UF-092`).
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md`, SHA-256 `fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008` (answers 2 and 3, and the coordinator's ruling 4).
+
+ContractRef: ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/DRY_Rules.md#DR-038, ContractName:Plans/usage-feature.md#UF-092
+
+### DL-176: Usage widgets get narrower, show real move and resize previews, and gain rethought size presets, Tidy and gravity
+
+**Question:** How wide can Usage widgets be, what does a widget show while it is moved or resized, which sizes does a widget offer, and what happens to the gaps a move leaves?
+
+**Why it came up:** Looking at the mockups on 2026-10-01, Jared found many widgets far too wide, wanted to see where a widget would land while moving or resizing it, and found that horizontal resizing did not really work. A small move pushed most of the board down and left empty bands. On 2026-10-09 he found the size presets made panels so small that their content no longer made sense, and on narrow cards the hover actions in a card's head slid behind its title.
+
+**What you get:**
+- Much narrower widgets on a finer horizontal grid. The board has more columns the wider it is, and the default boards put many narrow widgets in a row. Every kind of widget has small widths that still show the same information, adapting to the width it is given.
+- Horizontal resizing works from the right edge, the left edge and the corners, in grid steps, live, at every board width.
+- A real move preview: the card lifts and follows the pointer exactly, a placeholder sits in the exact slot it will land in, and the other cards slide aside to make room as it moves.
+- A real resize preview: an outline of the size the card will snap to, with that size's name and its width by height, while the other cards reflow to show the result; on release the card settles into place, and Escape glides it back.
+- Gravity: while a card is being moved or resized only the cards in its way move; once the gesture settles, cards float up into empty space above them, keeping their order, so no empty bands are left.
+- Tidy, from a card's menu and from Customize, repacks the whole board on request.
+- The gravity after a gesture, and a Tidy, each commit as one settled change of the layout with one receipt: never a separate move for every card, and no new command.
+- Size presets are rethought: every preset of every kind shows a complete, sensible set of content, never fragments, and the size picker previews each preset before it is chosen.
+- A card's hover actions never sit behind its title and always fit, however narrow the card.
+
+**What it costs:**
+- Gravity means the cards below a moved card can shift up after it settles, not only the cards it pushed.
+- Each kind of widget needs its own small-width content and its own preset set, which must be checked in every room, theme and width.
+
+**Options considered:** The coordinator weighed leaving gaps after a gesture, which the spec allowed by moving only obstructed cards, against filling them; it ruled that only obstructed cards move during the gesture and that cards float up once it settles, with Tidy kept as the explicit full repack. For committing a Tidy or the gravity, one move command per card that moved was rejected for one settled layout change with one receipt, and no new command was added; a Tidy is told apart from an ordinary move by an optional field on the existing move command, and the layout owner computes the repack itself. The size presets were redone per kind rather than trimmed. These are the coordinator's rulings on Jared's requests, not his own answers.
+
+**What Jared asked (2026-10-01 and 2026-10-09):** on 2026-10-01, after the mockups: better resize and move previews, much narrower widgets that still show the same information, and horizontal resizing that works; Direction B's binding consequences record the previews, the narrow widths and the horizontal resizing in detail. On 2026-10-09: the panel size presets rethought and polished, because they made the panels small and their content stopped making sense; and on narrow widgets, such as a provider tile in Analytics, the options that open in a card's top right must not go behind its title and must fit.
+
+**What the spec now says:**
+1. **Size presets per kind** (`Plans/Widget_System.md#WS-017`, amended): every preset a kind offers shows a complete content tier for that kind, and the picker previews them; the widget owner keeps which presets each kind offers.
+2. **Move and resize previews, gravity and Tidy** (`Plans/Widget_System.md#WS-019`, amended): the lifted card, the landing placeholder, the live size outline with its name and size, Escape gliding back, gravity after the gesture, Tidy as the explicit full repack, and both committing as one settled layout transaction with one receipt and no per-card move commands; Tidy's one `cmd.widget.move` carries the optional `arrange` field (`Plans/UI_Command_Catalog.md` section 2.3) so the owner computes the repack.
+3. **The layout record** (`Plans/Widget_System.md#WS-020`, amended): a chosen preset is committed with `cmd.widget.resize` carrying its `preset_id`.
+4. **The Usage board** (`Plans/usage-feature.md#UF-094` and `#UF-096`, amended): the board's column count grows with its width instead of a fixed twelve, the curated defaults use narrower cards, and every kind has narrow widths that show its facts complete.
+5. **The rooms' curated sizes** (`Plans/FinalGUISpec.md#F3-514`, amended), the card head (`Plans/FinalGUISpec.md#F3-628`), and the producer commit rule (`Plans/Wiring_Matrix.md#WM-045`, amended), so that gravity is part of the one settled commit.
+6. **Commands** (`Plans/UI_Command_Catalog.md#UCC-147`, dispositions): the size picker commits with `cmd.widget.resize`, and opening or hovering it dispatches nothing; Tidy and gravity add no command.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md`, SHA-256 `fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008` (Direction B's points 3 to 5, and the coordinator's ruling 1); `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md`, SHA-256 `d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5` (Jared's notes 1 and 6 of 2026-10-09 in section 2).
+
+ContractRef: ContractName:Plans/Widget_System.md#WS-017, ContractName:Plans/Widget_System.md#WS-019, ContractName:Plans/Widget_System.md#WS-020, ContractName:Plans/usage-feature.md#UF-094, ContractName:Plans/usage-feature.md#UF-096, ContractName:Plans/FinalGUISpec.md#F3-514, ContractName:Plans/Wiring_Matrix.md#WM-045, ContractName:Plans/UI_Command_Catalog.md#UCC-147
+
+### DL-177: Live readings are on by default, with a Live / Paused control, and the demo hour stays in the concept
+
+**Question:** Should the Usage page's numbers change in front of the viewer as new readings arrive, and how does the concept show a sped-up hour?
+
+**Why it came up:** A Usage page that only changes on refresh felt static. The redesign added live readings, a beat about every six seconds while new readings arrive, and a demo that plays the next hour at sixty times speed to show the page working over time. Both were put to Jared as questions on 2026-10-02.
+
+**What you get:**
+- Live readings are on by default: arriving readings change the page in front of the viewer, one beat at a time, with nothing moving between beats.
+- A Live / Paused control sits in the head of the rail, beside the Usage title, not as a second head line. Paused holds arriving updates, so the page is completely still at idle; Live applies them. The choice is remembered.
+- Live / Paused is a view preference only: it changes what this view shows, never what is counted, and it dispatches no command.
+- In the concept, Play the next hour runs a demo clock for one hour at sixty times speed, shows that demo time is running, and Back to now returns to the present. The concept's feature switches let a review turn each of these features off.
+
+**What it costs:**
+- The rule that nothing animates at idle now has one exception: a live beat while Live is on. With Live paused, the rule holds exactly.
+- The demo hour shows readings that have not happened. It stays a concept demonstration, clearly labelled as demo time, and never reaches the product.
+
+**Options considered:** Live off by default, or on; Jared chose on, with the Live / Paused control beside the Usage title. The coordinator placed the control in the rail head. For the demo hour and the feature switches, the coordinator recommends treating them as lab-only concept controls, as the chat concept's lab tools are (`Plans/assistant-chat-design.md#ACD-474`): no command, setting, wiring row, persisted key or test gate. That classification is the coordinator's recommendation; Jared has not decided it.
+
+**What Jared asked (2026-10-02):** yes to live readings on by default, with a Live / Paused control beside the Usage title that pauses them and remembers the choice; and yes to Play the next hour.
+
+**What the spec now says:**
+1. **Live as a view preference** (`Plans/usage-feature.md#UF-095` and `Plans/storage-plan.md#SP-248`, both amended): live becomes the ninth view family, kept by the storage owner and view-only, with `pm7:usage:live:v1` as the concept's noncanonical prototype key.
+2. **Where the control sits and what it does** (`Plans/usage-feature.md#UF-089`, amended, and `#UF-107`): the head stays one line and the control sits in the rail head; Live applies arriving updates and Paused holds them; Usage never counts differently because of it.
+3. **Commands** (`Plans/UI_Command_Catalog.md#UCC-147`, dispositions): Live / Paused is `view_only`. Play the next hour, Back to now and the concept's feature switches take the lab-only disposition `Plans/usage-feature.md#UF-107` owns, on the coordinator's recommendation recorded under Options considered, which Jared has not yet decided.
+4. **Counting honesty** (`Plans/usage-feature.md#UF-092`): the demo hour's readings are concept fixture data labelled as demo time, never product facts.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md`, SHA-256 `fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008` (Jared's answers to the feature questions 1 and 2, and the coordinator's ruling 6); `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md`, SHA-256 `d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5` (section 6, the recommendation to treat the demo controls as lab-only).
+
+ContractRef: ContractName:Plans/usage-feature.md#UF-095, ContractName:Plans/storage-plan.md#SP-248, ContractName:Plans/usage-feature.md#UF-089, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/usage-feature.md#UF-092, ContractName:Plans/UI_Command_Catalog.md#UCC-147, ContractName:Plans/assistant-chat-design.md#ACD-474
+
+### DL-178: Each Usage room has a hero, with calm colour and a soft key light, and no fact is dropped
+
+**Question:** How does each Usage room draw the eye to what matters, how does colour show pressure, and what happens to facts that do not fit?
+
+**Why it came up:** With much more data on screen, the redesign needed one clear focal point per room and a calm colour scale, without hiding facts. On 2026-10-02 three questions on this were put to Jared. On 2026-10-09 he noticed that room entrances did not always play, entering Plans & limits for one, and that on the Prompt cache room's savings trend the end dot of one line sat far from its line.
+
+**What you get:**
+- Each room names its hero, the one figure that matters most there, on a plate of its own.
+- On arrival and on a room change only the hero's number rolls into place; supporting values appear already final with a short fade. Rolls stay for live changes and for range or scope changes.
+- Below the warning line, meters and the skyline towers shade calmly from indigo through cyan to mint by value; above it the Settings thresholds take over as before.
+- The room's key light falls on the hero plate as a soft radial glow from the top left, 16 % on dark themes and 9 % on light ones. It is the one tinted surface the no-tinted-boxes rule allows.
+- Elements that two rooms share fly from one room to the next when switching between them.
+- Every room entrance is visible and rich from every neighbouring room; it may vary with where the viewer comes from, but it is never a plain cut.
+- Facts that do not fit fold behind an N more control that also opens on hover, and stay reachable in Details. Nothing is dropped: facts that the old page showed only in a static list return in their natural widget, labelled as concept fixture data.
+- Every line's end dot sits on its own line's last point, in every chart with more than one line.
+
+**What it costs:**
+- One more tinted surface, the hero's key light, as a bounded exception.
+- Folded facts take a hover or a click to read in full.
+
+**Options considered:** The hero roll, the calm colour scale and the key light were each built behind a switch and put to Jared with the alternative of leaving it off; he chose all three. The coordinator ruled that facts from the old page's static lists are restored in their natural widget rather than dropped; that is the coordinator's ruling, not Jared's answer.
+
+**What Jared asked (2026-10-02 and 2026-10-09):** on 2026-10-02, yes to only the hero rolling, yes to the calm colour scale below the warning line, and yes to the hero's key light. On 2026-10-09: the fancy entrances did not always trigger, for instance going into Plans & limits, unless they are meant to vary with where the viewer comes from, which is fine; and the dots on the savings trend did not line up with their lines.
+
+**What the spec now says:**
+1. **Heroes, colour, light, entrances and folded facts** (`Plans/FinalGUISpec.md#F3-628`): the explicit hero per room, the hero-only roll, the calm colour ramp below the warning line with the Settings thresholds above it, the hero key light, the shared-element flight, a visible entrance from every neighbour, folded facts behind N more and Details, and each series' end dot on its own last point.
+2. **The rooms' complete-or-hidden content** (`Plans/FinalGUISpec.md#F3-514`, amended): folding keeps every fact reachable.
+3. **The grammar's single owner** (`Plans/DRY_Rules.md#DR-058`): hero plates, the roll, the colour ramps and folded facts are defined once.
+4. **No fact is dropped** (`Plans/usage-feature.md#UF-107`).
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md`, SHA-256 `fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008` (Jared's answers to the feature questions 3 to 5, and the coordinator's ruling 3); `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md`, SHA-256 `d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5` (Jared's notes 3 and 7 of 2026-10-09 in section 2).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/FinalGUISpec.md#F3-514, ContractName:Plans/DRY_Rules.md#DR-058, ContractName:Plans/usage-feature.md#UF-107
+
+### DL-179: Usage uses the chat assistant's menus, the providers' official logos, and each theme family's own motion
+
+**Question:** What do the Usage page's menus look like, how are providers marked, and how does the page move in each theme?
+
+**Why it came up:** The redesign needed many dropdowns (scope, detail, range, a card's menu, the size picker, chart options, thresholds, filters, export) and a way to tell providers apart. Jared asked for motion to be ramped up; that had to hold 60 frames a second on a computer without a GPU and stay in the theme family's voice. On 2026-10-09 he found that Friendly and Glass moved too much like Basic, and that hovering over widgets left them blurry too often and for too long, with blur sometimes staying on a page with no pointer near it.
+
+**What you get:**
+- Every Usage dropdown is the chat assistant's menu: a floating panel with a head (a bold title and the current value), rows of a title with one muted line beneath, a check on the active row, small-caps section labels, an optional search field, and the corner-origin spring as it opens; keyboard use is the same as in the chat. Export is one of these menus, offering a snapshot or the ledger.
+- Every provider row, legend, group header, chart key and account card shows the provider's official logo: never recoloured, filtered, tinted or redrawn, never set on a disc or plate unless the provider publishes it that way, in light and dark variants where the provider has them. Free Models and Local model server use neutral icons.
+- Motion follows the theme family's voice. Friendly and Glass now differ from Basic as clearly as Retro and NieR do: Friendly soft, warm and a little playful, Glass about depth, focus, light and refraction; values never overshoot.
+- Without a GPU, Glass uses its solid pane instead of the live backdrop blur while Usage is open, as onboarding already does; computers with a GPU keep the full Glass look.
+- Switching rooms never freezes the page: no single step of a room switch takes more than about 50 ms.
+- Motion stays smooth at 60 frames a second without a GPU, nothing loops at idle, and Reduce Motion makes every change instant.
+- Blur never lingers: hovering does not leave a widget blurry, and no blur stays on a page after its effect has ended.
+
+**What it costs:**
+- Two more motion voices to tell apart and keep within the frame budget in every room.
+- On a computer without a GPU, Glass on Usage looks solid rather than frosted.
+
+**Options considered:** The redesign's own two-letter monograms were replaced by official logos. Usage-only motion voices were not created: the family voices stay owned by the chat's motion voices owner, and Usage uses them. The coordinator ruled the solid Glass pane without a GPU and the limit on a room switch's longest step; those are the coordinator's rulings, not Jared's answers. The exact values of each family's voice belong to the motion voices owner (ACD-475), not to this card.
+
+**What Jared asked (2026-10-01 to 2026-10-09):** on 2026-10-01, much more motion and colour, at 60 frames a second without a GPU. On 2026-10-02, the chat assistant's dropdown menus for every dropdown, and the providers' real logos instead of monograms. On 2026-10-09, Friendly and Glass motion a little different from Basic, the way Retro and NieR are, and a fix for blur that stays after hovering or without hovering.
+
+**What the spec now says:**
+1. **Menus, logos and motion on Usage** (`Plans/FinalGUISpec.md#F3-628`): the chat assistant's menu family for every Usage dropdown, official provider logos, family motion on Usage with Friendly and Glass distinct from Basic, the solid Glass pane without a GPU, the room-switch step limit, no idle loops, no lingering blur, and Reduce Motion instant (DL-115).
+2. **Reuse, not copies** (`Plans/DRY_Rules.md#DR-058`): Usage reuses the chat's menus, the family motion voices (`Plans/assistant-chat-design.md#ACD-475`, which stays their only owner, as `Plans/DRY_Rules.md#DR-043` says), the app's hover owner and the Notifications & Sounds owner, and draws provider logos from one marks source.
+3. **Export as a menu** (`Plans/usage-feature.md#UF-089`, amended): the Export menu still dispatches `cmd.usage.export`, with scope `snapshot` or `ledger`.
+4. **Friendly and Glass voices** (`Plans/assistant-chat-design.md#ACD-475`, amended): the motion voices owner now says that Friendly and Glass are as distinct from Basic as Retro and NieR are, in path, easing and texture only, and that every surface takes its motion from those voices; the exact values stay design tokens.
+5. **Unchanged:** each theme family has its own motion personality (DL-113), and Reduce Motion means instant (DL-115).
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md`, SHA-256 `fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008` (the menus and logos decisions of 2026-10-02, Direction B's point 6, the bar, and the coordinator's rulings 2 and 5); `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md`, SHA-256 `d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5` (Jared's notes 5 and 8 of 2026-10-09 in section 2).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/DRY_Rules.md#DR-058, ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/usage-feature.md#UF-089, ContractName:Plans/Decision_Log.md#DL-113, ContractName:Plans/Decision_Log.md#DL-115
 
 ### DL-157: Three answers from Jared: the Schedule ended wording, a command to open the exact Plan, and previews keep their own labels
 

@@ -3,12 +3,14 @@
   "owner_plan_units": [
     "UF-093",
     "F3-514",
-    "ATS-036"
+    "ATS-036",
+    "UF-107"
   ],
   "source_lineage": [
     "Plans/usage-feature.md#UF-093",
     "Plans/FinalGUISpec.md#F3-514",
-    "Plans/Automated_Testing_System.md#ATS-036"
+    "Plans/Automated_Testing_System.md#ATS-036",
+    "Plans/usage-feature.md#UF-107"
   ],
   "surfaces": [
     "Usage room rail",
@@ -40,10 +42,12 @@
     "material_disclosure_change",
     "provider_setup_required_exact_state",
     "provider_setup_preserves_operation_and_continuation_identity",
-    "provider_setup_cta:cmd.settings.bloom.open:ai:ai.accounts.provider-connections",
     "scope_filters_timestamped_identity_bound_records",
     "range_filters_timestamped_identity_bound_records",
-    "local_projection_only"
+    "local_projection_only",
+    "provider_setup_cta:cmd.settings.open:typed_settings_target",
+    "provider_not_set_up_one_compact_line_not_set_up_or_not_installed",
+    "accounts_and_plans_limits_one_row_per_account"
   ],
   "must_not": [
     "Essen",
@@ -54,6 +58,8 @@
     "advanced",
     "provider_setup_auto_install",
     "provider_setup_auto_authenticate",
-    "provider_setup_silent_cross_route"
+    "provider_setup_silent_cross_route",
+    "provider_setup_cta:cmd.settings.bloom.open_dispatched",
+    "empty_provider_card"
   ]
 }

@@ -1,0 +1,306 @@
+/* Accounts room (owner: content; DESIGN-SPEC 10, DESIGN-SPEC-ATLAS 10): provider plates with aligned window columns,
+   single plates, the bound auto-switch strip, compact provider rows, the setup card. The effective account is said by
+   its check glyph, its 680 name and the "Active" word: no fill, no side bar (A1 10.1). */
+
+/* ------------------------------------------------------------------ states and words */
+#panel-usage .pmu-acstate { display: inline-flex; align-items: center; gap: 4px; min-width: 0; color: var(--pmu-ink-3); }
+#panel-usage .pmu-acstate b { font-weight: 600; white-space: nowrap; }
+#panel-usage .pmu-acstate[data-tone="good"] { color: var(--pmu-ink-good); }
+#panel-usage .pmu-acstate[data-tone="warn"] { color: var(--pmu-ink-warn); }
+#panel-usage .pmu-acstate[data-tone="crit"] { color: var(--pmu-ink-crit); }
+#panel-usage .pmu-acstate .pmu-glyph { color: inherit; }
+#panel-usage .pmu-dot { font-style: normal; color: var(--pmu-ink-3); }
+#panel-usage .pmu-stale { display: inline-flex; align-items: center; gap: 3px; color: var(--pmu-ink-warn); }
+#panel-usage .pmu-stale .pmu-glyph { width: 12px; height: 12px; color: inherit; }
+#panel-usage .pmu-stale .pmu-glyph svg { width: 11px; height: 11px; }
+#panel-usage .pmu-asw { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--pmu-ink-3); white-space: nowrap; }
+#panel-usage .pmu-asw svg { width: 6px; height: 14px; color: var(--pmu-ink); }
+
+/* ------------------------------------------------------------------ provider plate, two or more accounts (A1 10.1) */
+#panel-usage .pmu-acc { display: flex; flex-direction: column; min-width: 0; min-height: 0; flex: 1 1 auto; }
+#panel-usage .pmu-accband { column-gap: 16px; }
+#panel-usage .pmu-accband .pmu-cap { letter-spacing: .05em; line-height: 13px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; white-space: normal; }
+#panel-usage .pmu-accrows { display: flex; flex-direction: column; min-width: 0; }
+#panel-usage .pmu-accrow { display: grid; align-items: center; column-gap: 16px; min-width: 0; cursor: pointer; }
+#panel-usage .pmu-accrow.is-comfy { height: 66px; padding-top: 9px; padding-bottom: 9px; }
+#panel-usage .pmu-accrow.is-compact { height: 44px; }
+#panel-usage .pmu-acc[data-mode="fold"] .pmu-accrow, #panel-usage .pmu-acc[data-mode="binding"] .pmu-accrow { column-gap: 14px; }
+#panel-usage .pmu-accid { display: flex; align-items: center; gap: 8px; min-width: 0; }
+#panel-usage .pmu-accglyph { display: inline-grid; place-items: center; flex: none; width: 16px; height: 16px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-accglyph .pmu-glyph { width: 16px; height: 16px; color: inherit; }
+#panel-usage .pmu-accrow[data-state="active"] .pmu-accglyph { color: var(--pmu-ink-good); }
+#panel-usage .pmu-accrow[data-state="exhausted"] .pmu-accglyph { color: var(--pmu-ink-crit); }
+#panel-usage .pmu-accrow[data-state="cooldown"] .pmu-accglyph, #panel-usage .pmu-accrow[data-state="signed-out"] .pmu-accglyph { color: var(--pmu-ink-warn); }
+#panel-usage .pmu-acctext { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+#panel-usage .pmu-ident { font-size: 13.5px; font-weight: 520; color: var(--pmu-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-ident.is-eff { font-weight: 680; }
+#panel-usage .pmu-ident.is-other { color: var(--pmu-ink-2); }
+#panel-usage .pmu-identmeta { display: block; min-width: 0; font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-identmeta .pmu-acstate { display: inline; }
+#panel-usage .pmu-identmeta .pmu-acstate b { font-size: 12px; }
+#panel-usage .pmu-identmeta .pmu-textbtn { height: 22px; margin-left: 6px; padding: 0 8px; font-size: 12px; }
+#panel-usage .pmu-amounts { font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-amounts b { font-weight: 560; color: var(--pmu-ink-2); }
+#panel-usage .pmu-acccell { min-width: 0; }
+#panel-usage .pmu-accnone { min-width: 0; font-size: 12.5px; }
+#panel-usage .pmu-accactcell { display: flex; justify-content: flex-end; min-width: 0; }
+#panel-usage .pmu-accact.is-active { font-size: 12.5px; font-weight: 640; color: var(--pmu-ink-good); white-space: nowrap; }
+#panel-usage .pmu-accbtn { height: 28px; }
+#panel-usage .pmu-accfoot { flex-direction: column; align-items: stretch; gap: 3px; margin-top: auto; }
+#panel-usage .pmu-accfootline { display: flex; align-items: flex-start; gap: 8px; min-width: 0; font-size: 12.5px; line-height: 1.4; color: var(--pmu-ink-2); }
+#panel-usage .pmu-accfootline > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#panel-usage .pmu-accfootline em { font-style: normal; color: var(--pmu-ink-3); }
+#panel-usage .pmu-accfootline .pmu-glyph { margin-top: 1px; }
+#panel-usage .pmu-accfootline[data-tone="warn"] .pmu-glyph { color: var(--pmu-ink-warn); }
+#panel-usage .pmu-card[data-tw="l"] .pmu-accfootline > span, #panel-usage .pmu-card[data-tw="xl"] .pmu-accfootline > span { white-space: normal; }
+
+/* ------------------------------------------------------------------ single plate (A1 10.2) */
+/* the single plate never shrinks under its content: a block that does not fit pushes the footer out of the body, where
+   the complete-or-hidden pass removes it whole (it can never slide under the footer) */
+#panel-usage .pmu-acc.is-single { gap: 12px; flex: 1 0 auto; }
+#panel-usage .pmu-acc.is-single > .pmu-facts + .pmu-facts { margin-top: -12px; }
+#panel-usage .pmu-acc.is-single > .pmu-facts + .pmu-facts > .pmu-fact { border-top: 1px dashed var(--pmu-rule); }
+#panel-usage .pmu-accmeter { min-width: 0; }
+#panel-usage .pmu-accmeter.is-na { display: flex; flex-direction: column; gap: 5px; }
+#panel-usage .pmu-natrack { height: 8px; border: 1px dashed var(--pmu-rule-strong); border-radius: 4px; }
+#panel-usage .pmu-accmeter.is-na .pmu-vs { font-size: 13px; font-weight: 520; }
+#panel-usage .pmu-naplan { font-size: 12px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-amtv { display: block; min-width: 0; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-amtv .pmu-vs { display: inline; }
+#panel-usage .pmu-amtv .pmu-vs .pmu-ico { display: inline-block; vertical-align: -2px; margin-right: 4px; }
+#panel-usage .pmu-accsfoot { display: flex; align-items: center; gap: 8px; min-width: 0; margin-top: auto; padding-top: 4px; flex: none; height: 30px; font-size: 12px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-sampled { display: inline-flex; align-items: center; gap: 4px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-sampled.is-stale { color: var(--pmu-ink-warn); }
+#panel-usage .pmu-sampled .pmu-glyph { width: 12px; height: 12px; color: inherit; }
+#panel-usage .pmu-host { margin-left: auto; white-space: nowrap; }
+#panel-usage .pmu-accsfoot .pmu-textbtn, #panel-usage .pmu-accsfoot .pmu-accact { flex: none; }
+#panel-usage .pmu-accsfoot .pmu-textbtn { height: 26px; }
+
+/* ------------------------------------------------------------------ the auto-switch strip (A1 10.3) */
+#panel-usage .pmu-switch { display: flex; align-items: center; gap: 10px 24px; min-width: 0; flex: 1 1 auto; font-size: 12.5px; }
+#panel-usage .pmu-switch.is-two { flex-direction: column; align-items: stretch; justify-content: center; gap: 8px; }
+#panel-usage .pmu-swctl { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; min-width: 0; flex: none; }
+#panel-usage .pmu-swlabel { font-size: 12.5px; font-weight: 540; color: var(--pmu-ink); margin-right: 4px; }
+#panel-usage .pmu-swat { font-size: 12.5px; color: var(--pmu-ink-2); }
+#panel-usage .pmu-stepval { border: 0; background: transparent; color: var(--pmu-ink); font: inherit; cursor: pointer; }
+#panel-usage .pmu-stepval:hover { background: var(--pmu-row-hover); }
+#panel-usage .pmu-stepper button[disabled] { opacity: .35; cursor: default; }
+#panel-usage .pmu-swwarn { margin-left: 6px; color: var(--pmu-ink-3); white-space: nowrap; }
+#panel-usage .pmu-swwarn b { font-weight: 600; color: var(--pmu-ink-2); }
+#panel-usage .pmu-swfams { display: flex; align-items: center; flex-wrap: nowrap; gap: 8px 18px; min-width: 0; overflow: hidden; }
+#panel-usage .pmu-switch.is-two .pmu-swfams { flex-wrap: wrap; overflow: visible; }
+#panel-usage .pmu-swfams > .pmu-cap { flex: none; }
+#panel-usage .pmu-swfam { display: inline-flex; align-items: center; gap: 6px; flex: none; min-width: 0; white-space: nowrap; }
+#panel-usage .pmu-swfamname { color: var(--pmu-ink-2); }
+#panel-usage .pmu-swfam b { font-weight: 600; color: var(--pmu-ink); }
+#panel-usage .pmu-swbar { display: inline-block; width: 110px; flex: none; }
+#panel-usage .pmu-switch.is-panel { flex-direction: column; align-items: stretch; gap: 4px; }
+#panel-usage .pmu-switch.is-panel .pmu-swrow { display: flex; align-items: center; gap: 8px; min-height: 30px; }
+#panel-usage .pmu-switch.is-panel .pmu-swwarn { margin-left: 0; }
+#panel-usage .pmu-switch.is-panel .pmu-swcap { margin-top: 6px; }
+#panel-usage .pmu-switch.is-panel .pmu-swfam { display: grid; grid-template-columns: 16px minmax(0, 1fr) 110px; height: 30px; border-top: 1px solid var(--pmu-rule-2); }
+#panel-usage .pmu-switch.is-panel .pmu-swfamname { overflow: hidden; text-overflow: ellipsis; }
+
+/* ------------------------------------------------------------------ compact provider rows (A1 10.4) */
+#panel-usage .pmu-provlist { display: flex; flex-direction: column; min-width: 0; }
+#panel-usage .pmu-provlist[data-cols] { display: grid; column-gap: 28px; align-content: start; }
+#panel-usage .pmu-provrow { display: flex; align-items: center; gap: 8px; min-height: 32px; padding: 2px 0; min-width: 0; }
+/* a narrow card keeps the whole provider name: it wraps to a second line instead of ending in an ellipsis */
+#panel-usage .pmu-provname { flex: 1 1 auto; min-width: 0; font-size: 13px; line-height: 1.22; font-weight: 540; color: var(--pmu-ink); overflow: hidden;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow-wrap: anywhere; }
+#panel-usage .pmu-provword { flex: none; max-width: 40%; font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-provrow .pmu-textbtn { flex: none; height: 24px; padding: 0 6px; border-color: transparent; font-size: 12.5px; }
+#panel-usage .pmu-provrow .pmu-textbtn:hover { border-color: color-mix(in srgb, var(--pmu-accent) 55%, transparent); }
+
+/* ------------------------------------------------------------------ the setup card (A1 10.6) */
+#panel-usage .pmu-setup { display: flex; flex-direction: column; min-width: 0; }
+#panel-usage .pmu-setuphead { display: flex; align-items: center; gap: 8px; height: 30px; font-size: 13px; color: var(--pmu-ink-warn); }
+#panel-usage .pmu-setuphead b { font-weight: 640; }
+#panel-usage .pmu-setuphead .pmu-glyph { color: inherit; }
+#panel-usage .pmu-setupcta-row { display: flex; align-items: center; height: 36px; }
+#panel-usage .pmu-setupnote { margin: 0; height: 22px; font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-amtsub { margin: -4px 0 0 26px; font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-setupcta { height: auto; min-height: 28px; padding: 4px 10px; white-space: normal; text-align: left; line-height: 1.3; }
+#panel-usage .pmu-setupcta-row { height: auto; min-height: 36px; }
+#panel-usage .pmu-amt .pmu-amtline2 { display: block; flex-basis: 100%; font-style: normal; font-weight: 400; font-size: 12px; text-align: right; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Settings group headings over the Accounts plates (kind group, head form band): no plate, the group name with a hairline
+   rule under it, the count line muted; the tools still appear on hover so a heading can be moved or hidden */
+#panel-usage .pmu-card[data-head="band"] { background: transparent; border-color: transparent; box-shadow: none; }
+#panel-usage .pmu-card[data-head="band"]:hover { border-color: transparent; box-shadow: none; transform: none; }
+#panel-usage .pmu-card[data-head="band"] > .pmu-cardhead { height: 52px; align-items: flex-end; padding: 0 2px 9px; border-bottom: 1px solid var(--pmu-rule); }
+#panel-usage .pmu-card[data-head="band"] > .pmu-cardbody { display: none; }
+#panel-usage .pmu-card[data-head="band"] .pmu-cardtitles { flex-direction: row; align-items: baseline; gap: 12px; }
+#panel-usage .pmu-card[data-head="band"] .pmu-cardtitle { flex: none; font-size: 16px; line-height: 20px; font-weight: 650; letter-spacing: -.01em; overflow: visible; }
+#panel-usage .pmu-card[data-head="band"] .pmu-cardsub { display: block; flex: 1 1 auto; margin: 0; font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase;
+  font-stretch: 87.5%; }
+#panel-usage .pmu-card[data-head="band"] .pmu-cardtools { top: 14px; right: 0; }
+#panel-usage .pmu-provword[data-tone="good"] { color: var(--pmu-ink-good, var(--pmu-ink-ok)); font-weight: 600; }
+#panel-usage .pmu-provword[data-tone="warn"] { color: var(--pmu-ink-warn); font-weight: 600; }
+#panel-usage .pmu-provrow.is-setup { cursor: pointer; border-radius: 6px; margin: 0 -6px; padding: 2px 6px; transition: background-color 160ms; }
+#panel-usage .pmu-provrow.is-setup:hover { background: var(--pmu-row-hover); }
+html[data-theme^="retro"] #panel-usage .pmu-provrow.is-setup { border-radius: 0; }
+
+/* ------------------------------------------------------------------ POLISH2 content (WOW round, 2026-10-02) */
+/* the action column at every width (LOOK-REVIEW-2 5); a row whose windows are all "not exposed" says it once across
+   the window columns, with its spend (LOOK-REVIEW-2 6); a narrow plate puts the binding meter under the identity */
+#panel-usage .pmu-acccell.is-merged { display: flex; flex-direction: column; justify-content: center; gap: 2px; min-width: 0; }
+#panel-usage .pmu-acccell.is-merged .pmu-amount { min-height: 26px; }
+#panel-usage .pmu-acccell.is-merged .pmu-accna { font-size: 12.5px; }
+#panel-usage .pmu-acc[data-mode="narrow"] .pmu-accrow { grid-template-rows: auto auto; row-gap: 6px; }
+#panel-usage .pmu-acc[data-mode="narrow"] .pmu-acccell { grid-column: 1 / -1; }
+#panel-usage .pmu-accactcell { align-self: center; }
+#panel-usage .pmu-accact.is-active { white-space: normal; text-align: right; line-height: 1.25; }
+/* the identity's lines: the name and its meta lines never cut a word (LOOK-REVIEW-2 13: "Max · Mac · 2m ago ...") */
+#panel-usage .pmu-accrow .pmu-identmeta { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: break-word; }
+#panel-usage .pmu-accrow .pmu-ident { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: break-word; }
+/* compact provider rows: a narrow column stacks the state word under the name; words never break inside */
+#panel-usage .pmu-provtext { display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0; gap: 1px; }
+#panel-usage .pmu-provrow .pmu-provname { overflow-wrap: break-word; word-break: normal; }
+#panel-usage .pmu-provrow .pmu-provword { overflow-wrap: normal; word-break: normal; white-space: nowrap; flex: none; }
+#panel-usage .pmu-provrow.is-stacked { min-height: 44px; }
+#panel-usage .pmu-provrow.is-stacked .pmu-provword { text-align: left; font-size: 12px; }
+/* the plate's rows never shrink under the foot: an overrun moves whole rows to "N more" (the fit pass) */
+#panel-usage .pmu-acc.is-group { flex: 0 0 auto; }
+
+/* the Accounts hero: the "most room now" ladder (WOW-SPEC 4, LOOK-REVIEW-2 2) */
+#panel-usage .pmu-ladder { display: grid; column-gap: 28px; min-width: 0; flex: 1 1 auto; }
+#panel-usage .pmu-ladside { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+#panel-usage .pmu-ladside .pmu-herohead { height: auto; min-height: 60px; flex-wrap: wrap; }
+#panel-usage .pmu-ladctl { flex-wrap: wrap; column-gap: 7px; }
+#panel-usage .pmu-ladctl .pmu-swlabel { margin-right: 0; }
+#panel-usage .pmu-ladwarn { font-size: 12.5px; }
+#panel-usage .pmu-ladwarn .pmu-swwarn { margin-left: 0; }
+#panel-usage .pmu-ladmain { display: flex; flex-direction: column; min-width: 0; }
+#panel-usage .pmu-ladcap { display: flex; justify-content: space-between; height: 22px; align-items: center; }
+#panel-usage .pmu-ladcols { display: grid; column-gap: 28px; min-width: 0; }
+#panel-usage .pmu-ladcol { position: relative; display: flex; flex-direction: column; min-width: 0; }
+#panel-usage .pmu-ladrow { position: relative; display: grid; grid-template-columns: 16px var(--ln, 110px) minmax(48px, 1fr) 40px 16px; align-items: center; column-gap: 8px; height: 24px; min-width: 0; cursor: pointer;
+  --c: var(--pmu-calm); }
+#panel-usage .pmu-ladrow[data-tone="warn"] { --c: var(--pmu-warn); }
+#panel-usage .pmu-ladrow[data-tone="crit"] { --c: var(--pmu-crit); }
+#panel-usage .pmu-ladrow[data-tone="exhausted"] { --c: var(--pmu-tone-exhausted, var(--pmu-crit)); }
+#panel-usage .pmu-ladname { display: flex; align-items: baseline; gap: 6px; min-width: 0; white-space: nowrap; overflow: hidden; }
+#panel-usage .pmu-ladname b { font-size: 13px; font-weight: 540; color: var(--pmu-ink); }
+#panel-usage .pmu-ladrow.is-eff .pmu-ladname b { font-weight: 680; }
+#panel-usage .pmu-ladname em { font-style: normal; font-size: 12px; color: var(--pmu-ink-3); flex: none; }
+#panel-usage .pmu-ladname b { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-ladtrack { position: relative; height: 8px; overflow: hidden; border-radius: 4px; background: var(--pmu-card-3, rgba(127,127,127,.14)); }
+#panel-usage .pmu-ladfill { position: absolute; left: 0; right: 0; top: 0; bottom: 0; border-radius: 4px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--c) 55%, transparent), var(--c)); }
+#panel-usage .pmu-ladrow.is-eff .pmu-ladfill { box-shadow: 0 0 10px 1px color-mix(in srgb, var(--c) 55%, transparent); }
+#panel-usage .pmu-ladrow.is-eff .pmu-ladfill::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 2px; background: color-mix(in srgb, #fff 60%, var(--c)); }
+#panel-usage .pmu-ladval { font-size: 13px; font-weight: 640; text-align: right; color: var(--pmu-ink); font-variant-numeric: tabular-nums; }
+#panel-usage .pmu-ladrow[data-tone="warn"] .pmu-ladval, #panel-usage .pmu-ladrow[data-tone="crit"] .pmu-ladval, #panel-usage .pmu-ladrow[data-tone="exhausted"] .pmu-ladval { color: var(--c); }
+#panel-usage .pmu-ladact .pmu-glyph { color: var(--pmu-ink-good); }
+#panel-usage .pmu-ladrow:hover .pmu-ladtrack { box-shadow: 0 0 0 1px color-mix(in srgb, var(--c) 50%, transparent); }
+/* the switch line: at the switch level of every track (16 + 8 + the measured name column + 8: it lives in the track
+   column's coordinates; 104 px = the fixed columns and the four gaps) */
+#panel-usage .pmu-ladline { position: absolute; top: -4px; bottom: -2px; width: 0; pointer-events: none; border-left: 1.5px dashed color-mix(in srgb, var(--pmu-ink) 60%, transparent);
+  left: calc(32px + var(--ln, 110px) + (100% - 104px - var(--ln, 110px)) * var(--swf, .1)); }
+#panel-usage .pmu-ladline[data-off] { opacity: .25; }
+#panel-usage .pmu-ladfoot { margin: 4px 0 0; font-size: 12px; color: var(--pmu-ink-3); }
+html[data-theme^="retro"] #panel-usage :is(.pmu-ladtrack, .pmu-ladfill) { border-radius: 0; }
+html[data-o55-nier="on"] #panel-usage .pmu-ladfill { background: repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 5px, transparent 5px 7px); box-shadow: none; }
+/* the active light that travels to the newly used account (one transient layer in the board, removed at its end) */
+#panel-usage .pmu-actlight { position: absolute; z-index: 30; pointer-events: none; border-radius: 10px; transform-origin: 0 0; will-change: transform, opacity;
+  background: radial-gradient(70% 140% at 30% 50%, color-mix(in srgb, var(--pmu-accent) 24%, transparent), transparent 72%);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--pmu-accent) 45%, transparent), 0 0 22px -4px color-mix(in srgb, var(--pmu-accent) 55%, transparent); }
+html[data-theme^="retro"] #panel-usage .pmu-actlight, html[data-o55-nier="on"] #panel-usage .pmu-actlight { border-radius: 0; }
+#panel-usage .pmu-accglyph { position: relative; border-radius: 50%; }
+/* the switch panel's family rows keep the provider word whole: the bar gives way first */
+#panel-usage .pmu-switch.is-panel .pmu-swfam { grid-template-columns: 16px minmax(54px, 1fr) minmax(44px, 46%); column-gap: 6px; }
+#panel-usage .pmu-switch.is-panel .pmu-swbar { width: auto; min-width: 0; }
+#panel-usage .pmu-ladder.is-stacked { row-gap: 6px; }
+#panel-usage .pmu-ladder.is-stacked .pmu-ladside { flex-direction: row; flex-wrap: wrap; align-items: flex-end; gap: 4px 18px; }
+#panel-usage .pmu-ladder.is-stacked .pmu-ladside .pmu-herohead { flex: 1 1 100%; }
+/* a long state word wraps inside the identity column instead of running under the window cell (Mac stills
+   2026-10-02: "Cooldown until 08:33" over "Not exposed"); a compact row grows by the wrapped line (70-wrap.css) */
+#panel-usage .pmu-accrow .pmu-identmeta .pmu-acstate b { white-space: normal; }
+/* an amount's label never breaks inside a word (Retro 2026-10-02: "Credi / ts"): its column keeps the longest word and
+   the value beside it wraps instead */
+#panel-usage .pmu-amt { grid-template-columns: 18px minmax(min-content, 1fr) auto; }
+
+/* WOW-TASKS-3 N3-4 / N3-7: the ladder bar is full width and translated (a live change moves it on the compositor); the
+   track lets the lit head's glow out above, below and to the right, never to the left where the translated bar waits */
+html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-ladrow .pmu-ladtrack { clip-path: inset(-12px -14px -12px 0 round 4px); }
+html[data-theme^="retro"] #panel-usage .pmu-ladtrack, html[data-o55-nier="on"] #panel-usage .pmu-ladtrack { overflow: hidden; }
+/* WOW-SPEC-3 7 Accounts / 9.1: the active light, pre-painted in every row of a provider plate and shown on the effective
+   row only (no element is added or removed when the active account changes): a soft backlight from the row's left edge
+   in the room's key light, gone by two thirds of the row. Static; the Accounts beat fades it in plate by plate. */
+#panel-usage .pmu-accrow { position: relative; }
+#panel-usage .pmu-acclight { position: absolute; inset: 0; pointer-events: none; opacity: 0; z-index: 0;
+  background: radial-gradient(70% 130% at 0% 50%, color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 13%, transparent), transparent 68%); }
+html[data-theme$="-light"] #panel-usage .pmu-acclight { background: radial-gradient(70% 130% at 0% 50%, color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 8%, transparent), transparent 68%); }
+#panel-usage .pmu-accrow.is-eff .pmu-acclight { opacity: 1; }
+#panel-usage .pmu-accrow > :not(.pmu-acclight) { position: relative; z-index: 1; }
+html[data-theme^="retro"] #panel-usage .pmu-acclight { background: linear-gradient(90deg, color-mix(in srgb, var(--pmu-s0) 10%, transparent), transparent 60%); }
+html[data-o55-nier="on"] #panel-usage .pmu-acclight { display: none; }
+
+/* ------------------------------------------------------------------ per-provider auto-switch (Jared 2026-10-09 item 2)
+   Each provider with two or more accounts carries its own switch and switch level: the plate's policy band (between the
+   rows and the foot, on the foot's hairline), one cell per provider in the Auto-switch hero, a switch on each provider row
+   of the headroom card; every ladder row carries its own provider's notch. No fills, no pills: the band is a ruled row. */
+#panel-usage .pmu-accpol { display: flex; flex-direction: column; gap: 2px; flex: none; min-width: 0; margin: auto -14px 0; padding: 6px 14px 4px; border-top: 1px solid var(--pmu-rule-2); }
+#panel-usage .pmu-accpol + .pmu-accfoot { margin-top: 0; border-top: 0; padding-top: 2px; }
+#panel-usage .pmu-card[data-head="plate"] > .pmu-cardbody > .pmu-accpol:last-child { margin-bottom: -12px; padding-bottom: 8px; }
+#panel-usage .pmu-polrow { display: flex; align-items: center; gap: 7px; height: 30px; min-width: 0; font-size: 12.5px; }
+#panel-usage .pmu-polrow .pmu-swlabel { margin-right: 0; }
+#panel-usage .pmu-polscope { margin-left: auto; padding-left: 10px; font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; }
+#panel-usage .pmu-accpol[data-off] .pmu-stepper, #panel-usage .pmu-accpol[data-off] .pmu-swat { opacity: .55; }
+#panel-usage .pmu-polstat { display: flex; align-items: flex-start; gap: 8px; min-width: 0; font-size: 12.5px; line-height: 18px; color: var(--pmu-ink-2); }
+#panel-usage .pmu-polstat > .pmu-glyph { flex: none; width: 16px; height: 16px; margin-top: 1px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-polstat[data-tone="warn"] > .pmu-glyph { color: var(--pmu-ink-warn); }
+#panel-usage .pmu-polstat > span { min-width: 0; overflow-wrap: break-word; }
+#panel-usage .pmu-polnow { display: inline-flex; align-items: center; height: 22px; margin: -2px 0 0 6px; padding: 0 8px; font-size: 12px; vertical-align: middle; }
+
+/* the hero's side column: one cell per provider (mark, switch, level), then the shared setting */
+#panel-usage .pmu-ladpol { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+#panel-usage .pmu-polcells { display: grid; gap: 2px 12px; min-width: 0; }
+#panel-usage .pmu-polcell { display: flex; align-items: center; gap: 7px; height: 28px; min-width: 0; }
+#panel-usage .pmu-polmark { display: inline-flex; align-items: center; gap: 6px; flex: 0 1 auto; min-width: 16px; overflow: hidden; }
+#panel-usage .pmu-polname { min-width: 0; font-size: 12.5px; color: var(--pmu-ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-polcell .pmu-toggle { margin-left: 2px; }
+#panel-usage .pmu-polval { flex: none; height: 24px; min-width: 42px; padding: 0 6px; border: 1px solid var(--pmu-rule); border-radius: 7px; background: transparent; color: var(--pmu-ink);
+  font: inherit; font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums; cursor: pointer; transition: background-color 140ms, color 140ms, border-color 140ms; }
+#panel-usage .pmu-polval:hover:not([disabled]) { background: var(--pmu-row-hover); }
+#panel-usage .pmu-polval[data-off] { color: var(--pmu-ink-3); font-weight: 500; }
+#panel-usage .pmu-polval[disabled] { opacity: .5; cursor: default; }
+#panel-usage .pmu-polcell[data-tone="warn"] .pmu-polval { border-color: color-mix(in srgb, var(--pmu-warn) 60%, var(--pmu-rule)); }
+#panel-usage .pmu-polshared { display: block; margin: 0; min-width: 0; font-size: 12px; line-height: 18px; color: var(--pmu-ink-3); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-polshared b { font-weight: 600; color: var(--pmu-ink-2); }
+#panel-usage .pmu-polshared:hover { color: var(--pmu-ink-2); }
+#panel-usage .pmu-polshared.is-none { cursor: default; white-space: normal; }
+#panel-usage .pmu-ladder.is-stacked .pmu-ladpol { flex: 1 1 100%; }
+#panel-usage .pmu-polcap { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; min-width: 0; }
+#panel-usage .pmu-polcap .pmu-cap { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#panel-usage .pmu-polshared.is-cap { flex: none; display: inline; font-size: 12px; }
+
+/* the ladder: each row's notch at its own provider's switch point, in the track column's coordinates (16 + 8 + the name
+   column + 8; 104 px = the fixed columns and the four gaps); rows that share a level line up into one dashed line */
+#panel-usage .pmu-ladnotch { position: absolute; top: 4px; bottom: 4px; width: 2px; margin-left: -1px; border-radius: 1px; pointer-events: none; z-index: 2;
+  background: color-mix(in srgb, var(--pmu-ink) 72%, transparent); left: calc(32px + var(--ln, 110px) + (100% - 104px - var(--ln, 110px)) * var(--swf, .1)); }
+#panel-usage .pmu-ladnotch[data-off] { opacity: .22; }
+
+/* the headroom card's provider rows: mark, name, most room now, the provider's own switch */
+#panel-usage .pmu-switch.is-panel .pmu-swfam { grid-template-columns: 16px var(--swn, minmax(0, 1fr)) minmax(36px, 1fr) 30px; column-gap: 6px; align-items: center; }
+#panel-usage .pmu-switch.is-panel .pmu-swfamname { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-swfam .pmu-toggle { justify-self: end; }
+#panel-usage .pmu-swfam[data-off] .pmu-swbar { opacity: .55; }
+#panel-usage .pmu-swbar.is-none { font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-switch.is-panel .pmu-polshared.is-foot { margin-top: 4px; }
+#panel-usage .pmu-switch:not(.is-panel) .pmu-polshared { flex: none; }
+
+/* the Overview skyline: the dashed line across it is the shared setting; a tower whose provider (or account) switches at
+   its own point carries its own short dashed notch across its track at that point, in the line's warn tone, dim while
+   that provider's auto-switch is off */
+#panel-usage .pmu-skynotch { position: absolute; z-index: 3; left: -6px; right: -6px; height: 0; margin-bottom: -1px; pointer-events: none;
+  border-top: 2px dashed color-mix(in srgb, var(--pmu-warn) 78%, transparent); filter: drop-shadow(0 0 3px color-mix(in srgb, var(--pmu-warn) 55%, transparent)); }
+#panel-usage .pmu-skynotch[data-off] { opacity: .3; }
+html[data-pmu-soft] #panel-usage .pmu-skynotch, html[data-o55-nier="on"] #panel-usage .pmu-skynotch { filter: none; }
+
+html[data-theme^="retro"] #panel-usage :is(.pmu-polval, .pmu-ladnotch) { border-radius: 0; }
+html[data-o55-nier="on"] #panel-usage .pmu-polval { border-radius: 0; border-color: var(--o55-nier-ink); color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #panel-usage .pmu-polval:hover:not([disabled]) { background: var(--o55-nier-ink); color: var(--o55-nier-paper, var(--pmu-card)); }
+html[data-o55-nier="on"] #panel-usage .pmu-ladnotch { border-radius: 0; background: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #panel-usage .pmu-accpol { border-top-style: dashed; }

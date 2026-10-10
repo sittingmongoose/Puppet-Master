@@ -1,0 +1,215 @@
+/* ---- 13. Actions & pipelines (#panel-git, lane E) --------------------------------------------------------------------
+   Same geometry as Files / Source / Docker. The automation service is a field under the header; runs are flat rows in
+   their shelf (name on line 1, run number · ref · age and the state word on line 2, the failure line under it); jobs
+   carry the shared glyph family; the dispatch form is a section of its workflow row, not a box in a box; the provider
+   views of the other services are the same cards as Source's publish card. */
+
+/* the service field and the two facts: one chrome plate under the header */
+§@git .pm7-automation-context {
+  display: grid !important; gap: 5px !important; padding: 0 6px 7px !important; border: 0 !important; z-index: 5;
+  background-color: var(--d-chrome) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
+}
+§{glass}@git .pm7-automation-context { -webkit-backdrop-filter: none; backdrop-filter: none; }
+§@git .pm7-automation-context-main { display: grid !important; gap: 3px !important; min-width: 0; }
+§@git .pm7-automation-context-main > .pm7-context-title {
+  font: 500 var(--d-fs-meta)/1.3 var(--body-font) !important; color: var(--d-text-3) !important; letter-spacing: 0; text-transform: none;
+}
+§@git .pm7-automation-select.d-hidden { display: none !important; }
+§@git .d-e-service { font-family: var(--body-font) !important; font-size: var(--d-fs-name) !important; font-weight: 600 !important; padding: 4px 8px !important; }
+§@git .d-e-service > .d-select-v { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+§@git .pm7-automation-common { display: grid !important; grid-template-columns: max-content minmax(0, 1fr); gap: 1px 8px !important; align-items: baseline; padding: 0 1px; }
+§@git .pm7-automation-fact { display: contents !important; }
+§@git .pm7-automation-fact > small {
+  display: block; font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text-3) !important;
+}
+§@git .pm7-automation-fact > strong {
+  display: block; margin: 0 !important; min-width: 0; font: 500 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-2) !important;
+  white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere;
+}
+§@git .pm7-automation-fact > strong.sh-mono { font-family: var(--mono-font) !important; font-size: var(--d-fs-mono) !important; }
+/* the shell hides the GitHub tabs and list while another service's view shows; keep that under the skin */
+§@git:not([data-automation-service="github"]) > .pm-segtab { display: none !important; }
+
+/* the banner's status is a phrase now ("4 passed · 2 failed · 1 running"): it may take a second line */
+§@git .sh-banner > .sh-bstatus { white-space: normal !important; align-items: flex-start !important; }
+§@git .sh-banner > .sh-bstatus > .d-gl { margin-top: 2px; }
+
+/* ---- run and workflow rows: flat in their shelf, highlights concentric with it ---- */
+§@git .sh-run {
+  position: relative; width: auto !important; margin: 0 0 2px !important; padding: 0 !important; overflow: clip;
+  border: 0 !important; border-radius: var(--d-r) !important; background: transparent !important; box-shadow: none !important;
+  transition: background-color var(--d-t2) var(--d-ease);
+}
+§@git .sh-run:last-child { margin-bottom: 0 !important; }
+§@git .sh-run.open { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-open), transparent) !important; }
+§@git .sh-run-h {
+  display: grid !important; grid-template-columns: 9px minmax(0, 1fr) auto; grid-template-areas: "chev name name" "chev meta state";
+  column-gap: var(--d-gap); row-gap: 1px; align-items: center;
+  min-height: var(--d-row-h); margin: 0 !important; padding: 4px var(--d-pad) !important;
+  border-radius: var(--d-r) !important; background: transparent; box-shadow: none !important; transform: none !important;
+  transition: background-color var(--d-t1) var(--d-ease);
+}
+§@git .sh-run-h:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+§@git .sh-run.open > .sh-run-h { border-radius: var(--d-r) var(--d-r) 0 0 !important; }
+§@git .sh-run-h:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+§@git .sh-run-h > .sh-accchev { grid-area: chev; align-self: start; width: 9px !important; height: 9px !important; margin-top: 4px; color: var(--d-text-3) !important; flex: none; }
+/* the run's state is its word on line 2 (glyph + word); the shell's colour dot repeats it, so it goes */
+§@git .sh-run-h > .sh-dot { display: none !important; }
+§@git .sh-run-h > .sh-main { display: contents !important; }
+§@git .sh-run-h .sh-name { grid-area: name; min-width: 0; }
+§@git .sh-run-h .sh-name > .sh-nm-txt { white-space: normal !important; overflow: visible !important; overflow-wrap: anywhere; text-overflow: clip !important; text-wrap: pretty; }
+§@git .sh-run-h .sh-meta { grid-area: meta; min-width: 0; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere; }
+/* fact lines wrap between their parts (JS keeps a ref or a count whole), in even lines, so an age or a word is never
+   left alone on a line (Chrome's text-wrap: pretty leaves "2h" alone there; balance does not) */
+§@git :is(.sh-run-h .sh-meta, .sh-kv > .sh-v:not(.sh-mono), .pm7-post-kv > dd:not(.sh-mono), .pm7-automation-run-copy > small) { text-wrap: balance; }
+§@git .sh-run-h > .pm-chip { grid-area: state; justify-self: end; margin-left: 8px; max-width: none !important; }
+/* when the facts would wrap beside the state word, the state goes under them (measured, JS) */
+§@git .sh-run-h[data-d-stack] { grid-template-areas: "chev name name" "chev meta meta" "chev state state"; }
+§@git .sh-run-h[data-d-stack] > .pm-chip { justify-self: start; margin-left: 0; }
+/* the failure stays visible while the row is closed (failure-first), under the name, never cut */
+§@git .sh-runfail {
+  margin: 0 !important; padding: 0 var(--d-pad) 6px calc(var(--d-pad) + 9px + var(--d-gap)) !important;
+  font: 400 var(--d-fs-small)/1.4 var(--mono-font) !important; color: var(--d-fail) !important;
+  white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere; text-wrap: pretty;
+}
+/* the open body: no padding of its own (a closed body is zero high), its rows start under the name */
+§@git .sh-run > .sh-accb { padding: 0 var(--d-pad) 0 calc(var(--d-pad) + 9px + var(--d-gap)) !important; }
+§@git .sh-run > .sh-accb > .pm-acc-inner > :first-child { margin-top: 1px !important; }
+§@git .sh-run > .sh-accb > .pm-acc-inner > :last-child { margin-bottom: 9px !important; }
+/* jobs: glyph, name, duration; the step and the log under the job they belong to */
+§@git .sh-job { display: flex !important; align-items: center !important; gap: 6px !important; padding: 3px 0 !important; min-height: 22px; }
+§@git .sh-job > .sh-dot { display: none !important; }
+§@git .sh-jname { font: 500 var(--d-fs-label)/1.35 var(--body-font) !important; color: var(--d-text) !important; }
+§@git .sh-jdur { font: 400 var(--d-fs-small)/1.35 var(--mono-font) !important; color: var(--d-text-3) !important; font-variant-numeric: tabular-nums; }
+§@git .sh-jstep {
+  padding: 0 0 4px 18px !important; font: 400 var(--d-fs-small)/1.4 var(--mono-font) !important; color: var(--d-fail) !important;
+  white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere;
+}
+§@git .sh-jstep.muted { color: var(--d-text-3) !important; }
+§@git .sh-log {
+  margin: 2px 0 6px !important; padding: 6px 7px !important; border-radius: var(--d-r) !important;
+  background: color-mix(in srgb, var(--d-fail) 8%, transparent) !important; border: 1px solid color-mix(in srgb, var(--d-fail) 16%, transparent);
+  font: 400 var(--d-fs-small)/1.45 var(--mono-font) !important; color: var(--d-text-2) !important;
+}
+§@git .sh-log > div { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere; }
+§@git .sh-log > .fail { color: var(--d-fail) !important; }
+/* run artifacts: a small labelled list, each one a row with its own hover */
+§@git .sh-arth { margin: 6px 0 2px !important; padding: 0 !important; font: 600 var(--d-fs-label)/1.35 var(--body-font) !important; letter-spacing: 0 !important; color: var(--d-text-2) !important; }
+§@git .sh-art {
+  margin: 0 0 0 -5px !important; width: calc(100% + 10px) !important; padding: 3px 5px !important; border-radius: var(--d-r) !important;
+  font: 400 var(--d-fs-small)/1.4 var(--mono-font) !important; color: var(--d-text) !important; transition: background-color var(--d-t1) var(--d-ease);
+}
+§@git .sh-art[data-demo-action] { cursor: pointer; }
+§@git .sh-art:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+§@git .sh-art.expired { color: var(--d-text-3) !important; }
+§@git .sh-art.expired:hover { background: none !important; }
+§@git .sh-art > .sh-jname { font: inherit !important; color: inherit !important; }
+§@git .sh-run .sh-kv { padding: 3px 0 !important; }
+/* a run's actions fill their rows instead of leaving a ragged edge */
+§@git .sh-run .sh-acts > .pm-btn { flex: 1 1 auto; }
+
+/* ---- workflows: the dispatch form is a section of the open row ---- */
+§@git .pm-footnote.d-e-note { display: flex !important; align-items: flex-start; gap: 6px; padding: 4px var(--d-pad) 6px !important; color: var(--d-text-2) !important; }
+§@git .pm-footnote.d-e-note > .d-gl { margin-top: 2px; }
+§@git .sh-run .pm-footnote { padding: 3px 0 2px !important; }
+§@git .sh-dispform {
+  display: flex !important; flex-direction: column; gap: 6px !important; width: auto !important;
+  margin: 6px 0 0 !important; padding: 8px 0 0 !important; border: 0 !important; border-top: 1px solid var(--d-line) !important; border-radius: 0 !important; background: none !important;
+}
+§@git .sh-dfk { font: 600 var(--d-fs-label)/1.3 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text) !important; }
+§@git .sh-dfrow { display: grid !important; grid-template-columns: 58px minmax(0, 1fr); column-gap: 6px !important; align-items: center; }
+§@git .sh-dfrow > .sh-k { min-width: 0 !important; font: 400 var(--d-fs-meta)/1.3 var(--body-font) !important; color: var(--d-text-3) !important; }
+§@git .sh-scope .pm6-tb-menu-trigger {
+  display: flex !important; align-items: center; gap: 6px !important; width: 100%; min-height: 26px; padding: 3px 7px !important;
+  border: 1px solid var(--d-ctl-line) !important; border-radius: var(--d-r) !important; background: var(--d-ctl-bg) !important; box-shadow: none !important;
+  font: 500 var(--d-fs-meta)/1.25 var(--mono-font) !important; color: var(--d-text) !important; text-align: left; cursor: pointer;
+  transition: background-color var(--d-t1) var(--d-ease), border-color var(--d-t1) var(--d-ease);
+}
+§@git .sh-scope .pm6-tb-menu-trigger:hover, §@git .sh-scope .pm6-tb-menu-trigger.is-menu-open { background: var(--d-press) !important; border-color: var(--d-line-2) !important; }
+§@git .sh-scope .pm6-tb-menu-trigger > .pm-ico { width: 12px !important; height: 12px !important; flex: none; color: var(--d-text-3); }
+§@git .sh-scope .pm6-tb-menu-trigger > .pm-ico:last-child { margin-left: auto; transition: transform var(--d-t2) var(--d-spring); }
+§@git .sh-scope .pm6-tb-menu-trigger.is-menu-open > .pm-ico:last-child { transform: rotate(180deg); }
+§@git .sh-scope .pm6-tb-menu-label { flex: 1 1 auto; min-width: 0; font: inherit !important; color: inherit !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+§@git .sh-chk { gap: 6px !important; font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-2) !important; }
+§@git .sh-chk input { accent-color: var(--accent-primary) !important; width: 13px !important; height: 13px !important; }
+§@git .sh-dispform .sh-acts { margin-top: 2px !important; }
+§@git .d-e-reason { display: flex; align-items: flex-start; gap: 6px; font: 400 var(--d-fs-meta)/1.4 var(--body-font); color: var(--d-text-2); }
+§@git .d-e-reason > .d-gl { margin-top: 2px; }
+/* the workflow file is a link */
+§@git .sh-kv > .sh-v[data-demo-action] { color: var(--accent-primary) !important; cursor: pointer; }
+§@git .sh-kv > .sh-v[data-demo-action]:hover { text-decoration: underline; text-underline-offset: 2px; }
+/* ids and paths keep both ends (middle truncation, JS); phrases wrap */
+§@git .sh-kv > .sh-v.sh-mono:not(.d-wrap) { white-space: nowrap !important; overflow: hidden !important; overflow-wrap: normal; }
+
+/* ---- settings: grouped facts, secret names with their state ---- */
+§@git .sh-head > .sh-hcount[data-d-st] { display: inline-flex !important; align-items: center; gap: 4px; }
+§@git .sh-head > .sh-hcount[data-d-st="live"], §@git .sh-head > .sh-hcount[data-d-st="ok"] { color: var(--d-ok) !important; }
+§@git .sh-grp {
+  margin: 0 !important; padding: 7px var(--d-pad) 2px !important; font: 600 var(--d-fs-label)/1.3 var(--body-font) !important;
+  letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text-2) !important;
+}
+§@git .sh-grp:first-child { padding-top: 3px !important; }
+§@git .sh-kvwrap {
+  display: grid !important; grid-template-columns: minmax(0, 1fr) auto; column-gap: 8px !important; align-items: center;
+  padding: 3px var(--d-pad) !important; min-height: 22px;
+}
+§@git .sh-kvwrap > .sh-k.sh-mono { white-space: nowrap !important; overflow: hidden !important; overflow-wrap: normal !important; word-break: normal !important; }
+§@git .sh-kvwrap > .pm-chip { justify-self: end; }
+§@git .sh-shelf > .sh-body > .pm-note { margin: 4px 0 6px !important; }
+§@git .sh-shelf > .sh-body > .pm-btn { white-space: normal !important; text-align: center; text-wrap: balance; }
+§@git .pm-empty {
+  margin: 0 !important; padding: 6px var(--d-pad) 7px !important; border: 0 !important; border-radius: 0 !important; background: none !important;
+  font: 400 var(--d-fs-meta)/1.45 var(--body-font) !important; color: var(--d-text-3) !important;
+}
+
+/* ---- the other services: the shell's provider view, as cards like Source's publish card ---- */
+§@git .pm7-automation-provider-view { padding: 0 var(--d-gx) 12px !important; gap: var(--d-g) !important; }
+§@git .pm7-post-card {
+  padding: 7px 7px 8px !important; border-radius: var(--d-R) !important; box-shadow: none !important; min-width: 0;
+  border: 1px solid var(--d-line) !important; background: color-mix(in srgb, var(--surface-elevated) 70%, transparent) !important;
+  container-type: inline-size;
+}
+§@git .pm7-post-card-head { display: grid !important; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "title state" "sub sub"; column-gap: 10px; row-gap: 2px; margin: 0 0 8px !important; align-items: baseline; }
+§@git .pm7-post-card-head > div { display: contents; }
+§@git .pm7-post-card-title {
+  grid-area: title; min-width: 0; font: var(--d-w-label) var(--d-fs-name)/1.3 var(--body-font) !important;
+  letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text) !important;
+}
+§@git .pm7-post-card-head > .pm7-post-state { grid-area: state; justify-self: end; }
+§@git .pm7-post-card-subtitle { grid-area: sub; margin: 0 !important; font: 400 var(--d-fs-small)/1.4 var(--body-font) !important; color: var(--d-text-3) !important; }
+@container (max-width: 250px) {
+  §@git .pm7-post-card-head { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "state" "sub"; }
+  §@git .pm7-post-card-head > .pm7-post-state { justify-self: start; }
+}
+§@git .pm7-post-kv { display: grid !important; grid-template-columns: minmax(70px, max-content) minmax(0, 1fr) !important; gap: 3px 8px !important; margin: 0; font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; }
+§@git .pm7-post-kv dt { color: var(--d-text-3) !important; }
+§@git .pm7-post-kv dd { color: var(--d-text-2) !important; margin: 0; overflow-wrap: anywhere; }
+§@git .pm7-post-kv dd.sh-mono { font-family: var(--mono-font) !important; font-size: var(--d-fs-small) !important; }
+@container (max-width: 210px) {
+  §@git .pm7-post-kv { grid-template-columns: minmax(0, 1fr) !important; row-gap: 0 !important; }
+  §@git .pm7-post-kv dd { margin-bottom: 4px; }
+}
+§@git .pm7-post-actions { display: flex !important; flex-wrap: wrap; gap: 6px !important; margin-top: 10px !important; }
+§@git .pm7-post-actions .pm-btn { flex: 1 1 auto; padding: 4px 8px !important; font-size: var(--d-fs-meta) !important; }
+§@git .pm7-automation-run {
+  display: grid !important; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "copy state"; column-gap: 8px !important; align-items: start;
+  padding: 6px 0 !important; border-top: 1px solid var(--d-line) !important;
+}
+§@git .pm7-automation-run > .dot { display: none !important; }
+§@git .pm7-automation-run-copy { grid-area: copy; }
+§@git .pm7-automation-run > .pm-chip { grid-area: state; margin-top: 1px; }
+§@git .pm7-automation-run-copy > strong { font: 500 var(--d-fs-name)/1.35 var(--body-font) !important; color: var(--d-text) !important; white-space: normal !important; overflow: visible !important; }
+§@git .pm7-automation-run-copy > small {
+  margin-top: 1px !important; font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-3) !important;
+  white-space: normal !important; overflow: visible !important; text-overflow: clip !important;
+}
+
+
+/* ---- families and modes ---- */
+§{retro}@git .sh-log { box-shadow: 2px 2px 0 color-mix(in srgb, var(--d-fail) 30%, transparent); }
+§{nier}@git .sh-log { background: transparent !important; border-color: var(--d-line-2); }
+§{nier}@git .pm7-post-card { background: transparent !important; border-color: var(--d-line-2) !important; }
+/* NieR headers: the panel's own group labels take the shared label capitals (90-themes covers shelf labels, card
+   titles and the title) */
+§R[data-o55-nier-parts~="headers"] #panel-git :is(.sh-dfk, .sh-grp) { text-transform: uppercase !important; letter-spacing: .07em !important; }

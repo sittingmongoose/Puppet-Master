@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30777-L31644
+Source lines: L30777-L31657
 
-Source SHA256: `12b8747bbb07328d8c9f0dfe59781510d754e172d89e64a3f234e7a9c210c719`
+Source SHA256: `de5dc2f783cf59029c19b3e7206bc5823fcdc8cb74354d4a78c485d0d1da94db`
 
 ---
 
@@ -694,6 +694,19 @@ rows, all scope `global` and tier `simple`: `general.visual.nier-mode` (toggle, 
 `general.visual.nier-background` (select of eight scenes, default City Ruins). NieR Mode is a hidden theme painted over
 the Basic family, not a ninth theme: the eight built-in variants of F3-425 are unchanged, and while it is on NieR
 decides the accent color and the app font. Its parts and background rows show only while it is on.
+
+Amended 2026-10-09 (per-provider auto-switch, `Plans/Decision_Log.md#DL-174`, owner `Plans/Multi-Account.md#MA-073`):
+four rows gain the `provider` scope beside the scopes they already have, `ai.accounts.cooldown-policy` also gains
+the `global` and `project` scopes so that each of the four has a global value and resolves through the same order,
+and the row count stays 916:
+`ai.accounts.multi-account-switching` (global, project, provider), `ai.accounts.hard-switch-level` and
+`ai.accounts.soft-warning-level` (global, project, provider, account), and `ai.accounts.cooldown-policy` (global,
+project, provider, account). MA-073 owns the order in which these scopes resolve, the shared value that a provider
+without a value of its own follows, and the switching rules. The provider value is set in the provider's own section of
+Settings > AI > Providers & Accounts and, for the toggle and the switch level, also on the Usage Accounts room's
+provider controls (`Plans/usage-feature.md#UF-107`); both are the same row, written only through the Settings owner's
+`cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with `scope=provider` (SSYS-009, SSYS-018,
+SSYS-044), and neither surface keeps a copy.
 
 ### F3-442 - Project Settings Modal Reconciliation
 

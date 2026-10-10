@@ -1,0 +1,122 @@
+/* The shared dropdown menu (owner: engine; DECISIONS.md "Dropdown menus"): the Chat Assistant 5.6 Pro menu look and
+   motion (menus.css, styles.css .overlay-menu / .menu-*), on Usage tokens. Floors: no text under 11 px; row titles 13 px,
+   descriptions 12 px, section labels 11 px mono caps (5.6 Pro draws 11 / 10 / 9 px; Usage keeps its 11 px floor). No
+   backdrop blur (Usage perf rule): the panel is the plate colour, near-opaque. Motion: corner-origin spring sprout by
+   TRANSITION (never @keyframes, so the box is measured untransformed), asymmetric close, height spring. */
+#panel-usage .pmu-shell {
+  --pmu-menu-bg: var(--pmu-card);
+  --pmu-menu-border: var(--pmu-rule-strong);
+  --pmu-menu-hot: color-mix(in srgb, var(--pmu-ink) 7%, transparent);
+  --pmu-menu-active: color-mix(in srgb, var(--pmu-ink) 9%, transparent);
+  --pmu-menu-iconbg: color-mix(in srgb, var(--pmu-ink) 8%, transparent);
+  --pmu-menu-shadow: 0 18px 65px rgba(0,0,0,.42), 0 4px 18px rgba(0,0,0,.26);
+  --pmu-r-menu: 13px; --pmu-r-mitem: 8px;
+  --pmu-m-ease: cubic-bezier(.2,.75,.25,1);
+}
+html[data-theme$="-light"] #panel-usage .pmu-shell { --pmu-menu-shadow: 0 18px 50px rgba(21,32,43,.16), 0 4px 14px rgba(21,32,43,.08); --pmu-menu-hot: color-mix(in srgb, var(--pmu-ink) 6%, transparent); }
+html[data-theme^="friendly"] #panel-usage .pmu-shell { --pmu-r-menu: 16px; --pmu-r-mitem: 10px; }
+html[data-theme="glass-dark"] #panel-usage .pmu-shell { --pmu-menu-bg: rgba(24,17,52,.96); --pmu-menu-border: rgba(196,179,255,.28); --pmu-menu-shadow: 0 18px 60px rgba(8,4,20,.6), 0 4px 18px rgba(8,4,20,.32); }
+html[data-theme="glass-light"] #panel-usage .pmu-shell { --pmu-menu-bg: rgba(255,255,255,.97); --pmu-menu-border: rgba(23,34,42,.14); }
+html[data-theme^="retro"] #panel-usage .pmu-shell { --pmu-r-menu: 0px; --pmu-r-mitem: 0px; --pmu-menu-shadow: var(--pmu-shadow-pop); --pmu-menu-border: var(--pmu-rule); }
+
+/* ---- panel ---- */
+#panel-usage .pmu-menu { position: absolute; z-index: 70; box-sizing: border-box; display: flex; flex-direction: column; min-width: 220px;
+  max-width: min(420px, calc(100% - 16px)); padding: 6px; border: 1px solid var(--pmu-menu-border); border-radius: var(--pmu-r-menu);
+  background: var(--pmu-menu-bg); box-shadow: var(--pmu-menu-shadow); color: var(--pmu-ink); font-family: var(--pmu-font); font-size: 13px;
+  line-height: 1.35; text-align: left; overflow: hidden; overscroll-behavior: contain; contain: layout;
+  transform-origin: var(--pmu-mox, 50%) var(--pmu-moy, 0px);
+  --pmu-m-sx: .72; --pmu-m-sy: .48; --pmu-m-ty: 10px;
+  transition: opacity calc(160ms * var(--pmu-msp, 1)) var(--pmu-m-ease), transform calc(300ms * var(--pmu-msp, 1)) cubic-bezier(.22, 1.55, .36, 1); }
+#panel-usage .pmu-menu.has-rail { padding: 0; }
+/* the app's Glass rule for [role="menu"] gives the panel a 30 px backdrop blur and a half-transparent fill (!important);
+   without a GPU every frame of the sprout then re-blurred the board behind it in software (40 ms draws, 25 fps, PERF-3):
+   the panel keeps its own near-opaque fill there */
+html[data-pmu-soft] #panel-usage .pmu-menu { background: var(--pmu-menu-bg) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+/* closed nudge: toward the trigger (a menu below its trigger starts 10 px up, one above starts 10 px down) */
+#panel-usage .pmu-menu[data-side="below"] { --pmu-m-ty: -10px; }
+/* measured invisible by opacity, never by visibility: the app's reduced-motion rule gives every element a 0.01 ms
+   transition, so a list that inherited "hidden" here was still hidden in the frame the first row took focus, focus stayed
+   on the trigger and Escape closed nothing (FINAL-REVIEW-3 must-fix 6) */
+#panel-usage .pmu-menu[data-mstate="measure"] { opacity: 0; pointer-events: none; transform: none; transition: none; }
+#panel-usage .pmu-menu[data-mnomo] { transition: none !important; animation: none !important; }
+#panel-usage .pmu-menu[data-mstate="closed"] { opacity: 0; transform: translate3d(0, var(--pmu-m-ty), 0) scale3d(var(--pmu-m-sx), var(--pmu-m-sy), 1); }
+#panel-usage .pmu-menu[data-mstate="open"] { opacity: 1; transform: none; }
+/* the 5.6 Pro asymmetric close (WOW-SPEC 3.14, E-6): 180 ms, a UNIFORM end transform (6 px toward the trigger, scale .94),
+   fully opaque until 70 %, then faded over the last 54 ms: never a squashed opaque frame */
+#panel-usage .pmu-menu[data-mstate="leaving"] { pointer-events: none; opacity: 0; transform: translate3d(0, var(--pmu-m-cy, -6px), 0) scale(.94);
+  transition: opacity calc(54ms * var(--pmu-msp, 1)) linear calc(126ms * var(--pmu-msp, 1)), transform calc(180ms * var(--pmu-msp, 1)) cubic-bezier(.4, 0, .2, 1); }
+#panel-usage .pmu-menu[data-side="above"] { --pmu-m-cy: 6px; }
+/* height spring when the contents change (search, rail, drill-in): 340 ms with overshoot (5.6 Pro model picker) */
+#panel-usage .pmu-menu.pmu-m-spring { transition: opacity calc(160ms * var(--pmu-msp, 1)) var(--pmu-m-ease), transform calc(300ms * var(--pmu-msp, 1)) cubic-bezier(.22, 1.55, .36, 1),
+  height calc(340ms * var(--pmu-msp, 1)) cubic-bezier(.22, 1.72, .36, 1); }
+
+/* ---- head, search, sections, rows ---- */
+#panel-usage .pmu-mhead { display: flex; align-items: center; gap: 8px; min-height: 34px; padding: 6px 8px 7px; margin-bottom: 4px; flex: none;
+  border-bottom: 1px solid var(--pmu-rule); }
+#panel-usage .pmu-menu.has-rail .pmu-mhead { margin: 0; padding: 8px 12px 9px 14px; }
+#panel-usage .pmu-mhead strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 650; color: var(--pmu-ink); }
+#panel-usage .pmu-mspacer { flex: 1 1 auto; }
+#panel-usage .pmu-mcur { flex: none; max-width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--pmu-ink-3); font-size: 12px; font-variant-numeric: tabular-nums; }
+#panel-usage .pmu-mback { display: inline-grid; place-items: center; width: 24px; height: 24px; margin: -2px 0 -2px -4px; padding: 0; border: 0; border-radius: 7px;
+  background: transparent; color: var(--pmu-ink-3); cursor: pointer; }
+#panel-usage .pmu-mback:hover { background: var(--pmu-menu-hot); color: var(--pmu-ink); }
+#panel-usage .pmu-mback svg { width: 14px; height: 14px; }
+#panel-usage .pmu-msearch { flex: none; padding: 4px 2px 7px; margin-bottom: 4px; border-bottom: 1px solid var(--pmu-rule); }
+#panel-usage .pmu-menu.has-rail .pmu-msearch { padding: 8px 8px 8px; margin: 0; }
+#panel-usage .pmu-msearchwrap { display: flex; align-items: center; gap: 7px; height: 32px; padding: 0 10px; border: 1px solid var(--pmu-rule); border-radius: var(--pmu-r-mitem);
+  background: var(--pmu-card-2); color: var(--pmu-ink-3); }
+#panel-usage .pmu-msearchwrap:focus-within { border-color: color-mix(in srgb, var(--pmu-accent) 60%, var(--pmu-rule)); }
+#panel-usage .pmu-msearchwrap .pmu-ico { width: 14px; height: 14px; }
+#panel-usage .pmu-msearchin { flex: 1 1 auto; min-width: 0; height: 100%; padding: 0; border: 0; outline: none; background: transparent; color: var(--pmu-ink); font: inherit; font-size: 13px; }
+#panel-usage .pmu-msearchin::placeholder { color: var(--pmu-ink-3); }
+#panel-usage .pmu-mlist { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+#panel-usage .pmu-menu.has-rail .pmu-mlist { padding: 2px 6px 6px; }
+#panel-usage .pmu-msec { padding: 8px 8px 4px; color: var(--pmu-ink-3); font-family: var(--pmu-mono); font-size: 11px; font-weight: 500; letter-spacing: .06em;
+  text-transform: uppercase; font-stretch: 87.5%; }
+#panel-usage .pmu-mdiv { height: 1px; margin: 5px 3px; background: var(--pmu-rule); }
+#panel-usage .pmu-mitem { display: flex; align-items: center; gap: 9px; width: 100%; min-height: 34px; padding: 6px 8px; border: 0; border-radius: var(--pmu-r-mitem);
+  background: transparent; color: var(--pmu-ink-2); font: inherit; text-align: left; cursor: pointer; outline: none;
+  transition: background-color calc(130ms * var(--pmu-speed, 1)), color calc(130ms * var(--pmu-speed, 1)), transform calc(130ms * var(--pmu-speed, 1)); }
+#panel-usage .pmu-mitem.has-sub { min-height: 42px; }
+#panel-usage .pmu-mitem:hover, #panel-usage .pmu-mitem:focus-visible { background: var(--pmu-menu-hot); color: var(--pmu-ink); }
+#panel-usage .pmu-mitem.active { background: var(--pmu-menu-active); color: var(--pmu-ink); }
+#panel-usage .pmu-mitem.is-toggle.is-on { color: var(--pmu-ink); }
+#panel-usage .pmu-mitem:active { transform: scale(.985); }
+#panel-usage .pmu-mitem.is-disabled { cursor: default; opacity: .55; }
+#panel-usage .pmu-mitem.is-disabled:hover { background: transparent; }
+#panel-usage .pmu-mitem.is-danger b { color: var(--pmu-ink-crit); }
+#panel-usage .pmu-mcopy { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1 1 auto; }
+#panel-usage .pmu-mcopy b { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 600; line-height: 18px; }
+#panel-usage .pmu-mcopy span { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; color: var(--pmu-ink-3); font-size: 12px; line-height: 16px; }
+#panel-usage .pmu-mright { flex: none; color: var(--pmu-ink-3); font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+#panel-usage .pmu-mcheck, #panel-usage .pmu-mchev { display: inline-grid; place-items: center; flex: none; width: 16px; height: 16px; color: var(--pmu-accent); }
+#panel-usage .pmu-mchev { color: var(--pmu-ink-3); }
+#panel-usage .pmu-mcheck svg, #panel-usage .pmu-mchev svg { width: 14px; height: 14px; }
+#panel-usage .pmu-mcheck-off { border: 1.5px solid var(--pmu-rule-strong); border-radius: 4px; width: 14px; height: 14px; }
+#panel-usage .pmu-mlead { display: inline-grid; place-items: center; flex: none; }
+#panel-usage .pmu-micon { width: 24px; height: 24px; border-radius: 7px; background: var(--pmu-menu-iconbg); color: var(--pmu-accent); }
+#panel-usage .pmu-micon svg { width: 14px; height: 14px; }
+#panel-usage .pmu-mlead-swatch i { display: block; width: 10px; height: 10px; border-radius: 3px; }
+#panel-usage .pmu-mempty { margin: 0; padding: 16px 10px; color: var(--pmu-ink-3); font-size: 12.5px; text-align: center; }
+#panel-usage .pmu-mfoot { margin: 4px 0 0; padding: 7px 8px 4px; border-top: 1px solid var(--pmu-rule); color: var(--pmu-ink-3); font-size: 12px; line-height: 1.4; }
+#panel-usage .pmu-mblock { padding: 6px 8px; }
+#panel-usage .pmu-mcustom:empty { display: none; }
+
+/* ---- the optional icon rail on the left (5.6 Pro model menu) ---- */
+#panel-usage .pmu-mlayout { display: grid; grid-template-columns: 46px minmax(0, 1fr); flex: 1 1 auto; min-height: 0; }
+#panel-usage .pmu-mmain { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+#panel-usage .pmu-mrail { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 0; border-right: 1px solid var(--pmu-rule);
+  overflow: auto; scrollbar-width: none; }
+#panel-usage .pmu-mrailbtn { display: inline-grid; place-items: center; flex: none; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 9px;
+  background: transparent; color: var(--pmu-ink-3); cursor: pointer; outline: none; transition: background-color calc(130ms * var(--pmu-speed, 1)), color calc(130ms * var(--pmu-speed, 1)); }
+#panel-usage .pmu-mrailbtn:hover, #panel-usage .pmu-mrailbtn:focus-visible { background: var(--pmu-menu-hot); color: var(--pmu-ink); }
+#panel-usage .pmu-mrailbtn.active { background: var(--pmu-menu-active); color: var(--pmu-accent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmu-accent) 45%, transparent); }
+#panel-usage .pmu-mrailbtn .pmu-ico { width: 16px; height: 16px; }
+
+/* triggers: a menu button shows its open state while its menu is up */
+#panel-usage .pmu-menu-anchor-open:not(.pmu-mitem) { color: var(--pmu-ink); background: var(--pmu-menu-hot); }
+
+@media (prefers-reduced-motion: reduce) {
+  #panel-usage .pmu-menu, #panel-usage .pmu-menu.pmu-m-spring { transition: none !important; animation: none !important; }
+}
+html[data-motion="reduced"] #panel-usage .pmu-menu { transition: none !important; animation: none !important; }

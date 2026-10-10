@@ -21,7 +21,7 @@ PM51.bound = {
     const s = PM51.setting(id); if (!s) return '';
     const v = settingValue(s);
     const opts = (choices || o55Options(s)).slice(); if (!opts.map(String).includes(String(v))) opts.unshift(v);
-    return `<span class="o55-bound o55-bound-select" data-setting-id="${a(id)}">${prefix ? `<span class="o55-bound-prefix">${h(prefix)}</span>` : ''}${PM51.dropdown(v, opts.map(o => ({ value: o, label: PM51.valueLabel(id, o), meta: PM51.valueHint(id, o) })), { action: 'change-setting', data: { setting: id }, label: label || PM51.rowLabel(s), width })}</span>`;
+    return `<span class="o55-bound o55-bound-select" data-setting-id="${a(id)}">${prefix ? `<span class="o55-bound-prefix">${h(prefix)}</span>` : ''}${PM51.dropdown(v, opts.map(o => { const why = PM51.choiceReason(id, o, v); return Object.assign({ value: o, label: PM51.valueLabel(id, o), meta: PM51.valueHint(id, o) }, why ? { disabled: true, reason: why, why: true } : {}); }), { action: 'change-setting', data: { setting: id }, label: label || PM51.rowLabel(s), width })}</span>`;
   },
   toggle(id, { label } = {}) {
     const s = PM51.setting(id); if (!s) return '';
