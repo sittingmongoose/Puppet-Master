@@ -4,6 +4,44 @@
   "title": "PMConcept7 Home Workspace control reconciliation",
   "decision_date": "2026-08-13",
   "status": "accepted_post_workspace_repair",
+  "superseded_2026_10_09": {
+    "decision_refs": [
+      "Plans/Decision_Log.md#DL-180",
+      "Plans/Decision_Log.md#DL-181"
+    ],
+    "disposition": "superseded",
+    "scope": "The four-editor-panel, singleton-dashboard, chat-dock, outer-dock, floating-host and terminal-section controls this reconciliation accepted on 2026-08-13 are superseded by the universal panel system. The file stays as lineage for those controls; it is not the current Home census.",
+    "current_census": "Plans/UI_Wiring_Rules.md#UIW-040 (Home), Plans/UI_Wiring_Rules.md#UIW-042 (terminal tab), Plans/Wiring_Matrix.md#WM-090 and #WM-091 (one wiring row per control)",
+    "superseded_locked_canon_keys": [
+      "editor_panel_count",
+      "editor_panel_ids",
+      "terminal_section_maximum",
+      "terminal_visible_pane_maximum",
+      "home_main_host",
+      "outer_dock_hosts",
+      "floating_host",
+      "web_floating_authority"
+    ],
+    "kept": [
+      "native_popout_authority, which now applies to the chat's Pop out window only (Plans/FinalGUISpec.md#F3-637)",
+      "the transaction rule: previews are local and one changed release commits once (Plans/UI_Wiring_Rules.md#UIW-012)",
+      "model-first identity: moving, collapsing, maximizing and reloading never mint buffers, browser sessions, chats or terminal sessions"
+    ],
+    "superseded_commands": [
+      "cmd.editor.open_panel",
+      "cmd.editor.close_panel",
+      "cmd.terminal.move_workgroup"
+    ],
+    "superseded_events": [
+      "terminal.workgroup_moved"
+    ],
+    "superseded_contracts": [
+      "OpenFile.target_editor_panel_id",
+      "OpenFile.target_editor_group_id",
+      "OpenFile.target_group compatibility alias (lineage only; none selects a home panel)"
+    ],
+    "storage_successor": "home_workspace_layout.v2:{project_id}:{workspace_tab_id} (pm.home_workspace_layout.v2, Plans/storage-plan.md#SP-330); the v1 record is a read-only migration input converted on first read and never reset."
+  },
   "authority": {
     "packet": "PMConcept7_Home_Workspace_Audit_Packet_v1",
     "implementation_packet_lineage": "PMConcept7_Home_Workspace_Implementation_Packet_v1",
@@ -64,6 +102,34 @@
       "disposition": "rejected_as_wrong_owner",
       "replacement": "Dashboard, editor, terminal, and Chat are Home surfaces, not widgets; Dashboard widget layout remains owned by Dashboard.",
       "consumer_update": "No cmd.widget.* command, widget hostability, DOM order, or Dashboard internal layout state is used by Home movement."
+    },
+    {
+      "owner": "Plans/Decision_Log.md#DL-180",
+      "stale_rule": "locked_canon: four stable editor panels (editor_panel_1..4), the home_main host, the four outer dock hosts and the floating host",
+      "disposition": "superseded",
+      "replacement": "Home is one universal panel system: an n-ary split tree of panels, each a tab group that holds any tab kind; there are no fixed editor panels, docks or in-window float (Plans/FinalGUISpec.md#F3-630).",
+      "consumer_update": "Panels, tabs and layout use cmd.panel_tab.* and the extended cmd.workspace_layout.* family (Plans/UI_Command_Catalog.md#UCC-200) on the pm.home_workspace_layout.v2 record (Plans/storage-plan.md#SP-330); OpenFile's editor panel and group targets no longer select a home panel (Plans/Contracts_V0.md#CV-360)."
+    },
+    {
+      "owner": "Plans/Decision_Log.md#DL-180",
+      "stale_rule": "the singleton Dashboard surface with its own grip, Pop Out and boundary resizer",
+      "disposition": "superseded",
+      "replacement": "The dashboard is a tab kind; several dashboard tabs may be open, each on its own board (Plans/FinalGUISpec.md#F3-638, Plans/Widget_System.md#WS-030).",
+      "consumer_update": "Widget commands stay cmd.widget.* addressed by board_id inside a dashboard tab and emit no workspace.layout_changed (UCC-200); no panel, tab or dashboard pops out (UCC-203)."
+    },
+    {
+      "owner": "Plans/Decision_Log.md#DL-180",
+      "stale_rule": "the movable chat: chat grip, keyboard move, docking to any host, in-canvas float and its Dock Back to a host",
+      "disposition": "superseded",
+      "replacement": "The chat is a fixed column on the right from the title bar to the status bar, never a tab and never moved inside the window; Pop out into its own window (desktop app) is its only move and Dock back returns it (Plans/FinalGUISpec.md#F3-637).",
+      "consumer_update": "Show and hide stay cmd.panel.switch; Pop out and Dock back are cmd.panel.undock and cmd.panel.redock with chat; the width is cmd.workspace_layout.resize_surface with surface chat (Plans/UI_Command_Catalog.md#UCC-203)."
+    },
+    {
+      "owner": "Plans/Decision_Log.md#DL-181",
+      "stale_rule": "up to four terminal sections with workgroups and up to four visible panes, workgroup movement, the bottom terminal and Collapse Bottom Terminal",
+      "disposition": "superseded",
+      "replacement": "A terminal is one tab kind with one session per tab; sections, workgroups, sub-tabs and in-tab splits retire, Terminals 2x2 is a named layout of four panels, and any panel folds to its strip (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, Plans/FinalGUISpec.md#F3-630, #F3-640).",
+      "consumer_update": "cmd.terminal.move_workgroup and terminal.workgroup_moved are withdrawn; a terminal tab moves with cmd.panel_tab.move and splits with cmd.workspace_layout.split and a terminal spec (Plans/UI_Command_Catalog.md#UCC-201)."
     }
   ],
   "model_and_storage": {
@@ -117,8 +183,8 @@
       "Pointer capture, offset-preserving pickup, placeholder/reflow preview, edge-zone cues, cancellation, reduced-motion, and save-on-drop semantics are preserved from U10 vocabulary.",
       "Four-edge scroll dissolve and the shared theme-aware resizer glow/recovery remain the common systems.",
       "Web guarantees in-canvas floating and all four in-app docks; window.open is optional degraded behavior.",
-      "The 28 by 28 More options trigger sits immediately left of Theme and opens exactly Open Panel, Open Browser in Panel, a divider, Collapse Bottom Terminal, and Reset Layout; the Collapse row is a toggle (tweak wave 2026-08-13: runtime relabel to Expand Bottom Terminal while collapsed, one cmd.workspace_layout.set_collapsed with the negated current value per activation).",
-      "Open Panel and Open Browser in Panel are view-local disclosures; only Panel 1 through Panel 4 leaves dispatch commands. Collapse Bottom Terminal is never relabeled as Expand.",
+      "The 28 by 28 More options trigger sits immediately left of Theme and opens exactly Open Panel, Open Browser in Panel, a divider, Collapse Bottom Terminal, and Reset Layout; the Collapse row is a toggle (tweak wave 2026-08-13: runtime relabel to Expand Bottom Terminal while collapsed, one cmd.workspace_layout.set_collapsed with the negated current value per activation). Retired 2026-10-09 (DL-180): Open Panel, Open Browser in Panel and the Collapse row leave the title bar's Home options menu, which now holds the named layouts, the chat rows, Save this layout..., Restore home layout and Run setup wizard (Plans/FinalGUISpec.md#F3-502).",
+      "Open Panel and Open Browser in Panel are view-local disclosures; only Panel 1 through Panel 4 leaves dispatch commands. The earlier rule that Collapse Bottom Terminal is never relabeled as Expand was superseded by the toggle rule above on 2026-08-13, and both retire with the row on 2026-10-09 (DL-180): every panel folds to its strip instead (Plans/FinalGUISpec.md#F3-630).",
       "Reset is dual-surface (amended 2026-08-13): Settings > General & Appearance > Startup & Recovery and the top-bar Reset Layout row both dispatch cmd.workspace_layout.reset with no new command ID; the concept demo's post-reset reload is demo behavior only. Move or Dock remains retired and File Manager targeting remains File Manager-local.",
       "Movement is direct manipulation from the top-right lines-only grip (tweak wave 2026-08-13; the corner triangle is retired): the held surface tracks the pointer one-to-one, the placeholder projects the TARGET geometry (fair share of the destination host; full width plus track thickness in row-axis docks) and re-seats only on a host or insertion-index change (one FLIP reflow wave per change, 16 ms stagger). A pickup still inside the source rect resolves to the source placement and a preview-expanded host never captures the hit-test for its preview growth. Preview never re-renders a surface subtree. Hosts carry visible-surface caps (left/right 3, top/bottom 2, floating 4, home_main uncapped) with announced host_full refusal; normalization spills overflow to home_main and never quarantines. Wave 3 (2026-08-13): target adoption has a two-frame hysteresis, mid-FLIP surfaces are excluded from hit-testing via data-pm-home-flip, auto-scroll re-applies only on actual movement, and the placeholder previews the proportional projected width mirroring normalizeMainRowBases; PM_EDGE band geometry defers during all Home gestures.",
       "The centre-screen drop-target rail is retired. Drop targeting resolves surface-under-pointer, then outer edge band (the only route to a currently empty, zero-sized dock), then host-under-pointer, then home_main. Amended 2026-08-13: leaving the window resolves to invalid_target — floating is explicit-only through the Pop Out rows (editor panels, Chat, Dashboard) or the keyboard float key, and boot demotes persisted floating surfaces to last_docked_host with a storage.boot_demote_floating receipt. Wave 4 (2026-08-13): host targeting is latch-based and purely geometric - buildDockLatch freezes per-dock entry/exit bands at pickup (entry = committed dock rect plus the 28 px edge strip; exit = anticipated opened track plus 44 px slack) and elementsFromPoint is retired from drop-target resolution; one host transition and one track opening per approach into an occupied dock.",
@@ -205,6 +271,97 @@
         "home.<surface>.redock.<host>"
       ],
       "disposition": "Retired with the per-surface Move or dock menu inventory. cmd.workspace_layout.move_surface is unchanged and is dispatched from home.<surface>.grab (pointer and keyboard) and home.drop_target.<host>."
+    },
+    "retired_rows_2026_10_09": {
+      "decision_refs": [
+        "Plans/Decision_Log.md#DL-180",
+        "Plans/Decision_Log.md#DL-181"
+      ],
+      "count": 51,
+      "rows": [
+        "home.chat.grab",
+        "home.dashboard.grab",
+        "home.dashboard.pop_out",
+        "home.drop_target.bottom",
+        "home.drop_target.floating",
+        "home.drop_target.left",
+        "home.drop_target.main",
+        "home.drop_target.right",
+        "home.drop_target.top",
+        "home.editor_panel_1.close",
+        "home.editor_panel_1.grab",
+        "home.editor_panel_1.open_browser",
+        "home.editor_panel_1.pop_out",
+        "home.editor_panel_2.close",
+        "home.editor_panel_2.grab",
+        "home.editor_panel_2.open_browser",
+        "home.editor_panel_2.pop_out",
+        "home.editor_panel_3.close",
+        "home.editor_panel_3.grab",
+        "home.editor_panel_3.open_browser",
+        "home.editor_panel_3.pop_out",
+        "home.editor_panel_4.close",
+        "home.editor_panel_4.grab",
+        "home.editor_panel_4.open_browser",
+        "home.editor_panel_4.pop_out",
+        "home.file_manager.open_panel_1",
+        "home.file_manager.open_panel_2",
+        "home.file_manager.open_panel_3",
+        "home.file_manager.open_panel_4",
+        "home.more_options.collapse_bottom",
+        "home.more_options.open_browser_panel_1",
+        "home.more_options.open_browser_panel_2",
+        "home.more_options.open_browser_panel_3",
+        "home.more_options.open_browser_panel_4",
+        "home.more_options.open_panel_1",
+        "home.more_options.open_panel_2",
+        "home.more_options.open_panel_3",
+        "home.more_options.open_panel_4",
+        "home.resizer.dashboard",
+        "home.resizer.dock_track",
+        "home.resizer.floating_corner",
+        "home.resizer.terminal_section",
+        "home.resizer.editor_panel_1",
+        "home.resizer.editor_panel_2",
+        "home.resizer.editor_panel_3",
+        "home.resizer.editor_panel_4",
+        "home.terminal_section.bottom_toggle",
+        "home.terminal_section.grab",
+        "home.terminal_section.move_workgroup",
+        "home.terminal_section.new_section",
+        "home.terminal_section.split_pane"
+      ],
+      "disposition": "Retired with the four fixed editor panels, the singleton Dashboard surface, the dock and floating hosts, the movable chat, terminal sections and Collapse Bottom Terminal. Their actions are the universal panel controls of Plans/Wiring_Matrix.md#WM-090: the panel grip and Move panel (cmd.workspace_layout.move_surface), dividers (resize_surface and set_collapsed), the panel menu's Close panel (cmd.workspace_layout.close_panel), the \"+\" menu and launcher (cmd.panel_tab.open and the open routes), the tab menu and tab drags (cmd.panel_tab.*) and the file tree's own opening rules (Plans/FileManager.md#F-090).",
+      "also_retired_catalog_rows": [
+        "catalog.terminal_split_pane",
+        "catalog.terminal_move_pane",
+        "catalog.terminal_close_pane",
+        "catalog.terminal_detach",
+        "catalog.terminal_reattach_section",
+        "catalog.terminal_focus_session",
+        "catalog.editor_close_tab",
+        "catalog.dashboard_add_widget"
+      ],
+      "also_retired_disposition": "Retired or alias commands (Plans/UI_Command_Catalog.md#UCC-200, #UCC-201, #UCC-202): cmd.terminal.split_pane, move_pane, close_pane, detach and reattach_section retire; cmd.terminal.focus_session, cmd.editor.close_tab and cmd.dashboard.add_widget are alias metadata of cmd.terminal.focus, cmd.panel_tab.close and cmd.widget.add with no row of their own; the Assistant browser_toolbar DevTools row is re-pointed to the canonical cmd.browser.open_devtools.",
+      "kept_rows": [
+        "home.chat.activity_toggle",
+        "home.chat.pop_out",
+        "home.more_options.reset_layout",
+        "home.resizer.chat",
+        "home.settings.reset_layout"
+      ],
+      "kept_disposition": "Rebuilt on the v2 model: the chat's show and hide (receipt only), Pop out (panel.undocked only), the chat width ({ surface: chat, width }) and Restore home layout from the title bar and from Settings."
+    },
+    "dl_180_census": {
+      "home_production_rows": 108,
+      "terminal_tab_production_rows": 36,
+      "production_wiring_owner": "Plans/Wiring_Matrix.production.json",
+      "row_prefixes": [
+        "home.",
+        "terminal."
+      ],
+      "census_owner": "Plans/UI_Wiring_Rules.md#UIW-040 and #UIW-042",
+      "note": "semantic_production_rows above is the 2026-08-13 census of the superseded model and is kept as lineage."
     }
   },
   "consumer_map": {
