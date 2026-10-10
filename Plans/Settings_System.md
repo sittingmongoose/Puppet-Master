@@ -2956,6 +2956,7 @@ Retired rows follow the inventory's own convention, the one `general.visual.basi
 | `code.editing.editor-strip-collapsed` | Start With Editor Strip Collapsed | There is no separate editor strip (DL-180). | Folding any panel to its tab strip (`cmd.workspace_layout.set_collapsed`), kept in the layout record |
 | `code.terminal.explanations` | Explain What Commands Do | No AI inside the terminal (DL-181, D19). | The Teacher persona in the chat (`Plans/Personas.md` section 11.8) |
 | `code.terminal.tab-role` | Tab Purpose Hints | The per-tab role setting retires (DL-181). | Shell profiles (`code.terminal.allowed-profiles`) and the tab's own label (`cmd.panel_tab.rename`) |
+| `code.terminal.search` | Enable Find in Terminal | Find is always present (DL-181). | The terminal find control (`Plans/FinalGUISpec.md#F3-641`) |
 
 ### Rows amended
 
@@ -3105,7 +3106,7 @@ canonical_text: >-
   code.terminal.auto-second-pane, code.editing.editor-strip-collapsed, code.terminal.explanations (D19, the
   Teacher persona explains commands in the chat) and code.terminal.tab-role (shell profiles and the tab label), plus code.terminal.search (find is always present, F3-641; DL-181). The chat width, revealing an already open file, an empty panel's
   fate, what "+" does and the close button's side are not rows. With SSYS-051's thirty-six rows, the inventory
-  holds 964 rows (916 plus 48 added), of which 7 are retired, leaving 957 live rows.
+  holds 964 rows (916 plus 48 added), of which 9 are retired, leaving 955 live rows.
   Settings > Editor has code.editing.color-scheme (Editor Colors), a scheme row bound to F3-642's shared code colour-scheme catalog, defaulting to
   "Follow look" and applying live through the same Settings transaction as the other editor rows.
 gui_related: true
@@ -3114,7 +3115,7 @@ split_recommended: false
 depends_on: [DL-180, DL-181, DL-183, SSYS-002, SSYS-004, SSYS-009, SSYS-040, SSYS-042, F3-630, F3-636, F3-637, F3-639]
 unblocks: []
 acceptance_criteria:
-  - "A census of Plans/settings_inventory.json finds 964 unique ids in 12 categories; the 7 rows retired here end their descriptions with (Superseded by ...) and render on no page, in no manager and in no search result, leaving 957 live rows."
+  - "A census of Plans/settings_inventory.json finds 964 unique ids in 12 categories; the 9 rows retired here end their descriptions with (Superseded by ...) and render on no page, in no manager and in no search result, leaving 955 live rows."
   - "The twelve added rows exist once each with their listed type, choices and default, scope global, and a valid category.subgroup.key id."
   - "Changing any added or amended row applies at once with no restart badge, and no Settings change opens, closes, moves or rearranges a panel or tab that is already open."
   - "No row writes the Home layout record: dragging the chat's width, pinning History and popping the chat out change only the layout record, and Chat History List decides only how a workspace with no saved choice starts."
@@ -3156,7 +3157,7 @@ preserved_exact_tokens:
   - "Keep the chat open in narrow windows"
   - "(Superseded by ...)"
   - "964"
-  - "957"
+  - "955"
   - "cmd.workspace_layout.reset"
 negative_constraints:
   - Do not write the Home layout record from Settings, or keep the chat's width, History pin or pop-out as a Settings value.
@@ -3169,10 +3170,11 @@ owner_hints:
   - Plans/settings_inventory.json
   - Plans/FinalGUISpec.md
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Recounts live and retired inventory rows and includes the search retirement."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Sets the already-listed editor line-height default to 1.55."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Requires an Editor scheme row using the shared catalog and defaulting to Follow look."
   - "Amended 2026-10-10 (lead ruling L18): Adds code.terminal.search to the retired rows because find is always present (F3-641)."
-  - "Retired 2026-10-09 (DL-180, DL-181): general.interaction.panel-dock, general.visual.chat-layout-mode, code.terminal.layout-style, code.terminal.auto-second-pane, code.editing.editor-strip-collapsed, code.terminal.explanations and code.terminal.tab-role."
+  - "Retired 2026-10-09 (DL-180, DL-181): general.interaction.panel-dock, general.visual.chat-layout-mode, code.terminal.layout-style, code.terminal.auto-second-pane, code.editing.editor-strip-collapsed, code.terminal.explanations, code.terminal.tab-role and code.terminal.search."
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Settings_System.md#SSYS-040, ContractName:Plans/Settings_System.md#SSYS-042, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/UI_Command_Catalog.md#UCC-200
