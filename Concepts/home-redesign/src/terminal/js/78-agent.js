@@ -156,6 +156,11 @@
       if (!r2.ok) return { ok: false, reason: s.paused === agent ? 'preempted' : r2.reason };
       var c = await Promise.race([done, new Promise(function (res) { var t = setInterval(function () { if (run.cancelled) { clearInterval(t); res(null); } }, 100); })]);
       if (once) s.revoke(agent);
+      /* a one-off run in a terminal a human owns ends the agent's turn there: the row and mark go, the lease returns */
+      if (s.owner === 'user' && !opts.keep) {
+        if (s.lease === agent) s.lease = 'user';
+        if (ctl.state && ctl.state.agent === agent && ctl.state.mode === 'driving') ctl.set(null);
+      }
       if (!c) return { ok: false, reason: 'stopped' };
       /* output reads say what they are: final here; never stitched, never "empty" when missing (SMPFS-023) */
       return { ok: true, exit: c.exit, output: s.term.commandOutput(c), read: 'final' };
