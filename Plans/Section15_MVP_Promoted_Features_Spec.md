@@ -301,7 +301,7 @@ Rules:
 - one command card corresponds to one observed command invocation when command metadata is available
 - transcript continuity remains canonical even when command metadata is degraded
 - command-block anchoring MUST survive transcript growth, resize, and later reveal/open flows
-- shell-integrated command metadata relies on shell hooks plus escape-sequence signals rather than transcript guessing; integration `/patterns` cover OSC 7 `/cwd`, OSC 133-style `/prompt` and `/command` boundary markers, bash `PROMPT_COMMAND` and prompt wiring, zsh `precmd` and `preexec`, fish `/preexec/postexec-style` functions, generic `/precmd-style` hooks where available, and PowerShell `/profile` and prompt integration.
+- shell-integrated command metadata relies on shell hooks plus escape-sequence signals rather than transcript guessing; integration `/patterns` cover OSC 7 `/cwd`, OSC 133-style `/prompt` and `/command` boundary markers, bash `PROMPT_COMMAND` and prompt wiring, zsh `precmd` and `preexec`, fish `/preexec/postexec-style` functions, generic `/precmd-style` hooks where available, and PowerShell `/profile` and prompt integration. Amended 2026-10-09 (DL-181): OSC 133 marks and PM's own command-line and who-typed records count only when they carry the terminal session's secret; without it they are plain output (`#SMPFS-183`).
 - Capability tiers record whether each `/session` has trustworthy prompt start `/end`, command start `/end`, cwd reporting, exit status reporting, shell/profile identification, and per-command metadata; weak shell-integration falls back to lower-confidence command metadata rather than invented exactness.
 - Command-block identity is transcript-oriented metadata, not rendered UI fragments: each block has `command_block_id`, owning `terminal_session_id`, monotonic ordinal, nullable `command_text`, nullable cwd, `block-start`/start_marker reference, `block-end`/end_marker reference, `started_at`, nullable `ended_at`, nullable `duration_ms`, nullable `exit_status`, lifecycle state, and integration source. Lifecycle states include `pending_prompt`, `collecting_command`, `running`, `completed`, and `indeterminate`; shell-provided markers win when available, and weak integration must not fabricate block-start, block-end, command_text, or exit_status.
 - Persisted command-block fields and qualified historical display use Storage's [Terminal command-block value migration](storage-plan.md#terminal-command-block-value-migration), including observed status-null compatibility semantics and coordinator-converted legacy claims.
@@ -339,7 +339,7 @@ Action rules:
 - `restart_session` replaces runtime with a new `terminal_session_id` while preserving the pane or tab container chosen by the command
 - `terminate_session` requests graceful shutdown
 - `kill_session` forces termination
-- closing a pane or tab removes presentation state; if a live session is still attached, the user gets explicit close-versus-terminate behavior instead of silent orphaning
+- closing a pane or tab removes presentation state; if a live session is still attached, the user gets explicit close-versus-terminate behavior instead of silent orphaning (amended 2026-10-09, DL-181: closing a terminal tab ends its session, and when a process still runs the tab first says so and offers Close terminal or Keep it open, `#SMPFS-180`)
 - `pre-run` terminal command `/safety` approval is visible before execution and includes edit, approve, reject, and trust choices; hard interrupt and `/kill/cancel` primitives are non-negotiable for AI-driven terminal work.
 - Retired 2026-10-09 (DL-181; lineage only): `terminal_section` state includes `docked_visible`, `docked_hidden`, `detached_visible`, and `detached_hidden`; dock, detach, show, hide, resize, and `/move` transitions are state-preserving events.
 - `terminal_tab` state includes `active`, `inactive`, `restoring`, and `review_only`; activation and `/deactivate` are presentation transitions, project reopen enters restoring, and a tab becomes review_only when all attached panes are exited or `/disconnected`.
@@ -393,6 +393,9 @@ Additional rules:
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 ### 2.2 Stable identities
+
+Amended 2026-10-09 (DL-180, DL-181): the panel tab id joins this list (`Plans/FinalGUISpec.md#F3-635`); a terminal tab's id is `terminal:<session>` and `terminal_tab_id` holds it where a record still carries one (`#SMPFS-180`). `terminal_section_id` and `terminal_pane_id` are retired and stay only as read-only migration inputs (`Plans/storage-plan.md#SP-332`, `#SMPFS-029`).
+
 The promoted feature set requires first-class stable identities for:
 - `project_id`
 - `workspace_tab_id`
@@ -415,8 +418,8 @@ Identity rules:
 - `workspace_tab_id` is distinct from `project_id` so multiple tabs may point at the same project with different local shell state
 - `browser_tab_id` is distinct from `preview_session_id` so multiple browser containers can render the same preview subject without collapsing persistence
 - `workspace_tab_id` and `browser_tab_id` are stable shell identities but are not `target_kind` values. `target_kind` remains a destination class for route/open resolution, while tab IDs identify concrete shell containers.
-- `terminal_section_id` owns presentation continuity rather than PTY continuity
-- `terminal_tab_id` and `terminal_pane_id` own workspace continuity and reveal targets inside the shell chrome
+- Retired 2026-10-09 (DL-181; migration input only): `terminal_section_id` owns presentation continuity rather than PTY continuity
+- `terminal_tab_id` and `terminal_pane_id` own workspace continuity and reveal targets inside the shell chrome (amended 2026-10-09, DL-181: the terminal tab alone does; `terminal_pane_id` is a migration input only, `#SMPFS-030`)
 - `terminal_session_id` owns exact PTY continuity and is the canonical meaning of “same terminal session”
 - `dev_session_id` owns higher-level workflow continuity and MUST NOT replace `terminal_session_id` when exact shell reuse is required
 
@@ -424,8 +427,8 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.
 
 Action-identity rules:
 - `Open in Terminal` and `Show Terminal` target existing `terminal_session_id` bindings first
-- `New Terminal`, explicit split, and explicit restart produce new runtime identity even when they reuse an existing pane or tab container
-- moving, renaming, pinning, docking, or detaching sections, tabs, and panes are presentation changes only and do not mint new PTY identity
+- `New Terminal`, explicit split, and explicit restart produce new runtime identity even when they reuse an existing pane or tab container (amended 2026-10-09, DL-181: Split opens a new panel with a new session; Restart keeps the tab, `#SMPFS-180`)
+- moving, renaming, pinning, docking, or detaching sections, tabs, and panes are presentation changes only and do not mint new PTY identity (amended 2026-10-09, DL-181: moving a terminal tab between panels, collapsing, maximizing or hiding it, and applying a named layout are the presentation changes now, `#SMPFS-180`)
 - Owner-vs-consumer discipline follows the universal boundary map: `Crosswalk.md` and `Contracts_V0.md` own route primitives such as `route_target` and `OpenSubject`, `FileManager.md` owns `OpenFile`, `GitHub_Integration.md §C` owns SSH remote project mode, and Section 15 plus `storage-plan.md` own terminal/runtime identity while downstream docs consume or reveal those identities.
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
