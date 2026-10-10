@@ -88,6 +88,10 @@
     parts: ['<rect x="8" y="3" width="8" height="18" rx="1.4" class="nx-f"/>']
   });
 
+  /* the panels tab strip's agent marks are these two (panels.js, tab marks); mapped here because this file loads after panels.js */
+  G.map('agent-driving', { family: 'panels', replaces: ['panels 32-strip.js agent-driven square (.pmw-agentmark, 10-panels.css:156)'], surfaces: ['panels tab strip (mark slot)'] });
+  G.map('agent-cursor', { family: 'panels', replaces: ['panels tab agent mark while the agent is paused (you took over)'], surfaces: ['panels tab strip (mark slot)'] });
+
   /* ---------------------------------------------------------------- mapped: the chat set already draws these */
   G.map('terminal', {
     family: F, meaning: 'A terminal: a shell session, its tab and its profiles.',
