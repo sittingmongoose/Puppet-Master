@@ -51,9 +51,11 @@
      built from the shared policy (providerId null) yields to its provider's own when the caller names the provider. */
   C.policyOf = function (w, pid, accountId) {
     var th = (pid && PMU.roster.thresholds(pid, accountId)) || PMU.roster.thresholds();
-    var own = w && typeof w.switchAt === 'number' && isFinite(w.switchAt) && (w.providerId || !pid);
+    var mine = !!w && (!!w.providerId || !pid), own = mine && typeof w.switchAt === 'number' && isFinite(w.switchAt);
+    /* autoOn stands on its own: a provider with one account (d-switch: nothing to switch to) dims its notch even where
+       the window carries no switch point of its own */
     return { switchAt: own ? w.switchAt : 100 - th.switchLeft, warnAt: own && typeof w.warnAt === 'number' && isFinite(w.warnAt) ? w.warnAt : 100 - th.warnLeft,
-      auto: own && typeof w.autoOn === 'boolean' ? w.autoOn : !!th.auto };
+      auto: mine && typeof w.autoOn === 'boolean' ? w.autoOn : !!th.auto };
   };
   C.meterSpec = function (w, opts) {
     opts = opts || {};

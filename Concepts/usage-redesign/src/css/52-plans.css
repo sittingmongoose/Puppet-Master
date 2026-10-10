@@ -74,8 +74,11 @@ html[data-o55-nier="on"] #panel-usage .pmu-wpend em { border-radius: 0; backgrou
 /* the providers that report no plan windows, named once under the lanes */
 #panel-usage .pmu-wnone { margin-top: 4px; min-height: 20px; font-size: 12px; line-height: 18px; color: var(--pmu-ink-3); }
 #panel-usage .pmu-wnone .pmu-vs { white-space: normal; }
-/* a passed reset waiting for its next reading ("Reset at 21:56 · new reading pending") reads at 12 px in a meter cell */
-#panel-usage .pmu-meterna .pmu-vs[data-vs="reset_pending"] { font-size: 12px; line-height: 15px; }
+/* a passed reset waiting for its next reading ("Reset at 21:56 · new reading pending") reads at 12 px in a meter cell and
+   wraps inside it in every room: the Accounts room's narrow cells kept it on one line, and at 1920 in every look Lab's
+   5-hour words ran over its weekly "31% used" */
+#panel-usage .pmu-meterna .pmu-vs[data-vs="reset_pending"] { font-size: 12px; line-height: 15px; white-space: normal; align-items: flex-start; }
+#panel-usage .pmu-meterna .pmu-vs[data-vs="reset_pending"] .pmu-ico { margin-top: 1px; flex: none; }
 
 /* ------------------------------------------------------------------ quota history: compare across a provider's accounts */
 /* the open row's focus: the compare switch over its chart (AAC's "Compare <window> across <provider> accounts") */
