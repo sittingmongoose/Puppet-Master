@@ -15490,7 +15490,7 @@ Amended 2026-10-10 (lead ruling L9): the History pin is the typed local action b
 
 | Action id | Arguments | Effect | Producers and keys |
 |---|---|---|---|
-| `ui.chat_column.pin_history` | `history_pinned` | Writes the v2 record's chat column `history_pinned`, committed with the `chat_column_changed` change | The History list's pin |
+| `ui.chat_column.pin_history` | `history_pinned` | Saves the v2 record's chat column `history_pinned` as view state with no `workspace.layout_changed` event, like `ui.workspace_layout.maximize` | The History list's pin |
 
 Retired chat rows: the chat grab (`home.chat.grab`), dragging the chat into a dock, the dock-left, dock-right, dock-top and dock-bottom targets, the in-canvas float and its corner resize (`home.drop_target.*`, `home.resizer.floating_corner`), and UCC-144's Pop Out into the in-canvas float layer. `home.chat.pop_out` stays as the Pop out producer of `cmd.panel.undock` with `chat`, into a window; `home.resizer.chat` stays as the width producer of `cmd.workspace_layout.resize_surface` with `{ surface: chat, width }`; `home.chat.activity_toggle` stays `cmd.panel.switch` with `chat`.
 
@@ -15514,7 +15514,7 @@ canonical_text: >-
   it into a dock, the dock-left, dock-right, dock-top and dock-bottom targets, the in-canvas float and its corner
   resize, and UCC-144's Pop Out into the in-canvas float layer retire. Folding the chat to its narrow edge strip and
   opening it from there dispatch nothing and are never saved.
-  ui.chat_column.pin_history is a typed local action (view state); its value is the v2 record's chat column history_pinned, committed with the chat_column_changed change.
+  ui.chat_column.pin_history is a typed local action (view state); its value is saved in the v2 record's chat column as history_pinned, with no workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize.
 gui_related: true
 gui_classification_reason: "Owns the chat column's visible commands and retires the chat docking and floating controls."
 split_recommended: false
@@ -15541,13 +15541,14 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64; D3)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md (SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162; Commands and keys, Chat; concept lineage only)"
 preserved_exact_tokens:
   - "ui.chat_column.pin_history"
   - "history_pinned"
-  - "chat_column_changed"
+  - "workspace.layout_changed"
   - "cmd.panel.switch"
   - "cmd.panel.undock"
   - "cmd.panel.redock"
@@ -15560,7 +15561,8 @@ negative_constraints:
   - "Do not dispatch cmd.panel.undock for a home panel, tab or dashboard."
 compatibility_only_notes: []
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (lead ruling L9): Registers the History pin as ui.chat_column.pin_history, writing history_pinned with chat_column_changed."
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Saves History pin as view state with no layout event, revision advance or receipt."
+  - "Amended 2026-10-10 (lead ruling L9): Registers the History pin as ui.chat_column.pin_history, writing history_pinned as view state without a workspace.layout_changed event."
   - "Retired 2026-10-09 (DL-180): the chat grab, the dock drop targets, the in-canvas float and its corner resize, and UCC-144's Pop Out generalization to editor panels, Chat and Dashboard."
 owner_hints:
   - Plans/UI_Command_Catalog.md

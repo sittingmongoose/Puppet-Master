@@ -27442,7 +27442,7 @@ canonical_text: >-
   never written. Every committed structural change validates, writes, reads back, then advances revision by one,
   publishes one result and receipt and appends one workspace.layout_changed (CV-361); failure rolls back with
   rolled_back=true and no event; a reveal-only open is no_change, and a reveal into a collapsed panel is one
-  panel_expanded. View state, the chat column's shown and popped_out, and a terminal tab's ref moving to a new
+  panel_expanded. View state, the chat column's shown, history_pinned and popped_out, and a terminal tab's ref moving to a new
   session are written with the record without a revision advance, receipt or event. The first read without a v2 record converts the v1 record, else the Home part
   of layout:v1, through the StorageMigrationCoordinator by the conversion table of this section: editor panels
   become panels holding their editor tabs, the dashboard a panel with dashboard:home, each terminal section a
@@ -27488,6 +27488,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1, D2, D3, D10)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (sections 2, 3 and 12; concept lineage only)"
@@ -27515,6 +27516,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The v1 record, its compatibility colon keys and the Home part of layout:v1 are read-only conversion inputs and lineage."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Explicitly includes History pin among saved view fields that emit no layout event."
   - "Amended 2026-10-10 (lead ruling L7): The chat popped_out field is current-run state and restart starts the chat in its column."
   - "Supersedes the v1 record as the selected Home layout (SP-245 amended 2026-10-09, DL-180)."
 owner_hints:

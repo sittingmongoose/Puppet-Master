@@ -44316,7 +44316,7 @@ canonical_text: >-
   popped-out chat window), F3-565's narrowest chat (its resilience rules now hold for a popped-out window narrower than 400 px),
   and the 360 px chat beside an open document of APR-038 and F3-569.
   After a restart the chat starts in its column (F3-504); whether a popped-out chat reopens popped out is an open question for Jared.
-  ui.chat_column.pin_history is a typed local action (view state); its value is the v2 record's chat column history_pinned, committed with the chat_column_changed change.
+  ui.chat_column.pin_history is a typed local action (view state); its value is saved in the v2 record's chat column as history_pinned, with no workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize.
   The saved width and the 400-760 px drag range describe the message area. Pinning History adds 240 px to
   the column, or 200 px while the whole column is under 540 px; the messages keep their width. The pinned
   column's minimum is 640 px; its drag range is 640 to 760 + 240 px, capped by the 960 px centre budget. A
@@ -44380,6 +44380,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept floats the popped-out chat inside the page at 440 x min(720, window - 140) px with Dock back; that is the concept's browser stand-in, not a canon size."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Saves History pin as view state with no layout event, revision advance or receipt."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds pinned History widths and keeps width and drag range tied to the messages."
   - "Amended 2026-10-10 (lead ruling L9): The History pin names ui.chat_column.pin_history and commits history_pinned with chat_column_changed."
   - "Amended 2026-10-10 (lead ruling L7): After restart the chat starts in its column; reopening popped out remains an open question for Jared."
