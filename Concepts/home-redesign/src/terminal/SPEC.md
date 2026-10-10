@@ -117,6 +117,13 @@ own terminal port pinned to a commit (`schemes/SOURCES.md` has every URL and SHA
 Teletype / PM Phosphor Green (Amber is the sibling); Basic One Half Light / Dark; NieR PM YoRHa Parchment / Ink.
 "Switch with light and dark" (default on) swaps a chosen scheme for its family's other appearance.
 
+The code editor uses the same catalog (D27). Each scheme carries 17 editor syntax colours (`schemes/editor-syntax.json`,
+held to 4.5:1 for text and 3:1 for comments against the scheme's background, 7:1 throughout on PM High Contrast); an
+imported scheme takes its from its ANSI 16 by a fixed map. Both surfaces default to following the look (the
+terminal's "Follow theme", the editor's "Follow look"), and the editor's Appearance popover offers only scheme, font
+and size. The Retro editor follows the terminal's Retro dark choice (`retroPhosphor`): PM Phosphor Amber chosen for
+All terminals turns it amber, anything else leaves it green.
+
 Minimum-contrast floor: default 4.5:1, choices Off, 3:1, 4.5:1, 7:1. Applied per cell to the text colour against its
 cell background by moving OKLab lightness only (hue and chroma kept); block elements, powerline and sextant glyphs are
 exempt (they are shapes that meet their neighbours). Selection uses the scheme's selection text colour.

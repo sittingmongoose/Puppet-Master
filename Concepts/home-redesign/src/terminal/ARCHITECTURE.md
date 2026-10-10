@@ -31,8 +31,9 @@ src/terminal/
         34-iterm.js       OSC 1337 File= (single and multipart) into the same store
         38-saved.js       saved scrollback: text, marks and images to IndexedDB, restore into a new session (T.Saved)
         40-schemes.js     scheme helpers (palette expansion, light/dark pairs, per-look defaults)
-        41-schemes-data.js T.SCHEMES (generated from schemes/*.json)
-        42-appearance.js  T.Appearance: layered model, resolution, contrast floor, settings registration
+        41-schemes-data.js T.SCHEMES (generated from schemes/*.json; each scheme with its 17 editor colours)
+        42-appearance.js  T.Appearance: layered model, resolution, contrast floor, settings registration, and the
+                          catalog the code editor reads (editorTokens, palette, retroPhosphor; D27)
         44-import.js      T.SchemeImport: iTerm2, Windows Terminal, kitty, Ghostty, Alacritty, base16/24, Xresources
         50-fx-gl.js       T.FXGL: WebGL post-process (scanlines, glow, curvature, burn-in, noise, flicker, degauss)
         52-fx.js          T.FX: effect policy (focused only, idle stop, Reduced Motion, no-GPU), trail, bell
@@ -43,13 +44,14 @@ src/terminal/
         70-view.js        T.View: the tab body (gutter, canvas stack, scrollbar, sticky header, overlays)
         72-find.js        find overlay
         74-select.js      selection, copy mode, quick select hints, links
-        76-popover.js     Appearance popover
+        76-popover.js     Appearance popover (T.AppearancePopover: the terminal's, and the editor's cut-down copy)
         78-agent.js       agent states (driving row, take over, permission, secret prompts, attribution)
         80-card.js        the chat's command card (PMT.card)
         90-kind.js        session registry, profiles, PM_HOME.registerKind('terminal'), window.PMT
   css/  00-fonts.css 10-view.css 20-overlays.css 30-looks.css 40-nier.css 50-fx.css 80-card.css (sorted, inlined)
   fonts/    woff2 + licence texts + SOURCE.md (DL-161 format)
-  schemes/  <family>.json (raw, with source and licence) + LICENSE-<family>.txt + SOURCES.md
+  schemes/  <family>.json (raw, with source and licence) + LICENSE-<family>.txt + SOURCES.md; editor-syntax.json
+            (the 17 editor syntax colours of every scheme, D27) + check_editor_syntax.py (its contrast gate)
   harness/  build_harness.py, mock-host.js, mock-host.css, harness.template.html, demos.js, labs, notes/, fixtures/,
             checks/ (node checks; the repository ignores every folder named tests/)
 ```
@@ -240,5 +242,41 @@ computed by the terminal from its command log (`PMT.cardSpec(session, command)` 
 ## 8. Public API (`window.PMT`, 90-kind.js)
 
 `PMT.profiles()` -> `[{ id, label, detail, icon }]`; `PMT.open(spec)` (through `PM_HOME.open`); `PMT.card(spec)`;
-`PMT.sessions()`; `PMT.appearance` (the model); `PMT.agent` (agent driving API used by demos and the chat);
-`PMT.version`.
+`PMT.sessions()`; `PMT.agent` (agent driving API used by demos and the chat); `PMT.version`.
+
+### The scheme catalog the editor shares (D27)
+
+One catalog serves the terminal and the code editor. `schemes/*.json` and `schemes/editor-syntax.json` compile
+(`python3 harness/compile_schemes.py`; `--check` fails when the output is stale) into `js/41-schemes-data.js`, where
+every `T.SCHEMES` entry carries `editor: { kw, str, num, com, fn, ty, var, prop, op, pun, tag, attr, esc, mac, link,
+head, code }` as `#rrggbb`. The compiler fails when a catalog id has no entry there, a token is missing or a value is
+not hex. Imported and user schemes have no editor block; theirs comes from their ANSI 16 by a fixed map (n is the
+ANSI index): kw 5, str 2, num 3, com 8, fn 4, ty 6, var foreground, prop 4, op foreground, pun foreground, tag 1,
+attr 3, esc 6, mac 5, link 4, head 4, code 2 (`T.Appearance.EDITOR_FROM_ANSI`). So every scheme supplies all 17.
+
+`PMT.Appearance` (over `T.Appearance`, 42-appearance.js); unknown scheme ids give `null`:
+- `schemes()` -> `[{ id, name, mode: 'light'|'dark', pair }]`: every scheme, curated then imported and user ones;
+  `pair` is the id "Switch with light and dark" swaps to, `null` when there is none.
+- `editorTokens(schemeId)` -> `{ kw: '#rrggbb', ... }` (all 17, a copy) | `null`.
+- `palette(schemeId)` -> `{ background, foreground, cursor, selection, ansi: [16] }` | `null`, as the catalog holds
+  them; `cursor` falls back to the foreground and `selection` (the scheme's `selectionBackground`) to a quarter of the
+  way from the background to the foreground, as the renderer does. The YoRHa schemes give their JSON values here; the
+  NieR tokens they are built from at runtime are the editor's to read.
+- `retroPhosphor()` -> `'green'|'amber'`: the Retro look's dark scheme. It has no store of its own: it is what Retro
+  dark resolves to at the All terminals layers (`terminal.scheme` and `terminal.schemePair`, project over app). Choosing
+  PM Phosphor Amber for All terminals makes it `'amber'`; Follow theme, or any other scheme, reads `'green'`. A tab's own
+  scheme never changes it. The editor only reads it.
+- `on('retro-phosphor', fn)` -> unsubscribe function; `fn(value)` fires once each time that value changes (checked after
+  every write to the app or project layer and every host settings event for `terminal.*`).
+
+`PMT.AppearancePopover.open(anchor, { surface: 'editor'|'terminal', get, set, onClose })` -> `{ el, close, refresh }`
+(`T.AppearancePopover`, 76-popover.js). `surface: 'terminal'` is the terminal's own popover (`View.openAppearance`
+opens it with `{ view }`; it binds `T.Appearance` at the scope its switch shows). `surface: 'editor'` shows only the
+colour scheme (with "Follow look" first, the default: the look's own scheme, and in Retro dark the phosphor
+`retroPhosphor()` names), the font face (Follow look or a terminal font) and the size; no effects, cursor, trail,
+background or scope rows. `get()` returns the editor's `{ scheme, font, size }` (`'follow'` for scheme and font when
+the editor follows the look, `size` null for the default) and `set(key, value)` is called on each change with key
+`'scheme'`, `'font'` or `'size'`; the editor persists them (`PM_HOME.settings` `editor.scheme`). The editor's copy is
+the one overlay outside a tab host: it floats (fixed) in `#pmw-overlay` under `anchor`, right-aligned to it, and closes
+on Escape, Done, its close button or a click outside, calling `onClose` once. Both copies use the same classes, so the
+NieR paint in `40-nier.css` reaches both.

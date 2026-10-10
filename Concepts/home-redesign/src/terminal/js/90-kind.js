@@ -246,6 +246,17 @@
     session: function (id) { var r = records.get(id); if (!r) for (var x of records.values()) if (x.alias === id) r = x; return r ? r.session : null; },
     view: function (id) { var r = records.get(id); if (!r) for (var x of records.values()) if (x.alias === id) r = x; return r ? r.view : null; },
     keys: function () { return T.keys.list(); },
+    /* the colour-scheme catalog the code editor shares (D27). Unknown scheme ids give null */
+    Appearance: {
+      schemes: function () { return T.Appearance.catalog(); },
+      editorTokens: function (schemeId) { return T.Appearance.editorTokens(schemeId); },
+      palette: function (schemeId) { return T.Appearance.palette(schemeId); },
+      retroPhosphor: function () { return T.Appearance.retroPhosphor(); },
+      /* 'retro-phosphor' is the one event; the result unsubscribes */
+      on: function (name, fn) { return name === 'retro-phosphor' && typeof fn === 'function' ? T.Appearance.on(name, fn) : function () {}; }
+    },
+    /* the Appearance popover for another surface: open(anchor, { surface: 'editor', get, set, onClose }) */
+    AppearancePopover: { open: function (anchor, opts) { return T.AppearancePopover.open(anchor, opts); } },
     agent: T.Agent ? T.Agent.api : null,
     /* saved scrollback: save now (resolves true when written) and what the last save kept */
     saved: {

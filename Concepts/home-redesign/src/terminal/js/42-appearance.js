@@ -4,7 +4,9 @@
      3. project default (same keys under 'terminal.project.<field>'; written only by Settings),
      4. this tab     (the tab's own overrides, saved with the tab).
    A field left unset falls through. Everything applies live: no field needs a restart. The Appearance popover
-   writes layer 4 ("This terminal") or layer 2 ("All terminals"). */
+   writes layer 4 ("This terminal") or layer 2 ("All terminals").
+   The scheme catalog is shared with the code editor (D27): every scheme carries its 17 editor syntax colours
+   (editorTokens), and the Retro look's dark scheme choice is read by the editor through retroPhosphor(). */
 (function () {
   var C = T.color;
 
@@ -149,6 +151,39 @@
     return theme;
   }
 
+  /* ---- the editor's view of the catalog (D27) ---- */
+  var EDITOR_TOKENS = ['kw', 'str', 'num', 'com', 'fn', 'ty', 'var', 'prop', 'op', 'pun', 'tag', 'attr', 'esc', 'mac', 'link', 'head', 'code'];
+  /* a scheme without its own editor block (imported, user) takes one from its ANSI 16: n is the ANSI index, 'fg' the
+     foreground. Fixed; the curated schemes carry their own from schemes/editor-syntax.json */
+  var EDITOR_FROM_ANSI = { kw: 5, str: 2, num: 3, com: 8, fn: 4, ty: 6, 'var': 'fg', prop: 4, op: 'fg', pun: 'fg', tag: 1, attr: 3,
+    esc: 6, mac: 5, link: 4, head: 4, code: 2 };
+  function editorFromAnsi(colors) {
+    var out = {};
+    EDITOR_TOKENS.forEach(function (t) { var n = EDITOR_FROM_ANSI[t]; out[t] = String(n === 'fg' ? colors.foreground : colors.ansi[n]).toLowerCase(); });
+    return out;
+  }
+  function editorTokens(id) {
+    var s = scheme(id); if (!s) return null;
+    var e = s.editor || editorFromAnsi(s.colors), out = {};
+    EDITOR_TOKENS.forEach(function (t) { out[t] = e[t]; });
+    return out;
+  }
+  /* the terminal colours of a scheme as the catalog holds them; cursor and selection fall back the way toTheme does */
+  function palette(id) {
+    var s = scheme(id); if (!s) return null;
+    var c = s.colors;
+    return { background: c.background, foreground: c.foreground, cursor: c.cursor || c.foreground,
+      selection: c.selectionBackground || C.toHex(C.mix(C.hex(c.background), C.hex(c.foreground), 0.25)), ansi: c.ansi.slice() };
+  }
+  /* every scheme, curated then imported and user ones; pair is the sibling "Switch with light and dark" swaps to, or
+     null when there is none */
+  function catalog() {
+    return allSchemes().map(function (s) {
+      var p = pairOf(s, s.appearance === 'light' ? 'dark' : 'light');
+      return { id: s.id, name: s.name, mode: s.appearance === 'light' ? 'light' : 'dark', pair: p && p.id !== s.id ? p.id : null };
+    });
+  }
+
   /* ---- layers ---- */
   function settings() { return window.PM_HOME && window.PM_HOME.settings ? window.PM_HOME.settings : null; }
   var localApp = {};
@@ -269,10 +304,25 @@
     };
   }
 
+  /* The Retro look's dark scheme, 'green' or 'amber' (D27). It is not stored anywhere of its own: it is what Retro dark
+     resolves to at the All terminals layers (project over app, the 'scheme' and 'schemePair' fields), so choosing
+     PM Phosphor Amber for All terminals is the choice. Follow theme, or any scheme that is not Amber, reads 'green'. */
+  function retroPhosphor() {
+    var sid = field(null, 'scheme'), s = sid === 'follow' ? null : scheme(sid);
+    if (s && field(null, 'schemePair')) s = pairOf(s, 'dark');
+    return (s ? s.id : LOOKS.retro.dark) === 'pm-phosphor-amber' ? 'amber' : 'green';
+  }
+  var events = new T.Emitter(), lastRetro = null;
+  function checkRetro() {
+    var now = retroPhosphor();
+    if (lastRetro !== null && now !== lastRetro) { lastRetro = now; events.emit('retro-phosphor', now); }
+    lastRetro = now;
+  }
+
   /* ---- writes ---- */
   var views = new Set();
   var writing = 0; /* inside our own host writes: they refresh once when done, not once per key */
-  function refreshAll() { views.forEach(function (v) { v.applyAppearance(resolve(v)); }); }
+  function refreshAll() { views.forEach(function (v) { v.applyAppearance(resolve(v)); }); checkRetro(); }
   function set(scope, key, value, view) {
     if (scope === 'tab' && view) {
       view.tabAppearance = view.tabAppearance || {};
@@ -302,7 +352,8 @@
 
   function addUserScheme(sch) {
     var id = 'user-' + String(sch.name || 'imported').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40);
-    var entry = { id: id, name: sch.name || 'Imported scheme', family: 'Imported', appearance: sch.appearance, licence: 'user', colors: sch.colors };
+    var entry = { id: id, name: sch.name || 'Imported scheme', family: 'Imported', appearance: sch.appearance, licence: 'user', colors: sch.colors,
+      editor: editorFromAnsi(sch.colors) };
     user = user.filter(function (u) { return u.id !== id; }); user.push(entry);
     try { localStorage.setItem('pm.home.terminal:v1:schemes', JSON.stringify(user)); } catch (e) {}
     return entry;
@@ -356,8 +407,13 @@
     forget: function (view) { views.delete(view); },
     get: field, layerOf: layerOf, set: set, reset: resetScope, preview: preview, endPreview: endPreview,
     refreshAll: refreshAll, addUserScheme: addUserScheme, imageUrl: imageUrl, lookKey: lookKey,
-    setTabFont: function (view, o) { if (o.size) set('tab', 'fontSize', o.size, view); }
+    setTabFont: function (view, o) { if (o.size) set('tab', 'fontSize', o.size, view); },
+    /* D27: the catalog as the editor reads it (window.PMT.Appearance, 90-kind.js) */
+    EDITOR_TOKENS: EDITOR_TOKENS, EDITOR_FROM_ANSI: EDITOR_FROM_ANSI, editorFromAnsi: editorFromAnsi,
+    catalog: catalog, editorTokens: editorTokens, palette: palette, retroPhosphor: retroPhosphor,
+    on: function (name, fn) { return events.on(name, fn); }
   };
+  lastRetro = retroPhosphor();
 
   /* register with the host settings model so Settings > Terminal only binds controls later (CONTRACT section 12) */
   var PH = window.PM_HOME;

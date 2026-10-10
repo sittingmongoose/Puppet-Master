@@ -27,6 +27,9 @@
   font-size: 12px;
 }
 .pmt-pop.pmt-pop-narrow { left: 6px; right: 6px; width: auto; }
+/* the editor's copy (T.AppearancePopover, surface 'editor') floats under its anchor in #pmw-overlay; 76-popover.js sets
+   its top, left, width and max height */
+.pmt-pop.pmt-pop-float { position: fixed; right: auto; z-index: 1000; }
 .pmt-pop-head { flex: none; display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 6px 0 12px; border-bottom: 1px solid var(--pmw-line, var(--border)); }
 .pmt-pop-title { font-weight: 600; font-size: 12.5px; margin-right: auto; }
 .pmt-pop-x { width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; border: 0; padding: 0; background: transparent; color: var(--pmw-text-2, var(--text-secondary)); border-radius: 4px; cursor: pointer; }

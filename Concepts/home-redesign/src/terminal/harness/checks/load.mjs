@@ -4,7 +4,8 @@ const here = path.dirname(url.fileURLToPath(import.meta.url));
 export function loadT(files, extra = {}) {
   const dir = path.join(here, '..', '..', 'js');
   const src = files.map(f => fs.readFileSync(path.join(dir, f), 'utf8')).join('\n;\n');
-  const window = Object.assign({ matchMedia: () => ({ matches: false }) }, extra.window || {});
+  /* a window passed in is used as it is (with matchMedia added when missing), so the caller sees what the files set on it */
+  const window = Object.assign(extra.window || {}, extra.window && extra.window.matchMedia ? {} : { matchMedia: () => ({ matches: false }) });
   const document = extra.document || { documentElement: { getAttribute: () => null } };
   const fn = new Function('window', 'document', 'PM_HOME', '"use strict";' + src + '\n;return T;');
   return fn(window, document, extra.PM_HOME || null);
