@@ -2155,6 +2155,8 @@ border-radius = 4
 - Terminal theme schema is semantic, not raw ANSI-only: it defines background `/foreground`, ANSI `/basic` and bright palettes, cursor and selection colors, search highlight colors, command-block and sticky-header chrome, and badge/status colors for `/failure/running/context` states.
 - Terminal theme catalog includes PM-matched themes, polished general-purpose themes, and `/fun/funky` or `/expressive` presets only when `/contrast` and readability checks pass; previews support `/search/light-dark` pairing, quick `/switching`, instant apply, and easy `/revert`.
 
+Amended 2026-10-09 (DL-183): the terminal's colour scheme, font, cursor, background and effects are one layered appearance model with a live Appearance popover in the terminal's More menu (F3-642, DR-068). Its catalogue is F3-642's 34 curated schemes (27 third-party schemes in 13 families, MIT or Apache-2.0, and 7 Puppet Master originals), which replaces the preset groups above; every scheme passes the minimum-contrast floor; Settings > Terminal binds the model's app and project layers (SSYS-051) while the popover writes This terminal or All terminals; and no terminal appearance change needs a restart.
+
 **Custom font support:** Custom themes can reference font files placed in `~/.puppet-master/fonts/`. Font files (.ttf, .otf, .woff2) are loaded at startup. A theme TOML referencing a missing font falls back to the base theme's font and shows a warning toast.
 
 **Theme preview:** When hovering over a theme in the selector dropdown, show a live preview of the theme applied to a small widget card (button, text, border sample). On click, apply the theme. This allows users to preview without committing.
@@ -2457,13 +2459,15 @@ Agent-Config is the visible provider/model/account/instruction management surfac
 
 #### 7.4.1 Terminal Settings Ownership
 
+Amended 2026-10-09 (DL-181, DL-183): the terminal's appearance is one live layered model (F3-642, DR-068). Settings binds its app and project layers (SSYS-051) and the terminal's Appearance popover writes the tab's own override; no terminal appearance row needs a restart. The groups follow SSYS-040 and SSYS-051, the quadrant layout behaviour retires with the Quadrant layout, and Explain What Commands Do leaves the terminal for the Teacher persona in the chat (D19). F3-120 and F3-121 carry the details.
+
 Settings > Terminal is the in-product cheat sheet and durable `/preferences` owner for terminal defaults. It groups high-frequency controls for preview and change ahead of dangerous `/rare` controls and daily-use settings, and it keeps `/shortcut` mappings plus conflict `/explanations` visible in-product rather than hiding discoverability in a secondary utility.
 
 Terminal durable preferences include `/theme/font/rendering`, `/selection/copy/paste`, `/profile/cwd`, `/transcript` retention and `/performance`, diagnostics `/logging`, shell-integration `/capability` visibility, and renderer/session diagnostics when exposed. Scope labels distinguish per-project or workspace-local `/workspace` defaults from tab-scoped `/tab` overrides; live-session and pane/session-local actions stay in Terminal runtime UI rather than Settings.
 
 Settings > Terminal is also the terminal-specific `/coverage` and `/reconciliation` landing zone for durable GUI preferences that are not owned by Tools or storage: `/theming`, `/remote/session` disclosure, and any future browser or remote terminal transport controls must reference the terminal SSOT rather than creating a new settings owner.
 
-Settings > Terminal groups Appearance, `/layout` & Workspaces, Shell & Startup, Interaction, and Diagnostics. Interaction covers `/copy/paste`, copy-on-select, `/kill/quit` prompts, sticky-header command-block visibility, `/explanations`, performance-safe search, `/readability` signals, and `/tunable` `/quadrant` layout behavior.
+Settings > Terminal groups Appearance, `/layout` & Workspaces, Shell & Startup, Interaction, and Diagnostics (its earlier group names; the groups are now SSYS-040's, mapped by SSYS-051). Interaction covers `/copy/paste`, copy-on-select, `/kill/quit` prompts, sticky-header command-block visibility, performance-safe search, and `/readability` signals. The `/explanations` row (Explain What Commands Do, D19) and the `/tunable` `/quadrant` layout behavior are retired (DL-181).
 
 Shortcut discovery is in-product and `/remappable`: it prioritizes true terminal operations over layout-management and other app-level actions, distinguishes terminal-owned shortcuts from `/TUI-owned` keys, and keeps search, next/previous match, scrollback paging, top/bottom jump, command-block navigation, font zoom, clear/reset, `/shortcuts/behaviors`, and copy/paste visible.
 
@@ -9800,18 +9804,24 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Terminal theme selection supports preview before apply, fast switching, search, contrast
   readability signals, instant apply/revert, and semantic terminal palettes rather than raw
-  ANSI-only theme ownership.
+  ANSI-only theme ownership. Since DL-183 this is real and owned by the one terminal appearance model (F3-642,
+  DR-068): "Follow theme" picks a scheme per look, 34 curated schemes ship with their licences in place of the
+  earlier PM-matched, general-purpose and fun or expressive presets, "Switch with light and dark" pairs light and
+  dark, the minimum-contrast floor (4.5:1 by default) is the readability rule every scheme passes, common theme files
+  import, and the Appearance popover previews each change live on the terminal. Every change applies at once and
+  reverts the same way, with no restart.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible terminal theme, preview, palette, and readability behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-183, F3-642, DR-068]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Choosing a terminal scheme in the Appearance popover or in Settings changes the terminal at once, with no restart badge, and the minimum-contrast floor applies to every scheme (F3-642)."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -9825,6 +9835,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0064"
+- "Plans/Decision_Log.md#DL-183"
 preserved_exact_tokens:
 - "terminal color-scheme selection"
 - "preview before apply"
@@ -9837,10 +9848,13 @@ preserved_exact_tokens:
 - "/expressive"
 negative_constraints:
 - "Terminal theme schema is semantic, not raw ANSI-only."
+- "No terminal theme or font choice carries a restart badge, and no second terminal theme store exists beside the one appearance model."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-183): the terminal theme catalogue, preview and instant apply become F3-642's real appearance model; Settings > Terminal binds its app and project layers and the Appearance popover writes This terminal or All terminals."
 owner_boundary_notes:
 - "Settings > Terminal owns durable terminal appearance/theme/color, default cwd, font, and default behavior controls."
+- "Since DL-183 the durable appearance values are the app and project layers of F3-642's model, bound by SSYS-051 and stored as SP-331 says; the terminal's Appearance popover writes the tab's override or the app default through the same model, and only Settings writes the project layer."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -11830,18 +11844,23 @@ canonical_text: >-
   Settings > Terminal is the in-product cheat sheet and durable preferences owner for terminal
   defaults, high-frequency preview/change controls, shortcut mappings, conflict explanations,
   terminal appearance, profile/cwd, transcript retention, performance, diagnostics, and
-  project/workspace scope labels.
+  project/workspace scope labels. Its appearance rows bind the one terminal appearance model (F3-642, DR-068):
+  the app default as Settings rows (SSYS-051) and the project default in the Project's settings, which only Settings
+  writes; the per-tab override is not a Settings row but lives in the terminal tab and is written by the Appearance
+  popover's This terminal (SP-331). Every terminal appearance row applies live, with no restart badge. Shell profiles
+  and SSH hosts replace the retired per-tab role setting (DL-181), and the terminal tab's own actions stay in the tab.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible Terminal Settings surfaces, labels, preferences, and explanations.
 split_recommended: true
-depends_on: []
+depends_on: [DL-181, DL-183, F3-642, SSYS-051, DR-068]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Every terminal appearance row in Settings binds F3-642's model at the app or project layer, applies live and carries no restart badge."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -11855,6 +11874,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0077"
+- "Plans/Decision_Log.md#DL-183"
 preserved_exact_tokens:
 - "Settings > Terminal"
 - "in-product cheat sheet"
@@ -11868,8 +11888,10 @@ preserved_exact_tokens:
 - "/tab"
 negative_constraints:
 - "Live-session and pane/session-local actions stay in Terminal runtime UI rather than Settings."
+- "Settings keeps no terminal theme or font value outside the one appearance model."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-183): terminal appearance is one live layered model; Settings binds its app and project layers, the tab keeps its own override, and pane-local actions are now the terminal tab's actions (DL-181)."
 owner_boundary_notes:
 - "Settings > Terminal is also the terminal-specific `/coverage` and `/reconciliation` landing zone for durable GUI preferences that are not owned by Tools or storage."
 owner_hints:
@@ -11886,18 +11908,25 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Settings > Terminal groups Appearance, layout and Workspaces, Shell and Startup, Interaction,
   and Diagnostics, and keeps terminal shortcut discovery in-product, remappable, and distinct from
-  TUI-owned keys and app-level layout actions.
+  TUI-owned keys and app-level layout actions. Since DL-181 to DL-183 the group names and order are
+  Settings_System's: the terminal rows sit in SSYS-040's Editor & Terminal groups (Terminal, Terminal look, Terminal
+  output & history, Copy & paste, and Terminal: more options), the appearance rows in Terminal look (SSYS-051), and
+  SSYS-051 records how this unit's older group names map onto them. The tunable quadrant layout behaviour retires
+  with the Quadrant layout (DL-181), and the Explain What Commands Do row retires from Interaction, because
+  explaining commands is the Teacher persona's job in the chat (D19). Shortcut discovery also shows the terminal's
+  keys and the keys a focused terminal gives back to the host (F3-640).
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible Terminal Settings groups and shortcut discovery controls.
 split_recommended: true
-depends_on: []
+depends_on: [DL-181, DL-183, SSYS-040, SSYS-051, F3-640]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Settings shows the terminal rows under SSYS-040's and SSYS-051's group names, with no quadrant layout row and no Explain What Commands Do row."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -11924,8 +11953,10 @@ preserved_exact_tokens:
 - "/shortcuts/behaviors"
 negative_constraints:
 - "Shortcut discovery prioritizes true terminal operations over layout-management and other app-level actions."
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- "The group names Appearance, Layout & Workspaces, Shell & Startup, Interaction and Diagnostics are this unit's earlier names; SSYS-051 maps them onto SSYS-040's groups."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181, DL-183): group names follow SSYS-040 and SSYS-051; the quadrant layout behaviour and the Explain What Commands Do row retire."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
