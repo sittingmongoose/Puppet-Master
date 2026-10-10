@@ -750,6 +750,13 @@ is paper, like its label. Short questionnaires look exactly as before. Demo
 Studio → Questions and decisions → **Long answers questionnaire** opens the
 deployment questionnaire written long to see all of this.
 
+The other questionnaire takes in Demo Studio (#1 to #8) fit long answers the
+same way (2026-10-10): each stops at the decision area's height and scrolls its
+body, with its actions in view and clickable. Before, long answers pushed every
+take past that height and its actions were cut off; Anchored Sheet's sat more than
+400px below the visible edge. In a narrow chat column, Evidence Split keeps two
+lines of the question and its actions, and the evidence strip gives way first.
+
 ## Overlay menus
 
 - Clicking the same trigger **closes** an open menu (persona, model, mode,
