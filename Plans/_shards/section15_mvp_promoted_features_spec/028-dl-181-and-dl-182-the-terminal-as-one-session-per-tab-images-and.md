@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L12362-L12991
+Source lines: L12362-L13000
 
-Source SHA256: `4cc5a7fe8548cb91049b01ecf42590cf828a52fb5f9e9f4d7778583fb43e9c59`
+Source SHA256: `c7daba5e9de471f9cc7f0ae04e3b552fa456af6f574dffc401dcdec300410e74`
 
 ---
 
@@ -187,7 +187,9 @@ canonical_text: >-
   and at most the columns right of the cursor wide. Sixel: 10,000 x 10,000 px, 16,777,216 pixels, 1024 colour
   registers private to each image and 16 MiB of data; with DECSDM (mode 80) set the image does not scroll, sits at
   the top left and leaves the cursor where it was, and mode 8452 puts the cursor right of the image. File and
-  shared-memory names are at most 2048 bytes, relative placements nest at most 8 levels, and the fastest animation
+  shared-memory names are at most 2048 bytes, relative placements nest at most 8 levels, each screen buffer holds at most 4,096 placements (past that, the
+  oldest placements that no other placement hangs from are dropped first), one placement (`c=`, `r=`) covers at most
+  10,000 cells, and the fastest animation
   frame shown is 20 ms. Hardening (all of kitty's 2026-09-14 hardening): file media accept regular files only; the
   resolved path is checked before opening, and `/proc`, `/sys` and `/dev` (except `/dev/shm`) are refused;
   symlinks are followed and loops fail; every read failure of any file medium (missing, unreadable, not regular,
@@ -238,6 +240,7 @@ unblocks:
 acceptance_criteria:
 - "The kitty graphics protocol with every listed feature, sixel and iTerm2 inline images all ship in the first terminal release; none is phased or left behind an off flag."
 - "Every limit holds at its stated number; a sequence over its cap is dropped and kitty gets EFBIG; an over-quota image store evicts images without placements, then transient images, then the least recently used."
+- "A screen buffer keeps at most 4,096 placements, and the 4,097th drops the oldest placement that no other placement hangs from; no placement covers more than 10,000 cells."
 - "Every file-medium read failure answers exactly EBADF:Failed to read image file; /proc, /sys and /dev (except /dev/shm) are refused; symlink loops fail; temporary files are deleted only inside /tmp or /dev/shm and only with tty-graphics-protocol in the path; shared memory is unlinked after reading."
 - "A remote (SSH) session and a command an agent typed can send images only by direct transmission; their file, temporary-file and shared-memory media get EBADF."
 - "Every error reply is one of the fixed strings and never echoes program data."
@@ -265,6 +268,7 @@ source_lineage:
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D14)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 7; concept lineage only)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md, SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476 (concept lineage only)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
 preserved_exact_tokens:
 - "SMPFS-181"
 - "kitty graphics protocol"
@@ -301,6 +305,7 @@ compatibility_only_notes:
 - "The concept SPEC's section 7 sentence that images never enter saved scrollback does not hold for canon; the planning thread's rule of 2026-10-09 replaces it."
 - "The concept caps one transmission at 64 MiB of decoded payload; the native cap comes with the next SPEC installment."
 stale_retired_dispositions:
+- "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Adds the placement limits, at most 4,096 placements per screen buffer (the oldest placements nothing hangs from drop first) and at most 10,000 cells per placement."
 - "Amended 2026-10-10 (lead ruling L15): Under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
 - "Replaces 2026-10-09 (DL-182): the image sentence of the DL-035 addendum's P3 row and SMPFS-158's negative constraint that image protocols are not approved."
 owner_hints:
@@ -335,7 +340,8 @@ canonical_text: >-
   or when that agent's run ends; Hand back after a take-over grants it again for the rest of that run. Deny
   refuses the write and the agent is told. A grant decides who may type, never what may run: every command an
   agent types still passes the Tools policy engine with its own approval over that exact invocation (SMPFS-024,
-  `Plans/Tools.md#T-007`, `Plans/Tools.md#T-171`, `Plans/Permissions_System.md#PS-041`, `#PS-129`, `#PS-130`).
+  `Plans/Tools.md#T-007`, `Plans/Tools.md#T-171`, `Plans/Permissions_System.md#PS-041`, `#PS-129`, `#PS-130`), and no wording in the permission row, its
+  hover tags or the Agent input menu suggests that commands are pre-approved.
   While a program reads a password or another secret with echo off, the terminal refuses all agent input as
   `secret_input`, the cursor becomes a padlock, and the row says "Password needed. Only you can answer this
   prompt; <agent> is waiting." with Type it, which focuses the terminal. While an agent drives, the row says
@@ -377,6 +383,7 @@ acceptance_criteria:
 - "An agent write into a human-opened terminal without a grant writes nothing to the session; Allow once admits exactly one command, after which the driving row, the agent's mark and the writer lease return to the human; Deny writes nothing and the agent is told."
 - "Allow in this terminal is never written to storage, settings, the layout record or a permission rule, and it ends when the terminal closes, the human takes over (keystroke, Take over or Stop), the human revokes it from the Agent input menu or the agent's run ends; Hand back restores it for that run only."
 - "Every command an agent types under any grant still gets its own Tools policy decision and approval over that exact invocation."
+- "No text in the permission row, its hover tags or the Agent input menu says or implies that commands are pre-approved."
 - "During a secret prompt every agent write is refused as secret_input with zero bytes reaching the PTY; the padlock cursor and the Password needed row show."
 - "Every command record carries by; a shell-integration mark or record without the terminal's secret creates no command boundary and no attribution."
 - "Agent reads return rendered text with a read state, never raw bytes or image data."
@@ -404,6 +411,7 @@ source_lineage:
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D18)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (sections 2 and 8; concept lineage only)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3 (Appendix C, gaps G2 to G8)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
 preserved_exact_tokens:
 - "SMPFS-182"
 - "preempted"
@@ -433,6 +441,7 @@ negative_constraints:
 compatibility_only_notes:
 - "The concept's \"Always allow here\" label is lineage only; the product label is Allow in this terminal."
 stale_retired_dispositions:
+- "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): States that no wording in the permission row, its hover tags or the Agent input menu suggests commands are pre-approved."
 - "Closes 2026-10-09 (DL-181) the terminal audit's gaps on takeover, agent writes into a human's terminal, attribution and agent-tab placement (G2, G5 to G8); the field shapes are CV-362's."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L14820-L15574
+Source lines: L14820-L15576
 
-Source SHA256: `e06b726c613b704ef92ba46949ad92d2256f2cd7df8debdc516cccb94f9b60b7`
+Source SHA256: `8270343f398ab6372b0ff16dbe15e8c567b637b99baf8e172aedf1dece604ab2`
 
 ---
 
@@ -438,7 +438,7 @@ Scrolling a page, to the top or to the bottom (Shift+PageUp / Shift+PageDown, Ct
 | Appearance popover | Background image Choose... | a file picker (view-local); the chosen image is a background value written like any field |
 | Appearance popover | Degauss (Retro) | `ui.terminal.degauss` |
 
-Keys a focused terminal gives back to the host (the revised terminal SPEC section 3): Alt+1..9, Alt+Shift+1..9, Alt+arrows, Alt+Shift+arrows, Ctrl+PgUp / Ctrl+PgDn, Ctrl+Shift+PgUp / Ctrl+Shift+PgDn, Ctrl+\\ and Ctrl+Shift+\\ (Ctrl+\\ is SIGQUIT in shells; a program that needs it gets it from Send signal), Shift+Escape, F6 and Shift+F6, Ctrl+Shift+Space, Ctrl+Shift+\`, Ctrl+Tab, and the web client's stand-ins Alt+T, Alt+W, Alt+Shift+T and Alt+\`. Every other Ctrl+key belongs to the shell (Ctrl+W, Ctrl+K, Ctrl+T and the rest). The shell loses zsh's Alt+digit arguments, Alt+arrow word moves (Ctrl+Left and Ctrl+Right still move by word) and Alt+T / Alt+W; that is the accepted cost.
+Keys a focused terminal gives back to the host (the revised terminal SPEC section 3, re-pinned at e741dfbc6c): Alt+1..9, Alt+Shift+1..9, Alt+arrows, Alt+Shift+arrows, Ctrl+PgUp / Ctrl+PgDn, Ctrl+Shift+PgUp / Ctrl+Shift+PgDn, Alt+PgUp / Alt+PgDn (next and previous tab in a browser, where Chrome keeps Ctrl+PgUp / Ctrl+PgDn), Ctrl+\\ and Ctrl+Shift+\\ (Ctrl+\\ is SIGQUIT in shells; a program that needs it gets it from Send signal), Shift+Escape, Ctrl+Shift+Space, Ctrl+Shift+\`, Ctrl+Tab, and the web client's stand-ins Alt+T, Alt+W, Alt+Shift+T and Alt+\`. Every other Ctrl+key belongs to the shell (Ctrl+W, Ctrl+K, Ctrl+T and the rest). The host takes F6 and Shift+F6 before the terminal sees them (the region cycle above), and ignores keys during IME composition (terminal SPEC e741dfbc6c). The shell loses zsh's Alt+digit arguments, Alt+arrow word moves (Ctrl+Left and Ctrl+Right still move by word) and Alt+T / Alt+W; that is the accepted cost.
 
 #### Retired terminal ids
 
@@ -538,6 +538,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64; D11 to D13, D15, D18, D19)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md (SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b; sections 1 to 3 and 8; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md (SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3; Catalog vs wiring)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md (SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d; R36; concept lineage only)"
 preserved_exact_tokens:
   - "cmd.terminal.take_over"
   - "cmd.terminal.hand_back"
@@ -568,6 +569,7 @@ negative_constraints:
 compatibility_only_notes:
   - "cmd.terminal.focus_session is recorded alias metadata of cmd.terminal.focus (UCC-202)."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): The given-back key list this addendum records adds Alt+PageUp and Alt+PageDown, and says the host takes F6 and Shift+F6 before the terminal sees them and ignores keys during IME composition."
   - "Retired 2026-10-09 (DL-181): the section, workgroup, sub-tab, pane, detach and editor-terminal-stack ids and the five Home terminal producers, each with the replacement in this addendum's retired-id table."
   - "Amended 2026-10-09 (DL-181): cmd.terminal.reveal reveals the session's tab wherever it is, replacing UCC-115's bottom panel."
   - "Amended 2026-10-10 (lead ruling L16): the popover's All terminals is enabled and writes the project layer through the Settings transaction, so the cmd.terminal.appearance.set row says only the Settings transaction writes the project layer (it said only Settings)."

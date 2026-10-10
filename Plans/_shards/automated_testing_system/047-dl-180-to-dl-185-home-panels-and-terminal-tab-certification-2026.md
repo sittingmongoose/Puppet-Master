@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L5906-L6251
+Source lines: L5906-L6255
 
-Source SHA256: `9c1eff0f1d4391ead6976ab9c2719c483b827764fd1eb77a596843dcae7bad10`
+Source SHA256: `64e6a3029903f00d5196febde4ed1ceb65d332cece93552c030c6488fa84a9e1`
 
 ---
 
@@ -279,8 +279,10 @@ acceptance_criteria:
   - "Each kitty graphics feature, sixel and iTerm2 single and multipart images render in the paint order and stay anchored to their cells."
   - "Every hardening case returns its exact fixed reply, including `EBADF:Failed to read image file` for every file-medium failure and for file media from a remote session or an agent-typed command, and no reply echoes program input."
   - "Quota, eviction order, frame pool, size, name, depth and cycle limits each refuse or evict as SMPFS-181 says, and animation pauses while hidden and under Reduced Motion."
+  - "A screen buffer keeps at most 4,096 image placements, the 4,097th dropping the oldest placement that no other placement hangs from, and no placement covers more than 10,000 cells (SMPFS-181)."
   - "Saved scrollback restores with its images, drops images oldest first with the dashed placeholder and a counted notice, resolves restored placeholder ids only to restored images, brings back a running command as ended and indeterminate, honours the write cadence, Clear scrollback, the 7-day closed-tab limit and the 5 s load budget, and never leaves this machine."
   - "The four agent rows show their exact text; take-over refuses the agent's next write as `preempted`; Allow once lets one command through; Allow in this terminal is never stored, ends on close, take-over or run end, returns on Hand back, and every command under it still asks for its own approval; Deny refuses; secret prompts refuse agent input as `secret_input` with the padlock; no control reads Always allow here."
+  - "Hovering Allow once shows \"<agent> types this one command\" and Allow in this terminal shows \"<agent> may type here until its run ends or you take over. Each command still needs its own approval.\"; while that grant lasts the Driving row stays between commands and More, Agent input lists \"Allowed in this terminal: <agent>\" with Revoke, which ends it; no text in the row, its hover tags or the menu suggests commands are pre-approved (F3-646, SMPFS-182)."
   - "Input protection blocks an agent with an explicit blocked result and zero child writes across tab moves, collapse, maximize, hide, layout apply and restore, and outranks every grant."
   - "Agent reads return rendered text with a read state and never raw bytes or images; the accessible buffer reads images as `[image W×H px]`, `[image]` or the placeholder label."
   - "Every terminal control has its UCC-201 command, UIW-042 census entry and WM-091 row."
@@ -312,6 +314,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D11-D18)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (sections 1-8; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3 (the ATS rows and gap G16; audit lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
 preserved_exact_tokens:
   - "10 s"
   - "P1000-class"
@@ -339,6 +342,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The terminal concept's harness hooks and its demo agents are concept lineage and are not product test names."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Adds criteria for the image placement limits (4,096 per screen buffer, 10,000 cells each) and for the permission row's hover tags, the Driving row kept between commands, the Agent input row with Revoke and no pre-approval wording."
   - "Amended 2026-10-10 (lead ruling L16): Certifies that All terminals is enabled and writes the project default through the Settings transaction with the in this project hover tag and no app-wide value, replacing 'only Settings writes the project default'."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
   - "Amended 2026-10-10 (R34, DL-183): Adopts the effects CPU budget, idle deadline and no-GPU fallback rule."
