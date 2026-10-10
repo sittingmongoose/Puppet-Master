@@ -2788,6 +2788,8 @@ Evidence presents artifact, receipt, validation, and corroboration references th
 
 Artifacts routes to Runtime Artifacts Panel and project-output artifact owners. It may mirror previews and links from Dashboard or Orchestrator, but artifact kind, envelope, projector, and schema authority stay with the artifact owners.
 
+Amended 2026-10-09 (DL-180): an artifact opened in the home centre opens as an artifact tab (`artifact:<artifact_id>`, F3-635), placed by F3-634; the viewer inside it is `Plans/Runtime_Artifacts_Panel.md#RAP-065`'s.
+
 ### 7.13 Source Control
 
 Source Control is the Git/worktree mutation and inspection surface. It consumes WorktreeGitImprovement, storage, Contracts, and FileManager open/review behavior while preserving lane, package, safe-point, and worktree identity.
@@ -2812,7 +2814,7 @@ Layout:
 #### 7.16.1 Thread header and message stream
 
 Chat context and message detail requirements:
-- The chat-header context indicator is the GUI entrypoint for thread context state. Hover opens the lightweight usage/status module, `More Details` focuses or opens the thread-scoped context-detail editor tab, and click may reveal `Compact Now` without dispatching compaction until the user chooses that action.
+- The chat-header context indicator is the GUI entrypoint for thread context state. Hover opens the lightweight usage/status module, `More Details` focuses or opens the thread-scoped context-detail editor tab (amended 2026-10-09, DL-180: a context tab, `context:<threadId>`, F3-635, placed by F3-634), and click may reveal `Compact Now` without dispatching compaction until the user chooses that action.
 - The context-detail tab is keyed by thread and live-updates as thread data changes. Its top-level header summary is followed by a top-level view toggle with `Curated` and `Raw`; `Curated` contains Overview, Breakdown, and Messages, while Raw exposes serialized payloads and provider/runtime debugging data through the shared Contracts and Usage rules.
 - Message rows expose an under-message icon row for copy, message actions, and message-level info-popover access. The info-popover consumes the closed field and label rules from Assistant Chat and Contracts, including runtime identity fields for provider, model, persona, account, requested/effective state, and `/model/persona/account` inspector disclosure where material.
 
@@ -3032,6 +3034,8 @@ Major widget families:
 - **Display:** Tree, List, Table, Card
 - **Feedback:** Toast, Dialog, ProgressBar, Badge
 - **Navigation:** Breadcrumb, SideNav, CommandPalette
+
+Amended 2026-10-09 (DL-180): in the Layout family, SplitPane is a split of the home centre's split tree, TabGroup the one tab strip (F3-631) and Panel the one panel (F3-630); every panel and every tab kind reuses them.
 
 Catalog rules:
 - atomic widgets define behavior, focus, and theme-token usage once and are reused across all surfaces
@@ -6558,11 +6562,14 @@ canonical_text: >-
   the legacy github_actions input normalizes to repository_automation with a GitHub automation binding and never
   creates another occupant. Routes normalize message, scheduler, package, lane, worktree, concern, promotion, and graph lineage
   through one object-first route shape.
+  Amended 2026-10-09 (DL-180): a route that opens something in the home centre lands as a tab of an F3-635 kind placed
+  by F3-634 and carries CV-360's placement fields (`where`, `mode`, `by`, `background`); the targets named here are
+  side-panel occupants and the embedded document pane, which are not panel tabs.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -6593,7 +6600,8 @@ preserved_exact_tokens:
 - "/worktree/concern/promotion/graph"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): routes into the home centre land as panel tabs through F3-634, carrying CV-360's placement fields."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -6609,12 +6617,14 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Contracts_V0 owns the canonical route payload, target model, and object_kind enum while
   Glossary.md owns user-facing object_kind vocabulary for help and downstream copy.
+  Amended 2026-10-09 (DL-180): the placement fields a route carries into the home centre are Contracts_V0's too
+  (CV-360).
 gui_related: false
 gui_classification_reason: >-
   This unit defines terminology, owner-boundary, runtime, storage, or governance behavior rather
   than visual presentation.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -6643,7 +6653,8 @@ preserved_exact_tokens:
 - "target model"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): Contracts_V0 also owns the route's placement fields (CV-360)."
 owner_boundary_notes:
 - "Contracts_V0 owns route payload schema; Glossary.md owns user-facing object_kind vocabulary."
 owner_hints:
@@ -12731,10 +12742,12 @@ canonical_text: >-
   Assistant Chat and Contracts label rules, including visible progress and failure/degraded feedback for explicit
   Compact Now actions plus already-running, cancelled, no-op, unavailable, retry, reload, completed, and failed
   command-result states.
+  Amended 2026-10-09 (DL-180): the thread-scoped context detail tab is the context tab kind (`context:<threadId>`,
+  F3-635), opened and placed by F3-634 in a home panel.
 gui_related: true
 gui_classification_reason: This unit defines visible thread context, message details, action rows, and popovers.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -12776,6 +12789,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "The former context.compaction.failed event implication remains retired; completion-only admission under ACD-461 / SP-259 does not authorize a failed event or a completion event for failure."
+- "Amended 2026-10-09 (DL-180): the context detail editor tab is the context tab kind (F3-635)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -13928,10 +13942,12 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Section 8 defines the atomic widget catalog used to compose pages and panels and aligns detailed
   widget references with the local Widget Catalog plus Widget_System hostability and catalog-linkage sections.
+  Amended 2026-10-09 (DL-180): the home centre's panel, tab strip and split are atomic widgets of this catalog, one
+  component each (F3-630, F3-631; section 8.2's Layout family).
 gui_related: true
 gui_classification_reason: This unit defines visible widget catalog scope and GUI composition vocabulary.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -13961,6 +13977,7 @@ negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "Plans/WIDGETS_VISUAL_REFERENCE.md and Plans/WIDGETS_QUICK_REFERENCE.md are retired standalone-doc placeholders; current owners are Plans/FinalGUISpec.md#8-widget-catalog and Plans/Widget_System.md."
+- "Amended 2026-10-09 (DL-180): the Layout family's widgets are the one panel, tab strip and split of F3-630 and F3-631."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -14027,10 +14044,12 @@ canonical_text: >-
   Widget categories cover layout, input, display, feedback, and navigation families, and catalog
   rules require atomic behavior, focus, theme-token reuse, accessible labels, stable identity, and
   deterministic fallback states across surfaces.
+  Amended 2026-10-09 (DL-180): in the Layout family, SplitPane is a split of the home centre's split tree, TabGroup
+  the one tab strip (F3-631) and Panel the one panel (F3-630); every panel and every tab kind reuses them.
 gui_related: true
 gui_classification_reason: This unit defines visible widget families and accessibility/fallback behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -14064,7 +14083,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "Page widgets in `Plans/Widget_System.md` are composed from this catalog and are not a substitute for the atomic widget list here."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): SplitPane, TabGroup and Panel are the split tree's split, the one tab strip and the one panel (F3-630, F3-631)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -16639,12 +16659,15 @@ canonical_text: >-
   `ui/widgets/*` components, and `ui/views/*` page-level views including dashboard, settings,
   wizard, interview, nodes, evidence, metrics, history, memory, ledger, coverage, projects,
   setup, usage, file_editor, agent_activity, and not_found.
+  Amended 2026-10-09 (DL-180): on Home, `views/dashboard.slint` and `views/file_editor.slint` are the dashboard and
+  editor tab kinds' bodies, mounted inside panels (F3-635), and the panel, strip and split components are F3-206's as
+  amended.
 gui_related: true
 gui_classification_reason: >-
   This unit covers the Slint root, theme, reusable widget, and page-level view file layout
   from the directory map.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -16683,7 +16706,8 @@ preserved_exact_tokens:
 - "not_found.slint"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the dashboard and file editor views are tab kind bodies inside panels on Home (F3-635, F3-206)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -18353,11 +18377,13 @@ canonical_text: >-
   New Slint surfaces include `views/usage.slint`, `views/file_editor.slint`, embedded
   `views/agent_activity.slint`, side-panel `panels/chat_panel.slint`, and side-panel
   `panels/file_manager_panel.slint`.
+  Amended 2026-10-09 (DL-180): `views/file_editor.slint` is the editor tab kind's body inside a panel (F3-639), and
+  `panels/chat_panel.slint` hosts the fixed chat column (F3-637), not a side-panel occupant.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves new Slint page and panel mappings.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -18388,7 +18414,8 @@ preserved_exact_tokens:
 - "Embedded"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the chat is a fixed column, not a side-panel occupant, and the file editor is a tab kind body (F3-637, F3-639)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -20664,11 +20691,13 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Default Dashboard layout includes `widget-orchestrator-progress`, `widget-active-lanes`, and
   `widget-recent-results` with IDs `orch-progress-v1`, `lanes-view-v1`, and `results-v1`.
+  Amended 2026-10-09 (DL-180): this default is the Home board's starting set (`dashboard:home`), which WS-030 owns and
+  states in full (its set adds `widget-custom-metrics`); the other boards' starting layouts are WS-030's too.
 gui_related: true
 gui_classification_reason: >-
   This unit defines the default visible Dashboard widgets.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -20702,7 +20731,8 @@ preserved_exact_tokens:
 - "artifact links"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the default Dashboard layout is now the Home board's starting set, owned by WS-030."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -20720,11 +20750,14 @@ canonical_text: >-
   opens the Widget Catalog overlay filtered to the named Dashboard catalog unless an owner has
   promoted another dashboard widget, lets the user choose placement and sizing, places widgets at
   the next available grid position with default size, and persists layout immediately.
+  Amended 2026-10-09 (DL-180): Add widget sits inside each dashboard tab, in its header row, adds to that board only,
+  and can place any Usage widget (F3-638, WS-030, UF-062); the menu, floating action button or toolbar choice and the
+  filter to the named Dashboard catalog are lineage.
 gui_related: true
 gui_classification_reason: >-
   This unit defines the visible Dashboard add-widget workflow and control.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -20774,6 +20807,7 @@ compatibility_only_notes:
 - "The broader widget.* list is compatibility/candidate-library lineage unless promoted by an owner doc."
 stale_retired_dispositions:
 - "The duplicated C.3/C.4 add-widget/catalog blocks are reconciled; the larger widget.* list is not the Dashboard named catalog."
+- "Amended 2026-10-09 (DL-180): Add widget lives in each dashboard tab's header row and its catalogue is every Usage widget (WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -21778,11 +21812,14 @@ canonical_text: >-
   embedding and native detached windows, appear in the web GUI only as the Web Capability Matrix allows. Protected
   AuthBrowserSession is a separate foreground
   human-only security surface and is excluded from this shared rendering/capture inventory.
+  Amended 2026-10-09 (DL-180): the editor-tab Browser is the browser tab kind (F3-635), and there is no bottom panel:
+  the bottom-panel browser-adjacent surfaces are the tool tabs output, problems, ports and debug_console, placed by
+  F3-634.
 gui_related: true
 gui_classification_reason: >-
   This unit defines the rendering addendum and shared browser-capable surface inventory.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -21826,7 +21863,8 @@ negative_constraints:
 - "Bottom-panel browser-adjacent surfaces do not own the canonical browsing session."
 - "The auth_session token is legacy source-lineage only; protected AuthBrowserSession cannot be captured, inspected, recorded, persisted, or controlled through shared rendering surfaces."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the editor-tab Browser and the bottom-panel surfaces are the browser kind and the tool kinds (F3-635)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -33498,10 +33536,12 @@ canonical_text: >-
   ui/<domain>/ path, both spellings denote one planned host surface, with the panels/
   spelling as the panel-occupant host. These paths are planned GUI host locations only;
   they create no implementation files and authorize no source tree.
+  Amended 2026-10-09 (DL-180): `panels/` here means the left rail's side panels; the home centre's panels, tab strips
+  and tab bodies are F3-206's as amended (F3-630, F3-635).
 gui_related: true
 gui_classification_reason: This unit names the planned Slint host files behind visible side-panel occupants.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The panels/ inventory lists host files for search, source control, Actions & Pipelines, testing, agents, and artifacts panels in addition to the existing file manager and docker manager entries."
@@ -33534,6 +33574,7 @@ compatibility_only_notes:
 - "Slint portability: host files are the planned mount points for opaque precomputed panel surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
 - "The prior panels/ inventory state that named only chat and file manager panel host files is superseded by this fuller inventory; the FABLE Slint Host File Inventory table remains findable lineage for its ui/<domain>/ spellings."
+- "Amended 2026-10-09 (DL-180): `panels/` names side-panel hosts only; home panels are F3-206's."
 owner_boundary_notes:
 - "This unit amends the host-file inventory only; panel behavior stays with each panel's owner units and docs."
 owner_hints:
@@ -36738,7 +36779,7 @@ What a wand module attaches to an ordinary reply is one line each (F3-570): the 
 
 ### 6. Plan card
 
-The Plan is a transcript card because it is a human-readable deliverable. Its header carries the Plan title, a `Plan · V5` badge, and a `Rich Text` / `Markdown` toggle with Rich Text selected by default. The body renders headings, paragraphs, tables, lists, code, Mermaid, charts, images, diagrams and supported artifacts with stable scroll and selection, **no editable caret**, an optional step-status gutter while building, and embedded artifacts that open in the normal artifact viewer. The Markdown view is read-only and preserves block identity.
+The Plan is a transcript card because it is a human-readable deliverable. Its header carries the Plan title, a `Plan · V5` badge, and a `Rich Text` / `Markdown` toggle with Rich Text selected by default. The body renders headings, paragraphs, tables, lists, code, Mermaid, charts, images, diagrams and supported artifacts with stable scroll and selection, **no editable caret**, an optional step-status gutter while building, and embedded artifacts that open in the normal artifact viewer (amended 2026-10-09, DL-180: an artifact tab, F3-635 and `Plans/Runtime_Artifacts_Panel.md#RAP-065`, placed by F3-634). The Markdown view is read-only and preserves block identity.
 
 The footer carries exactly one primary status control that changes label rather than being replaced by a separate badge. Before build the actions are `[Build] [Build With Crew] [Build At…] [Revise] [Send To Planning Wizard] [Export] [Cancel]`. During execution the primary control reads `Building…` alongside `Open To-Dos` and `Cancel`. After a terminal result it reads `Completed` or `Canceled`. A pause, quota wait or window boundary may appear as small support copy such as `Building… · paused until 10:00 PM`, but the button itself still reads `Building…`. The transcript card's status zone and its one action row are F3-606, and the schedule line's layout is F3-607 (DL-156).
 
@@ -36762,7 +36803,7 @@ Dynamic domains become `Goal · To-Dos · Subagents · Crew · BrainStorm · Rev
 
 The presentation of these surfaces is the wand modules GUI contract, F3-566 (sheets) and F3-569 (run cards, receipts and run views). One shared configuration sheet grammar and participant-row grammar serves all four kinds, with workflow-specific sections added rather than forked. A participant row exposes the role, the model, the Persona, and the requested-versus-effective disclosure when they differ. Wonderer and Grill Me appear as additive rows rather than replacing a core participant.
 
-Each run renders one transcript card that changes density in place as the run moves (Collaborative_Workflows CWR-019) and opens the run view, an editor document showing the same run (ACD-480). Participants are clickable and open their own transcripts. The BrainStorm sheet shows the effective question maximum including the Grill extension; the Review sheet shows the reviewer count control across one to eight with repeated model choices permitted; the Chat Room sheet shows turn policy and rounds; the Crew sheet shows coordinator, roles, assignment strategy and parallelism.
+Each run renders one transcript card that changes density in place as the run moves (Collaborative_Workflows CWR-019) and opens the run view, an editor document showing the same run (ACD-480; amended 2026-10-09, DL-180: a run tab, F3-635, placed by F3-634). Participants are clickable and open their own transcripts. The BrainStorm sheet shows the effective question maximum including the Grill extension; the Review sheet shows the reviewer count control across one to eight with repeated model choices permitted; the Chat Room sheet shows turn policy and rounds; the Crew sheet shows coordinator, roles, assignment strategy and parallelism.
 
 ### 11. BSD GUI
 
@@ -43750,7 +43791,12 @@ canonical_text: >-
   prefix opens nothing, and two kinds claiming one prefix is a start-up error. Tab identity is separate from domain
   identity: the path, terminal_session_id, board id or artifact id a tab shows is its domain reference, and moving,
   collapsing, maximizing, hiding or restoring a tab never changes it. No internal id (tab, panel, session, nonce) ever
-  appears as text in the interface. Each kind registers its label, its group name for the "+N" list, its icon (a bundled
+  appears as text in the interface. Older canon that names one of these surfaces by its former host means the kind here,
+  placed by F3-634: the run view called an editor document (ACD-480, F3-569, F3-576 and the 2026-09-03 redesign's
+  section 10) is a run tab, ACD-485's subagent transcript a transcript tab, the context-detail editor tab (section
+  7.16.1, F3-132) a context tab, the Plan card's "normal artifact viewer" and an artifact opened from section 7.12 an
+  artifact tab (RAP-065), the Your rules document (F3-579) a document tab, and F3-297's editor-tab Browser a browser
+  tab. Each kind registers its label, its group name for the "+N" list, its icon (a bundled
   SVG icon_id, never an emoji), its id prefixes, its content minimum, whether it is dedicated, its "+" menu row and
   sub-row, how it makes a tab id for an open (the terminal mints a new session), how it mounts, what it serializes and
   whether a tab may close now. Content minimums: terminal 320 x 120 px, browser 360 x 200, dashboard 320 x 120, run 360
