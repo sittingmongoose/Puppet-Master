@@ -245,6 +245,19 @@ Other events: `'open'` (`{ tabId, panelId, kind, created, by }`), `'focus'` (foc
   `failNextPersistenceWrite`, `setSurfaceVisible('chat', ...)`, `popOutChat`) as thin wrappers; the rest return
   `{ ok: false, reason: 'retired' }`.
 
+### 6.3 The left rail (agreed with the left rail lead, 2026-10-09)
+
+- **File opens from the rail.** The rail's concept D is a skin over the shell's own nine panels and never opens files
+  itself; every click goes through the shell rows' `data-demo-action` / `data-path` handlers. The panels reroute behind
+  those handlers: they re-register the demo engine's `cmd.file.open` action (the router hands it the click event, so a
+  double click keeps, Alt+click opens a new panel, Ctrl/Cmd+click opens in the background) and never replace a row
+  element or its `data-*` attributes (D's undo registry restores the shell byte for byte).
+- **The narrow hook.** The ladder writes `data-pm-rail-fold="eased"` or `data-pm-rail-fold="overlay"` on
+  `#sidePanelSlot` (removed when docked) and dispatches the document event `pm:rail-fold` with
+  `{ mode: 'eased' | 'overlay' | 'docked', width }` (240 eased, 280 as an overlay, at least 240). Never on `<html>`.
+- **Build order.** Settings, Usage, the rail (`rail_layer.apply_published`, step 4 of opus `build_text()`), then the home
+  layer, which inserts just before `</head>` and `</body>` and never rewrites the rail's band markup.
+
 ## 7. The "+" menu and the empty panel (D6)
 
 The "+" sits right after the last tab and opens the menu; it never creates a tab by itself. Ctrl+T makes a new tab of
@@ -377,18 +390,27 @@ and writes through the same model, so Settings > Terminal only binds controls.
   or output chrome (a program's own output may contain them). The layer lint fails the build on each.
 - No `:has(` in the layer CSS. No viewport width `@media` queries inside a tab body. No internal ids in the UI
   (session ids, tab ids, panel ids never appear as text).
-- Hover (the hover thread's engine `PMH`): tab strips use `role="tab"` and are never hover targets; dividers carry
-  `-divider` in their class; text surfaces (editor, terminal screen) carry `data-pmh="off"`; header-row buttons are
-  `data-pmh="icon"` (a static tint only, DR-059). Magnet and glow never touch tabs, tab buttons, dividers or text.
-  While the user drags a divider the host sets `body.pm-resizing`, which rests the engine.
+- Hover (the hover thread's merged engine `PMH`, opus-5.5 `src/js/18-hover.js`): it never targets tabs, `[role="tab"]`,
+  resizers and dividers (`-divider` in the class), inputs, textareas, selects, contenteditable or `.xterm`; it skips
+  everything inside `[data-pm-hover-exempt]` (no magnet, light, glow, state class or kind tag); `data-pmh="off"` takes
+  one element out; `data-pmh="card|row|tile|icon"` opts an element in. So: list rows opt in with `data-pmh="row"` (the
+  "+" menu rows, the "+N" list, the empty-panel launcher and its Recent rows, the recent-tabs switcher: the engine puts
+  it on the row wrapper, `.pmw-mrow`, so the trailing new-panel cell moves with its row); header-row buttons and other
+  small icon buttons are `data-pmh="icon"` (a static tint only, DR-059); text surfaces (the editor, a terminal screen)
+  carry `data-pmh="off"` or sit inside `[data-pm-hover-exempt]`; strips and dividers get nothing. Dashboard cards come
+  through the Usage board. Hover TAGS (the page's tag controller) stay off rows whose label is already visible with
+  `data-pm-hover-visual-suppressed="true"`, never with `data-pm-hover-exempt` (that would also take them out of the
+  hover engine). While the user drags a divider or a tab the host sets `body.pm-resizing`, which rests the engine, and
+  hides the tag layer. The full hover contract (the look per family) follows from the hover thread.
 - Fonts: faces in `src/terminal/fonts/` are not mirrored into PM Symbols; the layer exempts them from the
   face/symbol pairing check. Box-drawing, block, braille and powerline glyphs are drawn by the terminal.
 
 ## 14. Overlays and stacking
 
 One overlay root, `#pmw-overlay` (body-level, fixed), holds the "+" menu, "+N" list, panel menus, drag ghosts and
-landing previews. Z ladder inside the page: panel content 0-10; strip and dividers 20; drag ghost 1300; menus 1200;
-hover tags and the tour stay above (the page's existing 2147483000 band). Menus from a kind (`api.menu`) open in this
+landing previews. Z ladder: panel content 0-10; strip and dividers 20; #pmw-overlay at 2147481800 (above the page's
+status bar at 2147481700, below the demo pill at 2147482600 and the hover tags and the tour at 2147483000); inside it
+menus, then the drag chip and the landing preview. Menus from a kind (`api.menu`) open in this
 root. A kind never appends its own overlay to `document.body`.
 
 ## 15. Change log
@@ -397,4 +419,4 @@ root. A kind never appends its own overlay to `document.body`.
   file reference opens a preview tab, not only the file tree); the keyboard table is replaced (PM7's Ctrl+1..9 and Ctrl+K are taken;
   browser-owned chords get Alt stand-ins). Additive: command names agreed with the Plans thread (activation and
   maximize are `ui.*` view-state actions, `cmd.panel_tab.rename`, one `workspace.layout_changed` event), `onResize` gains
-  `final`.
+  `final`. Hover section rewritten for the merged hover engine (data-pmh rows, visual-suppressed tags).

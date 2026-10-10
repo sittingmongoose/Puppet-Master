@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3510-L12158
+Source lines: L3634-L12504
 
-Source SHA256: `7def4e82703338f3baacffc544a4432bb37b0ca347d0fc9402ed0a56b3af97d5`
+Source SHA256: `07c9e45a17cbf53fc94e9d79d4f2326b200c9be7d0dbdf526c7dfede2eb9e584`
 
 ---
 
@@ -8345,7 +8345,11 @@ canonical_text: >-
   coincident cues, and every cue is listed in the Settings sound library (F3-599), 354 entries in the concept. The
   showpiece pass is part of this decision: the hero moments in setup and the tour, and the rules that long words type
   on and that a large area does not flash. No settings key, NieR part,
-  theme variant or onboarding or tour action is added. NieR Mode gets its own Settings unit, SSYS-043, which DL-144
+  theme variant or onboarding or tour action is added. Amended 2026-10-09 by DL-153: no command id, route, settings
+  key or ui.guided_tour.* action is added, but onboarding's look choice and its NieR Mode controls use one new typed
+  local action, ui.onboarding.choose_look, the NieR Mode editor's open, close and replay are
+  ui.settings.nier_editor.open, ui.settings.nier_editor.close and ui.settings.nier_editor.replay, and the live
+  controls compose cmd.settings.transaction.preview then cmd.settings.transaction.apply. NieR Mode gets its own Settings unit, SSYS-043, which DL-144
   and F3-589 now cite. Jared asked for the three tasks in one request on PMConcept7: a more polished NieR Mode in
   setup and the tour with NieR puppets and sounds, NieR Mode as a checkbox with an adjust button wherever a theme is
   chosen, and livelier, more varied setup and tour sounds with NieR ones, all listed in the sound library; the record
@@ -8390,6 +8394,93 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
+```
+
+### DL-153 - The App Opens In Its Own Look Setup's Starting Look And The Four Families' Hero Moments
+
+```yaml
+plan_unit_id: DL-153
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-153 records the owner request of 2026-10-09 and its two rulings. The pre-paint layer shows the look stored for
+  the Project the application opens on, NieR Mode included, read from that Project's Settings, and stores no theme of
+  its own (F3-468). A new install's onboarding always starts in Basic Dark, preselected, whatever look was shown before;
+  Run Onboarding Again starts in the look on screen, NieR Mode included, preselected (F3-520). Onboarding's wake, act
+  card and curtain call take five styles, one per look family: NieR's whenever NieR Mode is painted, whatever family is
+  beneath, and otherwise the painted family's own, in its own materials and in both its variants (F3-600; F3-598 and
+  F3-599 amended). The application's own notices about the tour's restore stay quiet in every look (F3-521). No
+  settings key, theme variant, NieR part, sound setting, command id, route or tour action is added. Lead rulings under
+  existing canon, not owner answers, wire DL-152's look controls: the live ones compose
+  cmd.settings.transaction.preview then cmd.settings.transaction.apply (the title bar's Light/Dark/Auto keeps
+  cmd.theme.set_mode); the NieR Mode editor opens, closes and replays through ui.settings.nier_editor.open,
+  ui.settings.nier_editor.close and ui.settings.nier_editor.replay; the onboarding look choice, its NieR Mode controls
+  and its Look menu use one new typed local action, ui.onboarding.choose_look, a preview written with the Project at
+  commit that never dispatches cmd.theme.* or a Settings transaction; the sound library's Which look switch and Show N
+  more takes are typed local actions and playing an entry is cmd.sound.preview; the Tour's Look menu and sound
+  control are not tour actions; and DR-056 keeps one NieR Mode editor, reboot plate, look store and set of hero
+  moments. Jared asked for the four
+  next steps of the NieR showpiece and ruled on the five styles and on setup's starting look; the record states them in
+  plain words, the rulings kept word for word in the cited source.
+gui_related: true
+gui_classification_reason: Records an owner decision on the first paint, onboarding's starting look, the families' hero moments and the tour's restore notices.
+split_recommended: false
+depends_on: [DL-152]
+unblocks: [F3-600, F3-468, F3-520, F3-521, F3-598, F3-599, F3-082, DR-056, SSYS-010, SSYS-043, UIW-015, UCC-106, UCC-108, UCC-120, WM-041, WM-046, PWIZ-021, PWIZ-022, PWIZ-023, ATS-020]
+acceptance_criteria:
+  - "The first frame of an ordinary open is the stored look of the Project the application opens on, and no theme is stored outside that Project's Settings (F3-468)."
+  - "A new install's onboarding starts in Basic Dark; Run Onboarding Again starts in the look on screen (F3-520)."
+  - "Five styles of the three hero moments exist, NieR's always while NieR Mode is painted (F3-600)."
+  - "Every look control named by DL-152 has one command or typed local action: the Settings transaction pair or cmd.theme.set_mode live, ui.settings.nier_editor.* for the editor, ui.onboarding.choose_look inside the onboarding window, and the sound library's two local actions with cmd.sound.preview (UIW-013)."
+  - "Product Onboarding's census is fourteen typed local actions everywhere it is stated, and SSYS-043, F3-598 and DL-152 no longer say no onboarding action is added."
+  - "The owner request is recorded in plain words, with the verbatim rulings cited by path and SHA-256, and the lead's wiring rulings are cited as agent rulings."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: nier_onboarding_tour_drift
+reasoning_tier: high
+context_scope: nier_onboarding_tour
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+  - Plans/Planning_Wizard.md
+  - Plans/UI_Wiring_Rules.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/DRY_Rules.md
+  - Plans/Automated_Testing_System.md
+  - Plans/product_onboarding_contracts.schema.json
+  - Plans/product_onboarding_contract_fixtures.json
+  - Plans/touch_closure.json
+  - Plans/Wiring_Matrix.production.json
+  - Plans/00-plans-index.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-next-20261009/JARED-REQUEST-20261009.md, SHA-256 5d4f5b2aa55364c55fb022e4624657b5185e5ea5b316b6108b880dde51a98e48"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-next-20261009/LEAD-RULINGS-20261009.md, SHA-256 d838d83f930bda2967e9c289cffe1a98a59a2d07dd163374331c8c3803b98b38 (agent rulings, not owner answers)"
+  - "Concepts/onboarding/opus-5.5/README.md (concept lineage only; branch t3/concept/nier-showpiece-next)"
+preserved_exact_tokens:
+  - "DL-153"
+  - "NieR Mode"
+  - "Basic Dark"
+  - "Run Onboarding Again"
+  - "ui.onboarding.choose_look"
+  - "ui.settings.nier_editor.open"
+  - "cmd.settings.transaction.preview"
+negative_constraints:
+  - "Do not add a global or cross-Project theme store."
+  - "Do not make a NieR variant per family."
+  - "Do not add a settings key, a NieR part or an onboarding- or tour-only setting."
+  - "Do not add a command id, a route or a Guided Tour action for a look control."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+  - Plans/Planning_Wizard.md
 ```
 
 ### DL-161 - PMConcept7 Carries Its Own Fonts
@@ -8656,4 +8747,135 @@ negative_constraints:
   - "Do not add a command, wiring row or setting for the removed button."
 owner_hints:
   - Plans/FinalGUISpec.md
+```
+
+### DL-162 - The Left Rail Takes The Polish Design
+
+```yaml
+plan_unit_id: DL-162
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-162 records the owner decision of 2026-10-09 that the left rail takes concept D, "Polish", of the left-rail
+  review copy. The nine rail panels keep the Cozy Shelves structure and coloured shelf boxes with tighter geometry
+  (a 3 px gutter, a 2 px inset, an outer radius R and an inner radius R minus the inset, row names 24 px from the
+  rail edge), one type ladder with nothing under 11 px, and the looks' own faces (F3-618). Statuses are a glyph
+  whose shape is the state plus a coloured word, counts are plain tabular numbers, and nothing is a pill or carries a
+  coloured side bar (F3-619). Text fits by layout and is never abbreviated, tab strips included (F3-620; F3-480 (3),
+  F3-445, CRAU-098, UCC-136 and GI-039 amended). Every rail dropdown is the chat picker, and motion is per theme family:
+  Basic crisp, Friendly springy, Glass gliding with blur only on the shelf boxes, Retro stepped and NieR Mode ink,
+  under the Animation speed and reduced-motion settings (F3-621). The worktree owner filter becomes an Owner
+  dropdown and the publish and review card folds (F3-622, W-075 amended), with no new command. DR-057 keeps the
+  grammar in one owner. Open owner questions: whether the rail's glyphs and the chat's 13 status marks (F3-585)
+  should be one set, and whether the rail's frosted scroll-under plates fit F3-431's blur budget. Settled later
+  under this decision: the Jujutsu view's tabs (DL-163), the remaining panels and the bottom Debug tab in their
+  owner units with no new command, action or wiring row, the paused, immutable and errored glyphs (F3-619), and the
+  More tray as the chat picker (F3-625).
+gui_related: true
+gui_classification_reason: Records an owner decision on the left rail's presentation.
+split_recommended: false
+depends_on: [F3-472, F3-474, F3-480, F3-445, F3-471]
+unblocks: [F3-618, F3-619, F3-620, F3-621, F3-622, F3-625, DR-057]
+acceptance_criteria:
+  - "The rail's geometry, type, statuses, fitting, dropdowns and motion are owned by F3-618 to F3-622, and the amended consumer units point at them."
+  - "No command, action or wiring row is added by this decision."
+  - "The owner's decision is recorded in plain words with its source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: rail_presentation_drift
+reasoning_tier: high
+context_scope: left_rail_polish
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/Containers_Registry_and_Unraid.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/FileManager.md
+  - Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06"
+  - "Concepts/leftrail-redesign/src/concepts/d/ at commit c93e341606 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-162"
+  - "Polish"
+  - "never abbreviated"
+negative_constraints:
+  - "Do not add a command, an action or a wiring row through this decision."
+  - "Do not reintroduce pills, coloured side bars or abbreviated labels in the left rail."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+### DL-163 - The Jujutsu View Of Source Control Gets Its Own Five Tabs
+
+```yaml
+plan_unit_id: DL-163
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-163 records the answer of 2026-10-09 to the owner's question whether the Jujutsu view of Source Control should
+  have tabs, which he left to the left-rail build (DL-162). It does: Jujutsu gets its own strip of five views, one at
+  a time, Changes, Workspaces, History, Bookmarks and Operation Log, in JJI section 4.1's order and JJI-006's
+  registered words, while Git keeps its own Changes, Worktrees, History and Branches strip, hidden in Jujutsu mode;
+  neither strip relabels the other (JJI-001, JJI-006). The first four views share slot positions with Git's, so the
+  presentation-only engine switch (ui.source_control.profile.preview) opens the same slot and Operation Log opens
+  Git's History. Both Source Control strips fit by their longest label, so a strip never changes mode while one
+  clicks through it. Publish and review stays the footer card in both engines, and Jujutsu mode adds Undo and
+  Refresh to the panel head (F3-623). The five views list the current change, workspaces, stacks of changes,
+  bookmarks per remote and operations with existing commands only (F3-624). SCS-005 records the per-engine tab
+  strips, the footer card and the bookmark state axes; F3-529, F3-552, UCC-163 and JJI-008 call the fifth view
+  Operation Log. Open: disabled-reason codes for the concept's local reasons, an update command for an out-of-date
+  workspace, what Undo reverts after an automatic working-copy save, and, for the owner, whether a change's short
+  ID shows on its row and whether to keep "Operation Log".
+gui_related: true
+gui_classification_reason: Records an owner decision on the Jujutsu view of the Source Control rail panel.
+split_recommended: false
+depends_on: [DL-162, JJI-006, SCS-005, F3-529]
+unblocks: [F3-623, F3-624]
+acceptance_criteria:
+  - "The Jujutsu view's strip, views, rows and actions are owned by F3-623 and F3-624, and SCS-005, F3-529, F3-552, UCC-163 and JJI-008 point at them or use their label."
+  - "No command, action, schema value or wiring row is added by this decision."
+  - "The owner's question and the two choices left to him are recorded in plain words with the request's source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: rail_presentation_drift
+reasoning_tier: high
+context_scope: left_rail_polish
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Source_Control_System.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06 (issue 2)"
+  - "The left-rail build's Jujutsu tab decision, revision 2 of 2026-10-09, summarised in the DL-163 entry (not a repository file)"
+  - "Concepts/leftrail-redesign/src/concepts/d/ from lane commits 8693996260 and 2f77b78710 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-163"
+  - "Operation Log"
+  - "ui.source_control.profile.preview"
+negative_constraints:
+  - "Do not add a command, an action, a disabled-reason code or a wiring row through this decision."
+  - "Do not alias Bookmarks to Branches or Workspaces to Worktrees by relabelling one strip for both engines."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Jujutsu_Integration.md
+  - Plans/Source_Control_System.md
 ```

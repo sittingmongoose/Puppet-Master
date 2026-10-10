@@ -16,7 +16,7 @@ PMW.renderEmpty = function (panelEl, p) {
   var list = h('div', { class: 'pmw-empty-list', role: 'list' });
   PMW.plusRows(p.id, {}).forEach(function (r) {
     if (r.submenu) return;
-    var row = h('div', { class: 'pmw-empty-row', role: 'listitem' });
+    var row = h('div', { class: 'pmw-empty-row', role: 'listitem', 'data-pmh': 'row' });
     var b = h('button', { type: 'button', class: 'pmw-empty-btn pmw-cur' }, [kindIcon(r.kind || 'file'), h('b', { text: r.label }), r.right ? h('span', { class: 'pmw-empty-key', text: PMW.keyLabel(r.right) }) : null]);
     b.addEventListener('click', function (e) { r.run({ alt: e.altKey, row: r }); });
     row.appendChild(b);
@@ -33,7 +33,7 @@ PMW.renderEmpty = function (panelEl, p) {
     col.appendChild(h('p', { class: 'pmw-empty-sec', text: 'Recent' }));
     var rl = h('div', { class: 'pmw-empty-list pmw-empty-recent', role: 'list' });
     recent.forEach(function (path) {
-      var b = h('button', { type: 'button', class: 'pmw-empty-btn pmw-cur', role: 'listitem' }, [kindIcon('file'), h('b', { text: path.split('/').pop() }), h('span', { class: 'pmw-empty-path', text: path })]);
+      var b = h('button', { type: 'button', class: 'pmw-empty-btn pmw-cur', role: 'listitem', 'data-pmh': 'row' }, [kindIcon('file'), h('b', { text: path.split('/').pop() }), path.indexOf('/') >= 0 ? h('span', { class: 'pmw-empty-path', text: path.slice(0, path.lastIndexOf('/')) }) : null]);
       b.addEventListener('click', function (e) { PM_HOME.open({ kind: 'editor', path: path, mode: 'keep', where: e.altKey ? 'panel' : p.id }); });
       rl.appendChild(b);
     });

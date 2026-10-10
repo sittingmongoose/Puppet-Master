@@ -100,7 +100,9 @@ body.pmw-dragging, body.pmw-dragging * { user-select: none !important; -webkit-u
   overflow: visible;
   z-index: 1;
 }
-.pmw-tablist { position: relative; display: flex; align-items: flex-end; flex: 0 1 auto; min-width: 0; height: 100%; z-index: 1; }
+/* no z-index here: the tabs and the plate must share the strip's stacking context, so the carried tab (40) rides above
+   the plate (39) while the plate covers the neighbours it crosses (rev 20 "dragged tabs cover what they pass") */
+.pmw-tablist { position: relative; display: flex; align-items: flex-end; flex: 0 1 auto; min-width: 0; height: 100%; }
 .pmw-pins, .pmw-tabs { display: flex; align-items: flex-end; gap: var(--pmw-tab-gap); height: 100%; min-width: 0; }
 .pmw-pins[hidden] { display: none; }
 .pmw-pinsep { flex: none; width: 1px; height: 14px; margin: 0 4px 8px; background: var(--pmw-line-2); }
@@ -295,7 +297,8 @@ body.pmw-dragging #pm-hover-tag-root, body.pm-resizing #pm-hover-tag-root { disp
   background: color-mix(in srgb, var(--pmw-surface) 80%, transparent);
 }
 .pmw-landing-label[hidden] { display: none; }
-#pmw-overlay { position: fixed; inset: 0 auto auto 0; width: 0; height: 0; z-index: 1200; }
+/* above the page's status bar (2147481700), below the demo pill (2147482600), hover tags and the tour (2147483000) */
+#pmw-overlay { position: fixed; inset: 0 auto auto 0; width: 0; height: 0; z-index: 2147481800; }
 
 /* toasts and the MRU switcher */
 .pmw-toast {

@@ -27,8 +27,10 @@ menu.open = function (anchor, spec) {
     if (same) return null;
   }
   var hnd = { anchor: anchor, spec: spec, stack: [], el: null, closed: false };
+  /* hover: rows opt into the merged hover engine (data-pmh="row"); hover TAGS stay off the rows with
+     data-pm-hover-visual-suppressed (data-pm-hover-exempt would also take the rows out of the hover engine) */
   var el = hnd.el = h('div', { class: 'pmw-menu pmw-pop' + (spec.className ? ' ' + spec.className : ''), role: 'menu', tabindex: '-1',
-    'data-pm-hover-exempt': 'menu', 'data-mstate': 'measure', 'aria-label': spec.title || spec.label || 'Menu' });
+    'data-pm-hover-visual-suppressed': 'true', 'data-pmh': 'off', 'data-mstate': 'measure', 'aria-label': spec.title || spec.label || 'Menu' });
   overlay().appendChild(el);
   hnd.render = function (sp, keepQuery) {
     var q = keepQuery && hnd.search ? hnd.search.value : '';
@@ -90,7 +92,7 @@ menu.open = function (anchor, spec) {
     if (hnd.placed) morph();
   }
   function buildRow(r) {
-    var row = h('div', { class: 'pmw-mrow' + (r.alt || r.close ? ' has-cell' : '') });
+    var row = h('div', { class: 'pmw-mrow' + (r.alt || r.close ? ' has-cell' : ''), 'data-pmh': r.disabled ? 'off' : 'row' });
     var main = h('button', { type: 'button', class: 'pmw-mitem pmw-cur' + (r.disabled ? ' is-disabled' : '') + (r.danger ? ' is-danger' : '') + (r.submenu ? ' has-sub' : '') + (r.current ? ' is-current' : ''),
       role: r.checked != null ? 'menuitemcheckbox' : 'menuitem', tabindex: '-1' });
     if (r.checked != null) main.setAttribute('aria-checked', r.checked ? 'true' : 'false');
@@ -107,7 +109,8 @@ menu.open = function (anchor, spec) {
     main.appendChild(copy);
     if (r.right) main.appendChild(h('span', { class: 'pmw-mright', text: PMW.keyLabel(r.right) }));
     if (r.submenu) main.appendChild(h('span', { class: 'pmw-mchev' }, [icon('chevronRight', { size: 14 })]));
-    if (r.hover) { main.setAttribute('data-pm-hover-label', r.hover); }
+    if (r.hover) main.setAttribute('data-pm-hover-label', r.hover);
+    else main.setAttribute('data-pm-hover-visual-suppressed', 'true');
     main.addEventListener('click', function (e) { pick(r, { alt: e.altKey }); });
     main._pmwRow = r;
     row.appendChild(main);

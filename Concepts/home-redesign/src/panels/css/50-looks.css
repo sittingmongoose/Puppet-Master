@@ -50,11 +50,8 @@ html[data-theme="glass-dark"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw
   --pmw-tab-inactive: #F8F4FF;
   --pmw-tab-idle-fill: rgba(255, 255, 255, .07);
   --pmw-tab-hover: rgba(255, 255, 255, .12);
-  /* the page's Glass dark plate ("Beeper purple", page 22120-22134), kept until Jared rules (it does not fuse with the
-     dark reading canvas; deleting these lines falls back to the fused --pmw-surface plate with the 1 px rim) */
-  --pmw-plate-crown: #B5A4FF; --pmw-plate-crown-h: 2px;
-  --pmw-plate-fill: linear-gradient(180deg, color-mix(in srgb, #6A4BE5 78%, #3A2470) 0%, color-mix(in srgb, #6A4BE5 58%, #241450) 55%, color-mix(in srgb, #6A4BE5 42%, #1A1035) 100%), #241450;
-  --pmw-plate-filter: drop-shadow(0 12px 22px rgba(106, 75, 229, .48)) drop-shadow(0 -1px 0 rgba(181, 164, 255, .70));
+  /* Jared, 2026-10-10: the 2026-08-20 purple plate is dropped; the active tab is one surface with its panel, as in
+     every other look (the plate falls back to --pmw-surface with Glass's 1 px rim) */
 }
 /* Glass: panels are frosted plates on the wallpaper; the gaps are the separators. One blur at most, on the panel. */
 html[data-theme^="glass"] .pmw-panel { background: color-mix(in srgb, var(--pmw-strip) 92%, transparent); box-shadow: 0 0 0 1px var(--rg-rim-low, rgba(255, 255, 255, .12)); }
@@ -106,3 +103,5 @@ html[data-theme^="basic"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-sco
 html[data-theme="basic-light"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
   --pmw-strip: color-mix(in srgb, color-mix(in srgb, var(--surface) 88%, #000) 72%, var(--surface));
 }
+/* the Glass drag frost (rev 21): the plate goes to .92 only while a tab is carried; opaque at rest; never a backdrop blur */
+html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-strip.is-dragging .pmw-plate { opacity: .92; }

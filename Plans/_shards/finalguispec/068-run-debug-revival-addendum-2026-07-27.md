@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33417-L34453
+Source lines: L33465-L34527
 
-Source SHA256: `4fda7c380979f66f7d2b4aea2bcd243da6ef37306b055648aa27ae58d4d3e771`
+Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
 
 ---
 
@@ -100,6 +100,10 @@ canonical_text: >-
   paused, Pause when running; step commands are enabled only while paused; Stop and
   Disconnect are enabled whenever a session exists; Disconnect replaces Stop for
   attach sessions.
+  Amended 2026-10-09 (DL-162): in the rail, the bottom Debug tab and the session picker the session state draws as
+  FinalGUISpec F3-619's glyph and word in place of the rail chip and status dots: initializing as pending, running
+  as live, paused as the paused glyph, terminated as the stopped ring and adapter_crashed as failed. Every surface
+  still reads the one session store.
 gui_related: true
 gui_classification_reason: This unit defines the visible session-state chips, transport enablement, and inspection clear/populate behavior driven by DAP events.
 split_recommended: false
@@ -128,6 +132,7 @@ source_lineage:
 - "zed-industries/zed crates/debugger_ui (research lineage)"
 - "nvim-dap-ui (research lineage)"
 - "Plans/FinalGUISpec.md:17921 (F3-259 DAP debugger reliability risk row)"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "none"
 - "initializing"
@@ -175,6 +180,9 @@ canonical_text: >-
   focused session. Starting a configuration that is already running prompts a
   duplicate-session confirm. The bottom Debug tab shows one sub-tab per session,
   and closing a sub-tab offers terminate.
+  Amended 2026-10-09 (DL-162): in the rail the session picker opens as the chat picker (F3-621) and lists each
+  session with its state glyph and word by F3-483's mapping in place of coloured dots and a spinner; a terminated
+  session keeps its struck-through label, the focused session is checked, and the per-row close action is unchanged.
 gui_related: true
 gui_classification_reason: This unit defines the visible session picker, focus model, and per-session sub-tab behavior.
 split_recommended: false
@@ -201,6 +209,7 @@ source_lineage:
 - "user-decision:2026-07-27-run-debug-revival"
 - "zed-industries/zed crates/debugger_ui (research lineage; status-dot session picker)"
 - "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "starting"
 - "running"
@@ -246,6 +255,13 @@ canonical_text: >-
   (shelves populated), and terminated (a banner with the exit code and a Restart
   action). Panel width, motion, and fitting follow F3-471, F3-473, and F3-480
   (referenced).
+  Amended 2026-10-09 (DL-162): in the rail the launch row is a configuration field showing the configuration's name
+  on line 1 and its command on line 2, with the gear beside it, above Start Debugging and Run Without Debugging
+  joined as one split control across the full width. The configuration menu opens as the chat picker (F3-621) and
+  lists names first, grouped Recent, then Other configurations, then Add Configuration… and Edit configurations
+  file. Shelf labels are sentence case, the canon tokens Debug & Run, Start Debugging and Run Without Debugging keep
+  their case, every row name starts at the rail's name column (F3-618) with child sessions indented one step, and a
+  shelf head whose summary does not fit moves it under the label (F3-620).
 gui_related: true
 gui_classification_reason: This unit defines the visible section-by-section layout and empty-state vocabulary of the Run & Debug rail panel.
 split_recommended: false
@@ -273,6 +289,7 @@ source_lineage:
 - "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
 - "zed-industries/zed crates/debugger_ui (research lineage)"
 - "eclipse-theia/theia debug plugin (research lineage)"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "Add Configuration…"
 - "Edit configurations file"
@@ -440,6 +457,9 @@ canonical_text: >-
   Plans/storage-plan.md, not restated. Editor-gutter sync: the gutter marker and
   the shelf row are two renderers of the same breakpoint record; the record is the
   truth with a single owner, and toggling either renderer updates both.
+  Amended 2026-10-09 (DL-162): in the rail the conditional badge is the condition written out after the location and
+  function as when followed by the expression, with no capsule (F3-619); the logpoint diamond and the hollow
+  unverified mark stay.
 gui_related: true
 gui_classification_reason: This unit defines the visible breakpoint shelf rows, glyphs, edit strip, and gutter-sync rendering contract.
 split_recommended: false
@@ -467,6 +487,7 @@ source_lineage:
 - "user-decision:2026-07-27-run-debug-revival"
 - "microsoft/vscode src/vs/workbench/contrib/debug (research lineage)"
 - "nvim-dap-ui (research lineage)"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "Expression"
 - "Hit Count"
@@ -606,6 +627,10 @@ canonical_text: >-
   §7.20.2 pane list's "Debug Console" entry and the locked-decision "classical
   debugger surface" entry both resolve here. Reveal and focus behavior follows
   F3-491.
+  Amended 2026-10-09 (DL-162): the bottom Debug tab takes the rail's type and quiet buttons (F3-618), draws its
+  mirrored state chip as F3-619's glyph and word, marks the selected session sub-tab with an ink, shows stream tags
+  as coloured lowercase words, and opens its configuration menu as the chat picker (F3-621). In TERMINATED the
+  retained console scrollback stays visible under the ended chrome, as this unit already requires.
 gui_related: true
 gui_classification_reason: This unit defines the visible bottom-zone Debug tab states, session chrome, console, and conditional process pane.
 split_recommended: false
@@ -634,6 +659,7 @@ source_lineage:
 - "zed-industries/zed crates/debugger_ui (research lineage)"
 - "Plans/FinalGUISpec.md:1787 (§7.20.2 Debug, Problems, Output, and Ports pane list)"
 - "Plans/Section15_MVP_Promoted_Features_Spec.md (Debug Console pane ownership; referenced)"
+- "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
 preserved_exact_tokens:
 - "Start Debugging"
 - "Terminate"

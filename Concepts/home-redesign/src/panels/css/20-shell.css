@@ -32,11 +32,13 @@ html[data-pmw-home="on"] body.pm-resizing #chatPanel.chat-panel { transition: no
 html[data-pmw-home="on"] #chatResizer:not(.hidden) { cursor: col-resize; }
 
 /* the rail side panel eases to 240, then folds to its icon bar (D4); the user's own width is never overwritten */
-html[data-pmw-home="on"] .main-area[data-pmw-rail="ease"] #sidePanelSlot:not(.hidden) { max-width: 240px !important; }
+/* keyed on the hook agreed with the rail lead (#sidePanelSlot[data-pm-rail-fold]); the rail's concept D adds its own
+   overlay styling on the same attribute */
+html[data-pmw-home="on"] #sidePanelSlot[data-pm-rail-fold="eased"]:not(.hidden) { max-width: 240px !important; }
 html[data-pmw-home="on"] .main-area[data-pmw-rail="fold"] > .left-panel { position: relative; z-index: 30; }
-html[data-pmw-home="on"] .main-area[data-pmw-rail="fold"] #sidePanelSlot { display: none !important; }
+html[data-pmw-home="on"] #sidePanelSlot[data-pm-rail-fold="overlay"] { display: none !important; }
 html[data-pmw-home="on"] .main-area[data-pmw-rail="fold"] > #leftPanelResizer { display: none !important; }
-html[data-pmw-home="on"] .main-area[data-pmw-rail="fold"][data-pmw-rail-peek] #sidePanelSlot:not(.hidden) {
+html[data-pmw-home="on"] .main-area[data-pmw-rail-peek] #sidePanelSlot[data-pm-rail-fold="overlay"]:not(.hidden) {
   display: flex !important;
   position: absolute;
   left: 100%;

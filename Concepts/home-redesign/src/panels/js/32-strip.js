@@ -157,6 +157,7 @@ strip.render = function (panelEl, p, l, opts) {
     setAttr(el, 'hidden', !!hiddenSet[tid]);
     setAttr(el, 'data-size', fit.size[tid] || 'full');
     if (w != null && !hiddenSet[tid]) { var px = w + 'px'; if (el.style.width !== px) el.style.width = px; }
+    middleEllipsis(el, l.tabs[tid], fit.size[tid], w, tid === p.active, host, font);
   });
   // +N: plain text, counts the hidden tabs only
   var n = fit.hidden.length;
@@ -174,6 +175,25 @@ strip.render = function (panelEl, p, l, opts) {
   setAttr(host, 'data-collapsed', p.collapsed ? 'yes' : null);
   if (PMW.shape) PMW.shape.sync(host, p, l, opts);
 };
+
+/* A shrunk file tab keeps both ends of its name ("rec\u2026es.rs"), so same-prefix files stay apart (research 6.3). */
+function middleEllipsis(el, rec, size, w, active, host, font) {
+  var lab = el.querySelector('.pmw-tlabel');
+  var full = tabLabel(rec);
+  if (size !== 'shrunk' || active || !w || !(rec.state && rec.state.path)) { if (lab.textContent !== full) lab.textContent = full; return; }
+  var room = w - TAB.padL - TAB.iconSlot - TAB.iconGap - 8 - (rec.dirty ? TAB.close + TAB.iconGap : 0);
+  if (labelWidth(full, font, host, !!rec.preview) <= room) { if (lab.textContent !== full) lab.textContent = full; return; }
+  var dot = full.lastIndexOf('.');
+  var tailLen = dot > 0 && full.length - dot <= 6 ? full.length - dot + 2 : 3;
+  var tail = full.slice(-Math.min(tailLen, full.length - 1));
+  var lo = 1, hi = Math.max(1, full.length - tail.length - 1), best = full.slice(0, 1) + '\u2026' + tail;
+  while (lo <= hi) {
+    var mid = (lo + hi) >> 1;
+    var cand = full.slice(0, mid) + '\u2026' + tail;
+    if (labelWidth(cand, font, host, !!rec.preview) <= room) { best = cand; lo = mid + 1; } else hi = mid - 1;
+  }
+  if (lab.textContent !== best) lab.textContent = best;
+}
 
 function placeTab(s, container, tid, index, l, p) {
   var el = s.tabEls[tid] || (s.tabEls[tid] = createTab(s, tid));
