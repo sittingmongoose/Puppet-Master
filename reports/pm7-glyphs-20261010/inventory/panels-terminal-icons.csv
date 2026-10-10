@@ -1,0 +1,153 @@
+package,file,line,name,kind,markup_or_char,used_for,tab_kind
+panels,panels/css/10-panels.css,156,strip-agent-square,css,.pmw-agentmark { width:7px; height:7px; background:var(--pmw-warn) },agent-driving mark beside tab label,n
+panels,panels/css/10-panels.css,172,strip-dirty-dot,css,.pmw-tdot { width:7px; height:7px; border-radius:50%; background:currentColor },unsaved-changes dot in tab close slot,n
+panels,panels/css/10-panels.css,178,strip-attention-square,css,.pmw-tattn { width:6px; height:6px; border:1.5px solid var(--pmw-warn) },background-news hollow square on tab,n
+panels,panels/css/63-kind-docs.css,182,plan-busy-dot,css,.pmw-plan-busy { width:6px; height:6px; border-radius:50%; background:var(--pmw-accent); pulse 1.6s },build-running dot on plan Build button,n
+panels,panels/js/06-icons.js,6,terminal,svg,"<svg viewBox=""0 0 16 16""><path d=""M3 4.5l3.5 3.5L3 11.5M8.5 12H13""/></svg>",Terminal tab kind (fallback def); shell/profile picker rows in terminal pkg,y
+panels,panels/js/06-icons.js,7,browser,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2zM2 8h12M8 2c1.9 1.7 2.8 3.8 2.8 6S9.9 12.3 8 14M8 2C6.1 3.7 5.2 5.8 5.2 8S6.1 12.3 8 14""/></svg>",Browser tab kind; catalog rows; session toggle Ordinary,y
+panels,panels/js/06-icons.js,8,file,svg,"<svg viewBox=""0 0 16 16""><path d=""M4 2h5.5L12.5 5v9H4zM9.5 2v3h3""/></svg>",Editor tab kind; file rows; fallback drawing for unknown names,y
+panels,panels/js/06-icons.js,9,code,svg,"<svg viewBox=""0 0 16 16""><path d=""M5.5 4.5 2.5 8l3 3.5M10.5 4.5l3 3.5-3 3.5""/></svg>",source-code actions (artifact copy/show source),n
+panels,panels/js/06-icons.js,10,dashboard,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 2.5h4.5v4.5H2.5zM9 2.5h4.5v4.5H9zM2.5 9h4.5v4.5H2.5zM9 9h4.5v4.5H9z""/></svg>",Dashboard tab kind; board rows; header chip,y
+panels,panels/js/06-icons.js,11,plan,svg,"<svg viewBox=""0 0 16 16""><path d=""M3 3.5h10M3 6.5h10M3 9.5h7M3 12.5h5""/></svg>",Plan tab kind; open-plan buttons,y
+panels,panels/js/06-icons.js,12,document,svg,"<svg viewBox=""0 0 16 16""><path d=""M4 2h8v12H4zM6 5h4M6 7.5h4M6 10h2.5""/></svg>",Document tab kind; export/copy/summarize actions,y
+panels,panels/js/06-icons.js,13,artifact,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 3h11v10h-11zM4.5 10.5l2.2-3 2 2 2.6-4""/></svg>",Artifact tab kind; open-version buttons,y
+panels,panels/js/06-icons.js,14,run,svg,"<svg viewBox=""0 0 16 16""><path d=""M5.5 6.2a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4zM10.8 6.2a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4zM2.5 12.8c0-1.9 1.4-3.3 3-3.3s3 1.4 3 3.3M7.8 12.8c0-1.9 1.4-3.3 3-3.3s3 1.4 3 3.3""/></svg>",Run tab kind; missing-run frame,y
+panels,panels/js/06-icons.js,15,transcript,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 3h11v7.5H7l-3 2.5v-2.5H2.5z""/></svg>",Transcript tab kind; open-transcript buttons,y
+panels,panels/js/06-icons.js,16,context,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 2.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11zM8 5.2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6z""/></svg>",Context tab kind; context actions,y
+panels,panels/js/06-icons.js,17,record,svg,"<svg viewBox=""0 0 16 16""><path d=""M3.5 2h9v12l-2-1.2-2.5 1.2-2.5-1.2-2 1.2zM6 5.5h4M6 8h4""/></svg>",Record tab kind,y
+panels,panels/js/06-icons.js,18,output,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 3h11v10h-11zM2.5 6h11M5 8.5h4M5 10.5h6""/></svg>",Output tab kind; channel header,y
+panels,panels/js/06-icons.js,19,problems,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 2.2 14 13H2zM8 6.5v3M8 11.2v.1""/></svg>",Problems tab kind; dashboard Stalled; notice bad default; tool-error,y
+panels,panels/js/06-icons.js,20,ports,svg,"<svg viewBox=""0 0 16 16""><path d=""M6 2v3M10 2v3M4.5 5h7v2.5a3.5 3.5 0 0 1-7 0zM8 11v3""/></svg>",Ports tab kind,y
+panels,panels/js/06-icons.js,21,debug,svg,"<svg viewBox=""0 0 16 16""><path d=""M5.5 5.5h5v4.8a2.5 2.5 0 0 1-5 0zM6.5 5.5V4a1.5 1.5 0 0 1 3 0v1.5M3 7h2.5M10.5 7H13M3 10.5h2.5M10.5 10.5H13M3.5 13.5l2-1.5M12.5 13.5l-2-1.5""/></svg>",record kind type rows (e.g. App control),n
+panels,panels/js/06-icons.js,22,console,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 3h11v10h-11zM5 6.5l2 1.5-2 1.5M8.5 10h2.5""/></svg>",Debug Console tab kind,y
+panels,panels/js/06-icons.js,23,splitRight,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 3h11v10h-11zM8 3v10""/></svg>",editor layout toggle; terminal Split action,n
+panels,panels/js/06-icons.js,24,splitDown,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 3h11v10h-11zM2.5 8h11""/></svg>",editor layout toggle,n
+panels,panels/js/06-icons.js,25,maximize,svg,"<svg viewBox=""0 0 16 16""><path d=""M3 6V3h3M13 6V3h-3M3 10v3h3M13 10v3h-3""/></svg>",maximize toggles (panels + terminal),n
+panels,panels/js/06-icons.js,26,restore,svg,"<svg viewBox=""0 0 16 16""><path d=""M6 3v3H3M10 3v3h3M6 13v-3H3M10 13v-3h3""/></svg>",restore toggles (panels + terminal),n
+panels,panels/js/06-icons.js,27,more,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 3.4v.1M8 8v.1M8 12.6v.1"" stroke-width=""2.2""/></svg>",panel menu; overflow menus,n
+panels,panels/js/06-icons.js,28,moreH,svg,"<svg viewBox=""0 0 16 16""><path d=""M3.4 8h.1M8 8h.1M12.6 8h.1"" stroke-width=""2.2""/></svg>",run More button,n
+panels,panels/js/06-icons.js,29,close,svg,"<svg viewBox=""0 0 16 16""><path d=""M4.5 4.5l7 7M11.5 4.5l-7 7""/></svg>",tab close; dialog/menu close,n
+panels,panels/js/06-icons.js,30,plus,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 3v10M3 8h10""/></svg>",new tab/panel; add widget/port/dashboard,n
+panels,panels/js/06-icons.js,31,search,svg,"<svg viewBox=""0 0 16 16""><path d=""M7 2.8a4.2 4.2 0 1 0 0 8.4 4.2 4.2 0 0 0 0-8.4zM10.2 10.2 13.5 13.5""/></svg>",find actions; problems filter,n
+panels,panels/js/06-icons.js,32,pin,svg,"<svg viewBox=""0 0 16 16""><path d=""M6 2.5h4M6.7 2.5v4L4.5 9h7L9.3 6.5v-4M8 9v4.5""/></svg>",pin/unpin tab menu,n
+panels,panels/js/06-icons.js,33,lock,svg,"<svg viewBox=""0 0 16 16""><path d=""M4 7.5h8v6H4zM5.8 7.5V5.5a2.2 2.2 0 0 1 4.4 0v2""/></svg>",panel lock mark; protected session; blocked transcript; rule lock; read-only,n
+panels,panels/js/06-icons.js,34,chevronRight,svg,"<svg viewBox=""0 0 16 16""><path d=""M6 3.5 10.5 8 6 12.5""/></svg>",submenu arrows; trees; empty-state,n
+panels,panels/js/06-icons.js,35,chevronDown,svg,"<svg viewBox=""0 0 16 16""><path d=""M3.5 6 8 10.5 12.5 6""/></svg>",menus; sort marks; jump-to-latest,n
+panels,panels/js/06-icons.js,36,chevronLeft,svg,"<svg viewBox=""0 0 16 16""><path d=""M10 3.5 5.5 8l4.5 4.5""/></svg>",menu back; picker rows,n
+panels,panels/js/06-icons.js,37,grip,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 8.5 8.5 2.5M5.5 8.5l3-3""/></svg>",panel drag handle,n
+panels,panels/js/06-icons.js,38,reopen,svg,"<svg viewBox=""0 0 16 16""><path d=""M3.5 6.5h6.5a3 3 0 0 1 0 6H6M5.5 4.2 3.2 6.5l2.3 2.3""/></svg>",reopen closed tab; restore home layout; reset widgets,n
+panels,panels/js/06-icons.js,39,panel,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 3h11v10h-11zM2.5 6h11""/></svg>",switcher chip; empty-state chip,n
+panels,panels/js/06-icons.js,40,newPanel,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 3h11v10h-11zM8 3v10M10.8 6.2v3.6M9 8h3.6""/></svg>",open-in-new-panel actions,n
+panels,panels/js/06-icons.js,41,layout,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 3h11v10h-11zM8 3v5M2.5 8h11""/></svg>",home options button; board menus; tidy,n
+panels,panels/js/06-icons.js,42,chat,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 3.5h11v7H8l-3 2.5v-2.5H2.5z""/></svg>",narrow chat strip; send-to-chat; parent thread; show-in-chat,n
+panels,panels/js/06-icons.js,43,history,svg,"<svg viewBox=""0 0 16 16""><path d=""M3 8a5 5 0 1 0 1.5-3.6M3 2.8v2.6h2.6M8 5.2V8l2 1.3""/></svg>",versions menus; earlier-version banner,n
+panels,panels/js/06-icons.js,44,popOut,svg,"<svg viewBox=""0 0 16 16""><path d=""M9 2.5h4.5V7M13.5 2.5 8 8M11.5 9.5v4H2.5v-9h4""/></svg>",pop out/dock chat; send to Planning Wizard,n
+panels,panels/js/06-icons.js,45,agent,svg,"<svg viewBox=""0 0 16 16""><path d=""M3.5 3.5h9v9h-9zM6 8h4""/></svg>",send-findings-to-agent; agent buttons,n
+panels,panels/js/06-icons.js,46,git,svg,"<svg viewBox=""0 0 16 16""><path d=""M5 3v10M5 6.5a2 2 0 1 0 0-.01M11 5.5a1.6 1.6 0 1 0 0-.01M11 7.1c0 3-6 1.5-6 4.4""/></svg>",terminal header branch fact via host; unused in panels,n
+panels,panels/js/06-icons.js,47,folder,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 4h4l1.4 1.5h5.6v7h-11z""/></svg>",unused: no references outside 06-icons.js,n
+panels,panels/js/06-icons.js,48,clock,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 2.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11zM8 5v3l2 1.4""/></svg>",queued states; schedule/window lines; range; notice warn default; terminal run fact,n
+panels,panels/js/06-icons.js,49,check,svg,"<svg viewBox=""0 0 16 16""><path d=""M3.5 8.5l3 3 6-7""/></svg>",save/keep; complete states; menu checks; retains list,n
+panels,panels/js/06-icons.js,50,cross,svg,"<svg viewBox=""0 0 16 16""><path d=""M4.5 4.5l7 7M11.5 4.5l-7 7""/></svg>",delete dashboard; dashboard Failed; twin of close,n
+panels,panels/js/06-icons.js,51,replace,svg,"<svg viewBox=""0 0 16 16""><path d=""M3 5h7.5M8.5 3l2 2-2 2M13 11H5.5M7.5 9l-2 2 2 2""/></svg>",find-and-replace menu,n
+panels,panels/js/06-icons.js,52,arrowUp,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 13V3M4 7l4-4 4 4""/></svg>",previous change,n
+panels,panels/js/06-icons.js,53,arrowDown,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 3v10M4 9l4 4 4-4""/></svg>",next change,n
+panels,panels/js/06-icons.js,54,regex,svg,"<svg viewBox=""0 0 16 16""><path d=""M10.5 2.5v5M8.3 3.8l4.4 2.4M8.3 6.2l4.4-2.4M4 12a1 1 0 1 0 0-.01""/></svg>",editor find toggle,n
+panels,panels/js/06-icons.js,55,caseSense,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 12 5 4.5 7.5 12M3.4 9.5h3.2M10.5 8.7a1.9 1.9 0 1 1 0 3.3M12.4 7.5V12""/></svg>",editor find toggle,n
+panels,panels/js/06-icons.js,56,wholeWord,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 12.5h11M4 4.5 5.2 10 6.5 6.5 7.8 10 9 4.5M10.5 4.5v6""/></svg>",editor find toggle,n
+panels,panels/js/06-icons.js,57,reload,svg,"<svg viewBox=""0 0 16 16""><path d=""M13 8a5 5 0 1 1-1.5-3.6M13 2.8v2.6h-2.6""/></svg>",recheck/retry/restart/run-again; retrying states,n
+panels,panels/js/06-icons.js,58,back,svg,"<svg viewBox=""0 0 16 16""><path d=""M13 8H3.5M7 4.5 3.5 8 7 11.5""/></svg>",run back-to-team; evidence back,n
+panels,panels/js/06-icons.js,59,forward,svg,"<svg viewBox=""0 0 16 16""><path d=""M3 8h9.5M9 4.5l3.5 3.5L9 11.5""/></svg>",fallback-route state icon (dashboard),n
+panels,panels/js/06-icons.js,60,camera,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 5h2.5l1-1.5h4l1 1.5h2.5v7.5h-11zM8 6.8a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4z""/></svg>",browser screenshots; artifact image export,n
+panels,panels/js/06-icons.js,61,region,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 5V2.5H5M11 2.5h2.5V5M13.5 11v2.5H11M5 13.5H2.5V11""/></svg>",browser region screenshot,n
+panels,panels/js/06-icons.js,62,pointer,svg,"<svg viewBox=""0 0 16 16""><path d=""M4 2.5l7.5 5.5-3.2.6L10 12.5l-1.6.8-1.7-3.9L4 11.6z""/></svg>",browser select-component,n
+panels,panels/js/06-icons.js,63,devtools,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 3h11v10h-11zM5 7l1.8 1.5L5 10M8.5 10h2.5""/></svg>",browser DevTools toggle,n
+panels,panels/js/06-icons.js,64,link,svg,"<svg viewBox=""0 0 16 16""><path d=""M6.8 9.2 9.2 6.8M7.5 4.8l1-1a2.5 2.5 0 0 1 3.6 3.6l-1 1M8.5 11.2l-1 1a2.5 2.5 0 0 1-3.6-3.6l1-1""/></svg>",copy path/address/locator; fallback-route notice icon,n
+panels,panels/js/06-icons.js,65,keep,svg,"<svg viewBox=""0 0 16 16""><path d=""M4 2.5h8v11L8 10.8 4 13.5z""/></svg>",save layout; keep preview tab,n
+panels,panels/js/06-icons.js,66,diff,svg,"<svg viewBox=""0 0 16 16""><path d=""M4.5 2.5v6M1.8 5.5h5.4M9 11.5h5.2M11.5 2.5v4""/></svg>",editor diff mode,n
+panels,panels/js/06-icons.js,67,play,svg,"<svg viewBox=""0 0 16 16""><path d=""M5 3.5v9l7-4.5z""/></svg>",debug continue/start; run resume; dashboard Working; room next-round,n
+panels,panels/js/06-icons.js,68,pause,svg,"<svg viewBox=""0 0 16 16""><path d=""M5.5 3.5v9M10.5 3.5v9""/></svg>",debug pause; run pause; dashboard Waiting,n
+panels,panels/js/06-icons.js,69,stop,svg,"<svg viewBox=""0 0 16 16""><path d=""M4 4h8v8H4z""/></svg>",debug stop; run cancel,n
+panels,panels/js/06-icons.js,70,message,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 3.5h11v7H8l-3 2.5v-2.5H2.5zM5 6.5h6""/></svg>",run message actions,n
+panels,panels/js/06-icons.js,71,widget,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 2.5h11v11h-11zM2.5 6.5h11M6.5 6.5v7""/></svg>",unused: no references outside 06-icons.js,n
+panels,panels/js/06-icons.js,72,eye,svg,"<svg viewBox=""0 0 16 16""><path d=""M1.8 8S4 3.8 8 3.8 14.2 8 14.2 8 12 12.2 8 12.2 1.8 8 1.8 8zM8 6.3a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4z""/></svg>",notice default icon; show/board menus; recorded note; transcript fallback,n
+panels,panels/js/06-icons.js,73,rename,svg,"<svg viewBox=""0 0 16 16""><path d=""M3 12.5h2l7-7-2-2-7 7zM9 4.5l2 2""/></svg>",rename tab; revise plan; change setup,n
+panels,panels/js/06-icons.js,74,target,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 2.5v2M8 11.5v2M2.5 8h2M11.5 8h2M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z""/></svg>",go-to-line; transcript follow,n
+panels,panels/js/06-icons.js,78,artifact,retro-text,%,Retro one/two-cell glyph for tab-kind icon,y
+panels,panels/js/06-icons.js,78,browser,retro-text,@,Retro one/two-cell glyph for tab-kind icon,y
+panels,panels/js/06-icons.js,78,code,retro-text,#,Retro one/two-cell glyph for tab-kind icon,n
+panels,panels/js/06-icons.js,78,dashboard,retro-text,::,Retro one/two-cell glyph for tab-kind icon,y
+panels,panels/js/06-icons.js,78,document,retro-text,¶,Retro one/two-cell glyph for tab-kind icon,y
+panels,panels/js/06-icons.js,78,file,retro-text,#,Retro one/two-cell glyph for tab-kind icon,y
+panels,panels/js/06-icons.js,78,plan,retro-text,=,Retro one/two-cell glyph for tab-kind icon,y
+panels,panels/js/06-icons.js,78,terminal,retro-text,>_,Retro one/two-cell glyph for tab-kind icon,y
+panels,panels/js/06-icons.js,79,console,retro-text,>,Retro one/two-cell glyph for tab-kind icon,y
+panels,panels/js/06-icons.js,79,context,retro-text,o,Retro one/two-cell glyph for tab-kind icon,y
+panels,panels/js/06-icons.js,79,debug,retro-text,*,Retro one/two-cell glyph for tab-kind icon,n
+panels,panels/js/06-icons.js,79,output,retro-text,|,Retro one/two-cell glyph for tab-kind icon,y
+panels,panels/js/06-icons.js,79,ports,retro-text,:,Retro one/two-cell glyph for tab-kind icon,y
+panels,panels/js/06-icons.js,79,problems,retro-text,!,Retro one/two-cell glyph for tab-kind icon,y
+panels,panels/js/06-icons.js,79,record,retro-text,$,Retro one/two-cell glyph for tab-kind icon,y
+panels,panels/js/06-icons.js,79,run,retro-text,&,Retro one/two-cell glyph for tab-kind icon,y
+panels,panels/js/06-icons.js,79,transcript,retro-text,"""",Retro one/two-cell glyph for tab-kind icon,y
+panels,panels/kinds/10-editor.js,2990,edPalette,retro-text,*,Retro one-cell glyph for edPalette action,n
+panels,panels/kinds/10-editor.js,2990,edPalette,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 2.2a5.8 5.8 0 1 0 0 11.6c1 0 1.4-.7 1.1-1.5-.3-.8.3-1.6 1.1-1.6h1.6a2.2 2.2 0 0 0 2.2-2.2C14 5 11.3 2.2 8 2.2zM5 8.3h.01M6.4 5.3h.01M9.7 5.1h.01""/></svg>",editor appearance menu row,n
+panels,panels/kinds/22-tools.js,44,tools-mark:error,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 2.2a5.8 5.8 0 1 0 0 11.6A5.8 5.8 0 0 0 8 2.2zM5.9 5.9l4.2 4.2M10.1 5.9l-4.2 4.2""/></svg>",Problems severities + output line marks + console marks via mark(),n
+panels,panels/kinds/22-tools.js,45,tools-mark:warn,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 2.4 14 13.2H2zM8 6.6v3.2M8 11.3v.1""/></svg>",Problems severities + output line marks + console marks via mark(),n
+panels,panels/kinds/22-tools.js,46,tools-mark:info,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 2.2a5.8 5.8 0 1 0 0 11.6A5.8 5.8 0 0 0 8 2.2zM8 7.3v4M8 5v.1""/></svg>",Problems severities + output line marks + console marks via mark(),n
+panels,panels/kinds/22-tools.js,47,tools-mark:ok,svg,"<svg viewBox=""0 0 16 16""><path d=""M3.5 8.5l3 3 6-7""/></svg>",Problems severities + output line marks + console marks via mark(),n
+panels,panels/kinds/22-tools.js,57,CLEAR_ICON,svg,"<svg viewBox=""0 0 16 16"" width=""14"" height=""14"" class=""pmw-ico"" aria-hidden=""true"" focusable=""false""><path d=""M8 2.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11zM4.1 11.9l7.8-7.8""/></svg>",clear channel (output) + clear console (debug),n
+panels,panels/kinds/22-tools.js,58,FOLLOW_ICON,svg,"<svg viewBox=""0 0 16 16"" width=""14"" height=""14"" class=""pmw-ico"" aria-hidden=""true"" focusable=""false""><path d=""M8 2.5v8.5M4.5 7.5 8 11l3.5-3.5M3 13.5h10""/></svg>",follow toggle (output),n
+panels,panels/kinds/22-tools.js,59,WRAP_ICON,svg,"<svg viewBox=""0 0 16 16"" width=""14"" height=""14"" class=""pmw-ico"" aria-hidden=""true"" focusable=""false""><path d=""M2.5 4h11M2.5 8h9a2 2 0 0 1 0 4H8M9.5 10.5 8 12l1.5 1.5M2.5 12h3""/></svg>","defined, never used",n
+panels,panels/kinds/22-tools.js,202,outputNewTab,retro-text,+,Retro one-cell glyph for outputNewTab action,n
+panels,panels/kinds/22-tools.js,202,outputNewTab,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 13.5v-9h4.5l1 2h5.5v7zM10.5 8.5v3.5M8.75 10.25h3.5""/></svg>",open-channel-in-new-tab actions,n
+panels,panels/kinds/42-document.js,45,doc:check,svg,"<svg viewBox=""0 0 16 16""><path d=""M3.6 8.4l2.9 2.9 5.9-6.6""/></svg>",document kind local glyphs via glyph(),n
+panels,panels/kinds/42-document.js,46,doc:checkCircle,svg,"<svg viewBox=""0 0 16 16""><circle cx=""8"" cy=""8"" r=""6.25""/><path d=""M5.2 8.3l1.9 1.9 3.8-4.2""/></svg>",document kind local glyphs via glyph(),n
+panels,panels/kinds/42-document.js,47,doc:slashCircle,svg,"<svg viewBox=""0 0 16 16""><circle cx=""8"" cy=""8"" r=""6.25""/><path d=""M3.6 12.4l8.8-8.8""/></svg>",document kind local glyphs via glyph(),n
+panels,panels/kinds/42-document.js,48,doc:ring,svg,"<svg viewBox=""0 0 16 16""><circle cx=""8"" cy=""8"" r=""6.25"" 'stroke-dasharray'=""2.6 2.4""/></svg>",document kind local glyphs via glyph(),n
+panels,panels/kinds/42-document.js,49,doc:cross,svg,"<svg viewBox=""0 0 16 16""><circle cx=""8"" cy=""8"" r=""6.25""/><path d=""M5.8 5.8l4.4 4.4M10.2 5.8l-4.4 4.4""/></svg>",document kind local glyphs via glyph(),n
+panels,panels/kinds/42-document.js,50,doc:fileEdit,svg,"<svg viewBox=""0 0 16 16""><path d=""M4 2h5.5L12.5 5v3.5M9.5 2v3h3M4 2v12h4""/><path d=""M9 14l.4-1.8 3.4-3.4 1.4 1.4-3.4 3.4z""/></svg>",document kind local glyphs via glyph(),n
+panels,panels/kinds/42-document.js,51,doc:filePlus,svg,"<svg viewBox=""0 0 16 16""><path d=""M4 2h5.5L12.5 5v9H4zM9.5 2v3h3M8.2 7.5v4.4M6 9.7h4.4""/></svg>",document kind local glyphs via glyph(),n
+panels,panels/kinds/42-document.js,52,doc:trash,svg,"<svg viewBox=""0 0 16 16""><path d=""M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.7 9h5.6l.7-9M7 7v4.5M9 7v4.5""/></svg>",document kind local glyphs via glyph(),n
+panels,panels/kinds/42-document.js,53,doc:spark,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 2v3M8 11v3M2 8h3M11 8h3M4 4l2 2M10 10l2 2M12 4l-2 2M6 10l-2 2""/></svg>",document kind local glyphs via glyph(),n
+panels,panels/kinds/46-run.js,75,crew,retro-text,&,Retro one-cell glyph for run per-type icon,y
+panels,panels/kinds/46-run.js,75,crew,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 2.8a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM4.2 13.2c0-2.3 1.7-4 3.8-4s3.8 1.7 3.8 4M3.6 4.8a1.5 1.5 0 1 0 0 3M12.4 4.8a1.5 1.5 0 1 1 0 3M1.6 12.2c0-1.6.9-2.8 2.1-3.2M14.4 12.2c0-1.6-.9-2.8-2.1-3.2""/></svg>",run per-type tab icon via TYPES.icon + api.update icon,y
+panels,panels/kinds/46-run.js,76,review,retro-text,?,Retro one-cell glyph for run per-type icon,y
+panels,panels/kinds/46-run.js,76,review,svg,"<svg viewBox=""0 0 16 16""><path d=""M3.5 2.5h6l2.5 2.5v2.5M3.5 2.5v11h4M10.5 8.8a2.1 2.1 0 1 0 0 4.2 2.1 2.1 0 0 0 0-4.2zM12.1 12.5l1.8 1.8""/></svg>",run per-type tab icon via TYPES.icon + api.update icon,y
+panels,panels/kinds/46-run.js,77,room,retro-text,~,Retro one-cell glyph for run per-type icon,y
+panels,panels/kinds/46-run.js,77,room,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 3h7.5v5.5H6.2l-2.2 1.8V8.5H2.5zM12.2 6h1.3v5.5h-1.3v1.8l-2.2-1.8H7v-1.2""/></svg>",run per-type tab icon via TYPES.icon + api.update icon,y
+panels,panels/kinds/46-run.js,78,brainstorm,retro-text,^,Retro one-cell glyph for run per-type icon,y
+panels,panels/kinds/46-run.js,78,brainstorm,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 14V8.5M8 8.5 3.8 4.3M8 8.5l4.2-4.2M8 8.5V2.8M3.8 4.3V2.8M12.2 4.3V2.8""/></svg>",run per-type tab icon via TYPES.icon + api.update icon,y
+panels,panels/kinds/48-transcript.js,56,step:read,svg,"<svg viewBox=""0 0 16 16""><path d=""M4 2h5.5L12.5 5v9H4zM9.5 2v3h3M6 8h4M6 10.5h3""/></svg>",transcript feed step glyph via stepGlyph(),n
+panels,panels/kinds/48-transcript.js,57,step:search,svg,"<svg viewBox=""0 0 16 16""><path d=""M7 2.8a4.2 4.2 0 1 0 0 8.4 4.2 4.2 0 0 0 0-8.4zM10.2 10.2 13.5 13.5""/></svg>",transcript feed step glyph via stepGlyph(),n
+panels,panels/kinds/48-transcript.js,58,step:run,svg,"<svg viewBox=""0 0 16 16""><path d=""M3 4.5l3.5 3.5L3 11.5M8.5 12H13""/></svg>",transcript feed step glyph via stepGlyph(),n
+panels,panels/kinds/48-transcript.js,59,step:edit,svg,"<svg viewBox=""0 0 16 16""><path d=""M3 12.5h2l7-7-2-2-7 7zM9 4.5l2 2""/></svg>",transcript feed step glyph via stepGlyph(),n
+panels,panels/kinds/48-transcript.js,60,step:check,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 2.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11zM5.6 8.2l1.7 1.7 3.2-3.6""/></svg>",transcript feed step glyph via stepGlyph(),n
+panels,panels/kinds/48-transcript.js,61,step:test,svg,"<svg viewBox=""0 0 16 16""><path d=""M6.2 2.5h3.6M6.8 2.5v4L3.4 12.6a.8.8 0 0 0 .7 1.2h7.8a.8.8 0 0 0 .7-1.2L9.2 6.5v-4M5 10h6""/></svg>",transcript feed step glyph via stepGlyph(),n
+panels,panels/kinds/48-transcript.js,62,step:hand,svg,"<svg viewBox=""0 0 16 16""><path d=""M8 10.5V2.5M5 5.2 8 2.2l3 3M3 9v4.5h10V9""/></svg>",transcript feed step glyph via stepGlyph(),n
+panels,panels/kinds/48-transcript.js,63,step:agents,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 3.5h5v5h-5zM8.5 7.5h5v5h-5z""/></svg>",transcript feed step glyph via stepGlyph(),n
+panels,panels/kinds/48-transcript.js,64,step:note,svg,"<svg viewBox=""0 0 16 16""><path d=""M3.5 2.5h9v11h-9zM5.5 5.5h5M5.5 8h5M5.5 10.5h3""/></svg>",transcript feed step glyph via stepGlyph(),n
+panels,panels/kinds/48-transcript.js,80,route-change,svg,"<svg viewBox=""0 0 16 16""><path d=""M2.5 12.5h4l5-8.5M9 3.5h3v3M6.5 12.5h7""/></svg>",route-change event glyph via eventGlyph(); EVENT_KIND names unregistered icon 'route',n
+terminal,terminal/css/10-view.css,79,progress-bar,css,.pmt-progress { height:2px } ::before width var(--pmt-progress); states value/error/paused/indeterminate,OSC 9;4 progress bar at top of terminal body,n
+terminal,terminal/js/70-view.js,8,ok,svg,"<svg viewBox=""0 0 16 16"" aria-hidden=""true""><path d=""M3.5 8.5l3 3 6-7""/></svg>",command-mark gutter: exit 0,n
+terminal,terminal/js/70-view.js,9,fail,svg,"<svg viewBox=""0 0 16 16"" aria-hidden=""true""><path d=""M4.5 4.5l7 7M11.5 4.5l-7 7""/></svg>",command-mark gutter: exit N,n
+terminal,terminal/js/70-view.js,10,run,svg,"<svg viewBox=""0 0 16 16"" aria-hidden=""true""><circle cx=""8"" cy=""8"" r=""2.4"" class=""pmt-fill""/></svg>",command-mark gutter: running (filled dot),n
+terminal,terminal/js/70-view.js,11,idle,svg,"<svg viewBox=""0 0 16 16"" aria-hidden=""true""><circle cx=""8"" cy=""8"" r=""2.2""/></svg>",command-mark gutter: prompt/input + indeterminate (hollow dot),n
+terminal,terminal/js/70-view.js,12,agent,svg,"<svg viewBox=""0 0 16 16"" aria-hidden=""true""><rect x=""4"" y=""4"" width=""8"" height=""8""/><path d=""M6.5 8h3""/></svg>",command-mark gutter: agent-typed (replaces kind glyph),n
+terminal,terminal/js/70-view.js,15,clock,svg,"<svg viewBox=""0 0 16 16"" aria-hidden=""true""><circle cx=""8"" cy=""8"" r=""5.5""/><path d=""M8 5v3l2 1.5""/></svg>","defined, never referenced",n
+terminal,terminal/js/70-view.js,16,branch,svg,"<svg viewBox=""0 0 16 16"" aria-hidden=""true""><circle cx=""5"" cy=""4"" r=""1.5""/><circle cx=""5"" cy=""12"" r=""1.5""/><circle cx=""11"" cy=""6"" r=""1.5""/><path d=""M5 5.5v5M11 7.5c0 2-2 2.5-6 3""/></svg>","defined, never referenced",n
+terminal,terminal/js/70-view.js,17,folder,svg,"<svg viewBox=""0 0 16 16"" aria-hidden=""true""><path d=""M2.5 4.5h4l1.5 1.5h5.5v6.5h-11z""/></svg>","defined, never referenced",n
+terminal,terminal/js/72-find.js,7,find:prev,svg,"<svg viewBox=""0 0 16 16"" aria-hidden=""true""><path d=""M4 10l4-4 4 4""/></svg>",find bar previous-match button,n
+terminal,terminal/js/72-find.js,8,find:next,svg,"<svg viewBox=""0 0 16 16"" aria-hidden=""true""><path d=""M4 6l4 4 4-4""/></svg>",find bar next-match button,n
+terminal,terminal/js/72-find.js,9,find:close,svg,"<svg viewBox=""0 0 16 16"" aria-hidden=""true""><path d=""M4.5 4.5l7 7M11.5 4.5l-7 7""/></svg>",find bar close button,n
+terminal,terminal/js/76-popover.js,71,scheme-swatch,css,.pmt-swatch { Aa + 6 ansi bars }; selected = [aria-selected=true] background (css/20-overlays.css:87); no tick glyph,scheme preview chip in appearance popover,n
+terminal,terminal/js/76-popover.js,152,popover:close,svg,"<svg viewBox=""0 0 16 16""><path d=""M4.5 4.5l7 7M11.5 4.5l-7 7""/></svg>",appearance popover close button,n
+terminal,terminal/js/76-popover.js,400,popover:close,svg,"<svg viewBox=""0 0 16 16""><path d=""M4.5 4.5l7 7M11.5 4.5l-7 7""/></svg>",editor popover close button,n
+terminal,terminal/js/78-agent.js,12,agent-row:SQ,svg,"<svg class=""pmt-agent-sq"" viewBox=""0 0 16 16"" aria-hidden=""true""><rect x=""3.5"" y=""3.5"" width=""9"" height=""9""/><path d=""M6.5 8h3""/></svg>",agent row square: driving/paused/permission,n
+terminal,terminal/js/78-agent.js,13,agent-row:LOCK,svg,"<svg class=""pmt-agent-sq"" viewBox=""0 0 16 16"" aria-hidden=""true""><rect x=""3.5"" y=""7.5"" width=""9"" height=""6""/><path d=""M5.5 7.5V5.5a2.5 2.5 0 0 1 5 0v2""/></svg>",agent row lock: secret-input,n
+terminal,terminal/js/80-card.js,37,card:running,svg,"<svg viewBox=""0 0 16 16""><circle class=""pmt-card-g-track"" cx=""8"" cy=""8"" r=""5.5""/><path class=""pmt-card-g-arc"" d=""M8 2.5a5.5 5.5 0 0 1 5.5 5.5""/><circle class=""pmt-card-g-dot"" cx=""8"" cy=""8"" r=""2.1""/><rect class=""pmt-card-g-sq"" x=""5.75"" y=""5.75"" width=""4.5"" height=""4.5""/><rect class=""pmt-card-g-frame"" x=""2.5"" y=""2.5"" width=""11"" height=""11""/></svg>",chat command card: running (5-layer per-look glyph),n
+terminal,terminal/js/80-card.js,42,card:ok,svg,"<svg viewBox=""0 0 16 16""><path d=""M3.5 8.5l3 3 6-7""/></svg>",chat command card: ok,n
+terminal,terminal/js/80-card.js,43,card:failed,svg,"<svg viewBox=""0 0 16 16""><path d=""M4.5 4.5l7 7M11.5 4.5l-7 7""/></svg>",chat command card: failed,n
+terminal,terminal/js/80-card.js,44,card:interrupted,svg,"<svg viewBox=""0 0 16 16""><circle cx=""8"" cy=""8"" r=""5.5""/><path d=""M4.4 11.6l7.2-7.2""/></svg>",chat command card: interrupted,n
+terminal,terminal/js/80-card.js,45,card:waiting,svg,"<svg viewBox=""0 0 16 16""><path d=""M3 4.5l3.5 3.5L3 11.5""/><path d=""M8.5 11.5h4.5""/></svg>",chat command card: needs input,n
+terminal,terminal/js/80-card.js,47,card:chevron,svg,"<svg viewBox=""0 0 16 16""><path d=""M4.5 6.25l3.5 3.5 3.5-3.5""/></svg>",card expand toggle,n
+terminal,terminal/js/90-kind.js,8,terminal-tab,svg,"<svg viewBox=""0 0 16 16"" aria-hidden=""true""><path d=""M3 4l4 4-4 4M8 12h5""/></svg>",Terminal tab kind icon (svg-string via host icon()),y

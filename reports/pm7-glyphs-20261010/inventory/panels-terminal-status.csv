@@ -1,0 +1,123 @@
+package,file,line,vocab,state_name,shape_or_glyph,colour_role,notes
+panels,panels/js/32-strip.js,296,strip-tabs,preview,italic label text (no mark),—,rec.preview; drawn by css/10-panels.css:148
+panels,panels/js/32-strip.js,297,strip-tabs,dirty,7px dot (currentColor) in close slot until hover,currentColor; css/10-panels.css:172-176,rec.dirty; dot hides on close-hover
+panels,panels/js/32-strip.js,298,strip-tabs,pinned,36px icon-only tab (no mark),—,rec.pinned; TAB.pinned=36 (:8); css/10-panels.css:150-151
+panels,panels/js/32-strip.js,299,strip-tabs,attention,6px hollow square (1.5px warn border),warn; css/10-panels.css:178-180,rec.attention; aria new; terminal also raises it for bell/asks
+panels,panels/js/32-strip.js,300,strip-tabs,busy,NO STRIP VISUAL (attribute only),—,no [data-busy] rule in any css; surfaces only via kind widgets (plan dot / browser bar)
+panels,panels/js/32-strip.js,314,strip-tabs,failed,text 'exited <code>' in mono,bad (.pmw-exit css/10-panels.css:155),exitWords() :50; data-failed :301; aria last command failed
+panels,panels/js/32-strip.js,318,strip-tabs,agent-driven,7px filled square,warn (.pmw-agentmark css/10-panels.css:156),rec.agent name; aria '<agent> is driving it'
+panels,panels/kinds/30-dashboard.js,419,dashboard-agents,Working,icon 'play' 13px + word,accent (tone accent; css/62-kind-dashboard.css:242),live clock; group working
+panels,panels/kinds/30-dashboard.js,420,dashboard-agents,Retrying,icon 'reload' 13px + word,warn (tone warn; css :244),live clock; group working
+panels,panels/kinds/30-dashboard.js,421,dashboard-agents,Fallback route,icon 'forward' 13px + word,warn (tone warn; css :244),live clock; group working
+panels,panels/kinds/30-dashboard.js,422,dashboard-agents,Stalled,icon 'problems' 13px + word,warn (tone warn; css :244),group needs; key is 'blocked'
+panels,panels/kinds/30-dashboard.js,423,dashboard-agents,Failed,icon 'cross' 13px + word,bad (tone bad; css :245),group needs
+panels,panels/kinds/30-dashboard.js,424,dashboard-agents,Waiting,icon 'pause' 13px + word,dim text-3 (tone dim; css :246),group waiting; not live
+panels,panels/kinds/30-dashboard.js,425,dashboard-agents,Queued,icon 'clock' 13px + word,dim text-3 (tone dim; css :246),group waiting; not live
+panels,panels/kinds/30-dashboard.js,426,dashboard-agents,Complete,icon 'check' 13px + word,ok (tone ok; css :243),group done
+panels,panels/kinds/48-transcript.js,45,transcript-agent,Working,12px ring + quarter arc (spins 1.1s),accent (css/65-kind-records.css:34-35),statusMark working; STATUS_WORD :89
+panels,panels/kinds/48-transcript.js,46,transcript-agent,Complete,12px ring + check,ok (css :36),statusMark complete
+panels,panels/kinds/48-transcript.js,47,transcript-agent,Failed,12px ring + X,bad (css :37),statusMark failed
+panels,panels/kinds/48-transcript.js,48,transcript-agent,Stalled,12px ring + pause bars,warn (css :38),key 'blocked'; statusMark blocked
+panels,panels/kinds/48-transcript.js,49,transcript-agent,Retrying,circular arrow without ring,warn (css :38),statusMark retrying
+panels,panels/kinds/48-transcript.js,50,transcript-agent,Fallback route,divert/route arrow without ring,accent (css :34),statusMark fallback
+panels,panels/kinds/48-transcript.js,51,transcript-agent,Queued,12px ring + clock hands,dim text-3 (css :39),SAME SHAPE as Waiting (one shape two states)
+panels,panels/kinds/48-transcript.js,51,transcript-agent,Waiting,12px ring + clock hands,dim text-3 (css :39),SAME SHAPE as Queued (one shape two states)
+panels,panels/kinds/48-transcript.js,72,transcript-event,blocked,icon 'lock' via eventGlyph,warn (EVENT_KIND state),EVENT_KIND table :71-75
+panels,panels/kinds/48-transcript.js,73,transcript-event,waiting,icon 'clock' via eventGlyph,dim (EVENT_KIND state),EVENT_KIND table :71-75
+panels,panels/kinds/48-transcript.js,74,transcript-event,tool-error,icon 'problems' via eventGlyph,bad (EVENT_KIND state),EVENT_KIND table :71-75
+panels,panels/kinds/48-transcript.js,80,transcript-event,route-change,custom divert path M2.5 12.5h4l5-8.5M9 3.5h3v3M6.5 12.5h7,warn (EVENT_KIND state),EVENT_KIND names 'route' :75 which is NOT registered; notice maps it to 'link' :571
+panels,panels/kinds/46-run.js,55,run-cast,done (done),12px ring + check,ok (css/64-kind-artifact-run.css:279),stateMark; words in STATE_WORD :51
+panels,panels/kinds/46-run.js,56,run-cast,working (working),12px ring + open arc,accent (css :280),stateMark; SAME SHAPE as reading
+panels,panels/kinds/46-run.js,56,run-cast,reading (reading on their own),12px ring + open arc,accent (css :280),stateMark; SAME SHAPE as working
+panels,panels/kinds/46-run.js,57,run-cast,needs (needs your OK),12px ring + '!'-without-dot (stem + dot),warn (css :281),stateMark
+panels,panels/kinds/46-run.js,58,run-cast,failed (failed),12px ring + X,bad (css :282),stateMark
+panels,panels/kinds/46-run.js,59,run-cast,queued (waits its turn),12px ring + clock hands,text-3 (default css :277),stateMark
+panels,panels/kinds/46-run.js,60,run-cast,set aside (aside),12px ring + diagonal slash,text-3 (default),stateMark
+panels,panels/kinds/46-run.js,61,run-cast,waiting (idle),12px ring + horizontal dash,text-3 (default),stateMark else-branch; key 'idle'
+panels,panels/kinds/46-run.js,66,run-agree,yes (voted yes),9px rounded square filled with text colour,text fill (css :283-284),agreeMark; votes not statuses
+panels,panels/kinds/46-run.js,67,run-agree,unsure,9px hollow circle,text stroke (css :283),agreeMark
+panels,panels/kinds/46-run.js,68,run-agree,no,diagonal slash (no ring),text stroke (css :283),agreeMark
+panels,panels/kinds/46-run.js,69,run-agree,abstain (default),horizontal dash,dim text-3 (.is-none css :285),agreeMark else-branch
+panels,panels/kinds/44-artifact.js,59,artifact,Ready,meta word only (no mark),—,STATUS_WORD ready; shown in doc meta :931-933
+panels,panels/kinds/44-artifact.js,59,artifact,Stale,meta word with warn state,warn (cls :932),STATUS_WORD stale; Refresh action offered
+panels,panels/kinds/44-artifact.js,59,artifact,Needs retry,meta word with bad state + reload actions,bad (cls :932),key 'error'; retry + show-source actions
+panels,panels/kinds/44-artifact.js,887,artifact,Rendering,loading box + progress bar + ETA text,— (accent bar implied),key 'loading'; label :80; retry variant Drawing it again :965
+panels,panels/kinds/44-artifact.js,931,artifact,Pinned,meta word 'Pinned' (overlay on Ready),—,ready + s.pinned; Keep-this-version action pins it
+panels,panels/kinds/44-artifact.js,965,artifact,Rendering (retry),loading box 'Drawing it again · reading the same source',—,s.retrying; word forced at :931
+panels,panels/kinds/22-tools.js,44,tools-problems,Error,circled X,bad (css/61-kind-browser-tools.css:84),MARKS.error; SEV words :391
+panels,panels/kinds/22-tools.js,45,tools-problems,Warning,triangle + '!'-stem,warn (css :85),MARKS.warn; key 'warn'
+panels,panels/kinds/22-tools.js,46,tools-problems,Note (Info),circled i,accent (css :86),MARKS.info; key 'info'; counted as notes
+panels,panels/kinds/22-tools.js,281,tools-output,error line,circled X before the line,bad,mark(lv) for error|warn|ok only; levels comment :102
+panels,panels/kinds/22-tools.js,281,tools-output,warning line,triangle before the line,warn,mark(lv); key 'warn'
+panels,panels/kinds/22-tools.js,281,tools-output,ok line,check before the line,ok (css :87),mark(lv); cmd/dim/plain/info lines have no mark
+panels,panels/kinds/22-tools.js,727,debug-console,running,Pause action + busy flag (NO strip visual),—,busy=true; busy has no strip css so only the header row shows it
+panels,panels/kinds/22-tools.js,707,debug-console,paused,Continue/Start play action,—,mode swap :707-708
+panels,panels/kinds/22-tools.js,708,debug-console,ended,Start action + disabled Restart/Stop,—,mode ended; console keeps its lines
+panels,panels/kinds/40-plan.js,370,plan-steps,done (done),16px ring + check,ok (css/63-kind-docs.css:75),stepMark; states from stepStates :356-366
+panels,panels/kinds/40-plan.js,371,plan-steps,working (working on it),track ring + quarter arc,accent (css :76-78),stepMark; arc stroke-width 2.2
+panels,panels/kinds/40-plan.js,372,plan-steps,wait (waiting for build window),16px ring + clock hands,warn (css :79),stepMark; live.waiting while building
+panels,panels/kinds/40-plan.js,373,plan-steps,next (not started),plain ring r5.75,text-3 (css :73),stepMark else-branch; SAME SHAPE as idle
+panels,panels/kinds/40-plan.js,373,plan-steps,idle (not started),plain ring r5.75,text-3 (css :73),stepMark else-branch; SAME SHAPE as next; no 'admitted' concept in code
+panels,panels/kinds/40-plan.js,465,plan-embed,Missing,text word only,—,EMBED_STATE; no mark
+panels,panels/kinds/40-plan.js,465,plan-embed,Out of date,text word only,—,EMBED_STATE key 'stale'; no mark
+panels,panels/kinds/40-plan.js,465,plan-embed,No access,text word only,—,EMBED_STATE key 'denied'; no mark
+panels,panels/kinds/40-plan.js,465,plan-embed,Cannot be shown,text word only,—,EMBED_STATE key 'unsupported'; no mark
+panels,panels/kinds/42-document.js,312,document-note,verified,circled check (checkCircle),ok (.is-verified css :331),glyph() checkCircle :46
+panels,panels/kinds/42-document.js,312,document-note,unverified,dashed ring,warn default / accent while checking (css :330-332),glyph() ring :48
+panels,panels/kinds/42-document.js,530,document-checks,pass,circled check 14px,ok (css :399),glyph() checkCircle :46
+panels,panels/kinds/42-document.js,530,document-checks,fail,circled X 14px,bad (.is-fail css :400),glyph() cross :49
+panels,panels/kinds/42-document.js,217,document-rules,locked,icon 'lock' 16px,—,locked rule mark; unlocked rules show on/off glyph instead
+panels,panels/kinds/42-document.js,377,document-did,edited,file + pen glyph (fileEdit),—,DID_GLYPH; drawn at :470
+panels,panels/kinds/42-document.js,377,document-did,made,file + plus glyph (filePlus),—,DID_GLYPH; drawn at :470
+panels,panels/kinds/42-document.js,377,document-did,deleted,trash-can glyph (trash),—,DID_GLYPH; drawn at :470
+panels,panels/js/27-frames.js,69,frames-notice,bad tone,icon 'problems' + bad border tint,bad (css/45-frames.css:56),notice() default icon by state
+panels,panels/js/27-frames.js,69,frames-notice,warn tone,icon 'clock' + warn border tint,warn (css :55),notice() default icon by state
+panels,panels/js/27-frames.js,69,frames-notice,info (default),icon 'eye' no tint,—,notice() default icon by state
+panels,panels/js/27-frames.js,26,frames-meta,ok,meta word with ok tint,ok,meta() {text state} spans
+panels,panels/js/27-frames.js,26,frames-meta,warn,meta word with warn tint,warn,meta() {text state} spans :20-26
+panels,panels/js/27-frames.js,26,frames-meta,bad,meta word with bad tint,bad,meta() {text state} spans :20-26
+panels,panels/kinds/10-editor.js,651,editor-file,Added,text word only,—,STATUS_WORD; chat change list :1052 :2936
+panels,panels/kinds/10-editor.js,651,editor-file,Modified,text word only,—,STATUS_WORD
+panels,panels/kinds/10-editor.js,651,editor-file,Deleted,text word only,—,STATUS_WORD
+panels,panels/kinds/10-editor.js,651,editor-file,Renamed,text word only,—,STATUS_WORD
+panels,panels/kinds/20-browser.js,559,browser-session,Protected sign-in,icon 'lock' + pressed,—,session toggle; DevTools refused there
+panels,panels/kinds/20-browser.js,559,browser-session,Ordinary,icon 'browser',—,session toggle
+panels,panels/kinds/20-browser.js,663,browser-loading,loading,2px accent bar sweep (320ms) + busy flag,accent (css :168),is-loading class; bar hidden under reduced motion
+terminal,terminal/js/70-view.js,479,gutter-marks,running,filled dot r2.4,accent (--pmt-accent; css :46),SVG.run; kind expr :479
+terminal,terminal/js/70-view.js,479,gutter-marks,ok (exit 0),check,ok 80% (--pmt-ok; css :44),SVG.ok; same path as panels check
+terminal,terminal/js/70-view.js,479,gutter-marks,fail (exit N),X,bad (--pmt-bad; css :45),SVG.fail
+terminal,terminal/js/70-view.js,479,gutter-marks,idle (prompt/input),hollow dot r2.2,neutral (--pmt-mark-cmd; css :38),SVG.idle; SAME SHAPE as indeterminate
+terminal,terminal/js/70-view.js,479,gutter-marks,idle (ended with earlier session),hollow dot r2.2,neutral,exit null + indeterminate; SAME SHAPE as prompt/input; aria explains
+terminal,terminal/js/70-view.js,480,gutter-marks,agent-typed (overlay),square + dash REPLACES kind glyph,warn (fail keeps bad; css :47-48),/^agent:/ on by; authorship hides ok/run shape
+terminal,terminal/js/80-card.js,37,card-status,running,track ring + arc + dot + square + frame (per-look subset),currentColor (css/80-card.css:95-109),5 layers; motion looks show arc :289-290; retro shows square :373
+terminal,terminal/js/80-card.js,42,card-status,ok (Exit N),check,currentColor,GLYPH.ok; same path as gutter ok
+terminal,terminal/js/80-card.js,43,card-status,failed,X,currentColor,GLYPH.failed; failure line tinted bad :283-289
+terminal,terminal/js/80-card.js,44,card-status,interrupted,ring + diagonal slash,currentColor,GLYPH.interrupted
+terminal,terminal/js/80-card.js,45,card-status,waiting (Needs input),prompt arrow + rule,currentColor,GLYPH.waiting; word 'Needs input' :105
+terminal,terminal/js/78-agent.js,54,agent-row,driving,SQ square + '<b>name</b> is driving' + Take over/Interrupt/Stop,warn (css/20-overlays.css:11),mode driving; sets tab agent mark + label
+terminal,terminal/js/78-agent.js,58,agent-row,paused,SQ square + 'You took over...' + Hand back/Stop,warn,mode paused after take-over
+terminal,terminal/js/78-agent.js,63,agent-row,permission (asking),SQ square + 'wants to type' + exact command + Allow/Deny,warn,mode permission; NOT called 'asking' in code; raises attention :164
+terminal,terminal/js/78-agent.js,68,agent-row,secret (password),LOCK padlock + 'Password needed...' + Type it,accent (css :12-13),mode secret; raises attention :149 when unfocused
+terminal,terminal/js/78-agent.js,118,agent-row,ended (row removed),row removed (no mark),—,ended() settles asks + clears row; 'ended' is NOT a drawn mode
+terminal,terminal/js/70-view.js,877,progress,value (0-100),bar width %,accent (--pmt-accent; css :80),OSC 9;4 state 1; hidden when state 0 (:876)
+terminal,terminal/js/70-view.js,877,progress,error,bar width %,bad (css :81),OSC 9;4 state 2 (shell clears on exec :664 of 62-shell.js)
+terminal,terminal/js/70-view.js,877,progress,indeterminate,30% block sweeping 1.4s,accent (css :83),OSC 9;4 state 3; static under reduced motion
+terminal,terminal/js/70-view.js,877,progress,paused,bar width %,warn (css :82),OSC 9;4 state 4
+terminal,terminal/js/42-appearance.js,122,scheme-roles,markOk,colour role (not a shape),palette green / ok,consumed as --pmt-ok at 70-view.js:157
+terminal,terminal/js/42-appearance.js,122,scheme-roles,markFail,colour role (not a shape),palette red / err,consumed as --pmt-bad at 70-view.js:158
+terminal,terminal/js/42-appearance.js,123,scheme-roles,markNeutral,colour role (not a shape),36% fg mix,per-scheme export :146-148
+terminal,terminal/js/42-appearance.js,123,scheme-roles,progress,colour role (not a shape),terminal fg,per-scheme export :148
+terminal,terminal/js/42-appearance.js,123,scheme-roles,attention,colour role (not a shape),warn,per-scheme export :148
+terminal,terminal/js/42-appearance.js,122,scheme-roles,link,colour role (not a shape),terminal fg,consumed as --pmt-accent at 70-view.js:160
+terminal,terminal/js/70-view.js,555,sticky-header,Running,text word in sticky header,dim meta (--pmt-dim),one-line header for the command at top
+terminal,terminal/js/70-view.js,555,sticky-header,Exit 0,text word in sticky header,dim meta,hidden below 150px body height
+terminal,terminal/js/70-view.js,555,sticky-header,Exit N,text word in sticky header,dim meta,hidden below 150px body height
+terminal,terminal/js/70-view.js,433,terminal-session,ended,label + ' (ended)',—,session.state ended; restart/close notice :833
+terminal,terminal/js/70-view.js,872,terminal-attention,bell (unfocused),raises strip hollow square,warn square,visual bell ≤1/s (WCAG 2.3.1)
+terminal,terminal/js/70-view.js,885,terminal-attention,notification (unfocused),raises strip hollow square,warn square,notify()
+terminal,terminal/js/70-view.js,455,terminal-attention,long command done (>10s unfocused),raises strip hollow square,warn square,completion ping; same square as background-open
+terminal,terminal/js/78-agent.js,149,terminal-attention,secret prompt (unfocused),raises strip hollow square,warn square,password waits for the human
+terminal,terminal/js/78-agent.js,164,terminal-attention,permission ask,raises strip hollow square,warn square,agent asks to type; always raised (no focus check)
+terminal,terminal/js/70-view.js,405,header-run,running command,host 'clock' icon + command + ticking m:ss,—,header fact via host icons; NOT T.ICONS.clock (dead)
+terminal,terminal/js/72-find.js,103,find,Invalid pattern,'Invalid pattern' + bad input border,bad (css/10-view.css:116),st.error
+terminal,terminal/js/72-find.js,104,find,count,'N of M' / 'No results' / '',—,plain text count

@@ -1,0 +1,203 @@
+pm7_table,pm7_name,neon_name,confidence,why
+T-core,palette,,low,artist palette; no neon equivalent
+T-core,brain,brain,high,same object; both split-brain stroke paths
+T-core,shield,shield,high,same name and object (heater shield)
+T-core,terminal,terminal,high,same name and object; SHADOWS T-bridge twin (core wins)
+T-core,puzzle,,low,jigsaw piece; no neon equivalent
+T-core,clipboard,clipboard,high,same name and object; SHADOWS T-bridge twin
+T-core,branch,branch,high,same name and object (git fork); SHADOWS T-bridge twin
+T-core,film,,low,"filmstrip; neon monitor-play is a screen+play, not film"
+T-core,globe,globe,high,same name and object (meridian globe); SHADOWS T-bridge twin
+T-core,masks,users,low,theater masks (multi-account); nearest use-match is users but shape differs entirely
+T-core,toolbox,,low,toolbox; no neon equivalent
+T-core,gear,settings,high,"different name, same object: neon settings IS a gear (verified markup)"
+T-core,wave,hand,medium,waving hand; neon hand is the only hand (pose differs)
+T-core,search,search,high,same name and object; SHADOWS T-bridge twin
+T-core,star,star,high,same name and object
+T-core,scales,,low,justice scales; no neon equivalent
+T-core,sparkle,sparkles,high,same object; neon renders a trio vs single 4-point star
+T-core,restart,refresh,medium,"circular arrow; neon refresh matches direction, reset is the alt candidate"
+T-core,check,check,high,same name and object; SHADOWS T-bridge twin
+T-core,checkCircle,check-circle,high,same object modulo dash in name
+T-core,close,close,high,same name and object (X)
+T-core,soundOn,speaker,high,same object modulo name
+T-core,soundOff,speaker-off,high,same object modulo name
+T-core,folder,folder,high,same name and object; SHADOWS T-bridge twin
+T-core,home,,low,house; NO neon home (finding)
+T-core,robot,,low,robot head; no neon equivalent
+T-core,wand,wand,high,same name and object
+T-core,plant,,low,potted plant; no neon equivalent
+T-core,party,,low,party popper; no neon equivalent
+T-core,plug,plug,high,same name and object
+T-core,bolt,lightning,high,same object modulo name (bolt twice: bolt+zap both map here; T-core has bolt)
+T-core,telescope,lens,low,"spyglass; neon lens is a magnifier circle, closest observe-adjacent glyph"
+T-core,dial,,low,gauge face with needle; no neon gauge (finding: usage page icon)
+T-core,swirl,arc,low,"concentric-arc spiral; neon arc is a progress ring, kinetic cousin only"
+T-core,warning,warning,high,same name and object (triangle+!)
+T-core,rocket,send,low,"rocket vs neon paper-plane send; both fly, shapes differ"
+T-core,info,info,high,same name and object; SHADOWS T-bridge twin
+T-core,layers,,low,stacked layers; NO neon layers (finding: used by run/wizard/orchestrator)
+T-core,bell,,low,bell; NO neon bell (finding: notifications)
+T-core,lock,lock,high,same name and object (padlock)
+T-core,expand,expand,high,same name and object (fullscreen arrows)
+T-core,pen,edit,medium,"fountain pen vs neon pencil-edit; same use, nib differs"
+T-core,comment,chat,medium,chat bubble with lines; neon chat is a plain bubble
+T-bridge,actions,,low,github-actions mark; no neon equivalent
+T-bridge,agents,,low,robot head (same drawing as T-core robot); no neon equivalent
+T-bridge,arrowDn,,low,down arrow; neon has arrow-right only
+T-bridge,arrowUp,,low,up arrow; neon has arrow-right only
+T-bridge,artifacts,archive,medium,parcel vs neon archive box; same use (build artifacts)
+T-bridge,bell,,low,SHADOWED by T-core twin (never renders); and no neon bell anyway
+T-bridge,book,notebook,medium,open book vs neon notebook; same use (docs)
+T-bridge,boxMinus,minus,medium,minus-in-box; neon minus loses the box
+T-bridge,boxPlus,plus,medium,plus-in-box; neon plus loses the box
+T-bridge,bpCond,,low,conditional-breakpoint glyph; no neon equivalent
+T-bridge,bpLine,ring-dot,low,"breakpoint dot; neon ring-dot is a ring+dot, filled-vs-ring differ"
+T-bridge,bpLog,,low,logpoint glyph; no neon equivalent
+T-bridge,branch,branch,high,same name/object but SHADOWED by T-core twin (never renders)
+T-bridge,camera,camera,high,same name and object
+T-bridge,chat,chat,high,same name and object
+T-bridge,check,check,high,same name/object but SHADOWED by T-core twin (never renders)
+T-bridge,chevD,chevron-down,high,same object modulo name
+T-bridge,chevL,chevron-left,high,same object modulo name
+T-bridge,chevR,chevron-right,high,same object modulo name; most-called rail glyph (179 refs)
+T-bridge,clipboard,clipboard,high,same name/object but SHADOWED by T-core twin (never renders)
+T-bridge,clock,clock,high,same name and object
+T-bridge,cog,settings,medium,"cog vs neon gear-settings; same use, teeth differ"
+T-bridge,compose,table,low,"four-pane compose grid; neon table is the only grid, differs"
+T-bridge,copy,copy,high,same name and object
+T-bridge,diff,changes,low,split-pane diff view vs neon two-arrow changes; use-adjacent only
+T-bridge,docker,archive,low,generic 3D cube (not a whale); neon archive box is the nearest cube
+T-bridge,edit,edit,high,same name and object (pencil)
+T-bridge,external,open,medium,external-link vs neon open-box-arrow; same use (open out)
+T-bridge,eye,eye,high,same name and object
+T-bridge,eyeOff,eye-off,high,same object modulo name
+T-bridge,fetch,swap,medium,two-way sync arrows; neon swap is the only bidirectional-arrows glyph
+T-bridge,file,page,medium,folded-corner doc; neon page is the same object
+T-bridge,filePlus,file-edit,low,doc-plus vs neon doc-pencil; badge differs
+T-bridge,files,folder,medium,PM7 files IS a folder drawing; neon folder matches
+T-bridge,filter,filter,high,same name and object
+T-bridge,flame,,low,flame; no neon equivalent
+T-bridge,folder,folder,high,same name/object but SHADOWED by T-core twin (never renders)
+T-bridge,folderOpen,folder,medium,open folder; neon folder loses the open state
+T-bridge,folderPlus,folder,low,folder-plus; neon folder loses the plus (no folder-plus)
+T-bridge,globe,globe,high,same name/object but SHADOWED by T-core twin (never renders)
+T-bridge,grip,,low,"6-dot drag grip; neon more is 3 horizontal dots, not a grip"
+T-bridge,info,info,high,same name/object but SHADOWED by T-core twin (never renders)
+T-bridge,jsx,code,medium,"alias of js; file-type badge, neon code is generic"
+T-bridge,key,,low,key; no neon key (finding)
+T-bridge,layers,,low,SHADOWED by T-core twin; and no neon layers anyway
+T-bridge,link,link,high,same name and object
+T-bridge,merge,branch,low,merge-graph arrow; neon branch loses the merge direction
+T-bridge,minus,minus,high,same name and object
+T-bridge,monitor,monitor-play,low,plain screen; neon monitor-play adds a play triangle
+T-bridge,pause,pause,high,same name and object
+T-bridge,pin,pin,high,same name and object
+T-bridge,play,play,high,same name and object
+T-bridge,plus,plus,high,same name and object
+T-bridge,pr,branch,low,pull-request graph; neon branch loses the PR arrow
+T-bridge,pull,download,medium,cloud-download; neon download loses the cloud
+T-bridge,push,upload,medium,cloud-upload; neon upload loses the cloud
+T-bridge,refresh,refresh,high,same name and object (circular arrow)
+T-bridge,scissors,,low,scissors; no neon equivalent
+T-bridge,search,search,high,same name/object but SHADOWED by T-core twin (never renders)
+T-bridge,source,branch,medium,git-fork graph; neon branch is the same family
+T-bridge,spark,sparkles,medium,single spark vs neon trio; same family
+T-bridge,stash,,low,stash box; no neon equivalent (closest archive differs in use)
+T-bridge,stepInto,step,medium,step-into arrow; neon step is step-over shaped (play+bar)
+T-bridge,stepOut,step,low,step-out arrow; neon step faces the wrong way
+T-bridge,stepOver,step,medium,step-over arrow; neon step matches (play+bar)
+T-bridge,stop,stop,high,same name and object
+T-bridge,terminal,terminal,high,same name/object but SHADOWED by T-core twin (never renders)
+T-bridge,tests,check-circle,high,PM7 tests IS a check-in-circle; neon check-circle matches exactly
+T-bridge,trash,trash,high,same name and object
+T-bridge,tsx,code,medium,"alias of ts; file-type badge, neon code is generic"
+T-bridge,upload,upload,high,same name and object
+T-bridge,user,user,high,same name and object
+T-bridge,warn,warning,high,same object modulo name
+T-bridge,x,close,medium,X vs neon close-X; same object modulo name
+T-bridge,yaml,code,medium,"alias of yml; file-type badge, neon code is generic"
+T-art,box,archive,medium,3D cube; neon archive box is the nearest box
+T-art,check,check,high,same name and object
+T-art,cloud,,low,cloud; no neon cloud (finding)
+T-art,computer,monitor-play,low,desktop monitor; neon monitor-play adds a play triangle
+T-art,folder,folder,high,same name and object
+T-art,globe,globe,high,same name and object
+T-art,history,history,high,same name and object (clock+arrow)
+T-art,key,,low,key; no neon key
+T-art,link,link,high,same name and object
+T-art,lock,lock,high,same name and object
+T-art,person,user,high,same object modulo name
+T-art,phone,,low,smartphone; no neon equivalent
+T-art,plug,plug,high,same name and object
+T-art,power,lightning,medium,PM7 power IS a lightning zigzag; neon lightning matches
+T-art,rewind,history,medium,PM7 rewind IS a clock+restore-arrow (not triangles); neon history matches
+T-art,seed,,low,sprout; no neon equivalent
+T-art,server,,low,server rack; no neon equivalent
+T-art,spark,sparkles,medium,single spark vs neon trio; same family
+T-art,stack,copy,low,layered stack; neon copy (stacked docs) is use-adjacent only
+T-art,vault,shield,low,shield-with-check; neon shield loses the check (alt: sealed loses more)
+T-usage-svg,alert,warning,high,same object modulo name (triangle+!)
+T-usage-svg,arrowDown,,low,down arrow; neon has arrow-right only
+T-usage-svg,arrowUp,,low,up arrow; neon has arrow-right only
+T-usage-svg,book,notebook,medium,book; neon notebook is the docs-adjacent glyph
+T-usage-svg,briefcase,,low,briefcase; no neon equivalent
+T-usage-svg,chart,chart,high,same name and object
+T-usage-svg,check,check,high,same name and object
+T-usage-svg,checkCircle,check-circle,high,same object modulo dash
+T-usage-svg,chevron,chevron-down,high,PM7 chevron IS a down-chev (m7 10 5 5 5-5)
+T-usage-svg,chevronDown,chevron-down,high,same object modulo name
+T-usage-svg,chevronLeft,chevron-left,high,same object modulo name
+T-usage-svg,chevronRight,chevron-right,high,same object modulo name
+T-usage-svg,clock,clock,high,same name and object
+T-usage-svg,clockCircle,clock,medium,clock-in-circle; neon clock loses the ring
+T-usage-svg,close,close,high,same name and object (X)
+T-usage-svg,coin,,low,coin stack (credits); no neon equivalent
+T-usage-svg,dashedCircle,ring-dashed,high,same object modulo name (dashed ring)
+T-usage-svg,diamond,,low,diamond pip; no neon equivalent
+T-usage-svg,dots,more,medium,3 vertical dots vs neon 3 horizontal dots; orientation differs
+T-usage-svg,drag,,low,6-dot drag grip; no neon grip
+T-usage-svg,export,outbox,medium,tray-export; neon outbox (tray+arrow) matches the metaphor
+T-usage-svg,eye,eye,high,same name and object
+T-usage-svg,eyeOff,eye-off,high,same object modulo name
+T-usage-svg,file,page,medium,folded-corner doc; neon page matches
+T-usage-svg,filter,filter,high,same name and object
+T-usage-svg,gauge,,low,gauge; no neon gauge (finding)
+T-usage-svg,gear,settings,high,neon settings IS a gear (verified markup)
+T-usage-svg,grid,table,low,"app-grid vs neon data-table; both grids, use differs"
+T-usage-svg,grip,,low,alias of drag; no neon grip
+T-usage-svg,halfCircle,,low,half-filled circle; no neon equivalent
+T-usage-svg,hourglass,hourglass,high,same name and object
+T-usage-svg,info,info,high,same name and object
+T-usage-svg,kebab,more,medium,alias of dots; neon more differs in orientation (see dots)
+T-usage-svg,key,,low,key; no neon key
+T-usage-svg,layers,,low,stacked layers; NO neon layers
+T-usage-svg,link,link,high,same name and object
+T-usage-svg,list,todo,medium,list vs neon checklist-todo; use-adjacent
+T-usage-svg,lock,lock,high,same name and object
+T-usage-svg,minus,minus,high,same name and object
+T-usage-svg,minusCircle,,low,minus-in-circle; no neon equivalent (slash-circle differs)
+T-usage-svg,more,more,high,same name and object (3 dots)
+T-usage-svg,notch,,low,"2x10 auto-switch notch bar; functional, no neon equivalent"
+T-usage-svg,pencil,edit,medium,pencil; neon edit is the pencil glyph
+T-usage-svg,plus,plus,high,same name and object
+T-usage-svg,provider,,low,rounded-square provider placeholder; no neon equivalent
+T-usage-svg,pulse,,low,heartbeat line; no neon equivalent
+T-usage-svg,refresh,refresh,high,same name and object
+T-usage-svg,resize,expand,medium,resize corner vs neon fullscreen-expand; use-adjacent
+T-usage-svg,ring,ring,high,same name and object
+T-usage-svg,search,search,high,same name and object
+T-usage-svg,shield,shield,high,same name and object
+T-usage-svg,size,expand,low,box+arrow size glyph; neon expand is use-adjacent only
+T-usage-svg,slashCircle,slash-circle,high,same object modulo dash
+T-usage-svg,spark,sparkles,medium,single spark vs neon trio; same family
+T-usage-svg,tidy,,low,tidy-up glyph (uncertain drawing); no safe neon equivalent
+T-usage-svg,tool,,low,wrench; no neon wrench
+T-usage-svg,toolGear,settings,medium,perf-variant gear; neon settings gear matches modulo detail
+T-usage-svg,toolGrip,,low,perf-variant grip; no neon grip
+T-usage-svg,toolKebab,more,low,perf-variant kebab; neon more differs in orientation
+T-usage-svg,toolSize,expand,low,perf-variant size; neon expand is use-adjacent only
+T-usage-svg,user,user,high,same name and object
+T-usage-svg,users,users,high,same name and object
+T-usage-svg,wallet,,low,wallet (spend); no neon equivalent
+T-usage-svg,xCircle,close,low,X-in-circle; neon close loses the ring

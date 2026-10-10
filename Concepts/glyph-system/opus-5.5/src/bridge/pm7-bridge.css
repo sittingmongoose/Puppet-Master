@@ -30,3 +30,7 @@ svg:where(.nx[width="10"], .nx[width="11"]) { --nx-stroke-base: 3; }
 svg:where(.nx[width="12"], .nx[width="13"]) { --nx-stroke-base: 2.6; }
 svg:where(.nx[width="14"], .nx[width="15"]) { --nx-stroke-base: 2.3; }
 svg:where(.nx[width="16"], .nx[width="17"], .nx[width="18"]) { --nx-stroke-base: 2; }
+
+/* The change marks (added, modified, deleted, renamed) are facts about a file, not alarms: their tone inks them, but
+   they never take a status backlight (a deleted file must not glow like a blocked run). */
+.nx-st:is(.nx-st-change-added, .nx-st-change-modified, .nx-st-change-deleted, .nx-st-change-renamed)::before { display: none; }

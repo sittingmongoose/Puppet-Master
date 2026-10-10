@@ -1,0 +1,139 @@
+vocab_id,file,line,surface,state_name,shape_or_glyph,colour_token,notes
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,107,rail,ok,SOLID circle (mask knockout),--d-ok=var(--graph-passed),STATE_WORDS: ok ready exists in-use authenticated reachable healthy clean valid passed done success saved synced verified up current
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,108,rail,fail,SOLID X,--d-fail=var(--graph-failed),words: failed failing error errored unreachable crashed exited invalid offline
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,109,rail,warn,SOLID triangle,--d-warn=var(--accent-warning),words: not-configured attention degraded warning partial
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,110,rail,blocked,SOLID octagon,--d-fail (shares fail),word: blocked
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,111,rail,info,SOLID i-square,--d-pend=var(--accent-blue),no STATE_WORDS entry; used directly (e.g. jj)
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,112,rail,conflict,SOLID diamond,"--d-conflict=var(--accent-magenta,fail)",word: conflict*
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,115,rail,live,G dot+ring,--d-ok (shares ok),words: running live connected watching
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,116,rail,run,G play,--d-run=var(--graph-running),words: restarting building crash*
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,117,rail,current,G bullseye dot+2rings,--accent-primary,no STATE_WORDS entry (current maps to ok); used for checked-out/current row
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,118,rail,idle,G ring,--d-idle=var(--text-muted),no STATE_WORDS entry; default idle
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,119,rail,pending,G hourglass,--d-pend (shares info),words: outcome-pending pending waiting queued not-built checking scheduled
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,120,rail,stale,G clock,--d-warn (shares warn),words: stale outdated
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,121,rail,unknown,G question,--d-idle (shares idle),words: unknown unverified
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,122,rail,dirty,G pencil,--d-warn (shares warn),words: dirty modified unsaved
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,123,rail,orphan,G broken link,"--d-orange=var(--accent-orange,warn)","word: orphan*; orphaned (Source), errored (Testing)"
+V-rail,Concepts/leftrail-redesign/src/concepts/d/00-d.js,124,rail,stash,G box+lid,(no data-d-st rule; inherits),no STATE_WORDS entry; stash rows
+V-rail,Concepts/leftrail-redesign/src/concepts/d/15-jj.js,30,rail,immutable,SOLID circle + padlock knockout,(no data-d-st rule; inherits),jj immutable-change badge; rendered via jjState glyph(st)
+V-kit-tone,Concepts/onboarding/opus-5.5/src/settings/kit.js,43,settings,ready,pm51-status 7px dot + text,--k3-green,words: ready connected working on running current passed verified saved in-use tested enabled (TONE_BY_WORD:43)
+V-kit-tone,Concepts/onboarding/opus-5.5/src/settings/kit.js,44,settings,attention,pm51-status dot + amber text,--k3-amber,words: attention needs-attention needs-sign-in needs-setup needs-permission warning waiting update-ready
+V-kit-tone,Concepts/onboarding/opus-5.5/src/settings/kit.js,45,settings,off,pm51-status dot (default grey),--k3-muted,words: off not-set-up not-installed not-connected disabled not-run none available complete queued
+V-kit-tone,Concepts/onboarding/opus-5.5/src/settings/kit.js,46,settings,info,pm51-status dot,--k3-blue,words: checking syncing ready-to-resume-here recommended info locked default
+V-kit-tone,Concepts/onboarding/opus-5.5/src/settings/kit.js,47,settings,blocked,pm51-status dot,--k3-red,words: unavailable blocked failed has-problems error can't-reach-the-address; PLAIN_STATUS:49 maps 10 keys to Ready/Needs-attention/...
+V-s4,Concepts/pm7-tools/base/PM7-base.html,33622,settings,restart,s4-badge + PM_ICONS.restart,s4-badge.restart class,badgeHtml: Restart needed for this to apply
+V-s4,Concepts/pm7-tools/base/PM7-base.html,33623,settings,adjudication,s4-badge + PM_ICONS.scales,s4-badge.adjudication class,Default pending team decision
+V-s4,Concepts/pm7-tools/base/PM7-base.html,33624,settings,new,"s4-badge + PM_ICONS.sparkle + "" new""",s4-badge.new class,Recently added
+V-s4,Concepts/pm7-tools/base/PM7-base.html,33628,settings,ok,"s4-pill ""ok""",s4-pill.ok class,pillHtml(st): row state pill
+V-s4,Concepts/pm7-tools/base/PM7-base.html,33630,settings,needs-setup,"s4-pill ""needs setup""",s4-pill.needs-setup class,pillHtml
+V-s4,Concepts/pm7-tools/base/PM7-base.html,33630,settings,attention,"s4-pill ""attention"" (default)",s4-pill.<state> class,pillHtml default for any other state
+V-opstate,Concepts/pm7-tools/base/PM7-base.html,53366,chat,completed,"pm6-opcard-chip completed + "" ✓""",chip class completed,opStateChip map 53366-53368; label gets check suffix
+V-opstate,Concepts/pm7-tools/base/PM7-base.html,53366,chat,running,pm6-opcard-chip running,chip class running,also: created; unknown states default to running
+V-opstate,Concepts/pm7-tools/base/PM7-base.html,53367,chat,queued,pm6-opcard-chip waiting,chip class waiting,also: awaiting-approval awaiting_approval paused blocked
+V-opstate,Concepts/pm7-tools/base/PM7-base.html,53367,chat,failed,pm6-opcard-chip failed,chip class failed,also: denied
+V-opstate,Concepts/pm7-tools/base/PM7-base.html,53368,chat,cancelled,pm6-opcard-chip canceled,chip class canceled,also: canceled
+V-opstate,Concepts/pm7-tools/base/PM7-base.html,53368,chat,degraded,pm6-opcard-chip degraded,chip class degraded,opStateChip
+V-thread,Concepts/pm7-tools/base/PM7-base.html,53722,chat,working,thread-status-working pulse div,thread-status-working class,threadStatusHtml
+V-thread,Concepts/pm7-tools/base/PM7-base.html,53723,chat,unread,thread-status-unread div,thread-status-unread class,threadStatusHtml
+V-thread,Concepts/pm7-tools/base/PM7-base.html,53724,chat,draft,thread-status-draft div + data-status=draft dims thread,thread-status-draft / --text-muted,threadStatusHtml + CSS 2835
+V-thread,Concepts/pm7-tools/base/PM7-base.html,53726,chat,read,thread-status-read div + data-status=read dims thread,thread-status-read / --text-muted,threadStatusHtml default + CSS 2834
+V-proj,Concepts/pm7-tools/base/PM7-base.html,2662,projects,running,status-badge (lime chip; pm6-live pulses),--accent-lime,default badge look 2662-2670; data-status=running; live pulse 12295
+V-proj,Concepts/pm7-tools/base/PM7-base.html,2671,projects,idle,status-badge idle,--text-muted,data-status=idle
+V-proj,Concepts/pm7-tools/base/PM7-base.html,2672,projects,paused,status-badge paused,--accent-orange,data-status=paused
+V-proj,Concepts/pm7-tools/base/PM7-base.html,2673,projects,error,status-badge error,--accent-magenta,data-status=error
+V-proj,Concepts/pm7-tools/base/PM7-base.html,12288,projects,ready,status-badge pm6-ready,--accent-blue,pm6-ready class
+V-proj,Concepts/pm7-tools/base/PM7-base.html,12289,projects,attn,status-badge pm6-attn,--accent-warning,pm6-attn class
+V-proj,Concepts/pm7-tools/base/PM7-base.html,12290,projects,archived,status-badge pm6-archived,(see CSS 12290-12294),pm6-archived class; setter 48243
+V-health,Concepts/pm7-tools/base/PM7-base.html,6100,projects,healthy,health-dot healthy,--graph-passed,project activity strip 23792/23822
+V-health,Concepts/pm7-tools/base/PM7-base.html,6101,projects,stale,health-dot stale,--accent-orange,project activity strip 23851 (Stale config)
+V-health,Concepts/pm7-tools/base/PM7-base.html,6102,projects,error,health-dot error,--graph-failed,CSS only; no markup use in base
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,50255,orchestrator,planning,"pm6-orch-run-level badge text ""Planning""",data-state=planning,"setter 50255-50261; also ready→""Ready"""
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,50256,orchestrator,ready,"badge text ""Ready""",data-state=ready,setter
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,50257,orchestrator,running,"badge text ""Running""",data-state=running,stage executing + clock playing
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,50258,orchestrator,paused,badge text = stage label,data-state=paused,"clock stopped, stage != complete"
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,50256,orchestrator,blocked,"badge text ""Blocked""",data-state=blocked,setter
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,50257,orchestrator,complete,"badge text ""Complete""",data-state=complete,setter
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,14001,orchestrator,running,pm6-orch-status bordered chip,--graph-running,CSS 14001-14006; mirrors run badge
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,14002,orchestrator,complete,pm6-orch-status bordered chip,--graph-passed,CSS
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,14003,orchestrator,blocked,pm6-orch-status bordered chip,--accent-error,CSS
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,14004,orchestrator,paused,pm6-orch-status chip,--text-muted,CSS
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,14005,orchestrator,pending-launch,pm6-orch-status bordered chip,--graph-planning,CSS 14005-14006; setter 38321
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,14006,orchestrator,compiling,pm6-orch-status bordered chip,--graph-planning,CSS; setters 37717/38531
+V-orchbadge,Concepts/pm7-tools/base/PM7-base.html,13995,orchestrator,live-run,pm6-orch-run-mode lime chip,--accent-lime,default run mode; historical->orange 14000
+V-orchfresh,Concepts/pm7-tools/base/PM7-base.html,50264,orchestrator,current,"fresh chip, banner hidden",data-fresh=current,run.freshness || current; historical banner shows otherwise
+V-orchfresh,Concepts/pm7-tools/base/PM7-base.html,50264,orchestrator,(not current),fresh chip + historical banner,data-fresh=<run value>,any other run.freshness value shows pm6OrchFreshBanner
+V-sa,Concepts/pm7-tools/base/PM7-base.html,7437,chat,queued,sa-status-badge queued (dashed border),--text-muted,chat corpus 52297/52340
+V-sa,Concepts/pm7-tools/base/PM7-base.html,7438,chat,running,sa-status-badge running (animated),--accent-blue,
+V-sa,Concepts/pm7-tools/base/PM7-base.html,7439,chat,awaiting,sa-status-badge awaiting,--accent-warning,
+V-sa,Concepts/pm7-tools/base/PM7-base.html,7440,chat,blocked,sa-status-badge blocked,--accent-error,
+V-sa,Concepts/pm7-tools/base/PM7-base.html,7441,chat,complete,sa-status-badge complete,--accent-lime,
+V-sa,Concepts/pm7-tools/base/PM7-base.html,7442,chat,failed,sa-status-badge failed,--accent-error,
+V-sa,Concepts/pm7-tools/base/PM7-base.html,7443,chat,cancelled,sa-status-badge cancelled (dimmed),--text-muted,
+V-wizpill,Concepts/pm7-tools/base/PM7-base.html,48784,wizard,approved-ok,statepill ok,statepill ok class,renderStatePill: approved -> ok
+V-wizpill,Concepts/pm7-tools/base/PM7-base.html,48786,wizard,pack-warn,statepill warn,statepill warn class,pack && !theaterDone -> warn
+V-wizpill,Concepts/pm7-tools/base/PM7-base.html,48788,wizard,pack-ready,statepill (ready),statepill default class,pack -> ready
+V-wizpill,Concepts/pm7-tools/base/PM7-base.html,48790,wizard,interviewing,statepill interviewing,statepill default class,default branch
+V-wizschip,Concepts/pm7-tools/base/PM7-base.html,12889,wizard,ready,pm6-wiz-schip + sdot,--accent-lime,topic card state chip 12889-12899
+V-wizschip,Concepts/pm7-tools/base/PM7-base.html,12890,wizard,active,pm6-wiz-schip + sdot,--accent-primary,
+V-wizschip,Concepts/pm7-tools/base/PM7-base.html,12891,wizard,auditing,pm6-wiz-schip + sdot,--accent-orange,also: compiling repairing (12891-12893)
+V-wizschip,Concepts/pm7-tools/base/PM7-base.html,12894,wizard,impacted,pm6-wiz-schip + sdot,--accent-warning,also: review-impact (12894-12895)
+V-wizschip,Concepts/pm7-tools/base/PM7-base.html,12896,wizard,blocked,pm6-wiz-schip + sdot,--accent-error,
+V-wizschip,Concepts/pm7-tools/base/PM7-base.html,12897,wizard,ledger_syncing,pm6-wiz-schip + sdot,--accent-blue,
+V-wizschip,Concepts/pm7-tools/base/PM7-base.html,12898,wizard,reopened,pm6-wiz-schip + sdot,--accent-magenta,
+V-wiztstate,Concepts/pm7-tools/base/PM7-base.html,12915,wizard,ready,topic prog-fill,--accent-lime,per-card progress 12915-12920
+V-wiztstate,Concepts/pm7-tools/base/PM7-base.html,12916,wizard,blocked,topic prog-fill,--accent-error,
+V-wiztstate,Concepts/pm7-tools/base/PM7-base.html,12917,wizard,impacted,topic prog-fill,--accent-warning,also: review-impact
+V-wiztstate,Concepts/pm7-tools/base/PM7-base.html,12919,wizard,auditing,topic prog-fill,--accent-orange,also: compiling
+V-wt,Concepts/pm7-tools/base/PM7-base.html,52250,chat,wt-clean,thread-wt-glyph branch 8px (accent-teal),--accent-teal,inline svg; repeat 52843
+V-wt,Concepts/pm7-tools/base/PM7-base.html,52722,chat,wt-dirty,thread-wt-glyph branch 8px (accent-warning),--accent-warning,inline svg
+V-statusbar,Concepts/pm7-tools/base/PM7-base.html,26161,statusbar,running,status item + pm7-status-dot,--accent-blue,data-state=running
+V-statusbar,Concepts/pm7-tools/base/PM7-base.html,26162,statusbar,attention,status item + pm7-status-dot,--accent-orange,data-state=attention
+V-statusbar,Concepts/pm7-tools/base/PM7-base.html,26163,statusbar,complete,status item + pm7-status-dot,--accent-lime,data-state=complete
+V-statusbar,Concepts/pm7-tools/base/PM7-base.html,26151,statusbar,dot-ok,pm7-status-dot 6px + glow,--accent-lime,dot base; .warn->orange 26159
+V-gitfile,Concepts/pm7-tools/base/PM7-base.html,58363,rail,M (modified),fm-row.M: name in warning,--accent-warning,RANK 2; CSS 18622; tooltip Modified (uncommitted) 58447
+V-gitfile,Concepts/pm7-tools/base/PM7-base.html,58364,rail,A (added),fm-row.A: name in passed,--graph-passed,RANK 3; CSS 18623; tooltip Added (uncommitted)
+V-gitfile,Concepts/pm7-tools/base/PM7-base.html,58368,rail,Q/? (untracked),fm-row.Q: name in blue (both Q and ? map to class Q),--accent-blue,RANK 3; CSS 18624; tooltip Untracked
+V-gitfile,Concepts/pm7-tools/base/PM7-base.html,58365,rail,D (deleted),fm-row.D: name in failed,--graph-failed,RANK 1; CSS 18625; tooltip Deleted
+V-gitfile,Concepts/pm7-tools/base/PM7-base.html,58366,rail,C (conflict),fm-row.C: name in blue,--accent-blue,RANK 4 (folder inherit winner); CSS 18626; tooltip Conflict
+V-gitfile,Concepts/pm7-tools/base/PM7-base.html,58368,rail,? (untracked),fm-row.Q: same as Q (folded at 58368),--accent-blue,RANK 3; tooltip Untracked
+V-usage-state,Concepts/usage-redesign/src/js/18-model.js,15,usage,active,checkCircle glyph,good,STATE_WORD/G/T 15-17; word Active (+override variant)
+V-usage-state,Concepts/usage-redesign/src/js/18-model.js,15,usage,standby,(no glyph; null),muted,word Standby; STATE_GLYPH has no standby entry
+V-usage-state,Concepts/usage-redesign/src/js/18-model.js,15,usage,exhausted,alert glyph,crit,word Usage exhausted
+V-usage-state,Concepts/usage-redesign/src/js/18-model.js,15,usage,cooldown,hourglass glyph,warn,word Cooldown until <time>
+V-usage-state,Concepts/usage-redesign/src/js/18-model.js,15,usage,signed-out,key glyph,warn,word Signed out
+V-usage-state,Concepts/usage-redesign/src/js/18-model.js,15,usage,needs-seat,minusCircle glyph,muted,word Needs a seat
+V-usage-state,Concepts/usage-redesign/src/js/18-model.js,15,usage,unknown,dashedCircle glyph,muted,word Usage unknown
+V-usage-live,Concepts/usage-redesign/src/markup.html,7,usage,on,pmu-livectl toggle (live dot pulses),live accent,data-state=on; CSS 10-shell.css:215-217
+V-usage-live,Concepts/usage-redesign/src/markup.html,7,usage,paused,pmu-livectl toggle (Paused label),muted,data-state=paused
+V-toast,Concepts/pm7-tools/base/PM7-base.html,34864,toast,ephemeral,plain toast (text only),(none),toastApi string msg; kind advisory default
+V-toast,Concepts/pm7-tools/base/PM7-base.html,34865,toast,important/durable,sticky toast (text only),(none),opts.important/durable/msg.important
+V-toast,Concepts/pm7-tools/base/PM7-base.html,34880,toast,warn/info,toast with severity,sevClass halves to warn/info,severity halves: n/a none low->info else warn
+V-notify,Concepts/pm7-tools/base/PM7-base.html,16371,toast,info,n-sev-dot + text,--accent-blue,title-bar notify centre severities 16371-16377
+V-notify,Concepts/pm7-tools/base/PM7-base.html,16372,toast,success,n-sev-dot + text,--accent-lime,
+V-notify,Concepts/pm7-tools/base/PM7-base.html,16373,toast,warn,n-sev-dot + text,--accent-warning,
+V-notify,Concepts/pm7-tools/base/PM7-base.html,16374,toast,error,n-sev-dot + text,--accent-error,
+V-tourpips,Concepts/onboarding/opus-5.5/src/css/40-tour.css,155,tour,pip-todo,o55t-pip (default),--text-muted,tour progress pips; builder 80-tour-core.js:218
+V-tourpips,Concepts/onboarding/opus-5.5/src/css/40-tour.css,156,tour,pip-current,o55t-pip o55t-cur (name expands),--text-primary,
+V-tourpips,Concepts/onboarding/opus-5.5/src/css/40-tour.css,157,tour,pip-done,o55t-pip o55t-done,--text-secondary,
+V-tourpips,Concepts/onboarding/opus-5.5/src/css/40-tour.css,161,tour,tick-todo,o55t-tick 6px dot (round; square in retro),text-primary 22%,tour ticks; builder 80-tour-core.js:219
+V-tourpips,Concepts/onboarding/opus-5.5/src/css/40-tour.css,162,tour,tick-done,o55t-tick o55t-on,--accent-lime,
+V-tourpips,Concepts/onboarding/opus-5.5/src/css/40-tour.css,163,tour,tick-current,o55t-tick o55t-cur (halo),--o55t-accent,
+V-onbrail,Concepts/onboarding/opus-5.5/src/js/60-ui-core.js,269,onboarding,done,o55-railitem node (check/filled),done tone,data-state=done; CSS 10-window.css:62-67 + family variants
+V-onbrail,Concepts/onboarding/opus-5.5/src/js/60-ui-core.js,269,onboarding,current,o55-railitem node (ring),accent,data-state=current
+V-onbrail,Concepts/onboarding/opus-5.5/src/js/60-ui-core.js,270,onboarding,next/todo,o55-railitem node (hollow),muted,data-state=next (default todo)
+V-dashdot,Concepts/pm7-tools/base/PM7-base.html,11179,home,is-done,"pm6-dash-dot ● + ""complete""",--accent-lime,lane dots; markup 23581
+V-dashdot,Concepts/pm7-tools/base/PM7-base.html,11180,home,is-run,"pm6-dash-dot ● + ""running""",--accent-orange,markup 23582-23583
+V-dashdot,Concepts/pm7-tools/base/PM7-base.html,11181,home,is-fail,pm6-dash-dot ●,--accent-error,CSS only; no markup use in base
+V-dashdot,Concepts/pm7-tools/base/PM7-base.html,11182,home,is-queue,"pm6-dash-dot ● + ""queued""",--text-muted,markup 23584
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3180,chrome,ready,state-badge,ready class,DEFINED ONLY: no usage in census sources
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3181,chrome,needs-setup,state-badge,needs-setup class,DEFINED ONLY
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3182,chrome,logged-in,state-badge,logged-in class,DEFINED ONLY
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3183,chrome,validating,state-badge,validating class,DEFINED ONLY
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3184,chrome,auth-expired,state-badge,auth-expired class,DEFINED ONLY
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3185,chrome,disconnected,state-badge,disconnected class,DEFINED ONLY
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3190,chrome,authoritative,confidence-badge,authoritative class,DEFINED ONLY
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3191,chrome,estimated,confidence-badge,estimated class,DEFINED ONLY
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3192,chrome,inferred,confidence-badge,inferred class,DEFINED ONLY
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3197,chrome,healthy,pressure-bar-fill,healthy class,DEFINED ONLY
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3198,chrome,warning,pressure-bar-fill,warning class,DEFINED ONLY
+V-deadcss,Concepts/pm7-tools/base/PM7-base.html,3199,chrome,critical,pressure-bar-fill,critical class,DEFINED ONLY

@@ -62,21 +62,23 @@
   /* ------------------------------------------------------------ data */
   var STATUS = N.STATUS;
   var EXTRA = (D.status && D.status.extra) || {};           /* PMG statuses beyond the chat's 13 (10-status.js data) */
-  var SURF = (D.status && D.status.surfaces) || {};         /* status key -> the PM7 words that map to it, by surface */
+  var SURF = (D.status && D.status.surfaces) || {};
+  var MEANING = (D.status && D.status.meaning) || {};         /* status key -> the PM7 words that map to it, by surface */
   var STATUS_ORDER = ((D.status && D.status.order) || Object.keys(STATUS)).filter(function (k) { return STATUS[k] || EXTRA[k]; });
   var families = (D.families && D.families.list) || [];
   var records = G.records();
   var chat = N.list().filter(function (r) { return !r.status; });
 
   function famGlyphs(f) {
-    if (f.from === 'chat') return chat.filter(function (r) { return (f.match ? new RegExp(f.match).test(r.name) : true) && !(f.exclude && new RegExp(f.exclude).test(r.name)) && !records.some(function (x) { return x.name === r.name && x.source === 'pmg'; }); }).map(function (r) { return { name: r.name, role: r.role, act: r.act, aliases: r.aliases, source: 'c56', rec: G.record(r.name) }; });
+    if (f.from === 'chat') return chat.filter(function (r) { return (f.match ? new RegExp(f.match).test(r.name) : true) && !(f.exclude && new RegExp(f.exclude).test(r.name)) && !G.owns(r.name); }).map(function (r) { return { name: r.name, role: r.role, act: r.act, aliases: r.aliases, source: 'c56', rec: G.record(r.name) }; });
     return records.filter(function (r) { return r.family === f.id && r.source === 'pmg'; }).map(function (r) { return { name: r.name, role: r.role, act: r.act, aliases: r.aliases, source: 'pmg', rec: r }; });
   }
 
   var SECTIONS = [
     { id: 'status', title: 'Status vocabulary', icon: 'st-working', count: function () { return STATUS_ORDER.length; }, render: renderStatus },
     { id: 'decisions', title: 'Decisions for Jared', icon: 'question', count: function () { return ((D.decisions && D.decisions.cards) || []).length; }, render: renderDecisions },
-    { id: 'inks', title: 'Glyph inks and contrast', icon: 'eye', count: function () { return 10; }, render: renderInks }
+    { id: 'inks', title: 'Glyph inks and contrast', icon: 'eye', count: function () { return 10; }, render: renderInks },
+    { id: 'map', title: 'Before and after', icon: 'changes', count: function () { return MAP.length; }, render: renderMap }
   ].concat(families.map(function (f) {
     return { id: 'fam-' + f.id, title: f.title, icon: f.icon || 'sparkles', fam: f, count: function () { return famGlyphs(f).length; }, render: function (el) { renderFamily(el, f); } };
   }));
@@ -95,12 +97,12 @@
     var sec = SECTIONS[0];
     var rows = STATUS_ORDER.map(function (k) {
       var S = STATUS[k] || EXTRA[k], words = SURF[k] || {}, isNew = !STATUS[k];
-      var aliasHtml = Object.keys(words).map(function (s) { return '<b>' + esc(s) + '</b> ' + esc(words[s].join(', ')); }).join(' · ') || ('<b>chat</b> ' + esc((S.aliases || []).join(', ')));
+      var aliasHtml = Object.keys(words).map(function (s) { return '<b>' + esc(s) + '</b> ' + esc(words[s].join(', ')); }).join(' · ') || ((S.aliases || []).length ? '<b>chat</b> ' + esc(S.aliases.join(', ')) : '');
       return '<div class="pmg-st-row" data-status="' + esc(k) + '">' +
         '<div class="pmg-st-name">' + statusMark(k, 20) + '<div>' + esc(S.label || k) + (isNew ? ' <span class="pmg-origin-new">new</span>' : '') + '<small>' + esc(S.glyph) + ' · tone ' + esc(S.tone) + '</small></div></div>' +
         '<div class="pmg-sizes">' + SIZES.map(function (z) { return '<span>' + statusMark(k, z) + z + '</span>'; }).join('') + '</div>' +
         '<div class="pmg-line pmg-live">' + statusMark(k, 15) + '<span>' + esc((S.example || 'Refactor the settings store')) + '</span><span class="pmg-line-sub">' + esc(S.label || k) + '</span></div>' +
-        '<div><div class="pmg-meaning">' + esc(S.meaning || S.motion || '') + '</div><div class="pmg-aliases">' + aliasHtml + '</div></div>' +
+        '<div><div class="pmg-meaning">' + esc(MEANING[k] || S.meaning || '') + '</div>' + (S.motion && S.motion !== 'none' ? '<div class="pmg-motion">Motion: ' + esc(S.motion) + '</div>' : '') + '<div class="pmg-aliases">' + aliasHtml + '</div></div>' +
         '<div class="pmg-contrast" data-measure>…</div></div>';
     }).join('');
     el.innerHTML = head(sec, 'One meaning per shape, everywhere',
@@ -158,6 +160,33 @@
     var sec = SECTIONS.filter(function (s) { return s.fam === f; })[0], list = famGlyphs(f);
     el.innerHTML = head(sec, f.kicker || (f.from === 'chat' ? 'From the 5.6 Pro chat' : 'New in the neon language'), esc(f.intro || '')) +
       (list.length ? '<div class="pmg-grid">' + list.map(tile).join('') + '</div>' : '<p class="pmg-panel pmg-empty">' + esc(f.empty || 'Being drawn.') + '</p>');
+  }
+
+  /* ------------------------------------------------------------ before and after */
+  var MAP = ((D.map && D.map.items) || []);
+  var GROUPS = [
+    ['Shell icons (PM_ICONS)', ['T-core']], ['Rail and Settings bridge', ['T-bridge']], ['Settings engine', ['T-engine']],
+    ['Usage', ['T-usage-svg', 'T-usage-base', 'T-single']], ['Chat (PMConcept7 today)', ['T-chat']],
+    ['Terminal in the shell', ['T-term', 'T-term-split', 'T-term-wg']], ['Terminal package', ['home-terminal']],
+    ['Panels package', ['home-panels']], ['Left rail', ['T-rail-solid', 'T-jj']], ['Onboarding art', ['T-art', 'T-obfall']],
+    ['Status marks', ['T-marks']]
+  ];
+  function oldSvg(it) { return '<svg class="pmg-old" viewBox="' + esc(it.vb) + '" width="22" height="22" fill="none" stroke="currentColor" stroke-width="' + (it.vb === '0 0 16 16' ? 1.3 : 1.8) + '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + it.old + '</svg>'; }
+  function renderMap(el) {
+    var sec = SECTIONS.filter(function (s) { return s.id === 'map'; })[0];
+    var drawn = MAP.filter(function (it) { return N.has(it.glyph); }).length;
+    el.innerHTML = head(sec, 'Every icon PMConcept7 draws today', 'Left: the icon as PMConcept7 (and the unpublished panels and terminal) draws it now. Right: the neon glyph that replaces it. ' + drawn + ' of ' + MAP.length + ' already have their glyph; the rest are being drawn. Hover a row to see where it comes from.') +
+      GROUPS.map(function (g) {
+        var items = MAP.filter(function (it) { return g[1].indexOf(it.table) >= 0; });
+        if (!items.length) return '';
+        var ok = items.filter(function (it) { return N.has(it.glyph); }).length;
+        return '<div class="pmg-family"><div class="pmg-family-head"><h3>' + esc(g[0]) + '</h3><p>' + ok + ' of ' + items.length + ' mapped</p></div><div class="pmg-map pmg-panel">' + items.map(function (it) {
+          var has = N.has(it.glyph);
+          return '<div class="pmg-map-row" title="' + esc(it.at + ' · ' + it.surfaces.join(', ') + ' · mapped by ' + it.by) + '">' + oldSvg(it) + '<span class="pmg-map-arrow">' + N.icon('arrow-right', 12, 'nx-r-concept') + '</span>' +
+            (has ? N.icon(it.glyph, 22, 'nx-r-concept') : '<span class="pmg-map-todo">to draw</span>') +
+            '<span class="pmg-map-name">' + esc(it.name) + (has && N.alias(it.glyph) !== it.name.toLowerCase() ? ' <small>as ' + esc(N.alias(it.glyph)) + '</small>' : '') + '</span></div>';
+        }).join('') + '</div></div>';
+      }).join('');
   }
 
   /* ------------------------------------------------------------ detail sheet */

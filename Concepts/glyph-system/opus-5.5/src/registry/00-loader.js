@@ -38,7 +38,7 @@
 
   var ACTS = ['none', 'strike', 'seq', 'fill', 'wave', 'swap', 'spin', 'hop', 'drop', 'ratchet', 'blink', 'calm', 'tip', 'tick2'];
   var ROLES = ['concept', 'control', 'status', 'brand'];
-  var records = Object.create(null), order = [], problems = [];
+  var records = Object.create(null), order = [], problems = [], aliasOf = Object.create(null);
 
   /* markup -> neon element objects (the same shape neon-icons.js builds with el()) */
   function parse(str) {
@@ -81,6 +81,11 @@
       redraw: r.redraw || '', moving: moving, source: 'pmg'
     };
     order.push(name);
+    /* an alias draws the same glyph under the PM7 name it replaces, unless the chat set already owns that name */
+    (r.aliases || []).forEach(function (a) {
+      if (N.has(a) || records[a] || aliasOf[a]) { problems.push(name + ': alias ' + a + ' is taken'); return; }
+      N.register(a, { parts: parts, act: act, role: role }); aliasOf[a] = name;
+    });
     return true;
   }
 
@@ -105,7 +110,9 @@
     def: def, map: map,
     icon: N.icon, status: N.status, has: N.has, alias: N.alias,
     records: function () { return order.map(function (k) { return records[k]; }); },
-    record: function (k) { return records[N.alias(k)] || records[k] || null; },
+    record: function (k) { return records[N.alias(k)] || records[k] || records[aliasOf[k]] || null; },
+    /* true for a name PMG drew or aliased (the catalog keeps those out of the chat set's lists) */
+    owns: function (k) { return !!(records[k] && records[k].source === 'pmg') || !!aliasOf[k]; },
     problems: problems
   };
 })();
