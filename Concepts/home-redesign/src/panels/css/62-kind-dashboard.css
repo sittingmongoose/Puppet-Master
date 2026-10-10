@@ -9,8 +9,6 @@
 
 .pmw-dash { position: absolute; inset: 0; display: flex; flex-direction: column; color: var(--pmw-text); font-family: var(--pm-font-ui); }
 .pmw-dash-stage { position: relative; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
-/* the row's own Add widget hides while the page's button sits beside it (the core's .pmw-hbtn display beats [hidden]) */
-.pmw-dash .pmw-hrow .pmw-hbtn[hidden] { display: none; }
 
 /* ---- 1. the adopted page node ---- */
 html[data-pmw-home="on"] #pm-home-centre .pmw-dash-stage > #dashboardView.dashboard-view {
@@ -83,6 +81,11 @@ html[data-pmw-home="on"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add::
 html[data-theme^="retro"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add,
 html[data-o55-nier="on"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add { border-radius: 0 !important; }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] #pm-home-centre .pmw-hrow #pm6DashAddBtn.pmw-dash-add { text-transform: uppercase !important; letter-spacing: .07em !important; }
+
+/* the interim column fix (kinds/30-dashboard.js fitColumns): with 4 or 2 columns set in the page's 3-column range,
+   a card spans up to the new count (the page caps it at 3 there) */
+html[data-pmw-home="on"] #pm-home-centre #pm6DashGrid[data-pmw-dash-cols="4"] .pm6-dash-card { grid-column: span min(var(--dw, 1), 4); }
+html[data-pmw-home="on"] #pm-home-centre #pm6DashGrid[data-pmw-dash-cols="2"] .pm6-dash-card { grid-column: span min(var(--dw, 1), 2); }
 
 /* status chips (Running, passed, building, degraded ...): plain text with a small drawn glyph, never a capsule */
 html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-chip {
@@ -163,6 +166,14 @@ html[data-pmw-home="on"] #pm-home-centre #dashboardView { --fs-2xs: 11px; }
 html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm7-dash-extra div,
 html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm7-dash-extra b { font-size: 11px !important; }
 
+/* every card title at the board's size: the page's compact density (a 1x1 card) drops it to 10 px */
+html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-card[data-pm7-density="compact"] .pm6-dash-card-title { font-size: var(--fs-sm); }
+html[data-pmw-home="on"][data-theme^="retro"] #pm-home-centre #dashboardView .pm6-dash-card[data-pm7-density="compact"] .pm6-dash-card-title { font-size: var(--fs-xs); }
+
+/* the lane and quota tracks: no capsules (the page rounds them with --radius-pill), a 1 px radius like the Agents
+   board's bar; Retro keeps its own 2 px, NieR's blocks part its square track */
+html[data-pmw-home="on"]:not([data-theme^="retro"]) #pm-home-centre #dashboardView .pm6-dash-bar { border-radius: 1px; }
+
 /* text-glyph marks drawn instead (D22, no emoji-range glyphs): the remove and close crosses, the lane dots */
 html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-iconbtn:is([data-pm6-dash="remove"], [data-pm6-dash="catalog-close"]) { font-size: 0 !important; }
 html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-iconbtn:is([data-pm6-dash="remove"], [data-pm6-dash="catalog-close"])::before {
@@ -190,9 +201,6 @@ html[data-theme^="retro"] #pm-home-centre #dashboardView .pm6-dash-dot,
 html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-dot { border-radius: 0; }
 html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-dot.is-queue { background: transparent; box-shadow: inset 0 0 0 1px var(--o55-nier-ink); }
 html[data-o55-nier="on"] #pm-home-centre #dashboardView .pm6-dash-dot:not(.is-queue) { color: var(--o55-nier-ink); }
-
-/* the board menu: an unchecked row keeps its empty check slot (the core's lead-icon colour paints every check) */
-.pmw-dash-menu .pmw-mcheck:not(.on) .pmw-ico { visibility: hidden; }
 
 /* ---- 2a. the note a second visible grid tab shows ---- */
 .pmw-dash-note { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 16px; overflow: auto; }

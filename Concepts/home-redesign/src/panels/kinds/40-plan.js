@@ -5,10 +5,10 @@
    line per step), no per-step cards and no inner max-height (the tab body is the only scroller), the Markdown rail's
    dot character drawn in CSS, the Build control always the same button. The header row carries the tab-level controls
    (Rich Text / Markdown, Versions, Copy Markdown, Maximize); the footer carries Build / Revise / More.
-   File references in steps follow D7 (click previews, double click keeps, Alt+click a new panel, Ctrl+click behind). */
+   File references in steps are the shared PMW.fileRef (D7: click previews, double click keeps, Alt+click a new panel,
+   Ctrl+click behind). Reopening an open plan with { view, version, step } reaches reveal() (CONTRACT 6 rule 1). */
 
 var D = document;
-var DBL_MS = 240;          // a click waits this long for a second one before it opens a preview (D7)
 var TICK_MS = 2600;        // the demo build finishes one step this often while the tab is visible
 var NARROW_FOOT = 420;     // below this body width the footer shows Build + More only (Revise moves into More)
 
@@ -46,7 +46,6 @@ function svgBox(w, hh, kids, cls) {
 }
 function base(path) { return String(path || '').split('/').pop(); }
 function reduced() { try { return PMW.reduced(); } catch (_) { return false; } }
-function saveSoon() { try { if (PMW.persist && PMW.persist.saveSoon) PMW.persist.saveSoon(); } catch (_) {} }
 function copyText(text, done) {
   function fallback() {
     var ta = h('textarea', { class: 'pmw-plan-clip', 'aria-hidden': 'true' });
@@ -340,6 +339,20 @@ function planById(planId) {
 
 /* ---- blocks, steps and their marks ---- */
 function stepsOf(blocks) { return blocks.filter(function (b) { return b.t === 'step'; }); }
+/* what a person reads for a step: its number in the list ("2", a sub-step "3.1"), never its id */
+function stepNumbers(blocks) {
+  var out = {}, n = 0, kids = {};
+  stepsOf(blocks).forEach(function (s) {
+    if (s.parent && out[s.parent]) { kids[s.parent] = (kids[s.parent] || 0) + 1; out[s.id] = out[s.parent] + '.' + kids[s.parent]; }
+    else out[s.id] = String(++n);
+  });
+  return out;
+}
+function stepTitles(blocks) { var out = {}; stepsOf(blocks).forEach(function (s) { out[s.id] = s.title; }); return out; }
+/* the other steps in the same parallel group */
+function parallelPeers(blocks, b) {
+  return b.parallel ? stepsOf(blocks).filter(function (s) { return s.parallel === b.parallel && s.id !== b.id; }).map(function (s) { return s.id; }) : [];
+}
 function stepStates(blocks, live) {
   var steps = stepsOf(blocks), out = {};
   steps.forEach(function (s, i) {
@@ -362,7 +375,7 @@ function stepMark(state) {
 }
 
 /* the Markdown projection (plans.js mdBlock): status lives in the rail, never in the bytes */
-function md(b) {
+function md(b, blocks) {
   switch (b.t) {
     case 'h': return new Array(b.level + 1).join('#') + ' ' + b.text;
     case 'p': return b.text;
@@ -373,40 +386,16 @@ function md(b) {
     case 'art': return '[' + b.label + '](' + b.kind + ':' + b.id + ')';
     case 'embed': return '![' + b.caption + '](' + b.artifact + '@v' + b.version + ' "' + b.kind + '")\n\n> ' + b.summary;
     case 'callout': return '> **' + (b.tone === 'warning' ? 'Warning' : 'Note') + '** ' + b.text;
-    case 'step': return (b.parent ? '  ' : '') + '- **' + b.title + '** `' + b.id + '`' + (b.after.length ? ' _(after ' + b.after.join(', ') + ')_' : '') +
-      (b.parallel ? ' _(parallel: ' + b.parallel + ')_' : '') + '\n      ' + (b.parent ? '  ' : '') + b.text;
+    case 'step':
+      var no = stepNumbers(blocks || [b]), peers = parallelPeers(blocks || [b], b);
+      var ref = function (id) { return 'step ' + (no[id] || '?'); };
+      return (b.parent ? '  ' : '') + '- **Step ' + no[b.id] + ' · ' + b.title + '**' + (b.after.length ? ' _(after ' + b.after.map(ref).join(', ') + ')_' : '') +
+        (peers.length ? ' _(alongside ' + peers.map(ref).join(', ') + ')_' : '') + '\n  ' + (b.parent ? '  ' : '') + b.text;
   }
   return '';
 }
 function markdownOf(plan, version) {
-  return '# ' + plan.title + '\n\n' + plan.revisions[version].map(md).join('\n\n') + '\n';
-}
-
-/* ---- D7 file references: click previews (after a beat, so a double click can keep), double click keeps, Alt+click
-   opens a new panel, Ctrl/Cmd+click opens behind ---- */
-function fileRef(api, ref, o) {
-  o = o || {};
-  var text = ref.path + (ref.line ? ':' + ref.line : '');
-  var b = h('button', { type: 'button', class: 'pmw-plan-file' + (o.cls ? ' ' + o.cls : ''), 'data-k': 'file:' + text + (o.key || ''),
-    'data-pm-hover-label': 'Open ' + base(ref.path), 'data-pm-hover-detail': 'Click to preview, double-click to keep, Alt+click for a new panel', 'data-pmh': 'icon' },
-  [PMW.icon('file', { size: 13 }), h('span', { text: o.short ? base(ref.path) + (ref.line ? ':' + ref.line : '') : text })]);
-  var timer = 0;
-  function go(e, mode) {
-    var spec = { kind: 'editor', path: ref.path, mode: mode };
-    if (ref.line) spec.line = ref.line;
-    if (e.altKey) spec.where = 'panel';
-    if (e.ctrlKey || e.metaKey) spec.background = true;
-    api.open(spec);
-  }
-  b.addEventListener('click', function (e) {
-    if (e.detail > 1) return;
-    if (e.detail === 0) { go(e, 'preview'); return; }   // keyboard activation: no double click to wait for
-    var snap = { altKey: e.altKey, ctrlKey: e.ctrlKey, metaKey: e.metaKey };
-    clearTimeout(timer);
-    timer = setTimeout(function () { go(snap, 'preview'); }, DBL_MS);
-  });
-  b.addEventListener('dblclick', function (e) { clearTimeout(timer); go(e, 'keep'); });
-  return b;
+  return '# ' + plan.title + '\n\n' + plan.revisions[version].map(function (b, i, all) { return md(b, all); }).join('\n\n') + '\n';
 }
 
 /* ---- embed previews: small, honest sketches of each renderer (one series, text in text colours) ---- */
@@ -493,7 +482,7 @@ function mountPlan(host, state, api) {
   var view = state && state.view === 'markdown' ? 'markdown' : 'rich';
   var viewing = state && state.version && plan.revisions[state.version] ? state.version : plan.version;
   var scrolls = (state && state.scrolls) || { rich: 0, markdown: 0 };
-  var frame = null, timer = 0, visible = false, gone = false, width = 0, restored = false;
+  var frame = null, timer = 0, visible = false, gone = false, width = api.size().w || 0, restored = false;
 
   api.update({ label: plan.title, title: plan.title + ' · Plan V' + plan.version });
 
@@ -504,7 +493,7 @@ function mountPlan(host, state, api) {
     paint();
     if (frame) frame._scroll.scrollTop = scrolls[view] || 0;
     api.announce(v === 'rich' ? 'Showing the plan as rich text' : 'Showing the plan as Markdown');
-    saveSoon();
+    api.saveSoon();
   }, { label: 'Plan view', cls: 'pmw-plan-hseg' });
   var versions = Object.keys(plan.revisions).length;
   var row = api.headerRow({
@@ -534,7 +523,7 @@ function mountPlan(host, state, api) {
     return { id: 'plan-versions', title: 'Versions', width: 320, align: 'end', rows: vs.map(function (v) {
       var log = (plan.log || []).filter(function (x) { return x.v === v; })[0];
       return { id: 'v' + v, label: 'V' + v + (v === plan.version ? ' · current' : ''), sub: log ? log.at + ' · ' + log.why : '', checked: v === viewing,
-        run: function () { if (v === viewing) return; remember(); viewing = v; paint(); if (frame) frame._scroll.scrollTop = 0; api.announce('Showing version ' + v); saveSoon(); } };
+        run: function () { if (v === viewing) return; remember(); viewing = v; paint(); if (frame) frame._scroll.scrollTop = 0; api.announce('Showing version ' + v); api.saveSoon(); } };
     }) };
   }
   function remember() { if (frame) scrolls[view] = frame._scroll.scrollTop; }
@@ -542,7 +531,7 @@ function mountPlan(host, state, api) {
   /* ---- body ---- */
   function blocksNow() { return plan.revisions[viewing]; }
   function richBody(blocks, states) {
-    var out = [], list = null;
+    var out = [], list = null, ctx = { no: stepNumbers(blocks), title: stepTitles(blocks), blocks: blocks };
     blocks.forEach(function (b) {
       if (b.t !== 'step') list = null;
       if (b.t === 'h') { out.push(h(b.level === 3 ? 'h3' : 'h2', { class: b.level === 3 ? 'pmw-plan-h3' : 'pmw-plan-h2', text: b.text })); return; }
@@ -555,7 +544,7 @@ function mountPlan(host, state, api) {
       if (b.t === 'embed') { out.push(embed(b)); return; }
       if (b.t === 'step') {
         if (!list) { list = h('ol', { class: 'pmw-plan-steps' }); out.push(list); }
-        list.appendChild(step(b, states[b.id]));
+        list.appendChild(step(b, states[b.id], ctx));
       }
     });
     return out;
@@ -585,7 +574,7 @@ function mountPlan(host, state, api) {
     api.open(s);
   }
   function artifactRow(b) {
-    var btn = h('button', { type: 'button', class: 'pmw-plan-art pmw-cur', 'data-k': 'art:' + b.id,
+    var btn = h('button', { type: 'button', class: 'pmw-plan-art pmw-cur', 'data-k': 'art:' + b.id, 'data-pmh': 'card',
       'data-pm-hover-label': 'Open ' + b.label, 'data-pm-hover-detail': 'Opens the artifact; Alt+click opens it in a new panel' }, [
       PMW.kindIcon('artifact'),
       h('span', { class: 'pmw-plan-art-copy' }, [h('b', { text: b.label }), h('span', { text: b.kind + ' · V' + b.version + (b.sub ? ' · ' + b.sub : '') })]),
@@ -611,37 +600,40 @@ function mountPlan(host, state, api) {
     var pv = embedPreview(b);
     if (pv) fig.appendChild(h('div', { class: 'pmw-plan-embed-pv', role: 'img', 'aria-label': b.caption }, [pv]));
     fig.appendChild(h('p', { class: 'pmw-plan-embed-sum', text: b.summary }));
-    var open = h('button', { type: 'button', class: 'pmw-plan-link', 'data-k': 'embed:' + b.artifact, 'data-pm-hover-label': 'Open this exact version', 'data-pm-hover-detail': 'V' + b.version + ', frozen when the plan was approved' }, ['Open V' + b.version]);
+    var open = h('button', { type: 'button', class: 'pmw-plan-link', 'data-k': 'embed:' + b.artifact, 'data-pmh': 'icon', 'data-pm-hover-label': 'Open this exact version', 'data-pm-hover-detail': 'V' + b.version + ', frozen when the plan was approved' }, ['Open V' + b.version]);
     open.addEventListener('click', function (e) { openArtifact(e, { id: 'artifact:' + b.artifact + '@v' + b.version, kind: 'artifact', label: label, title: b.caption }); });
     fig.appendChild(h('div', { class: 'pmw-plan-embed-acts' }, [open]));
     return fig;
   }
-  function step(b, st) {
+  function step(b, st, ctx) {
     var li = h('li', { class: 'pmw-plan-step is-' + st + (b.parent ? ' is-child' : ''), id: domId('step', b.id), tabindex: '-1' });
     li.appendChild(stepMark(st));
     var body = h('div', { class: 'pmw-plan-step-body' });
     body.appendChild(h('p', { class: 'pmw-plan-step-title', text: b.title }));
     body.appendChild(h('p', { class: 'pmw-plan-step-text', text: b.text }));
-    var meta = h('p', { class: 'pmw-plan-step-meta' }, [h('span', { class: 'pmw-plan-sid', text: b.id })]);
+    var meta = h('p', { class: 'pmw-plan-step-meta' }, [h('span', { class: 'pmw-plan-sid', text: 'Step ' + ctx.no[b.id] })]);
     function sep() { meta.appendChild(h('span', { class: 'pmw-plan-sep', 'aria-hidden': 'true', text: '·' })); }
-    if (b.parent) { sep(); meta.appendChild(h('span', { text: 'part of ' })); meta.appendChild(depLink(b.parent, b.id)); }
-    if (b.after.length) {
-      sep();
-      meta.appendChild(h('span', { text: 'after ' }));
-      b.after.forEach(function (a, i) { if (i) meta.appendChild(D.createTextNode(', ')); meta.appendChild(depLink(a, b.id)); });
-    }
-    if (b.parallel) { sep(); meta.appendChild(h('span', { text: 'parallel with ' + b.parallel })); }
+    function links(ids) { ids.forEach(function (a, i) { if (i) meta.appendChild(D.createTextNode(', ')); meta.appendChild(depLink(a, b.id, ctx)); }); }
+    if (b.parent) { sep(); meta.appendChild(h('span', { text: 'part of ' })); links([b.parent]); }
+    if (b.after.length) { sep(); meta.appendChild(h('span', { text: 'after ' })); links(b.after); }
+    var peers = parallelPeers(ctx.blocks, b);
+    if (peers.length) { sep(); meta.appendChild(h('span', { text: 'alongside ' })); links(peers); }
     if (MARK_WORD[st] && (live.status === 'building' || live.status === 'canceled')) { sep(); meta.appendChild(h('span', { class: 'pmw-plan-sstate is-' + st, text: MARK_WORD[st] })); }
     body.appendChild(meta);
     if (b.files && b.files.length) {
-      body.appendChild(h('p', { class: 'pmw-plan-step-files' }, b.files.map(function (f) { return fileRef(api, f, { key: ':' + b.id }); })));
+      body.appendChild(h('p', { class: 'pmw-plan-step-files' }, b.files.map(function (f) {
+        var ref = PMW.fileRef(f, { api: api });
+        ref.setAttribute('data-k', 'file:' + f.path + (f.line ? ':' + f.line : '') + ':' + b.id);
+        return ref;
+      })));
     }
     li.appendChild(body);
     return li;
   }
   function domId(kind, id) { return 'pmw-plan-' + kind + '-' + String(tabId).replace(/[^a-z0-9_-]/gi, '_') + '-' + id; }
-  function depLink(id, from) {
-    var b = h('button', { type: 'button', class: 'pmw-plan-dep', 'data-k': 'dep:' + from + ':' + id, 'data-pm-hover-label': 'Go to ' + id, 'data-pmh': 'icon', text: id });
+  function depLink(id, from, ctx) {
+    var word = 'step ' + (ctx.no[id] || '');
+    var b = h('button', { type: 'button', class: 'pmw-plan-dep', 'data-k': 'dep:' + from + ':' + id, 'data-pm-hover-label': 'Go to ' + word, 'data-pm-hover-detail': ctx.title[id] || null, 'data-pmh': 'icon', text: word });
     b.addEventListener('click', function () {
       var t = D.getElementById(domId('step', id));
       if (!t) return;
@@ -659,7 +651,7 @@ function mountPlan(host, state, api) {
       var dot = st === 'done' ? 'is-done' : st === 'working' || st === 'wait' ? 'is-now' : '';
       wrap.appendChild(h('div', { class: 'pmw-plan-mdrow' }, [
         h('span', { class: 'pmw-plan-mdrail' + (dot ? ' ' + dot : ''), 'aria-label': dot ? (st === 'done' ? 'Done' : 'In progress') : null, role: dot ? 'img' : null }),
-        h('pre', { class: 'pmw-plan-mdtext' }, [h('code', { text: md(b) })])
+        h('pre', { class: 'pmw-plan-mdtext' }, [h('code', { text: md(b, blocks) })])
       ]));
     });
     return [wrap];
@@ -730,17 +722,10 @@ function mountPlan(host, state, api) {
   }
   function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
   function revise() {
-    var text = 'Revise the plan "' + plan.title + '": ';
-    /* the chat's message box only (never an editable title); the chat port will bring PM_HOME-level compose */
-    var box = D.querySelector('#chatPanel textarea.pm6-chat-input') || D.querySelector('#chatPanel textarea');
-    if (box && box.offsetParent !== null) {
-      box.value = text;
-      try { box.dispatchEvent(new Event('input', { bubbles: true })); } catch (_) {}
-      try { box.setSelectionRange(text.length, text.length); } catch (_) {}
-      box.focus();
-      api.announce('Say what to change in the chat');
-      return;
-    }
+    /* the chat's own compose (the stand-in's message box, or the page chat's): shows the chat and puts the caret after */
+    var res = null;
+    try { res = PM_HOME.chat && PM_HOME.chat.compose ? PM_HOME.chat.compose('Revise the plan "' + plan.title + '": ') : null; } catch (_) {}
+    if (res && res.ok) { api.announce('Say what to change in the chat'); return; }
     PMW.toast('Say what to change in the chat, and a new version appears here');
   }
   function startBuild() {
@@ -750,7 +735,7 @@ function mountPlan(host, state, api) {
     api.announce('Build started: ' + plan.title);
     paint();
     tick();
-    saveSoon();
+    api.saveSoon();
   }
   function cancelBuild() {
     live.status = 'canceled'; live.waiting = false;
@@ -758,14 +743,14 @@ function mountPlan(host, state, api) {
     api.update({ busy: false });
     api.announce('Build canceled. Steps already done stay done.');
     paint();
-    saveSoon();
+    api.saveSoon();
   }
   function resume() {
     live.waiting = false;
     api.announce('Build resumed');
     paint();
     tick();
-    saveSoon();
+    api.saveSoon();
   }
   function tick() {
     clearTimeout(timer);
@@ -782,7 +767,7 @@ function mountPlan(host, state, api) {
       if (PMW.menu.isOpen()) { setTimeout(function () { paint(); tick(); }, 600); return; }
       paint();
       tick();
-      saveSoon();
+      api.saveSoon();
     }, TICK_MS);
   }
 
@@ -790,15 +775,17 @@ function mountPlan(host, state, api) {
   function topLines() {
     var out = [];
     if (viewing !== plan.version) {
-      var back = h('button', { type: 'button', class: 'pmw-plan-link', 'data-k': 'back-current', text: 'Back to V' + plan.version });
-      back.addEventListener('click', function () { remember(); viewing = plan.version; paint(); if (frame) frame._scroll.scrollTop = 0; saveSoon(); });
+      var back = h('button', { type: 'button', class: 'pmw-plan-link', 'data-k': 'back-current', 'data-pmh': 'icon', text: 'Back to V' + plan.version,
+        'data-pm-hover-label': 'Back to V' + plan.version, 'data-pm-hover-detail': 'The current version, the one that builds' });
+      back.addEventListener('click', function () { remember(); viewing = plan.version; paint(); if (frame) frame._scroll.scrollTop = 0; api.saveSoon(); });
       out.push(h('div', { class: 'pmw-plan-line is-note' }, [PMW.icon('history', { size: 14 }), h('span', { text: 'You are reading V' + viewing + ', an earlier version. Nothing here can build.' }), back]));
     }
     if (plan.schedule && live.status === 'ready' && viewing === plan.version) {
       out.push(h('div', { class: 'pmw-plan-line' }, [PMW.icon('clock', { size: 14 }), h('span', null, [h('b', { text: plan.schedule.text }), ' · ' + plan.schedule.next])]));
     }
     if (live.status === 'building' && live.waiting && plan.window) {
-      var go = h('button', { type: 'button', class: 'pmw-plan-link', 'data-k': 'resume', text: 'Resume now' });
+      var go = h('button', { type: 'button', class: 'pmw-plan-link', 'data-k': 'resume', 'data-pmh': 'icon', text: 'Resume now',
+        'data-pm-hover-label': 'Resume now', 'data-pm-hover-detail': 'Build outside the window this once' });
       go.addEventListener('click', resume);
       out.push(h('div', { class: 'pmw-plan-line is-warn', role: 'status' }, [PMW.icon('clock', { size: 14 }), h('span', { text: plan.window }), go]));
     }
@@ -842,7 +829,27 @@ function mountPlan(host, state, api) {
   paint();
   if (live.status === 'building') api.update({ busy: true });
 
+  /* a reopen of this tab with { view, version, step }: switch the view or the version, then bring a step into view;
+     any other key (label, title and so on) is left alone */
+  function reveal(s) {
+    s = s || {};
+    var changed = false;
+    if ((s.view === 'rich' || s.view === 'markdown') && s.view !== view) { remember(); view = s.view; changed = true; }
+    var v = s.version != null ? Number(s.version) : null;
+    if (v && plan.revisions[v] && v !== viewing) { remember(); viewing = v; changed = true; }
+    if (changed) { paint(); if (frame) frame._scroll.scrollTop = scrolls[view] || 0; api.saveSoon(); }
+    if (s.step != null && view === 'rich') {
+      var t = D.getElementById(domId('step', String(s.step)));
+      if (t) {
+        t.scrollIntoView({ block: 'center', behavior: reduced() ? 'auto' : 'smooth' });
+        t.classList.remove('is-flash'); void t.offsetWidth; t.classList.add('is-flash');
+        setTimeout(function () { t.classList.remove('is-flash'); }, 1400);
+      }
+    }
+  }
+
   return {
+    reveal: reveal,
     onShow: function () { visible = true; tick(); },
     onHide: function () { visible = false; clearTimeout(timer); },
     onResize: function (s) {
@@ -904,7 +911,7 @@ function mountDiscovery(host, state, api) {
     var el = D.getElementById('pmw-plan-q-' + runId + '-' + q.id);
     if (el) { el.scrollIntoView({ block: 'center', behavior: reduced() ? 'auto' : 'smooth' }); el.classList.add('is-flash'); setTimeout(function () { el.classList.remove('is-flash'); }, 1400); }
     api.announce('New question: ' + q.prompt);
-    saveSoon();
+    api.saveSoon();
   }
   function choose(q, i) {
     run.choices[q.id] = i;
@@ -912,7 +919,7 @@ function mountDiscovery(host, state, api) {
     run.created = false;
     paint();
     api.announce('Answered: ' + q.options[i]);
-    saveSoon();
+    api.saveSoon();
   }
   function openSource(e, q) {
     var spec = { kind: 'editor', id: q.source.id, text: q.source.text, language: 'json', title: q.source.name, label: q.source.name };
@@ -934,25 +941,28 @@ function mountDiscovery(host, state, api) {
       var name = 'pmw-plan-q-' + runId + '-' + q.id + '-opt';
       var group = h('div', { class: 'pmw-plan-q-opts', role: 'radiogroup', 'aria-label': q.prompt });
       q.options.forEach(function (opt, i) {
-        var input = h('input', { type: 'radio', name: name, value: String(i), 'data-k': 'opt:' + q.id + ':' + i });
+        var input = h('input', { type: 'radio', name: name, value: String(i), 'data-k': 'opt:' + q.id + ':' + i, 'data-pm-hover-visual-suppressed': 'true' });
         if (run.choices[q.id] === i) input.checked = true;
         input.addEventListener('change', function () { choose(q, i); });
-        group.appendChild(h('label', { class: 'pmw-plan-q-opt pmw-cur' }, [input, h('span', { text: opt })]));
+        group.appendChild(h('label', { class: 'pmw-plan-q-opt pmw-cur', 'data-pmh': 'row' }, [input, h('span', { text: opt })]));
       });
       sec.appendChild(group);
     }
     var acts = [];
     if (q.state === 'proposed') {
-      var ask = h('button', { type: 'button', class: 'pmw-plan-link', 'data-k': 'ask:' + q.id, text: 'Ask it now' });
-      ask.addEventListener('click', function () { q.state = 'presented'; paint(); saveSoon(); });
+      var ask = h('button', { type: 'button', class: 'pmw-plan-link', 'data-k': 'ask:' + q.id, 'data-pmh': 'icon', text: 'Ask it now',
+        'data-pm-hover-label': 'Ask it now', 'data-pm-hover-detail': 'Put this question to you before the others' });
+      ask.addEventListener('click', function () { q.state = 'presented'; paint(); api.saveSoon(); });
       acts.push(ask);
     }
     if (q.source) {
-      var src = h('button', { type: 'button', class: 'pmw-plan-link', 'data-k': 'src:' + q.id, 'data-pm-hover-label': 'Open ' + q.source.name, text: 'Source' });
+      var src = h('button', { type: 'button', class: 'pmw-plan-link', 'data-k': 'src:' + q.id, 'data-pmh': 'icon', 'data-pm-hover-label': 'Open ' + q.source.name,
+        'data-pm-hover-detail': 'Read-only; Alt+click opens it in a new panel', text: 'Source' });
       src.addEventListener('click', function (e) { openSource(e, q); });
       acts.push(src);
       if (q.type === 'fact') {
-        var rc = h('button', { type: 'button', class: 'pmw-plan-link', 'data-k': 'recheck:' + q.id, text: q.state === 'researching' ? 'Checking…' : 'Recheck source' });
+        var rc = h('button', { type: 'button', class: 'pmw-plan-link', 'data-k': 'recheck:' + q.id, 'data-pmh': 'icon', text: q.state === 'researching' ? 'Checking…' : 'Recheck source',
+          'data-pm-hover-label': 'Recheck source', 'data-pm-hover-detail': 'Read the source again and say if it changed' });
         if (q.state === 'researching') rc.setAttribute('aria-disabled', 'true');
         else rc.addEventListener('click', function () { recheck(q); });
         acts.push(rc);
@@ -963,14 +973,15 @@ function mountDiscovery(host, state, api) {
   }
   function preview() {
     var p = exportPlanFrom(run);
+    var no = stepNumbers(p.revisions[1]);
     var list = h('ol', { class: 'pmw-plan-frozen' }, p.revisions[1].filter(function (b) { return b.t !== 'p'; }).map(function (b) {
       if (b.t === 'h') return h('li', { class: 'is-h', text: b.text });
       if (b.t === 'ul') return h('li', null, [h('ul', { class: 'pmw-plan-ul' }, b.items.map(function (t) { return h('li', { text: t }); }))]);
-      if (b.t === 'step') return h('li', null, [h('span', { class: 'pmw-plan-sid', text: b.id }), ' ' + b.title]);
+      if (b.t === 'step') return h('li', null, [h('span', { class: 'pmw-plan-sid', text: 'Step ' + no[b.id] }), ' ' + b.title]);
       if (b.t === 'callout') return h('li', null, [callout(b.tone, b.text)]);
       return null;
     }).filter(Boolean));
-    var cancel = PMW.frames.button({ label: 'Cancel preview', run: function () { run.preview = false; paint(); saveSoon(); } });
+    var cancel = PMW.frames.button({ label: 'Cancel preview', run: function () { run.preview = false; paint(); api.saveSoon(); } });
     cancel.setAttribute('data-k', 'cancel-preview');
     var create = PMW.frames.button({ label: 'Create this Plan', primary: true, detail: 'Opens it beside this tab; it does not build', run: createPlan });
     create.setAttribute('data-k', 'create');
@@ -995,7 +1006,7 @@ function mountDiscovery(host, state, api) {
     var res = api.split('auto', { id: 'plan:ap-export', kind: 'plan', label: 'Offline collection export' });
     paint();
     if (!res || !res.ok) api.open({ id: 'plan:ap-export', kind: 'plan', label: 'Offline collection export' });
-    saveSoon();
+    api.saveSoon();
   }
   function paint() {
     if (gone) return;
@@ -1008,14 +1019,14 @@ function mountDiscovery(host, state, api) {
       h('b', { text: String(c.reused) }), ' reused', h('span', { class: 'pmw-plan-sep', 'aria-hidden': 'true', text: '·' }),
       h('b', { text: String(c.researched) }), ' researched'
     ]);
-    var grill = h('input', { type: 'checkbox', 'data-k': 'grill' });
+    var grill = h('input', { type: 'checkbox', 'data-k': 'grill', 'data-pm-hover-visual-suppressed': 'true' });
     grill.checked = run.grillOn;
-    grill.addEventListener('change', function () { run.grillOn = grill.checked; paint(); api.announce(run.grillOn ? 'Grill Me on: up to 25 more questions' : 'Grill Me off'); saveSoon(); });
+    grill.addEventListener('change', function () { run.grillOn = grill.checked; paint(); api.announce(run.grillOn ? 'Grill Me on: up to 25 more questions' : 'Grill Me off'); api.saveSoon(); });
     var body = [
       h('p', { class: 'pmw-plan-p', text: 'Inspect the sources, answer only what matters, then review one Plan. No work starts here.' }),
       stats,
       h('p', { class: 'pmw-fine', text: run.strategy + ' · base ' + run.base + (run.grillOn ? ' + ' + run.grill + ' Grill Me = ' + c.budget : '; Grill Me adds ' + run.grill) + '. This is a ceiling, not a target.' }),
-      h('label', { class: 'pmw-plan-check pmw-cur' }, [grill, h('span', null, [h('b', { text: 'Grill Me' }), h('span', { text: 'Ask up to ' + run.grill + ' more questions that try to break the plan.' })])])
+      h('label', { class: 'pmw-plan-check pmw-cur', 'data-pmh': 'row' }, [grill, h('span', null, [h('b', { text: 'Grill Me' }), h('span', { text: 'Ask up to ' + run.grill + ' more questions that try to break the plan.' })])])
     ];
     if (run.created) body.push(h('div', { class: 'pmw-plan-line is-note', role: 'status' }, [PMW.icon('check', { size: 14 }), h('span', { text: 'The Plan has been created. Build is a separate, explicit action.' })]));
     body.push(PMW.frames.section('Sources and decisions', run.questions.length + ' questions', run.questions.map(question)));
@@ -1026,7 +1037,7 @@ function mountDiscovery(host, state, api) {
       run.preview = true; paint();
       var sec = frame && frame.querySelector('.pmw-plan-frozen');
       if (sec) sec.scrollIntoView({ block: 'start', behavior: reduced() ? 'auto' : 'smooth' });
-      saveSoon();
+      api.saveSoon();
     } });
     review.setAttribute('data-k', 'review');
     var nextB = PMW.frames.button({ label: 'Next questions', run: nextQuestion });
@@ -1078,14 +1089,16 @@ PM_HOME.catalog.add('plan', Object.keys(PLANS).map(function (id) {
 
 /* "Plan or document...": one picker over both kinds, headed Plans and Documents (the kinds share one group) */
 function pickPlanOrDocument(ctx) {
-  var hnd = PMW.catalogPicker(ctx.anchor, { kinds: ['plan', 'document'], title: 'Open a plan or document', panelId: ctx.panelId, newPanel: ctx.newPanel });
-  if (hnd && hnd.spec && hnd.spec.sections && hnd.spec.sections.length === 2) {
-    hnd.spec.sections[0].label = 'Plans';
-    hnd.spec.sections[1].label = 'Documents';
-    hnd.update(hnd.spec);
-    if (hnd.search) { try { hnd.search.focus({ preventScroll: true }); } catch (_) {} }
-  }
-  return hnd;
+  return PMW.catalogPicker(ctx.anchor, { kinds: ['plan', 'document'], title: 'Open a plan or document', panelId: ctx.panelId, newPanel: ctx.newPanel,
+    sectionLabels: { plan: 'Plans', document: 'Documents' } });
+}
+
+/* the label of a plan tab that is not mounted yet (restored, or opened behind) */
+function planLabel(id) {
+  if (String(id).indexOf('deep-discovery:') === 0) return 'Deep Plan \u00b7 discovery';
+  var pid = id === 'plan-query' ? 'ap-index' : String(id).indexOf('plan:') === 0 ? String(id).slice(5) : null;
+  if (pid === 'ap-export') return 'Offline collection export';
+  return pid && PLANS[pid] ? PLANS[pid].title : null;
 }
 
 PM_HOME.registerKind('plan', {
@@ -1096,6 +1109,7 @@ PM_HOME.registerKind('plan', {
   document: true,
   min: { w: 280, h: 160 },
   canonical: function (id) { return id === 'plan-query' ? 'plan:ap-index' : id; },
+  labelFor: planLabel,
   idFor: function (spec) { return spec.run ? 'deep-discovery:' + spec.run : 'plan:' + (spec.plan || 'ap-index'); },
   plus: {
     order: 50,

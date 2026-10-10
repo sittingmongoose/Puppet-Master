@@ -156,12 +156,13 @@ menu.open = function (anchor, spec) {
       wrapEl = h('div', { class: 'pmw-mgroup' }, [row]);
       var lr = h('div', { class: 'pmw-mlinks' });
       r.links.forEach(function (lk, i) {
-        if (i) lr.appendChild(h('span', { class: 'pmw-mlinksep', 'aria-hidden': 'true', text: '·' }));
         var a = h('button', { type: 'button', class: 'pmw-mlink pmw-cur', role: 'menuitem', tabindex: '-1', text: lk.label });
         if (lk.title) a.setAttribute('data-pm-hover-label', lk.title);
         a.addEventListener('click', function (e) { if (hnd.closed) return; close({ returnFocus: false }); lk.run({ alt: e.altKey }); restoreFocus(); });
         a._pmwLink = lk;
-        lr.appendChild(a);
+        // a separator travels with the link after it, so a wrapped sub-row never ends on a dangling dot
+        if (i) lr.appendChild(h('span', { class: 'pmw-mlinkpair', role: 'none' }, [h('span', { class: 'pmw-mlinksep', 'aria-hidden': 'true', text: '·' }), a]));
+        else lr.appendChild(a);
         hnd.items.push(a);
       });
       wrapEl.appendChild(lr);
@@ -287,8 +288,22 @@ menu.open = function (anchor, spec) {
   function place() {
     var vw = doc.documentElement.clientWidth, vh = doc.documentElement.clientHeight;
     el.style.maxHeight = '';
-    var width = hnd.spec.width || Math.min(Math.max(el.offsetWidth, 220), 420);
+    // a spec without a width takes its widest row (from minWidth up to 420 px), so its own labels are never cut
+    var width = hnd.spec.width || Math.min(Math.max(el.offsetWidth, hnd.spec.minWidth || 220), 420);
     el.style.width = width + 'px';
+    if (!hnd.spec.width) {
+      // the measured width can come out a few px short of a row's label (a font still settling, sub-pixel text): widen
+      // by what the longest label still lacks, up to the same 420 px
+      var lack = 0;
+      // (measured on the text itself: scrollWidth rounds, and a label 0.4 px too wide still gets its ellipsis)
+      var rng = doc.createRange();
+      Array.prototype.forEach.call(el.querySelectorAll('.pmw-mcopy b, .pmw-mhead strong'), function (b) {
+        if (!b.firstChild) return;
+        rng.selectNodeContents(b);
+        lack = Math.max(lack, rng.getBoundingClientRect().width - b.getBoundingClientRect().width);
+      });
+      if (lack > 0 && width < 420) { width = Math.min(420, Math.ceil(width + lack + 1)); el.style.width = width + 'px'; }
+    }
     var natural = el.scrollHeight;
     var ar;
     var at = hnd.spec.at || spec.at || (anchor && anchor.isConnected ? null : centreTopPoint());
@@ -297,7 +312,8 @@ menu.open = function (anchor, spec) {
     var below = vh - ar.bottom - MENU_GAP - MENU_EDGE, above = ar.top - MENU_GAP - MENU_EDGE;
     var up = natural > below && above > below;
     var room = Math.max(120, up ? above : below);
-    var maxH = Math.min(Math.round(vh * 0.7), 520, room);
+    // as tall as its rows when the window has the room; it scrolls only when the side it opens on is really short
+    var maxH = Math.min(vh - 2 * MENU_EDGE, room);
     el.style.maxHeight = maxH + 'px';
     var x = hnd.spec.align === 'end' ? ar.right - width : ar.left;
     x = clamp(x, MENU_EDGE, vw - width - MENU_EDGE);

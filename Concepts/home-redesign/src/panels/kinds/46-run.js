@@ -69,18 +69,22 @@ function agreeMark(kind, label) {
   else s.appendChild(sv('path', { d: 'M5 7h4' }));
   return s;
 }
-var MARKS = {
-  review: '<svg viewBox="0 0 16 16" width="14" height="14"><path d="M3.5 2.5h6l2.5 2.5v2.5M3.5 2.5v11h4M10.5 8.8a2.1 2.1 0 1 0 0 4.2 2.1 2.1 0 0 0 0-4.2zM12.1 12.5l1.8 1.8"/></svg>',
-  room: '<svg viewBox="0 0 16 16" width="14" height="14"><path d="M2.5 3h7.5v5.5H6.2l-2.2 1.8V8.5H2.5zM12.2 6h1.3v5.5h-1.3v1.8l-2.2-1.8H7v-1.2"/></svg>',
-  brainstorm: '<svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 14V8.5M8 8.5 3.8 4.3M8 8.5l4.2-4.2M8 8.5V2.8M3.8 4.3V2.8M12.2 4.3V2.8"/></svg>'
+/* the per-type run marks, in the core icon grammar (16 px, stroke), each with a one-cell Retro glyph: the strip draws them
+   through api.update({ icon }), the run frame's kind line and the "+" picker rows through their names */
+var RUN_ICONS = {
+  crew: ['M8 2.8a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM4.2 13.2c0-2.3 1.7-4 3.8-4s3.8 1.7 3.8 4M3.6 4.8a1.5 1.5 0 1 0 0 3M12.4 4.8a1.5 1.5 0 1 1 0 3M1.6 12.2c0-1.6.9-2.8 2.1-3.2M14.4 12.2c0-1.6-.9-2.8-2.1-3.2', '&'],
+  review: ['M3.5 2.5h6l2.5 2.5v2.5M3.5 2.5v11h4M10.5 8.8a2.1 2.1 0 1 0 0 4.2 2.1 2.1 0 0 0 0-4.2zM12.1 12.5l1.8 1.8', '?'],
+  room: ['M2.5 3h7.5v5.5H6.2l-2.2 1.8V8.5H2.5zM12.2 6h1.3v5.5h-1.3v1.8l-2.2-1.8H7v-1.2', '~'],
+  brainstorm: ['M8 14V8.5M8 8.5 3.8 4.3M8 8.5l4.2-4.2M8 8.5V2.8M3.8 4.3V2.8M12.2 4.3V2.8', '^']
 };
+Object.keys(RUN_ICONS).forEach(function (n) { try { PMW.registerIcon(n, RUN_ICONS[n][0], RUN_ICONS[n][1]); } catch (_) {} });
 
 /* ---- the runs (the chat's seed runs, collaboration.js; copy kept plain, hashes and ids never shown) ---- */
 var TYPES = {
-  crew: { prefix: 'crew-work:', word: 'Crew', overview: 'Summary', icon: 'run', helpers: 'helpers', hub: 'a Coordinator hands out the work', promise: 'Helpers can’t do more than this chat: same tools and Skills, and it asks first.' },
-  review: { prefix: 'review:', word: 'Review · Multi-Pass', overview: 'Report', icon: MARKS.review, helpers: 'reviewers', hub: 'each reads on its own', promise: 'Reviewers only read. They can’t change your files.' },
-  room: { prefix: 'room:', word: 'Chat Room', overview: 'Discussion', icon: MARKS.room, helpers: 'helpers', hub: 'a Moderator calls on them', promise: 'Talking changes nothing. You pick what, if anything, to keep.' },
-  brainstorm: { prefix: 'brainstorm:', word: 'BrainStorm', overview: 'How they decided', icon: MARKS.brainstorm, helpers: 'helpers', hub: 'a Coordinator hands out the work', promise: 'Helpers can’t do more than this chat: same tools and Skills, and it asks first.' }
+  crew: { prefix: 'crew-work:', word: 'Crew', overview: 'Summary', icon: 'crew', helpers: 'helpers', hub: 'a Coordinator hands out the work', promise: 'Helpers can’t do more than this chat: same tools and Skills, and it asks first.' },
+  review: { prefix: 'review:', word: 'Review · Multi-Pass', overview: 'Report', icon: 'review', helpers: 'reviewers', hub: 'each reads on its own', promise: 'Reviewers only read. They can’t change your files.' },
+  room: { prefix: 'room:', word: 'Chat Room', overview: 'Discussion', icon: 'room', helpers: 'helpers', hub: 'a Moderator calls on them', promise: 'Talking changes nothing. You pick what, if anything, to keep.' },
+  brainstorm: { prefix: 'brainstorm:', word: 'BrainStorm', overview: 'How they decided', icon: 'brainstorm', helpers: 'helpers', hub: 'a Coordinator hands out the work', promise: 'Helpers can’t do more than this chat: same tools and Skills, and it asks first.' }
 };
 var RUNS = {
   'crew-query-perf': {
@@ -95,7 +99,7 @@ var RUNS = {
         ask: 'Rehearsing the rollback restores a schema snapshot on a shared host. That needs your approval; this helper can’t give it to itself.' }],
     parts: [
       { title: 'Split migration 0043 into a no-transaction file', who: 'Migration Engineer', when: 'can start right away', state: 'done', doneWhen: 'A no-transaction migration file plus a green migration test run.',
-        proof: 'migrations/0043_events_tenant_created.sql landed with pm:no-transaction; the migration tests are green.' },
+        proofFile: 'migrations/0043_tenant_created_index.sql', proof: 'landed with pm:no-transaction; the migration tests are green.' },
       { title: 'Measure write amplification at 50,000 inserts', who: 'Benchmark Runner', when: 'starts after part 1', state: 'queued', doneWhen: 'A measured (not estimated) write-overhead percentage against 50,000 inserts.' },
       { title: 'Rehearse the rollback against a restored snapshot', who: 'Rollback Auditor', when: 'starts after part 1', state: 'needs', doneWhen: 'A recorded rehearsal with the restore and down-migration timings.',
         blocked: 'Rehearsing the rollback requires restoring a schema snapshot on a shared host; that needs approval this helper can’t give itself.' }],
@@ -229,6 +233,13 @@ function labelFor(tabId) {
   var run = RUNS[ref.runId];
   return run ? runLabel(run) : 'Run';
 }
+/* the strip mark: the run's own type (evidence takes the mark of the run that cites it) */
+function iconOf(tabId) {
+  var ref = parseRun(tabId);
+  if (ref.evidence) return TYPES[ref.type] ? TYPES[ref.type].icon : 'run';
+  var run = RUNS[ref.runId];
+  return run ? TYPES[run.type].icon : 'run';
+}
 function personOf(run, id) {
   var all = run.people.concat(run.specialists || []);
   for (var i = 0; i < all.length; i++) if (all[i].id === id) return all[i];
@@ -240,6 +251,13 @@ function hueOf(run, id) {
   return i < 0 ? 0 : (i % 5) + 1;
 }
 
+/* a D7 file reference (PMW.fileRef: single click previews, double click keeps, Alt a new panel) when the demo project
+   has the file; otherwise the path as plain text, so a click never lands on an empty editor */
+function fileRefOf(path, api, line) {
+  if (PMW.fileRef && PM_HOME.fileExists && PM_HOME.fileExists(path)) return PMW.fileRef({ path: path, line: line || null }, { api: api, inline: true });
+  return h('span', { class: 'pmw-run-mono pmw-run-path' }, [PMW.icon('file', { size: 13 }), h('span', { text: path })]);
+}
+
 /* ---- the kind ---- */
 function mountRun(host, state, api) {
   var ref = parseRun(api.id);
@@ -249,7 +267,7 @@ function mountRun(host, state, api) {
   var L = run ? liveOf(ref.runId) : null;
   var st = { tab: state.tab || 'overview', person: state.person || null, filter: state.filter || null };
   var frame = null, visible = false, disposed = false, timer = 0, streamTimer = 0;
-  api.update({ label: labelFor(api.id), title: run ? run.title + ' · ' + T.word : 'Run' });
+  api.update({ label: labelFor(api.id), title: run ? run.title + ' · ' + T.word : 'Run', icon: iconOf(api.id) });
 
   if (!run) {
     host.appendChild(PMW.frames.run({ title: 'This run is not available', kind: { icon: 'run', word: 'Run' }, status: ['It may have been removed, or it belongs to another project.'],
@@ -292,6 +310,7 @@ function mountRun(host, state, api) {
   function message(person) {
     var at = '@' + (person ? person.role : shortName()) + ' ';
     if (PMW.standIn && typeof PMW.standIn.prefill === 'function') { PMW.standIn.prefill(at); return; }
+    if (PM_HOME.chat && typeof PM_HOME.chat.compose === 'function') { PM_HOME.chat.compose(at); return; }
     PMW.toast('Write in the chat beside this panel, starting with ' + at.trim());
   }
   function togglePause() {
@@ -331,7 +350,7 @@ function mountRun(host, state, api) {
 
   /* ---- the cast plate ---- */
   function seat(p, run2) {
-    var b = h('button', { type: 'button', class: 'pmw-run-seat pmw-cur is-' + seatState(p), 'data-pmh': 'icon', 'data-pm-hover-label': p.role,
+    var b = h('button', { type: 'button', class: 'pmw-run-seat pmw-cur is-' + seatState(p), 'data-pmh': 'tile', 'data-pm-hover-label': p.role,
       'data-pm-hover-detail': 'Open their transcript · ' + p.model + ' · ' + STATE_WORD[seatState(p)], 'aria-label': p.role + ', ' + p.model + ', ' + STATE_WORD[seatState(p)] + '. Open their transcript' });
     var pup = puppet(hueOf(run2, p.id), 28);
     pup.appendChild(stateMark(seatState(p)));
@@ -423,11 +442,11 @@ function mountRun(host, state, api) {
       var pick = h('button', { type: 'button', class: 'pmw-run-picker', 'aria-haspopup': 'menu', 'data-pmh': 'icon', 'data-pm-hover-label': 'Show one person', 'data-pm-hover-detail': 'Or everyone' },
         [h('span', { text: who ? 'Showing ' + who.role : 'Showing everyone' }), PMW.icon('chevronDown', { size: 12 })]);
       pick.addEventListener('click', function () {
-        var rows = [{ id: 'all', label: 'Everyone', checked: !st.filter, run: function () { st.filter = null; rerenderMain(); } }].concat(
+        var rows = [{ id: 'all', label: 'Everyone', checked: !st.filter, run: function () { st.filter = null; rerenderMain(); api.saveSoon(); } }].concat(
           run.people.concat(run.specialists || []).map(function (p) {
-            return { id: p.id, label: p.role, sub: p.model + ' · ' + p.persona, checked: st.filter === p.id, run: function () { st.filter = p.id; rerenderMain(); } };
+            return { id: p.id, label: p.role, sub: p.model + ' · ' + p.persona, checked: st.filter === p.id, run: function () { st.filter = p.id; rerenderMain(); api.saveSoon(); } };
           }));
-        PMW.menu.open(pick, { id: 'run-filter', title: 'Show messages from', rows: rows, width: 260 });
+        api.menu(rows, pick, { title: 'Show messages from', width: 260 });
       });
       out.push(pick);
     }
@@ -440,13 +459,13 @@ function mountRun(host, state, api) {
   function team() {
     function row(p, isHub) {
       var stt = isHub ? 'working' : seatState(p);
-      var b = h('button', { type: 'button', class: 'pmw-run-trow pmw-cur', 'data-pmh': 'icon', 'data-pm-hover-label': isHub ? p.role : 'Open ' + p.role, 'data-pm-hover-detail': isHub ? (p.does || 'Runs the room') : 'What they are doing, and their messages' }, [
+      var b = h('button', { type: 'button', class: 'pmw-run-trow pmw-cur', 'data-pmh': isHub ? 'off' : 'row', 'data-pm-hover-label': isHub ? p.role : 'Open ' + p.role, 'data-pm-hover-detail': isHub ? (p.does || 'Runs the room') : 'What they are doing, and their messages' }, [
         puppet(isHub ? 0 : hueOf(run, p.id), 22),
         h('span', { class: 'pmw-run-tname' }, [h('b', { text: p.role }), h('small', { text: isHub ? p.sub : p.full + ' · ' + p.persona })]),
         h('span', { class: 'pmw-run-tout' }, [isHub ? null : stateMark(stt), isHub ? (p.does || 'hands out the work and checks it') : STATE_WORD[stt]]),
         h('span', { class: 'pmw-run-tcost', text: money(p.cost) })]);
       if (isHub) b.setAttribute('aria-disabled', 'true');
-      else b.addEventListener('click', function () { st.person = p.id; rerenderMain(); });
+      else b.addEventListener('click', function () { st.person = p.id; rerenderMain(); api.saveSoon(); });
       return b;
     }
     var core = h('div', { class: 'pmw-run-team' }, (run.type === 'room' ? [row(run.hubSeat, true)] : []).concat(run.people.map(function (p) { return row(p); })));
@@ -460,7 +479,7 @@ function mountRun(host, state, api) {
     if (!p) { st.person = null; return team(); }
     var stt = seatState(p);
     var back = h('button', { type: 'button', class: 'pmw-run-back', 'data-pmh': 'icon', 'data-pm-hover-label': 'Back to the team' }, [PMW.icon('back', { size: 14 }), h('span', { text: 'Team' })]);
-    back.addEventListener('click', function () { st.person = null; rerenderMain(); });
+    back.addEventListener('click', function () { st.person = null; rerenderMain(); api.saveSoon(); });
     var mine = L.messages.filter(function (m) { return m.who === p.id; });
     var out = [back, h('div', { class: 'pmw-run-person' }, [puppet(hueOf(run, p.id), 34), h('div', null, [h('h2', { text: p.role }),
       PMW.frames.meta([p.full, p.persona, { text: STATE_WORD[stt], state: stt === 'needs' ? 'warn' : stt === 'failed' ? 'bad' : stt === 'done' ? 'ok' : null }, money(p.cost)])])]),
@@ -506,7 +525,7 @@ function mountRun(host, state, api) {
         PMW.frames.meta([pt.who, pt.when, { text: word, state: pt.state === 'done' ? 'ok' : pt.state === 'needs' ? 'warn' : null }]),
         h('p', null, [h('span', { class: 'pmw-run-lbl', text: 'Done when: ' }), pt.doneWhen])]);
       li.querySelector('.pmw-run-parthead').appendChild(partMark(pt.state));
-      if (pt.proof) li.appendChild(h('p', null, [h('span', { class: 'pmw-run-lbl', text: 'Proof: ' }), h('span', { class: 'pmw-run-mono', text: pt.proof })]));
+      if (pt.proof) li.appendChild(h('p', { class: 'pmw-run-proof' }, [h('span', { class: 'pmw-run-lbl', text: 'Proof: ' }), pt.proofFile ? fileRefOf(pt.proofFile, api) : null, pt.proofFile ? ' ' : null, pt.proof]));
       if (pt.blocked) li.appendChild(h('p', { class: 'pmw-run-warnline' }, [stateMark('needs'), ' ', pt.blocked]));
       return li;
     }));
@@ -536,14 +555,15 @@ function mountRun(host, state, api) {
     if (!L.ticks) L.ticks = run.findings.map(function (f) { return f.disp === 'Confirmed'; });
     var list = h('ol', { class: 'pmw-run-findings' });
     run.findings.forEach(function (f, i) {
-      var box = h('input', { type: 'checkbox', class: 'pmw-run-tick', id: 'pmw-run-f-' + api.id.length + '-' + i, 'aria-label': 'Make a To-Do of finding ' + (i + 1) });
+      var box = h('input', { type: 'checkbox', class: 'pmw-run-tick', id: 'pmw-run-f-' + api.id.length + '-' + i, 'aria-label': 'Make a To-Do of finding ' + (i + 1),
+        'data-pm-hover-label': 'Make a To-Do of it', 'data-pm-hover-detail': 'Only ticked findings become To-Dos' });
       box.checked = !!L.ticks[i];
       box.addEventListener('change', function () { L.ticks[i] = box.checked; var c = act.querySelector('.pmw-run-todos span'); if (c) c.textContent = 'Create To-Dos (' + L.ticks.filter(Boolean).length + ')'; });
       var li = h('li', { class: 'pmw-run-finding pmw-cur' + (box.checked ? ' pmw-chosen' : '') }, [box, h('div', { class: 'pmw-run-fbody' }, [
         PMW.frames.meta([{ text: f.sev, state: f.sev === 'Critical' ? 'bad' : f.sev === 'Major' ? 'warn' : null }, f.disp]),
         h('p', { class: 'pmw-run-claim', text: f.claim }),
         h('p', null, [h('span', { class: 'pmw-run-lbl', text: 'Why: ' }), f.proof, ' ', h('button', { type: 'button', class: 'pmw-run-link', 'data-pmh': 'icon', 'data-pm-hover-label': 'Open the evidence',
-          'data-pm-hover-detail': 'The exact lines every reviewer read', onclick: function () { api.open({ id: 'review-evidence:' + ref.runId + ':' + f.evidence, kind: 'run', label: 'Review evidence' }); } }, ['See the lines'])]),
+          'data-pm-hover-detail': 'The exact lines every reviewer read', onclick: function () { api.open({ id: 'review-evidence:' + ref.runId + ':' + f.evidence, kind: 'run', label: 'Review evidence', icon: 'review' }); } }, ['See the lines'])]),
         h('p', null, [h('span', { class: 'pmw-run-lbl', text: 'Suggested fix: ' }), f.fix]),
         f.dissent ? h('p', { class: 'pmw-run-dissent' }, [h('span', { class: 'pmw-run-lbl', text: 'Still disagrees: ' }), f.dissent]) : null])]);
       box.addEventListener('change', function () { li.classList.toggle('pmw-chosen', box.checked); });
@@ -617,7 +637,7 @@ function mountRun(host, state, api) {
       }))]);
     out.push(PMW.frames.section('How they voted', '3 for B · 1 against A', vt));
     out.push(PMW.frames.section('Sources and earlier answers', null, h('ul', { class: 'pmw-run-plain' }, [
-      h('li', null, [h('button', { type: 'button', class: 'pmw-run-link', 'data-pmh': 'icon', 'data-pm-hover-label': 'Open the evidence', onclick: function () { api.open({ id: 'brainstorm-evidence:' + ref.runId + ':src-1', kind: 'run', label: 'BrainStorm evidence' }); } }, ['Provider status-page latency samples']), ' · checked during Check facts']),
+      h('li', null, [h('button', { type: 'button', class: 'pmw-run-link', 'data-pmh': 'icon', 'data-pm-hover-label': 'Open the evidence', onclick: function () { api.open({ id: 'brainstorm-evidence:' + ref.runId + ':src-1', kind: 'run', label: 'BrainStorm evidence', icon: 'brainstorm' }); } }, ['Provider status-page latency samples']), ' · checked during Check facts']),
       h('li', { text: 'Two earlier answers of yours: never spend from a personal account without asking first.' })])));
     out.push(PMW.frames.section('Also considered', 'ruled out', h('p', { class: 'pmw-run-lead' }, [h('b', { text: 'Fully automatic cross-account failover. ' }), 'It breaks your rule “Never spend from a personal account without explicit confirmation.” Votes can’t override a rule.'])));
     out.push(PMW.frames.section('Wonderer’s ideas', 'hypotheses, not checked yet', h('ul', { class: 'pmw-run-plain' }, [
@@ -638,7 +658,7 @@ function mountRun(host, state, api) {
       run.people.map(function (p) { return h('li', null, [h('b', { text: p.role }), ' · ' + p.persona]); })))]),
       asideBlock('Moderator guides', [h('p', { text: 'up to ' + run.maxRounds + ' rounds · ' + L.rounds + ' so far' })]),
       asideBlock('Spent', [h('p', { text: money(run.cost) + ' so far of your ' + money(run.limit) + ' limit' })]), asideBlock('Promise', [h('p', { text: T.promise })])];
-    var grill = h('input', { type: 'checkbox', class: 'pmw-run-grill', id: 'pmw-run-grill-' + ref.runId });
+    var grill = h('input', { type: 'checkbox', class: 'pmw-run-grill', id: 'pmw-run-grill-' + ref.runId, 'data-pm-hover-visual-suppressed': 'true' });
     grill.checked = !!L.grill;
     grill.addEventListener('change', function () { L.grill = grill.checked; render(); api.announce(L.grill ? 'Grill Me on: up to 45 questions' : 'Grill Me off: up to 20 questions'); });
     return [asideBlock('Voting', [h('p', { text: '4 of 4 in.' }), h('p', null, [h('b', { text: 'Wonderer' }), ' abstains: its ideas stay hypotheses until checked.'])]),
@@ -748,7 +768,7 @@ function mountRun(host, state, api) {
       status: statusItems(),
       actions: headActions(),
       plate: plate(),
-      tabs: { items: tabItems(), value: st.tab, onChange: function (v) { st.tab = v; st.person = null; rerenderMain(); } },
+      tabs: { items: tabItems(), value: st.tab, onChange: function (v) { st.tab = v; st.person = null; rerenderMain(); api.saveSoon(); } },
       main: [],
       aside: aside(),
       cls: 'pmw-run-k pmw-run-t-' + run.type
@@ -771,6 +791,15 @@ function mountRun(host, state, api) {
       if (L.streaming) { var cur = L.messages[L.messages.length - 1]; if (cur) delete cur.shown; while (L.queue && L.queue.length) L.messages.push(L.queue.shift()); L.streaming = false; L.speaking = null; }
     },
     focus: function () { if (frame && frame._scroll) frame._scroll.focus({ preventScroll: true }); },
+    /* a reopen that names a section (tab: 'cost', person: '<id>') shows it; any other key is ignored */
+    reveal: function (s) {
+      s = s || {};
+      var names = tabItems().map(function (x) { return x.value; });
+      var moved = false;
+      if (typeof s.tab === 'string' && names.indexOf(s.tab) >= 0 && s.tab !== st.tab) { st.tab = s.tab; st.person = null; moved = true; }
+      if (typeof s.person === 'string' && personOf(run, s.person)) { st.tab = 'team'; st.person = s.person; moved = true; }
+      if (moved) { render(); api.saveSoon(); }
+    },
     unmount: function () { disposed = true; stopTimers(); later.forEach(clearTimeout); },
     serialize: function () { return { tab: st.tab, person: st.person, filter: st.filter }; }
   };
@@ -779,13 +808,13 @@ function mountRun(host, state, api) {
 /* the evidence a run cites: the exact lines, numbered, with the cited ones marked */
 function mountEvidence(host, api, ref) {
   var run = RUNS[ref.runId], ev = EVIDENCE[ref.runId] && EVIDENCE[ref.runId][ref.eid];
-  api.update({ label: labelFor(api.id), title: ev ? ev.label : 'Evidence' });
+  api.update({ label: labelFor(api.id), title: ev ? ev.label : 'Evidence', icon: iconOf(api.id) });
   var kindWord = (ref.type === 'review' ? 'Review evidence' : 'BrainStorm evidence') + (run ? ' · ' + run.title : '');
   var back = { label: ref.type === 'review' ? 'Back to the report' : 'Back to the BrainStorm', icon: 'back', run: function () {
-    api.open({ id: (ref.type === 'review' ? 'review:' : 'brainstorm:') + ref.runId, kind: 'run', label: run ? runLabel(run) : null });
+    api.open({ id: (ref.type === 'review' ? 'review:' : 'brainstorm:') + ref.runId, kind: 'run', label: run ? runLabel(run) : null, icon: iconOf(api.id) });
   } };
   if (!ev) {
-    host.appendChild(PMW.frames.run({ title: 'This evidence is not available', kind: { icon: 'document', word: kindWord }, status: ['It may belong to an earlier run.'], actions: run ? [back] : [], main: [] }));
+    host.appendChild(PMW.frames.run({ title: 'This evidence is not available', kind: { icon: iconOf(api.id), word: kindWord }, status: ['It may belong to an earlier run.'], actions: run ? [back] : [], main: [] }));
     return {};
   }
   var pre = h('pre', { class: 'pmw-code pmw-run-evcode', 'data-pmh': 'off', tabindex: '0', 'aria-label': ev.file });
@@ -797,10 +826,10 @@ function mountEvidence(host, api, ref) {
   pre.appendChild(code);
   var range = ev.hi.length > 1 ? 'lines ' + ev.hi[0] + '–' + ev.hi[ev.hi.length - 1] : 'line ' + ev.hi[0];
   var frame = PMW.frames.run({
-    title: ev.label, kind: { icon: 'document', word: kindWord },
+    title: ev.label, kind: { icon: iconOf(api.id), word: kindWord },
     status: ref.type === 'review' ? [{ text: 'The exact version every reviewer read' }, 'snapshot 5:38 PM'] : [{ text: 'Checked during Check facts' }, 'kept as it was read'],
     actions: [back],
-    main: [h('p', { class: 'pmw-run-fine pmw-run-evfile' }, [PMW.icon('file', { size: 13 }), ' ', ev.file]), pre,
+    main: [h('p', { class: 'pmw-run-fine pmw-run-evfile' }, [fileRefOf(ev.file, api, ev.hi[0])]), pre,
       h('p', { class: 'pmw-run-lead', text: 'The marked ' + range + ' are the ones the ' + (ref.type === 'review' ? 'report' : 'BrainStorm') + ' points to.' })],
     aside: [h('section', { class: 'pmw-run-asec' }, [h('h3', { text: 'Cited by' }), h('p', { text: ev.cites })]),
       h('section', { class: 'pmw-run-asec' }, [h('h3', { text: 'Read-only' }), h('p', { text: 'Evidence is kept exactly as it was read; nothing here can change it.' })])],
@@ -818,6 +847,8 @@ PM_HOME.registerKind('run', {
   prefixes: ['collab-run:', 'crew-work:', 'review:', 'room:', 'brainstorm:', 'review-evidence:', 'brainstorm-evidence:'],
   min: { w: 360, h: 200 },
   document: true,
+  /* a run opened in the background or by an agent mounts lazily; its strip label comes from here until then */
+  labelFor: function (id) { return labelFor(id); },
   idFor: function (spec) {
     var r = spec.run || spec.runId;
     return r && RUNS[r] ? TYPES[RUNS[r].type].prefix + r : r ? 'collab-run:' + r : null;
@@ -834,13 +865,6 @@ PM_HOME.registerKind('run', {
 PM_HOME.catalog.add('run', Object.keys(RUNS).map(function (id) {
   var r = RUNS[id], T = TYPES[r.type];
   var sub = r.type === 'crew' ? 'Crew · running · 3 helpers' : r.type === 'review' ? 'Review · 3 reviewers' : r.type === 'room' ? 'Chat Room · round 2 of 5' : 'BrainStorm · voting';
-  return { id: T.prefix + id, label: runLabel(r), sub: sub + ' · ' + r.thread, icon: 'run', keywords: T.word + ' ' + r.thread, spec: { id: T.prefix + id, kind: 'run', label: runLabel(r) } };
-}).concat([{ id: 'review-evidence:review-orchestrator-boundary:ev-1', label: 'Review evidence', sub: 'orchestrator-subagent-integration.md · lines 2–3', icon: 'document',
-  keywords: 'evidence review lines', spec: { id: 'review-evidence:review-orchestrator-boundary:ev-1', kind: 'run', label: 'Review evidence' } }]));
-
-/* a run opened in the background is mounted lazily; name it now so its strip label is right */
-PM_HOME.on('open', function (e) {
-  if (!e || e.kind !== 'run' || !e.created) return;
-  var t = (PM_HOME.tabs() || []).filter(function (x) { return x.tabId === e.tabId; })[0];
-  if (t && (t.label === 'Run' || !t.label)) PM_HOME.update(e.tabId, { label: labelFor(e.tabId) });
-});
+  return { id: T.prefix + id, label: runLabel(r), sub: sub + ' · ' + r.thread, icon: T.icon, keywords: T.word + ' ' + r.thread, spec: { id: T.prefix + id, kind: 'run', label: runLabel(r), icon: T.icon } };
+}).concat([{ id: 'review-evidence:review-orchestrator-boundary:ev-1', label: 'Review evidence', sub: 'orchestrator-subagent-integration.md · lines 2–3', icon: 'review',
+  keywords: 'evidence review lines', spec: { id: 'review-evidence:review-orchestrator-boundary:ev-1', kind: 'run', label: 'Review evidence', icon: 'review' } }]));

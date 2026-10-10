@@ -6,8 +6,9 @@
      work-record:<message>            a work note with no other owner (no linked file or artifact)
    The shared header row says what the record is ("Web search", "8 results") with Copy, Show in chat and Maximize; the
    body is the shared document frame: the title, a plain meta line, one quiet line that nothing was fetched, then the
-   request and the result in the code face. A search result that is a project file opens the editor the D7 way
-   (single click a preview tab, double click a kept one); a web result opens a Browser tab under the chat's link: id.
+   request and the result in the code face. A search result that is a project file is the shared file reference
+   (PMW.fileRef: single click a preview tab, double click a kept one, D7) drawn as a result row; a web result opens a
+   Browser tab under the chat's link: id. Show in chat finds the work row in its thread (PM_HOME.chat.reveal).
    Never claims live data. Single column; the column stops at 960 px; tables scroll sideways in a narrow tab. */
 
 function h(tag, attrs, kids) {
@@ -120,13 +121,14 @@ function inline(text) {
 }
 function plain(text) { return String(text).replace(/`([^`]+)`/g, '$1').replace(/\*\*([^*]+)\*\*/g, '$1'); }
 
+/* the tab's label, also before it is mounted (an agent's background open, a restored tab) */
 function labelFor(id) {
   var r = parseId(id);
   if (r.kind === 'search') return r.a ? (r.a.length > 28 ? r.a.slice(0, 27) + '…' : r.a) : 'Search';
   if (r.kind === 'mcp') return r.a || 'MCP';
   if (r.kind === 'app') return 'Database inspector';
   if (r.kind === 'work-record') return WORK[r.a] ? WORK[r.a].title : 'Work note';
-  return 'Record';
+  return null;
 }
 
 /* ---- pieces ---- */
@@ -175,22 +177,30 @@ function searchRecord(r, api) {
 function resultRow(res, api) {
   var isFile = !!res.file;
   var where = isFile ? res.file + (res.line ? ':' + res.line : '') : res.web + res.path;
-  var b = h('button', { type: 'button', class: 'pmw-rec-result', role: 'listitem', 'data-pmh': 'row', 'data-k': 'res:' + where,
-    'data-pm-hover-label': isFile ? 'Open ' + res.file.split('/').pop() : 'Open in a Browser tab',
-    'data-pm-hover-detail': isFile ? 'Click: preview · double click: keep it open · Alt+click: new panel' : 'https://' + res.web + res.path }, [
+  var kids = [
     h('span', { class: 'pmw-rec-rico', 'aria-hidden': 'true' }, [PMW.kindIcon(isFile ? 'file' : 'browser')]),
     h('span', { class: 'pmw-rec-rcopy' }, [
       h('span', { class: 'pmw-rec-rtitle', text: res.title }),
       h('span', { class: 'pmw-rec-rwhere', text: isFile ? where + ' · in this project' : res.web + res.path }),
       h('span', { class: 'pmw-rec-rsnip', text: res.snippet })
     ])
-  ]);
-  b.addEventListener('click', function (e) {
-    var extra = { where: e.altKey ? 'panel' : undefined, background: e.ctrlKey || e.metaKey || undefined };
-    if (isFile) api.open(Object.assign({ kind: 'editor', path: res.file, line: res.line || null, mode: 'preview' }, extra));
-    else api.open(Object.assign({ id: 'link:' + enc(res.web) + '|' + enc(res.title), kind: 'browser', label: res.title, url: 'https://' + res.web + res.path, title: res.title }, extra));
-  });
-  if (isFile) b.addEventListener('dblclick', function () { api.open({ kind: 'editor', path: res.file, line: res.line || null, mode: 'keep' }); });
+  ];
+  var b;
+  if (isFile) {
+    /* the shared file reference carries the D7 opens (its own click timing, Enter keeps); the row draws its content */
+    b = PMW.fileRef({ path: res.file, line: res.line || null }, { api: api, icon: false, cls: 'pmw-rec-result' });
+    b.textContent = '';
+    add(b, kids);
+  } else {
+    b = h('button', { type: 'button', class: 'pmw-rec-result', 'data-pm-hover-label': 'Open in a Browser tab', 'data-pm-hover-detail': 'https://' + res.web + res.path }, kids);
+    b.addEventListener('click', function (e) {
+      api.open({ id: 'link:' + enc(res.web) + '|' + enc(res.title), kind: 'browser', label: res.title, url: 'https://' + res.web + res.path, title: res.title,
+        where: e.altKey ? 'panel' : undefined, background: e.ctrlKey || e.metaKey || undefined });
+    });
+  }
+  b.setAttribute('role', 'listitem');
+  b.setAttribute('data-pmh', 'row');
+  b.setAttribute('data-k', 'res:' + where);
   return b;
 }
 function mcpRecord(r) {
@@ -249,7 +259,7 @@ function workRecord(r) {
   }
   var src = h('button', { type: 'button', class: 'pmw-rec-srcbtn', 'data-pmh': 'icon', 'data-k': 'source', 'data-pm-hover-label': 'Show in chat', 'data-pm-hover-detail': 'Where this note was written' },
     [PMW.icon('chat', { size: 13, glyph: false }), h('span', { text: rec.thread })]);
-  src.addEventListener('click', function () { showInChat(rec.thread, rec.at); });
+  src.addEventListener('click', function () { showInChat('work-record:' + r.a, rec.thread, rec.at); });
   return {
     word: 'Work note', icon: 'document', facts: [{ id: 'rec-link', text: 'No linked file or artifact', dim: true }], title: rec.title,
     meta: ['Work note', 'No linked file or artifact', 'written at ' + rec.at],
@@ -261,11 +271,10 @@ function unknownRecord() {
   return { word: 'Record', icon: 'record', facts: [], title: 'This record is not here', meta: ['Record'],
     body: [h('p', { text: 'It may have been opened from an earlier session. Open it again from the chat’s work rows.' })], text: '' };
 }
-function showInChat(thread, at) {
-  var panel = document.getElementById('chatPanel');
-  var target = panel && panel.querySelector('textarea, [contenteditable="true"], input, button');
-  if (target) { try { target.focus({ preventScroll: true }); } catch (_) {} }
-  PMW.toast('In the chat: ' + (thread || 'the thread') + (at ? ', the work row at ' + at : ''));
+/* the work row this record came from, found and marked in its thread (the chat says when the demo lacks it) */
+function showInChat(id, thread, at) {
+  var res = PM_HOME.chat && PM_HOME.chat.reveal ? PM_HOME.chat.reveal({ thread: thread, messageId: id }) : null;
+  if (!res || res.ok === false) PMW.toast('In the chat: ' + (thread || 'the thread') + (at ? ', the work row at ' + at : ''));
 }
 
 function mountRecord(host, state, api) {
@@ -273,8 +282,8 @@ function mountRecord(host, state, api) {
   var r = parseId(api.id);
   var rec = r.kind === 'search' ? searchRecord(r, api) : r.kind === 'mcp' ? mcpRecord(r) : r.kind === 'app' ? inspectorRecord() : r.kind === 'work-record' ? workRecord(r) : unknownRecord();
   api.update({ label: labelFor(api.id), title: rec.word + ' · ' + rec.title });
-  var thread = (rec.meta && rec.meta[0] && SEARCHES[r.a]) ? SEARCHES[r.a].thread : (MCP[r.a] ? MCP[r.a].thread : 'Query performance');
-  var at = SEARCHES[r.a] ? SEARCHES[r.a].at : MCP[r.a] ? MCP[r.a].at : WORK[r.a] ? WORK[r.a].at : null;
+  var src = r.kind === 'search' ? SEARCHES[r.a] : r.kind === 'mcp' ? MCP[r.a] : r.kind === 'work-record' ? WORK[r.a] : null;
+  var thread = src ? src.thread : 'Query performance', at = src ? src.at : null;
   function actions() {
     var m = api.isMaximized();
     return [
@@ -282,12 +291,14 @@ function mountRecord(host, state, api) {
         try { navigator.clipboard.writeText(rec.text).then(function () { PMW.toast('Record copied'); }, function () { PMW.toast('Copying is not allowed here'); }); }
         catch (_) { PMW.toast('Copying is not allowed here'); }
       } },
-      { id: 'chat', label: 'Show in chat', icon: 'chat', detail: 'The work row this record came from', run: function () { showInChat(thread, at); } },
+      { id: 'chat', label: 'Show in chat', icon: 'chat', detail: 'The work row this record came from', run: function () { showInChat(api.id, thread, at); } },
       { id: 'max', label: m ? 'Restore' : 'Maximize', icon: m ? 'restore' : 'maximize', shortcut: 'Shift+Escape', run: function () { api.toggleMaximize(); row.setAction('max', { label: api.isMaximized() ? 'Restore' : 'Maximize', icon: api.isMaximized() ? 'restore' : 'maximize' }); } }
     ];
   }
   var root = h('div', { class: 'pmw-rec pmw-rec-' + r.kind });
-  var row = api.headerRow({ label: rec.word + ' controls', left: [{ id: 'rec-kind', icon: rec.icon, text: rec.word, strong: true }].concat(rec.facts), actions: actions() });
+  /* the last fact takes the free width and ends in an ellipsis; the buttons go to icons below 600 px */
+  var facts = rec.facts.map(function (f, i) { return i === rec.facts.length - 1 ? Object.assign({ grow: true }, f) : f; });
+  var row = api.headerRow({ label: rec.word + ' controls', left: [{ id: 'rec-kind', icon: rec.icon, text: rec.word, strong: true }].concat(facts), actions: actions(), labelsAt: 600 });
   var frame = PMW.frames.doc({ title: rec.title, meta: rec.meta, body: rec.body, cls: 'pmw-rec-doc' });
   frame._scroll.setAttribute('data-pmh', 'off');
   frame._scroll.setAttribute('tabindex', '-1');
@@ -316,6 +327,7 @@ PM_HOME.registerKind('record', {
     if (spec.message) return 'work-record:' + spec.message;
     return null;
   },
+  labelFor: labelFor,
   mount: mountRecord
 });
 
@@ -332,9 +344,3 @@ PM_HOME.catalog.add('record', CATALOG_IDS.map(function (x) {
   var label = labelFor(x[0]);
   return { id: x[0], label: label, sub: x[1], icon: 'record', keywords: 'record ' + parseId(x[0]).kind + ' ' + parseId(x[0]).a, spec: { id: x[0], kind: 'record', label: label } };
 }));
-
-PM_HOME.on('open', function (e) {
-  if (!e || e.kind !== 'record' || !e.created) return;
-  var t = (PM_HOME.tabs() || []).filter(function (x) { return x.tabId === e.tabId; })[0];
-  if (t && (t.label === 'Record' || !t.label)) PM_HOME.update(e.tabId, { label: labelFor(e.tabId) });
-});

@@ -6,7 +6,7 @@ var RECENT_KEY = 'pm.home.recent:v1';
 
 /* recent files (the "+" menu's inline three, the empty launcher's five) */
 PMW.recent = {
-  list: function () { return store.get(RECENT_KEY) || ['src/routes/recipes.rs', 'PRD.md', 'web/src/routes/+page.svelte']; },
+  list: function () { return store.get(RECENT_KEY) || ['src/routes/recipes.rs', 'PRD.md', 'web/src/routes/+page.svelte', 'src/main.rs', 'Cargo.toml']; },
   push: function (path) {
     if (!path) return;
     var l = PMW.recent.list().filter(function (p) { return p !== path; });
@@ -88,7 +88,7 @@ menus.plus = function (panelId, anchor) {
     { id: 'reopen', label: 'Reopen closed tab', right: KEYS.reopen, icon: 'reopen', disabled: !closedN, reason: 'No closed tab yet', run: function () { PMW.reopenClosed(); } }
   ];
   return menu.open(anchor, {
-    id: 'plus:' + panelId, search: { placeholder: 'Open anything: kinds, files, URLs' }, width: 320,
+    id: 'plus:' + panelId, search: { placeholder: 'Open anything: kinds, files, URLs' }, minWidth: 320,
     sections: [{ rows: rows }, { rows: actions }],
     filter: function (q) { return PMW.quickOpenSections(panelId, q, rows, actions); }
   });
@@ -133,7 +133,7 @@ menus.overflow = function (panelId, anchor, o) {
       return { label: def ? def.group : k, rows: groups[k].map(function (t) {
         var r = lay.tabs[t];
         return {
-          id: t, label: tabLabel(r), sub: r.state && r.state.path ? r.state.path : (r.title || ''), kind: (def && def.icon) || 'file',
+          id: t, label: tabLabel(r), sub: r.state && r.state.path ? r.state.path : (r.title || ''), kind: tabIcon(r),
           right: r.dirty ? 'unsaved' : (r.pinned ? 'pinned' : ''), current: pp && pp.active === t,
           run: function () { PMW.activateTab(t, { focus: true }); },
           // returns the close's promise: the menu refreshes once the tab is really gone (or its canClose said no)
@@ -156,8 +156,8 @@ menus.allTabs = function (anchor) {
     var l = state.layout;
     return model.panels(l).map(function (p, i) {
       return { label: 'Panel ' + (i + 1) + ': ' + model.describe(l, p.id), rows: p.tabs.map(function (t) {
-        var r = l.tabs[t], def = kindDef(r.kind);
-        return { id: t, label: tabLabel(r), sub: r.state && r.state.path ? r.state.path : '', kind: (def && def.icon) || 'file', current: p.active === t,
+        var r = l.tabs[t];
+        return { id: t, label: tabLabel(r), sub: r.state && r.state.path ? r.state.path : '', kind: tabIcon(r), current: p.active === t,
           run: function () { PMW.activateTab(t, { focus: true }); }, close: function () { return PMW.closeTab(t, { refocus: false }); } };
       }) };
     });
@@ -197,11 +197,11 @@ function lastOpenInSplit(l, panelId) {
   if (!parent) return true;
   return parent.kids.every(function (k) { return k.id === panelId || (k.t === 'panel' && k.collapsed); });
 }
+/* the panel menu's heading: where the panel is, in words ("Top right panel"; "This panel" when it is the only one) */
 function panelTitle(panelId) {
-  var l = state.layout, p = model.panel(l, panelId);
-  var role = p ? PMW.panelRole(l, p) : 'documents';
-  var names = { documents: 'Panel', terminal: 'Terminal panel', browser: 'Browser panel', dashboard: 'Dashboard panel', tools: 'Tools panel' };
-  return (names[role] || 'Panel') + ', ' + model.describe(l, panelId);
+  var where = model.describe(state.layout, panelId);
+  if (where === 'the only panel') return 'This panel';
+  return where.charAt(0).toUpperCase() + where.slice(1);
 }
 
 /* where a panel can move: beside each other panel, or to an edge of the whole centre (only offers that fit) */

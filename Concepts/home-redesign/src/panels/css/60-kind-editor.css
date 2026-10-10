@@ -81,9 +81,10 @@ html[data-theme="friendly-light"] .pmw-ed {
   --pmw-ed-s-var: #cf2c40; --pmw-ed-s-code: #b24297;
 }
 /* Glass: the reading plate under code is kept at least about 82 % opaque over the wallpaper, and nothing here adds a
-   blur (the closed blur budget): the header plate is a denser tint instead */
-html[data-theme^="glass"] .pmw-ed { --pmw-ed-plate: color-mix(in srgb, var(--pmw-ed-gutbg) 90%, transparent); }
+   blur (the closed blur budget): the header plate is the gutter tone made opaque instead, so a line scrolled under
+   the header row never reads through it */
 html[data-theme="glass-dark"] .pmw-ed {
+  --pmw-ed-plate: rgb(16, 12, 28);
   --pmw-ed-bg: rgba(12, 9, 22, .42);
   --pmw-ed-gutbg: rgba(16, 12, 28, .95);
   --pmw-ed-fg: #c0caf5;
@@ -96,6 +97,7 @@ html[data-theme="glass-dark"] .pmw-ed {
   --pmw-ed-s-var: #e0af68; --pmw-ed-s-code: #b4f9f8;
 }
 html[data-theme="glass-light"] .pmw-ed {
+  --pmw-ed-plate: rgb(240, 243, 243);
   --pmw-ed-bg: rgba(238, 242, 242, .70);
   --pmw-ed-gutbg: rgba(240, 243, 243, .96);
   --pmw-ed-fg: #343b58;
@@ -151,6 +153,33 @@ html[data-theme="retro-light"] .pmw-ed {
   --pmw-ed-s-mac: #3b3631; --pmw-ed-s-tag: #1a1a1a; --pmw-ed-s-esc: #a1281f; --pmw-ed-s-head: #1a1a1a; --pmw-ed-s-link: #a1281f;
   --pmw-ed-s-var: #a1281f; --pmw-ed-s-code: #a1281f;
 }
+/* Retro dark follows the terminal's phosphor (D27; PMT.Appearance.retroPhosphor(), the editor never writes it): amber is
+   the same monochrome design as green, each step at the green step's luminance, so contrast and weight are unchanged.
+   Retro light stays the black and red ribbon above whatever the terminal picks. */
+html[data-theme="retro-dark"] .pmw-ed[data-phosphor="amber"] {
+  --pmw-ed-fg: #ffc25f;
+  --pmw-ed-ln: #c37800; --pmw-ed-ln-cur: #ffedd1;
+  --pmw-ed-line: rgba(255, 194, 95, .06);
+  --pmw-ed-sel: #ffc25f; --pmw-ed-sel-blur: #c37800;
+  --pmw-ed-caret: #ffc25f;
+  --pmw-ed-hit: rgba(255, 243, 222, .18); --pmw-ed-hit-cur: rgba(255, 243, 222, .34); --pmw-ed-hit-ring: #fff3de; --pmw-ed-hit-mark: #fff3de;
+  --pmw-ed-focus-bg: rgba(255, 194, 95, .14);
+  --pmw-ed-thumb-ink: var(--pmw-ed-fg);
+  --pmw-ed-s-kw: #ffedd1; --pmw-ed-s-str: #ffd797; --pmw-ed-s-com: #c37800; --pmw-ed-s-fn: #ffdfad; --pmw-ed-s-ty: #ffce7e;
+  --pmw-ed-s-num: #fff3de; --pmw-ed-s-op: #ffc25f; --pmw-ed-s-pun: #e38c00; --pmw-ed-s-prop: #ffcc79; --pmw-ed-s-attr: #ffcc79;
+  --pmw-ed-s-mac: #ffdfad; --pmw-ed-s-tag: #ffdfad; --pmw-ed-s-esc: #fff3de; --pmw-ed-s-head: #fff3de; --pmw-ed-s-link: #ffd797;
+  --pmw-ed-s-var: #fff3de; --pmw-ed-s-code: #ffd797;
+}
+/* A picked code scheme (D27, editor.scheme): 10-editor.js writes the scheme's colours on the code area only (the
+   scroller, sticky lines, the track and the horizontal bar), so the header row, find and go to line keep the look.
+   Values the looks derive from other tokens are restated here, on those elements, so they resolve to the scheme. */
+.pmw-ed[data-scheme] .pmw-ed-scroll { background: var(--pmw-ed-bg); }
+html[data-theme^="retro"] .pmw-ed[data-scheme] :is(.pmw-ed-scroll, .pmw-ed-sticky, .pmw-ed-track) {
+  --pmw-ed-sizer-bg: var(--pmw-ed-bg); --pmw-ed-sg-ink: var(--pmw-ed-bg); --pmw-ed-sg-fill-add: var(--pmw-ed-add-fg);
+  --pmw-ed-sg-fill-mod: var(--pmw-ed-mod-fg); --pmw-ed-sg-fill-del: var(--pmw-ed-del-fg); --pmw-ed-sg-fill-conf: var(--pmw-ed-conf-fg);
+  --pmw-ed-thumb-ink: var(--pmw-ed-add-fg);
+}
+
 /* NieR: ink and parchment only (the NieR token tables), square, no glow, no blur */
 html[data-o55-nier="on"] .pmw-ed {
   --pmw-ed-bg: var(--o55-nier-code-bg);
@@ -229,8 +258,8 @@ html[data-theme^="glass"] .pmw-ed-head, html[data-o55-nier="on"] .pmw-ed-head { 
 .pmw-ed-thumb[hidden] { display: none; }
 .pmw-ed-track:hover .pmw-ed-thumb { background: color-mix(in srgb, var(--pmw-ed-fg) 20%, transparent); }
 .pmw-ed-track.is-drag .pmw-ed-thumb { background: color-mix(in srgb, var(--pmw-ed-fg) 28%, transparent); }
-html[data-theme^="retro"] .pmw-ed-thumb { border-radius: 0; border-color: var(--pmw-ed-add-fg); background: color-mix(in srgb, var(--pmw-ed-add-fg) 7%, transparent); }
-html[data-theme^="retro"] .pmw-ed-track:hover .pmw-ed-thumb, html[data-theme^="retro"] .pmw-ed-track.is-drag .pmw-ed-thumb { background: color-mix(in srgb, var(--pmw-ed-add-fg) 16%, transparent); }
+html[data-theme^="retro"] .pmw-ed-thumb { border-radius: 0; border-color: var(--pmw-ed-thumb-ink, var(--pmw-ed-add-fg)); background: color-mix(in srgb, var(--pmw-ed-thumb-ink, var(--pmw-ed-add-fg)) 7%, transparent); }
+html[data-theme^="retro"] .pmw-ed-track:hover .pmw-ed-thumb, html[data-theme^="retro"] .pmw-ed-track.is-drag .pmw-ed-thumb { background: color-mix(in srgb, var(--pmw-ed-thumb-ink, var(--pmw-ed-add-fg)) 16%, transparent); }
 html[data-o55-nier="on"] .pmw-ed-thumb { border-radius: 0; border-color: var(--o55-nier-ink); background: rgba(var(--o55-nier-ink-rgb), .08); }
 html[data-o55-nier="on"] .pmw-ed-track:hover .pmw-ed-thumb, html[data-o55-nier="on"] .pmw-ed-track.is-drag .pmw-ed-thumb { background: rgba(var(--o55-nier-ink-rgb), .16); }
 .pmw-ed-probe { position: absolute; width: 0; height: 0; overflow: hidden; }

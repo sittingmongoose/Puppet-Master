@@ -16,8 +16,16 @@
    watch PM_HOME 'activate', 'close', 'open' and 'layout': while their run is the active tab of a panel the card says
    "Deciding in the panel beside the chat" in place of its controls, and its controls come back when that ends.
 
-   Sizing keys on the layer itself (container pmw-sc, inline-size): the column runs 400-760 px (440 floating); folded to
-   its 32 px strip the shell hides every child of #chatPanel, this layer included. */
+   Sizing keys on the layer itself (container pmw-sc, inline-size): the message area runs 400-760 px (440 floating);
+   pinned History adds PMW.LADDER.chatHistoryW to the column (the chat column widens, 46-chat.js), drawn at
+   chatHistoryWNarrow while the whole layer is under chatHistoryAt; folded to its 32 px strip the shell hides every
+   child of #chatPanel, this layer included.
+
+   Hooks for the kinds (it registers itself as PMW.chatCol.surface, so PM_HOME.chat reaches it): compose(text) and
+   PMW.standIn.prefill(text) put text in the composer; reveal({ thread, messageId }) finds a message (an id below, or the
+   id of a tab or file a row opens) and marks it; a finished scripted reply emits PMW.bus 'chat' { type: 'turn-finished',
+   threadId }. The browser kind's captures ('browser:capture') land in the composer as attachment cards, and its
+   Send to chat ('browser:send') posts, lists or inserts the part it picked. */
 
 var SC_KEY = 'chat.standIn';
 var THREAD = 'Query performance';
@@ -111,6 +119,7 @@ var T = {
   wonderer: { id: 'wonderer:w-1', kind: 'document', label: 'Wonderer’s ideas' },
   wonderSource: { id: 'wonder-source:dashboard-query', kind: 'document', label: 'Wonderer · source' },
   context: { id: 'context:query', kind: 'context', label: 'Context · Query performance' },
+  workNote: { id: 'work-record:m-7', kind: 'record', label: 'Kept idx_events_created until the new index is proven' },
   capture: { id: 'browser:1', kind: 'browser', label: 'Query performance dashboard', extra: { url: 'https://app.internal/dashboards/query-performance' } }
 };
 var ARTIFACT_ROWS = [
@@ -165,6 +174,25 @@ var THREADS = {
     ['Crew and shared work', 'The coordinator assigns the parts.']
   ]
 };
+/* thread ids: the History titles in lower-case words joined by hyphens, plus the short ids other kinds use for the same
+   threads (the context kind's thread keys) */
+var THREAD_ALIAS = { query: THREAD, subagents: 'Architecture review', visuals: 'Working with artifacts', 'plan-deep': 'Deep Plan', crew: 'Crew and shared work' };
+function slug(t) { return String(t).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
+function allThreads() { return THREADS.pinned.concat(THREADS.recent); }
+function threadByKey(key) {
+  if (key == null || key === '') return null;
+  var k = String(key).trim(), low = k.toLowerCase();
+  if (Object.prototype.hasOwnProperty.call(THREAD_ALIAS, low)) return THREAD_ALIAS[low];
+  var list = allThreads();
+  for (var i = 0; i < list.length; i++) if (list[i][0].toLowerCase() === low || slug(list[i][0]) === slug(k)) return list[i][0];
+  return null;
+}
+function threadIdOf(title) {
+  for (var a in THREAD_ALIAS) if (THREAD_ALIAS[a] === title) return a;
+  return slug(title);
+}
+function threadPreview(title) { var list = allThreads(); for (var i = 0; i < list.length; i++) if (list[i][0] === title) return list[i][1]; return ''; }
+
 var REPLIES = [
   ['On it. The composite index holds at 71 ms p95, so next I check the write overhead in ', { file: 'src/analytics/bench.rs', line: 44 }, '.'],
   ['The rollback rehearsal waits for the migration. The Crew card above shows where it stands.'],
@@ -174,9 +202,13 @@ var REPLIES = [
 
 /* ---- state ---- */
 var S = { layer: null, scroll: null, list: null, hist: null, histOpen: false, input: null, popBtn: null, runCards: [], replyN: 0, rerunN: 0,
-  thread: THREAD, scripted: null, installed: false, recomputeQueued: false };
+  thread: THREAD, scripted: null, installed: false, recomputeQueued: false,
+  sent: {},            // thread title -> the nodes sent and replied there, so a thread switch keeps them
+  atts: [], attsEl: null, caret: null, marked: null, markTimer: 0 };
 
 function isOn() { return PM_HOME.settings.get(SC_KEY) !== false; }
+/* the layer is what the person sees in the chat column: on, installed, and not lifted for the Guided Tour */
+function drawn() { return !!S.installed && isOn() && !document.documentElement.hasAttribute('data-o55-tour'); }
 function apply() {
   if (!S.layer) return;
   var on = isOn();
@@ -186,6 +218,7 @@ function apply() {
   var cp = document.getElementById('chatPanel');
   if (cp) { if (on) cp.setAttribute('data-pmw-sc', 'on'); else cp.removeAttribute('data-pmw-sc'); }
   if (!on) closeHistory();
+  if (PMW.narrow) PMW.narrow.schedule();   // pinned History widens the column only while the layer draws it
 }
 function toggle() {
   var next = !isOn();
@@ -244,7 +277,7 @@ function card(o) {
     ]),
     o.status ? h('span', { class: 'pmw-sc-state' + (o.state ? ' is-' + o.state : ''), text: o.status }) : null
   ]);
-  var c = h('section', { class: 'pmw-sc-card' + (o.cls ? ' ' + o.cls : ''), 'aria-label': o.aria || o.title || o.kicker }, [head]);
+  var c = h('section', { class: 'pmw-sc-card' + (o.cls ? ' ' + o.cls : ''), 'aria-label': o.aria || o.title || o.kicker, 'data-pmw-sc-msg': o.msg || null }, [head]);
   if (o.body) add(c, o.body);
   if (o.actions) c.appendChild(h('div', { class: 'pmw-sc-acts' }, o.actions));
   return c;
@@ -259,12 +292,16 @@ function para(parts) {
   });
   return p;
 }
-function msgUser(text, time) {
-  return h('div', { class: 'pmw-sc-msg is-user' }, [h('div', { class: 'pmw-sc-bubble', text: text }), h('p', { class: 'pmw-sc-when', text: time || 'now' })]);
+function msgUser(text, time, atts) {
+  return h('div', { class: 'pmw-sc-msg is-user' }, [text ? h('div', { class: 'pmw-sc-bubble', text: text }) : null,
+    atts && atts.length ? h('div', { class: 'pmw-sc-msg-atts' }, atts.map(function (a) { return chipEl(a, false); })) : null,
+    h('p', { class: 'pmw-sc-when', text: time || 'now' })]);
 }
 function msgAgent(kids, meta) {
   return h('div', { class: 'pmw-sc-msg is-agent' }, [h('div', { class: 'pmw-sc-agent' }, kids), meta ? h('p', { class: 'pmw-sc-when', text: meta }) : null]);
 }
+/* a message id for PM_HOME.chat.reveal (the scripted thread's ids are listed by PMW.standIn.messages()) */
+function mid(el, id) { el.setAttribute('data-pmw-sc-msg', id); return el; }
 function workGroup(title, rows) {
   return h('div', { class: 'pmw-sc-work' }, [h('p', { class: 'pmw-sc-work-head' }, [ico('clock', 13), h('span', { text: title })]), h('div', { class: 'pmw-sc-work-rows' }, rows)]);
 }
@@ -374,15 +411,19 @@ function agentOpen(a, res) {
 function addEvent(text, t) {
   if (!S.list) return;
   var row = h('div', { class: 'pmw-sc-event' }, [ico('problems', 14), h('span', { class: 'pmw-sc-event-t', text: text }), t ? targetBtn('Open', t, { quiet: true }) : null]);
-  row.setAttribute('data-pmw-sc-sent', '');
-  S.list.appendChild(row);
-  scrollEnd();
+  keep(THREAD, row);
+}
+/* a node sent or replied in a thread: kept with that thread, and shown now when it is the thread on screen */
+function keep(thread, node) {
+  node.setAttribute('data-pmw-sc-sent', '');
+  (S.sent[thread] = S.sent[thread] || []).push(node);
+  if (thread === S.thread && S.list) { S.list.appendChild(node); scrollEnd(); }
 }
 
 /* ---- the scripted transcript ---- */
 function transcript() {
   var out = [];
-  out.push(msgUser('Analytics is slow for our biggest tenants. Find out why and plan a fix.', '9:02 PM'));
+  out.push(mid(msgUser('Analytics is slow for our biggest tenants. Find out why and plan a fix.', '9:02 PM'), 'q-ask'));
 
   /* turn 1: the investigation */
   out.push(msgAgent([
@@ -391,7 +432,8 @@ function transcript() {
       workRow({ icon: 'search', text: 'Searched “postgres composite index write amplification” · 8 results', target: T.search }),
       workRow({ icon: 'link', text: 'PostgreSQL 16 · Multicolumn Indexes · postgresql.org', target: T.link }),
       workRow({ icon: 'record', text: 'Called grafana.query-range — p95 series, last 24h', target: T.mcp }),
-      workRow({ icon: 'record', text: 'Refreshed schema metadata in the database inspector', target: T.inspector })
+      workRow({ icon: 'record', text: 'Refreshed schema metadata in the database inspector', target: T.inspector }),
+      mid(workRow({ icon: 'document', textEl: [h('span', { class: 'pmw-sc-dim', text: 'Work note · ' }), document.createTextNode(T.workNote.label)], hover: 'Work note: ' + T.workNote.label, target: T.workNote }), 'm-7')
     ]),
     card({ icon: 'browser', kicker: 'Browser', title: 'Inspecting the live query dashboard', status: '8s ago',
       body: h('p', { class: 'pmw-sc-fine', text: 'Opened the Query Performance dashboard. Captured p50 118 ms and p95 482 ms. No console errors across 3 reloads.' }),
@@ -403,9 +445,10 @@ function transcript() {
     lensStrip(),
     planCard()
   ], 'Agent · Claude Sonnet 4.6 · 9:05 PM'));
+  mid(out[out.length - 1], 'q-investigation');
 
   /* subagents */
-  out.push(card({ icon: 'transcript', kicker: 'Live subagents', title: 'Two helpers on the read path', status: '2 running', cls: 'is-agents-live',
+  out.push(card({ icon: 'transcript', kicker: 'Live subagents', title: 'Two helpers on the read path', status: '2 running', cls: 'is-agents-live', msg: 'q-subagents',
     body: h('div', { class: 'pmw-sc-rows' }, [
       workRow({ icon: 'agent', text: 'Query Analyzer · Benchmarking tenant-scoped query alternatives', meta: 'running', state: 'ok', target: T.agentQuery }),
       workRow({ icon: 'agent', text: 'Schema Reviewer · Checking the migration lock', meta: 'waiting', state: 'warn', target: T.agentSchema })
@@ -419,11 +462,12 @@ function transcript() {
     ]),
     artifactCard()
   ], 'Agent · Claude Sonnet 4.6 · 9:11 PM'));
+  mid(out[out.length - 1], 'q-artifacts');
 
-  out.push(activityCard());
+  out.push(mid(activityCard(), 'q-activity'));
 
   /* runs */
-  out.push(msgUser('Get a few opinions on the rollout before we ship it.', '9:14 PM'));
+  out.push(mid(msgUser('Get a few opinions on the rollout before we ship it.', '9:14 PM'), 'q-ask-opinions'));
   out.push(msgAgent([
     para(['Four runs are going. Open one to decide in the panel beside the chat.']),
     runCard({ ids: [T.crew.id], kicker: 'Crew', title: 'Crew · Query Performance Rollout', status: 'Running', state: 'ok',
@@ -441,6 +485,7 @@ function transcript() {
       body: h('p', { class: 'pmw-sc-fine', text: '3 options · Implementation leads · $2.68 of $14.00' }),
       actions: [targetBtn('Open Panel', T.brainstorm, { primary: true, detail: 'Opens the run beside the chat · Alt+click for a new panel' })] })
   ], 'Agent · 9:15 PM'));
+  mid(out[out.length - 1], 'q-runs');
 
   /* planning and receipts */
   out.push(msgAgent([
@@ -458,8 +503,9 @@ function transcript() {
       body: h('p', { class: 'pmw-sc-fine', text: 'Reproduced on the local example. The cause is narrowed to the unit table.' }),
       actions: [targetBtn('Open investigation', T.debug, { primary: true })] })
   ], 'Agent · 9:20 PM'));
+  mid(out[out.length - 1], 'q-plans');
 
-  out.push(agentCard());
+  out.push(mid(agentCard(), 'q-agent-activity'));
   return out;
 }
 function lensStrip() {
@@ -570,9 +616,14 @@ function moreMenu(anchor) {
     { id: 'current', label: 'Show the current chat', sub: 'The stand-in comes back from Home options', icon: 'chat', run: function () { toggle(); } },
     floating ? { id: 'dock', label: 'Dock back', icon: 'popOut', run: function () { PMW.chatCol.dockBack(); syncPop(); } }
       : { id: 'pop', label: 'Pop out', sub: 'The only way to move the chat', icon: 'popOut', run: function () { PMW.chatCol.popOut(); syncPop(); } },
-    { id: 'pin', label: 'Keep History open', checked: pinned, run: function () { setPinned(!pinned); } },
-    { id: 'clear', label: 'Clear what you sent', icon: 'reopen', disabled: !S.sentCount, run: function () { resetThread(); } }
+    { id: 'pin', label: 'Keep History open', sub: 'The chat grows by its width', checked: pinned, run: function () { setPinned(!pinned); } },
+    { id: 'clear', label: 'Clear what you sent', sub: 'In this thread', icon: 'reopen', disabled: !(S.sent[S.thread] || []).length, run: function () { resetThread(); } }
   ] });
+}
+/* History is drawn pinned while the setting says so and the narrow ladder has not given its width back (44-narrow.js:
+   below the strip threshold the column falls back to the flyout before the chat folds to its strip; never saved) */
+function histPinned() {
+  return PM_HOME.settings.get('chat.history') === 'pinned' && !(PMW.narrow && PMW.narrow.state && PMW.narrow.state.histDropped);
 }
 function setPinned(on) {
   PM_HOME.settings.set('chat.history', on ? 'pinned' : 'flyout');
@@ -581,13 +632,13 @@ function setPinned(on) {
 }
 function paintHistoryMode() {
   if (!S.layer) return;
-  var pinned = PM_HOME.settings.get('chat.history') === 'pinned';
+  var setting = PM_HOME.settings.get('chat.history') === 'pinned', pinned = histPinned();
   S.layer.toggleAttribute('data-pmw-sc-pinned', pinned);
-  if (pinned) { S.hist.hidden = false; S.histOpen = false; S.histBtn.setAttribute('aria-expanded', 'true'); }
+  if (pinned) { S.hist.hidden = false; S.histOpen = false; S.layer.removeAttribute('data-pmw-sc-hist'); S.histBtn.setAttribute('aria-expanded', 'true'); }
   else if (!S.histOpen) { S.hist.hidden = true; S.histBtn.setAttribute('aria-expanded', 'false'); }
   if (S.pinBtn) {
-    S.pinBtn.setAttribute('aria-pressed', pinned ? 'true' : 'false');
-    var lbl = pinned ? 'Unpin History' : 'Pin History';
+    S.pinBtn.setAttribute('aria-pressed', setting ? 'true' : 'false');
+    var lbl = setting ? 'Unpin History' : 'Pin History';
     S.pinBtn.setAttribute('aria-label', lbl); S.pinBtn.setAttribute('data-pm-hover-label', lbl);
   }
 }
@@ -606,7 +657,7 @@ function history() {
         var cur = t[0] === S.thread;
         var r = h('button', { type: 'button', role: 'listitem', class: 'pmw-sc-hrow pmw-cur' + (cur ? ' pmw-chosen' : ''), 'data-pmh': 'row', 'aria-current': cur ? 'true' : null,
           'data-pm-hover-visual-suppressed': 'true' }, [h('span', { class: 'pmw-sc-hrow-t', text: t[0] }), h('span', { class: 'pmw-sc-hrow-p', text: t[1] })]);
-        r.addEventListener('click', function () { showThread(t[0], t[1]); if (PM_HOME.settings.get('chat.history') !== 'pinned') closeHistory(true); fill(search.value); });
+        r.addEventListener('click', function () { showThread(t[0], t[1]); if (!histPinned()) closeHistory(true); fill(search.value); });
         list.appendChild(r);
       });
     });
@@ -626,7 +677,7 @@ function history() {
   return panel;
 }
 function toggleHistory(b) {
-  if (PM_HOME.settings.get('chat.history') === 'pinned') { setPinned(false); return; }
+  if (histPinned()) { setPinned(false); return; }
   if (S.histOpen) closeHistory(true); else openHistory();
 }
 function openHistory() {
@@ -641,7 +692,7 @@ function closeHistory(returnFocus) {
   if (!S.histOpen) return;
   S.histOpen = false;
   S.layer.removeAttribute('data-pmw-sc-hist');
-  if (PM_HOME.settings.get('chat.history') !== 'pinned') { S.hist.hidden = true; S.histBtn.setAttribute('aria-expanded', 'false'); }
+  if (!histPinned()) { S.hist.hidden = true; S.histBtn.setAttribute('aria-expanded', 'false'); }
   if (returnFocus) try { S.histBtn.focus({ preventScroll: true }); } catch (_) {}
 }
 function composer() {
@@ -652,28 +703,139 @@ function composer() {
   ta.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); submit(); }
   });
+  ta.addEventListener('input', fit);
+  /* where Insert at cursor lands: the caret when the box last had it (the end before it ever had it) */
+  function remember() { S.caret = { start: ta.selectionStart, end: ta.selectionEnd }; }
+  ta.addEventListener('blur', remember);
+  ta.addEventListener('select', remember);
   S.input = ta;
-  return h('div', { class: 'pmw-sc-comp' }, [h('div', { class: 'pmw-sc-box' }, [ta,
+  S.attsEl = h('div', { class: 'pmw-sc-atts', role: 'list', 'aria-label': 'Attached to this message', hidden: true });
+  return h('div', { class: 'pmw-sc-comp' }, [h('div', { class: 'pmw-sc-box' }, [S.attsEl, ta,
     h('div', { class: 'pmw-sc-comprow' }, [h('span', { class: 'pmw-sc-mode', text: 'Agent · Claude Sonnet 4.6 · Auto' }), send])])]);
+}
+/* the box grows with its text up to 160 px, then scrolls */
+function fit() {
+  if (!S.input) return;
+  S.input.style.height = 'auto';
+  S.input.style.height = Math.min(160, Math.max(44, S.input.scrollHeight)) + 'px';
+}
+function focusComposer(caret) {
+  if (!S.input) return;
+  var n = caret == null ? S.input.value.length : caret;
+  S.caret = { start: n, end: n };
+  function go() {
+    try { S.input.focus({ preventScroll: true }); } catch (_) {}
+    try { S.input.setSelectionRange(n, n); } catch (_) {}
+  }
+  go();
+  /* a menu or button that ran this may hand focus back to itself as it closes: take it once more, next frame */
+  requestAnimationFrame(function () { var a = document.activeElement; if (a !== S.input && !(S.layer && S.layer.contains(a))) go(); });
+}
+
+/* ---- attachments: the browser's captures and picked parts, drawn as small cards (never pills) ---- */
+var capKeys = typeof WeakMap === 'function' ? new WeakMap() : null, capSeq = 0;
+function capKey(tabId, c) {
+  if (!capKeys) return 'cap:' + tabId + ':' + c.kind + ':' + c.at + ':' + c.w + 'x' + c.h;
+  var k = capKeys.get(c);
+  if (!k) { capSeq += 1; k = 'cap:' + tabId + ':' + capSeq; capKeys.set(c, k); }
+  return k;
+}
+function compName(i) { return i.comp ? (i.comp.charAt(0) === '<' ? i.comp : '<' + i.comp + '>') : '<' + (i.el || 'element') + '>'; }
+function attFromCapture(tabId, c) {
+  if (!c || c.kind === 'refused') return null;
+  if (c.kind === 'component') {
+    var name = compName({ comp: c.comp });
+    return { key: 'comp:' + tabId + ':' + name, type: 'component', tabId: tabId, label: name, detail: c.title || '', page: c.title || '' };
+  }
+  var word = c.kind === 'page' ? 'Full page screenshot' : c.kind === 'region' ? 'Region screenshot' : 'Full screenshot';
+  return { key: capKey(tabId, c), type: 'capture', tabId: tabId, kind: c.kind, label: word, page: c.title || '',
+    detail: (c.title || 'Browser') + (c.w ? ' · ' + c.w + ' × ' + c.h : ''), thumb: c.thumb };
+}
+function attFromComponent(tabId, i) {
+  if (!i) return null;
+  var name = compName(i), key = 'comp:' + tabId + ':' + name;
+  var had = S.atts.filter(function (a) { return a.key === key; })[0];
+  var page = had && had.page ? had.page : tabTitle(tabId);
+  return { key: key, type: 'component', tabId: tabId, label: name, src: i.src || '', page: page,
+    detail: i.src || (had && had.detail) || page || i.text || '' };
+}
+/* the browser tab's own label (its page title), for a picked part that came without one */
+function tabTitle(tabId) {
+  try { var t = PM_HOME.tabs().filter(function (x) { return x.tabId === tabId; })[0]; return t && t.label ? String(t.label) : ''; } catch (_) { return ''; }
+}
+function chipEl(a, removable) {
+  var thumb;
+  if (a.type === 'capture') {
+    var t = a.thumb || ['#888', '#aaa', '#ddd'];
+    thumb = h('span', { class: 'pmw-sc-att-thumb' + (a.kind === 'region' ? ' is-crop' : ''), 'aria-hidden': 'true', style: '--t1:' + t[0] + ';--t2:' + t[1] + ';--t3:' + t[2] }, [h('i'), h('i'), h('i')]);
+  } else thumb = h('span', { class: 'pmw-sc-att-thumb is-comp', 'aria-hidden': 'true' }, [ico('code', 14)]);
+  var body = h('button', { type: 'button', class: 'pmw-sc-att-body', 'data-pmh': 'off', 'aria-label': a.label + (a.detail ? ', ' + a.detail : '') + '. Show the browser tab',
+    'data-pm-hover-label': a.label, 'data-pm-hover-detail': 'Shows the browser tab it came from' }, [thumb,
+    h('span', { class: 'pmw-sc-att-t' }, [h('span', { class: 'pmw-sc-att-l', text: a.label }), a.detail ? h('span', { class: 'pmw-sc-att-d', text: a.detail }) : null])]);
+  body.addEventListener('click', function () {
+    var r = null;
+    try { r = a.tabId ? PM_HOME.reveal(a.tabId) : null; } catch (_) { r = null; }
+    if (!r || r.ok === false) PMW.announce('The browser tab it came from is closed');
+  });
+  var chip = h('span', { class: 'pmw-sc-att' + (a.type === 'component' ? ' is-comp' : ''), role: removable ? 'listitem' : null }, [body]);
+  if (removable) {
+    var x = h('button', { type: 'button', class: 'pmw-sc-att-x', 'aria-label': 'Remove ' + a.label, 'data-pm-hover-label': 'Remove', 'data-pm-hover-detail': 'Takes it off this message', 'data-pmh': 'icon' }, [ico('close', 12)]);
+    x.addEventListener('click', function () { removeAtt(a.key); PMW.announce(a.label + ' removed'); focusComposer(); });
+    chip.appendChild(x);
+  }
+  return chip;
+}
+function renderAtts() {
+  if (!S.attsEl) return;
+  S.attsEl.textContent = '';
+  S.atts.forEach(function (a) { S.attsEl.appendChild(chipEl(a, true)); });
+  S.attsEl.hidden = !S.atts.length;
+}
+var MAX_ATTS = 6;
+function addAtt(a) {
+  if (!a) return;
+  S.atts = S.atts.filter(function (x) { return x.key !== a.key; });
+  S.atts.push(a);
+  if (S.atts.length > MAX_ATTS) S.atts = S.atts.slice(S.atts.length - MAX_ATTS);
+  renderAtts();
+}
+function removeAtt(key) { S.atts = S.atts.filter(function (x) { return x.key !== key; }); renderAtts(); }
+
+/* ---- sending and the scripted replies ---- */
+function fileKnown(path) { try { return !!PMW.fileIndex && PMW.fileIndex(path, 40).indexOf(path) >= 0; } catch (_) { return false; } }
+function replyFor(atts) {
+  var comp = atts.filter(function (a) { return a.type === 'component'; })[0];
+  if (comp) {
+    var m = /^(.*?):(\d+)/.exec(comp.src || '');
+    if (m && fileKnown(m[1])) return ['I’ll look at ', { code: comp.label }, '. It is drawn in ', { file: m[1], line: +m[2] }, '.'];
+    return ['I’ll look at ', { code: comp.label }, ' on ' + (comp.page || 'that page') + '. The page has no source for it, so I’ll work from what it draws.'];
+  }
+  var cap = atts.filter(function (a) { return a.type === 'capture'; })[0];
+  if (cap) return ['I have the ' + cap.label.toLowerCase() + ' of ' + (cap.page || 'the page') + '. I’ll use it when I check the layout.'];
+  var r = REPLIES[S.replyN % REPLIES.length];
+  S.replyN += 1;
+  return r;
+}
+function post(text, atts) {
+  atts = atts || [];
+  var thread = S.thread;
+  keep(thread, msgUser(text, 'now', atts));
+  var reply = replyFor(atts);
+  setTimeout(function () {
+    keep(thread, msgAgent([para(reply)], 'Agent · now'));
+    PMW.announce('Puppet Master replied');
+    try { PMW.bus.emit('chat', { type: 'turn-finished', threadId: threadIdOf(thread) }); } catch (_) {}
+  }, PMW.reduced() ? 120 : 650);
 }
 function submit() {
   var text = (S.input.value || '').trim();
-  if (!text) return;
+  if (!text && !S.atts.length) return;
+  var atts = S.atts.slice();
   S.input.value = '';
-  S.sentCount = (S.sentCount || 0) + 1;
-  var mine = msgUser(text, 'now');
-  mine.setAttribute('data-pmw-sc-sent', '');
-  S.list.appendChild(mine);
-  scrollEnd();
-  var reply = REPLIES[S.replyN % REPLIES.length];
-  S.replyN += 1;
-  setTimeout(function () {
-    var m = msgAgent([para(reply)], 'Agent · now');
-    m.setAttribute('data-pmw-sc-sent', '');
-    S.list.appendChild(m);
-    scrollEnd();
-    PMW.announce('Puppet Master replied');
-  }, PMW.reduced() ? 120 : 650);
+  fit();
+  S.atts = [];
+  renderAtts();
+  post(text, atts);
 }
 function scrollEnd() {
   if (!S.scroll) return;
@@ -681,19 +843,153 @@ function scrollEnd() {
   try { S.scroll.scrollTo({ top: S.scroll.scrollHeight, behavior: smooth ? 'smooth' : 'auto' }); } catch (_) { S.scroll.scrollTop = S.scroll.scrollHeight; }
 }
 function resetThread() {
-  Array.prototype.slice.call(S.list.querySelectorAll('[data-pmw-sc-sent], .pmw-sc-event')).forEach(function (n) { n.remove(); });
-  S.sentCount = 0;
+  (S.sent[S.thread] || []).forEach(function (n) { n.remove(); });
+  S.sent[S.thread] = [];
+  PMW.announce('Cleared what you sent in ' + S.thread);
 }
-function showThread(name, preview) {
+function showThread(name, preview, quiet) {
   if (name === S.thread) return;
   S.thread = name;
   S.titleEl.textContent = name;
   S.list.textContent = '';
   if (name === THREAD) { add(S.list, S.scripted); queueRecompute(); }
-  else add(S.list, otherThread(name, preview || ''));
+  else add(S.list, otherThread(name, preview || threadPreview(name)));
+  add(S.list, S.sent[name] || []);
   S.scroll.scrollTop = name === THREAD ? S.scroll.scrollHeight : 0;
   if (S.fillHistory) S.fillHistory();
-  PMW.announce('Showing ' + name);
+  if (!quiet) PMW.announce('Showing ' + name);
+}
+
+/* ---- the hooks for the kinds (PM_HOME.chat in 46-chat.js reaches these through PMW.chatCol.surface) ---- */
+/* compose: the text goes in the composer, focused, caret at the end; a draft already there is kept and the text follows
+   it on a new line (the same text twice is not added twice) */
+function compose(text) {
+  if (!S.input) return { ok: false, reason: 'not_installed' };
+  closeHistory(false);
+  var t = String(text == null ? '' : text), cur = S.input.value || '', tt = t.trim();
+  var next = !tt ? cur : !cur.trim() ? t : cur.replace(/\s+$/, '').slice(-tt.length) === tt ? cur : cur.replace(/\s+$/, '') + '\n' + t;
+  S.input.value = next;
+  fit();
+  focusComposer(next.length);
+  return { ok: true, surface: 'stand-in' };
+}
+function findIn(nodes, id) {
+  var v = String(id), path = v.indexOf('file:') === 0 ? v.slice(5) : v;
+  var sels = [];
+  try {
+    var e = window.CSS && CSS.escape ? CSS.escape : function (x) { return x.replace(/["\\]/g, '\\$&'); };
+    sels.push('[data-pmw-sc-msg="' + e(v) + '"]', '[data-pmw-sc-open="' + e(v) + '"]', '[data-pmw-sc-file="' + e(path) + '"]');
+    if (/^work-record:/.test(v)) sels.push('[data-pmw-sc-msg="' + e(v.slice(12)) + '"]');
+  } catch (_) { return null; }
+  for (var s = 0; s < sels.length; s++) {
+    for (var i = 0; i < nodes.length; i++) {
+      var n = nodes[i];
+      if (!n || n.nodeType !== 1) continue;
+      if (n.matches(sels[s])) return n;
+      var hit = n.querySelector(sels[s]);
+      if (hit) return hit;
+    }
+  }
+  return null;
+}
+function nodesOf(thread) { return (thread === THREAD ? S.scripted : []).concat(S.sent[thread] || []); }
+function scrollToEl(el) {
+  var sc = S.scroll;
+  if (!sc) return;
+  var sr = sc.getBoundingClientRect(), er = el.getBoundingClientRect();
+  var top = Math.max(0, sc.scrollTop + (er.top - sr.top) - Math.max(16, (sr.height - er.height) / 2));
+  try { sc.scrollTo({ top: top, behavior: PMW.reduced() ? 'auto' : 'smooth' }); } catch (_) { sc.scrollTop = top; }
+}
+function markEl(el) {
+  if (el.classList.contains('pmw-sc-msg') && el.classList.contains('is-user')) el = el.querySelector('.pmw-sc-bubble, .pmw-sc-msg-atts') || el;
+  if (S.marked) S.marked.removeAttribute('data-pmw-sc-found');
+  clearTimeout(S.markTimer);
+  S.marked = el;
+  el.removeAttribute('data-pmw-sc-found');
+  void el.offsetWidth;   // restart the fade when the same message is marked twice
+  el.setAttribute('data-pmw-sc-found', '');
+  S.markTimer = setTimeout(function () { el.removeAttribute('data-pmw-sc-found'); if (S.marked === el) S.marked = null; }, 2400);
+}
+function reveal(o) {
+  o = o || {};
+  if (!S.list) return { ok: false, found: false, thread: null, reason: 'not_installed' };
+  closeHistory(false);
+  var want = null;
+  if (o.thread != null && o.thread !== '') {
+    want = threadByKey(o.thread);
+    if (!want) { PMW.announce('That thread is not in this demo'); return { ok: false, found: false, thread: threadIdOf(S.thread), reason: 'unknown_thread' }; }
+  } else if (o.messageId) {
+    // no thread named: the thread on screen when it has the message, else the scripted thread when that has it
+    want = findIn(nodesOf(S.thread), o.messageId) ? S.thread : findIn(nodesOf(THREAD), o.messageId) ? THREAD : S.thread;
+  }
+  if (want && want !== S.thread) showThread(want, threadPreview(want), true);
+  var el = o.messageId ? findIn(nodesOf(S.thread), o.messageId) : null;
+  if (!el || !S.list.contains(el)) {
+    PMW.announce(o.messageId ? 'That message is not in this demo' : 'Showing ' + S.thread);
+    return { ok: true, found: false, thread: threadIdOf(S.thread) };
+  }
+  scrollToEl(el);
+  markEl(el);
+  PMW.announce('Showing the message in ' + S.thread);
+  return { ok: true, found: true, thread: threadIdOf(S.thread) };
+}
+
+/* ---- the browser kind: its captures attach here; Send to chat posts, lists or inserts the part it picked ---- */
+function onCapture(e) {
+  if (!e || !e.capture) return;
+  addAtt(attFromCapture(e.tabId, e.capture));
+}
+function insertAtCaret(text) {
+  var v = S.input.value || '';
+  // the live caret while the box has focus; else where it was when the box last had it
+  var live = document.activeElement === S.input ? { start: S.input.selectionStart, end: S.input.selectionEnd } : S.caret;
+  var at = live && live.start != null && live.start <= v.length ? live : { start: v.length, end: v.length };
+  var before = v.slice(0, at.start), after = v.slice(Math.max(at.start, at.end));
+  var pre = before && !/\s$/.test(before) ? ' ' : '';
+  S.input.value = before + pre + text + after;
+  var caret = (before + pre + text).length;
+  S.caret = { start: caret, end: caret };
+  fit();
+  focusComposer(caret);
+}
+function onSend(e) {
+  if (!e || !e.what) return;
+  var a = e.how === 'capture' ? attFromCapture(e.tabId, e.what) : attFromComponent(e.tabId, e.what);
+  if (!a) return;
+  if (!drawn()) {
+    // the page's own chat is showing (stand-in off, or the Guided Tour): it cannot take attachments, so a plain
+    // reference goes in its box for every way of sending, and the person sends it
+    var ref = a.type === 'capture' ? a.label + ' of ' + (a.page || 'the page') : a.label + (a.page ? ' on ' + a.page : '');
+    PM_HOME.chat.compose(e.how === 'send' || e.how === 'capture' ? 'Look at ' + ref + '.' : ref + ' ');
+    return;
+  }
+  if (PMW.chatCol) PMW.chatCol.show();
+  closeHistory(false);
+  if (e.how === 'capture') {
+    // "Sends the capture as its own message"
+    removeAtt(a.key);
+    post('', [a]);
+    return;
+  }
+  if (e.how === 'send') {
+    // the draft is the instruction; everything attached goes with it
+    var text = (S.input.value || '').trim() || 'Look at ' + a.label + (a.page ? ' on ' + a.page : '') + '.';
+    var atts = [a].concat(S.atts.filter(function (x) { return x.key !== a.key; }));   // the part sent leads, so the reply is about it
+    S.input.value = '';
+    fit();
+    S.atts = [];
+    renderAtts();
+    post(text, atts);
+    return;
+  }
+  addAtt(a);
+  if (e.how === 'list') {
+    var v = (S.input.value || '').replace(/\s+$/, '');
+    var n = (v.match(/^\s*\d+\.\s/gm) || []).length + 1;
+    S.input.value = (v ? v + '\n' : '') + n + '. ' + a.label + ' ';
+    fit();
+    focusComposer();
+  } else insertAtCaret(a.label + ' ');
 }
 
 /* ---- install ---- */
@@ -714,7 +1010,18 @@ function build() {
     closeHistory(false);
   });
   layer.addEventListener('keydown', function (e) { if (e.key === 'Escape' && S.histOpen) { e.stopPropagation(); closeHistory(true); } });
+  /* pinned History's width comes from the ladder's constants: chatHistoryW, or chatHistoryWNarrow while the whole layer
+     is under chatHistoryAt (only a squeezed or capped column gets there; the column normally grows by chatHistoryW) */
+  if (typeof ResizeObserver === 'function') new ResizeObserver(fitHistory).observe(layer);
+  fitHistory();
   return layer;
+}
+function fitHistory() {
+  if (!S.layer) return;
+  var L = PMW.LADDER || {}, w = S.layer.getBoundingClientRect().width;
+  var hw = w && w < (L.chatHistoryAt || 540) ? (L.chatHistoryWNarrow || 200) : (L.chatHistoryW || 240);
+  var px = hw + 'px';
+  if (S.layer.style.getPropertyValue('--pmw-sc-hist-w') !== px) S.layer.style.setProperty('--pmw-sc-hist-w', px);
 }
 function seat() {
   var cp = document.getElementById('chatPanel');
@@ -734,9 +1041,20 @@ function install() {
   /* the page's chat may re-render its own content; the layer goes back in (same node, state kept) */
   if (typeof MutationObserver === 'function') new MutationObserver(function () { if (S.layer.parentNode !== cp) seat(); }).observe(cp, { childList: true });
   ['activate', 'close', 'open', 'layout'].forEach(function (ev) { PM_HOME.on(ev, queueRecompute); });
-  PM_HOME.on('chat', syncPop);
+  PM_HOME.on('chat', function (e) { if (!e || e.type == null) syncPop(); });
   PM_HOME.settings.on(SC_KEY, apply);
   PM_HOME.settings.on('chat.history', paintHistoryMode);
+  PM_HOME.on('narrow', paintHistoryMode);   // the ladder gives pinned History's width back, or takes it again
+  PMW.bus.on('browser:capture', onCapture);
+  PMW.bus.on('browser:send', onSend);
+  /* the chat column asks the surface on screen whether it draws pinned History and routes PM_HOME.chat to it */
+  if (PMW.chatCol) PMW.chatCol.surface = { drawsHistory: drawn, shown: drawn, compose: compose, reveal: reveal };
+  /* the Guided Tour lifts the layer (CSS); the column then loses the History's width until the tour ends */
+  if (typeof MutationObserver === 'function') new MutationObserver(function () {
+    if (document.documentElement.hasAttribute('data-o55-tour')) closeHistory(false);
+    if (PMW.narrow) PMW.narrow.schedule();
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-o55-tour'] });
+  if (PMW.narrow) PMW.narrow.schedule();
   queueRecompute();
   setTimeout(function () { if (S.scroll) S.scroll.scrollTop = S.scroll.scrollHeight; }, 0);
 }
@@ -745,7 +1063,16 @@ PMW.standIn = {
   install: install,
   isOn: isOn,
   toggle: toggle,
+  /* the kinds' hook (the run kind's "Message" uses it): show the chat, the text in its composer, caret at the end */
+  prefill: function (text) { return PM_HOME.chat ? PM_HOME.chat.compose(text) : compose(text); },
+  compose: compose,
+  reveal: reveal,
+  drawn: drawn,
   /* tests: the controls in the transcript, by id */
   controls: function () { return Object.keys(T).map(function (k) { return { key: k, id: T[k].id, kind: T[k].kind, label: T[k].label }; }); },
-  agentOpens: function () { return AGENT_OPENS.map(function (a) { return { id: a.id, by: a.spec.by, kind: a.spec.kind }; }); }
+  agentOpens: function () { return AGENT_OPENS.map(function (a) { return { id: a.id, by: a.spec.by, kind: a.spec.kind }; }); },
+  messages: function () { return (S.scripted || []).reduce(function (out, n) { return out.concat(n.matches('[data-pmw-sc-msg]') ? [n] : [], Array.prototype.slice.call(n.querySelectorAll('[data-pmw-sc-msg]'))); }, []).map(function (n) { return n.getAttribute('data-pmw-sc-msg'); }); },
+  threads: function () { return allThreads().map(function (t) { return { id: threadIdOf(t[0]), title: t[0] }; }); },
+  attachments: function () { return S.atts.map(function (a) { return { key: a.key, type: a.type, label: a.label, detail: a.detail }; }); },
+  draft: function () { return S.input ? S.input.value : ''; }
 };

@@ -14,7 +14,8 @@
 }
 .pmw-hrow-left { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 12px; overflow: hidden; white-space: nowrap; }
 .pmw-hfact { display: inline-flex; align-items: center; gap: 5px; min-width: 0; color: var(--pmw-text-2); }
-.pmw-hfact-t { overflow: hidden; text-overflow: ellipsis; }
+.pmw-hfact-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.pmw-hfact.is-grow { flex: 1 1 auto; min-width: 0; }
 .pmw-hfact.is-mono { font-family: var(--pm-font-code); font-size: 11.5px; color: var(--pmw-text); }
 .pmw-hfact.is-strong { color: var(--pmw-text); }
 .pmw-hfact.is-dim { color: var(--pmw-text-3); }
@@ -37,6 +38,7 @@
   white-space: nowrap;
   cursor: pointer;
 }
+.pmw-hbtn[hidden] { display: none; }
 .pmw-hbtn:hover, .pmw-hbtn.pmw-anchor-open { background: var(--pmw-hover); color: var(--pmw-text); }
 .pmw-hbtn:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: -2px; }
 .pmw-hbtn[aria-pressed="true"] { background: var(--pmw-press); color: var(--pmw-text); }
@@ -44,6 +46,11 @@
 .pmw-hbtn.is-primary { color: var(--pmw-accent); }
 .pmw-hbtn.is-danger { color: var(--pmw-bad); }
 .pmw-hbtn .pmw-ico { width: 14px; height: 14px; }
+/* Friendly's page rule [data-theme^="friendly"] button { border-radius: var(--radius-md) } (0,1,1, 14 px) outranks the
+   one-class rules here and turns 20-36 px controls into capsules (the pill ban); these restate the header row's and the
+   launcher's radii at that weight, in Friendly only, so kinds' own two-class rules still win and NieR's square part keeps its square corners */
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-hbtn { border-radius: 6px; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button:is(.pmw-empty-btn, .pmw-empty-cell) { border-radius: var(--pmw-row-radius); }
 @container pmw-body (max-width: 519px) {
   .pmw-hbtn { padding: 0; width: 24px; }
   .pmw-hbtn-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
@@ -51,6 +58,14 @@
 @container pmw-body (max-height: 149px) {
   .pmw-hrow { display: none; }
 }
+/* spec.labelsAt (28-hrow.js): the row's own threshold replaces the 520 px container rule both ways, through the
+   .is-icons / .is-labels class the row carries. One class of weight (the rest in :where), later than the container
+   rule, so a kind's own one- or two-class rules still win; only the row's own action buttons, never a .pmw-hbtn a kind
+   put inside a left fact */
+:where(.pmw-hrow.is-icons > .pmw-hrow-actions) > .pmw-hbtn { padding: 0; width: 24px; }
+:where(.pmw-hrow.is-icons > .pmw-hrow-actions > .pmw-hbtn) .pmw-hbtn-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+:where(.pmw-hrow.is-labels > .pmw-hrow-actions) > .pmw-hbtn { padding: 0 7px; width: auto; }
+:where(.pmw-hrow.is-labels > .pmw-hrow-actions > .pmw-hbtn) .pmw-hbtn-label { position: static; width: auto; height: auto; overflow: visible; clip-path: none; }
 
 /* the empty panel's launcher: list rows, no tiles, no pills */
 .pmw-empty {
@@ -63,10 +78,10 @@
   container-type: size;
   container-name: pmw-empty;
 }
-.pmw-empty-col { width: 100%; max-width: 360px; }
+.pmw-empty-col { width: 100%; max-width: 400px; }
 .pmw-empty-title { margin: 0 0 10px; font-size: 13px; font-weight: 600; color: var(--pmw-text-2); }
 .pmw-empty-list { display: flex; flex-direction: column; gap: 2px; }
-.pmw-empty-row { display: flex; align-items: stretch; border-radius: var(--pmw-row-radius); }
+.pmw-empty-row { display: flex; align-items: stretch; gap: 2px; border-radius: var(--pmw-row-radius); }
 .pmw-empty-btn {
   flex: 1 1 auto;
   min-width: 0;
@@ -74,7 +89,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 0 10px;
+  padding: 0 12px 0 10px;
   border: 0;
   border-radius: var(--pmw-row-radius);
   background: transparent;
@@ -86,10 +101,11 @@
 }
 .pmw-empty-btn b { font-weight: 550; flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pmw-empty-btn:hover, .pmw-empty-btn:focus-visible { background: var(--pmw-hover); outline: none; }
-.pmw-empty-key { margin-left: auto; font-size: 12px; color: var(--pmw-text-3); font-family: var(--pm-font-code); }
-.pmw-empty-path { margin-left: auto; font-size: 12px; color: var(--pmw-text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.pmw-empty-key { flex: none; margin-left: auto; padding-left: 12px; font-size: 12px; color: var(--pmw-text-3); font-family: var(--pm-font-code); }
+.pmw-empty-path { margin-left: auto; padding-left: 12px; font-size: 12px; color: var(--pmw-text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .pmw-empty-cell { flex: none; width: 32px; border: 0; border-radius: var(--pmw-row-radius); background: transparent; color: var(--pmw-text-3); display: grid; place-items: center; cursor: pointer; }
 .pmw-empty-cell:hover, .pmw-empty-cell:focus-visible { background: var(--pmw-hover); color: var(--pmw-text); outline: none; }
+.pmw-empty-chev { flex: none; margin-left: auto; padding-left: 12px; color: var(--pmw-text-3); display: grid; place-items: center; }
 .pmw-empty-sec { margin: 18px 0 6px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--pmw-text-3); font-family: var(--pm-font-code); }
 .pmw-empty-hint { margin: 18px 0 0; font-size: 12px; color: var(--pmw-text-3); }
 .pmw-empty-short { display: none; margin: 0; align-self: center; font-size: 12px; color: var(--pmw-text-3); }

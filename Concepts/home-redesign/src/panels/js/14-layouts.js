@@ -10,7 +10,9 @@ var DEFAULT_TABS = PMW.DEFAULT_TABS = {
   'plan:ap-index': { kind: 'plan', label: 'Tenant-scoped analytics read path', state: { plan: 'ap-index' } },
   'terminal:t1': { kind: 'terminal', state: { profile: 'zsh', cwd: '~/tastebook/api', session: 't1', script: 'idle' } },
   'terminal:t2': { kind: 'terminal', state: { profile: 'zsh', cwd: '~/tastebook/api', session: 't2', script: 'cargo-test' } },
-  'output:build': { kind: 'output', label: 'Output', state: { channel: 'build' } }
+  // D28: one Output tab, the channel is its view state; no fixed label, so the kind's own label shows. A saved layout
+  // holding 'output:build' keeps it: that is a split-off tab fixed to the Build channel now
+  'output': { kind: 'output', state: { channel: 'build' } }
 };
 
 /* slot trees: { dir, sizes, kids } or { slot: name, accepts: [kinds], ensure: [tabIds], rest, active } */
@@ -23,7 +25,7 @@ var NAMED = PMW.NAMED = {
         { slot: 'docs', accepts: ['editor', 'plan', 'document', 'artifact', 'run', 'transcript', 'context', 'record', 'browser'], rest: true,
           ensure: ['file:src/main.rs', 'file:src/routes/recipes.rs', 'plan:ap-index'], active: 'file:src/main.rs' }
       ] },
-      { slot: 'tools', accepts: ['terminal', 'output', 'problems', 'ports', 'debug-console'], ensure: ['terminal:t1', 'terminal:t2', 'output:build'], active: 'terminal:t1' }
+      { slot: 'tools', accepts: ['terminal', 'output', 'problems', 'ports', 'debug-console'], ensure: ['terminal:t1', 'terminal:t2', 'output'], active: 'terminal:t1' }
     ] }
   },
   build: {
@@ -35,7 +37,7 @@ var NAMED = PMW.NAMED = {
       ] },
       { dir: 'row', sizes: [0.6, 0.4], kids: [
         { slot: 'term', accepts: ['terminal'], ensure: ['terminal:t1'] },
-        { slot: 'tools', accepts: ['output', 'problems', 'ports', 'debug-console'], ensure: ['output:build', 'problems'] }
+        { slot: 'tools', accepts: ['output', 'problems', 'ports', 'debug-console'], ensure: ['output', 'problems'] }
       ] }
     ] }
   },

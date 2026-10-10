@@ -189,10 +189,10 @@ function syncBodies(panelEl, p, l, panelHidden) {
     var tid = p.tabs[i];
     var active = tid === p.active;
     var rec = instances[tid];
-    if (!rec && (active || (kindDef(l.tabs[tid].kind) || {}).eager)) rec = mountTab(tid);
+    var visible = active && !panelHidden && !p.collapsed;
+    if (!rec && (active || (kindDef(l.tabs[tid].kind) || {}).eager)) rec = mountTab(tid, body, visible);
     if (!rec) continue;
     if (rec.host.parentNode !== body) body.appendChild(rec.host);   // a moved tab keeps its instance
-    var visible = active && !panelHidden && !p.collapsed;
     setAttr(rec.host, 'hidden', !visible);
     if (visible !== rec.visible) {
       rec.visible = visible;
@@ -207,12 +207,16 @@ function syncBodies(panelEl, p, l, panelHidden) {
 }
 
 var tabSeq = 0;
-function mountTab(tabId) {
+/* The body is attached to its panel (and sized by it) before mount() runs, so a kind can measure in mount(): a tab
+   that will show is laid out at its real size, one that will not (an eager background tab) is hidden already. The
+   first onResize, once sizes have settled, is still where precise work belongs (a panel may be mid-glide). */
+function mountTab(tabId, parent, visible) {
   var l = state.layout, recd = l.tabs[tabId];
   if (!recd) return null;
   var k = kindDef(recd.kind) || PMW.missingKind;
   tabSeq += 1;
   var host = h('div', { class: 'pmw-tabbody', role: 'tabpanel', id: 'pmw-tp-' + tabSeq, 'data-pmw-tab': tabId, 'data-pmw-kind': recd.kind, tabindex: '-1' });
+  if (parent) { if (!visible) host.hidden = true; parent.appendChild(host); }
   var entry = { id: tabId, kind: recd.kind, host: host, instance: null, api: null, visible: false, off: [], size: null };
   instances[tabId] = entry;
   entry.api = makeApi(entry);
@@ -305,6 +309,8 @@ function makeApi(entry) {
     },
     menu: function (items, anchor, o) { return kindMenu(entry, items, anchor, o); },
     announce: announce,
+    // persist the layout soon (250 ms, coalesced) after an in-tab view change: serialize() is read then
+    saveSoon: function () { if (instances[entry.id] === entry && PMW.persist) PMW.persist.saveSoon(); },
     command: function (id, args) { return PM_HOME.command(id, args); },
     settings: PMW.settings,
     look: look,
@@ -420,16 +426,32 @@ PMW.missingKind = {
   }
 };
 
-/* ---- labels ---- */
+/* ---- labels ----
+   Order: the user's label, the label the kind pushed (api.update), the kind's labelFor(id, state) (so a tab that is not
+   mounted yet, opened in the background, by an agent or restored, still shows its real label), the state's file name or
+   title, the tab's hover title, the kind's label. The hover title falls back to the same label. */
+var labelForFailed = {};
+function kindLabelFor(k, rec) {
+  if (!k || typeof k.labelFor !== 'function') return null;
+  try {
+    var v = k.labelFor(rec.id, rec.state || {});
+    return v == null || v === '' ? null : String(v);
+  } catch (err) {
+    if (!labelForFailed[k.id]) { labelForFailed[k.id] = 1; try { console.error('[pm-home] labelFor failed for the ' + k.id + ' kind', err); } catch (_) {} }
+    return null;
+  }
+}
 function tabLabel(rec) {
   if (!rec) return '';
   if (rec.userLabel) return rec.userLabel;
   if (rec.label) return rec.label;
+  var k = kindDef(rec.kind);
+  var own = kindLabelFor(k, rec);
+  if (own) return own;
   var s = rec.state || {};
   if (s.path) return String(s.path).split('/').pop();
-  if (s.title) return s.title;
+  if (s.title) return String(s.title);
   if (rec.title) return rec.title;
-  var k = kindDef(rec.kind);
   return k ? k.label : 'Tab';
 }
 PMW.tabLabel = tabLabel;
@@ -441,6 +463,26 @@ function tabTitle(rec) {
   return tabLabel(rec);
 }
 PMW.tabTitle = tabTitle;
+
+/* ---- icons ----
+   Order: the icon the kind pushed (api.update), the kind's iconFor(id, state) (the icon counterpart of labelFor, so a
+   tab that is not mounted yet shows its real icon in the strip and the tab lists), the kind's icon, the file mark. */
+var iconForFailed = {};
+function tabIcon(rec) {
+  if (!rec) return 'file';
+  if (rec.icon) return rec.icon;
+  var k = kindDef(rec.kind);
+  if (k && typeof k.iconFor === 'function') {
+    try {
+      var v = k.iconFor(rec.id, rec.state || {});
+      if (v != null && v !== '') return String(v);
+    } catch (err) {
+      if (!iconForFailed[k.id]) { iconForFailed[k.id] = 1; try { console.error('[pm-home] iconFor failed for the ' + k.id + ' kind', err); } catch (_) {} }
+    }
+  }
+  return (k && k.icon) || 'file';
+}
+PMW.tabIcon = tabIcon;
 
 /* CONTRACT section 3: every mounted instance hears a look change once, at the next frame after it (the core's look
    watcher already defers past the attribute write) */

@@ -15,11 +15,17 @@ PMW.renderEmpty = function (panelEl, p) {
   col.appendChild(h('p', { class: 'pmw-empty-title', text: 'Open something here' }));
   var list = h('div', { class: 'pmw-empty-list', role: 'list' });
   PMW.plusRows(p.id, {}).forEach(function (r) {
-    if (r.submenu) return;
     var row = h('div', { class: 'pmw-empty-row', role: 'listitem', 'data-pmh': 'row' });
-    var b = h('button', { type: 'button', class: 'pmw-empty-btn pmw-cur' }, [kindIcon(r.kind || 'file'), h('b', { text: r.label }), r.right ? h('span', { class: 'pmw-empty-key', text: PMW.keyLabel(r.right) }) : null]);
-    // the row button is the anchor of a picker the row opens (Plan or document..., Artifact...), never the centre
-    b.addEventListener('click', function (e) { r.run({ alt: e.altKey, row: r, anchor: b }); });
+    var trail = r.submenu ? h('span', { class: 'pmw-empty-chev', 'aria-hidden': 'true' }, [icon('chevronRight', { size: 14 })])
+      : r.right ? h('span', { class: 'pmw-empty-key', text: PMW.keyLabel(r.right) }) : null;
+    var b = h('button', { type: 'button', class: 'pmw-empty-btn pmw-cur' }, [kindIcon(r.kind || 'file'), h('b', { text: r.label }), trail]);
+    if (r.submenu) b.setAttribute('aria-haspopup', 'menu');
+    // the row button is the anchor of a picker the row opens (Plan or document..., Artifact...; the Output, Problems,
+    // Ports, Debug Console row opens its own list there), never the centre
+    b.addEventListener('click', function (e) {
+      if (r.submenu) { PMW.menu.open(b, typeof r.submenu === 'function' ? r.submenu() : r.submenu); return; }
+      r.run({ alt: e.altKey, row: r, anchor: b });
+    });
     row.appendChild(b);
     if (r.alt) {
       var c = h('button', { type: 'button', class: 'pmw-empty-cell', 'aria-label': 'Open in new panel: ' + r.label, 'data-pm-hover-label': 'Open in new panel' }, [icon('newPanel', { size: 14 })]);

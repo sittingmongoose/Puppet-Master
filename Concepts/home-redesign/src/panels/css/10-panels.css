@@ -41,7 +41,6 @@
 }
 .pmw-panel[data-collapsed] .pmw-body { display: none; }
 .pmw-panel[data-collapsed="row"] { flex-direction: column; }
-.pmw-panel[data-collapsed="row"] .pmw-strip .pmw-tablist { flex-direction: column; }
 .pmw-tabbody {
   position: absolute;
   inset: 0;
@@ -134,7 +133,13 @@ body.pmw-dragging, body.pmw-dragging * { user-select: none !important; -webkit-u
 body.pmw-dragging #pm-hover-tag-root, body.pm-resizing #pm-hover-tag-root { display: none !important; }
 .pmw-tab[data-active] { color: var(--pmw-tab-active, var(--pmw-text)); font-weight: var(--pmw-tab-weight, 600); z-index: 2; }
 .pmw-tab:not([data-active]) { background: var(--pmw-tab-idle-fill, transparent); }
-.pmw-tab:focus-visible { box-shadow: inset 0 0 0 2px var(--pmw-focus); }
+/* one ring, on the tab's own top and sides: the bottom stays open, so a focused active tab is still one surface with its
+   panel (the page's focus alias, and Friendly's ring and glow, would add a second ring outside it) */
+.pmw-tab:focus-visible { outline: none; box-shadow: none; }
+.pmw-tab:focus-visible::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  border: 2px solid var(--pmw-focus); border-bottom: 0; border-radius: inherit;
+}
 .pmw-tico { flex: none; width: 16px; height: 16px; display: grid; place-items: center; }
 .pmw-kico { position: relative; width: 16px; height: 16px; display: grid; place-items: center; flex: none; }
 .pmw-kglyph { display: none; font-family: var(--pm-font-code); font-size: 11px; line-height: 1; letter-spacing: -.04em; }
@@ -229,6 +234,9 @@ body.pmw-dragging #pm-hover-tag-root, body.pm-resizing #pm-hover-tag-root { disp
 }
 .pmw-sbtn:hover, .pmw-sbtn.pmw-anchor-open { background: var(--pmw-hover); color: var(--pmw-text); }
 .pmw-sbtn:focus-visible, .pmw-more:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: -2px; }
+/* Friendly's page rule [data-theme^="friendly"] button { border-radius: var(--radius-md) } (14 px) turns these 28 px
+   buttons into circles; restated at that weight, Friendly only, as 30-menu.css does for the picker */
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button:is(.pmw-sbtn, .pmw-more) { border-radius: 8px; }
 .pmw-switcher { width: auto; padding: 0 8px; gap: 6px; display: inline-flex; align-items: center; font: inherit; font-variant-numeric: tabular-nums; color: var(--pmw-text); }
 .pmw-switcher[hidden] { display: none; }
 .pmw-strip-fill { flex: 1 1 auto; align-self: stretch; min-width: 8px; }
@@ -256,6 +264,24 @@ body.pmw-dragging #pm-hover-tag-root, body.pm-resizing #pm-hover-tag-root { disp
 .pmw-grip:hover, .pmw-grip:focus-visible { opacity: 1; color: var(--pmw-text); }
 .pmw-grip:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: -2px; border-radius: 4px; }
 .pmw-panel[data-collapsed] .pmw-pmenu, .pmw-panel[data-collapsed] .pmw-plus { opacity: .8; }
+/* the expand button of a collapsed panel; its chevron points the way the panel grows back */
+.pmw-expand[hidden] { display: none; }
+.pmw-expand[data-dir="down"] .pmw-ico { transform: rotate(90deg); }
+.pmw-expand[data-dir="left"] .pmw-ico { transform: rotate(180deg); }
+.pmw-expand[data-dir="up"] .pmw-ico { transform: rotate(-90deg); }
+/* a panel collapsed beside another: a 35 px column, expand first, then its tabs as icons one above the other (pinned
+   tabs always), "+N", "+", and the panel menu at the foot; the corner grip keeps the top right corner */
+.pmw-strip[data-column] { flex: 1 1 auto; height: auto; min-height: 0; flex-direction: column; align-items: center; gap: 4px; padding: 16px 0 6px; }
+.pmw-strip[data-column] .pmw-expand { order: -1; }
+.pmw-strip[data-column] .pmw-tablist { flex: none; flex-direction: column; align-items: center; height: auto; }
+.pmw-strip[data-column] :is(.pmw-pins, .pmw-tabs) { flex-direction: column; align-items: center; height: auto; gap: 2px; }
+.pmw-strip[data-column] .pmw-tab { width: 30px; height: 30px; padding: 0; justify-content: center; border-radius: 6px; }
+.pmw-strip[data-column] .pmw-tab[data-active] { background: var(--pmw-press); color: var(--pmw-text); }
+.pmw-strip[data-column] .pmw-pinsep { width: 14px; height: 1px; margin: 3px 0; }
+.pmw-strip[data-column] :is(.pmw-sbtn, .pmw-more) { margin: 0; }
+.pmw-strip[data-column] .pmw-more { min-width: 28px; max-width: 31px; padding: 0 2px; font-size: 11px; }
+.pmw-strip[data-column] .pmw-strip-fill { align-self: stretch; min-width: 0; min-height: 4px; }
+.pmw-strip[data-column] .pmw-lockmark { margin: 0; }
 
 /* the drag chip (an attached floating clone, never an HTML drag image) and the landing preview */
 .pmw-chip {
@@ -274,6 +300,11 @@ body.pmw-dragging #pm-hover-tag-root, body.pm-resizing #pm-hover-tag-root { disp
   font-size: var(--pmw-tab-font, 12px);
   will-change: transform;
 }
+/* the chip is a clone of the tab: it drops the strip's active ink (NieR's cursor and Retro draw the active label in the
+   page colour, for the filled plate the chip does not have) and the idle fill, so icon and label read on the chip */
+.pmw-tab.pmw-chip, .pmw-tab.pmw-chip[data-active], .pmw-tab.pmw-chip:not([data-active]) { color: var(--pmw-text); background: var(--pmw-surface); }
+.pmw-tab.pmw-chip .pmw-tlabel { opacity: 1; }
+.pmw-tab.pmw-chip .pmw-tlabel::before { content: none; }
 .pmw-chip .pmw-tclose { display: none; }
 .pmw-chip[data-nodrop] { opacity: .7; }
 .pmw-chip-panel { border-radius: 8px; font-size: 12px; }

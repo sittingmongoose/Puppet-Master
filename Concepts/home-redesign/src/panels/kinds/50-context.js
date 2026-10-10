@@ -4,7 +4,10 @@
    redacted JSON export. Curated: the hero line (the number, the sentence, a 6 px bar), three tiles, the Back Seat
    Driver block as a plain section, then eight disclosure rows separated by hairlines (their open state is kept). In a
    wide tab (960 px and up) Source composition and Context growth open side by side. Raw: the redacted projection with
-   its lock notice. Unknown values print "not reported", never 0. No blur inside the tab; sizes key on the tab body. */
+   its lock notice. Unknown values print "not reported", never 0. No blur inside the tab; sizes key on the tab body.
+   When the chat finishes a turn in the tab's thread (PM_HOME.on('chat') { type: 'turn-finished', threadId }), the
+   thread's numbers take that turn (the window, the growth chart, the costs) and an open tab redraws in place, keeping
+   its view, its open sections and its scroll; a thread that had nothing measured gets its first figures. */
 
 var SVGNS = 'http://www.w3.org/2000/svg';
 function h(tag, attrs, kids) {
@@ -85,13 +88,79 @@ var THREADS = {
     raw: { ref: 'raw-context:query:redacted', hash: '8c0b494b…d890', omitted: { secrets: 2, credentials: 1, accountIdentifiers: 1, localPaths: 1 }, permission: 'redacted_view_allowed', epoch: 4 }
   }
 };
-var THREAD_TITLE = { query: 'Query performance', subagents: 'Architecture review', debug: 'Browser debug session', plain: 'Plain chat',
+var THREAD_TITLE = { query: 'Query performance', subagents: 'Architecture review', debug: 'Investigate a browser issue', plain: 'Plain chat',
   context: 'Context lens', 'plan-deep': 'Deep Plan', crew: 'Crew and shared work', route: 'Provider route change', visuals: 'Working with artifacts' };
+function slug(t) { return String(t).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
+/* a thread the table does not name is titled from its id when the id reads as words (the chat's History ids do) */
+function titleOf(threadId) {
+  if (THREAD_TITLE[threadId]) return THREAD_TITLE[threadId];
+  var id = String(threadId || '');
+  if (/^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(id) && id.length <= 48) { var s = id.replace(/-/g, ' '); return s.charAt(0).toUpperCase() + s.slice(1); }
+  return 'This thread';
+}
 function threadOf(threadId) {
   if (THREADS[threadId]) return THREADS[threadId];
-  return { title: THREAD_TITLE[threadId] || 'This thread', unknown: true, window: {}, sources: [], growth: [], route: { requested: {}, effective: {}, fallback: { used: false, reason: NR }, agent: null },
+  return { title: titleOf(threadId), unknown: true, window: {}, sources: [], growth: [], route: { requested: {}, effective: {}, fallback: { used: false, reason: NR }, agent: null },
     limits: [], caps: [], compaction: { state: 'idle', revision: 0, retains: [], drops: [], history: [] }, bsd: null, raw: {} };
 }
+
+/* ---- a finished turn: the thread's numbers move (demo arithmetic, never claimed as live) ---- */
+function clockNow() {
+  var d = new Date(), hh = d.getHours(), mm = d.getMinutes();
+  return ((hh % 12) || 12) + ':' + ('0' + mm).slice(-2) + ' ' + (hh < 12 ? 'AM' : 'PM');
+}
+function firstTurn(threadId) {
+  var q = THREADS.query;
+  return {
+    title: titleOf(threadId), turns: 0,
+    window: { used: 6068, limit: 131000, cached: 0, inputThisTurn: 0, outputThisTurn: 0, cacheHitPct: 0,
+      product: q.window.product, connection: q.window.connection, model: q.window.model, account: q.window.account, costApi: 0, costPlan: 0, updated: null },
+    sources: [{ family: 'Conversation', tokens: 0 }, { family: 'System and provider', tokens: 6068, note: 'Instructions, tool definitions and the capabilities that are On.' }],
+    growth: [],
+    route: JSON.parse(JSON.stringify(q.route)),
+    limits: q.limits.map(function (m) { return Object.assign({}, m); }),
+    caps: q.caps.map(function (c) { return Object.assign({}, c); }),
+    compaction: { state: 'idle', revision: 0, wouldRemove: null, wouldRetain: null, retains: [], drops: [], history: [] },
+    bsd: null,
+    raw: { ref: 'raw-context:' + threadId + ':redacted', hash: 'not_reported', omitted: {}, permission: 'redacted_view_allowed', epoch: 1 }
+  };
+}
+function takeTurn(threadId) {
+  if (!THREADS[threadId]) THREADS[threadId] = firstTurn(threadId);
+  var T = THREADS[threadId], w = T.window, n = (T.turns = (T.turns || 0) + 1);
+  var input = 900 + ((n * 373) % 1100), output = 380 + ((n * 211) % 520);
+  var room = Math.max(0, Math.round(w.limit * 0.95) - w.used);   // the demo never fills the window past 95 %
+  var grow = Math.min(room, input + output);
+  var convo = T.sources.filter(function (s) { return s.family === 'Conversation'; })[0];
+  if (convo) convo.tokens += grow;
+  w.used += grow;
+  w.inputThisTurn = input;
+  w.outputThisTurn = output;
+  w.cached = Math.min(w.used, (w.cached || 0) + Math.round(grow * 0.8));   // most of a turn is read again from cache next turn
+  w.cacheHitPct = w.used ? Math.min(99, (w.cached / w.used) * 100) : 0;
+  w.costApi = (w.costApi || 0) + (input * 3 + output * 15) / 1e6;
+  w.costPlan = (w.costPlan || 0) + (input * 3 + output * 15) / 2.7e6;
+  w.updated = clockNow();
+  T.growth.push(w.used);
+  var c = T.compaction;
+  if (c.wouldRemove != null) c.wouldRetain = w.used - c.wouldRemove;
+  return T;
+}
+var MOUNTED = [];   // the open tabs' redraw hooks: { threadId, turn() }
+function threadMatches(threadId, evId) {
+  var e = String(evId);
+  return e === threadId || e === slug(titleOf(threadId));
+}
+PM_HOME.on('chat', function (e) {
+  if (!e || e.type !== 'turn-finished' || e.threadId == null || e.threadId === '') return;
+  var ids = {};
+  Object.keys(THREADS).forEach(function (k) { if (threadMatches(k, e.threadId)) ids[k] = 1; });
+  MOUNTED.forEach(function (m) { if (threadMatches(m.threadId, e.threadId)) ids[m.threadId] = 1; });
+  Object.keys(ids).forEach(function (k) {
+    takeTurn(k);
+    MOUNTED.forEach(function (m) { if (m.threadId === k) { try { m.turn(); } catch (err) { try { console.error('[pm-home] context redraw failed', err); } catch (_) {} } } });
+  });
+});
 
 var SECTIONS = [
   { id: 'tokens', title: 'Token details' },
@@ -132,7 +201,9 @@ function mountContext(host, state, api) {
   var auto = !Array.isArray(state.open);   // the width picks the open sections until the reader toggles one
   if (!auto) { open = {}; state.open.forEach(function (k) { open[k] = 1; }); }
   var preview = false, gone = false, frame = null, chartBox = null, chartW = 0, wide = false, keepScroll = state.scrollTop || 0;
-  var p = w.used != null && w.limit ? (w.used / w.limit) * 100 : null;
+  var p = null;
+  function measure() { p = w.used != null && w.limit ? (w.used / w.limit) * 100 : null; }
+  measure();
 
   function labels() {
     api.update({ label: 'Context · ' + T.title, title: 'Context detail · ' + T.title + (p != null ? ' · ' + pct(p) + ' used' : '') });
@@ -154,11 +225,15 @@ function mountContext(host, state, api) {
     ];
   }
   var root = h('div', { class: 'pmw-ctx' });
-  var row = api.headerRow({ label: 'Context controls', left: [
-    { id: 'ctx-view', el: seg },
-    { id: 'ctx-thread', text: T.title, strong: true },
-    { id: 'ctx-used', text: p != null ? pct(p) + ' used' : 'Nothing measured yet', dim: p == null }
-  ], actions: actions() });
+  function headLeft() {
+    return [
+      { id: 'ctx-view', el: seg },
+      { id: 'ctx-thread', text: T.title, strong: true, grow: true },
+      { id: 'ctx-used', text: p != null ? pct(p) + ' used' : 'Nothing measured yet', dim: p == null }
+    ];
+  }
+  /* the three buttons' words cost the facts their room: icons below 720 px */
+  var row = api.headerRow({ label: 'Context controls', left: headLeft(), actions: actions(), labelsAt: 720 });
   var stage = h('div', { class: 'pmw-ctx-stage' });
   add(root, [row.el, stage]);
   host.appendChild(root);
@@ -245,7 +320,8 @@ function mountContext(host, state, api) {
     svg.appendChild(sv('path', { class: 'pmw-ctx-area', d: d + ' L' + x(n - 1).toFixed(1) + ' ' + y(0) + ' L' + x(0).toFixed(1) + ' ' + y(0) + ' Z' }));
     svg.appendChild(sv('path', { class: 'pmw-ctx-line', d: d }));
     svg.appendChild(sv('circle', { class: 'pmw-ctx-end', cx: x(n - 1), cy: y(data[n - 1]), r: 4 }));
-    svg.appendChild(sv('text', { class: 'pmw-ctx-endlabel', x: x(n - 1) - 8, y: y(data[n - 1]) + 16, 'text-anchor': 'end' }, [num(data[n - 1]) + ' now']));
+    var one = n === 1;   // a lone first turn sits on the left edge: its label reads rightwards
+    svg.appendChild(sv('text', { class: 'pmw-ctx-endlabel', x: x(n - 1) + (one ? 8 : -8), y: y(data[n - 1]) + (one ? -8 : 16), 'text-anchor': one ? 'start' : 'end' }, [num(data[n - 1]) + ' now']));
     var cross = sv('line', { class: 'pmw-ctx-cross', y1: padT, y2: H - padB, x1: 0, x2: 0, visibility: 'hidden' });
     var dot = sv('circle', { class: 'pmw-ctx-hdot', r: 4.5, visibility: 'hidden' });
     svg.appendChild(cross); svg.appendChild(dot);
@@ -421,6 +497,24 @@ function mountContext(host, state, api) {
   }
   paint();
 
+  /* a turn finished in this thread: new numbers in place (view, open sections and scroll stay) */
+  function rerender() {
+    if (gone) return;
+    var was = !!T.unknown;
+    T = threadOf(threadId); w = T.window;
+    measure();
+    labels();
+    row.set({ left: headLeft() });
+    row.setAction('compact', { disabled: !!T.unknown });
+    if (was && !T.unknown && auto && wide) { open = open || {}; open.sources = 1; open.growth = 1; }
+    paint();
+  }
+  var hook = { threadId: threadId, turn: function () {
+    rerender();
+    if (api.isVisible()) api.announce('Context updated: ' + (p != null ? pct(p) + ' of the window used' : 'nothing measured yet'));
+  } };
+  MOUNTED.push(hook);
+
   return {
     onResize: function (s) {
       var nowWide = s.w >= 960;
@@ -428,10 +522,10 @@ function mountContext(host, state, api) {
       if (nowWide !== wide) { wide = nowWide; paint(); return; }
       if (s.final && chartBox && Math.abs((chartBox.clientWidth || 0) - chartW) > 8) drawChart();
     },
-    rerender: function () { T = threadOf(threadId); w = T.window; labels(); paint(); },
+    rerender: rerender,
     focus: function () { if (frame) { try { frame._scroll.focus({ preventScroll: true }); } catch (_) {} } },
     serialize: function () { return { threadId: threadId, view: view, open: open && !auto ? Object.keys(open) : null, scrollTop: frame ? Math.round(frame._scroll.scrollTop) : 0 }; },
-    unmount: function () { gone = true; }
+    unmount: function () { gone = true; var i = MOUNTED.indexOf(hook); if (i >= 0) MOUNTED.splice(i, 1); }
   };
 }
 
@@ -443,17 +537,11 @@ PM_HOME.registerKind('context', {
   document: true,
   min: { w: 280, h: 160 },
   idFor: function (spec) { return 'context:' + (spec.thread || spec.threadId || 'query'); },
+  labelFor: function (id) { return 'Context · ' + threadOf(String(id).replace(/^context:/, '') || 'query').title; },
   mount: mountContext
 });
 
 PM_HOME.catalog.add('context', [
-  { id: 'context:query', label: 'Context · Query performance', sub: '64% of the window used · 83,900 of 131,000 tokens', icon: 'context',
+  { id: 'context:query', label: 'Context · Query performance', sub: 'How full the window is, what fills it, limits and compaction', icon: 'context',
     keywords: 'context window tokens compaction more details', spec: { id: 'context:query', kind: 'context', label: 'Context · Query performance' } }
 ]);
-
-PM_HOME.on('open', function (e) {
-  if (!e || e.kind !== 'context' || !e.created) return;
-  var t = (PM_HOME.tabs() || []).filter(function (x) { return x.tabId === e.tabId; })[0];
-  var thread = String(e.tabId).replace(/^context:/, '');
-  if (t && (t.label === 'Context detail' || !t.label)) PM_HOME.update(e.tabId, { label: 'Context · ' + threadOf(thread).title });
-});

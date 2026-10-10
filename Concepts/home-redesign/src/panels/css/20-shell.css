@@ -20,7 +20,8 @@ html[data-pmw-home="on"] #pm-home-centre {
 html[data-pmw-home="on"] #panel-dashboard.pm-home-owned.pm8-page-out { position: absolute; }
 body.pmu-page-active #pm-home-centre { pointer-events: none !important; }
 
-/* the chat column (D3): one width model on every page, from an inline custom property the ladder writes */
+/* the chat column (D3): one width model on every page, from an inline custom property the ladder writes (the message
+   area plus pinned History's --pmw-chat-hist-w, which the ladder also writes; 0px while History is a flyout) */
 html[data-pmw-home="on"] body #chatPanel.chat-panel {
   flex: 0 0 var(--pmw-chat-w, clamp(400px, calc(26.667vw + 88px), 640px)) !important;
   width: var(--pmw-chat-w, clamp(400px, calc(26.667vw + 88px), 640px)) !important;
@@ -60,7 +61,8 @@ html[data-pmw-home="on"] .main-area[data-pmw-chat="strip"][data-pmw-chat-peek] #
   right: 0 !important;
   top: 0 !important;
   bottom: 0 !important;
-  width: 400px !important;
+  /* 400 for the messages plus pinned History, never wider than the row less a 48 px margin to click out on */
+  width: min(calc(400px + var(--pmw-chat-hist-w, 0px)), calc(100% - 48px)) !important;
   flex: none !important;
   z-index: 60 !important;
   box-shadow: -18px 0 40px -12px rgba(0, 0, 0, .45);
@@ -92,13 +94,17 @@ html[data-pmw-home="on"] .main-area[data-pmw-chat-float] #chatPanel.chat-panel {
   bottom: 48px !important;
   top: auto !important;
   height: min(720px, calc(100vh - 140px)) !important;
-  width: 440px !important;
+  /* 440 for the messages plus pinned History (the native window grows the same way) */
+  width: min(calc(440px + var(--pmw-chat-hist-w, 0px)), calc(100vw - 48px)) !important;
   flex: none !important;
   z-index: 70 !important;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 28px 70px -20px rgba(0, 0, 0, .55), 0 0 0 1px var(--border, rgba(255, 255, 255, .12));
 }
+/* Retro and NieR's square part keep the floating window square */
+html[data-pmw-home="on"][data-theme^="retro"] .main-area[data-pmw-chat-float] #chatPanel.chat-panel,
+html[data-pmw-home="on"][data-o55-nier="on"][data-o55-nier-parts~="square"] .main-area[data-pmw-chat-float] #chatPanel.chat-panel { border-radius: 0; }
 
 /* the title bar's Home options button */
 .pmw-tb-btn {

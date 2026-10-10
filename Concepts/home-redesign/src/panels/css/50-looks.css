@@ -48,7 +48,7 @@ html[data-theme="glass-light"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pm
 html[data-theme="glass-dark"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
   --pmw-tab-active: #FFFFFF; --pmw-tab-weight: 700;
   --pmw-tab-inactive: #F8F4FF;
-  --pmw-tab-idle-fill: rgba(255, 255, 255, .07);
+  /* inactive tabs are plain labels on the strip, as in Glass light: no idle plate, so only the active tab is a surface */
   --pmw-tab-hover: rgba(255, 255, 255, .12);
   /* Jared, 2026-10-10: the 2026-08-20 purple plate is dropped; the active tab is one surface with its panel, as in
      every other look (the plate falls back to --pmw-surface with Glass's 1 px rim) */
@@ -105,3 +105,47 @@ html[data-theme="basic-light"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pm
 }
 /* the Glass drag frost (rev 21): the plate goes to .92 only while a tab is carried; opaque at rest; never a backdrop blur */
 html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-strip.is-dragging .pmw-plate { opacity: .92; }
+
+/* Legibility (cross-look review, 2026-10-10): every token drawn as text reaches 4.5:1 on the surfaces it sits on (the
+   panel body, the strip, the menus). The page's own muted, state and accent colours are tuned for larger type or for
+   marks; here they are pulled toward the text colour (dim text) or toward black (state words and links on light
+   glass), so they keep their hue. Marks that only need 3:1 read the same tokens and only gain. NieR's own inks are in
+   60-nier.css, which comes later and wins. */
+html[data-theme="friendly-light"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-text-3: color-mix(in srgb, var(--text-muted) 55%, var(--text-primary));
+  --pmw-tab-inactive: color-mix(in srgb, var(--text-primary) 94%, var(--text-muted));
+  --pmw-accent: color-mix(in srgb, var(--accent-primary, var(--accent-blue)) 62%, #000);
+  --pmw-ok: color-mix(in srgb, var(--accent-lime) 62%, #000);
+  --pmw-warn: color-mix(in srgb, var(--accent-warning, var(--accent-orange)) 60%, #000);
+  --pmw-bad: color-mix(in srgb, var(--accent-error, #e57373) 70%, #000);
+}
+html[data-theme="friendly-dark"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-text-3: color-mix(in srgb, var(--text-muted) 72%, var(--text-primary));
+}
+html[data-theme="glass-light"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-text-2: color-mix(in srgb, var(--text-secondary) 70%, var(--text-primary));
+  --pmw-text-3: color-mix(in srgb, var(--text-muted) 50%, var(--text-primary));
+  --pmw-accent: color-mix(in srgb, var(--accent-primary, var(--accent-blue, #0078d8)) 74%, #000);
+  --pmw-ok: color-mix(in srgb, var(--accent-lime) 76%, #000);
+  --pmw-warn: color-mix(in srgb, var(--accent-warning, var(--accent-orange)) 78%, #000);
+  --pmw-bad: color-mix(in srgb, var(--accent-error, #c44258) 76%, #000);
+}
+html[data-theme="glass-dark"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-text-3: color-mix(in srgb, var(--text-muted) 72%, var(--text-primary));
+}
+html[data-theme="retro-light"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-tab-inactive: color-mix(in srgb, color-mix(in srgb, var(--accent-lime) 70%, var(--text-secondary)) 86%, #000);
+  --pmw-ok: color-mix(in srgb, var(--accent-lime) 84%, #000);
+  --pmw-bad: color-mix(in srgb, var(--accent-error, #e06c5a) 88%, #000);
+}
+html[data-theme="retro-dark"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-text-3: color-mix(in srgb, var(--text-muted) 86%, var(--text-primary));
+}
+html[data-theme="basic-light"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-ok: color-mix(in srgb, var(--accent-lime) 84%, #000);
+  --pmw-warn: color-mix(in srgb, var(--accent-warning, var(--accent-orange)) 72%, #000);
+}
+html[data-theme="basic-dark"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-text-3: color-mix(in srgb, var(--text-muted) 68%, var(--text-primary));
+  --pmw-bad: color-mix(in srgb, var(--accent-error, #ef6b6b) 74%, var(--text-primary));
+}

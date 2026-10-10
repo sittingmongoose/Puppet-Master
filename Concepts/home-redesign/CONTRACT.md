@@ -64,7 +64,7 @@ lands in the right kind. One id is one tab in the whole workspace: opening an id
 | `transcript` | `thread-<agentId>` | read-only live feed |
 | `context` | `context:<threadId>` | thread-keyed context detail |
 | `record` | `search:`, `mcp:`, `app:`, `work-record:` | read-only tool-call records |
-| `output` | `output:<channel>` | |
+| `output` | `output`, `output:<channel>` | one Output tab, the channel is its view state (D28); a channel opened as its own tab from the picker is `output:<channel>`, fixed to that channel |
 | `problems` | `problems` | one per workspace |
 | `ports` | `ports` | one per workspace |
 | `debug-console` | `debug-console:<session>` | |
@@ -73,7 +73,8 @@ Retired, never registered: the chat's Goal tab (`goal-artifact`, DL-147), its la
 `b16-work:`, `b17-work:`, `bsd12:`, `eli5-evidence:`). Activity Detail stays inside the chat (D3) and is not a kind.
 
 `PM_HOME.kindOf(id)` returns the kind for an id (`null` for an unknown prefix). A kind can claim more prefixes in its
-registration (section 3); two kinds claiming one prefix is a boot error.
+registration (section 3); two kinds claiming one prefix is a boot error. `PM_HOME.kindOf('output')` returns `'output'`
+for the bare id even before the Output kind registers, as it does for `problems` and `ports`.
 
 ## 3. Registering a kind
 
@@ -87,6 +88,8 @@ PM_HOME.registerKind('terminal', {
   dedicated: true,              // a panel holding only these tabs is skipped by file opens (D7) and its Ctrl+T makes one
   idFor(spec) { ... },          // stable tab id for an open spec; may mint one (terminal: a new session id)
   canonical(id, spec) { ... },  // optional: one tab per canonical id (plan-query -> plan:ap-index, collab-run:X -> room:X)
+  labelFor(id, state) { ... },  // optional: the label of a tab not mounted yet (background, agent-opened, restored)
+  iconFor(id, state) { ... },   // optional: its icon likewise (a PM_HOME.icons name)
   plus: {                       // optional: a row in the "+" menu and the empty-panel launcher
     order: 10,                  // rows sort by order; section 7 lists the built order
     shortcut: 'Ctrl+Shift+`',
@@ -100,14 +103,22 @@ PM_HOME.registerKind('terminal', {
 ```
 
 `mount(host, state, api)` is called once per tab when the tab is first shown (lazily: a restored background tab is
-not mounted until it is activated, unless the kind sets `eager: true`). Arguments:
+not mounted until it is activated, unless the kind sets `eager: true`). The body is already attached to its panel and
+laid out when `mount` runs, so `api.size()` is valid there (an eager background tab is attached hidden); the first
+`onResize` after mount is still where size-dependent work belongs. Arguments:
 
 - `host`: the tab body element. It is the tab's own box, sized by the panel, `container-type: size` and
   `container-name: pmw-body`, `overflow: hidden`, `position: relative`. Draw everything inside it. Never size
   against the window (`innerWidth`, viewport `@media` width queries): use `@container pmw-body (...)` or
   `api.size()`.
 - `state`: the restored state from `serialize()`, or for a new tab the open spec (section 6) minus the host fields
-  (`where`, `mode`, `by`, `background`, `focus`).
+  (`where`, `by`, `background`, `focus`, and `mode` when it is `'preview'` or `'keep'`). Any other `mode` (a view such
+  as `'diff'`) reaches the kind as `state.mode`, and `title` reaches it as `state.title` (it stays the hover title).
+
+A tab's strip label is, in order: the user's rename, the label the kind pushed with `api.update`, `labelFor(id,
+state)`, the state's file name or `title`, the open's `title`, the kind's `label`. Its icon: one pushed with
+`api.update`, `iconFor(id, state)`, the kind's `icon`; the strip, the "+N" list, the every-tab list and the recent-tabs
+switcher all show it. `labelFor` and `iconFor` treat `state` as read-only; a throw or an empty value falls through.
 - `api`: the per-tab host API (section 4).
 
 The returned instance may implement any of:
@@ -123,6 +134,7 @@ The returned instance may implement any of:
 | `wantsKey(event)` | asked before the host handles a shortcut while focus is inside the body; return `true` to keep the key (section 9) |
 | `canClose()` | before a close; return `true`, `false` or a Promise of either (dirty editors confirm here; a running terminal says what it ends) |
 | `focus()` | the host wants keyboard focus inside the body (activation by keyboard, `open` with focus) |
+| `reveal(fields)` | an open of this tab's id while it is mounted: every kind field the open carries (`line`, `col`, `mode`, `url`, `channel`, `invocation`, `rerun`, `title` ...). It must tolerate keys it does not know. Without `reveal`, or while the tab is not mounted, the fields merge into its saved state |
 
 ## 4. The per-tab host API (`api` in `mount`)
 
@@ -139,7 +151,8 @@ Everything is push: the kind tells the host when its label or marks change; the 
 | `api.split(direction, spec)` | open `spec` (section 6) in a new panel beside this tab's panel. `direction`: `'right'`, `'down'` or `'auto'` (right when both halves stay at least the larger minimum wide, else down, else the new tab opens in this panel). Returns the open result |
 | `api.toggleMaximize()`, `api.isMaximized()` | maximize is a flag outside the tree (D1); Esc in the strip or the same command restores |
 | `api.open(spec)` | same as `PM_HOME.open` with this tab as the opener (its panel counts as the source for routing) |
-| `api.menu(items, anchor, o?)` | open a host menu (the picker look every PM menu uses) at an element, or at a point (`{ x, y }` or a mouse event) for a context menu; items `{ id, label, detail, icon, shortcut, disabled, reason, checked, danger, sub, run }`, `'-'` for a hairline; `sub` is an item array or a function returning one; `o` may carry `title`, `search`, `width`, `align`, `onClose`; a second call on the same anchor closes it; a row whose `run` throws is logged and the menu stays usable |
+| `api.menu(items, anchor, o?)` | open a host menu (the picker look every PM menu uses) at an element, or at a point (`{ x, y }` or a mouse event) for a context menu; items `{ id, label, detail, icon, shortcut, disabled, reason, checked, danger, sub, run }`, `'-'` for a hairline; `sub` is an item array or a function returning one; `o` may carry `title`, `search`, `width`, `align`, `onClose`; a second call on the same anchor closes it; a row whose `run` throws is logged and the menu stays usable; `checked: false` gives an empty check slot, only `checked: true` shows the check |
+| `api.saveSoon()` | persist the layout soon (about 250 ms, coalesced) after an in-tab view change; `serialize()` is read then |
 | `api.announce(text)` | polite live-region announcement |
 | `api.command(id, args)` | run a host command (section 8) |
 | `api.settings` | the settings model (section 12) |
@@ -163,6 +176,17 @@ const row = api.headerRow({
 row.set({ left: [...] });   row.setAction('max', { label: 'Restore' });   row.el   // the row element
 ```
 
+A fact (`left`) is `{ id, text | el, icon, title, detail, mono, strong, dim, grow }`: `el` is drawn in place of text,
+`title` and `detail` become its hover tag (the label is `title`, or `text` when only `detail` is given), `mono` keeps a path's case under NieR's headers part, `grow` takes the row's
+free width. An action is `{ id, label, icon, shortcut, detail, primary, danger, pressed, disabled, run(e, button),
+menu }`, or `{ id, el }`, a ready-made element adopted into the actions area as it is (never cloned or restyled; it
+stays while `set()` sends back the same id and element). `row.set({ left, actions, labelsAt })` patches in place: a
+fact or button whose id survives keeps its node, so focus, hover and an open menu stay, and only what changed is
+created or removed. An element moved between two rows can be out of the document for a moment, so a kind that does
+that keeps its own reference. `spec.labelsAt` (px of the body width) moves the icon-only step from its default 520 px;
+the row then carries `.is-icons` below it and `.is-labels` at or above it. A button with the `hidden` attribute is not
+shown.
+
 An action's `menu` (an item list, a function returning one, or a whole menu spec) takes the same item shape as
 `api.menu` (section 4) and toggles on its button, which carries `aria-haspopup="menu"`; PMW.menu's own row names (a
 string `sub` as the detail line, `right`, `submenu`) are also accepted, so either shape works there.
@@ -170,12 +194,36 @@ string `sub` as the detail line, `right`, `submenu`) are also accepted, so eithe
 | Rule | Value (provisional until the panels thread confirms it in its report) |
 |---|---|
 | Row height | 30 px; controls are 24 px targets with 12 px text (11 px for secondary facts) |
-| Labels shown | body width at least 520 px; below that, icons only, each with its hover tag (label plus shortcut) |
+| Labels shown | body width at least 520 px (or the row's `labelsAt`); below that, icons only, each with its hover tag (label plus shortcut) |
 | Row hidden | body height below 150 px (the panel then holds only the strip and the content) |
 | Classes | `.pmw-hrow`, `.pmw-hrow-left`, `.pmw-hrow-actions`, `.pmw-hbtn`, `.pmw-hbtn-label`; style through these, not by restyling the row |
 
 A kind may draw its own row only when nothing in the shared one fits; say so in a note to the panels thread so canon
 records why.
+
+### 5.1 Shared frames and helpers (DRY: a kind uses these instead of its own copy)
+
+- `PMW.frames.doc(spec)`, `.run(spec)`, `.meta(items)`, `.seg(spec)`, `.section(spec)`, `.notice(spec)`,
+  `.tiles(spec)`, `.code(spec)`, `.button(spec)`: the document and run frames every reading kind draws in. `doc` and
+  `run` take button specs or ready-made elements in `actions` and return `frame.actionEls` (`{ id: button }`) and
+  `frame.actionsEl`, so a kind can set `aria-pressed` on a toggle. A run without an `aside` is one full-width column.
+  `meta` draws its separators before the following item, so a dot never ends a line. Paragraph defaults inside a
+  document body have zero specificity (78ch, no colour), so the body's 12 px rhythm and a kind's own rules win.
+  Frame controls never take a look's full radius: `min(--pmw-radius, 8px)`, 0 in Retro and in NieR's square part.
+- `PMW.fileRef({ path, line, col, label, view }, { api, source, inline, short, icon, cls })`: the one D7 file
+  reference (32 px, 24 px inline): a click previews after 240 ms unless a double click arrives (a link inside a
+  document opens its preview in the same panel, which would hide the link before the second click), a double click
+  keeps, Alt opens in a new panel, Ctrl or Cmd in the background, Enter opens kept. `view: 'diff'` rides in the
+  editor's state and stays a preview. Its hover tag says what it does in words ("Open file" / "Click previews it.
+  Double-click keeps it open."; "No file to open" without a path) and the path stays in the button's text: the page's
+  tag controller replaces any tag text that looks like a path, a file name or host:port with generic copy and has no
+  opt-out for literal text. `PM_HOME.fileExists(path)` says whether the demo project has the file.
+- `PM_HOME.catalog.add(kind, items)` / `.list()` / `.find()` / `.open(id, o)` and `PMW.catalogPicker(anchor, { kind |
+  kinds, title, placeholder, panelId, newPanel, sectionLabels })`: every openable thing a kind knows, and the one
+  picker over them (`sectionLabels` names each kind's section).
+- `PMW.registerIcon(name, svgPath, retroGlyph)` (also `PM_HOME.registerIcon`): a named icon in the 16 px stroke grammar
+  with a one- or two-cell Retro glyph (no pictographs), for `api.update({ icon })`, `iconFor`, the strip, menus and
+  header rows. Core icons are never replaced.
 
 ## 6. Opening things: `PM_HOME.open(spec)`
 
@@ -189,7 +237,9 @@ PM_HOME.open({
   path: 'src/main.rs', line: 128, col: 14,      // editor
   text: '...', language: 'text', title: 'cargo test output',   // editor buffer (no path): read-only unless edit: true
   mode: 'preview' | 'keep',  // files only, D7: a person's single click opens 'preview' (the default for user file opens);
-                             // a double click keeps; Ctrl+P with Enter, the "+" menu's recent files and agents open 'keep'
+                             // a double click keeps; Ctrl+P with Enter, the "+" menu's recent files and agents open 'keep'.
+                             // Any other mode is the kind's view ('diff'): it reaches state.mode and opens kept; a diff
+                             // reference that should stay a preview passes view: 'diff' instead
   where: 'auto' | 'tab' | 'panel' | 'right' | 'down' | '<panelId>',   // default 'auto'
   by: 'user' | 'agent:<name>',  // default 'user'
   background: false,         // user-requested background open (Ctrl/Cmd+click); agents are always background
@@ -201,7 +251,8 @@ Rules, in order (D7, D8):
 
 1. **One tab per id.** If the id is open, the existing tab is revealed: activated in its panel (scrolled into view,
    pulled out of "+N" if hidden there), and focused if the open focuses. If it is open in a collapsed panel, that panel
-   expands. An open never moves an existing tab to another panel.
+   expands. An open never moves an existing tab to another panel. The open's kind fields reach the open tab through
+   its instance's `reveal(fields)` (section 3), or merge into its saved state while it is not mounted.
 2. **Placement for a new tab** (`where: 'auto'`): the last-focused panel that accepts the kind. Documents (editor,
    plan, document, artifact, run, transcript, context, record) go to the last-focused panel that holds documents;
    panels holding only terminals, browsers or dashboards are skipped. A dedicated kind (terminal, browser, dashboard)
@@ -222,7 +273,8 @@ Rules, in order (D7, D8):
 5. **Narrow centre** (D4, below 600 px): new panels are not created; `where: 'panel'` and splits open in the next
    panel of the switcher instead, and say so in the announcement.
 
-Convenience forms: `PM_HOME.openFile(path, { line, col, mode, where })`, `PM_HOME.reveal(id)`.
+Convenience forms: `PM_HOME.openFile(path, { line, col, mode, where })`, `PM_HOME.reveal(id)`, and `PMW.fileRef`
+(section 5.1) for a file reference drawn by a kind.
 
 ### 6.1 The chat contract (5.6 Pro `openEditor`)
 
@@ -236,8 +288,24 @@ Convenience forms: `PM_HOME.openFile(path, { line, col, mode, where })`, `PM_HOM
 | narrow reveal | rule 5 above plus the narrow switcher; the chat is never a tab |
 
 Other events: `'open'` (`{ tabId, panelId, kind, created, by }`), `'focus'` (focused panel changed), `'layout'`
-(a structural commit: the page-side mirror of `workspace.layout_changed`), `'narrow'` (`{ step }`), `'look'`.
-`PM_HOME.on` returns an unsubscribe function.
+(a structural commit: the page-side mirror of `workspace.layout_changed`), `'narrow'` (`{ step }`), `'look'`, and
+`'chat'`: `{ floating }` when the chat pops out or docks back, `{ type: 'turn-finished', threadId }` when a reply
+finishes (`threadId` is the chat's alias or History slug, not a title). `PM_HOME.on` returns an unsubscribe function.
+
+Kinds reach the chat through `PM_HOME.chat`, never the chat surface directly:
+
+| Call | What |
+|---|---|
+| `PM_HOME.chat.compose(text)` | shows the chat, puts the text into its composer (after an existing draft, on a new line) and focuses it with the caret at the end; `PMW.standIn.prefill(text)` is the same; empty text does nothing |
+| `PM_HOME.chat.reveal({ thread, messageId })` | shows the chat, switches to the thread when the chat knows it, scrolls the message into view and marks it briefly; an unknown message shows the thread and announces "That message is not in this demo". Returns `{ ok, found, thread }` |
+| `PM_HOME.chat.isOpen()` | the chat is docked, popped out, or open over the centre from its strip |
+
+The chat takes the browser kind's bus events: `'browser:capture'` `{ tabId, capture: { kind, w, h, comp, at, title,
+url } }` becomes an attachment card in its composer (a 1 px box with the look's corner, never a pill), and
+`'browser:send'` `{ tabId, how: 'send' | 'list' | 'insert' | 'capture', what }` posts, lists or inserts it. The chat
+surface on screen registers `PMW.chatCol.surface = { drawsHistory(), shown(), compose(text), reveal(o) }`: the
+stand-in does today, and the 5.6 Pro chat takes the same slot at the port. The column widens for a pinned History
+only while `drawsHistory()` is true.
 
 ### 6.2 Compatibility shims (kept until the callers move)
 
@@ -259,6 +327,9 @@ Other events: `'open'` (`{ tabId, panelId, kind, created, by }`), `'focus'` (foc
 - **The narrow hook.** The ladder writes `data-pm-rail-fold="eased"` or `data-pm-rail-fold="overlay"` on
   `#sidePanelSlot` (removed when docked) and dispatches the document event `pm:rail-fold` with
   `{ mode: 'eased' | 'overlay' | 'docked', width }` (240 eased, 280 as an overlay, at least 240). Never on `<html>`.
+  The home layer only places the overlay (position, width, stacking, dismiss); the rail's concept D gives it its look
+  per family (an opaque plate, a hairline, the family's shadow and entrance) and refits on the event (main
+  37de861164).
 - **Build order.** Settings, Usage, the rail (`rail_layer.apply_published`, step 4 of opus `build_text()`), then the home
   layer, which inserts just before `</head>` and `</body>` and never rewrites the rail's band markup.
 
@@ -332,6 +403,13 @@ are ignored, and a held Alt+\` does not reopen the recent-tabs list. An open men
 it; a menu left open behind the focus closes on the first real key outside it, which then goes on as usual. Tab in a
 menu closes it.
 
+A text field marked `data-pmw-keys="host"`, on itself or an ancestor (`data-pmw-host-keys` is an alias), is not a text
+field for the host's navigation keys: once the focused tab's `wantsKey(e)` returns false, Alt+1..9, Alt+Shift+1..9,
+Alt+arrows, Alt+Shift+arrows, Alt+PgUp/PgDn, Ctrl+P, Ctrl+Shift+A and, on Windows and Linux, Alt+W reach the host from
+it (a terminal's input textarea and the editor's IME textarea are marked). The Mac typing rule still treats it as a
+text field: on a Mac, Alt+T, Alt+Shift+T, Alt+\` and Alt+W never fire from a marked field, and a `Dead` key never fires
+them on any platform.
+
 | Action | Native app | In a browser |
 |---|---|---|
 | New tab of the panel's usual kind | Ctrl+T | Alt+T |
@@ -377,6 +455,26 @@ Shared tokens the panels CSS defines on `#pm-home-centre` (use them so every kin
 Every moving part is off under Reduced Motion (instant, no blink). Retro and NieR renderings follow
 `research-ide-layout.md` section 11.
 
+### 10.1 Code colour schemes (D27, agreed with the terminal thread 2026-10-10)
+
+One scheme catalog serves the editor and the terminal. It is one data module in the terminal package
+(`src/terminal/schemes/*.json`, compiled into the terminal's JS), reached through `window.PMT`:
+
+| Call | Returns |
+|---|---|
+| `PMT.Appearance.schemes()` | `[{ id, name, mode, pair }]`, the curated schemes (D15) and the user's own |
+| `PMT.Appearance.editorTokens(id)` | the editor's 17 syntax colours as hex: `kw str num com fn ty var prop op pun tag attr esc mac link head code` (the editor's `--pmw-ed-s-*` tokens); imported and user schemes get them derived from their ANSI 16 by a fixed map, so every scheme supplies all 17 |
+| `PMT.Appearance.palette(id)` | `{ background, foreground, cursor, selection, ansi: [16] }`; the editor takes its code-area background, text, caret, selection and gutter tone from it (a scheme's syntax colours keep contrast only on its own background) and derives its diff tints from ANSI green, red and yellow |
+| `PMT.Appearance.retroPhosphor()`, `PMT.Appearance.on('retro-phosphor', fn)` | `'green'` or `'amber'`: the Retro scheme choice, stored once in the terminal's look record; the editor's monochrome Retro dark follows it and never writes it |
+| `PMT.AppearancePopover.open(anchor, { surface, get, set, onClose })` | the one Appearance popover, floating in `#pmw-overlay`; returns `{ el, close, refresh }`. `get()` returns `{ scheme, font, size }` (`'follow'` for Follow look; `size: null` is the default) and `get(key)` one of them; `set(key, value)` takes the keys `'scheme'`, `'font'` and `'size'`. `surface: 'editor'` shows Scheme (Follow look first), font and size only |
+
+Both surfaces word the default "Follow look" (D27; D16 had "Follow theme"). Each surface has its own pick and both
+default to it (D21's per-look syntax colours for the editor, the
+look's default scheme for the terminal): `editor.scheme` (`'follow'` or a scheme id) and the terminal's own key under
+`terminal.*`. The editor opens the popover from its More menu ("Appearance..."). In a build without `src/terminal`
+the editor keeps Follow look, its Retro dark stays green and the Appearance row is absent. Settings > Editor and >
+Terminal bind the same catalog when Settings is ported.
+
 ## 11. NieR hooks
 
 Hook classes join the Settings script's NieR selector lists through the layer (one patch per list, anchors not shared
@@ -390,7 +488,11 @@ lists. The terminal's parchment and ink are its own CSS under `html[data-o55-nie
 `pm.home.settings:v1`; every choice a user will later make in Settings reads from here with a default. Panels keys:
 `panels.layout.named`, `panels.tabs.preview` (true), `panels.plus.default` ('menu'), `panels.tabs.sizing` ('shrink'),
 `editor.font.family`, `editor.font.size` (13), `editor.minimap` (true), `editor.stickyScroll` (true),
-`chat.width` (null = the default for the window). The terminal's appearance model (D15) lives under `terminal.*`,
+`editor.scheme` ('follow', D27; registered by the editor kind), `chat.width` (null = the default for the window),
+`chat.history` ('flyout' or 'pinned'). A pinned History widens the chat column by 240 px (the chat draws it at 200
+while its whole column is under 540); `chat.width` and the 400-760 drag range stay the message area's. The widening
+counts in the narrow ladder, the peek (400 plus History) and the popped-out window (440 plus History), and is never
+saved. The terminal's appearance model (D15) lives under `terminal.*`,
 registered by the terminal with `PM_HOME.settings.register('terminal', schema, defaults)`; its Appearance popover reads
 and writes through the same model, so Settings > Terminal only binds controls.
 
@@ -399,9 +501,19 @@ and writes through the same model, so Settings > Terminal only binds controls.
 - No pills (no fully rounded capsules, no class names containing `pill`), no box with a coloured side border (no
   `border-left` / `border-inline-start` of 2 px or more, no inset side shadows standing in for one), no emoji in source
   or output chrome (a program's own output may contain them). The layer lint fails the build on each.
+- Friendly's page rule rounds every `button` to 14 px, which turns small and 32 px buttons into capsules. The core
+  restates header-row, menu, launcher, frame and file-reference radii; a kind restates its own buttons the same way
+  (inside `:where()`, so its own rules still win, and skipped under NieR's square part).
 - No `:has(` in the layer CSS. No viewport width `@media` queries inside a tab body. No internal ids in the UI
   (session ids, tab ids, panel ids never appear as text).
-- Hover (the hover thread's merged engine `PMH`, opus-5.5 `src/js/18-hover.js`): it never targets tabs, `[role="tab"]`,
+- Hover (the hover thread's merged engine `PMH`, opus-5.5 `src/js/18-hover.js`, settled 2026-10-10 on
+  concept/pm7-hover-polish-20261009, canon F3-465 and DR-072): per kind, `card` is a 2-3.5 px magnet on translate
+  with a small pointer light and a faint edge line near the pointer; `row` and `tile` are light and glow with no
+  magnet; `icon` is state classes only. Basic is crisp, Friendly warm, Glass clear, Retro "Raise", NieR "Lock-on"
+  (gated by the brackets part). A kind's own CSS may use the state classes `.pmh-on`, `.pmh-near`, `.pmh-out` and
+  tune only the `--pmh-*` tokens; it never restates the effect and never writes inherited custom properties on a hover
+  target. The engine rests under `body.pm-resizing`, `pmw-dragging` and `pm-ab-dragging`, and nothing runs at idle.
+  It never targets tabs, `[role="tab"]`,
   resizers and dividers (`-divider` in the class), inputs, textareas, selects, contenteditable or `.xterm`; it skips
   everything inside `[data-pm-hover-exempt]` (no magnet, light, glow, state class or kind tag); `data-pmh="off"` takes
   one element out; `data-pmh="card|row|tile|icon"` opts an element in. So: list rows opt in with `data-pmh="row"` (the
@@ -412,7 +524,9 @@ and writes through the same model, so Settings > Terminal only binds controls.
   through the Usage board. Hover TAGS (the page's tag controller) stay off rows whose label is already visible with
   `data-pm-hover-visual-suppressed="true"`, never with `data-pm-hover-exempt` (that would also take them out of the
   hover engine). While the user drags a divider or a tab the host sets `body.pm-resizing`, which rests the engine, and
-  hides the tag layer. The full hover contract (the look per family) follows from the hover thread.
+  hides the tag layer. A field (input, textarea, select) carries its own `data-pm-hover-label` and
+  `data-pm-hover-detail`, or `data-pm-hover-visual-suppressed="true"`: the tag controller otherwise gives an unlabelled
+  field the generic detail "Change this setting." (the controller checks the element itself, not its ancestors).
 - Fonts: faces in `src/terminal/fonts/` are not mirrored into PM Symbols; the layer exempts them from the
   face/symbol pairing check. Box-drawing, block, braille and powerline glyphs are drawn by the terminal.
 
@@ -437,3 +551,12 @@ root. A kind never appends its own overlay to `document.body`.
   (pending the Plans thread). `api.menu` gains point anchors, `reason`, function submenus and `o`.
   Same day: a header-row action's `menu` and `PMW.frames.button`'s `menu` map items through the same mapping as
   `api.menu` (the terminal thread found contract items printed "[object Object]" there).
+- v1.2 (2026-10-10): D26-D28 and the integration round. Section 2: Output is one tab, `output`, with the channel as
+  view state, and `output:<channel>` for a channel opened as its own tab (D28). Section 3: `labelFor` and `iconFor`, the
+  body attached before `mount`, view modes and `title` reach the state, `reveal(fields)` tolerates any key. Section 4:
+  `api.saveSoon()`, empty check slots. Section 5: fact `el`/`detail`/`grow`, `{ id, el }` actions, in-place `set()`,
+  `labelsAt`; new 5.1 (frames, `PMW.fileRef`, the catalog and picker, `registerIcon`). Section 6: the open's fields
+  reach `reveal`; 6.1 `PM_HOME.chat`, the `'chat'` events, browser captures, the chat surface slot; 6.3 the rail's own
+  overlay look. Section 9: `data-pmw-keys="host"`. Section 10.1: the shared code colour-scheme catalog and popover
+  (D27, agreed with the terminal thread). Sections 12-13: `editor.scheme`, pinned History widening, Friendly radius
+  restatements, the settled hover contract, field hover tags.

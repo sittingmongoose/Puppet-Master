@@ -9,11 +9,13 @@ var TAB = PMW.TAB = { max: 200, natural: 96, shrunk: 72, icon: 36, activeMin: 12
 var strip = PMW.strip = {};
 var measureCtx = null, measureCache = {};
 
-/* label widths are measured on a real hidden label inside the strip (the same font, size, weight and letter
-   spacing the look gives a tab, web fonts included), cached per text and look, cleared when fonts finish loading */
+/* label widths are measured on a real hidden label inside the strip (the same font, size, weight, case and letter
+   spacing the look gives a tab, web fonts included; an active tab is measured as an active one, so its heavier weight
+   and NieR's cursor square count), cached per text, state and look, cleared when the look changes or fonts load */
 var measureHost = null;
-function labelWidth(text, font, host, italic) {
-  var key = font + '|' + (italic ? 'i|' : '') + text;
+function labelWidth(text, font, host, italic, active) {
+  var focused = !!(active && host && host.closest && host.closest('.pmw-panel[data-focused]'));
+  var key = font + '|' + (italic ? 'i|' : '') + (active ? (focused ? 'af|' : 'a|') : '') + text;
   if (measureCache[key] != null) return measureCache[key];
   if (!host) return Math.ceil(text.length * 7);
   var m = host._pmwMeasure;
@@ -23,6 +25,7 @@ function labelWidth(text, font, host, italic) {
     host._pmwMeasure = m;
   }
   setAttr(m, 'data-preview', !!italic);
+  setAttr(m, 'data-active', !!active);
   var lab = m.firstChild;
   lab.textContent = text;
   var w = Math.ceil(lab.getBoundingClientRect().width);
@@ -40,13 +43,14 @@ function stripFont(stripEl) {
   fontCache.at = now;
   return fontCache.value;
 }
-bus.on('look', function () { measureCache = {}; fontCache.value = ''; });
+// a look change (theme, NieR and its parts, motion) can change every label's width: measure again and refit
+bus.on('look', function () { measureCache = {}; fontCache.value = ''; render.schedule({ animate: false }); });
 
 /* natural width of a tab: icon + gap + label + marks + close slot + padding, clamped */
-function naturalWidth(rec, font, host) {
+function naturalWidth(rec, font, host, active) {
   var label = tabLabel(rec);
   // padding, icon, the two 6 px gaps (icon-label, label-close), the label, the 24 px close slot, 2 px of slack
-  var w = TAB.padL + TAB.iconSlot + TAB.iconGap + labelWidth(label, font, host, !!rec.preview) + TAB.iconGap + TAB.close + TAB.padR + 2;
+  var w = TAB.padL + TAB.iconSlot + TAB.iconGap + labelWidth(label, font, host, !!rec.preview, !!active) + TAB.iconGap + TAB.close + TAB.padR + 2;
   if (rec.exitCode != null) w += labelWidth(String(rec.exitCode), font, host) + 18;
   if (rec.agent) w += 14;
   return clamp(w, TAB.natural, TAB.max);
@@ -73,7 +77,7 @@ strip.fit = function (tabs, recs, activeId, avail, font, frozen, host) {
   }
   if (!rest.length) return res;
   var nat = {};
-  rest.forEach(function (t) { nat[t] = naturalWidth(recs[t], font, host); });
+  rest.forEach(function (t) { nat[t] = naturalWidth(recs[t], font, host, t === activeId); });
   var activeIn = rest.indexOf(activeId) >= 0;
   var aW = activeIn ? Math.max(TAB.activeMin, nat[activeId]) : 0;
   var others = rest.filter(function (t) { return t !== activeId; });
@@ -132,6 +136,25 @@ strip.fit = function (tabs, recs, activeId, avail, font, frozen, host) {
   return res;
 };
 
+/* the column of a panel collapsed beside another: pinned tabs always, then a window of icon tabs around the active one
+   as tall as the column allows; the rest behind "+N" (the expand button, "+" and the panel menu keep their places) */
+var COLUMN = { top: 16, cell: 32, controls: 3 * 32 + 8, more: 32, sep: 8 };
+function fitColumn(p, l, height, pinnedIds, restIds) {
+  var res = { widths: {}, size: {}, hidden: [] };
+  pinnedIds.forEach(function (t) { res.size[t] = 'pinned'; });
+  var room = height - COLUMN.top - COLUMN.controls - pinnedIds.length * COLUMN.cell - (pinnedIds.length && restIds.length ? COLUMN.sep : 0);
+  var cap = Math.max(0, Math.floor(room / COLUMN.cell));
+  if (restIds.length > cap) cap = Math.max(0, Math.floor((room - COLUMN.more) / COLUMN.cell));
+  var ai = restIds.indexOf(p.active);
+  var start = ai < 0 ? 0 : Math.max(0, Math.min(ai, restIds.length - cap));
+  if (ai >= 0 && cap === 0) { start = ai; cap = 1; }   // the active tab never hides
+  restIds.forEach(function (t, i) {
+    if (i >= start && i < start + cap) res.size[t] = 'icon';
+    else res.hidden.push(t);
+  });
+  return res;
+}
+
 /* ---- render ---- */
 strip.render = function (panelEl, p, l, opts) {
   opts = opts || {};
@@ -166,20 +189,31 @@ strip.render = function (panelEl, p, l, opts) {
   if (tr && panelEl.offsetWidth) stripW = Math.max(0, tr.w - (panelEl.offsetWidth - host.clientWidth));
   else if (!stripW) stripW = render.rects() && render.rects().panels[p.id] ? render.rects().panels[p.id].w : 0;
   s.fitW = stripW;
-  var fixed = TAB.stripPadL + TAB.stripPadR + TAB.plus + TAB.menu + TAB.gripReserve + (narrow && panels.length > 1 ? 52 : 0) + (pinnedIds.length && restIds.length ? 9 : 0);
+  // a panel collapsed beside another (a row split) is a 35 px column: its tabs stand as icons, one above the other
+  var column = p.collapsed && panelEl.getAttribute('data-collapsed') === 'row';
+  setAttr(host, 'data-column', column);
+  setAttr(s.expand, 'hidden', !p.collapsed);
+  if (p.collapsed) {
+    var kidsOf = model.parentOf(l, p.id), first = kidsOf && kidsOf.kids[0] && kidsOf.kids[0].id === p.id;
+    s.expand.setAttribute('data-dir', column ? (first ? 'right' : 'left') : (first ? 'down' : 'up'));
+  }
+  var fixed = TAB.stripPadL + TAB.stripPadR + TAB.plus + TAB.menu + TAB.gripReserve + (narrow && panels.length > 1 ? 52 : 0) + (pinnedIds.length && restIds.length ? 9 : 0) + (p.collapsed ? TAB.plus + 2 : 0);
   var font = stripFont(host);
-  var fit = strip.fit(p.tabs, l.tabs, p.active, Math.max(0, stripW - fixed), font, s.frozen, host);
+  var fit = column ? fitColumn(p, l, tr ? tr.h : panelEl.offsetHeight, pinnedIds, restIds)
+    : strip.fit(p.tabs, l.tabs, p.active, Math.max(0, stripW - fixed), font, s.frozen, host);
   var hiddenSet = {};
   fit.hidden.forEach(function (t) { hiddenSet[t] = true; });
   s.hidden = fit.hidden.slice();
+  // every width first, then the labels are measured against them (one layout, not one per tab)
   p.tabs.forEach(function (tid) {
     var el = s.tabEls[tid];
     var w = fit.widths[tid];
     setAttr(el, 'hidden', !!hiddenSet[tid]);
     setAttr(el, 'data-size', fit.size[tid] || 'full');
-    if (w != null && !hiddenSet[tid]) { var px = w + 'px'; if (el.style.width !== px) el.style.width = px; }
-    middleEllipsis(el, l.tabs[tid], fit.size[tid], w, tid === p.active, host, font);
+    if (column) { if (el.style.width) el.style.width = ''; }
+    else if (w != null && !hiddenSet[tid]) { var px = w + 'px'; if (el.style.width !== px) el.style.width = px; }
   });
+  p.tabs.forEach(function (tid) { if (!hiddenSet[tid]) middleEllipsis(s.tabEls[tid], l.tabs[tid], fit.size[tid]); });
   // +N: plain text, counts the hidden tabs only
   var n = fit.hidden.length;
   setAttr(s.more, 'hidden', !n);
@@ -197,23 +231,34 @@ strip.render = function (panelEl, p, l, opts) {
   if (PMW.shape) PMW.shape.sync(host, p, l, opts);
 };
 
-/* A shrunk file tab keeps both ends of its name ("rec\u2026es.rs"), so same-prefix files stay apart (research 6.3). */
-function middleEllipsis(el, rec, size, w, active, host, font) {
+/* A shrunk file tab keeps both ends of its name ("rec\u2026es.rs"), so same-prefix files stay apart (research 6.3).
+   The candidates are measured in the label itself, at the width the fitter has just given the tab, so the font, case,
+   letter spacing and any mark the look draws inside the label all count, and the text the tab shows always fits: the
+   CSS end ellipsis never cuts it a second time. When even "r\u2026es.rs" does not fit, the tail shortens to the
+   extension, then to its last letters. */
+function middleEllipsis(el, rec, size) {
   var lab = el.querySelector('.pmw-tlabel');
   var full = tabLabel(rec);
-  if (size !== 'shrunk' || active || !w || !(rec.state && rec.state.path)) { if (lab.textContent !== full) lab.textContent = full; return; }
-  var room = w - TAB.padL - TAB.iconSlot - TAB.iconGap - 8 - (rec.dirty ? TAB.close + TAB.iconGap : 0);
-  if (labelWidth(full, font, host, !!rec.preview) <= room) { if (lab.textContent !== full) lab.textContent = full; return; }
+  if (lab.textContent !== full) lab.textContent = full;
+  if (size === 'icon' || size === 'pinned' || !(rec.state && rec.state.path)) return;
+  var room = lab.clientWidth;
+  if (!room || lab.scrollWidth <= room) return;
+  function fits(t) { lab.textContent = t; return lab.scrollWidth <= lab.clientWidth; }
   var dot = full.lastIndexOf('.');
-  var tailLen = dot > 0 && full.length - dot <= 6 ? full.length - dot + 2 : 3;
-  var tail = full.slice(-Math.min(tailLen, full.length - 1));
-  var lo = 1, hi = Math.max(1, full.length - tail.length - 1), best = full.slice(0, 1) + '\u2026' + tail;
-  while (lo <= hi) {
-    var mid = (lo + hi) >> 1;
-    var cand = full.slice(0, mid) + '\u2026' + tail;
-    if (labelWidth(cand, font, host, !!rec.preview) <= room) { best = cand; lo = mid + 1; } else hi = mid - 1;
+  var ext = dot > 0 && full.length - dot <= 6 ? full.length - dot : 0;
+  var tails = [], seen = {};
+  [ext ? ext + 2 : 3, ext, 2, 1].forEach(function (n) { if (n > 0 && n < full.length - 1 && !seen[n]) { seen[n] = 1; tails.push(n); } });
+  for (var ti = 0; ti < tails.length; ti++) {
+    var tail = full.slice(-tails[ti]);
+    var lo = 1, hi = full.length - tail.length - 1, best = '';
+    while (lo <= hi) {
+      var mid = (lo + hi) >> 1;
+      var cand = full.slice(0, mid) + '\u2026' + tail;
+      if (fits(cand)) { best = cand; lo = mid + 1; } else hi = mid - 1;
+    }
+    if (best) { lab.textContent = best; return; }
   }
-  if (lab.textContent !== best) lab.textContent = best;
+  lab.textContent = full.slice(0, 1) + '\u2026';
 }
 
 function placeTab(s, container, tid, index, l, p) {
@@ -257,10 +302,10 @@ function updateTab(el, rec, p, l) {
   if (inst) el.setAttribute('aria-controls', inst.host.id); else el.removeAttribute('aria-controls');
   var lab = el.querySelector('.pmw-tlabel');
   setText(lab, label);
-  // icon (kind icon, or the tab's own)
+  // icon: the pushed one, the kind's iconFor, the kind's own (tabIcon, 22-render.js)
   var ico = el.querySelector('.pmw-tico');
   var k = kindDef(rec.kind);
-  var iconName = rec.icon || (k && k.icon) || 'file';
+  var iconName = tabIcon(rec);
   if (ico._name !== iconName) { ico.textContent = ''; ico.appendChild(kindIcon(iconName)); ico._name = iconName; }
   // marks: failed command's exit code (D12), agent mark
   var mark = el.querySelector('.pmw-tmark');
@@ -280,8 +325,32 @@ function updateTab(el, rec, p, l) {
   if (markText) desc.push('last command failed with exit code ' + markText);
   if (rec.agent) desc.push(rec.agent + ' is driving it');
   el.setAttribute('aria-label', label + (desc.length ? ', ' + desc.join(', ') : ''));
-  el.setAttribute('data-pm-hover-label', tabTitle(rec));
-  el.setAttribute('data-pm-hover-detail', desc.length ? desc.join(' · ') : (k ? k.label : ''));
+  var tag = hoverWords(rec, k);
+  el.setAttribute('data-pm-hover-label', tag.label);
+  el.setAttribute('data-pm-hover-detail', [tag.place].concat(desc).concat(k && !desc.length ? [k.label] : []).filter(Boolean).join(' · '));
+}
+
+/* The tab's hover tag. The page's tag controller (PMConcept7.html, descriptor and looksInternal) replaces any label or
+   detail that holds a dotted word ("recipes.rs", "postgresql.org", "host:5173") with "Choose this option", and has no
+   opt-out for literal text (41-fileref.js keeps paths out of its tag for the same reason). So a file tab's tag names
+   the file by its stem and its type ("recipes, Rust file") and its folder ("In src/routes"); the exact name is the
+   tab's own text and the "+N" list's. */
+var DOTTED = /\b[a-z][a-z0-9-]*(?:[.:][a-z0-9_-]+)+\b/i;
+var EXT_WORDS = { rs: 'Rust', md: 'Markdown', toml: 'TOML', json: 'JSON', ts: 'TypeScript', tsx: 'TypeScript', js: 'JavaScript', mjs: 'JavaScript',
+  css: 'CSS', html: 'HTML', svelte: 'Svelte', sql: 'SQL', yml: 'YAML', yaml: 'YAML', xml: 'XML', log: 'log', bin: 'binary', py: 'Python', sh: 'script', txt: 'text' };
+function hoverWords(rec, k) {
+  var title = tabTitle(rec), path = rec.state && rec.state.path;
+  if (path) {
+    var name = String(path).split('/').pop(), dir = String(path).slice(0, Math.max(0, String(path).length - name.length - 1));
+    var dot = name.lastIndexOf('.');
+    var stem = dot > 0 ? name.slice(0, dot) : name, ext = dot > 0 ? name.slice(dot + 1).toLowerCase() : '';
+    var kind = ext ? (EXT_WORDS[ext] || ext.toUpperCase()) + ' file' : (dot === 0 ? 'Hidden file' : 'File');
+    var lab = dot === 0 ? name.slice(1) : stem;
+    return { label: DOTTED.test(lab) ? kind : lab + ', ' + kind, place: dir && !DOTTED.test(dir) ? 'In ' + dir : '' };
+  }
+  if (!DOTTED.test(title)) return { label: title, place: '' };
+  var short = tabLabel(rec);
+  return { label: !DOTTED.test(short) ? short : (k ? k.label : 'Tab'), place: '' };
 }
 
 function buildStrip(host, panelId) {
@@ -296,11 +365,13 @@ function buildStrip(host, panelId) {
   s.more = h('button', { type: 'button', class: 'pmw-more', hidden: true, 'aria-haspopup': 'dialog' });
   s.plus = h('button', { type: 'button', class: 'pmw-plus pmw-sbtn', 'aria-label': 'New tab or panel', 'aria-haspopup': 'menu', 'data-pmh': 'icon' }, [icon('plus', { size: 14 })]);
   s.fill = h('div', { class: 'pmw-strip-fill', 'aria-hidden': 'true' });
+  s.expand = h('button', { type: 'button', class: 'pmw-expand pmw-sbtn', hidden: true, 'aria-label': 'Expand panel', 'data-pm-hover-label': 'Expand panel',
+    'data-pm-hover-detail': 'Show this panel at its size again', 'data-pmh': 'icon' }, [icon('chevronRight', { size: 14 })]);
   s.lock = h('span', { class: 'pmw-lockmark', hidden: true, 'data-pm-hover-label': 'Locked', 'data-pm-hover-detail': 'Files open in other panels' }, [icon('lock', { size: 12 })]);
   s.menuBtn = h('button', { type: 'button', class: 'pmw-pmenu pmw-sbtn', 'aria-label': 'Panel options', 'aria-haspopup': 'menu', 'data-pm-hover-label': 'Panel options', 'data-pmh': 'icon' }, [icon('more', { size: 14 })]);
   s.grip = h('button', { type: 'button', class: 'pmw-grip', 'aria-label': 'Move panel (drag, or Enter then arrows)', 'data-pm-hover-label': 'Move panel', 'data-pm-hover-detail': 'Drag it to another place, or press Enter and use the arrows', 'data-pmh': 'off' }, [icon('grip', { size: 9 })]);
   s.plate = h('div', { class: 'pmw-plate', 'aria-hidden': 'true' });
-  append(host, [s.plate, s.switcher, s.list, s.more, s.plus, s.fill, s.lock, s.menuBtn, s.grip]);
+  append(host, [s.plate, s.switcher, s.list, s.more, s.plus, s.expand, s.fill, s.lock, s.menuBtn, s.grip]);
   host._pmw = s;
   wireStrip(host, s);
 }
@@ -343,6 +414,7 @@ function wireStrip(host, s) {
   s.plus.addEventListener('contextmenu', function (e) { e.preventDefault(); PMW.menus.plus(s.panelId, s.plus); });
   s.more.addEventListener('click', function () { PMW.menus.overflow(s.panelId, s.more); });
   s.menuBtn.addEventListener('click', function () { PMW.menus.panel(s.panelId, s.menuBtn); });
+  s.expand.addEventListener('click', function () { PMW.setCollapsed(s.panelId, false); });
   s.switcher.addEventListener('click', function () { PMW.menus.switcher(s.panelId, s.switcher); });
   s.grip.addEventListener('pointerdown', function (e) { if (PMW.panelDrag) PMW.panelDrag.begin(e, s.panelId, s.grip); });
   s.grip.addEventListener('keydown', function (e) {

@@ -15,6 +15,12 @@ PM_HOME.registerKind = function (id, def) {
   }, def);
   k.id = id;
   k.min = { w: Math.max(PANEL_MIN.w, (def.min && def.min.w) || 0), h: Math.max(PANEL_MIN.h, (def.min && def.min.h) || 0) };
+  // labelFor(id, state) -> string | null: the label of a tab that is not mounted yet (a background, agent-opened or
+  // restored tab mounts lazily); tabLabel asks it after the user's and the kind's pushed label (22-render.js)
+  if (typeof k.labelFor !== 'function') k.labelFor = null;
+  // iconFor(id, state) -> icon name | null: its icon counterpart; tabIcon asks it after an icon the kind pushed
+  // (api.update) and before the kind's own icon (22-render.js)
+  if (typeof k.iconFor !== 'function') k.iconFor = null;
   for (var i = 0; i < k.prefixes.length; i++) {
     var pre = k.prefixes[i];
     for (var j = 0; j < PREFIXES.length; j++) {
@@ -28,6 +34,7 @@ PM_HOME.registerKind = function (id, def) {
   var replacing = !!KINDS[id];
   KINDS[id] = k;
   if (replacing && PMW.render && PMW.render.remountKind) PMW.render.remountKind(id);
+  else if (PMW.state && PMW.state.layout && PMW.render) PMW.render.schedule({ animate: false });   // a late kind: its labels and icons
   bus.emit('kinds', { id: id });
   return k;
 };
@@ -35,7 +42,8 @@ PM_HOME.kindOf = function (tabId) {
   if (!tabId) return null;
   if (PMW.state && PMW.state.layout && PMW.state.layout.tabs[tabId]) return PMW.state.layout.tabs[tabId].kind;
   for (var i = 0; i < PREFIXES.length; i++) if (tabId.indexOf(PREFIXES[i].prefix) === 0) return PREFIXES[i].kind;
-  if (tabId === 'problems' || tabId === 'ports') return tabId;
+  // the one-per-workspace ids, before (or without) their kind's registration: the Output tab is 'output' (D28)
+  if (tabId === 'problems' || tabId === 'ports' || tabId === 'output') return tabId;
   return null;
 };
 PM_HOME.kinds = function () { return Object.keys(KINDS); };
@@ -96,12 +104,18 @@ PM_HOME.catalog = {
   }
 };
 
-/* a picker on PMW.menu over catalog items (kinds use it for their "+" rows: Plan or document..., Artifact...) */
+/* a picker on PMW.menu over catalog items (kinds use it for their "+" rows: Plan or document..., Artifact...).
+   o: { kind | kinds, title, placeholder, panelId, newPanel, sectionLabels: { <kind>: 'Plans', ... } }. With several
+   kinds each section is headed by its sectionLabels entry, else by the kind's group (two kinds sharing one group name
+   their own sections through sectionLabels); a single kind's section is headed only when sectionLabels names it. */
 PMW.catalogPicker = function (anchor, o) {
+  o = o || {};
   var kinds = o.kinds || [o.kind];
+  var named = o.sectionLabels && typeof o.sectionLabels === 'object' ? o.sectionLabels : {};
   var sections = kinds.map(function (k) {
     var def = KINDS[k];
-    return { label: kinds.length > 1 ? (def ? def.group : k) : null, rows: PM_HOME.catalog.list(k).map(function (it) {
+    var heading = Object.prototype.hasOwnProperty.call(named, k) && named[k] ? String(named[k]) : (kinds.length > 1 ? (def ? def.group : k) : null);
+    return { label: heading, rows: PM_HOME.catalog.list(k).map(function (it) {
       return { id: it.id, label: it.label, sub: it.sub || '', kind: it.icon || (def && def.icon) || 'file', keywords: it.keywords || '',
         run: function (info) { PM_HOME.catalog.open(it.id, { where: info.alt || o.newPanel ? 'panel' : (o.panelId || 'auto'), source: o.panelId, mode: 'keep' }); },
         alt: { label: 'Open in new panel', run: function () { PM_HOME.catalog.open(it.id, { where: 'panel', source: o.panelId, mode: 'keep' }); } } };

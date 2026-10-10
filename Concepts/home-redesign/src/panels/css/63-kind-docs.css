@@ -17,13 +17,12 @@
 .pmw-plan-hseg .pmw-seg-opt[aria-selected="true"]::after { bottom: 0; }
 
 /* ---- shared text ---- */
-/* one vertical rhythm for top-level blocks (the frames' own p rule zeroes it for paragraphs) */
-.pmw-plan-doc .pmw-doc-body > * + *, .pmw-docu-doc .pmw-doc-body > * + * { margin-top: 12px; }
+/* the frame gives top-level blocks their 12 px rhythm and sections their 24 px (45-frames.css); a heading's own bottom
+   margin is the gap after it, and the discovery's budget line sits under its counts */
 .pmw-plan-doc .pmw-doc-body > :is(h2, h3) + *, .pmw-docu-doc .pmw-doc-body > :is(h2, h3) + * { margin-top: 0; }
-.pmw-plan-doc .pmw-doc-body > .pmw-sec, .pmw-docu-doc .pmw-doc-body > .pmw-sec { margin-top: 24px; }
 .pmw-plan-doc .pmw-doc-body > .pmw-plan-stats + .pmw-fine { margin-top: 2px; }
 .pmw-docu-doc .pmw-docu-h2 { margin: 22px 0 6px; }
-.pmw-plan .pmw-plan-p { margin-inline: 0; margin-bottom: 0; font-size: 13px; line-height: 20px; color: var(--pmw-text); max-width: 78ch; }
+.pmw-plan-p { font-size: 13px; line-height: 20px; color: var(--pmw-text); }
 .pmw-plan-doc .pmw-plan-h2 { margin: 26px 0 8px; font-size: 15px; line-height: 21px; font-weight: 620; color: var(--pmw-text); }
 .pmw-plan-doc .pmw-doc-body > .pmw-plan-h2:first-child { margin-top: 6px; }
 .pmw-plan-doc .pmw-doc-body > .pmw-plan-line + .pmw-plan-h2 { margin-top: 20px; }
@@ -40,17 +39,10 @@
 .pmw-plan-link:hover, .pmw-docu-link:hover { text-decoration-color: currentColor; }
 .pmw-plan-link:focus-visible, .pmw-docu-link:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 1px; border-radius: 3px; }
 
-/* D7 file references: a file mark and the path, underlined on hover; 24 px tall */
-.pmw-plan-file, .pmw-docu-file {
-  display: inline-flex; align-items: center; gap: 6px; height: 24px; max-width: 100%; padding: 0 4px; margin-left: -4px; border: 0; border-radius: 4px;
-  background: transparent; color: var(--pmw-text-2); font: inherit; font-family: var(--pm-font-code); font-size: 11.5px; cursor: pointer;
-}
-.pmw-plan-file span, .pmw-docu-file span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: underline; text-decoration-color: var(--pmw-line-2); text-underline-offset: 3px; }
-.pmw-plan-file .pmw-ico, .pmw-docu-file .pmw-ico { width: 13px; height: 13px; color: var(--pmw-text-3); }
-.pmw-plan-file:hover, .pmw-docu-file:hover { color: var(--pmw-text); }
-.pmw-plan-file:hover span, .pmw-docu-file:hover span { text-decoration-color: currentColor; }
-.pmw-plan-file:focus-visible, .pmw-docu-file:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 0; }
-.pmw-docu-file.is-path { color: var(--pmw-text); font-size: 12px; }
+/* D7 file references are the shared PMW.fileRef (.pmw-fileref); here only where they sit: the mark lines up with the
+   text above it, and a document's own subject path reads in the text colour */
+.pmw-plan-step-files { margin-left: -6px; }
+.pmw-docu .pmw-fileref.is-path { color: var(--pmw-text); }
 
 /* ---- plan: lines above the body (schedule, the build window, an earlier version, canceled) ---- */
 .pmw-plan-line { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font-size: 12.5px; line-height: 18px; color: var(--pmw-text-2); }
@@ -86,15 +78,15 @@
 .pmw-plan-mark .pmw-plan-marc { stroke-width: 2.2; }
 .pmw-plan-mark.is-wait { color: var(--pmw-warn); }
 .pmw-plan-step-body { min-width: 0; }
-.pmw-plan .pmw-plan-step-title { margin: 0; font-size: 13px; line-height: 20px; font-weight: 600; color: var(--pmw-text); }
+.pmw-plan-step-title { margin: 0; font-size: 13px; line-height: 20px; font-weight: 600; color: var(--pmw-text); }
 .pmw-plan .pmw-plan-step.is-working .pmw-plan-step-title, .pmw-plan .pmw-plan-step.is-wait .pmw-plan-step-title { font-weight: 700; }
 .pmw-plan .pmw-plan-step.is-done .pmw-plan-step-title { color: var(--pmw-text-2); }
-.pmw-plan .pmw-plan-step-text { margin: 2px 0 0; font-size: 12.5px; line-height: 19px; color: var(--pmw-text-2); max-width: 78ch; }
-.pmw-plan .pmw-plan-step-meta { margin: 4px 0 0; display: block; font-size: 12px; line-height: 18px; color: var(--pmw-text-3); }
+.pmw-plan-step-text { margin: 2px 0 0; font-size: 12.5px; line-height: 19px; color: var(--pmw-text-2); max-width: 78ch; }
+.pmw-plan-step-meta { margin: 4px 0 0; display: block; font-size: 12px; line-height: 18px; color: var(--pmw-text-3); }
 .pmw-plan-step-meta > .pmw-plan-sep { margin: 0 6px; }
-.pmw-plan-sid { font-family: var(--pm-font-code); font-size: 11.5px; color: var(--pmw-text-2); }
+.pmw-plan-sid { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--pmw-text-2); }
 .pmw-plan-dep {
-  margin: -3px 0; padding: 3px 1px; border: 0; background: none; font: inherit; font-family: var(--pm-font-code); font-size: 11.5px; color: var(--pmw-text-2);
+  margin: -3px 0; padding: 3px 1px; border: 0; background: none; font: inherit; font-variant-numeric: tabular-nums; color: var(--pmw-text-2);
   cursor: pointer; text-decoration: underline; text-decoration-color: var(--pmw-line-2); text-underline-offset: 2px;
 }
 .pmw-plan-dep:hover { color: var(--pmw-text); text-decoration-color: currentColor; }
@@ -102,7 +94,7 @@
 .pmw-plan-sstate.is-done { color: var(--pmw-ok); }
 .pmw-plan-sstate.is-working { color: var(--pmw-accent); font-weight: 600; }
 .pmw-plan-sstate.is-wait { color: var(--pmw-warn); font-weight: 600; }
-.pmw-plan .pmw-plan-step-files { margin: 4px 0 0; display: flex; flex-wrap: wrap; gap: 0 14px; }
+.pmw-plan-step-files { margin-top: 2px; margin-bottom: -4px; display: flex; flex-wrap: wrap; gap: 0 8px; }
 
 /* ---- plan: notes and warnings (a full 1 px border, never a coloured side) ---- */
 .pmw-plan-callout { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border: 1px solid var(--pmw-line-2); border-radius: var(--pmw-radius); }
@@ -110,7 +102,7 @@
 .pmw-plan-callout-ico { flex: none; display: grid; place-items: center; width: 16px; height: 18px; color: var(--pmw-text-2); }
 .pmw-plan-callout.is-warn .pmw-plan-callout-ico { color: var(--pmw-warn); }
 .pmw-plan-callout-ico svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-.pmw-plan-doc .pmw-plan-callout p, .pmw-plan-callout p { margin: 0; font-size: 12.5px; line-height: 19px; color: var(--pmw-text); max-width: 80ch; }
+.pmw-plan-callout p { margin: 0; font-size: 12.5px; line-height: 19px; color: var(--pmw-text); max-width: 80ch; }
 .pmw-plan-callout b { font-weight: 650; }
 
 /* ---- plan: an evidence artifact (opens the artifact tab) ---- */
@@ -133,9 +125,9 @@
 .pmw-plan-embed-head b { font-size: 13px; line-height: 19px; font-weight: 600; color: var(--pmw-text); }
 .pmw-plan-embed-head .pmw-doc-meta { margin: 0; }
 .pmw-plan-embed-pv { margin-top: 10px; padding: 10px 12px; border-radius: calc(var(--pmw-radius) * .7); background: var(--pmw-surface-2); overflow-x: auto; scrollbar-width: thin; }
-.pmw-plan-doc .pmw-plan-embed-sum, .pmw-plan-embed-sum { margin: 8px 0 0; font-size: 12.5px; line-height: 19px; color: var(--pmw-text-2); }
+.pmw-plan-embed-sum { margin: 8px 0 0; font-size: 12.5px; line-height: 19px; color: var(--pmw-text-2); }
 .pmw-plan-embed-acts { margin-top: 4px; display: flex; gap: 12px; }
-.pmw-plan-doc .pmw-plan-embed-off, .pmw-plan-embed-off { margin: 8px 0 0; display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; font-size: 12.5px; color: var(--pmw-text-2); }
+.pmw-plan-embed-off { margin: 8px 0 0; display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; font-size: 12.5px; color: var(--pmw-text-2); }
 .pmw-plan-embed-off svg { flex: none; align-self: center; fill: none; stroke: var(--pmw-warn); stroke-width: 1.5; stroke-linecap: round; }
 .pmw-plan-embed-off b { color: var(--pmw-text); font-weight: 600; }
 .pmw-plan-pv-svg { display: block; max-width: none; height: auto; overflow: visible; }
@@ -161,7 +153,7 @@
 @container pmw-body (max-width: 519.98px) { .pmw-plan-pv-list { grid-template-columns: minmax(0, 1fr); } }
 
 /* ---- plan: the Markdown projection (status in a rail of dots, never in the bytes) ---- */
-.pmw-plan-md { padding: 12px 14px 12px 4px; border: 1px solid var(--pmw-line); border-radius: var(--pmw-radius); background: var(--pmw-surface-2); font-family: var(--pm-font-code); font-size: 12px; line-height: 1.65; color: var(--pmw-text); }
+.pmw-plan-md { padding: 12px 14px 12px 4px; border: 1px solid var(--pmw-line); border-radius: min(var(--pmw-radius), 8px); background: var(--pmw-surface-2); font-family: var(--pm-font-code); font-size: 12px; line-height: 1.65; color: var(--pmw-text); }
 .pmw-plan-mdrow { display: grid; grid-template-columns: 14px minmax(0, 1fr); }
 .pmw-plan-mdrow + .pmw-plan-mdrow { margin-top: 1.65em; }
 .pmw-plan-mdrail { position: relative; }
@@ -189,13 +181,13 @@
 .pmw-act.pmw-plan-build.is-canceled { text-decoration: line-through; color: var(--pmw-text-3); }
 .pmw-plan-busy { width: 6px; height: 6px; margin-left: 2px; border-radius: 50%; background: var(--pmw-accent); animation: pmw-plan-busy 1.6s ease-in-out infinite; }
 @keyframes pmw-plan-busy { 50% { opacity: .35; } }
-.pmw-act[aria-pressed="true"] { background: var(--pmw-press); border-color: var(--pmw-text-3); }
-/* Friendly's 14 px radius turns a 32 px button into a capsule; actions in these kinds stop at 8 px (no pills) */
-:is(.pmw-plan, .pmw-docu) .pmw-act { border-radius: min(var(--pmw-radius), 8px); }
+:is(.pmw-plan, .pmw-docu) .pmw-act[aria-pressed="true"] { background: var(--pmw-press); border-color: var(--pmw-text-3); }
+/* the frame's .pmw-act carries its own radius in every look (45-frames.css); these kinds' own rows and text buttons stop
+   at 8 px, so Friendly's 14 px page rule for buttons never turns a 32 px row into a capsule */
 :is(.pmw-plan, .pmw-docu) :is(.pmw-docu-tbtn, .pmw-docu-note, .pmw-plan-q-opt, .pmw-docu-phase) { border-radius: min(var(--pmw-row-radius), 8px); }
 
 /* ---- Deep Plan discovery ---- */
-.pmw-plan .pmw-plan-stats { margin-inline: 0; margin-bottom: 0; font-size: 13px; color: var(--pmw-text-2); }
+.pmw-plan-stats { font-size: 13px; color: var(--pmw-text-2); }
 .pmw-plan-stats b { color: var(--pmw-text); font-weight: 650; font-variant-numeric: tabular-nums; }
 .pmw-plan-check { display: flex; align-items: flex-start; gap: 10px; min-height: 32px; padding: 6px 0; cursor: pointer; }
 .pmw-plan-check input, .pmw-plan-q-opt input { width: 16px; height: 16px; margin: 2px 0 0; flex: none; accent-color: var(--pmw-accent); }
@@ -204,13 +196,29 @@
 .pmw-plan-check span span { font-size: 12px; color: var(--pmw-text-2); }
 .pmw-plan-q { padding: 12px 6px 12px 0; border-bottom: 1px solid var(--pmw-line); outline: none; transition: background-color 900ms var(--pmw-ease); }
 .pmw-plan-q:first-of-type { border-top: 1px solid var(--pmw-line); }
-.pmw-plan .pmw-plan-q-prompt { margin: 0; font-size: 13.5px; line-height: 20px; font-weight: 600; color: var(--pmw-text); }
+.pmw-plan-q-prompt { margin: 0; font-size: 13.5px; line-height: 20px; font-weight: 600; color: var(--pmw-text); }
 .pmw-plan-q .pmw-doc-meta { margin-top: 3px; }
-.pmw-plan-doc .pmw-plan-q-answer, .pmw-plan-q-answer { margin: 6px 0 0; font-size: 13px; line-height: 20px; color: var(--pmw-text); }
+.pmw-plan-q-answer { margin: 6px 0 0; font-size: 13px; line-height: 20px; color: var(--pmw-text); }
 .pmw-plan-q-opts { margin-top: 6px; display: flex; flex-direction: column; gap: 2px; }
 .pmw-plan-q-opt { display: flex; align-items: center; gap: 10px; min-height: 32px; margin: 0 -8px; padding: 0 8px; border-radius: var(--pmw-row-radius); font-size: 13px; color: var(--pmw-text); cursor: pointer; }
 .pmw-plan-q-opt:hover { background: var(--pmw-hover); }
 .pmw-plan-q-opt input { margin: 0; }
+/* the discovery's radio and check are drawn here, so neither the page's colour scheme (a native radio turns into a solid
+   dark disc under a dark scheme) nor the page's input rules (a 1 px line-coloured box; Glass paints every input with the
+   same pale fill, !important, so a chosen option looked empty) decide them: empty is a ring or box in the secondary text
+   colour, chosen is the accent with a dot or a tick in the ink that reads on it (black or white, as 45-frames.css) */
+.pmw-plan .pmw-plan-q-opt input[type="radio"] {
+  appearance: none; -webkit-appearance: none; box-sizing: border-box; border: 1.5px solid var(--pmw-text-2) !important; border-radius: 50%;
+  background: transparent !important; cursor: pointer;
+}
+.pmw-plan .pmw-plan-q-opt input[type="radio"]:checked { border-color: var(--pmw-accent) !important; background: radial-gradient(circle closest-side, var(--pmw-accent) 0 56%, transparent 62%) !important; }
+.pmw-plan .pmw-plan-check input[type="checkbox"] { border-color: var(--pmw-text-2) !important; background: transparent !important; }
+.pmw-plan .pmw-plan-check input[type="checkbox"]:checked { border-color: var(--pmw-accent) !important; background: var(--pmw-accent) !important; }
+.pmw-plan .pmw-plan-check input[type="checkbox"]:checked::after { border-color: var(--pmw-surface); }
+@supports (color: color(from red srgb-linear r g b)) {
+  .pmw-plan .pmw-plan-check input[type="checkbox"]:checked::after { border-color: color(from var(--pmw-accent) srgb-linear clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1) clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1) clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1)); }
+}
+:is(.pmw-plan-q-opt, .pmw-plan-check) input:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 2px; }
 .pmw-plan-q-acts { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 0 14px; }
 .pmw-plan-q-acts.is-buttons { gap: 8px; margin-top: 12px; }
 .pmw-plan-frozen { list-style: none; margin: 10px 0 0; padding: 10px 14px 12px; border: 1px solid var(--pmw-line); border-radius: var(--pmw-radius); font-size: 12.5px; line-height: 19px; color: var(--pmw-text); }
@@ -222,16 +230,13 @@
 /* ================================================================== documents */
 .pmw-docu-glyph { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .pmw-docu-run .pmw-run-main > * + * { margin-top: 14px; }
-/* the run grid keeps its 220 px aside column even with no aside; a document without one uses the full column */
-.pmw-docu-run .pmw-run-grid > .pmw-run-main:only-child { grid-column: 1 / -1; }
 .pmw-docu-run .pmw-run-main > .pmw-sec { margin-top: 24px; }
-.pmw-docu-acts { align-self: start; }
-@container pmw-body (max-width: 599.98px) { .pmw-docu-acts { grid-column: 1; } }
-.pmw-docu-p { margin: 0; font-size: 13px; line-height: 20px; color: var(--pmw-text); max-width: 78ch; }
-.pmw-doc-body .pmw-docu-p { color: var(--pmw-text); }
+/* zero-specificity margins, so the frame's block rhythm still spaces these when they sit at the top of a document */
+:where(.pmw-docu-p, .pmw-docu-fine) { margin: 0; }
+.pmw-docu-p { font-size: 13px; line-height: 20px; color: var(--pmw-text); max-width: 78ch; }
 .pmw-docu-p.is-strong { font-weight: 600; }
 .pmw-docu-p + .pmw-docu-p { margin-top: 6px; }
-.pmw-docu-fine, .pmw-doc-body .pmw-docu-fine { margin: 0; font-size: 11.5px; line-height: 17px; color: var(--pmw-text-3); max-width: 90ch; }
+.pmw-docu-fine { font-size: 11.5px; line-height: 17px; color: var(--pmw-text-3); max-width: 90ch; }
 .pmw-docu-dim { color: var(--pmw-text-3); }
 .pmw-docu-h2 { margin: 22px 0 6px; font-size: 15px; line-height: 21px; font-weight: 620; color: var(--pmw-text); }
 .pmw-doc-body > .pmw-docu-h2:first-child { margin-top: 0; }
@@ -345,13 +350,13 @@
 .pmw-docu-file-sec { padding: 14px 0 12px; border-top: 1px solid var(--pmw-line); }
 .pmw-docu-file-sec:last-child { border-bottom: 1px solid var(--pmw-line); }
 .pmw-docu-filehead { display: grid; grid-template-columns: 20px minmax(0, 1fr) auto; gap: 10px; align-items: start; }
-.pmw-docu-filemark { padding-top: 4px; color: var(--pmw-text-2); }
+.pmw-docu-filemark { padding-top: 8px; color: var(--pmw-text-2); }
 .pmw-docu-filemark.is-made { color: var(--pmw-ok); }
 .pmw-docu-filemark.is-deleted { color: var(--pmw-bad); }
 .pmw-docu-filecopy { min-width: 0; }
-.pmw-docu-fileline { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0 10px; }
+.pmw-docu-fileline { margin: 0 0 0 -6px; display: flex; flex-wrap: wrap; align-items: center; gap: 0 10px; }
 .pmw-docu-filecopy > .pmw-docu-dim { margin: 0; font-size: 12px; line-height: 17px; }
-.pmw-docu-filestate { padding-top: 4px; font-size: 12px; color: var(--pmw-text-2); white-space: nowrap; }
+.pmw-docu-filestate { padding-top: 8px; font-size: 12px; color: var(--pmw-text-2); white-space: nowrap; }
 .pmw-docu-filestate.is-ok { color: var(--pmw-ok); }
 @container pmw-body (max-width: 519.98px) {
   .pmw-docu-filehead { grid-template-columns: 20px minmax(0, 1fr); }
@@ -362,7 +367,7 @@
 .pmw-docu-counts .is-del { color: var(--pmw-bad); }
 .pmw-docu-file-sec .pmw-seg { margin-top: 8px; }
 .pmw-docu-file-sec > .pmw-docu-fine { margin-top: 8px; }
-.pmw-docu-diff { margin-top: 8px; padding: 4px 0; border: 1px solid var(--pmw-line); border-radius: var(--pmw-radius); background: var(--pmw-surface-2); font-family: var(--pm-font-code); font-size: 12px; line-height: 20px; overflow-x: auto; scrollbar-width: thin; }
+.pmw-docu-diff { margin-top: 8px; padding: 4px 0; border: 1px solid var(--pmw-line); border-radius: min(var(--pmw-radius), 8px); background: var(--pmw-surface-2); font-family: var(--pm-font-code); font-size: 12px; line-height: 20px; overflow-x: auto; scrollbar-width: thin; }
 .pmw-docu-diff:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 1px; }
 .pmw-docu-dr { display: grid; grid-template-columns: 34px 34px 16px max-content; min-width: 100%; width: max-content; }
 .pmw-docu-dr.is-add { background: color-mix(in srgb, var(--pmw-ok) 12%, transparent); }
@@ -374,7 +379,7 @@
 .pmw-docu-dr-text { padding-right: 14px; white-space: pre; color: var(--pmw-text); }
 
 /* ---- Debug: eight phases, 4 columns from 640 px, 2 below; marks are SVG ---- */
-.pmw-docu .pmw-docu-target { margin: 0; display: flex; flex-wrap: wrap; align-items: center; font-size: 12.5px; }
+.pmw-docu .pmw-docu-target { margin: 0 0 0 -6px; display: flex; flex-wrap: wrap; align-items: center; font-size: 12.5px; }
 .pmw-docu-phases { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px 6px; }
 @container pmw-body (max-width: 639.98px) { .pmw-docu-phases { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @container pmw-body (max-width: 339.98px) { .pmw-docu-phases { grid-template-columns: minmax(0, 1fr); } }
@@ -446,15 +451,16 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-note.is-chosen :is
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-phase.is-now .pmw-docu-phase-no { border-color: var(--surface); color: var(--surface); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-docu-phase-no, .pmw-plan-busy) { border-radius: 0; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-plan-mdrail.is-done::before, html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-plan-mdrail.is-now::before { border-radius: 0; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-plan-file, .pmw-docu-file, .pmw-plan-link, .pmw-docu-link, .pmw-plan-dep):hover { background: var(--accent-lime); color: var(--surface); text-decoration: none; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-plan-file, .pmw-docu-file):hover :is(span, .pmw-ico) { color: var(--surface); text-decoration: none; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-plan-file, .pmw-docu-file, .pmw-plan-dep, .pmw-docu-tbtn, .pmw-docu-note, .pmw-plan-q-opt) { border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-plan-link, .pmw-docu-link, .pmw-plan-dep):hover { background: var(--accent-lime); color: var(--surface); text-decoration: none; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-plan-link, .pmw-docu-link, .pmw-plan-dep, .pmw-docu-tbtn, .pmw-docu-note, .pmw-plan-q-opt, .pmw-plan-art, .pmw-docu-sum) { border-radius: 0; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-plan-busy { animation: none; }
 
-/* ---- looks: NieR (ink and parchment, square corners, no glow, small uppercase headers) ---- */
-html[data-o55-nier="on"] :is(.pmw-plan, .pmw-docu) :is(.pmw-plan-h2, .pmw-docu-h2, .pmw-sec-head h2) { font-size: 12px; line-height: 18px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
-html[data-o55-nier="on"] :is(.pmw-docu-phase-no, .pmw-plan-busy, .pmw-docu-tbtn, .pmw-docu-note, .pmw-plan-q-opt, .pmw-plan-file, .pmw-docu-file, .pmw-plan-dep) { border-radius: 0; }
-html[data-o55-nier="on"] .pmw-plan-mdrail.is-done::before, html[data-o55-nier="on"] .pmw-plan-mdrail.is-now::before { border-radius: 0; background: var(--o55-nier-ink); }
+/* ---- looks: NieR (ink and parchment always; small uppercase headers with its headers part, square corners with its
+   square part; no glow) ---- */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(.pmw-plan, .pmw-docu) :is(.pmw-plan-h2, .pmw-docu-h2, .pmw-sec-head h2) { font-size: 12px; line-height: 18px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] :is(.pmw-docu-phase-no, .pmw-plan-busy, .pmw-docu-tbtn, .pmw-docu-note, .pmw-plan-q-opt, .pmw-plan-dep, .pmw-plan-art, .pmw-docu-sum) { border-radius: 0; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-plan-mdrail:is(.is-done, .is-now)::before { border-radius: 0; }
+html[data-o55-nier="on"] .pmw-plan-mdrail.is-done::before, html[data-o55-nier="on"] .pmw-plan-mdrail.is-now::before { background: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmw-docu-note.is-chosen, html[data-o55-nier="on"] .pmw-docu-phase.is-now { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] .pmw-docu-note.is-chosen :is(span, b, .pmw-docu-note-mark) { color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] .pmw-docu-phase.is-now .pmw-docu-phase-no { border-color: var(--o55-nier-on-ink); color: var(--o55-nier-on-ink); }

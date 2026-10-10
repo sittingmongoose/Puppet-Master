@@ -93,10 +93,30 @@ does the same. The empty-panel launcher shows the same rows (32 px list rows), t
 |---|---|
 | Default width | clamp(400, 0.26667 x window + 88, 640): 480 at 1470, 600 at 1920, 640 from 2070 |
 | Drag range | 400-760, and never so wide that the centre drops below 960 (where the ladder starts easing the chat back) |
-| Pop out | the only way to move it; in the browser concept it floats at 440 x min(720, window - 140) with Dock back |
+| Pop out | the only way to move it; in the browser concept it floats at 440x720 with History as a flyout and 680x720 with History pinned (+240 pinned, capped at 100vw - 48), at right 24 / bottom 48 with Dock back |
 | Ladder (on C, the centre width) | C < 960: the rail side panel eases to 240, then folds to its icon bar below 760 (opens as an overlay), then the chat eases toward 400; C < 600: one panel column with a panel switcher ("2/3") in the strip; C < 480: the chat folds to a 32 px strip unless "Keep the chat open in narrow windows" is on |
 | Hysteresis | 48 px per step; nothing is ever saved |
 | Measured | 1920: rail 240, chat 600, C 1041. 1680: chat 441, C 960. 1470: rail folded, chat 473, C 960. 1440: chat 443. 1280: chat 400, C 847. 1024: one column, C 567. 900: chat strip, C 811 |
+| Pinned History width | 240 px (chat draws it at 200 while its whole column is under 540) |
+| Pinned column minimum | 640 px; drag with History pinned: lowest column 640, highest 760 + 240 (capped by the C 960 rule) |
+| Peek with History | 400 px with History as a flyout and 640 px with History pinned (+240 pinned, capped at row width - 48), opening over the right side; a folded chat always has History dropped, so its peek opens at 400 px |
+| History drop thresholds | with History pinned and the rail folded, the drop happens at 1170 px going narrower and comes back at 1210 px; the strip fold at 930 px going narrower and 990 px going wider (48 px hysteresis) |
+| Measured with History pinned | 1920 Friendly dark: column 600 flyout, 666 pinned (History 240, messages 425) and C 960; 1920 NieR: column 600 flyout, 681 pinned (History 240, messages 440) and C 960; 1470 Glass light: column 434 flyout (rail folded, C 960), 640 pinned (History 240, messages 399) and C 754; 900 Retro dark: folded to 32 px strip, peek 400 flyout, 640 pinned |
+
+## Shared helpers (CONTRACT sections 4-5)
+
+| What | Value |
+|---|---|
+| Header row | default labelsAt 520 px; with labelsAt set, icon-only buttons are 24 px wide; each kind's labelsAt: browser 1100 px, transcript 1100 px, context 720 px, record 600 px; the rules live in css/40-parts.css under :where(.pmw-hrow.is-icons > .pmw-hrow-actions) > .pmw-hbtn and the .is-labels variants |
+| File references | 32 px tall (6 px radius, 12 px code face); inline: 24 px tall (4 px radius, 11.5 px); double-click window: 240 ms (FILEREF_DBL_MS in 41-fileref.js); rules live in css/45-frames.css |
+| File reference hover tag | label 'Open file', detail 'Click previews it. Double-click keeps it open.'; without a path: 'No file to open' / 'This reference names no file.' |
+| api.saveSoon | 250 ms coalesced (PMW.persist.saveSoon) |
+| registerIcon | Retro glyph at most 2 cells |
+| New icons | registered via PMW.registerIcon (16 px stroke grammar), with Retro glyphs: crew '&', review '?', room '~', brainstorm '^', outputNewTab '+' (path 'M2.5 13.5v-9h4.5l1 2h5.5v7zM10.5 8.5v3.5M8.75 10.25h3.5'), edPalette '*' |
+| registerKind iconFor | iconFor(id, state): the strip, the '+N' list, the every-tab list and the recent-tabs switcher show it |
+| Primary frame buttons | black or white ink chosen from the fill's luminance (crossover Y 0.1791, at least 4.58:1); measured Glass light 1.75 -> 4.68 (hover 7.3), Friendly light 2.97 -> 6.79; every look at least 4.68 |
+| Document action buttons (.pmw-act) radius | Friendly 8, Glass 8, Basic 6, Retro 0, NieR square 0 |
+| Meta separator slot | 16 px (column gap); wrapped-line clip slack 3 px |
 
 ## Tab kinds (D9)
 
@@ -127,6 +147,13 @@ header-row targets, 32 px document actions, nothing under 11 px) are in CONTRACT
 | Shortcuts | Ctrl+F, Ctrl+H, Ctrl+G, Ctrl+S, F3/Shift+F3, Alt+F5/Shift+Alt+F5 (next and previous change), Alt+C and Alt+R inside find. Alt+W stays the host's close key, so whole word has no shortcut. Ctrl+Shift+1 replaces one, Ctrl+Alt+Enter replaces all. |
 | Performance with 10,000 lines | scroll step ~1.2 ms, far jump ~8 ms, keystroke ~8 ms (about 120 ms before the shadow root). |
 | Demo ids | 34 project and chat files (`file:<path>`) |
+| Setting editor.scheme | 'follow' (default) or a scheme id; 'follow' keeps per-look colours (D21); a scheme id writes 17 --pmw-ed-s-* tokens plus background, gutter, text, caret, selection, line numbers, current line, find hits, minimap ink and diff tints |
+| Text contrast floor under a scheme | 4.5:1 for syntax tokens, foreground, line numbers, text-2/-3 and diff signs; find-hit ring 3:1 |
+| Scheme tints | dark / light: add-bg 12% / 10%, mod-bg 10% / 8%, del-bg 12% / 9%, conf-bg 15% / 12%, word marks 30% / 22% (add) and 30% / 20% (del) |
+| Scheme fixed values | current line 5% / 6% of foreground (dark / light), focus band ANSI blue at 16%, minimap alpha .28 dark / .34 light |
+| Amber phosphor (Retro dark) | fg and caret and selection #ffc25f, kw and ln-cur #ffedd1, str and link and code #ffd797, com and ln #c37800, fn and mac and tag #ffdfad, ty #ffce7e, num and esc and head and var #fff3de, pun #e38c00, prop and attr #ffcc79; current line rgba(255,194,95,.06); focus band .14; find hits rgba(255,243,222,.18/.34) with ring #fff3de |
+| Editor attributes and classes | data-phosphor='amber' and data-scheme='<id>' on .pmw-ed; data-pmw-host-keys on .pmw-ed-scroll; CSS variable --pmw-ed-thumb-ink (defaults to --pmw-ed-add-fg); class .pmw-ed-ime (.is-composing while composing) |
+| More menu Appearance | row id 'appearance', label 'Appearance...', icon edPalette (Retro glyph '*'), detail '<scheme name or Follow look> · font and size'; calls PMT.AppearancePopover.open |
 
 ### Browser and tools (kinds/20-browser.js, kinds/22-tools.js)
 
@@ -145,6 +172,9 @@ header-row targets, 32 px document actions, nothing under 11 px) are in CONTRACT
 | Ports | id 'ports'; columns 96 px / 1fr / 1.3fr / 140 px / 220 px; at < 760 px the Origin column goes and buttons are icon-only (actions 108 px); at < 480 px rows stack. Row action buttons are 32 px; rows at least 44 px. Serialize: extra (added ports), removed (port numbers). |
 | Debug Console | idFor 'debug-console:' + (session \|\| 'main'); label 'Debug Console' (other sessions 'Debug Console · <name>'). Console cap 400 lines; input history 30 (20 saved); input row 34 px. Continue re-hits the breakpoint after 1.9 s; Restart pauses after 1.7 s (60 ms under Reduced Motion). Serialize: session, history. |
 | Demo ids | `web:tastebook`, `web:query-dashboard`, `link:postgresql.org\|PostgreSQL%2016%20%C2%B7%20Multicolumn%20Indexes`, `link:postgresql.org\|PostgreSQL%2016%20%C2%B7%20Index-Only%20Scans`, `link:wiki.postgresql.org\|Locking%20notes%20for%20concurrent%20index%20builds`, `output`, `problems`, `ports`, `debug-console:main` |
+| Output D28 channel picker | menu width 300 px (was 280); each row has trailing cell 'Open in new tab' (Alt+Enter; Alt+click opens in new panel), icon 'outputNewTab' (Retro glyph '+'); split-off tab shows plain fact with no picker, More menu adds 'Show in the Output tab' |
+| Output D28 kind and ids | tab ids: 'output' (one tab, channel is view state) and 'output:<channel>' (split-off, fixed); labels: 'Output', and 'Output · <Channel>'; prefixes ['output:', 'output']; reveal({ channel }) switches main Output tab |
+| Browser and Debug Console fields | one focus ring: the header row draws it, the field itself has no border, shadow or outline |
 
 ### Dashboard (kinds/30-dashboard.js)
 
@@ -164,6 +194,10 @@ header-row targets, 32 px document actions, nothing under 11 px) are in CONTRACT
 | Engine hook | PMW.dashboard = { reveal(board), reset(board), holder(), boards() }. |
 | Agent transcript ids used | thread-agent-query, thread-agent-schema, thread-agent-rollback, thread-agent-fallback, thread-agent-bench, thread-agent-orphan, thread-agent-migration. Opened with { kind: 'transcript', agentId, label, mode: 'keep' }, or the transcript catalog item's spec when one is registered. |
 | Demo ids | `dashboard:home`, `dashboard:metrics`, `dashboard:monitoring`, `dashboard:agents` |
+| Column fix range | grid width 700 to 1060 px (COLS_MIN 700, COLS_MAX 1060, the page's pm6dash container steps). Minimum column at 4 columns: 200 px (COL_MIN_W). The 8 px gap is read from computed column-gap. Column count: 3 if some visible widget has an odd --dw, else 4 if (width - 3 gaps) / 4 >= 200, else 2. Written as style.setProperty('grid-template-columns', 'repeat(N, minmax(0, 1fr))', 'important') plus data-pmw-dash-cols='2\|3\|4' on #pm6DashGrid |
+| Measured grid widths | Focus layout or maximized 1005 px at 1920 and 924 px at 1680 and 1470, giving Home and Monitoring 4 columns and Metrics 3. Home layout 437-488 px and Build 294-332 px: page rules, 2 columns |
+| Adopted Add widget button | 24 px tall in every look, about 98-119 px wide with its label, 24x24 icon-only under a 520 px tab body; carries data-id='add' |
+| Agents filter save | goes through api.saveSoon (about 250 ms); no new settings keys or storage |
 
 ### Plan and documents (kinds/40-plan.js, kinds/42-document.js)
 
@@ -187,6 +221,11 @@ header-row targets, 32 px document actions, nothing under 11 px) are in CONTRACT
 | Settings keys | none added; all view state is per tab through serialize. |
 | Class prefixes | pmw-plan-*, pmw-docu-*. NieR hook classes used: .pmw-cur (picker-like rows: memory notes, discovery options, the evidence row), .pmw-chosen (the chosen memory note). |
 | Demo ids | `plan:ap-index`, `plan:ap-cache`, `plan:ap-auth`, `plan:ap-flags`, `plan:ap-embeds`, `deep-discovery:b14-thorough-1`, `plan:ap-export (added only after Create this Plan in discovery)`, `teach:query`, `memory:query`, `revert:turn-1`, `debug:dbg-investigation-1`, `lens-source:query:m-12`, `lens-effective:query`, `wonderer:w-1`, `wonder-source:dashboard-query`, `doc:docs/query-performance.md` |
+| Picker section labels | { plan: 'Plans', document: 'Documents' } |
+| Plan reveal keys | view ('rich'\|'markdown'), version (number), step (step id) |
+| labelFor | plan 'plan:<id>' -> PLANS title, 'plan-query' -> the ap-index title, 'deep-discovery:*' -> 'Deep Plan · discovery', 'plan:ap-export' -> 'Offline collection export'; document -> the document's own label |
+| File references and marks | file references are 32 px (PMW.fileRef default), with a -6px left shift where they start a line (plan steps' file rows were 24 px before); .pmw-plan-step-files: margin-top 2px, margin-bottom -4px, gap 0 8px (was margin 4px 0 0, gap 0 14px); Revert .pmw-docu-filemark / .pmw-docu-filestate padding-top: 4px -> 8px |
+| NieR gates | headers part for the uppercase small headings, square part for square corners |
 
 ### Artifact and runs (kinds/44-artifact.js, kinds/46-run.js)
 
@@ -206,6 +245,13 @@ header-row targets, 32 px document actions, nothing under 11 px) are in CONTRACT
 | Persisted tab state | artifact { view: 'fit'\|'actual'\|'source', metric: 'p95'\|'s0'..'s3', filter: 'all'\|'hit'\|'miss', sort: { col, dir }\|null, answers: { qIndex: choiceIndex } }; run { tab: 'overview'\|'conv'\|'team'\|'cost', person, filter }. Live run state (paused, progress, rounds, ticks, promotions) is kept only for the session, per run. |
 | Header-row action ids | artifact uses versions, newpanel, more, with left facts view (the text toggle) and path. Run More menu ids: cancel (yes/no submenu), setup, again (review only), transcript (disabled), newpanel. |
 | Demo ids | `dashboard-query`, `mermaid-runtime`, `render-forecast`, `test-evidence`, `data-explorer`, `architecture-map`, `report-query`, `flow-plan`, `chart-cost`, `quiz-indexes`, `periodic-capabilities`, `generated-image`, `transcript-summary`, `lens-receipt`, `crew-board`, `broken-viz`, `chart-latency`, `deep-plan-sources`, `artifact-revision:%7B%22artifact_id%22%3A%22dashboard-query%22%2C%22artifact_version%22%3A4%2C%22project_id%22%3A%22pm%22%2C%22thread_id%22%3A%22query%22%7D`, `crew-work:crew-query-perf`, `review:review-orchestrator-boundary`, `room:chatroom-onboarding`, `brainstorm:brainstorm-provider-failover`, `review-evidence:review-orchestrator-boundary:ev-1` |
+| Run icons | TYPES icons: crew 'crew' (was 'run'), review 'review', room 'room', brainstorm 'brainstorm' (were inline SVG strings); registered via PMW.registerIcon (16 px stroke grammar) with Retro glyphs: crew '&', review '?', room '~', brainstorm '^' |
+| Friendly radii | 6 px (hopt, tocl, run-back, run-picker); min(--pmw-radius, 8px) (choice, seat, trow); 0 (sort); 3 px (run-link) |
+| Doc-body rhythm in artifact viewer | 12 px (core), was 14 px; 6 px note-under-figure exceptions unchanged; .pmw-art-ident keeps 24 px |
+| Metric switch | below 520 px: wraps, 0 12px gap (core seg gap is 18 px) |
+| Run grid | at 904 px: 652 + 32 gap + 220 with an aside; 904 without one |
+| File references and proof file | inline PMW.fileRef, 24 px; shown only when PM_HOME.fileExists(path) is true; Crew part 1 proof file: migrations/0043_tenant_created_index.sql (was migrations/0043_events_tenant_created.sql) |
+| Hover opt-ins (data-pmh) | run seat 'tile' (was 'icon'), team row 'row' (was 'icon'), hub row 'off', quiz choice 'row' (was 'icon') |
 
 ### Transcript, context and records (kinds/48-transcript.js, kinds/50-context.js, kinds/52-record.js)
 
@@ -225,6 +271,10 @@ header-row targets, 32 px document actions, nothing under 11 px) are in CONTRACT
 | Record | min 280 x 120; column max 960 px (shared doc frame); result rows padding 10 px; tables scroll sideways with nowrap cells and a notes column at least 160 px; label = the query cut at 27 characters + '…' when longer than 28, else 'Search'; mcp label = the tool, else 'MCP'; serialize { scrollTop }. |
 | Shared | header-row actions are 24 px targets (core); document actions are 32 px (PMW.frames.button and .pmw-rec-srcbtn); nothing under 11 px. |
 | Demo ids | `thread-agent-query`, `thread-agent-schema`, `thread-agent-bench`, `thread-agent-migration`, `thread-agent-rollback`, `thread-agent-motion`, `thread-agent-test`, `thread-agent-tokens`, `thread-agent-orphan`, `thread-agent-theme`, `thread-agent-plan`, `thread-agent-probe`, `thread-agent-fallback`, `thread-agent-evidence`, `context:query`, `search:postgres%20composite%20index%20write%20amplification\|8%20results`, `search:index%20only%20scan%20visibility%20map\|3%20results`, `search:autovacuum%20analyze%20threshold%20after%20create%20index\|6%20results`, `mcp:grafana.query-range\|Called%20grafana.query-range%20%E2%80%94%20p95%20series%2C%20last%2024h`, `mcp:linear.update-issue\|Called%20linear.update-issue%20%E2%80%94%20PERF-218%20%E2%86%92%20%22index%20landed%22`, `app:inspector`, `work-record:m-7` |
+| Header labelsAt | Transcript: 1100 px (icons-only buttons below that); Context: 720 px; Record: 600 px |
+| Context demo turn (demo data only, not canon) | input 900 + (n*373 mod 1100) tokens, output 380 + (n*211 mod 520) tokens; window capped at 95% of the limit; cached grows by 80% of each turn's growth; API cost (in*3 + out*15)/1e6 USD; plan estimate (in*3 + out*15)/2.7e6 USD |
+| Context first turn on unknown thread | starts from 6,068 System and provider tokens and a 131,000-token limit |
+| Friendly restatements | stretch head and context disclosure rows var(--pmw-row-radius); Parent link 6px; Jump to latest and Source-thread button min(var(--pmw-radius), 8px) |
 
 ### Stand-in chat (kinds/95-standin-chat.js)
 
@@ -263,6 +313,10 @@ Alt+Shift+T, Alt+\` and Alt+PgDn/PgUp instead. On a Mac the Alt stand-ins never 
 there). F6 cycles rail, panels and chat from any of them. Full table: CONTRACT section 9 and `js/42-keyboard.js`
 (`PMW.KEYS`).
 
+| What | Value |
+|---|---|
+| Keyboard opt-out | data-pmw-keys="host" on the field or an ancestor (data-pmw-host-keys is an alias); the Mac typing rule still applies to Alt+T, Alt+Shift+T, Alt+` and Alt+W |
+
 ## Commands and keys
 
 | Kind | Ids |
@@ -274,6 +328,6 @@ there). F6 cycles rail, panels and chat from any of them. Full table: CONTRACT s
 | Aliases | cmd.editor.close_tab -> cmd.panel_tab.close; cmd.file.open, cmd.nav.open_subject, cmd.browser.open_workspace_preview, cmd.terminal.open -> cmd.panel_tab.open |
 | Event | workspace.layout_changed per structural commit; plus the page's pm:command-dispatch (cancelable: a cancel rolls back) and pm:dispatch-receipt |
 | Storage (concept) | pm.home.panels:v1:<project> (layout), pm.home.panels:quarantine:v1:<project> (the newest set-aside record plus an `earlier` list of up to 2), pm.home.panels.saved:v1 (named layouts), pm.home.settings:v1 (settings model), pm.home.recent:v1, pm.home.chat:v1 (chat visibility) |
-| Settings keys | panels.layout.named, panels.tabs.preview, panels.tabs.sizing, panels.tabs.closeOnLeft, panels.plus.default, panels.files.revealIfOpen, panels.empty.closePanel, editor.font.family, editor.font.size, editor.lineHeight, editor.minimap, editor.stickyScroll, editor.diff.layout, editor.wordWrap, chat.width, chat.history, chat.pinOpen (the terminal registers terminal.*) |
+| Settings keys | panels.layout.named, panels.tabs.preview, panels.tabs.sizing, panels.tabs.closeOnLeft, panels.plus.default, panels.files.revealIfOpen, panels.empty.closePanel, editor.scheme, editor.font.family, editor.font.size, editor.lineHeight, editor.minimap, editor.stickyScroll, editor.diff.layout, editor.wordWrap, chat.width, chat.history, chat.pinOpen (the terminal registers terminal.*) |
 | Serialize cap | 16 KB of state per tab |
 | Z ladder | panel content 0-10; strip and dividers 20; #pmw-overlay 2147481800 (menus, "+N" list, drag chip and landing preview inside it: above the page's status bar 2147481700, below the demo pill 2147482600 and the hover tags and tour 2147483000) |

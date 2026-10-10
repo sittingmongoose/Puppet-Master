@@ -188,7 +188,7 @@ function parseRef(tabId) {
 function labelFor(tabId) {
   var ref = parseRef(tabId), art = ref.id && ART[ref.id];
   if (ref.revision && ref.version != null) return (art ? art.title : 'Unavailable artifact') + ' · V' + ref.version;
-  return art ? art.title : 'Artifact';
+  return art ? art.title : null;
 }
 function versionId(art, v) { return v === art.version ? art.id : 'artifact:' + art.id + '@v' + v; }
 
@@ -343,14 +343,39 @@ function diagram(g, o) {
   o = o || {};
   var L = layered(g), NH = o.sub ? 52 : 38, VG = 48, HG = 22, PAD = 18;
   g.nodes.forEach(function (n) { n.w = Math.max(96, Math.min(220, Math.max(textW(n.label, 13), n.sub ? textW(n.sub, 12) : 0) + 28)); if (n.shape === 'decision') n.w += 18; });
-  var rowW = L.rows.map(function (r) { return r.reduce(function (a, n) { return a + n.w; }, 0) + HG * (r.length - 1); });
+  function lineW(line) { return line.reduce(function (a, n) { return a + n.w; }, 0) + HG * (line.length - 1); }
   var hasBack = g.edges.some(function (e) { return e.back; });
-  var SIDE = hasBack ? 40 : 0;
-  var W = Math.max.apply(null, rowW) + PAD * 2 + SIDE * 2, H = L.rows.length * NH + (L.rows.length - 1) * VG + PAD * 2;
-  var core = W;
-  L.rows.forEach(function (r, ri) {
-    var x = (core - rowW[ri]) / 2;
-    r.forEach(function (n) { n.x = x; n.y = PAD + ri * (NH + VG); n.h = NH; n.cx = x + n.w / 2; x += n.w + HG; });
+  var SIDE = hasBack ? 40 : 0, CH = 16, EDGE = 8;
+  // Fit (o.maxW, the figure's inner width) wraps a row that is too wide onto more lines, so every node shows at full size;
+  // edges to a later line run down a channel outside the lines above it
+  var lines = L.rows.map(function (r) { return [r]; });
+  if (o.maxW) {
+    var room = o.maxW - (EDGE + CH) * 2 - SIDE * 2;
+    // only when the svg's 92 % floor (below) could not take it in
+    if (L.rows.some(function (r) { return (lineW(r) + PAD * 2 + SIDE * 2) * 0.92 > o.maxW; })) {
+      lines = L.rows.map(function (r) {
+        if (lineW(r) <= room) return [r];
+        var out = [[]];
+        r.forEach(function (n) { var cur = out[out.length - 1]; if (cur.length && lineW(cur.concat([n])) > room) out.push([n]); else cur.push(n); });
+        return out;
+      });
+    }
+  }
+  var wrapped = lines.some(function (ls) { return ls.length > 1; });
+  var maxLine = Math.max.apply(null, [].concat.apply([], lines.map(function (ls) { return ls.map(lineW); })));
+  var nLines = lines.reduce(function (a, ls) { return a + ls.length; }, 0);
+  var W = maxLine + (wrapped ? EDGE + CH : PAD) * 2 + SIDE * 2, H = nLines * NH + (nLines - 1) * VG + PAD * 2;
+  var core = W, li0 = 0;
+  lines.forEach(function (ls, ri) {
+    ls.forEach(function (line, k) {
+      var x = (core - lineW(line)) / 2, y = PAD + li0 * (NH + VG);
+      line.forEach(function (n) { n.x = x; n.y = y; n.h = NH; n.cx = x + n.w / 2; n.line = k; x += n.w + HG; });
+      li0++;
+    });
+    // the row's span, for edges that pass it or reach a later line of it
+    var all = L.rows[ri];
+    ls.span = { left: Math.min.apply(null, all.map(function (n) { return n.x; })), right: Math.max.apply(null, all.map(function (n) { return n.x + n.w; })),
+      top: ls[0][0].y };
   });
   var svg = sv('svg', { class: 'pmw-art-svg', viewBox: '0 0 ' + W + ' ' + H, width: W, height: H, role: 'img', 'aria-label': o.label || 'Diagram' });
   // Fit never shrinks the drawing below 92 %, so its smallest text stays at 11 px; narrower panels scroll sideways
@@ -372,10 +397,22 @@ function diagram(g, o) {
       var block = null;
       for (var li = L.layer[a.id] + 1; li < L.layer[b.id] && !block; li++) {
         var t = (li - L.layer[a.id]) / (L.layer[b.id] - L.layer[a.id]), lx = x1 + (x2 - x1) * t;
-        L.rows[li].forEach(function (n) { if (!block && lx > n.x - 8 && lx < n.x + n.w + 8) block = n; });
+        // a wrapped row in the way is passed outside all of its lines
+        if (lines[li].length > 1) { var sp = lines[li].span, lastL = lines[li][lines[li].length - 1][0]; block = { x: sp.left, w: sp.right - sp.left, y: sp.top, h: lastL.y + lastL.h - sp.top, cx: core / 2 }; }
+        else L.rows[li].forEach(function (n) { if (!block && lx > n.x - 8 && lx < n.x + n.w + 8) block = n; });
+      }
+      // in a wrapped row, an edge leaves an earlier line past the lines below it, on the source's side, and reaches a later
+      // line past the lines above it, on the target's side
+      var side = null, la = lines[L.layer[a.id]], lb = lines[L.layer[b.id]];
+      if (!block && a.line < la.length - 1) {
+        var below = la[a.line + 1][0], last = la[la.length - 1][0];
+        block = { x: la.span.left, w: la.span.right - la.span.left, y: below.y, h: last.y + last.h - below.y }; side = x1 >= core / 2;
+      } else if (!block && b.line) {
+        var above = lb[b.line - 1][0];
+        block = { x: lb.span.left, w: lb.span.right - lb.span.left, y: lb.span.top, h: above.y + above.h - lb.span.top }; side = x2 >= core / 2;
       }
       if (block) {
-        var wx = (x1 + x2) / 2 >= block.cx ? block.x + block.w + 16 : block.x - 16, top2 = block.y - 6, bot2 = block.y + block.h + 6;
+        var wx = (side != null ? side : (x1 + x2) / 2 >= block.cx) ? block.x + block.w + 16 : block.x - 16, top2 = block.y - 6, bot2 = block.y + block.h + 6;
         d = 'M' + x1 + ' ' + yy1 + ' C' + x1 + ' ' + (yy1 + 18) + ' ' + wx + ' ' + (top2 - 18) + ' ' + wx + ' ' + top2 + ' V' + bot2 +
           ' C' + wx + ' ' + (bot2 + 18) + ' ' + x2 + ' ' + (yy2 - 24) + ' ' + x2 + ' ' + (yy2 - 6);
         ex = x2; ey = yy2; cx = x2; cy = yy2 - 24; mx = wx; my = (top2 + bot2) / 2;
@@ -473,8 +510,9 @@ function mountArtifact(host, state, api) {
   var older = !!(art && ref.version && ref.version < art.version);
   var missing = !art || ref.broken || (ref.version != null && art && ref.version > art.version);
   var timers = [], visible = false, frame = null, disposed = false;
+  var hasFile = !!(art && PMW.fileRef && PM_HOME.fileExists && PM_HOME.fileExists(art.path));
 
-  api.update({ label: labelFor(api.id), title: art ? art.title + ' · ' + KIND_WORD[art.kind] + ' · Version ' + shownVersion : 'Artifact' });
+  api.update({ label: labelFor(api.id) || 'Artifact', title: art ? art.title + ' · ' + KIND_WORD[art.kind] + ' · Version ' + shownVersion : 'Artifact' });
 
   function status() {
     if (!art) return 'missing';
@@ -512,7 +550,7 @@ function mountArtifact(host, state, api) {
       b.classList.toggle('pmw-chosen', on);
     });
   }
-  function setView(v) { if (st.view === v) return; st.view = v; paintSeg(); render(); }
+  function setView(v) { if (st.view === v) return; st.view = v; paintSeg(); render(); api.saveSoon(); }
 
   function versionRows() {
     var rows = [];
@@ -552,7 +590,8 @@ function mountArtifact(host, state, api) {
       { id: 'export-png', label: 'Export as image', sub: fileBase() + '-v' + shownVersion + '.png', icon: 'camera', run: function () { PMW.toast('Exported ' + fileBase() + '-v' + shownVersion + '.png to Downloads'); } },
       { id: 'export-data', label: 'Export the data', sub: art.path.split('/').pop(), icon: 'output', run: function () { PMW.toast('Exported ' + art.path.split('/').pop() + ' to Downloads'); } },
       '-',
-      { id: 'open-file', label: 'Open the source file', sub: art.path, icon: 'file', run: function () { api.open({ kind: 'editor', path: art.path, mode: 'keep' }); } }
+      { id: 'open-file', label: 'Open the source file', sub: art.path, icon: 'file', disabled: !hasFile, reason: 'This demo project has no copy of it',
+        run: function () { api.open({ kind: 'editor', path: art.path, mode: 'keep' }); } }
     ];
     return rows;
   }
@@ -564,7 +603,9 @@ function mountArtifact(host, state, api) {
   actions.push({ id: 'more', label: 'More', icon: 'more', detail: 'Copy and export', menu: function () { return moreRows(); } });
   var left = [];
   if (art && !missing) left.push({ id: 'view', el: seg });
-  if (art) left.push({ id: 'path', icon: 'file', text: art.path, mono: true, dim: true, title: 'Source file' });
+  // the source file: a D7 file reference when the demo project has it (preview on click, kept on double click)
+  if (art && hasFile) left.push({ id: 'path', el: PMW.fileRef({ path: art.path }, { api: api, inline: true }), mono: true });
+  else if (art) left.push({ id: 'path', icon: 'file', text: art.path, mono: true, dim: true, title: 'Source file' });
   var row = api.headerRow({ left: left, actions: actions, label: 'Artifact controls' });
   var stage = h('div', { class: 'pmw-art-stage' });
   var frameRoot = h('div', { class: 'pmw-art' }, [row.el, stage]);
@@ -599,7 +640,7 @@ function mountArtifact(host, state, api) {
       out.push(PMW.frames.tiles(tiles));
       var opts = [{ value: 'p95', label: 'p95 read' }].concat(p.secondary.map(function (s, i) { return { value: 's' + i, label: s.label }; }));
       var chartHost = h('div');
-      var seg2 = PMW.frames.seg(opts, st.metric, function (v) { st.metric = v; chartHost.textContent = ''; chartHost.appendChild(dashChart()); }, { label: 'Metric', cls: 'pmw-art-metric' });
+      var seg2 = PMW.frames.seg(opts, st.metric, function (v) { st.metric = v; chartHost.textContent = ''; chartHost.appendChild(dashChart()); api.saveSoon(); }, { label: 'Metric', cls: 'pmw-art-metric' });
       out.push(PMW.frames.section('Comparison', 'before and after', [seg2, chartHost]));
       chartHost.appendChild(dashChart());
     } else {
@@ -633,7 +674,7 @@ function mountArtifact(host, state, api) {
     p.rows.forEach(function (r) { if (r[4] === 'hit') counts.hit++; else if (r[4] === 'miss') counts.miss++; });
     var tableHost = h('div', { class: 'pmw-art-tablewrap', 'data-pmh': 'off' });
     var filter = PMW.frames.seg([{ value: 'all', label: 'All', count: counts.all }, { value: 'hit', label: 'Cache hits', count: counts.hit }, { value: 'miss', label: 'Cache misses', count: counts.miss }],
-      st.filter, function (v) { st.filter = v; fillTable(); }, { label: 'Filter', cls: 'pmw-art-filter' });
+      st.filter, function (v) { st.filter = v; fillTable(); api.saveSoon(); }, { label: 'Filter', cls: 'pmw-art-filter' });
     function fillTable() {
       tableHost.textContent = '';
       var rows = p.rows.filter(function (r) { return st.filter === 'all' || r[4] === st.filter; });
@@ -658,6 +699,7 @@ function mountArtifact(host, state, api) {
         btn.addEventListener('click', function () {
           st.sort = sorted && st.sort.dir === 'asc' ? { col: ci, dir: 'desc' } : sorted && st.sort.dir === 'desc' ? null : { col: ci, dir: 'asc' };
           fillTable();
+          api.saveSoon();
           var again = tableHost.querySelectorAll('.pmw-art-sort')[ci];
           if (again) again.focus();
           api.announce(st.sort ? 'Sorted by ' + name.toLowerCase() + (st.sort.dir === 'asc' ? ', low to high' : ', high to low') : 'Original order');
@@ -689,8 +731,11 @@ function mountArtifact(host, state, api) {
       g = { nodes: p.nodes.map(function (n) { return { id: n.id, label: n.label, quiet: !!n.quiet, strong: n.id === 'approved' }; }), edges: p.edges.map(function (e) { return { from: e[0], to: e[1] }; }) };
       label = art.title;
     }
-    var svg = diagram(g, { sub: art.kind === 'architecture', label: label + ', a diagram of ' + g.nodes.length + ' steps' });
+    var dOpts = { sub: art.kind === 'architecture', label: label + ', a diagram of ' + g.nodes.length + ' steps' };
+    var svg = diagram(g, dOpts);
     var fig = h('figure', { class: 'pmw-art-fig' + (st.view === 'actual' ? ' is-actual' : '') }, [svg]);
+    // Fit redraws the diagram for the figure's width once it is on the page (fitFigures)
+    if (st.view !== 'actual') fig._fit = function (w) { dOpts.maxW = w; return diagram(g, dOpts); };
     var out = [fig, connections(g)];
     if (art.kind === 'mermaid') out.splice(1, 0, h('p', { class: 'pmw-art-fine', text: 'Drawn from the Mermaid source; Source shows it as written.' }));
     return out;
@@ -706,13 +751,14 @@ function mountArtifact(host, state, api) {
       q.choices.forEach(function (c, ci) {
         var chosen = pick === ci, correct = c === q.a;
         var cls = 'pmw-art-choice pmw-cur' + (chosen ? ' pmw-chosen is-chosen' : '') + (pick != null && correct ? ' is-right' : '') + (chosen && !correct ? ' is-wrong' : '');
-        var b = h('button', { type: 'button', class: cls, role: 'radio', 'aria-checked': chosen ? 'true' : 'false', 'data-pmh': 'icon',
+        var b = h('button', { type: 'button', class: cls, role: 'radio', 'aria-checked': chosen ? 'true' : 'false', 'data-pmh': 'row',
           'data-pm-hover-label': 'Answer', 'data-pm-hover-detail': c }, [h('span', { class: 'pmw-art-choicek', text: String.fromCharCode(65 + ci) }), h('span', { text: c })]);
         if (pick != null && correct) b.appendChild(mark('pass', 'Right answer'));
         else if (chosen) b.appendChild(mark('fail', 'Not this one'));
         b.addEventListener('click', function () {
           st.answers[qi] = ci;
           render();
+          api.saveSoon();
           api.announce(correct ? 'Right. ' + q.why : 'Not quite. The answer is ' + q.a + '. ' + q.why);
         });
         group.appendChild(b);
@@ -723,7 +769,7 @@ function mountArtifact(host, state, api) {
     });
     var score = h('p', { class: 'pmw-art-score', role: 'status' }, [answered ? right + ' of ' + qs.length + ' right' + (answered < qs.length ? ', ' + (qs.length - answered) + ' to go' : '') : qs.length + ' questions. Pick an answer to see why.']);
     var out = [score, list];
-    if (answered) out.push(h('div', { class: 'pmw-art-acts' }, [PMW.frames.button({ label: 'Start over', icon: 'reload', run: function () { st.answers = {}; render(); } })]));
+    if (answered) out.push(h('div', { class: 'pmw-art-acts' }, [PMW.frames.button({ label: 'Start over', icon: 'reload', run: function () { st.answers = {}; render(); api.saveSoon(); } })]));
     return out;
   }
   function periodicBody() {
@@ -954,9 +1000,18 @@ function mountArtifact(host, state, api) {
     if (keep) frame._scroll.scrollTop = keep;
     centreFigures();
   }
-  /* a drawing wider than the panel scrolls sideways; start it centred, where the flow is */
+  /* Fit wraps a diagram's wide rows to the figure's width; a drawing still wider than the panel (Actual size, an image,
+     a single node wider than the panel) scrolls sideways and starts centred, where the flow is */
   function centreFigures() {
     Array.prototype.forEach.call(stage.querySelectorAll('.pmw-art-fig'), function (f) {
+      if (f._fit && f.clientWidth) {
+        var cs = getComputedStyle(f), w = Math.floor(f.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight));
+        if (w > 0 && w !== f._fitW) {
+          f._fitW = w;
+          var next = f._fit(w), cur = f.querySelector('.pmw-art-svg');
+          if (cur && next.getAttribute('viewBox') !== cur.getAttribute('viewBox')) f.replaceChild(next, cur);
+        }
+      }
       if (f.scrollWidth > f.clientWidth + 1) f.scrollLeft = (f.scrollWidth - f.clientWidth) / 2;
     });
   }
@@ -967,9 +1022,15 @@ function mountArtifact(host, state, api) {
       visible = true;
       var s = art && live(art.id);
       if (dirtyWhileHidden || (s && art.status === 'loading' && s.loaded && stage.querySelector('.pmw-art-loading'))) { dirtyWhileHidden = false; render(); }
+      else centreFigures();
     },
     onHide: function () { visible = false; },
     onResize: function (sz) { if (sz.final) centreFigures(); },
+    /* a reopen that names a view (view: 'source') shows it; any other key is ignored */
+    reveal: function (s) {
+      var v = s && s.view;
+      if (typeof v === 'string' && !missing && viewOpts.some(function (o) { return o.value === v; })) setView(v);
+    },
     focus: function () { if (frame && frame._scroll) frame._scroll.focus({ preventScroll: true }); },
     unmount: function () {
       disposed = true;
@@ -987,6 +1048,8 @@ PM_HOME.registerKind('artifact', {
   prefixes: ['artifact:', 'artifact-revision:'],
   min: { w: 280, h: 160 },
   document: true,
+  /* an artifact opened in the background or by an agent mounts lazily; its strip label comes from here until then */
+  labelFor: function (id) { return labelFor(id); },
   idFor: function (spec) {
     var a = spec.artifactId || spec.artifact;
     if (!a) return null;
@@ -1014,10 +1077,3 @@ PM_HOME.catalog.add('artifact', Object.keys(ART).map(function (id) {
 }).concat([{ id: 'artifact-revision:' + encodeURIComponent(JSON.stringify({ artifact_id: 'dashboard-query', artifact_version: 4, project_id: 'pm', thread_id: 'query' })),
   label: 'Query Benchmark Dashboard · V4', sub: 'dashboard · an older version, kept as written', icon: 'artifact', keywords: 'version revision retained',
   spec: { id: 'artifact-revision:' + encodeURIComponent(JSON.stringify({ artifact_id: 'dashboard-query', artifact_version: 4, project_id: 'pm', thread_id: 'query' })), kind: 'artifact', label: 'Query Benchmark Dashboard · V4' } }]));
-
-/* a tab opened in the background (or by an agent) is mounted lazily; name it now so its strip label is right */
-PM_HOME.on('open', function (e) {
-  if (!e || e.kind !== 'artifact' || !e.created) return;
-  var t = (PM_HOME.tabs() || []).filter(function (x) { return x.tabId === e.tabId; })[0];
-  if (t && (t.label === 'Artifact' || !t.label)) PM_HOME.update(e.tabId, { label: labelFor(e.tabId) });
-});

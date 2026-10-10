@@ -41,23 +41,32 @@ function idForSpec(s) {
     bufferSeq += 1;
     return 'buffer:' + Date.now().toString(36) + bufferSeq;
   }
-  if (s.kind === 'problems' || s.kind === 'ports') return s.kind;
+  // the Output kind's idFor picks 'output' or a split-off 'output:<channel>' (D28); without the kind it is the one tab
+  if (s.kind === 'problems' || s.kind === 'ports' || s.kind === 'output') return s.kind;
   if (s.kind === 'dashboard') return 'dashboard:' + (s.board || ('board-' + Date.now().toString(36)));
-  if (s.kind === 'output') return 'output:' + (s.channel || 'main');
   if (s.kind === 'debug-console') return 'debug-console:' + (s.session || 'main');
   if (s.kind === 'browser') { bufferSeq += 1; return 'browser:' + Date.now().toString(36) + bufferSeq; }
   bufferSeq += 1;
   return s.kind + ':' + Date.now().toString(36) + bufferSeq;
 }
 
+/* What the kind gets as state: the spec minus the host fields, plus two that are both. A mode other than D7's
+   'preview' and 'keep' is the kind's view (CONTRACT section 2: file: tabs carry state.mode = 'diff'), and the title is
+   the tab's hover title and the kind's to show (a buffer's name, a fetched page's title). */
 function kindState(s) {
   var st = {};
   for (var k in s) if (!HOST_FIELDS[k] && k !== 'agent' && s[k] !== undefined && typeof s[k] !== 'function') st[k] = s[k];
+  if (isViewMode(s.mode)) st.mode = s.mode;
+  if (s.title != null && s.title !== '') st.title = s.title;
   return st;
 }
+function isViewMode(mode) { return typeof mode === 'string' && mode !== '' && mode !== 'preview' && mode !== 'keep'; }
+function hasOwnKeys(o) { for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) return true; return false; }
 
 /* D7: every file reference a person single-clicks opens as the panel's preview tab; a double click passes mode 'keep';
-   Ctrl+P with Enter and the "+" menu's recent files pass 'keep'; agent opens are kept (and in the background). */
+   Ctrl+P with Enter and the "+" menu's recent files pass 'keep'; agent opens are kept (and in the background). A view
+   mode ('diff') is a deliberate open of that view, so it is kept too; a diff reference a person single-clicks passes
+   view: 'diff' (as openEditor does) and stays a preview. */
 function isPreviewOpen(s) {
   if (s.kind !== 'editor' || !s.path) return false;
   if (s.agent) return false;
@@ -165,11 +174,15 @@ function openAs(spec, commandId, cmdArgs) {
   // 1. one id, one tab: reveal it
   if (l.tabs[id] && model.panelOf(l, id)) {
     var holder = model.panelOf(l, id);
-    if (s.mode === 'keep' && l.tabs[id].preview) PMW.keepTab(id);
-    if (s.line != null || s.state) {
+    if ((s.mode === 'keep' || isViewMode(s.mode)) && l.tabs[id].preview) PMW.keepTab(id);
+    // whatever the open carries for the kind reaches the open tab (a line, a diff view, a terminal's invocation and
+    // rerun, a browser's url); a tab that is not mounted takes it into its saved state for its mount
+    var ks = kindState(s);
+    if (hasOwnKeys(ks)) {
       var e = instances[id];
-      if (e && e.instance && e.instance.reveal) { try { e.instance.reveal(kindState(s)); } catch (_) {} }
-      else l.tabs[id].state = Object.assign({}, l.tabs[id].state, kindState(s));
+      if (e && e.instance && e.instance.reveal) {
+        try { e.instance.reveal(ks); } catch (err) { try { console.error('[pm-home] reveal failed for a ' + l.tabs[id].kind + ' tab', err); } catch (_) {} }
+      } else l.tabs[id].state = Object.assign({}, l.tabs[id].state, ks);
     }
     if (background) {
       if (holder.active !== id) PMW.updateTab(id, { attention: true });

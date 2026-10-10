@@ -3,7 +3,8 @@
    status word and ticking elapsed time, the model as plain text, "Parent: <thread>" and "Read-only · live" with a lock
    glyph (no pill). Below it the feed: prose paragraphs and work stretches (a run of tool calls between two pieces of
    prose collapses into one quiet toggle row with a compact step rail; open, it lists one line per record, and a file
-   name in a record opens the editor the D7 way: single click a preview tab, double click a kept one). Other records
+   name in a record is the shared file reference, PMW.fileRef: single click a preview tab, double click a kept one,
+   D7). "Parent: <thread>" shows the parent thread in the chat (PM_HOME.chat.reveal). Other records
    (a policy denial, a queue wait, a tool error, a route change) are plain lines with a glyph, never a coloured side
    stripe. While the tab is visible a working agent keeps streaming: a record or a paragraph every few seconds, the
    feed following the bottom unless the reader scrolled up ("Jump to latest" then waits at the bottom). Nothing moves
@@ -83,7 +84,8 @@ function eventGlyph(type) {
 }
 
 /* ---- the agents (the chat's demo data, data.js:1475-1690; copy kept plain, ids never shown) ---- */
-var THREAD_TITLE = { query: 'Query performance', subagents: 'Architecture review', debug: 'Browser debug session' };
+/* the parent threads, titled as the chat's History lists them (PM_HOME.chat.reveal takes the title) */
+var THREAD_TITLE = { query: 'Query performance', subagents: 'Architecture review', debug: 'Investigate a browser issue' };
 var STATUS_WORD = { working: 'Working', blocked: 'Stalled', waiting: 'Waiting', complete: 'Complete', failed: 'Failed', queued: 'Queued', retrying: 'Retrying', fallback: 'Fallback route' };
 var TICKS = { working: 1, retrying: 1, fallback: 1, waiting: 1 };
 var LIVE_STATES = { working: 1, retrying: 1, fallback: 1 };
@@ -372,29 +374,20 @@ function stretchSummary(list, live) {
   return { verb: 'Ran', rest: [plural(n, 'tool')].concat(facts).join(' · '), sep: ' ' };
 }
 
-/* file names inside a record's title open the editor (D7) */
+/* file names inside a record open the editor through the shared file reference (D7: click a preview, double click
+   keeps it, Alt a new panel, Ctrl or Cmd the background); the record's own text stays as written */
 var PATH_RX = /(?:[\w.-]+\/)+[\w.+-]+\.[a-z0-9]{1,5}\b|\b[\w-]+\.(?:rs|sql|json|mjs|css|toml|md)\b/g;
-function withFileLinks(text, line, open) {
+function withFileLinks(text, line, api) {
   var out = [], last = 0, m;
   PATH_RX.lastIndex = 0;
   while ((m = PATH_RX.exec(text))) {
     if (/\.\./.test(m[0])) continue;
     if (m.index > last) out.push(text.slice(last, m.index));
-    out.push(fileLink(m[0], line, open));
+    out.push(PMW.fileRef({ path: m[0], line: line || null, label: m[0] }, { api: api, inline: true, icon: false, cls: 'pmw-tx-file' }));
     last = m.index + m[0].length;
   }
   if (last < text.length) out.push(text.slice(last));
   return out;
-}
-function fileLink(path, line, open) {
-  var b = h('button', { type: 'button', class: 'pmw-tx-file', 'data-pmh': 'icon', 'data-pm-hover-label': 'Open ' + path.split('/').pop(),
-    'data-pm-hover-detail': 'Click: preview · double click: keep it open · Alt+click: new panel', text: path });
-  b.addEventListener('click', function (e) {
-    e.stopPropagation();
-    open({ kind: 'editor', path: path, line: line || null, mode: 'preview', where: e.altKey ? 'panel' : undefined, background: e.ctrlKey || e.metaKey || undefined });
-  });
-  b.addEventListener('dblclick', function (e) { e.stopPropagation(); open({ kind: 'editor', path: path, line: line || null, mode: 'keep' }); });
-  return b;
 }
 
 /* ---- the tab ---- */
@@ -410,7 +403,6 @@ function mountTranscript(host, state, api) {
   var follow = state.follow !== false;
   var visible = false, gone = false, timer = 0, tick = 0, revealing = null, unseen = 0, programmatic = 0;
 
-  function openFile(spec) { return api.open(spec); }
   function statusWord() { return STATUS_WORD[L.status] || 'Working'; }
   function isLive() { return !!LIVE_STATES[L.status]; }
 
@@ -458,7 +450,8 @@ function mountTranscript(host, state, api) {
   }
 
   var root = h('div', { class: 'pmw-tx' });
-  var row = api.headerRow({ label: agent.name + ' transcript controls', left: [], actions: actions() });
+  /* the facts need the width more than the three buttons need their words: icons below 1100 px */
+  var row = api.headerRow({ label: agent.name + ' transcript controls', left: [], actions: actions(), labelsAt: 1100 });
   var scroll = h('div', { class: 'pmw-tx-scroll', 'data-pmh': 'off', tabindex: '-1' });
   var col = h('div', { class: 'pmw-tx-col' });
   var standingEl = h('div', { class: 'pmw-tx-standing' });
@@ -545,8 +538,8 @@ function mountTranscript(host, state, api) {
       rows.appendChild(h('div', { class: 'pmw-tx-srow' + (cur ? ' is-live' : ''), role: 'listitem' }, [
         h('span', { class: 'pmw-tx-sglyphwrap', 'aria-hidden': 'true', title: null }, [stepGlyph(step, 13)]),
         h('span', { class: 'pmw-tx-scopy' }, [
-          h('span', { class: 'pmw-tx-slabel' }, withFileLinks(cur && rec.doing ? rec.doing : rec.title, rec.line, openFile).concat(cur ? [h('span', { class: 'pmw-tx-now', text: ' · in progress' })] : [])),
-          rec.detail ? h('span', { class: 'pmw-tx-sdetail' }, withFileLinks(rec.detail, null, openFile)) : null
+          h('span', { class: 'pmw-tx-slabel' }, withFileLinks(cur && rec.doing ? rec.doing : rec.title, rec.line, api).concat(cur ? [h('span', { class: 'pmw-tx-now', text: ' · in progress' })] : [])),
+          rec.detail ? h('span', { class: 'pmw-tx-sdetail' }, withFileLinks(rec.detail, null, api)) : null
         ]),
         h('span', { class: 'pmw-tx-time', text: rec._time })
       ]));
@@ -607,6 +600,10 @@ function mountTranscript(host, state, api) {
     else if (follow) setFollow(false, false);
     paintJump();
   }, { passive: true });
+  /* a reader moving up while words are still landing: their intent wins over the follow that keeps pulling down */
+  function readerUp() { if (follow) { programmatic = 0; setFollow(false, false); } }
+  scroll.addEventListener('wheel', function (e) { if (e.deltaY < 0) readerUp(); }, { passive: true });
+  scroll.addEventListener('keydown', function (e) { if (/^(ArrowUp|PageUp|Home)$/.test(e.key)) readerUp(); });
   function afterGrow() {
     if (follow) toBottom(false); else { unseen += 1; paintJump(); }
   }
@@ -676,11 +673,10 @@ function mountTranscript(host, state, api) {
   }
   labels();
 
+  /* the parent thread in the chat, with the row that opened this transcript marked when the chat shows it */
   function showParent() {
-    var panel = document.getElementById('chatPanel');
-    var target = panel && panel.querySelector('textarea, [contenteditable="true"], input, button');
-    if (target) { try { target.focus({ preventScroll: true }); } catch (_) {} }
-    PMW.toast(parentTitle + ' is the parent thread in the chat');
+    var res = PM_HOME.chat && PM_HOME.chat.reveal ? PM_HOME.chat.reveal({ thread: parentTitle, messageId: api.id }) : null;
+    if (!res || res.ok === false) PMW.toast(parentTitle + ' is the parent thread in the chat');
   }
   function copyTranscript() {
     var lines = [agent.name + ' · ' + statusWord() + ' · ' + agent.model, 'Parent: ' + parentTitle, ''];
@@ -730,9 +726,10 @@ function mountMissing(host, api) {
   return {};
 }
 
+/* the tab's label before it is mounted (an agent's background open, a restored tab): the agent's name */
 function labelFor(id) {
   var a = AGENTS[String(id).replace(/^thread-/, '')];
-  return a ? a.name : 'Agent transcript';
+  return a ? a.name : null;
 }
 
 PM_HOME.registerKind('transcript', {
@@ -743,6 +740,7 @@ PM_HOME.registerKind('transcript', {
   document: true,
   min: { w: 280, h: 160 },
   idFor: function (spec) { var a = spec.agentId || spec.agent; return a ? 'thread-' + String(a).replace(/^thread-/, '') : null; },
+  labelFor: labelFor,
   mount: mountTranscript
 });
 
@@ -751,10 +749,3 @@ PM_HOME.catalog.add('transcript', AGENT_ORDER.map(function (id) {
   return { id: 'thread-' + id, label: a.name, sub: STATUS_WORD[a.status] + ' · ' + a.model + ' · ' + THREAD_TITLE[a.thread], icon: 'transcript',
     keywords: 'agent transcript ' + a.name + ' ' + STATUS_WORD[a.status], spec: { id: 'thread-' + id, kind: 'transcript', label: a.name } };
 }));
-
-/* a transcript opened in the background (an agent's own open, D8) is mounted lazily; name it now */
-PM_HOME.on('open', function (e) {
-  if (!e || e.kind !== 'transcript' || !e.created) return;
-  var t = (PM_HOME.tabs() || []).filter(function (x) { return x.tabId === e.tabId; })[0];
-  if (t && (t.label === 'Agent transcript' || !t.label)) PM_HOME.update(e.tabId, { label: labelFor(e.tabId) });
-});
