@@ -32,8 +32,9 @@ html[data-pmw-home="on"] body.pm-resizing #chatPanel.chat-panel { transition: no
 html[data-pmw-home="on"] #chatResizer:not(.hidden) { cursor: col-resize; }
 
 /* the rail side panel eases to 240, then folds to its icon bar (D4); the user's own width is never overwritten */
-/* keyed on the hook agreed with the rail lead (#sidePanelSlot[data-pm-rail-fold]); the rail's concept D adds its own
-   overlay styling on the same attribute */
+/* keyed on the hook agreed with the rail lead (#sidePanelSlot[data-pm-rail-fold]). This layer only places the overlay
+   (position, width, stacking, dismiss); the rail's concept D gives it its look per family (plate, hairline, shadow,
+   entrance; 37de861164), so nothing here paints it */
 html[data-pmw-home="on"] #sidePanelSlot[data-pm-rail-fold="eased"]:not(.hidden) { max-width: 240px !important; }
 html[data-pmw-home="on"] .main-area[data-pmw-rail="fold"] > .left-panel { position: relative; z-index: 30; }
 html[data-pmw-home="on"] #sidePanelSlot[data-pm-rail-fold="overlay"] { display: none !important; }
@@ -47,7 +48,6 @@ html[data-pmw-home="on"] .main-area[data-pmw-rail-peek] #sidePanelSlot[data-pm-r
   width: 280px !important;
   max-width: none !important;
   z-index: 31;
-  box-shadow: 18px 0 40px -12px rgba(0, 0, 0, .45);
 }
 
 /* the chat folds to an edge strip below C 480 (unless pinned); its button sits over the strip */
