@@ -106,11 +106,57 @@
     return true;
   }
 
+  /* ---- flat render (Usage PERF-3, t3-usage-pm7 2026-10-10): the whole glyph as one stroked path (and one filled path if
+     it has beads), no halo, no moving parts: <svg><path/></svg>. For chrome where element count is the budget (Usage's
+     card-head tools). It lights by ink alone on hover (the light looks' ignite), and plays no act. Cached per call. */
+  var flatCache = Object.create(null);
+  function fmt(n) { var v = Math.round(n * 1000) / 1000; return String(Object.is(v, -0) ? 0 : v); }
+  function absHead(d) {
+    var h = /^\s*m/.exec(d); if (!h) return d;
+    var rest = d.slice(h[0].length), xy = [], re = /^[\s,]*(-?(?:\d*\.\d+|\d+\.?)(?:e[-+]?\d+)?)/i, x;
+    for (var i = 0; i < 2; i++) { x = re.exec(rest); if (!x) return d; xy.push(x[1]); rest = rest.slice(x[0].length); }
+    return 'M' + xy[0] + ' ' + xy[1] + (/^[\s,]*[-+.\d]/.test(rest) ? 'l' : '') + rest;
+  }
+  function attrsOf(tag) { var a = {}, ar = /([\w:-]+)="([^"]*)"/g, m; while ((m = ar.exec(tag))) a[m[1]] = m[2]; return a; }
+  function pathOf(name, a) {
+    var n = function (k) { return Number(a[k]) || 0; };
+    if (name === 'path') return absHead(a.d || '');
+    if (name === 'line') return 'M' + fmt(n('x1')) + ' ' + fmt(n('y1')) + 'L' + fmt(n('x2')) + ' ' + fmt(n('y2'));
+    if (name === 'circle' || name === 'ellipse') {
+      var rx = name === 'circle' ? n('r') : n('rx'), ry = name === 'circle' ? n('r') : n('ry'), cx = n('cx'), cy = n('cy');
+      return 'M' + fmt(cx - rx) + ' ' + fmt(cy) + 'a' + fmt(rx) + ' ' + fmt(ry) + ' 0 1 0 ' + fmt(2 * rx) + ' 0a' + fmt(rx) + ' ' + fmt(ry) + ' 0 1 0 ' + fmt(-2 * rx) + ' 0';
+    }
+    if (name === 'rect') {
+      var x = n('x'), y = n('y'), w = n('width'), h = n('height'), r = Math.min(n('rx') || n('ry'), w / 2, h / 2);
+      if (!r) return 'M' + fmt(x) + ' ' + fmt(y) + 'h' + fmt(w) + 'v' + fmt(h) + 'h' + fmt(-w) + 'z';
+      return 'M' + fmt(x + r) + ' ' + fmt(y) + 'h' + fmt(w - 2 * r) + 'a' + fmt(r) + ' ' + fmt(r) + ' 0 0 1 ' + fmt(r) + ' ' + fmt(r) + 'v' + fmt(h - 2 * r) +
+        'a' + fmt(r) + ' ' + fmt(r) + ' 0 0 1 ' + fmt(-r) + ' ' + fmt(r) + 'h' + fmt(-(w - 2 * r)) + 'a' + fmt(r) + ' ' + fmt(r) + ' 0 0 1 ' + fmt(-r) + ' ' + fmt(-r) +
+        'v' + fmt(-(h - 2 * r)) + 'a' + fmt(r) + ' ' + fmt(r) + ' 0 0 1 ' + fmt(r) + ' ' + fmt(-r) + 'z';
+    }
+    return '';
+  }
+  function flat(name, size, cls) {
+    var key = name + '|' + size + '|' + (cls || '');
+    if (flatCache[key]) return flatCache[key];
+    var svg = N.icon(name, size, cls), open = /^<svg\b[^>]*>/.exec(svg)[0], stroke = [], fill = [], re = /<(path|circle|rect|ellipse|line)\b([^>]*?)\/?>/g, m;
+    while ((m = re.exec(svg))) {
+      var a = attrsOf(m[2]), c = a['class'] || '';
+      if (/\bnx-(h|ov)\b/.test(c)) continue;            /* halos and act overlays go */
+      (/\bnx-f\b/.test(c) ? fill : stroke).push(pathOf(m[1], a));
+    }
+    open = open.replace(/\sstyle="[^"]*"/, '').replace(/class="([^"]*)"/, function (x, k) { return 'class="' + k.replace(/\bnx-a-\w+/, 'nx-a-none') + ' pmg-flat"'; });
+    var out = open + (stroke.length ? '<path class="nx-c" d="' + stroke.join('') + '"/>' : '') + (fill.length ? '<path class="nx-c nx-f" d="' + fill.join('') + '"/>' : '') + '</svg>';
+    return (flatCache[key] = out);
+  }
+  /* a calm status mark: lit and still from the first frame, no list rhythm and no mount act (Usage: b-motion's room
+     entrance owns arrival motion). The wrapper takes nx-still and pmg-calm (pm7-bridge.css). */
+  function calm(key, size, cls) { return N.status(key, size, 'nx-still pmg-calm' + (cls ? ' ' + cls : '')); }
+
   window.PMG = {
     version: 1,
     ACTS: ACTS, ROLES: ROLES,
     def: def, map: map,
-    icon: N.icon, status: N.status, has: N.has, alias: N.alias,
+    icon: N.icon, status: N.status, has: N.has, alias: N.alias, flat: flat, calm: calm,
     records: function () { return order.map(function (k) { return records[k]; }); },
     record: function (k) { return records[N.alias(k)] || records[k] || records[aliasOf[k]] || null; },
     /* true for a name PMG drew or aliased (the catalog keeps those out of the chat set's lists) */

@@ -1,6 +1,6 @@
 # Rollout spec: Usage adopts the neon glyph set (pm7-glyphs, D44)
 
-Status: DRAFT for t3-usage-pm7's review. A worker executes it only after that review and after the left rail's step.
+Status: APPROVED by t3-usage-pm7 (2026-10-10) with the six changes folded in below. A worker executes it after the left rail's step.
 
 ## What changes, in one paragraph
 
@@ -20,9 +20,13 @@ rule: only Live beats move). Provider brand marks are untouched.
 ## Edit
 
 1. `src/js/00-core.js`: add a `NEON` map (PM7 name -> glyph) and change `PMU.icon` to
-   `PMG.has(NEON[name] || name) ? PMG.icon(NEON[name] || name, sizeFor(cls), 'nx-r-' + roleFor(name)) : <the old SVG>`,
-   wrapped in the same `<span class="pmu-ico">`. `sizeFor` reads the size the CSS gives `.pmu-ico` in that context
-   (16 by default, 14 in card heads); never change a box size. Names to map (lead's table):
+   `PMG.has(NEON[name] || name) ? PMG.icon(NEON[name] || name, SIZE[cls] || 16, 'nx-r-' + roleFor(name)) : <the old SVG>`,
+   wrapped in the same `<span class="pmu-ico">`. `SIZE` is a static map per class (card head 14, default 16; list each
+   class you find); never measure (no getComputedStyle or layout read: PMU.icon runs on every live-beat re-render), and
+   cache the returned string per (glyph, size, role). Never change a box size.
+   The four card-head tools (toolGrip, toolSize, toolGear, toolKebab) use `PMG.flat(glyph, 14, 'nx-r-control')`: one
+   path, no halo, ink-only hover (PERF-3). The kebab becomes the set's `more`: horizontal dots, like every other menu
+   in Puppet Master. Names to map (lead's table):
    `refresh`->refresh, `export`->outbox, `chevron`/`chevronDown`->chevron-down, `chevronRight`->chevron-right,
    `chevronLeft`->chevron-left, `close`->close, `gear`/`toolGear`->settings, `checkCircle`->check-circle,
    `alert`->st-warning, `hourglass`->hourglass, `key`->key, `lock`->lock, `link`->link, `arrowUp`->arrow-up,
@@ -33,10 +37,11 @@ rule: only Live beats move). Provider brand marks are untouched.
    Not glyphs, keep as they are: `notch`, `diamond`, `halfCircle`, `provider`, `tidy` (until drawn), and every brand mark.
 2. State marks (`minusCircle`, `slashCircle`, `dashedCircle`, `halfCircle` used as a state, `xCircle`, the alert
    triangle on alert rows): replace each call site in `50-w-common.js`, `54-w-accounts.js`, `52-w-plans.js` and
-   `74-rooms-c.js` with `PMG.status(key, size, 'nx-still')`, the key from `PMU.fmt`'s state word through
+   `74-rooms-c.js` with `PMG.calm(key, size)` (lit and still from the first frame: no rhythm and no mount act; the
+   room entrance owns all arrival motion), placed BESIDE the state word, never replacing it, the key from `PMU.fmt`'s state word through
    `status.json` `surfaces.usage` (degraded/low -> warning, signed out/unavailable -> offline, cooldown -> recovering,
    standby/paused -> paused, exhausted -> failed, needs a seat -> off, live -> working). Write the word-to-key table once,
-   in `10-fmt.js`, next to `PMU.fmt`.
+   in `10-fmt.js`, next to `PMU.fmt`; it maps words only and changes no copy.
 3. `src/css/20-board.css`: no box sizes change. If a rule set `stroke-width` on `.pmu-ico svg`, scope it to
    `.pmu-ico svg:not(.nx)` so the neon weight ladder applies.
 4. NieR (`96-nier.js`, `90-nier-shell.css`, `94-nier-widgets.css`): remove Usage's own NieR glyph overrides only where
@@ -46,9 +51,12 @@ rule: only Live beats move). Provider brand marks are untouched.
 ## Must stay
 
 - `data-tool` attributes and aria labels on the card-head buttons (probes use them); D43's per-account control slot.
-- Card-head tool weight (PERF-3): today each tool is one path in one svg. The neon glyph adds its halo path. Measure the
-  room chrome's element count before and after; report it. The lead decides whether to add a compact render.
-- Reduce Motion is instant. No idle motion except Live beats. No pills, side bars or tinted boxes. Labels >= 11 px.
+- Card-head tool weight (PERF-3): `PMG.flat` keeps each tool one path in one svg. Report the room chrome's element count
+  before and after, and the room-click main-thread budget (no task over about 50 ms).
+- Reduce Motion is instant. No idle motion except Live beats. No glyph act on mount anywhere in Usage; the hover
+  ignite is the only glyph motion and follows PMH (src/bridge/pm7-hover-bridge.css).
+- Hosted boards (home-panels D10) use the same PMU.icon: PMG must exist before the first board mount on Home (it does:
+  the glyph layer is in the head); a gate checks it. No pills, side bars or tinted boxes. Labels >= 11 px.
 - Files owned by home-panels (40-board.js, 90-api.js, 15-film.js, 45-menu.js, the board-singleton parts of
   42-cards.js): do not edit; list any change they would need.
 
@@ -59,4 +67,7 @@ rule: only Live beats move). Provider brand marks are untouched.
   in published mode (t3-usage-pm7's gates).
 - A GPU film (P1000, `agent-browser --record --codec h264`) of the Usage page in all ten looks plus Reduced Motion,
   hovering the card-head tools and an alert row; frame strips of the hover and of a plate at idle (it must not move).
+- A 1920 room-change film in glass-dark and nier (no glyph flickers or redraws mid-entrance), and an idle strip of
+  6 s with Live paused and 6 s with Live on, where only beat cells may change.
+- `window.PMG` exists before the first board mount on Home (log it in the boot check).
 - Every state mark >= 3:1 on its field in every look (the catalog's measure, `PMG_CATALOG.contrastOf` logic).
