@@ -701,7 +701,7 @@
         if (!m) { this.pending = rest; break; }
         i += m[0].length;
         var seq = m[1];
-        if (this.search) { this.endSearch(true); }
+        if (this.search && /^(\[|O)/.test(seq) && !/^\[[\d;]*[RcnyStu]$/.test(seq)) { this.endSearch(true); }
         switch (seq) {
           case '[D': case 'OD': if (this.pos > 0) this.pos--; break;
           case '[C': case 'OC': if (this.pos < this.buf.length) this.pos++; break;
@@ -714,7 +714,7 @@
           case '[1;5C': case '[1;3C': case 'f': this.pos = this.wordRight(); break;
           case '\x7f': { var wl = this.wordLeft(); this.yank = this.buf.slice(wl, this.pos); this.buf = this.buf.slice(0, wl) + this.buf.slice(this.pos); this.pos = wl; break; }
           case '\r': this.insert('\n'); break;
-          default: break; /* replies and unknown keys are ignored */
+          default: continue; /* replies and unknown keys are ignored, without a redraw */
         }
         dirty = true; continue;
       }

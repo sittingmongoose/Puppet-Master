@@ -103,7 +103,7 @@
 
     this.blinkTimer = setInterval(function () { self._blinkTick(); }, 530);
     this.clockTimer = setInterval(function () { self._updateHeader(); }, 1000);
-    if (T.FX && T.FX.attach) this.fx = T.FX.attach(this);
+    if (T.FX && T.FX.attach) { this.fx = T.FX.attach(this); this.fx.configure(this.appearance.effects || {}); }
     if (T.Agent && T.Agent.attach) this.agent = T.Agent.attach(this);
     this._updateLabel(); this._updateHeader();
   }

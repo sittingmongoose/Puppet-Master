@@ -1,0 +1,46 @@
+/* NieR Mode (D23): ink on parchment. The terminal's own scheme is YoRHa Parchment or YoRHa Ink; this file shapes the
+   chrome: square corners, ink rules, the square list cursor on selected rows, uppercase spaced headings, ink corner
+   brackets on focus (30-looks.css), the static parchment grain (50-fx.css), no glow anywhere. Colours come only from
+   the NieR helpers (--o55-nier-*); nothing here is a literal colour. */
+
+html[data-o55-nier="on"] .pmt-root { --pmt-radius: 0px; letter-spacing: .02em; }
+html[data-o55-nier="on"] .pmt-pop, html[data-o55-nier="on"] .pmt-findbar, html[data-o55-nier="on"] .pmt-linktip, html[data-o55-nier="on"] .pmt-notice {
+  border-radius: 0; background: var(--o55-nier-raised); color: var(--o55-nier-ink); border-color: var(--o55-nier-line-strong);
+  box-shadow: 0 2px 6px rgba(var(--o55-nier-shadow-rgb), .14);
+}
+html[data-o55-nier="on"] .pmt-pop-head { border-bottom: 2px solid var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmt-pop-title, html[data-o55-nier="on"] .pmt-pop-sec h4, html[data-o55-nier="on"] .pmt-scheme-group { text-transform: uppercase; letter-spacing: .12em; }
+html[data-o55-nier="on"] .pmt-seg, html[data-o55-nier="on"] .pmt-seg button, html[data-o55-nier="on"] .pmt-pop-ctl select,
+html[data-o55-nier="on"] .pmt-find-input, html[data-o55-nier="on"] .pmt-textbtn, html[data-o55-nier="on"] .pmt-scheme,
+html[data-o55-nier="on"] .pmt-swatch, html[data-o55-nier="on"] .pmt-step, html[data-o55-nier="on"] .pmt-mark { border-radius: 0; }
+html[data-o55-nier="on"] .pmt-seg button[aria-checked="true"], html[data-o55-nier="on"] .pmt-find-toggle.pmt-on {
+  background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
+}
+/* the NieR square list cursor on the chosen scheme */
+html[data-o55-nier="on"] .pmt-scheme[aria-selected="true"] { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmt-scheme[aria-selected="true"] .pmt-scheme-meta { color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmt-scheme::before { content: ""; width: 6px; height: 6px; flex: none; background: transparent; }
+html[data-o55-nier="on"] .pmt-scheme:hover::before, html[data-o55-nier="on"] .pmt-scheme:focus::before, html[data-o55-nier="on"] .pmt-scheme[aria-selected="true"]::before { background: currentColor; }
+
+/* command marks: hollow square (done), filled rust square (failed), square with a dot (running) */
+html[data-o55-nier="on"] .pmt-mark svg { display: none; }
+html[data-o55-nier="on"] .pmt-mark::before { content: ""; width: 7px; height: 7px; border: 1.5px solid currentColor; }
+html[data-o55-nier="on"] .pmt-mark-ok { color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmt-mark-fail { color: var(--o55-nier-error); }
+html[data-o55-nier="on"] .pmt-mark-fail::before { background: currentColor; }
+html[data-o55-nier="on"] .pmt-mark-run::before { background: radial-gradient(currentColor 0 1.5px, transparent 2px); }
+html[data-o55-nier="on"] .pmt-mark-idle::before { opacity: .45; }
+html[data-o55-nier="on"] .pmt-mark-agent::before { width: 8px; height: 8px; background: linear-gradient(currentColor, currentColor) center / 4px 1.5px no-repeat; }
+html[data-o55-nier="on"] .pmt-mark:hover { background: var(--o55-nier-hover); }
+
+html[data-o55-nier="on"] .pmt-hint { border-radius: 0; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmt-sb-thumb { border-radius: 0; background: transparent; border: 0; border-left: 1px solid var(--o55-nier-ink); border-right: 1px solid var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmt-sticky { border-bottom: 1px solid var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmt-progress { height: 2px; background: rgba(var(--o55-nier-ink-rgb), .18); }
+html[data-o55-nier="on"] .pmt-progress::before { background: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmt-progress::after { content: ""; position: absolute; top: -2px; left: calc(var(--pmt-progress, 0%) - 3px); width: 6px; height: 6px; background: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmt-agentrow { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-bottom: 0; text-transform: none; }
+html[data-o55-nier="on"] .pmt-agentrow .pmt-agent-sq { stroke: currentColor; }
+html[data-o55-nier="on"] .pmt-agentrow .pmt-textbtn:hover { background: rgba(var(--o55-nier-paper-rgb), .14); }
+html[data-o55-nier="on"] .pmt-notice-warn { background: var(--o55-nier-warn-surface); }
+html[data-o55-nier="on"] .pmt-a11y-body h3 { text-transform: uppercase; letter-spacing: .1em; }

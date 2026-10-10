@@ -1,0 +1,92 @@
+/* Per-look treatments (D16, D23). The effects policy writes data-pmt-look, data-pmt-focusfx and data-pmt-bell on the
+   root. Focus: Friendly a soft accent ring, Glass a luminous rim, Retro an inverse header, Basic a thin accent line
+   under the header, NieR ink corner brackets. Inactive dimming per look. Bell per look, at most once a second.
+   Reduced Motion: every animation here is replaced by a static state. */
+
+/* ---- focus ---- */
+.pmt-root[data-pmt-focusfx="ring"].pmt-focused .pmt-body { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 45%, transparent); }
+.pmt-root[data-pmt-focusfx="rim"].pmt-focused .pmt-body { box-shadow: inset 0 0 0 1px rgba(255,255,255,.30), inset 0 1px 0 rgba(255,255,255,.22); }
+html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pmt-body { box-shadow: inset 0 0 0 1px rgba(255,255,255,.75), inset 0 1px 0 rgba(255,255,255,.9); }
+.pmt-root[data-pmt-focusfx="line"].pmt-focused > .pmw-hrow { box-shadow: inset 0 -1px 0 var(--pmw-accent, var(--accent-primary)); }
+.pmt-root[data-pmt-focusfx="inverse"].pmt-focused > .pmw-hrow { background: var(--pmt-fg); color: var(--pmt-bg-solid); }
+.pmt-root[data-pmt-focusfx="inverse"].pmt-focused > .pmw-hrow * { color: inherit; }
+.pmt-root[data-pmt-focusfx="brackets"] .pmt-body::before {
+  content: ""; position: absolute; inset: 3px; z-index: 7; pointer-events: none; opacity: 0;
+  --b: var(--o55-nier-ink, var(--pmt-fg));
+  background:
+    linear-gradient(var(--b), var(--b)) left top / 10px 2px no-repeat, linear-gradient(var(--b), var(--b)) left top / 2px 10px no-repeat,
+    linear-gradient(var(--b), var(--b)) right top / 10px 2px no-repeat, linear-gradient(var(--b), var(--b)) right top / 2px 10px no-repeat,
+    linear-gradient(var(--b), var(--b)) left bottom / 10px 2px no-repeat, linear-gradient(var(--b), var(--b)) left bottom / 2px 10px no-repeat,
+    linear-gradient(var(--b), var(--b)) right bottom / 10px 2px no-repeat, linear-gradient(var(--b), var(--b)) right bottom / 2px 10px no-repeat;
+  transition: opacity .18s, inset .18s;
+}
+.pmt-root[data-pmt-focusfx="brackets"].pmt-focused .pmt-body::before { opacity: 1; inset: 2px; }
+
+/* ---- inactive dimming ---- */
+.pmt-body::after { content: ""; position: absolute; inset: 0; z-index: 6; pointer-events: none; opacity: 0; background: var(--pmt-dim-color, var(--pmt-bg-solid)); transition: opacity .2s; }
+.pmt-inactive .pmt-body::after { opacity: var(--pmt-dim-amount, 0); }
+.pmt-root[data-pmt-look="retro"] { --pmt-dim-color: #000; }
+.pmt-root[data-pmt-look="glass"] { --pmt-dim-color: transparent; }
+.pmt-root[data-pmt-look="glass"].pmt-inactive .pmt-grid, .pmt-root[data-pmt-look="glass"].pmt-inactive .pmt-fxcanvas { opacity: .8; }
+
+/* ---- bell ---- */
+.pmt-root[data-pmt-bell="flash"].pmt-bell .pmt-body::after { opacity: 0; background: var(--pmt-fg); animation: pmt-bell-flash .4s ease-out; }
+@keyframes pmt-bell-flash { 0% { opacity: .09; } 100% { opacity: 0; } }
+.pmt-root[data-pmt-bell="rim"].pmt-bell .pmt-body { box-shadow: inset 0 0 0 2px rgba(255,255,255,.55); }
+.pmt-root[data-pmt-bell="inverse"].pmt-bell .pmt-screen { animation: pmt-bell-inv .12s steps(1) 1; }
+@keyframes pmt-bell-inv { 0% { filter: invert(1); } 100% { filter: none; } }
+.pmt-root[data-pmt-bell="snap"].pmt-bell .pmt-body::before { opacity: 1; animation: pmt-bell-snap .24s ease-out; }
+@keyframes pmt-bell-snap { 0% { inset: 10px; } 100% { inset: 2px; } }
+.pmt-root[data-pmt-bell="marker"].pmt-bell > .pmw-hrow { box-shadow: inset 0 -2px 0 var(--pmw-warn, var(--accent-warning)); }
+
+/* ---- command marks per look ---- */
+.pmt-root[data-pmt-look="retro"] .pmt-mark svg { display: none; }
+.pmt-root[data-pmt-look="retro"] .pmt-mark::before { font-family: var(--pmt-font); font-size: var(--pmt-font-size); line-height: 1; }
+.pmt-root[data-pmt-look="retro"] .pmt-mark-ok::before { content: ">"; }
+.pmt-root[data-pmt-look="retro"] .pmt-mark-fail::before { content: "!"; }
+.pmt-root[data-pmt-look="retro"] .pmt-mark-run::before { content: "*"; }
+.pmt-root[data-pmt-look="retro"] .pmt-mark-idle::before { content: ">"; opacity: .45; }
+.pmt-root[data-pmt-look="retro"] .pmt-mark-agent::before { content: "#"; }
+.pmt-root[data-pmt-look="retro"] .pmt-mark { border-radius: 0; }
+.pmt-root[data-pmt-look="retro"] .pmt-mark:hover { background: var(--pmt-fg); color: var(--pmt-bg-solid); }
+
+/* ---- progress per look ---- */
+.pmt-root[data-pmt-look="glass"] .pmt-progress { background: rgba(255,255,255,.12); }
+.pmt-root[data-pmt-look="glass"] .pmt-progress::before { background: rgba(255,255,255,.75); box-shadow: 0 0 6px rgba(255,255,255,.5); }
+.pmt-root[data-pmt-look="retro"] .pmt-progress { height: 4px; background: transparent; }
+.pmt-root[data-pmt-look="retro"] .pmt-progress::before { background: repeating-linear-gradient(90deg, var(--pmt-fg) 0 6px, transparent 6px 8px); transition: none; }
+.pmt-root[data-pmt-look="friendly"] .pmt-progress { height: 3px; }
+
+/* ---- chrome shapes per look ---- */
+.pmt-root[data-pmt-look="friendly"] { --pmt-radius: 8px; }
+.pmt-root[data-pmt-look="glass"] { --pmt-radius: 10px; }
+.pmt-root[data-pmt-look="retro"] { --pmt-radius: 0px; }
+.pmt-root[data-pmt-look="friendly"] .pmt-pop { border-radius: 14px; }
+.pmt-root[data-pmt-look="glass"] .pmt-pop, .pmt-root[data-pmt-look="glass"] .pmt-findbar {
+  background: color-mix(in srgb, var(--surface-elevated, #2a2240) 92%, transparent); border-color: var(--glass-hairline, rgba(255,255,255,.16));
+}
+.pmt-root[data-pmt-look="glass"] .pmt-pop { border-radius: 14px; }
+.pmt-root[data-pmt-look="retro"] .pmt-pop, .pmt-root[data-pmt-look="retro"] .pmt-findbar, .pmt-root[data-pmt-look="retro"] .pmt-linktip {
+  border-radius: 0; border-width: 2px; box-shadow: var(--elev-2, 3px 3px 0 rgba(224,224,224,.55)); font-family: var(--body-font, 'IBM Plex Mono', monospace);
+}
+.pmt-root[data-pmt-look="retro"] .pmt-seg, .pmt-root[data-pmt-look="retro"] .pmt-seg button,
+.pmt-root[data-pmt-look="retro"] .pmt-pop-ctl select, .pmt-root[data-pmt-look="retro"] .pmt-find-input,
+.pmt-root[data-pmt-look="retro"] .pmt-textbtn, .pmt-root[data-pmt-look="retro"] .pmt-scheme, .pmt-root[data-pmt-look="retro"] .pmt-swatch { border-radius: 0; }
+.pmt-root[data-pmt-look="retro"] .pmt-seg button[aria-checked="true"], .pmt-root[data-pmt-look="retro"] .pmt-scheme[aria-selected="true"],
+.pmt-root[data-pmt-look="retro"] .pmt-find-toggle.pmt-on { background: var(--pmw-accent, var(--accent-primary)); color: var(--background, #10120e); }
+.pmt-root[data-pmt-look="retro"] .pmt-pop-sec h4::before { content: "[ "; }
+.pmt-root[data-pmt-look="retro"] .pmt-pop-sec h4::after { content: " ]"; }
+.pmt-root[data-pmt-look="retro"] .pmt-hint { border-radius: 0; background: var(--pmt-fg); color: var(--pmt-bg-solid); }
+.pmt-root[data-pmt-look="retro"] .pmt-sb-thumb { border-radius: 0; background: transparent; border: 1px solid var(--pmt-fg); opacity: .7; }
+.pmt-root[data-pmt-look="retro"] .pmt-sticky { background: color-mix(in srgb, var(--pmt-bg-solid) 90%, var(--pmt-fg)); }
+.pmt-root[data-pmt-look="retro"] .pmt-agentrow { background: var(--pmt-fg); color: var(--pmt-bg-solid); border-bottom: 0; }
+.pmt-root[data-pmt-look="retro"] .pmt-agentrow .pmt-agent-sq { stroke: currentColor; }
+.pmt-root[data-pmt-look="retro"] .pmt-notice { border-radius: 0; }
+
+/* ---- Reduced Motion: no animation anywhere in the terminal ---- */
+html[data-motion="reduced"] .pmt-root *, html[data-motion="reduced"] .pmt-root *::before, html[data-motion="reduced"] .pmt-root *::after { animation: none !important; transition: none !important; }
+html[data-motion="reduced"] .pmt-root.pmt-bell .pmt-body { box-shadow: inset 0 0 0 1px var(--pmw-warn, var(--accent-warning)); }
+html[data-motion="reduced"] .pmt-progress[data-pmt-state="indeterminate"]::before { width: 100%; left: 0; opacity: .5; }
+@media (prefers-reduced-motion: reduce) {
+  .pmt-root *, .pmt-root *::before, .pmt-root *::after { animation: none !important; transition: none !important; }
+}

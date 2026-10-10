@@ -55,7 +55,24 @@
 
   Terminal.prototype.write = function (s) {
     if (!s) return;
+    if (this._hold > 0) { this._pending.push(s); return; }
     this.parser.feed(s);
+    this.emit('dirty');
+  };
+  /* hold: an image decode or file read is in flight; output after it waits so the cursor moves first */
+  Terminal.prototype.hold = function () { this._hold = (this._hold || 0) + 1; if (!this._pending) this._pending = []; };
+  Terminal.prototype.release = function () {
+    this._hold = Math.max(0, (this._hold || 0) - 1);
+    if (this._hold === 0 && this._pending && this._pending.length) {
+      var q = this._pending.join(''); this._pending = [];
+      this.write(q);
+    }
+    this.emit('dirty');
+  };
+  Terminal.prototype.held = function () { return (this._hold || 0) > 0; };
+  Terminal.prototype.defer = function (rest) {
+    if (!this._pending) this._pending = [];
+    if (rest) this._pending.unshift(rest);
     this.emit('dirty');
   };
 
@@ -113,6 +130,7 @@
         if (line.gr) line.gr.delete(x + 1);
       }
       line.ver++;
+      if (this.images && this.images.coverLines && this.images.coverLines.has(line)) this.images.noteText(line, x);
       lastLine = line; lastX = x;
       cur.x = x + w;
       if (cur.x >= cols) { cur.x = cols - 1; cur.pendingWrap = autowrap; }

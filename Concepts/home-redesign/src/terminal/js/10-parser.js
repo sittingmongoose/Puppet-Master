@@ -92,8 +92,7 @@
         if (i >= n) break;
         c = s.charCodeAt(i); i++;
         if (c === 0x07) {
-          if (state === OSC) this._dispatchString();
-          else if (state !== STR_IGNORE) this._dispatchString();
+          if (state !== STR_IGNORE) this._dispatchString();
           this.state = GROUND;
         } else if (c === 0x1b) {
           if (state !== STR_IGNORE) this._dispatchString();
@@ -103,6 +102,7 @@
           this.str = []; this.strLen = 0; this.overflow = false; this.dcsHook = null;
           this.state = GROUND;
         }
+        if (h.held && h.held()) { h.defer(s.slice(i)); return; }
         continue;
       }
       c = s.charCodeAt(i); i++;

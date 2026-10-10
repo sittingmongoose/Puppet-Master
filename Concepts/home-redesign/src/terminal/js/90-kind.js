@@ -123,6 +123,7 @@
     session: function (id) { var r = records.get(id); if (!r) for (var x of records.values()) if (x.alias === id) r = x; return r ? r.session : null; },
     view: function (id) { var r = records.get(id); if (!r) for (var x of records.values()) if (x.alias === id) r = x; return r ? r.view : null; },
     keys: function () { return T.keys.list(); },
+    agent: T.Agent ? T.Agent.api : null,
     _T: T
   };
   window.PMT = PMT;
