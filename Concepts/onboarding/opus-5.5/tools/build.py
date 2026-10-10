@@ -808,6 +808,15 @@ def _rail():
     return rail_layer
 
 
+def _glyphs():
+    """The glyph layer (Concepts/glyph-system/opus-5.5/tools/glyph_layer.py), imported when first needed."""
+    glyph_tools = str(CONCEPTS / 'glyph-system' / 'opus-5.5' / 'tools')
+    if glyph_tools not in sys.path:
+        sys.path.insert(0, glyph_tools)
+    import glyph_layer  # noqa: E402
+    return glyph_layer
+
+
 def build_text(usage: bool = True) -> str:
     """The built page. usage=False leaves the base's Prism Usage page in place: a private reference build only
     (build.py --out PATH --no-usage, usage_boot.mjs), never published."""
@@ -862,13 +871,16 @@ def build_text(usage: bool = True) -> str:
     # 4. The left rail: concept D (Polish) from Concepts/leftrail-redesign, a skin over the shell's own rail panels
     #    (its CSS, its script and data-rail-* on the <html> tag); the review copy with concepts A-C is build_rail.py.
     text, SETTINGS_NOTES['rail'] = _rail().apply_published(text, need)
+    # 5. The glyph system (Concepts/glyph-system, Jared's D44): the 5.6 Pro neon renderer, the PMG registry and the PM7
+    #    bridge in the head, so every surface can draw PMG.icon / PMG.status; nothing changes until a surface adopts it.
+    text, SETTINGS_NOTES['glyphs'] = _glyphs().apply_published(text, need)
     note = ('<!-- TestOpus5.5PmConcept (Opus 5.5): TestPMConcept.html with a rebuilt Product Onboarding and Guided Tour. '
             'Built by Concepts/onboarding/opus-5.5/tools/build.py; never hand-edit. -->\n')
     return note + text
 
 
 def check(built: str) -> list[str]:
-    problems = lint_sources() + syntax_check(built) + _rail().published_problems(built)
+    problems = lint_sources() + syntax_check(built) + _rail().published_problems(built) + _glyphs().published_problems(built)
     for removed in dict.fromkeys(['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
                                   'pm7-onboarding-css', 'pm7-guided-tour-css', "'.pm7gt-callout", ".closest('.pm7gt')",
                                   "getElementById('pm7-onboarding')", "getElementById('pm7-guided-tour')",
