@@ -4,13 +4,16 @@
     "UF-094",
     "UF-095",
     "WS-020",
-    "ATS-036"
+    "ATS-036",
+    "UF-107"
   ],
   "source_lineage": [
     "Plans/usage-feature.md#UF-094",
     "Plans/usage-feature.md#UF-095",
     "Plans/Widget_System.md#WS-020",
-    "Plans/Automated_Testing_System.md#ATS-036"
+    "Plans/Automated_Testing_System.md#ATS-036",
+    "Plans/usage-feature.md#UF-107",
+    "Plans/Decision_Log.md#DL-177"
   ],
   "surfaces": [
     "Usage workspace demo state",
@@ -26,6 +29,46 @@
     "layout",
     "order"
   ],
+  "view_preference_families": [
+    {
+      "family": "live",
+      "values": [
+        "live",
+        "paused"
+      ],
+      "default": "live",
+      "settings_owned": false,
+      "command": null,
+      "event": null,
+      "receipt": null,
+      "prototype_key": "pm7:usage:live:v1",
+      "prototype_key_canonical": false
+    }
+  ],
+  "redesign_prototype_envelope": {
+    "key_name": "widget_layout:v1:usage",
+    "key_name_owner": "WS-020",
+    "prototype_schema_id": "pm.usage.widget_layout.v1",
+    "prototype_schema_id_canonical": false,
+    "product_record": "UsageWidgetLayoutRecord",
+    "when_absent": [
+      "pm7:usage:prototype:workspace:v12",
+      "pm7:usage:prototype:workspace:v11"
+    ],
+    "prior_envelope_carries": [
+      "room",
+      "detail",
+      "range",
+      "scope",
+      "more",
+      "hidden"
+    ],
+    "prior_envelope_drops": [
+      "layout",
+      "order"
+    ],
+    "corrupt_or_unknown": "set_aside_defaults_apply_without_second_migration"
+  },
   "usage_widget_layout_record_required_fields": [
     "layout_schema_version",
     "default_set_version",
@@ -72,7 +115,10 @@
     "v11_envelope_one_time_import_to_v12",
     "older_namespace_migration",
     "invalid_widget_eviction",
-    "unsupported_geometry_fallback"
+    "unsupported_geometry_fallback",
+    "redesign_envelope_widget_layout_v1_usage",
+    "v12_then_v11_prior_envelope_one_time_import_when_redesign_envelope_absent",
+    "live_choice_restored_live_by_default"
   ],
   "must": [
     "settled_only",
@@ -80,11 +126,28 @@
     "pm7:usage:prototype:workspace:v12:demo_only_noncanonical_lineage",
     "pm7:usage:prototype:workspace:v11:one_time_prior_envelope_import",
     "pm7:usage:v10:bounded_legacy_import_when_no_valid_envelope",
-    "explicit_fallback_disposition"
+    "explicit_fallback_disposition",
+    "widget_layout:v1:usage:product_key_name_with_noncanonical_prototype_schema_pm.usage.widget_layout.v1",
+    "pm7:usage:live:v1:demo_only_noncanonical_lineage",
+    "live_view_preference_live_by_default_remembered_without_command_setting_event_or_receipt",
+    "prior_envelope_considered_once_carrying_room_detail_range_scope_more_hidden",
+    "detail_values_glance_detailed_diagnostics"
   ],
   "must_not": [
     "preview_frame_persistence",
     "ghost_persistence",
-    "prototype_key_as_canonical"
+    "prototype_key_as_canonical",
+    "live_choice_as_settings_value_or_command",
+    "prototype_schema_id_as_product_schema"
+  ],
+  "token_dispositions": [
+    {
+      "token": "state_families",
+      "disposition": "UF-095 now names nine families; the ninth, live, is listed in view_preference_families because scripts/pm-validate-pm7-gui-fixtures.py pins state_families to the eight layout and view families."
+    },
+    {
+      "token": "v11_envelope_one_time_import_to_v12",
+      "disposition": "Lineage case: the redesigned concept considers the v12 envelope once, else the v11 envelope, only when widget_layout:v1:usage is absent (UF-095)."
+    }
   ]
 }

@@ -5,14 +5,21 @@
     "WS-018",
     "WS-019",
     "UF-096",
-    "F3-514"
+    "F3-514",
+    "UF-094",
+    "WS-020",
+    "F3-628"
   ],
   "source_lineage": [
     "Plans/Widget_System.md#WS-017",
     "Plans/Widget_System.md#WS-018",
     "Plans/Widget_System.md#WS-019",
     "Plans/usage-feature.md#UF-096",
-    "Plans/FinalGUISpec.md#F3-514"
+    "Plans/FinalGUISpec.md#F3-514",
+    "Plans/usage-feature.md#UF-094",
+    "Plans/Widget_System.md#WS-020",
+    "Plans/FinalGUISpec.md#F3-628",
+    "Plans/Decision_Log.md#DL-176"
   ],
   "surfaces": [
     "Usage widget grid",
@@ -35,19 +42,54 @@
     "standard",
     "tall"
   ],
+  "track_ladder": [
+    {
+      "tracks": 12,
+      "board_width_css_px_from": 0,
+      "board_width_css_px_below": 820
+    },
+    {
+      "tracks": 20,
+      "board_width_css_px_from": 820,
+      "board_width_css_px_below": 1100
+    },
+    {
+      "tracks": 24,
+      "board_width_css_px_from": 1100,
+      "board_width_css_px_below": 1460
+    },
+    {
+      "tracks": 30,
+      "board_width_css_px_from": 1460,
+      "board_width_css_px_below": null
+    }
+  ],
+  "track_ladder_hysteresis_css_px": 24,
+  "track_ladder_measured_on": "board_width",
   "must": [
     "larger_size_adds_useful_content",
     "provider_heavy_narrow_tall",
     "partial_rows_keep_curated_width",
     "content_tier_selected_from_measured_physical_width",
     "reorder_placeholder_uses_measured_physical_width_and_height",
-    "usage_resize_placeholder_tracks_last_painted_supported_physical_footprint"
+    "usage_resize_placeholder_tracks_last_painted_supported_physical_footprint",
+    "track_count_follows_measured_board_width_on_12_20_24_30_ladder_with_24px_hysteresis",
+    "narrowest_class_keeps_twelve_tracks",
+    "default_boards_use_many_narrow_widgets_per_row_with_complete_tiers",
+    "preset_is_width_in_tracks_and_height_in_rows_from_the_kind_curated_shapes",
+    "preset_offered_only_when_it_shows_a_complete_tier",
+    "preset_wider_than_board_listed_disabled_with_reason",
+    "preset_hover_or_focus_previews_with_live_outline_and_dispatches_nothing",
+    "facts_a_size_cannot_show_fold_behind_n_more_with_hover_and_details"
   ],
   "must_not": [
     "routine_internal_scroll",
     "empty_middle_space",
     "full_width_lone_card",
     "nominal_grid_span_as_physical_width",
-    "preview_physical_span_persisted"
+    "preview_physical_span_persisted",
+    "fixed_single_twelve_track_board",
+    "preset_showing_fragment_or_unlabelled_value",
+    "custom_size_label_stored_as_preset_id"
   ]
 }
