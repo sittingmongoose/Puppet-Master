@@ -2155,7 +2155,7 @@ border-radius = 4
 - Terminal theme schema is semantic, not raw ANSI-only: it defines background `/foreground`, ANSI `/basic` and bright palettes, cursor and selection colors, search highlight colors, command-block and sticky-header chrome, and badge/status colors for `/failure/running/context` states.
 - Terminal theme catalog includes PM-matched themes, polished general-purpose themes, and `/fun/funky` or `/expressive` presets only when `/contrast` and readability checks pass; previews support `/search/light-dark` pairing, quick `/switching`, instant apply, and easy `/revert`.
 
-Amended 2026-10-09 (DL-183): the terminal's colour scheme, font, cursor, background and effects are one layered appearance model with a live Appearance popover in the terminal's More menu (F3-642, DR-068). Its catalogue is F3-642's 34 curated schemes (27 third-party schemes in 13 families, MIT or Apache-2.0, and 7 Puppet Master originals), which replaces the preset groups above; every scheme passes the minimum-contrast floor; Settings > Terminal binds the model's app and project layers (SSYS-051) while the popover writes This terminal or All terminals; and no terminal appearance change needs a restart.
+Amended 2026-10-09 (DL-183): the terminal's colour scheme, font, cursor, background and effects are one layered appearance model with a live Appearance popover in the terminal's More menu (F3-642, DR-068). Its catalogue is F3-642's 34 curated schemes (27 third-party schemes in 13 families, MIT or Apache-2.0, and 7 Puppet Master originals), which replaces the preset groups above; the minimum-contrast floor (F3-642, 4.5:1 by default) adjusts text against its cell background in every scheme unless the user turns it off; Settings > Terminal binds the model's app and project layers (SSYS-051) while the popover writes This terminal or All terminals; and no terminal appearance change needs a restart.
 
 **Custom font support:** Custom themes can reference font files placed in `~/.puppet-master/fonts/`. Font files (.ttf, .otf, .woff2) are loaded at startup. A theme TOML referencing a missing font falls back to the base theme's font and shows a warning toast.
 
@@ -9808,8 +9808,8 @@ canonical_text: >-
   ANSI-only theme ownership. Since DL-183 this is real and owned by the one terminal appearance model (F3-642,
   DR-068): "Follow theme" picks a scheme per look, 34 curated schemes ship with their licences in place of the
   earlier PM-matched, general-purpose and fun or expressive presets, "Switch with light and dark" pairs light and
-  dark, the minimum-contrast floor (4.5:1 by default) is the readability rule every scheme passes, common theme files
-  import, and the Appearance popover previews each change live on the terminal. Every change applies at once and
+  dark, the minimum-contrast floor (4.5:1 by default) adjusts text against its cell background in every scheme
+  unless the user turns it off, common theme files import, and the Appearance popover previews each change live on the terminal. Every change applies at once and
   reverts the same way, with no restart.
 gui_related: true
 gui_classification_reason: >-
@@ -9822,7 +9822,7 @@ acceptance_criteria:
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
-- "Choosing a terminal scheme in the Appearance popover or in Settings changes the terminal at once, with no restart badge, and the minimum-contrast floor applies to every scheme (F3-642)."
+- "Choosing a terminal scheme in the Appearance popover or in Settings changes the terminal at once, with no restart badge, and the minimum-contrast floor (4.5:1 by default) adjusts text against its cell background in every scheme unless the user turns it off (F3-642)."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
