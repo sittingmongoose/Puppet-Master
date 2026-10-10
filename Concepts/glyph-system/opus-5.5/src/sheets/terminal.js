@@ -75,7 +75,7 @@
       '</div></section>' +
       '<section class="sh-sec"><h3>Find bar and header facts (14 px)</h3><div class="sh-row">' +
         '<span class="tm-find"><span class="tm-q">error</span><span class="tm-n">3 of 12</span>' +
-          '<button class="tm-ib">' + S.icon('chevron-up', 14) + '</button><button class="tm-ib sh-hov">' + S.icon('chevron-down', 14) + '</button><button class="tm-ib">' + S.icon('close', 14) + '</button></span>' +
+          '<button class="tm-ib">' + S.icon('arrow-up', 14) + '</button><button class="tm-ib sh-hov">' + S.icon('arrow-down', 14) + '</button><button class="tm-ib">' + S.icon('close', 14) + '</button></span>' +
       '</div><div class="tm-head"><span>' + S.icon('folder', 14, 'nx-r-concept') + '~/src/api</span><span>' + S.icon('branch', 14, 'nx-r-concept') + 'main</span><span>' + S.icon('clock', 14, 'nx-r-concept') + '<span class="tm-run">cargo test --workspace</span><span class="tm-el">1:42</span></span></div>' +
       '</section>';
   });

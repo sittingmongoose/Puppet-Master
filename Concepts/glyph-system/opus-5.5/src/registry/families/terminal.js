@@ -13,7 +13,8 @@
  * - The agent mark is a spark (AI) beside a terminal cursor cell: solid while the agent holds the keyboard (driving),
  *   hollow while it does not (you took over). A terminal draws its own cursor solid when focused and hollow when not,
  *   so the fill already means "who has the keyboard".
- * - Find, the header facts and the card chevron are the chat's controls and concepts (mapped).
+ * - Find previous and next are the controls family's arrows; find close, the header facts and the card chevron are the
+ *   chat's controls and concepts (mapped).
  *
  * The new drawings follow docs/NEON-GRAMMAR.md: drawn for 12 px first, transform and opacity only, the rest pose is
  * the finished lit drawing, travel 3 units so they still move at 12 px.
@@ -102,8 +103,9 @@
   G.map('st-waiting', { family: F, replaces: ['terminal 78-agent.js SQ (permission row: an agent asks to type)', 'terminal 80-card.js card:waiting ("Needs input")'], surfaces: ['terminal agent row (permission)', 'chat command card'] });
   G.map('lock', { family: F, meaning: 'A secret: only you can answer this prompt.', replaces: ['terminal 78-agent.js LOCK (secret row: a password prompt)'], surfaces: ['terminal agent row (secret)'] });
   /* find, header facts, card */
-  G.map('chevron-up', { family: F, replaces: ['terminal 72-find.js ICON.prev'], surfaces: ['terminal find bar'] });
-  G.map('chevron-down', { family: F, replaces: ['terminal 72-find.js ICON.next', 'terminal 80-card.js card:chevron (expand)'], surfaces: ['terminal find bar', 'chat command card'] });
+  /* find previous and next are the controls family's arrow-up and arrow-down (one pair for every find bar, panels and
+     terminal alike); the card's expand toggle is the chat's chevron */
+  G.map('chevron-down', { family: F, replaces: ['terminal 80-card.js card:chevron (expand)'], surfaces: ['chat command card'] });
   G.map('close', { family: F, replaces: ['terminal 72-find.js ICON.close', 'terminal 76-popover.js close (appearance and editor popovers)'], surfaces: ['terminal find bar', 'appearance popover'] });
   G.map('branch', { family: F, replaces: ['host icon "git" in the terminal header row (the branch fact)', 'terminal 70-view.js T.ICONS.branch (dead code: drop it)'], surfaces: ['terminal header row'] });
   G.map('clock', { family: F, replaces: ['host icon "clock" in the terminal header row (running command, elapsed time)', 'terminal 70-view.js T.ICONS.clock (dead code: drop it)'], surfaces: ['terminal header row'] });
