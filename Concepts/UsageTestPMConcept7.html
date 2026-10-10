@@ -23262,6 +23262,12 @@ html[data-density="compact"] #panel-settings .pm51-all .all-settings-window .set
 .pm51-popout-item:hover, .pm51-popout-item.is-active, .pm51-popout-item:focus-visible { background: color-mix(in srgb, var(--text-primary, #f4f2ff) 8%, transparent); color: var(--text-primary, #f4f2ff); outline: 0; }
 .pm51-popout-item[aria-selected="true"] { background: var(--accent-soft, rgba(124,108,255,.18)); color: var(--text-primary, #f4f2ff); }
 .pm51-popout-item[aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
+/* a held-back choice that says why (Settings_System section 8: "disabled with the reason"): the reason sits under its name,
+   once for a run of choices held back for the same reason, and stays readable while the choice is dimmed */
+.pm51-popout-item.has-why { flex-wrap: wrap; row-gap: 2px; }
+.pm51-popout-item.has-why[aria-disabled="true"] { opacity: 1; }
+.pm51-popout-item.has-why[aria-disabled="true"] > :is(.pm51-popout-icon, .pm51-popout-label, .pm51-popout-meta) { opacity: .5; }
+.pm51-popout-why { flex: 1 0 100%; font-size: 11px; font-weight: 500; line-height: 1.35; white-space: normal; color: var(--text-muted, #8f8ab0); }
 /* Menus are placed outside the Settings panel, so the panel's icon rule never reaches them: draw their icons here. */
 .pm51-popout .icon { width: 14px; height: 14px; flex: 0 0 auto; display: inline-grid; place-items: center; }
 .pm51-popout .icon svg { display: block; stroke: currentColor; }
@@ -25696,6 +25702,9 @@ html[data-motion="reduced"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { tr
   transition: border-color 160ms var(--k3-ease-out), background-color 160ms var(--k3-ease-out), transform 160ms var(--k3-ease-out); }
 #panel-settings .o55-insp-choice:hover { border-color: var(--k3-line-strong, var(--k3-line)); background: var(--k3-bg-2); }
 #panel-settings .o55-insp-choice:active { transform: scale(.99); }
+#panel-settings .o55-insp-choice[aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
+#panel-settings .o55-insp-choice[aria-disabled="true"]:hover { border-color: var(--k3-line); background: none; }
+#panel-settings .o55-insp-choice[aria-disabled="true"]:active { transform: none; }
 #panel-settings .o55-insp-choice.is-on { border-color: color-mix(in srgb, var(--k3-accent) 50%, transparent); background: var(--k3-accent-soft); color: var(--k3-text-1); }
 #panel-settings .o55-insp-mark { width: 18px; height: 18px; flex: 0 0 auto; margin-top: 1px; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid var(--k3-line-strong, var(--k3-line)); color: var(--k3-bg-0, #000); }
 #panel-settings .o55-insp-choice[role="checkbox"] .o55-insp-mark { border-radius: 5px; }
@@ -72376,7 +72385,7 @@ PM51.link = ({ label, action, data, callback, cls, ui }) => {
 const normOption = o => (o && typeof o === 'object' && !Array.isArray(o)) ? o : (Array.isArray(o) ? { value: o[0], label: o[1] } : { value: o, label: o });
 PM51.dropdown = (value, options, { action, data, cls, label, name, id, search, width, placeholder, disabled, reason } = {}) => {
   const list = (options || []).map(normOption);
-  const sel = `<select class="select-control pm51-select${cls ? ' ' + cls : ''}" data-action="${a(action || 'pm51-noop')}" ${dataAttrs(data)} ${name ? `name="${a(name)}"` : ''} ${id ? `id="${a(id)}"` : ''} ${label ? `aria-label="${a(label)}"` : ''} ${search ? 'data-dd-search="1"' : ''} ${width ? `data-dd-width="${Number(width)}"` : ''} ${placeholder ? `data-dd-placeholder="${a(placeholder)}"` : ''} ${disabled ? `aria-disabled="true" data-disabled-reason="${a(reason || 'This cannot be changed here.')}"` : ''}>${list.map(o => `<option value="${a(o.value)}"${String(o.value) === String(value) ? ' selected' : ''}${o.meta ? ` data-meta="${a(o.meta)}"` : ''}${o.icon ? ` data-icon="${a(o.icon)}"` : ''}${o.group ? ` data-group="${a(o.group)}"` : ''}${o.disabled ? ' data-disabled="1"' : ''}${o.reason ? ` data-reason="${a(o.reason)}"` : ''}>${h(o.label)}</option>`).join('')}</select>`;
+  const sel = `<select class="select-control pm51-select${cls ? ' ' + cls : ''}" data-action="${a(action || 'pm51-noop')}" ${dataAttrs(data)} ${name ? `name="${a(name)}"` : ''} ${id ? `id="${a(id)}"` : ''} ${label ? `aria-label="${a(label)}"` : ''} ${search ? 'data-dd-search="1"' : ''} ${width ? `data-dd-width="${Number(width)}"` : ''} ${placeholder ? `data-dd-placeholder="${a(placeholder)}"` : ''} ${disabled ? `aria-disabled="true" data-disabled-reason="${a(reason || 'This cannot be changed here.')}"` : ''}>${list.map(o => `<option value="${a(o.value)}"${String(o.value) === String(value) ? ' selected' : ''}${o.meta ? ` data-meta="${a(o.meta)}"` : ''}${o.icon ? ` data-icon="${a(o.icon)}"` : ''}${o.group ? ` data-group="${a(o.group)}"` : ''}${o.disabled ? ' data-disabled="1"' : ''}${o.reason ? ` data-reason="${a(o.reason)}"` : ''}${o.why ? ' data-why="1"' : ''}>${h(o.label)}</option>`).join('')}</select>`;
   return PM51.upgradeSelects(sel);
 };
 PM51.select = (value, options, opts) => PM51.dropdown(value, options, opts || {});
@@ -72563,8 +72572,11 @@ function openListPopout({ anchor, trigger, options, current, search, title, widt
   popoutClose({ restoreFocus: false });
   const pop = document.createElement('div'); pop.className = 'pm51-popout pm51-dd-list'; pop.id = POP_ID(); pop.setAttribute('role', 'listbox'); pop.tabIndex = -1; pop.dataset.portalDisplay = 'block';
   const groups = [], seen = new Map();
-  options.forEach((o, i) => { const g = o.group || ''; if (!seen.has(g)) { seen.set(g, groups.length); groups.push({ name: g, items: [] }); } groups[seen.get(g)].items.push(Object.assign({ index: i }, o)); });
-  const item = o => `<div class="pm51-popout-item" role="option" id="${pop.id}-${o.index}" data-index="${o.index}" aria-selected="${String(o.value) === String(current) ? 'true' : 'false'}" ${o.disabled ? `aria-disabled="true" data-disabled-reason="${a(o.reason || 'Not available.')}"` : ''}>${o.icon ? `<span class="pm51-popout-icon">${icon(o.icon)}</span>` : ''}<span class="pm51-popout-label">${h(o.label)}</span>${o.meta ? `<span class="pm51-popout-meta">${h(o.meta)}</span>` : ''}<span class="pm51-popout-check">${icon('check')}</span></div>`;
+  /* a held-back choice that asks for it (why) says its reason under its name, once for a run held back for the same reason */
+  options.forEach((o, i) => { const g = o.group || ''; if (!seen.has(g)) { seen.set(g, groups.length); groups.push({ name: g, items: [] }); } const prev = options[i - 1];
+    const why = o.disabled && o.why && o.reason && !(prev && prev.disabled && prev.reason === o.reason) ? o.reason : '';
+    groups[seen.get(g)].items.push(Object.assign({ index: i }, o, { why })); });
+  const item = o => `<div class="pm51-popout-item${o.why ? ' has-why' : ''}" role="option" id="${pop.id}-${o.index}" data-index="${o.index}" aria-selected="${String(o.value) === String(current) ? 'true' : 'false'}" ${o.disabled ? `aria-disabled="true" data-disabled-reason="${a(o.reason || 'Not available.')}"` : ''}>${o.icon ? `<span class="pm51-popout-icon">${icon(o.icon)}</span>` : ''}<span class="pm51-popout-label">${h(o.label)}</span>${o.meta ? `<span class="pm51-popout-meta">${h(o.meta)}</span>` : ''}<span class="pm51-popout-check">${icon('check')}</span>${o.why ? `<span class="pm51-popout-why">${h(o.why)}</span>` : ''}</div>`;
   pop.innerHTML = (search ? `<div class="pm51-popout-search">${icon('search')}<input type="search" role="combobox" aria-autocomplete="list" aria-controls="${pop.id}" aria-expanded="true" aria-label="${a('Filter ' + (title || 'options'))}" placeholder="${a(title ? 'Search ' + String(title).toLowerCase() : 'Search')}"/></div>` : (title ? `<div class="pm51-popout-title">${h(title)}</div>` : ''))
     + groups.map(g => (g.name ? `<div class="pm51-popout-group" role="presentation">${h(g.name)}</div>` : '') + g.items.map(item).join('')).join('')
     + '<div class="pm51-popout-empty" hidden>No matches</div>';
@@ -72586,7 +72598,7 @@ function openListPopout({ anchor, trigger, options, current, search, title, widt
 function dropdownOpen(trigger) {
   const wrap = trigger.closest('.pm51-dd'), sel = wrap && wrap.querySelector('select'); if (!sel) return;
   if (pmActive && pmActive.trigger === trigger) { popoutClose({ restoreFocus: true }); return; }
-  const options = [...sel.options].map(o => ({ value: o.value, label: o.textContent, meta: o.dataset.meta || '', icon: o.dataset.icon || '', group: o.dataset.group || '', disabled: o.dataset.disabled === '1', reason: o.dataset.reason || '' }));
+  const options = [...sel.options].map(o => ({ value: o.value, label: o.textContent, meta: o.dataset.meta || '', icon: o.dataset.icon || '', group: o.dataset.group || '', disabled: o.dataset.disabled === '1', reason: o.dataset.reason || '', why: o.dataset.why === '1' }));
   const search = sel.dataset.ddSearch === '1' || options.length > 12;
   openListPopout({ anchor: trigger, trigger, options, current: sel.value, search, title: trigger.getAttribute('aria-label') || '', width: Number(sel.dataset.ddWidth) || 0, kind: 'dropdown',
     onCommit: (value, o, index) => {
@@ -73791,12 +73803,22 @@ const o55Options = setting => {
   const seen = new Set(base.map(String));
   return base.concat(o55Extra(setting.id).filter(v => !seen.has(String(v))));
 };
+/* A choice the owner would not store as picked is shown but cannot be picked, and says why (Settings_System section 8:
+   the shared switch level at or past a warn level, or the shared warn level at or below a switch level, "is disabled
+   with the reason, the shared choice included"). The manager that owns the rule registers it:
+   PM51.choiceBlock(id, value => reason or ''). The current value is never held back. */
+const o55Blocks = {};
+PM51.choiceBlock = (id, fn) => { o55Blocks[id] = fn; };
+PM51.choiceReason = (id, value, current) => {
+  const fn = o55Blocks[id]; if (!fn || String(value) === String(current == null ? '' : current)) return '';
+  try { return fn(value) || ''; } catch (e) { return ''; }
+};
 const o55SegmentFits = (setting, opts) => opts.length <= 4 && opts.reduce((n, o) => n + PM51.valueLabel(setting.id, o).length, 0) <= 34;
 function o55Select(setting, value, opts) {
   const list = opts.slice();
   const cur = value == null ? '' : String(value);
   if (!list.map(String).includes(cur)) list.unshift(cur); /* never pretend the first choice is the current one */
-  return PM51.dropdown(cur, list.map(o => ({ value: o, label: PM51.valueLabel(setting.id, o), meta: PM51.valueHint(setting.id, o) })), { action: 'change-setting', data: { setting: setting.id }, label: setting.label, search: list.length > 10 });
+  return PM51.dropdown(cur, list.map(o => { const why = PM51.choiceReason(setting.id, o, cur); return Object.assign({ value: o, label: PM51.valueLabel(setting.id, o), meta: PM51.valueHint(setting.id, o) }, why ? { disabled: true, reason: why, why: true } : {}); }), { action: 'change-setting', data: { setting: setting.id }, label: setting.label, search: list.length > 10 });
 }
 function o55Segmented(setting, value, opts) {
   return `<div class="segmented o55-seg" role="radiogroup" aria-label="${a(setting.label)}">${opts.map(o => { const on = String(o) === String(value); return `<button type="button" role="radio" class="${on ? 'active' : ''}" aria-checked="${on}" data-action="set-setting" data-setting="${a(setting.id)}" data-value="${a(o)}">${h(PM51.valueLabel(setting.id, o))}</button>`; }).join('')}</div>`;
@@ -78081,7 +78103,7 @@ function o55ChoicesFor(setting, current) {
   }
   if (['select', 'segmented'].includes(control)) {
     const opts = o55Options(setting); if (!opts.length) return null;
-    return { kind: 'single', items: opts.map(o => ({ raw: o, label: PM51.valueLabel(setting.id, o), hint: PM51.valueHint(setting.id, o), on: String(o) === String(current), marks: mark(o) })) };
+    return { kind: 'single', items: opts.map(o => ({ raw: o, label: PM51.valueLabel(setting.id, o), hint: PM51.valueHint(setting.id, o), on: String(o) === String(current), marks: mark(o), why: PM51.choiceReason(setting.id, o, current) })) };
   }
   if (control === 'swatches') {
     const opts = (setting.options || []).slice(); if (!opts.length) return null;
@@ -78097,7 +78119,7 @@ function o55ChoicesFor(setting, current) {
 }
 function o55ChoicesHtml(setting, ch) {
   if (!ch) return '';
-  return `<section class="o55-insp-block"><h4>${ch.kind === 'multi' ? 'Choose any' : 'Your choices'}</h4><div class="o55-insp-choices" role="${ch.kind === 'multi' ? 'group' : 'radiogroup'}" aria-label="${a(PM51.rowLabel(setting))}">${ch.items.map(it => `<button type="button" class="o55-insp-choice${it.on ? ' is-on' : ''}" role="${ch.kind === 'multi' ? 'checkbox' : 'radio'}" aria-checked="${it.on}" data-action="o55-insp-choose" data-setting="${a(setting.id)}" data-kind="${ch.kind}" data-value="${a(typeof it.raw === 'boolean' ? (it.raw ? '__true' : '__false') : it.raw)}"><span class="o55-insp-mark">${it.on ? icon('check') : ''}</span>${it.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${it.swatch}"></span>` : ''}<span class="o55-insp-choice-copy"><span class="o55-insp-choice-label">${h(it.label)}${it.marks.map(m => `<em>${h(m)}</em>`).join('')}</span>${it.hint ? `<span class="o55-insp-choice-hint">${h(it.hint)}</span>` : ''}</span></button>`).join('')}</div></section>`;
+  return `<section class="o55-insp-block"><h4>${ch.kind === 'multi' ? 'Choose any' : 'Your choices'}</h4><div class="o55-insp-choices" role="${ch.kind === 'multi' ? 'group' : 'radiogroup'}" aria-label="${a(PM51.rowLabel(setting))}">${ch.items.map(it => `<button type="button" class="o55-insp-choice${it.on ? ' is-on' : ''}" role="${ch.kind === 'multi' ? 'checkbox' : 'radio'}" aria-checked="${it.on}" data-action="o55-insp-choose" data-setting="${a(setting.id)}" data-kind="${ch.kind}" data-value="${a(typeof it.raw === 'boolean' ? (it.raw ? '__true' : '__false') : it.raw)}"${it.why ? ` aria-disabled="true" data-disabled-reason="${a(it.why)}"` : ''}><span class="o55-insp-mark">${it.on ? icon('check') : ''}</span>${it.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${it.swatch}"></span>` : ''}<span class="o55-insp-choice-copy"><span class="o55-insp-choice-label">${h(it.label)}${it.marks.map(m => `<em>${h(m)}</em>`).join('')}</span>${it.why || it.hint ? `<span class="o55-insp-choice-hint">${h(it.why || it.hint)}</span>` : ''}</span></button>`).join('')}</div></section>`;
 }
 renderDetailInspectorBody = function (setting, section, workspace) {
   const row = O55R[setting.id] || {};
@@ -78216,6 +78238,8 @@ function o55InspRefresh(id) {
 const o55InspDispatch = dispatchAction;
 dispatchAction = function (action, el, event) {
   if (action === 'o55-insp-choose') {
+    /* a held-back choice (PM51.choiceBlock) says why and changes nothing */
+    if (el.getAttribute('aria-disabled') === 'true') { showToast('Not available', el.dataset.disabledReason || 'Not available here.', 'info', 2600); return; }
     const id = el.dataset.setting, found = findSettingGlobal(id); if (!found) return;
     const raw = el.dataset.value === '__true' ? true : el.dataset.value === '__false' ? false : el.dataset.value;
     let next = raw;
@@ -78258,7 +78282,7 @@ PM51.bound = {
     const s = PM51.setting(id); if (!s) return '';
     const v = settingValue(s);
     const opts = (choices || o55Options(s)).slice(); if (!opts.map(String).includes(String(v))) opts.unshift(v);
-    return `<span class="o55-bound o55-bound-select" data-setting-id="${a(id)}">${prefix ? `<span class="o55-bound-prefix">${h(prefix)}</span>` : ''}${PM51.dropdown(v, opts.map(o => ({ value: o, label: PM51.valueLabel(id, o), meta: PM51.valueHint(id, o) })), { action: 'change-setting', data: { setting: id }, label: label || PM51.rowLabel(s), width })}</span>`;
+    return `<span class="o55-bound o55-bound-select" data-setting-id="${a(id)}">${prefix ? `<span class="o55-bound-prefix">${h(prefix)}</span>` : ''}${PM51.dropdown(v, opts.map(o => { const why = PM51.choiceReason(id, o, v); return Object.assign({ value: o, label: PM51.valueLabel(id, o), meta: PM51.valueHint(id, o) }, why ? { disabled: true, reason: why, why: true } : {}); }), { action: 'change-setting', data: { setting: id }, label: label || PM51.rowLabel(s), width })}</span>`;
   },
   toggle(id, { label } = {}) {
     const s = PM51.setting(id); if (!s) return '';
@@ -80559,11 +80583,11 @@ ensurePm51State = function () { o55EnsurePm51State(); try { o55PersonaCanon(); }
     const sharedN = pctLeft(shared);
     const opts = [{ value: '', label: `Shared · ${cool ? (COOLDOWNS.some(x => x[0] === shared) ? cooldownText(shared) : 'default') : sharedN === null ? String(shared || '') : `${sharedN}% left`}`,
       meta: !cool && sharedN !== null ? `${100 - sharedN}% used` : '' }];
-    if (!cool && block(shared)) { opts[0].disabled = true; opts[0].reason = block(shared); }
+    if (!cool && block(shared)) { opts[0].disabled = true; opts[0].reason = block(shared); opts[0].why = true; }
     if (cool) COOLDOWNS.forEach(([v]) => opts.push({ value: v, label: cooldownText(v) }));
     else {
       const vals = list.slice(); const n = pctLeft(own); if (n !== null && !vals.includes(n)) { vals.push(n); vals.sort((x, y) => x - y); }
-      vals.forEach(v => { const why = String(v) === String(own) ? '' : block(v); opts.push(Object.assign({ value: String(v), label: leftText(v) }, why ? { disabled: true, reason: why } : {})); });
+      vals.forEach(v => { const why = String(v) === String(own) ? '' : block(v); opts.push(Object.assign({ value: String(v), label: leftText(v) }, why ? { disabled: true, reason: why, why: true } : {})); });
     }
     if (own !== undefined && !opts.some(o => o.value === String(own))) opts.push({ value: String(own), label: String(own) });
     /* the open list is 264 px wide, so the shared choice keeps its % used beside it (the closed field keeps its own width:
@@ -80660,6 +80684,25 @@ ensurePm51State = function () { o55EnsurePm51State(); try { o55PersonaCanon(); }
     const args = Array.prototype.slice.call(arguments); args[1] = held[0].value;
     return o55PolicyCommit.apply(this, args);
   };
+  /* The shared rows (Limits & switching › Moving between accounts, their Details choices, All settings) offer no choice
+     that holdOrder would move: a crossing level is shown but cannot be picked, and says why, as each service's own
+     lists and the Usage page's level menu do (Settings_System section 8: "disabled with the reason, the shared choice
+     included"). A shared switch level crosses the shared warn level, or the own warn level of a service that follows
+     the shared switch level; a shared warn level crosses the shared switch level, or the own switch level of a service
+     that follows the shared warn level. The same pairs as holdOrder, so a choice offered here is stored as picked. */
+  function sharedCrossing(id, v) {
+    const n = pctLeft(v); if (n === null) return '';
+    const isSw = id === SW_ID, other = isSw ? WARN_ID : SW_ID;
+    const crosses = lvl => lvl !== null && (isSw ? n >= lvl : n <= lvl);
+    const shared = PM51.value(other), sharedOther = shared === null || shared === undefined || shared === '' ? null : pctLeft(shared);
+    if (crosses(sharedOther)) return isSw ? `At or past the warn level (${100 - sharedOther}% used). Lower the warn level first.` : `At or before the switch level (${100 - sharedOther}% used). Raise the switch level first.`;
+    const q = all().filter(canSwitch).find(x => ownPolicy(x, id) === undefined && crosses(pctLeft(ownPolicy(x, other))));
+    if (!q) return '';
+    const lvl = pctLeft(ownPolicy(q, other));
+    return isSw ? `At or past ${q.name}'s own warn level (${100 - lvl}% used), and it follows this shared level.` : `At or before ${q.name}'s own switch level (${100 - lvl}% used), and it follows this shared level.`;
+  }
+  PM51.choiceBlock(SW_ID, v => sharedCrossing(SW_ID, v));
+  PM51.choiceBlock(WARN_ID, v => sharedCrossing(WARN_ID, v));
   function setPolicy(p, id, value) {
     if (!p || !POLICY_IDS.includes(id)) return false;
     if (!p.props || typeof p.props !== 'object') p.props = {};
