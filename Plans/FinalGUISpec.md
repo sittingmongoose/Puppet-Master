@@ -10099,7 +10099,7 @@ canonical_text: >-
   Terminal theme selection supports preview before apply, fast switching, search, contrast
   readability signals, instant apply/revert, and semantic terminal palettes rather than raw
   ANSI-only theme ownership. Since DL-183 this is real and owned by the one terminal appearance model (F3-642,
-  DR-068): "Follow theme" picks a scheme per look, 34 curated schemes ship with their licences in place of the
+  DR-068): "Follow look" picks a scheme per look, 34 curated schemes ship with their licences in place of the
   earlier PM-matched, general-purpose and fun or expressive presets, "Switch with light and dark" pairs light and
   dark, the minimum-contrast floor (4.5:1 by default) adjusts text against its cell background in every scheme
   unless the user turns it off, common theme files import, and the Appearance popover previews each change live on the terminal. Every change applies at once and
@@ -10128,6 +10128,7 @@ node_compile_hint:
   mode: terminal_theme_ownership_and_semantic_catalog
   create_worknodes: false
 source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0064"
 - "Plans/Decision_Log.md#DL-183"
 preserved_exact_tokens:
@@ -10145,6 +10146,7 @@ negative_constraints:
 - "No terminal theme or font choice carries a restart badge, and no second terminal theme store exists beside the one appearance model."
 compatibility_only_notes: []
 stale_retired_dispositions:
+- "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for the terminal appearance default in surviving amendment prose."
 - "Amended 2026-10-09 (DL-183): the terminal theme catalogue, preview and instant apply become F3-642's real appearance model; Settings > Terminal binds its app and project layers and the Appearance popover writes This terminal or All terminals."
 owner_boundary_notes:
 - "Settings > Terminal owns durable terminal appearance/theme/color, default cwd, font, and default behavior controls."
@@ -45261,7 +45263,7 @@ canonical_text: >-
   default in Retro dark and off by default elsewhere. Full CRT is off by default in every look, and the user turns it
   on. Flicker is off by default in every look; its amount defaults to 0.02 and is capped at 0.03 of relative
   luminance, against the 0.10 change that WCAG 2.3.1 counts as a flash, so flicker can never be a flash. The effect
-  fields (F3-642) default to: effects Follow theme; scan strength 0.30; glow strength 0.45; Full CRT off; curvature
+  fields (F3-642) default to: effects Follow look; scan strength 0.30; glow strength 0.45; Full CRT off; curvature
   0.08; burn-in on within Full CRT; noise 0.035; flicker off; flicker amount 0.02, capped at 0.03. NieR Mode's
   terminal has a parchment texture under the text and ink focus brackets, and no glow. By the NieR rule for new
   surfaces (DL-152, SSYS-043, F3-598, DR-056), NieR paints the terminal only while NieR Mode is on and each touch only
@@ -45299,6 +45301,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-wave2-numbers-5e549d6961.md, SHA-256 f9d7756f94f26c5285b35400a380afed57fb27dfaee6d29683c3916604b4a15a (R34, adopted effects budgets; concept lineage only)"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D16)"
@@ -45324,6 +45327,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's per-look effect parameters, its GPU frame times, its battery-saver threshold and its measured performance are lineage only; R34 adopts the 2 ms CPU budget at DPR 2 on P1000-class hardware and the 10 s idle deadline as canon."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for the terminal appearance default in surviving amendment prose."
   - "Amended 2026-10-10 (R34, DL-183): Adopts the effects CPU budget, idle deadline and no-GPU fallback rule."
 owner_hints:
   - Plans/FinalGUISpec.md

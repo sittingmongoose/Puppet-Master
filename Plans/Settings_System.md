@@ -1246,7 +1246,7 @@ Settings Home uses cached bounded manager summaries, then hydrates only the sele
 
 Amended 2026-10-09 (DL-180, DL-183): Home has no bottom panel any more, so the consumers of the committed theme snapshot are named as every panel and tab; the chat layout is no longer a Settings row (SSYS-010, SSYS-050); and the terminal's own look is the one appearance model whose Settings rows are SSYS-051, layered over the look's defaults rather than a second theme authority.
 
-Project theme and layout changes update the active Project shell only after atomic acceptance. `pm.settings_appearance_preview.v1` may temporarily paint a candidate Project appearance but writes nothing and reverts on cancel, close, expiry, route change, or Project switch. Title bar, status bar, every panel and tab, Chat, and Settings consume the same committed effective Project theme snapshot; no surface keeps a second local theme authority. The terminal's scheme, font and effects follow that snapshot through "Follow theme" unless the terminal look rows of SSYS-051 choose otherwise.
+Project theme and layout changes update the active Project shell only after atomic acceptance. `pm.settings_appearance_preview.v1` may temporarily paint a candidate Project appearance but writes nothing and reverts on cancel, close, expiry, route change, or Project switch. Title bar, status bar, every panel and tab, Chat, and Settings consume the same committed effective Project theme snapshot; no surface keeps a second local theme authority. The terminal's scheme, font and effects follow that snapshot through "Follow look" unless the terminal look rows of SSYS-051 choose otherwise.
 
 The theme family/mode pair yields exactly eight built-in variants. Glass background mode is `Mesh`, `Depth`, or `Minimal`; Glass alpha is bounded to 0.35..1.0 for Dark and 0.45..1.0 for Light, and the Glass controls show only while a Glass family is active (decided 2026-09-27; they were previously kept visible but disabled with `not_applicable`), as do the Retro texture rows under a Retro family and High contrast under a Basic family. `general.interaction.show-tooltips=false` suppresses hover hints only; focus descriptions and Help/Details remain. Effective reduced motion is the logical OR of Project request and platform preference and calms nonessential movement without suppressing progress, focus, error, or state-change feedback.
 
@@ -2939,7 +2939,7 @@ This addendum compiles the Settings side of four decisions of 2026-10-09: `Plans
 
 Every row below is an ordinary Settings value bound to exactly one Project (SSYS-002); the inventory's scope field is applicability metadata and admits no app-global store (SSYS-004). Settings never writes the Home layout record (SP-330): the split tree, the tabs, a panel's collapsed or locked state, the chat column's width, its pinned History and its popped-out state are layout state, committed by the layout commands of UCC-200. The rows here only choose defaults and how things start.
 
-The terminal's appearance is one model with four layers resolved field by field: the look's defaults ("Follow theme"), the app default, the project default, then the tab's own override (F3-642). Settings > Terminal writes the app default and is the only writer of the project default, and the Appearance popover's All terminals writes the app default (F3-642). Each SSYS-051 row is one field's project default: an ordinary Settings value in the open Project's settings snapshot (SSYS-002), written only by Settings through `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` over the exact id. The app default follows SSYS-028's rule for the ELI5 All chats edit exactly. SSYS-002 and SSYS-004 admit no app-wide store, so until one is admitted (the open question SSYS-028 records as `pldg-20260927-001-wand-collab-workflows` q-035) a field's app default is the row's bundled inventory default, and both app-default edits, the one in Settings > Terminal and the popover's All terminals, are disabled with the Settings owner's reason. Their editable requirement is kept, not replaced by a permanent read-only decision, and no app-wide write is admitted from scope metadata alone. The tab's override is the terminal tab's own serialized state (SP-331), written by the popover's This terminal through `cmd.terminal.appearance.set` (UCC-201); Settings never writes it.
+The terminal's appearance is one model with four layers resolved field by field: the look's defaults ("Follow look"), the app default, the project default, then the tab's own override (F3-642). Settings > Terminal writes the app default and is the only writer of the project default, and the Appearance popover's All terminals writes the app default (F3-642). Each SSYS-051 row is one field's project default: an ordinary Settings value in the open Project's settings snapshot (SSYS-002), written only by Settings through `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` over the exact id. The app default follows SSYS-028's rule for the ELI5 All chats edit exactly. SSYS-002 and SSYS-004 admit no app-wide store, so until one is admitted (the open question SSYS-028 records as `pldg-20260927-001-wand-collab-workflows` q-035) a field's app default is the row's bundled inventory default, and both app-default edits, the one in Settings > Terminal and the popover's All terminals, are disabled with the Settings owner's reason. Their editable requirement is kept, not replaced by a permanent read-only decision, and no app-wide write is admitted from scope metadata alone. The tab's override is the terminal tab's own serialized state (SP-331), written by the popover's This terminal through `cmd.terminal.appearance.set` (UCC-201); Settings never writes it.
 
 Every row added or amended here applies live. A change commits through the Settings transaction over its exact id (SSYS-009), the panels, the editor, the chat column and every open terminal read the committed value at once, and no row carries a restart badge or waits for a reload. A row that says how something starts (Starting layout, Chat history list, Remember window layout, Terminals when reopening a project, Tabs remembered between sessions) is in effect at once for the next start it governs, and a row that caps or opens tabs (Max open editor tabs, Preview tabs) at the next open. No Settings change opens, closes, moves or rearranges a panel or a tab that is already open (SSYS-042); Restore home layout routes to Home's own `cmd.workspace_layout.reset` after one plain question.
 
@@ -2976,8 +2976,8 @@ SSYS-051's twelve:
 
 | Id | Label | What changed |
 |---|---|---|
-| `code.terminal.theme` | Terminal Colors | The scheme field: Follow theme (default) or one of the 34 schemes of F3-642 or an imported one; the restart badge is removed. The earlier "Match App Theme" stays a search word and reads as Follow theme. |
-| `code.terminal.font-family` | Terminal Font | The font field: Follow theme (default), JetBrains Mono, Atkinson Hyperlegible Mono, VT323, Departure Mono, Sixtyfour, Sixtyfour Raster or System monospace (F3-644); the restart badge, Fira Code, SF Mono and Custom are removed, because every terminal face other than System monospace, which uses the computer's own monospace face, is built in under the licence rule. |
+| `code.terminal.theme` | Terminal Colors | The scheme field: Follow look (default) or one of the 34 schemes of F3-642 or an imported one; the restart badge is removed. The earlier "Match App Theme" stays a search word and reads as Follow look. |
+| `code.terminal.font-family` | Terminal Font | The font field: Follow look (default), JetBrains Mono, Atkinson Hyperlegible Mono, VT323, Departure Mono, Sixtyfour, Sixtyfour Raster or System monospace (F3-644); the restart badge, Fira Code, SF Mono and Custom are removed, because every terminal face other than System monospace, which uses the computer's own monospace face, is built in under the licence rule. |
 | `code.terminal.font-size` | Terminal Text Size | The size field: Font default (each face's own size, F3-644) instead of 12. A terminal's Text size menu is a view zoom of that terminal alone (UCC-201), not this row. |
 | `code.terminal.copy-on-select` | Copy When I Highlight | Also the model's copy-on-select field (off), which a terminal's popover can set for that terminal alone. |
 | `code.terminal.sticky-header` | Keep Command Titles Visible | Also the model's sticky-header field (on); describes F3-640's sticky command header. |
@@ -3033,22 +3033,22 @@ SSYS-051's thirty-six, all scope `global` and `project` (applicability metadata;
 | `code.terminal.letter-spacing` | Letter Spacing | number, px | 0 |
 | `code.terminal.ligatures` | Ligatures | toggle | on |
 | `code.terminal.bold-bright` | Bold As Bright | toggle | off |
-| `code.terminal.cursor-shape` | Cursor Shape | select: Follow theme, Block, Bar, Underline | Follow theme |
+| `code.terminal.cursor-shape` | Cursor Shape | select: Follow look, Block, Bar, Underline | Follow look |
 | `code.terminal.cursor-blink` | Cursor Blink | toggle | on |
-| `code.terminal.cursor-trail` | Cursor Trail | select: Follow theme, Off, Soft, Glow, Phosphor, Trace | Follow theme |
-| `code.terminal.background` | Terminal Background | select: Follow theme, Theme surface, Solid color, Gradient, Image | Follow theme |
+| `code.terminal.cursor-trail` | Cursor Trail | select: Follow look, Off, Soft, Glow, Phosphor, Trace | Follow look |
+| `code.terminal.background` | Terminal Background | select: Follow look, Theme surface, Solid color, Gradient, Image | Follow look |
 | `code.terminal.background-color` | Background Color | text (a colour) | none |
 | `code.terminal.background-gradient` | Background Gradient | select: Dusk, Dawn, Deep, Paper | none |
 | `code.terminal.background-image` | Background Image | select: Hills, Grid, Paper, Custom | none |
 | `code.terminal.background-image-file` | Custom Background Image | path | none |
 | `code.terminal.background-dim` | Background Image Dimming | slider | 0.45 |
 | `code.terminal.background-blur` | Background Image Blur | slider, px, made once on the picture | 0 |
-| `code.terminal.opacity` | Terminal Opacity (Glass) | slider | Follow theme (70 % light, 74 % dark) |
+| `code.terminal.opacity` | Terminal Opacity (Glass) | slider | Follow look (70 % light, 74 % dark) |
 | `code.terminal.padding` | Terminal Padding | number, px across, 60 % of it above and below | 8 |
-| `code.terminal.effects` | Terminal Effects | select: Follow theme, Off, Custom | Follow theme |
-| `code.terminal.scanlines` | Scanlines | select: Follow theme, On, Off | Follow theme |
+| `code.terminal.effects` | Terminal Effects | select: Follow look, Off, Custom | Follow look |
+| `code.terminal.scanlines` | Scanlines | select: Follow look, On, Off | Follow look |
 | `code.terminal.scan-strength` | Scanline Strength | slider | 0.30 |
-| `code.terminal.glow` | Phosphor Glow | select: Follow theme, On, Off | Follow theme |
+| `code.terminal.glow` | Phosphor Glow | select: Follow look, On, Off | Follow look |
 | `code.terminal.glow-strength` | Glow Strength | slider | 0.45 |
 | `code.terminal.crt` | Full CRT | toggle | off |
 | `code.terminal.curvature` | Screen Curvature | slider | 0.08 |
@@ -3056,13 +3056,13 @@ SSYS-051's thirty-six, all scope `global` and `project` (applicability metadata;
 | `code.terminal.noise` | Screen Noise | slider | 0.035 |
 | `code.terminal.flicker` | Flicker | toggle | off |
 | `code.terminal.flicker-amount` | Flicker Amount | slider, never above 0.03 | 0.02 |
-| `code.terminal.inactive-dim` | Dim Terminals I'm Not In | select: Follow theme, On, Off | Follow theme |
-| `code.terminal.smooth-scroll` | Smooth Scrolling | select: Follow theme, On, Off | Follow theme |
-| `code.terminal.bell` | Terminal Bell | select: Follow theme, Visual, Off | Follow theme |
+| `code.terminal.inactive-dim` | Dim Terminals I'm Not In | select: Follow look, On, Off | Follow look |
+| `code.terminal.smooth-scroll` | Smooth Scrolling | select: Follow look, On, Off | Follow look |
+| `code.terminal.bell` | Terminal Bell | select: Follow look, Visual, Off | Follow look |
 | `code.terminal.sixtyfour-scan` | Sixtyfour Scanlines | slider, -53 to 100 | none |
 | `code.terminal.sixtyfour-bleed` | Sixtyfour Bleed | slider, 0 to 100 | none |
 
-With the five amended rows that carry the scheme, font, size, copy-on-select and sticky-header fields, every field of F3-642 has exactly one row. A field that reads Follow theme, Font default or none falls through to the look's default (for the scheme, font and effects, the per-look defaults of F3-642 and F3-644); none is a value the sources have not settled yet, listed for the next installment. Scanlines and Phosphor Glow left on Follow theme draw what the look draws: on in Retro dark, off elsewhere (F3-643).
+With the five amended rows that carry the scheme, font, size, copy-on-select and sticky-header fields, every field of F3-642 has exactly one row. A field that reads Follow look, Font default or none falls through to the look's default (for the scheme, font and effects, the per-look defaults of F3-642 and F3-644); none is a value the sources have not settled yet, listed for the next installment. Scanlines and Phosphor Glow left on Follow look draw what the look draws: on in Retro dark, off elsewhere (F3-643).
 
 What shows when (the visibility rule of the presentation rework, section 5): Background Color only while Terminal Background is Solid color; Background Gradient only while it is Gradient; Background Image, Background Image Dimming and Background Image Blur only while it is Image; Custom Background Image only while Background Image is Custom; Terminal Opacity (Glass) only under a Glass theme, as SSYS-010's family-specific rows; Scanlines, Phosphor Glow, Full CRT and Flicker only while Terminal Effects is Custom; Scanline Strength while Scanlines is On, Glow Strength while Phosphor Glow is On, Screen Curvature, Burn-In and Screen Noise while Full CRT is on, and Flicker Amount while Flicker is on; Sixtyfour Scanlines and Sixtyfour Bleed only while Terminal Font is Sixtyfour. A hidden row keeps its stored value. No row turns an effect on where F3-643 keeps it off: effects run only in the focused terminal and stop when it is idle, every moving part (cursor blink and trail, smooth scrolling, burn-in, noise, flicker, the bell's flash) stops under Reduce Animations and on battery saver, and the no-GPU path draws what F3-643 says it can.
 
@@ -3279,6 +3279,7 @@ owner_hints:
   - Plans/settings_inventory.json
   - Plans/FinalGUISpec.md
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look consistently in the appearance-model prose and field tables."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Amended 2026-10-10 (lead ruling L18): The search switch is retired; find stays always present and the retired row renders nowhere."

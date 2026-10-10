@@ -27535,7 +27535,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Final
 
 ### Terminal appearance storage (SP-331)
 
-The terminal's appearance is one model resolved field by field: the look's defaults ("Follow theme"), then the app default, then the project default, then this terminal (`Plans/FinalGUISpec.md#F3-642`, `Plans/DRY_Rules.md#DR-068`). The look's defaults ship with the product and are never stored. Until an app-wide Settings store is admitted (`Plans/Settings_System.md#SSYS-028`), the app default and the project default share one stored value per field, so today two values are stored, not three:
+The terminal's appearance is one model resolved field by field: the look's defaults ("Follow look"), then the app default, then the project default, then this terminal (`Plans/FinalGUISpec.md#F3-642`, `Plans/DRY_Rules.md#DR-068`). The look's defaults ship with the product and are never stored. Until an app-wide Settings store is admitted (`Plans/Settings_System.md#SSYS-028`), the app default and the project default share one stored value per field, so today two values are stored, not three:
 
 | Layer | Where it is stored | Written by |
 |---|---|---|
@@ -27604,6 +27604,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15)"
@@ -27622,6 +27623,7 @@ negative_constraints:
 compatibility_only_notes:
   - "terminal_font.v1:global and terminal_color.v1:global were prose-only keys (SP-122) and map to the app layer."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look consistently in the appearance-model prose and field tables."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Stores the editor scheme choice beside the terminal choice as Settings values and never stores the built-in catalog."
   - "Amended 2026-10-10 (lead ruling L16): The enabled All terminals popover writes the project default through the Settings transaction and never an app-wide value until q-035 admits one."
   - "Replaces SP-122's global font and colour keys (DL-183)."
