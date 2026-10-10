@@ -18141,7 +18141,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: The persisted layout determines visible Home placement, recovery disclosure, sizes, collapse state, and restored focus.
 split_recommended: false
-depends_on: [SP-244, F3-501, DL-180]
+depends_on: [SP-244, F3-501]
 unblocks: []
 acceptance_criteria:
 - The registry and standalone schema both use schema_id pm.home_workspace_layout.v1 and the registry points to the standalone schema owner.
@@ -18163,6 +18163,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - PMConcept7_Home_Workspace_Audit_Packet_v1/shared/04_COMMAND_EVENT_STORAGE_WIRING.md
+- Plans/Decision_Log.md#DL-180 (amendment of 2026-10-09; cited here rather than in depends_on, because DL-180 already depends on this unit through DL-147)
 preserved_exact_tokens: [pm.home_workspace_layout.v1, home_workspace_layout.v1, persisted=true, Wayland]
 negative_constraints:
 - Do not write compatibility keys.
@@ -27554,7 +27555,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Decides where each terminal look choice is kept and what survives a move, a reopen and a restore.
 split_recommended: false
-depends_on: [DL-183, F3-642, DR-068, SSYS-051, SSYS-028, SP-330, SP-222, SP-127]
+depends_on: [DL-183, F3-642, DR-068, SSYS-051, SSYS-028, SP-330, SP-222]
 unblocks: []
 acceptance_criteria:
   - "The app and project defaults are stored only as SSYS-051's Settings rows in the Project's settings snapshot, the tab override only in the tab's state, and the look's defaults are not stored."
