@@ -11,6 +11,10 @@
     return w;
   }
   T.strWidth = strWidth;
+  /* visible width of text with escape sequences (SGR, OSC) removed */
+  function visibleWidth(s) {
+    return strWidth(String(s).replace(/\x1b\][^\x07\x1b]*(?:\x07|\x1b\\)/g, '').replace(/\x1b\[[0-9;:?]*[ -\/]*[@-~]/g, ''));
+  }
 
   var PROFILES = {
     zsh: { id: 'zsh', label: 'zsh', shell: 'zsh', detail: 'Default' },
@@ -255,6 +259,9 @@
     this.mark('B');
     this.rawOut('\x1b[?2004h');
     this.mode = 'edit';
+    /* the prompt starts at column 0 (PROMPT_SP above); its width says where input starts even while the terminal is
+       holding output for an image decode (the cursor has not moved yet then) */
+    this.promptWidth = visibleWidth(this.promptText());
     this.ed = new LineEditor(this);
     var res = await this.ed.run();
     this.rawOut('\x1b[?2004l');
@@ -593,8 +600,9 @@
     this.saved = ''; this.yank = ''; this.search = null; this.endRow = 0;
     this.pending = '';
     this.term = sh.s.term;
-    this.startX = this.term.buf.cursor.x; /* where input starts on the prompt line */
-    this.startOff = this.startX;          /* logical offset of the input start within the prompt's line */
+    var pw = sh.promptWidth !== undefined ? sh.promptWidth : this.term.buf.cursor.x;
+    this.startX = pw % this.term.cols;     /* where input starts on the prompt line */
+    this.startOff = pw;                   /* logical offset of the input start within the prompt's line */
     this.curRow = 0;                      /* cursor row relative to the input start row */
   }
   LineEditor.prototype.run = async function () {
@@ -771,7 +779,8 @@
   LineEditor.prototype.redrawPrompt = function () {
     var sh = this.sh;
     sh.rawOut(sh.promptText());
-    this.startX = this.term.buf.cursor.x; this.startOff = this.startX; this.curRow = 0;
+    var pw = visibleWidth(sh.promptText());
+    this.startX = pw % this.term.cols; this.startOff = pw; this.curRow = 0;
   };
   LineEditor.prototype.histMove = function (d) {
     if (this.hi === this.hist.length) this.saved = this.buf;
