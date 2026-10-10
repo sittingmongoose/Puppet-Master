@@ -6649,7 +6649,7 @@
               "null"
             ],
             "pattern": "^terminal:.+$",
-            "description": "The id of the terminal tab that shows this session, or that last showed it once the session has ended; null when no tab shows it. It is the tab's id and is never derived from this session's own id: a tab keeps the id minted from the session it was first opened with when Restart or a restore gives it a new session, so a restored or reopened tab finds its earlier session's saved scrollback through this field (SP-332). Moving, collapsing, maximizing or hiding the tab never changes the session (SMPFS-180)."
+            "description": "The id of the terminal tab that shows this session, or that last showed it once the session has ended; null when no tab shows it. It is the tab's id and is never derived from this session's own id: a tab keeps the id minted from the session it was first opened with when Restart or a restore gives it a new session, so an ended session's record names, as history, the tab that showed it. Saved scrollback is keyed by the tab's id and is not found through this field (SP-332). Moving, collapsing, maximizing or hiding the tab never changes the session (SMPFS-180)."
           },
           "legacy_terminal_leaf_pane_id": {
             "type": [
