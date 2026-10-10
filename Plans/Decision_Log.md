@@ -3727,8 +3727,8 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/Final
 - The rest of this card is the planning thread's recommendation, which Jared accepted without change. Retiring the per-tab role setting is the terminal concept lead's recommendation under the label rule above.
 
 **What the spec now says:**
-1. **One session per tab** (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`): the terminal is a tab kind; sections, workgroups, sub-tabs, in-tab splits and the Quadrant layout retire (`#SMPFS-014`, `#SMPFS-138` and `#SMPFS-170` amended, section 1.6 superseded); presentation and `terminal_session_id` stay separate as before. A lead ruling where Jared's answer is silent: moving, folding, maximizing or hiding a terminal tab never touches its session; closing the tab ends the session after saying what is still running; Reopen closed tab, or a terminal restored after a restart whose session did not survive, starts a new session in the same folder and shell and says so, never pretending to be the old one.
-2. **The tab's chrome and features** (`Plans/FinalGUISpec.md#F3-640`, `#F3-641`; engine side `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183`), superseding the workgroup strip and grid units `#F3-062` to `#F3-065`, `#F3-449` and `#F3-450`.
+1. **One session per tab** (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`): the terminal is a tab kind; sections, workgroups, sub-tabs, in-tab splits and the Quadrant layout retire (`#SMPFS-014` amended, `#SMPFS-138` and `#SMPFS-170` superseded, section 1.6 superseded); presentation and `terminal_session_id` stay separate as before. A lead ruling where Jared's answer is silent: moving, folding, maximizing or hiding a terminal tab never touches its session; closing the tab ends the session after saying what is still running; Reopen closed tab, or a terminal restored after a restart whose session did not survive, starts a new session in the same folder and shell and says so, never pretending to be the old one.
+2. **The tab's chrome and features** (`Plans/FinalGUISpec.md#F3-640`, `#F3-641`; engine side `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183`), superseding the workgroup strip `#F3-062` and the four-pane grid `#F3-450`, and amending `#F3-063` to `#F3-065` and `#F3-449`.
 3. **Agents and people** (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182`, presentation `Plans/FinalGUISpec.md#F3-646`). A lead ruling of 2026-10-10 where Jared's answer is silent: the permission row offers Allow once, Allow in this terminal and Deny. Allow in this terminal is a write grant to one agent in one terminal session. It is held in memory only, never stored, and ends when the terminal closes, when the human takes over (a keystroke, Take over or Stop) or when that agent's run ends; Hand back after a take-over grants it again for the rest of that run. It decides who may type, never what may run: every command the agent types still passes the Tools policy engine with its own approval over that exact invocation (`#SMPFS-024`, `Plans/Permissions_System.md#PS-041`), and a secret prompt still refuses agent input. The concept's label "Always allow here" becomes "Allow in this terminal", because Always in Puppet Master's approval choices means a stored rule that outlives the session (`#PS-041`).
 4. **No AI in the terminal** (`#SMPFS-180` negative constraint; `Plans/Personas.md` section 11.8; `Plans/settings_inventory.json` retires `code.terminal.explanations`).
 5. **Commands and wiring** (`Plans/UI_Command_Catalog.md#UCC-201`, `Plans/Wiring_Matrix.md#WM-091`): section, workgroup and quadrant commands retire; take over, interrupt, find, images and appearance join; `cmd.terminal.reveal` reveals the tab wherever it is.
@@ -12784,7 +12784,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Records the owner decision that replaces the home page's panel model, tabs, opening rules and chat position.
 split_recommended: false
-depends_on: [DL-147, DL-161]
+depends_on: []
 unblocks: [F3-630, F3-631, F3-632, F3-633, F3-634, F3-635, F3-636, F3-637, F3-638, F3-639, F3-647, DR-065, DR-066, DR-067, DR-071, UCC-200, UCC-202, UCC-203, CS-100, CS-101, WM-090, WM-092, UIW-040, UIW-041, SSYS-050, SP-330, CV-360, CV-361, ACD-500, PWIZ-035, WS-030, F-090, RAP-065, ATS-075, GRRC-040, G-030]
 acceptance_criteria:
   - "Output is one tab with the id output whose channel is view state; a channel split off by Open in new tab is output:<channel>; the tour has 20 steps with move_or_dock_chat retired, and a saved position at a retired step resumes at the start of its chapter (F3-635, UCC-200, PWIZ-035)."
@@ -12831,6 +12831,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-147 (cited, not a dependency, so units that compile this record close no dependency cycle through it)"
+  - "Plans/Decision_Log.md#DL-161 (cited, not a dependency, so units that compile this record close no dependency cycle through it)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1-D10, D21, D23-D25, D28)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
@@ -12885,7 +12887,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Records the owner decision that rebuilds the terminal as a tab kind with new chrome, features and agent rules.
 split_recommended: false
-depends_on: [DL-035, DL-037, DL-038, DL-180]
+depends_on: [DL-180]
 unblocks: [SMPFS-180, SMPFS-182, SMPFS-183, SMPFS-184, F3-640, F3-641, F3-646, UCC-201, WM-091, UIW-042, ACD-502, CV-362, SP-332, ATS-076]
 acceptance_criteria:
   - "Canon holds one terminal session per tab; no active unit describes terminal sections, workgroups, sub-tabs, in-tab splits, the Quadrant layout or the four-section and four-pane caps (SMPFS-180)."
@@ -12919,6 +12921,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-035 (cited, not a dependency, so units that compile this record close no dependency cycle through it)"
+  - "Plans/Decision_Log.md#DL-037 (cited, not a dependency, so units that compile this record close no dependency cycle through it)"
+  - "Plans/Decision_Log.md#DL-038 (cited, not a dependency, so units that compile this record close no dependency cycle through it)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D11-D13, D18-D20)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md, SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476 (concept lineage only)"
 preserved_exact_tokens:
@@ -12950,7 +12955,7 @@ canonical_text: >-
   and shared-memory transmission, placements, Unicode placeholders, layering above and below text, and animation),
   sixel, and iTerm2 inline images, with no phases. File, temporary-file and shared-memory transfers follow the
   protocol's hardening rules, are refused in remote sessions and for commands an agent typed, and are bounded by per-
-  image, per-terminal and total quotas; a program that sends too much is refused, never allowed to freeze the app.
+  image, per-sequence and per-screen-buffer limits (no product-wide total in wave 1); a program that sends too much is refused, never allowed to freeze the app.
   Images persist with the terminal's saved scrollback within its storage quota, an evicted image leaving a short text
   placeholder that names it; animation pauses under Reduced Motion and while the terminal is hidden; images read as a
   short text placeholder in the accessible buffer and in agent output reads (SMPFS-181, F3-645). DL-035's own-engine
@@ -12959,7 +12964,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Records the owner decision that admits three image protocols into the terminal's first release.
 split_recommended: false
-depends_on: [DL-035, DL-181]
+depends_on: [DL-181]
 unblocks: [SMPFS-181, F3-645, ATS-076]
 acceptance_criteria:
   - "SMPFS-181 owns the three protocols, their hardening rules, the remote refusal and the quotas, and F3-645 owns how images look in a tab."
@@ -12983,6 +12988,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-035 (cited, not a dependency, so units that compile this record close no dependency cycle through it)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D14)"
   - "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs (image protocols left as a separate decision)"
 preserved_exact_tokens:
@@ -13030,7 +13036,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Records the owner decision on the terminal's schemes, backgrounds, effects and built-in code fonts.
 split_recommended: false
-depends_on: [DL-161, DL-181]
+depends_on: [DL-181]
 unblocks: [F3-642, F3-643, F3-644, DR-068, SSYS-051, SP-331]
 acceptance_criteria:
   - "One code colour-scheme catalog and one Appearance popover serve the editor and the terminal, each surface defaulting to Follow look with its own scheme choice, and Retro's monochrome editor syntax reads the terminal's Retro scheme choice from the terminal's appearance model with no second stored copy (F3-642, F3-639, DR-068)."
@@ -13057,6 +13063,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-161 (cited, not a dependency, so units that compile this record close no dependency cycle through it)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15-D17)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-1.md, SHA-256 1651ae9c41a61f215ee960288b27bb78ee8d9ad804c741495e3313ff4a33e299 (D17a)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-1-d605b4a256.md, SHA-256 71784f23a24c3f922292c8979093e0e5bcbdb1c49392da0d8cd9bd04533ea7c2 (concept lineage only)"
