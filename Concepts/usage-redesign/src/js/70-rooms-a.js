@@ -265,7 +265,8 @@
   };
 
   /* the Overview hero (WOW-TASKS N-2): every window of the active accounts as a lit gauge, ordered by pressure */
-  def('ov-skyline', 'overview', { kind: 'skyline', meta: function () { var th = PMU.roster.thresholds(); return 'active account of each provider · ordered by pressure · ' + (th.auto ? 'auto-switch at ' + (100 - th.switchLeft) + '% used' : 'auto-switch off'); },
+  /* d-switch (item 2): the shared switch point and each provider whose own differs (C.autoCaption, 54-w-accounts.js) */
+  def('ov-skyline', 'overview', { kind: 'skyline', meta: function () { var th = PMU.roster.thresholds(); return 'active account of each provider · ordered by pressure · ' + (C.autoCaption ? C.autoCaption() : th.auto ? 'auto-switch at ' + (100 - th.switchLeft) + '% used' : 'auto-switch off'); },
     inspect: function () {
       var m = C.skylineModel();
       return C.insp('Headroom skyline', m.cols.map(function (c) { return [c.p.name + ' · ' + c.w.label, C.fmt(c.w.pct, 'pct') + ' used · ' + C.fmt(Math.max(0, 100 - c.w.pct), 'pct') + ' left · ' + F.resetLine(c.w).text + ' · ' + c.a.nickname + ' · ' + PMU.fmt.truth(c.w.truth)]; }));
@@ -512,7 +513,9 @@
       aside: function (ctx) {
         var r = PMU.roster.provider(p.id); if (!r || !r.accounts.length) return '';
         if (r.accounts.length > 1) {
-          if (ctx && ctx.form === 'plate' && r.group === 'plan' && r.windows.length) { var th = PMU.roster.thresholds();
+          /* the provider's own switch point (thresholds(providerId); the shared levels where it has none). Lane d-switch's
+             plate policy band carries it instead and returns '' here: at integration its hunk wins */
+          if (ctx && ctx.form === 'plate' && r.group === 'plan' && r.windows.length) { var th = PMU.roster.thresholds(p.id);
             var tw = ctx.tier ? ctx.tier.w : 'l'; if (tw === 'xs' || tw === 's') return '';
             /* the long words only where the subtitle beside them stays whole (Retro 2026-10-02: "4 accounts · Work Claude ...") */
             var longW = 'Auto-switch at ' + (100 - th.switchLeft) + '% used', metaT = providerMeta(p.id)();

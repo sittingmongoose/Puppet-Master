@@ -44,11 +44,20 @@
     var sampled = w.sampledAt !== null && w.sampledAt !== undefined ? C.sampledText(w.sampledAt) : age ? 'sampled ' + String(age).replace(/^cached /, '') : '';
     return [w.truth && w.truth !== 'unknown' ? PMU.fmt.truth(w.truth) : '', w.source || '', sampled].filter(Boolean).join(' · ');
   };
-  /* one meter spec for a WindowView (A1 6). The notch and the tone ramp are the provider's own switch and warn levels
-     (lane d-plans: thresholds(providerId), lane d-switch's per-provider policy; the shared levels where it has none) */
+  /* one meter spec for a WindowView (A1 6). The notch and the warn line are the window's own provider policy: lane d-switch
+     (item 2) puts providerId, switchAt, warnAt (% used) and autoOn on every window from thresholds(providerId, accountId), so
+     Codex's notch sits at its own 85 % while Claude keeps the shared 90 %; a window without them (this lane's base) asks
+     thresholds(providerId, accountId), and a roster without per-provider policy answers with the shared levels. A window
+     built from the shared policy (providerId null) yields to its provider's own when the caller names the provider. */
+  C.policyOf = function (w, pid, accountId) {
+    var th = (pid && PMU.roster.thresholds(pid, accountId)) || PMU.roster.thresholds();
+    var own = w && typeof w.switchAt === 'number' && isFinite(w.switchAt) && (w.providerId || !pid);
+    return { switchAt: own ? w.switchAt : 100 - th.switchLeft, warnAt: own && typeof w.warnAt === 'number' && isFinite(w.warnAt) ? w.warnAt : 100 - th.warnLeft,
+      auto: own && typeof w.autoOn === 'boolean' ? w.autoOn : !!th.auto };
+  };
   C.meterSpec = function (w, opts) {
     opts = opts || {};
-    var pid = opts.prov || w.providerId || null, th = (pid && PMU.roster.thresholds(pid)) || PMU.roster.thresholds();
+    var pid = opts.prov || w.providerId || null, pol = C.policyOf(w, pid, opts.acct || null);
     var rl = PMU.fmt.resetLine(w), src = C.winSource(w, opts.age);
     var pace = w.pacePts !== null && w.pacePts !== undefined ? (w.pacePts > 0 ? '+' : '') + w.pacePts + ' pts vs norm' : '';
     var label = (opts.hoverName ? opts.hoverName + ' · ' : '') + w.label;
@@ -57,9 +66,9 @@
       (w.source ? ' (' + w.source + ')' : '') + ', before the reset' } : { label: label };
     return { label: opts.label || w.short, pct: w.pct, vs: w.pct === null ? (w.vs === 'ok' ? 'unknown' : w.vs) : undefined, vsWord: w.pct === null ? PMU.roster.vsWord(w) : undefined,
       tone: w.tone, size: opts.size || 'c', window: w.key, binding: !!w.binding, estimated: !!w.est, dimmed: !!opts.stale, stale: !!opts.stale,
-      notch: w.governed && w.pct !== null ? { at: 100 - th.switchLeft, faint: !opts.effective, off: !th.auto } : null,
+      notch: w.governed && w.pct !== null ? { at: pol.switchAt, faint: !opts.effective, off: !pol.auto } : null,
       resetText: w.pct === null ? '' : rl.text, resetSoon: rl.soon, amount: opts.noAmount ? '' : (w.amount || (w.note && w.pct !== null ? w.note : '')), prov: opts.prov,
-      source: [src, pace].filter(Boolean).join(' · '), thresholds: { warn: 100 - th.warnLeft, switch: 100 - th.switchLeft },
+      source: [src, pace].filter(Boolean).join(' · '), thresholds: { warn: pol.warnAt, switch: pol.switchAt },
       hover: hover };
   };
   var METER_H = { c: 58, i: 58, k: 44 };   /* measured k: 44 (CONTENT-3, VM 1920 and 1440) */
@@ -153,13 +162,42 @@
       if (a.windows.every(function (w) { return w.pct === null && !w.resetPending; })) return PMU.roster.vsWord(a.windows[0]);
       return a.windows.map(function (w) { return wcode(w) + ' ' + (w.pct === null ? shortVs(w) : C.fmt(w.pct, 'pct')); }).join(' · ');
     };
-    var lineW = Math.max(60, bw - 22);
-    var lineOne = function (a) { return tw(lineL(a), 13, 600) + tw(lineR(a), 12.5, 560) + 18 <= lineW; };
-    /* a line's height by its measured width (C.wrapLines counted "5H 78% · WK 54%" as two lines in a 127 px column where the
-       page sets one, and a 4x8 Claude plate showed one account over 110 px of room); a line the estimate lets through
-       that does not fit is taken by the fit pass into the "N more" count, exactly */
-    var nLines = function (s, px, wt) { return Math.max(1, Math.ceil(tw(s, px, wt) / lineW - 0.02)); };
-    var lineH = function (a) { return lineOne(a) ? 28 : 10 + 18 * nLines(lineL(a), 13, 600) + 17 * nLines(lineR(a), 12.5, 560); };
+    /* a line's height as the page lays it out: the nickname, the state word and each window's value ("5H 78%") are whole
+       inline blocks that wrap at the middle dots between them (never "WK" / "61%", never "Usage" / "exhausted" while the
+       column has room for the phrase), so the estimate flows the same blocks greedily through the line's text column (the
+       row less its 16 px glyph and 8 px gap). The old estimate divided a whole string by the column, and in Glass at 4x8 a
+       Claude plate showed one account over 93 px of room; a line the estimate still lets through that does not fit is
+       taken by the fit pass into the "N more" count, exactly */
+    /* measured with C.wrapW as it is: the theme face's canvas width already runs 1-6 % over the laid-out width in every look
+       (VM calibration 2026-10-10, Basic, Friendly, Glass, Retro, NieR), so the rows' extra look factor k over-counted the
+       lines (Glass 4x8 Claude: one account line over 91 px of free room) */
+    var lw = function (s, px, wt) { return C.wrapW(s, px, wt); };
+    var colW = Math.max(60, bw - 24), sepW = lw(' · ', 13, 400);
+    var nameW = function (a, px) { return lw(a.nickname, px, a.effective ? 680 : 520); };
+    /* a nickname wider than the column steps down to 12 px, and where even that does not fit it ends in an ellipsis (the
+       line's hover tag and Details carry it whole): "sittingmongoose" broke inside the word ("sittingmongoos / e") */
+    var nameCls = function (a) { return nameW(a, 13) <= colW ? '' : nameW(a, 12) <= colW ? ' is-tight' : ' is-cut'; };
+    var blockL = function (a) {
+      var c = nameCls(a), sw = lw(a.stateWord, 12, 600);
+      return [{ w: c === ' is-cut' ? colW : nameW(a, c ? 12 : 13) }, { w: sw, n: sw > colW ? C.wrapLines(a.stateWord, colW, 12, 600) : 1 }];
+    };
+    var wordsR = function (a) { return !n || allHiddenP(a) || a.windows.every(function (w) { return w.pct === null && !w.resetPending; }); };
+    var blockR = function (a) {
+      if (wordsR(a)) { var t = lineR(a); return [{ w: lw(t, 12.5), n: C.wrapLines(t, colW, 12.5) }]; }
+      return a.windows.map(function (w) { return { w: lw(wcode(w) + ' ', 12, 500) + (w.pct === null ? lw(shortVs(w), 12) : lw(C.fmt(w.pct, 'pct'), 13, 650)) }; });
+    };
+    var flow = function (bs) {
+      var lines = 1, cur = 0;
+      bs.forEach(function (b) {
+        var w = Math.min(b.w, colW);   /* a block wider than the column wraps inside itself (its own lines) and fills it */
+        if (cur > 0 && cur + sepW + w > colW) { lines++; cur = 0; }
+        lines += (b.n || 1) - 1; cur += (cur > 0 ? sepW : 0) + w;
+      });
+      return lines;
+    };
+    var sumW = function (bs) { return bs.reduce(function (s, b, i) { return s + b.w + (i ? sepW : 0); }, 0); };
+    var lineOne = function (a) { var l = blockL(a), r = blockR(a); return l.every(function (b) { return (b.n || 1) === 1; }) && r.every(function (b) { return (b.n || 1) === 1; }) && sumW(l) + 8 + sumW(r) <= colW; };
+    var lineH = function (a) { return lineOne(a) ? 28 : 10 + 18 * flow(blockL(a)) + 17 * flow(blockR(a)); };
     var lh = accs.map(lineH);
     /* the most full rows with every other account as a line; else lines only, as many as fit, and the "N more" line */
     var need = function (kf) { var u = kf && cols ? bandH : 0; for (var q = 0; q < accs.length; q++) u += q < kf ? hs[q] : lh[q]; return u; };
@@ -192,12 +230,12 @@
         '<i class="pmu-acclight" aria-hidden="true"></i>' + ident + cells + '</div>';
     }).join('') + asLines.map(function (a) {
       /* the line's values in their tones; its hover tag says every window with its reset, and it opens the account's Details */
-      var right = !n || allHiddenP(a) || a.windows.every(function (w) { return w.pct === null && !w.resetPending; }) ? '<span class="pmu-plword">' + esc(lineR(a)) + '</span>'
+      var right = wordsR(a) ? '<span class="pmu-plword">' + esc(lineR(a)) + '</span>'
         : a.windows.map(function (w) { return '<span class="pmu-plwin">' + esc(wcode(w)) + ' ' + (w.pct === null ? '<em>' + esc(shortVs(w)) + '</em>' : '<b data-tone="' + esc(w.tone || 'calm') + '">' + esc(C.fmt(w.pct, 'pct')) + '</b>') + '</span>'; }).join('<i class="pmu-dot"> · </i>');
       var sig = a.shownState + '|' + a.effective + '|' + a.windows.map(function (w) { return w.pct; }).join(',');
       return '<div class="pmu-row pmu-accrow pmu-planline' + (lineOne(a) ? '' : ' is-two') + (a.effective ? ' is-eff' : '') + '" data-reveal data-flash-key="' + esc(a.key) + '" data-flash-sig="' + esc(sig) + '" data-acct="' + esc(a.key) + '" data-state="' + a.shownState + '"' +
         ' data-pmu-act="acct-inspect" data-value="' + esc(a.key) + '" role="button" tabindex="0"' + C.hover(p.name + ' · ' + a.nickname + (a.effective ? ' · Active' : ''), foldLine(a) + ' · ' + (a.fresh ? a.fresh.source + ' · ' : '') + C.sampledText(a.sampledAt) + ' · select for Details') + '>' +
-        '<span class="pmu-accglyph">' + (a.stateGlyph ? C.glyph(a.stateGlyph) : '') + '</span><span class="pmu-plid"><b class="pmu-ident' + (a.effective ? ' is-eff' : '') + '"' + C.shareAttr('acct:' + a.key) + '>' + esc(a.nickname) + '</b>' +
+        '<span class="pmu-accglyph">' + (a.stateGlyph ? C.glyph(a.stateGlyph) : '') + '</span><span class="pmu-plid"><b class="pmu-ident' + (a.effective ? ' is-eff' : '') + nameCls(a) + '"' + C.shareAttr('acct:' + a.key) + '>' + esc(a.nickname) + '</b>' +
         '<i class="pmu-dot"> · </i>' + stateHtmlP(a) + '</span><span class="pmu-plvals">' + right + '</span></div>';
     }).join('');
     var foldItems = folded.map(foldLine);
@@ -229,7 +267,7 @@
       if (!row || !n || allHiddenP(a)) return;
       a.windows.forEach(function (w) {
         var h = row.querySelector('[data-win="' + w.key + '"]');
-        var spec = C.meterSpec(w, { size: cols ? 'c' : 'k', effective: a.effective, prov: p.id, stale: a.fresh.stale, age: a.ageText, hoverName: p.name + ' · ' + a.nickname });
+        var spec = C.meterSpec(w, { size: cols ? 'c' : 'k', effective: a.effective, prov: p.id, acct: a.id, stale: a.fresh.stale, age: a.ageText, hoverName: p.name + ' · ' + a.nickname });
         if (cols) spec.noLabel = true; else spec.label = w.short;
         C.chart(body, 'meter', h, spec, { label: a.nickname + ' ' + w.label });
       });
@@ -306,7 +344,7 @@
         body.innerHTML = '<div class="pmu-limit"' + C.foldHover((rest.head ? [] : amt.hidden.map(function (x) { return x.t; })).concat(rest.folded, footFold)) + '>' + meters + amt.html + rest.html + '</div>' + (m.foot && footH ? C.foot(m.foot, m.footGlyph) : '');
       }
       shownWins.forEach(function (w, i) {
-        C.chart(body, 'meter', body.querySelector('.pmu-limitmeter[data-i="' + i + '"]'), C.meterSpec(w, { size: w.pct === null ? 'k' : size, effective: true, prov: m.settingsId, stale: m.account && m.account.fresh.stale, age: m.account ? m.account.ageText : '', hoverName: m.name }),
+        C.chart(body, 'meter', body.querySelector('.pmu-limitmeter[data-i="' + i + '"]'), C.meterSpec(w, { size: w.pct === null ? 'k' : size, effective: true, prov: m.settingsId, acct: m.account ? m.account.id : null, stale: m.account && m.account.fresh.stale, age: m.account ? m.account.ageText : '', hoverName: m.name }),
           { label: m.name + ' ' + w.label });
       });
     }

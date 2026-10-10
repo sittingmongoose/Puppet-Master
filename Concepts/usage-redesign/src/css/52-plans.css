@@ -21,11 +21,21 @@
    does not fit the values go under the name. One row of the plate's table: the same separators, hover and Details */
 #panel-usage .pmu-planline { grid-template-columns: 16px minmax(0, 1fr) auto; column-gap: 8px; align-items: center; min-height: 28px; padding-top: 5px; padding-bottom: 5px; }
 #panel-usage .pmu-planline .pmu-plid { min-width: 0; font-size: 13px; line-height: 18px; color: var(--pmu-ink-2); overflow-wrap: break-word; }
-#panel-usage .pmu-planline .pmu-plid .pmu-ident { font-size: 13px; font-weight: 600; color: var(--pmu-ink); }
-#panel-usage .pmu-planline .pmu-plid .pmu-acstate { display: inline; }
+/* the nickname, the state word and each window's value are whole blocks that wrap at the middle dots between them (never
+   "WK" / "61%" or "Usage" / "exhausted" while the column has room; the plate's estimate flows the same blocks). The
+   nickname weighs like the rows' (the active account 680, the others 520); one wider than the column steps down to 12 px
+   (is-tight), and where even that does not fit it ends in an ellipsis (is-cut; the line's hover tag and Details say it) */
+#panel-usage .pmu-planline .pmu-plid .pmu-ident { display: inline-block; font-size: 13px; font-weight: 520; color: var(--pmu-ink); white-space: nowrap; overflow-wrap: normal; }
+#panel-usage .pmu-planline .pmu-plid .pmu-ident.is-eff { font-weight: 680; }
+#panel-usage .pmu-planline .pmu-plid .pmu-ident.is-tight { font-size: 12px; }
+#panel-usage .pmu-planline .pmu-plid .pmu-ident.is-cut { max-width: 100%; overflow: hidden; text-overflow: ellipsis; vertical-align: top; }
+#panel-usage .pmu-planline .pmu-plid .pmu-acstate { display: inline-block; max-width: 100%; }
 #panel-usage .pmu-planline .pmu-plid .pmu-acstate b { font-size: 12px; white-space: normal; }
-#panel-usage .pmu-planline .pmu-plvals { justify-self: end; font-size: 12.5px; line-height: 17px; color: var(--pmu-ink-3); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
-#panel-usage .pmu-planline .pmu-plvals b { font-weight: 650; color: var(--pmu-ink); }
+/* values at 13 px (HANDOFF 9: values 13-14 px), the window codes and missing-reading words at 12 */
+#panel-usage .pmu-planline .pmu-plvals { justify-self: end; font-size: 12px; line-height: 17px; color: var(--pmu-ink-3); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+#panel-usage .pmu-planline .pmu-plvals .pmu-plwin { display: inline-block; white-space: nowrap; }
+#panel-usage .pmu-planline .pmu-plvals .pmu-plword { font-size: 12.5px; }
+#panel-usage .pmu-planline .pmu-plvals b { font-size: 13px; font-weight: 650; color: var(--pmu-ink); }
 #panel-usage .pmu-planline .pmu-plvals b[data-tone="warn"] { color: var(--pmu-ink-warn); }
 #panel-usage .pmu-planline .pmu-plvals b:is([data-tone="crit"], [data-tone="exhausted"], [data-tone="over"]) { color: var(--pmu-ink-crit); }
 #panel-usage .pmu-planline .pmu-plvals em { font-style: normal; }

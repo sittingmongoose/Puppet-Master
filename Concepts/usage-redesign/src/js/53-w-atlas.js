@@ -287,7 +287,7 @@
         var r = rowsDrawn.filter(function (x) { return x.account.key === open; })[0], fh = body.querySelector('.pmu-qfocushost');
         if (r && fh) {
           /* the account's own provider's switch and warn lines (lane d-plans: thresholds(providerId), shared levels as fallback) */
-          var th = (r.account.providerId && PMU.roster.thresholds(r.account.providerId)) || PMU.roster.thresholds();
+          var th = r.account.policy || (r.account.providerId && PMU.roster.thresholds(r.account.providerId, r.account.id)) || PMU.roster.thresholds();
           var bands = activeSpans(r.account, q.now).map(function (sp) { return { from: sp.from, to: sp.to, label: 'active' }; });
           var wins = cmpOn ? [r].concat(cmpG.g.rows.filter(function (x) { return x !== r; })).map(function (x, i) {
             var f = x.focus.filter(function (ff) { return ff.key === cmpG.key; })[0], pts = x.main && x.main.key === cmpG.key && x.points ? x.points : f && f.points;
