@@ -114,11 +114,28 @@ PMW.updateTab = function (tabId, fields) {
   if (fields.dirty && rec.preview) PMW.keepTab(tabId);
   if (changed) {
     var p = model.panelOf(L(), tabId);
-    var el = p && render.panelEl(p.id);
-    if (el) PMW.strip.render(el, p, L(), { narrow: PMW.narrow && PMW.narrow.singleColumn(), rects: render.rects() });
+    if (p) stripSoon(p.id);
     PMW.persist.saveSoon();
   }
 };
+/* a kind's push-updates (a terminal's label and exit code at each command's start and end, a dirty mark) repaint the
+   panel's strip once, in the next frame, after the kind's own writes: never a fit pass inside the kind's write task,
+   which forced the page's layout mid-task (home-terminal's profile: about 50 ms twice per command on Nas1) */
+var stripDue = {}, stripRaf = 0;
+function stripSoon(panelId) {
+  stripDue[panelId] = true;
+  if (stripRaf) return;
+  stripRaf = requestAnimationFrame(function () {
+    stripRaf = 0;
+    var ids = Object.keys(stripDue), l = L();
+    stripDue = {};
+    var o = { narrow: PMW.narrow && PMW.narrow.singleColumn(), rects: render.rects() };
+    ids.forEach(function (id) {
+      var p = model.panel(l, id), el = p && render.panelEl(id);
+      if (el) PMW.strip.render(el, p, l, o);
+    });
+  });
+}
 PM_HOME.update = function (tabId, fields) { PMW.updateTab(tabId, fields); };
 
 PMW.closeTab = function (tabId, opts) {
