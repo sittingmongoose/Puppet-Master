@@ -201,7 +201,7 @@
       x = x1d - 1;
     }
     /* 5. cursor */
-    if (hasCursor) this._cursor(ctx, line, y0, m, th, fgs, bgs, defBg);
+    if (hasCursor) { this._cursor(ctx, line, y0, m, th, fgs, bgs, defBg); ctx.globalAlpha = 1; }
     if (images) images.drawRow(ctx, abs, y0, 'over-text', v);
     ctx.restore();
   };
@@ -229,6 +229,9 @@
     var thick = Math.max(1, Math.round(m.dpr * (shape === 'bar' ? 2 : 2)));
     ctx.fillStyle = css(color);
     if (v.secretInput) { this._lock(ctx, cx, y0, W, H, color); return; }
+    var alpha = v.focused && v.cursorAlpha !== undefined ? v.cursorAlpha : 1;
+    if (alpha < 0.03) return;
+    ctx.globalAlpha = alpha;
     if (!v.focused) {
       ctx.strokeStyle = css(color); ctx.lineWidth = Math.max(1, Math.round(m.dpr));
       var o = ctx.lineWidth / 2; ctx.strokeRect(cx + o, y0 + o, cw - ctx.lineWidth, H - ctx.lineWidth); return;

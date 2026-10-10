@@ -275,14 +275,32 @@
     if (!this.focused || !this.visible) return;
     var idle = T.util.now() - this.lastInput;
     var next = idle > 15000 ? true : !this.blinkOn; /* blinking stops after 15 s without input */
-    if (next !== this.blinkOn) { this.blinkOn = next; this.schedule(); }
+    if (next === this.blinkOn) return;
+    this.blinkOn = next;
+    var fx = this.appearance && this.appearance.effects;
+    if (fx && fx.blink === 'eased' && !T.look().reduced) {
+      /* Friendly and Glass: the cursor fades over 150 ms instead of stepping (five frames per phase) */
+      var self = this, from = next ? 0 : 1, to = next ? 1 : 0, t0 = T.util.now();
+      var step = function () {
+        var k = Math.min(1, (T.util.now() - t0) / 150);
+        self.cursorAlpha = from + (to - from) * (k * k * (3 - 2 * k));
+        self.schedule();
+        if (k < 1) requestAnimationFrame(step);
+      };
+      this.blinkOn = true; /* stay drawable while fading; alpha carries the phase */
+      this._blinkPhase = next;
+      requestAnimationFrame(step);
+      return;
+    }
+    this.cursorAlpha = 1;
+    this.schedule();
   };
   View.prototype.overlayKey = function (abs, y, line) {
     var k = '';
     var sel = this.selectionSpan(abs); if (sel) k += 's' + sel[0] + '-' + sel[1];
     var f = this.findSpans(abs); if (f) k += 'f' + f.map(function (m) { return m.x0 + ':' + m.x1 + (m.current ? '*' : ''); }).join(',');
     var b = this.term.buf;
-    if (abs === b.abs(b.cursor.y)) k += 'c' + b.cursor.x + (this.cursorVisible() ? 1 : 0) + (this.focused ? 'f' : '') + (this.secretInput ? 'L' : '') + JSON.stringify(this.term.cursorStyle || this.opts.cursor);
+    if (abs === b.abs(b.cursor.y)) k += 'c' + b.cursor.x + (this.cursorVisible() ? 1 : 0) + (this.focused ? 'f' : '') + (this.secretInput ? 'L' : '') + Math.round((this.cursorAlpha === undefined ? 1 : this.cursorAlpha) * 8) + JSON.stringify(this.term.cursorStyle || this.opts.cursor);
     if (this.hoverRange && this.hoverRange.abs === abs) k += 'h' + this.hoverRange.x0;
     if (this.hoverLinkId) k += 'l' + this.hoverLinkId;
     return k;
@@ -531,7 +549,7 @@
     inp.addEventListener('paste', function (e) { e.preventDefault(); var t = (e.clipboardData || window.clipboardData).getData('text'); self.paste(t); });
     inp.addEventListener('keydown', function (e) {
       if (composing || e.isComposing) return;
-      self.lastInput = T.util.now(); self.blinkOn = true;
+      self.lastInput = T.util.now(); self.blinkOn = true; self.cursorAlpha = 1;
       if (self.handleShortcut(e)) { e.preventDefault(); e.stopPropagation(); return; }
       var bytes = T.Input.encodeKey(e, self.term, self.opts);
       if (bytes === null) return;
