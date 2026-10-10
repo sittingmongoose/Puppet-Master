@@ -180,7 +180,9 @@ board lives in the board's own store, written by the engine.
   `pm.home.dashboards:v1:<project>` = `{ schema_id: 'pm.home.dashboards.v1', names: { 'dash-<n>': name } }` (trimmed,
   80 characters at most; "Dashboard n" is the default and is not stored). Rename dashboard... sets it and renames the
   tab with `cmd.panel_tab.rename`; a rename of the tab sets it too, and clearing that rename clears it. The name shows on the
-  tab, in the header facts, in the Board menu's dashboards, in the "+" menu's Dashboard sub-row and in the catalog
+  tab, in the header facts, in the Board menu's dashboards, in the "+" menu's 'Your dashboards' row (the
+  custom dashboards are `plus.sub()` entries with `group: 'dash'`, one submenu row under Dashboard, so the inline links
+  stay the four built-ins and New dashboard) and in the catalog
   (`PM_HOME.catalog`, item `dashboard:dash-<n>`; an item for a dashboard that is deleted, or that belongs to the project
   left behind, is removed with `PM_HOME.catalog.remove`). A project lists only
   its own custom dashboards: the open ones, the stored ones (a closed one keeps its key while it is in the reopen list,
@@ -228,10 +230,10 @@ board lives in the board's own store, written by the engine.
   `snapshot(ids?)` (each listed board flushed, then its own key read: `b.STORE_KEY` for a mounted board, this project's
   key otherwise) and `restore(snap)` (each board's own key written, `null` removes it, mounted boards reloaded; an
   envelope saved in another project is written as this project's). The tour's snapshots and the named layouts' boards
-  (P6) use these two, so both are per project. Applying a saved named layout puts back every board it saved except a
-  custom dashboard that the applied layout does not hold (deleted or closed since) or whose envelope was saved in
-  another project (the same `dash-<n>` names another board there); those keep what they hold (`26-actions.js`
-  `namedBoards`).
+  (P6) use these two, so both are per project. Applying a saved named layout puts back the boards it saved in this
+  project only: an envelope saved in another project is skipped, a built-in board's included (board contents are per
+  project, P5), and so is a custom dashboard that the applied layout does not hold (deleted or closed since); those
+  keep what they hold (`26-actions.js` `namedBoards`).
 
 ## 4. The per-tab host API (`api` in `mount`)
 

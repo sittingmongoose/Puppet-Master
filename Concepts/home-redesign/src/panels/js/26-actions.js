@@ -386,7 +386,10 @@ function namedBoards(boards) {
   try { p = PMW.dashboard.project ? PMW.dashboard.project() : null; } catch (_) { p = null; }
   Object.keys(boards).forEach(function (id) {
     var env = boards[id];
-    if (/^dash-\d+$/.test(id) && (!l.tabs['dashboard:' + id] || (env && env.project_id && p && env.project_id !== p))) return;
+    // board contents are per project (P5): an envelope saved in another project is never written here, a built-in
+    // board's included (that project's Home stays that project's); a custom one only while the layout holds its tab
+    if (env && env.project_id && p && env.project_id !== p) return;
+    if (/^dash-\d+$/.test(id) && !l.tabs['dashboard:' + id]) return;
     out[id] = env;
   });
   return out;

@@ -31,7 +31,8 @@ function openIn(panelId, spec, newPanel) {
    Typing in the "+" field lists the matching entries themselves (by label and detail). An entry whose group the table
    does not know stays an inline link. Another kind groups its entries by adding a line here. */
 var SUB_GROUPS = PMW.SUB_GROUPS = {
-  ssh: { label: 'SSH hosts', icon: 'remote', one: 'SSH host', keywords: 'ssh remote host server', search: 'Find a host' }
+  ssh: { label: 'SSH hosts', icon: 'remote', one: 'SSH host', keywords: 'ssh remote host server', search: 'Find a host' },
+  dash: { label: 'Your dashboards', icon: 'dashboard', one: 'Your dashboard', keywords: 'dashboard board widgets custom', search: 'Find a dashboard' }
 };
 function subGroupRow(k, p, panelId, g) {
   var def = SUB_GROUPS[g.id];

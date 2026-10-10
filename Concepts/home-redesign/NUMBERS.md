@@ -71,7 +71,7 @@ slot holds.
      gets its own filter field above 7 hosts
 3. Browser · Ctrl+Shift+B · sub-row: localhost:5173, Query dashboard
 4. File... · Ctrl+P · sub-row: three recent files
-5. Dashboard · sub-row: Home, Metrics, Monitoring, Agents, this project's custom dashboards by name, New dashboard
+5. Dashboard · sub-row: Home, Metrics, Monitoring, Agents, New dashboard; then, when this project has custom dashboards, one 'Your dashboards' row (icon dashboard) with a submenu of them by name (second line: the widget count; a search field above 7)
 6. Plan or document...
 7. Artifact...
 8. Output, Problems, Ports, Debug Console (one row with a submenu)

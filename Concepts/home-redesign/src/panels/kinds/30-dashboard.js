@@ -1057,7 +1057,9 @@ PM_HOME.registerKind('dashboard', {
     label: 'Dashboard',
     sub: function () {
       var out = FIXED_IDS.map(function (b) { return { id: b, label: FIXED[b].label, detail: FIXED[b].sub, icon: 'dashboard' }; });
-      customBoards().forEach(function (b) { out.push({ id: b, label: labelOf(b), detail: 'Your dashboard · ' + widgetCount(storedCount(b)).toLowerCase(), icon: 'dashboard' }); });
+      // custom dashboards go into one 'Your dashboards' row under Dashboard (PMW.SUB_GROUPS), so the inline links stay
+      // the four built-ins and New dashboard however many a person makes
+      customBoards().forEach(function (b) { out.push({ id: b, label: labelOf(b), detail: widgetCount(storedCount(b)), icon: 'dashboard', group: 'dash' }); });
       return out.concat([{ id: 'new', label: 'New dashboard', detail: NEW_SUB, icon: 'plus' }]);
     },
     spec: function (sub) {
@@ -1255,6 +1257,8 @@ function onClosedDropped(ev) {
   if (!Array.isArray(ids) || !ids.length) return;
   var open = {};
   try { PM_HOME.tabs().forEach(function (t) { open[t.tabId] = true; }); } catch (_) {}
+  // still in the committed reopen list (the commit that dropped it was rejected): keep it
+  try { var lc = PMW.state && PMW.state.layout && PMW.state.layout.closed; (lc || []).forEach(function (c) { if (c && c.tab) open[c.tab.id] = true; }); } catch (_) {}
   ids.forEach(function (id) {
     if (typeof id !== 'string' || !DASH_TAB.test(id) || open[id]) return;
     forget(boardOf(id));
