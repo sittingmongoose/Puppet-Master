@@ -26453,7 +26453,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Keeps concept lab controls out of product surfaces."
 split_recommended: false
-depends_on: [DL-106, DL-185, DR-070]
+depends_on: [DL-106]
 unblocks: []
 acceptance_criteria:
   - "No product catalog, settings inventory, wiring matrix or persisted key names a lab tool listed here."
@@ -26477,6 +26477,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-106"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
   - "Plans/Decision_Log.md#DL-185"
+  - "Plans/DRY_Rules.md#DR-070"
   - "Plans/FinalGUISpec.md#F3-649"
 preserved_exact_tokens:
   - "Demo Studio"
@@ -26486,7 +26487,7 @@ negative_constraints:
   - "Do not register a lab tool as a command, setting, wiring row, persisted key or test gate."
   - "Do not carry concept family or variant indices into product settings."
 stale_retired_dispositions:
-  - "Amended 2026-10-09 (DL-185): Demo Studio is one for all of PMConcept7 (DR-070, F3-649); F3-649 is cited in source_lineage because it depends on this unit."
+  - "Amended 2026-10-09 (DL-185): Demo Studio is one for all of PMConcept7 (DR-070, F3-649); DL-185, DR-070 and F3-649 are cited in source_lineage, not depends_on, because F3-649 depends on this unit and an edge to DL-185 would pull this unit into the dependency cycle through DL-180 that the merged branches form."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
