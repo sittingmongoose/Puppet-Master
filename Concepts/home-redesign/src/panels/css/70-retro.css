@@ -56,7 +56,10 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-chip { border-radius: 0
   50% { background: transparent; color: var(--accent-lime); }
   75%, 100% { background: var(--accent-lime); color: var(--surface); }
 }
-.pmw-tab.pmw-rfx-drag { outline: 1px dashed var(--accent-lime); outline-offset: -1px; background: color-mix(in srgb, var(--surface) 35%, transparent); }
+/* the DOS dashed cut-out (T33): while a tab is carried in Retro the block lifts out and only its dashed outline and
+   phosphor label travel; the reverse-video block returns on drop with one inversion blink */
+.pmw-tab.pmw-rfx-drag { outline: 1px dashed var(--accent-lime); outline-offset: -1px; background: color-mix(in srgb, var(--surface) 35%, transparent); color: var(--accent-lime) !important; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-strip.is-dragging .pmw-plate { opacity: 0; }
 .pmw-tab.pmw-rfx-drop { animation: pmw-rfx-drop 280ms steps(1, end); }
 @keyframes pmw-rfx-drop { 0% { background: var(--accent-lime); color: var(--surface); } 50%, 100% { background: transparent; } }
 html[data-motion="reduced"] .pmw-tab[class*="pmw-rfx-"] { animation: none !important; box-shadow: none; }
