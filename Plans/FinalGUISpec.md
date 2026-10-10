@@ -1843,6 +1843,7 @@ Rules:
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md
 ### Terminal section presentation rules
 
+Superseded 2026-10-09 (DL-180, DL-181, DL-184): this block is lineage. The bottom runtime zone, terminal sections, workgroups, sub-tabs, the split tree inside a workgroup and the editor terminal stack are retired. A terminal is one tab kind holding one session in any panel (F3-635, SMPFS-180), with its chrome in F3-640 and its features in F3-641; its splits are new panels, side-by-side terminals are panels, and four-up is the Terminals 2x2 layout of F3-630. The workgroup pill below is retired by DL-184 (F3-648). F3-062 is superseded by F3-640; F3-063, F3-064 and F3-065 are amended to keep only their surviving rules (no second session for a second presentation, no split-parent fade, drag cleanup, Reduced Motion).
 
 The bottom runtime zone uses a workgroup-first terminal information architecture.
 
@@ -2154,6 +2155,8 @@ border-radius = 4
 - Terminal theme schema is semantic, not raw ANSI-only: it defines background `/foreground`, ANSI `/basic` and bright palettes, cursor and selection colors, search highlight colors, command-block and sticky-header chrome, and badge/status colors for `/failure/running/context` states.
 - Terminal theme catalog includes PM-matched themes, polished general-purpose themes, and `/fun/funky` or `/expressive` presets only when `/contrast` and readability checks pass; previews support `/search/light-dark` pairing, quick `/switching`, instant apply, and easy `/revert`.
 
+Amended 2026-10-09 (DL-183): the terminal's colour scheme, font, cursor, background and effects are one layered appearance model with a live Appearance popover in the terminal's More menu (F3-642, DR-068). Its catalogue is F3-642's 34 curated schemes (27 third-party schemes in 13 families, MIT or Apache-2.0, and 7 Puppet Master originals), which replaces the preset groups above; the minimum-contrast floor (F3-642, 4.5:1 by default) adjusts text against its cell background in every scheme unless the user turns it off; Settings > Terminal binds the model's app and project layers (SSYS-051) while the popover writes This terminal or All terminals; and no terminal appearance change needs a restart.
+
 **Custom font support:** Custom themes can reference font files placed in `~/.puppet-master/fonts/`. Font files (.ttf, .otf, .woff2) are loaded at startup. A theme TOML referencing a missing font falls back to the base theme's font and shows a warning toast.
 
 **Theme preview:** When hovering over a theme in the selector dropdown, show a live preview of the theme applied to a small widget card (button, text, border sample). On click, apply the theme. This allows users to preview without committing.
@@ -2456,13 +2459,15 @@ Agent-Config is the visible provider/model/account/instruction management surfac
 
 #### 7.4.1 Terminal Settings Ownership
 
+Amended 2026-10-09 (DL-181, DL-183): the terminal's appearance is one live layered model (F3-642, DR-068). Settings binds its app and project layers (SSYS-051) and the terminal's Appearance popover writes the tab's own override; no terminal appearance row needs a restart. The groups follow SSYS-040 and SSYS-051, the quadrant layout behaviour retires with the Quadrant layout, and Explain What Commands Do leaves the terminal for the Teacher persona in the chat (D19). F3-120 and F3-121 carry the details.
+
 Settings > Terminal is the in-product cheat sheet and durable `/preferences` owner for terminal defaults. It groups high-frequency controls for preview and change ahead of dangerous `/rare` controls and daily-use settings, and it keeps `/shortcut` mappings plus conflict `/explanations` visible in-product rather than hiding discoverability in a secondary utility.
 
-Terminal durable preferences include `/theme/font/rendering`, `/selection/copy/paste`, `/profile/cwd`, `/transcript` retention and `/performance`, diagnostics `/logging`, shell-integration `/capability` visibility, and renderer/session diagnostics when exposed. Scope labels distinguish per-project or workspace-local `/workspace` defaults from tab-scoped `/tab` overrides; live-session and pane/session-local actions stay in Terminal runtime UI rather than Settings.
+Terminal durable preferences include `/theme/font/rendering`, `/selection/copy/paste`, `/profile/cwd`, `/transcript` retention and `/performance`, diagnostics `/logging`, shell-integration `/capability` visibility, and renderer/session diagnostics when exposed. Scope labels distinguish per-project or workspace-local `/workspace` defaults from tab-scoped `/tab` overrides; live-session and terminal-tab actions stay in the terminal tab rather than Settings (DL-181).
 
 Settings > Terminal is also the terminal-specific `/coverage` and `/reconciliation` landing zone for durable GUI preferences that are not owned by Tools or storage: `/theming`, `/remote/session` disclosure, and any future browser or remote terminal transport controls must reference the terminal SSOT rather than creating a new settings owner.
 
-Settings > Terminal groups Appearance, `/layout` & Workspaces, Shell & Startup, Interaction, and Diagnostics. Interaction covers `/copy/paste`, copy-on-select, `/kill/quit` prompts, sticky-header command-block visibility, `/explanations`, performance-safe search, `/readability` signals, and `/tunable` `/quadrant` layout behavior.
+Settings > Terminal groups Appearance, `/layout` & Workspaces, Shell & Startup, Interaction, and Diagnostics (its earlier group names; the groups are now SSYS-040's, mapped by SSYS-051). Interaction covers `/copy/paste`, copy-on-select, `/kill/quit` prompts, sticky-header command-block visibility, performance-safe search, and `/readability` signals. The `/explanations` row (Explain What Commands Do, D19) and the `/tunable` `/quadrant` layout behavior are retired (DL-181).
 
 Shortcut discovery is in-product and `/remappable`: it prioritizes true terminal operations over layout-management and other app-level actions, distinguishes terminal-owned shortcuts from `/TUI-owned` keys, and keeps search, next/previous match, scrollback paging, top/bottom jump, command-block navigation, font zoom, clear/reset, `/shortcuts/behaviors`, and copy/paste visible.
 
@@ -3078,7 +3083,7 @@ The GUI must never visually "jump" or "flicker" when background data updates arr
 - Bounded terminal transcript or plain-log projections may expose a visible row window in `VecModel`/`ListView`, but those projections are derived views rather than the live terminal core.
 - When output arrives rapidly, throttle GUI projection updates to max 30fps and batch rows arriving within 33ms; PTY/buffer ingestion and diff computation remain off the UI thread.
 - Ring buffers stay in Rust; the GUI holds only the visible transcript or plain-log projection window.
-- high-volume terminal output uses ring-buffer backed `/virtualized` projections so 4-split terminal panes keep layout ratios stable while the live core remains off the UI thread.
+- high-volume terminal output uses ring-buffer backed `/virtualized` projections so the panels holding terminal tabs keep their proportions stable while the live core remains off the UI thread. Amended 2026-10-09 (DL-181): each terminal tab holds one session, several terminals show at once only as several panels, and the earlier 4-split terminal panes retire (F3-194).
 
 ---
 
@@ -3385,7 +3390,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-ch
 | `mcp_server_record.v1:{mcp_server_id}` | MCP server configuration and readiness metadata | On save/change |
 | `skill_record.v1:{skill_id}` | Skill registry entry, enablement, source, and settings summary | On save/change |
 | `web_operation_payload` | Stored child-run metadata for web search, fetch/read, extract, research, crawl, and map summaries referenced by GUI projections; `read` is the semantic `web_operation` for the `webfetch` tool. | On completion/update |
-| `terminal_layout.v1:{project_id}` | Canonical terminal layout persistence family for terminal sections, pane arrangement, and focused runtime chrome | On change (debounced 300ms) |
+| `terminal_layout.v1:{project_id}` | Canonical terminal layout persistence family for terminal sections, pane arrangement, and focused runtime chrome. Amended 2026-10-09 (DL-180, DL-181): a migration input only; terminal tabs and their panels are kept in the Home layout record (SP-330) and the old sections and pane arrangement are read once (SP-332) | On change (debounced 300ms) |
 | `terminal_session.v1:{terminal_session_id}` | PTY session continuity record for terminal restore and historical/live verification | On lifecycle change |
 | `ssh_remotes/{id}` | Saved SSH remote record: nickname, host, port, user, auth method, remote folder, jump host, and last test metadata. No secrets. | On save |
 
@@ -3401,7 +3406,7 @@ Normative mapping notes:
 - `dashboard_layout:v1` is a deprecated migration-read alias only; `widget_layout:v1:dashboard` is the canonical dashboard key after migration.
 - §15.1 lists the keys required for GUI state persistence. For the complete key catalog including non-GUI keys, see `Plans/storage-plan.md` §2.3.
 - Viewer-mode and MCP readiness copy must mirror owner-doc precision. When the active durable store is locked by another writer or the selected `pm.lock` cannot be acquired, the GUI enters `/viewer-mode` and labels the state as read-only/viewer rather than implying ordinary edit capability. MCP readiness rows consume `mcp_server_record` and `mcp_runtime_availability` from the MCP owner docs; cost-display and `/account/readiness` copy must route to the canonical Usage/cost and account/readiness owner pipelines instead of creating local MCP, account, or cost buckets.
-- Terminal GUI persistence imports the full storage-owned terminal key catalog instead of forking a local subset: `terminal_workspace_state.v1:{project_id}:{workspace_tab_id}`, `terminal_section_record.v1:{project_id}:{terminal_section_id}`, `terminal_tab_record.v1:{project_id}:{terminal_tab_id}`, `terminal_pane_record.v1:{project_id}:{terminal_pane_id}`, `terminal_leaf_pane_record.v1:{project_id}:{terminal_leaf_pane_id}`, `terminal_workgroup_record.v1:{project_id}:{terminal_workgroup_id}`, `editor_terminal_panel_state.v1:{project_id}:{workspace_tab_id}:{editor_terminal_panel_id}`, `terminal_session_record.v1:{project_id}:{terminal_session_id}`, and `terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}`. Wildcard audit shorthands such as `terminal_workspace_state.v1:*` and `terminal_command_block.v1:*` resolve to these concrete key families. The GUI-facing `terminal_layout.v1` / `terminal_session.v1` rows above are projection and compatibility summaries only; restore and open/focus flows resolve through the storage key catalog before claiming liveness.
+- Terminal GUI persistence imports the full storage-owned terminal key catalog instead of forking a local subset: `terminal_workspace_state.v1:{project_id}:{workspace_tab_id}`, `terminal_section_record.v1:{project_id}:{terminal_section_id}`, `terminal_tab_record.v1:{project_id}:{terminal_tab_id}`, `terminal_pane_record.v1:{project_id}:{terminal_pane_id}`, `terminal_leaf_pane_record.v1:{project_id}:{terminal_leaf_pane_id}`, `terminal_workgroup_record.v1:{project_id}:{terminal_workgroup_id}`, `editor_terminal_panel_state.v1:{project_id}:{workspace_tab_id}:{editor_terminal_panel_id}`, `terminal_session_record.v1:{project_id}:{terminal_session_id}`, and `terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}`. Wildcard audit shorthands such as `terminal_workspace_state.v1:*` and `terminal_command_block.v1:*` resolve to these concrete key families. The GUI-facing `terminal_layout.v1` / `terminal_session.v1` rows above are projection and compatibility summaries only; restore and open/focus flows resolve through the storage key catalog before claiming liveness. Amended 2026-10-09 (DL-181): SP-332 re-scopes this catalog for one session per tab. A terminal tab is a tab record `terminal:<session>` in the Home layout record (SP-330), its appearance override sits in its serialized state (SP-331), the session record's view link is optional, the workspace, section, workgroup and editor-terminal-panel families are read only as migration inputs, and saved scrollback with its images is the terminal restore record's transcript chunks (F3-221).
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md
 
@@ -3426,7 +3431,7 @@ On startup:
 4. Read `activity_bar_order:v1` and restore icon order.
 5. Read `editor_workspace_state.v1:{project_id}` and restore open tabs and view positions. Restore each dirty per-file buffer from `editor_state.v1:{project_id}:{file_path_hash}` before focusing the active tab; if the disk baseline differs, present a diff and never overwrite either side implicitly.
 6. Read `project_state:v1:{project_id}` and restore the active project-facing shell state.
-7. Read `terminal_layout.v1:{project_id}` plus linked `terminal_session.v1:{terminal_session_id}` / canonical terminal record families and restore terminal section layout, tabs, pane tree, labels, and selected focus targets. On first launch after migration, a compatibility reader MAY ingest deprecated `terminal_state:v1` payloads and rewrite them into the canonical terminal key family.
+7. Terminal tabs restore with the Home layout record (SP-330), each bound to its `terminal_session_id`; a terminal tab mounts when it is first shown and, if its session did not survive, loads its saved scrollback and starts a new session in the same folder and shell profile, saying so (F3-640, F3-226). Amended 2026-10-09 (DL-181): `terminal_layout.v1:{project_id}`, the linked `terminal_session.v1:{terminal_session_id}` records and the earlier terminal section layout, tabs, pane tree, labels, and selected focus targets are read once as migration inputs (SP-332). On first launch after migration, a compatibility reader MAY ingest deprecated `terminal_state:v1` payloads and rewrite them into the canonical terminal key family.
 8. Read `hotreload_state.v1:{project_id}` and rehydrate only historical dev-session UI state; revalidate process, watcher, port, and session liveness before any live badge or control is enabled.
 9. Read the current `onboarding_state` session binding from SP-252 and revalidate the bounded draft, actual Project commit and phase against their owners before showing first-run/provider hints. Guided Tour's separate checkpoint disposition remains SP-251; it is not inferred from Onboarding progress.
 10. If a floating or detached window was on a disconnected monitor, fall back to docked presentation or to a safe detached coordinate.
@@ -3436,11 +3441,11 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.
 Restore rules:
 - Compatibility aliases are consumed only by an admitted migration. Ordinary startup never falls back from a missing canonical dotted key to an alias and never rewrites an alias opportunistically.
 - Resettable hot-reload/onboarding corruption follows `detected -> secured -> reset_to_default -> purged`: raw bytes are secured before reset and the warning card names the reset. Editor buffer/workspace corruption is canonical non-rebuildable loss, follows mandatory-backup recovery, and cannot be relabeled as first run or an empty project.
-- terminal restore MUST preserve section, tab, and pane identity before attempting any session liveness verification
+- terminal restore MUST preserve each terminal tab's identity and its bound session before attempting any session liveness verification (amended 2026-10-09, DL-181: sections and panes retire; the earlier rule preserved section, tab, and pane identity)
 - restored historical sessions may appear immediately, but live-state badges wait for verification
-- startup restore MUST prefer revealing prior selected terminal containers over creating new empty terminals automatically
-- project `/reopen` restores saved sections, tabs, panes, layout style, labels, dock/detach state, and session cwd/profile metadata before liveness checks; it must not fall back to a default single-pane layout when durable terminal layout exists
-- `/restored`, `/exited`, and `/disconnected` UI copy must keep structural restore separate from live PTY proof; replace with new terminal or `/restart` attaches a fresh runtime to the same slot, while close removes the workspace container
+- startup restore MUST prefer revealing prior selected terminal containers over creating new empty terminals automatically; a saved terminal tab whose session did not survive comes back with its saved scrollback above a new session in the same folder and profile (F3-640), which is not a new empty terminal
+- project `/reopen` restores the saved terminal tabs, their panels, labels, and session cwd/profile metadata before liveness checks; it must not fall back to a default single-pane layout when durable terminal layout exists (amended 2026-10-09, DL-181: the earlier sections, panes, layout style and dock/detach state are migration inputs, SP-332)
+- `/restored`, `/exited`, and `/disconnected` UI copy must keep structural restore separate from live PTY proof; a restored terminal tab whose session did not survive says so in its restored notice and starts a new session in the same tab (F3-640), Restart session (`/restart`) attaches a fresh runtime to the same tab, and Close tab removes it (amended 2026-10-09, DL-181: the earlier slot and workspace container are now the tab)
 - Session restore is project-scoped and `/session-aware`: thread-specific restoration prompts before rebinding thread, chat, terminal, or editor focus, and the saved `/layout` projection may restore only after that scope is confirmed.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
@@ -3458,11 +3463,11 @@ Recoverable state:
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md
 
 Terminal and dev-session recovery rules:
-- terminal sections, tabs, panes, labels, pin state, and selected focus restore from durable terminal workspace state
+- terminal tabs, their labels, pin state, and selected focus restore from the Home layout record (SP-330); amended 2026-10-09 (DL-181): terminal sections, panes and the durable terminal workspace state are migration inputs only (SP-332)
 - terminal sessions restore only as verified-live or historical records; Puppet Master MUST NOT fake live PTY continuity after restart
 - canonical recovery outcomes are `restored_live`, `restored_exited`, `restored_disconnected`, and `restored_without_history`
 - dev sessions restore as workflow records tied to their last-known output, problems, ports, and linked terminal refs
-- restored historical terminals show explicit banners and recovery controls such as restart, replace, or close historical tab
+- restored historical terminals show explicit banners and recovery controls such as restart, replace, or close historical tab; amended 2026-10-09 (DL-181): for a terminal tab whose session did not survive, the banner is F3-640's restored notice above its saved scrollback, and the tab starts a new session in the same folder and shell profile, except a tab whose profile is itself a privileged attachment, which follows the next rule (F3-228)
 - Restart recovery treats privileged interactive sessions as crash-interrupted unless liveness is revalidated. `docker exec/attach`, `kubectl exec`, and `kubectl port-forward` sessions never `auto-resume` a live attachment after crash or restart. They restore as `interrupted_session` records with target identity, last-known timestamps, the source-specific blind-spot window, and a `Reconnect / Start new session` CTA; prior buffers remain historical evidence, not proof of a live attachment.
 - A restored `log_stream_session` stores source identity plus resume cursor or `/bookmark` semantics. Source-specific resume requires the exact cursor when the backend has one, best-effort tail timestamp when it does not, or a metadata-only reopen state when no cursor model exists. GitHub Actions restart recovery distinguishes `remote run still executing`, `remote run completed while app was down`, and `local observation interrupted`: the GUI restores selection context, shows a gap marker if logs advanced while the app was down, and does not claim uninterrupted local stream continuity.
 - Receipt finalization for crash-interrupted operation observers uses explicit lifecycle states `started`, `observation_interrupted`, `reconciled_completed`, `reconciled_failed`, and `abandoned_unknown` for exec and `/attach`, port-forward, log streams, `workflow-run` observation, and publish `/deploy` follow chains. Orchestrator `/restart` reconciliation uses `external-continuity` classifications `resumable_local`, `externally_continued`, `externally_completed`, `stale_historical`, and `unknown_after_crash` when hosted runs, containers, or Kubernetes rollouts continued while the UI observer was down.
@@ -3889,7 +3894,7 @@ Agent ecosystem seams remain explicit migration references: `Plans/Skills_System
 
 | Retired Rust/Iced-Lineage View | New Slint Location | Notes |
 |-------------------|-------------------|-------|
-| `dashboard.rs` | `views/dashboard.slint` (Home group) | Add rearrangeable card grid, 4-split terminal |
+| `dashboard.rs` | `views/dashboard.slint` (Home group) | Add rearrangeable card grid. Retired 2026-10-09 (DL-181): the "4-split terminal" this note named; terminals are tabs in the home panels, one session each (F3-640) |
 | `projects.rs` | `views/projects.slint` (Home group) | Minimal changes |
 | `wizard.rs` | `views/wizard.slint` (Run group) | Add agent activity pane, intent selection |
 | `interview.rs` | `views/interview.slint` (Run group) | Also available as Chat mode |
@@ -3971,7 +3976,7 @@ cargo check
 | **No built-in context menu** | Low | Custom `ContextMenu` widget using `TouchArea` pointer events. Positioned at mouse coordinates. Styled per theme. Clipboard operations (Copy/Paste/Select All) delegate to Slint's native `TextInput.copy()` / `.paste()` / `.select-all()` — no custom clipboard state management needed. |
 | **No built-in docking framework** | High | Custom `PanelRegistry` in Rust handles dock/undock state machine, snap detection, window lifecycle. This is the most complex custom component and should be implemented early. |
 | **Font family change requires restart** | Low | Detect font family change in settings. Show restart prompt. Pre-load fonts for all themes on startup so within-family switches (Dark <-> Light) are instant. Auto-mode transitions are equally instant: an OS appearance change resolves the selected family to its other variant with no restart. |
-| **4-split terminal performance** | Medium | Live terminal panes use native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing per Section 15. Keep bounded ring buffers per pane (max 10k retained rows) and one PTY per pane. `VecModel`/`ListView` holds only bounded transcript/plain-log projection windows (~500 visible rows plus small overscan), not the terminal core. Batch/throttle projection updates (max 30fps). |
+| **4-split terminal performance** (amended 2026-10-09, DL-181: now the performance of many visible terminal tabs, one session per tab) | Medium | Live terminal panes use native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing per Section 15. Keep bounded ring buffers per pane (max 10k retained rows) and one PTY per pane. `VecModel`/`ListView` holds only bounded transcript/plain-log projection windows (~500 visible rows plus small overscan), not the terminal core. Batch/throttle projection updates (max 30fps). Since DL-181 each terminal tab holds one session with one PTY and one bounded ring buffer, several terminals show at once only as several panels, a hidden terminal tab stops its animation work, and there is no four-pane grid to budget for (F3-245). |
 | **Platform-specific window manager issues** | Medium | Test: macOS window snapping with floating panels, Linux compositing with overlay effects, Windows DPI scaling. Handle gracefully with fallback behaviors. |
 | **Large Settings page complexity** | Medium | The old tab counts and two-level-sidebar mandate are retired migration lineage. F3-432 owns one search-first Settings surface with category blooms, shelves, command-palette deep links, and real-data testing. |
 | **Migration scope** | High | 18 existing views + 5 new = 23 total. Prioritize: (1) Theme system + shell layout, (2) Dashboard + Settings, (3) Chat + File Manager, (4) remaining views. Each view can be migrated independently. |
@@ -4076,7 +4081,7 @@ These decisions are final and must not be revisited during implementation:
 9. **Model/platform selection via dropdowns**, not text entry
 10. **Product name: `Puppet Master`**
 11. **All 12 former future considerations are MVP** -- browser, instant project switch, sound effects, hot reload, instructions editor, custom themes, language detection, catalog, sync, SSH, Debug Mode workflows, and terminal tab management
-12. **Bottom runtime zone includes the classical debugger surface** -- Terminal, Problems, Output, Ports, and Debugger / DAP Debugger remain runtime-zone occupants; browser-capable preview/browsing is not a bottom-panel debug substitute
+12. **Bottom runtime zone includes the classical debugger surface** -- Superseded 2026-10-09 (DL-180, DL-181): there is no fixed bottom runtime zone. Terminal, Output, Problems, Ports and Debug Console are tab kinds that open in any panel, the tools landing beside the terminals by kind affinity, and the default Home layout's full-width bottom row is an ordinary panel row (F3-630, F3-634, F3-635); each terminal tab holds one session (F3-640, SMPFS-180). What stands: the Debugger / DAP Debugger stays part of the product (decision 14), and browser-capable preview/browsing is not a debug substitute. Earlier text, kept for lineage: "Terminal, Problems, Output, Ports, and Debugger / DAP Debugger remain runtime-zone occupants; browser-capable preview/browsing is not a bottom-panel debug substitute"
 13. **Browser runtime contract is capability-first, not crate-name-first** -- implementation must satisfy the promoted browser/session model rather than hard-locking the spec to stale `wry` wording
 14. **Classical debugger uses DAP** -- the integrated debugger surface is DAP-based and distinct from Assistant Debug Mode
 15. **SSH uses system keychain / agent flows** -- credentials stay in OS-managed stores, never in config files
@@ -8634,9 +8639,15 @@ owner_hints:
 ```yaml
 plan_unit_id: F3-062
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/FinalGUISpec.md
+superseded_by: F3-640
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The bottom runtime zone's
+  workgroup-first strip, its leaf-pane sub-tabs and its split-pane trees retire: a terminal is one tab kind holding
+  one session in any panel, with the shared header row inside the tab, and there is no fixed bottom runtime zone
+  (F3-630, SMPFS-180). The text below is retained verbatim for lineage and audit and must not be accepted or indexed
+  as active current-product truth. Superseded by F3-640 (DL-181).
   The bottom runtime zone uses workgroup-first terminal information architecture with workgroups,
   leaf-pane subtabs, optional split-pane trees, left/center/right regions, and a retired
   command-log strip.
@@ -8644,7 +8655,7 @@ gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -8676,13 +8687,14 @@ negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "The separate command-log strip is retired from the canonical layout."
+- "Superseded 2026-10-09 (DL-181): workgroups, sub-tabs and the in-zone split-pane tree retire with the bottom runtime zone; the terminal tab's chrome is F3-640, and side-by-side terminals are panels (F3-630)."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Command_Catalog.md"
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-### F3-063 - Terminal Split Grid And Editor Embeddings
+### F3-063 - Terminal Tabs Side By Side
 
 ```yaml
 plan_unit_id: F3-063
@@ -8690,20 +8702,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Terminal split grids use visible gutters/resizers, workgroup accents, no split-parent opacity
-  enter animation, and editor-hosted stacks that reference existing terminal leaf panes rather
-  than creating second terminal sessions.
+  Terminals side by side are panels of the panel split tree, with its visible dividers and resizing (F3-630); a
+  terminal tab has no split grid of its own (F3-640). Terminal tabs use no split-parent opacity enter animation that
+  dims them during reorder or drag. A second presentation of a terminal never creates a second terminal session: a
+  session has one terminal tab (SMPFS-180), and the chat's command cards stay read-only previews of that session
+  (F3-357 to F3-361). Workgroup accents and the editor-hosted terminal stack retire (DL-181).
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181, F3-640, SMPFS-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "No terminal tab draws a split grid, a workgroup accent or an editor-hosted terminal stack, and no second presentation of a terminal starts a second session."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -8717,6 +8732,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0048"
+- "Plans/Decision_Log.md#DL-181"
 preserved_exact_tokens:
 - "gutters"
 - "resizers"
@@ -8725,9 +8741,12 @@ preserved_exact_tokens:
 - "existing terminal leaf pane"
 - "second terminal session"
 negative_constraints:
-- "The terminal grid must not use a split-parent opacity enter animation that dims all children during reorder or drag operations."
-compatibility_only_notes: []
-stale_retired_dispositions: []
+- "Terminal tabs must not use a split-parent opacity enter animation that dims all children during reorder or drag operations."
+compatibility_only_notes:
+- "Earlier text, lineage only: Terminal split grids use visible gutters/resizers, workgroup accents, no split-parent opacity enter animation, and editor-hosted stacks that reference existing terminal leaf panes rather than creating second terminal sessions."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): the terminal split grid, its workgroup accents and the editor-hosted terminal stack retire; terminals side by side are panels, and no second presentation starts a second session."
+- "Retitled 2026-10-09 (DL-181): the heading was 'Terminal Split Grid And Editor Embeddings' before terminal panes retired."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md"
 owner_hints:
@@ -8742,19 +8761,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Terminal drag-and-drop accepts pane, subtab, and workgroup payloads, handles same-group pane
-  reorder, workgroup drops to editor, stale hover/opacity cleanup, and pane-body drop targets.
+  A terminal tab drags like every other tab (F3-630, F3-631): it reorders in its strip, moves to another panel, or
+  drops on a panel's edge to split, and moving it never touches its session (SMPFS-180). Pane, sub-tab and workgroup
+  payloads, same-group pane reorder and workgroup drops on the editor retire with workgroups (DL-181). Drag cleanup
+  still clears stale hover, opacity and drag classes after a rebuild or a drag end, so no terminal stays dimmed, and
+  a tab dragged over a terminal's screen still reaches the panel's landing zones: the screen never swallows the drag.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181, F3-630, F3-631, SMPFS-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Dragging a terminal tab to another strip or a panel edge keeps its session, and a drag over a terminal's screen still shows the panel's landing zones."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -8768,6 +8791,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0049"
+- "Plans/Decision_Log.md#DL-181"
 preserved_exact_tokens:
 - "pane"
 - "subtab"
@@ -8776,10 +8800,13 @@ preserved_exact_tokens:
 - "stale hover"
 - "opacity"
 - "pane-body content"
-negative_constraints: []
-compatibility_only_notes: []
+negative_constraints:
+- "Moving a terminal tab must not end, restart or duplicate its session."
+compatibility_only_notes:
+- "Earlier text, lineage only: Terminal drag-and-drop accepts pane, subtab, and workgroup payloads, handles same-group pane reorder, workgroup drops to editor, stale hover/opacity cleanup, and pane-body drop targets; drag handlers for pane drop targets work when the cursor is over pane-body content, not only over outer chrome."
 stale_retired_dispositions:
 - "DnD cleanup must clear stale hover, opacity, and drag classes after rebuild or dragend."
+- "Amended 2026-10-09 (DL-181): pane, sub-tab and workgroup drag payloads retire; a terminal tab drags as a panel tab, keeping the cleanup and body hit-test rules."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md"
 owner_hints:
@@ -8795,18 +8822,21 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Reduced motion applies to terminal enter animations where still used, while removed split-parent
-  fade effects remain removed.
+  fade effects remain removed. It also covers every terminal tab and every terminal effect: under Reduced Motion
+  every moving part of a terminal is off, cursor blink, trail, smooth scrolling, effects, bell flashes, progress
+  sweeps and image animation included, and only the static looks stay (F3-643, F3-645).
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-183, F3-643]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "With Reduced Motion on, no part of any terminal tab moves, and its static looks stay."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -8820,13 +8850,15 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0050"
+- "Plans/Decision_Log.md#DL-183"
 preserved_exact_tokens:
 - "reduced motion"
 - "terminal enter animations"
 - "split-parent fade effects"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-183): reduced motion now covers every terminal tab and every terminal effect, not only enter animations."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md"
 owner_hints:
@@ -9773,18 +9805,24 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Terminal theme selection supports preview before apply, fast switching, search, contrast
   readability signals, instant apply/revert, and semantic terminal palettes rather than raw
-  ANSI-only theme ownership.
+  ANSI-only theme ownership. Since DL-183 this is real and owned by the one terminal appearance model (F3-642,
+  DR-068): "Follow theme" picks a scheme per look, 34 curated schemes ship with their licences in place of the
+  earlier PM-matched, general-purpose and fun or expressive presets, "Switch with light and dark" pairs light and
+  dark, the minimum-contrast floor (4.5:1 by default) adjusts text against its cell background in every scheme
+  unless the user turns it off, common theme files import, and the Appearance popover previews each change live on the terminal. Every change applies at once and
+  reverts the same way, with no restart.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible terminal theme, preview, palette, and readability behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-183, F3-642, DR-068]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Choosing a terminal scheme in the Appearance popover or in Settings changes the terminal at once, with no restart badge, and the minimum-contrast floor (4.5:1 by default) adjusts text against its cell background in every scheme unless the user turns it off (F3-642)."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -9798,6 +9836,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0064"
+- "Plans/Decision_Log.md#DL-183"
 preserved_exact_tokens:
 - "terminal color-scheme selection"
 - "preview before apply"
@@ -9810,10 +9849,13 @@ preserved_exact_tokens:
 - "/expressive"
 negative_constraints:
 - "Terminal theme schema is semantic, not raw ANSI-only."
+- "No terminal theme or font choice carries a restart badge, and no second terminal theme store exists beside the one appearance model."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-183): the terminal theme catalogue, preview and instant apply become F3-642's real appearance model; Settings > Terminal binds its app and project layers and the Appearance popover writes This terminal or All terminals."
 owner_boundary_notes:
 - "Settings > Terminal owns durable terminal appearance/theme/color, default cwd, font, and default behavior controls."
+- "Since DL-183 the durable appearance values are the app and project layers of F3-642's model, bound by SSYS-051 and stored as SP-331 says; the terminal's Appearance popover writes the tab's override or the app default through the same model, and only Settings writes the project layer."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -11803,18 +11845,23 @@ canonical_text: >-
   Settings > Terminal is the in-product cheat sheet and durable preferences owner for terminal
   defaults, high-frequency preview/change controls, shortcut mappings, conflict explanations,
   terminal appearance, profile/cwd, transcript retention, performance, diagnostics, and
-  project/workspace scope labels.
+  project/workspace scope labels. Its appearance rows bind the one terminal appearance model (F3-642, DR-068):
+  the app default as Settings rows (SSYS-051) and the project default in the Project's settings, which only Settings
+  writes; the per-tab override is not a Settings row but lives in the terminal tab and is written by the Appearance
+  popover's This terminal (SP-331). Every terminal appearance row applies live, with no restart badge. Shell profiles
+  and SSH hosts replace the retired per-tab role setting (DL-181), and the terminal tab's own actions stay in the tab.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible Terminal Settings surfaces, labels, preferences, and explanations.
 split_recommended: true
-depends_on: []
+depends_on: [DL-181, DL-183, F3-642, SSYS-051, DR-068]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Every terminal appearance row in Settings binds F3-642's model at the app or project layer, applies live and carries no restart badge."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -11828,6 +11875,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0077"
+- "Plans/Decision_Log.md#DL-183"
 preserved_exact_tokens:
 - "Settings > Terminal"
 - "in-product cheat sheet"
@@ -11840,9 +11888,12 @@ preserved_exact_tokens:
 - "/workspace"
 - "/tab"
 negative_constraints:
-- "Live-session and pane/session-local actions stay in Terminal runtime UI rather than Settings."
-compatibility_only_notes: []
-stale_retired_dispositions: []
+- "Live-session and terminal-tab actions stay in the terminal tab rather than Settings."
+- "Settings keeps no terminal theme or font value outside the one appearance model."
+compatibility_only_notes:
+- "Before DL-181 the first negative constraint read: Live-session and pane/session-local actions stay in Terminal runtime UI rather than Settings."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-183): terminal appearance is one live layered model; Settings binds its app and project layers, the tab keeps its own override, and pane-local actions are now the terminal tab's actions (DL-181)."
 owner_boundary_notes:
 - "Settings > Terminal is also the terminal-specific `/coverage` and `/reconciliation` landing zone for durable GUI preferences that are not owned by Tools or storage."
 owner_hints:
@@ -11859,18 +11910,24 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Settings > Terminal groups Appearance, layout and Workspaces, Shell and Startup, Interaction,
   and Diagnostics, and keeps terminal shortcut discovery in-product, remappable, and distinct from
-  TUI-owned keys and app-level layout actions.
+  TUI-owned keys and app-level layout actions. Since DL-181 to DL-183 the group names and order are
+  Settings_System's: the terminal rows sit in SSYS-040's Editor & Terminal groups, SSYS-051 places the appearance
+  rows among them, and SSYS-051 records how this unit's older group names map onto them. The tunable quadrant layout behaviour retires
+  with the Quadrant layout (DL-181), and the Explain What Commands Do row retires from Interaction, because
+  explaining commands is the Teacher persona's job in the chat (D19). Shortcut discovery also shows the terminal's
+  keys and the keys a focused terminal gives back to the host (F3-640).
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible Terminal Settings groups and shortcut discovery controls.
 split_recommended: true
-depends_on: []
+depends_on: [DL-181, DL-183, SSYS-040, SSYS-051, F3-640]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Settings shows the terminal rows under SSYS-040's and SSYS-051's group names, with no quadrant layout row and no Explain What Commands Do row."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -11897,8 +11954,10 @@ preserved_exact_tokens:
 - "/shortcuts/behaviors"
 negative_constraints:
 - "Shortcut discovery prioritizes true terminal operations over layout-management and other app-level actions."
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- "The group names Appearance, Layout & Workspaces, Shell & Startup, Interaction and Diagnostics are this unit's earlier names; SSYS-051 maps them onto SSYS-040's groups."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181, DL-183): group names follow SSYS-040 and SSYS-051; the quadrant layout behaviour and the Explain What Commands Do row retire."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -15726,19 +15785,22 @@ canonical_text: >-
   Bounded terminal transcript or plain-log projections may use visible `VecModel`/`ListView`
   row windows; rapid output is throttled to max 30fps, rows are batched within 33ms, ring
   buffers stay in Rust, and high-volume output uses ring-buffer-backed `/virtualized`
-  projections so 4-split terminal panes keep layout ratios stable.
+  projections so the panels holding terminal tabs keep their proportions stable. Each terminal tab holds one
+  session (SMPFS-180); several terminals show at once only as several panels, as in the Terminals 2x2 layout
+  (F3-630), and the earlier 4-split terminal panes retire (DL-181).
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible terminal projection update bounds while preserving the live-core
   boundary.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181, SMPFS-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Four terminal tabs streaming high-volume output in four panels keep their panel proportions and stay within the 30fps and 33ms bounds."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -15752,6 +15814,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0128"
+- "Plans/Decision_Log.md#DL-181"
 preserved_exact_tokens:
 - "VecModel"
 - "ListView"
@@ -15764,7 +15827,8 @@ preserved_exact_tokens:
 - "4-split terminal panes"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): one session per terminal tab; the 4-split terminal panes this unit protected retire, and the rule now keeps the panels holding terminal tabs stable."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -17098,13 +17162,15 @@ canonical_text: >-
   account/server profile, pressure/switch records, MCP/skill records, `web_operation_payload`,
   terminal layout/session summaries, and `ssh_remotes/{id}`. The former
   `editor_unsaved_buffer.v1:{project_id}:{document_id}` token is source-lineage only; live
-  buffer recovery uses `editor_state.v1:{project_id}:{file_path_hash}`.
+  buffer recovery uses `editor_state.v1:{project_id}:{file_path_hash}`. Since DL-180 and DL-181,
+  `terminal_layout.v1:{project_id}` is a migration input only: terminal tabs and their panels are kept in the Home
+  layout record (SP-330) and the old sections and pane arrangement are read once (SP-332, F3-221).
 gui_related: true
 gui_classification_reason: >-
   This unit defines GUI preview, browser, recovery, LSP, account, MCP, skill, web-operation,
   terminal, and remote persistence keys.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181, SP-330, SP-332]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -17147,6 +17213,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "`editor_unsaved_buffer.v1:{project_id}:{document_id}` and wildcard `editor_unsaved_buffer.v1:*` are source-lineage only; they are not registered live write keys."
+- "Amended 2026-10-09 (DL-180, DL-181): `terminal_layout.v1:{project_id}` is a migration input only; terminal tabs and their panels persist in the Home layout record (SP-330) and the old sections and pane arrangement are read once (SP-332)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -17235,18 +17302,24 @@ canonical_text: >-
   Terminal GUI persistence imports the full storage-owned terminal key catalog, resolves
   wildcard audit shorthands to concrete key families, and treats GUI-facing
   `terminal_layout.v1` / `terminal_session.v1` rows as projection and compatibility summaries
-  only before claiming restore liveness.
+  only before claiming restore liveness. Since DL-180 and DL-181 SP-332 re-scopes that catalog: a terminal tab's
+  place is its tab record `terminal:<session>` in the Home layout record (SP-330), its appearance override lives in
+  the tab's serialized state (SP-331), the session record's view link is optional so a session survives every view
+  change, the workspace, section, workgroup and editor-terminal-panel families are read only as migration inputs, and
+  saved scrollback, its images included, is the terminal restore record's transcript chunks, kept and excluded as
+  SP-332 says.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves terminal GUI persistence compatibility and storage-owner boundaries.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181, SP-330, SP-331, SP-332]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Terminal tabs persist only through the Home layout record and the families SP-332 keeps; no terminal section, workgroup or editor-terminal-panel record is written after migration."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -17279,7 +17352,9 @@ negative_constraints:
 - "Restore and open/focus flows must resolve through the storage key catalog before claiming liveness."
 compatibility_only_notes:
 - "GUI-facing `terminal_layout.v1` / `terminal_session.v1` rows are projection and compatibility summaries only."
-stale_retired_dispositions: []
+- "`terminal_workspace_state`, `terminal_section_record`, `terminal_workgroup_record` and `editor_terminal_panel_state` are read-only migration inputs since DL-181 (SP-332)."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): the terminal key catalog is re-scoped by SP-332 for one session per tab; the Home layout record (SP-330) holds terminal tabs, and saved scrollback with its images is the restore record's transcript chunks."
 owner_boundary_notes:
 - "Plans/storage-plan.md owns the complete terminal key catalog."
 owner_hints:
@@ -17514,22 +17589,28 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Startup terminal restore reads `terminal_layout.v1:{project_id}` plus linked terminal
-  session and canonical terminal record families, preserves section/tab/pane identity before
-  liveness verification, prefers prior selected terminal containers, keeps structural restore
-  copy separate from live PTY proof, and treats deprecated `terminal_state:v1` as
-  compatibility input only.
+  Startup terminal restore brings back terminal tabs with the Home layout record (SP-330), each bound to its
+  session, preserves each terminal tab's identity before liveness verification, prefers the previously selected
+  terminal tab, keeps structural restore copy separate from live PTY proof, and reads
+  `terminal_layout.v1:{project_id}`, the linked terminal session and canonical terminal record families and the
+  section and pane families once as migration inputs (SP-332), with deprecated `terminal_state:v1` as compatibility
+  input only (DL-181). A restored terminal tab mounts when it is first shown (F3-635). If its session
+  survived, it shows that live session; if not, it loads its saved scrollback, draws the dim rule, starts a new
+  session in the same folder and shell profile and says so in its restored notice (F3-640, F3-645, SMPFS-180), and a
+  command that was running comes back ended and indeterminate, never done. That notice is the structural-restore
+  copy: the tab never presents itself as its earlier live session.
 gui_related: true
 gui_classification_reason: >-
   This unit constrains terminal startup restore and live-state claims.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181, SP-330, SP-332, F3-640]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "After a restart, every saved terminal tab is back in its panel; one whose session did not survive shows its saved scrollback, the dim rule and the restored notice above a new session in the same folder and profile."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -17561,9 +17642,12 @@ negative_constraints:
 - "Startup restore must not fall back to a default single-pane layout when durable terminal layout exists."
 - "Startup restore must not create new empty terminals automatically when saved terminal containers exist."
 - "Structural restore must not be presented as live PTY proof."
+- "A restored terminal tab must not present itself as its earlier live session, and startup restore must not add terminal tabs that were not saved."
 compatibility_only_notes:
 - "Deprecated `terminal_state:v1` may be ingested only by compatibility readers that rewrite into canonical terminal key families."
-stale_retired_dispositions: []
+- "Before DL-181 this unit read: Startup terminal restore reads `terminal_layout.v1:{project_id}` plus linked terminal session and canonical terminal record families, preserves section/tab/pane identity before liveness verification, prefers prior selected terminal containers, keeps structural restore copy separate from live PTY proof, and treats deprecated `terminal_state:v1` as compatibility input only."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): terminal sections and panes retire; terminal tabs restore with the Home layout record, and a tab whose session did not survive restores its saved scrollback above a new session that says so."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -17642,18 +17726,25 @@ canonical_text: >-
   historical terminal records, canonical recovery outcomes, workflow records, explicit
   historical banners, and privileged-session interrupted records; `docker exec/attach`,
   `kubectl exec`, and `kubectl port-forward` never auto-resume live attachment after crash or
-  restart.
+  restart. Since DL-181 the terminal workspace state it restores is the Home layout record's terminal tabs (SP-330),
+  terminal sections and panes being migration inputs only (SP-332). For a terminal tab whose session did not
+  survive, the explicit historical banner is F3-640's restored notice, an inline row above its saved scrollback, and
+  the tab starts a new session in the same folder and shell profile (the lead ruling in DL-181); a command that was
+  running comes back ended and indeterminate, never done, and is never run again. A terminal tab whose profile is
+  itself a privileged attachment (`docker exec/attach`, `kubectl exec`, `kubectl port-forward`) starts no new session
+  by itself: it restores as an `interrupted_session` with Reconnect / Start new session, as above.
 gui_related: true
 gui_classification_reason: >-
   This unit constrains terminal/dev-session recovery and privileged attach semantics.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181, SP-330, SP-332, F3-640]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "After a restart a terminal tab whose session ended shows the restored notice and a new session, its running command reads as ended with the earlier session, and a privileged-attachment tab waits for Reconnect / Start new session."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -17685,8 +17776,10 @@ preserved_exact_tokens:
 negative_constraints:
 - "Puppet Master MUST NOT fake live PTY continuity after restart."
 - "Privileged interactive sessions never `auto-resume` a live attachment after crash or restart."
+- "A restored terminal tab never re-runs a command that was running when its earlier session ended."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): terminal sections and panes leave the restored state; a terminal tab whose session did not survive gets F3-640's restored notice and a new session, except a privileged-attachment tab, which keeps the interrupted-session rule."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -18593,7 +18686,7 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-### F3-245 - Four Split Terminal Performance Risk
+### F3-245 - Many Visible Terminal Tabs Performance Risk
 
 ```yaml
 plan_unit_id: F3-245
@@ -18603,18 +18696,23 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The `4-split terminal performance` risk is mitigated as follows: Terminal panes use native
   screen/buffer state, diff painting, off-UI-thread PTY/buffer processing, bounded ring
-  buffers, one PTY per pane, bounded transcript projections, and max 30fps throttling.
+  buffers, one PTY per pane, bounded transcript projections, and max 30fps throttling. Since DL-181 the risk is
+  the performance of many visible terminal tabs: each terminal tab holds one session with one PTY and one bounded
+  ring buffer (SMPFS-180), several terminals show at once only as several panels (F3-630), a hidden terminal tab
+  stops its animation work (F3-635, F3-643), and there is no four-pane grid to budget for. The performance targets
+  for DL-035's own engine are Section 15's to set.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181, SMPFS-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Each visible terminal tab owns exactly one session and one PTY, and a hidden terminal tab draws no animation frames."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -18628,6 +18726,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+- "Plans/Decision_Log.md#DL-181"
 preserved_exact_tokens:
 - "4-split terminal performance"
 - "native screen/buffer state"
@@ -18639,7 +18738,9 @@ preserved_exact_tokens:
 - "max 30fps"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): the four-split risk becomes the risk of many visible terminal tabs, one session and one PTY per tab, with the same mitigations."
+- "Retitled 2026-10-09 (DL-181): the heading was 'Four Split Terminal Performance Risk' before terminal panes retired."
 owner_boundary_notes:
 - "The row remains part of the FinalGUISpec risk/mitigation matrix."
 owner_hints:
@@ -30144,16 +30245,19 @@ canonical_text: >-
   admits on the Skia GPU path only (F3-566). Effects the concept
   builds with mix-blend-mode or mask-composite, such as the glass pane sheen and gradient
   hairline rings, are either renderable natively by the toolkit or precomputed into baked
-  assets.
+  assets. The terminal adds no backdrop blur and takes no entry in this budget (DL-183): in Glass it draws its scheme
+  at 70 % (light) and 74 % (dark) opacity over the app shell's existing glass blur, and a terminal background
+  image's blur is baked once into the image (F3-642, F3-643).
 gui_related: true
 gui_classification_reason: This unit constrains how visible theme effects are produced so every variant renders on the Slint toolkit.
 split_recommended: false
-depends_on: [F3-426, F3-427, F3-430]
+depends_on: [F3-426, F3-427, F3-430, DL-183]
 unblocks: []
 acceptance_criteria:
 - "No color-mix() or alpha-scaling calc() color derivation survives to runtime; per-variant precomputed values replace them at build time."
 - "All theme fonts are bundled locally and cloudscapes are baked as pre-blurred bitmaps per background mode, with depth parallax layers baked separately."
 - "The backdrop-filter budget is closed at two glass blurs, three friendly blurs, two settings-modal blurs, and the DL-139 setup-popup sheet blur on the Skia GPU path, and no surface adds a blur outside that enumeration."
+- "No terminal tab draws a backdrop blur of its own; Glass terminals show the app shell's blur through their scheme's opacity."
 - "mix-blend-mode and mask-composite effects are renderable natively or precomputed into baked assets."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -30183,6 +30287,7 @@ compatibility_only_notes:
 - "Slint portability (updated for DL-139): this unit is the family-wide remediation contract. Blur, backdrop blur, masks, blend modes and filter effects are no longer banned for portability, because Puppet Master's Skia renderer extensions draw them (F3-582); this unit's closed backdrop-filter budget still limits backdrop blur. The note's other guidance (color math precomputed rather than runtime-mixed, and glass treatment as a single blur over a known wallpaper baked as a pre-blurred asset) remains a performance option."
 stale_retired_dispositions:
 - "DL-139 opens the closed budget by exactly one entry, the setup-popup sheet blur on the Skia GPU path, replacing the 2026-09-27 outcome of DL-114 that kept it closed."
+- "Amended 2026-10-09 (DL-183): the terminal's Glass look and its background images add no backdrop blur; the budget is not widened."
 owner_boundary_notes:
 - "The precomputed-color constraint phrasing aligns with PWIZ-019 in Plans/Planning_Wizard.md; that unit remains owner of the embedded-chat surface it constrains."
 owner_hints:
@@ -31866,19 +31971,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Terminal workgroups and individual terminals support user customization from terminal tab
-  context and customize menus: per-workgroup rename, per-terminal rename, an accent color
-  chosen from an 8-color swatch, and an icon chosen from a 20-icon catalog. Chosen names,
-  colors, and icons render on the corresponding workgroup and terminal tabs.
+  Renaming a terminal is the panel tab rename (`cmd.panel_tab.rename`, F3-631): from the tab's menu the user sets a
+  label that replaces the terminal's own label (F3-640) until it is cleared. Workgroups retire, and workgroup rename
+  with them (DL-181). The 8-color accent swatch and the 20-icon catalog are not drawn on the redesigned strip, which
+  marks a tab only with its silhouette and the one mark set (F3-631, DL-141), and no colour is ever drawn on a tab as
+  a coloured border or stripe (DR-069).
 gui_related: true
 gui_classification_reason: This unit defines visible terminal tab rename, color, and icon customization controls.
 split_recommended: false
-depends_on: [F3-062, F3-063]
+depends_on: [DL-181, F3-640, F3-631]
 unblocks: []
 acceptance_criteria:
-- "Workgroups and terminals can each be renamed from their tab context or customize menus."
-- "The accent swatch offers exactly 8 colors and the icon catalog offers exactly 20 icons."
-- "Chosen names, colors, and icons render on the corresponding workgroup and terminal tabs."
+- "A terminal tab can be renamed from its tab menu through cmd.panel_tab.rename, and clearing the label restores the terminal's own label."
+- "No workgroup rename, accent swatch or icon catalog is drawn for terminal tabs, and no tab colour is drawn as a coloured border or stripe."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -31902,7 +32007,9 @@ negative_constraints:
 - "Do not expose customization through hidden gestures only; the tab context or customize menu is the canonical entry point."
 compatibility_only_notes:
 - "Slint portability: context and customize menus render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+- "Earlier text, lineage only: Terminal workgroups and individual terminals support user customization from terminal tab context and customize menus: per-workgroup rename, per-terminal rename, an accent color chosen from an 8-color swatch, and an icon chosen from a 20-icon catalog. Chosen names, colors, and icons render on the corresponding workgroup and terminal tabs."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): workgroup rename retires, terminal rename becomes the panel tab rename, and the accent swatch and icon catalog are not drawn on the strip."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -31913,16 +32020,22 @@ owner_hints:
 ```yaml
 plan_unit_id: F3-450
 unit_type: constraint
-status: accepted
+status: superseded
 owner_doc: Plans/FinalGUISpec.md
+superseded_by: F3-640
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The four-pane cap and the 2x2 grid inside
+  a terminal workgroup section retire: a terminal tab holds one session and no panes, Split opens a new panel by the
+  panels' split fit rule, and four terminals side by side are the Terminals 2x2 named layout of four panels (F3-630,
+  SMPFS-180). The text below is retained verbatim for lineage and audit and must not be accepted or indexed as
+  active current-product truth. Superseded by F3-640 (DL-181).
   A terminal workgroup section holds at most 4 leaf panes, arranged in a 2x2 grid at
   capacity. When a section is at the 4-pane cap, split affordances render disabled with a
   visible reason instead of disappearing or failing silently.
 gui_related: true
 gui_classification_reason: This unit constrains visible terminal split layout and split affordance states.
 split_recommended: false
-depends_on: [F3-063]
+depends_on: [F3-063, DL-181]
 unblocks: []
 acceptance_criteria:
 - "No split action can create a fifth pane in a terminal workgroup section."
@@ -31950,7 +32063,8 @@ negative_constraints:
 - "Split affordances must not silently no-op or disappear at the pane cap; they disable with a reason."
 compatibility_only_notes:
 - "Slint portability: disabled split affordances and their reason presentation render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Superseded 2026-10-09 (DL-181): one session per tab and no splits inside a terminal; the four-section and four-pane caps retire, and Terminals 2x2 is a named layout of four panels."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -37446,7 +37560,9 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Settings_Sys
 
 ## DL-035 terminal research consumer planning - 2026-09-09
 
-DL-035 authorizes P3–P10 planning under the PM-owned terminal engine and host direction. The following consumers use Section15 SMPFS-158 through SMPFS-165; they do not re-own parsing, host selection, output truth, commands or durable storage. Existing native terminal layout, accessible focus/input, selection, output-read and command-palette parity contracts remain in force. No change to the current visual style, pane topology or Settings manager kit is implied. Unknown capabilities and missing native/platform evidence remain explicitly unavailable, degraded or not_run. Accepted planning is not implementation or shipping acceptance.
+Amended 2026-10-09 (DL-181): the terminal's look and topology have changed since these consumers were written. A terminal is one session per tab in the universal panels (F3-640 to F3-646, SMPFS-180) with the appearance of DL-183, and the P3 to P10 behaviours below carry over unchanged into the terminal tab; F3-544's image sentence gives way to DL-182 (SMPFS-181, F3-645), and F3-546 and F3-549 now speak of the terminal tab where they said pane.
+
+DL-035 authorizes P3–P10 planning under the PM-owned terminal engine and host direction. The following consumers use Section15 SMPFS-158 through SMPFS-165; they do not re-own parsing, host selection, output truth, commands or durable storage. Existing native terminal layout, accessible focus/input, selection, output-read and command-palette parity contracts remain in force. No change to the Settings manager kit is implied; the current visual style and pane topology this sentence also kept are changed by DL-181 to DL-183. Unknown capabilities and missing native/platform evidence remain explicitly unavailable, degraded or not_run. Accepted planning is not implementation or shipping acceptance.
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-035, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Automated_Testing_System.md#ATS-047
 
@@ -37461,7 +37577,7 @@ canonical_text: Terminal, Chat and Output project owner-qualified enhanced keybo
   and provider snapshot continuity truth. Requested keyboard capability is distinct from tested effective capability;
   richer prompt metadata cannot invent authoritative command boundaries. Provider output displays append, complete
   snapshot, rolling/truncated snapshot or final-result semantics consistently, without presenting rewritten previews
-  as an exact transcript.
+  as an exact transcript. Image protocols are not this consumer's to approve; DL-182 decides them (SMPFS-181, F3-645).
 gui_related: true
 gui_classification_reason: Visible terminal capability, action, settings, accessibility or projection acceptance
   is directly specified.
@@ -37471,6 +37587,7 @@ depends_on:
 - SMPFS-159
 - SMPFS-160
 - F3-360
+- DL-182
 unblocks: []
 acceptance_criteria:
 - P3 shows the requested/effective versioned keyboard profile and an actionable unsupported/degraded reason when
@@ -37504,9 +37621,12 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0006
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0007
 negative_constraints:
-- No image protocol, provider integration, additional environment collection, multiple-snapshot retention policy
-  or terminal reference-code reuse is approved by this consumer.
+- No provider integration, additional environment collection, multiple-snapshot retention policy or terminal
+  reference-code reuse is approved by this consumer; image protocols are approved by DL-182, not by this consumer
+  (SMPFS-181, F3-645).
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-182): the earlier constraint read 'No image protocol, provider integration, additional environment collection, multiple-snapshot retention policy or terminal reference-code reuse is approved by this consumer.'; images are no longer excluded, because DL-182 approves kitty graphics, sixel and iTerm2 images (SMPFS-181, F3-645)."
 ```
 
 ### F3-545 - Explicit Remote Terminal Compatibility Setup
@@ -37562,14 +37682,15 @@ negative_constraints:
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
 ```
 
-### F3-546 - Pane Local Advisory Command Progress
+### F3-546 - Tab Local Advisory Command Progress
 
 ```yaml
 plan_unit_id: F3-546
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: OSC 9;4 projects pane-local advisory command progress using the Section15 attribution and deterministic
+canonical_text: OSC 9;4 projects tab-local advisory command progress (pane-local before DL-181; now inside the terminal
+  tab that owns the session, F3-641) using the Section15 attribution and deterministic
   notification-collision rule. The visible and accessible state distinguishes advisory progress from independently
   known command execution outcome; it supplies no command, Goal or work-record completion authority.
 gui_related: true
@@ -37579,6 +37700,7 @@ split_recommended: false
 depends_on:
 - SMPFS-162
 - SMPFS-023
+- DL-181
 unblocks: []
 acceptance_criteria:
 - Progress is scoped to the exact session and to a command only when authoritative boundaries support that association.
@@ -37608,6 +37730,9 @@ source_lineage:
 negative_constraints:
 - No taskbar/dock aggregation, new notification semantics or progress-derived lifecycle authority is included.
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): the progress is scoped to the terminal tab that owns the session, since a terminal no longer has panes."
+- "Retitled 2026-10-09 (DL-181): the heading was 'Pane Local Advisory Command Progress' before terminal panes retired."
 ```
 
 ### F3-547 - Safe Command Insertion And Retained Output Editor Actions
@@ -37722,7 +37847,7 @@ negative_constraints:
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
 ```
 
-### F3-549 - Explicit Live Pane Input Protection
+### F3-549 - Explicit Live Terminal Tab Input Protection
 
 ```yaml
 plan_unit_id: F3-549
@@ -37733,6 +37858,9 @@ canonical_text: A live terminal pane offers explicit idempotent enable/disable i
   accessible protected state while output continues. Protection is distinct from historical review, process suspension
   and session termination; unlock retains the exact live session. Protection is retained for the same verified live
   session across reconnect and PM reopen; a replacement session starts unlocked. DL-038 protection covers user and agent input, with explicit blocked results for agents.
+  Since DL-181 the live terminal pane is the terminal tab, which holds one session in the panels' split tree (F3-640);
+  moving, collapsing, maximizing or hiding the tab keeps the session and its protection, and protection also blocks
+  an agent that holds Allow in this terminal (F3-646).
 gui_related: true
 gui_classification_reason: Visible terminal capability, action, settings, accessibility or projection acceptance
   is directly specified.
@@ -37744,6 +37872,7 @@ depends_on:
 - UCC-160
 - WM-052
 - UIW-021
+- DL-181
 unblocks: []
 acceptance_criteria:
 - Use cmd.terminal.input_protection.enable and cmd.terminal.input_protection.disable; do not substitute a non-idempotent
@@ -37776,8 +37905,12 @@ source_lineage:
 - Plans/Decision_Log.md#DL-035
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0012
 negative_constraints:
-- No arbitrary pane trees, group or zoom features are introduced; protection cannot transfer as a pane preference to a replacement session or imply agent bypass.
+- This unit adds no split, group or zoom of its own (terminal tabs live one session per tab in the panels' split tree,
+  F3-630 and F3-640); protection cannot transfer as a pane preference to a replacement session or imply agent bypass.
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): the clause 'No arbitrary pane trees, group or zoom features are introduced' is superseded by one session per tab in the panels' split tree, whose maximize is the panels' own; the input protection rules are kept unchanged."
+- "Retitled 2026-10-09 (DL-181): the heading was 'Explicit Live Pane Input Protection' before terminal panes retired."
 ```
 
 
@@ -42679,3 +42812,721 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-163, ContractName:Plans/FinalGUISpec.md#F3-623, ContractName:Plans/Jujutsu_Integration.md#JJI-003, ContractName:Plans/Jujutsu_Integration.md#JJI-012, ContractName:Plans/Jujutsu_Integration.md#JJI-014, ContractName:Plans/Jujutsu_Integration.md#JJI-019, ContractName:Plans/Decision_Log.md#DL-057
+
+## DL-181 to DL-183 — The Terminal As A Tab: Chrome, Features, Appearance, Effects, Fonts, Images And Agents (2026-10-09)
+
+This addendum compiles the owner decisions DL-181 (the terminal rebuilt as one session per tab, its chrome, what it helps you do, and agents and people sharing a terminal), DL-182 (images) and DL-183 (schemes, backgrounds, effects and fonts), with the lead rulings those cards record. The terminal is one tab kind of F3-635 and lives in the panels of F3-630; its session model is `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`, and its engine stays DL-035's own (SMPFS-184). The units below own the terminal tab's presentation only. They supersede F3-062 (the bottom runtime workgroup strip) and F3-450 (the four-pane split guard), and retire the workgroup, sub-tab and editor-terminal-stack parts of F3-063 and F3-064, Appendix B's locked decision 12, the section 16 "4-split terminal" mapping and section 7.4.1's quadrant and explanations wording. They amend F3-065, F3-083, F3-120, F3-121, F3-194, F3-221, F3-226, F3-228, F3-245, F3-431, F3-449, F3-544, F3-546, F3-549 and the DL-035 consumer preamble. F3-193, F3-216, F3-238, F3-249, F3-357 to F3-361, F3-372, F3-412 to F3-416, F3-545, F3-547, F3-548, F3-582 and F3-583 stand unchanged. The rules stay with their owners: SMPFS-181 (image protocols, hardening and quotas), SMPFS-182 (agents and people), SMPFS-183 (marks, links, find, copy mode, progress, the bell, IME and the accessible buffer), SP-331 and SP-332 (storage), SSYS-051 (the Settings rows), UCC-201 (the commands) and DR-068 (one appearance model). General code text across the app stays with DL-161, F3-426 and F3-430. The terminal concept (branch `concept/home-terminal-20261009`, its SPEC and its architecture) is source lineage only: its class names, data attributes, script globals, settings keys, storage keys and harness hooks are not canon.
+
+### F3-640 — The Terminal Tab's Chrome
+
+```yaml
+plan_unit_id: F3-640
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  A terminal is one tab kind of F3-635 with one session per tab (DL-181, SMPFS-180): the terminal kind mints the
+  session, the tab id is `terminal:<session>`, and moving, collapsing, maximizing or hiding the tab never touches its
+  session. There are no splits, sections, workgroups or sub-tabs inside a terminal. Split opens a new panel beside
+  this one holding a new terminal in the same folder and shell profile (`cmd.workspace_layout.split` with a terminal
+  spec), placed by F3-630's split fit rule; the More menu adds Split down. The tab label is `<process> · <folder>`:
+  the foreground program, else `ssh` inside an SSH session, else the shell's name, then the last component of the
+  folder. A failed last command adds its exit code after the label, a terminal an agent is driving shows the 7 px
+  square agent mark, and a running process shows the static busy mark, all from the strip's one mark set (F3-631,
+  DL-141). The hover tag is the label, plus "(ended)" once the session has ended and "· <agent> is driving" while an
+  agent drives it. A label the user sets with `cmd.panel_tab.rename` replaces the label until it is cleared. Under the
+  strip the tab draws F3-635's shared header row with no terminal-specific thresholds: 30 px tall, 24 px targets,
+  12 px text and 11 px for secondary facts, labels when the tab body is at least 520 px wide and icons with hover tags
+  below that, and the row hidden when the body is under 150 px tall. Its left side shows the folder in the code face
+  with `~` for home, the branch when the folder is in a repository, and, only while a command runs, that command cut
+  at 48 characters with an ellipsis (the full text in its hover tag) and its elapsed time as `m:ss`. Its right side
+  shows Find, Split, Maximize (Restore while maximized; `ui.workspace_layout.maximize`) and More. Nothing is drawn
+  below the screen: there is no bottom bar. No session id, tab id or nonce ever appears as text. Notices are inline
+  rows above the screen, never modals: at least 30 px tall, with 12 px text and 24 px text buttons, a warning shown as
+  a tinted surface and never as a side stripe. An ended session shows the row "Session ended" (with "with exit code
+  N" when the code is not zero), Restart and Close tab, and dims the screen to 72 % opacity; Enter in an ended
+  terminal restarts it. Closing a terminal whose process still runs asks inline, through the kind's close check:
+  "Close this terminal? <process> is still running and will be stopped.", with Close terminal and Keep it open. A tab
+  with no live session (restored after a restart or a reload, or a closed tab reopened) loads its saved scrollback
+  before its new session starts (F3-645, SP-332), draws the dim rule `── Restored <time> · the earlier session ended ──`
+  above the new prompt, starts a new session in the same folder and shell profile, never presents itself as the old
+  session (F3-226, F3-228), and says so: "This terminal was restored with its scrollback (N images were not kept).
+  Its earlier session ended when the page reloaded; this is a new session.", the parenthesis shown only when images
+  were dropped, and for a reopened tab "This terminal was reopened with its scrollback" with "Its earlier session
+  ended when the tab closed; this is a new session.". A command still running when the earlier session ended comes
+  back ended and indeterminate, "ended with the earlier session", never as done. When the saved scrollback cannot be
+  loaded within its load budget (SP-332), the tab starts without it and says so. The gutter is 20 px wide (18 px
+  when the body is under 400 px wide) and draws one 12 px glyph per prompt line with a 20 x 24 px hit target, never
+  a stripe (F3-641). The scrollbar is 14 px wide (10 px when the body is under 400 px wide) and speaks the editor
+  minimap's language: a viewport box with a 2 px radius and a 1 px border, command marks 55 % of the track wide in a
+  neutral tone, failed commands the full width in the failure colour, find matches 45 % wide in the search colour
+  and the current match in the link colour; marks widen on hover. The sticky command header: when the top of the
+  view is inside a command's output, a one-line header one cell plus 8 px tall shows that command's prompt line and
+  its state (Running, Exit 0, Exit N), and clicking it jumps to the command; it hides when the body is under 150 px
+  tall and in the alternate screen. The More menu, in order: New terminal (a submenu of the shell profiles and SSH
+  hosts), Split down, a hairline, Appearance..., Text size (Bigger, Smaller, Reset), a hairline, Copy mode, Quick
+  select, Select all, Clear, Clear scrollback, Plain-text buffer, a hairline, Agent input (Ask each time, then one
+  row per agent allowed in this terminal, each of which revokes that agent's grant), Send signal (Interrupt SIGINT,
+  Terminate SIGTERM, Kill SIGKILL), Restart session. The screen's context menu opens on a right click, or a
+  Shift+right click while a program reports the mouse: Open in editor and Copy path on a file reference, Open link
+  and Copy link on a URL, then Copy, Paste, Select all, Find and Clear. The command-mark menu opens on a click on a
+  gutter glyph: a header row with the command, its state, its duration and who typed it ("You typed this" or
+  "<agent> typed this"), then Copy command, Copy output, Rerun, Insert command (without Enter), Open output in an
+  editor tab and Select output. Every menu opens in the one overlay root (DR-067). Keys while a terminal has focus,
+  macOS in brackets: Find Ctrl+Shift+F (Cmd+F), and in the find bar Enter for the previous match (upward),
+  Shift+Enter for the next, Alt+C case, Alt+W whole word, Alt+R regular expression and Esc to close; Copy and Paste
+  Ctrl+Shift+C and Ctrl+Shift+V (Cmd+C, Cmd+V); Select all (Cmd+A), from the menu on other platforms; previous and
+  next command Ctrl+Up and Ctrl+Down (Cmd+Up, Cmd+Down); a page Shift+PageUp and Shift+PageDown; top and bottom
+  Ctrl+Shift+Home and Ctrl+Shift+End (Cmd+Home, Cmd+End); Copy mode Ctrl+Shift+X (Cmd+Shift+X); Quick select
+  Ctrl+Shift+E (Cmd+Shift+E); the plain-text buffer Alt+F2; text size Ctrl+=, Ctrl+- and Ctrl+0 (Cmd+=, Cmd+-,
+  Cmd+0); Clear Ctrl+Shift+K (Cmd+K); Split Ctrl+Shift+5 (Cmd+D). A focused terminal gives these keys back to the
+  host (F3-635): Alt+1..9, Alt+Shift+1..9, Alt+arrows, Alt+Shift+arrows, Ctrl+PageUp and Ctrl+PageDown,
+  Ctrl+Shift+PageUp and Ctrl+Shift+PageDown, Ctrl+\ and Ctrl+Shift+\, Shift+Escape, F6 and Shift+F6,
+  Ctrl+Shift+Space, Ctrl+Shift+`, Ctrl+Tab, and in a browser the stand-ins Alt+T, Alt+W, Alt+Shift+T and Alt+`. The
+  shell therefore loses zsh's Alt+digit arguments, Alt+arrow word moves (Ctrl+Left and Ctrl+Right still move by
+  word), Alt+T and Alt+W, and a program that needs Ctrl+\ (SIGQUIT) gets it from Send signal; every other Ctrl+key
+  belongs to the shell. Split dispatches `cmd.workspace_layout.split` with a terminal spec and Clear scrollback
+  `cmd.terminal.clear_scrollback`; Appearance... opens the Appearance popover (F3-642); Find, Copy mode, Quick
+  select, Plain-text buffer and Text size are the typed local actions `ui.terminal.find`, `ui.terminal.copy_mode`,
+  `ui.terminal.quick_select`, `ui.terminal.a11y_buffer` and `ui.terminal.zoom`; the command-mark items are
+  `ui.terminal.mark.copy_command`, `ui.terminal.mark.copy_output`, `ui.terminal.mark.rerun` (which dispatches the
+  catalogue's rerun command), `ui.terminal.mark.insert` and `ui.terminal.mark.open_output` (which dispatches
+  `cmd.panel_tab.open` with an editor buffer); the agent controls are F3-646's; New terminal, Select all, Clear, Send
+  signal and Restart session map to the ids UCC-201 records. Restart and Restart session start a new session in the
+  same tab by the explicit replacement of F3-548, Copy and Paste follow F3-238's clipboard rules, and the screen is
+  the terminal core's own grid (F3-193, F3-216). The header row's buttons are the hover engine's icon kind, a static
+  tint only, and the screen is never a hover target (DR-059, F3-465).
+gui_related: true
+gui_classification_reason: Defines the terminal tab's label, header row, notices, gutter, scrollbar, sticky header, menus and keys in the universal panels.
+split_recommended: false
+depends_on: [DL-181, F3-635, F3-630, F3-631, F3-634, SMPFS-180, SMPFS-183, DR-067]
+unblocks: [F3-641, F3-646, UCC-201, ATS-076]
+acceptance_criteria:
+  - "Every terminal tab holds one session; Split opens a new panel with a new terminal in the same folder and shell profile, and no terminal tab draws a split, section, workgroup, sub-tab or bottom bar."
+  - "The tab label reads `<process> · <folder>` by the rule above, shows the exit code of a failed last command and the square agent mark while an agent drives it, and its hover tag adds \"(ended)\" and \"· <agent> is driving\" when they apply."
+  - "The header row is F3-635's shared row with the folder, branch and, while a command runs, the command cut at 48 characters and its `m:ss` time on the left, and Find, Split, Maximize or Restore, and More on the right."
+  - "At body widths of 399 and 400 px the gutter is 18 and 20 px and the scrollbar 10 and 14 px wide; below 150 px of body height the header row and the sticky command header are hidden."
+  - "An ended session shows \"Session ended\" with Restart and Close tab and dims the screen to 72 %; closing a running terminal asks \"Close this terminal? <process> is still running and will be stopped.\" inline."
+  - "A restored or reopened terminal shows its saved scrollback, the dim rule and the restored notice above a new session in the same folder and profile, and a command that was running reads \"ended with the earlier session\"."
+  - "The More, context and command-mark menus show exactly the items above in that order, and every menu opens in the one overlay root."
+  - "Each key above does its action in a focused terminal, each key in the given-back list reaches the host, and every other Ctrl+key reaches the shell."
+  - "No session id, tab id or nonce appears as text, and no notice is a modal or carries a coloured side stripe."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-181"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D11, D12)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 1 to 3 and 7 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9, sections 3 to 5 and 9 (concept lineage only)"
+preserved_exact_tokens:
+  - "terminal:<session>"
+  - "<process> · <folder>"
+  - "Session ended"
+  - "Close this terminal? <process> is still running and will be stopped."
+  - "Keep it open"
+  - "This terminal was restored with its scrollback"
+  - "ended with the earlier session"
+  - "Plain-text buffer"
+  - "Agent input"
+  - "Send signal"
+  - "Restart session"
+  - "You typed this"
+  - "Insert command (without Enter)"
+  - "Open output in an editor tab"
+  - "ui.terminal.find"
+  - "cmd.terminal.clear_scrollback"
+negative_constraints:
+  - "Do not draw a bottom bar, an in-tab split, a section, a workgroup or a sub-tab in a terminal tab."
+  - "Do not show a session id, tab id or nonce as text."
+  - "Do not present a restored or reopened terminal as its earlier live session."
+  - "Do not draw a notice as a modal or with a coloured side stripe."
+  - "Do not keep a key from the given-back list in the terminal, or take any other Ctrl+key from the shell."
+compatibility_only_notes:
+  - "The concept's kind registration, its script globals, its class and data-attribute prefixes and its terminal settings keys are lineage only; the concept's example profiles (zsh, bash, pwsh and one SSH host) and the agent name in its mark menu are demo data."
+stale_retired_dispositions:
+  - "Supersedes F3-062's bottom runtime workgroup strip and F3-450's four-pane split guard, and retires the workgroup, sub-tab and editor-terminal-stack parts of F3-063 and F3-064 (DL-181)."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/UI_Command_Catalog.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, ContractName:Plans/UI_Command_Catalog.md#UCC-201, ContractName:Plans/DRY_Rules.md#DR-067
+
+### F3-641 — What The Terminal Helps You Do
+
+```yaml
+plan_unit_id: F3-641
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The terminal tab (F3-640) helps around commands (DL-181). The engine side, shell integration with its per-terminal
+  secret, command records, OSC 8 links, OSC 7, OSC 9;4, the bell and notifications, copy mode, quick select, IME and
+  the accessible buffer, is `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183`; only a mark that carries the
+  terminal's secret becomes a command boundary, and any other mark is plain output. Command marks: each prompt line
+  gets one glyph in the gutter, never a stripe, showing its command's state (running, exit 0, exit N, or ended with
+  the earlier session), and a command an agent typed shows the agent's square mark in the gutter. A click on the
+  glyph opens the command-mark menu (F3-640), whose header names who typed the command from its `by` record ("You
+  typed this" or "<agent> typed this"). Copy command and Copy output copy; Rerun dispatches the catalogue's rerun
+  command (F3-360); Insert command puts the command line at the prompt without Enter and executes nothing (F3-547);
+  Open output in an editor tab opens the output as an editor buffer, never a preview; Select output selects it. The
+  sticky command header (F3-640) names the command you are scrolled into, and Ctrl+Up and Ctrl+Down (Cmd+Up,
+  Cmd+Down) jump to the previous and next command. Links: `path:line:col` references, file paths, URLs and OSC 8
+  hyperlinks are links. A plain click selects text, as in every terminal. Ctrl+click (Cmd+click) is the terminal's
+  single click on a link: on a file reference it opens the panel's preview tab at that line and column by F3-634's
+  rule, a Ctrl+double-click keeps that tab, and Ctrl+Alt+click opens it in a new panel; on a URL it opens a Browser
+  tab placed by F3-634. Find (Ctrl+Shift+F, Cmd+F) opens a find bar inside the tab with case, whole word and regular
+  expression switches, highlights every match, and puts the matches and the current match on the scrollbar beside
+  the command and failure marks (F3-640). Copy mode (Ctrl+Shift+X) moves a keyboard cursor through the screen and
+  the scrollback with the arrows or h j k l, w b e, 0 $, g G, PageUp and PageDown or Ctrl+U and Ctrl+D, selects with
+  v, V (lines) or Ctrl+V (a block), copies and leaves with y or Enter, finds with /, and leaves with Esc or q. Quick
+  select (Ctrl+Shift+E) puts short labels over the URLs, paths, hashes and IP addresses in view: typing a label
+  copies its text, Shift with the label inserts it at the prompt, Alt with the label opens it, and Esc cancels.
+  Terminals you are not in are dimmed by their look (F3-643). Progress a program reports with OSC 9;4 shows inside
+  its own tab as advisory progress that completes nothing (F3-546). The visual bell, when the bell setting asks for
+  it, flashes the tab in its look's form (F3-643), and the attention it raises follows SMPFS-183. Input methods
+  (IME) work at the prompt (SMPFS-183). The plain-text buffer (Alt+F2, or More, Plain-text buffer) shows the screen
+  and the scrollback as plain text for screen readers; Ctrl+Up and Ctrl+Down move between commands and Esc returns
+  to the screen; images read as their text descriptions (F3-645). There is no AI feature in the terminal: no explain,
+  fix, suggest or ask action and no inline completion; explaining commands is the Teacher persona's job in the chat
+  (D19, SMPFS-180), and the terminal stays a user shell and agent surface, not Puppet Master's control plane (F3-413).
+gui_related: true
+gui_classification_reason: Defines the visible command marks, links, find, copy mode, quick select, progress, bell and accessible buffer of the terminal tab.
+split_recommended: false
+depends_on: [DL-181, F3-640, F3-634, F3-546, F3-547, SMPFS-183, SMPFS-180]
+unblocks: [ATS-076]
+acceptance_criteria:
+  - "Every prompt line with a verified mark has one gutter glyph showing its command's state, no mark is drawn as a stripe, and a mark without the terminal's secret creates no glyph."
+  - "The command-mark menu names who typed the command, Insert command sends no Enter, and Open output in an editor tab opens a buffer, never a preview."
+  - "A plain click on a link selects text; Ctrl+click (Cmd+click) on a `path:line:col` reference opens the panel's preview tab at that line and column, Ctrl+double-click keeps it, Ctrl+Alt+click opens a new panel, and a URL opens a Browser tab."
+  - "Find supports case, whole word and regular expressions, highlights every match and marks the matches on the scrollbar."
+  - "Copy mode and quick select work with the keys above and leave with Esc."
+  - "The plain-text buffer opens with Alt+F2, moves between commands with Ctrl+Up and Ctrl+Down, and reads images as their text descriptions."
+  - "No explain, fix, suggest or ask action and no inline completion appears anywhere in the terminal tab."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-181"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D7, D13, D19)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 1 to 3 and 8 (concept lineage only)"
+preserved_exact_tokens:
+  - "path:line:col"
+  - "OSC 9;4"
+  - "Ctrl+Alt+click"
+  - "Copy mode"
+  - "Quick select"
+  - "plain-text buffer"
+negative_constraints:
+  - "Do not draw a command mark as a stripe or treat a mark without the terminal's secret as a boundary."
+  - "Do not open a link on a plain click; a plain click selects."
+  - "Do not add an AI action or an inline completion to the terminal."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-546, ContractName:Plans/FinalGUISpec.md#F3-547
+
+### F3-642 — The Terminal's Appearance
+
+```yaml
+plan_unit_id: F3-642
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The terminal's appearance is one layered model (DL-183, DR-068), resolved field by field: the look's defaults
+  ("Follow theme") under the app default (Settings > Terminal, SSYS-051) under the project default (written only from
+  Settings, in the Project's settings) under this tab's override; a field left unset falls through to the layer
+  below. Every field applies live, and no terminal appearance setting carries a restart badge; the terminal draws its
+  own glyphs (DL-035), so section 6.4's restart rule for the app's font families does not reach it. "Follow theme"
+  resolves per look, light and dark: Friendly Catppuccin Latte and Mocha; Glass Tokyo Night Day and Storm, drawn at
+  70 % (light) and 74 % (dark) opacity over the shell's existing glass blur, the terminal adding no backdrop blur of
+  its own (F3-431); Retro PM Paper Teletype and PM Phosphor Green, with PM Phosphor Amber as Phosphor Green's
+  sibling; Basic One Half Light and Dark; NieR Mode PM YoRHa Parchment and PM YoRHa Ink. Thirty-four schemes ship: 27
+  third-party schemes in 13 families, each read from the project's own terminal port pinned to a commit, and 7 Puppet
+  Master originals. Puppet Master originals: PM Phosphor Green, PM Phosphor Amber, PM Paper Teletype, PM YoRHa
+  Parchment, PM YoRHa Ink, PM High Contrast Light, PM High Contrast Dark. Catppuccin (MIT): Latte, Frappé, Macchiato,
+  Mocha. Tokyo Night (Apache-2.0): Day, Storm, Night. One Half (MIT): Light, Dark. Rosé Pine (MIT): Dawn, Moon,
+  Main. Solarized (MIT): Light, Dark. Gruvbox (MIT): Light, Dark. Dracula (MIT): Dark. Nord (MIT): Dark. Kanagawa
+  (MIT): Wave, Lotus. Everforest (MIT): Light, Dark. Flexoki (MIT): Light, Dark. GitHub (MIT): Light, Dark. Ayu
+  (MIT): Mirage. Every third-party scheme ships with its licence text and its source address and SHA-256; the
+  iTerm2-Color-Schemes collection (no single licence) and Modus (GPL-3.0) are not bundled, and import covers them.
+  "Switch with light and dark", on by default, swaps a chosen scheme for its family's other appearance when the app
+  changes between light and dark. A minimum-contrast floor applies per cell to the text colour against its cell
+  background by moving OKLab lightness only, keeping hue and chroma: default 4.5:1, with the choices Off, 3:1, 4.5:1
+  and 7:1; block elements, powerline and sextant glyphs are exempt, because they are shapes that meet their
+  neighbours, and a selection uses the scheme's selection text colour. Import reads iTerm2 `.itermcolors`, Windows
+  Terminal JSON (one scheme, or a settings file's list of schemes), kitty `.conf`, Ghostty themes, Alacritty TOML and
+  its legacy YAML, base16 and base24 YAML, and Xresources; input is capped at 256 KB, nothing in a file is evaluated,
+  and every error message is fixed and never echoes the file. The fields and their defaults: scheme (Follow theme,
+  or a scheme); Switch with light and dark (on); minimum contrast (4.5:1); font (Follow theme, JetBrains Mono,
+  Atkinson Hyperlegible Mono, VT323, Departure Mono, Sixtyfour, Sixtyfour Raster or the system monospace; F3-644);
+  font size and line height (the face's defaults, F3-644); weight (400); letter spacing (0); ligatures (on); bold as bright (off); cursor
+  shape (Follow theme, block, bar or underline); cursor blink (on); cursor trail (Follow theme, off, soft, glow,
+  phosphor or trace); background (Follow theme, theme surface, solid colour, gradient or image) with its colour, its
+  gradient (dusk, dawn, deep or paper), its image (hills, grid, paper or a custom image), image dim (0.45) and image
+  blur (0 px, baked once into the image and never a backdrop blur); opacity (Glass); padding (8 px across, the
+  vertical padding 60 % of it); effects (Follow theme, off or custom) with the effect fields of F3-643; inactive
+  dimming; smooth scrolling; bell (Follow theme, visual or off); sticky header (on); copy on select (off); and
+  Sixtyfour's scan and bleed axes. Cell geometry: a cell is a whole number of device pixels, its width
+  round((advance + letter spacing) x device pixel ratio) and its height round(font size in px x line height x device
+  pixel ratio), never less than 90 % of the font's ascent plus descent, with the baseline centred; the padding is
+  painted in the cell background, so the remainder smaller than a cell never shows as a stripe. The Appearance
+  popover (More, Appearance...) previews every change live on the terminal and writes either This terminal (the
+  tab's override) or All terminals (the app default, through the Settings transaction over SSYS-051's rows); it
+  commits with `cmd.terminal.appearance.set` (UCC-201). Settings > Terminal binds the same model with the same fields
+  (SSYS-051) and is the only writer of the project layer. The app and project layers are Settings values and the
+  tab's override lives in the terminal tab's serialized state; a custom background image is kept as SP-331 says.
+  There is one model: the look's defaults, the popover and Settings read and write it, and no second terminal theme
+  or font store exists (DR-068).
+gui_related: true
+gui_classification_reason: Defines the terminal's visible schemes, contrast floor, import, appearance fields, cell geometry and Appearance popover.
+split_recommended: false
+depends_on: [DL-183, F3-640, F3-431, DR-068, SSYS-051, SP-331]
+unblocks: [F3-643, F3-644, UCC-201, ATS-076]
+acceptance_criteria:
+  - "Every field resolves tab override, then project default, then app default, then the look's default, and an unset field falls through."
+  - "Each look's Follow theme scheme is the one listed for its light and dark variant, and Glass draws its scheme at 70 % and 74 % opacity with no backdrop blur of the terminal's own."
+  - "Exactly the 34 schemes listed ship, each third-party scheme with its licence and source record, and the iTerm2-Color-Schemes collection and Modus are not bundled."
+  - "The minimum-contrast floor defaults to 4.5:1, offers Off, 3:1, 4.5:1 and 7:1, changes only OKLab lightness, and leaves block, powerline and sextant glyphs alone."
+  - "Import accepts the seven formats listed, refuses input over 256 KB, evaluates nothing and shows fixed errors that never echo the file."
+  - "Every field changes the terminal at once, from the popover and from Settings, and no terminal appearance setting shows a restart badge."
+  - "Cells are whole device pixels by the geometry rule, and no stripe shows between the last cell and the padding."
+  - "The popover writes This terminal or All terminals, and only Settings writes the project default."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+  - Plans/storage-plan.md
+  - Plans/DRY_Rules.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-183"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 5 and 6 (concept lineage only)"
+preserved_exact_tokens:
+  - "Follow theme"
+  - "Switch with light and dark"
+  - "Thirty-four schemes"
+  - "4.5:1"
+  - "256 KB"
+  - "This terminal"
+  - "All terminals"
+  - "cmd.terminal.appearance.set"
+negative_constraints:
+  - "Do not mark a terminal appearance setting as needing a restart."
+  - "Do not keep a second terminal theme or font store beside the one appearance model."
+  - "Do not add a backdrop blur of the terminal's own, or bundle a scheme without its licence and source record."
+  - "Do not echo an imported file's content in an error message or evaluate anything in it."
+compatibility_only_notes:
+  - "The concept's field names and its settings keys under a terminal prefix are lineage only; the product ids are SSYS-051's rows."
+stale_retired_dispositions:
+  - "Makes F3-083's terminal colour-scheme catalogue, preview and instant apply real, and replaces the restart badges on the old terminal theme and font rows (DL-183)."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+  - Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/DRY_Rules.md#DR-068, ContractName:Plans/Settings_System.md#SSYS-051, ContractName:Plans/storage-plan.md#SP-331, ContractName:Plans/FinalGUISpec.md#F3-431, ContractName:Plans/UI_Command_Catalog.md#UCC-201
+
+### F3-643 — Terminal Effects
+
+```yaml
+plan_unit_id: F3-643
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The terminal's effects are Puppet Master's own (DL-183) and follow one policy. They are event-driven: the effect
+  pass runs only after the screen repainted or while something is still animating. Only the focused, visible
+  terminal animates; ambient motion stops when the terminal is idle; motion is off on battery saver; and where no GPU
+  draws the terminal (on the desktop, the Skia CPU raster of F3-582), only the static fallbacks remain (a static
+  scanline pattern and a static glow), curvature, burn-in and noise are not drawn, and the Appearance popover says
+  what it could not draw. Under Reduced Motion every moving part is off (cursor blink, cursor trail, smooth
+  scrolling, burn-in, noise, flicker, degauss, bell flashes, progress sweeps and image animation) and the static looks
+  stay (scanlines, glow, curvature and the parchment grain). The catalogue: inactive dimming, the focus ring, cursor
+  blink and trail, smooth scrolling, backgrounds (F3-642), Glass's blur (the shell's existing blur; the terminal adds
+  none, F3-431), Retro scanlines and phosphor glow, an opt-in Full CRT tier (curvature, burn-in and noise), flicker,
+  the visual bell, progress (F3-546), attention marks, and an on-demand Retro degauss, an action in the Appearance
+  popover rather than a setting, which runs to its end and stops. Scanlines and phosphor glow are Retro's: on by
+  default in Retro dark and off by default elsewhere. Full CRT is off by default in every look, and the user turns it
+  on. Flicker is off by default in every look; its amount defaults to 0.02 and is capped at 0.03 of relative
+  luminance, against the 0.10 change that WCAG 2.3.1 counts as a flash, so flicker can never be a flash. The effect
+  fields (F3-642) default to: effects Follow theme; scan strength 0.30; glow strength 0.45; Full CRT off; curvature
+  0.08; burn-in on within Full CRT; noise 0.035; flicker off; flicker amount 0.02, capped at 0.03. NieR Mode's
+  terminal has a parchment texture under the text and ink focus brackets, and no glow. By the NieR rule for new
+  surfaces (DL-152, SSYS-043, F3-598, DR-056), NieR paints the terminal only while NieR Mode is on and each touch only
+  with its own installed part: the parchment with the `ground` part and the focus brackets with the `brackets` part,
+  never a new part; its colours come only from NieR's token tables or the theme tokens NieR repaints; its motion is
+  stepped, with no glow, filter or blur, and loops only by transform or opacity; no surface larger than 340x256 px
+  reverses its opacity more than once a second; and Reduced Motion and the Still and Colors only presets show end
+  states at once. Motion voices belong to the theme family (DR-043).
+gui_related: true
+gui_classification_reason: Defines the terminal's visible effects, their defaults and the policy that limits when they run.
+split_recommended: false
+depends_on: [DL-183, F3-642, F3-431, F3-582, DR-043, DL-152, DR-056]
+unblocks: [ATS-076]
+acceptance_criteria:
+  - "Only the focused, visible terminal animates; an idle terminal draws no ambient frames; battery saver turns motion off."
+  - "Where no GPU draws the terminal, only the static scanlines and glow are drawn, curvature, burn-in and noise are not, and the Appearance popover names what it could not draw."
+  - "Under Reduced Motion no part of the terminal moves, and the static looks stay."
+  - "A fresh Retro dark terminal shows scanlines and phosphor glow; no other look shows them by default; Full CRT and flicker are off by default in every look."
+  - "The flicker amount defaults to 0.02 and cannot exceed 0.03 of relative luminance."
+  - "Degauss is a one-shot action in Retro, not a setting, and stops at its end."
+  - "With NieR Mode on, the parchment shows only with the ground part and the focus brackets only with the brackets part, NieR's own terminal look has no glow, filter or blur, and no surface larger than 340x256 px reverses its opacity more than once a second."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-183"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D16)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 6 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md, SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476, section 6 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md, SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728"
+preserved_exact_tokens:
+  - "Full CRT"
+  - "WCAG 2.3.1"
+  - "0.02"
+  - "0.03"
+  - "degauss"
+  - "ground"
+  - "brackets"
+negative_constraints:
+  - "Do not animate a terminal that is not focused and visible, or keep ambient motion running on an idle terminal."
+  - "Do not turn on Full CRT or flicker by default in any look, or let flicker exceed 0.03 of relative luminance."
+  - "Do not add a NieR part, or give NieR's terminal look a glow, filter or blur."
+compatibility_only_notes:
+  - "The concept's per-look effect parameters, its GPU frame times, its battery-saver threshold and its performance measurements are lineage only until a later terminal installment settles them."
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/FinalGUISpec.md#F3-431, ContractName:Plans/FinalGUISpec.md#F3-582, ContractName:Plans/DRY_Rules.md#DR-056
+
+### F3-644 — The Editor's And The Terminal's Faces
+
+```yaml
+plan_unit_id: F3-644
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  These are the faces of the home redesign's editor and terminal only (DL-183, with Jared's answer of 2026-10-10 on
+  Retro code text, D17a). The editor's code face is JetBrains Mono in every look, Retro included (F3-639). The
+  terminal's default face is JetBrains Mono in every look except Retro, where it is VT323; Sixtyfour, Sixtyfour
+  Raster and Departure Mono are Retro options and JetBrains Mono stays selectable there; Atkinson Hyperlegible Mono
+  is offered for readability; and the system monospace is also a choice (F3-642). JetBrains Mono is provided by the
+  page, not by the terminal: its upright bytes are NieR Mode's PM NieR Mono files under the general family name
+  'JetBrains Mono', which the 5.6 Pro fonts work builds through DL-161's pipeline, and its italic is synthesised
+  unless the page's code face adds the italic file (42,964 bytes, offered). The faces, with licence, bytes, axes and
+  default size and line height in CSS px: JetBrains Mono, the code face of the editor and the terminal, OFL-1.1, the
+  page's face (31,432 bytes), weight 400 to 800, 13 px and 1.30; VT323, Retro's terminal default, OFL-1.1, 17,936
+  bytes, no axes, 19 px and 1.05; Sixtyfour, a Retro option whose own axes give a CRT look without motion, OFL-1.1,
+  4,236 bytes, SCAN -53 to 100 and BLED 0 to 100, 10 px and 1.45; Sixtyfour Raster, a Retro option that is Sixtyfour
+  baked at SCAN 45 and BLED 40, OFL-1.1, 3,068 bytes, no axes; Atkinson Hyperlegible Mono, for readability, OFL-1.1,
+  17,752 bytes upright and 19,084 bytes italic, weight 200 to 800, 13 px and 1.35; Departure Mono, a Retro option,
+  OFL-1.1 (its v1.500 release ships the SIL Open Font License, not MIT), 22,496 bytes, no axes, 13.75 px and 1.20;
+  and the system monospace, 13 px and 1.30. The terminal's own faces total 84,572 bytes before base64. Box drawing
+  (U+2500 to U+257F), block elements (U+2580 to U+259F), braille (U+2800 to U+28FF), powerline (U+E0B0 to U+E0BF)
+  and sextants (U+1FB00 to U+1FB3B) are drawn by the terminal, so no patched font is needed, and the terminal's faces
+  are never mirrored into PM Symbols. Licence rule: only permissively licensed faces are built in, under the SIL Open
+  Font License, Apache or MIT, each with its licence text and its source and SHA-256 record; every terminal face is
+  OFL-1.1. The files go through DL-161's embedding pipeline as one set of files shared with the rest of the page
+  (DR-050). A face change applies live in the terminal (F3-642). Terminal text keeps its own fidelity fixtures,
+  separate from rendered GUI text (F3-414). General code text across the chat and PMConcept7
+  (JetBrains Mono in Basic, Glass and Friendly, IBM Plex Mono in Retro, PM NieR Mono in NieR) is not this unit's: it
+  belongs to DL-161, F3-426 and F3-430 as the 5.6 Pro fonts work amends them under D17a, and Retro's interface and
+  its code text outside the editor and the terminal stay IBM Plex Mono.
+gui_related: true
+gui_classification_reason: Defines the built-in faces, defaults and licence rule of the editor's and the terminal's visible text.
+split_recommended: false
+depends_on: [DL-183, DL-161, F3-642, F3-639, DR-050]
+unblocks: [ATS-076]
+acceptance_criteria:
+  - "The editor draws JetBrains Mono in every look, Retro included."
+  - "A new terminal draws JetBrains Mono in every look but Retro and VT323 in Retro, and each face listed above can be chosen."
+  - "Each face that has a default size and line height listed above opens at them."
+  - "JetBrains Mono's bytes are the page's code-face files, never a second copy inside the terminal, and the terminal's own faces total 84,572 bytes before base64."
+  - "Box drawing, block, braille, powerline and sextant glyphs are drawn by the terminal and meet their neighbours with no gaps."
+  - "Every built-in face is under the SIL Open Font License, Apache or MIT and ships with its licence and source record."
+  - "DL-161, F3-426 and F3-430 are cited for general code text and are not amended by this unit."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-183"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D17)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-1.md, SHA-256 1651ae9c41a61f215ee960288b27bb78ee8d9ad804c741495e3313ff4a33e299 (D17a)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 4 (concept lineage only)"
+preserved_exact_tokens:
+  - "JetBrains Mono"
+  - "VT323"
+  - "Sixtyfour Raster"
+  - "Departure Mono"
+  - "Atkinson Hyperlegible Mono"
+  - "84,572 bytes"
+  - "PM Symbols"
+  - "OFL-1.1"
+negative_constraints:
+  - "Do not build in a face whose licence is not the SIL Open Font License, Apache or MIT."
+  - "Do not carry a second copy of JetBrains Mono inside the terminal."
+  - "Do not amend DL-161, F3-426 or F3-430 from this unit, or change Retro's general code text."
+compatibility_only_notes:
+  - "The concept's font file names are lineage; the product's files are the embedding pipeline's (DL-161, DR-050)."
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/Decision_Log.md#DL-161, ContractName:Plans/DRY_Rules.md#DR-050, ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/FinalGUISpec.md#F3-639
+
+### F3-645 — Images In The Terminal
+
+```yaml
+plan_unit_id: F3-645
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  A terminal tab draws kitty graphics, sixel and iTerm2 inline images, all from the first release (DL-182). What the
+  protocols accept, their limits, the hardening and the fixed error replies are
+  `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-181`; this unit owns how images look and behave in the tab.
+  Paint order, from the back: the default background, images with z below -1,073,741,824, cell backgrounds, images
+  with negative z, text and the glyphs the terminal draws, decorations, selection and the cursor, then images with z
+  of 0 or more; Unicode-placeholder images draw in their own cells at the under-text tier, which is how an image
+  survives a program such as tmux that redraws cells. An image anchors to the cell it was placed on: it scrolls with
+  that cell, follows it when the grid reflows, clips to the tab, and goes when the screen is cleared or its lines
+  leave the scrollback. Text written over a sixel or iTerm2 image cuts the image out of those cells. While an image
+  decodes or a file is read, later output waits, so text after an image always lands after it. Animation plays no
+  faster than SMPFS-181's fastest frame; it pauses while the terminal is hidden and under Reduced Motion, where an
+  animated image holds its first frame. The desktop draws the tiers through Skia (F3-582) and the web client draws
+  the same tiers over its text rows, positioned by row, so images scroll and clip with the rows (F3-583). Images
+  persist with the terminal's saved scrollback inside its storage quota (SP-332), the separate terminal scrollback
+  cap F3-416 asks for, so a restored terminal's
+  scrollback looks as it did; placeholder cells on restored lines resolve only to restored images, so a program in
+  the new session that reuses an image id never paints into the old scrollback. When the quota drops an image
+  (oldest first, text never giving way to images, and a frame that cannot be read back counting the same), its
+  cells show a dashed hairline box with `[<name> <W>×<H> · not kept]`, the name being the file name a kitty file
+  transfer or iTerm2's name gave, else `kitty image`, `sixel image` or `inline image`; a Unicode-placeholder run
+  shows that label in its first cell; and the restore notice counts the images not kept (F3-640). Images on the
+  alternate screen are never saved. The accessible plain-text buffer and agent reads describe an image as
+  `[image W×H px]`, with ", animated" when it is animated, a Unicode-placeholder run as `[image]`, and an image the
+  saved scrollback could not keep by its placeholder label; agent reads never return image data (SMPFS-182). An image
+  that a limit, a quota or a transfer rule refuses (a file, temporary-file or shared-memory image from a remote
+  session or from a command an agent typed is one) is not drawn, and the program receives SMPFS-181's fixed error
+  reply, which never echoes what it sent.
+gui_related: true
+gui_classification_reason: Defines how terminal images are layered, anchored, animated, saved, replaced by placeholders and described in the terminal tab.
+split_recommended: false
+depends_on: [DL-182, F3-640, SMPFS-181, SMPFS-182, SP-332, F3-582, F3-583]
+unblocks: [ATS-076]
+acceptance_criteria:
+  - "Images draw in the paint order above, and Unicode-placeholder images draw in their cells under the text."
+  - "An image scrolls, reflows and clips with its anchor cell, and text written over a sixel or iTerm2 image cuts it out of those cells."
+  - "Output after an image never paints before the image is decoded."
+  - "An animated image pauses while its terminal is hidden and holds its first frame under Reduced Motion."
+  - "A restored terminal shows its saved images where they were; an image the quota dropped shows the dashed placeholder with its name and size, and the restore notice counts it."
+  - "The accessible buffer and agent reads show `[image W×H px]`, `[image]` or the placeholder label, and never image data."
+  - "A refused image is not drawn, and the program's error reply is one of SMPFS-181's fixed strings."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-182"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D14)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 7 (concept lineage only)"
+preserved_exact_tokens:
+  - "kitty graphics"
+  - "sixel"
+  - "iTerm2"
+  - "-1,073,741,824"
+  - "[<name> <W>×<H> · not kept]"
+  - "[image W×H px]"
+  - "[image]"
+negative_constraints:
+  - "Do not draw text after an image before the image is decoded."
+  - "Do not let a restored placeholder resolve to an image from the new session."
+  - "Do not return image data in an agent read, or echo a program's input in an image error."
+compatibility_only_notes:
+  - "The concept's image store, renderer layers and demo images are lineage only."
+stale_retired_dispositions:
+  - "Replaces F3-544's sentence that no image protocol is approved (DL-182)."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-182, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-181, ContractName:Plans/storage-plan.md#SP-332, ContractName:Plans/FinalGUISpec.md#F3-582, ContractName:Plans/FinalGUISpec.md#F3-583
+
+### F3-646 — Agents And People In One Terminal
+
+```yaml
+plan_unit_id: F3-646
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  An agent and a person can share one terminal (DL-181). The rules are
+  `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182`; this unit owns how they show. While an agent works in a
+  terminal or asks to, an inline row above the screen (F3-640's notice row) shows one of four states. Driving: "<agent>
+  is driving this terminal · step N of M · <label>", with Take over, Interrupt and Stop. Paused, after a take-over:
+  "You took over. <agent> is paused and has been told.", with Hand back and Stop <agent>. Permission: "<agent> wants
+  to type in this terminal: `<command>`", with Allow once, Allow in this terminal and Deny. Secret input: "Password
+  needed. Only you can answer this prompt; <agent> is waiting.", with Type it, which focuses the terminal. The person
+  can always type: any keystroke in a terminal an agent is driving takes over at once, the row turns to Paused and
+  the agent is told, and the agent's next write is refused as `preempted`. Take over does the same from the row
+  (`cmd.terminal.take_over`); Interrupt sends SIGINT to the foreground job (`cmd.terminal.interrupt`); Stop and Stop
+  <agent> end the agent's run and return the terminal to the person (`cmd.terminal.stop_agent`). An agent cannot type
+  into a terminal a person opened unless the person allows it. Allow once lets that one command through, and the
+  agent's turn there ends with it: its row, its mark and its lease go back. Allow in this terminal is a write grant to
+  that agent in that terminal session only; it is held in memory and never stored, and it ends when the terminal
+  closes, when the person takes over (a keystroke, Take over or Stop) or when that agent's run ends. Hand back returns
+  the terminal to the agent, and in a terminal the person opened it grants Allow in this terminal again for the rest
+  of that run. The grant decides who may type, never what may run: every command the agent types still passes the
+  Tools policy engine with its own approval of that exact invocation (SMPFS-024, PS-041). The concept's label "Always
+  allow here" is not used, because Always in PS-041's approval choices means a stored rule that outlives the session
+  (lead ruling of 2026-10-10 in DL-181). Deny refuses the write. Allow once and Allow in this terminal dispatch
+  `cmd.terminal.allow_agent_input` with their scope (CV-362). More, Agent input lists Ask each time and then one row
+  per agent holding Allow in this terminal, and choosing an agent's row revokes its grant
+  (`cmd.terminal.revoke_agent_input`); UCC-201 records these commands. Password and secret prompts always go to the
+  person: while one is open the cursor is a padlock and every agent input is refused as `secret_input`. Each command records who typed it (`by`): a
+  command an agent typed shows the agent's square mark in the gutter, and the command-mark menu says "<agent> typed
+  this" or "You typed this" (F3-641). A terminal an agent is driving shows the 7 px square agent mark on its tab, and
+  its hover tag adds "· <agent> is driving" (F3-640). A terminal an agent opened by itself lands as a background tab
+  with the 6 px hollow square and a polite announcement, never takes keyboard focus and never changes the active tab
+  of a panel the person is typing in (F3-634). Agent reads return rendered text with a read state, never raw bytes and
+  never images (SMPFS-182, F3-645). Input protection (F3-549) still blocks the person's and the agent's input alike.
+  A control API for the user's own scripts comes later and is not part of this unit.
+gui_related: true
+gui_classification_reason: Defines the visible agent row, take-over, permission and secret-prompt states, attribution marks and background opens of a shared terminal.
+split_recommended: false
+depends_on: [DL-181, F3-640, F3-641, F3-634, SMPFS-182, SMPFS-024, PS-041, CV-362]
+unblocks: [UCC-201, ATS-076]
+acceptance_criteria:
+  - "Each of the four row states shows its exact text and actions, as an inline row above the screen and never a modal."
+  - "A keystroke in a terminal an agent is driving takes over at once, shows the Paused row and refuses the agent's next write as `preempted`."
+  - "An agent's write into a terminal a person opened waits for the Permission row; Allow once lets exactly one command through and then returns the row, mark and lease."
+  - "Allow in this terminal is never stored and ends when the terminal closes, the person takes over or that agent's run ends; every command under it still asks for its own approval."
+  - "No control in the terminal is labelled Always allow here."
+  - "While a secret prompt is open the cursor is a padlock and agent input is refused as `secret_input`."
+  - "Agent-typed commands carry the square mark in the gutter, the mark menu names who typed each command, and an agent-driven tab shows the square agent mark."
+  - "A terminal an agent opens lands in the background with the hollow square and never takes focus."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-181 (the lead ruling of 2026-10-10 on Allow in this terminal)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D8, D18)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 8 (concept lineage only)"
+preserved_exact_tokens:
+  - "is driving this terminal · step N of M · <label>"
+  - "You took over. <agent> is paused and has been told."
+  - "wants to type in this terminal:"
+  - "Password needed. Only you can answer this prompt; <agent> is waiting."
+  - "Allow once"
+  - "Allow in this terminal"
+  - "Hand back"
+  - "Type it"
+  - "preempted"
+  - "secret_input"
+  - "Always allow here"
+negative_constraints:
+  - "Do not store an agent's terminal write grant, keep it after the terminal closes, the person takes over or the agent's run ends, or let it stand in for command approval."
+  - "Do not let an agent answer a password or secret prompt."
+  - "Do not let a terminal an agent opened take keyboard focus."
+  - "Do not label the grant Always allow here."
+compatibility_only_notes:
+  - "The concept keeps its third permission action behind a flag that is off; canon shows Allow in this terminal."
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-024, ContractName:Plans/Permissions_System.md#PS-041, ContractName:Plans/Contracts_V0.md#CV-362, ContractName:Plans/UI_Command_Catalog.md#UCC-201
