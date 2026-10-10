@@ -13155,6 +13155,75 @@ owner_hints:
   - Plans/DRY_Rules.md
 ```
 
+### DL-171 - One Merged, Quieter Hover Across PMConcept7, With Its Own Forms In Retro And NieR
+
+```yaml
+plan_unit_id: DL-171
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-171 records the owner request of 2026-10-09, items 10 and 11, in his words: "10. Make the hover spotlight effect
+  slight less pronounced and smaller." and "11. The other pages have a magnetism when you hover it moves boxes,
+  widgets around. I think the effect is a little too strong, they move a little too much. There is also a glow that
+  happens inside the boxes and a glow emitted from the boxes. Its a little unrefined and a little too strong. You
+  kinda put some of this in the usage page. I think there should be a middle ground. Can you merge the two ways its
+  done? Then polish the effect significantly. I also think the effect doesn't work well in the retro and nier themes,
+  so can you think of a different way of doing it for those two themes? Then apply this updated look throughout the
+  entire PMConcept7." Decided: PMConcept7's two hover systems, the PM8 magnet and spotlight on every other page and the
+  Usage page's plate lift and pointer sheen, become one, F3-465, owned once by DR-072. It takes Usage's cheap
+  mechanics (pre-painted layers whose opacity changes, translate-only motion, no subtree restyle) and PM8's continuous
+  field and neighbour falloff, at a middle ground: the magnet drops from up to 8 px (7.6 to 12.8 px measured at an
+  edge) to 2 to 2.5 px, the spotlight from PM8's 115 px ring and Usage's 280 px sheen to a soft pool of about 90 to
+  100 px, and the emitted glow to half of PM8's bloom, which no longer leans with the magnet. Retro and NieR get forms
+  of their own with no soft glow, because a glow does not belong to either: Retro's Raise, a hard-cut rise on a hard
+  shadow with a phosphor rule, on the left rail's 33 ms tick, chosen over a phosphor cursor that read as selection;
+  and NieR's Lock-on, its own corner brackets acquiring the card, chosen over a Menu cursor ink bar that would compete
+  with the real Menu cursor and the rail's chosen-tab ink. Every page with the old effect and the Usage page take the
+  new system; tabs, dividers and editor and terminal text are left out by the boundary agreed with the home panels and
+  terminal threads. Why: the owner found the old effect too strong and unrefined and wrong in Retro and NieR, and one
+  system is cheaper to keep right than two (the old field read every box's rect per pointer frame and kept its loop
+  running while the pointer rested).
+gui_related: true
+gui_classification_reason: Records an owner request on PMConcept7's hover magnet, spotlight and glow.
+split_recommended: false
+depends_on: []
+unblocks: [F3-465, F3-446, DR-072]
+acceptance_criteria:
+  - "The owner's items 10 and 11 are recorded in his words with their date, 2026-10-09."
+  - "One hover system serves every PMConcept7 page, the Usage page included (F3-465, DR-072)."
+  - "The magnet, spotlight and emitted glow are smaller than PM8's, and Retro and NieR use their own forms with no soft glow."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: finalgui_drift
+reasoning_tier: high
+context_scope: pm7_hover_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/HOVER-THREAD-BRIEF.md, SHA-256 a06c03129a9580ea0c1f5db411f0ec8ee5a14d6d1be171ead2b007ab69aea704"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/FAMILY-SPEC.md, SHA-256 d66b09a302226c0682a59786d92c74d703cbdf7fc28f9bc63ffb509a07f321e8"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/RETRO-FINAL.md, SHA-256 49546103ce230dc1db08440e01bb7dc21b02d153c74138b7618cc491b4ddba81"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/NIER-FINAL.md, SHA-256 e647d369534c83251d9d8ba904765491db2338154f80a91ca12759a771c8e233"
+preserved_exact_tokens:
+  - "DL-171"
+  - "Raise"
+  - "Lock-on"
+  - "middle ground"
+negative_constraints:
+  - "Do not bring back a second hover system or a soft glow under Retro or NieR."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
 ## Migration Coverage
 
 Original hash: `f2e60f840d40385942aad5a8875a8243bc33fcfa07959d008e3fe231cc4023f7`.

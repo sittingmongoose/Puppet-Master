@@ -1,104 +1,104 @@
 # Shard Index: Plans/FinalGUISpec.md
 
-Generated: 2026-10-10T11:14:26Z
+Generated: 2026-10-10T16:12:06Z
 
-Source SHA256: `531f33841911f4b489578d3196daf49d16ffb0c03c93684d88fe8aaeddd22662`
+Source SHA256: `ffbec4a7a1ba043acf9904aed68ff9db0f2c7e7aa90125640c443b7d2ceca151`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `82f7f57bf74abadcb882911de7e2c1e3397e7a293dbfcb98c2add72a66ad57d2`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L137 `880f1dda6f00f7067d0ebb44e309bd0d0afab530c6eb5818687749292d35b0cf`
-- [003 - Table of Contents](003-table-of-contents.md) L139-L163 `804db00b26e52d9fbad6e8bd1e57d5dfd712491395c452a1fa575ca60be08d2e`
-- [004 - 1. Executive Summary](004-1.-executive-summary.md) L165-L189 `2599618574d7c64cc2459474256f723b5d5c5981b4a57f744cf1697a8db7f65b`
-- [005 - 2. Tech Stack and Renderer](005-2.-tech-stack-and-renderer.md) L191-L272 `0d82b45515e726292106aa34f4f38e9082abe357a35dcbe061a3c3b3de415f6f`
-- [006 - PMConcept7 Home Workspace Control Reconciliation — 2026-08-04](006-pmconcept7-home-workspace-control-reconciliation-2026-08-04.md) L274-L1241 `47ee91456af45cbb92f992a1cbf4f75223d897793bc54341fc99d1f686df8cea`
-- [007 - Known-37 recovery-unavailable GUI projection - 2026-07-18](007-known-37-recovery-unavailable-gui-projection-2026-07-18.md) L1243-L1249 `50c3e8368706d93fac50da4207b5ca4dbfa0ff73be5f69746d22f98beaac29b3`
-- [008 - GUI / PMConcept implementation-readiness repair addendum (2026-07-02)](008-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md) L1251-L1265 `d8b0a43489b6d1fe50b60702e8844113198f86ae8f47433793ce87010ebb9ca9`
-- [009 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](009-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L1267-L1376 `afe842d5b23a2667ecb568ed3860f52503724a662c32207e879067048fd24c98`
-- [010 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](010-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L1378-L1500 `483a373e6f78f6774b0245a8efca0b7b95ebd9baadca22821c376c3a6a2a4f92`
-- [011 - 3. Master Layout](011-3.-master-layout.md) L1502-L1639 `6945c0ba5983585603990b6169f231f49ea02ebedfa8db3492aec8f185c827a7`
-- [012 - 4. Navigation Architecture](012-4.-navigation-architecture.md) L1641-L1816 `0eb4f92a97453bd362faa35de530a75fdb4f02916874bac66497058bb1fa9915`
-- [013 - 5. Panel System](013-5.-panel-system.md) L1818-L1970 `2e8b439e754af46d97892c1ef1d3e7bf6e53257919991791da68cb2b5f13b2c1`
-- [014 - 6. Theme System](014-6.-theme-system.md) L1972-L2167 `29b9aa392a7b485f00070978bae7144f479fa89051e1b720aeefaffb548b0249`
-- [015 - 7. Views Specification](015-7.-views-specification.md) L2169-L2812 `c3ce25e56b13688dccefb6c8ca57a03498b51acab6e5aa239d598a8869147bca`
-- [016 - 8. Widget Catalog](016-8.-widget-catalog.md) L2814-L2840 `8c1e73754e1484fe4d8317c9f1e1b15a8a3e9faf9cb6f1f79f6a723a9a455d5c`
-- [017 - 9. State Management](017-9.-state-management.md) L2842-L2912 `625b6f7c602ab16afc62a270b0de8095c459bcf9afa8ac8b9decb9eb4452bca8`
-- [018 - 10. UX Patterns](018-10.-ux-patterns.md) L2914-L3039 `ee32f188639664bca03679230bc6729b89377a258dc7a8f3322d5a4406db9995`
-- [019 - 11. Anti-Flickering and Scroll Preservation](019-11.-anti-flickering-and-scroll-preservation.md) L3041-L3083 `05d5e5dc2ae5760ede7ddb3d13ba93f0d8db8699a4b4901cffac27ab435fab90`
-- [020 - 12. Responsive Design](020-12.-responsive-design.md) L3085-L3126 `fdc35e19d101b1d678e44c9cfa90e39a5ff803b0f9818aaf80f86249711f1264`
-- [021 - 13. Accessibility](021-13.-accessibility.md) L3128-L3167 `2404737f6b92bef25076e357a1a4c0efce881bc62891d20a5259399f45d0876a`
-- [022 - 14. Slint File Organization](022-14.-slint-file-organization.md) L3169-L3312 `d26521bc2c4f280857ecabd36371e85b132b322cd46332de3dcad20805b34056`
-- [023 - 15. Persistence](023-15.-persistence.md) L3314-L3881 `dc85100b0860685f608281e39c5832bbb8bdd6370c3064cfc8892a5847040cc7`
-- [024 - 16. Migration Mapping](024-16.-migration-mapping.md) L3883-L3961 `83798b4d50587fb77f0889d8650a90bdac3acffd5c261e0ce01fae1ffab9dff3`
-- [025 - 17. Risks and Mitigations](025-17.-risks-and-mitigations.md) L3963-L3997 `1add2d557b157d23f059de5aff58dab67c8fc59293d323992fb6ad974d97411d`
-- [026 - 18. Promoted Features (Formerly Future Considerations)](026-18.-promoted-features-formerly-future-considerations.md) L3999-L4024 `34a7144fc3f05ba77de685f4f13388d66d9681c6e30fcbf4ea969d145a89a169`
-- [027 - Appendix A: Cross-References](027-appendix-a-cross-references.md) L4026-L4063 `674ca78cde1721c305b90bac6bc8a942f14db80aa81c84ccdc49b9387b074f4d`
-- [028 - Appendix B: Locked Decisions Summary](028-appendix-b-locked-decisions-summary.md) L4064-L4084 `75042103c55bd89ecfd4a94c0dda842486ceb7aa27fdbe670fe699e7b5738176`
-- [029 - Appendix C: Dashboard Widget Grid and Widget Catalog Integration (Addendum -- 2026-02-23)](029-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-.md) L4086-L4174 `621cc587336ece808d32a4d53379efbc02f1a1ddb921b5702caba209892b532e`
-- [030 - 19. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)](030-19.-persona-editor-compatibility-disclosure-and-surface-level-pe.md) L4175-L4312 `f7c01020accbb9911041cf6d3bf9d1bbe1b09f0ffa96f3aaeb42e48277f4f567`
-- [031 - Rendering Surface Addendum (2026-03-07)](031-rendering-surface-addendum-2026-03-07.md) L4314-L4442 `f201738a534654e587ea23e1836953e3175cb50b8d2ae37f782fcd6ee14c2942`
-- [032 - Assistant Planning UX Addendum (2026-03-08)](032-assistant-planning-ux-addendum-2026-03-08.md) L4444-L4553 `3c7dff9636c25c874de8ff19282c269a00bcdf592d45933602515ea1e6d125a4`
-- [033 - Compatibility/source-lineage - Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)](033-compatibility-source-lineage-scheduler-blocked-and-remediation-g.md) L4555-L4630 `209a601460e9d29f9c973c18a681757dbad4ae7a9f86aac02c73b77f9149ae93`
-- [034 - Compatibility/source-lineage - Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)](034-compatibility-source-lineage-runtime-scheduler-blocked-state-gui.md) L4631-L4651 `4d46be52787d7b13d0eb912992bea863449e5211568e0b964d0566499f85e401`
-- [035 - Compatibility/source-lineage - Runtime Blocked, Queue, and Recovery GUI Canonical Alignment (2026-03-09)](035-compatibility-source-lineage-runtime-blocked-queue-and-recovery-.md) L4652-L4679 `d7924e8e7dee038bd0cc9c6bf9a37e4d9ece2f5d2f6a3b54f01a996a4ac7b9c2`
-- [036 - Compatibility/source-lineage - Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)](036-compatibility-source-lineage-runtime-scheduler-recovery-gui-cons.md) L4680-L4697 `4922835cb626f7af061cec80d661b0d59ab8956526146af613d533927c834cdb`
-- [037 - Canonical Blocked/Recovery Behavior](037-canonical-blocked-recovery-behavior.md) L4698-L4746 `fed8fa25cad245a6e65b22b13df13c64f8a0c31478bc892feccc45afc591183d`
-- [038 - Compatibility/source-lineage - Blocked-State Visual Distinction and Recovery UX Addendum](038-compatibility-source-lineage-blocked-state-visual-distinction-an.md) L4747-L4813 `aaa18cdd3510508efd53a4affa21beac2fe422df036ee41375ad4bb6045cc8c3`
-- [039 - 15. Promoted widget catalog (web tools, planning, question, operation cards)](039-15.-promoted-widget-catalog-web-tools-planning-question-operatio.md) L4815-L5195 `9314ef0981e80f4b4d057d442431f917ea50637eca2fac3ca69e576f60b06f9e`
-- [040 - Owner / Consumer Map](040-owner-consumer-map.md) L5197-L5201 `ad3d4aca018c77119c1ef660d740b166b416eefb2dcea1fdf30ee8c8a9bd10b0`
-- [041 - PlanUnits](041-planunits.md) L5203-L5254 `c92b34661186eae2643fd906e2ceea30c1e0c4a2a8f7c5e0e0adca7f59aba298`
-- [042 - Remaining Runtime Canon Closure Addendum (2026-08-14)](042-remaining-runtime-canon-closure-addendum-2026-08-14.md) L5256-L5339 `31710ded9651ade96cc05a6f6cceb5f5d0a4eeaa792355e7fa7478e9701cad88`
-- [043 - Shared Runtime Projection Addendum - 2026-08-13](043-shared-runtime-projection-addendum-2026-08-13.md) L5341-L26490 `19e24a5a490b62bdc5516367d9e11a4d462d2f4fd7ad9ecd0a93d268936a2adf`
-- [044 - Migration Coverage](044-migration-coverage.md) L26491-L26501 `d376fcd789f6cd762dcd671da69e3a19d066de933403377101d9c4dc4238e7a2`
-- [045 - Ledger Compile Addendum - pldg-20260614-001](045-ledger-compile-addendum-pldg-20260614-001.md) L26503-L26627 `afb5109c305332c3c52d69d3589e49f027371f077c75eb4fbea6c39d3ab21af7`
-- [046 - Ledger Compile Addendum - pldg-20260614-002](046-ledger-compile-addendum-pldg-20260614-002.md) L26629-L26668 `ba93e88d64f8dcb9d58269ea95d4c8bc21bd552f018aa4a30ad590f62eb37075`
-- [047 - Ledger Compile Addendum - pldg-20260615-001](047-ledger-compile-addendum-pldg-20260615-001.md) L26670-L26846 `37547f5a686ab262d80a90938915f3c3fa9d5b48ed93d4bba14a438ec3b2611a`
-- [048 - Ledger Compile Addendum - pldg-20260616-001](048-ledger-compile-addendum-pldg-20260616-001.md) L26848-L26901 `c380e419316d8aa8865d51377c67e48a5153238791bcc998c3920749aa237ce3`
-- [049 - Ledger Compile Addendum - pldg-20260616-002](049-ledger-compile-addendum-pldg-20260616-002.md) L26903-L27138 `3c421cb9cc29626b9d9510ccec2ec7b5daad23cc137afd4507d1d6b40ef71898`
-- [050 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](050-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L27140-L27250 `51095ea586d2963d6de846e717f735f99dd5581406f6cfca0b07f337b3788325`
-- [051 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](051-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L27253-L27541 `d6130c369cd9096c22ff012ab8176930fed51bccf5c0ff2cc4b72716b473dca6`
-- [052 - Ledger Compile Addendum - pldg-20260622-001-fff](052-ledger-compile-addendum-pldg-20260622-001-fff.md) L27543-L27594 `04a09a24e23b749a283ecbbddd6265666a1fc9c896936e54185ab4be79060d44`
-- [053 - Ledger Compile Addendum - pldg-20260626-001-feature-name](053-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L27597-L27783 `8ab094d848f48685a39c03de71713004672f04d10de2af975e6244c37bb7160d`
-- [054 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](054-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L27785-L28266 `a7724176e60a4b8047adf565d563606ec6fc14f76f48c87cde410d2dfd886c71`
-- [055 - Ledger Compile Addendum - pldg-20260629-001-feature-name](055-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L28268-L28458 `a7e3dd1fad83e9e79b960361c6fa69a058c0cf1189e7ece1b495816e9d83a4e0`
-- [056 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](056-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L28460-L28615 `123979468780b4841e401ee5f42637dd8d91642a9088649a14770bde344c8c0b`
-- [057 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](057-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L28617-L29082 `0d6512ee78121fd78504f70b2afc2ea2fc9c2f1c9ec7df5fe401868c6e4cb294`
-- [058 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](058-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L29084-L29159 `8f98949b62d066fa79375c4084a9ef4d53b9a08a308ae1f041c557f53341fed2`
-- [059 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](059-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L29160-L29170 `4f22beae76547885a8d8eeea44dbbad013f0abdcfc585002f36f4e33c36142cb`
-- [060 - Usage GUI Propagation Addendum - 2026-07-09](060-usage-gui-propagation-addendum-2026-07-09.md) L29172-L29251 `39f8c1c66ff9777a7a072f37205b193f084796e359ff084bf619bf89547cc2eb`
-- [061 - PMConcept6 Concept Promotion Addendum - 2026-07-11](061-pmconcept6-concept-promotion-addendum-2026-07-11.md) L29253-L29497 `17920d38da0c0a52ac5e1758c76a726b8db7d39c7858d018d0b955bb29e9b663`
-- [062 - PMConcept6 Chat Polish Addendum - 2026-07-16](062-pmconcept6-chat-polish-addendum-2026-07-16.md) L29499-L29678 `c0a6d876accdc793d17c028c3f6bede0e686757448951025fe89cfb1a41e2bd5`
-- [063 - Theme System Addendum - 2026-07-16](063-theme-system-addendum-2026-07-16.md) L29680-L30756 `e983cd31c212ea158d01693c5927dffe7361b520bf40649ef3f0dedc9894de14`
-- [064 - Settings System Addendum - 2026-07-16](064-settings-system-addendum-2026-07-16.md) L30758-L31638 `f358125631cf8b4b3dc979a27a002cf69ec35280b7f608bee9613bf0d90dcb74`
-- [065 - PMConcept6 Shell Sweep Addendum - 2026-07-16](065-pmconcept6-shell-sweep-addendum-2026-07-16.md) L31640-L32130 `340e841d3b60eef942e643923d5a5b304edb1ca705e00c0f4dbdd2ef0c4cec5f`
-- [066 - PMConcept7 Concept Promotion Addendum - 2026-07-23](066-pmconcept7-concept-promotion-addendum-2026-07-23.md) L32132-L32779 `bec055b7da0fb4803e798bbe6d15f91b0397398795731e10969c2924de8be084`
-- [067 - Cozy Shelves Panel Reconciliation Addendum - 2026-07-27](067-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md) L32781-L33476 `70612b768ccae8bf1438d17af259e8ed0e983cdd6ef369daa0b93c4c854931a5`
-- [068 - Run & Debug Revival Addendum - 2026-07-27](068-run-debug-revival-addendum-2026-07-27.md) L33478-L34540 `e03ef01fe6e4b90791892c89970be83703ac1d5750920031163c313862af27cd`
-- [069 - PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28](069-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md) L34543-L34786 `7de5015751995bc1db9925cb4b2293e8046cb02d1860d658abf8dd1c15ce4508`
-- [070 - PMConcept7 User-Polished Runtime Contract Addendum - 2026-08-27](070-pmconcept7-user-polished-runtime-contract-addendum-2026-08-27.md) L34788-L35232 `9d23e12bbf36a580d93a58b618f813c7c0f8900891ecd93d80f0a468a5e81fe2`
-- [071 - Settings, Product Onboarding, Guided Tour, Doctor, And Hover Presentation Reconciliation - 2026-08-31 (amended 2026-09-01)](071-settings-product-onboarding-guided-tour-doctor-and-hover-present.md) L35234-L36015 `ea20c3841d9b26e10cfe1619dc32b05ad6d40408faec002f5a391acb5e5e31c6`
-- [072 - Forge/Backup/tsnet shared GUI consumer addendum - 2026-09-01](072-forge-backup-tsnet-shared-gui-consumer-addendum-2026-09-01.md) L36017-L36105 `ab46932a64e1bbb0921dab319592262d1016538975844e7e0ff1f7767b6fc456`
-- [073 - Source Control And Provider-Operational GUI Depth Repair - 2026-09-02](073-source-control-and-provider-operational-gui-depth-repair-2026-09.md) L36107-L36272 `9df855ed83300c10b413221ee3962acb35e87a884064c91d5dd1f7034aebeae5`
-- [074 - Puppet Master Assistant Redesign GUI Specification - 2026-09-03](074-puppet-master-assistant-redesign-gui-specification-2026-09-03.md) L36274-L36581 `cae164b9f1174b8ba73f6b8d2860ead754552439f19ae0885955b7638e6db17d`
-- [075 - Additive Correction v4 — Assistant Correction Surfaces (2026-09-03)](075-additive-correction-v4-assistant-correction-surfaces-2026-09-03.md) L36583-L36767 `93c50844831e8152b2899eceedf3e03b34770b724cc7a570927f4810dcabadf9`
-- [076 - Cumulative v3 Assistant & Settings GUI Specification (2026-09-07)](076-cumulative-v3-assistant-settings-gui-specification-2026-09-07.md) L36769-L37471 `91546f0ec1e3613f4fa6b7db71ac177d5baaf0a17bab69ee8d5d4c39d0ee670c`
-- [077 - DL-035 terminal research consumer planning - 2026-09-09](077-dl-035-terminal-research-consumer-planning-2026-09-09.md) L37474-L37808 `bdeadd4e44167072bfaa9b9bb16b2b8f26ee6b82162bdbb6e30b0df8b15bb231`
-- [078 - DL-036 research decision-card presentation - 2026-09-09](078-dl-036-research-decision-card-presentation-2026-09-09.md) L37811-L37949 `3a8a12e88ae0c2b4dfdf60b685264ffa7c83f0fe7e5063f567367f347910b0ab`
-- [079 - DL-043 — Accepted Jujutsu Surface And Contract Planning (2026-09-11)](079-dl-043-accepted-jujutsu-surface-and-contract-planning-2026-09-11.md) L37951-L38604 `c912de1a1c65479d0f8e4c09c31bb1503a5fed8561b345a2fcb9e9eb5841cdac`
-- [080 - DL-062 — Accepted Gate List Presentation (2026-09-18)](080-dl-062-accepted-gate-list-presentation-2026-09-18.md) L38606-L38648 `7150ef9043d2ceed93513d02c5cb13442912c9c676eb681f9920eeca6c7b9d17`
-- [081 - Chat WOW Concept Promotion Addendum - 2026-09-27](081-chat-wow-concept-promotion-addendum-2026-09-27.md) L38650-L38871 `a62a789aec7bf39da22967af16629f148077110a9024d0d4351dfcb2ca8c7a65`
-- [082 - Wand Modules Redesign Addendum (2026-09-27)](082-wand-modules-redesign-addendum-2026-09-27.md) L38873-L40083 `3ef95faaaedacfcc531d14224cc437e40a7658885d2dbdfbd8d219ad3deb9c7f`
-- [083 - DL-139 — Skia Only Desktop And Leptos Web Client (2026-10-01)](083-dl-139-skia-only-desktop-and-leptos-web-client-2026-10-01.md) L40085-L40252 `bcaaacb0252c5c3634abc6a0fc5e4568c4efae35e30e1f4a7b7505af972e5e4c`
-- [084 - DL-140 to DL-144 — Assistant Chat Neon Icons, Status Set, Send And Stop, And NieR Mode (2026-10-07)](084-dl-140-to-dl-144-assistant-chat-neon-icons-status-set-send-and-s.md) L40254-L40659 `eca45ac0aad74349b206932485123092341e68f8f336991840252627eefeb41a`
-- [085 - DL-145 to DL-151 — Assistant Chat Tweaks: Hover Labels, The Coloured Wand, Activity Detail, Setup Sheets, Puppet Agents, The Ask Card And Retro (2026-10-08)](085-dl-145-to-dl-151-assistant-chat-tweaks-hover-labels-the-coloured.md) L40661-L41255 `4ab7c45ffcf81b20fdde676523f4e8407c55880dbc9d8a49d64ae3abeda9720b`
-- [086 - DL-152 — NieR Mode Where A Look Is Chosen, NieR Onboarding And Tour, And Their Sounds (2026-10-07)](086-dl-152-nier-mode-where-a-look-is-chosen-nier-onboarding-and-tour.md) L41257-L41522 `82d6db083cc53128d5ea92d85172628b0d2fb94851ad333010d826c6dbd8676a`
-- [087 - DL-158 — The Ask Card Fits Long Answers (2026-10-09)](087-dl-158-the-ask-card-fits-long-answers-2026-10-09.md) L41524-L41592 `57f39169cfa10af69aaec4fcc5e00af75f3a8999cd6f8397afd669362dfacd26`
-- [088 - DL-154 — Collaboration Graphs Stay In View As Teams And Rounds Grow (2026-10-09)](088-dl-154-collaboration-graphs-stay-in-view-as-teams-and-rounds-gro.md) L41594-L41721 `f8263466f8fd36861a3840457ce19967f8fc27872657cca7a880f9ed07e3e25a`
-- [089 - DL-156 — The Plan Card's Action Row And Schedule Line (2026-10-09)](089-dl-156-the-plan-card-s-action-row-and-schedule-line-2026-10-09.md) L41723-L41859 `0a37be9b0fbcaf6daec732245be1dd1a47f77d856eaef013df4f97468825af2a`
-- [090 - 5.6 Pro Chat Round Coverage Audit — Activity Polish And Where Technical Details Remains (2026-10-09)](090-5.6-pro-chat-round-coverage-audit-activity-polish-and-where-tech.md) L41861-L41991 `20854cea82a5eace425834aa0775d817df205bb85aab928d63a142b9a89d07a1`
-- [091 - DL-153 — The App Opens In Its Own Look, Setup's Starting Look, And The Four Families' Hero Moments (2026-10-09)](091-dl-153-the-app-opens-in-its-own-look-setup-s-starting-look-and-t.md) L41993-L42086 `1979b444f42d42b45e5c86af315132b2d8f1e300c7faef3f938efac685070572`
-- [092 - DL-162 — The Left Rail Takes The Polish Design (2026-10-09)](092-dl-162-the-left-rail-takes-the-polish-design-2026-10-09.md) L42088-L42543 `5db155cb579cf3460aafe3ef24aabd483fa11ec5ff8aac5c29dc7dafed7a5ee2`
-- [093 - DL-163 — The Jujutsu View Of Source Control Gets Its Own Five Tabs (2026-10-09)](093-dl-163-the-jujutsu-view-of-source-control-gets-its-own-five-tabs.md) L42545-L42729 `49b347077d98b4f6ac1e5323768c99e45021183d07d459c93600affaec843f64`
-- [094 - DL-173 to DL-179 — The Redesigned Usage Page In PMConcept7 (2026-10-09)](094-dl-173-to-dl-179-the-redesigned-usage-page-in-pmconcept7-2026-10.md) L42731-L42913 `3486a5c16dedc12f3343543721a5b4b9126d57f514be4d10beabc1619fcceab0`
+- [001 - Preamble](001-preamble.md) L1-L1 `6dcf055a4ff3df80cd8c88bc36c8f8c05db3d9e916d302c4abf5d48b9f662b88`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L137 `5aba92347f52799dd00da3063085f66171f3c716311f282f7cfb7d358f2f1d17`
+- [003 - Table of Contents](003-table-of-contents.md) L139-L163 `3fd9afec5b20509de3af928b7a819538013bc84aefad17dd12980aac639f4e3d`
+- [004 - 1. Executive Summary](004-1.-executive-summary.md) L165-L189 `567f17e31a174c91a321ad7d771cd70fa0910d350445adc0ebfada7bd2aa3ba4`
+- [005 - 2. Tech Stack and Renderer](005-2.-tech-stack-and-renderer.md) L191-L272 `480f9dbb47f3d2d2aed04450a3f78f70a64eecebe96d47fb2d4841529f414235`
+- [006 - PMConcept7 Home Workspace Control Reconciliation — 2026-08-04](006-pmconcept7-home-workspace-control-reconciliation-2026-08-04.md) L274-L1241 `78d433f184cf378f928949f93068a62b03967cb0be041916ab5209b405834049`
+- [007 - Known-37 recovery-unavailable GUI projection - 2026-07-18](007-known-37-recovery-unavailable-gui-projection-2026-07-18.md) L1243-L1249 `ae3b25fe16fedc220294726377f5d971e5adc1059cf96418821ca287f0e989c4`
+- [008 - GUI / PMConcept implementation-readiness repair addendum (2026-07-02)](008-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md) L1251-L1265 `890f8e3f80623ebc2efa86f21afec2b5879dfc84984d77da874e850653ab2eab`
+- [009 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](009-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L1267-L1376 `148a280a24a86ccf2a61a6ea7d6c755c8ae0ee0af91f57ca13ab036f777248e4`
+- [010 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](010-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L1378-L1500 `7e42958c7e6189ebaa048ed8941ece6c5f73cd95c3418c006eccce4806cf41d2`
+- [011 - 3. Master Layout](011-3.-master-layout.md) L1502-L1639 `1f6aa55a14119b62312a1a6378df7c9ec24601f8a5f3efcdf80bea2f4b916271`
+- [012 - 4. Navigation Architecture](012-4.-navigation-architecture.md) L1641-L1816 `c5d0d7f567f2cca6cfefb0255fd3a3db1f2b4b18c27171f91cef9815d5eba257`
+- [013 - 5. Panel System](013-5.-panel-system.md) L1818-L1970 `a415d479b55a57e3f0bf24c1b5a1f69d258e643601303fd3fba47bb126288172`
+- [014 - 6. Theme System](014-6.-theme-system.md) L1972-L2167 `9d4f6d9817f1ea788c529c812b1ebe9379a90f9fd26c10c38641b24e091b3b51`
+- [015 - 7. Views Specification](015-7.-views-specification.md) L2169-L2812 `1e5d4708740e465d62406b9f054d89f3e280723bbc593cab55ec30da428ad3c4`
+- [016 - 8. Widget Catalog](016-8.-widget-catalog.md) L2814-L2840 `fd280cc0ddaa7c2503ae0a41a64b5f9307760f970cdb1c1d83980ca595a64818`
+- [017 - 9. State Management](017-9.-state-management.md) L2842-L2912 `53d7e50aaaac1e127e3ebaa4297dc7d1e6021278a86a7e708fe59d4ddc657885`
+- [018 - 10. UX Patterns](018-10.-ux-patterns.md) L2914-L3039 `c4bb958b0d9a8d02c9c989b5c232d37af9382c5226131b79a97ace3b5597df16`
+- [019 - 11. Anti-Flickering and Scroll Preservation](019-11.-anti-flickering-and-scroll-preservation.md) L3041-L3083 `021012555c714e272aa5bfdbe53b0789e14383c895ffea00ea86f7b661a678fd`
+- [020 - 12. Responsive Design](020-12.-responsive-design.md) L3085-L3126 `51f9620a28c93681a4c530110a647805efb0864c26656ad20e86476d6c5846e3`
+- [021 - 13. Accessibility](021-13.-accessibility.md) L3128-L3167 `21402e358e1686e98d0ca18c2fcaa3a19697997a0d0af4f0d7f7dad4cf6f34a2`
+- [022 - 14. Slint File Organization](022-14.-slint-file-organization.md) L3169-L3312 `4ac97f8db1864a9ecdddadd325ed27631090ad9fd13500065e94a7e5bdb9a6a1`
+- [023 - 15. Persistence](023-15.-persistence.md) L3314-L3881 `21022831dce999e8203b9d4e0e0e36d2ca72b21b719660c681e490d0d4af28c9`
+- [024 - 16. Migration Mapping](024-16.-migration-mapping.md) L3883-L3961 `ad2433490a353ca63281064c9799e6df92f5737ba4aa6f0dea2973ba083ff3b6`
+- [025 - 17. Risks and Mitigations](025-17.-risks-and-mitigations.md) L3963-L3997 `200fb65b2932276b7b56e7d9d22b6092db8e09f9cdf18d41e454f8ca9dc81423`
+- [026 - 18. Promoted Features (Formerly Future Considerations)](026-18.-promoted-features-formerly-future-considerations.md) L3999-L4024 `0498b4335c62dcf17ba2fa04126d585f066193a157417ec771bc8a78329dc29b`
+- [027 - Appendix A: Cross-References](027-appendix-a-cross-references.md) L4026-L4063 `96c5d9e3b77276f01d24ebf07129352250b2cf31635796ea7f9bb6dc717c0438`
+- [028 - Appendix B: Locked Decisions Summary](028-appendix-b-locked-decisions-summary.md) L4064-L4084 `ea36b9623896c332662fcbade9bf31ccec595c925861d16202b62a8def775984`
+- [029 - Appendix C: Dashboard Widget Grid and Widget Catalog Integration (Addendum -- 2026-02-23)](029-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-.md) L4086-L4174 `f9e91977782b0d24546d4ed4e24544bf43b94098eadfce6b091a9b96783928f8`
+- [030 - 19. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)](030-19.-persona-editor-compatibility-disclosure-and-surface-level-pe.md) L4175-L4312 `94bb0da39ef28bc4f31bb25c0aaf08b2f5c247acfa4e80ff21ee3dd4c27279dc`
+- [031 - Rendering Surface Addendum (2026-03-07)](031-rendering-surface-addendum-2026-03-07.md) L4314-L4442 `6f84fd53d4af849e702e7b59c18008eae4f940473336c996846e07f5078b876c`
+- [032 - Assistant Planning UX Addendum (2026-03-08)](032-assistant-planning-ux-addendum-2026-03-08.md) L4444-L4553 `10cd0a1cbc5957cc71331790dface4c5c32bec177329a29ff7e45400219dbf98`
+- [033 - Compatibility/source-lineage - Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)](033-compatibility-source-lineage-scheduler-blocked-and-remediation-g.md) L4555-L4630 `2a3c1a2d48f4f36e2f937a98fec65f9d6e9596f1aa8e106815cda720631a1a8d`
+- [034 - Compatibility/source-lineage - Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)](034-compatibility-source-lineage-runtime-scheduler-blocked-state-gui.md) L4631-L4651 `186facfcec81c106d85cadedc6b775d5748ff26c5824976f439bda41e66506a3`
+- [035 - Compatibility/source-lineage - Runtime Blocked, Queue, and Recovery GUI Canonical Alignment (2026-03-09)](035-compatibility-source-lineage-runtime-blocked-queue-and-recovery-.md) L4652-L4679 `8e168a0905a6425948d9d3dd5bd44a25b3c0f008fdf90388d5a945e5a73357da`
+- [036 - Compatibility/source-lineage - Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)](036-compatibility-source-lineage-runtime-scheduler-recovery-gui-cons.md) L4680-L4697 `302e8f7ba7ccef94f2b93190c2253afd9a53c6b9d4e750c01cdb058d93c05bbb`
+- [037 - Canonical Blocked/Recovery Behavior](037-canonical-blocked-recovery-behavior.md) L4698-L4746 `b51a8f038179e032563efe886ebf23f85d6845decbd13c274395b166b906d410`
+- [038 - Compatibility/source-lineage - Blocked-State Visual Distinction and Recovery UX Addendum](038-compatibility-source-lineage-blocked-state-visual-distinction-an.md) L4747-L4813 `315cc37517b430b319422b293d5e92daa9083aeffb99ef11c6f776d4231f3ae8`
+- [039 - 15. Promoted widget catalog (web tools, planning, question, operation cards)](039-15.-promoted-widget-catalog-web-tools-planning-question-operatio.md) L4815-L5195 `5f61f21b09c8e8c238cfeafc6207ce852843e18d0778d9516b77458b4d7c9d26`
+- [040 - Owner / Consumer Map](040-owner-consumer-map.md) L5197-L5201 `cc41fc03d485e54685c2799602fa3850be47b6f05986ef2b0d6367148da4db97`
+- [041 - PlanUnits](041-planunits.md) L5203-L5254 `72fe203e3f97dcd5d6628ee0a8844b9f0cdc20479575d6269348ff1ff461b32c`
+- [042 - Remaining Runtime Canon Closure Addendum (2026-08-14)](042-remaining-runtime-canon-closure-addendum-2026-08-14.md) L5256-L5339 `ad73cff46ffe5ab3471ef4274f741e963391463f8a5c26f3438437f2f34ce8c6`
+- [043 - Shared Runtime Projection Addendum - 2026-08-13](043-shared-runtime-projection-addendum-2026-08-13.md) L5341-L26490 `fe12fd5a661a88cdfc255b9415a3cd770a12e9c2696e466402d593372f305ccb`
+- [044 - Migration Coverage](044-migration-coverage.md) L26491-L26501 `e9ce52820e84bf2b33ea935d1ddf0de3d5ca4ce29524e9f8091502e6556c54f7`
+- [045 - Ledger Compile Addendum - pldg-20260614-001](045-ledger-compile-addendum-pldg-20260614-001.md) L26503-L26627 `cd1ed238b6cddff37a0162ae415e0736321bc361a92ce0e4b798e28b96258193`
+- [046 - Ledger Compile Addendum - pldg-20260614-002](046-ledger-compile-addendum-pldg-20260614-002.md) L26629-L26668 `978ee8d9dc525c33bafe2446640f0a093a16650c59843e161aa72a0bc85e22bc`
+- [047 - Ledger Compile Addendum - pldg-20260615-001](047-ledger-compile-addendum-pldg-20260615-001.md) L26670-L26846 `ef215aef7ad3a8dd9e2b7d4a539bc70741674df6269c1b0f9456af4e8617565c`
+- [048 - Ledger Compile Addendum - pldg-20260616-001](048-ledger-compile-addendum-pldg-20260616-001.md) L26848-L26901 `be4e6cacfd8e716a985d04cb7b80ea5b06265d9518c5dd9cd6a9642febea3f23`
+- [049 - Ledger Compile Addendum - pldg-20260616-002](049-ledger-compile-addendum-pldg-20260616-002.md) L26903-L27138 `c0ee81302804b5f0c03cd4e25a78f5c323c23ac00b84557fabc9efa60c6e5e64`
+- [050 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](050-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L27140-L27250 `f0f96637c19a0f40a7ae348543da5ca5b3b474f325e2dc9a4cbcb82d21600f0e`
+- [051 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](051-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L27253-L27541 `2fa29c28c7e0228ba454b3db0a98d1ece5df34494314e70c6ccb2c8e23e605e5`
+- [052 - Ledger Compile Addendum - pldg-20260622-001-fff](052-ledger-compile-addendum-pldg-20260622-001-fff.md) L27543-L27594 `71b88a657f1bb35cd29c5511b00317fc36066998cff1dc28ea621a267df0924a`
+- [053 - Ledger Compile Addendum - pldg-20260626-001-feature-name](053-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L27597-L27783 `5679d37786113230fd163157c0e10a9ff387eef8d5a4bde61ddc31a78caba370`
+- [054 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](054-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L27785-L28266 `3f321d90009524bc706d77703d658a9bd38ae96e3d6884b0d92d541efca314dd`
+- [055 - Ledger Compile Addendum - pldg-20260629-001-feature-name](055-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L28268-L28458 `a911b7008f3485df3c17941b3991606b28e92179896002249b2645b2b21d4ea1`
+- [056 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](056-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L28460-L28615 `cd63b162f0489d1179bf161a3d2ed7a869da2096dd6ff8dbd3831bc291d283af`
+- [057 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](057-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L28617-L29082 `6c0df744cce263d238bfd2b49a1025c12cacc80090f74779105b91ee27da2901`
+- [058 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](058-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L29084-L29159 `f3ebc65ae3f4a5e4ddb787334b67159801d251ffaf12b7ceaa1fd38b00b55707`
+- [059 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](059-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L29160-L29170 `14ae30e3f5b96f9d4c2d61d8b2fbc56ec34c24152ec03b690dcc6fed31b95b32`
+- [060 - Usage GUI Propagation Addendum - 2026-07-09](060-usage-gui-propagation-addendum-2026-07-09.md) L29172-L29251 `d23af5db6d064f2b58ddd5ca1e1bde63901d5dabeacea3648ce76cc9c4ee07af`
+- [061 - PMConcept6 Concept Promotion Addendum - 2026-07-11](061-pmconcept6-concept-promotion-addendum-2026-07-11.md) L29253-L29497 `dabca473aee8546563905447a62d3d92b3364d51c45353c6a1c7f724f3f70fb6`
+- [062 - PMConcept6 Chat Polish Addendum - 2026-07-16](062-pmconcept6-chat-polish-addendum-2026-07-16.md) L29499-L29678 `d7760d0513b3b8239e7f667809f502a182da827fc7b9439d8c554797677fb75c`
+- [063 - Theme System Addendum - 2026-07-16](063-theme-system-addendum-2026-07-16.md) L29680-L30756 `3cd43682f8b09a92e28a0e19d54dda899da8ad9109b766c90bd549d889c26bca`
+- [064 - Settings System Addendum - 2026-07-16](064-settings-system-addendum-2026-07-16.md) L30758-L31638 `a4049faa193ee25d9a11ba90af5aae8ff1b3617cb14a0155d96fb643407b5c53`
+- [065 - PMConcept6 Shell Sweep Addendum - 2026-07-16](065-pmconcept6-shell-sweep-addendum-2026-07-16.md) L31640-L32137 `a556642a36bdb3ce03601f665c978f8be100a13155fa807e40bcd83adefd6c16`
+- [066 - PMConcept7 Concept Promotion Addendum - 2026-07-23](066-pmconcept7-concept-promotion-addendum-2026-07-23.md) L32139-L32826 `1711054f84bb51a32f74f9a87ec1c5180fad081511eae6c92329df098282c1d5`
+- [067 - Cozy Shelves Panel Reconciliation Addendum - 2026-07-27](067-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md) L32828-L33523 `c1b20d6321a7e98e81629309e544db428eb0207b66ee7535d20d2178ce336d47`
+- [068 - Run & Debug Revival Addendum - 2026-07-27](068-run-debug-revival-addendum-2026-07-27.md) L33525-L34587 `846fd48b099869a44c63aba1cc58f209dcbafa84d4028355baaa735297709c4c`
+- [069 - PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28](069-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md) L34590-L34833 `b69e8920df3dd112cea9baa3a796fbcefa509903cd95a8c04b1457f1fd267107`
+- [070 - PMConcept7 User-Polished Runtime Contract Addendum - 2026-08-27](070-pmconcept7-user-polished-runtime-contract-addendum-2026-08-27.md) L34835-L35279 `1e84d36288ae811a058b05aba69923581372f1d3d06e47cc33ad8c755f8cdf8a`
+- [071 - Settings, Product Onboarding, Guided Tour, Doctor, And Hover Presentation Reconciliation - 2026-08-31 (amended 2026-09-01)](071-settings-product-onboarding-guided-tour-doctor-and-hover-present.md) L35281-L36062 `e85aff52941ef0e35901d2e0605def78b7d6942f857ccf1fe2f477879d994cdb`
+- [072 - Forge/Backup/tsnet shared GUI consumer addendum - 2026-09-01](072-forge-backup-tsnet-shared-gui-consumer-addendum-2026-09-01.md) L36064-L36152 `b1d48b54c6d8ac8b1dbcea9a3f7b2c3a400024ef20709fefc75586487dc5cee1`
+- [073 - Source Control And Provider-Operational GUI Depth Repair - 2026-09-02](073-source-control-and-provider-operational-gui-depth-repair-2026-09.md) L36154-L36319 `1e430411ea77baeeae1c12630003b20ba6a2ee6224603bd029463edc6f783803`
+- [074 - Puppet Master Assistant Redesign GUI Specification - 2026-09-03](074-puppet-master-assistant-redesign-gui-specification-2026-09-03.md) L36321-L36628 `b84610f8852a47241001ce7fff6b22783755171aaf55889813b44dad879477fd`
+- [075 - Additive Correction v4 — Assistant Correction Surfaces (2026-09-03)](075-additive-correction-v4-assistant-correction-surfaces-2026-09-03.md) L36630-L36814 `d182a62aa78012084111fd42021d4af00ac20594cce976efc60b8d6a5457dcdb`
+- [076 - Cumulative v3 Assistant & Settings GUI Specification (2026-09-07)](076-cumulative-v3-assistant-settings-gui-specification-2026-09-07.md) L36816-L37518 `185259901655d00d47fe16daea59c0f44921d0aaf2be0c04c5d8a681f107d8ac`
+- [077 - DL-035 terminal research consumer planning - 2026-09-09](077-dl-035-terminal-research-consumer-planning-2026-09-09.md) L37521-L37855 `9c92fc658a2e17371c337d43af2e6545d06d315f3871a3b9032b78524a76d506`
+- [078 - DL-036 research decision-card presentation - 2026-09-09](078-dl-036-research-decision-card-presentation-2026-09-09.md) L37858-L37996 `60e800ef595ae7ce4cc1db79d7127bba6f5943f98c818e1f97e964c51ca055b0`
+- [079 - DL-043 — Accepted Jujutsu Surface And Contract Planning (2026-09-11)](079-dl-043-accepted-jujutsu-surface-and-contract-planning-2026-09-11.md) L37998-L38651 `6abc48ec07268f49da5c9adab3d8ce17be3bb6b906bb8e6695380dd0d329e136`
+- [080 - DL-062 — Accepted Gate List Presentation (2026-09-18)](080-dl-062-accepted-gate-list-presentation-2026-09-18.md) L38653-L38695 `86032aa5edf102e32881c2db48322a353c8ce471d83c29c8d58e5e36b22e99f0`
+- [081 - Chat WOW Concept Promotion Addendum - 2026-09-27](081-chat-wow-concept-promotion-addendum-2026-09-27.md) L38697-L38918 `c8b241cecaa2dd0876844799e4a9ad56f2b1aead9506ebc8c55ca27d9b89fa31`
+- [082 - Wand Modules Redesign Addendum (2026-09-27)](082-wand-modules-redesign-addendum-2026-09-27.md) L38920-L40130 `51fa63b2ff8d6fa33ba43e432674d628b499f8910cefff72da103c9196d9c192`
+- [083 - DL-139 — Skia Only Desktop And Leptos Web Client (2026-10-01)](083-dl-139-skia-only-desktop-and-leptos-web-client-2026-10-01.md) L40132-L40299 `edaae3e7d8fb22d188ba7761037988a12c9f2d989f9380c5423acb52fefdaf43`
+- [084 - DL-140 to DL-144 — Assistant Chat Neon Icons, Status Set, Send And Stop, And NieR Mode (2026-10-07)](084-dl-140-to-dl-144-assistant-chat-neon-icons-status-set-send-and-s.md) L40301-L40706 `cc6afab27af2af560ac878404c022f76f02afd308fde35ece5c4172ba0acf818`
+- [085 - DL-145 to DL-151 — Assistant Chat Tweaks: Hover Labels, The Coloured Wand, Activity Detail, Setup Sheets, Puppet Agents, The Ask Card And Retro (2026-10-08)](085-dl-145-to-dl-151-assistant-chat-tweaks-hover-labels-the-coloured.md) L40708-L41302 `bc0402070009a98496382bc354ee8c3f237842ab98bedac73b43faeeb52d0990`
+- [086 - DL-152 — NieR Mode Where A Look Is Chosen, NieR Onboarding And Tour, And Their Sounds (2026-10-07)](086-dl-152-nier-mode-where-a-look-is-chosen-nier-onboarding-and-tour.md) L41304-L41569 `86d67f95ad55205888d8c019bcd17751bb77846b34f718cce21d5cab15e349d4`
+- [087 - DL-158 — The Ask Card Fits Long Answers (2026-10-09)](087-dl-158-the-ask-card-fits-long-answers-2026-10-09.md) L41571-L41639 `23c3200f753a7648c94eb41cecc8cd827f24f5640031223c14434326cf43a4ba`
+- [088 - DL-154 — Collaboration Graphs Stay In View As Teams And Rounds Grow (2026-10-09)](088-dl-154-collaboration-graphs-stay-in-view-as-teams-and-rounds-gro.md) L41641-L41768 `a261757f41022e03a8fac31c795c464ba8fe65395b09ac9aefdacb6733698619`
+- [089 - DL-156 — The Plan Card's Action Row And Schedule Line (2026-10-09)](089-dl-156-the-plan-card-s-action-row-and-schedule-line-2026-10-09.md) L41770-L41906 `7c40be9630507888af3afd4a90be30d5bb191ce03e31c7e531a1e9174d3eec97`
+- [090 - 5.6 Pro Chat Round Coverage Audit — Activity Polish And Where Technical Details Remains (2026-10-09)](090-5.6-pro-chat-round-coverage-audit-activity-polish-and-where-tech.md) L41908-L42038 `1b948fbf216fdcf3230db0201ff92faf5e3fc6baf3a07a5fb35c01ef3da80b83`
+- [091 - DL-153 — The App Opens In Its Own Look, Setup's Starting Look, And The Four Families' Hero Moments (2026-10-09)](091-dl-153-the-app-opens-in-its-own-look-setup-s-starting-look-and-t.md) L42040-L42133 `8a343e053d6e1cb082cc088743d956f985b34b39a68f458ac0cd17571114c1ff`
+- [092 - DL-162 — The Left Rail Takes The Polish Design (2026-10-09)](092-dl-162-the-left-rail-takes-the-polish-design-2026-10-09.md) L42135-L42590 `efe19cf505df28bf88136710ecedf5c4e964977fbdc41124c5fea76e0cd618fa`
+- [093 - DL-163 — The Jujutsu View Of Source Control Gets Its Own Five Tabs (2026-10-09)](093-dl-163-the-jujutsu-view-of-source-control-gets-its-own-five-tabs.md) L42592-L42776 `b4da1d81f00d4547aec78cb72886715bd33214e11e26bbd42897cfe23a8bafb2`
+- [094 - DL-173 to DL-179 — The Redesigned Usage Page In PMConcept7 (2026-10-09)](094-dl-173-to-dl-179-the-redesigned-usage-page-in-pmconcept7-2026-10.md) L42778-L42960 `751878650052667c5a5950d92ada5a5ae70e70e8c8f3e66692e5e456c9a109bd`

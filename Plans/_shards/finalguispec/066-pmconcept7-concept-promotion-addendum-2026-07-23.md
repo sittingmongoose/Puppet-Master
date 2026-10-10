@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32132-L32779
+Source lines: L32139-L32826
 
-Source SHA256: `531f33841911f4b489578d3196daf49d16ffb0c03c93684d88fe8aaeddd22662`
+Source SHA256: `ffbec4a7a1ba043acf9904aed68ff9db0f2c7e7aa90125640c443b7d2ceca151`
 
 ---
 
@@ -322,38 +322,65 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The selector set formerly covered by the one-shot hover jiggle runs a pointer-tracking
-  magnet and spotlight hover system. The hovered box translates a few pixels toward the
-  pointer via a spring using the standalone translate channel only, never transform-matrix
-  composition that fights entrance animations. A continuous-intensity pointer-local accent
-  ring renders as a border band with a soft interior wash and an outward bloom, and
-  intensity ramps continuously from a bleed distance outside the box to full inside with
-  no snap at edges. Overlaying panels must not light boxes beneath them, and nested
-  targets resolve to the outer box. Per-theme feel knobs cover ring size and softness,
-  magnet strength, and spring stiffness and damping: retro is stiff with a small hard
-  ring, basic is restrained, glass has a wide soft ring and stronger magnet, and friendly
-  is springy with micro-overshoot, with the accent color riding the theme accent. Reduced
-  motion kills the entire system by clearing translate and glow and stopping the engine.
-  One shared animation driver services the system, effect writes are compositor-friendly
-  translate and opacity writes, and the driver self-suspends when nothing is hovered,
-  settling, or glowing. On magnetic Usage cards, the painted move and resize controls define
-  measured base-relative corner zones. Magnet translation attenuates continuously to zero as
-  the pointer enters either zone, while body magnetism remains unchanged elsewhere. A short
-  pointer-id-, time-, and bounds-scoped lease may hand an otherwise displaced corner control
-  to the existing drag/resize controller from document capture; unrelated buttons, links,
-  fields, pointer ids, expired leases, and points outside the corridor never activate it. Every
-  direct or rescued transaction clears the lease before capture and resets latent magnet state
-  on cleanup.
+  Every hoverable card, row, tile and icon in PMConcept7, the Usage plates included, runs one merged magnet and
+  spotlight hover system (PMH, DL-171). It replaces both the PM8 magnet, ring, wash and bloom and the Usage page's own
+  plate lift and pointer sheen, and DR-072 makes it the single owner of the hover grammar. One shared self-suspending
+  animation driver rides the single merged document pointer-move handler that F3-446 owns (`window.PM7_PMOVE` in the
+  concept); no element has a pointer-move listener of its own. The driver runs only while a spring is unsettled, the
+  NieR reticle travels, or a pointer or scroll change is pending, so it stops once a pointer resting on a box has
+  settled, and nothing animates at idle. Box rects are read when the hover enters a scope and after a scroll, a resize
+  or a change inside that scope, never for every box on every frame. Targets are the outermost match of the set:
+  markup that opts in with `data-pmh` (its value names the kind, card, row, tile or icon, and an empty value means
+  card), every sheen-treated element, and the listed card, row, tile and icon classes. `data-pmh="off"` takes an
+  element out of the set even when its class matches, and nothing inside `[data-pm-hover-exempt]` is a target or
+  hovers one. Nested targets resolve to the outer box, and overlaying panels do not light boxes beneath them
+  (occlusion). Intensity is one continuous field: 0 at the bleed distance outside a box, partial at its edge and full
+  a short ramp inside, with no snap at edges, so a neighbour inside the bleed catches the light on its near edge and
+  gets no magnet and no plate. In Basic, Friendly and Glass the hovered box leans toward the pointer by a small magnet,
+  2 to 2.5 px at an edge, on a spring that writes the standalone translate channel only, never transform-matrix
+  composition that fights entrance animations; tiles lean less, rows by a token amount, and icons and the Usage
+  plates get no magnet. The spotlight is a small soft pointer light, a radius of about 90 to 100 px with a Gaussian
+  roll-off (smaller on tiles and rows), that reveals a pre-painted sheen tint and a hairline along the border, under
+  the box's content; only the light's centre moves with the pointer. The emitted glow is halved from PM8's bloom and
+  pre-painted with a short elevation shadow on a plate that stays at the box's rest rect, never moving with the
+  magnet, and animates by opacity only. The family voices stay: Basic crisp with no overshoot, Friendly a warm pool
+  and a soft band with a gentle settle, Glass a slow drift and a bright specular hairline, the accent riding the
+  theme accent. Retro and NieR use no soft light, glow, blur, lean or neighbour light, and nothing follows the pointer
+  inside a box. Retro's form is Raise: the hovered card's plate rises 2 px up and to the left in one hard cut while
+  its own hard offset shadow grows from 3 to 5 px, so the shadow's far edge stays where it was; one 33 ms tick later a
+  1 px phosphor rule in the accent appears 1 px inside the border; on leaving, the rule goes first and the plate drops
+  one tick later; tiles rise 1 px with no rule, rows take the left rail's stepped row fill, and a 2 px edge hold keeps
+  the raise from toggling at the edge it moved off. NieR's form is Lock-on: one page-level reticle of four 8 px ink
+  corner brackets is placed on the card's rest rect in whole device pixels, opens 4 px outside the border and steps
+  closed to 3 px in two steps over 90 ms, then a 1 px ink line at .6 lands over the card's own border; between cards
+  the reticle cuts and never glides, and the card itself never changes. The corners are NieR's brackets part (Target
+  brackets); with brackets off the lock is the ink line alone on the same beat. NieR tiles and rows take the left
+  rail's NieR row ink fill. Under Reduced Motion there is no magnet, no travel, no pointer-following light and no
+  neighbour light, and the hovered box shows its hover state instantly: a static half-strength hairline and the plate
+  in Basic, Friendly and Glass, the raised shadow and rule without the rise in Retro, the closed lock in NieR. On a
+  software-rendered path the field, the light and the plate are off and the magnet stops, and the hovered box shows the
+  same static hairline. A gesture rest (a resize, a tab or panel drag, a Usage board operation or moment) drops the
+  hover and settles the magnet to 0, and a held pointer button keeps the hover state but calms the magnet. A hover
+  writes no inherited property and restyles no subtree: the continuous values are registered non-inherited
+  properties that the host's own pseudo-elements read, effects are pre-painted layers whose opacity changes plus the
+  translate, and no box-shadow or filter animates on a large element. The boundary: tab strips, resize dividers and
+  editor and terminal text surfaces are never targets and get no magnet, light or glow, at most a static hover tint;
+  icons keep their own quiet hover tint and nothing more from this system.
 gui_related: true
-gui_classification_reason: This unit defines visible magnet lean, spotlight ring, wash, and bloom hover behavior on shell boxes.
+gui_classification_reason: This unit defines the visible magnet lean, pointer light, emitted glow and the Retro and NieR hover forms on PMConcept7's cards, rows, tiles and icons.
 split_recommended: false
-depends_on: []
-unblocks: []
+depends_on: [F3-446, DL-171]
+unblocks: [DR-072]
 acceptance_criteria:
-- "Every box in the former jiggle selector set runs the magnet and spotlight hover system with spring translate toward the pointer and a continuous-intensity accent ring, interior wash, and outward bloom; Usage move/resize corner acquisition measures the painted controls in the card's base coordinates, continuously attenuates only card translation to zero near those controls, preserves body magnetism elsewhere, scopes rescue to one live pointer id plus a short time/bounds corridor, excludes other interactive controls, and clears the lease and latent magnet state on direct activation, rescued activation, commit, cancellation, and no-op cleanup."
-- "Intensity ramps continuously from a bleed distance outside the box with no snap at edges; overlaying panels do not light boxes beneath them, and nested targets resolve to the outer box."
-- "Per-theme knobs give retro a stiff small hard ring, basic restraint, glass a wide soft ring with stronger magnet, and friendly springy micro-overshoot, with the accent color riding the theme accent."
-- "Reduced motion clears translate and glow and stops the engine; one shared self-suspending driver performs compositor-friendly translate and opacity writes."
+- "Every card, row, tile and icon target in PMConcept7, the Usage plates included, takes its hover from this one system; no surface keeps a second hover engine, a `.pm-sheen:hover` lift or glow, or a pointer sheen of its own."
+- "One shared driver services every target through the single merged document pointer-move handler and adds no pointer-move listener; two seconds after the pointer leaves there is no hover-owned animation frame or running hover animation, and a pointer resting still inside a box adds no driver frames once the spring has settled."
+- "In Basic, Friendly and Glass the magnet moves a hovered card at most about 2.5 px at an edge, through the standalone translate channel only; icons and the Usage plates never move."
+- "The pointer light is a small soft pool, about 90 to 100 px in radius on cards, revealing a pre-painted sheen and hairline under the content; the emitted glow is half of PM8's bloom, pre-painted, opacity-only, and stays at the box's rest rect while the box leans."
+- "Intensity ramps continuously from the bleed distance outside the box with no snap at edges; neighbours inside the bleed light only their near edge; overlaying panels do not light boxes beneath them, and nested targets resolve to the outer box."
+- "Retro shows Raise (a 2 px hard-cut rise on a 3 to 5 px hard shadow whose far edge stays put, then a 1 px phosphor rule one 33 ms tick later, released in the reverse order) and NieR shows Lock-on (four 8 px ink corners stepping closed in two steps over 90 ms, then an ink line at .6, cutting between cards), gated by the brackets part with the ink-line fallback; neither shows a soft light, glow, blur, lean or neighbour light."
+- "Under Reduced Motion there is no magnet, travel, pointer-following light or neighbour light, and every family shows its hover state instantly; on a software-rendered path the field, light and plate are off and the magnet stops."
+- "A hover writes no inherited custom property and restyles no subtree beyond the hovered box and its lit neighbours, and no box-shadow or filter animates on a large element."
+- "`data-pmh` opts markup in with a kind, `data-pmh=\"off\"` opts it out, nothing inside `[data-pm-hover-exempt]` hovers, and tab strips, resize dividers and editor and terminal text surfaces get at most a static hover tint."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -363,12 +390,19 @@ reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
 - "Plans/FinalGUISpec.md"
+- "Concepts/onboarding/opus-5.5/src/js/18-hover.js"
+- "Concepts/onboarding/opus-5.5/src/css/22-hover.css"
 node_compile_hint:
   mode: magnet_spotlight_hover_system
   create_worknodes: false
 source_lineage:
 - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
 - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+- "Concepts/onboarding/opus-5.5/src/js/18-hover.js and src/css/22-hover.css (the PMH engine and its look; concept lineage only)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/ENGINE.md, SHA-256 bd3480ac65c053210ebc6d9193480acc3c04c6592276607332817615fd76de5e"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/FAMILY-SPEC.md, SHA-256 d66b09a302226c0682a59786d92c74d703cbdf7fc28f9bc63ffb509a07f321e8"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/RETRO-FINAL.md, SHA-256 49546103ce230dc1db08440e01bb7dc21b02d153c74138b7618cc491b4ddba81"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/NIER-FINAL.md, SHA-256 e647d369534c83251d9d8ba904765491db2338154f80a91ca12759a771c8e233"
 preserved_exact_tokens:
 - "magnet"
 - "spotlight"
@@ -376,14 +410,20 @@ preserved_exact_tokens:
 - "translate"
 negative_constraints:
 - "Do not compose the magnet through transform-matrix writes that fight entrance animations; use the standalone translate channel."
-- "Do not attach per-element pointer-move listeners; one shared driver services the whole selector set through the merged document pointer-move handler."
-- "Do not disable Usage card magnetism globally, synthesize a second pointerdown, or let a stale/foreign acquisition lease activate through another interactive control."
+- "Do not attach per-element pointer-move listeners; one shared driver services every target through the merged document pointer-move handler."
+- "Do not give icons or the Usage plates a magnet, and do not let the emitted glow move with the magnet."
+- "Do not animate box-shadow or filter on a large element, write an inherited custom property on hover, or keep the driver running at idle."
+- "Do not draw a soft light, glow or blur under Retro or NieR."
+- "Do not give tab strips, resize dividers or editor and terminal text surfaces a magnet, light or glow."
 compatibility_only_notes:
-- "Slint portability: the magnet maps to translate plus an animated spring, pointer tracking maps to TouchArea.mouse-cursor-position, the ring renders as a radial-gradient Rectangle with an inner cover instead of a mask, the wash is a second under-content Rectangle, and the bloom is a drop-shadow on the box (ScrollView clips automatically with no fixed proxy needed); no blend modes, filters, or canvas."
+- "Slint portability: the magnet maps to translate plus an animated spring, and pointer tracking maps to TouchArea.mouse-cursor-position. The concept draws the pointer light as one radial mask over a pre-painted sheen and hairline; Slint has no mask, so the hairline renders as a radial-gradient Rectangle centred on the pointer with an inner cover rectangle over it, inset by the line width and filled with the box's own fill, so that only the border band shows, and the sheen is a second, fainter radial-gradient Rectangle under the content; both are clipped to the box and take the field intensity as opacity. The plate is a drop-shadow on a sibling Rectangle at the rest geometry whose opacity animates (ScrollView clips automatically, with no fixed proxy needed). Retro's Raise is a translate plus a hard offset Rectangle and a 1 px inner border Rectangle; NieR's Lock-on is four corner Rectangles and a 1 px border Rectangle on stepped animations. No blend modes, filters, canvas or arbitrary-content backdrop blur."
 stale_retired_dispositions:
-- "The F3-446 one-shot hover jiggle wobble is retired on its entire selector set and superseded by this magnet and spotlight system; the F3-446 sheen hover-lift and glass depth parallax remain live."
+- "The F3-446 one-shot hover jiggle wobble is retired on its entire selector set and superseded by this magnet and spotlight system."
+- "Retired 2026-10-10 by DL-171: the PM8 accent ring, interior wash and offset bloom proxy, the F3-446 sheen hover-lift and glow, the Usage page's own plate lift and 280 px pointer sheen, and the per-theme knobs that gave retro a stiff small hard ring and glass a wide soft ring with a stronger magnet."
+- "Retired 2026-10-10: the Usage `.pm7u-card` corner-zone magnet attenuation and the pointer-scoped acquisition lease to the drag/resize controller; those cards no longer exist after the Usage port, and the Usage `.pmu-card` plates carry no magnet, so no lease is needed."
 owner_boundary_notes:
-- "F3-446 owns the sheen hover-lift, glass depth parallax, and the single merged document pointer-move handler this system rides on."
+- "F3-446 owns glass depth parallax and the single merged document pointer-move handler this system rides on; DR-072 makes this unit the single owner of the hover grammar."
+- "Tab silhouettes and tab hover belong to their tab owners (F3-505, F3-466); the resizers keep their own grab glow; the left rail's rows and icons keep their owner's hover."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```

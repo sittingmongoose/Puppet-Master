@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31640-L32130
+Source lines: L31640-L32137
 
-Source SHA256: `531f33841911f4b489578d3196daf49d16ffb0c03c93684d88fe8aaeddd22662`
+Source SHA256: `ffbec4a7a1ba043acf9904aed68ff9db0f2c7e7aa90125640c443b7d2ceca151`
 
 ---
 
@@ -80,22 +80,25 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Shell elements carrying the sheen treatment, approximately 40 shell elements, receive a
-  hover-lift with a sheen highlight, driven by event delegation from a shared pointer
-  handler and executed as time-bounded animation primitives rather than per-frame style
-  writes. Pointer parallax on background layers runs only while the glass theme family's
-  depth background mode is active, and all document-level pointer-move work, including
-  parallax sampling and the F3-465 magnet spotlight driver, is merged into a single shared
-  document pointer-move handler. Both effects are fully disabled under reduced motion.
+  Shell elements carrying the sheen treatment, approximately 40 shell elements, keep their place as hover targets:
+  the sheen class marks them into the F3-465 merged hover system, which owns their whole hover look and motion. The
+  former sheen hover-lift and its glow (the base, Friendly and Glass `.pm-sheen:hover` lift, border and glow) are
+  retired in favour of F3-465 (DL-171), and no sheen element carries a hover-lift or glow of its own. Hover is driven
+  by event delegation from a shared pointer handler and executed through compositor-friendly writes rather than
+  per-frame style writes. Pointer parallax on background layers runs only while the glass theme family's depth
+  background mode is active, and all document-level pointer-move work, including parallax sampling and the F3-465
+  hover driver, is merged into a single shared document pointer-move handler (`window.PM7_PMOVE` in the concept)
+  that every consumer hooks into rather than listening itself. Parallax is fully disabled under reduced motion, and
+  F3-465 sets the hover's reduced-motion form.
 gui_related: true
-gui_classification_reason: This unit defines visible sheen hover-lift and parallax motion on shell controls.
+gui_classification_reason: This unit defines the sheen hover targets, glass depth parallax and the single merged pointer-move handler on shell controls.
 split_recommended: false
 depends_on: [F3-428]
-unblocks: []
+unblocks: [F3-465]
 acceptance_criteria:
-- "Sheen-treated shell elements receive the hover-lift and sheen highlight on hover."
-- "Pointer parallax runs only in the glass depth background mode, and exactly one merged document pointer-move handler services parallax, delegated hover effects, and the F3-465 magnet spotlight driver."
-- "With reduced motion active, sheen hover-lift and parallax are both disabled."
+- "Sheen-treated shell elements are F3-465 hover targets and show F3-465's hover; no `.pm-sheen:hover` lift, border or glow of their own remains in any family."
+- "Pointer parallax runs only in the glass depth background mode, and exactly one merged document pointer-move handler services parallax, delegated hover effects, and the F3-465 hover driver."
+- "With reduced motion active, parallax is disabled and the sheen elements show F3-465's reduced-motion hover."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -111,6 +114,7 @@ node_compile_hint:
 source_lineage:
 - "Plans/FinalGUISpec.md:5482"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- "Concepts/onboarding/opus-5.5/tools/build.py, the `pmh:` PATCHES that keep the dispatcher and retire the sheen hover (concept lineage only)"
 preserved_exact_tokens:
 - "sheen"
 - "parallax"
@@ -118,11 +122,14 @@ preserved_exact_tokens:
 negative_constraints:
 - "Do not attach per-control pointer-move listeners or multiple document pointer-move handlers for these effects."
 - "Do not run pointer parallax outside the glass depth background mode."
+- "Do not restore a sheen hover-lift or glow beside the F3-465 hover."
 compatibility_only_notes:
-- "Slint portability: the hover-lift maps to animated hover states on opaque precomputed surfaces with no per-frame style writes; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+- "Slint portability: the sheen elements' hover follows F3-465's Slint notes; parallax maps to a translate on opaque precomputed background layers with no per-frame style writes; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
-- "The one-shot hover jiggle wobble on designated shell controls is retired per PMConcept7 rev 7, superseded by the F3-465 magnet spotlight hover system on the same selector set; the sheen hover-lift and glass depth parallax remain live and stay reduced-motion-disabled."
-owner_boundary_notes: []
+- "The one-shot hover jiggle wobble on designated shell controls is retired per PMConcept7 rev 7, superseded by the F3-465 magnet spotlight hover system on the same selector set; glass depth parallax remains live and stays reduced-motion-disabled."
+- "Retired 2026-10-10 by DL-171: the sheen hover-lift and its glow (`.pm-sheen:hover` in the base, Friendly and Glass), in favour of the F3-465 merged hover system."
+owner_boundary_notes:
+- "F3-465 owns the hover look and motion of every sheen element; this unit owns the sheen targets' place, glass depth parallax and the single merged document pointer-move handler."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
