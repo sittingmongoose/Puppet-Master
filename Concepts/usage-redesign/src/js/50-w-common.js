@@ -1600,7 +1600,16 @@
         });
         /* the row's 10 px padding each side */
         stack = needSt > ctx.tier.bw - 20;
+        /* a stacked row is 53 px with its 2 px gap after (measured, every look) */
+        if (stack) rowH = 55;
       }
+      /* a stacked row whose value and share leave the bar under 36 px gives its share to the row's hover tag (the Context
+         sources rows, "4.22k · 3.3%" and "10%", ran 10 px past a 198 px card) */
+      var stackVal = function (r) {
+        if (!stack || !isFinite(r.share)) return r;
+        if (36 + 10 + C.wrapW(r.valueText || '', 13, 620) + C.wrapW('100%', 12) + 6 <= ctx.tier.bw - 20) return r;
+        return Object.assign({}, r, { share: null, hover: [r.hover, 'share ' + (Math.abs(r.share) < 10 && r.share % 1 ? Math.round(r.share * 10) / 10 : Math.round(r.share)) + '%'].filter(Boolean).join(' · ') });
+      };
       var footOk = m.foot && C.fit(ctx.tier.bh, rowH, 38) >= rows.length;
       var fit = C.fit(ctx.tier.bh, rowH, (footOk ? 38 : 0) + 4);
       var shown = rows.length > fit ? rows.slice(0, Math.max(1, fit * rowH + 22 + 4 <= ctx.tier.bh ? fit : fit - 1)) : rows;
@@ -1634,7 +1643,7 @@
         var role = segs.join(' · ');
         return role === r.role ? r : Object.assign({}, r, { role: role, hover: [r.role, r.hover].filter(Boolean).join(' · ') });
       };
-      var c = C.chart(body, 'ranked', host, { rows: (inline || !C.w(ctx, 'l') ? shown.map(function (r) { return Object.assign({}, r, inline && r.valueShort ? { valueText: r.valueShort, valueFull: r.valueText } : {}, narrowName(r) ? { name: r.short, hover: r.hover || r.name } : {}); }) : shown).map(fitRole), scale: m.scale, inline: inline }, { label: ctx.def.title, tier: ctx.tier });
+      var c = C.chart(body, 'ranked', host, { rows: (inline || !C.w(ctx, 'l') ? shown.map(function (r) { return Object.assign({}, r, inline && r.valueShort ? { valueText: r.valueShort, valueFull: r.valueText } : {}, narrowName(r) ? { name: r.short, hover: r.hover || r.name } : {}); }) : shown).map(fitRole).map(stackVal), scale: m.scale, inline: inline }, { label: ctx.def.title, tier: ctx.tier });
       if (!c && !body._pmuDry) host.innerHTML = shown.map(function (r) { return '<div class="pmu-lrow"><span class="pmu-lname"><b>' + esc(r.name) + '</b></span><span class="pmu-lval">' + esc(r.valueText) + '</span></div>'; }).join('');
     }
   });
