@@ -3,7 +3,7 @@
   "$id": "https://puppetmaster.local/schemas/home_workspace_layout/2.0.0/home_workspace_layout_v2.schema.json",
   "title": "Puppet Master Home Workspace Layout V2",
   "description": "The sole Home layout record (DL-180, Plans/storage-plan.md#SP-330), stored per project and workspace tab under home_workspace_layout.v2:{project_id}:{workspace_tab_id}. It holds the panel split tree, the tab records, the view-state block, the chat column, the user's saved named layouts, the closed-tab stack and the migration stamp. It stores stable references only: it never owns editor buffers, terminal sessions, PTYs or scrollback, browser sessions, chat messages, or a dashboard's widget layout (each dashboard tab keeps its own under widget_layout:v1:dashboard:<board_id>, Plans/Widget_System.md#WS-030). Narrow-window states, overlays, open menus, hover and drag state are never saved. Invariants JSON Schema cannot express are listed in $comment and are checked by the owner before a write.",
-  "$comment": "Semantic invariants (Plans/storage-plan.md#SP-330, Plans/FinalGUISpec.md#F3-630): S1 each split has as many sizes as children and the sizes sum to 1, each above 0.02; S2 split, panel and tab ids are unique in the record; S3 every tab id placed in a panel has a record in tabs, every record in tabs is placed in exactly one panel, and no tab id is in two panels; S4 a panel's first pinned_count tab ids are exactly its pinned tabs (pinned tabs first); S5 at most one preview tab per panel: preview_tab_id is null or one of the panel's tab ids whose record has mode preview, and every tab with mode preview is its panel's preview_tab_id; S6 active_tab_id is null only for a panel with no tabs and otherwise one of its tab ids; S7 a panel with no tabs is either the only panel in the tree or locked; S8 a terminal tab's id is terminal:<terminal_session_id> of its ref; S9 view_state.focused_panel_id and maximized_panel_id are null or ids of panels in the tree, and recent_tab_ids are open tab ids; S10 the canonical JSON encoding of a tab's state is at most 16 KB (16,384 bytes); S11 closed_tabs entries hold tab ids that are not open; S12 a named layout's slot tree follows S1 and the never-the-parent's-axis rule.",
+  "$comment": "Semantic invariants (Plans/storage-plan.md#SP-330, Plans/FinalGUISpec.md#F3-630): S1 each split has as many sizes as children and the sizes sum to 1, each above 0.02; S2 split, panel and tab ids are unique in the record; S3 every tab id placed in a panel has a record in tabs, every record in tabs is placed in exactly one panel, and no tab id is in two panels; S4 a panel's first pinned_count tab ids are exactly its pinned tabs (pinned tabs first); S5 at most one preview tab per panel: preview_tab_id is null or one of the panel's tab ids whose record has mode preview, and every tab with mode preview is its panel's preview_tab_id; S6 active_tab_id is null only for a panel with no tabs and otherwise one of its tab ids; S7 a panel with no tabs is either the only panel in the tree or locked; S8 no two open terminal tabs name the same ref.terminal_session_id (one session per tab); a terminal tab's id is terminal:<the session it was first opened with> and never changes, while ref.terminal_session_id is the session it shows now, which differs from the id's suffix after Restart or a restore whose session did not survive (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180); S9 view_state.focused_panel_id and maximized_panel_id are null or ids of panels in the tree, and recent_tab_ids are open tab ids; S10 the canonical JSON encoding of a tab's state is at most 16 KB (16,384 bytes); S11 closed_tabs entries hold tab ids that are not open; S12 a named layout's slot tree follows S1 and the never-the-parent's-axis rule.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -99,8 +99,8 @@
     },
     "tab_id": {
       "type": "string",
-      "pattern": "^[a-z][a-z0-9-]*(?::.+)?$",
-      "description": "Opaque, stable tab id whose prefix names its kind (file:, buffer:, terminal:, browser:, link:, dashboard:, plan:, artifact:, output:, problems, ports, debug-console: and the rest of Plans/FinalGUISpec.md#F3-635). Never shown as text in the UI."
+      "pattern": "^[a-z][a-z0-9-]*(?:[:-].+)?$",
+      "description": "Opaque, stable tab id whose prefix names its kind (file:, buffer:, terminal:, browser:, link:, dashboard:, plan:, artifact:, output:, problems, ports, debug-console: and the rest of Plans/FinalGUISpec.md#F3-635). Forms without a colon (problems, ports, thread-<agentId>) are allowed; the part after the prefix may hold any characters. Never shown as text in the UI."
     },
     "tab_kind": {
       "type": "string",
@@ -524,8 +524,13 @@
           "then": {
             "properties": {
               "ref": {
-                "properties": {},
-                "additionalProperties": false
+                "properties": {
+                  "run_id": true
+                },
+                "additionalProperties": false,
+                "required": [
+                  "run_id"
+                ]
               }
             }
           }
@@ -591,8 +596,13 @@
           "then": {
             "properties": {
               "ref": {
-                "properties": {},
-                "additionalProperties": false
+                "properties": {
+                  "record_id": true
+                },
+                "additionalProperties": false,
+                "required": [
+                  "record_id"
+                ]
               }
             }
           }
@@ -671,8 +681,13 @@
           "then": {
             "properties": {
               "ref": {
-                "properties": {},
-                "additionalProperties": false
+                "properties": {
+                  "debug_session_id": true
+                },
+                "additionalProperties": false,
+                "required": [
+                  "debug_session_id"
+                ]
               }
             }
           }
@@ -753,6 +768,18 @@
         },
         "thread_id": {
           "$ref": "#/$defs/non_empty_string"
+        },
+        "run_id": {
+          "$ref": "#/$defs/non_empty_string",
+          "description": "The Crew, Review, Chat Room or BrainStorm run, or its evidence, that a run tab shows (Plans/Contracts_V0.md shared record envelopes carry run_id)."
+        },
+        "record_id": {
+          "$ref": "#/$defs/non_empty_string",
+          "description": "The read-only tool-call record (search, MCP, app or work record) that a record tab shows (Plans/Contracts_V0.md shared record envelopes carry record_id)."
+        },
+        "debug_session_id": {
+          "$ref": "#/$defs/non_empty_string",
+          "description": "The debug session a Debug Console tab shows (the debug_session_id of Plans/UI_Command_Catalog.md#UCC-077)."
         }
       }
     },

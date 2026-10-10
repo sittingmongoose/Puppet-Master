@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0",
   "title": "workspace.layout_changed settled event payload, version 2",
-  "description": "One event for every committed structural change of the v2 Home layout (Plans/Contracts_V0.md#CV-361, DL-180). change names what happened; the id lists name what it touched. An open that only reveals an existing tab, view-state writes (activate, focus, maximize, recent order), menus, hover and drags emit nothing. Events written at 1.1.0 stay readable through $defs/workspace_layout_changed_v1_compatibility_reader.",
+  "description": "One event for every committed structural change of the v2 Home layout (Plans/Contracts_V0.md#CV-361, DL-180). change names what happened; the id lists name what it touched. An open that only reveals an existing tab, view-state writes (activate, focus, maximize, recent order, the chat's shown and History pinned), the chat's pop-out and return (which append panel.undocked or panel.redocked), menus, hover and drags emit nothing; a reveal that expands its tab's collapsed panel is one panel_expanded under the open's command id. Events written at 1.1.0 stay readable through $defs/workspace_layout_changed_v1_compatibility_reader.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -82,9 +82,6 @@
             "cmd.editor.close_tab",
             "cmd.file.open",
             "cmd.nav.open_subject",
-            "cmd.panel.redock",
-            "cmd.panel.switch",
-            "cmd.panel.undock",
             "cmd.panel_tab.close",
             "cmd.panel_tab.keep",
             "cmd.panel_tab.move",
@@ -208,12 +205,10 @@
       "uniqueItems": true,
       "items": {
         "enum": [
-          "width_px",
-          "shown",
-          "popped_out"
+          "width_px"
         ]
       },
-      "description": "The chat column fields a chat_column_changed changed; empty for every other change."
+      "description": "The chat column fields a chat_column_changed changed: only width_px, from a width drag. shown and history_pinned are view state and popped_out is written with the pop-out's own panel.undocked or panel.redocked; none of them appends this event. Empty for every other change."
     },
     "commit_origin": {
       "type": "string",
@@ -511,7 +506,12 @@
         "properties": {
           "command_id": {
             "enum": [
-              "cmd.workspace_layout.set_collapsed"
+              "cmd.workspace_layout.set_collapsed",
+              "cmd.panel_tab.open",
+              "cmd.file.open",
+              "cmd.nav.open_subject",
+              "cmd.browser.open_workspace_preview",
+              "cmd.terminal.open"
             ]
           }
         }
@@ -658,10 +658,7 @@
         "properties": {
           "command_id": {
             "enum": [
-              "cmd.workspace_layout.resize_surface",
-              "cmd.panel.switch",
-              "cmd.panel.undock",
-              "cmd.panel.redock"
+              "cmd.workspace_layout.resize_surface"
             ]
           }
         }
@@ -789,237 +786,8 @@
       "minLength": 1
     },
     "workspace_layout_changed_v1_compatibility_reader": {
-      "$id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.1.0",
-      "title": "workspace.layout_changed settled event payload",
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "schema_id",
-        "schema_version",
-        "project_id",
-        "workspace_tab_id",
-        "command_id",
-        "interaction_transaction_id",
-        "origin",
-        "correlation_id",
-        "command_result_ref",
-        "receipt_refs",
-        "prior_layout_revision",
-        "new_layout_revision",
-        "mutation_kind",
-        "affected_surface_instance_ids",
-        "source_host",
-        "target_host",
-        "target_slot_index",
-        "target_surface_instance_id",
-        "insertion_edge",
-        "commit_origin",
-        "semantic_size_preset_id",
-        "settled_layout_ref",
-        "settled_at_utc",
-        "settled_only",
-        "preview_state_included",
-        "persisted"
-      ],
-      "properties": {
-        "schema_id": {
-          "const": "pm.event.workspace_layout_changed.v1"
-        },
-        "schema_version": {
-          "const": "1.1.0"
-        },
-        "project_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "workspace_tab_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "command_id": {
-          "type": "string",
-          "enum": [
-            "cmd.browser.open_workspace_preview",
-            "cmd.editor.close_panel",
-            "cmd.editor.open_panel",
-            "cmd.file.open",
-            "cmd.panel.switch",
-            "cmd.panel.undock",
-            "cmd.terminal.move_workgroup",
-            "cmd.terminal.split_pane",
-            "cmd.workspace_layout.move_surface",
-            "cmd.workspace_layout.reset",
-            "cmd.workspace_layout.resize_surface",
-            "cmd.workspace_layout.set_collapsed"
-          ]
-        },
-        "interaction_transaction_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "origin": {
-          "const": "home_workspace"
-        },
-        "correlation_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "command_result_ref": {
-          "type": "string",
-          "minLength": 1
-        },
-        "receipt_refs": {
-          "type": "array",
-          "minItems": 1,
-          "maxItems": 1,
-          "uniqueItems": true,
-          "items": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "prior_layout_revision": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "new_layout_revision": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "mutation_kind": {
-          "type": "string",
-          "enum": [
-            "open",
-            "close",
-            "focus",
-            "move",
-            "dock",
-            "redock",
-            "undock",
-            "resize_commit",
-            "collapse",
-            "expand",
-            "reset",
-            "restore",
-            "recovery",
-            "open_browser",
-            "open_file_target",
-            "focus_file_target",
-            "move_workgroup",
-            "terminal_split"
-          ]
-        },
-        "affected_surface_instance_ids": {
-          "type": "array",
-          "minItems": 1,
-          "uniqueItems": true,
-          "items": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "source_host": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "enum": [
-            null,
-            "home_main",
-            "dock_left",
-            "dock_right",
-            "dock_top",
-            "dock_bottom",
-            "floating"
-          ]
-        },
-        "target_host": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "enum": [
-            null,
-            "home_main",
-            "dock_left",
-            "dock_right",
-            "dock_top",
-            "dock_bottom",
-            "floating"
-          ]
-        },
-        "target_slot_index": {
-          "type": [
-            "integer",
-            "null"
-          ],
-          "minimum": 0
-        },
-        "target_surface_instance_id": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "minLength": 1
-        },
-        "insertion_edge": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "enum": [
-            null,
-            "before",
-            "after",
-            "inside"
-          ]
-        },
-        "commit_origin": {
-          "type": "string",
-          "enum": [
-            "pointer_release",
-            "keyboard_commit",
-            "semantic_preset",
-            "direct_control",
-            "reset",
-            "restore",
-            "migration",
-            "recovery"
-          ]
-        },
-        "semantic_size_preset_id": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "enum": [
-            null,
-            "compact",
-            "standard",
-            "wide",
-            "tall",
-            "focus"
-          ]
-        },
-        "settled_layout_ref": {
-          "type": "string",
-          "minLength": 1
-        },
-        "settled_at_utc": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "settled_only": {
-          "const": true
-        },
-        "preview_state_included": {
-          "const": false
-        },
-        "persisted": {
-          "const": true
-        }
-      },
-      "description": "Compatibility reader for workspace.layout_changed 1.1.0 events written before the v2 Home layout (DL-180). Retained exactly for reading old events; never a new write."
+      "$ref": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.1.0",
+      "description": "Reads events written at 1.1.0 (Plans/event_payloads/workspace_layout_changed.schema.json, referenced by its $id; one resource per URI). No 1.1.0 event is rewritten."
     }
   }
 }

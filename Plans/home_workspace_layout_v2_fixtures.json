@@ -10,7 +10,7 @@
   ],
   "source_lineage": [
     "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (named layout trees; concept lineage only)",
-    "Concepts/home-redesign/src/panels/js/14-layouts.js on branch concept/home-panels-20261009 (the default Home tabs; concept lineage only)"
+    "Concepts/home-redesign/src/panels/js/14-layouts.js at commit 35e51da2314d186d21798ebf2ae4823a6b2e284a (branch concept/home-panels-20261009), SHA-256 8d05d9b09028725d7a0bff444b20d7e655047bb7485350c8e771323223f5316e (the default Home tabs; concept lineage only)"
   ],
   "notes": "Each valid record validates against the schema and passes the semantic invariants S1-S12 listed in the schema's $comment. Each invalid case applies its JSON Patch ops (RFC 6902) to the named valid record; rejected_by says whether the schema or a named semantic invariant rejects it. An op value of the form {\"$generate\": {\"repeat\": c, \"count\": n}} stands for a string of n copies of c. The migration case's inputs are illustrative extracts: the v1 record validates against Plans/home_workspace_layout.schema.json, editor_groups stands for the editor's own workspace state (editor_workspace_state.v1) and terminal_sections for the terminal section, workgroup, pane and session records; expected_v2 is the record SP-330's conversion produces.",
   "valid": [
@@ -22,7 +22,7 @@
         "schema_version": "2.0.0",
         "project_id": "proj-tastebook",
         "workspace_tab_id": "wt-main",
-        "revision": 1,
+        "revision": 0,
         "updated_at": "2026-10-09T12:00:00Z",
         "root": {
           "node": "split",
@@ -995,6 +995,193 @@
       }
     },
     {
+      "name": "terminal_restarted",
+      "description": "The default Home layout after terminal:t2's session ended and Restart started session t7 in the same tab: the tab keeps its id terminal:t2 while its ref names t7 (SMPFS-180), and the record's revision is unchanged because Restart is no structural change.",
+      "record": {
+        "schema_id": "pm.home_workspace_layout.v2",
+        "schema_version": "2.0.0",
+        "project_id": "proj-tastebook",
+        "workspace_tab_id": "wt-main",
+        "revision": 0,
+        "updated_at": "2026-10-09T12:00:00Z",
+        "root": {
+          "node": "split",
+          "id": "split-root",
+          "axis": "column",
+          "children": [
+            {
+              "node": "split",
+              "id": "split-top",
+              "axis": "row",
+              "children": [
+                {
+                  "node": "panel",
+                  "id": "panel-dash",
+                  "tab_ids": [
+                    "dashboard:home",
+                    "dashboard:agents"
+                  ],
+                  "active_tab_id": "dashboard:home",
+                  "preview_tab_id": null,
+                  "pinned_count": 1,
+                  "collapsed": false,
+                  "locked": false
+                },
+                {
+                  "node": "panel",
+                  "id": "panel-docs",
+                  "tab_ids": [
+                    "file:src/main.rs",
+                    "file:src/routes/recipes.rs",
+                    "plan:ap-index"
+                  ],
+                  "active_tab_id": "file:src/main.rs",
+                  "preview_tab_id": null,
+                  "pinned_count": 0,
+                  "collapsed": false,
+                  "locked": false
+                }
+              ],
+              "sizes": [
+                0.5,
+                0.5
+              ]
+            },
+            {
+              "node": "panel",
+              "id": "panel-tools",
+              "tab_ids": [
+                "terminal:t1",
+                "terminal:t2",
+                "output:build"
+              ],
+              "active_tab_id": "terminal:t1",
+              "preview_tab_id": null,
+              "pinned_count": 0,
+              "collapsed": false,
+              "locked": false
+            }
+          ],
+          "sizes": [
+            0.6,
+            0.4
+          ]
+        },
+        "tabs": {
+          "dashboard:home": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": true,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "home"
+            }
+          },
+          "dashboard:agents": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "agents"
+            }
+          },
+          "file:src/main.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/main.rs"
+            }
+          },
+          "file:src/routes/recipes.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/routes/recipes.rs"
+            }
+          },
+          "plan:ap-index": {
+            "kind": "plan",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "plan_id": "ap-index"
+            }
+          },
+          "terminal:t1": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t1"
+            }
+          },
+          "terminal:t2": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t7"
+            }
+          },
+          "output:build": {
+            "kind": "output",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "channel": "build"
+            },
+            "ref": {}
+          }
+        },
+        "view_state": {
+          "focused_panel_id": "panel-docs",
+          "maximized_panel_id": null,
+          "recent_tab_ids": [
+            "file:src/main.rs",
+            "terminal:t1",
+            "dashboard:home"
+          ]
+        },
+        "chat_column": {
+          "width_px": null,
+          "history_pinned": false,
+          "popped_out": false,
+          "shown": true
+        },
+        "named_layouts": [],
+        "closed_tabs": [],
+        "migration": {
+          "origin": "created_default",
+          "source_key": null,
+          "source_schema_id": null,
+          "source_revision": null,
+          "migrated_at": null
+        }
+      }
+    },
+    {
       "name": "default_after_unreadable_source",
       "description": "An unreadable v1 record: the default Home layout, the old record kept where it was, and a notice.",
       "record": {
@@ -1002,7 +1189,7 @@
         "schema_version": "2.0.0",
         "project_id": "proj-tastebook",
         "workspace_tab_id": "wt-main",
-        "revision": 1,
+        "revision": 0,
         "updated_at": "2026-10-09T12:00:00Z",
         "root": {
           "node": "split",
@@ -1963,17 +2150,17 @@
       "why": "Pinned tabs come first."
     },
     {
-      "name": "terminal_tab_id_not_its_session",
+      "name": "two_terminal_tabs_one_session",
       "base_valid": "default_home",
       "rejected_by": "semantic:S8",
       "ops": [
         {
           "op": "replace",
           "path": "/tabs/terminal:t2/ref/terminal_session_id",
-          "value": "t9"
+          "value": "t1"
         }
       ],
-      "why": "A terminal tab's id is terminal:<terminal_session_id>."
+      "why": "One session per tab: two open terminal tabs never show the same session."
     },
     {
       "name": "closed_tab_stack_over_20",
