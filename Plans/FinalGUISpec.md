@@ -18092,11 +18092,11 @@ canonical_text: >-
   `kubectl exec`, and `kubectl port-forward` never auto-resume live attachment after crash or
   restart. Since DL-181 the terminal workspace state it restores is the Home layout record's terminal tabs (SP-330),
   terminal sections and panes being migration inputs only (SP-332). For a terminal tab whose session did not
-  survive, the explicit historical banner is F3-640's restored notice, an inline row above its saved scrollback, and
-  the tab starts a new session in the same folder and shell profile (the lead ruling in DL-181); a command that was
+  survive, the explicit historical banner is F3-640's restored notice, an inline row above its saved scrollback, and a local terminal tab starts a new session in the same folder and shell profile (the lead ruling in DL-181); a command that was
   running comes back ended and indeterminate, never done, and is never run again. A terminal tab whose profile is
   itself a privileged attachment (`docker exec/attach`, `kubectl exec`, `kubectl port-forward`) starts no new session
   by itself: it restores as an `interrupted_session` with Reconnect / Start new session, as above.
+  Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close tab), as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
 gui_related: true
 gui_classification_reason: >-
   This unit constrains terminal/dev-session recovery and privileged attach semantics.
@@ -18108,7 +18108,7 @@ acceptance_criteria:
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
-- "After a restart a terminal tab whose session ended shows the restored notice and a new session, its running command reads as ended with the earlier session, and a privileged-attachment tab waits for Reconnect / Start new session."
+- "After a restart a local terminal tab whose session ended shows the restored notice and a new session; an SSH-host tab asks Reconnect / Close tab first, its running command reads as ended with the earlier session, and a privileged-attachment tab waits for Reconnect / Start new session."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -18143,6 +18143,7 @@ negative_constraints:
 - "A restored terminal tab never re-runs a command that was running when its earlier session ended."
 compatibility_only_notes: []
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L14): An SSH-host terminal tab, like a privileged attachment, waits for a user choice instead of reconnecting on restore."
 - "Amended 2026-10-09 (DL-181): terminal sections and panes leave the restored state; a terminal tab whose session did not survive gets F3-640's restored notice and a new session, except a privileged-attachment tab, which keeps the interrupted-session rule."
 owner_boundary_notes: []
 owner_hints:
@@ -44639,13 +44640,13 @@ canonical_text: >-
   "Close this terminal? <process> is still running and will be stopped.", with Close terminal and Keep it open. A tab
   with no live session (restored after a restart or a reload, or a closed tab reopened) loads its saved scrollback
   before its new session starts (F3-645, SP-332), draws the dim rule `── Restored <time> · the earlier session ended ──`
-  above the new prompt, starts a new session in the same folder and shell profile, never presents itself as the old
+  above the new prompt, starts a new local session in the same folder and shell profile, never presents itself as the old
   session (F3-226, F3-228), and says so: "This terminal was restored with its scrollback (N images were not kept).
   Its earlier session ended when the page reloaded; this is a new session.", the parenthesis shown only when images
   were dropped, and for a reopened tab "This terminal was reopened with its scrollback" with "Its earlier session
   ended when the tab closed; this is a new session.". A command still running when the earlier session ended comes
   back ended and indeterminate, "ended with the earlier session", never as done. When the saved scrollback cannot be
-  loaded within its load budget (SP-332), the tab starts without it and says so. The gutter is 20 px wide (18 px
+  loaded within its load budget (SP-332), a local terminal tab starts without it and says so; an SSH-host tab still waits for Reconnect / Close tab. The gutter is 20 px wide (18 px
   when the body is under 400 px wide) and draws one 12 px glyph per prompt line with a 20 x 24 px hit target, never
   a stripe (F3-641). The scrollbar is 14 px wide (10 px when the body is under 400 px wide) and speaks the editor
   minimap's language: a viewport box with a 2 px radius and a 1 px border, command marks 55 % of the track wide in a
@@ -44686,6 +44687,7 @@ canonical_text: >-
   same tab by the explicit replacement of F3-548, Copy and Paste follow F3-238's clipboard rules, and the screen is
   the terminal core's own grid (F3-193, F3-216). The header row's buttons are the hover engine's icon kind, a static
   tint only, and the screen is never a hover target (DR-059, F3-465).
+  Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close tab), as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
 gui_related: true
 gui_classification_reason: Defines the terminal tab's label, header row, notices, gutter, scrollbar, sticky header, menus and keys in the universal panels.
 split_recommended: false
@@ -44697,7 +44699,7 @@ acceptance_criteria:
   - "The header row is F3-635's shared row with the folder, branch and, while a command runs, the command cut at 48 characters and its `m:ss` time on the left, and Find, Split, Maximize or Restore, and More on the right."
   - "At body widths of 399 and 400 px the gutter is 18 and 20 px and the scrollbar 10 and 14 px wide; below 150 px of body height the header row and the sticky command header are hidden."
   - "An ended session shows \"Session ended\" with Restart and Close tab and dims the screen to 72 %; closing a running terminal asks \"Close this terminal? <process> is still running and will be stopped.\" inline."
-  - "A restored or reopened terminal shows its saved scrollback, the dim rule and the restored notice above a new session in the same folder and profile, and a command that was running reads \"ended with the earlier session\"."
+  - "A restored or reopened terminal shows its saved scrollback, the dim rule and the restored notice above a new local session in the same folder and profile; an SSH-host tab asks Reconnect / Close tab before reconnecting, and a command that was running reads \"ended with the earlier session\"."
   - "The More, context and command-mark menus show exactly the items above in that order, and every menu opens in the one overlay root."
   - "Each key above does its action in a focused terminal, each key in the given-back list reaches the host, and every other Ctrl+key reaches the shell."
   - "No session id, tab id or nonce appears as text, and no notice is a modal or carries a coloured side stripe."
@@ -44747,6 +44749,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's kind registration, its script globals, its class and data-attribute prefixes and its terminal settings keys are lineage only; the concept's example profiles (zsh, bash, pwsh and one SSH host) and the agent name in its mark menu are demo data."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L14): SSH-host terminal restore asks Reconnect / Close tab before any remote reconnection."
   - "Supersedes F3-062's bottom runtime workgroup strip and F3-450's four-pane split guard, and retires the workgroup, sub-tab and editor-terminal-stack parts of F3-063 and F3-064 (DL-181)."
 owner_hints:
   - Plans/FinalGUISpec.md
