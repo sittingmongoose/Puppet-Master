@@ -392,8 +392,9 @@ function mountEngine(rec) {
   if (curProject == null) curProject = project;
   rec.offs = ['mount', 'commit', 'change', 'class'].map(function (e) { return b.on(e, function (d) { onBoardEvent(rec, e, d); }); });
   /* the Live mark pulses once per beat this board patches (the engine's 'beat' event; without it the mark is steady),
-     and during the demo hour the demo time moves with the cards it patched */
-  rec.offs.push(b.on('beat', function () { pulseLive(rec); if (rec.hourTimer && rec.paintLeft) rec.paintLeft(); }));
+     and during the demo hour the demo time moves with the cards it patched. A beat of an hour this tab did not start
+     (PMU.boards.hour.play() from elsewhere) paints too, so the demo time and its 2 s ticker start on the first one */
+  rec.offs.push(b.on('beat', function () { pulseLive(rec); if (rec.paintLeft && (rec.hourTimer || hourRunning())) rec.paintLeft(); }));
 }
 /* a change to the widgets ends the Undo of a Start from (Undo would throw the change away); the preset hold's own resizes
    (a set's widgets settling at their presets' fit heights, right after the Start from) are not a change; everything
@@ -458,13 +459,23 @@ function setView(rec, patch) {
   if (patch.range || String(b.state.scope).indexOf('provider:') !== 0) what = what.charAt(0).toLowerCase() + what.slice(1);
   rec.api.announce(nameOf(rec) + ' shows ' + what + '.');
 }
+/* Reset widgets replaces the widgets as a Start from does (a custom dashboard loses all of them), so it offers the same
+   Undo when it changed anything; a reset that changed nothing only says so */
 function resetEngine(rec) {
   var b = rec.b;
   if (!b) return null;
+  var before = snapshotBoards([rec.board]);
   var r = b.reset('room');
   var what = dashNumber(rec.board) ? nameOf(rec) + ' is empty again.' : nameOf(rec) + ' is back to its default widgets.';
-  rec.api.announce(what);
-  if (PMW.toast) PMW.toast(what);
+  var changed = JSON.stringify(snapshotBoards([rec.board])) !== JSON.stringify(before);
+  if (changed && rec.wrap) {
+    rec.api.announce(what + ' Undo is available for a few seconds.');
+    showUndo(rec, what, before, 'Undo Reset widgets');
+  } else {
+    rec.api.announce(what);
+    if (PMW.toast) PMW.toast(what);
+  }
+  if (rec.paintLeft) rec.paintLeft();
   return r;
 }
 
@@ -552,12 +563,12 @@ function startFrom(rec, s) {
    or focus is on it); a change to the widgets ends it. It sits right after the header row in the reading order, so
    Tab reaches Undo next. ---- */
 var UNDO_MS = 8000;
-function showUndo(rec, text, snap) {
+function showUndo(rec, text, snap, groupLabel) {
   dismissUndo(rec, { instant: true });
   if (!snap || !rec.wrap) return;
   var btn = h('button', { type: 'button', class: 'pmw-dash-undo-btn', 'data-pmh': 'icon', 'data-pm-hover-label': 'Undo',
     'data-pm-hover-detail': 'Put the widgets back as they were' }, [PMW.icon('reopen', { size: 14 }), h('span', { text: 'Undo' })]);
-  var el = h('div', { class: 'pmw-dash-undo pmw-pop', role: 'group', 'aria-label': 'Undo Start from', 'data-pmh': 'off' }, [
+  var el = h('div', { class: 'pmw-dash-undo pmw-pop', role: 'group', 'aria-label': groupLabel || 'Undo Start from', 'data-pmh': 'off' }, [
     h('span', { class: 'pmw-dash-undo-t', text: text }), btn]);
   var u = rec.undo = { el: el, snap: snap, timer: 0, held: false };
   function arm(ms) { clearTimeout(u.timer); u.timer = setTimeout(function () { if (!u.held && rec.undo === u) dismissUndo(rec); }, ms); }
@@ -633,13 +644,13 @@ function managePresetsSpec(rec) {
     }) };
 }
 function presetSpec(rec, p) {
-  return { id: 'dash-preset:' + p.id, title: p.name, className: 'pmw-dash-menu', width: 300, rows: [
+  return { id: 'dash-preset:' + p.id, title: p.name, className: 'pmw-dash-menu', width: 320, rows: [
     { id: 'preset-start', label: 'Start from this preset', icon: 'widget', sub: 'Replaces the widgets on ' + nameOf(rec),
       run: function () { startFrom(rec, { id: 'user:' + p.id, label: p.name, kind: 'user' }); } },
     { id: 'preset-rename', label: 'Rename preset...', icon: 'rename', run: function () { renamePreset(rec, p); } },
-    { id: 'preset-delete', label: 'Delete preset...', icon: 'cross', danger: true, sub: 'Dashboards keep the widgets they have', submenu: function () {
-      return { id: 'dash-preset-delete', title: 'Delete ' + p.name + '?', width: 300, rows: [
-        { id: 'preset-delete-yes', label: 'Delete preset', icon: 'cross', danger: true, sub: 'It leaves Start from on every dashboard', run: function () { deletePreset(rec, p); } },
+    { id: 'preset-delete', label: 'Delete preset...', icon: 'cross', danger: true, sub: 'Dashboards keep their widgets', submenu: function () {
+      return { id: 'dash-preset-delete', title: 'Delete ' + p.name + '?', width: 320, rows: [
+        { id: 'preset-delete-yes', label: 'Delete preset', icon: 'cross', danger: true, sub: 'It leaves Start from everywhere', run: function () { deletePreset(rec, p); } },
         { id: 'preset-delete-no', label: 'Keep it', icon: 'check', run: function () {} }
       ] };
     } }
@@ -920,7 +931,7 @@ function boardMenu(rec) {
     if (custom) {
       sections.push({ rows: [
         { id: 'rename', label: 'Rename dashboard...', icon: 'rename', run: function () { renameDash(rec); } },
-        { id: 'delete', label: 'Delete dashboard...', icon: 'cross', danger: true, sub: 'Closes it and forgets its widgets', submenu: function () {
+        { id: 'delete', label: 'Delete dashboard...', icon: 'cross', danger: true, sub: 'Its widgets go with it', submenu: function () {
           return { id: 'dash-delete', title: 'Delete ' + nameOf(rec) + '?', rows: [
             { id: 'delete-yes', label: 'Delete dashboard', icon: 'cross', danger: true, sub: 'Its widgets cannot be brought back', run: function () { deleteDash(rec); } },
             { id: 'delete-no', label: 'Keep it', icon: 'check', run: function () {} }

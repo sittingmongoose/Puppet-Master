@@ -516,6 +516,17 @@ html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-stab[aria-sele
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-stab[aria-selected="true"] :is(.pmw-tool-sword, .pmw-tool-sdot) { color: var(--o55-nier-on-ink); opacity: 1; }
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-stab[aria-selected="true"]:focus-visible::before { box-shadow: 0 0 0 2px var(--o55-nier-on-ink); }
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-sind { display: none; }
+/* The session names shorten last in every look (the dot keeps the state when the words go). The headers part sets the
+   row in spaced capitals, about a third wider, so in NieR the words go below 600 px of body (not 460), the paused-at
+   reference below 680 (not 640) and the buttons' words below 920 (not the row's 820); Retro's code face and Friendly's
+   face are a little wider, so their words go below 500. Measured on the two demo sessions at every 20 px. */
+@container pmw-body (max-width: 599.98px) { html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-tool-sword { display: none; } }
+@container pmw-body (max-width: 679.98px) { html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-tool-dbg .pmw-hfact[data-id="at"] { display: none; } }
+@container pmw-body (max-width: 919.98px) {
+  html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-tool-dbg > .pmw-hrow > .pmw-hrow-actions > .pmw-hbtn { padding: 0; width: 24px; }
+  html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-tool-dbg > .pmw-hrow > .pmw-hrow-actions > .pmw-hbtn .pmw-hbtn-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
+@container pmw-body (max-width: 499.98px) { html:is([data-theme^="retro"], [data-theme^="friendly"]):not([data-o55-nier="on"]) .pmw-tool-sword { display: none; } }
 html[data-o55-nier="on"] .pmw-br-prompt { box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16); border-color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmw-br-pbtn:first-child { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] :is(.pmw-br-hl, .pmw-br-hl.is-picked) { outline-color: var(--o55-nier-ink); }

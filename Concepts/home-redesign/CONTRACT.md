@@ -107,8 +107,10 @@ PM_HOME.registerKind('terminal', {
 });
 ```
 
-`tabMenu(state, tabId)` gets the tab's saved state (what `serialize` last wrote) and returns items in `api.menu`'s
-shape (section 4): `detail` is the second line, `checked` is honoured, `run` is called; missing or `[]` adds nothing.
+`tabMenu(state, tabId)` gets the tab's state as its `serialize` gives it when the menu opens (the saved state for a
+tab that is not mounted or has no `serialize`), so a row such as the mute shows its current check, and returns items
+in `api.menu`'s shape (section 4): `detail` is the second line, `checked` is honoured, `run` is called; missing or `[]`
+adds nothing.
 The rows go last in the tab menu, after a hairline (the terminal's notification mute, D38).
 
 `plus.sub()` returns one flat list. Entries without a `group` are the row's inline sub-row, every one of them unless
@@ -214,7 +216,8 @@ board lives in the board's own store, written by the engine.
   is gone) says so; `dispatch_accepted: false` is left to the engine's own notice. Otherwise the board was snapshotted
   first (`PMW.dashboard.snapshot([board])`) and an Undo notice offers to put it back (`PMW.dashboard.restore`) for 8 s,
   held while the pointer or focus is on it, ended by any later change to the widgets (not by the preset hold's own
-  resizes) and by Escape. Reset widgets (`board.reset('room')`) goes back to the board's own default set.
+  resizes) and by Escape. Reset widgets (`board.reset('room')`) goes back to the board's own default set, and when that
+  changed anything it offers the same Undo (a custom dashboard's reset empties it).
 - **Presets (P4).** Per user, shown on every dashboard: `PMU.boards.presets` (store `widget_presets:v1`). Save as
   preset... asks for a name in the package's prompt (`PMW.menu.prompt`, default the dashboard's name, made unique);
   rename uses the same prompt; delete is confirmed. Dashboards that started from a deleted preset keep their widgets.
@@ -225,7 +228,10 @@ board lives in the board's own store, written by the engine.
   `snapshot(ids?)` (each listed board flushed, then its own key read: `b.STORE_KEY` for a mounted board, this project's
   key otherwise) and `restore(snap)` (each board's own key written, `null` removes it, mounted boards reloaded; an
   envelope saved in another project is written as this project's). The tour's snapshots and the named layouts' boards
-  (P6) use these two, so both are per project.
+  (P6) use these two, so both are per project. Applying a saved named layout puts back every board it saved except a
+  custom dashboard that the applied layout does not hold (deleted or closed since) or whose envelope was saved in
+  another project (the same `dash-<n>` names another board there); those keep what they hold (`26-actions.js`
+  `namedBoards`).
 
 ## 4. The per-tab host API (`api` in `mount`)
 

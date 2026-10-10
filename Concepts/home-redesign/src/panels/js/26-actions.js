@@ -377,6 +377,20 @@ PMW.reopenClosed = function () {
   }
   return res.ok;
 };
+/* the boards a saved named layout puts back (P6): each board it saved, except a custom dashboard (dash-<n>) that the
+   applied layout does not hold (deleted since, whose Delete said its widgets cannot be brought back, or closed) or that
+   was saved in another project (the envelope's project_id: the same dash-<n> names another board here, which the
+   restore would overwrite). Home, Metrics and Monitoring come back as saved. */
+function namedBoards(boards) {
+  var l = L(), p = null, out = {};
+  try { p = PMW.dashboard.project ? PMW.dashboard.project() : null; } catch (_) { p = null; }
+  Object.keys(boards).forEach(function (id) {
+    var env = boards[id];
+    if (/^dash-\d+$/.test(id) && (!l.tabs['dashboard:' + id] || (env && env.project_id && p && env.project_id !== p))) return;
+    out[id] = env;
+  });
+  return out;
+}
 PMW.applyNamed = function (name, opts) {
   opts = opts || {};
   var built = PMW.buildNamed(name, opts.fresh ? null : L());
@@ -391,7 +405,7 @@ PMW.applyNamed = function (name, opts) {
     PMW.settings.set('panels.layout.named', name);
     var def = PMW.NAMED[name] || PMW.savedLayouts()[name];
     if (def && def.boards && PMW.dashboard && typeof PMW.dashboard.restore === 'function') {
-      try { PMW.dashboard.restore(def.boards); } catch (_) {}
+      try { PMW.dashboard.restore(namedBoards(def.boards)); } catch (_) {}
     }
     announce((def && def.label ? def.label : name) + ' layout');
   }
