@@ -106,11 +106,17 @@
     };
   }
   function planMeta(id) {
-    return function () {
+    return function (ctx) {
       var v = D.planView(id); if (!v) return '';
       var a = v.account, rp = v.provider, wins = (v.windowDefs || []).map(function (w) { return w.short.toLowerCase(); }).join(' + ') || 'no plan windows';
-      if (rp && rp.accounts.length > 1) return rp.accounts.length + ' accounts · ' + (a ? a.nickname + ' active' : 'none active') + ' · ' + wins;
-      return (a ? a.nickname + ' · ' + (a.plan || v.plan) : v.plan) + ' · ' + wins;
+      var parts = rp && rp.accounts.length > 1 ? [rp.accounts.length + ' accounts', a ? a.nickname + ' active' : 'none active', wins] : [a ? a.nickname + ' · ' + (a.plan || v.plan) : v.plan, wins];
+      /* whole parts only, the last first: a narrow plate's subtitle ended "3 accounts · Jared a..." (the plate's rows and
+         Details say every part) */
+      var bw = ctx && ctx.tier && ctx.tier.bw, l = PMU.theme.look(), k = l.nier || l.family === 'retro' ? 1.22 : 1.08;
+      /* the subtitle runs between the provider mark (34 px) and the head's tools column (its count, about 58 px); the
+         engine's own plate-head measure (42-cards.js fitSub: 12 px, the same margins) */
+      if (bw) while (parts.length > 1 && C.wrapW(parts.join(' · '), 12) * k > bw - 92) parts.pop();
+      return parts.join(' · ');
     };
   }
   /* Details: every account and every window with its reading, reset truth, source and sampled time (AAC: provenance per

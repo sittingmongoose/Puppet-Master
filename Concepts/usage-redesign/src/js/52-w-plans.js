@@ -137,11 +137,38 @@
       return Math.ceil(identH(a) + mh + 16);
     };
     var bandH = cols ? 26 : 0, MORE = 26;
-    var hs = accs.map(rowH), used = bandH, shownN = 0;
-    for (var i = 0; i < accs.length; i++) { if (used + hs[i] + (i < accs.length - 1 ? 0 : 0) <= bh + 4) { used += hs[i]; shownN++; } else break; }
-    if (shownN < accs.length) { while (shownN > 1 && used + MORE > bh + 4) { shownN--; used -= hs[shownN]; } used += MORE; }
-    shownN = Math.max(1, shownN);
-    var shown = accs.slice(0, shownN), folded = accs.slice(shownN);
+    var hs = accs.map(rowH);
+    /* the account line (small plates): an account with no room for its full row still shows, as one line (two where
+       narrow): its state glyph, nickname and state word, then every window's value ("5H 78% · WK 54%"; a missing reading
+       says its word, never 0 %). Content grows by rows: as the plate grows the first accounts take their full rows
+       (meters, resets) and the rest stay lines, so every account of the provider shows at every size where a line fits
+       (a 4x8 Codex plate was "3 more accounts at a taller size" over 155 px of nothing); only where even the lines run
+       out does "N more accounts" fold the rest (its hover lists each with its windows, Details everything) */
+    var WCODE = { fiveHour: '5H', weekly: 'WK', monthly: 'MO', daily: 'DAY' };
+    var wcode = function (w) { return WCODE[w.key] || String(w.short).slice(0, 3).toUpperCase(); };
+    var shortVs = function (w) { return w.resetPending ? 'pending' : w.vs === 'not_exposed' ? 'not exposed' : w.vs === 'disabled' ? 'disabled' : 'unknown'; };
+    var lineL = function (a) { return a.nickname + ' · ' + a.stateWord; };
+    var lineR = function (a) {
+      if (!n || allHiddenP(a)) return a.amounts.length ? amtText(a).replace(/\s+/g, ' ').trim() : !n ? a.noWindowsWord || 'No plan windows' : 'Quota not exposed';
+      if (a.windows.every(function (w) { return w.pct === null && !w.resetPending; })) return PMU.roster.vsWord(a.windows[0]);
+      return a.windows.map(function (w) { return wcode(w) + ' ' + (w.pct === null ? shortVs(w) : C.fmt(w.pct, 'pct')); }).join(' · ');
+    };
+    var lineW = Math.max(60, bw - 22);
+    var lineOne = function (a) { return tw(lineL(a), 13, 600) + tw(lineR(a), 12.5, 560) + 18 <= lineW; };
+    /* a line's height by its measured width (C.wrapLines counted "5H 78% · WK 54%" as two lines in a 127 px column where the
+       page sets one, and a 4x8 Claude plate showed one account over 110 px of room); a line the estimate lets through
+       that does not fit is taken by the fit pass into the "N more" count, exactly */
+    var nLines = function (s, px, wt) { return Math.max(1, Math.ceil(tw(s, px, wt) / lineW - 0.02)); };
+    var lineH = function (a) { return lineOne(a) ? 28 : 10 + 18 * nLines(lineL(a), 13, 600) + 17 * nLines(lineR(a), 12.5, 560); };
+    var lh = accs.map(lineH);
+    /* the most full rows with every other account as a line; else lines only, as many as fit, and the "N more" line */
+    var need = function (kf) { var u = kf && cols ? bandH : 0; for (var q = 0; q < accs.length; q++) u += q < kf ? hs[q] : lh[q]; return u; };
+    var shownN = accs.length; while (shownN > 0 && need(shownN) > bh + 4) shownN--;
+    var lineN = accs.length - shownN, used;
+    if (need(shownN) <= bh + 4) used = need(shownN);
+    else { shownN = 0; used = MORE; lineN = 0; while (lineN < accs.length && used + lh[lineN] <= bh + 4) { used += lh[lineN]; lineN++; } lineN = Math.max(1, lineN); }
+    var shown = accs.slice(0, shownN), asLines = accs.slice(shownN, shownN + lineN), folded = accs.slice(shownN + lineN);
+    if (!shownN) { cols = false; bandH = 0; }
     var tmpl = cols ? identW + 'px ' + p.windows.map(function () { return 'minmax(' + PWIN + 'px,1fr)'; }).join(' ') : '';
     var band = cols ? '<div class="pmu-colhead pmu-accband pmu-planband" style="grid-template-columns:' + tmpl + ';column-gap:' + PGAP + 'px"><span class="pmu-cap">' + esc(C.plural(accs.length, 'ACCOUNT', 'ACCOUNTS')) + '</span>' +
       p.windows.map(function (w) { return '<span class="pmu-cap">' + esc(String(w.label).replace(/ window$/i, '').toUpperCase()) + '</span>'; }).join('') + '</div>' : '';
@@ -163,23 +190,34 @@
       return '<div class="pmu-row pmu-accrow pmu-planrow is-comfy' + (cols ? '' : ' is-stack') + (a.effective ? ' is-eff' : '') + '" data-reveal data-flash-key="' + esc(a.key) + '" data-flash-sig="' + esc(sig) + '" data-acct="' + esc(a.key) + '" data-state="' + a.shownState + '"' +
         ' data-pmu-act="acct-inspect" data-value="' + esc(a.key) + '" role="button" tabindex="0"' + (cols ? ' style="grid-template-columns:' + tmpl + ';column-gap:' + PGAP + 'px"' : '') + '>' +
         '<i class="pmu-acclight" aria-hidden="true"></i>' + ident + cells + '</div>';
+    }).join('') + asLines.map(function (a) {
+      /* the line's values in their tones; its hover tag says every window with its reset, and it opens the account's Details */
+      var right = !n || allHiddenP(a) || a.windows.every(function (w) { return w.pct === null && !w.resetPending; }) ? '<span class="pmu-plword">' + esc(lineR(a)) + '</span>'
+        : a.windows.map(function (w) { return '<span class="pmu-plwin">' + esc(wcode(w)) + ' ' + (w.pct === null ? '<em>' + esc(shortVs(w)) + '</em>' : '<b data-tone="' + esc(w.tone || 'calm') + '">' + esc(C.fmt(w.pct, 'pct')) + '</b>') + '</span>'; }).join('<i class="pmu-dot"> · </i>');
+      var sig = a.shownState + '|' + a.effective + '|' + a.windows.map(function (w) { return w.pct; }).join(',');
+      return '<div class="pmu-row pmu-accrow pmu-planline' + (lineOne(a) ? '' : ' is-two') + (a.effective ? ' is-eff' : '') + '" data-reveal data-flash-key="' + esc(a.key) + '" data-flash-sig="' + esc(sig) + '" data-acct="' + esc(a.key) + '" data-state="' + a.shownState + '"' +
+        ' data-pmu-act="acct-inspect" data-value="' + esc(a.key) + '" role="button" tabindex="0"' + C.hover(p.name + ' · ' + a.nickname + (a.effective ? ' · Active' : ''), foldLine(a) + ' · ' + (a.fresh ? a.fresh.source + ' · ' : '') + C.sampledText(a.sampledAt) + ' · select for Details') + '>' +
+        '<span class="pmu-accglyph">' + (a.stateGlyph ? C.glyph(a.stateGlyph) : '') + '</span><span class="pmu-plid"><b class="pmu-ident' + (a.effective ? ' is-eff' : '') + '"' + C.shareAttr('acct:' + a.key) + '>' + esc(a.nickname) + '</b>' +
+        '<i class="pmu-dot"> · </i>' + stateHtmlP(a) + '</span><span class="pmu-plvals">' + right + '</span></div>';
     }).join('');
     var foldItems = folded.map(foldLine);
     /* the provider's plan facts in the room the rows leave (two columns where pairs fit), the rest counted in the head. The
        row estimates lean long so an account row is never cut; the facts and the foot take the room by the rows' likely
        height instead (each a little shorter), and the fit pass trims a fact or the foot that does not fit, exactly */
-    var tight = 0; shown.forEach(function (a, i) { tight += hs[i] - (cols ? 4 : 8); });
+    var tight = 0; shown.forEach(function (a, i) { tight += hs[i] - (cols ? 4 : 8); }); asLines.forEach(function (a, i) { tight += lh[shownN + i]; });
     /* the foot's height from its wrapped words (one line 34 px, about 18 a line more: a 226 px plate wraps "+3 pts vs norm ·
        provider reported" to two lines, and a one-line estimate let it run past the body) */
     var footText = m.foot ? String(m.foot).replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, ' ') : '';
     var footLinesN = footText ? Math.max(1, Math.min(4, C.wrapLines(footText, Math.max(80, bw - 26), 12.5))) : 1, footH = footLinesN > 1 ? 16 + 18 * footLinesN : 34;
-    var room = bh - bandH - tight - (folded.length ? MORE : 0) - 4, facts = (m.facts || []).slice(), footOk = m.foot && room >= footH + 4;
+    /* the foot only where every account shows (an account line comes before the foot's source words, which then go to the
+       head count's hover tag: a 4x8 Claude plate kept a two-line foot over "3 more accounts") */
+    var room = bh - bandH - tight - (folded.length ? MORE : 0) - 4, facts = (m.facts || []).slice(), footOk = m.foot && !folded.length && room >= footH + 4;
     if (footOk) room -= footH;
     var lay = facts.length ? C.factLayout(facts, bw) : null, fr = lay && !folded.length ? lay.fit(room) : { n: 0, used: 0 };
     var headItems = facts.slice(fr.n).map(C.factText).concat(m.foot && !footOk ? [String(m.foot).replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim()] : []);
     C.headMore(ctx, body, headItems);
-    body.innerHTML = '<div class="pmu-acc is-group pmu-planplate" data-mode="' + (cols ? 'full' : 'stack') + '"' + (folded.length || C.smallCard(ctx) || !headItems.length ? '' : C.foldHover(headItems)) + '>' + band + '<div class="pmu-accrows">' + rows + '</div>' +
-      (folded.length ? C.more(folded.length, folded.length === 1 ? 'account' : 'accounts', false, foldItems) : '') + (fr.n ? lay.html(fr.n) : '') + '</div>' + (footOk ? C.foot(m.foot, m.footGlyph) : '');
+    body.innerHTML = '<div class="pmu-acc is-group pmu-planplate" data-mode="' + (!shownN ? 'lines' : cols ? 'full' : 'stack') + '"' + (folded.length || C.smallCard(ctx) || !headItems.length ? '' : C.foldHover(headItems)) + '>' + band + '<div class="pmu-accrows">' + rows + '</div>' +
+      (folded.length ? C.more(folded.length, folded.length === 1 ? 'account' : 'accounts', bw < 320, foldItems) : '') + (fr.n ? lay.html(fr.n) : '') + '</div>' + (footOk ? C.foot(m.foot, m.footGlyph) : '');
     /* the facts give way before any account row (the engine's fit pass takes [data-fit-first] lines first, the last first),
        and the foot does where no fact shows (it names the source, so it stays while a fact can go instead). Without this
        a foot that ran 6 px past the body cost the plate its last account (Copilot at 1920, Basic Dark: 1 of 2 rows); what
@@ -202,6 +240,9 @@
   /* model: planView + {facts, pace, foot, plan, requests, tokens} (defined in 70-rooms-a.js); a provider with two or more
      accounts renders the account rows plate (rowsPlate above) */
   C.kind('limit', {
+    /* a rows plate whose "N more accounts" line sits over a free band renders once more with the band added (the engine's
+       grow step, as list and agenda do); the fit pass then trims what the estimate let through, exactly */
+    grow: function (body) { return !!(body && body.querySelector && body.querySelector('.pmu-planplate')); },
     render: function (body, ctx) {
       var m = ctx.model; if (!m) { body.innerHTML = C.empty('This provider is not in the selected scope.'); return; }
       if (m.provider && m.provider.accounts.length > 1 && ctx.tier.h !== 'h0') { rowsPlate(body, ctx, m); return; }
@@ -218,8 +259,16 @@
         var b = m.binding || wins[0];
         /* a strip: the effective account's binding window; every account of the provider is in the hover tag and Details */
         var all = m.provider && m.provider.accounts.length > 1 ? m.provider.accounts : [];
-        body.innerHTML = '<div class="pmu-limit is-h0"' + C.foldHover(all.map(foldLine)) + '><span class="pmu-limitinline">' + (all.length && m.account ? esc(m.account.nickname) + ' · ' : '') + (b ? esc(b.short) + ' <b>' + esc(b.pct === null ? PMU.roster.vsWord(b) : C.fmt(b.pct, 'pct')) + '</b>' + (b.pct === null ? '' : ' used · ' + esc(PMU.fmt.resetLine(b).text)) : esc('No plan windows')) +
-          (all.length > 1 ? ' · ' + esc(C.plural(all.length - 1, 'more account', 'more accounts')) : '') + '</span></div>';
+        /* the strip's parts fit its lines (Retro and Glass at 6x3 ran the third line 11-13 px past the body): the reset gives
+           way first, then the "N more accounts" count, then the nickname; each is in the hover tag and Details */
+        var lk0 = PMU.theme.look(), kx = lk0.nier || lk0.family === 'retro' ? 1.14 : lk0.family === 'glass' ? 1.06 : 1;
+        var lead = b ? esc(b.short) + ' <b>' + esc(b.pct === null ? PMU.roster.vsWord(b) : C.fmt(b.pct, 'pct')) + '</b>' + (b.pct === null ? '' : ' used') : esc('No plan windows');
+        var parts = [{ k: 'nick', h: all.length && m.account ? esc(m.account.nickname) : '' }, { k: 'lead', h: lead }, { k: 'more', h: all.length > 1 ? esc(C.plural(all.length - 1, 'more account', 'more accounts')) : '' },
+          { k: 'reset', h: b && b.pct !== null ? esc(PMU.fmt.resetLine(b).text) : '' }].filter(function (x) { return x.h; });
+        /* the strip's body is about 10 px taller than its tier budget (measured on the VM: bh 34-36, body 44-46) */
+        var maxL = Math.max(1, Math.floor((bh + 8) / 19.5)), stripText = function () { return parts.map(function (x) { return x.h.replace(/<[^>]+>/g, ''); }).join(' · '); };
+        ['reset', 'more', 'nick'].forEach(function (drop) { if (C.wrapLines(stripText(), ctx.tier.bw / kx, 12.5) > maxL) parts = parts.filter(function (x) { return x.k !== drop; }); });
+        body.innerHTML = '<div class="pmu-limit is-h0"' + C.foldHover(all.length ? all.map(foldLine) : b && b.pct !== null ? [b.label + ' ' + C.fmt(b.pct, 'pct') + ' used · ' + PMU.fmt.resetLine(b).text] : []) + '><span class="pmu-limitinline">' + parts.map(function (x) { return x.h; }).join(' · ') + '</span></div>';
         return;
       }
       if (wins.length * mh + footH > bh + 2) footH = 0;   /* every window stays visible before the foot does (R-PLAN-01) */

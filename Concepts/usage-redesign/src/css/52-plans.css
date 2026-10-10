@@ -16,6 +16,24 @@
 #panel-usage .pmu-planrow .pmu-meter .pmu-meterna .pmu-vs { white-space: normal; }
 /* the meta line leads with the state word in its tone (the Active mark) and wraps rather than cut */
 #panel-usage .pmu-planrow .pmu-identmeta .pmu-acstate b { font-weight: 600; }
+/* the account line of a small plate (an account with no room for its full row): glyph, nickname · state word, then every
+   window's value at the right ("5H 78% · WK 54%", values in their tones, a missing reading in words); where the line
+   does not fit the values go under the name. One row of the plate's table: the same separators, hover and Details */
+#panel-usage .pmu-planline { grid-template-columns: 16px minmax(0, 1fr) auto; column-gap: 8px; align-items: center; min-height: 28px; padding-top: 5px; padding-bottom: 5px; }
+#panel-usage .pmu-planline .pmu-plid { min-width: 0; font-size: 13px; line-height: 18px; color: var(--pmu-ink-2); overflow-wrap: break-word; }
+#panel-usage .pmu-planline .pmu-plid .pmu-ident { font-size: 13px; font-weight: 600; color: var(--pmu-ink); }
+#panel-usage .pmu-planline .pmu-plid .pmu-acstate { display: inline; }
+#panel-usage .pmu-planline .pmu-plid .pmu-acstate b { font-size: 12px; white-space: normal; }
+#panel-usage .pmu-planline .pmu-plvals { justify-self: end; font-size: 12.5px; line-height: 17px; color: var(--pmu-ink-3); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+#panel-usage .pmu-planline .pmu-plvals b { font-weight: 650; color: var(--pmu-ink); }
+#panel-usage .pmu-planline .pmu-plvals b[data-tone="warn"] { color: var(--pmu-ink-warn); }
+#panel-usage .pmu-planline .pmu-plvals b:is([data-tone="crit"], [data-tone="exhausted"], [data-tone="over"]) { color: var(--pmu-ink-crit); }
+#panel-usage .pmu-planline .pmu-plvals em { font-style: normal; }
+#panel-usage .pmu-planline.is-two { grid-template-columns: 16px minmax(0, 1fr); align-items: start; }
+#panel-usage .pmu-planline.is-two .pmu-accglyph { margin-top: 1px; }
+#panel-usage .pmu-planline.is-two .pmu-plvals { grid-column: 2; justify-self: start; text-align: left; white-space: normal; }
+html[data-o55-nier="on"] #panel-usage .pmu-planline .pmu-plvals b[data-tone="warn"] { color: var(--o55-nier-warn, var(--o55-nier-ink)); }
+html[data-o55-nier="on"] #panel-usage .pmu-planline .pmu-plvals b:is([data-tone="crit"], [data-tone="exhausted"], [data-tone="over"]) { color: var(--o55-nier-error, var(--o55-nier-ink)); }
 #panel-usage .pmu-planplate > .pmu-facts { margin-top: 6px; }
 #panel-usage .pmu-planplate > .pmu-more { margin-top: 2px; }
 
