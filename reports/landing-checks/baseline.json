@@ -838,32 +838,177 @@
    "count": 1,
    "error": "missing_ref",
    "fingerprints": [
-    "71bc7ba39ea0"
+    "3b42a94f84ff"
    ],
    "path": "Plans/00-plans-index.md",
    "subcheck": "support_refs"
   },
   {
    "check": "run-gates",
-   "count": 16,
-   "error": "raw_capture_manifest_path_unresolved",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
    "fingerprints": [
-    "21a61f2e6d90",
-    "3dd7d0368ec0",
-    "6d4b03c978f3",
-    "754ac6b4c159",
-    "7da68d814c20",
-    "84cb34d07a03",
-    "89f7626fc70e",
-    "8a50dc9bbda8",
-    "9c34c1b0924e",
-    "baee8a97e9fc",
-    "c11f21245f69",
-    "d0c89b39f6c9",
-    "d81e27d9cc5f",
-    "e03118e493b8",
-    "eb1d247cea7f",
-    "f37d0ed49674"
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v9_run_01/direct_appserver_receipts/slot-bravo_S10A_DECISION_A14.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "1c54b72c32ec"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/canary_004/r10-codex-app-canary-004-evidence/parent_capture.raw.jsonl",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "1c54b72c32ec"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/canary_004/r10-codex-app-canary-004-evidence/parent_prefix.raw.jsonl",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-001/fault_evidence/fault-019-forced-loss-instead-of-drain/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-001/fault_evidence/fault-024-loss-after-raw/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-002/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-002/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-003-final-self-test-001/fault_evidence/019-forced-loss-instead-of-drain/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-004-final-self-test-001/fault_evidence/025-loss-after-completion/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-004-final-self-test-001/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-005-final-self-test-001/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-005-final-self-test-001/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-008-final-self-test-002/fault_evidence/019-forced-loss-instead-of-drain/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-008-final-self-test-002/fault_evidence/027-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-002/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-002/fault_evidence/027-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_mode_census_mismatch",
+   "fingerprints": [
+    "08ea05121408"
    ],
    "path": "tests/fixtures/governance/raw_evidence_capture_modes.json",
    "subcheck": "json_syntax"
@@ -873,7 +1018,7 @@
    "count": 1,
    "error": "missing_ref",
    "fingerprints": [
-    "71bc7ba39ea0"
+    "3b42a94f84ff"
    ],
    "path": "Plans/00-plans-index.md",
    "subcheck": "lint_contractrefs"
@@ -1538,12 +1683,12 @@
    }
   },
   "run-gates": {
-   "failure_total": 3561,
+   "failure_total": 3562,
    "status": "fail",
    "subchecks": {
     "json_syntax": {
-     "reported": 16,
-     "sampled": 16
+     "reported": 17,
+     "sampled": 17
     },
     "lint_contractrefs": {
      "reported": 1,
@@ -1592,7 +1737,7 @@
    }
   }
  },
- "commit": "1bf8a778bd31ca918e3460ef77a38d7bd0bed441",
+ "commit": "eaf8ef508f29637569a226d0f15bbbe72471d90a",
  "export_buckets": [
   {
    "check": "audit-governance",
@@ -2715,8 +2860,10 @@
   }
  ],
  "max_fingerprints_per_bucket": 200,
- "recorded_at_utc": "2026-10-10T19:35:15Z",
- "run_dir": "Plans/.plan_migration/pds-20261010-004-current-planunit-snapshot",
+ "recorded_at_utc": "2026-10-10T20:12:58Z",
+ "run_dir": "Plans/.plan_migration/pds-20261010-005-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
- "untracked_inputs": []
+ "untracked_inputs": [
+  "tests/agent_packet_restrictions"
+ ]
 }
