@@ -53,7 +53,7 @@ var TOUR_COPY = {
   },
   widget_action: {
     title: 'Add a widget',
-    do: 'On your Home dashboard, choose Add widget, find Upcoming resets and add it. Then drag it to where you can glance at it.',
+    do: 'On your Home dashboard, choose Add widget, find Upcoming resets and add it. Then drag it up to where you can glance at it.',
     doEli5: 'Add Upcoming resets to Home.',
     after: 'Upcoming resets is on your Home dashboard now. Each dashboard keeps its own widgets.'
   }

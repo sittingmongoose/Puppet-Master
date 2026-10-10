@@ -10,7 +10,7 @@ var DEFAULT_TABS = PMW.DEFAULT_TABS = {
   'plan:ap-index': { kind: 'plan', label: 'Tenant-scoped analytics read path', state: { plan: 'ap-index' } },
   'terminal:t1': { kind: 'terminal', state: { profile: 'zsh', cwd: '~/tastebook/api', session: 't1', script: 'idle' } },
   'terminal:t2': { kind: 'terminal', state: { profile: 'zsh', cwd: '~/tastebook/api', session: 't2', script: 'cargo-test' } },
-  // D28: one Output tab, the channel is its view state; no fixed label, so the kind's own label shows. A saved layout
+  // D31: one Output tab, the channel is its view state; no fixed label, so the kind's own label shows. A saved layout
   // holding 'output:build' keeps it: that is a split-off tab fixed to the Build channel now
   'output': { kind: 'output', state: { channel: 'build' } }
 };
