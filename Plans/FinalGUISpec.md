@@ -43205,14 +43205,17 @@ addendum (F3-HOME-001 to F3-HOME-005), F3-501 to F3-504, the fixed bottom runtim
 stood in August (`PMConcept7_Home_Workspace_Audit_Packet_v1`), and they are superseded here. What survives of them is
 named in their own dated notes: the gesture transaction of F3-HOME-002 and F3-503 now moves panels and tabs, F3-505's
 contact-aware silhouette becomes the one tab silhouette, F3-HOME-004's write-then-read-back transaction and F3-HOME-005's
-Rust-owned model carry over to the split tree, and F3-504 keeps the web and native boundary for the chat's Pop out.
+Rust-owned model carry over to the split tree, and F3-504 keeps the web and native boundary, with Pop out a desktop app
+action.
 Superseded with a dated note: F3-501 (by F3-630), F3-070 (by F3-630), F3-197 (by F3-638) and F3-279 (by F3-638).
 Amended in place, each with a dated note: the 2026-08-04 block's heading paragraph, F3-HOME-001 to F3-HOME-005 and the
 block's superseded dispositions; F3-502 to F3-505; the executive summary; sections 3.1, 3.2, 3.5, 3.6, 4.1, 4.4, 5
-(5.1, the terminal section presentation rules, 5.2 to 5.4 and 5.6 to 5.8), 7.2, 7.3, 7.18, 7.20, 12.1, 12.3, 13.3, 15.1
-and 22 (the APR-036 to APR-038 rows); Appendix B item 4; Appendix C; F3-027, F3-034, F3-035, F3-039 to F3-041, F3-060,
-F3-061, F3-066 to F3-068, F3-071, F3-072, F3-102, F3-140, F3-143, F3-151 to F3-153, F3-195, F3-202, F3-206, F3-217,
-F3-271, F3-276, F3-421 to F3-423, F3-445, F3-463, F3-464, F3-466, F3-467, F3-469, F3-516, F3-517, F3-521, F3-540,
+(5.1, the terminal section presentation rules, 5.2 to 5.4 and 5.6 to 5.8), 7.2, 7.3, 7.12, 7.16.1, 7.18, 7.20, 8.2,
+12.1, 12.3, 13.3, 15.1, 15.4 and 22 (the APR-036 to APR-038 rows), and the Assistant redesign's Plan card (section 6)
+and run views (section 10); Appendix B item 4; Appendix C; F3-010, F3-019, F3-020, F3-027, F3-034, F3-035, F3-039 to
+F3-041, F3-060, F3-061, F3-066 to F3-068, F3-071, F3-072, F3-102, F3-132, F3-140, F3-143, F3-151 to F3-154, F3-156,
+F3-162, F3-195, F3-202, F3-205, F3-206, F3-217, F3-225, F3-234, F3-271, F3-276 to F3-278, F3-281, F3-282, F3-297,
+F3-421 to F3-423, F3-445, F3-463, F3-464, F3-466, F3-467, F3-469, F3-476, F3-516, F3-517, F3-520, F3-521, F3-540,
 F3-565 and F3-569; and, where their DL-162 notes or text name the bottom Debug tab or the bottom zone, the Run & Debug
 units F3-483, F3-484, F3-490 to F3-492, F3-495 and F3-496 and the DL-162 addendum's heading paragraph, which now point
 at the Debug Console tool kind. The left rail otherwise keeps its own canon (DL-162, DL-163, F3-618 to F3-625, DR-057):
