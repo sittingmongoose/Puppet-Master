@@ -5466,10 +5466,14 @@ plan_unit_id: ACD-039
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Standard Plan shows the written plan plus normalized TODO list in the plan panel, may open the artifact in the editor on demand, and has defined minimum artifact contents.
+canonical_text: >-
+  Standard Plan shows the written plan plus normalized TODO list in the plan panel, may open the artifact in the
+  editor on demand, and has defined minimum artifact contents.
+  Amended 2026-10-09 (DL-180): the editor the plan artifact opens in is a plan tab in the home centre, opened through
+  ACD-500 and the one opening module (Plans/FinalGUISpec.md#F3-634), still only when the user asks.
 gui_related: true
 gui_classification_reason: Plan panel display, editor opening, and artifact review are user-visible GUI behavior.
-depends_on: [ACD-038]
+depends_on: [ACD-038, DL-180, ACD-500]
 unblocks: []
 acceptance_criteria:
   - Standard Plan displays written plan content and normalized TODO list in the plan panel.
@@ -5497,6 +5501,8 @@ preserved_exact_tokens:
   - "verification / validation notes"
   - "unresolved questions"
 negative_constraints: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): opening the artifact in the editor means a plan tab placed by F3-634 through ACD-500."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -5549,15 +5555,21 @@ plan_unit_id: ACD-041
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Deep Plan produces a rich markdown planning document, automatically opens it in a preview-capable editing surface, defaults to planning_draft, and uses transient generated:// artifact buffers when not persisted.
+canonical_text: >-
+  Deep Plan produces a rich markdown planning document, automatically opens it in a preview-capable editing surface,
+  defaults to planning_draft, and uses transient generated:// artifact buffers when not persisted.
+  Amended 2026-10-09 (DL-180): the automatic open is the agent's own open, so the Deep Plan document lands as a
+  background plan tab with the hollow square and a polite announcement, and never takes keyboard focus or changes the
+  active tab of a panel the user is typing in (ACD-500, F3-634); the user's own click on it opens it and takes focus.
 gui_related: true
 gui_classification_reason: Automatic preview-capable editor opening and rich document rendering are user-visible GUI behavior.
-depends_on: [ACD-040]
+depends_on: [ACD-040, DL-180, ACD-500]
 unblocks: [ACD-042]
 acceptance_criteria:
   - Deep Plan documents open automatically in a preview-capable editing surface.
   - Non-persisted Deep Plan documents open as transient generated:// artifact buffers.
   - Source markdown and Mermaid text remain canonical even when richly rendered.
+  - "An automatically opened Deep Plan document lands as a background tab and never takes keyboard focus (DL-180)."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -5580,6 +5592,8 @@ preserved_exact_tokens:
   - "source markdown / Mermaid text"
   - "Mermaid Diagrams"
 negative_constraints: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the automatic open is an agent's background open under F3-634."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FileManager.md
@@ -22627,10 +22641,14 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Assistant Chat must expose visible Goal Mode activation and control paths without re-owning Goal Runtime policy. Users can start goals through a button, chip, icon, `/goal`, or natural-language activation. Assistant Chat supports a pre-goal shaping flow where the assistant helps create a goal prompt, acceptance criteria, constraints, and stop conditions before the user switches to Goal Mode. A visible active-goal indicator shows goal state labels including Running, Stopped, Paused, Blocked, and Complete, with Blocked carrying the precise blocker reason when available. Thread controls support pause, resume, stop, clear, edit, and update; stopped_by_user and cleared_from_thread remain distinct runtime states. The active Goal chip/status opens a menu or drawer with View goal, Edit goal, Pause, Resume, Stop, Clear, Show tasks, Show subgoals, and Show evidence/logs. Active-goal updates can be initiated with `/goal again`, asking for an update, or clicking a little icon next to the goal status. The Goal chip is separate from chat mode so Ask, Agent, Debug, Plan, Deep Plan, Agent + Goal, Debug + Goal, Plan + Goal, and Crew + Goal remain compatible presentation concepts. Goal UI reuses PMConcept cues including chat mode dropdown, slash command menu, sticky plan tracker, thread working pulse, context usage, active subagent indicator, files touched, message blocks, and hover/runtime popovers.
+  Amended 2026-10-09 (DL-180): View goal shows the Goal in Activity Detail's Goal panel
+  (Plans/FinalGUISpec.md#F3-593); there is no Goal tab (DL-147, ACD-500).
 gui_related: true
 gui_classification_reason: This unit defines user-visible chat activation paths, chips, indicators, and thread controls.
 depends_on:
   - GRS-002
+  - DL-180
+  - ACD-500
 unblocks: []
 acceptance_criteria:
   - Assistant Chat exposes button/chip/icon, `/goal`, and natural-language activation paths.
@@ -22723,6 +22741,8 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not make a running goal indistinguishable from ordinary chat mode.
   - Do not let Assistant Chat invent a lifecycle that diverges from Goal Runtime state.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): View goal shows the Goal panel of Activity Detail; the chat's Goal tab is gone (DL-147)."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Goal_Runtime_System.md
@@ -24620,15 +24640,19 @@ canonical_text: >-
   Pop out, Cycle layout, and Close remain surface affordances without new command
   registrations. The kebab follows the header chrome menu sprout and chrome contract
   (ACD-442) and tracks `aria-expanded`.
+  Amended 2026-10-09 (DL-180): Pop out dispatches cmd.panel.undock with chat and is the chat's only way to move
+  (Plans/FinalGUISpec.md#F3-637, Plans/UI_Command_Catalog.md#UCC-203). The popped-out chat's kebab menu lists Dock
+  back (cmd.panel.redock), which returns the chat to its column, and Close chat. Cycle layout is retired, because the
+  chat is never floated inside the window. Neither is a new command registration.
 gui_related: true
 gui_classification_reason: Defines the visible more-options kebab and its menu contents.
 split_recommended: false
-depends_on: [ACD-071, ACD-442]
+depends_on: [ACD-071, ACD-442, DL-180, F3-637, UCC-203]
 unblocks: []
 acceptance_criteria:
   - "The docked chat header shows one vertical-ellipsis kebab instead of a row of standalone Duplicate/Archive/Pop out/Close icon buttons; its menu lists Duplicate thread, Archive thread, Pop out, and Close chat as full-width rows with icon plus label."
-  - "The floating chat header kebab menu lists Cycle layout and Close chat."
-  - "Archive dispatches `cmd.chat.archive`; Duplicate, Pop out, Cycle layout, and Close remain surface affordances with no new command registrations."
+  - "The popped-out chat's header kebab menu lists Dock back and Close chat; Cycle layout is retired (DL-180)."
+  - "Archive dispatches `cmd.chat.archive`, Pop out dispatches cmd.panel.undock and Dock back cmd.panel.redock (UCC-203); Duplicate and Close remain surface affordances with no new command registrations."
   - "The kebab menu opens and closes per the ACD-442 sprout and chrome contract with aria-expanded tracked."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -24659,6 +24683,7 @@ compatibility_only_notes:
   - "Slint portability: the kebab menu renders as an opaque precomputed popup surface with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
   - "Docked chat header row of four standalone icon buttons (Duplicate thread, Archive thread, Pop out, Close chat) retired; the actions are hosted in the more-options kebab menu."
+  - "Amended 2026-10-09 (DL-180): the floating chat's Cycle layout is retired; Pop out and Dock back dispatch UCC-203's existing commands."
 owner_boundary_notes: []
 owner_hints:
   - Plans/assistant-chat-design.md
@@ -24685,17 +24710,22 @@ canonical_text: >-
   selected threads show a tinted fill, an inset left accent bar, a hairline outer ring, and a
   bolder title, with role colors carried to the bar and border. The docked and pop-out chat
   mounts share the sidebar builder and behave identically.
+  Amended 2026-10-09 (DL-180, DL-184): this Chats rail is PMConcept7's current thread list. One thread-history list
+  survives, the 5.6 Pro chat's History list, which replaces this rail when the chat is ported (ACD-500, ACD-501);
+  until then this unit's rules stand, and its pop-out mount is the popped-out chat (Plans/FinalGUISpec.md#F3-637). Its
+  left accent bars retire now (Plans/DRY_Rules.md#DR-069): an expanded selected thread shows by its tinted fill,
+  hairline outer ring and bolder title, with the role colour on the ring, and an active collapsed row by its glow.
 gui_related: true
 gui_classification_reason: Defines visible thread sidebar labeling, provenance, collapse, and selection behavior.
 split_recommended: false
-depends_on: [ACD-071]
+depends_on: [ACD-071, DL-180, DL-184, ACD-500]
 unblocks: []
 acceptance_criteria:
   - "The thread sidebar label reads Chats at an unchanged size across expanded and collapsed states, with a compact vertically centered new-thread control."
   - "No stream provenance banner renders in the thread; first paint is the first user message, and provenance stays reachable through thread metadata/audit surfaces."
   - "There is no chevron collapse control; crossing the collapse width threshold toggles collapsed chrome only, without locking width or disabling resize."
-  - "Collapsed rows truncate the title, hide status/timestamp/summary, and carry the thread-status color on border and glow; active collapsed rows keep glow plus a left accent bar."
-  - "Expanded selected threads show tinted fill, inset left accent bar, hairline outer ring, and bolder title with role colors on bar and border, identically in docked and pop-out mounts."
+  - "Collapsed rows truncate the title, hide status/timestamp/summary, and carry the thread-status color on border and glow; active collapsed rows keep their glow and show no left accent bar (DL-184)."
+  - "Expanded selected threads show tinted fill, hairline outer ring and bolder title with the role color on the ring and no left accent bar (DL-184), identically in the chat column and the popped-out chat."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -24723,6 +24753,7 @@ stale_retired_dispositions:
   - "Sidebar HISTORY label retired; the rail is labeled Chats."
   - "Chevron collapse button retired; collapse is resize-driven content-chrome toggling."
   - "Stream provenance banner (Thread created from ... injected context) retired from thread first paint; provenance remains in thread metadata and audit surfaces."
+  - "Amended 2026-10-09 (DL-180, DL-184): the rail's two left accent bars retire; the 5.6 Pro History list replaces this rail at the port."
 owner_boundary_notes:
   - "Plans/FinalGUISpec.md F3-469 owns chats-rail geometry, pixel thresholds, and per-theme presentation skins; this unit owns the chat-behavior semantics (label, provenance removal, resize-driven collapse, selection and status disclosure)."
 owner_hints:
@@ -24769,6 +24800,11 @@ canonical_text: >-
   Curated/Raw routing, fallback, cache, limits, compaction-state, and history views. No
   Assistant clone, app-wide Usage substitute, second detail drawer, or second context
   store is permitted.
+  Amended 2026-10-09 (DL-180): Home's seat is the fixed chat column on the right (Plans/FinalGUISpec.md#F3-637), not a
+  saved dock: returning Home puts the same Assistant back in its column, and its only other place is the popped-out
+  window, which Dock back returns (Plans/UI_Command_Catalog.md#UCC-203). Boot never restores a floating Home
+  placement, and nothing floats the chat inside the window. More Details opens or reveals the thread's context tab in
+  the home centre (ACD-500).
 gui_related: true
 gui_classification_reason: The unit defines cross-page Assistant visibility, identity continuity, context-ring fields, menu actions, and detail views.
 split_recommended: false
@@ -24776,7 +24812,7 @@ depends_on: [ACD-441, ACD-445, ACD-447, CS-068, UCC-147, WM-045, UIW-012, DR-039
 unblocks: []
 acceptance_criteria:
   - Home, Projects, Planning Wizard, Orchestrator, Usage, Settings, and every other primary page show/hide or re-seat the same Assistant node/store rather than cloning it.
-  - Returning Home restores that same node to the saved Home dock with active thread, draft, attachments, transcript, context, details, and focus continuity intact; boot never restores floating placement.
+  - "Returning Home restores that same node to the chat column (F3-637) with active thread, draft, attachments, transcript, context, details, and focus continuity intact; boot never restores floating placement (DL-180)."
   - The context ring/menu exposes current-window use, effective window/tokens loaded, cache hit, and source composition.
   - The click menu contains Compact Now and More Details; opening or hovering the menu dispatches nothing.
   - Compact Now dispatches cmd.chat.compact_context only after explicit selection and updates the ring plus detail state coherently for started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, and failed results.
@@ -24802,6 +24838,8 @@ source_lineage:
   - Concepts/pm7-tools/build_pm7.py#T33-T41 (source-owned transforms)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
+  - "Plans/Decision_Log.md#DL-180"
+  - "Plans/assistant-chat-design.md#ACD-500"
 preserved_exact_tokens:
   - Compact Now
   - More Details
@@ -24816,6 +24854,8 @@ negative_constraints:
   - Do not dispatch compaction from hover or menu disclosure.
   - Do not route thread context details through app-wide Usage or create a second detail store.
   - Do not treat concept-local storage as canonical Assistant state.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the saved Home dock is the fixed chat column of F3-637; DL-180 is cited in source_lineage because a depends_on edge would close a cycle through DL-147."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -25060,13 +25100,17 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Opening Activity Detail defaults to a pinned left panel. An explicit Unpin action converts the active panel to floating, but clicking any activity-preview item opens its record PINNED by default, superseding earlier unpinned state. Pinned History and pinned Activity Detail share the available width without overlapping gutters. Activity previews are bounded non-scrolling previews; separate Open Activity buttons are removed and clicking a preview item navigates directly to its corresponding detail view.
+  Amended 2026-10-09 (DL-180): History opens as a flyout over the chat by default, and pinning it widens the chat
+  column by the list's own width instead of narrowing the messages (Plans/FinalGUISpec.md#F3-637, ACD-500). The width
+  that pinned History and pinned Activity Detail share is the chat column's, never the window's (ACD-501), and
+  Activity Detail stays inside the chat.
 gui_related: true
 gui_classification_reason: Activity Detail panel docking, preview navigation, and sidebar coexistence.
-depends_on: [ACD-452]
+depends_on: [ACD-452, DL-180, ACD-500]
 unblocks: [ACD-454]
 acceptance_criteria:
   - Activity Detail opens pinned on the left by default; unpin makes it float; subsequent preview clicks open pinned.
-  - Pinned History and pinned Activity share available width cleanly.
+  - "History is a flyout by default and pinning it widens the chat column by its own width; pinned History and pinned Activity share the column's width cleanly (DL-180)."
   - Hover previews do not scroll internally; clicking preview rows opens corresponding detail.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
@@ -25093,6 +25137,8 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not persist prior unpinned state over the default pinned navigation rule.
   - Do not keep separate Open Activity buttons in activity previews.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): History is a flyout by default and its pin widens the chat column; the shared width is the column's."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -25153,14 +25199,18 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Clicking a plan title, Details, Expand, or Open Plan in transcript navigates to the exact plan in the left editor/document tab system, deduplicating the legacy artifact alias and plan identity into one shared tab. The plan tab exposes rich text/Markdown toggle, Build, Revise, More, Build With Crew, Build At, Export, and Send to Planning Wizard. Under narrow widths (390px-768px), the editor displays full-width with tabs above content and a persistent Return to chat control, temporarily occluding History without altering saved preferences.
+  Amended 2026-10-09 (DL-180): the left editor/document tab system is the home centre's panels: the plan opens as a
+  plan tab through ACD-500 and Plans/FinalGUISpec.md#F3-634, one tab per plan, with the legacy alias and the plan id
+  resolving to one tab; in a narrow window it shows through Plans/FinalGUISpec.md#F3-636's panel switcher beside the
+  chat. Return to chat retires for Home, because no tab covers the chat (ACD-500).
 gui_related: true
 gui_classification_reason: Plan document tab navigation, controls, and responsive presentation.
-depends_on: [ACD-452]
+depends_on: [ACD-452, DL-180, ACD-500]
 unblocks: [ACD-456]
 acceptance_criteria:
-  - Plan navigation opens a single deduplicated left editor tab rather than modal or duplicate tabs.
+  - "Plan navigation opens a single deduplicated plan tab in the home centre through F3-634 rather than modal or duplicate tabs (DL-180)."
   - The plan tab exposes the full suite of owner-backed plan controls.
-  - Narrow viewport shows full-width editor with Return to chat affordance.
+  - "In a narrow window the plan tab shows in the centre's panel switcher beside the chat, and no Return to chat control is needed (DL-180)."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: plan_navigation_and_tab_defect
@@ -25183,6 +25233,8 @@ preserved_exact_tokens:
   - "Return to chat"
 negative_constraints:
   - Do not treat Plan Details as a modal dialog or open duplicate tabs for plan and artifact alias.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the left editor/document tab system is the home panels and Return to chat retires for Home (ACD-500)."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Assistant_Plan_Runtime.md
@@ -25289,16 +25341,18 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   History threads and components are fully inventoried to reflect current behavior. Ordinary everyday threads predominantly show running, completed, or successful workflows; unfinished work is not marked Needs attention unless an active fault exists. Recovery and failure examples are clearly partitioned into an intentional, labeled recovery minority. Read-only review fixtures demonstrate findings and inspection without source mutation. The responsive editor/chat split enforces min-size rules so chat is never crushed into the resize handle.
+  Amended 2026-10-09 (DL-180): Home has no editor/chat split: the chat is a fixed column whose width and limits are
+  Plans/FinalGUISpec.md#F3-637's, and the centre's panels never take its room (F3-636), so the chat is never crushed.
 gui_related: true
 gui_classification_reason: History thread currentness, normal workflow proportion, and responsive split behavior.
-depends_on: [ACD-452, ACD-457]
+depends_on: [ACD-452, ACD-457, DL-180, F3-637]
 unblocks: []
 acceptance_criteria:
   - Every History thread has an inventoried disposition and before/after component mapping.
   - Ordinary workflows show running/completed/successful work without false Needs attention labels.
   - Failures and recoveries are confined to explicit labeled recovery threads.
   - Read-only review shows findings, not file mutation.
-  - Resizing editor/chat split preserves chat visibility above minimum threshold.
+  - "Resizing the chat column stays within F3-637's limits, so the chat is never crushed (DL-180)."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: misleading_thread_telemetry_and_layout_crush
@@ -25324,6 +25378,8 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not mark unfinished work as Needs attention without an actual error or block.
   - Do not squeeze chat into the resize handle track.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the editor/chat split and its 360 px chat minimum give way to the chat column of F3-637."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -26374,14 +26430,18 @@ canonical_text: >-
   (play, pause, step, complete, reset, work history), the instant or stream reply switch, the
   scripted replies, the film clock, and every measured timing recorded in the concept's notes. None
   of them receives a command, setting, wiring row, persisted key or test gate.
+  Amended 2026-10-09 (DL-185): Demo Studio is now one for all of PMConcept7 (Plans/DRY_Rules.md#DR-070,
+  Plans/FinalGUISpec.md#F3-649): the chat's demo controls, the tour's and onboarding's, the home demos and later the
+  Orchestrator's and the Planning Wizard's are its sections, and it stays lab only under this unit's exclusions.
 gui_related: true
 gui_classification_reason: "Keeps concept lab controls out of product surfaces."
 split_recommended: false
-depends_on: [DL-106]
+depends_on: [DL-106, DL-185, DR-070]
 unblocks: []
 acceptance_criteria:
   - "No product catalog, settings inventory, wiring matrix or persisted key names a lab tool listed here."
   - "The working card offers no play, pause, step, complete, reset or history controls in product."
+  - "The one Demo Studio of PMConcept7 is excluded from every product catalog, setting, wiring row, persisted key and test gate, like the chat's was (DL-185)."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -26399,6 +26459,8 @@ node_compile_hint:
 source_lineage:
   - "Plans/Decision_Log.md#DL-106"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+  - "Plans/Decision_Log.md#DL-185"
+  - "Plans/FinalGUISpec.md#F3-649"
 preserved_exact_tokens:
   - "Demo Studio"
   - "Motion voice"
@@ -26406,6 +26468,8 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not register a lab tool as a command, setting, wiring row, persisted key or test gate."
   - "Do not carry concept family or variant indices into product settings."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-185): Demo Studio is one for all of PMConcept7 (DR-070, F3-649); F3-649 is cited in source_lineage because it depends on this unit."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -26841,14 +26905,18 @@ canonical_text: >-
   preferences. The chat and the composer destination stay visible while the view is open, and a
   control that changes the run is rendered in one place at a time (Collaborative_Workflows CWR-020
   owns what the view contains). This unit does not change the minimum chat width.
+  Amended 2026-10-09 (DL-180): the editor tab system beside the chat is the home centre's panels. Open Panel opens or
+  reveals the run's run tab through ACD-500 and Plans/FinalGUISpec.md#F3-634, one tab per run identity, and it takes
+  focus because the user clicked it; in a narrow window it shows through F3-636's panel switcher beside the chat.
+  Return to chat retires for Home, because no tab covers the chat (ACD-500). The chat's width is F3-637's.
 gui_related: true
 gui_classification_reason: "Places collaboration run views in the editor tab system."
 split_recommended: false
 depends_on: [ACD-452]
 unblocks: [F3-569]
 acceptance_criteria:
-  - "Open Panel opens one editor document per run and focuses an existing tab instead of duplicating it."
-  - "Narrow widths show the run view full width with Return to chat, as the Plan tab does."
+  - "Open Panel opens one run tab per run in the home centre through F3-634 and reveals an existing tab instead of duplicating it (DL-180)."
+  - "In a narrow window the run tab shows in the centre's panel switcher beside the chat, as the plan tab does (DL-180)."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -26866,6 +26934,8 @@ node_compile_hint:
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 4.4, 7.9, 7.12"
   - "IMPACT-REGISTER B-ACD-05 (item 15)"
+  - "Plans/Decision_Log.md#DL-180"
+  - "Plans/assistant-chat-design.md#ACD-500"
 preserved_exact_tokens:
   - "Open Panel"
   - "Return to chat"
@@ -26873,6 +26943,8 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not build a second document mechanism for run views."
   - "Do not open a run view as a centred modal panel."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): run views are run tabs placed by F3-634 through ACD-500, and Return to chat retires for Home; DL-180 and ACD-500 are cited in source_lineage because a depends_on edge would close a cycle through DL-147."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Collaborative_Workflows.md
@@ -27206,10 +27278,13 @@ canonical_text: >-
   expanded panel (work stream, thought stream, state, context and result). The document is drawn on a root of its
   own by the chat's one transcript renderer (DRY_Rules DR-052): the chat's turn spine, reply streaming, sound cues and
   follow-along never bind to it, and nothing arriving in it plays a chat cue.
+  Amended 2026-10-09 (DL-180): the document opens as a transcript tab in the home centre through ACD-500 and
+  Plans/FinalGUISpec.md#F3-634, one per child run, revealed rather than duplicated; in a narrow window it follows the
+  plan tab's amended rule (ACD-455).
 gui_related: true
 gui_classification_reason: Defines what opening a subagent does in the assistant chat.
 split_recommended: false
-depends_on: [DL-147, ACD-480, ACD-469, ACD-473, UCC-129]
+depends_on: [DL-147, ACD-480, ACD-469, ACD-473, UCC-129, DL-180, ACD-500]
 unblocks: [F3-593]
 acceptance_criteria:
   - "Opening a subagent twice focuses one document and never duplicates it."
@@ -27244,7 +27319,8 @@ negative_constraints:
   - "Do not invent a subagent-only status in the document."
   - "Do not register a chat-local command or alias for opening a subagent."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the child transcript is a transcript tab placed by F3-634 through ACD-500."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
