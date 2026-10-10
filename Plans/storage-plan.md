@@ -27563,6 +27563,7 @@ canonical_text: >-
   asset is deleted. Images an app or project layer references are backed up with Settings; an image only a tab
   override references follows the Home record, is not backed up, and when missing the tab falls through to the next
   layer. This replaces SP-122's terminal_font.v1:global and terminal_color.v1:global.
+  The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035 admits one.
 gui_related: true
 gui_classification_reason: Decides where each terminal look choice is kept and what survives a move, a reopen and a restore.
 split_recommended: false
@@ -27571,7 +27572,7 @@ unblocks: []
 acceptance_criteria:
   - "The app and project defaults are stored only as SSYS-051's Settings rows in the Project's settings snapshot, as one shared value per field until an app-wide store is admitted (SSYS-028); the tab override only in the tab's state; the look's defaults are not stored."
   - "A stored value holds only the fields set in it; clearing a tab override field shows the Settings value, and clearing a Settings field shows the look's default."
-  - "Moving, collapsing or reopening a terminal tab keeps its override; only Settings writes the project layer."
+  - "Moving, collapsing or reopening a terminal tab keeps its override; Settings and the popover's All terminals write the project layer through the same Settings transaction."
   - "No appearance value is stored with a restart flag."
   - "A background image is stored once by content hash and referenced, never inlined in a settings row or tab state; an unreferenced image is deleted."
   - "Backup includes images the app or project layer references and excludes images only a tab override references."
@@ -27608,6 +27609,7 @@ negative_constraints:
 compatibility_only_notes:
   - "terminal_font.v1:global and terminal_color.v1:global were prose-only keys (SP-122) and map to the app layer."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L16): The enabled All terminals popover writes the project default through the Settings transaction and never an app-wide value until q-035 admits one."
   - "Replaces SP-122's global font and colour keys (DL-183)."
 owner_hints:
   - Plans/storage-plan.md

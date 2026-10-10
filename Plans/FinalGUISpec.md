@@ -44857,8 +44857,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The terminal's appearance is one layered model (DL-183, DR-068), resolved field by field: the look's defaults
-  ("Follow theme") under the app default (Settings > Terminal, SSYS-051) under the project default (written only from
-  Settings, in the Project's settings) under this tab's override; a field left unset falls through to the layer
+  ("Follow theme") under the app default (Settings > Terminal, SSYS-051) under the project default (written through Settings transactions, in the Project's settings) under this tab's override; a field left unset falls through to the layer
   below. Every field applies live, and no terminal appearance setting carries a restart badge; the terminal draws its
   own glyphs (DL-035), so section 6.4's restart rule for the app's font families does not reach it. "Follow theme"
   resolves per look, light and dark: Friendly Catppuccin Latte and Mocha; Glass Tokyo Night Day and Storm, drawn at
@@ -44895,12 +44894,12 @@ canonical_text: >-
   pixel ratio), never less than 90 % of the font's ascent plus descent, with the baseline centred; the padding is
   painted in the cell background, so the remainder smaller than a cell never shows as a stripe. The Appearance
   popover (More, Appearance...) previews every change live on the terminal and writes either This terminal (the
-  tab's override) or All terminals (the app default, through the Settings transaction over SSYS-051's rows); it
-  commits with `cmd.terminal.appearance.set` (UCC-201). Settings > Terminal binds the same model with the same fields
-  (SSYS-051) and is the only writer of the project layer. The app and project layers are Settings values and the
+  tab's override) or All terminals (enabled, the project default through the same Settings transaction Settings uses over SSYS-051's rows); This terminal commits with `cmd.terminal.appearance.set` (UCC-201). Settings > Terminal binds the same model with the same fields
+  (SSYS-051) and writes the project layer through that same Settings transaction. The app and project layers are Settings values and the
   tab's override lives in the terminal tab's serialized state; a custom background image is kept as SP-331 says.
   There is one model: the look's defaults, the popover and Settings read and write it, and no second terminal theme
   or font store exists (DR-068).
+  The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035 admits one.
 gui_related: true
 gui_classification_reason: Defines the terminal's visible schemes, contrast floor, import, appearance fields, cell geometry and Appearance popover.
 split_recommended: false
@@ -44914,7 +44913,7 @@ acceptance_criteria:
   - "Import accepts the seven formats listed, refuses input over 256 KB, evaluates nothing and shows fixed errors that never echo the file."
   - "Every field changes the terminal at once, from the popover and from Settings, and no terminal appearance setting shows a restart badge."
   - "Cells are whole device pixels by the geometry rule, and no stripe shows between the last cell and the padding."
-  - "The popover writes This terminal or All terminals, and only Settings writes the project default."
+  - "The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035 admits one."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -44952,6 +44951,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's field names and its settings keys under a terminal prefix are lineage only; the product ids are SSYS-051's rows."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L16): All terminals writes the project default through the Settings transaction and shows in this project; no app-wide value is written until q-035 admits one."
   - "Makes F3-083's terminal colour-scheme catalogue, preview and instant apply real, and replaces the restart badges on the old terminal theme and font rows (DL-183)."
 owner_hints:
   - Plans/FinalGUISpec.md
