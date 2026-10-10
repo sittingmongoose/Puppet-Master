@@ -324,6 +324,9 @@ calls `show()`; it never changes the page in front, Enter and Space do the same 
 focusable, a press that becomes the rail's drag still reorders the rail (or hides the entry in More) and toggles nothing,
 and the entry is lit while the column is shown (its folded strip counts). A popped-out chat starts back in its column
 after a restart (D32): the float is never saved, while the column's visibility (`pm.home.chat:v1`) and `chat.width` are.
+Settings' Chat Layout row (`general.visual.chat-layout-mode`) is retired (the planner's ruling on D3 and D32): the
+opus-5.5 build draws it nowhere, its paint sends no `chat.layout`, and a stored value is cleared on first read with no
+pop out and no notice, so nothing replays a pop out at start; `PM_HOME_WORKSPACE.popOutChat()` is `chatCol.popOut()`.
 
 The chat takes the browser kind's bus events: `'browser:capture'` `{ tabId, capture: { kind, w, h, comp, at, title,
 url } }` becomes an attachment card in its composer (a 1 px box with the look's corner, never a pill), and

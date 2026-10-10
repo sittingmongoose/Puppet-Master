@@ -397,6 +397,20 @@ PATCHES = [
      "      'settings.guided_tour.resume':['Resume the Guided Tour','Pick up the tour at the step where it stopped.'],\n"
      "      'settings.guided_tour.replay':['Start the Guided Tour over','Begin the tour again from its first step.'],",
      'hover label tour resume and restart'),
+    # Settings' Chat Layout row (general.visual.chat-layout-mode) is retired: the chat stays in its column and moves only
+    # by its own Pop out (the planner's ruling on D3 and D32; o55/placement.d/60-app-input.json retire_ids). The paint
+    # no longer sends chat.layout from the stored value, and a stored value (Overlay, Detached or any other) is ignored
+    # and cleared on first read, with no pop-out and no notice.
+    ("      var chat=String(settings['general.visual.chat-layout-mode']||'Docked').toLowerCase();\n"
+     "      if(chat!==lastChatLayout&&window.PM_DEMO&&typeof window.PM_DEMO.emit==='function'){lastChatLayout=chat;window.PM_DEMO.emit('chat.layout',{mode:chat,origin:'settings'});}\n",
+     "      /* Chat Layout (general.visual.chat-layout-mode) is retired (D3, D32): the paint sends no chat.layout */\n",
+     'settings paint: chat layout retired'),
+    ("      var priorAlpha=saved.settings['general.visual.glass-transparency'],alpha=clampGlassAlpha(saved.settings,priorAlpha);saved.settings['general.visual.glass-transparency']=alpha;\n",
+     "      /* Chat Layout is retired (D3, D32): a stored value is ignored and cleared on first read */\n"
+     "      var retiredChat='general.visual.chat-layout-mode';\n"
+     "      if(projection&&projection.settings&&Object.prototype.hasOwnProperty.call(projection.settings,retiredChat)){delete projection.settings[retiredChat];if(projection.changed)delete projection.changed[retiredChat];if(Object.prototype.hasOwnProperty.call(base.settings,retiredChat))saved.settings[retiredChat]=base.settings[retiredChat];else delete saved.settings[retiredChat];if(saved.changed)delete saved.changed[retiredChat];if(source==='local_concept_fixture')try{localStorage.setItem(k,JSON.stringify(scrubCredentialSettings(projection)));}catch(_e){}}\n"
+     "      var priorAlpha=saved.settings['general.visual.glass-transparency'],alpha=clampGlassAlpha(saved.settings,priorAlpha);saved.settings['general.visual.glass-transparency']=alpha;\n",
+     'settings load: chat layout retired'),
     # Settings search › Restore home layout pointed its detail panel at "restore-defaults", which is not a setting on
     # App & Input, so the panel opened empty. It now opens the real row and asks the Reset Home layout question.
     ("      ['Restore home layout', 'Open structured desktop and window settings', 'general', 'app-input', 'restore-defaults'],",

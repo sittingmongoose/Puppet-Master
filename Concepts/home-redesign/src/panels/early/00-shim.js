@@ -54,7 +54,7 @@ var shim = {
     return { ok: true };
   },
   moveSurface: function () { return { ok: false, reason: 'retired', detail: 'The chat moves only by popping out (D3).' }; },
-  popOutChat: function () { var w = W(); return w && w.chatCol ? (w.chatCol.popOutFromPage || w.chatCol.popOut)() : retired(); },
+  popOutChat: function () { var w = W(); return w && w.chatCol ? w.chatCol.popOut() : retired(); },
   popOutPanel: retired,
   openPanel: retired,
   closePanel: retired,
