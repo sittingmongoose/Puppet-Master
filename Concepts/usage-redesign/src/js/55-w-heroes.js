@@ -95,7 +95,7 @@
         }).join('') +
         '<i class="pmu-skyswitch"' + (th.auto ? '' : ' data-off') + ' data-at="' + swAt + '" style="bottom:calc(var(--sky-foot) + ' + (swAt / 100) + ' * var(--sky-h))"><span>' + (th.auto ? swAt + '%' : 'OFF') + '</span></i>' +
         '<i class="pmu-skyfront" style="bottom:calc(var(--sky-foot) + ' + (swAt / 100) + ' * var(--sky-h))"></i>' +
-        '</div>' + (cols.length > n ? C.more(cols.length - n, 'windows', false, cols.slice(n).map(function (c) { return c.p.name + ' · ' + c.a.nickname + ' · ' + c.w.label + ' ' + C.fmt(c.w.pct, 'pct') + ' used · ' + F.resetLine(c.w).text; })) : '') + '</div>';
+        '</div>' + (cols.length > n ? C.more(cols.length - n, 'windows', 'at a wider size', cols.slice(n).map(function (c) { return c.p.name + ' · ' + c.a.nickname + ' · ' + c.w.label + ' ' + C.fmt(c.w.pct, 'pct') + ' used · ' + F.resetLine(c.w).text; })) : '') + '</div>';
       if (body._pmuDry) return;
       /* the plot's geometry for the beats and the toggle (no layout read later): the line runs from -4 px to the plot's
          width less 34 px; the body is the plot's width */
@@ -491,14 +491,21 @@
       var head = heroOk ? C.heroHead(ctx, { value: 100, fmt: 'pct', label: 'of readings carry a named authority',
         sub: b(nRep) + ' provider reported · ' + b(nEst) + ' PM ' + (nEst === 1 ? 'estimate' : 'estimates') + ' · ' + b(0) + ' stale · ' + b(0) + ' unknown' }) : '';
       var H = Math.max(120, bh - (heroOk ? 66 : 0) - 26 - 6);
-      var colW = Math.max(110, Math.min(200, Math.floor(bw * 0.26))), gapW = Math.max(40, Math.floor((bw - 3 * colW) / 2)), tight = colW < 170;
+      /* (lane c-presets) three columns and two gaps inside the body at every width: a 400 px board gave the flow 372 px and
+         the 110 px column floor ran the LABEL column 38 px past the card */
+      /* below 460 px the reading column keeps 120 px for its names ("Forecast" beside its glyph) and the authority and
+         label columns share the rest */
+      var gapMin = bw < 460 ? 24 : 40, colW = Math.max(84, Math.min(200, Math.floor(bw * 0.26), Math.floor((bw - 2 * gapMin) / 3)));
+      var c1 = bw < 460 ? Math.min(124, Math.floor(bw * 0.33)) : colW;
+      if (bw < 460) colW = Math.max(84, Math.floor((bw - c1 - 2 * gapMin) / 2));
+      var gapW = Math.max(gapMin, Math.floor((bw - c1 - 2 * colW) / 2)), tight = colW < 170;
       var leftH = Math.floor((H - 6 * (rows.length - 1)) / rows.length);
       /* a source box names its reading by its Settings name with its age when both fit, the name alone when only the
          name fits (the age stays in the hover tag), else the short word with the age (final fix M8) */
       var srcName = function (r) {
         /* padding 2 x 10, the 16 px mark and two 8 px gaps; the age is in the mono face (Mac stills: "ChatGPT / Code" was
            cut beside "31s old" when the age was measured in the text face) and 6 px of margin */
-        var room = colW - 20 - 16 - 8 - 6, ageW = tight ? 0 : (PMU.charts && PMU.charts.textW ? PMU.charts.textW(r.age, 11, true) * 1.12 : r.age.length * 7) + 8;
+        var room = c1 - 20 - 16 - 8 - 6, ageW = tight ? 0 : (PMU.charts && PMU.charts.textW ? PMU.charts.textW(r.age, 11, true) * 1.12 : r.age.length * 7) + 8;
         if (C.fitsW(r.name, room - ageW, 12.5, 560)) return { name: r.name, age: !tight };
         if (C.fitsW(r.name, room, 12.5, 560)) return { name: r.name, age: false };
         return { name: r.short, age: !tight };
@@ -506,7 +513,7 @@
       var sorted = rows.filter(function (r) { return !r.est; }).concat(rows.filter(function (r) { return r.est; }));
       var midTot = H - 12, repH = Math.round(midTot * nRep / rows.length), estH = midTot - repH;
       var mid = [{ key: 'rep', label: 'Provider reported', n: nRep, y: 0, h: repH }, { key: 'est', label: 'PM estimate', n: nEst, y: repH + 12, h: estH }];
-      var x1 = colW, x2 = colW + gapW, x3 = x2 + colW, x4 = x3 + gapW;
+      var x1 = c1, x2 = c1 + gapW, x3 = x2 + colW, x4 = x3 + gapW;
       var paths = [], fillY = { rep: 0, est: 0 };
       sorted.forEach(function (r, i) {
         var y0 = i * (leftH + 6), m0 = r.est ? mid[1] : mid[0], share = m0.h / Math.max(1, m0.n), my = m0.y + fillY[r.est ? 'est' : 'rep'];
@@ -515,14 +522,14 @@
       });
       var labTop = 0;
       mid.forEach(function (m0) { if (m0.n) paths.push({ k: m0.key, d: band(x3, m0.y, m0.y + m0.h, x4, labTop + (m0.key === 'rep' ? 0 : repH), labTop + (m0.key === 'rep' ? repH : repH + estH + 12)), stage: 2 }); });
-      body.innerHTML = '<div class="pmu-flow">' + head + '<div class="pmu-flowcaps" style="grid-template-columns:' + colW + 'px ' + gapW + 'px ' + colW + 'px ' + gapW + 'px ' + colW + 'px">' +
+      body.innerHTML = '<div class="pmu-flow' + (bw < 460 ? ' is-narrow' : '') + '">' + head + '<div class="pmu-flowcaps" style="grid-template-columns:' + c1 + 'px ' + gapW + 'px ' + colW + 'px ' + gapW + 'px ' + colW + 'px">' +
         '<span class="pmu-cap">READING</span><span></span><span class="pmu-cap">AUTHORITY</span><span></span><span class="pmu-cap">LABEL</span></div>' +
         '<div class="pmu-flowplot" style="height:' + H + 'px">' +
         '<svg class="pmu-flowsvg" width="' + (x4 + colW) + '" height="' + H + '" viewBox="0 0 ' + (x4 + colW) + ' ' + H + '" aria-hidden="true">' + paths.map(function (p) {
           return '<path class="pmu-flowband" data-k="' + p.k + '" data-stage="' + (p.stage || 1) + '" d="' + p.d + '"/>';
         }).join('') + '</svg>' +
         sorted.map(function (r, i) {
-          return '<div class="pmu-flowsrc" data-k="' + (r.est ? 'est' : 'rep') + '" style="top:' + (i * (leftH + 6)) + 'px;height:' + leftH + 'px;width:' + colW + 'px"' + C.hover(r.name, (r.est ? 'PM estimate' : 'provider reported') + ' · ' + r.what + ' · ' + r.age) + '>' +
+          return '<div class="pmu-flowsrc" data-k="' + (r.est ? 'est' : 'rep') + '" style="top:' + (i * (leftH + 6)) + 'px;height:' + leftH + 'px;width:' + c1 + 'px"' + C.hover(r.name, (r.est ? 'PM estimate' : 'provider reported') + ' · ' + r.what + ' · ' + r.age) + '>' +
             (r.prov ? PMU.mark(r.prov, 16) : C.glyph(r.est ? 'pencil' : 'check')) + '<span>' + esc(srcName(r).name) + '</span>' + (srcName(r).age ? '<em>' + esc(r.age) + '</em>' : '') + '</div>';
         }).join('') +
         mid.map(function (m0) { return m0.n ? '<div class="pmu-flowmid' + (m0.h < 54 ? ' is-row' : '') + '" data-k="' + m0.key + '" style="left:' + x2 + 'px;top:' + m0.y + 'px;height:' + m0.h + 'px;width:' + colW + 'px"><b>' + m0.n + '</b><span>' + esc(m0.label) + '</span></div>' : ''; }).join('') +

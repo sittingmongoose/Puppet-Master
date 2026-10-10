@@ -188,7 +188,8 @@ window.PM7_USAGE = {
   /* the old verifier helpers over the new board (VERIFY.md notes) */
   visibleWidgets: function () { return roomWidgets(state.room); },
   widgetById: function (id) { return PMU.widgets ? PMU.widgets.get(id) : null; },
-  sizePresets: function (id) { var d = PMU.widgets && PMU.widgets.get(id); var k = d && PMU_BOARDS.kinds[d.kind]; return k ? k.presets.slice() : []; },
+  /* the presets at the board's class now, as {name, w, h} (lane c-presets: widths are per board class, heights may be fit) */
+  sizePresets: function (id) { return PMU.cards && PMU.cards.presets ? PMU.cards.presets(id).map(function (p) { return { id: p.id, name: p.name, w: p.w, h: PMU.cards.presetH(id, p), fit: p.fit }; }) : []; },
   layoutFor: function (id) { return PMU.board ? PMU.board.layout(state.room).filter(function (r) { return r.id === id; })[0] || null : null; },
   setLayout: function (id, size) { return PMU.board ? PMU.board.resize(id, size || {}, 'api') : null; },
   showOnly: function (ids) { (PMU.board ? PMU.board.layout(state.room) : []).forEach(function (r) { var want = (ids || []).indexOf(r.id) >= 0; var hidden = !!(state.hidden[state.room] || {})[r.id]; if (want === hidden) PMU.board.setVisible(r.id, want); }); },

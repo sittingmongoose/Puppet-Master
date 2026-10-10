@@ -7,7 +7,13 @@
    the layout store (widget_layout:v1:usage records, v12 migrated once, default_set_version); the held build, the room
    transition and the reading-order entrance; the tier pass. */
 (function () {
-  var CLASSES = [{ name: 'S', tracks: 12, min: 0 }, { name: 'M', tracks: 20, min: 820 }, { name: 'L', tracks: 24, min: 1100 }, { name: 'XL', tracks: 30, min: 1460 }];
+  /* (lane c-presets, agent 5) M from 880 px, not 820: at 820 a 20-track board's pitch was 41.4 px and the M default
+     boards, authored at the 46.9 px pitch of the 929 px board (1920 with a 480 px chat), clipped and wrapped names letter
+     by letter; a 1920 window with a 600 px chat (809 px board) also came out S or M depending on the width it came from
+     (hysteresis). From 880 px M never runs under 43.2 px (with the hysteresis), and every look's 1920 board stays M
+     (Glass, with its wider rail, is 890 px); 820 to 880 px boards are S at 69 to 74 px tracks, close to the 767 px panel
+     the S boards were designed for (BOARDS.md). */
+  var CLASSES = [{ name: 'S', tracks: 12, min: 0 }, { name: 'M', tracks: 20, min: 880 }, { name: 'L', tracks: 24, min: 1100 }, { name: 'XL', tracks: 30, min: 1460 }];
   var GAP = 8, ROW = 30, HYST = 24, MOVE_THRESHOLD = 4, TARGET_HYST = 0.75, SCROLL_BAND = 48;
   var STORE_KEY = 'widget_layout:v1:usage';
   /* the default set follows the generated boards (tools/boards.py writes PMU_BOARDS.version): a saved layout from an
@@ -58,6 +64,7 @@
 
   /* ---- layout store (DESIGN-SPEC 6.6): one envelope, records per widget, geometry per board class edited ---- */
   function geoStr(r) { return r.x + ',' + r.y + ',' + r.w + ',' + r.h; }
+  function geoMap(g) { var out = {}; Object.keys(g || {}).forEach(function (cls) { var r = parseGeo(g[cls]); if (r) out[cls] = r; }); return out; }
   function parseGeo(s) { var p = String(s || '').split(',').map(Number); return p.length === 4 && p.every(function (n) { return isFinite(n) && n >= 0; }) ? { x: p[0], y: p[1], w: p[2], h: p[3] } : null; }
   function cfgRefs(cfg) { return Object.keys(cfg || {}).filter(function (k) { return cfg[k] != null && cfg[k] !== ''; }).map(function (k) { return k + '=' + cfg[k]; }); }
   function parseRefs(list) { var out = {}; (list || []).forEach(function (s) { var i = String(s).indexOf('='); if (i > 0) out[s.slice(0, i)] = s.slice(i + 1); }); return out; }
@@ -102,6 +109,8 @@
       if (rec.configuration_refs && rec.configuration_refs.length) configs[rec.widget_id] = parseRefs(rec.configuration_refs);
       if (rec.committed_revision) revisions[rec.widget_id] = rec.committed_revision;
       if (!keepGeometry) return;
+      /* the preset each class's size was set to (its name survives the reload; a fit preset's size alone cannot say) */
+      if (rec.presets && typeof rec.presets === 'object' && PMU.cards && PMU.cards.seedPresets) PMU.cards.seedPresets(rec.widget_id, rec.presets, geoMap(rec.geometry));
       Object.keys(rec.geometry || {}).forEach(function (cls) {
         var g = parseGeo(rec.geometry[cls]); if (!g) return;
         layout[rec.room_id] = layout[rec.room_id] || {};
@@ -153,7 +162,8 @@
         var g = geo[id] || {}, cls = current.cls ? current.cls.name : null, mine = cls && g[cls] ? parseGeo(g[cls]) : null;
         var card = current.room === room ? cardOf(id) : null;
         var rec = { room_id: room, widget_id: id, visible: !(st.hidden[room] || {})[id], order_index: order[id] != null ? order[id] : null, geometry: g,
-          preset_id: mine ? (PMU.cards.sizeName(kindSpec(id), mine.w, mine.h) || 'custom') : null,
+          preset_id: mine ? (PMU.cards.sizeName(kindSpec(id), mine.w, mine.h, id) || 'custom') : null,
+          presets: PMU.cards.presetsSet ? PMU.cards.presetsSet(id, geoMap(g)) : null,
           semantic_tier_id: card ? (card.getAttribute('data-tw') || '') + '.' + (card.getAttribute('data-th') || '') : null,
           configuration_refs: cfgRefs(configs[id]), committed_revision: revisions[id] || 0 };
         byWidget[room + '/' + id] = rec; recs.push(rec);
@@ -256,7 +266,8 @@
     var kept = rects.filter(function (r) { var b = PMU_BOARDS.widgets[r.id]; return !/^acct-/.test(r.id) || !b || b.kind !== 'provider' || withAccounts[r.id]; });
     var have = {}; kept.forEach(function (r) { have[r.id] = true; });
     var extra = Object.keys(withAccounts).filter(function (id) { return !have[id]; }).map(function (id) {
-      var many = withAccounts[id].accounts.length > 1; return { id: id, w: Math.min(many ? 10 : 4, cls.tracks), h: many ? 11 : 7 };
+      /* the provider presets' widths (lane c-presets): Standard for a group, Compact for one account */
+      var many = withAccounts[id].accounts.length > 1; return { id: id, w: Math.min(many ? 12 : 6, cls.tracks), h: many ? 14 : 7 };
     });
     if (!extra.length) return kept;
     return kept.concat(firstFitInto(kept, extra, cls.tracks));
@@ -1060,7 +1071,7 @@
     }
   }
   function sizeLabel(id, r) {
-    var name = PMU.cards.sizeName(kindSpec(id), r.w, r.h);
+    var name = PMU.cards.sizeName(kindSpec(id), r.w, r.h, id);
     return { name: name, size: r.w + ' x ' + r.h };
   }
   function tierNote(card, r) {
@@ -1241,7 +1252,10 @@
         receipt = command('cmd.widget.move', { room: room, widget_id: g.id, from: { x: g.me.x, y: g.me.y }, to: { x: g.target.x, y: g.target.y }, board_class: cls,
           moved_peers: peers.map(function (r) { return { widget_id: r.id, to: { x: r.x, y: r.y } }; }), source: g.source || (g.kb ? 'keyboard' : 'pointer') }, { moved: true });
       } else {
-        var nm = PMU.cards.sizeName(kindSpec(g.id), g.target.w, g.target.h);
+        /* a preset reached by Shift steps is kept as the panel's preset at this class, as a pick in the size menu is (its
+           name then survives a reload through the layout record's presets) */
+        if (g.kbPick && g.kbPick.w === g.target.w && g.kbPick.h === g.target.h && PMU.cards.notePick) PMU.cards.notePick(g.id, g.kbPick.pid, g.target.w, g.target.h);
+        var nm = PMU.cards.sizeName(kindSpec(g.id), g.target.w, g.target.h, g.id);
         var form = PMU.cards.headForm(PMU.widgets.get(g.id) || {}, g.target.w, g.target.h, current.cls.pitchX);
         var tt = tierOf(g.target.w * current.cls.pitchX - GAP - 28, g.target.h * ROW - GAP - (PMU.cards.HEAD_PX[form] || 34) - (form === 'plate' ? 16 : 10));
         receipt = command('cmd.widget.resize', { room: room, widget_id: g.id, from: { x: g.me.x, y: g.me.y, w: g.me.w, h: g.me.h },
@@ -1485,6 +1499,8 @@
     var g = { id: id, card: card, type: mode === 'resize' ? 'resize' : 'move', edge: 'se', kb: true, started: true };
     card.focus({ preventScroll: true });
     if (!beginGesture(g)) return false;
+    /* the presets' fit heights measure while the page is idle, so a Shift step has them (lane c-presets) */
+    if (g.type === 'resize' && PMU.cards.warmFits) PMU.cards.warmFits(id, function () { return gesture === g && !g.done; });
     g.onBlur = function () { if (!g.done) endGesture(g, 'blur'); };
     g.onFocusOut = function (e) { if (!g.done && (!e.relatedTarget || !card.contains(e.relatedTarget))) endGesture(g, 'blur'); card.removeEventListener('focusout', g.onFocusOut); };
     card.addEventListener('focusout', g.onFocusOut);
@@ -1500,15 +1516,26 @@
     } else if (shift) {
       /* Shift steps to the next preset in the arrow's direction: Right / Left by width, Down / Up by height (ties: the
          preset closest in the other dimension) */
-      var presets = (ks.presets || []).filter(function (p) { return p.w <= cls.tracks - r.x; });
+      /* the presets offered at this board class, a fit preset at its measured height (lane c-presets) */
+      /* ranked on the heights known now (measured, the last picker's, or the kind's fallback); only the preset a step
+         lands on is measured, if it still has to be (one fit, not every preset's in one key press) */
+      /* every preset the board can give (a card in the right half moves left to take a wider one, as the picker does) */
+      var presets = (PMU.cards.presets ? PMU.cards.presets(g.id) : []).filter(function (p) { return p.w <= cls.tracks; });
       var horiz = key === 'ArrowRight' || key === 'ArrowLeft', fwd = key === 'ArrowRight' || key === 'ArrowDown';
-      var cands = presets.filter(function (p) { var a = horiz ? p.w : p.h, b = horiz ? r.w : r.h; return fwd ? a > b : a < b; });
+      var toward = function (p) { var a = horiz ? p.w : p.h, b = horiz ? r.w : r.h; return fwd ? a > b : a < b; };
+      /* by width the direction is known; by height a preset not measured yet is ranked on its known height, and only
+         where none is left in that direction are the rest measured */
+      var cands = presets.filter(toward);
+      if (!horiz && !cands.length) cands = presets.filter(function (p) { return !p.measured; });
       cands.sort(function (p, q) {
         var pa = horiz ? p.w : p.h, qa = horiz ? q.w : q.h;
         if (pa !== qa) return fwd ? pa - qa : qa - pa;
         return Math.abs((horiz ? p.h : p.w) - (horiz ? r.h : r.w)) - Math.abs((horiz ? q.h : q.w) - (horiz ? r.h : r.w));
       });
-      if (cands[0]) { r.w = cands[0].w; r.h = cands[0].h; }
+      for (var ci = 0; ci < cands.length; ci++) {
+        var cp = cands[ci], ch = PMU.cards.presetH ? PMU.cards.presetH(g.id, cp) : cp.h;
+        if (toward({ w: cp.w, h: ch })) { r.w = cp.w; r.h = ch; r.x = Math.min(r.x, cls.tracks - r.w); g.kbPick = { pid: cp.id, w: r.w, h: r.h }; break; }
+      }
     } else {
       var wMax = Math.min(ks.wMax || cls.tracks, cls.tracks - r.x), hMax = ks.hMax || 40;
       if (key === 'ArrowRight') r.w = Math.min(wMax, r.w + 1); if (key === 'ArrowLeft') r.w = Math.max(ks.wMin || 1, r.w - 1);

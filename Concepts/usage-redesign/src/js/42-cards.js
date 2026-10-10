@@ -151,52 +151,505 @@
     if ((card.getAttribute('data-tone') || '') !== tone) { if (tone) card.setAttribute('data-tone', tone); else card.removeAttribute('data-tone'); }
   }
 
-  /* ---- the card menu, the size picker and the gear (PMU.menu) ---- */
-  function sizeName(kindSpec, w, h) {
-    var p = (kindSpec && kindSpec.presets || []).filter(function (x) { return x.w === w && x.h === h; })[0];
-    return p ? p.name : null;
+  /* ---- size presets (lane c-presets, Jared 2026-10-09: "Panel size presets need to be rethought and polished.
+     Currently they make the panels small and the content doesn't make sense."; PRESETS.md in the lane folder) ----
+     A kind's presets (tools/boards.py) carry a width per board class (the same pixel width at every class, or the board's
+     width) and a height in rows, or by content: fit = n (the smallest height that shows n complete items: accounts, rows,
+     resets, models) or 'all' (the smallest that folds nothing). A fit height is measured by rendering the kind in a hidden
+     card at that width, in the current look, through the board's own render path (renderBody, then one synchronous fit
+     pass), and kept per look, range, scope, configuration and board class. */
+  var CLS_ORDER = ['S', 'M', 'L', 'XL'], GAP_PX = 8, ROW_PX = 30, FOLD_TAG = 'Not shown at this size';
+  /* what counts as one item of a kind for fit = n (a kind without an entry, or a card that draws none, fits "nothing
+     folded") */
+  var ITEM_SEL = { kpi: '.pmu-fact', limit: '.pmu-accrow', provider: '.pmu-accrow', list: '.pmu-lrow', table: '.pmu-tbody > .pmu-trow', agenda: '.pmu-agline',
+    qhist: '.pmu-qrow:not(.pmu-qaxis)', models: '.pmu-sbrow', ranked: '.pmu-rk', mix: '.pmu-mixrow', providers: '.pmu-provrow', context: '.pmu-ctxleg' };
+  /* a plate of one account has no account rows: its "account" is the plate, complete when every window meter shows */
+  var WHOLE_SEL = { limit: '.pmu-limitmeter', provider: '.pmu-accmeter' };
+  var ITEM_WORD = { kpi: ['fact', 'facts'], limit: ['account', 'accounts'], provider: ['account', 'accounts'], list: ['row', 'rows'], table: ['row', 'rows'],
+    agenda: ['reset', 'resets'], qhist: ['account', 'accounts'], models: ['model', 'models'], ranked: ['row', 'rows'], mix: ['part', 'parts'],
+    providers: ['provider', 'providers'], context: ['family', 'families'] };
+  var fitCache = {};   /* measured fit heights: id|class|w|fit|look|range|scope|config -> rows */
+  /* the heights of the last opening of the picker: each opening measures afresh (the data may have changed), and until it
+     has, a pick, a row and a Shift step use these (no 80-160 ms measure in the click; the idle measure corrects a row) */
+  var fitStale = {};
+  /* widget id -> {class: {w, h, px, pid}}: the preset a panel was last set to from the menu at each board class (its fit
+     height); kept in the layout record (40-board, presets), so a reload keeps the preset's name */
+  var picked = {};
+  function pickedAt(id, cls) { return picked[id] ? picked[id][cls] || null : null; }
+  function clsNow() { return PMU.board && PMU.board.cls ? PMU.board.cls() : { name: 'S', tracks: 12, pitchX: 47 }; }
+  function viewKey(id) {
+    var l = PMU.theme.look(), c = cfgOf(id);
+    return l.slug + (l.nier ? '+nier' : '') + '|' + st.range + '|' + st.scope + '|' + Object.keys(c).sort().map(function (k) { return k + '=' + c[k]; }).join(',');
   }
-  /* one muted line per size row, the way the Chat Assistant menus describe each choice: what the panel shows at that size */
-  var SIZE_DESC = {
-    limit: [[3, 'The binding window on one line'], [6, 'Every window and its reset'], [8, 'Windows and the plan line'], [99, 'Windows, plan, spend and facts']],
-    kpi: [[3, 'The value alone'], [4, 'Value and its second line'], [6, 'Value, line and facts'], [99, 'Value, trend and every fact']],
-    kpis: [[3, 'Values in one strip'], [5, 'Values with their second lines'], [99, 'Two rows of values']],
-    provider: [[3, 'One line per account'], [7, 'Accounts with every window'], [99, 'Accounts, windows and notes']],
-    providers: [[4, 'Two or three lines'], [99, 'Every provider line']],
-    switch: [[3, 'Toggle and threshold on one line'], [99, 'Toggle, threshold and most room']],
-    alert: [[6, 'State, detail and meter'], [99, 'State, meter, actions and facts']],
-    free: [[6, 'State and price'], [99, 'State, price and every fact']],
-    cache: [[6, 'Read share and split'], [99, 'Read share, split and facts']],
-    context: [[6, 'Ring and families'], [99, 'Ring, families and route']],
-    trend: [[5, 'A compact chart'], [8, 'Chart with axes and legend'], [99, 'Chart, legend and facts']],
-    columns: [[5, 'A compact chart'], [8, 'Chart with axes'], [99, 'Chart, caption and facts']],
-    budget: [[6, 'Spend and projection'], [99, 'Spend, projection chart and facts']],
-    heat: [[6, 'The week at a glance'], [99, 'Every hour with labels']],
-    donut: [[10, 'Ring and top models'], [99, 'Ring and every model']],
-    breakdown: [[10, 'Every token type'], [99, 'Types with the counting note']],
-    efficiency: [[9, 'Ring and savings'], [99, 'Ring, savings and trend']],
-    models: [[8, 'The top models'], [99, 'Every model']],
-    mix: [[4, 'The mix bar'], [99, 'Mix bar and every part']],
-    setup: [[3, 'The setup line'], [99, 'Setup and every fact']]
-  };
-  function sizeDesc(kind, w, h) {
-    var list = SIZE_DESC[kind] || [[6, 'The first rows'], [10, 'Most rows'], [99, 'Every row']];
-    for (var i = 0; i < list.length; i++) if (h <= list[i][0]) return list[i][1];
-    return list[list.length - 1][1];
+  function offered(p, cls) { return !p.from || CLS_ORDER.indexOf(cls) >= CLS_ORDER.indexOf(p.from); }
+  function widthOf(p, cls) { return typeof p.w === 'object' ? (p.w[cls] != null ? p.w[cls] : p.w.S) : p.w; }
+  /* a preset's width at the board now: authored in tracks at the nominal 47 px pitch (S at a 557 px board, M at 929 px),
+     resolved to the same pixel width at the live pitch (never more than 2 % narrower: the content tiers switch at fixed
+     pixel widths, and a 264 px "274 px" card crossed them), so a preset is the same card on a 400 px board (pitch 34)
+     and a 1700 px one; a board-wide preset takes the class's tracks. Inside the kind's range. A preset with minPx is not
+     offered where the board cannot give it that width (the one-line switch strip needs about 480 px). */
+  var NOMINAL_PITCH = 47;
+  function widthAt(p, ks, cls) {
+    var cap = Math.max(1, Math.min(cls.tracks, (ks && ks.wMax) || cls.tracks)), lo = Math.min((ks && ks.wMin) || 1, cap);
+    if (p.full) return cap;
+    var pitch = cls.pitchX || NOMINAL_PITCH, px = widthOf(p, cls.name) * NOMINAL_PITCH - GAP_PX;
+    var t = Math.max(1, Math.round((px + GAP_PX) / pitch));
+    while (t * pitch - GAP_PX < px * 0.98) t += 1;
+    return Math.max(lo, Math.min(cap, t));
   }
-  function sizeRows(id) {
-    var ks = PMU.widgets.spec(id), cls = PMU.board.cls(), me = PMU.board.rect(id), kind = (PMU.widgets.get(id) || {}).kind;
-    if (!ks || !me) return [];
-    return (ks.presets || []).map(function (p) {
-      var w = Math.min(p.w, cls.tracks), wide = p.w > cls.tracks;
-      return { value: 'size:' + p.w + 'x' + p.h, label: p.name, sub: sizeDesc(kind, p.w, p.h), right: w + ' x ' + p.h, active: me.w === p.w && me.h === p.h,
-        disabled: wide, reason: wide ? 'Wider than this board (' + cls.tracks + ' columns)' : null };
+  /* the measured height belongs to the card's pixel width (the same tracks are 34 px apart on a 400 px board, 47 on a
+     557 px one) */
+  function pxOf(w) { var c = clsNow(); return Math.round(w * (c.pitchX || NOMINAL_PITCH) - GAP_PX); }
+  function fitKeyOf(id, cls, w, fit) { return [id, cls, pxOf(w), fit, viewKey(id)].join('|'); }
+  /* the presets a panel offers at the board's class now: [{id, name, desc, w, h, fit, measured}] (a fit preset's h is its
+     measured height when known, else the kind's fallback) */
+  function presetsOf(id) { return dedupe(allPresets(id)); }
+  presetsOf.all = function (id) { return allPresets(id); };
+  function allPresets(id) {
+    var ks = PMU.widgets.spec(id), cls = clsNow();
+    if (!ks) return [];
+    var list = (ks.presets || []).filter(function (p) { return offered(p, cls.name) && (!p.minPx || Math.min(cls.tracks, (ks.wMax || cls.tracks)) * (cls.pitchX || NOMINAL_PITCH) - GAP_PX >= p.minPx); }).map(function (p) {
+      var w = widthAt(p, ks, cls), h = p.h, measured = p.fit == null, stale = false;
+      if (p.fit != null) {
+        var key = fitKeyOf(id, cls.name, w, p.fit), k = fitCache[key], pk = pickedAt(id, cls.name);
+        if (k != null) { h = k; measured = true; }
+        else if (pk && pk.pid === p.id && pk.w === w && pk.px === pxOf(w)) { h = pk.h; measured = true; stale = true; }
+        else if (fitStale[key] != null) { h = fitStale[key]; measured = true; stale = true; }
+      }
+      return { id: p.id, name: p.name, desc: p.desc, w: w, h: h, fit: p.fit == null ? null : p.fit, hMin: p.hMin || null, measured: measured, stale: stale };
+    });
+    return list;
+  }
+  /* two presets that come to the same size here (a narrow board gives a 10- and a 12-track preset its whole width; a
+     fit of eight rows where the panel has eight) are one preset: the later, larger tier keeps the row */
+  function dedupe(list) {
+    return list.filter(function (p, i) {
+      return !list.slice(i + 1).some(function (q) { return q.w === p.w && (p.measured && q.measured ? q.h === p.h : p.fit == null && q.fit == null ? q.h === p.h : p.fit != null && q.fit === p.fit); });
+    });
+  }
+  /* the preset name of a size (the menu's "Current", the resize outline, the layout record's preset_id): with the widget
+     id, the preset it was last set to or a measured preset of that size; without, a fixed preset of that size */
+  function sizeName(ks, w, h, id) {
+    var cls = clsNow().name;
+    if (id) {
+      var pk = pickedAt(id, cls), list = presetsOf(id);
+      if (pk && pk.w === w && pk.h === h) {
+        var mine = function (p) { return p.id === pk.pid && p.w === w; };
+        var hit = list.filter(mine)[0] || allPresets(id).filter(mine)[0]; if (hit) return hit.name;
+      }
+      var m = list.filter(function (p) { return p.w === w && p.h === h && p.measured; })[0];
+      return m ? m.name : null;
+    }
+    var c0 = clsNow(), q = (ks && ks.presets || []).filter(function (x) { return offered(x, cls) && x.fit == null && widthAt(x, ks, c0) === w && x.h === h; })[0];
+    return q ? q.name : null;
+  }
+
+  /* ---- the hidden card: the real kind rendered at a preset's size (the fit measure and the picker's miniature) ---- */
+  var measureHost = null;
+  function hostEl() {
+    var app = document.getElementById('pmuApp'); if (!app) return null;
+    if (!measureHost || !measureHost.isConnected) { measureHost = document.createElement('div'); measureHost.className = 'pmu-szmeasure'; measureHost.setAttribute('aria-hidden', 'true'); app.appendChild(measureHost); }
+    return measureHost;
+  }
+  function ghostCard(id) {
+    var live = PMU.board.card(id), room = live ? live.getAttribute('data-room') : st.room;
+    var card = PMU.cards.build(id, room);
+    card._pmuPreview = true;
+    card.classList.add('pmu-szcard');
+    card.removeAttribute('tabindex'); card.removeAttribute('aria-roledescription');
+    card.setAttribute('aria-hidden', 'true'); card.setAttribute('inert', '');
+    if (live && live.hasAttribute('data-hero')) card.setAttribute('data-hero', '');
+    return card;
+  }
+  function dropGhost(card) {
+    if (!card) return;
+    var b = card.querySelector('.pmu-cardbody');
+    if (b && b._pmuKind && b._pmuKind.destroy) { try { b._pmuKind.destroy(b, b._pmuCtx); } catch (error) {} }
+    if (b) { b._pmuKind = null; b._pmuCtx = null; }
+    card.remove();
+  }
+  /* render the kind at w x h: the head form, the measured tier, the body, one synchronous fit pass; then what it shows */
+  function renderAt(card, w, h) {
+    var id = card.getAttribute('data-widget'), cls = clsNow(), def = PMU.widgets.get(id) || {};
+    card.dataset.x = 0; card.dataset.y = 0; card.dataset.w = w; card.dataset.h = h;
+    card.style.width = Math.round(w * cls.pitchX - GAP_PX) + 'px';
+    card.style.height = (h * ROW_PX - GAP_PX) + 'px';
+    var form = headForm(def, w, h, cls.pitchX);
+    if (card.getAttribute('data-head') !== form) card.setAttribute('data-head', form);
+    var tier = PMU.board.measure(card);
+    card.setAttribute('data-tw', tier.w); card.setAttribute('data-th', tier.h);
+    PMU.cards.renderBody(card, tier, false);
+    var body = card.querySelector('.pmu-cardbody');
+    /* the charts draw now, not in the next microtask (a meter or a ring sets its row's height) */
+    if (PMU.charts && PMU.charts.flush) { try { PMU.charts.flush(); } catch (error) {} }
+    if (body && PMU.content && PMU.content.fitNow) { try { PMU.content.fitNow(body); } catch (error) { console.error('[pm-usage] preset fit pass', error); } }
+    /* a miniature is never a flight's end (WOW-SPEC-3 6.3 shared keys stay on the board) */
+    Array.prototype.forEach.call(card.querySelectorAll('[data-share]'), function (el) { el.removeAttribute('data-share'); });
+    return readShown(card, def.kind);
+  }
+  function readShown(card, kind) {
+    var body = card.querySelector('.pmu-cardbody'), sel = ITEM_SEL[kind];
+    /* an item counts when it is laid out whole inside the body (a row a plate's own clip hides is not shown) */
+    var bb = body ? body.getBoundingClientRect() : null;
+    var inside = function (el) { var r = el.getBoundingClientRect(); return r.height > 0 && r.top >= bb.top - 1 && r.bottom <= bb.bottom + 1; };
+    var items = sel && body ? Array.prototype.filter.call(body.querySelectorAll(sel), inside).length : 0;
+    var whole = WHOLE_SEL[kind] && body ? Array.prototype.filter.call(body.querySelectorAll(WHOLE_SEL[kind]), inside).length : 0;
+    /* clipped: a word, a mark or a chart running past the card's edges (a fragment, whatever the fold markers say), or
+       more than 3 px into the body's bottom padding (agent 4: a NieR totals strip's last line sat on the frame's corner
+       ticks, 0 px from the card's edge, and passed); a plate's foot sits in that padding by design */
+    var cr = card.getBoundingClientRect(), clipped = false;
+    var floor = body ? Math.min(cr.bottom + 1, bb.bottom - Math.max(0, (parseFloat(getComputedStyle(body).paddingBottom) || 0) - 3)) : cr.bottom + 1;
+    if (body) Array.prototype.some.call(body.querySelectorAll('*'), function (el) {
+      if (el.closest('svg') && !/^svg$/i.test(el.tagName)) return false;
+      var own = /^svg$/i.test(el.tagName) || Array.prototype.some.call(el.childNodes, function (n) { return n.nodeType === 3 && n.nodeValue.trim(); });
+      if (!own) return false;
+      var r = el.getBoundingClientRect(); if (!r.width || !r.height) return false;
+      if (r.bottom > (el.closest('.pmu-cardfoot') ? cr.bottom + 1 : floor) || r.top < bb.top - 1 || r.right > cr.right + 1 || r.left < cr.left - 1) { clipped = true; return true; }
+      return false;
+    });
+    var hidden = 0;
+    Array.prototype.forEach.call(card.querySelectorAll('.pmu-more'), function (el) { var m = /^(\d+) more\b/.exec(el.textContent || ''); if (m && el.getClientRects().length) hidden += +m[1]; });
+    Array.prototype.forEach.call(card.querySelectorAll('.pmu-headmore'), function (el) { hidden += +(el.getAttribute('data-n') || 0); });
+    /* a fold tag without a count ("Not shown at this size" on a body, a strip, a ring) counts the items its tag lists, so
+       a fit can tell a strip that folds four families from a ladder that folds none */
+    var tags = Array.prototype.filter.call(card.querySelectorAll('[data-pm-hover-label="' + FOLD_TAG + '"]'), function (el) { return !el.classList.contains('pmu-headmore') && !el.classList.contains('pmu-more'); });
+    tags.forEach(function (el) { var d = el.getAttribute('data-pm-hover-detail') || ''; hidden += d ? d.split('; ').length : 1; });
+    var tagged = tags.length > 0 || !!card.querySelector('[data-pm-hover-label="' + FOLD_TAG + '"]');
+    return { items: items, whole: whole, hidden: hidden, folded: hidden > 0 || tagged, clipped: clipped };
+  }
+  /* the smallest height (rows) at width w that shows fit = n items, or everything (fit 'all'); where even the kind's tallest
+     size folds, the smallest that shows as much as the tallest. A job renders one height a step, so the picker can
+     measure in idle slices (one render, 15-30 ms, a slice) and a pick can finish it at once. */
+  var jobs = {};
+  function fitJob(id, w, fit) {
+    var cls = clsNow(), key = fitKeyOf(id, cls.name, w, fit);
+    if (jobs[key] && !jobs[key].done) return jobs[key];
+    var job = { key: key, done: false, h: fitCache[key] != null ? fitCache[key] : null, renders: 0, t0: performance.now() };
+    if (job.h != null) { job.done = true; return job; }
+    jobs[key] = job;
+    var ks = PMU.widgets.spec(id) || {};
+    var pre = (ks.presets || []).filter(function (p) { return p.fit === fit && offered(p, cls.name) && widthAt(p, ks, cls) === w; })[0];
+    /* a preset's own floor (per class): the form it names needs its rows (the switch ladder) */
+    var pm = pre && pre.hMin ? (typeof pre.hMin === 'object' ? pre.hMin[cls.name] || 0 : pre.hMin) : 0;
+    var hMin = Math.max(ks.hMin || 3, 3, pm), hMax = Math.max(hMin, Math.min(ks.hMax || 30, 40));
+    var fb = Math.max(hMin, Math.min(hMax, pre ? pre.h : hMin)), want = fit === 'all' || fit === 'items' ? null : +fit;
+    var card = null, top = null, lo = hMin, hi = hMax, phase = 'top';
+    var at = function (h) {
+      if (!card) { var host = hostEl(); if (!host) throw new Error('no host'); card = ghostCard(id); host.appendChild(card); }
+      job.renders++; return renderAt(card, w, h);
+    };
+    /* judged against the tallest size: n items (or every item there is), every window of a one-account plate, or
+       everything the tallest shows; never a clipped card where the tallest is whole */
+    var ok = function (r) {
+      if (r.clipped && !top.clipped) return false;
+      if (fit === 'all') {
+        if (top.items > 0) return r.items >= top.items && r.hidden <= top.hidden;
+        if (top.whole > 0 && r.whole < top.whole) return false;
+        return top.folded ? r.hidden <= top.hidden : !r.folded;
+      }
+      /* fit 'items': every item of the kind (every family of a context ring), its other facts may fold to the count */
+      if (fit === 'items' && top.items > 0) return r.items >= top.items;
+      if (top.items > 0) return r.items >= Math.min(want, top.items);
+      if (top.whole > 0) return r.whole >= top.whole;
+      return top.folded ? r.hidden <= top.hidden : !r.folded;
+    };
+    var finish = function (h) {
+      job.done = true; job.h = h; delete jobs[key];
+      if (h != null) { fitCache[key] = h; delete fitStale[key]; }
+      dropGhost(card); card = null;
+      if (PMU.cards._fitLog) PMU.cards._fitLog.push({ id: id, w: w, fit: fit, h: h, renders: job.renders, ms: Math.round(performance.now() - job.t0) });
+    };
+    /* the tallest size first (how many items there are, whether everything can show), then the fallback height (usually
+       within a row or two of the answer), then a bisection on the side it points to */
+    job.step = function () {
+      if (job.done) return true;
+      try {
+        if (phase === 'top') { top = at(hMax); phase = 'fb'; }
+        else if (phase === 'fb') { if (ok(at(fb))) { lo = hMin; hi = fb; } else { lo = fb + 1; hi = hMax; } phase = 'bisect'; }
+        else if (lo < hi) { var mid = (lo + hi) >> 1; if (ok(at(mid))) hi = mid; else lo = mid + 1; }
+        if (phase === 'bisect' && lo >= hi) finish(lo);
+      } catch (error) { console.error('[pm-usage] preset fit ' + id, error); finish(null); }
+      return job.done;
+    };
+    job.cancel = function () { if (!job.done) { job.done = true; delete jobs[key]; dropGhost(card); card = null; } };
+    return job;
+  }
+  function measureFit(id, w, fit) { var j = fitJob(id, w, fit); var guard = 0; while (!j.done && guard++ < 50) j.step(); return j.h; }
+  /* a fit preset's height now (measured, or measured here) */
+  function presetH(id, p) {
+    if (p.fit == null || p.measured) return p.h;   /* a stale height counts: the idle measure corrects it */
+    var m = measureFit(id, p.w, p.fit);
+    if (m != null) { p.h = m; p.measured = true; }
+    return p.h;
+  }
+
+  /* ---- the size picker (the size tool, and the card menu's "Size" row drilling in): the Chat Assistant menu with a
+     preview stage. The stage shows a faithful miniature: the real card rendered by its own kind at the preset's pixel
+     size, in the current look, scaled into the stage over the board's track grid at the same scale; hover or the arrow
+     keys move it (the frame springs to the new proportions, the new content cross-fades in). ---- */
+  var pv = null;   /* the open picker's stage: {id, h, el, view, item, card, outline, key, measuring} */
+  function easeOf(kind) {
+    var f = PMU.motion && PMU.motion.family ? PMU.motion.family() : 'basic';
+    if (f === 'nier') return kind === 'fade' ? 'steps(3, jump-start)' : 'steps(5, jump-start)';
+    if (f === 'retro') return kind === 'fade' ? 'steps(2, jump-start)' : 'steps(4, jump-start)';
+    return kind === 'fade' ? 'cubic-bezier(.22,.8,.28,1)' : f === 'friendly' ? 'cubic-bezier(.34,1.56,.64,1)' : 'cubic-bezier(.22,1.55,.36,1)';
+  }
+  function reducedNow() { return PMU.motion && PMU.motion.reduced ? PMU.motion.reduced() : false; }
+  function speedNow() { return PMU.motion && PMU.motion.speed ? PMU.motion.speed() : 1; }
+  /* the footprint glyph of a size row: the board's width as a frame, the card's share of it, its height to one scale */
+  function footprint(w, h, tracks, hRef) {
+    var W = 26, H = 18, cw = Math.max(3, Math.round(W * w / tracks * 10) / 10), ch = Math.max(3, Math.round(H * Math.min(1, h / hRef) * 10) / 10);
+    return '<svg class="pmu-szfp" viewBox="0 0 28 20" aria-hidden="true"><rect x="1" y="1" width="' + W + '" height="' + H + '" rx="2" fill="none" stroke="currentColor" stroke-opacity=".32" stroke-dasharray="1.6 1.4"/>' +
+      '<rect x="1" y="1" width="' + cw + '" height="' + ch + '" rx="1.6" fill="currentColor" fill-opacity=".9"/></svg>';
+  }
+  function sizeRows(id, list) {
+    var me = PMU.board.rect(id), cls = clsNow(), hRef = Math.max(12, Math.max.apply(null, list.map(function (p) { return p.h; }).concat([1])));
+    return list.map(function (p) {
+      var key = 'szfp:' + p.w + 'x' + p.h + ':' + cls.tracks + ':' + hRef;
+      if (!SVG[key]) SVG[key] = footprint(p.w, p.h, cls.tracks, hRef);
+      return { value: 'size:' + p.id, label: p.name, sub: p.desc, right: p.w + ' x ' + p.h, icon: key, preset: p,
+        active: !!me && me.w === p.w && me.h === p.h && p.measured, keywords: p.id };
     });
   }
   function applySize(id, v) {
-    var m = /^size:(\d+)x(\d+)$/.exec(v); if (!m) return false;
-    PMU.board.resize(id, { w: +m[1], h: +m[2] }, 'size_menu');
+    var m = /^size:(.+)$/.exec(v); if (!m) return false;
+    var raw = /^(\d+)x(\d+)$/.exec(m[1]);
+    if (raw) { PMU.board.resize(id, { w: +raw[1], h: +raw[2] }, 'size_menu'); return true; }
+    /* a row the idle measure has since folded into a larger preset of the same size (a click that lands while the rows
+       update) still picks: the preset itself, at its size */
+    var p = presetsOf(id).filter(function (x) { return x.id === m[1]; })[0] || presetsOf.all(id).filter(function (x) { return x.id === m[1]; })[0];
+    if (!p) return false;
+    var h = presetH(id, p), cls = clsNow().name;
+    (picked[id] = picked[id] || {})[cls] = { w: p.w, px: pxOf(p.w), h: h, pid: p.id };
+    PMU.board.resize(id, { w: p.w, h: h }, 'size_menu');
     return true;
+  }
+  function currentLabel(id) {
+    var me = PMU.board.rect(id), ks = PMU.widgets.spec(id) || {}; if (!me) return '';
+    var nm = sizeName(ks, me.w, me.h, id);
+    return (nm ? nm + ' · ' : '') + me.w + ' x ' + me.h;
+  }
+  function stageMarkup() {
+    return '<div class="pmu-szview"><i class="pmu-szgrid" aria-hidden="true"></i><i class="pmu-szoutline" aria-hidden="true"></i></div>' +
+      '<div class="pmu-szcap" aria-live="polite"><b class="pmu-szname"></b><span class="pmu-szdim"></span><span class="pmu-szwhat"></span></div>';
+  }
+  function dropStage() {
+    if (!pv) return;
+    clearTimeout(pv.t0); if (pv.raf) cancelAnimationFrame(pv.raf); if (pv.idle && window.cancelIdleCallback) { try { cancelIdleCallback(pv.idle); } catch (error) {} }
+    [pv.item, pv.oldItem].forEach(function (it) { if (it) { dropGhost(it.firstChild); it.remove(); } });
+    if (pv.el) pv.el.remove();
+    pv = null;
+  }
+  function presetOfRow(h, row) {
+    if (!row || !h || !h.flat) return null;
+    var r = h.flat[+row.getAttribute('data-mi')];
+    return r && r.preset ? r.preset : null;
+  }
+  /* what the miniature actually shows, read from the rendered card */
+  function shownText(kind, r, p) {
+    var word = ITEM_WORD[kind];
+    if (!r.folded) return word && r.items ? 'Every ' + word[0] + ' shows: ' + r.items + ' ' + (r.items === 1 ? word[0] : word[1]) : 'Everything shows';
+    var more = (r.hidden ? r.hidden + ' more' : 'The rest') + ' in its hover tag and Details';
+    return word && r.items ? r.items + ' ' + (r.items === 1 ? word[0] : word[1]) + ' · ' + more : more;
+  }
+  function previewTo(p) {
+    showPreset(p);
+    if (pv && pv.capDirty) { pv.capDirty = false; fitStage(pv.h); }
+  }
+  function showPreset(p) {
+    if (!pv || !p || !pv.view || !pv.view.isConnected) return;
+    var id = pv.id, cls = clsNow(), h = presetH(id, p), key = p.id + ':' + p.w + 'x' + h;
+    pv.p = p;
+    if (pv.key === key) return;
+    var view = pv.view, vw = view.clientWidth || 320, vh = view.clientHeight || 160;
+    var pxW = Math.round(p.w * cls.pitchX - GAP_PX), pxH = h * ROW_PX - GAP_PX;
+    /* the whole card where it fits at a legible scale; a tall card keeps at least 0.42 (its top part, the rest fading
+       under the stage's edge: the caption and the footprint glyph give its whole size) */
+    var kFit = Math.min(1, (vw - 20) / pxW, (vh - 20) / pxH), k = Math.min(1, (vw - 20) / pxW, Math.max(kFit, 0.42));
+    var crop = pxH * k > vh - 20 + 0.5;
+    var left = Math.round((vw - pxW * k) / 2), top = crop ? 10 : Math.round((vh - pxH * k) / 2);
+    view.classList.toggle('is-crop', crop);
+    /* rendered unscaled (the fit pass and the tier read real boxes), then scaled into the stage */
+    var item = document.createElement('div'); item.className = 'pmu-szitem';
+    item.style.cssText = 'left:' + left + 'px;top:' + top + 'px;width:' + pxW + 'px;height:' + pxH + 'px;opacity:0';
+    var card = ghostCard(id); item.appendChild(card); view.appendChild(item);
+    var shown = { items: 0, hidden: 0, folded: false };
+    try { shown = renderAt(card, p.w, h); } catch (error) { console.error('[pm-usage] size preview ' + id, error); }
+    item.style.transform = 'scale(' + k.toFixed(4) + ')'; item.style.opacity = '';
+    /* the board's track grid behind it, at the miniature's scale, aligned to the card's left and top edges */
+    view.style.setProperty('--sz-px', (cls.pitchX * k).toFixed(3) + 'px');
+    view.style.setProperty('--sz-py', (ROW_PX * k).toFixed(3) + 'px');
+    view.style.setProperty('--sz-ox', (left - GAP_PX * k / 2).toFixed(2) + 'px');
+    view.style.setProperty('--sz-oy', (top - GAP_PX * k / 2).toFixed(2) + 'px');
+    var def = PMU.widgets.get(id) || {};
+    var cap = pv.el.querySelector('.pmu-szcap');
+    if (cap) {
+      cap.querySelector('.pmu-szname').textContent = p.name;
+      cap.querySelector('.pmu-szdim').textContent = p.w + ' x ' + h + ' · ' + pxW + ' x ' + pxH + ' px';
+      cap.querySelector('.pmu-szwhat').textContent = shownText(def.kind, shown, p);
+      /* a caption taller than the one the stage was fitted with (a third line: Retro's mono face wraps "4 resets · 12 more
+         in its hover tag and Details") gives the stage less room, the first fill included, so the rows still all show.
+         The caption keeps the tallest height it has had in this opening (min-height): a shorter one never hands the room
+         back, so stage plus caption stay one height and the rows never move under the pointer */
+      var capH = cap.offsetHeight;
+      if (capH > (pv.capH || 0)) { if (pv.capH) cap.style.minHeight = capH + 'px'; pv.capH = capH; pv.capDirty = true; }
+    }
+    var outline = pv.el.querySelector('.pmu-szoutline'), box = { x: left, y: top, w: pxW * k, h: pxH * k };
+    var old = pv.item, oldBox = pv.box;
+    pv.oldItem && pv.oldItem !== old && (dropGhost(pv.oldItem.firstChild), pv.oldItem.remove());
+    pv.item = item; pv.card = card; pv.key = key; pv.box = box; pv.oldItem = old || null;
+    var place = function (el, b) { el.style.transform = 'translate(' + b.x.toFixed(2) + 'px,' + b.y.toFixed(2) + 'px)'; el.style.width = b.w.toFixed(2) + 'px'; el.style.height = b.h.toFixed(2) + 'px'; };
+    if (outline) place(outline, box);
+    if (!old || !oldBox || reducedNow() || typeof item.animate !== 'function') {
+      if (old) { dropGhost(old.firstChild); old.remove(); pv.oldItem = null; }
+      return;
+    }
+    /* the frame springs from the old proportions to the new (transform only), the new miniature cross-fades in over it, the
+       old one fades out and leaves; NieR and Retro step */
+    var sp = speedNow(), dur = 300 * sp, fade = 160 * sp;
+    var sx = oldBox.w / box.w, sy = oldBox.h / box.h, dx = oldBox.x - box.x, dy = oldBox.y - box.y;
+    if (outline) outline.animate([{ transform: 'translate(' + oldBox.x.toFixed(2) + 'px,' + oldBox.y.toFixed(2) + 'px) scale(' + sx.toFixed(4) + ',' + sy.toFixed(4) + ')' },
+      { transform: 'translate(' + box.x.toFixed(2) + 'px,' + box.y.toFixed(2) + 'px) scale(1,1)' }], { duration: dur, easing: easeOf('spring') });
+    item.animate([{ opacity: 0, transform: 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px) scale(' + (k * Math.min(sx, sy)).toFixed(4) + ')' }, { opacity: 1, transform: 'scale(' + k.toFixed(4) + ')' }],
+      { duration: dur, easing: easeOf('spring') }).finished.then(function () {}, function () {});
+    item.animate([{ opacity: 0 }, { opacity: 1 }], { duration: fade, delay: 40 * sp, easing: easeOf('fade'), fill: 'backwards' });
+    var gone = old.animate([{ opacity: 1 }, { opacity: 0 }], { duration: fade, easing: easeOf('fade'), fill: 'forwards' });
+    gone.finished.then(function () { if (pv && pv.oldItem === old) pv.oldItem = null; dropGhost(old.firstChild); old.remove(); }, function () { dropGhost(old.firstChild); old.remove(); });
+  }
+  /* measure the picker's fit presets while the page is idle, one render a slice, then show their heights and the check */
+  function measureLater(h, id) {
+    if (!pv) return;
+    var idle = window.requestIdleCallback || function (fn) { return setTimeout(function () { fn({ timeRemaining: function () { return 12; } }); }, 30); };
+    var job = null;
+    var step = function (deadline) {
+      if (!pv || pv.id !== id || pv.h !== h || !h.open) { if (job) job.cancel(); return; }
+      var t0 = performance.now();
+      do {
+        if (!job || job.done) {
+          var next = presetsOf(id).filter(function (p) { return p.fit != null && (!p.measured || p.stale); })[0];
+          if (!next) { if (h.spec && h.spec.id === 'size:' + id) settleRows(h, id); return; }
+          job = fitJob(id, next.w, next.fit);
+        }
+        job.step();
+      } while (performance.now() - t0 < 8 && deadline && deadline.timeRemaining && deadline.timeRemaining() > 20);
+      pv.idle = idle(step, { timeout: 500 });
+    };
+    pv.idle = idle(step, { timeout: 500 });
+  }
+  /* the measured rows: the same presets update in place (their size, footprint and check), so a row never re-renders under
+     the pointer; only a changed set of rows (a preset that came to the size of a larger one) rebuilds the list */
+  function settleRows(h, id) {
+    var next = sizeMenuSpec(id, h.spec._nested), rows = next.sections[1].rows;
+    var els = Array.prototype.slice.call(h.el.querySelectorAll('.pmu-mitem'));
+    var olds = els.map(function (el) { return h.flat[+el.getAttribute('data-mi')]; });
+    var same = !h.query && olds.length === rows.length && olds.every(function (r, i) { return r && r.preset && r.value === rows[i].value; });
+    if (!same) { h.update(next); return; }
+    h.spec = next;
+    els.forEach(function (el, i) {
+      var r = rows[i], mi = +el.getAttribute('data-mi'), was = h.flat[mi];
+      h.flat[mi] = r;
+      if (was.right !== r.right) { var rt = el.querySelector('.pmu-mright'); if (rt) rt.textContent = r.right; }
+      if (was.icon !== r.icon) { var ic = el.querySelector('.pmu-micon'); if (ic) ic.innerHTML = SVG[r.icon] || ''; }
+      if (!!was.active !== !!r.active) {
+        el.classList.toggle('active', !!r.active); el.setAttribute('aria-checked', r.active ? 'true' : 'false');
+        var ck = el.querySelector('.pmu-mcheck');
+        if (r.active && !ck) el.insertAdjacentHTML('beforeend', '<span class="pmu-mcheck" aria-hidden="true">' + (SVG.check || '') + '</span>');
+        else if (!r.active && ck) ck.remove();
+      }
+    });
+    var cur = h.el.querySelector('.pmu-mcur'); if (cur && next.current) cur.textContent = 'Current · ' + next.current;
+    /* the miniature on show follows its row's measured height */
+    if (pv && pv.h === h && pv.p) { var now = rows.filter(function (r) { return r.preset.id === pv.p.id; })[0]; if (now) previewTo(now.preset); }
+  }
+  /* the same idle measure without a picker (the keyboard's resize mode): while alive() holds */
+  function warmFits(id, alive) {
+    var idle = window.requestIdleCallback || function (fn) { return setTimeout(function () { fn({ timeRemaining: function () { return 12; } }); }, 30); };
+    var job = null;
+    var step = function (deadline) {
+      if (!alive()) { if (job) job.cancel(); return; }
+      var t0 = performance.now();
+      do {
+        if (!job || job.done) {
+          var next = presetsOf(id).filter(function (p) { return p.fit != null && (!p.measured || p.stale); })[0];
+          if (!next) return;
+          job = fitJob(id, next.w, next.fit);
+        }
+        job.step();
+      } while (performance.now() - t0 < 8 && deadline && deadline.timeRemaining && deadline.timeRemaining() > 20);
+      idle(step, { timeout: 500 });
+    };
+    idle(step, { timeout: 500 });
+  }
+  function mountStage(id, h) {
+    var slot = h.el.querySelector('.pmu-szslot'); if (!slot) return;
+    if (!pv || pv.id !== id || pv.h !== h) {
+      dropStage();
+      var el = document.createElement('div'); el.className = 'pmu-szstage'; el.innerHTML = stageMarkup();
+      pv = { id: id, h: h, el: el, view: el.querySelector('.pmu-szview'), key: null };
+      /* the first miniature waits for the menu's sprout (a render inside it would cost the open its frames) */
+      pv.t0 = setTimeout(function () {
+        if (!pv || pv.h !== h || !h.open) return;
+        var rows = Array.prototype.slice.call(h.el.querySelectorAll('.pmu-mitem')), act = rows.filter(function (r) { return r.classList.contains('active'); })[0];
+        var focus = rows.indexOf(document.activeElement) >= 0 ? document.activeElement : null;
+        previewTo(presetOfRow(h, focus) || presetOfRow(h, act) || presetOfRow(h, rows[0]));
+        measureLater(h, id);
+      }, reducedNow() ? 0 : 340 * speedNow());
+    }
+    slot.appendChild(pv.el);
+    /* the stage gives way where the menu would not fit beside its anchor (a card near the window's top or bottom edge):
+       the view shrinks to 72 px at least, so every size row shows without the menu scrolling (the menu's own room:
+       45-menu.js place, 6 px gap and 8 px edge) */
+    fitStage(h);
+    if (!h.el._pmuSzWired) {
+      h.el._pmuSzWired = true;
+      /* one miniature a frame, the last row asked for (a fast sweep down the rows renders where it stops) */
+      var onRow = function (event) {
+        if (!pv || pv.h !== h || !h.spec || h.spec.id !== 'size:' + pv.id) return;
+        var row = event.target.closest && event.target.closest('.pmu-mitem'), p = presetOfRow(h, row);
+        if (!p || pv.key === null) return;
+        pv.want = p;
+        if (!pv.raf) pv.raf = requestAnimationFrame(function () { if (!pv) return; pv.raf = 0; previewTo(pv.want); });
+      };
+      h.el.addEventListener('pointerover', onRow);
+      h.el.addEventListener('focusin', onRow);
+    }
+  }
+  /* the menu's height with nothing cut: its box is capped (place's max-height once it has opened, a spring's fixed height
+     while it springs), so the list's hidden overflow is added back. The room is the side place gave it once it has
+     opened (a drill-in from the card menu keeps the card menu's side), else the larger side, as place will choose */
+  var STAGE_PX = 160, STAGE_MIN = 72;
+  function fitStage(h) {
+    var appEl = document.getElementById('pmuApp'), a = h.anchor && h.anchor.isConnected ? h.anchor.getBoundingClientRect() : h.lastAnchor;
+    if (!appEl || !a || !pv || !pv.view) return;
+    var hostR = appEl.getBoundingClientRect(), capped = parseFloat(h.el.style.maxHeight);
+    var room = capped > 0 ? capped : Math.max(hostR.bottom - a.bottom, a.top - hostR.top) - 6 - 8;
+    /* before place has run the menu has no width yet: measured at the width place will give it (its rows wrap there) */
+    if (!(capped > 0) && h.spec && h.spec.width && !h.el.style.width) h.el.style.width = Math.min(h.spec.width, hostR.width - 16) + 'px';
+    var was = pv.view.offsetHeight, hold = h.el.style.height;
+    pv.view.style.height = '';
+    h.el.style.height = '';
+    var list = h.el.querySelector('.pmu-mlist');
+    var natural = h.el.offsetHeight + (list ? Math.max(0, list.scrollHeight - list.clientHeight) : 0);
+    h.el.style.height = hold;
+    var over = Math.ceil(natural - room);
+    /* down to 72 px where a card at the window's edge and Retro's taller rows leave less than 96 (better a shorter stage
+       than a list that scrolls) */
+    if (over > 0) pv.view.style.height = Math.max(STAGE_MIN, STAGE_PX - over) + 'px';
+    /* the caption height this fit was measured with (showPreset refits when a caption grows past it) */
+    var capEl = pv.el.querySelector('.pmu-szcap'); if (capEl && capEl.offsetHeight > (pv.capH || 0)) pv.capH = capEl.offsetHeight;
+    /* a stage that changed height re-places the miniature on show */
+    if (pv.key && pv.p && pv.view.offsetHeight !== was) { var p = pv.p; pv.key = null; previewTo(p); }
+  }
+  /* a fresh measure for each opening of the picker: the data, the range or the look may have changed since the last one */
+  function freshFits(id) { Object.keys(fitCache).forEach(function (k) { if (k.indexOf(id + '|') === 0) { fitStale[k] = fitCache[k]; delete fitCache[k]; } }); }
+  function sizeMenuSpec(id, nested) {
+    var list = presetsOf(id);
+    return { id: 'size:' + id, _nested: !!nested, title: t('cardmenu.size'), current: currentLabel(id), align: 'end', width: 360, className: 'pmu-szmenu',
+      sections: [{ rows: [{ html: '<div class="pmu-szslot"></div>' }] }, { rows: sizeRows(id, list) }],
+      foot: 'Drag any edge or corner for any size in between.',
+      body: function (c, h) { mountStage(id, h); },
+      onPick: function (v) { applySize(id, v); return true; },
+      onClose: function () { dropStage(); } };
   }
   var RANGES = [['5h', 'Last 5 hours'], ['24h', 'Last 24 hours'], ['7d', 'Last 7 days'], ['30d', 'Last 30 days']];
   function gearSpec(id) {
@@ -231,8 +684,8 @@
   }
   function cardMenuSpec(id) {
     var def = PMU.widgets.get(id) || {}, me = PMU.board.rect(id), ks = PMU.widgets.spec(id) || {};
-    var title = text(def.title, ctxBase(id, st.room));
-    var cur = me ? (sizeName(ks, me.w, me.h) ? t('cardmenu.current_size', { name: sizeName(ks, me.w, me.h), w: me.w, h: me.h }) : t('cardmenu.custom_size', { w: me.w, h: me.h })) : '';
+    var title = text(def.title, ctxBase(id, st.room)), nm = me ? sizeName(ks, me.w, me.h, id) : null;
+    var cur = me ? (nm ? t('cardmenu.current_size', { name: nm, w: me.w, h: me.h }) : t('cardmenu.custom_size', { w: me.w, h: me.h })) : '';
     var kind = PMU.widgets.kindOf(id);
     var panelRows = [{ value: 'configure', label: t('cardmenu.configure'), sub: t('cardmenu.configure_sub'), icon: 'gear', submenu: function () { return gearSpec(id); } }];
     /* "Fit" only when it would change the card (the kind's autoH names a taller height that shows every row) */
@@ -244,9 +697,11 @@
       { value: 'kbresize', label: t('cardmenu.resize'), sub: t('cardmenu.resize_sub'), icon: 'resize', action: true },
       { value: 'tidy', label: t('cardmenu.tidy'), sub: t('cardmenu.tidy_sub'), icon: 'tidy', action: true },
       { value: 'hide', label: t('cardmenu.hide'), sub: t('cardmenu.hide_sub'), icon: 'eyeOff', action: true, danger: true });
-    return { id: 'card:' + id, title: title, current: cur, align: 'end', width: 320,
-      sections: [{ label: t('cardmenu.size'), rows: sizeRows(id) }, { label: 'Panel', rows: panelRows }],
-      onPick: function (v) { return cardAction(id, v); } };
+    /* the sizes are one row that drills into the size picker and its previews (lane c-presets) */
+    var sizeRow = { value: 'sizes', label: t('cardmenu.size'), sub: (cur ? cur + ' · ' : '') + 'preview each preset', icon: 'size', submenu: function () { freshFits(id); return sizeMenuSpec(id, true); } };
+    return { id: 'card:' + id, title: title, current: cur, align: 'end', width: 360,
+      sections: [{ rows: [sizeRow] }, { label: 'Panel', rows: panelRows }],
+      onPick: function (v) { return cardAction(id, v); }, onClose: function () { dropStage(); } };
   }
   function cardAction(id, v) {
     var card = PMU.board.card(id), def = PMU.widgets.get(id) || {};
@@ -264,12 +719,7 @@
     if (v === 'hide') { var name = text(def.title, ctxBase(id, st.room)); PMU.board.setVisible(id, false); PMU.shell.toast(t('toast.hidden', { name: name })); return true; }
     return true;
   }
-  function sizeMenuSpec(id) {
-    var def = PMU.widgets.get(id) || {}, me = PMU.board.rect(id), ks = PMU.widgets.spec(id) || {};
-    var nm = me ? sizeName(ks, me.w, me.h) : null;
-    return { id: 'size:' + id, title: t('cardmenu.size'), current: me ? (nm ? nm + ' · ' : '') + me.w + ' x ' + me.h : '', align: 'end', width: 300,
-      rows: sizeRows(id), foot: 'Drag any edge or corner for any size in between.', onPick: function (v) { applySize(id, v); return true; } };
-  }
+
 
   /* the heads follow the look: a NieR or Retro switch (or a web font that lands late) changes the face the subtitles and
      titles are measured in, so every card's head is fitted again (Mac NieR 1920: a plate subtitle fitted in the Basic
@@ -325,7 +775,20 @@
       var id = card.getAttribute('data-widget'), kind = PMU.widgets.kindOf(id);
       withView(id, function () {
         var ctx = ctxFor(card, tier, entering);
+        var titleEl = card.querySelector('.pmu-cardtitle'), title0 = titleEl ? titleEl.textContent : '';
         syncHead(card, ctx);
+        /* the head's title just changed (the short title of a narrow tile): the tier was measured under the old head (a
+           wrapped title took the tile's second line, so a 4 x 4 tile rendered its h0 strip with a free line under it);
+           measure again and render for the head as it is now (lane c-presets) */
+        if (titleEl && titleEl.textContent !== title0 && PMU.board && PMU.board.measure) {
+          var t2 = PMU.board.measure(card);
+          if (t2.w !== tier.w || t2.h !== tier.h || t2.bw !== tier.bw || t2.bh !== tier.bh) {
+            tier = t2;
+            if (card.getAttribute('data-tw') !== tier.w) card.setAttribute('data-tw', tier.w);
+            if (card.getAttribute('data-th') !== tier.h) card.setAttribute('data-th', tier.h);
+            ctx = ctxFor(card, tier, entering);
+          }
+        }
         if (body._pmuKind && body._pmuKind.destroy) { try { body._pmuKind.destroy(body, body._pmuCtx); } catch (error) {} }
         body.textContent = '';
         var head = card.querySelector('.pmu-headtools'); if (head) head.textContent = '';
@@ -385,9 +848,32 @@
       return el;
     },
     menu: function (id, anchor) { return PMU.menu.toggle(anchor, cardMenuSpec(id)); },
-    sizeMenu: function (id, anchor) { return PMU.menu.toggle(anchor, sizeMenuSpec(id)); },
+    sizeMenu: function (id, anchor) { if (!(pv && pv.id === id)) freshFits(id); return PMU.menu.toggle(anchor, sizeMenuSpec(id)); },
     gear: function (id, anchor) { return PMU.menu.toggle(anchor, gearSpec(id)); },
-    sizeName: sizeName
+    sizeName: sizeName,
+    /* the presets of a panel at the board's class now ([{id, name, desc, w, h, fit, measured}]), a fit preset's measured
+       height, and applying one (the keyboard's Shift steps, the API, the probes) */
+    presets: presetsOf, presetH: function (id, p) { return presetH(id, p); }, measureFit: measureFit,
+    applyPreset: function (id, pid) { return applySize(id, 'size:' + pid); }, _fitLog: null, warmFits: warmFits,
+    /* a preset the keyboard's Shift steps landed on, at the size it landed (40-board, on Enter) */
+    notePick: function (id, pid, w, h) { (picked[id] = picked[id] || {})[clsNow().name] = { w: w, px: pxOf(w), h: h, pid: pid }; },
+    /* the layout record's presets ({class: {id, w, h, px}}): the preset a panel was set to at each class while its geometry
+       there is still that size (40-board writes and reads it) */
+    presetsSet: function (id, geo) {
+      var out = null, mine = picked[id] || {};
+      Object.keys(mine).forEach(function (cls) {
+        var pk = mine[cls], g = geo && geo[cls];
+        if (pk && g && g.w === pk.w && g.h === pk.h) (out = out || {})[cls] = { id: pk.pid, w: pk.w, h: pk.h, px: pk.px };
+      });
+      return out;
+    },
+    seedPresets: function (id, set, geo) {
+      Object.keys(set || {}).forEach(function (cls) {
+        var e = set[cls], g = geo && geo[cls];
+        if (!e || typeof e.id !== 'string' || !g || g.w !== e.w || g.h !== e.h) return;
+        (picked[id] = picked[id] || {})[cls] = { w: e.w, h: e.h, px: +e.px || 0, pid: e.id };
+      });
+    }
   };
 
   /* ---- the head's room for its actions (Jared's note 6b, 2026-10-09) ----

@@ -24,7 +24,9 @@
       var tools = C.headTools(ctx, tkLegend(TK));
       var footText = (left.length ? left.map(function (m) { return m.name; }).join(', ') + (left.length > 1 ? ' are' : ' is') + ' left out: no tokens or value recorded. ' : '') +
         'Value by token type is a PM estimate at catalog rates; the parts add up to the recorded value.';
-      var rowH = two ? 48 : 42, reserve = (tools ? 34 : 0) + (two ? 0 : 28) + 44;
+      /* (lane c-presets, agent 5) the legend tools take two lines in a narrow card (NieR, Retro: about 50 px) and a
+         two-line foot 48 px with its gap: counted at 34 and 44, the NieR Compact card put "3 more models" under its foot */
+      var rowH = two ? 48 : 42, reserve = (tools ? (two ? 50 : 34) : 0) + (two ? 0 : 28) + 48;
       var fit = C.fit(ctx.tier.bh, rowH, reserve);
       var rows = shown.length > fit ? shown.slice(0, Math.max(1, fit * rowH + 22 + reserve <= ctx.tier.bh ? fit : fit - 1)) : shown;
       var maxV = Math.max.apply(null, shown.map(function (m) { return m.value.total; }).concat([1e-9]));
@@ -98,9 +100,13 @@
       var m = ctx.model; if (!m || !m.rows.length) { body.innerHTML = C.empty('No token activity in this range.'); return; }
       var tools = C.headTools(ctx, '<span class="pmu-legend pmu-legend-inline"><span class="pmu-legend-item"><i class="pmu-swatch" data-sw="soft" data-tk="all"></i><span class="pmu-legend-name">Share of tokens</span></span>' +
         '<span class="pmu-legend-item"><i class="pmu-swatch" data-sw="box" data-tk="all"></i><span class="pmu-legend-name">Share of cost</span></span></span>');
-      var narrow = ctx.tier.bw < 360, rowH = narrow ? 41 : 36, gap = 12;
-      var rows = m.rows, need = rows.length * rowH + (rows.length - 1) * gap + (tools ? 34 : 0);
-      var footOk = m.foot && need + 50 <= ctx.tier.bh + 12;
+      /* (lane c-presets, agent 5) measured at 266-271 px: a narrow row 43 px (Retro), the legend tools 40 px with their 4 px
+         gap where the two legend names wrap (Glass, Retro); the foot only where it fits with no slack. With 41 / 34 and 12 px
+         of slack the foot showed in a Retro 6 x 14 card whose rows then overflowed upward past the body's top, which the
+         fit measure read as clipped at every height and settled the Compact preset on 5 rows */
+      var narrow = ctx.tier.bw < 360, rowH = narrow ? 43 : 36, gap = 12;
+      var rows = m.rows, need = rows.length * rowH + (rows.length - 1) * gap + (tools ? (narrow ? 44 : 34) : 0);
+      var footOk = m.foot && need + 50 <= ctx.tier.bh + 2;
       body.innerHTML = '<div class="pmu-breakw">' + tools + '<div class="pmu-breakhost"></div></div>' + (footOk ? C.foot(esc(m.foot), 'info') : '');
       var c = C.chart(body, 'sharebars', body.querySelector('.pmu-breakhost'), { rows: rows, narrow: narrow }, { label: 'Token breakdown' });
       if (!c && !body._pmuDry) body.querySelector(".pmu-breakhost").innerHTML = rows.map(function (r) { return '<div class="pmu-lrow"><span class="pmu-lname"><b>' + esc(r.name) + '</b></span><span class="pmu-lval">' + esc(PMU.fmt.tok(r.tokens) + ' · ' + C.money(r.value)) + '</span></div>'; }).join('');
@@ -219,7 +225,11 @@
       var open = openRows[ctx.id] || '';
       var cmpG = open ? compareGroup(q, open) : null, cmpOn = !!(cmpG && compareOn[ctx.id]);
       var rowH = mid ? 36 : 40, headH = 36, focusH = 236 + (cmpG ? 32 : 0);
-      var budget = ctx.tier.bh - 22 - (q.noWindows.length ? 34 : 0) - (open ? focusH : 0);
+      /* the foot's own height: it wraps to two lines in a 368 px card (lane c-presets: the 34 px of one line let the
+         "N more accounts" line run under a two-line foot) */
+      var noWin = q.noWindows.length ? listWords(q.noWindows) + (q.noWindows.length > 1 ? ' expose' : ' exposes') + ' no quota windows.' : '';
+      var footH = noWin ? 16 + 18 * Math.min(2, C.wrapLines(noWin, bw - 24 - 22, 12.5)) : 0;
+      var budget = ctx.tier.bh - 22 - footH - (open ? focusH : 0);
       var used = 0, hiddenRows = 0, out = [], rowsDrawn = [], hiddenNames = [];
       var tlW = wide ? bw * 0.66 - 230 : mid ? bw * 0.64 - 200 : bw * 0.6 - 110;
       var axis = axisTicks(q, Math.max(1, Math.ceil(7 * 34 / Math.max(60, tlW))), tlW);
@@ -378,7 +388,9 @@
          days out in a hidden fourth column and printed "continued" under its own day). Two columns from 520 px, three from
          900; a day that runs into the next column carries its head there ("continued", only at a column top); the foot line
          counts what was actually laid out. */
-      var bw = ctx.tier.bw, colsN = bw >= 900 ? 3 : bw >= 520 ? 2 : 1, GAP = 28;
+      /* (lane c-presets) a column of at least 300 px, so a line keeps its account and provider on one line: two columns
+         from 628 px, three from 960 (two 250 px columns at a 557 px board wrapped every line to three) */
+      var bw = ctx.tier.bw, colsN = bw >= 960 ? 3 : bw >= 628 ? 2 : 1, GAP = 28;
       var colW = (bw - GAP * (colsN - 1)) / colsN, narrow = colW < 300;
       var minLine = narrow ? 48 : 42, headH = 32;
       /* the text column: the line's grid (time 46 / 52 px, mark 18, the used column as wide as its widest value) */

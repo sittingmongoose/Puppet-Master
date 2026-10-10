@@ -1030,10 +1030,15 @@
          label beside it on a short leader, on the side with room; HTML over the plot, so the room's beat can unfold it */
       var co = spec.callout;
       if (co && !compact && W >= 360 && pts[0] && finite(pts[0][co.i])) {
-        var cx = xs[co.i], cy = pts[0][co.i], left = cx > pad.l + pw * 0.6;
+        var cx = xs[co.i], cy = pts[0][co.i];
+        /* (lane c-presets) the label takes a side only where it fits inside the plot (the side with more room first), else
+           only the ring marks the point (the spike stays in the facts row, the notes and the readout): Retro's 404 px
+           Standard card put the label 15 px past the card's left edge */
+        var coW = Math.max(charts.textW(co.title || '', 12.5, false, 640), charts.textW(co.sub || '', 12)) * 1.12 + 24;
+        var roomL = cx - 16 >= coW, roomR = W - cx - 16 >= coW, left = cx > pad.l + pw * 0.6 ? roomL || !roomR : !roomR && roomL;
         var top = Math.max(2, Math.min(Hh - pad.b - 44, cy - 20));
-        h += '<i class="pmu-callring" data-tone="' + esc(co.tone || 'warn') + '" style="left:' + r1(cx) + 'px;top:' + r1(cy) + 'px"></i>' +
-          '<div class="pmu-callout" data-tone="' + esc(co.tone || 'warn') + '" data-side="' + (left ? 'l' : 'r') + '" style="' + (left ? 'right:' + r1(W - cx + 16) : 'left:' + r1(cx + 16)) + 'px;top:' + r1(top) + 'px;--stem-y:' + r1(cy - top) + 'px">' +
+        h += '<i class="pmu-callring" data-tone="' + esc(co.tone || 'warn') + '" style="left:' + r1(cx) + 'px;top:' + r1(cy) + 'px"></i>';
+        if (roomL || roomR) h += '<div class="pmu-callout" data-tone="' + esc(co.tone || 'warn') + '" data-side="' + (left ? 'l' : 'r') + '" style="' + (left ? 'right:' + r1(W - cx + 16) : 'left:' + r1(cx + 16)) + 'px;top:' + r1(top) + 'px;--stem-y:' + r1(cy - top) + 'px">' +
           '<b>' + esc(co.title || '') + '</b>' + (co.sub ? '<span>' + esc(co.sub) + '</span>' : '') + '</div>';
       }
       if (live && morph) slid = slideJobs(f.hl, h); else if (morph) morphMarks(c._tw, f.hl, h); else charts.patchHtml(f.hl, h);
@@ -1694,6 +1699,12 @@
       (pk ? ' · ' + esc(t('charts.busiest')) + ' <b>' + esc(pk.label) + '</b>' : '') + '</span>' +
       '<span class="pmu-hs-key is-first"><i data-step="0"></i>' + esc(t('charts.heat_nothing')) + '</span><span class="pmu-hs-key"><i data-step="-1"></i>' + esc(t('charts.heat_outside')) + '</span>');
     if (pk) { var pc = c.el.querySelector('.pmu-hc[data-r="' + pk.row + '"][data-c="' + pk.col + '"]'); if (pc) pc.setAttribute('data-peak', '1'); }
+    /* (lane c-presets) the legend as laid out: where its words wrap to more lines than the estimate (the NieR face, a bold
+       peak), the cells give up the difference, so the legend's last line never sits under the card's edge */
+    if (!ownLeg && Hh > 0) {
+      var over = grid.offsetHeight + 12 + lg.offsetHeight + 2 - Hh;
+      if (over > 0 && cellH > 11) { cellH = Math.max(11, cellH - Math.ceil(over / Math.max(1, rows.length))); grid.style.setProperty('--hc-h', cellH + 'px'); }
+    }
     void morph;
   }
 

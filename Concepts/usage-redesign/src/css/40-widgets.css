@@ -38,7 +38,12 @@
 #panel-usage .pmu-wempty span { font-size: 12px; color: var(--pmu-ink-3); text-align: center; }
 #panel-usage .pmu-cfoot { min-width: 0; }
 #panel-usage .pmu-cfoot-text { flex: 1 1 auto; min-width: 0; color: var(--pmu-ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-#panel-usage .pmu-card[data-head="plate"] .pmu-cfoot-text { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1.4; }
+/* (lane c-presets, agent 5) a plate's foot keeps to two lines and clips the rest (overflow: hidden over 70-wrap.css's
+   visible): the clamped third line (Retro's wider face) spilled 10 px into the body's padding, where it counted as
+   overflow and the fit pass removed every row of the card above it (the Plan allocation mix kept only its bar). The
+   whole foot is in its hover tag (50-w-common C.foot). Letting the foot take three lines instead moved other cards'
+   rows under it (Retro models and token breakdown, pf3) */
+#panel-usage .pmu-card[data-head="plate"] .pmu-cfoot-text { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1.4; overflow: hidden; }
 #panel-usage .pmu-cfoot-when { flex: none; color: var(--pmu-ink-3); font-size: 12px; }
 #panel-usage .pmu-key { display: inline-block; width: 10px; height: 10px; margin-right: 6px; border-radius: 3px; background: var(--pmu-tk-all); vertical-align: -1px; }
 #panel-usage .pmu-key[data-sw="half"] { width: 6px; margin-right: 1px; }
@@ -119,6 +124,10 @@ html[data-theme^="retro"] #panel-usage .pmu-caveat, html[data-o55-nier="on"] #pa
 #panel-usage .pmu-kpicell .pmu-kpisub b { font-weight: 600; color: var(--pmu-ink-2); }
 #panel-usage .pmu-kpis.is-values .pmu-kpicell .pmu-kpivalue { font-size: 20px; }
 #panel-usage .pmu-kpis.is-tight .pmu-kpicell .pmu-kpivalue { font-size: 22px; line-height: 1; }
+#panel-usage .pmu-kpis.is-low { margin-bottom: -4px; }
+#panel-usage .pmu-kpis.is-low .pmu-kpicell { gap: 1px; }
+#panel-usage .pmu-kpis.is-low .pmu-kpicell-l { font-size: 12px; line-height: 14px; }
+#panel-usage .pmu-kpis.is-low .pmu-kpicell .pmu-kpivalue { font-size: 18px; line-height: 1; }
 #panel-usage .pmu-kpis.is-tight .pmu-kpicell { gap: 1px; }
 
 /* ------------------------------------------------------------------ list rows */
@@ -198,6 +207,10 @@ html[data-theme^="retro"] #panel-usage .pmu-caveat, html[data-o55-nier="on"] #pa
 #panel-usage .pmu-mixrow b { font-weight: 600; color: var(--pmu-ink); }
 #panel-usage .pmu-mixpct { font-size: 12px; color: var(--pmu-ink-3); text-align: right; }
 #panel-usage .pmu-rankedhost { min-width: 0; flex: none; }
+/* (lane c-presets) a narrow two-line ranked row: the name on its own line, the bar and the value under it (50-w-common
+   ranked: the longest name did not fit beside the value and its share) */
+#panel-usage .pmu-rankedhost.is-stack .pmu-rk { grid-template-columns: minmax(36px, 1fr) auto; grid-template-areas: "name name" "bar val"; align-items: center; gap: 4px 10px; }
+#panel-usage .pmu-rankedhost.is-stack .pmu-rkt { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #panel-usage .pmu-gauge { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0; flex: 1 1 auto; }
 #panel-usage .pmu-gauge.is-side { flex-direction: row; align-items: center; gap: 16px; }
 #panel-usage .pmu-gaugering { flex: none; }
@@ -235,6 +248,9 @@ html[data-theme^="retro"] #panel-usage .pmu-caveat, html[data-o55-nier="on"] #pa
 #panel-usage .pmu-budgetof { font-size: 12.5px; color: var(--pmu-ink-2); white-space: nowrap; }
 #panel-usage .pmu-budgetest { font-size: 12.5px; color: var(--pmu-ink-3); white-space: nowrap; }
 #panel-usage .pmu-budget.is-compact .pmu-budgetest { flex-basis: 100%; }
+/* (lane c-presets) a compact hero is three whole lines (the value, "of budget", the month-end estimate): the 52 px cap
+   cut the estimate in half behind the plot in the 6 x 7 Compact preset */
+#panel-usage .pmu-budget.is-compact .pmu-budgethero { max-height: 66px; }
 #panel-usage .pmu-budgetmix { flex: none; }
 
 /* ------------------------------------------------------------------ the Atlas kinds */
@@ -529,7 +545,9 @@ html[data-theme$="-light"] #panel-usage .pmu-skyfill::before { box-shadow: 0 1px
 #panel-usage .pmu-skytrack.is-est .pmu-skyflare { display: none; }
 #panel-usage .pmu-skyfoot { display: inline-flex; align-items: center; gap: 4px; height: 22px; }
 #panel-usage .pmu-skyfoot b { font-family: var(--pmu-mono); font-size: 11px; font-weight: 600; letter-spacing: .04em; color: var(--pmu-ink-2); }
-#panel-usage .pmu-skyreset { max-width: 100%; font-size: 11px; line-height: 18px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: clip; }
+/* the reset word is centred on its tower and may run a pixel or two past a 37 px column ("Oct 16" in the NieR face was
+   cut to "Oct 1", agent 4); every word is at most six characters, so neighbours never meet */
+#panel-usage .pmu-skyreset { max-width: none; font-size: 11px; line-height: 18px; color: var(--pmu-ink-3); white-space: nowrap; overflow: visible; }
 #panel-usage .pmu-skycol:hover .pmu-skytrack { box-shadow: var(--pmu-l-track-in, none), 0 0 0 1px color-mix(in srgb, var(--c) 55%, transparent); }
 /* the plot keeps a 40 px gutter on the right for the auto-switch level, so its word never sits on a gauge's value; the
    floor is one lit rule the towers stand on */
@@ -597,6 +615,9 @@ html[data-o55-nier="on"] #panel-usage .pmu-atdot.is-pending { background: transp
 #panel-usage .pmu-flowmid.is-row { flex-direction: row; align-items: center; justify-content: flex-start; gap: 10px; }
 #panel-usage .pmu-flowmid.is-row b { font-size: 22px; }
 #panel-usage .pmu-flowlab b { font-size: 22px; }
+/* (lane c-presets) a flow under 460 px (a 400 px board): 100 px authority and label columns keep "6 of 6" on one line */
+#panel-usage .pmu-flow.is-narrow :is(.pmu-flowmid, .pmu-flowlab) { padding: 0 9px; }
+#panel-usage .pmu-flow.is-narrow .pmu-flowlab b { font-size: 20px; white-space: nowrap; }
 #panel-usage :is(.pmu-flowmid, .pmu-flowlab) span { font-size: 12.5px; font-weight: 560; color: var(--pmu-ink-2); }
 #panel-usage .pmu-flowlab em { font-style: normal; font-size: 12px; line-height: 1.35; color: var(--pmu-ink-3); }
 html[data-theme^="retro"] #panel-usage :is(.pmu-flowsrc, .pmu-flowmid, .pmu-flowlab) { border-radius: 0; }
@@ -696,6 +717,9 @@ html[data-o55-nier="on"] #panel-usage .pmu-wmk em { border-radius: 0; background
 /* round 3: the quiet count of a small card's folded readings, in its head ("+6", layers glyph, 12 px ink-3; the hover tag
    lists them). It sits in the head tools slot, before any tool. */
 #panel-usage .pmu-headmore { display: inline-flex; align-items: center; gap: 4px; flex: none; height: 20px; padding: 0 2px; font-size: 12px; line-height: 1; color: var(--pmu-ink-3); cursor: default; white-space: nowrap; }
+/* (lane c-presets) in a tile head the count keeps the head's 18 px line: at 20 px it made the head 2 px taller, so a tile
+   measured with the count rendered one fact fewer than one measured without it, and kept the count (gauge 8 x 8) */
+#panel-usage .pmu-card[data-head="tile"] > .pmu-cardhead .pmu-headmore { height: 18px; }
 #panel-usage .pmu-headmore .pmu-glyph { width: 13px; height: 13px; opacity: .8; }
 #panel-usage .pmu-headmore .pmu-glyph svg { width: 13px; height: 13px; }
 #panel-usage .pmu-headmore b { font-weight: 600; font-variant-numeric: tabular-nums; }
@@ -705,3 +729,34 @@ html[data-o55-nier="on"] #panel-usage .pmu-headmore { font-family: var(--pmu-mon
 #panel-usage .pmu-kpi .pmu-kpiline.has-count-row { flex-wrap: wrap; row-gap: 0; }
 #panel-usage .pmu-kpiline.has-count-row .pmu-headmore.is-inline { height: 18px; }
 #panel-usage .pmu-headmore.is-row { display: flex; justify-content: flex-end; width: 100%; height: 18px; margin: 0; padding: 0; flex: none; grid-column: 1 / -1; }
+
+/* ------------------------------------------------------------------ the size picker's preview (lane c-presets, Jared item 1)
+   The stage of the size menu: the real card at the preset's size (a hidden-card render, 42-cards.js), scaled into a well
+   over the board's track grid at the same scale, an accent frame that springs between presets, and a caption that says
+   what the miniature shows. The miniature never takes the pointer, focus or a hover tag. */
+#panel-usage .pmu-szstage { position: relative; margin: 2px 0 4px; }
+#panel-usage .pmu-szview { position: relative; height: 160px; overflow: hidden; border-radius: calc(var(--pmu-r-mitem, 8px) + 2px);
+  box-shadow: inset 0 0 0 1px var(--pmu-rule-2); contain: layout paint; }
+#panel-usage .pmu-szgrid { position: absolute; inset: 0; pointer-events: none; opacity: .7;
+  background-image: linear-gradient(to right, color-mix(in srgb, var(--pmu-ink) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--pmu-ink) 5%, transparent) 1px, transparent 1px);
+  background-size: var(--sz-px, 24px) var(--sz-py, 15px); background-position: var(--sz-ox, 0) var(--sz-oy, 0); }
+#panel-usage .pmu-szoutline { position: absolute; left: 0; top: 0; transform-origin: 0 0; pointer-events: none; border-radius: var(--pmu-r-card);
+  box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--pmu-accent) 62%, transparent), 0 0 22px color-mix(in srgb, var(--pmu-accent) 22%, transparent); }
+#panel-usage .pmu-szitem { position: absolute; transform-origin: 0 0; pointer-events: none; }
+/* a tall card's miniature runs under the stage's lower edge: the last 36 px fade out */
+#panel-usage .pmu-szview.is-crop { -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - min(36px, 35%)), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - min(36px, 35%)), transparent); }
+#panel-usage .pmu-szitem > .pmu-card { position: relative; box-sizing: border-box; pointer-events: none; }
+#panel-usage .pmu-szitem > .pmu-card .pmu-cardtools, #panel-usage .pmu-szitem > .pmu-card .pmu-h,
+#panel-usage .pmu-szmeasure .pmu-cardtools, #panel-usage .pmu-szmeasure .pmu-h { visibility: hidden; }
+/* the caption keeps its two lines' room before the first miniature fills it (the menu is sized once, at its open) */
+#panel-usage .pmu-szcap { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 8px; row-gap: 1px; box-sizing: border-box; min-height: 42px; padding: 7px 2px 0; font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-szcap b { color: var(--pmu-ink); font-size: 13px; font-weight: 640; }
+#panel-usage .pmu-szcap .pmu-szdim { font-variant-numeric: tabular-nums; }
+#panel-usage .pmu-szcap .pmu-szwhat { flex-basis: 100%; color: var(--pmu-ink-2); }
+#panel-usage .pmu-szmeasure { position: absolute; left: -40000px; top: 0; width: 0; height: 0; overflow: visible; visibility: hidden; pointer-events: none; }
+#panel-usage .pmu-szmeasure > .pmu-card { position: absolute; left: 0; top: 0; }
+/* the footprint glyph of a size row: the card's share of the board's width and its height */
+#panel-usage .pmu-micon svg.pmu-szfp { width: 22px; height: 16px; }
+html[data-theme^="retro"] #panel-usage .pmu-szview, html[data-o55-nier="on"] #panel-usage .pmu-szview { border-radius: 0; }
+html[data-theme^="retro"] #panel-usage .pmu-szoutline, html[data-o55-nier="on"] #panel-usage .pmu-szoutline { border-radius: 0; box-shadow: 0 0 0 1.5px var(--pmu-accent); }
