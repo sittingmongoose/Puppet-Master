@@ -499,10 +499,9 @@
        own column below, so the action column is at least as wide as the button */
     var swOn = switchable(p), SWB = swOn ? accSwW() : 0, actShort = actW;
     if (fullAct) actW = fullActW;
-    /* the folded button fits its column whole (a button leaning into the gap met the merged "Quota not exposed" of
-       Codex's API key row on a 400 px board); it is drawn tight (4 px a side), so an "Active" or "Use" column grows by a
-       few px at most (14 px more wrapped Codex's rows a line taller at 1920) */
-    if (swOn) actW = Math.max(actW, SWB);
+    /* the folded button may lean 3 px into the 16 px gap on its left, so an action column that holds only "Active" (49
+       px) keeps its width: 3 px more wrapped Codex's rows a line taller at 1920 */
+    if (swOn) actW = Math.max(actW, SWB - 3);
     /* a window column keeps "78% used" and "resets in 1h 41m" on one line each from about 104 px */
     var IDENT = Math.max(112, NAMECOL), WIN = 104, IDENT_B = Math.max(100, NAMECOL);
     /* with two or more windows the identity column may go to 100 px, so a plate whose action column reserves its widest
@@ -630,6 +629,9 @@
       var cells;
       if (!n || hidden) {
         var word = !n ? a.noWindowsWord || 'Quota not exposed' : (a.windows[0].note && /limit/.test(a.windows[0].note) ? 'Limit not exposed' : 'Quota not exposed');
+        /* a merged cell narrower than its words says "Not exposed", as a narrow meter does (D43: on a 400 px board Codex's
+           "Quota not exposed" ran 19 px past its column into the action column); Details keeps the whole words */
+        if (n && C.wrapW(word, 12.5, 520) + 22 > (mode === 'full' ? n * winW + GAP * (n - 1) : winW)) word = 'Not exposed';
         cells = ['<span class="pmu-acccell is-merged"' + (mode === 'full' && n > 1 ? ' style="grid-column:span ' + n + '"' : '') + '>' + (a.amounts.length ? amountLines(a, 2, bw < 420) : '') +
           (!n && a.amounts.length ? '' : '<span class="pmu-accna">' + C.vs('not_exposed', word) + '</span>') + '</span>'];
       } else if (mode === 'full') cells = p.windows.map(function (w) { return '<span class="pmu-acccell" data-win="' + esc(w.key) + '"' + C.shareAttr('win:' + a.key + '/' + w.key) + '></span>'; });
