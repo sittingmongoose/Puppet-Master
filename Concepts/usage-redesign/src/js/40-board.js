@@ -11,7 +11,11 @@
    document listeners stay at module level. PMU.board is the Usage page's instance, made at the end of this file from the
    same four elements, with the page state, the rooms, the v12 migration and the room film; a hosted board (a Home
    dashboard tab) builds its own DOM, keeps a private state with one fixed room (its id) and takes its width from its
-   host (hostResize). */
+   host (hostResize).
+   D10 round two (Jared, 2026-10-10): widget sources (PMU.boards.sources, P3); Start from and the user's saved presets
+   (board.sets, board.startFrom, PMU.boards.presets, P4); dashboard keys per project (board.setProject,
+   PMU.boards.forgetKey, P5); live beats and Play the next hour on dashboards (PMU.boards.live, PMU.boards.hour, P12); a
+   new dash-<n> starts empty (P13). The Usage board takes none of these paths. */
 (function () {
   /* (lane c-presets, agent 5) M from 880 px, not 820: at 820 a 20-track board's pitch was 41.4 px and the M default
      boards, authored at the 46.9 px pitch of the 929 px board (1920 with a 480 px chat), clipped and wrapped names letter
@@ -197,11 +201,113 @@
      synchronous call (run), the board that holds the one page-wide gesture (ACTIVE: its handle), and the data epoch that
      tells a hidden hosted board to refresh when it is shown again ---- */
   var REG = {}, ORDER = [], EACH = [], ambient = null, ACTIVE = null, EPOCH = 0, LAYER = null, CATALOG = null;
-  /* ids a hosted board may never take (D10 2.4): the Usage board's, the 13 Usage rooms' (05-data.js ROOM) and the kind's own */
-  var RESERVED = { usage: 1, layer: 1, agents: 1, current: 1 };
+  /* ids a hosted board may never take (D10 2.4): the Usage board's, the 13 Usage rooms' (05-data.js ROOM), the kind's own
+     and 'dashboard' (the name of a Start-from set, never a board's: D10 P13) */
+  var RESERVED = { usage: 1, layer: 1, agents: 1, current: 1, dashboard: 1 };
   function own(o, k) { return Object.prototype.hasOwnProperty.call(o, k); }
-  function hostDefaults(id) { var H = typeof PMU_BOARDS !== 'undefined' && PMU_BOARDS ? PMU_BOARDS.hosts : null; return (H && H[id]) || null; }
+  function hostsTable() { return typeof PMU_BOARDS !== 'undefined' && PMU_BOARDS && PMU_BOARDS.hosts ? PMU_BOARDS.hosts : null; }
+  /* a board's own default set (tools/boards.py HOSTS): home, metrics and monitoring have one; an id without one (a new
+     dash-<n>) starts empty, and the 'dashboard' set is only offered in Start from (D10 P13) */
+  function hostDefaults(id) { var H = hostsTable(); return H && id !== 'dashboard' && own(H, id) ? H[id] : null; }
   function hostSetVersion(id) { return 'pmu-host:' + (hostDefaults(id) && PMU_BOARDS.hosts_version ? PMU_BOARDS.hosts_version : 'none'); }
+
+  /* ---- widget sources (D10 P3): a widget's source is its id. Usage's ids stay bare (the built-in source, prefix '');
+     another source's widgets are '<prefix>:<id>', and the source registers its label, its catalog (catalog() -> [{ id,
+     title, kind?, level?, w?, h?, ... }]) and optionally build(id, item) -> a widget definition for PMU.widgets.define,
+     asked the first time one of its ids is added. Payloads and records carry the id as it is. ---- */
+  var SOURCES = [{ prefix: '', label: 'Usage', builtin: true, catalog: null, build: null }], SRC = { '': SOURCES[0] };
+  function registerSource(prefix, spec) {
+    prefix = String(prefix == null ? '' : prefix); spec = spec || {};
+    var why = !/^[a-z][a-z0-9-]{0,23}$/.test(prefix) ? 'malformed prefix' : typeof spec.catalog !== 'function' ? 'no catalog' : null;
+    if (why) { console.error('[pm-usage] boards.sources.register refused (' + why + '): ' + prefix); return null; }
+    var rec = { prefix: prefix, label: String(spec.label || prefix), builtin: false, catalog: spec.catalog, build: typeof spec.build === 'function' ? spec.build : null };
+    /* registering a prefix again replaces its source (a module that reloads) */
+    if (own(SRC, prefix)) SOURCES = SOURCES.map(function (s) { return s.prefix === prefix ? rec : s; }); else SOURCES.push(rec);
+    SRC[prefix] = rec;
+    return sourceOut(rec);
+  }
+  function sourceOut(s) { return s ? { prefix: s.prefix, label: s.label, builtin: s.builtin, catalog: s.catalog, build: s.build } : null; }
+  /* the source of a widget id: the bare id's is Usage; '<prefix>:...' is that prefix's, null while it is not registered */
+  function sourceOf(id) {
+    var s = String(id == null ? '' : id), i = s.indexOf(':'), p = i < 0 ? '' : i > 0 ? s.slice(0, i) : null;
+    return p != null && own(SRC, p) ? SRC[p] : null;
+  }
+  function usageId(id) { return String(id == null ? '' : id).indexOf(':') < 0; }
+  /* a source's catalog items, each with its full id ('<prefix>:<id>'; an item given without the prefix gets it) */
+  function sourceItems(s) {
+    var items = [];
+    try { items = s.catalog() || []; } catch (error) { console.error('[pm-usage] source catalog ' + s.prefix, error); items = []; }
+    return items.filter(function (it) { return it && it.id != null; }).map(function (it) {
+      var id = String(it.id); if (id.indexOf(s.prefix + ':') !== 0) id = s.prefix + ':' + id;
+      return Object.assign({}, it, { id: id });
+    });
+  }
+  function sourceItem(s, id) { return sourceItems(s).filter(function (it) { return it.id === id; })[0] || null; }
+
+  /* ---- Start from (D10 P4): a set's rows per class, [[widget, x, y, w, h, preset?], ...] as tools/boards.py writes them.
+     A Usage room's set is its default board (PMU_BOARDS.rooms, read only) without the group kind (an empty Accounts band
+     a dashboard never holds), the rows below a dropped band floated up into its place ---- */
+  function floatUp(rows) {
+    var placed = [];
+    rows.slice().sort(function (a, b) { return a[2] - b[2] || a[1] - b[1]; }).forEach(function (e) {
+      var c = { id: e[0], x: e[1], y: e[2], w: e[3], h: e[4] };
+      while (c.y > 0) { c.y--; if (placed.some(function (p) { return overlaps(c, p); })) { c.y++; break; } }
+      placed.push(c); c.row = e.slice(); c.row[2] = c.y;
+    });
+    return placed.map(function (c) { return c.row; });
+  }
+  function roomRows(room) {
+    var src = PMU_BOARDS.rooms[room] || {}, W = PMU_BOARDS.widgets || {}, out = {};
+    Object.keys(src).forEach(function (cn) {
+      var rows = (src[cn] || []).filter(function (e) { return !W[e[0]] || W[e[0]].kind !== 'group'; });
+      out[cn] = rows.length < (src[cn] || []).length ? floatUp(rows) : rows.map(function (e) { return e.slice(); });
+    });
+    return out;
+  }
+  /* the preset id a set holds for each widget (HOSTS rows' sixth field, a saved preset's map): the board's class first */
+  function rowPresets(rows, clsName) {
+    var out = {};
+    [clsName, 'L', 'M', 'S', 'XL'].forEach(function (cn) { (rows[cn] || []).forEach(function (e) { if (e[5] && !own(out, e[0])) out[e[0]] = e[5]; }); });
+    return out;
+  }
+  function widgetCount(n) { return !n ? 'Empty' : n === 1 ? '1 widget' : n + ' widgets'; }
+
+  /* ---- the user's saved presets (D10 P4): one store for the user, not per project (localStorage widget_presets:v1). A
+     preset is a snapshot of a board's layout at every board class, its preset ids and configuration refs (never its view);
+     it applies through board.startFrom('user:<id>') on any dashboard ---- */
+  var PRESET_KEY = 'widget_presets:v1';
+  function presetStore() {
+    var s = STORE.get(PRESET_KEY, null);
+    return s && typeof s === 'object' && Array.isArray(s.presets) ? s : { schema_id: 'pm.usage.widget_presets.v1', presets: [] };
+  }
+  function presetById(id) { return presetStore().presets.filter(function (p) { return p && p.id === id; })[0] || null; }
+  function presetOut(p) { return { id: p.id, name: p.name, created: p.created, sourceBoard: p.source_board || null }; }
+  function presetName(name) { return String(name == null ? '' : name).replace(/\s+/g, ' ').trim().slice(0, 80); }
+
+  /* ---- board keys per project (D10 P5, dashboards only): widget_layout:v1:<project>:<board>; the Usage page keeps
+     widget_layout:v1:usage. A board's unscoped key from before (widget_layout:v1:<board>) becomes the first project's that
+     asks for it, once, and goes. ---- */
+  var KEY_ROOT = 'widget_layout:v1:';
+  function boardKey(boardId, projectId) { return KEY_ROOT + (projectId ? projectId + ':' : '') + boardId; }
+  function projectOk(p) { return typeof p === 'string' && /^[^\s:]{1,64}$/.test(p); }
+  function dropKey(key) { try { localStorage.removeItem(key); localStorage.removeItem(key + ':quarantine'); } catch (error) {} }
+  function adoptKey(boardId, projectId) {
+    var key = boardKey(boardId, projectId), old = boardKey(boardId, null), raw = null;
+    try { if (localStorage.getItem(key) != null) return false; raw = localStorage.getItem(old); } catch (error) { return false; }
+    if (raw == null) return false;
+    var env = null; try { env = JSON.parse(raw); } catch (error) { env = null; }
+    if (env && typeof env === 'object' && !Array.isArray(env)) { env.project_id = projectId; raw = JSON.stringify(env); }
+    try { localStorage.setItem(key, raw); localStorage.removeItem(old); } catch (error) { return false; }
+    return true;
+  }
+
+  /* ---- live beats on dashboards (D10 P12): the Usage page's match of a beat's share keys to a card (15-film.js flush):
+     a reading inside it carries one of the keys, or its data-live names a prefix of one ---- */
+  function cssq(v) { return window.CSS && CSS.escape ? CSS.escape(v) : String(v).replace(/"/g, '\\"'); }
+  function liveHit(c, keys) {
+    return keys.some(function (k) { return c.querySelector('[data-share="' + cssq(k) + '"], [data-share-v="' + cssq(k) + '"]'); })
+      || (c.getAttribute('data-live') && keys.some(function (k) { return c.getAttribute('data-live').split(' ').some(function (pre) { return pre && k.indexOf(pre) === 0; }); }));
+  }
   /* every Usage widget the catalog offers, in the Usage rooms' order (05-data.js ROOM) and each room's reading order; a
      widget's home room is the first room it is placed in. The group kind (an empty band) is never offered. */
   function catalogIds() {
@@ -266,8 +372,11 @@
   function createBoard(bo, hosted) {
     /* the board's members are filled in at the end (loadEnvelope hands the board to PMU.cards.holdStored before that) */
     var api = {}, inner = { api: api, teardowns: [], film: !!bo.film };
-    var boardId = bo.id, storeKey = bo.storeKey || 'widget_layout:v1:' + bo.id;
+    /* a dashboard given a project keeps its contents per project (D10 P5); the Usage board's key is its own (STORE_KEY) */
+    var perProject = hosted && !bo.storeKey && bo.projectId != null;
+    var boardId = bo.id, storeKey = bo.storeKey || boardKey(bo.id, perProject ? bo.projectId : null);
     var hostId = bo.hostId || (hosted ? 'home.dashboard' : bo.id), projectId = bo.projectId || 'tastebook';
+    if (perProject) adoptKey(boardId, projectId);
     /* the room film is one board's (D10 2.7): a board without it never begins a moment, ghosts, flies, frames or holds */
     var FILM = bo.film ? PMU.film : null;
     /* the width source (D10 2.8): the Usage board observes its scroll pane, a hosted board hears its host */
@@ -292,6 +401,12 @@
     var landing = null, outline = null;
     /* a hosted board builds and refreshes only while its host shows it (D10 3.3 show / hide); the Usage board always shows */
     var shownFlag = !hosted || bo.shown !== false, dead = false, dirty = false, sizeDirty = false, seenEpoch = EPOCH;
+    /* the set a dashboard's widgets started from (D10 P4, the envelope's set_id; null: its own default set) and that set's
+       rows, which are then its defaults (a widget a newer set adds is appended, as a newer default set's is) */
+    var startSet = null, startRows = null;
+    /* live beats (D10 P12): the share keys a dashboard has not patched yet (hidden or held), the cards of a patch still
+       running in slices, and what it did (liveStats) */
+    var liveKeys = null, liveQ = null, liveRaf = 0, liveStat = { beats: 0, patched: 0, held: null, last: null };
 
     function emit(evt, detail) { (listeners[evt] || []).slice().forEach(function (fn) { try { fn(detail); } catch (error) { console.error('[pm-usage] board ' + evt, error); } }); }
     function say(text) {
@@ -401,6 +516,12 @@
       st.more = !!envelope.view.more;
       st.hidden = loaded.hidden;
       st.layout = loaded.layout;
+      /* a dashboard: the set it started from (a saved preset deleted since gives no defaults, never the board's own), and
+         the project its key belongs to */
+      if (hosted) {
+        startSet = typeof envelope.set_id === 'string' && envelope.set_id && envelope.set_id !== 'default' ? envelope.set_id : null; startRows = null;
+        envelope.project_id = projectId;
+      }
       if (loaded.fresh || !loaded.env.records || (envelope.migration_receipt && !envelope.records.length)) persist();
     }
     var widgetRoom = null;
@@ -451,6 +572,7 @@
       savePending = false;
       envelope.view = { room: st.room, detail: st.detail, range: st.range, scope: st.scope, more: !!st.more };
       envelope.records = recordsNow();
+      if (hosted) { if (startSet) envelope.set_id = startSet; else delete envelope.set_id; envelope.project_id = projectId; }
       STORE.set(storeKey, envelope);
     }
     function persist() {
@@ -474,12 +596,36 @@
       return null;
     }
     /* a board without rooms takes its default set from opts.defaults(class name, tracks), else from PMU_BOARDS.hosts[id]
-       (tools/boards.py), else it starts empty */
-    function hostSet() {
+       (tools/boards.py), else it starts empty (a new dash-<n>, D10 P13) */
+    function ownSet() {
       if (!bo.defaults) return hostDefaults(boardId) || {};
       var out = {};
       CLASSES.forEach(function (c) { var list = bo.defaults(c.name, c.tracks); if (list) out[c.name] = list; });
       return out;
+    }
+    /* once it was started from another set (D10 P4), that set's rows are its defaults */
+    function hostSet() {
+      if (!startSet) return ownSet();
+      if (!startRows) { var s = setRows(startSet); startRows = s ? s.rows : {}; }
+      return startRows;
+    }
+    /* a set by id (D10 P4) -> { rows, presets, configs }, null for an unknown id: 'default' (the board's own), 'room:<id>'
+       (a Usage room's default board), 'host:dashboard' (the dashboard starter set) and 'user:<id>' (a saved preset) */
+    function setRows(setId, cn) {
+      var m = /^(default|room|host|user)(?::(.+))?$/.exec(String(setId || '')), clsName = cn || (current.cls ? current.cls.name : 'L');
+      if (!m) return null;
+      if (m[1] === 'default') { var mine = ownSet(); return m[2] ? null : { rows: mine, presets: rowPresets(mine, clsName), configs: {} }; }
+      if (m[1] === 'room') return own(ROOM, m[2]) && PMU_BOARDS.rooms[m[2]] ? { rows: roomRows(m[2]), presets: {}, configs: {} } : null;
+      if (m[1] === 'host') { var H = hostsTable(); return m[2] === 'dashboard' && H && H.dashboard ? { rows: H.dashboard, presets: rowPresets(H.dashboard, clsName), configs: {} } : null; }
+      var p = presetById(m[2]);
+      return p ? { rows: p.layout || {}, presets: p.presets || {}, configs: p.configs || {} } : null;
+    }
+    /* a set's rects at a board class: its own rows there, else projected (XL from L) as the Usage page does; the Accounts
+       room's set takes the providers with accounts, as the Usage page's Accounts room does */
+    function setRects(setId, rows, cls) {
+      var rects = rows[cls.name] ? rectsOf(rows[cls.name]) : project(rectsOf(rows.L || rows.M || rows.S || rows.XL || []), cls.tracks);
+      rects = rects.map(function (r) { return clampRect(r, cls.tracks); });
+      return setId === 'room:accounts' ? mergeRoster(rects, cls) : rects;
     }
     function defaultsFor(room, cls) {
       var rooms = bo.rooms ? PMU_BOARDS.rooms[room] || {} : hostSet();
@@ -501,7 +647,7 @@
         rects = near ? project(near.map(function (r) { return { id: r.id, x: r.x, y: r.y, w: r.w, h: r.h }; }), cls.tracks) : defaults;
         if (near) { var hv = {}; rects.forEach(function (r) { hv[r.id] = true; }); var miss = defaults.filter(function (r) { return !hv[r.id]; }); if (miss.length) rects = rects.concat(firstFitInto(rects, miss, cls.tracks)); }
       }
-      if (bo.rooms && room === 'accounts') rects = mergeRoster(rects, cls);
+      if (bo.rooms ? room === 'accounts' : startSet === 'room:accounts') rects = mergeRoster(rects, cls);
       return rects;
     }
     function visibleIds(room) {
@@ -945,7 +1091,7 @@
       var W = opts.transition && current.mounted && current.cls && view.w && Math.abs(view.w - (current.wSeen || -1)) < 0.5 ? current.cls.W : boardWidth();
       if (W <= 0) { current.pending = true; current.room = room; return; }
       current.pending = false;
-      if (hosted) { seenEpoch = EPOCH; dirty = false; }
+      if (hosted) { seenEpoch = EPOCH; dirty = false; liveStop(); liveKeys = null; }   /* the mount renders the latest readings */
       flushGravity();
       var t0 = performance.now(), sTop = scroll.scrollTop;   /* every read before the first write */
       var roomChanged = current.room !== room;
@@ -1976,6 +2122,8 @@
     function reset(scope) {
       ensure();
       var receipt = cmd('cmd.widget.reset_layout', { scope: scope || 'room', room: current.room || st.room }, { reset: true });
+      /* a dashboard's reset is to its own default set, whatever set it was started from (D10 P4) */
+      if (hosted) { startSet = null; startRows = null; }
       if (scope === 'all') { st.layout = {}; st.hidden = {}; configs = {}; }
       else {
         delete st.layout[current.room]; delete st.hidden[current.room];
@@ -2093,6 +2241,7 @@
       if (gesture) endGesture(gesture, 'cancel', true);
       if (PMU.menu && menuOwned()) PMU.menu.close();
       if (refreshQ) { refreshQ.cancelled = true; refreshQ = null; dirty = true; }
+      if (liveQ) { liveStop(); dirty = true; }   /* a beat's patch cut short: the show refreshes */
       clearTimeout(holdT); holdT = 0;
       if (roTimer) { clearTimeout(roTimer); roTimer = 0; sizeDirty = true; }
       sheenOff();
@@ -2105,12 +2254,14 @@
       var fresh = !current.mounted;
       if (fresh || current.pending || sizeDirty) { sizeDirty = false; readView(); onWidth(); }
       if (!fresh && current.mounted && (dirty || seenEpoch !== EPOCH)) {
-        dirty = false; seenEpoch = EPOCH;
+        dirty = false; seenEpoch = EPOCH; liveKeys = null;
         if (PMU.settings && PMU.settings.invalidate) PMU.settings.invalidate('page');
         if (PMU.roster && PMU.roster.invalidate) PMU.roster.invalidate();
         refresh('page', { sliced: true });
-      }
+      } else liveTry();   /* only the beats it missed: the cards their shares match */
       if (current.mounted) scheduleHold();
+      /* the live film's tick (15-film.js) is subscribed once the demo engine runs, also when Usage was never opened */
+      if (PMU.live && PMU.live.wake) PMU.live.wake();
     }
     /* a look change (the host's onLook): the preset hold re-measures the per-look fit heights; hidden, at the next show */
     function relook() {
@@ -2119,8 +2270,64 @@
     }
     inner.touch = function (reason) {
       if (!hosted || dead) return;
-      if (shownFlag && current.mounted && !current.pending) { seenEpoch = EPOCH; refresh(reason || 'data', { sliced: true }); } else dirty = true;
+      if (shownFlag && current.mounted && !current.pending) { seenEpoch = EPOCH; liveKeys = null; refresh(reason || 'data', { sliced: true }); } else dirty = true;
     };
+    /* ---- live beats (D10 P12): a beat's share keys reach every dashboard (PMU.boards.live.beat, from the live film). A
+       shown one patches the cards they match, as the Usage page's beat does (15-film.js flush): in slices of about 6 ms, in
+       view first, the first slice in the beat's own task, through PMU.cards.update(card, 'live'). A hidden one keeps the
+       keys for its show; a held one (a gesture, its own sliced refresh, a menu, a crosshair, the tour, onboarding, the tab
+       hidden) until the next tick that finds the hold over. Nothing runs between beats. ---- */
+    function liveHeld() {
+      var r = document.documentElement;
+      if (document.hidden) return 'tab';
+      if (r.hasAttribute('data-o55-open')) return 'onboarding';
+      if (r.hasAttribute('data-o55-tour')) return 'tour';
+      if (gesture) return 'gesture';
+      if (refreshQ) return 'refresh';
+      if (PMU.menu && PMU.menu.isOpen && PMU.menu.isOpen()) return 'menu';
+      if (PMU.charts && PMU.charts.crosshairOn ? PMU.charts.crosshairOn() : !!(boardEl && boardEl.querySelector('.pmu-xh-on'))) return 'crosshair';
+      return null;
+    }
+    function liveStop() { if (liveRaf) { cancelAnimationFrame(liveRaf); liveRaf = 0; } liveQ = null; }
+    function liveTry() {
+      if (!liveKeys || dead || !shownFlag || !current.mounted || current.pending) return false;
+      liveStat.held = liveHeld();
+      if (liveStat.held) return false;
+      var keys = Object.keys(liveKeys); liveKeys = null;
+      var hit = cardsNow().filter(function (c) { return liveHit(c, keys); });
+      var order = readingOrder(hit.filter(inView)).concat(readingOrder(hit.filter(function (c) { return !inView(c); })));
+      liveStat.beats++;
+      liveStat.last = { at: Math.round(performance.now()), shares: keys.length, cards: order.map(function (c) { return c.getAttribute('data-widget'); }) };
+      if (!order.length) return true;
+      /* a patch still running takes the new cards at its end (each reads the latest readings when its turn comes) */
+      if (liveQ) { order.forEach(function (c) { if (liveQ.indexOf(c) < 0) liveQ.push(c); }); return true; }
+      liveQ = order;
+      liveStep();
+      return true;
+    }
+    function liveStep() {
+      liveRaf = 0;
+      var q = liveQ; if (!q || dead) return;
+      var ts = performance.now(), first = true;
+      fitSliced(function () {
+        while (q.length && (first || performance.now() - ts < 6)) {
+          var c = q.shift(); first = false;
+          if (c.isConnected) { try { PMU.cards.update(c, 'live'); liveStat.patched++; } catch (error) { console.error('[pm-usage] live patch', error); } }
+        }
+      });
+      if (q.length && liveQ === q) liveRaf = requestAnimationFrame(liveStep); else if (liveQ === q) liveQ = null;
+    }
+    if (hosted) {
+      inner.live = function (keys) {
+        if (dead) return;
+        liveKeys = liveKeys || {};
+        keys.forEach(function (k) { liveKeys[k] = true; });
+        liveTry();
+      };
+      inner.liveTry = liveTry;
+      /* a shown dashboard that holds a Usage widget wants the beats */
+      inner.liveWanted = function () { return !dead && shownFlag && current.mounted && cardsNow().some(function (c) { return usageId(c.getAttribute('data-widget')); }); };
+    }
     /* the board's own view (D10 2.5): range and scope; the Usage board's is the page's (46-shell.js setView) */
     function setView(v) {
       ensure(); v = v || {};
@@ -2139,7 +2346,15 @@
     function add(id, o) {
       ensure(); o = o || {};
       if (dead) return null;
+      /* a widget of another source (D10 P3): only on a dashboard, its source registered; a definition the registry does not
+         have yet comes from the source's build */
+      var src = sourceOf(id), item = src && !src.builtin ? sourceItem(src, String(id)) : null;
+      if (!src || (!src.builtin && (bo.rooms || !item))) return null;
       var def = PMU.widgets.get(id);
+      if (!def && src.build) {
+        try { var made = src.build(String(id), item); if (made && typeof made === 'object') PMU.widgets.define(String(id), made); } catch (error) { console.error('[pm-usage] source build ' + id, error); }
+        def = PMU.widgets.get(id);
+      }
       if (!def || def.kind === 'group') return null;
       var room = current.room || st.room, hid = st.hidden[room] || {};
       var cls = current.cls || pickClass(boardWidth());
@@ -2152,6 +2367,7 @@
         var p = list.filter(function (x) { return x.id === 'standard'; })[0] || list[0];
         if (p) size = { w: p.w, h: PMU.cards.presetH ? PMU.cards.presetH(id, p, api) : p.h, pid: p.id };
       } catch (error) { console.error('[pm-usage] board add preset', error); }
+      if (!size && item && item.w > 0 && item.h > 0) size = { w: Math.round(item.w), h: Math.round(item.h), pid: null };   /* the source's own size */
       if (!size) { var ks = kindSpec(id); size = { w: Math.max(ks.wMin || 3, 6), h: Math.max(ks.hMin || 3, 6), pid: null }; }
       var rect = firstFitInto(rects, [{ id: id, w: Math.min(size.w, cls.tracks), h: size.h }], cls.tracks)[0];
       var receipt = cmd('cmd.widget.add', { room: room, widget_id: id }, { visible: true });
@@ -2174,17 +2390,28 @@
       emit('change', { op: 'add', id: id, receipt: receipt });
       return receipt;
     }
-    /* the catalog (D10 3.3): every Usage widget the board can be given, in the Usage rooms' order, with whether it is on
-       this board now */
+    /* the catalog (D10 3.3, P3): every Usage widget the board can be given, in the Usage rooms' order, then on a dashboard
+       every other registered source's items in registration order; each with whether it is on this board now and its
+       source (prefix '' and 'Usage' for Usage's own) */
     function catalog() {
       ensure();
       var room = current.room || st.room, hid = st.hidden[room] || {}, on = {};
       layoutFor(room).forEach(function (r) { if (!hid[r.id]) on[r.id] = true; });
-      return catalogIds().map(function (e) {
+      var out = catalogIds().map(function (e) {
         var d = PMU.widgets.get(e.id) || {};
         return { id: e.id, title: titleOf(e.id, e.room, st), kind: d.kind || null, level: d.level || 'glance', homeRoom: e.room,
-          homeRoomLabel: e.room && ROOM[e.room] ? ROOM[e.room].label : null, on: !!on[e.id], addable: !on[e.id] };
+          homeRoomLabel: e.room && ROOM[e.room] ? ROOM[e.room].label : null, on: !!on[e.id], addable: !on[e.id], source: '', sourceLabel: SRC[''].label };
       });
+      if (bo.rooms) return out;
+      SOURCES.forEach(function (s) {
+        if (s.builtin) return;
+        sourceItems(s).forEach(function (it) {
+          if (it.kind === 'group') return;
+          out.push(Object.assign(it, { title: it.title || it.id, kind: it.kind || null, level: it.level || 'glance', homeRoom: null, homeRoomLabel: null,
+            on: !!on[it.id], addable: !on[it.id], source: s.prefix, sourceLabel: s.label }));
+        });
+      });
+      return out;
     }
     /* reveal: the card scrolled into view (grid geometry, one read of the pane) and marked by one seat */
     function reveal(id) {
@@ -2198,14 +2425,101 @@
     /* reload: the store read again (a tour restore wrote it) and the board mounted at once */
     function reload() {
       if (dead) return false;
+      reread();
+      emit('change', { op: 'reload' });
+      return true;
+    }
+    function reread() {
       if (gesture) endGesture(gesture, 'cancel', true);
       clearTimeout(saveTimer); saveTimer = 0; savePending = false;
       loaded = null; envelope = null; configs = {}; revisions = {}; parkedFrom = {}; widgetRoom = null;
       ensure();
       if (current.mounted || current.pending) mount(st.room, { instant: true });
-      emit('change', { op: 'reload' });
+    }
+    /* the project (D10 P5, dashboards only): the board's state is written to the project it belongs to, then the board
+       takes the new project's key (widget_layout:v1:<project>:<board>, the board's unscoped key adopted once if that is
+       missing) and reads it; a hidden board mounts it at its next show */
+    function setProject(pid) {
+      if (!hosted || dead || bo.storeKey || !projectOk(pid)) return false;
+      if (perProject && pid === projectId) return false;
+      if (gesture) endGesture(gesture, 'cancel', true);
+      if (loaded) flushNow();
+      perProject = true; projectId = pid; storeKey = boardKey(boardId, pid); api.STORE_KEY = storeKey;
+      adoptKey(boardId, pid);
+      reread();
+      emit('change', { op: 'project', project: pid });
       return true;
     }
+    /* Start from (D10 P4): the sets this dashboard can start from, in this order: its own default set, the 13 Usage rooms'
+       in room order, the dashboard starter set, the user's saved presets. active: the set its widgets started from. The
+       Usage board offers none (its rooms are its sets). */
+    function sets() {
+      if (bo.rooms || dead) return [];
+      ensure();
+      var cls = api.cls(), out = [], at = startSet || 'default';
+      var count = function (id, rows) { var ids = {}; setRects(id, rows || {}, cls).forEach(function (r) { ids[r.id] = true; }); return Object.keys(ids).length; };
+      var push = function (id, label, kind, detail) { out.push({ id: id, label: label, kind: kind, detail: detail, active: id === at }); };
+      push('default', 'Default widgets', 'default', widgetCount(count('default', ownSet())));
+      Object.keys(ROOM).forEach(function (room) { if (PMU_BOARDS.rooms[room]) push('room:' + room, ROOM[room].label, 'room', 'Usage room · ' + widgetCount(count('room:' + room, roomRows(room)))); });
+      var H = hostsTable(); if (H && H.dashboard) push('host:dashboard', 'Dashboard', 'host', widgetCount(count('host:dashboard', H.dashboard)));
+      presetStore().presets.forEach(function (p) { if (p && p.id) push('user:' + p.id, p.name, 'user', 'Saved preset · ' + widgetCount(count('user:' + p.id, p.layout))); });
+      return out;
+    }
+    /* startFrom(setId): the board's widgets become the set's at every board class (its rows, else projected as the Usage
+       page does); its preset ids are held, so the preset hold resolves their fit heights at this pitch and look, as a
+       stored record's are; a saved preset's configuration refs come with it; nothing is hidden. One
+       cmd.widget.reset_layout, the reset's payload with the set named: { scope: 'room', room, set_id }. */
+    function startFrom(setId) {
+      ensure();
+      if (bo.rooms || dead) return null;
+      setId = String(setId || '');
+      var cls = api.cls(), set = setRows(setId, cls.name);
+      if (!set) return null;
+      completeStream();
+      if (gesture) endGesture(gesture, 'cancel', true);
+      var room = st.room;
+      var receipt = cmd('cmd.widget.reset_layout', { scope: 'room', room: room, set_id: setId }, { reset: true });
+      if (receipt && receipt.dispatch_accepted === false) { PMU.shell.toast(t('board.rejected')); return receipt; }
+      startSet = setId === 'default' ? null : setId; startRows = startSet ? set.rows : null;
+      st.layout[room] = {};
+      CLASSES.forEach(function (c) {
+        var rects = setRects(setId, set.rows, c);
+        if (rects.length) st.layout[room][c.name] = rects.map(function (r) { return { id: r.id, x: r.x, y: r.y, w: r.w, h: r.h }; });
+      });
+      st.hidden[room] = {};
+      parkedFrom = {};
+      configs = {};
+      Object.keys(set.configs || {}).forEach(function (id) { var c = parseRefs(set.configs[id]); if (Object.keys(c).length) configs[id] = c; });
+      /* every widget of the set is held at the set's preset, or at none (a hold left from before the set would resize it) */
+      var held = {}; Object.keys(st.layout[room]).forEach(function (cn) { st.layout[room][cn].forEach(function (r) { held[r.id] = true; }); });
+      if (PMU.cards && PMU.cards.holdStored) Object.keys(held).forEach(function (id) { PMU.cards.holdStored(id, (set.presets || {})[id] || null, null, api); });
+      persist();
+      if (current.mounted && shownFlag) { reconcile(layoutFor(room), { dur: 'morph', ease: 'settle' }); refresh('reset'); scheduleHold(400); }
+      else if (current.mounted) mount(room, { instant: true });   /* hidden: it mounts at its show */
+      if (bo.onShell) bo.onShell();
+      emit('change', { op: 'start', set_id: setId, receipt: receipt });
+      return receipt;
+    }
+    /* a saved preset's content (PMU.boards.presets.save): the layout at every board class (the shown widgets only), the
+       preset id of each widget (as its record would carry it) and its configuration refs; never the view */
+    inner.snapshot = function () {
+      ensure();
+      if (bo.rooms || dead) return null;
+      var room = st.room, hid = st.hidden[room] || {}, cur = api.cls(), layout = {}, pids = {}, cfgs = {};
+      CLASSES.forEach(function (c) {
+        var cls = c.name === cur.name ? cur : { name: c.name, tracks: c.tracks, pitchX: null, W: null };
+        var rows = layoutFor(room, cls).filter(function (r) { return !hid[r.id]; }).map(function (r) { return [r.id, r.x, r.y, r.w, r.h]; });
+        if (rows.length) layout[c.name] = rows;
+      });
+      (layout[cur.name] || layout.L || layout.M || layout.S || layout.XL || []).forEach(function (e) {
+        var id = e[0], pid = PMU.cards.heldId ? PMU.cards.heldId(id, api) : null;
+        if (!pid && current.cls) pid = PMU.cards.sizeId(kindSpec(id), e[3], e[4], id, api);
+        if (!pid && PMU.cards.pickedId) CLASSES.some(function (c) { var r = (layout[c.name] || []).filter(function (x) { return x[0] === id; })[0]; pid = r ? PMU.cards.pickedId(id, c.name, r[3], r[4], api) : null; return !!pid; });
+        if (pid) pids[id] = pid;
+        if (configs[id] && cfgRefs(configs[id]).length) cfgs[id] = cfgRefs(configs[id]);
+      });
+      return { layout: layout, presets: pids, configs: cfgs };
+    };
     /* destroy: the gesture ends, pending state is written, every timer and frame stops, the observer and the scroll
        listeners go, the each() teardowns run, the card bodies are destroyed, the root leaves and the board unregisters.
        The Usage board is never destroyed. */
@@ -2222,6 +2536,7 @@
       sheenOff();
       buildToken++; streaming = null; lateHeld = null;
       if (refreshQ) { refreshQ.cancelled = true; refreshQ = null; }
+      liveStop(); liveKeys = null;
       if (ro) { ro.disconnect(); ro = null; }
       if (scroll) {
         scroll.removeEventListener('scroll', onScrollView, { passive: true });
@@ -2283,7 +2598,10 @@
       show: show, hide: hide, shown: function () { return shownFlag && !dead; },
       relook: relook, setView: setView, add: add, catalog: catalog, count: function () { return visibleIds(current.room || st.room).length; },
       reveal: reveal, focus: focusFirst, flush: flushNow, reload: reload, destroy: destroy,
-      details: bo.details || null, navigate: bo.navigate || null
+      details: bo.details || null, navigate: bo.navigate || null,
+      /* D10 round two: Start from (P4), the project (P5), what the live beats did here (P12) */
+      sets: sets, startFrom: startFrom, setProject: setProject, project: function () { return projectId; },
+      liveStats: function () { return { beats: liveStat.beats, patched: liveStat.patched, held: liveStat.held, pending: liveKeys ? Object.keys(liveKeys).length : 0, running: !!liveQ, last: liveStat.last }; }
     });
     Object.defineProperty(api, 'DEFAULT_SET', { get: setVersion, enumerable: true, configurable: true });
     return inner;
@@ -2308,7 +2626,8 @@
     opts = opts || {};
     var id = String(opts.id || ''), hosted = opts.hosted != null ? !!opts.hosted : !('board' in opts);
     var why = !/^[a-z][a-z0-9-]{0,31}$/.test(id) ? 'malformed id' : own(REG, id) ? 'id taken' : hosted && (own(RESERVED, id) || own(ROOM, id)) ? 'reserved id'
-      : opts.film && ORDER.some(function (h) { return h.film; }) ? 'a second board with the room film' : null;
+      : opts.film && ORDER.some(function (h) { return h.film; }) ? 'a second board with the room film'
+      : hosted && opts.projectId != null && !projectOk(opts.projectId) ? 'malformed project id' : null;
     if (why) { console.error('[pm-usage] boards.create refused (' + why + '): ' + id); return null; }
     var inner = createBoard(opts, hosted);
     REG[id] = inner; ORDER.push(inner);
@@ -2339,7 +2658,76 @@
     /* data changed (a rerender, a live beat, a Settings write): shown hosted boards refresh in slices, hidden ones on show */
     touch: function (reason) { EPOCH++; ORDER.slice().forEach(function (h) { try { if (h.touch) h.touch(reason); } catch (error) { console.error('[pm-usage] boards.touch', error); } }); },
     epoch: function () { return EPOCH; },
-    layer: layer
+    layer: layer,
+    /* widget sources (D10 P3): register(prefix, { label, catalog, build? }) -> source | null; list() -> [{ prefix, label,
+       builtin }] (Usage first); of(widgetId) -> its source, null for a prefix nobody registered */
+    sources: {
+      register: registerSource,
+      list: function () { return SOURCES.map(function (s) { return { prefix: s.prefix, label: s.label, builtin: s.builtin }; }); },
+      of: function (id) { return sourceOut(sourceOf(id)); }
+    },
+    /* the user's saved presets (D10 P4), shown in every dashboard's Start from; applied by board.startFrom('user:<id>') */
+    presets: {
+      list: function () { return presetStore().presets.filter(function (p) { return p && p.id; }).map(presetOut); },
+      save: function (board, name) {
+        var b = typeof board === 'string' ? (own(REG, board) ? REG[board].api : null) : board;
+        var h = b && own(REG, b.id) && REG[b.id].api === b ? REG[b.id] : null, snap = h && h.snapshot ? h.snapshot() : null;
+        if (!snap) return null;
+        var s = presetStore(), n = s.presets.length, pid = null;
+        while (!pid || s.presets.some(function (p) { return p && p.id === pid; })) pid = 'p' + Date.now().toString(36) + (n++).toString(36);
+        var p = { id: pid, name: presetName(name) || 'Preset ' + (s.presets.length + 1), created: new Date().toISOString(), source_board: b.id,
+          layout: snap.layout, presets: snap.presets, configs: snap.configs };
+        s.presets.push(p);
+        STORE.set(PRESET_KEY, s);
+        return presetOut(p);
+      },
+      rename: function (id, name) {
+        var s = presetStore(), p = s.presets.filter(function (x) { return x && x.id === id; })[0], nm = presetName(name);
+        if (!p || !nm) return null;
+        p.name = nm; STORE.set(PRESET_KEY, s);
+        return presetOut(p);
+      },
+      remove: function (id) {
+        var s = presetStore(), kept = s.presets.filter(function (x) { return !(x && x.id === id); });
+        if (kept.length === s.presets.length) return false;
+        s.presets = kept; STORE.set(PRESET_KEY, s);
+        return true;
+      }
+    },
+    /* a board's key and its quarantine, gone (D10 P5, P6: a deleted dashboard; a closed one leaving the reopen list):
+       widget_layout:v1:<project>:<board>, or the unscoped widget_layout:v1:<board> without a project. Never the Usage
+       page's. */
+    forgetKey: function (boardId, projectId) {
+      boardId = String(boardId || '');
+      if (!/^[a-z][a-z0-9-]{0,31}$/.test(boardId) || boardId === 'usage' || (projectId != null && !projectOk(projectId))) return false;
+      dropKey(boardKey(boardId, projectId != null ? projectId : null));
+      return true;
+    },
+    /* live beats on dashboards (D10 P12), for the live film (15-film.js): wanted() while a shown dashboard holds a Usage
+       widget; beat(keys) hands a beat's share keys to every dashboard; flush() lets a dashboard whose hold ended patch;
+       hit(card, keys) is the match both use. on() / set(on): the viewer's Live choice (the Usage page's, one for the page). */
+    live: {
+      wanted: function () { return ORDER.some(function (h) { return !!h.liveWanted && h.liveWanted(); }); },
+      beat: function (keys) {
+        var list = [].concat(keys || []).filter(function (k) { return typeof k === 'string' && k; });
+        if (!list.length) return;
+        ORDER.slice().forEach(function (h) { try { if (h.live) h.live(list); } catch (error) { console.error('[pm-usage] boards.live', error); } });
+      },
+      flush: function () { ORDER.slice().forEach(function (h) { try { if (h.liveTry) h.liveTry(); } catch (error) { console.error('[pm-usage] boards.live', error); } }); },
+      hit: function (card, keys) { return !!card && !!liveHit(card, [].concat(keys || [])); },
+      on: function () { return !!(PMU.live && PMU.live.enabled() && PMU.live.on()); },
+      set: function (on) { return !!PMU.live && (on ? PMU.live.resume() : PMU.live.pause()); }
+    },
+    /* Play the next hour from a dashboard (D10 P12; 15-film.js 8.6): available() as the Usage page's Live menu offers it;
+       play() runs the demo hour (Live on), and every shown dashboard patches as it plays; back() returns to now */
+    hour: {
+      available: function () { var h = PMU.live && PMU.live.hour; return !!(h && h.available()); },
+      play: function () { var h = PMU.live && PMU.live.hour; return !!(h && h.play()); },
+      back: function () { var h = PMU.live && PMU.live.hour; return !!(h && h.back()); },
+      running: function () { var h = PMU.live && PMU.live.hour; return !!(h && h.running()); },
+      label: function () { var h = PMU.live && PMU.live.hour; return h ? h.label() : ''; },
+      step: function () { var h = PMU.live && PMU.live.hour; return h ? h.step() : 0; }
+    }
   };
   /* the Usage page's board, from the same four elements at the same point in load order (D10 2.1 USAGE_OPTS) */
   PMU.board = PMU.boards.create({
