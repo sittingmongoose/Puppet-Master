@@ -1,0 +1,108 @@
+/* Per-look values for the --pmw-* tokens (values measured in PMConcept7, 2026-10-09). They alias the page's own root
+   tokens wherever those already change per look, so Settings' accent, Glass's alpha and NieR repaint the panels for
+   free. The strip silhouette values are EDSHAPE's per look (crown, shoulder, flare). NieR is 60-nier.css; Retro's
+   reverse video and effects are 70-retro.css. */
+
+html[data-theme^="friendly"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-surface: color-mix(in srgb, var(--pm6-cozy-mint, #6fdabc) 7%, var(--surface));
+  --pmw-surface-2: var(--surface-elevated, var(--pmw-surface));
+  --pmw-strip: color-mix(in srgb, color-mix(in srgb, var(--pmw-surface) 66%, #000) 94%, var(--pmw-surface));
+  --pmw-gutter: var(--background, transparent);
+  --pmw-line: var(--border-light); --pmw-line-2: var(--border);
+  --pmw-ok: var(--accent-lime); --pmw-warn: var(--accent-warning, var(--accent-orange)); --pmw-bad: var(--accent-error, #e57373);
+  --pmw-pop: var(--surface-elevated, var(--pmw-surface));
+  --pm-font-ui: var(--body-font, inherit);
+  --pmw-radius: 14px; --pmw-panel-radius: 16px; --pmw-row-radius: 10px; --pmw-menu-radius: 14px;
+  --pmw-tab-crown: 16px; --pmw-tab-shoulder: 16px; --pmw-tab-flare: 25px; --pmw-tab-profile: arc;
+  --pmw-tab-font: 11.5px; --pmw-tab-weight: 700;
+  --pmw-tab-active: var(--accent-lime);
+  --pmw-tab-inactive: var(--text-secondary);
+  --pmw-plate-crown: transparent; --pmw-plate-crown-h: 0px;
+  --pmw-t-med: 220ms;
+}
+html[data-theme="friendly-light"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-strip: color-mix(in srgb, color-mix(in srgb, var(--pmw-surface) 70%, #000) 78%, var(--pmw-surface));
+  --pmw-tab-inactive: color-mix(in srgb, var(--text-primary) 78%, var(--text-muted));
+  --pmw-pop: var(--surface);
+}
+
+html[data-theme^="glass"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-surface: var(--rg-reading, var(--surface));
+  --pmw-surface-2: var(--rg-card, var(--pmw-surface));
+  --pmw-strip: color-mix(in srgb, var(--rg-rail-solid, #111) 88%, var(--rg-reading, #222));
+  --pmw-gutter: transparent;
+  --pmw-line: var(--border-light); --pmw-line-2: var(--border);
+  --pmw-ok: var(--accent-lime); --pmw-warn: var(--accent-warning, var(--accent-orange)); --pmw-bad: var(--accent-error, #ef6b6b);
+  --pmw-pop: var(--rg-menu, var(--pmw-surface)); --pmw-hover: var(--rg-menu-hover, color-mix(in srgb, var(--pmw-text) 8%, transparent));
+  --pmw-pop-line: var(--rg-rim-soft, rgba(255, 255, 255, .18));
+  --pmw-pop-shadow: 0 18px 50px var(--rg-shadow, rgba(0, 0, 0, .35)), 0 0 0 1px var(--rg-rim-low, rgba(255, 255, 255, .12));
+  --pm-font-ui: var(--body-font, inherit);
+  --pmw-radius: 11px; --pmw-panel-radius: 12px; --pmw-row-radius: 8px; --pmw-menu-radius: 14px;
+  --pmw-tab-crown: 16px; --pmw-tab-shoulder: 16px; --pmw-tab-flare: 25px; --pmw-tab-profile: arc;
+  --pmw-tab-font: 11.5px; --pmw-tab-weight: 650;
+  --pmw-tab-active: var(--text-primary);
+  --pmw-plate-crown: var(--rg-rim, rgba(255, 255, 255, .9)); --pmw-plate-crown-h: 1px;
+  --pmw-t-med: 260ms;
+}
+html[data-theme="glass-light"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) { --pmw-tab-inactive: #2A3540; }
+html[data-theme="glass-dark"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-tab-active: #FFFFFF; --pmw-tab-weight: 700;
+  --pmw-tab-inactive: #F8F4FF;
+  --pmw-tab-idle-fill: rgba(255, 255, 255, .07);
+  --pmw-tab-hover: rgba(255, 255, 255, .12);
+  /* the page's Glass dark plate ("Beeper purple", page 22120-22134), kept until Jared rules (it does not fuse with the
+     dark reading canvas; deleting these lines falls back to the fused --pmw-surface plate with the 1 px rim) */
+  --pmw-plate-crown: #B5A4FF; --pmw-plate-crown-h: 2px;
+  --pmw-plate-fill: linear-gradient(180deg, color-mix(in srgb, #6A4BE5 78%, #3A2470) 0%, color-mix(in srgb, #6A4BE5 58%, #241450) 55%, color-mix(in srgb, #6A4BE5 42%, #1A1035) 100%), #241450;
+  --pmw-plate-filter: drop-shadow(0 12px 22px rgba(106, 75, 229, .48)) drop-shadow(0 -1px 0 rgba(181, 164, 255, .70));
+}
+/* Glass: panels are frosted plates on the wallpaper; the gaps are the separators. One blur at most, on the panel. */
+html[data-theme^="glass"] .pmw-panel { background: color-mix(in srgb, var(--pmw-strip) 92%, transparent); box-shadow: 0 0 0 1px var(--rg-rim-low, rgba(255, 255, 255, .12)); }
+html[data-theme^="glass"] .pmw-strip { background: transparent; }
+html[data-theme^="glass"] .pmw-divider .pmw-divider-line { background: transparent; }
+
+html[data-theme^="retro"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-surface: var(--surface);
+  --pmw-surface-2: var(--surface-elevated, var(--surface));
+  --pmw-strip: color-mix(in srgb, var(--surface) 88%, #000);
+  --pmw-gutter: var(--background, transparent);
+  --pmw-line: var(--border-light); --pmw-line-2: var(--border);
+  --pmw-accent: var(--accent-lime);
+  --pmw-ok: var(--accent-lime); --pmw-warn: var(--accent-warning, var(--accent-orange)); --pmw-bad: var(--accent-error, #e06c5a);
+  --pmw-pop: var(--surface-elevated, var(--surface));
+  --pmw-pop-line: var(--border);
+  --pmw-pop-shadow: 3px 3px 0 rgba(26, 26, 26, .30);
+  --pm-font-ui: var(--body-font, var(--mono-font, monospace));
+  --pmw-radius: 0px; --pmw-panel-radius: 0px; --pmw-row-radius: 0px; --pmw-menu-radius: 0px;
+  --pmw-tab-crown: 6px; --pmw-tab-shoulder: 8px; --pmw-tab-flare: 14px; --pmw-tab-profile: stepped;
+  --pmw-tab-font: 12px; --pmw-tab-weight: 400; --pmw-tab-gap: 2px;
+  --pmw-tab-inactive: color-mix(in srgb, var(--accent-lime) 70%, var(--text-secondary));
+  --pmw-plate-crown: transparent; --pmw-plate-crown-h: 0px;
+  --pmw-t-fast: 0ms; --pmw-t-med: 140ms;
+}
+html[data-theme="retro-dark"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-strip: color-mix(in srgb, var(--surface) 60%, #000);
+  --pmw-pop-shadow: 3px 3px 0 rgba(224, 224, 224, .25);
+}
+
+html[data-theme^="basic"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-surface: var(--surface);
+  --pmw-surface-2: var(--surface-elevated, var(--surface));
+  --pmw-strip: color-mix(in srgb, color-mix(in srgb, var(--surface) 66%, #000) 72%, var(--surface));
+  --pmw-gutter: var(--background, transparent);
+  --pmw-line: var(--border-light); --pmw-line-2: var(--border);
+  --pmw-ok: var(--accent-lime); --pmw-warn: var(--accent-warning, var(--accent-orange)); --pmw-bad: var(--accent-error, #ef6b6b);
+  --pmw-pop: var(--surface-elevated, var(--surface));
+  --pm-font-ui: var(--body-font, inherit);
+  --pmw-radius: 6px; --pmw-panel-radius: 8px; --pmw-row-radius: 6px; --pmw-menu-radius: 8px;
+  --pmw-tab-crown: 9px; --pmw-tab-shoulder: 14px; --pmw-tab-flare: 22px; --pmw-tab-profile: arc;
+  --pmw-tab-font: 12px; --pmw-tab-weight: 500;
+  --pmw-tab-active: var(--text-primary); --pmw-tab-inactive: var(--text-secondary);
+  /* the page's Basic plate carried a 2 px accent crown strip; D5 makes the silhouette the only active marker (no accent
+     line), so Basic fuses plainly like the others */
+  --pmw-plate-crown: transparent; --pmw-plate-crown-h: 0px;
+  --pmw-t-med: 200ms;
+}
+html[data-theme="basic-light"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-strip: color-mix(in srgb, color-mix(in srgb, var(--surface) 88%, #000) 72%, var(--surface));
+}

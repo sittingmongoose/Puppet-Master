@@ -1,0 +1,63 @@
+/* Retro (D23): reverse-video tabs, bracket glyphs, stepped corners (34-shape.js's stepped profile), box-drawn menus and
+   dividers, one-cell kind glyphs instead of drawings. The steady active tab is a phosphor-filled block with dark text;
+   the effects in 35-retro.js all end there. Snap, never spring. */
+
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(#pm-home-centre, #pmw-overlay, .pmw-scope) {
+  --pmw-plate-fill: var(--accent-lime);
+  --pmw-tab-active: var(--surface);
+  --pmw-tab-weight: 600;
+}
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-strip { box-shadow: inset 0 -1px 0 var(--accent-lime); font-family: var(--pm-font-ui); }
+/* one-cell kind glyphs from the code face, never emoji */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-kico > svg { display: none; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-kglyph { display: block; font-family: var(--pm-font-code); font-weight: 600; }
+/* dirty: the classic asterisk after the label; close is a plain x cell */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tab[data-dirty] .pmw-tlabel::after { content: "*"; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tab[data-dirty] .pmw-tdot { display: none; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tab[data-dirty] .pmw-tclose .pmw-ico { opacity: 1; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tclose { border-radius: 0; }
+/* bracket glyphs on "+N" and "+" */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-more::before { content: "["; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-more::after { content: "]"; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-more { font-family: var(--pm-font-code); color: var(--accent-lime); border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-plus > svg { display: none; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-plus::before { content: "[+]"; font-family: var(--pm-font-code); font-size: 12px; color: var(--accent-lime); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-sbtn, html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-hbtn { border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-sbtn:hover, html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-more:hover { background: var(--accent-lime); color: var(--surface); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-sbtn:hover .pmw-ico { color: var(--surface); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-plus:hover::before { color: var(--surface); }
+/* dividers: a single box-drawing line that goes double on hover */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-divider .pmw-divider-line { background: var(--border); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-divider[data-dir="row"]:is(:hover, .pmw-active, :focus-visible) .pmw-divider-line { transform: none; width: 3px; left: 2.5px; background: transparent; border-left: 1px solid var(--accent-lime); border-right: 1px solid var(--accent-lime); box-sizing: border-box; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-divider[data-dir="col"]:is(:hover, .pmw-active, :focus-visible) .pmw-divider-line { transform: none; height: 3px; top: 2.5px; background: transparent; border-top: 1px solid var(--accent-lime); border-bottom: 1px solid var(--accent-lime); box-sizing: border-box; }
+/* box-drawn menus: a hard 1 px frame, reverse-video rows */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-pop { border: 1px solid var(--accent-lime); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mitem:is(:hover, :focus-visible, .is-current) { background: var(--accent-lime); color: var(--surface); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mitem:is(:hover, :focus-visible, .is-current) :is(.pmw-mcopy span, .pmw-mright, .pmw-mlead, .pmw-mchev) { color: var(--surface); background: transparent; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mlead { background: transparent; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-menu[data-mstate] { transition: none; transform: none; }
+/* the landing preview: a dithered half-tone with a box-drawn outline */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-landing { border: 1px solid var(--accent-lime); border-radius: 0; background: repeating-conic-gradient(color-mix(in srgb, var(--accent-lime) 22%, transparent) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-landing-label { border-radius: 0; background: var(--accent-lime); color: var(--surface); font-family: var(--pm-font-code); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-chip { border-radius: 0; box-shadow: 3px 3px 0 rgba(0, 0, 0, .35), 0 0 0 1px var(--accent-lime); }
+
+/* ---- the selection effects (35-retro.js) ---- */
+.pmw-strip.pmw-rfx-live .pmw-plate { opacity: 0; }
+.pmw-tab.pmw-rfx-phos { color: var(--accent-lime); background: repeating-conic-gradient(color-mix(in srgb, var(--accent-lime) 55%, transparent) 0% 25%, transparent 0% 50%) 0 0 / 8px 8px; animation: pmw-rfx-phos 240ms steps(3, end) forwards; }
+@keyframes pmw-rfx-phos { 0% { background-size: 8px 8px; } 66% { background-size: 4px 4px; } 100% { background: var(--accent-lime); color: var(--surface); } }
+.pmw-tab.pmw-rfx-glow { box-shadow: 0 0 14px color-mix(in srgb, var(--accent-lime) 35%, transparent); animation: pmw-rfx-glow 650ms ease-out forwards; }
+@keyframes pmw-rfx-glow { to { box-shadow: 0 0 14px transparent; } }
+.pmw-tab.pmw-rfx-crt { color: var(--accent-lime); background: repeating-linear-gradient(transparent 0 2px, color-mix(in srgb, var(--accent-lime) 70%, transparent) 2px 3px) 0 0 / 100% 0% no-repeat; animation: pmw-rfx-crt 300ms steps(6, end) forwards; }
+@keyframes pmw-rfx-crt { 0% { background-size: 100% 0%; } 90% { background-size: 100% 100%; color: var(--accent-lime); } 100% { background: var(--accent-lime); background-size: 100% 100%; color: var(--surface); } }
+.pmw-tab.pmw-rfx-dos { animation: pmw-rfx-dos 600ms steps(1, end) forwards; }
+@keyframes pmw-rfx-dos {
+  0% { background: transparent; color: var(--accent-lime); }
+  25% { background: var(--accent-lime); color: var(--surface); }
+  50% { background: transparent; color: var(--accent-lime); }
+  75%, 100% { background: var(--accent-lime); color: var(--surface); }
+}
+.pmw-tab.pmw-rfx-drag { outline: 1px dashed var(--accent-lime); outline-offset: -1px; background: color-mix(in srgb, var(--surface) 35%, transparent); }
+.pmw-tab.pmw-rfx-drop { animation: pmw-rfx-drop 280ms steps(1, end); }
+@keyframes pmw-rfx-drop { 0% { background: var(--accent-lime); color: var(--surface); } 50%, 100% { background: transparent; } }
+html[data-motion="reduced"] .pmw-tab[class*="pmw-rfx-"] { animation: none !important; box-shadow: none; }
+@media (prefers-reduced-motion: reduce) { .pmw-tab[class*="pmw-rfx-"] { animation: none !important; box-shadow: none; } }

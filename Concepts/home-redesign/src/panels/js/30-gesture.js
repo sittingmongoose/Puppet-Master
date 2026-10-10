@@ -81,6 +81,7 @@ gesture.start = function (ev, spec) {
     if (PMW.menu && PMW.menu.close) PMW.menu.close();
     try { var sel = window.getSelection(); if (sel && sel.removeAllRanges) sel.removeAllRanges(); } catch (_) {}
     try { g.el.setPointerCapture(g.pointerId); g.el.addEventListener('lostpointercapture', onLost); } catch (_) {}
+    try { if (window.PM_HOVER_TAG_CONTROLLER && PM_HOVER_TAG_CONTROLLER.close) PM_HOVER_TAG_CONTROLLER.close(true); } catch (_) {}
     var cl = doc.body.classList;
     if (!cl.contains('pm-resizing')) { cl.add('pm-resizing'); g.ownsResizing = true; }
     cl.add('pmw-dragging');
@@ -132,6 +133,7 @@ gesture.start = function (ev, spec) {
       try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (_) {}
     }
     render.flushResizes(true);
+    try { if (window.PM_HOVER_TAG_CONTROLLER && PM_HOVER_TAG_CONTROLLER.close) PM_HOVER_TAG_CONTROLLER.close(true); } catch (_) {}
     suppressClick();
   }
   g.end = end;

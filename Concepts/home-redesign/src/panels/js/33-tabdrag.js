@@ -43,7 +43,7 @@ tabDrag.begin = function (ev, tabEl, s) {
       g.mode = 'strip';
       cacheSlots(g);
       g.retro = retroOn() && !reducedMotion();
-      if (g.retro) tabEl.classList.add('pm-retro-drag-dos');
+      if (g.retro) tabEl.classList.add('pmw-rfx-drag');
       shape.snap(host);
       return true;
     },
@@ -130,7 +130,7 @@ function tearOff(g) {
   var chip = g.tab.cloneNode(true);
   chip.removeAttribute('id');
   chip.classList.add('pmw-chip');
-  chip.classList.remove('pmw-dragging', 'pm-retro-drag-dos');
+  chip.classList.remove('pmw-dragging', 'pmw-rfx-drag');
   chip.setAttribute('aria-hidden', 'true');
   chip.style.transform = '';
   chip.style.width = r.width + 'px';
@@ -352,14 +352,14 @@ function settleInStrip(g, done) {
     setTimeout(finish, SETTLE_MS + 100);
     rideShape(g.host, SETTLE_MS);
   } else finish();
-  if (g.retro) { tab.classList.add('pm-retro-dos-drop'); setTimeout(function () { tab.classList.remove('pm-retro-dos-drop'); }, 320); }
+  if (g.retro) { tab.classList.add('pmw-rfx-drop'); setTimeout(function () { tab.classList.remove('pmw-rfx-drop'); }, 320); }
 }
 function finishStrip(g) {
   var s = g.s;
   s.dragging = false;
   s.frozen = null;
   g.host.classList.remove('is-dragging');
-  g.tab.classList.remove('pmw-dragging', 'pmw-torn', 'pm-retro-drag-dos');
+  g.tab.classList.remove('pmw-dragging', 'pmw-torn', 'pmw-rfx-drag');
   Array.prototype.forEach.call(s.list.querySelectorAll('.pmw-tab'), function (t) { t.style.transition = ''; t.style.transform = ''; });
 }
 function restore(g) {

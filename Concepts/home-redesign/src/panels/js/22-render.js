@@ -317,3 +317,14 @@ function tabTitle(rec) {
   return tabLabel(rec);
 }
 PMW.tabTitle = tabTitle;
+
+/* CONTRACT section 3: every mounted instance hears a look change once, at the next frame after it (the core's look
+   watcher already defers past the attribute write) */
+bus.on('look', function (lk) {
+  for (var id in instances) {
+    var e = instances[id];
+    if (e.instance && typeof e.instance.onLook === 'function') {
+      try { e.instance.onLook(lk); } catch (err) { try { console.error('[pm-home] onLook failed', err); } catch (_) {} }
+    }
+  }
+});
