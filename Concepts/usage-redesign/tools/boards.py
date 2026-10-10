@@ -532,16 +532,19 @@ B = {
 # so changing a host never resets a Usage room and the reverse. Every card is 'widget@preset': its size is that preset's at
 # the class (validated), packed first-fit with no hole like the room boards; written for S, M and L (XL is projected from L
 # as for the rooms). Positions keep the summary tiles first where they pack without a hole; where a short tile beside a
-# taller card would leave one, the tiles close the board instead. Compact provider plates show the active account and fold
+# taller card would leave one, the tiles close the board instead. 'widget@preset:h' gives a preset sized by content (fit)
+# its fallback height h (inside the kind's range); a fixed preset always takes its own height. Compact provider plates show the active account and fold
 # a provider's other accounts to their "N more" line (hover, Details). HOSTS_DIGEST is the hash of the generated host
 # boards: --check fails when HOSTS changes without a new HOSTS_VERSION (and HOSTS_DIGEST) or a version without a change.
-HOSTS_VERSION = 'pmu-hosts-2026-10-10'
-HOSTS_DIGEST = '35d85701c81a51be'
+HOSTS_VERSION = 'pmu-hosts-2026-10-10b'
+HOSTS_DIGEST = '3ce745e8635d68a7'
 HOST_CLASSES = {'S': 12, 'M': 20, 'L': 24}
 HOST_PLATES = ['acct-claude-code', 'acct-openai-codex', 'acct-antigravity', 'acct-muse', 'acct-github-copilot',
                'acct-qwen-coding', 'acct-zai-coding', 'acct-kimi-coding', 'acct-opencode-go', 'acct-anthropic-api',
                'acct-gemini-direct', 'acct-cursor-cli']
-_PLATES = ' '.join(pid + '@compact' for pid in HOST_PLATES)
+# 10 rows: the fallback height of the fit=1 Compact plate (the height the engine measures for one complete account; at 7
+# rows a 196 px Claude or Copilot plate showed none of its accounts over its auto-switch line)
+_PLATES = ' '.join(pid + '@compact:10' for pid in HOST_PLATES)
 HOSTS = {
     # new dash-<n> tabs: the usage summary (Overview's Usage health) and one provider plate per provider
     'dashboard': {cls: 'health@standard ' + _PLATES for cls in HOST_CLASSES},
@@ -758,6 +761,7 @@ def build_hosts():
             items, presets = [], {}
             for tok in spec[cls].split():
                 wid, _, pid = tok.partition('@')
+                pid, _, hfit = pid.partition(':')
                 if wid not in W:
                     problems.append(f'host {hid}/{cls}: {wid} is not a widget')
                     continue
@@ -775,6 +779,12 @@ def build_hosts():
                 if W[wid][1] != 'G':
                     problems.append(f'host {hid}/{cls}: {wid} is not at Glance')
                 w, h = pr['w'][cls], pr['h']
+                if hfit:
+                    h = int(hfit)
+                    if pr.get('fit') is None:
+                        problems.append(f'host {hid}/{cls}: {wid} preset {pid} has a fixed height ({pr["h"]}), not {h}')
+                    if not KINDS[kind][2] <= h <= KINDS[kind][3]:
+                        problems.append(f'host {hid}/{cls}: {wid} height {h} outside {kind} range')
                 if w > cols:
                     problems.append(f'host {hid}/{cls}: {wid} {w} tracks is wider than the board')
                 items.append((wid, w, h))
