@@ -7331,7 +7331,7 @@
     },
     "catalog.alert_acknowledge": {
       "ui_element_id": "catalog.alert_acknowledge",
-      "ui_location": "Attention Center > Alerts > Acknowledge",
+      "ui_location": "Attention Center > Alerts > Acknowledge; Usage page > alert Acknowledge (F3-453)",
       "ui_command_id": "cmd.alert.acknowledge",
       "handler_location": "handlers::alert::acknowledge",
       "expected_event_types": [
@@ -7572,7 +7572,7 @@
     },
     "catalog.alert_snooze": {
       "ui_element_id": "catalog.alert_snooze",
-      "ui_location": "Attention Center > Alerts > Snooze",
+      "ui_location": "Attention Center > Alerts > Snooze; Usage page > alert Snooze 1 hour (F3-453)",
       "ui_command_id": "cmd.alert.snooze",
       "handler_location": "handlers::alert::snooze",
       "expected_event_types": [
@@ -55746,7 +55746,7 @@
     },
     "catalog.settings_open": {
       "ui_element_id": "catalog.settings_open",
-      "ui_location": "Settings K3 workspace > setting, manager, and owner-route consumers",
+      "ui_location": "Settings K3 workspace > setting, manager, and owner-route consumers; Usage page > Accounts room > Open in Settings and the provider plate's shared-value line (target_type setting), and a provider not set up > Set up in Settings (UF-107)",
       "ui_command_id": "cmd.settings.open",
       "handler_location": "handlers::settings::open_route",
       "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_route_request",
@@ -55803,7 +55803,7 @@
     },
     "catalog.settings_transaction_apply": {
       "ui_element_id": "catalog.settings_transaction_apply",
-      "ui_location": "Settings K3 workspace > confirmed current transaction preview; Project-owner commit chain applying the SSYS-036 explicitly selected settings copy after Project commit; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153); Usage page > Accounts room > provider plate Auto-switch toggle and switch level at scope provider (SSYS-044)",
+      "ui_location": "Settings K3 workspace > confirmed current transaction preview; Project-owner commit chain applying the SSYS-036 explicitly selected settings copy after Project commit; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153); Usage page > Accounts room > provider plate Auto-switch toggle and switch-level stepper and menu (its Shared setting choice sends inherit), and the same controls on the Accounts hero cells and the Overview headroom card, at scope provider (SSYS-044, MA-073)",
       "ui_command_id": "cmd.settings.transaction.apply",
       "handler_location": "handlers::settings::transaction_apply",
       "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request",
@@ -55870,7 +55870,7 @@
     },
     "catalog.settings_transaction_preview": {
       "ui_element_id": "catalog.settings_transaction_preview",
-      "ui_location": "Settings K3 workspace > every pending value, import, reset, and bulk-change review; Product Onboarding uncreated Project Copy settings from preview and postcommit rebind through SSYS-036; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153); Usage page > Accounts room > provider plate Auto-switch toggle and switch level at scope provider (SSYS-044)",
+      "ui_location": "Settings K3 workspace > every pending value, import, reset, and bulk-change review; Product Onboarding uncreated Project Copy settings from preview and postcommit rebind through SSYS-036; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153); Usage page > Accounts room > provider plate Auto-switch toggle and switch-level stepper and menu (its Shared setting choice sends inherit), and the same controls on the Accounts hero cells and the Overview headroom card, at scope provider (SSYS-044, MA-073)",
       "ui_command_id": "cmd.settings.transaction.preview",
       "handler_location": "handlers::settings::transaction_preview",
       "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request",
@@ -62775,7 +62775,7 @@
     },
     "catalog.usage_export": {
       "ui_element_id": "catalog.usage_export",
-      "ui_location": "Usage page > Export JSON / Ledger JSON",
+      "ui_location": "Usage page > head Export menu (Snapshot or Ledger) and the Ledger table's export (UF-107)",
       "ui_command_id": "cmd.usage.export",
       "handler_location": "handlers::usage::export",
       "expected_event_types": [],
@@ -63013,7 +63013,7 @@
     },
     "catalog.widget_configure": {
       "ui_element_id": "catalog.widget_configure",
-      "ui_location": "Widget hosts > Usage or Dashboard > Card configuration",
+      "ui_location": "Widget hosts > Usage or Dashboard > Card configuration; Usage page > chart type and gear options (UF-107)",
       "ui_command_id": "cmd.widget.configure",
       "handler_location": "handlers::widget::configure",
       "expected_event_types": [],
@@ -63269,7 +63269,7 @@
     },
     "catalog.widget_resize": {
       "ui_element_id": "catalog.widget_resize",
-      "ui_location": "Widget hosts > Usage or Dashboard > Resize handle, keyboard resize, or size menu commit",
+      "ui_location": "Widget hosts > Usage or Dashboard > Resize handle, keyboard resize, or size menu commit; Usage page > size menu preset, committed with its preset_id (WS-020)",
       "ui_command_id": "cmd.widget.resize",
       "handler_location": "handlers::widget::resize",
       "expected_event_types": [],
