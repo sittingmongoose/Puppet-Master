@@ -401,8 +401,10 @@
   };
   function agUsedHtml(ev) {
     var used = ev.used.filter(function (u) { return u !== null && u !== undefined; });
-    return used.length > 1 && used.every(function (u) { return u === used[0]; }) ? '<b data-tone="' + (PMU.roster.tone(used[0]) || 'calm') + '">' + esc(C.fmt(used[0], 'pct')) + '</b><em>both</em>'
-      : used.map(function (u) { return '<b data-tone="' + (PMU.roster.tone(u) || 'calm') + '">' + esc(C.fmt(u, u < 10 && u % 1 ? 'pct1' : 'pct')) + '</b>'; }).join('');
+    /* item 2: the tone uses this account's own warn and switch levels, not the shared ones */
+    var ac = ev.account || null, tone = function (u) { return ac ? PMU.roster.tone(u, ac.providerId, ac.id) : PMU.roster.tone(u); };
+    return used.length > 1 && used.every(function (u) { return u === used[0]; }) ? '<b data-tone="' + (tone(used[0]) || 'calm') + '">' + esc(C.fmt(used[0], 'pct')) + '</b><em>both</em>'
+      : used.map(function (u) { return '<b data-tone="' + (tone(u) || 'calm') + '">' + esc(C.fmt(u, u < 10 && u % 1 ? 'pct1' : 'pct')) + '</b>'; }).join('');
   }
   /* a live beat (a window reading moved): the lines keep their place; each shown line's used % patches in place. Lines that
      come or go (a reset passing) are a new structure: false (the wrapper defers an idle re-render) */

@@ -12,3 +12,6 @@
 #panel-settings .o55-policy-fields .o55-fields { align-items: end; }
 #panel-settings .o55-policy-field .o55-field-label,
 #panel-settings .o55-policy-row .setting-description { text-wrap: pretty; }
+/* the level dropdowns ask for a 264 px open list (data-dd-width); their closed field keeps the width of its slot */
+#panel-settings .o55-policy-field .pm51-dd-trigger,
+#panel-settings .o55-policy-ctl .pm51-dd-trigger { width: 100% !important; }

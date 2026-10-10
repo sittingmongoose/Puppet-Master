@@ -516,7 +516,9 @@
       vals.forEach(v => { const why = String(v) === String(own) ? '' : block(v); opts.push(Object.assign({ value: String(v), label: leftText(v) }, why ? { disabled: true, reason: why } : {})); });
     }
     if (own !== undefined && !opts.some(o => o.value === String(own))) opts.push({ value: String(own), label: String(own) });
-    return PM51.dropdown(own === undefined ? '' : String(own), opts, { action: 'pm51-scoped-select', data: { scope: SVC, setting: id, provider: p.id }, label: `${label} for ${p.name}` });
+    /* the open list is 264 px wide, so the shared choice keeps its % used beside it (the closed field keeps its own width:
+       61-providers.css) */
+    return PM51.dropdown(own === undefined ? '' : String(own), opts, { action: 'pm51-scoped-select', data: { scope: SVC, setting: id, provider: p.id }, label: `${label} for ${p.name}`, width: 264 });
   }
   /* a compact field (the account's "When it runs low" layout); "changed" here means the service has its own value */
   function policyField(p, id, label, control) {
