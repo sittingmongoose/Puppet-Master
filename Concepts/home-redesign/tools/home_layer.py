@@ -69,6 +69,15 @@ APP_PATCHES = [
      "  function homeActive() { return activePage() === 'dashboard' && document.documentElement.getAttribute('data-pmw-home') !== 'on'; }"
      " /* home layer: the chat is one column on every page */",
      'homeActive (home layer)'),
+    # The status bar said "Execution host local · 2ms", banned wording (the cross-look review; the planner gave the page
+    # shell's status bar to this layer, 2026-10-10). NieR's readout found that item by its words, so the item now
+    # carries data-status-item="host" and NieR looks for that first.
+    ("""'<span class="pm7-statusitem" data-status-priority="low">Execution host <strong>local</strong> · 2ms</span>'""",
+     """'<span class="pm7-statusitem" data-status-priority="low" data-status-item="host">Runs on <strong>this computer</strong> · 2ms</span>'""",
+     'status bar host item (home layer)'),
+    ("/^Execution host/i.test(e.textContent.trim())",
+     "(e.getAttribute('data-status-item') === 'host' || /^Execution host/i.test(e.textContent.trim()))",
+     'NieR readout finds the host item (home layer)'),
 ]
 
 # NieR Mode selector lists in the Settings script (opus-5.5 src/settings/kit.d/19-nier-parts.js). Filled from the

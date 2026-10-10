@@ -124,3 +124,53 @@ html[data-pmw-home="on"][data-o55-nier="on"][data-o55-nier-parts~="square"] .mai
 /* the file menu's new rows */
 .pmw-ctx-item { cursor: pointer; }
 .pmw-ctx-sep { height: 1px; margin: 4px 6px; background: var(--border-light, rgba(255, 255, 255, .08)); }
+
+/* the concept demo widget docks into a slot at the status bar's left end (js/50-pageshell.js): one status item, no
+   capsule and no chip, covering nothing (the planner, 2026-10-10). Its menu still opens upward from it. */
+html[data-pmw-home="on"] #pm7GlobalStatusBar .pmw-demo-slot {
+  flex: none;
+  height: 100%;
+  border-right: 1px solid color-mix(in srgb, var(--border-light) 70%, transparent);
+}
+html[data-pmw-home="on"][data-o55-tour] #pm7GlobalStatusBar .pmw-demo-slot { display: none; }
+html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) {
+  left: var(--pmw-demo-x, 0px);
+  bottom: var(--pmw-demo-y, 0px);
+  height: var(--pmw-demo-h, 25px);
+}
+html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) > button[data-demo="toggle"] {
+  height: var(--pmw-demo-h, 25px);
+  padding: 0 10px;
+  gap: 6px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-secondary);
+  font-family: var(--pmw-sb-font, inherit);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) > button[data-demo="toggle"]:hover,
+html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) > button[data-demo="toggle"][aria-expanded="true"] {
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  color: var(--text-primary);
+}
+html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) .o55-demoscn {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) .o55-demoscn::before {
+  content: "\00b7";
+  margin-right: 6px;
+  color: var(--text-secondary);
+}
+html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) .o55-demomenu { bottom: calc(var(--pmw-demo-h, 25px) + 6px); }
+
+/* the notice anchor (js/50-pageshell.js): the title bar's notification cards keep their place under the bell and drop
+   past the strip, header row or chat header below it; the drop is 0 on other pages */
+html[data-pmw-home="on"] #rsStage { top: calc(100% + 10px + var(--pmw-notice-drop, 0px)); }
