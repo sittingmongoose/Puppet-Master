@@ -44950,8 +44950,10 @@ canonical_text: >-
   Ctrl+Shift+E (Cmd+Shift+E); the plain-text buffer Alt+F2; text size Ctrl+=, Ctrl+- and Ctrl+0 (Cmd+=, Cmd+-,
   Cmd+0); Clear Ctrl+Shift+K (Cmd+K); Split Ctrl+Shift+5 (Cmd+D). A focused terminal gives these keys back to the
   host (F3-635): Alt+1..9, Alt+Shift+1..9, Alt+arrows, Alt+Shift+arrows, Ctrl+PageUp and Ctrl+PageDown,
-  Ctrl+Shift+PageUp and Ctrl+Shift+PageDown, Ctrl+\ and Ctrl+Shift+\, Shift+Escape, F6 and Shift+F6,
+  Ctrl+Shift+PageUp and Ctrl+Shift+PageDown, Alt+PageUp and Alt+PageDown (next and previous tab in a browser, where
+  Chrome keeps Ctrl+PageUp and Ctrl+PageDown), Ctrl+\ and Ctrl+Shift+\, Shift+Escape,
   Ctrl+Shift+Space, Ctrl+Shift+`, Ctrl+Tab, and in a browser the stand-ins Alt+T, Alt+W, Alt+Shift+T and Alt+`. The
+  host takes F6 and Shift+F6 before the terminal sees them, and ignores keys during IME composition. The
   shell therefore loses zsh's Alt+digit arguments, Alt+arrow word moves (Ctrl+Left and Ctrl+Right still move by
   word), Alt+T and Alt+W, and a program that needs Ctrl+\ (SIGQUIT) gets it from Send signal; every other Ctrl+key
   belongs to the shell. Split dispatches `cmd.workspace_layout.split` with a terminal spec and Clear scrollback
@@ -44980,6 +44982,7 @@ acceptance_criteria:
   - "A restored or reopened terminal shows its saved scrollback, the dim rule and the restored notice above a new local session in the same folder and profile; an SSH-host tab asks Reconnect / Close tab before reconnecting, and a command that was running reads \"ended with the earlier session\"."
   - "The More, context and command-mark menus show exactly the items above in that order, and every menu opens in the one overlay root."
   - "Each key above does its action in a focused terminal, each key in the given-back list reaches the host, and every other Ctrl+key reaches the shell."
+  - "Alt+PageUp and Alt+PageDown reach the host from a focused terminal, F6 and Shift+F6 reach the host before the terminal sees them, and the host acts on no key during IME composition."
   - "No session id, tab id or nonce appears as text, and no notice is a modal or carries a coloured side stripe."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
@@ -45001,6 +45004,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D11, D12)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 1 to 3 and 7 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9, sections 3 to 5 and 9 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
 preserved_exact_tokens:
   - "terminal:<session>"
   - "<process> · <folder>"
@@ -45027,6 +45031,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's kind registration, its script globals, its class and data-attribute prefixes and its terminal settings keys are lineage only; the concept's example profiles (zsh, bash, pwsh and one SSH host) and the agent name in its mark menu are demo data."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): The keys given back to the host add Alt+PageUp and Alt+PageDown, and the host takes F6 and Shift+F6 before the terminal sees them and ignores keys during IME composition."
   - "Amended 2026-10-10 (lead ruling L14): SSH-host terminal restore asks Reconnect / Close tab before any remote reconnection."
   - "Amended 2026-10-10 (lead ruling L14, review): The general restore sentence names the SSH-host exception in place, so only a local-profile tab starts its new session at once."
   - "Supersedes F3-062's bottom runtime workgroup strip and F3-450's four-pane split guard, and retires the workgroup, sub-tab and editor-terminal-stack parts of F3-063 and F3-064 (DL-181)."
