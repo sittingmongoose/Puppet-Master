@@ -191,9 +191,10 @@ html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
 /* (written above 70-wrap.css's tile and line clamps, which come later in the cascade: at equal weight their clamp of 3
    won and a yielding tile title wrapped to a new line, growing the head). The title's box is cut to the lines it shows
    (the clamp alone adds the ellipsis but keeps the box of every line) and the titles block keeps its resting height,
-   so the head's box is exactly as it rests when the title shows fewer lines */
+   so the head's box is exactly as it rests when the title shows fewer lines; the line it shows sits at the block's middle,
+   level with the provider mark beside it, not on the first line's place above it */
 #panel-usage .pmu-card > .pmu-cardhead[data-title-lines] .pmu-cardtitle { -webkit-line-clamp: var(--pmu-title-lines, 2); overflow: hidden; height: var(--pmu-title-h, auto); }
-#panel-usage .pmu-card > .pmu-cardhead[data-title-lines] > .pmu-cardtitles { min-height: var(--pmu-titles-h, 0px); }
+#panel-usage .pmu-card > .pmu-cardhead[data-title-lines] > .pmu-cardtitles { min-height: var(--pmu-titles-h, 0px); justify-content: center; }
 #panel-usage .pmu-board[data-op] .pmu-cardtitles { margin-right: 0; transition: none; }
 #panel-usage .pmu-board[data-op] .pmu-cardtools { opacity: 0 !important; pointer-events: none !important; }
 html[data-theme^="retro"] #panel-usage .pmu-cardtools, html[data-theme^="retro"] #panel-usage .pmu-cardtools .pmu-iconbtn { border-radius: 0; }
