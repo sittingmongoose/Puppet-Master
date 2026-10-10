@@ -624,6 +624,8 @@ This addendum repairs non-runtime UI wiring rows without creating WorkNodes, imp
 
 ## PMConcept7 Home Workspace wiring rules — 2026-08-04
 
+Superseded 2026-10-09 (DL-180): Home is one universal panel system with a fixed chat column. The fixed-zone controls this passage names (Panel 1 through Panel 4, Open Panel and Open Browser in Panel, File Manager's Open in Panel, the host drop targets, Collapse Bottom Terminal and the terminal add and split leaves) are retired; the Home census is UIW-040's closed list, the tab rules are UIW-041 and the wiring rows are `Plans/Wiring_Matrix.md#WM-090`. The rule that every visible control has exactly one production row or a `view_only` disposition, and that preview is local and one semantic end commits once, stands.
+
 Home Workspace is a reconciliation input for UI wiring. Every visible menu item,
 grab handle, Browser action, File Manager Open-in-Panel action, drop target, and
 semantic resize endpoint has exactly one production wiring row. Preview movement
@@ -632,12 +634,12 @@ the typed command and persists the committed layout once.
 
 Popup/flyout disclosure controls are explicitly view-local and are recorded in the
 control census with a `view_only` disposition rather than fabricated command rows.
-The compact Home popup has exactly four top-level rows (amended 2026-08-13: Open
-Panel, Open Browser in Panel, Collapse Bottom Terminal, and Reset Layout); its
-Panel 1 through Panel 4
-leaf targets, each surface menu leaf, File Manager target leaf, terminal add/split
-leaf, drop endpoint, and committed resizer endpoint resolve to one typed production
-row and one executable test. Disabled rows project the owner-provided reason and
+The compact Home popup's rows are F3-502's (amended 2026-10-09, DL-180: the named and
+saved layouts, the chat's rows, Save this layout..., Restore home layout and Run setup
+wizard; the earlier four rows Open Panel, Open Browser in Panel, Collapse Bottom
+Terminal and Reset Layout, with their Panel 1 through Panel 4 leaves, are retired); each
+of its leaves, each tab, "+", panel and tab menu leaf, drop endpoint and committed
+divider endpoint resolves to one typed production row and one executable test. Disabled rows project the owner-provided reason and
 dispatch zero commands.
 
 Rows must prove the command ID, typed payload, expected layout/terminal revision,
@@ -666,16 +668,20 @@ canonical_text: >-
   top-right lines-only grip (the corner-triangle wording is retired), the drop-target
   rows carry the target-geometry change-gated hover-preview acceptance (the
   pickup-footprint wording is retired), and the census adds the row-dock track-handle
-  resize endpoint (home.resizer.dock_track).
+  resize endpoint (home.resizer.dock_track). Amended 2026-10-09 (DL-180): the census
+  is UIW-040's closed list of the universal panel controls; the fixed-zone rows named
+  above (the Dashboard Pop Out, the floating corner and dock track resizers, the
+  grab-handle and host drop-target rows) and the terminal caps are retired, and the
+  Chat's Pop Out row is the chat's Pop out into its own window only.
 gui_related: true
 gui_classification_reason: This unit owns concrete UI-to-command wiring completeness for the Home workspace.
 split_recommended: false
-depends_on: [UIW-009, F3-501, UCC-144, CV-323]
+depends_on: [UIW-009, F3-501, UCC-144, CV-323, DL-180, UIW-040]
 unblocks: []
 acceptance_criteria:
 - Disclosure-only menu/flyout actions are view_only; each selected leaf maps to exactly one command and exact result/event family.
 - Pointermove and live resize preview have no command/event/persistence mapping; one changed pointer-up/drop has one semantic mapping.
-- Disabled terminal cap and Collapse states carry exact accessible reasons and zero dispatch.
+- Disabled terminal cap and Collapse states carry exact accessible reasons and zero dispatch. (Amended 2026-10-09, DL-180 - the terminal caps and Collapse Bottom Terminal are retired; every disabled Home control of UIW-040 carries its owner's reason and zero dispatch.)
 - The source-hashed control census reports unresolved_count=0 and every production row names an executable test, not declarative prose alone.
 validation_surfaces:
 - python3 scripts/pm-validate-wiring-matrix.py
@@ -697,6 +703,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - The prior non-census Home reconciliation summary is superseded by the source-hashed control census.
+- "Amended 2026-10-09 (DL-180): the census contents are UIW-040's closed list; the fixed-zone rows, the terminal caps and Collapse Bottom Terminal leave it."
 owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
 ```
 
@@ -780,6 +787,11 @@ usage_event_ref plus provider/account/runtime refs as correlation.
 Current PMConcept7 aggregate provider/account/panel cards open local inspectors with no command, receipt, event, or
 invented route kind.
 
+Amended 2026-10-09 (DL-180): on Home the chat is a fixed column on the right, from the title bar to the status bar
+(F3-637); it has no saved Home dock and never moves inside the window. Pop out into its own window (desktop
+app) and Dock back are its only move (`cmd.panel.undock` and `cmd.panel.redock` with `chat`), and the same node and
+store serve the window. The sentences below keep their identity rules; "saved Home host" now reads as the chat column.
+
 The shared Assistant has one DOM/native component identity and one thread/context store. Shell wiring may
 re-seat that same node between its saved Home host and the right-side global host for other primary pages.
 `cmd.panel.switch` controls visibility; re-parenting is local shell projection and must preserve node
@@ -807,7 +819,10 @@ canonical_text: >-
   cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject and retains the
   event ref as correlation. Home preset sizing normalizes to resize_surface, and shell
   wiring re-seats one shared Assistant node/store between Home and global hosts without
-  cloning or losing thread/context continuity. Usage card body magnetism remains active, but
+  cloning or losing thread/context continuity. Amended 2026-10-09 (DL-180): the same
+  transaction carries every panel and tab gesture of the universal panels (a tab drag, a
+  panel move, a divider, a fold); the chat never moves inside the window, Pop out into its
+  own window is its only relocation, and the same node/store serves that window. Usage card body magnetism remains active, but
   move/resize acquisition uses the controls' measured base-coordinate zones, continuous
   translation attenuation, and at most one pointer-id/time/bounds-scoped document-capture
   handoff to the existing controller. Direct and rescued activation clear that lease before
@@ -822,14 +837,15 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: The unit governs direct manipulation, cleanup, cross-page Assistant seating, and visible state continuity.
 split_recommended: false
-depends_on: [UIW-010, UIW-011, CS-068, UCC-147, WM-045]
+depends_on: [UIW-010, UIW-011, CS-068, UCC-147, WM-045, DL-180, UIW-041]
 unblocks: [DR-039, ACD-448]
 acceptance_criteria:
   - Pointer and keyboard preview state remains local; Usage pointer resize advances the target footprint and visibly repacks only obstructed peers, Usage reorder displaces affected peers, and Dashboard resize peers remain frozen. Every preview preserves mounted peer identity, paint, DOM order, and effect-spy silence; Usage move/resize acquisition preserves body magnetism, neutralizes translation continuously only around measured control zones, uses no synthetic pointerdown or second controller, requires rescued pointerdown top-hit ownership by the remembered card, lets an intervening overlay receive the event while clearing that stale lease, excludes unrelated interactive targets, rejects every concurrent operation before mutation, and clears the short pointer-specific acquisition lease on every direct/rescued activation and terminal path.
   - A changed pointer release dispatches exactly one canonical command after final-coordinate resolution, a changed keyboard reorder drop dispatches one move command for its selected insertion intent, and each supported keyboard-resize activation settles atomically through one resize command; no-change and cancel paths dispatch nothing. Event-primary Usage callers use usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses cmd.nav.open_usage_subject with usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries no OpenSubject. Current aggregate cards remain local with no command, receipt, event, or route identity.
   - Commit and cancel both release capture and remove ghost, placeholder, portal, preview, animation-frame, and transient-listener state.
   - Home preset sizing uses cmd.workspace_layout.resize_surface after preset resolution and does not register cmd.workspace_layout.size_surface.
-  - Re-seating preserves one Assistant node/store, active thread, draft, transcript, attachment, context, detail-pane, and focus identity across primary pages and back to the saved Home dock.
+  - Re-seating preserves one Assistant node/store, active thread, draft, transcript, attachment, context, detail-pane, and focus identity across primary pages and back to the saved Home dock. (Amended 2026-10-09, DL-180 - the saved Home dock is now the fixed chat column, and the same identity holds across Pop out and Dock back.)
+  - "A tab drag, a panel move, a divider drag and a fold each follow this transaction: one changed release dispatches one command and emits one workspace.layout_changed; cancel, no change and failure dispatch nothing (amended 2026-10-09, DL-180)."
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -862,7 +878,10 @@ negative_constraints:
   - Do not leave pointer capture, pending animation frames, portals, ghosts, placeholders, or transient listeners after commit or cancel.
   - Do not let magnet translation move a Usage handle away during acquisition or let an occluded, stale, expired, foreign-pointer, or other-interactive lease start a widget transaction; do not allow two widget-operation controllers to coexist.
   - Do not clone the Assistant node, controller, transcript store, or context store.
+  - Do not move, dock or float the chat inside the window; Pop out is its only relocation (DL-180).
   - Do not route aggregate Usage cards, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use usage_event_ref as the PMConcept7 Ledger attempt object_id.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the chat's saved Home dock and in-window re-seat retire; the transaction covers every panel and tab gesture."
 owner_hints:
   - Plans/UI_Wiring_Rules.md
   - Plans/Wiring_Matrix.md
@@ -2044,7 +2063,7 @@ unblocks: [ATS-075]
 acceptance_criteria:
   - "Every control on the list maps to exactly one WM-090 row, and every home.* production entry maps to a control on the list: the census reports unresolved_count=0."
   - "No row exists for a retired control on the list's retired part, and Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json records those rows as retired."
-  - "A disabled control (for example Split right when the centre is too narrow, Reopen closed tab with nothing closed, Close panel on the only centre panel) shows its owner's reason and dispatches nothing."
+  - "A disabled control (for example Split right when the centre is too narrow to split, Reopen closed tab when no tab has been closed) shows its owner's reason and dispatches nothing."
   - "Every key label on the list shows the key that works where the app runs; a browser shows Alt+T, Alt+W, Alt+Shift+T and Alt+` for the four browser-owned chords."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
