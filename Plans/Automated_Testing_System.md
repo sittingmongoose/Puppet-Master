@@ -6043,7 +6043,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-184"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1-D10, D22, D23)"
@@ -6069,7 +6069,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Matches the 960 px chat-drag centre floor in the wrapped certification prose."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Certifies the per-kind document content minima adopted from NUMBERS."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Certifies both text/state contrast and primary-button ink across looks and NieR."
-  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
+  - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Superseded 2026-10-09 (DL-180): ATS-029's four-panel live matrix and its exact 72-case visual matrix."
 owner_boundary_notes:
   - "This unit tests the owner units it cites and adds no rule of its own; F3-630 to F3-639, F3-647 and F3-648, WS-030, F-090, RAP-065, SP-330, CV-361, UCC-200, UIW-040, UIW-041, WM-090, DR-065 and DR-067 own the behaviour."
@@ -6221,7 +6221,7 @@ node_compile_hint:
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-wave2-numbers-5e549d6961.md, SHA-256 f9d7756f94f26c5285b35400a380afed57fb27dfaee6d29683c3916604b4a15a (R34, adopted effects budgets; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)"
   - "Plans/Decision_Log.md#DL-181"
   - "Plans/Decision_Log.md#DL-182"
   - "Plans/Decision_Log.md#DL-183"
@@ -6260,7 +6260,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L16): Certifies that All terminals is enabled and writes the project default through the Settings transaction with the in this project hover tag and no app-wide value, replacing 'only Settings writes the project default'."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
   - "Amended 2026-10-10 (R34, DL-183): Adopts the effects CPU budget, idle deadline and no-GPU fallback rule."
-  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
+  - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Amended 2026-10-09 (DL-182): ATS-047's 'images remain outside approval' is replaced; image protocols, their hardening and saved scrollback with images are certified here."
 owner_boundary_notes:
   - "SMPFS-180 to SMPFS-183, F3-640 to F3-646, SP-331, SP-332, CV-362, UCC-201, UIW-042 and WM-091 own the behaviour; this unit only tests it. Effect parameters per look and GPU frame measurements remain concept lineage; R34's adopted CPU budget, idle deadline and no-GPU rule are certified here."

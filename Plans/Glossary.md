@@ -2250,7 +2250,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D31)"
 - Plans/Decision_Log.md#DL-180
 - Plans/Decision_Log.md#DL-181
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1, D2, D5-D11)
@@ -2285,7 +2285,7 @@ negative_constraints:
 compatibility_only_notes:
 - Terminal section, workgroup, sub-tab, quadrant and terminal pane stay readable in superseded units and in the old records that are read-only migration inputs (SP-330, SP-332).
 stale_retired_dispositions:
-- "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
+- "Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
 - 'Retired 2026-10-09 (DL-180, DL-181): terminal section, workgroup, sub-tab, quadrant, terminal pane, the four fixed editor panels, the singleton Dashboard surface, and the bottom panel or bottom zone as a place.'
 owner_boundary_notes:
 - Glossary owns the words; the panel model is FinalGUISpec F3-630 to F3-639, the terminal tab F3-640 and SMPFS-180, the dashboard boards WS-030, and the layout record SP-330.

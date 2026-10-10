@@ -7647,7 +7647,7 @@ The name `panel_tab` keeps panel tabs apart from `workspace_tab_id` (project tab
 
 **Typed local action prefixes.** `ui.panel_tab.`, `ui.workspace_layout.` and `ui.terminal.` are typed local action prefixes in the pattern of `ui.guided_tour.focus_route` (CS-072): an action under them has no catalog command row, no central registration, no handler of the command bus, no receipt and no event, and is never also a `cmd.*` id. Their members are UCC-200's and UCC-201's tables: `ui.panel_tab.activate`, `ui.workspace_layout.maximize`, `ui.workspace_layout.focus_panel`, and the `ui.terminal.*` actions. A `ui.terminal.mark.*` action that runs a command (Rerun, Insert command, Open output in an editor tab) dispatches that catalog command, which carries its own receipt.
 
-Amended 2026-10-10 (Addendum 2 D28; lead ruling L9, corrected to view state with no event): `ui.output.` and `ui.chat_column.` are typed local action prefixes too, under the same rule. Their members are `ui.output.select_channel` (UCC-200: the Output tab's channel, view state of the one `output` tab) and `ui.chat_column.pin_history` (UCC-203: the History list's pin, saved as the v2 record's chat column `history_pinned` with no `workspace.layout_changed` event, revision advance or receipt).
+Amended 2026-10-10 (D31; lead ruling L9, corrected to view state with no event): `ui.output.` and `ui.chat_column.` are typed local action prefixes too, under the same rule. Their members are `ui.output.select_channel` (UCC-200: the Output tab's channel, view state of the one `output` tab) and `ui.chat_column.pin_history` (UCC-203: the History list's pin, saved as the v2 record's chat column `history_pinned` with no `workspace.layout_changed` event, revision advance or receipt).
 
 **The view-state ruling** (the decision CDRY-006 left open for panel tabs):
 - Choosing a tab (a click, the "+N" list, the every-tab and recent-tab lists, the tab keys), maximizing or restoring a panel, and focusing a panel are view state: `ui.panel_tab.activate`, `ui.workspace_layout.maximize`, `ui.workspace_layout.focus_panel`. They are written with the layout record's view state (active tab, focused panel, maximized panel, recent-tab order, `Plans/storage-plan.md#SP-330`) and emit no receipt and no event.
@@ -7703,7 +7703,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D31)"
   - "Plans/Commands_System.md CDRY-006 What stays view state (a prose heading with no PlanUnit; cited, not a dependency (lead ruling L22, 2026-10-10))"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-181"
@@ -7727,8 +7727,8 @@ negative_constraints:
   - "Do not add an event family for panel or tab changes."
 compatibility_only_notes: []
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
-  - "Amended 2026-10-10 (Addendum 2 D28; lead ruling L9, corrected to view state with no event): Registers ui.output. and ui.chat_column. as typed local action prefixes and adds the History pin, ui.chat_column.pin_history, to the view-state list."
+  - "Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
+  - "Amended 2026-10-10 (D31; lead ruling L9, corrected to view state with no event): Registers ui.output. and ui.chat_column. as typed local action prefixes and adds the History pin, ui.chat_column.pin_history, to the view-state list."
   - "Amended 2026-10-09 (DL-180): CDRY-006's local-tab rule now covers panel tab activation explicitly; CS-060's registry gains two prefixes."
 owner_hints:
   - Plans/Commands_System.md

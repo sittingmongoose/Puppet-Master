@@ -3079,7 +3079,7 @@ SSYS-051's twelve (eleven live, and `code.terminal.search`, retired since):
 
 ### Rows added
 
-Amended 2026-10-10 (Addendum 2 D27; R35): `code.editing.color-scheme` (Editor Colors) joins the rows below, making twelve, and Editor Line Spacing's default is 1.55 (it read "none yet").
+Amended 2026-10-10 (D30; R35): `code.editing.color-scheme` (Editor Colors) joins the rows below, making twelve, and Editor Line Spacing's default is 1.55 (it read "none yet").
 
 SSYS-050's twelve, all scope `global`, stored per Project:
 
@@ -3234,7 +3234,7 @@ node_compile_hint:
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "hpt-plans-lead pm-mail 1010084328-3f4b (2026-10-10): code.editing.color-scheme, Editor Colors, Follow look; existing editing subgroup and neighbouring select-row shape."
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-181"
   - "Plans/Decision_Log.md#DL-183"
@@ -3266,10 +3266,10 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Distinguishes the inventory-wide retired census from this wave retirement set."
   - "Amended 2026-10-10 (lead ruling L18): Recounts live and retired inventory rows and includes the search retirement."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Sets the already-listed editor line-height default to 1.55."
-  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Requires an Editor scheme row using the shared catalog and defaulting to Follow look."
+  - "Amended 2026-10-10 (D30, DL-183): Requires an Editor scheme row using the shared catalog and defaulting to Follow look."
   - "Amended 2026-10-10 (lead ruling L18): Adds code.terminal.search to the retired rows because find is always present (F3-641)."
   - "Amended 2026-10-10 (lead ruling L18): The 2026-10-09 retirement line below keeps its original seven ids; this L18 line records the search retirement."
-  - "Amended 2026-10-10 (Addendum 2 D27; R35): The prose Rows added table lists twelve rows with Editor Colors and Editor Line Spacing's 1.55 default."
+  - "Amended 2026-10-10 (D30; R35): The prose Rows added table lists twelve rows with Editor Colors and Editor Line Spacing's 1.55 default."
   - "Retired 2026-10-09 (DL-180, DL-181): general.interaction.panel-dock, general.visual.chat-layout-mode, code.terminal.layout-style, code.terminal.auto-second-pane, code.editing.editor-strip-collapsed, code.terminal.explanations and code.terminal.tab-role."
 ```
 
@@ -3346,7 +3346,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)"
   - "Plans/storage-plan.md#SP-332 (terminal records consume these rows; cited, not a dependency (lead ruling L22, 2026-10-10))"
   - "Plans/Decision_Log.md#DL-183"
   - "Plans/Decision_Log.md#DL-181"
@@ -3376,7 +3376,7 @@ owner_hints:
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look consistently in the appearance-model prose and field tables."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
-  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
+  - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Amended 2026-10-10 (lead ruling L18): The search switch is retired; find stays always present and the retired row renders nowhere."
   - "Amended 2026-10-10 (lead ruling L16): All terminals is enabled and writes the project default through the Settings transaction, with the hover tag in this project and no app-wide write."
   - "Amended 2026-10-10 (lead ruling L16): Restores the q-035 rule for the app default layer: until q-035 admits an app-wide store, a field's app default is the bundled inventory default and only the Settings > Terminal app-default edit stays disabled, its editable requirement kept."
