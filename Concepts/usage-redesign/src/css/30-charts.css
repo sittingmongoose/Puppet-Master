@@ -730,17 +730,18 @@ html[data-o55-nier="on"] #panel-usage .pmu-callring { border-color: var(--pmu-in
 /* ---------- the calm ramp: below the warn line a "% used" reading shades continuously by its value (--v, 0-100, written
    by 34-charts-bars.js and by content through PMU.charts.rampAttr / rampVar): indigo -> cyan below 50, cyan -> mint from
    50 to 79; the Settings thresholds take over above (amber, red-orange, red, magenta). Behind the spectrum flag
-   (#pmuApp[data-pmu-f-spectrum="0"] keeps the calm teal / cyan of round 2); NieR keeps its ink. ---------- */
-html:not([data-o55-nier="on"]) #panel-usage #pmuApp:not([data-pmu-f-spectrum="0"]) :is(.pmu-meter, .pmu-rk, .pmu-ladrow, .pmu-skycol, .pmu-ramp)[data-ramp="0"],
-html:not([data-o55-nier="on"]) #panel-usage #pmuApp:not([data-pmu-f-spectrum="0"]) .pmu-meterheat[data-step="0"] {
+   (#pmuApp[data-pmu-f-spectrum="0"] keeps the calm teal / cyan of round 2); NieR keeps its ink. A hosted board's shell
+   (.pmu-hosted, D10 6.2) carries the same flag and takes the same ramps. ---------- */
+html:not([data-o55-nier="on"]) #panel-usage :is(#pmuApp,.pmu-hosted):not([data-pmu-f-spectrum="0"]) :is(.pmu-meter, .pmu-rk, .pmu-ladrow, .pmu-skycol, .pmu-ramp)[data-ramp="0"],
+html:not([data-o55-nier="on"]) #panel-usage :is(#pmuApp,.pmu-hosted):not([data-pmu-f-spectrum="0"]) .pmu-meterheat[data-step="0"] {
   --c: color-mix(in oklch, var(--pmu-l-r1) clamp(0%, calc(var(--v, 25) * 2%), 100%), var(--pmu-l-r0)); }
-html:not([data-o55-nier="on"]) #panel-usage #pmuApp:not([data-pmu-f-spectrum="0"]) :is(.pmu-meter, .pmu-rk, .pmu-ladrow, .pmu-skycol, .pmu-ramp)[data-ramp="1"],
-html:not([data-o55-nier="on"]) #panel-usage #pmuApp:not([data-pmu-f-spectrum="0"]) .pmu-meterheat[data-step="1"] {
+html:not([data-o55-nier="on"]) #panel-usage :is(#pmuApp,.pmu-hosted):not([data-pmu-f-spectrum="0"]) :is(.pmu-meter, .pmu-rk, .pmu-ladrow, .pmu-skycol, .pmu-ramp)[data-ramp="1"],
+html:not([data-o55-nier="on"]) #panel-usage :is(#pmuApp,.pmu-hosted):not([data-pmu-f-spectrum="0"]) .pmu-meterheat[data-step="1"] {
   --c: color-mix(in oklch, var(--pmu-l-r2) clamp(0%, calc((var(--v, 65) - 50) * 3.4%), 100%), var(--pmu-l-r1)); }
-html:not([data-o55-nier="on"]) #panel-usage #pmuApp:not([data-pmu-f-spectrum="0"]) :is(.pmu-meter, .pmu-rk, .pmu-ladrow, .pmu-skycol, .pmu-ramp)[data-ramp] { --cb: color-mix(in srgb, #fff 55%, var(--c)); }
-html[data-theme$="-light"]:not([data-o55-nier="on"]) #panel-usage #pmuApp:not([data-pmu-f-spectrum="0"]) :is(.pmu-meter, .pmu-rk, .pmu-ladrow, .pmu-skycol, .pmu-ramp)[data-ramp] { --cb: color-mix(in srgb, #fff 30%, var(--c)); }
+html:not([data-o55-nier="on"]) #panel-usage :is(#pmuApp,.pmu-hosted):not([data-pmu-f-spectrum="0"]) :is(.pmu-meter, .pmu-rk, .pmu-ladrow, .pmu-skycol, .pmu-ramp)[data-ramp] { --cb: color-mix(in srgb, #fff 55%, var(--c)); }
+html[data-theme$="-light"]:not([data-o55-nier="on"]) #panel-usage :is(#pmuApp,.pmu-hosted):not([data-pmu-f-spectrum="0"]) :is(.pmu-meter, .pmu-rk, .pmu-ladrow, .pmu-skycol, .pmu-ramp)[data-ramp] { --cb: color-mix(in srgb, #fff 30%, var(--c)); }
 /* a ranked row's bar segments take the row's ramp colour (their own state tone would paint the round-2 teal) */
-html:not([data-o55-nier="on"]) #panel-usage #pmuApp:not([data-pmu-f-spectrum="0"]) .pmu-rk:is([data-ramp="0"], [data-ramp="1"]) .pmu-rkfill > i { --c: inherit; --cb: inherit; }
+html:not([data-o55-nier="on"]) #panel-usage :is(#pmuApp,.pmu-hosted):not([data-pmu-f-spectrum="0"]) .pmu-rk:is([data-ramp="0"], [data-ramp="1"]) .pmu-rkfill > i { --c: inherit; --cb: inherit; }
 
 /* ---------- meters at rest (4.6): recessed track, a fill that brightens toward its lit 3 px tip (the fill is full width and
    translated, so a short fill shows the bright end and a long one the whole gradient), a specular top line, and a clip

@@ -145,11 +145,16 @@
   function cardOf(el) { return el && el.closest ? el.closest('.pmu-card') : null; }
   charts.cardOf = cardOf;
   charts.isHero = function (c) { var k = cardOf(c && (c.host || c.el)); return !!(k && k.hasAttribute('data-hero')); };
-  /* in view (no layout read: the board's cached grid geometry); a chart outside the viewport never animates (PERF-3 rule 3) */
+  /* the board a card is on (D10 7.1): its own (PMU.boards, made by 40-board.js after this file), else the ambient board,
+     else the Usage board; and the hosted board an element is on, or null on the Usage page */
+  function boardOfCard(k) { return (PMU.boards && (PMU.boards.of(k) || PMU.boards.current())) || PMU.board || null; }
+  function hostedOf(el) { var b = el && PMU.boards ? PMU.boards.of(el) : null; return b && PMU.board && b !== PMU.board ? b : null; }
+  /* in view (no layout read: the card's board's cached grid geometry); a chart outside the viewport never animates (PERF-3
+     rule 3) */
   charts.inView = function (c) {
-    var k = cardOf(c && (c.host || c.el));
-    if (!k || !PMU.board || !PMU.board.inView) return true;
-    try { return PMU.board.inView(k); } catch (error) { return true; }
+    var k = cardOf(c && (c.host || c.el)), b = k ? boardOfCard(k) : null;
+    if (!k || !b || !b.inView) return true;
+    try { return b.inView(k); } catch (error) { return true; }
   };
   /* PMU.charts.of(el): the chart object of a chart root or of the chart that holds el (live hooks, flyers) */
   charts.of = function (el) {
@@ -305,7 +310,7 @@
     /* opts.size {w, h} (round 3): a kind that knows its plot's box passes it, so the first draw forces no layout of the
        body that was just built (the flush's size read was most of the "chart flush" in the room-change profiles); the
        ResizeObserver corrects a wrong hint after the frame's own layout */
-    var sizes = list.map(function (c) { if (c._dead) return null; var hz = c._first && c.opts.size; return hz && hz.w > 0 ? { w: hz.w, h: hz.h || 0 } : { w: c.host.clientWidth, h: c.host.clientHeight }; });
+    var sizes = list.map(function (c) { if (c._dead || gone(c)) return null; var hz = c._first && c.opts.size; return hz && hz.w > 0 ? { w: hz.w, h: hz.h || 0 } : { w: c.host.clientWidth, h: c.host.clientHeight }; });
     list.forEach(function (c, i) {
       if (!sizes[i]) return;
       c._w = sizes[i].w; c._h = sizes[i].h;
@@ -324,21 +329,32 @@
       if (c._pendingEnter != null && c._drawn) { var d = c._pendingEnter; c._pendingEnter = null; c._enter(d, c._pendingQuiet); }
     });
   }
+  /* a chart on a board that was destroyed (a closed dashboard tab) never draws again: its queued draw, resize or update
+     stands down and it is dead from then on (D10 7.1; lane A's probe saw draws into the detached bodies after destroy) */
+  function gone(c) {
+    if (c.el.isConnected) return false;
+    var k = cardOf(c.host), b = k && k._pmuBoard;
+    if (!b || !PMU.boards || PMU.boards.get(b.id) === b) return false;
+    c._dead = true;
+    return true;
+  }
   function schedule(c) {
     if (pending.indexOf(c) < 0) pending.push(c);
     if (!scheduled) { scheduled = true; (window.queueMicrotask || function (f) { Promise.resolve().then(f); })(flush); }
   }
   charts.flush = flush;
   /* a host's layout size changed: re-lay the chart on the next frame (never inside the observer callback, so a chart
-     that changes its host's height cannot loop the observer); flow charts (content sets their height) track width only */
+     that changes its host's height cannot loop the observer); flow charts (content sets their height) track width only.
+     A box of 0 x 0 is a hidden page or tab (D10 7.1): the chart keeps the size it was drawn at and draws again only when it
+     shows at another size. */
   var watched = new Map(), resizeQ = [], resizeRaf = 0;
   function runResizes() {
     resizeRaf = 0;
     var list = resizeQ; resizeQ = [];
-    var sizes = list.map(function (c) { return c._dead ? null : { w: c.host.clientWidth, h: c.host.clientHeight }; });
+    var sizes = list.map(function (c) { return c._dead || gone(c) ? null : { w: c.host.clientWidth, h: c.host.clientHeight }; });
     list.forEach(function (c, i) {
       var sz = sizes[i];
-      if (!sz) return;
+      if (!sz || (!sz.w && !sz.h)) return;
       if (Math.abs(sz.w - c._w) < 1 && (c._flow || Math.abs(sz.h - c._h) < 1)) return;
       c._w = sz.w; c._h = sz.h;
       try { c._draw(false, true); } catch (error) { console.error('[pm-usage] chart resize', c.name, error); }
@@ -351,6 +367,7 @@
       var w = entry.contentRect.width, h = entry.contentRect.height;
       if (Math.abs(w - c._cw) < 1 && (c._flow || Math.abs(h - c._ch) < 1)) return;
       c._cw = w; c._ch = h;
+      if (!w && !h) return;   /* hidden: nothing to lay out (runResizes keeps the last size) */
       /* the box the chart was drawn for (a size hint, or the first read): nothing to do, and no read in the next frame */
       if (Math.abs(w - c._w) < 1 && (c._flow || Math.abs(h - c._h) < 1)) return;
       if (resizeQ.indexOf(c) < 0) resizeQ.push(c);
@@ -381,6 +398,7 @@
   }
   charts.make = function (name, host, spec, opts, impl) {
     opts = opts || {};
+    if (!boardsHooked) hookBoards();
     var root = H(impl.tag || 'div', 'pmu-chart pmu-c-' + name);
     root.setAttribute('data-pmu-chart', name);
     root.setAttribute('role', impl.role || 'img');
@@ -392,7 +410,7 @@
     root._pmuChart = c;
     if (impl.carry) { var ck = carryKey(c); if (ck && carry[ck] && carry[ck].name === name) { c._carry = carry[ck]; delete carry[ck]; } }
     c._draw = function (first, resized) {
-      if (c._dead) return;
+      if (c._dead || gone(c)) return;
       impl.draw(c, first, !!resized);
       c._drawn = true;
     };
@@ -796,9 +814,17 @@
      cfg.onIndex(i|null). The line and the dots live in the plot; the card lives in one fixed layer inside the Usage shell
      (so the card body's paint containment never clips it, and it keeps the shell's tokens). Line, dots and card glide
      with transform (140 ms); on first entry they appear in place and fade in. Hover maths reads rects only inside the
-     pointer handler (the card is at rest then). */
+     pointer handler (the card is at rest then). A hosted board's charts (a Home dashboard tab, D10 7.1) put the card in the
+     readout layer of that board's menu host (the shared layer, 40-board.js), which carries the same tokens. */
   var roLayer = null;
-  function layer() {
+  function layer(box) {
+    var hb = box ? box._pmuRoBoard : null;
+    if (box && hb === undefined) hb = box._pmuRoBoard = hostedOf(box);
+    if (hb && hb.menuHost) {
+      var mh = hb.menuHost(), hl = mh ? mh.querySelector(':scope > .pmu-rolayer') : null;
+      if (mh && !hl) { hl = H('div', 'pmu-rolayer', mh); hl.setAttribute('aria-hidden', 'true'); }
+      if (hl) return hl;
+    }
     if (roLayer && roLayer.isConnected) return roLayer;
     var root = document.getElementById('pmuApp') || document.body;
     roLayer = H('div', 'pmu-rolayer', root);
@@ -928,9 +954,10 @@
      size after its words changed), the writes after; the "appear in place" class is lifted in the next frame instead of
      a forced style flush (void offsetWidth). */
   var sharedCard = null, cardOwner = null;
-  function readoutCard() {
-    if (sharedCard && sharedCard.isConnected) return sharedCard;
-    sharedCard = H('div', 'pmu-readout', layer());
+  function readoutCard(box) {
+    var l = layer(box);
+    if (sharedCard && sharedCard.isConnected) { if (sharedCard.parentNode !== l) l.appendChild(sharedCard); return sharedCard; }
+    sharedCard = H('div', 'pmu-readout', l);
     return sharedCard;
   }
   charts.crosshairOn = function () { return openCards.size > 0; };
@@ -960,7 +987,7 @@
       var root = box.parentNode || box;
       $$('.pmu-mark[data-key]', root).forEach(function (m) { m.classList.toggle('is-cold', !!k && m.getAttribute('data-key') !== k); });
     }
-    function parts() { return [xh, band, readoutCard()].concat(dotEls); }
+    function parts() { return [xh, band, readoutCard(box)].concat(dotEls); }
     /* every part is placed with the `translate` property, never `transform` (Jared 2026-10-09, item 3: "The blue dot is far to
        the left of the pink and doesn't follow its line"): CSS applies translate, rotate, scale and then transform, so a dot
        placed by transform under the individual `scale` (.8 when it is not the hovered series) had its position scaled too
@@ -1000,7 +1027,7 @@
       } catch (error) { el._gl = null; }
     }
     function place(i, instant) {
-      var card = readoutCard();
+      var card = readoutCard(box);
       /* reads first: the plot's rect (cached for 120 ms), then the card's size once its words changed */
       var g = boxGeo(), r = g.r, k2 = r.width / g.cw;
       var x = cfg.xAt(i), top = cfg.pad.t;
@@ -1080,7 +1107,7 @@
     }
     function show(i, instant) {
       if (cardOwner && cardOwner !== api && cardOwner.hide) cardOwner.hide();
-      var card = readoutCard();
+      var card = readoutCard(box);
       if (instant) parts().forEach(function (el) { el.classList.add('is-instant'); });
       place(i, instant);
       parts().forEach(function (el) { el.classList.add('is-on'); });
@@ -1099,7 +1126,7 @@
       setHot(null);
       [xh, band].concat(dotEls).forEach(function (el) { el.classList.remove('is-on'); });
       box.classList.remove('pmu-xh-on');
-      if (cardOwner === api) readoutCard().classList.remove('is-on');
+      if (cardOwner === api) readoutCard(box).classList.remove('is-on');
       openCards.delete(api);
       if (cfg.onIndex) cfg.onIndex(null);
     }
@@ -1200,13 +1227,12 @@
 
   /* ---------- cross-highlight (DESIGN-SPEC 7.1): after a 110 ms intent delay the other providers' marks dim and the
      provider's rows light. Only the elements that change get a class (a board attribute restyled every [data-prov]
-     descendant on each exit: about 1,700 elements, 75 ms on the CPU-only VM) ---------- */
-  (function crossHighlight() {
-    var root = document.getElementById('pmuApp');
-    if (!root) return;
+     descendant on each exit: about 1,700 elements, 75 ms on the CPU-only VM). One per board (D10 7.1): the Usage page's
+     on #pmuApp lighting #pmuBoard, as before; each hosted board's on its root, lighting that board only. ---------- */
+  function bindHighlight(root, boardEl) {
     var timer = 0, clearTimer = 0, current = null, lit = [];
     function set(id) {
-      var b = document.getElementById('pmuBoard');
+      var b = boardEl();
       if (!b) return;
       lit.forEach(function (el) { el.classList.remove('is-hl-dim', 'is-hl-on'); });
       lit = [];
@@ -1215,7 +1241,7 @@
       $$('.pmu-mark[data-prov]', b).forEach(function (el) { if (el.getAttribute('data-prov') !== id) { el.classList.add('is-hl-dim'); lit.push(el); } });
       $$('.pmu-irow[data-prov]', b).forEach(function (el) { if (el.getAttribute('data-prov') === id) { el.classList.add('is-hl-on'); lit.push(el); } });
     }
-    root.addEventListener('pointerover', function (e) {
+    var over = function (e) {
       var el = e.target && e.target.closest ? e.target.closest('[data-prov]') : null;
       if (!el || !root.contains(el) || el.closest('.pmu-gallery')) return;
       var id = el.getAttribute('data-prov');
@@ -1223,16 +1249,49 @@
       if (id === current) return;
       clearTimeout(timer);
       timer = setTimeout(function () { set(id); }, 110);
-    });
-    root.addEventListener('pointerout', function (e) {
+    };
+    var out = function (e) {
       var from = e.target && e.target.closest ? e.target.closest('[data-prov]') : null;
       var to = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest('[data-prov]') : null;
       if (!from || (to && to.getAttribute('data-prov') === from.getAttribute('data-prov'))) return;
       clearTimeout(timer);
       clearTimeout(clearTimer);
       clearTimer = setTimeout(function () { set(null); }, 60);
-    });
+    };
+    root.addEventListener('pointerover', over);
+    root.addEventListener('pointerout', out);
+    /* the board's teardown: no pending light lands in a destroyed board */
+    return function () { clearTimeout(timer); clearTimeout(clearTimer); lit = []; root.removeEventListener('pointerover', over); root.removeEventListener('pointerout', out); };
+  }
+  (function crossHighlight() {
+    var root = document.getElementById('pmuApp');
+    if (!root) return;
+    bindHighlight(root, function () { return document.getElementById('pmuBoard'); });
   })();
+  /* the paint servers for hosted boards (D10 6.6): a gradient inside a display: none subtree does not paint (lane B's
+     probe: a hosted area chart's url(#pmu-ga-tk-cr) drew nothing while the Usage page was hidden under Home), so when the
+     first hosted board is made the one defs svg (svg.pmu-defs > #pmuDefs) moves into the shared layer's shell, which is
+     always rendered and carries the same tokens (the same token rules, the same look on <html>). The ids do not change:
+     every url(#pmu-...) of the Usage page and of every hosted board finds it there. */
+  function hoistDefs(b) {
+    var defs = document.getElementById('pmuDefs'), svg = defs && defs.closest ? defs.closest('svg.pmu-defs') : null;
+    var mh = b.menuHost ? b.menuHost() : null;
+    if (!svg || !mh || svg.parentNode === mh) return;
+    mh.insertBefore(svg, mh.firstChild);
+  }
+  /* hosted boards (D10 7.1) get their cross-highlight and the defs through PMU.boards.each, hooked once 40-board.js has
+     made the registry (it loads after this file: the hook runs when the page script is done, or at the first chart made) */
+  var boardsHooked = false;
+  function hookBoards() {
+    if (boardsHooked || !PMU.boards || !PMU.boards.each) return;
+    boardsHooked = true;
+    PMU.boards.each(function (b) {
+      if (b === PMU.board || !b.root) return null;
+      hoistDefs(b);
+      return bindHighlight(b.root, function () { return b.el(); });
+    });
+  }
+  (window.queueMicrotask || function (f) { Promise.resolve().then(f); })(hookBoards);
 
   /* placeholder factory (kept for withdrawn primitives): a quiet labelled box */
   charts.placeholder = function (name) {

@@ -40,8 +40,16 @@
     });
   }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-o55-nier-parts', 'data-motion', 'style'] });
 
-  /* official marks swap their light / dark artwork with the theme (06-marks.js refresh) */
-  listeners.push(function () { try { if (window.PMU_MARKS && window.PMU_MARKS.refresh) window.PMU_MARKS.refresh(document.getElementById('pmuApp')); } catch (error) {} });
+  /* official marks swap their light / dark artwork with the theme (06-marks.js refresh): the Usage page's, then every
+     hosted board's root and the shared layer's (D10 7.1; PMU.boards is made later, by 40-board.js) */
+  listeners.push(function () {
+    try {
+      if (!window.PMU_MARKS || !window.PMU_MARKS.refresh) return;
+      window.PMU_MARKS.refresh(document.getElementById('pmuApp'));
+      if (PMU.boards) PMU.boards.all().forEach(function (b) { if (b !== PMU.board && b.root) window.PMU_MARKS.refresh(b.root); });
+      var lay = document.querySelector('[data-pmu-host="layer"]'); if (lay) window.PMU_MARKS.refresh(lay);
+    } catch (error) {}
+  });
 
   PMU.theme = {
     look: look,

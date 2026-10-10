@@ -319,3 +319,8 @@ html[data-motion="reduced"] #panel-usage :is(.pmu-headtools, .pmu-cardtools, .pm
 @media (prefers-reduced-motion: reduce) { #panel-usage :is(.pmu-headtools, .pmu-cardtools, .pmu-cardtitles, .pmu-cardmeta) { transition: none !important; } }
 @media (prefers-reduced-motion: reduce) { #panel-usage .pmu-card, #panel-usage .pmu-card:hover, #panel-usage .pmu-card[data-head="tile"]:not([data-head="band"]):hover { transition: none; transform: none; }
   #panel-usage .pmu-card::before, #panel-usage .pmu-card:hover::before { transition: opacity calc(120ms * var(--pmu-speed, 1)) linear; } }
+
+/* a hosted board's padding is its tab body's (D10 6.4, Home NUMBERS.md: 12 / 12 / 16, and 8 / 8 / 12 under 420 px); the
+   engine reads it from computed style */
+#panel-usage .pmu-shell.pmu-hosted .pmu-board { padding: 12px 12px 16px; }
+@container pmu-host (max-width: 419px) { #panel-usage .pmu-shell.pmu-hosted .pmu-board { padding: 8px 8px 12px; } }

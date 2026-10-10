@@ -72,6 +72,13 @@
   }
   function open(s, from) {
     if (!el || !s) return;
+    /* Details from a hosted board (a Home dashboard tab, D10 7.1 and 7.2): this drawer sits on the hidden Usage page, so
+       the board's host shows them (its details hook: v1 goes to the Usage page and opens them there) */
+    var hb = PMU.boards ? (from && from.nodeType === 1 && PMU.boards.of(from)) || PMU.boards.current() : null;
+    if (hb && PMU.board && hb !== PMU.board) {
+      if (typeof hb.details === 'function') { try { hb.details(s, from || null); } catch (error) { console.error('[pm-usage] details', error); } }
+      return;
+    }
     if (PMU.menu) PMU.menu.close();
     var wasOpen = el.classList.contains('open');
     opener = from || (wasOpen ? opener : document.activeElement);
@@ -110,11 +117,11 @@
   if (closeBtn) closeBtn.addEventListener('click', function () { close(); });
   /* Escape closes the drawer wherever focus is (FINAL-REVIEW-3 must-fix 6): a capture-phase listener on the document, for
      keys from inside the Usage page or from no particular element; an open menu takes Escape first (45-menu.js), and a
-     board gesture keeps its own Escape (cancel with a glide back) */
+     board gesture, on any board (D10 7.1), keeps its own Escape (cancel with a glide back) */
   document.addEventListener('keydown', function (event) {
     if (event.key !== 'Escape' || !el || !el.classList.contains('open')) return;
     if (PMU.menu && PMU.menu.isOpen && PMU.menu.isOpen()) return;
-    if (PMU.board && PMU.board.gesture && PMU.board.gesture()) return;
+    if ((PMU.board && PMU.board.gesture && PMU.board.gesture()) || (PMU.boards && PMU.boards.active())) return;
     var tg = event.target, panel = document.getElementById('panel-usage');
     if (!(tg === document.body || tg === document.documentElement || (panel && panel.contains(tg)))) return;
     event.preventDefault(); event.stopPropagation(); close();

@@ -24,11 +24,38 @@
     }
     return Math.min(480, 32 * rank) + (extra == null ? 160 : extra);
   };
-  /* persisted widget configuration (the gear; engine: PMU.board.config / setConfig, one cmd.widget.configure, kept in
+  /* ------------------------------------------------------------------ the board a widget is on (D10 3.5 and 7.1)
+     A widget sits on the Usage board or on a hosted board (a Home dashboard tab; 40-board.js PMU.boards). Card code asks
+     for the card's board, id-only code for the ambient board (PMU.boards.run sets it around the engine's renders, the
+     delegated acts below and the menus), else the Usage board, so every Usage path resolves as it did. Content's own view
+     maps are kept per board; the Usage board's keys stay the bare widget id. */
+  function boardNow() { return (PMU.boards && PMU.boards.current()) || PMU.board || null; }
+  C.board = boardNow;
+  /* an element's board: its card's or its host's (PMU.boards.of), else the board of the open menu that holds it (a hosted
+     board's menus live in the shared layer, outside its root), else the ambient board */
+  C.boardOf = function (el) {
+    var b = el && PMU.boards ? PMU.boards.of(el) : null;
+    if (!b && el && PMU.menu && PMU.menu.current) { var h = PMU.menu.current(); if (h && h.board && h.el && h.el.contains(el)) b = h.board; }
+    return b || boardNow();
+  };
+  /* fn with el's board as the ambient board: a listener bound on a body or a timer runs outside the engine's run, and a
+     widget's config, view and card lookups inside it must not fall back to the Usage board */
+  C.inBoard = function (el, fn) { return PMU.boards ? PMU.boards.run(C.boardOf(el), fn) : fn(); };
+  C.bk = function (id) { var b = boardNow(); return !b || b === PMU.board ? id : b.id + '|' + id; };
+  /* a page-wide pass (the settled fit, the fonts pass, the reface) visits the Usage board's live cards as before, then
+     those of every hosted board its host shows; a hidden tab's board is left alone (it refreshes on its next show) */
+  function hostedShown() { return PMU.boards ? PMU.boards.all().filter(function (b) { return b !== PMU.board && b.shown() && b.el(); }) : []; }
+  function shownBodies() {
+    var list = Array.prototype.slice.call(document.querySelectorAll('#pmuBoard > .pmu-card > .pmu-cardbody'));
+    hostedShown().forEach(function (b) { list = list.concat(Array.prototype.slice.call(b.el().querySelectorAll(':scope > .pmu-card > .pmu-cardbody'))); });
+    return list;
+  }
+  /* persisted widget configuration (the gear; engine: the board's config / setConfig, one cmd.widget.configure, kept in
      the layout record's configuration_refs) and local view state (search text, page, filters, open rows: no command) */
   function optOf(id, key) { var def = PMU.widgets.get(id); return def && Array.isArray(def.config) ? def.config.filter(function (o) { return (o.id || o.key) === key; })[0] : null; }
   C.cfg = function (id, key, dflt) {
-    var c = PMU.board && PMU.board.config ? PMU.board.config(id) || {} : (st.config && st.config[id]) || {};
+    var b = boardNow();
+    var c = b && b.config ? b.config(id) || {} : (st.config && st.config[id]) || {};
     if (c[key] != null) return c[key];
     var o = optOf(id, key);
     if (o) { var v = typeof o.value === 'function' ? null : o.value != null ? o.value : o.dflt; if (v != null) return v; }
@@ -36,19 +63,20 @@
   };
   C.setCfg = function (id, key, value) {
     if (C.cfg(id, key) === value) return false;
-    var patch = {}; patch[key] = value;
-    if (PMU.board && PMU.board.setConfig) { PMU.board.setConfig(id, patch); return true; }
+    var patch = {}, b = boardNow(); patch[key] = value;
+    if (b && b.setConfig) { b.setConfig(id, patch); return true; }
     st.config = st.config || {}; st.config[id] = st.config[id] || {}; st.config[id][key] = value;
-    var card = PMU.board && PMU.board.card ? PMU.board.card(id) : null;
+    var card = b && b.card ? b.card(id) : null;
     if (card && PMU.cards && PMU.cards.updateAll) PMU.cards.updateAll([card], 'config');
     return true;
   };
   var views = {};
-  C.view = function (id, key, dflt) { var v = views[id] && views[id][key]; return v == null ? dflt : v; };
+  C.view = function (id, key, dflt) { var k = C.bk(id), v = views[k] && views[k][key]; return v == null ? dflt : v; };
   C.setView = function (id, patch, rerender) {
-    views[id] = Object.assign(views[id] || {}, patch);
+    var k = C.bk(id), b = boardNow();
+    views[k] = Object.assign(views[k] || {}, patch);
     viewAction('view.usage.widget_view', { widget_id: id, patch: patch });
-    if (rerender !== false) { var card = PMU.board && PMU.board.card ? PMU.board.card(id) : null; if (card && PMU.cards && PMU.cards.updateAll) PMU.cards.updateAll([card], 'view'); }
+    if (rerender !== false) { var card = b && b.card ? b.card(id) : null; if (card && PMU.cards && PMU.cards.updateAll) PMU.cards.updateAll([card], 'view'); }
   };
   /* head tools (A1 3.1): into the card head (ctx.head) from width tier l, else the first line of the body */
   /* They go in the head only when the whole title, the head tools and the hover tools cluster (108 px) fit on the line,
@@ -57,19 +85,20 @@
   var headToolsIn = {};
   C.headTools = function (ctx, html, minTier) {
     /* a dry render (the in-place checks) never touches the live head: it repeats the last decision */
-    if (ctx.body && ctx.body._pmuDry || ctx._dry) return html && headToolsIn[ctx.id] ? '' : html ? '<div class="pmu-bodytools">' + html + '</div>' : '';
+    var hk = C.bk(ctx.id);
+    if (ctx.body && ctx.body._pmuDry || ctx._dry) return html && headToolsIn[hk] ? '' : html ? '<div class="pmu-bodytools">' + html + '</div>' : '';
     /* a size preview or fit measure (42-cards.js, a hidden card of the same widget) decides for itself and leaves the live
        card's record alone */
     var mem = ctx.card && ctx.card._pmuPreview ? {} : headToolsIn;
-    if (!html) { mem[ctx.id] = false; if (ctx.head) ctx.head.innerHTML = ''; return ''; }
+    if (!html) { mem[hk] = false; if (ctx.head) ctx.head.innerHTML = ''; return ''; }
     if (ctx.head && C.w(ctx, minTier || 'l')) {
       ctx.head.innerHTML = html;
       var card = ctx.head.closest('.pmu-card'), title = card && card.querySelector('.pmu-cardtitle'), key = card && card.querySelector('.pmu-cardkey:not([hidden])');
       var avail = (card ? card.clientWidth : ctx.tier.bw + 28) - 28;
       var need = (title ? title.scrollWidth : 0) + ctx.head.scrollWidth + TOOLS_RESERVE + 10 + (key ? key.offsetWidth + 10 : 0);
-      if (need <= avail) { mem[ctx.id] = true; return ''; }
+      if (need <= avail) { mem[hk] = true; return ''; }
     }
-    mem[ctx.id] = false;
+    mem[hk] = false;
     if (ctx.head) ctx.head.innerHTML = '';
     return '<div class="pmu-bodytools">' + html + '</div>';
   };
@@ -104,7 +133,7 @@
     /* only where the count fits the head beside the title, its key (mark) and its aside (a title never breaks inside a
        word: "OpenCod / e Go", "Claud / e"); a tile's title may take its two lines at word breaks. The engine's own
        titleFits measure (42-cards.js), less the count's 46 px. Canvas measure, no layout read. */
-    var card = ctx.head.closest ? ctx.head.closest('.pmu-card') : null, cls = PMU.board && PMU.board.cls ? PMU.board.cls() : null;
+    var card = ctx.head.closest ? ctx.head.closest('.pmu-card') : null, bd = card ? C.boardOf(card) : boardNow(), cls = bd && bd.cls ? bd.cls() : null;
     if (!card || !cls || !cls.pitchX || !PMU.charts || !PMU.charts.textW) return false;
     var form = card.getAttribute('data-head') || 'line', nier = document.documentElement.getAttribute('data-o55-nier') === 'on';
     var thm = document.documentElement.getAttribute('data-theme') || '', wide = nier || /^retro/.test(thm), k = wide ? 1.2 : /^glass/.test(thm) ? 1.12 : 1.08;
@@ -524,10 +553,11 @@
     /* in the moment's end task itself (no frame callback after the moment: the page is idle from here) */
     var list = fitAgain.splice(0); list.forEach(function (b) { b._pmuFitDone = false; }); fitFlush(list);
   });
-  /* the settled pass runs in idle slices of about 8 ms (NOTES3-perf C1: never a whole-board pass in a moment) */
+  /* the settled pass runs in idle slices of about 8 ms (NOTES3-perf C1: never a whole-board pass in a moment); over every
+     shown board (D10 7.1) */
   function fitSettled() {
     fitSettleT = 0;
-    var bodies = Array.prototype.slice.call(document.querySelectorAll('#pmuBoard > .pmu-card > .pmu-cardbody'));
+    var bodies = shownBodies();
     var idle = window.requestIdleCallback || function (f) { return setTimeout(function () { f({ timeRemaining: function () { return 8; } }); }, 16); };
     (function step(deadline) {
       var t0 = performance.now();
@@ -729,10 +759,11 @@
     body._pmuFitDone = false; fitFlush([body]);
   };
   /* a web font that finishes loading after the render (NieR's mono, Retro's face) can push a row or a foot past the body:
-     the fit pass runs once more over the board when the fonts settle (NieR Light at 1440: "4 more facts" cut at the edge) */
+     the fit pass runs once more over the board when the fonts settle (NieR Light at 1440: "4 more facts" cut at the edge);
+     every shown board's (D10 7.1) */
   try {
     if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', function () {
-      var bodies = Array.prototype.slice.call(document.querySelectorAll('#pmuBoard > .pmu-card > .pmu-cardbody'));
+      var bodies = shownBodies();
       if (!bodies.length) return;
       requestAnimationFrame(fitSettled);
     });
@@ -741,17 +772,22 @@
      wrap memo forgets every count, and each body re-renders at its size in place (no entrance, no count roll), so its
      rows, short names and line counts are chosen again in the real face; the fit pass follows each render. In slices of
      about 6 ms a frame, the cards in view first (a whole board in one task was 100-250 ms on the CPU-only VM); never inside
-     a moment or a gesture (it waits for their end, about 10 s at most), never on a hidden page. */
+     a moment or a gesture (it waits for their end, about 10 s at most), never on a hidden page. The Usage board's cards
+     while the Usage page shows, then every shown hosted board's (D10 7.1), each board's cards in view first. */
   var refaceT = 0, refaceTries = 0, refaceQ = null;
   function reface() {
     refaceT = 0;
-    var panel = document.getElementById('panel-usage');
-    if (!panel || !panel.classList.contains('active')) { refaceTries = 0; return; }
-    var busy = (PMU.film && PMU.film.moment && PMU.film.moment()) || (PMU.board && PMU.board.gesture && PMU.board.gesture());
+    var panel = document.getElementById('panel-usage'), usageOn = !!(panel && panel.classList.contains('active')), hosted = hostedShown();
+    if (!usageOn && !hosted.length) { refaceTries = 0; return; }
+    var busy = (PMU.film && PMU.film.moment && PMU.film.moment()) || (PMU.board && PMU.board.gesture && PMU.board.gesture()) || (PMU.boards && PMU.boards.active());
     if (busy && ++refaceTries < 40) { refaceT = setTimeout(reface, 250); return; }
     refaceTries = 0;
-    var cards = Array.prototype.slice.call(document.querySelectorAll('#pmuBoard > .pmu-card')), inV = PMU.board && PMU.board.inView;
-    if (inV) cards = cards.filter(function (c) { return inV(c); }).concat(cards.filter(function (c) { return !inV(c); }));
+    var inViewFirst = function (list, b) {
+      var inV = b && b.inView;
+      return inV ? list.filter(function (c) { return inV(c); }).concat(list.filter(function (c) { return !inV(c); })) : list;
+    };
+    var cards = usageOn ? inViewFirst(Array.prototype.slice.call(document.querySelectorAll('#pmuBoard > .pmu-card')), PMU.board) : [];
+    hosted.forEach(function (b) { cards = cards.concat(inViewFirst(Array.prototype.slice.call(b.el().querySelectorAll(':scope > .pmu-card')), b)); });
     var q = refaceQ = { list: cards };
     (function slice() {
       if (refaceQ !== q) return;
@@ -759,7 +795,7 @@
         while (q.list.length && performance.now() - t0 < 6) {
           var card = q.list.shift(), body = card.isConnected && card.querySelector(':scope > .pmu-cardbody'), tier = body && body._pmuCtx && body._pmuCtx.tier;
           if (!tier || !body._pmuKind || card._pmuLeaving || card.hasAttribute('data-leaving')) continue;
-          try { PMU.cards.resizeBody(card, tier); if (PMU.charts.flush) PMU.charts.flush(); } catch (error) { console.error('[pm-usage] reface', error); }
+          try { C.inBoard(card, function () { PMU.cards.resizeBody(card, tier); }); if (PMU.charts.flush) PMU.charts.flush(); } catch (error) { console.error('[pm-usage] reface', error); }
         }
       };
       if (PMU.board && PMU.board.fitSliced) PMU.board.fitSliced(run); else run();
@@ -819,8 +855,8 @@
      change needs a new structure while it is in view is re-rendered quietly after the beat, in an idle slice. */
   function liveFinalOf(body) {
     if (PMU.motion.reduced && PMU.motion.reduced()) return true;
-    var card = body.closest ? body.closest('.pmu-card') : null;
-    if (card && PMU.board && PMU.board.inView) { try { return !PMU.board.inView(card); } catch (error) { return false; } }
+    var card = body.closest ? body.closest('.pmu-card') : null, b = card ? C.boardOf(card) : null;   /* the card's board (D10 7.1) */
+    if (card && b && b.inView) { try { return !b.inView(card); } catch (error) { return false; } }
     return false;
   }
   C.liveFinalOf = liveFinalOf;
@@ -1087,25 +1123,37 @@
     });
   };
 
-  /* delegated clicks for every content control inside a card body ([data-pmu-act]) */
+  /* delegated clicks for every content control inside a card body ([data-pmu-act]), on the Usage page and on a hosted
+     board or its layer ([data-pmu-host], D10 7.1); the act runs with the control's board as the ambient board */
   var acts = {};
   C.act = function (name, fn) { acts[name] = fn; };
   document.addEventListener('click', function (event) {
-    var el = event.target.closest && event.target.closest('#pmuApp [data-pmu-act]');
+    var el = event.target.closest && event.target.closest(':is(#pmuApp,[data-pmu-host]) [data-pmu-act]');
     if (!el || el.disabled || el.getAttribute('aria-disabled') === 'true') return;
     var name = el.getAttribute('data-pmu-act'), fn = acts[name];
     if (!fn) return;
     var card = el.closest('.pmu-card');
     event.preventDefault(); event.stopPropagation();
-    try { fn(el, card ? card.getAttribute('data-widget') : null, event); } catch (error) { console.error('[pm-usage] act ' + name, error); }
+    try { C.inBoard(el, function () { fn(el, card ? card.getAttribute('data-widget') : null, event); }); } catch (error) { console.error('[pm-usage] act ' + name, error); }
   }, true);
   document.addEventListener('keydown', function (event) {
     if (event.key !== 'Enter' && event.key !== ' ') return;
     var el = event.target;
-    if (!el || !el.matches || !el.matches('#pmuApp [data-pmu-row], #pmuApp [data-pmu-act][role="button"], #pmuApp .pmu-agline')) return;
+    if (!el || !el.matches || !el.matches(':is(#pmuApp,[data-pmu-host]) [data-pmu-row], :is(#pmuApp,[data-pmu-host]) [data-pmu-act][role="button"], :is(#pmuApp,[data-pmu-host]) .pmu-agline')) return;
     if (el.tagName === 'BUTTON') return;
     event.preventDefault(); event.stopPropagation(); el.click();
   }, true);
+  /* a row that opens a Usage room (the Attention rows): on the Usage page the room changes; on a hosted board its host
+     navigates (the board's navigate hook: Home goes to the Usage page in that room), never the hidden Usage page's room
+     by itself (D10 7.1) */
+  C.openRoom = function (room, el, source) {
+    var b = C.boardOf(el);
+    if (b && PMU.board && b !== PMU.board) {
+      if (typeof b.navigate === 'function') { try { b.navigate(room, el); } catch (error) { console.error('[pm-usage] navigate', error); } }
+      return;
+    }
+    PMU.shell.setView({ room: room }, source);
+  };
   /* gear-free segmented controls write the widget configuration */
   C.act('cfg', function (el, id) { C.setCfg(id, el.getAttribute('data-key') || 'mode', el.getAttribute('data-value')); });
   C.act('seg', function (el, id) { C.setCfg(id, el.closest('[data-key]') ? el.closest('[data-key]').getAttribute('data-key') : 'mode', el.getAttribute('data-value')); });
@@ -1364,7 +1412,7 @@
       if (shown.some(function (r) { return r.onClick; })) {
         body.querySelector('.pmu-list').addEventListener('click', function (event) {
           var row = event.target.closest('[data-pmu-row]'); if (!row) return;
-          var r = shown[+row.getAttribute('data-pmu-row')]; if (r && r.onClick) r.onClick(row);
+          var r = shown[+row.getAttribute('data-pmu-row')]; if (r && r.onClick) C.inBoard(row, function () { r.onClick(row); });
         });
       }
     }
@@ -1455,12 +1503,13 @@
     /* "Fit" in the card menu (NOTES2-engine, paging at S): the height in rows that shows every record without a pager,
        at most the kind's tallest size; null when the card already shows them all */
     autoH: function (ctx) {
-      var card = PMU.board && PMU.board.card ? PMU.board.card(ctx.id) : null, body = card && card.querySelector('.pmu-cardbody');
+      /* the live card on the board of the card asked about (D10 7.1) */
+      var bd = ctx.card ? C.boardOf(ctx.card) : boardNow(), card = bd && bd.card ? bd.card(ctx.id) : null, body = card && card.querySelector('.pmu-cardbody');
       if (!card || !body || !(body._pmuTableNeed > 0)) return null;
       var h = +card.dataset.h || 0, bh = body.clientHeight, extra = body._pmuTableNeed - bh;
       if (!h || extra <= 0) return null;
       var lim = (PMU_BOARDS.kinds && PMU_BOARDS.kinds.table && PMU_BOARDS.kinds.table.hMax) || 24;
-      var pitch = PMU.board.ROW || 30;   /* the row pitch: a 22 px row and the 8 px gap */
+      var pitch = bd.ROW || 30;   /* the row pitch: a 22 px row and the 8 px gap */
       var fit = Math.min(lim, h + Math.ceil(extra / pitch));
       return fit > h ? fit : null;   /* already at the tallest size: no Fit (a resize to the same size would be a no-op) */
     },
@@ -1558,7 +1607,7 @@
       body.innerHTML = '<div class="pmu-table">' + toolbar + head + '<div class="pmu-tbody">' + bodyRows + '</div>' + pg + '</div>' + (m.foot ? C.foot(m.foot) : '');
       body._pmuTable = { model: m, shown: shown };
       var tbody = body.querySelector('.pmu-tbody');
-      if (tbody) tbody.addEventListener('click', function (event) { var row = event.target.closest('[data-pmu-row]'); if (!row) return; var r = ((body._pmuTable && body._pmuTable.shown) || shown)[+row.getAttribute('data-pmu-row')]; if (r && r.onClick) r.onClick(row); });
+      if (tbody) tbody.addEventListener('click', function (event) { var row = event.target.closest('[data-pmu-row]'); if (!row) return; var r = ((body._pmuTable && body._pmuTable.shown) || shown)[+row.getAttribute('data-pmu-row')]; if (r && r.onClick) C.inBoard(row, function () { r.onClick(row); }); });
       var input = body.querySelector('[data-pmu-tsearch]');
       if (input) {
         var timer = 0;
@@ -1566,7 +1615,7 @@
           clearTimeout(timer);
           timer = setTimeout(function () {
             var pos = input.selectionStart;
-            C.setView(id, { q: input.value, page: 0 });
+            C.inBoard(ctx.card || input, function () { C.setView(id, { q: input.value, page: 0 }); });
             var again = ctx.card.querySelector('[data-pmu-tsearch]'); if (again) { again.focus(); try { again.setSelectionRange(pos, pos); } catch (e) {} }
           }, 140);
         });
@@ -1575,7 +1624,7 @@
   });
   C.act('tpage', function (el, id) { C.setView(id, { page: Math.max(0, +el.getAttribute('data-value') || 0) }); });
   C.act('tfilter', function (el, id) {
-    var card = PMU.board.card(id), body = card && card.querySelector('.pmu-cardbody'), m = body && body._pmuTable ? body._pmuTable.model : null;
+    var card = boardNow().card(id), body = card && card.querySelector('.pmu-cardbody'), m = body && body._pmuTable ? body._pmuTable.model : null;
     if (!m) return;
     var key = el.getAttribute('data-key'), f = m.toolbar.filters.filter(function (x) { return (x.key || x.id) === key; })[0];
     if (!f) return;
@@ -1583,7 +1632,7 @@
       onPick: function (v) { var patch = { page: 0 }; patch['f-' + key] = v; C.setView(id, patch); } });
   });
   C.act('texport', function (el, id) {
-    var card = PMU.board.card(id), body = card && card.querySelector('.pmu-cardbody'), m = body && body._pmuTable ? body._pmuTable.model : null;
+    var card = boardNow().card(id), body = card && card.querySelector('.pmu-cardbody'), m = body && body._pmuTable ? body._pmuTable.model : null;
     if (m && m.toolbar && typeof m.toolbar.export === 'function') m.toolbar.export(el);
   });
 

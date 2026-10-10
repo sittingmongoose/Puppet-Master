@@ -18,7 +18,8 @@ What apply() does, every step guarded so it happens exactly once or the build st
   3. Extracts the chat context module (window.PM7_CONTEXT) from the old Usage script, pinned by sha256, and runs it
      inside a shim that routes its Usage-side effects to the new page's window.PM7_USAGE.
   4. Writes the new band: the open tag, <!-- USAGE:BODY:START -->, <style id="pm-usage-ctx-css">, the filtered
-     pm7-t29-usage-final and pm7-t32-final, <style id="pm-usage-css"> (src/css), src/markup.html,
+     pm7-t29-usage-final and pm7-t32-final, <style id="pm-usage-css"> (src/css, every `#panel-usage ` anchor widened to
+     `:is(#panel-usage,[data-pmu-host])` for hosted boards by host_scope_css, its count checked), src/markup.html,
      <script id="pm-usage-js"> (window.PM_USAGE_COPY, src/js, the context module), <!-- USAGE:BODY:END -->, the close tag.
   5. Outside the band: removes pm7-t24-usage-readability-and-fit and filters the Usage rules out of
      pm7-t23-adjustments (75 kept, 215 dropped). Shared blocks that merely name a pm7u- class are left alone: with the
@@ -229,6 +230,161 @@ def filter_css(css: str, stats: dict, keep_ctx_only: bool = False) -> str:
 
 
 # ---------------------------------------------------------------------------------------------------------------------
+# hosted boards (D10, D10-DESIGN-per-instance-boards.md 6.1): every Usage rule is anchored on the page (`#panel-usage `
+# and a descendant); the build widens each such anchor to `:is(#panel-usage,[data-pmu-host])`, so the same rule also
+# styles a board a host builds (a Home dashboard tab, and the shared layer of menus, readouts and hidden measures, both
+# made by 40-board.js under [data-pmu-host]). :is() takes its most specific argument, so every rule keeps its (1,x,y)
+# specificity and the order of the Usage rules holds; on the Usage page, where no [data-pmu-host] exists, each rule
+# matches exactly what it matched before. Only selectors change: declarations, comments, @keyframes names and strings
+# (attribute values, content) are never touched, and a compound use (`#panel-usage.page.pm8-page-in`, the page's own
+# arrival) stays Usage-only.
+
+HOST_ANCHOR = '#panel-usage'
+HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
+# The census of the rewrite: 2,625 anchors at a501fc00f6 and the 6 of the hosted rules D10 6.4 appends. A Usage CSS
+# edit that adds or removes an anchored rule moves 'rewritten': look at what the new rules style (a hosted board gets
+# them too), then re-pin the number here. Any other use of #panel-usage (a child or sibling combinator, a rule for the
+# panel itself, an anchor outside a selector) stops the build: it would be Usage-only, or not a selector, without
+# saying so.
+HOST_SCOPE_EXPECT = {'rewritten': 2631, 'compound': 1}
+HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
+_ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
+
+
+def _mask_css(css: str) -> str:
+    """The text with comments blanked and string contents replaced (same length, newlines kept), so braces, quotes and
+    anchors are found only where they are syntax: an anchor inside a comment, an attribute value or a content string is
+    not one."""
+    out, i, n = [], 0, len(css)
+    while i < n:
+        ch = css[i]
+        if ch == '/' and css.startswith('/*', i):
+            j = css.find('*/', i + 2)
+            j = n if j < 0 else j + 2
+            out.append(re.sub(r'[^\n]', ' ', css[i:j]))
+            i = j
+        elif ch in '"\'':
+            j = i + 1
+            while j < n and css[j] != ch and css[j] != '\n':
+                j += 2 if css[j] == '\\' else 1
+            j = min(n, j + 1)
+            out.append(ch + re.sub(r'[^\n]', 'x', css[i + 1:j - 1]) + (css[j - 1] if j - 1 > i else ''))
+            i = j
+        else:
+            out.append(ch)
+            i += 1
+    return ''.join(out)
+
+
+def _anchor_kind(m: str, a: int) -> str:
+    """How the anchor at m[a] is used in a (masked) selector: 'descendant' (a whole compound followed by a descendant
+    combinator: the rewrite), 'compound' (part of a larger compound), 'combinator' (followed by >, + or ~) or 'bare'
+    (the selector ends with it)."""
+    before = m[a - 1] if a > 0 else ' '
+    z = a + len(HOST_ANCHOR)
+    after = m[z] if z < len(m) else ''
+    if not (before.isspace() or before in ',(>+~'):
+        return 'compound'
+    if after in ('.', '[', ':', '#'):
+        return 'compound'
+    rest = m[z:].lstrip()
+    nxt = rest[:1]
+    if not nxt or nxt in ',){':
+        return 'bare'
+    if nxt in '>+~':
+        return 'combinator'
+    return 'descendant' if after.isspace() else 'compound'
+
+
+def _host_scope_rules(css: str, m: str, i: int, n: int, stats: dict, out: list) -> None:
+    """Walk the rules of css[i:n] (m: the masked text), appending the text with every descendant anchor of a selector
+    rewritten; recurses into the grouping at-rules."""
+    while i < n:
+        j = m.find('{', i, n)
+        if j < 0:
+            tail = m[i:n]
+            stats['outside'] += len(_ANCHOR_RX.findall(tail))
+            out.append(css[i:n])
+            return
+        semi = m.rfind(';', i, j)
+        if semi >= 0:   # a statement before the rule (@import, @layer a, b;): kept as it is
+            stats['outside'] += len(_ANCHOR_RX.findall(m[i:semi + 1]))
+            out.append(css[i:semi + 1])
+            i = semi + 1
+        k, depth = j + 1, 1
+        while k < n and depth:
+            c = m[k]
+            if c == '{':
+                depth += 1
+            elif c == '}':
+                depth -= 1
+            k += 1
+        head = m[i:j].strip()
+        if head.startswith('@'):
+            if head.startswith(HOST_AT_GROUPS):
+                stats['outside'] += len(_ANCHOR_RX.findall(m[i:j]))
+                out.append(css[i:j + 1])
+                _host_scope_rules(css, m, j + 1, k - 1, stats, out)
+                out.append(css[k - 1:k])
+            else:   # @keyframes, @font-face, @property ...: never touched
+                stats['outside'] += len(_ANCHOR_RX.findall(m[i:k]))
+                out.append(css[i:k])
+        else:
+            sel, last = [], i
+            for hit in _ANCHOR_RX.finditer(m, i, j):
+                kind = _anchor_kind(m[i:j], hit.start() - i)
+                if kind == 'descendant':
+                    sel.append(css[last:hit.start()] + HOST_SCOPE)
+                    last = hit.end()
+                    stats['rewritten'] += 1
+                elif kind == 'compound':
+                    stats['compound'] += 1
+                else:
+                    line = css.count('\n', 0, hit.start()) + 1
+                    stats['other'].append(f'{kind} use at line {line}: {" ".join(css[i:j].split())[:120]}')
+            sel.append(css[last:j])
+            stats['outside'] += len(_ANCHOR_RX.findall(m[j:k]))
+            out.append(''.join(sel) + css[j:k])
+        i = k
+
+
+def host_scope_css(css: str) -> tuple[str, dict]:
+    """The selector-only pass of D10 6.1 over the Usage stylesheet: returns the rewritten text and its census
+    {'rewritten', 'compound', 'other': [...], 'outside', 'left'}. 'left' counts the descendant anchors still in a
+    selector of the output (0 when the pass is whole)."""
+    stats = {'rewritten': 0, 'compound': 0, 'other': [], 'outside': 0}
+    if HOST_SCOPE in css:
+        stats['other'].append(f'{HOST_SCOPE} is already in the source (the rewrite would run twice)')
+    m = _mask_css(css)
+    out: list = []
+    _host_scope_rules(css, m, 0, len(css), stats, out)
+    text = ''.join(out)
+    # the output read again: with the rewritten anchors set aside, no descendant anchor is left in any selector
+    check = {'rewritten': 0, 'compound': 0, 'other': [], 'outside': 0}
+    probe = text.replace(HOST_SCOPE, ' ' * len(HOST_SCOPE))
+    _host_scope_rules(probe, _mask_css(probe), 0, len(probe), check, [])
+    stats['left'] = check['rewritten']
+    stats['scoped'] = text.count(HOST_SCOPE)
+    return text, stats
+
+
+def host_scope_problems(stats: dict) -> list[str]:
+    problems = [f'usage layer host scope: {o}' for o in stats['other']]
+    if stats['outside']:
+        problems.append(f'usage layer host scope: {stats["outside"]} {HOST_ANCHOR} outside a selector (a declaration, an at-rule prelude, a statement)')
+    if stats['left']:
+        problems.append(f'usage layer host scope: {stats["left"]} descendant {HOST_ANCHOR} anchors left in selectors after the rewrite')
+    if stats['scoped'] != stats['rewritten']:
+        problems.append(f'usage layer host scope: {stats["scoped"]} {HOST_SCOPE} in the output for {stats["rewritten"]} rewrites')
+    got = {k: stats[k] for k in HOST_SCOPE_EXPECT}
+    if got != HOST_SCOPE_EXPECT:
+        problems.append(f'usage layer host scope census changed: got {got}, recorded {HOST_SCOPE_EXPECT}; a Usage CSS edit added or '
+                        'removed anchored rules (they reach hosted boards too): look at them, then re-pin HOST_SCOPE_EXPECT '
+                        'in tools/usage_layer.py')
+    return problems
+
+
+# ---------------------------------------------------------------------------------------------------------------------
 # guarded helpers (the same contracts as opus-5.5 build.py's, raising through the caller's need())
 
 def _count_once(need, text: str, needle: str, where: str) -> int:
@@ -419,7 +575,13 @@ def apply(text: str, need) -> tuple[str, dict]:
     # 4. the new band
     _, copy_problems = copy_parts()
     need(not copy_problems, 'usage layer: ' + '; '.join(copy_problems))
-    css = read_parts(SRC / 'css', '.css')
+    # every anchored rule also reaches a hosted board (D10 6.1); the census is printed and checked against its record
+    css, scope = host_scope_css(read_parts(SRC / 'css', '.css'))
+    scope_problems = host_scope_problems(scope)
+    need(not scope_problems, '; '.join(scope_problems))
+    notes['host scope'] = {'rewritten': scope['rewritten'], 'compound': scope['compound'], 'recorded': HOST_SCOPE_EXPECT}
+    print(f'usage layer: host scope rewrote {scope["rewritten"]} {HOST_ANCHOR} anchors to {HOST_SCOPE} (recorded '
+          f'{HOST_SCOPE_EXPECT["rewritten"]}); {scope["compound"]} compound use left Usage-only', file=sys.stderr)
     markup = (SRC / 'markup.html').read_text(encoding='utf-8')
     script = build_script(ctx_js)
     for name, chunk in (('src/css', css), ('src/markup.html', markup), ('src/js + copy.json', script)):

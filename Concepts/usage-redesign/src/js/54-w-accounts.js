@@ -1077,20 +1077,39 @@
   });
 
   /* ================================================================== actions (ARCHITECTURE 4.11, DESIGN-SPEC 10.8) */
+  /* the live board element of the board that acts (D10 7.1): the Usage page's #pmuBoard, or a hosted board's (a Home
+     dashboard tab) when the act came from one */
+  function hostedNow() { var bd = C.board(); return bd && PMU.board && bd !== PMU.board && bd.el ? bd : null; }
+  function boardEl() { var hb = hostedNow(); return hb ? hb.el() : document.getElementById('pmuBoard'); }
   /* the cards that hold the bound controls, notches, switch lines and active marks are named first (NOTES3-perf C3: the
      engine may patch these in the click task and slice the rest; a refresh that does not know the option ignores it) */
   function boundCards(pid) {
     /* item 2: a provider's own change touches only the cards that show that provider (its plate, the hero's cell and
        rows, its meters elsewhere): those patch in the click task, every other card follows in slices (the old click task
        re-rendered every bound card dry: 47-55 ms of the 98-117 ms toggle task, PERF-3) */
-    var board = document.getElementById('pmuBoard'), ids = [], leg = pid && PMU.roster.settingsToLegacy ? PMU.roster.settingsToLegacy(pid) : null;
+    var board = boardEl(), ids = [], leg = pid && PMU.roster.settingsToLegacy ? PMU.roster.settingsToLegacy(pid) : null;
     var sel = pid ? '[data-prov="' + pid + '"]' + (leg ? ', [data-prov="' + leg + '"]' : '') : '.pmu-notch, .pmu-ladnotch, .pmu-skyswitch, .pmu-skynotch, .pmu-toggle, .pmu-accrow.is-eff, .pmu-stepper';
     if (board) Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card'), function (c) {
       if (c.querySelector(sel)) ids.push(c.getAttribute('data-widget'));
     });
     return ids;
   }
-  function refreshAccounts(pid) { PMU.roster.invalidate(); if (PMU.data.invalidate) PMU.data.invalidate(); if (PMU.board && PMU.board.refresh) PMU.board.refresh('settings', { first: boundCards(pid) }); }
+  /* a hosted board reads Settings fresh (D10 7.1): the page's Settings and roster caches can hold a read from before the
+     Settings owner was ready (the Usage page re-reads them on arrival, 90-api.js; lane B's probe: a dashboard made before
+     the first Usage visit showed no providers at all, "Auto-switch is off until a second account is signed in") */
+  if (PMU.boards && PMU.boards.each) PMU.boards.each(function (bd) {
+    if (bd === PMU.board) return;
+    if (PMU.settings && PMU.settings.invalidate) PMU.settings.invalidate('page');
+    if (PMU.roster && PMU.roster.invalidate) PMU.roster.invalidate();
+  });
+  /* every board hears a Settings write (D10 7.1): PMU.boards.touch refreshes a shown dashboard in slices and marks a hidden
+     one for its next show; then the board that wrote it refreshes with its ripple (superseding its own sliced refresh) */
+  function refreshAccounts(pid) {
+    PMU.roster.invalidate(); if (PMU.data.invalidate) PMU.data.invalidate();
+    if (PMU.boards) PMU.boards.touch('settings');
+    var bd = C.board();
+    if (bd && bd.refresh) bd.refresh('settings', { first: boundCards(pid) });
+  }
   /* the Settings change ripples down the board (WOW-SPEC 3.9): every notch keeps its old look until its row's turn,
      30 ms apart in reading order (24 ms for a level change), then eases to the new one; the rows are patched in place,
      so the notch elements are the same before and after */
@@ -1098,7 +1117,7 @@
   /* NOTES3-perf C2: no layout read in the click task. A notch's ripple rank comes from its card's grid row and its order
      in the card (the old per-notch rect read was a 23-33 ms forced layout on the VM); the rail's --at is a style read */
   function rippleCapture() {
-    var board = document.getElementById('pmuBoard'); if (!board || reducedNow()) return null;
+    var board = boardEl(); if (!board || reducedNow()) return null;
     var ns = Array.prototype.slice.call(board.querySelectorAll('.pmu-notch, .pmu-ladnotch, .pmu-skyswitch, .pmu-skynotch'));
     var local = new Map(), tops = ns.map(function (n) {
       var card = n.closest('.pmu-card'); if (!card) return null;
@@ -1171,14 +1190,18 @@
       var a = PMU.roster.account(key); if (!a || !a.eligible.ok) return null;
       if (!a.pastSwitch || !a.binding) return PMU.accounts.useAccount(key);
       var p = PMU.roster.provider(a.providerId), pol = a.policy || PMU.roster.thresholds(a.providerId), at = 100 - pol.switchLeft, used = Math.round(a.binding.pct);
-      var el = anchor && anchor.isConnected ? anchor : document.querySelector('#pmuBoard .pmu-accrow[data-acct="' + key + '"] .pmu-usebtn');
+      var hb = hostedNow(), sel = '.pmu-accrow[data-acct="' + key + '"] .pmu-usebtn';
+      var el = anchor && anchor.isConnected ? anchor : hb ? hb.el().querySelector(sel) : document.querySelector('#pmuBoard ' + sel);
       /* from the inspector in a room without this provider's plate there is no row to hang the question from: it opens
-         centred over the board, under a still point (item 2 review: it opened at the menu's top-left fallback) */
+         centred over the board, under a still point (item 2 review: it opened at the menu's top-left fallback); a hosted
+         board's point hangs in its menu host (the shared layer), never in the host page's body (D10 7.1) */
       var pin = null;
       if (!el) {
-        var host = document.getElementById('pmuScroll') || document.getElementById('panel-usage') || document.body, hr = host.getBoundingClientRect();
+        var host = (hb && hb.scrollEl) || document.getElementById('pmuScroll') || document.getElementById('panel-usage') || document.body, hr = host.getBoundingClientRect();
+        var pinHost = hb ? hb.menuHost() : document.body;
         pin = document.getElementById('pmuAskPin');
-        if (!pin) { pin = document.createElement('span'); pin.id = 'pmuAskPin'; pin.setAttribute('aria-hidden', 'true'); document.body.appendChild(pin); }
+        if (!pin) { pin = document.createElement('span'); pin.id = 'pmuAskPin'; pin.setAttribute('aria-hidden', 'true'); pinHost.appendChild(pin); }
+        else if (pin.parentNode !== pinHost) pinHost.appendChild(pin);
         pin.style.cssText = 'position:fixed;width:1px;height:1px;pointer-events:none;left:' + Math.round(hr.left + hr.width / 2) + 'px;top:' + Math.round(hr.top + Math.max(60, hr.height * 0.28)) + 'px';
         el = pin;
       }
@@ -1194,7 +1217,7 @@
     },
     useAccount: function (key) {
       var a = PMU.roster.account(key); if (!a || !a.eligible.ok) return null;
-      var board = document.getElementById('pmuBoard'), p0 = PMU.roster.provider(a.providerId), oldKey = p0 && p0.effective ? p0.effective.key : null;
+      var board = boardEl(), p0 = PMU.roster.provider(a.providerId), oldKey = p0 && p0.effective ? p0.effective.key : null;
       var rectOf = function (k) { var r = board && k ? board.querySelector('.pmu-accrow[data-acct="' + k + '"]') : null; return r ? r.getBoundingClientRect() : null; };
       var from = rectOf(oldKey), to0 = rectOf(key);
       var legacy = a.legacy || {};

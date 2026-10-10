@@ -120,3 +120,6 @@ html[data-pmu-soft] #panel-usage .pmu-menu { background: var(--pmu-menu-bg) !imp
   #panel-usage .pmu-menu, #panel-usage .pmu-menu.pmu-m-spring { transition: none !important; animation: none !important; }
 }
 html[data-motion="reduced"] #panel-usage .pmu-menu { transition: none !important; animation: none !important; }
+
+/* a menu opened from a hosted board lives in the shared layer, which takes no pointer (D10 6.4) */
+#panel-usage .pmu-shell.pmu-layer > .pmu-menu { pointer-events: auto; }
