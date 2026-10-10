@@ -44321,6 +44321,12 @@ canonical_text: >-
   column's minimum is 640 px; its drag range is 640 to 760 + 240 px, capped by the 960 px centre budget. A
   folded chat has History dropped to a flyout; its peek is 400 px, or 640 px when History is pinned, capped
   at the row width minus 48 px.
+  Measured History cases: at 1920 px in Friendly dark, the flyout column is 600 px, the pinned column 666 px
+  (History 240 px, messages 425 px) and C 960 px; at 1920 px in NieR, flyout is 600 px and pinned 681 px
+  (History 240 px, messages 440 px), with C 960 px. At 1470 px in Glass light with the rail folded, flyout
+  is 434 px with C 960 px, and pinned is 640 px (History 240 px, messages 399 px), with C 754 px. At 900 px
+  in Retro dark the chat folds to 32 px, with a 400 px flyout peek or 640 px pinned peek. These measurements
+  include centre-budget clamping, while the saved width remains the message-area preference.
 gui_related: true
 gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout and Activity Detail.
 split_recommended: false
@@ -44379,6 +44385,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept floats the popped-out chat inside the page at 440 x min(720, window - 140) px with Dock back; that is the concept's browser stand-in, not a canon size."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Records measured pinned History column and message widths from NUMBERS."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Saves History pin as view state with no layout event, revision advance or receipt."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds pinned History widths and keeps width and drag range tied to the messages."
   - "Amended 2026-10-10 (lead ruling L9): The History pin names ui.chat_column.pin_history and commits history_pinned with chat_column_changed."
