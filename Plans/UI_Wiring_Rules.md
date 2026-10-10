@@ -713,6 +713,8 @@ owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
 
 §0.1 update 2026-10-09 (`Plans/Decision_Log.md#DL-162`, `#DL-163`): `Concepts/PMConcept7.html` remains the primary concept input for wiring review. Its rail panels and bottom Debug tab now carry the Polish design (`Plans/FinalGUISpec.md` F3-618 to F3-625), built into the page through the opus-5.5 build as a skin over the same shell panels: every shell control keeps its command id and its `data-demo-action` and `data-demo-arg`, and the Jujutsu view's five tabs (F3-623, F3-624) dispatch only existing `cmd.jujutsu.*`, `cmd.forge.review.*`, `cmd.file.open` and `ui.source_control.backup_history.open` ids, so the skin adds no wiring row and changes no census disposition. `Concepts/LeftRailPMConcept7.html` is the comparison copy (concepts A, B, C and "Original", the rail before Polish) and is not a wiring input. This note creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
 
+Amended 2026-10-09 (`Plans/Decision_Log.md#DL-180`): Home has no bottom zone, so the bottom Debug tab that the two §0.1 updates above name is now the `debug_console` tab kind, opened in any panel and revealed wherever it is by `cmd.run_debug.console.reveal` (`Plans/Commands_System.md#CS-101`). The census of Home controls is `UIW-040`'s.
+
 ## Shared Runtime receipt/projection wiring addendum - 2026-08-13
 
 The 26 canonical shared-runtime command IDs owned by `Plans/Commands_System.md` CS-066 and registered by `Plans/UI_Command_Catalog.md` UCC-145 each have one production wiring row. Each row binds the exact sole handler, typed request/result pair, owner state selector, closed disabled-reason set, accessible pending/outcome behavior, and a receipt/projection-only effect. While Event Authority remains `UNKNOWN_OPEN`, every row has `expected_event_types: []`, carries `missing_event_registration`, and proves that no unregistered `EventRecord` is emitted. A command acknowledgement or accepted result is admission only, never terminal domain success.
@@ -1526,6 +1528,11 @@ handler dispatch invariants in accordance with APR-023 and APR-050.
   the owner's disabled reason when it is unavailable. The Settings Reset the layout row dispatches the
   same `cmd.workspace_layout.reset` as the Home menu after one confirmation. No Settings-specific command
   ID, handler or production wiring row is created for these routes (`Plans/Settings_System.md#SSYS-039`).
+  Amended 2026-10-09 (DL-180): the dashboard is a tab kind and several boards may be open, so Choose widgets
+  opens the widget picker of the Home dashboard tab (`dashboard:home`) wherever that tab is, revealed by the one
+  opening module, and each dashboard tab keeps its own widgets (`Plans/Widget_System.md#WS-030`,
+  `Plans/FinalGUISpec.md#F3-638`); the layout row is now labelled Restore home layout
+  (`general.startup.reset-home-layout`, `Plans/Settings_System.md#SSYS-050`) and keeps every open tab.
 - **Declared Action Chaining and Teardown Order (APR-050):** Application reset hooks, workspace
   reloads, and component unmount sequences enforce deterministic, declared action chaining where each
   subsystem owner is invoked exactly once:
@@ -2112,7 +2119,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Wirin
 
 ### UIW-041 - Tab Lifecycle: Open, Keep, Close, Reopen, Move And Pin
 
-Every tab of every kind goes through the same steps, and each step that changes the layout is one commit with one event.
+Every tab of every kind goes through the same steps, and each step that changes the layout is one commit with one event. This supersedes the editor-only tab lifecycle and the fixed-panel open targets (Panel 1 to Panel 4).
 
 ```yaml
 plan_unit_id: UIW-041
@@ -2188,6 +2195,8 @@ negative_constraints:
   - "Do not let an agent's open take keyboard focus or change the active tab of a panel the person is typing in."
   - "Do not end a terminal session or drop unsaved work without the kind's close check."
   - "Do not emit workspace.layout_changed for a reveal, an activation, or a cancelled, unchanged or failed step."
+stale_retired_dispositions:
+  - "Superseded 2026-10-09 (DL-180): the editor-only tab lifecycle of catalog.editor_close_tab (cmd.editor.close_tab is now an alias of cmd.panel_tab.close, which serves tabs of every kind) and the fixed-panel open targets Panel 1 to Panel 4."
 owner_hints:
   - Plans/UI_Wiring_Rules.md
   - Plans/Wiring_Matrix.md
