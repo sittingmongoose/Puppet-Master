@@ -14,7 +14,8 @@
     var agentItems = [{ id: 'agents-ask', label: 'Ask each time', checked: true, disabled: true, detail: 'Agents ask before typing here' }];
     s.grants.forEach(function (a) {
       if (a === s.owner) return;
-      agentItems.push({ id: 'agent-' + a, label: 'Allowed: ' + a.replace(/^agent:/, ''), detail: 'Revoke', run: function () { s.revoke(a); v.announce(a.replace(/^agent:/, '') + ' can no longer type here'); } });
+      var nm = a.replace(/^agent:/, '');
+      agentItems.push({ id: 'agent-' + a, label: (s.inTerminal.has(a) ? 'Allowed in this terminal: ' : 'Allowed once: ') + nm, detail: 'Revoke', run: function () { s.revoke(a); v.announce(nm + ' can no longer type here'); } });
     });
     return [
       { id: 'new', label: 'New terminal', sub: profiles.map(function (p) { return { id: 'new-' + p.id, label: p.label, detail: p.detail, run: function () { if (v.api && v.api.open) v.api.open({ kind: 'terminal', profile: p.id, where: 'tab' }); } }; }) },

@@ -2,7 +2,9 @@
    PM owns every PTY (DL-035): a session holds one T.Terminal and one shell process tree. The line discipline does
    ONLCR, echoes typeahead, turns Ctrl+C into SIGINT for the foreground job, and enforces the write rules for agents
    (D18): one writer at a time, a human keystroke takes over, an agent cannot type into a terminal a human opened
-   unless the human allowed it, and secret prompts accept no agent input. */
+   unless the human allowed it, and secret prompts accept no agent input. A grant decides who may type, never what may
+   run (DL-181): "Allow once" lasts one command; "Allow in this terminal" lasts the rest of that agent's run, in memory
+   only, and ends when the human takes over (a keystroke, Take over, Stop) or the run ends; Hand back restores it. */
 (function () {
   var b64 = function (s) { return T.base64.encode(T.util.utf8Encode(s)); };
   function strWidth(s) {
@@ -38,6 +40,8 @@
     this.grants = new Set(this.owner !== 'user' ? [this.owner] : []);
     this.lease = this.owner;            /* who may write now: 'user' | 'agent:<name>' */
     this.paused = null;                 /* agent paused by a take-over */
+    this.inTerminal = new Set();        /* agents allowed in this terminal for the rest of their run (DL-181; never saved) */
+    this.heldGrant = null;              /* the grant a take-over suspended: { agent, inTerminal } */
     this.secret = false;
     this.state = 'starting';            /* running | ended */
     this.exitCode = null;
@@ -92,8 +96,8 @@
     if (this.state !== 'running') return { ok: false, reason: 'ended' };
     if (by === 'user' || !by) return { ok: true };
     if (this.secret) return { ok: false, reason: 'secret_input' };
-    if (!this.grants.has(by)) return { ok: false, reason: 'needs_permission' };
     if (this.paused === by) return { ok: false, reason: 'preempted' };
+    if (!this.grants.has(by)) return { ok: false, reason: 'needs_permission' };
     if (this.lease !== by && this.lease !== null && this.lease !== 'user') return { ok: false, reason: 'busy' };
     return { ok: true };
   };
@@ -106,6 +110,7 @@
       /* any human keystroke takes over: the agent is paused and told so */
       var agent = this.lease;
       this.paused = agent; this.lease = 'user';
+      this._suspend(agent);
       this.emit('takeover', { agent: agent, reason: 'typed' });
     }
     if (by !== 'user') this.lease = by;
@@ -113,16 +118,41 @@
     if (this.shell) this.shell.deliver(data, by);
     return { ok: true };
   };
-  Session.prototype.grant = function (agent, always) {
+  /* scope: 'once' (one command) or 'terminal' (the rest of this agent's run here) */
+  Session.prototype.grant = function (agent, scope) {
     this.grants.add(agent);
-    this.emit('grant', { agent: agent, always: !!always });
+    if (scope === 'terminal') this.inTerminal.add(agent);
+    this.emit('grant', { agent: agent, scope: scope === 'terminal' ? 'terminal' : 'once' });
   };
-  Session.prototype.revoke = function (agent) { this.grants.delete(agent); if (this.lease === agent) this.lease = 'user'; this.emit('grant', { agent: agent, revoked: true }); };
+  Session.prototype.revoke = function (agent) {
+    this.grants.delete(agent); this.inTerminal.delete(agent);
+    if (this.heldGrant && this.heldGrant.agent === agent) this.heldGrant = null;
+    if (this.lease === agent) this.lease = 'user';
+    this.emit('grant', { agent: agent, revoked: true });
+  };
+  /* a take-over ends an agent's grant in a terminal a human opened; Hand back restores it for the rest of that run */
+  Session.prototype._suspend = function (agent) {
+    if (agent === this.owner || !this.grants.has(agent)) return;
+    this.heldGrant = { agent: agent, inTerminal: this.inTerminal.has(agent) };
+    this.grants.delete(agent); this.inTerminal.delete(agent);
+    this.emit('grant', { agent: agent, suspended: true });
+  };
   Session.prototype.takeOver = function () {
-    if (/^agent:/.test(this.lease || '')) { this.paused = this.lease; this.lease = 'user'; this.emit('takeover', { agent: this.paused, reason: 'button' }); }
+    if (/^agent:/.test(this.lease || '')) { this.paused = this.lease; this.lease = 'user'; this._suspend(this.paused); this.emit('takeover', { agent: this.paused, reason: 'button' }); }
   };
   Session.prototype.handBack = function () {
-    if (this.paused) { var a = this.paused; this.paused = null; this.lease = a; this.emit('handback', { agent: a }); }
+    if (!this.paused) return;
+    var a = this.paused; this.paused = null; this.lease = a;
+    var h = this.heldGrant;
+    if (h && h.agent === a) { this.heldGrant = null; this.grant(a, h.inTerminal ? 'terminal' : 'once'); }
+    this.emit('handback', { agent: a });
+  };
+  /* the agent's run ended (it finished, or the human pressed Stop): its grant here ends with it */
+  Session.prototype.endRun = function (agent) {
+    if (!agent) return;
+    if (this.paused === agent) this.paused = null;
+    if (this.lease === agent) this.lease = 'user';
+    if (agent !== this.owner) this.revoke(agent);
   };
   Session.prototype.interrupt = function () { if (this.shell) this.shell.signal('SIGINT', true); };
   Session.prototype.kill = function () { if (this.shell) this.shell.signal('SIGKILL', true); };
@@ -368,6 +398,14 @@
       return { code: code, output: out.join('') };
     }
     var prog = T.Programs && T.Programs[name];
+    /* a path (./scripts/deploy.sh, /usr/bin/git): run the program the file stands for */
+    if (!prog && name.indexOf('/') >= 0 && this.vfs) {
+      var fp = this.vfs.resolve(this.cwd, name), fst = this.vfs.stat(fp);
+      if (!fst) { write('zsh: no such file or directory: ' + name + '\n'); return { code: 127, output: out.join('') }; }
+      if (fst.type === 'dir' || !(fst.mode & 73)) { write('zsh: permission denied: ' + name + '\n'); return { code: 126, output: out.join('') }; }
+      prog = T.Programs[fst.exec || fp.replace(/^.*\//, '')];
+      if (!prog) { write('zsh: exec format error: ' + name + '\n'); return { code: 126, output: out.join('') }; }
+    }
     if (!prog) {
       write('zsh: command not found: ' + name + '\n');
       return { code: 127, output: out.join('') };

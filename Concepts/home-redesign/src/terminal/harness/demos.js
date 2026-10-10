@@ -76,6 +76,14 @@
     PMT.agent.done(id);
   }
 
+  /* a realistic session in one go: git, cargo, a failing test with path links, an image, then an agent deploys in the
+     background (its tab gets the agent mark and never takes focus) */
+  async function workingSession() {
+    await typeAll(['git status', 'git log --oneline --graph -8', 'cargo build --workspace', 'cargo test media::', 'imgcat assets/chart.png'], 500);
+    await sleep(800);
+    await agentDeploy();
+  }
+
   /* chat command cards for the focused terminal's last commands (live) */
   var cardsEl = null;
   function cardsDemo() {
@@ -108,6 +116,7 @@
 
   window.PMT_HARNESS_DEMOS = window.PMT_HARNESS_DEMOS || [];
   window.PMT_HARNESS_DEMOS.push(
+    { label: 'A working session: git, cargo, a failing test, an image, an agent', run: workingSession },
     { label: 'Agent: Builder deploys in a background terminal', run: agentDeploy },
     { label: 'Agent: Reviewer asks to type in your terminal', run: agentAsks },
     { label: 'Agent: a password prompt only you can answer', run: agentPassword },

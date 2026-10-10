@@ -180,9 +180,11 @@ on: they scroll with it, follow it when the grid reflows, clip to the tab, and g
 lines leave scrollback. Text written over a sixel or iTerm2 image cuts the image out of those cells. While an image
 decodes or a file is read, later output waits, so text after an image always lands after it.
 
-Saved scrollback (canon from the Plans thread, 2026-10-09): images persist with the terminal's saved scrollback within the
-scrollback storage quota; when the quota evicts one, its cells show a short text placeholder naming the image; a
-restored terminal's scrollback looks as it did. Saved images follow the saved scrollback's own storage and backup rules.
+Saved scrollback (canon R18 from the Plans thread, 2026-10-09): images persist with the terminal's saved scrollback
+within the scrollback storage quota; when the quota evicts one, its cells show a short text placeholder naming the image;
+a restored terminal's scrollback looks as it did. Saved images follow the saved scrollback's own storage and backup
+rules: it stays on this machine and is excluded from backups, exports and sync. A product-wide cap across terminals is
+an open question for Jared (wave 1 has none).
 What the concept does (`js/38-saved.js`), with its numbers:
 
 | Rule | Value |
@@ -198,6 +200,7 @@ What the concept does (`js/38-saved.js`), with its numbers:
 | Closing the tab | The saved copy is kept while the tab can be reopened (the panels' reopen stack holds 20) and for at most 7 days, then deleted |
 | Load budget | 5 s; past it the tab starts without its scrollback and says so |
 | Per project | Saved copies are keyed by project and terminal, like the layout |
+| Where it lives | On this machine only: saved scrollback (text and images) is the terminal restore record's transcript chunks and is excluded from backups, exports and sync (R18) |
 
 Per renderer:
 - Skia (desktop): one draw per placement per frame, clipped to the rows being painted, in the tier order above; GPU
@@ -219,18 +222,27 @@ run as `[image]`; an image saved scrollback could not keep by its placeholder la
 |---|---|---|
 | Driving | "<agent> is driving this terminal · step N of M · <label>" | Take over, Interrupt, Stop |
 | Paused (after a take-over) | "You took over. <agent> is paused and has been told." | Hand back, Stop <agent> |
-| Permission | "<agent> wants to type in this terminal: `<command>`" | Allow once, Deny. "Always allow here" is pending a Plans ruling against Permissions_System (an approval covers one exact command); the concept keeps it behind a flag that is off |
+| Permission | "<agent> wants to type in this terminal: `<command>`" | Allow once, Allow in this terminal, Deny (DL-181). Hover tags: "<agent> types this one command"; "<agent> may type here until its run ends or you take over. Each command still needs its own approval." |
 | Secret input | "Password needed. Only you can answer this prompt; <agent> is waiting." | Type it (focuses the terminal) |
 
 Rules the session enforces: one writer at a time; any human keystroke in an agent-driven terminal takes over at once
 and the agent's next write is refused as `preempted`; an agent cannot type into a terminal a human opened without a
-grant (Allow once lasts one command); a secret prompt refuses all agent input (`secret_input`) and turns the cursor
-into a padlock; Interrupt sends SIGINT to the foreground job; Stop ends the agent's run and returns the lease to the
-human; agent-opened terminals land as background tabs with the hollow-square mark and never take focus (D8). Every
+grant; a secret prompt refuses all agent input (`secret_input`) and turns the cursor into a padlock; Interrupt sends
+SIGINT to the foreground job; Stop ends the agent's run and returns the lease to the human; agent-opened terminals land as background tabs with the hollow-square mark and never take focus (D8). Every
 command record carries `by`; the gutter shows a square mark on agent-typed commands and the mark menu says who typed
 it. Shell-integration marks carry a per-terminal secret (`OSC 133;...;pmn=<secret>`, `OSC 6973;<secret>;E;<base64
 command line>`, `OSC 6973;<secret>;W;<who>`): a mark without it is plain output. Agent reads return rendered text with
 a read state (`final` for a finished command), never raw bytes, never images.
+
+Grants (DL-181) decide who may type, never what may run: every command an agent runs still needs its own approval for
+that exact invocation (SMPFS-024, PS-041), and no wording in the row suggests commands are pre-approved.
+- Allow once: the agent may type this one command; the grant ends when the command ends.
+- Allow in this terminal: the agent may type here for the rest of its run, without asking again. The grant is in memory
+  only, for one agent in one terminal session, and is never saved. It ends when the terminal closes, when the human
+  takes over (any keystroke while the agent drives, Take over, or Stop) or when that agent's run ends. Hand back
+  grants it again for the rest of that run. While it lasts, the agent keeps the driving row between commands, and More
+  > Agent input lists it ("Allowed in this terminal: <agent>", Revoke).
+- A take-over suspends either grant at once, so the agent's next write is refused as `preempted`.
 
 ## 9. Effects (D16)
 

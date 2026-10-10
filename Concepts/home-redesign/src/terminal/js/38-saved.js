@@ -4,7 +4,8 @@
    being typed, selections and find highlights are never saved (transient_only).
    Storage, the concept's stand-in for canon's transcript chunks: IndexedDB "pm.home.terminal:v1:saved", one record per
    terminal (text, styles, links, command records, image placements) and one record per image frame, written once and
-   reused by later saves. Saved images follow the saved scrollback's own storage and backup rules.
+   reused by later saves. Saved images follow the saved scrollback's own rules (R18): it stays on this machine and is
+   excluded from backups, exports and sync.
    Quota: 64 MiB stored per terminal, text and images together. Text is bounded by the 10,000-line scrollback and never
    gives way to images; images that do not fit are dropped oldest first (highest in the scrollback), and their cells then
    show a short placeholder naming the image: "[logo.png 640×480 · not kept]". A frame that cannot be read back gets

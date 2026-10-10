@@ -193,8 +193,6 @@
     view: function (id) { var r = records.get(id); if (!r) for (var x of records.values()) if (x.alias === id) r = x; return r ? r.view : null; },
     keys: function () { return T.keys.list(); },
     agent: T.Agent ? T.Agent.api : null,
-    /* pending canon: alwaysAllowHere (off) */
-    flags: T.flags,
     /* saved scrollback: save now (resolves true when written) and what the last save kept */
     saved: {
       save: function (id) { var r = records.get(id); if (!r) for (var x of records.values()) if (x.alias === id) r = x; return r && r.saver ? r.saver.now(true) : Promise.resolve(false); },

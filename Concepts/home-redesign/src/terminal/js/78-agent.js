@@ -2,15 +2,14 @@
    exposes the agent API the chat and the demos use.
    - Driving: "<agent> is driving this terminal", the step, and Take over, Interrupt, Stop.
    - Paused: after a take-over (a button or any keystroke): Hand back, Stop.
-   - Permission: an agent asks to type into a terminal a human opened: Allow once, Deny. An approval covers one exact
-     command (the terminal canon's approval contract); "Always allow here" is a standing grant, so it stays behind
-     T.flags.alwaysAllowHere, off, until Plans rules on it against Permissions_System.
+   - Permission: an agent asks to type into a terminal a human opened: Allow once, Allow in this terminal, Deny (DL-181).
+     A grant decides who may type, never what may run: every command still needs its own approval for that exact
+     invocation. "Allow in this terminal" lasts the rest of that agent's run, in memory only; a take-over or the run's
+     end ends it and Hand back restores it (62-shell.js).
    - Secret input: a password prompt is open; only the human can answer it; the agent waits.
    Commands are attributed to whoever typed them (gutter marks). Agent-opened terminals land as background tabs (D8). */
 (function () {
   var SQ = '<svg class="pmt-agent-sq" viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="3.5" width="9" height="9"/><path d="M6.5 8h3"/></svg>';
-  T.flags = T.flags || {};
-  if (T.flags.alwaysAllowHere === undefined) T.flags.alwaysAllowHere = false;
   var LOCK = '<svg class="pmt-agent-sq" viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="7.5" width="9" height="6"/><path d="M5.5 7.5V5.5a2.5 2.5 0 0 1 5 0v2"/></svg>';
 
   function Controller(view) {
@@ -49,12 +48,16 @@
       acts = [['handback', 'Hand back'], ['stop', 'Stop ' + nm]];
     } else if (st.mode === 'permission') {
       html = SQ + '<span class="pmt-agent-text"><b>' + nm + '</b> wants to type in this terminal' + (st.cmd ? ': <code>' + T.util.esc(st.cmd) + '</code>' : '') + '</span>';
-      acts = [['allow', 'Allow once']].concat(T.flags.alwaysAllowHere ? [['always', 'Always allow here']] : [], [['deny', 'Deny']]);
+      acts = [['allow', 'Allow once', nm + ' types this one command'],
+        ['terminal', 'Allow in this terminal', nm + ' may type here until its run ends or you take over. Each command still needs its own approval.'],
+        ['deny', 'Deny']];
     } else if (st.mode === 'secret') {
       html = LOCK + '<span class="pmt-agent-text">Password needed. Only you can answer this prompt' + (st.agent ? '; <b>' + nm + '</b> is waiting' : '') + '.</span>';
       acts = [['focus', 'Type it']];
     }
-    row.innerHTML = html + '<span class="pmt-agent-acts">' + acts.map(function (a) { return '<button type="button" class="pmt-textbtn" data-act="' + a[0] + '">' + a[1] + '</button>'; }).join('') + '</span>';
+    row.innerHTML = html + '<span class="pmt-agent-acts">' + acts.map(function (a) {
+      return '<button type="button" class="pmt-textbtn" data-act="' + a[0] + '"' + (a[2] ? ' data-pm-hover-label="' + a[2] + '"' : '') + '>' + a[1] + '</button>';
+    }).join('') + '</span>';
     row.className = 'pmt-agentrow pmt-agent-' + st.mode;
     row.setAttribute('role', st.mode === 'permission' || st.mode === 'secret' ? 'alert' : 'status');
     row.hidden = false;
@@ -69,14 +72,14 @@
     else if (a === 'interrupt') { s.interrupt(); v.announce('Sent interrupt'); }
     else if (a === 'stop') { this.stopAgent(st.agent); }
     else if (a === 'handback') { s.handBack(); }
-    else if (a === 'allow' || a === 'always') { if (st.resolve) st.resolve(a === 'always' && T.flags.alwaysAllowHere ? 'always' : 'allow'); this.set(st.prevState || null); }
+    else if (a === 'allow' || a === 'terminal') { if (st.resolve) st.resolve(a); this.set(st.prevState || null); }
     else if (a === 'deny') { if (st.resolve) st.resolve('deny'); this.set(st.prevState || null); }
     else if (a === 'focus') { v.focus(); }
   };
   Controller.prototype.stopAgent = function (agent) {
     var s = this.s;
     if (this.run) this.run.cancelled = true;
-    if (s.lease === agent || s.paused === agent) { s.paused = null; s.lease = 'user'; }
+    s.endRun(agent);
     s.emit('agent-stopped', { agent: agent });
     this.view.announce(this.name(agent) + ' stopped');
     this.set(null);
@@ -99,7 +102,7 @@
     if (e.reason === 'secret_input') this.view.announce(this.name(e.by) + ' cannot answer a password prompt');
   };
 
-  /* ask the human; resolves 'allow' | 'deny' ('always' only while the flag is on) */
+  /* ask the human; resolves 'allow' | 'terminal' | 'deny' */
   Controller.prototype.ask = function (agent, cmd) {
     var self = this;
     return new Promise(function (resolve) {
@@ -140,7 +143,7 @@
       if (!chk.ok && chk.reason === 'needs_permission') {
         var answer = await ctl.ask(agent, cmd);
         if (answer === 'deny') return { ok: false, reason: 'denied' };
-        s.grant(agent, answer === 'always');
+        s.grant(agent, answer === 'terminal' ? 'terminal' : 'once');
         if (answer === 'allow') { var once = true; }
         chk = s.canWrite(agent);
       }
@@ -160,8 +163,9 @@
       if (!r2.ok) return { ok: false, reason: s.paused === agent ? 'preempted' : r2.reason };
       var c = await Promise.race([done, new Promise(function (res) { var t = setInterval(function () { if (run.cancelled) { clearInterval(t); res(null); } }, 100); })]);
       if (once) s.revoke(agent);
-      /* a one-off run in a terminal a human owns ends the agent's turn there: the row and mark go, the lease returns */
-      if (s.owner === 'user' && !opts.keep) {
+      /* a one-off run in a terminal a human owns ends the agent's turn there: the row and mark go, the lease returns.
+         An agent allowed in this terminal keeps it for the rest of its run (until done or Stop) */
+      if (s.owner === 'user' && !opts.keep && !s.inTerminal.has(agent)) {
         if (s.lease === agent) s.lease = 'user';
         if (ctl.state && ctl.state.agent === agent && ctl.state.mode === 'driving') ctl.set(null);
       }
@@ -173,7 +177,13 @@
       var v = viewFor(sessionId); if (!v) return;
       v.agent.set({ mode: 'driving', agent: 'agent:' + name, step: step, steps: steps, label: label });
     },
-    done: function (sessionId) { var v = viewFor(sessionId); if (v) v.agent.set(null); var s = window.PMT.session(sessionId); if (s && /^agent:/.test(s.lease || '')) s.lease = 'user'; },
+    /* the agent's run is over: the row goes and its grant here ends (DL-181) */
+    done: function (sessionId, name) {
+      var v = viewFor(sessionId), s = window.PMT.session(sessionId); if (!s) return;
+      var agent = name ? 'agent:' + name : (v && v.agent.state && v.agent.state.agent) || (/^agent:/.test(s.lease || '') ? s.lease : s.paused);
+      if (v) v.agent.set(null);
+      s.endRun(agent);
+    },
     stop: function (sessionId, name) { var v = viewFor(sessionId); if (v) v.agent.stopAgent('agent:' + name); }
   };
 
