@@ -42893,8 +42893,8 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the terminal tab's label, header row, notices, gutter, scrollbar, sticky header, menus and keys in the universal panels.
 split_recommended: false
-depends_on: [DL-181, F3-635, F3-630, F3-631, F3-634, SMPFS-180, SMPFS-183, UCC-201, DR-067]
-unblocks: [F3-641, F3-646, ATS-076]
+depends_on: [DL-181, F3-635, F3-630, F3-631, F3-634, SMPFS-180, SMPFS-183, DR-067]
+unblocks: [F3-641, F3-646, UCC-201, ATS-076]
 acceptance_criteria:
   - "Every terminal tab holds one session; Split opens a new panel with a new terminal in the same folder and shell profile, and no terminal tab draws a split, section, workgroup, sub-tab or bottom bar."
   - "The tab label reads `<process> · <folder>` by the rule above, shows the exit code of a failed last command and the square agent mark while an agent drives it, and its hover tag adds \"(ended)\" and \"· <agent> is driving\" when they apply."
@@ -43105,8 +43105,8 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the terminal's visible schemes, contrast floor, import, appearance fields, cell geometry and Appearance popover.
 split_recommended: false
-depends_on: [DL-183, F3-640, F3-431, DR-068, SSYS-051, SP-331, UCC-201]
-unblocks: [F3-643, F3-644, ATS-076]
+depends_on: [DL-183, F3-640, F3-431, DR-068, SSYS-051, SP-331]
+unblocks: [F3-643, F3-644, UCC-201, ATS-076]
 acceptance_criteria:
   - "Every field resolves tab override, then project default, then app default, then the look's default, and an unset field falls through."
   - "Each look's Follow theme scheme is the one listed for its light and dark variant, and Glass draws its scheme at 70 % and 74 % opacity with no backdrop blur of the terminal's own."
@@ -43160,7 +43160,7 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/DRY_Rules.md#DR-068, ContractName:Plans/Settings_System.md#SSYS-051, ContractName:Plans/storage-plan.md#SP-331, ContractName:Plans/FinalGUISpec.md#F3-431
+ContractRef: ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/DRY_Rules.md#DR-068, ContractName:Plans/Settings_System.md#SSYS-051, ContractName:Plans/storage-plan.md#SP-331, ContractName:Plans/FinalGUISpec.md#F3-431, ContractName:Plans/UI_Command_Catalog.md#UCC-201
 
 ### F3-643 — Terminal Effects
 
@@ -43455,8 +43455,8 @@ canonical_text: >-
   (lead ruling of 2026-10-10 in DL-181). Deny refuses the write. Allow once and Allow in this terminal dispatch
   `cmd.terminal.allow_agent_input` with their scope (CV-362). More, Agent input lists Ask each time and then one row
   per agent holding Allow in this terminal, and choosing an agent's row revokes its grant
-  (`cmd.terminal.revoke_agent_input`). Password and secret prompts always go to the person: while one is open the
-  cursor is a padlock and every agent input is refused as `secret_input`. Each command records who typed it (`by`): a
+  (`cmd.terminal.revoke_agent_input`); UCC-201 records these commands. Password and secret prompts always go to the
+  person: while one is open the cursor is a padlock and every agent input is refused as `secret_input`. Each command records who typed it (`by`): a
   command an agent typed shows the agent's square mark in the gutter, and the command-mark menu says "<agent> typed
   this" or "You typed this" (F3-641). A terminal an agent is driving shows the 7 px square agent mark on its tab, and
   its hover tag adds "· <agent> is driving" (F3-640). A terminal an agent opened by itself lands as a background tab
@@ -43467,8 +43467,8 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the visible agent row, take-over, permission and secret-prompt states, attribution marks and background opens of a shared terminal.
 split_recommended: false
-depends_on: [DL-181, F3-640, F3-641, F3-634, SMPFS-182, SMPFS-024, PS-041, CV-362, UCC-201]
-unblocks: [ATS-076]
+depends_on: [DL-181, F3-640, F3-641, F3-634, SMPFS-182, SMPFS-024, PS-041, CV-362]
+unblocks: [UCC-201, ATS-076]
 acceptance_criteria:
   - "Each of the four row states shows its exact text and actions, as an inline row above the screen and never a modal."
   - "A keystroke in a terminal an agent is driving takes over at once, shows the Paused row and refuses the agent's next write as `preempted`."
@@ -43523,4 +43523,4 @@ owner_hints:
   - Plans/Section15_MVP_Promoted_Features_Spec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-024, ContractName:Plans/Permissions_System.md#PS-041, ContractName:Plans/Contracts_V0.md#CV-362
+ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-024, ContractName:Plans/Permissions_System.md#PS-041, ContractName:Plans/Contracts_V0.md#CV-362, ContractName:Plans/UI_Command_Catalog.md#UCC-201
