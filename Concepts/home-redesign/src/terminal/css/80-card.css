@@ -1,0 +1,489 @@
+/* The chat's compact command card (js/80-card.js, DECISIONS.md D27). It sits in the 5.6 Pro chat's transcript in
+   narrative order, beside the working card, so it follows that transcript's card grammar: one flat card, a head, the
+   output as a full-width band of the same card (never a rounded box inside the card), and a row of text buttons.
+   No capsule badges, no coloured side stripes, no emoji, no uppercase micro-labels.
+
+   Anatomy (numbers for SPEC.md)
+   - Head: status glyph (14 px in a 16 px column; 20 px disc in Friendly, bracketed in Retro), the command in the code
+     face at 12/18 px on one line with an ellipsis, then a meta line at 11.5/16 px: status words, elapsed time, who ran
+     it and in which folder. A failed command may add its failure line (11.5 px, error ink). The disclosure is a 24 px
+     square at the right of the command line.
+   - Output band: full card width, a hairline above, the look's code well behind it, the code face at 11.5/17 px,
+     white-space: pre, sideways scroll, then "N more lines" at 11 px. 5 lines collapsed (85 px), 15 expanded (255 px).
+   - Actions: text buttons, 24 px tall, 11.5 px semibold, 10 px apart; the reveal action (Open in Terminal, or View
+     output when there is no live session) is in the accent ink, the rest in the secondary ink.
+   - Status inks: running accent, Exit 0 the positive ink, failed the error ink, Needs input the warning ink,
+     Interrupted the secondary ink. Light looks deepen the accent inks toward the text colour for at least 4.5:1.
+   - Motion: the running glyph turns (1.4 s per turn) only in Friendly, Glass and Basic without Reduced Motion; Retro
+     and NieR always draw it still. The elapsed time is text that changes once a second, never an animation.
+
+   Looks are read from html[data-theme], html[data-o55-nier="on"] with its installed parts, and
+   html[data-motion="reduced"]. Colours come from the page tokens and, in NieR, the --o55-nier-* helpers. */
+
+.pmt-card {
+  --pmt-card-ink: var(--text-primary);
+  --pmt-card-ink-2: var(--text-secondary);
+  --pmt-card-ink-3: var(--text-muted);
+  --pmt-card-bg: var(--surface-elevated);
+  --pmt-card-edge: var(--border-light, var(--border));
+  --pmt-card-rule: var(--border-light, var(--border));
+  --pmt-card-well: color-mix(in srgb, var(--background) 62%, var(--surface-elevated));
+  --pmt-card-radius: 8px;
+  --pmt-card-btn-radius: 4px;
+  --pmt-card-shadow: none;
+  --pmt-card-accent: var(--accent-primary);
+  --pmt-card-run: var(--accent-primary);
+  --pmt-card-ok: var(--accent-lime);
+  --pmt-card-bad: var(--accent-error);
+  --pmt-card-warn: var(--accent-warning);
+  --pmt-card-off: var(--text-secondary);
+  --pmt-card-tint: color-mix(in srgb, var(--text-primary) 9%, transparent);
+  --pmt-card-gw: 16px;
+  --pmt-card-code: var(--pm-font-code, 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace);
+  --pmt-card-ui: var(--body-font, system-ui, sans-serif);
+  --pmt-card-t: 160ms;
+  --pmt-card-sc: var(--pmt-card-run);
+  position: relative;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  color: var(--pmt-card-ink);
+  background: var(--pmt-card-bg);
+  border: 1px solid var(--pmt-card-edge);
+  border-radius: var(--pmt-card-radius);
+  box-shadow: var(--pmt-card-shadow);
+  font-family: var(--pmt-card-ui);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: normal;
+  text-align: left;
+  text-transform: none;
+}
+.pmt-card *, .pmt-card *::before, .pmt-card *::after { box-sizing: border-box; }
+.pmt-card [hidden] { display: none !important; }
+
+.pmt-card[data-pmt-status="running"] { --pmt-card-sc: var(--pmt-card-run); }
+.pmt-card[data-pmt-status="ok"] { --pmt-card-sc: var(--pmt-card-ok); }
+.pmt-card[data-pmt-status="failed"] { --pmt-card-sc: var(--pmt-card-bad); }
+.pmt-card[data-pmt-status="interrupted"] { --pmt-card-sc: var(--pmt-card-off); }
+.pmt-card[data-pmt-status="waiting"] { --pmt-card-sc: var(--pmt-card-warn); }
+
+/* ---- head ---- */
+.pmt-card-head {
+  display: grid;
+  grid-template-columns: var(--pmt-card-gw) minmax(0, 1fr) 24px;
+  column-gap: 8px;
+  align-items: start;
+  padding: 9px 6px 9px 12px;
+  color: var(--pmt-card-ink);
+}
+.pmt-card-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--pmt-card-gw);
+  height: 18px;
+  color: var(--pmt-card-sc);
+  font-family: var(--pmt-card-ui);
+  font-size: 11.5px;
+  line-height: 18px;
+}
+.pmt-card-gi { display: inline-flex; width: 14px; height: 14px; flex: none; }
+.pmt-card-g {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.pmt-card-g-track { stroke-opacity: .32; }
+.pmt-card-g-arc { display: none; }
+.pmt-card-g-dot { fill: currentColor; stroke: none; }
+.pmt-card-g-sq { display: none; fill: currentColor; stroke: none; }
+.pmt-card-g-frame { display: none; stroke-width: 1.4; }
+
+.pmt-card-title { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.pmt-card-cmd {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--pmt-card-ink);
+  font-family: var(--pmt-card-code);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  font-variant-ligatures: none;
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pmt-card[data-pmt-expanded="true"] .pmt-card-cmd { white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-all; }
+
+.pmt-card-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  color: var(--pmt-card-ink-2);
+  font-size: 11.5px;
+  line-height: 16px;
+  white-space: nowrap;
+}
+.pmt-card-status { flex: none; font-weight: 600; }
+.pmt-card[data-pmt-status="failed"] .pmt-card-status,
+.pmt-card[data-pmt-status="waiting"] .pmt-card-status { color: var(--pmt-card-sc); }
+.pmt-card-sep { flex: none; color: color-mix(in srgb, var(--pmt-card-ink-2) 72%, transparent); }
+.pmt-card-time { flex: none; font-variant-numeric: tabular-nums; }
+.pmt-card-who { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+/* expanded: the who-and-folder part wraps inside itself, so a long folder never leaves a separator at a line end */
+.pmt-card[data-pmt-expanded="true"] .pmt-card-who { flex: 1 1 0; overflow: visible; white-space: normal; overflow-wrap: anywhere; }
+
+/* the failure line wraps the way a terminal wraps (at the column edge, anywhere) to at most three lines, so the file
+   and line it names stay readable even in a 360 px chat */
+.pmt-card-fail {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  margin: 3px 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--pmt-card-bad);
+  font-family: var(--pmt-card-code);
+  font-size: 11.5px;
+  line-height: 17px;
+  font-variant-ligatures: none;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow: hidden;
+}
+.pmt-card[data-pmt-expanded="true"] .pmt-card-fail { -webkit-line-clamp: unset; line-clamp: none; }
+
+/* the disclosure: a 24 px square on the command line */
+.pmt-card-toggle {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin: -3px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--pmt-card-btn-radius);
+  background: transparent;
+  color: var(--pmt-card-ink-2);
+  font-family: var(--pmt-card-ui);
+  font-size: 11.5px;
+  line-height: 24px;
+  cursor: pointer;
+}
+.pmt-card-chev {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--pmt-card-t) ease;
+}
+.pmt-card[data-pmt-expanded="true"] .pmt-card-chev { transform: rotate(180deg); }
+.pmt-card-tg-text { display: none; }
+.pmt-card-toggle:hover { background: var(--pmt-card-tint); color: var(--pmt-card-ink); }
+
+/* ---- output band: part of the card, not a box inside it ---- */
+.pmt-card-out {
+  padding: 7px 0;
+  border-top: 1px solid var(--pmt-card-rule);
+  background-color: var(--pmt-card-well);
+}
+.pmt-card-lines {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 12px;
+  color: var(--pmt-card-ink);
+  font-family: var(--pmt-card-code);
+  font-size: 11.5px;
+  font-weight: 400;
+  line-height: 17px;
+  font-variant-ligatures: none;
+  white-space: pre;
+  tab-size: 8;
+  outline: none;
+  /* a thin sideways bar, faint until the output is hovered or focused. Chrome and Safari draw it through the
+     ::-webkit-scrollbar parts, which Chrome only honours while scrollbar-width and scrollbar-color stay auto (the
+     page hides every bar with scrollbar-width: none unless a pane opts in); Firefox takes the standard pair. */
+  scrollbar-width: auto;
+  scrollbar-color: auto;
+}
+.pmt-card-lines::-webkit-scrollbar { width: 0; height: 6px; background: transparent; }
+.pmt-card-lines::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+.pmt-card-lines::-webkit-scrollbar-track { background: transparent; }
+.pmt-card-lines::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--text-primary) 16%, transparent); border: 0; border-radius: 0; }
+.pmt-card-lines:is(:hover, :focus-visible)::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--text-primary) 32%, transparent); }
+@supports not selector(::-webkit-scrollbar) {
+  .pmt-card-lines { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--text-primary) 24%, transparent) transparent; }
+}
+.pmt-card-lines:focus-visible { outline: 2px solid var(--pmt-card-accent); outline-offset: -2px; }
+.pmt-card-line { min-height: 17px; }
+.pmt-card-line-bad { color: var(--pmt-card-bad); }
+.pmt-card-none { color: var(--pmt-card-ink-2); font-family: var(--pmt-card-ui); }
+.pmt-card-more {
+  padding: 2px 12px 0;
+  color: var(--pmt-card-ink-2);
+  font-size: 11px;
+  line-height: 16px;
+}
+
+/* ---- actions ---- */
+.pmt-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  padding: 6px 4px 6px;
+}
+.pmt-card-act {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  height: 24px;
+  margin: 0;
+  padding: 0 8px;
+  border: 0;
+  border-radius: var(--pmt-card-btn-radius);
+  background: transparent;
+  color: var(--pmt-card-ink-2);
+  font-family: var(--pmt-card-ui);
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: normal;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.pmt-card-act-primary { color: var(--pmt-card-accent); }
+.pmt-card-act:hover { background: var(--pmt-card-tint); color: var(--pmt-card-ink); }
+.pmt-card-act-primary:hover { color: var(--pmt-card-accent); }
+.pmt-card-act:focus-visible,
+.pmt-card-toggle:focus-visible { outline: 2px solid var(--pmt-card-accent); outline-offset: 1px; }
+
+/* ---- running glyph: it turns only where motion is allowed (never Retro, never NieR, never Reduced Motion by the
+   setting or by the system preference); everywhere else the still form is the ring with a dot ---- */
+@keyframes pmt-card-turn { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]):is([data-theme^="friendly"], [data-theme^="glass"], [data-theme^="basic"]) .pmt-card[data-pmt-status="running"] .pmt-card-gi {
+    animation: pmt-card-turn 1.4s linear infinite;
+  }
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]):is([data-theme^="friendly"], [data-theme^="glass"], [data-theme^="basic"]) .pmt-card[data-pmt-status="running"] .pmt-card-g-arc { display: inline; }
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]):is([data-theme^="friendly"], [data-theme^="glass"], [data-theme^="basic"]) .pmt-card[data-pmt-status="running"] .pmt-card-g-dot { display: none; }
+}
+
+/* ---- light looks: deepen the accent inks toward the text colour so status words and the reveal action keep
+   at least 4.5:1 on the card ---- */
+html[data-theme$="-light"] .pmt-card {
+  --pmt-card-accent: color-mix(in srgb, var(--accent-primary) 76%, var(--text-primary));
+  --pmt-card-run: color-mix(in srgb, var(--accent-primary) 76%, var(--text-primary));
+  --pmt-card-ok: color-mix(in srgb, var(--accent-lime) 74%, var(--text-primary));
+  --pmt-card-bad: color-mix(in srgb, var(--accent-error) 82%, var(--text-primary));
+  --pmt-card-warn: color-mix(in srgb, var(--accent-warning) 60%, var(--text-primary));
+}
+
+html[data-theme="basic-dark"] .pmt-card { --pmt-card-bad: color-mix(in srgb, var(--accent-error) 76%, var(--text-primary)); }
+
+/* ---- Friendly: a soft card, the glyph on a tinted disc ---- */
+html[data-theme^="friendly"] .pmt-card {
+  --pmt-card-radius: 14px;
+  --pmt-card-btn-radius: 8px;
+  --pmt-card-edge: var(--border);
+  --pmt-card-rule: var(--border);
+  --pmt-card-well: var(--surface-alt, color-mix(in srgb, var(--background) 62%, var(--surface-elevated)));
+  --pmt-card-shadow: var(--elev-1);
+  --pmt-card-gw: 20px;
+}
+html[data-theme="friendly-light"] .pmt-card {
+  --pmt-card-accent: color-mix(in srgb, var(--accent-primary) 62%, var(--text-primary));
+  --pmt-card-run: color-mix(in srgb, var(--accent-primary) 62%, var(--text-primary));
+  --pmt-card-ok: color-mix(in srgb, var(--accent-lime) 60%, var(--text-primary));
+  --pmt-card-bad: color-mix(in srgb, var(--accent-error) 56%, var(--text-primary));
+  --pmt-card-warn: color-mix(in srgb, var(--accent-warning) 42%, var(--text-primary));
+  --pmt-card-ink-2: color-mix(in srgb, var(--text-secondary) 80%, var(--text-primary));
+}
+html[data-theme^="friendly"] .pmt-card-head { padding-top: 10px; padding-bottom: 10px; }
+html[data-theme^="friendly"] .pmt-card-glyph {
+  height: 20px;
+  margin-top: -1px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--pmt-card-sc) 17%, transparent);
+}
+html[data-theme^="friendly"] .pmt-card-gi { width: 12px; height: 12px; }
+html[data-theme^="friendly"] .pmt-card-g { stroke-width: 2; }
+
+/* ---- Glass: a lighter pane of the same glass; no extra blur (the chat column owns the blur budget) ---- */
+html[data-theme^="glass"] .pmt-card {
+  --pmt-card-radius: 14px;
+  --pmt-card-btn-radius: 8px;
+  --pmt-card-edge: var(--glass-hairline, var(--border));
+  --pmt-card-rule: var(--border-light, var(--border));
+  --pmt-card-well: color-mix(in srgb, var(--background) 46%, transparent);
+  --pmt-card-shadow: var(--elev-1);
+}
+html[data-theme="glass-light"] .pmt-card {
+  --pmt-card-well: color-mix(in srgb, var(--text-primary) 6%, transparent);
+  --pmt-card-bad: color-mix(in srgb, var(--accent-error) 64%, var(--text-primary));
+  --pmt-card-accent: color-mix(in srgb, var(--accent-primary) 70%, var(--text-primary));
+  --pmt-card-run: color-mix(in srgb, var(--accent-primary) 70%, var(--text-primary));
+  --pmt-card-ink-2: color-mix(in srgb, var(--text-primary) 84%, transparent);
+  --pmt-card-ink-3: color-mix(in srgb, var(--text-primary) 62%, transparent);
+}
+html[data-theme="glass-dark"] .pmt-card { --pmt-card-ink-3: color-mix(in srgb, var(--text-primary) 62%, transparent); }
+
+/* ---- Retro: square, bracket glyphs, a double rule, reverse video for focus ---- */
+html[data-theme^="retro"] .pmt-card {
+  --pmt-card-radius: 0px;
+  --pmt-card-btn-radius: 0px;
+  --pmt-card-edge: var(--border);
+  --pmt-card-rule: var(--border);
+  --pmt-card-well: var(--background);
+  --pmt-card-shadow: var(--elev-1);
+  --pmt-card-gw: 30px;
+  --pmt-card-t: 0ms;
+}
+html[data-theme="retro-light"] .pmt-card { --pmt-card-ink-3: var(--text-secondary); }
+html[data-theme^="retro"] .pmt-card-out { border-top: 3px double var(--pmt-card-rule); }
+html[data-theme^="retro"] .pmt-card-glyph { justify-content: space-between; }
+html[data-theme^="retro"] .pmt-card-glyph::before { content: "["; color: var(--pmt-card-ink-3); }
+html[data-theme^="retro"] .pmt-card-glyph::after { content: "]"; color: var(--pmt-card-ink-3); }
+html[data-theme^="retro"] .pmt-card-gi { width: 12px; height: 12px; }
+html[data-theme^="retro"] .pmt-card-g,
+html[data-theme^="retro"] .pmt-card-chev { stroke-linecap: square; stroke-linejoin: miter; }
+html[data-theme^="retro"] .pmt-card-g-track { display: none; }
+html[data-theme^="retro"] .pmt-card-g-dot { display: none; }
+html[data-theme^="retro"] .pmt-card-g-sq { display: inline; }
+html[data-theme^="retro"] .pmt-card-chev { display: none; }
+html[data-theme^="retro"] .pmt-card-toggle { width: 30px; }
+html[data-theme^="retro"] .pmt-card-tg-text { display: inline; font-weight: 600; }
+html[data-theme^="retro"] .pmt-card-tg-text::before { content: "["; }
+html[data-theme^="retro"] .pmt-card-tg-text::after { content: "]"; }
+html[data-theme^="retro"] .pmt-card-act::before { content: "["; }
+html[data-theme^="retro"] .pmt-card-act::after { content: "]"; }
+html[data-theme^="retro"] .pmt-card-act { padding: 0 4px; }
+html[data-theme^="retro"] .pmt-card-act:hover,
+html[data-theme^="retro"] .pmt-card-act:focus-visible,
+html[data-theme^="retro"] .pmt-card-toggle:hover,
+html[data-theme^="retro"] .pmt-card-toggle:focus-visible {
+  background: var(--pmt-card-ink);
+  color: var(--pmt-card-bg);
+  outline: none;
+}
+/* reverse video: the head of the card that holds focus */
+html[data-theme^="retro"] .pmt-card:focus-within .pmt-card-head {
+  background: var(--pmt-card-ink);
+  color: var(--pmt-card-bg);
+  --pmt-card-sc: currentColor;
+}
+html[data-theme^="retro"] .pmt-card:focus-within .pmt-card-head :is(.pmt-card-cmd, .pmt-card-meta, .pmt-card-status, .pmt-card-sep, .pmt-card-fail, .pmt-card-toggle) { color: inherit; }
+html[data-theme^="retro"] .pmt-card:focus-within .pmt-card-glyph::before,
+html[data-theme^="retro"] .pmt-card:focus-within .pmt-card-glyph::after { color: inherit; }
+html[data-theme^="retro"] .pmt-card:focus-within .pmt-card-head .pmt-card-toggle:focus-visible {
+  background: var(--pmt-card-bg);
+  color: var(--pmt-card-ink);
+}
+
+/* ---- NieR: ink on parchment, square, no glow. Each touch is gated by its installed part ---- */
+html[data-o55-nier="on"] .pmt-card {
+  --pmt-card-bg: var(--o55-nier-raised);
+  --pmt-card-edge: rgba(var(--o55-nier-ink-rgb), .36);
+  --pmt-card-rule: rgba(var(--o55-nier-ink-rgb), .28);
+  --pmt-card-well: var(--o55-nier-code-bg);
+  --pmt-card-ink: var(--o55-nier-ink);
+  --pmt-card-ink-2: var(--text-secondary);
+  --pmt-card-ink-3: var(--text-muted);
+  --pmt-card-accent: var(--o55-nier-ink);
+  --pmt-card-run: var(--o55-nier-ink);
+  --pmt-card-ok: var(--o55-nier-ok-text);
+  --pmt-card-bad: color-mix(in srgb, var(--o55-nier-error-text) 78%, var(--o55-nier-ink));
+  --pmt-card-warn: var(--o55-nier-warn-text);
+  --pmt-card-off: var(--text-secondary);
+  --pmt-card-tint: rgba(var(--o55-nier-ink-rgb), .09);
+  --pmt-card-shadow: none;
+  --pmt-card-t: 0ms;
+}
+/* the accent is the ink itself, so the reveal action stands out by weight: ink at 600, the rest secondary at 500 */
+html[data-o55-nier="on"] .pmt-card-act:not(.pmt-card-act-primary) { font-weight: 500; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-card { --pmt-card-radius: 0px; --pmt-card-btn-radius: 0px; }
+/* icons: square strokes, and the running mark is a still ink square */
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmt-card-g,
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmt-card-chev { stroke-linecap: square; stroke-linejoin: miter; }
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] :is(.pmt-card-g-dot, .pmt-card-g-track) { display: none; }
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] :is(.pmt-card-g-sq, .pmt-card-g-frame) { display: inline; }
+/* headers: the rule under the head is a hairline with a square cap at each end */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmt-card-out {
+  padding-top: 10px;
+  border-top-color: transparent;
+  background-image: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45));
+  background-size: 5px 5px, 5px 5px, calc(100% - 12px) 1px;
+  background-position: left -1px, right -1px, center 1px;
+  background-repeat: no-repeat;
+}
+/* cursor: the hovered or focused action is an ink bar with paper text, the square cursor beside it */
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmt-card-actions { padding-left: 18px; column-gap: 18px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmt-card-act, .pmt-card-toggle):is(:hover, :focus-visible) {
+  background: var(--o55-nier-ink);
+  color: var(--o55-nier-on-ink);
+  outline: none;
+}
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmt-card-act:is(:hover, :focus-visible)::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin-top: -5px;
+  background:
+    linear-gradient(var(--o55-nier-paper), var(--o55-nier-paper)) 2px 2px / 2px 2px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 100% 6px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 6px 100% no-repeat;
+}
+@keyframes pmt-card-nudge { 0% { translate: 0 0; } 50% { translate: -3px 0; } 100% { translate: 0 0; } }
+@media (prefers-reduced-motion: no-preference) {
+  html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not([data-motion="reduced"]) .pmt-card-act:is(:hover, :focus-visible)::before {
+    animation: pmt-card-nudge 1.1s step-end infinite;
+  }
+}
+/* brackets: target brackets at the corners of the card that holds focus */
+html[data-o55-nier="on"][data-o55-nier-parts~="brackets"] .pmt-card:focus-within::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left top / 10px 1.5px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left top / 1.5px 10px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right top / 10px 1.5px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right top / 1.5px 10px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left bottom / 10px 1.5px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left bottom / 1.5px 10px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right bottom / 10px 1.5px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right bottom / 1.5px 10px no-repeat;
+}
+
+/* ---- Reduced Motion: nothing moves; the end states show at once (the turning glyph and the cursor nudge above
+   only exist under prefers-reduced-motion: no-preference without html[data-motion="reduced"]) ---- */
+html[data-motion="reduced"] .pmt-card { --pmt-card-t: 0ms; }
+@media (prefers-reduced-motion: reduce) {
+  .pmt-card { --pmt-card-t: 0ms; }
+}

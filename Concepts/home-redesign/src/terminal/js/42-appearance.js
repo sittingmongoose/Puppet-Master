@@ -14,6 +14,7 @@
     'vt323': { label: 'VT323', stack: "'VT323', 'JetBrains Mono', ui-monospace, monospace", size: 19, lineHeight: 1.05, licence: 'OFL-1.1' },
     'departure': { label: 'Departure Mono', stack: "'Departure Mono', 'JetBrains Mono', ui-monospace, monospace", size: 13.75, lineHeight: 1.2, licence: 'OFL-1.1' },
     'sixtyfour': { label: 'Sixtyfour', stack: "'Sixtyfour', 'JetBrains Mono', ui-monospace, monospace", size: 10, lineHeight: 1.45, licence: 'OFL-1.1' },
+    'sixtyfour-raster': { label: 'Sixtyfour Raster', stack: "'Sixtyfour Raster', 'Sixtyfour', 'JetBrains Mono', ui-monospace, monospace", size: 10, lineHeight: 1.45, licence: 'OFL-1.1' },
     'system': { label: 'System monospace', stack: "ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace", size: 13, lineHeight: 1.3, licence: 'system' }
   };
 
@@ -66,8 +67,8 @@
     bell: { type: 'enum', values: ['follow', 'visual', 'off'], default: 'follow', label: 'Bell' },
     stickyHeader: { type: 'bool', default: true, label: 'Sticky command header' },
     copyOnSelect: { type: 'bool', default: false, label: 'Copy on select' },
-    sixtyfourScan: { type: 'number', min: -53, max: 100, step: 1, default: 0, label: 'Sixtyfour scan' },
-    sixtyfourBleed: { type: 'number', min: 0, max: 100, step: 1, default: 0, label: 'Sixtyfour bleed' }
+    sixtyfourScan: { type: 'number', min: -53, max: 100, step: 1, default: 0, label: 'Sixtyfour scan (native renderer only)' },
+    sixtyfourBleed: { type: 'number', min: 0, max: 100, step: 1, default: 0, label: 'Sixtyfour bleed (native renderer only)' }
   };
   var DEFAULTS = {}; Object.keys(FIELDS).forEach(function (k) { DEFAULTS[k] = FIELDS[k].default; });
 

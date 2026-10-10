@@ -26,3 +26,7 @@
 @font-face { font-family: 'Atkinson Hyperlegible Mono'; font-style: normal; font-weight: 200 800; font-display: swap; src: url("o55font:pmt-atkinson-hyperlegible-mono-latin-var.woff2") format("woff2"); }
 @font-face { font-family: 'Atkinson Hyperlegible Mono'; font-style: italic; font-weight: 200 800; font-display: swap; src: url("o55font:pmt-atkinson-hyperlegible-mono-latin-var-italic.woff2") format("woff2"); }
 @font-face { font-family: 'Departure Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url("o55font:pmt-departure-mono-400.woff2") format("woff2"); }
+
+/* Sixtyfour Raster: a static instance of Sixtyfour at SCAN 45, BLED 40, baked with fontTools varLib.instancer because a
+   canvas cannot set custom variation axes. It gives the motion-free CRT look of the font's own scanlines and bleed. */
+@font-face { font-family: 'Sixtyfour Raster'; src: url("o55font:pmt-sixtyfour-raster-latin.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }

@@ -89,7 +89,7 @@
         row('Line height', range('lineHeight', R.font.lineHeight, 1, 2, 0.05, R.font.lineHeight.toFixed(2))) +
         row('Letter spacing', range('letterSpacing', R.font.letterSpacing, -1, 3, 0.25, R.font.letterSpacing + ' px')) +
         row('Ligatures', check('ligatures', val('ligatures'), 'Join ligatures where the font has them')) +
-        (R.font.id === 'sixtyfour' ? row('Scan', range('sixtyfourScan', val('sixtyfourScan'), -53, 100, 1, String(val('sixtyfourScan')))) + row('Bleed', range('sixtyfourBleed', val('sixtyfourBleed'), 0, 100, 1, String(val('sixtyfourBleed')))) : '') +
+        (R.font.id === 'sixtyfour' || R.font.id === 'sixtyfour-raster' ? '<p class="pmt-pop-note">Sixtyfour Raster is Sixtyfour with its scanline and bleed axes set (45, 40): a CRT look with no motion.</p>' : '') +
         '</section>';
       /* cursor */
       html += '<section class="pmt-pop-sec" aria-label="Cursor"><h4>Cursor</h4>' +

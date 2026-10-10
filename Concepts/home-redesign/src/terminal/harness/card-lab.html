@@ -1,0 +1,975 @@
+<!doctype html>
+<html lang="en" data-theme="basic-dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Command card lab: the chat's compact command card</title>
+<!--
+  Standalone lab for js/80-card.js and css/80-card.css (DECISIONS.md D27, terminal brief item 9). It is a harness page:
+  the home layer never inlines it. Serve the Concepts folder over http (fonts load by relative URL) and open
+  home-redesign/src/terminal/harness/card-lab.html.
+  URL parameters for scripted shots: family=friendly|glass|retro|basic, mode=light|dark, nier=1, reduced=1,
+  width=360|480|600|all, freeze=1 (no streaming; the running card keeps ticking).
+-->
+<style>
+/* ---- faces (the lab loads them by relative URL; the layer inlines its own) ---- */
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap; src: url("../../../../onboarding/opus-5.5/src/fonts/inter-latin-100-900-normal.woff2") format("woff2"); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 400; font-display: swap; src: url("../../../../onboarding/opus-5.5/src/fonts/poppins-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 500; font-display: swap; src: url("../../../../onboarding/opus-5.5/src/fonts/poppins-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 600; font-display: swap; src: url("../../../../onboarding/opus-5.5/src/fonts/poppins-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 700; font-display: swap; src: url("../../../../onboarding/opus-5.5/src/fonts/poppins-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url("../../../../onboarding/opus-5.5/src/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url("../../../../onboarding/opus-5.5/src/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url("../../../../onboarding/opus-5.5/src/fonts/ibm-plex-mono-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 700; font-display: swap; src: url("../../../../onboarding/opus-5.5/src/fonts/ibm-plex-mono-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: 'PM NieR Sans'; font-style: normal; font-weight: 100 900; font-display: swap; src: url("../../../../onboarding/opus-5.5/src/settings/nier/fonts/mplus1-latin-var.woff2") format("woff2"); }
+@font-face { font-family: 'PM NieR Mono'; font-style: normal; font-weight: 100 800; font-display: swap; src: url("../fonts/pmt-jetbrains-mono-latin-var.woff2") format("woff2"); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 800; font-display: swap; src: url("../fonts/pmt-jetbrains-mono-latin-var.woff2") format("woff2"); }
+
+/* ---- the page's theme tokens, copied verbatim (the radius capsule token is left out) ---- */
+/* PM7 :root token contract (PMConcept7.html lines 171-213) */
+    :root {
+      --xs: 2px;
+      --sm: 4px;
+      --md: 8px;
+      --lg: 12px;
+      --xl: 16px;
+      --border-width: 2px;
+      --border-radius: 0px;
+      --display-font: 'Orbitron', sans-serif;
+      --body-font: 'Rajdhani', sans-serif;
+      --base-font-size: 14px;
+      --line-height: 1.4;
+      --letter-spacing: normal;
+      --grid-gap: 24px;
+      /* -- new PM6 tokens (verbatim contract block) -- */
+      --radius-xs:2px; --radius-sm:6px; --radius-md:10px; --radius-lg:16px; --radius-xl:22px;
+      --accent-primary:var(--accent-blue); --accent-primary-rgb:0,71,171;
+      --accent-soft:color-mix(in srgb, var(--accent-primary) 12%, transparent);
+      --accent-glow:color-mix(in srgb, var(--accent-primary) 25%, transparent);
+      --elev-1:0 1px 2px rgba(0,0,0,.12); --elev-2:0 4px 14px rgba(0,0,0,.16);
+      --elev-3:0 12px 36px rgba(0,0,0,.22); --elev-hover:0 10px 30px var(--accent-glow);
+      --motion-fast:120ms; --motion-med:240ms; --motion-slow:420ms;
+      --ease-out:cubic-bezier(.22,1,.36,1); --ease-spring:cubic-bezier(.34,1.56,.64,1);
+      --ease-smooth:cubic-bezier(.4,0,.2,1); --ease-snap:cubic-bezier(.2,0,0,1);
+      --ease-default:var(--ease-smooth); --sheen-dur:.6s;
+      /* Direct-manipulation motion (u11-prism vocabulary): pickup lift, drop
+         settle, and the neighbour-reflow FLIP shared by the dashboard widget
+         board and the Home surface drag. */
+      --mo-widget-pickup-dur:120ms; --mo-widget-pickup-ease:var(--ease-out);
+      --mo-widget-drop-dur:220ms; --mo-widget-drop-ease:var(--ease-snap);
+      --mo-widget-reflow-dur:240ms; --mo-widget-reflow-ease:cubic-bezier(.45,0,.4,1);
+      --mo-pulse:1.8s;
+      --fs-2xs:10px; --fs-xs:11px; --fs-sm:12px; --fs-md:14px; --fs-lg:16px; --fs-xl:20px; --fs-2xl:26px; --fs-3xl:32px;
+      --lh-tight:1.2; --lh-body:1.55; --2xl:24px; --3xl:32px; --density:1;
+      --activity-bar-w:72px; --files-panel-w:280px; --chat-panel-w:550px; --chat-sidebar-w:200px;
+      --tile-size:220px; --floating-chat-w:550px;
+      --glass-alpha:.55; --glass-tint-rgb:46,34,72; --panel-blur:16px; --panel-blur-sm:10px;
+      --glass-edge:rgba(255,255,255,.35); --glass-hairline:rgba(255,255,255,.08);
+      /* -- baseline-undefined var fix (six names referenced by legacy CSS/JS) -- */
+      --mono-font: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+      --font-mono: var(--mono-font);
+      --bg: var(--background);
+      --accent-red: var(--accent-error);
+      --accent-blue-rgb: var(--accent-primary-rgb);
+      --glass-glow-color: var(--accent-glow);
+    }
+/* retro-dark (PMConcept7.html line 309) */
+    [data-theme="retro-dark"] {
+      --background: #10120e;
+      --surface: #171a14;
+      --surface-elevated: #1e2219;
+      --text-primary: #dfe6cf;
+      --text-secondary: #a8b394;
+      --text-muted: #7c866b;
+      --border: #4a533a;
+      --border-light: #333a28;
+      --accent-blue: #9db4d0;
+      --accent-magenta: #d8b93c;
+      --accent-lime: #86c46a;
+      --accent-orange: #e9853f;
+      --accent-warning: #d8b93c;
+      --accent-error: #e2694f;
+      --accent-primary: var(--accent-lime);
+      --accent-primary-rgb: 184,208,102;
+      --graph-pending: #6C757D;
+      --graph-running: #FF9800;
+      --graph-passed: #4CAF50;
+      --graph-failed: #F44336;
+      --graph-planning: #2196F3;
+      --graph-gating: #9C27B0;
+      --shadow: 3px 3px 0 rgba(224,224,224,.55);
+      --pm6-rb-shadow-hard: 3px 3px 0 rgba(224,224,224,.55);
+      --elev-1: 2px 2px 0 rgba(224,224,224,.40);
+      --elev-2: 3px 3px 0 rgba(224,224,224,.55);
+      --elev-3: 5px 5px 0 rgba(224,224,224,.55);
+      --elev-hover: 4px 4px 0 var(--accent-glow);
+      --display-font: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace;
+      --display-font-sm: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace;
+      --body-font: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace;
+      --base-font-size: 15px;
+      --line-height: 1.55;
+      --border-radius: 0px;
+      --border-width: 2px;
+      --border-width-inner: 1px;
+      --radius-xs: 2px;
+      --radius-sm: 0px;
+      --radius-md: 0px;
+      --radius-lg: 0px;
+      --radius-xl: 0px;
+      --grid-gap: 24px;
+      --ease-default: var(--ease-snap);
+      --motion-med: 140ms;
+      --sheen-dur: .35s;
+    }
+/* retro-light (PMConcept7.html line 361) */
+    [data-theme="retro-light"] {
+      --background: #F5F0E8;
+      --surface: #F5F0E8;
+      --surface-elevated: #FAF7F2;
+      --text-primary: #1A1A1A;
+      --text-secondary: #444444;
+      --text-muted: #524F49;
+      --border: #4A463F;
+      --border-light: #D8D1C7;
+      --accent-blue: #0047AB;
+      --accent-magenta: #FF1493;
+      --accent-lime: #2F7A3D;
+      --accent-orange: #FF7F27;
+      --accent-warning: #F57C00;
+      --accent-error: #D32F2F;
+      --accent-primary: var(--accent-blue);
+      --accent-primary-rgb: 0,71,171;
+      --graph-pending: #ADB5BD;
+      --graph-running: #FFB74D;
+      --graph-passed: #66BB6A;
+      --graph-failed: #EF5350;
+      --graph-planning: #42A5F5;
+      --graph-gating: #AB47BC;
+      --shadow: 3px 3px 0 rgba(26,26,26,.30);
+      --pm6-rb-shadow-hard: 3px 3px 0 rgba(26,26,26,.30);
+      --elev-1: 2px 2px 0 rgba(26,26,26,.22);
+      --elev-2: 3px 3px 0 rgba(26,26,26,.30);
+      --elev-3: 5px 5px 0 rgba(26,26,26,.30);
+      --elev-hover: 4px 4px 0 var(--accent-glow);
+      --display-font: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace;
+      --display-font-sm: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace;
+      --body-font: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace;
+      --base-font-size: 15px;
+      --line-height: 1.55;
+      --border-radius: 0px;
+      --border-width: 2px;
+      --border-width-inner: 1px;
+      --radius-xs: 2px;
+      --radius-sm: 0px;
+      --radius-md: 0px;
+      --radius-lg: 0px;
+      --radius-xl: 0px;
+      --grid-gap: 24px;
+      --ease-default: var(--ease-snap);
+      --motion-med: 140ms;
+      --sheen-dur: .35s;
+    }
+/* basic-light (PMConcept7.html line 413) */
+    [data-theme="basic-light"] {
+      --background: #EAECEF;
+      --surface: #EAECEF;
+      --surface-elevated: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #3B3B3B;
+      --text-muted: #5C6470;
+      --border: #C4C4C4;
+      --border-light: #E0E0E0;
+      --accent-blue: #0056B3;
+      --accent-magenta: #D32F2F;
+      --accent-lime: #0B8043;
+      --accent-orange: #E65100;
+      --accent-warning: #E65100;
+      --accent-error: #C62828;
+      --accent-primary-rgb: 0,86,179;
+      --graph-pending: #ADB5BD;
+      --graph-running: #FF9800;
+      --graph-passed: #4CAF50;
+      --graph-failed: #F44336;
+      --graph-planning: #2196F3;
+      --graph-gating: #9C27B0;
+      --shadow: none;
+      --elev-1: 0 1px 2px rgba(0,0,0,.08);
+      --elev-2: 0 2px 8px rgba(0,0,0,.10);
+      --elev-3: 0 6px 20px rgba(0,0,0,.14);
+      --elev-hover: 0 6px 18px var(--accent-glow);
+      --base-font-size: 15px;
+      --line-height: 1.6;
+      --letter-spacing: 0.02em;
+      --display-font: 'Inter', system-ui, sans-serif;
+      --body-font: 'Inter', system-ui, sans-serif;
+      --border-radius: 4px;
+      --border-width: 1px;
+      --radius-xs: 2px;
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+      --radius-xl: 10px;
+      --grid-gap: 24px;
+      --ease-default: var(--ease-smooth);
+      --motion-med: 200ms;
+    }
+/* basic-dark (PMConcept7.html line 460) */
+    [data-theme="basic-dark"] {
+      --background: #121212;
+      --surface: #1E1E1E;
+      --surface-elevated: #2D2D2D;
+      --text-primary: #E8E8E8;
+      --text-secondary: #A0A0A0;
+      --text-muted: #6B7280;
+      --border: #424242;
+      --border-light: #333333;
+      --accent-blue: #64B5F6;
+      --accent-magenta: #FF69B4;
+      --accent-lime: #3DD68C;
+      --accent-orange: #FFA347;
+      --accent-warning: #FFB74D;
+      --accent-error: #EF5350;
+      --accent-primary-rgb: 100,181,246;
+      --graph-pending: #6C757D;
+      --graph-running: #FF9800;
+      --graph-passed: #4CAF50;
+      --graph-failed: #F44336;
+      --graph-planning: #2196F3;
+      --graph-gating: #9C27B0;
+      --shadow: none;
+      --elev-1: 0 1px 2px rgba(0,0,0,.20);
+      --elev-2: 0 2px 8px rgba(0,0,0,.24);
+      --elev-3: 0 6px 20px rgba(0,0,0,.30);
+      --elev-hover: 0 6px 18px var(--accent-glow);
+      --base-font-size: 15px;
+      --line-height: 1.6;
+      --letter-spacing: 0.02em;
+      --display-font: 'Inter', system-ui, sans-serif;
+      --body-font: 'Inter', system-ui, sans-serif;
+      --border-radius: 4px;
+      --border-width: 1px;
+      --radius-xs: 2px;
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+      --radius-xl: 10px;
+      --grid-gap: 24px;
+      --ease-default: var(--ease-smooth);
+      --motion-med: 200ms;
+    }
+/* glass-dark (PMConcept7.html line 511) */
+    [data-theme="glass-dark"] {
+      --background: #241B36;
+      --glass-tint-rgb: 46,34,72;
+      --glass-alpha: .60;
+      --surface: rgba(var(--glass-tint-rgb), var(--glass-alpha));
+      --surface-elevated: rgba(58,44,88, calc(var(--glass-alpha) + .08));
+      --text-primary: #EDE7F8;
+      --text-secondary: #CFC5E6;
+      --text-muted: rgba(237,231,248,.55);
+      --border: rgba(255,255,255,.14);
+      --border-light: rgba(255,255,255,.08);
+      --accent-blue: #B79CFF;
+      --accent-magenta: #E58BC8;
+      --accent-lime: #8FD9A5;
+      --accent-orange: #F3B266;
+      --accent-warning: #F6C888;
+      --accent-error: #F0879B;
+      --accent-primary-rgb: 183,156,255;
+      --graph-pending: rgba(207,197,230,.55);
+      --graph-running: #F3B266;
+      --graph-passed: #8FD9A5;
+      --graph-failed: #F0879B;
+      --graph-planning: #93A2F2;
+      --graph-gating: #E58BC8;
+      --shadow: 0 8px 24px rgba(10,5,25,.45);
+      --elev-1: 0 2px 8px rgba(10,5,25,.35);
+      --elev-2: 0 8px 24px rgba(10,5,25,.45);
+      --elev-3: 0 16px 44px rgba(10,5,25,.55);
+      --glass-edge: rgba(255,255,255,.40);
+      --glass-hairline: rgba(255,255,255,.16);
+      --display-font: 'Inter', system-ui, sans-serif;
+      --body-font: 'Inter', system-ui, sans-serif;
+      --border-radius: 14px;
+      --border-width: 0px;
+      --base-font-size: 14px;
+      --line-height: 1.5;
+      --letter-spacing: 0.01em;
+      --grid-gap: 24px;
+      --ease-default: var(--ease-out);
+      --motion-med: 320ms;
+      --sheen-dur: .7s;
+    }
+/* glass-light (PMConcept7.html line 554) */
+    [data-theme="glass-light"] {
+      --background: #E4CDE4;
+      --glass-tint-rgb: 246,240,255;
+      --glass-alpha: .55;
+      --surface: rgba(var(--glass-tint-rgb), var(--glass-alpha));
+      --surface-elevated: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .18));
+      --text-primary: #453A5C;
+      --text-secondary: rgba(69,58,92,.75);
+      --text-muted: rgba(69,58,92,.55);
+      --border: rgba(69,58,92,.16);
+      --border-light: rgba(69,58,92,.09);
+      --accent-blue: #8B6ED9;
+      --accent-magenta: #C167B4;
+      --accent-lime: #3E7D4E;
+      --accent-orange: #B26A2A;
+      --accent-warning: #8F6410;
+      --accent-error: #C0566B;
+      --accent-primary-rgb: 139,110,217;
+      --graph-pending: rgba(69,58,92,.40);
+      --graph-running: #B26A2A;
+      --graph-passed: #3E7D4E;
+      --graph-failed: #C0566B;
+      --graph-planning: #7E8BE0;
+      --graph-gating: #C167B4;
+      --shadow: 0 8px 24px rgba(93,63,133,.16);
+      --elev-1: 0 2px 8px rgba(93,63,133,.10);
+      --elev-2: 0 8px 24px rgba(93,63,133,.16);
+      --elev-3: 0 16px 44px rgba(93,63,133,.22);
+      --glass-edge: rgba(255,255,255,.95);
+      --glass-hairline: rgba(255,255,255,.55);
+      --display-font: 'Inter', system-ui, sans-serif;
+      --body-font: 'Inter', system-ui, sans-serif;
+      --border-radius: 14px;
+      --border-width: 0px;
+      --base-font-size: 14px;
+      --line-height: 1.5;
+      --letter-spacing: 0.01em;
+      --grid-gap: 20px;
+      --ease-default: var(--ease-out);
+      --motion-med: 320ms;
+      --sheen-dur: .7s;
+    }
+/* friendly-dark (PMConcept7.html line 605) */
+    [data-theme="friendly-dark"] {
+      --background: #211E26;
+      --surface: #2A2731;
+      --surface-elevated: #322E3A;
+      --surface-alt: #262330;
+      --text-primary: #F0EDF4;
+      --text-secondary: #B4AEBE;
+      --text-muted: #8A8494;
+      --border: rgba(240,237,244,.10);
+      --border-light: rgba(240,237,244,.06);
+      --accent-blue: #6FC6E8;
+      --accent-magenta: #C3B1E4;
+      --accent-lime: #6FDABC;
+      --accent-orange: #FFAD93;
+      --accent-warning: #FFD97F;
+      --accent-error: #FF8A73;
+      --accent-primary-rgb: 111,198,232;
+      --graph-pending: #8A8494;
+      --graph-running: #FFAD93;
+      --graph-passed: #6FDABC;
+      --graph-failed: #FF8A73;
+      --graph-planning: #6FC6E8;
+      --graph-gating: #C3B1E4;
+      --shadow: 0 2px 6px rgba(0,0,0,.30), 0 10px 24px rgba(0,0,0,.22);
+      --elev-1: 0 1px 3px rgba(0,0,0,.26);
+      --elev-2: 0 2px 6px rgba(0,0,0,.30), 0 10px 24px rgba(0,0,0,.22);
+      --elev-3: 0 14px 40px rgba(0,0,0,.34);
+      --elev-hover: 0 12px 30px rgba(111,198,232,.20);
+      --display-font: 'Poppins', 'Nunito', system-ui, sans-serif;
+      --body-font: 'Poppins', 'Nunito', system-ui, sans-serif;
+      --base-font-size: 14.5px;
+      --line-height: 1.55;
+      --letter-spacing: normal;
+      --border-radius: 14px;
+      --border-width: 1px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --grid-gap: 20px;
+      --ease-default: var(--ease-spring);
+      --motion-med: 260ms;
+      --sheen-dur: .55s;
+      /* cozy hooks (dark derivation: same pastels, slightly brighter) */
+      --pm6-cozy-mint: #6FDABC;
+      --pm6-cozy-sky: #6FC6E8;
+      --pm6-cozy-coral: #FFAD93;
+      --pm6-cozy-lav: #C3B1E4;
+      --pm6-cozy-butter: #FFD97F;
+      --pm6-cozy-card-base: #2A2731;
+      --pm6-cozy-mix: 14%;
+      --pm6-cozy-border-mix: 34%;
+      --pm6-cozy-chrome: rgba(40,36,48,.82);
+      --pm6-cozy-chrome-border: rgba(255,255,255,.08);
+      --pm6-cozy-field: rgba(255,255,255,.06);
+      --pm6-cozy-dot: rgba(190,180,210,.06);
+      --pm6-cozy-glow-mint: rgba(95,208,176,.10);
+      --pm6-cozy-glow-lav: rgba(179,157,219,.12);
+      --pm6-cozy-glow-sky: rgba(90,185,224,.09);
+    }
+/* friendly-light (PMConcept7.html line 664) */
+    [data-theme="friendly-light"] {
+      --background: #FBF7F3;
+      --surface: #FFFFFF;
+      --surface-elevated: #FFFFFF;
+      --surface-alt: #F5EFEA;
+      --text-primary: #4A4550;
+      --text-secondary: #6B6473;
+      --text-muted: #9A93A0;
+      --border: #E4DCEA;
+      --border-light: #EFEAF3;
+      --accent-blue: #3F9CC7;
+      --accent-magenta: #9678C9;
+      --accent-lime: #2FA183;
+      --accent-orange: #F07A55;
+      --accent-warning: #D9A62A;
+      --accent-error: #E8654C;
+      --accent-primary-rgb: 63,156,199;
+      --graph-pending: #9A93A0;
+      --graph-running: #F07A55;
+      --graph-passed: #2FA183;
+      --graph-failed: #E8654C;
+      --graph-planning: #3F9CC7;
+      --graph-gating: #9678C9;
+      --shadow: 0 4px 16px rgba(122,109,140,.12);
+      --elev-1: 0 2px 8px rgba(122,109,140,.10);
+      --elev-2: 0 4px 16px rgba(122,109,140,.12);
+      --elev-3: 0 14px 40px rgba(122,109,140,.20);
+      --elev-hover: 0 10px 26px rgba(90,185,224,.25);
+      --display-font: 'Poppins', 'Nunito', system-ui, sans-serif;
+      --body-font: 'Poppins', 'Nunito', system-ui, sans-serif;
+      --base-font-size: 14.5px;
+      --line-height: 1.55;
+      --letter-spacing: normal;
+      --border-radius: 14px;
+      --border-width: 1px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --grid-gap: 20px;
+      --ease-default: var(--ease-spring);
+      --motion-med: 260ms;
+      --sheen-dur: .55s;
+      /* cozy hooks (approved mockup palette, pure pastels) */
+      --pm6-cozy-mint: #5FD0B0;
+      --pm6-cozy-sky: #5AB9E0;
+      --pm6-cozy-coral: #FF9E80;
+      --pm6-cozy-lav: #B39DDB;
+      --pm6-cozy-butter: #FFD166;
+      --pm6-cozy-card-base: #FFFFFF;
+      --pm6-cozy-mix: 11%;
+      --pm6-cozy-border-mix: 30%;
+      --pm6-cozy-chrome: rgba(255,255,255,.88);
+      --pm6-cozy-chrome-border: rgba(255,255,255,.85);
+      --pm6-cozy-field: rgba(255,255,255,.70);
+      --pm6-cozy-dot: rgba(122,109,140,.10);
+      --pm6-cozy-glow-mint: rgba(95,208,176,.16);
+      --pm6-cozy-glow-lav: rgba(179,157,219,.18);
+      --pm6-cozy-glow-sky: rgba(90,185,224,.14);
+    }
+
+/* NieR root token tables (onboarding/opus-5.5/src/settings/styles.d/13-nier.css, generated by tools/nier_palette.py) */
+html[data-o55-nier][data-theme="basic-light"] {
+  --background: #ccc8b1;
+  --bg: #ccc8b1;
+  --surface: #c6c2ab;
+  --surface-elevated: #d1cdb7;
+  --surface-alt: #bfbba4;
+  --text-primary: #211f1b;
+  --text-secondary: #4d4b3f;
+  --text-muted: #4d4b40;
+  --border: #a29e89;
+  --border-light: #aeaa93;
+  --accent-primary: #211f1b;
+  --accent-primary-rgb: 33,31,27;
+  --accent-blue: #211f1b;
+  --accent-blue-rgb: 33,31,27;
+  --accent-magenta: #a94a38;
+  --accent-lime: #676930; /* derived: olive from the warning hue */
+  --accent-orange: #5c5022;
+  --accent-warning: #5c5022;
+  --accent-error: #a94a38;
+  --accent-red: #a94a38;
+  --accent-soft: rgba(33,31,27,0.1);
+  --accent-glow: rgba(33,31,27,0.18);
+  --glass-glow-color: rgba(33,31,27,0.18);
+  --graph-pending: #928e7a;
+  --graph-running: #a08e42;
+  --graph-passed: #676930; /* derived */
+  --graph-failed: #a94a38;
+  --graph-planning: #211f1b; /* info is the ink accent */
+  --graph-gating: #454138;
+  --cat-blue: #211f1b;
+  --cat-green: #676930; /* derived */
+  --cat-amber: #a08e42;
+  --cat-warn: #5c5022;
+  --cat-purple: #454138;
+  --cat-fail: #a94a38;
+  --cat-neutral: #4d4b40;
+  --shadow: none;
+  --elev-1: 0 1px 2px rgba(33,31,27,0.1);
+  --elev-2: 0 2px 6px rgba(33,31,27,0.12);
+  --elev-3: 0 6px 16px rgba(33,31,27,0.16);
+  --elev-hover: 0 4px 12px rgba(33,31,27,0.14);
+  --pm6-sb-thumb: #aaa691;
+  --pm6-sb-thumb-hover: #96926f;
+  --diff-added-bg: rgba(103,105,48,0.12);
+  --diff-modified-bg: rgba(33,31,27,0.07);
+  --diff-deleted-bg: rgba(169,74,56,0.1);
+  --diff-conflict-bg: rgba(160,142,66,0.16);
+  --diff-added-flash-bg: rgba(103,105,48,0.24);
+  --diff-modified-flash-bg: rgba(33,31,27,0.16);
+  --diff-conflict-flash-bg: rgba(160,142,66,0.28);
+  --terminal-bg: #ccc8b1;
+  --terminal-fg: #211f1b;
+  --terminal-fg-2: #a94a38;
+  --terminal-fg-3: #5c5022;
+  --terminal-fg-4: #4d4b40;
+  --terminal-chrome: #bfbba4;
+  --body-font: "PM NieR Sans", "Inter", system-ui, sans-serif;
+  --display-font: "PM NieR Sans", "Inter", system-ui, sans-serif;
+  --mono-font: "PM NieR Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --font-mono: "PM NieR Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --base-font-size: 15px;
+  --line-height: 1.6;
+  --letter-spacing: 0.02em;
+  --border-radius: 4px;
+  --border-width: 1px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --grid-gap: 20px;
+  --ease-default: var(--ease-smooth);
+  --motion-med: 200ms;
+  --pm8-ring: 2px;
+  --pm8-bleed: 10;
+  --pm8-edge: .45;
+  --pm8-ramp: 14;
+  --pm8-spot-glow: 0;
+  --pm8-glow: 0;
+  --pm8-wash: .30;
+  --pm8-mag: .9;
+  --pm8-stiff: 210;
+  --pm8-damp: 26;
+  --o55-nier-ink: #211f1b;
+  --o55-nier-ink-rgb: 33,31,27;
+  --o55-nier-on-ink: #dcd8c2;
+  --o55-nier-paper: #ccc8b1;
+  --o55-nier-paper-rgb: 204,200,177;
+  --o55-nier-raised: #d1cdb7;
+  --o55-nier-overlay: #d7d3bf;
+  --o55-nier-secondary: #c1bda5;
+  --o55-nier-hover: #b8b49d;
+  --o55-nier-active: #b1ad96;
+  --o55-nier-selected: #aeaa93;
+  --o55-nier-line-strong: #928e7a;
+  --o55-nier-ok: #676930;
+  --o55-nier-ok-text: #525426; /* derived */
+  --o55-nier-ok-surface: rgba(103,105,48,0.18);
+  --o55-nier-warn: #a08e42;
+  --o55-nier-warn-text: #5c5022;
+  --o55-nier-warn-surface: #ccc49e;
+  --o55-nier-error: #a94a38;
+  --o55-nier-error-text: #7d3427;
+  --o55-nier-error-surface: #cfb7a2;
+  --o55-nier-code-bg: #c6c2ab;
+  --o55-nier-code-fg: #211f1b;
+  --o55-nier-term-selection: #aeaa93;
+  --o55-nier-term-cursor: #211f1b;
+  --o55-nier-shadow-rgb: 33,31,27;
+}
+html[data-o55-nier][data-theme="basic-dark"] {
+  --background: #2f2d26;
+  --bg: #2f2d26;
+  --surface: #36342c;
+  --surface-elevated: #3b3930;
+  --surface-alt: #282620;
+  --text-primary: #d1cdb7;
+  --text-secondary: #a8a593;
+  --text-muted: #9d9986;
+  --border: #4f4d45;
+  --border-light: #45433a;
+  --accent-primary: #d1cdb7;
+  --accent-primary-rgb: 209,205,183;
+  --accent-blue: #d1cdb7;
+  --accent-blue-rgb: 209,205,183;
+  --accent-magenta: #c96b57;
+  --accent-lime: #b6b964; /* derived: olive from the warning hue */
+  --accent-orange: #c2b169;
+  --accent-warning: #c2b169;
+  --accent-error: #c96b57;
+  --accent-red: #c96b57;
+  --accent-soft: rgba(209,205,183,0.12);
+  --accent-glow: rgba(209,205,183,0.18);
+  --glass-glow-color: rgba(209,205,183,0.18);
+  --graph-pending: #9d9986;
+  --graph-running: #c2b169;
+  --graph-passed: #b6b964; /* derived */
+  --graph-failed: #c96b57;
+  --graph-planning: #d1cdb7; /* info is the ink accent */
+  --graph-gating: #b5b096;
+  --cat-blue: #d1cdb7;
+  --cat-green: #b6b964; /* derived */
+  --cat-amber: #c2b169;
+  --cat-warn: #c2b169;
+  --cat-purple: #b5b096;
+  --cat-fail: #c96b57;
+  --cat-neutral: #9d9986;
+  --shadow: none;
+  --elev-1: 0 1px 2px rgba(33,31,27,0.4);
+  --elev-2: 0 2px 6px rgba(33,31,27,0.45);
+  --elev-3: 0 6px 16px rgba(33,31,27,0.55);
+  --elev-hover: 0 4px 12px rgba(33,31,27,0.5);
+  --pm6-sb-thumb: #403e35;
+  --pm6-sb-thumb-hover: #4c4a40;
+  --diff-added-bg: rgba(182,185,100,0.12);
+  --diff-modified-bg: rgba(209,205,183,0.08);
+  --diff-deleted-bg: rgba(201,107,87,0.12);
+  --diff-conflict-bg: rgba(194,177,105,0.14);
+  --diff-added-flash-bg: rgba(182,185,100,0.24);
+  --diff-modified-flash-bg: rgba(209,205,183,0.16);
+  --diff-conflict-flash-bg: rgba(194,177,105,0.24);
+  --terminal-bg: #2b2923;
+  --terminal-fg: #d1cdb7;
+  --terminal-fg-2: #d98a77;
+  --terminal-fg-3: #d3c47e;
+  --terminal-fg-4: #9d9986;
+  --terminal-chrome: #282620;
+  --body-font: "PM NieR Sans", "Inter", system-ui, sans-serif;
+  --display-font: "PM NieR Sans", "Inter", system-ui, sans-serif;
+  --mono-font: "PM NieR Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --font-mono: "PM NieR Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --base-font-size: 15px;
+  --line-height: 1.6;
+  --letter-spacing: 0.02em;
+  --border-radius: 4px;
+  --border-width: 1px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --grid-gap: 20px;
+  --ease-default: var(--ease-smooth);
+  --motion-med: 200ms;
+  --pm8-ring: 2px;
+  --pm8-bleed: 10;
+  --pm8-edge: .45;
+  --pm8-ramp: 14;
+  --pm8-spot-glow: 0;
+  --pm8-glow: 0;
+  --pm8-wash: .30;
+  --pm8-mag: .9;
+  --pm8-stiff: 210;
+  --pm8-damp: 26;
+  --o55-nier-ink: #d1cdb7;
+  --o55-nier-ink-rgb: 209,205,183;
+  --o55-nier-on-ink: #2f2d26;
+  --o55-nier-paper: #2f2d26;
+  --o55-nier-paper-rgb: 47,45,38;
+  --o55-nier-raised: #3b3930;
+  --o55-nier-overlay: #403e35;
+  --o55-nier-secondary: #3d3b33;
+  --o55-nier-hover: #33312a;
+  --o55-nier-active: #3a382f;
+  --o55-nier-selected: #3d3b33;
+  --o55-nier-line-strong: #49473f;
+  --o55-nier-ok: #b6b964;
+  --o55-nier-ok-text: #c0c379; /* derived */
+  --o55-nier-ok-surface: rgba(182,185,100,0.18);
+  --o55-nier-warn: #c2b169;
+  --o55-nier-warn-text: #d3c47e;
+  --o55-nier-warn-surface: #403a24;
+  --o55-nier-error: #c96b57;
+  --o55-nier-error-text: #d98a77;
+  --o55-nier-error-surface: #45302a;
+  --o55-nier-code-bg: #33312a;
+  --o55-nier-code-fg: #ccc8b1;
+  --o55-nier-term-selection: #45433a;
+  --o55-nier-term-cursor: #d1cdb7;
+  --o55-nier-shadow-rgb: 33,31,27;
+}
+
+/* ---- host token the panels CSS defines (CONTRACT.md section 10): JetBrains Mono first in every look ---- */
+:root { --pm-font-code: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace; }
+
+/* ---- lab chrome (pmt-lab-*): not part of the card ---- */
+html, body { margin: 0; padding: 0; }
+html { min-height: 100%; }
+body {
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--body-font);
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+}
+html[data-theme="glass-dark"] body {
+  background: radial-gradient(120% 80% at 15% 10%, #6d4f9e 0%, transparent 60%),
+    radial-gradient(90% 70% at 85% 30%, #b0629a 0%, transparent 55%),
+    linear-gradient(180deg, #2a1f45 0%, #1b1430 100%);
+}
+html[data-theme="glass-light"] body {
+  background: radial-gradient(110% 80% at 20% 0%, #f7e4f2 0%, transparent 60%),
+    radial-gradient(90% 70% at 85% 35%, #cdbdf0 0%, transparent 60%),
+    linear-gradient(180deg, #e9d6ea 0%, #d8c8ec 100%);
+}
+.pmt-lab-bar {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px;
+  padding: 10px 18px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+html[data-theme^="glass"] .pmt-lab-bar { backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); }
+.pmt-lab-title { font-weight: 650; font-size: 13px; margin-right: 6px; }
+.pmt-lab-group { display: inline-flex; align-items: center; gap: 4px; }
+.pmt-lab-group > span { color: var(--text-secondary); font-size: 11.5px; margin-right: 4px; }
+.pmt-lab-btn {
+  appearance: none; height: 26px; padding: 0 10px; margin: 0;
+  border: 1px solid var(--border); border-radius: var(--radius-sm, 4px);
+  background: transparent; color: var(--text-secondary);
+  font: 600 11.5px/24px var(--body-font); cursor: pointer;
+}
+.pmt-lab-btn[aria-pressed="true"] { background: var(--text-primary); color: var(--background); border-color: var(--text-primary); }
+.pmt-lab-btn:disabled { opacity: .45; cursor: default; }
+.pmt-lab-btn:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+.pmt-lab-stage { display: flex; gap: 28px; align-items: flex-start; padding: 22px 18px 60px; overflow-x: auto; }
+.pmt-lab-col { flex: none; }
+.pmt-lab-caption { color: var(--text-secondary); font-size: 11.5px; margin: 0 0 6px 2px; }
+
+/* the chat column mock: the 5.6 Pro transcript at its own width */
+.pmt-lab-chat {
+  box-sizing: border-box;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 8px);
+  padding: 16px 14px 18px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+html[data-theme^="glass"] .pmt-lab-chat { backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); border-color: var(--glass-hairline); }
+html[data-theme^="retro"] .pmt-lab-chat, html[data-o55-nier="on"] .pmt-lab-chat { border-radius: 0; }
+.pmt-lab-msg { font-size: 13px; line-height: 1.5; margin: 0; }
+.pmt-lab-msg code { font-family: var(--pm-font-code); font-size: 12px; }
+.pmt-lab-user {
+  align-self: flex-end; max-width: 82%;
+  padding: 8px 12px; border-radius: 14px;
+  background: color-mix(in srgb, var(--accent-primary) 12%, var(--surface-elevated));
+  border: 1px solid var(--border-light, var(--border));
+}
+html[data-theme^="basic"] .pmt-lab-user { border-radius: 8px; }
+html[data-theme^="retro"] .pmt-lab-user, html[data-o55-nier="on"] .pmt-lab-user { border-radius: 0; }
+.pmt-lab-asst { color: var(--text-primary); padding: 2px 2px; }
+.pmt-lab-note { color: var(--text-secondary); font-size: 11.5px; padding: 0 2px; }
+</style>
+<link rel="stylesheet" href="../css/80-card.css">
+</head>
+<body>
+<header class="pmt-lab-bar" aria-label="Look switcher">
+  <span class="pmt-lab-title">Command card lab</span>
+  <span class="pmt-lab-group" role="group" aria-label="Family"><span>Family</span>
+    <button type="button" class="pmt-lab-btn" data-lab-family="friendly">Friendly</button>
+    <button type="button" class="pmt-lab-btn" data-lab-family="glass">Glass</button>
+    <button type="button" class="pmt-lab-btn" data-lab-family="retro">Retro</button>
+    <button type="button" class="pmt-lab-btn" data-lab-family="basic">Basic</button>
+  </span>
+  <span class="pmt-lab-group" role="group" aria-label="Mode"><span>Mode</span>
+    <button type="button" class="pmt-lab-btn" data-lab-mode="light">Light</button>
+    <button type="button" class="pmt-lab-btn" data-lab-mode="dark">Dark</button>
+  </span>
+  <span class="pmt-lab-group" role="group" aria-label="Modes over the look">
+    <button type="button" class="pmt-lab-btn" data-lab-toggle="nier">NieR</button>
+    <button type="button" class="pmt-lab-btn" data-lab-toggle="reduced">Reduced Motion</button>
+  </span>
+  <span class="pmt-lab-group" role="group" aria-label="Chat width"><span>Chat width</span>
+    <button type="button" class="pmt-lab-btn" data-lab-width="360">360</button>
+    <button type="button" class="pmt-lab-btn" data-lab-width="480">480</button>
+    <button type="button" class="pmt-lab-btn" data-lab-width="600">600</button>
+    <button type="button" class="pmt-lab-btn" data-lab-width="all">All three</button>
+  </span>
+  <span class="pmt-lab-group" role="group" aria-label="Demo">
+    <button type="button" class="pmt-lab-btn" data-lab-do="expand">Expand all</button>
+    <button type="button" class="pmt-lab-btn" data-lab-do="collapse">Collapse all</button>
+    <button type="button" class="pmt-lab-btn" data-lab-do="restart">Restart the running test</button>
+  </span>
+</header>
+<main class="pmt-lab-stage" id="pmt-lab-stage"></main>
+
+<script>var T = {};</script>
+<script src="../js/80-card.js"></script>
+<script>
+(function () {
+  'use strict';
+  var html = document.documentElement;
+  var q = new URLSearchParams(location.search);
+  var look = {
+    family: q.get('family') || 'basic',
+    mode: q.get('mode') || 'dark',
+    nier: q.get('nier') === '1',
+    reduced: q.get('reduced') === '1',
+    width: q.get('width') || '480'
+  };
+  var freeze = q.get('freeze') === '1';
+  var ARROW = String.fromCodePoint(0x279c);
+
+  /* ---- fixtures: plain text, escapes already stripped, as the terminal hands them to the chat ---- */
+  function range(n, f) { var a = []; for (var i = 0; i < n; i++) a.push(f(i)); return a; }
+  var testNames = ['auth::session::tests::expires_idle', 'auth::session::tests::refresh_rotates', 'db::pool::tests::reuses_idle',
+    'media::import::tests::dedupes_by_hash', 'media::import::tests::keeps_exif_orientation', 'media::import::tests::large_batch',
+    'media::import::tests::rejects_empty_upload', 'router::tests::health_route', 'router::tests::rejects_unknown_tenant'];
+  var cargoFail = ['   Compiling tastebook-api v0.4.1 (/home/jared/tastebook/api)',
+    '    Finished `test` profile [unoptimized + debuginfo] target(s) in 41.20s',
+    '     Running unittests src/main.rs (target/debug/deps/tastebook_api-5f0c2a1d9e7b3c44)', '', 'running 128 tests']
+    .concat(range(120, function (i) { var n = testNames[i % testNames.length]; return 'test ' + n + (i > 8 ? '_' + i : '') + ' ... ' + (i === 5 ? 'FAILED' : 'ok'); }))
+    .concat(['', 'failures:', '', '---- media::import::tests::large_batch stdout ----',
+      "thread 'media::import::tests::large_batch' panicked at src/media/import.rs:128:14:",
+      'index out of bounds: the len is 400 but the index is 400',
+      'note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace', '', 'failures:',
+      '    media::import::tests::large_batch', '',
+      'test result: FAILED. 127 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.41s', '',
+      'error: test failed, to rerun pass `-p tastebook-api --lib`']);
+  var rerunScript = ['   Compiling tastebook-api v0.4.1 (/home/jared/tastebook/api)',
+    '    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.84s',
+    '     Running unittests src/main.rs (target/debug/deps/tastebook_api-5f0c2a1d9e7b3c44)', '', 'running 6 tests',
+    'test media::import::tests::dedupes_by_hash ... ok', 'test media::import::tests::keeps_exif_orientation ... ok',
+    'test media::import::tests::large_batch ... ok', 'test media::import::tests::rejects_empty_upload ... ok',
+    'test media::import::tests::resumes_partial_batch ... ok', 'test media::import::tests::streams_thumbnails ... ok', '',
+    'test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 122 filtered out; finished in 0.88s'];
+  var crates = ['proc-macro2 v1.0.92', 'unicode-ident v1.0.14', 'libc v0.2.169', 'cfg-if v1.0.0', 'once_cell v1.20.2', 'memchr v2.7.4',
+    'serde v1.0.217', 'itoa v1.0.14', 'bytes v1.9.0', 'pin-project-lite v0.2.16', 'quote v1.0.38', 'syn v2.0.96',
+    'tokio-macros v2.5.0', 'mio v1.0.3', 'socket2 v0.5.8', 'tokio v1.43.0', 'tracing-core v0.1.33', 'http v1.2.0',
+    'httparse v1.9.5', 'serde_derive v1.0.217', 'serde_json v1.0.135', 'hyper v1.5.2', 'tower v0.5.2', 'axum-core v0.5.0',
+    'image v0.25.5', 'kamadak-exif v0.6.1', 'blake3 v1.5.5', 'sqlx-core v0.8.3', 'sqlx-postgres v0.8.3', 'axum v0.8.1',
+    'tower-http v0.6.2', 'tracing-subscriber v0.3.19', 'uuid v1.12.0', 'chrono v0.4.39', 'thiserror v2.0.11', 'anyhow v1.0.95',
+    'reqwest v0.12.12', 'jsonwebtoken v9.3.0', 'argon2 v0.5.3'];
+  var release = crates.map(function (c) { return '   Compiling ' + c; })
+    .concat(['   Compiling tastebook-api v0.4.1 (/home/jared/tastebook/api)', '    Finished `release` profile [optimized] target(s) in 1m 47s']);
+  var bench = ['import-bench: 12 runs over 400 files (large-batch.json)']
+    .concat(range(12, function (i) { return 'run ' + (i < 9 ? ' ' : '') + (i + 1) + '  p50 ' + (58 + (i * 7) % 5) + ' ms  p95 ' + (70 + (i * 5) % 6) + ' ms'; }))
+    .concat(['summary: p50 59 ms, p95 72 ms, 0 errors', 'report written to target/bench/import.json']);
+  var vite = ['', '> tastebook-web@0.4.1 dev', '> vite', '', '  VITE v6.2.0  ready in 412 ms', '',
+    '  ' + ARROW + '  Local:   http://localhost:5173/', '  ' + ARROW + '  Network: use --host to expose',
+    '3:42:07 PM [vite] page reload src/routes/upload.tsx', '3:43:55 PM [vite] hmr update /src/components/BatchProgress.tsx', '^C'];
+
+  function noop() {}
+  function log(name) { return function () { note('Pressed ' + name); }; }
+  function cards() {
+    return {
+      failed: { command: 'cargo test --workspace', cwd: '~/tastebook/api', status: 'failed', exitCode: 101, elapsedMs: 62400,
+        lines: cargoFail, totalLines: cargoFail.length, by: 'agent:Builder',
+        failureLine: "thread 'media::import::tests::large_batch' panicked at src/media/import.rs:128:14:",
+        onOpen: log('Open in Terminal'), onRerun: log('Rerun in Terminal') },
+      running: { command: 'cargo test -p tastebook-api media::import', cwd: '~/tastebook/api', status: 'running',
+        startedAt: Date.now() - 12000, lines: freeze ? rerunScript.slice(0, 8) : [], totalLines: freeze ? 8 : 0, by: 'agent:Builder',
+        onOpen: log('Open in Terminal'), onRerun: log('Rerun in Terminal') },
+      waiting: { command: './scripts/setup-media.sh', cwd: '~/tastebook/api', status: 'waiting', startedAt: Date.now() - 31000,
+        lines: ['==> Checking the media toolchain', 'libvips 8.15 not found', '==> Installing libvips-dev with apt', '[sudo] password for jared: '],
+        totalLines: 4, by: 'agent:Builder', onOpen: log('Open in Terminal'), onRerun: log('Rerun in Terminal') },
+      interrupted: { command: 'npm run dev', cwd: '~/tastebook/web', status: 'interrupted', exitCode: 130, elapsedMs: 252000,
+        lines: vite, totalLines: vite.length, by: 'user', onOpen: log('Open in Terminal'), onRerun: log('Rerun in Terminal') },
+      release: { command: 'cargo build --release', cwd: '~/tastebook/api', status: 'ok', exitCode: 0, elapsedMs: 108000,
+        lines: release, totalLines: release.length, by: 'user', expanded: true, onOpen: log('Open in Terminal'), onRerun: log('Rerun in Terminal') },
+      bench: { command: 'RUST_LOG=tastebook_api::media=trace cargo run --release --bin import-bench -- --fixture assets/fixtures/large-batch.json --repeat 12 --report target/bench/import.json',
+        cwd: '~/tastebook/api', status: 'ok', exitCode: 0, elapsedMs: 38200, lines: bench, totalLines: bench.length, by: 'agent:Builder',
+        onViewOutput: log('View output'), onRerun: log('Rerun in Terminal') },
+      quiet: { command: 'mkdir -p target/bench', cwd: '~/tastebook/api', status: 'ok', exitCode: 0, elapsedMs: 40, lines: [], totalLines: 0,
+        by: 'agent:Builder', onViewOutput: log('View output'), onRerun: log('Rerun in Terminal') }
+    };
+  }
+
+  var live = [];   /* every running card instance, for the streaming demo */
+  function note(text) { document.querySelectorAll('.pmt-lab-note').forEach(function (n) { n.textContent = text; }); }
+
+  function msg(cls, htmlText) { var p = document.createElement('p'); p.className = 'pmt-lab-msg ' + cls; p.innerHTML = htmlText; return p; }
+  function column(width) {
+    var wrap = document.createElement('section');
+    wrap.className = 'pmt-lab-col';
+    wrap.setAttribute('aria-label', 'Chat column ' + width + ' px');
+    var cap = document.createElement('div'); cap.className = 'pmt-lab-caption'; cap.textContent = 'Chat column, ' + width + ' px';
+    var chat = document.createElement('div'); chat.className = 'pmt-lab-chat'; chat.style.width = width + 'px';
+    var c = cards();
+    var C = T.CommandCard;
+    chat.appendChild(msg('pmt-lab-user', 'The large batch import test is failing again. Can you find out why and fix it?'));
+    chat.appendChild(msg('pmt-lab-asst', 'I will run the whole test suite first to see what fails.'));
+    chat.appendChild(C.create(c.failed));
+    chat.appendChild(msg('pmt-lab-asst', 'One test fails: <code>large_batch</code> reads one past the end of the batch at <code>import.rs:128</code>. I changed the loop bound and I am running the import tests again.'));
+    var run = C.create(c.running); chat.appendChild(run); live.push(run);
+    chat.appendChild(msg('pmt-lab-asst', 'Thumbnails need libvips. Installing it asks for your password, so the setup script is waiting for you in its terminal.'));
+    chat.appendChild(C.create(c.waiting));
+    chat.appendChild(msg('pmt-lab-user', 'I stopped the dev server and built a release myself.'));
+    chat.appendChild(C.create(c.interrupted));
+    chat.appendChild(C.create(c.release));
+    chat.appendChild(msg('pmt-lab-asst', 'The import benchmark ran as a one-shot command, so its output is saved with the chat rather than in a terminal.'));
+    chat.appendChild(C.create(c.quiet));
+    chat.appendChild(C.create(c.bench));
+    var noteEl = document.createElement('p'); noteEl.className = 'pmt-lab-msg pmt-lab-note'; noteEl.setAttribute('aria-live', 'polite');
+    chat.appendChild(noteEl);
+    wrap.appendChild(cap); wrap.appendChild(chat);
+    return wrap;
+  }
+
+  var streamTimer = 0;
+  function stream() {
+    clearTimeout(streamTimer);
+    if (freeze) return;
+    var start = Date.now(), i = 0;
+    live.forEach(function (n) { T.CommandCard.update(n, { status: 'running', startedAt: start, lines: [], totalLines: 0, exitCode: null }); });
+    (function step() {
+      if (i < rerunScript.length) {
+        i++;
+        var shown = rerunScript.slice(0, i);
+        live.forEach(function (n) { T.CommandCard.update(n, { lines: shown, totalLines: shown.length }); });
+        streamTimer = setTimeout(step, i < 3 ? 1600 : 900);
+      } else {
+        live.forEach(function (n) { T.CommandCard.update(n, { status: 'ok', exitCode: 0, elapsedMs: Date.now() - start }); });
+      }
+    })();
+  }
+
+  function render() {
+    var stage = document.getElementById('pmt-lab-stage');
+    stage.textContent = ''; live = [];
+    var widths = look.width === 'all' ? [360, 480, 600] : [+look.width || 480];
+    widths.forEach(function (w) { stage.appendChild(column(w)); });
+    stream();
+  }
+
+  function applyLook() {
+    html.setAttribute('data-theme', (look.nier ? 'basic' : look.family) + '-' + look.mode);
+    if (look.nier) {
+      html.setAttribute('data-o55-nier', 'on');
+      html.setAttribute('data-o55-nier-parts', 'square cursor headers brackets icons ground');
+    } else {
+      html.removeAttribute('data-o55-nier');
+      html.removeAttribute('data-o55-nier-parts');
+    }
+    if (look.reduced) html.setAttribute('data-motion', 'reduced'); else html.removeAttribute('data-motion');
+    document.querySelectorAll('[data-lab-family]').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(!look.nier && b.getAttribute('data-lab-family') === look.family));
+      b.disabled = look.nier;
+    });
+    document.querySelectorAll('[data-lab-mode]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lab-mode') === look.mode)); });
+    document.querySelectorAll('[data-lab-toggle]').forEach(function (b) { b.setAttribute('aria-pressed', String(!!look[b.getAttribute('data-lab-toggle')])); });
+    document.querySelectorAll('[data-lab-width]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lab-width') === look.width)); });
+  }
+
+  document.querySelector('.pmt-lab-bar').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.hasAttribute('data-lab-family')) look.family = b.getAttribute('data-lab-family');
+    else if (b.hasAttribute('data-lab-mode')) look.mode = b.getAttribute('data-lab-mode');
+    else if (b.hasAttribute('data-lab-toggle')) { var k = b.getAttribute('data-lab-toggle'); look[k] = !look[k]; }
+    else if (b.hasAttribute('data-lab-width')) { look.width = b.getAttribute('data-lab-width'); applyLook(); render(); return; }
+    else if (b.hasAttribute('data-lab-do')) {
+      var d = b.getAttribute('data-lab-do');
+      if (d === 'restart') { stream(); return; }
+      document.querySelectorAll('.pmt-card').forEach(function (n) { T.CommandCard.update(n, { expanded: d === 'expand' }); });
+      return;
+    }
+    applyLook();
+  });
+
+  applyLook();
+  render();
+  window.pmtLab = { look: look, render: render, applyLook: applyLook, stream: stream };
+})();
+</script>
+</body>
+</html>
