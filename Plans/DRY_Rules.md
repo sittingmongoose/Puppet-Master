@@ -3211,8 +3211,9 @@ canonical_text: >-
   that do not fit (F3-633), one shared header row for every kind that needs controls above its content (F3-635), and
   one keyboard table with one web-client mapping rule (F3-635). No tab kind draws its own strip, tab overflow, "+" or
   menu button, panel menu or header row; a kind draws a row of its own only when nothing in the shared header row
-  fits, and that kind's owner unit records why. No kind keeps a key table of its own: a terminal keeps the shell's
-  keys and gives back the host keys F3-640 lists. A kind supplies its content, its registration (label, group, icon,
+  fits, and that kind's owner unit records why. The panel keys are F3-635's alone and no kind redefines one: a
+  kind's own keys work only inside its body, and a terminal keeps the shell's keys and gives back the host keys
+  F3-640 lists. A kind supplies its content, its registration (label, group, icon,
   id prefixes, content minimum, its "+" row, mount, saved state, close check; F3-635) and its marks through the host;
   every tab mark that names a state comes from the one status set (F3-585, DL-141, DR-051), and every kind icon is a
   bundled SVG icon_id (FinalGUISpec section 2.6, F3-417), never an emoji. The dashboard, the terminal and the browser
@@ -3234,7 +3235,7 @@ acceptance_criteria:
   - "No tab kind or panel owner defines its own tab strip, tab overflow, \"+\" button, menu button, panel menu or header row, and every kind-specific row is justified in its owner unit."
   - "The dashboard, the terminal and the browser are tab kinds of F3-630's one panel model, with no second panel model, layout record, strip or placement rule."
   - "Every tab state mark comes from the one status set of F3-585 and every kind icon is a bundled SVG icon_id."
-  - "One keyboard table and one web-client mapping rule serve every panel; no kind keeps a second key table."
+  - "One keyboard table and one web-client mapping rule serve every panel; no kind redefines a panel key."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -3281,14 +3282,13 @@ canonical_text: >-
   Panels and the Usage widget board move with one gesture kit (DL-180, D1; Jared, in the question form: "Split tree +
   Usage gestures (Recommended)"). The kit is the interaction layer only: pick-up after a small travel threshold, the
   held item following the pointer one to one, the landing preview, target hysteresis and dwell, edge auto-scroll, the
-  settle on drop and the glide back on cancel, the keyboard path (pick up, move with the arrow keys and a bigger step
-  with Shift, Enter to drop, Escape to cancel) and polite announcements of where the item would land and where it
-  landed. Its transaction is one rule for both layouts: the preview is local and dispatches nothing, writes nothing
+  settle on drop and the glide back on cancel, a keyboard path for every pointer move, and polite announcements of
+  where the item would land and where it landed. Its transaction is one rule for both layouts: the preview is local and dispatches nothing, writes nothing
   and emits no event; a changed release commits exactly one owner command; an unchanged or invalid release, Escape, a
   pointer cancel or the window losing focus commits nothing and restores the exact earlier picture; and a failed
   commit rolls back (UIW-012, CS-068). The pointer rules are F3-HOME-002's and F3-503's, which F3-630 applies to
   panels and tabs; the Usage board uses the same kit under WS-019. Each layout supplies only its own target model, its
-  pick-up keys and its numbers: the split tree resolves strips, panel edges and the "+N" list with F3-630's
+  keys and its numbers: the split tree resolves strips, panel edges and the "+N" list with F3-630's
   thresholds, and the board resolves grid cells with its own. The kit carries no layout model. The board's snapping
   widget grid, its tracks, its push-down resolver and its gravity lay out widgets only: on the Usage page and, in the
   home centre, only inside dashboard tabs (WS-030); they never lay out panels, and the split tree never lays out
@@ -3491,7 +3491,7 @@ owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   Puppet Master has one rule against side stripes, emoji and pills, for every surface (DL-184, D22; Jared: "Remember,
   no boxes with side colors, no emojis, no pills are to be used."). No box carries a coloured border or stripe on one
-  side, and no inset shadow or drawn edge stands in for one. No emoji appears in Puppet Master's chrome; a program's
+  side, and no inset accent border, inset shadow or pseudo-element stripe stands in for one. No emoji appears in Puppet Master's chrome; a program's
   own output in the terminal may contain emoji. No pill: no fully rounded capsule used as a tab, tag, badge, button or
   status chip; keyboard key caps are the one capsule-like shape allowed. Selection is shown by the surface itself: the
   fused tab silhouette, a filled or tinted row, the NieR square cursor, Retro reverse video, never an edge stripe. A
@@ -3563,8 +3563,8 @@ canonical_text: >-
   (ACD-501). The studio and everything in it are lab only, in the pattern ACD-474 set for the chat: never a product
   control, setting, command, wiring row, saved value or test gate, and no canon number comes from a demo control. No
   product catalog (UI_Command_Catalog, settings_inventory, Wiring_Matrix, touch_closure, storage_value_registry,
-  Automated_Testing_System) names a demo control. Its presentation is F3-649's, and it sits above the one overlay
-  root (DR-067).
+  Automated_Testing_System) names a demo control. Its presentation is F3-649's, and in the concept it sits above the
+  one overlay root (DR-067).
 gui_related: true
 gui_classification_reason: "Fixes one Demo Studio for every PMConcept7 concept surface and keeps it out of the product."
 split_recommended: false
