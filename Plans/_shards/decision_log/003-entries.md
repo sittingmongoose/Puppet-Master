@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L3863
+Source lines: L13-L3867
 
-Source SHA256: `83b81cca16f00b6d5c12c7a9da64aab99d610793cb047e0310ba9f76c637d913`
+Source SHA256: `8c347183ecb5d13a5d0ed92b03f706cdaec0374eff02acb5b75a0204d42abb83`
 
 ---
 
@@ -3668,7 +3668,7 @@ ContractRef: ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/Fina
 **What you get:**
 - Account cards act in place. Use this account makes that account the active one; it is labelled as an override and shown only where the provider supports choosing the active account by hand.
 - Each provider with two or more accounts has its own Auto-switch toggle and switch level on its card; its warning level and rest period show there as read values and are changed in Settings. They are the same settings Settings shows, not a Usage copy: changing them on the card changes the real setting, previewed and applied through Settings, and Settings shows the new value at once. Open in Settings goes to the same setting.
-- Auto-switch, its switch level, its warning level and its rest period after a rate limit can each be set per provider in Settings. A provider without its own value uses the global value, which is the default for all four; the rest period, which until now was set only per account, gains a global value for this. An account's own override still wins over its provider's value, in the order the multi-account spec sets out.
+- Auto-switch, its switch level, its warning level and its rest period after a rate limit can each be set per provider in Settings. A provider without its own value uses the global value, which is the default for all four; the rest period, which until now was set only per account, gains a global value for this. An account's own value still wins over its provider's value, in the order the multi-account spec sets out (made one ladder by the owner decision of 2026-10-10 below).
 - How the switch decides, as the AI Account Center does it: a provider with one account keeps auto-switch off until a second account is signed in; every meter of a provider carries a notch at that provider's switch point; only a fresh reading tied to the account's identity may trigger a switch, while a stale or estimated reading, an account that must sign in again, or a reset that has passed with no new reading blocks it with a named reason; the switch goes to the eligible account with the most left; it waits until the tool is idle and never switches in the middle of work; a warning shows when paid credit is being drawn; and making an account active by hand when it is already past its provider's switch point asks first, and the automatic switch never treats that confirmation as consent.
 - One roster with Settings: the room reads providers and accounts from Settings, uses Settings' display names and order, groups providers as Settings does (Subscriptions and plans, Pay as you go, Free and your own) and takes each provider's windows from its Settings definition, with no invented windows. A provider that is not set up or not installed shows as one compact line with a way to set it up, never as a large empty card.
 - Plans & limits shows one row per account, grouped by provider, so all three Codex accounts appear, each with its own windows and history.
@@ -3690,6 +3690,10 @@ ContractRef: ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/Fina
 5. **Commands and wiring** (`Plans/UI_Command_Catalog.md#UCC-147`, dispositions): Use this account dispatches the existing `cmd.account.select_profile`, the toggle and level dispatch the Settings transaction pair, and Open in Settings reuses `cmd.settings.open` with `target_type=setting`. No command is added; the existing production wiring rows for these commands (`catalog.account_select_profile`, `catalog.settings_transaction_preview`, `catalog.settings_transaction_apply`) name the Accounts room controls in their locations (`Plans/Wiring_Matrix.md#WM-043`).
 6. **Every account of a provider** (`Plans/Multi-Account.md#MA-049`, consumed by `Plans/usage-feature.md#UF-107`): Usage never flattens a provider's accounts into one label, and Plans & limits lists one row per account.
 7. **Unchanged:** choosing the active account by hand stays an override (`Plans/Multi-Account.md#MA-022`), and only providers whose capability allows it offer it (`supports_manual_set_active`, `Plans/Models_System.md`).
+
+**Owner decision 2026-10-10 (USG-1):** Jared kept the account scope on `ai.accounts.hard-switch-level` and retired `ai.accounts.account-threshold-override`. There is one scope ladder for every threshold, global, then project, then provider, then account, and the most specific set value wins. An account's own switch level is `ai.accounts.hard-switch-level` at scope account; a value stored under the retired id is read once and carried there. The spec now says so in `Plans/Multi-Account.md#MA-073` and section 5, `Plans/Settings_System.md` section 8 and the 2026-10-10 amendment of `Plans/FinalGUISpec.md#F3-441`; the inventory row is marked superseded and kept only for that one carry.
+
+**Owner decision 2026-10-10 (USG-2):** Jared asked for MA-073's status states to be written as a mapping: each state is defined by a set of section 5 reason codes. `Plans/Multi-Account.md` now carries the MA-073 state table, read top to bottom, with no new code and no stored status.
 
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md`, SHA-256 `fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008` (answer 1, the provider catalog and the demo roster); `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md`, SHA-256 `d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5` (Jared's notes 2 and 4 of 2026-10-09 in section 2, and the AI Account Center's switching rules in section 5).
 

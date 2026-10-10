@@ -31455,6 +31455,14 @@ provider controls (`Plans/usage-feature.md#UF-107`); both are the same row, writ
 `cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with `scope=provider` (SSYS-009, SSYS-018,
 SSYS-044), and neither surface keeps a copy.
 
+Amended 2026-10-10 (owner decision USG-1, `Plans/Decision_Log.md#DL-174`, owner `Plans/Multi-Account.md#MA-073`):
+`ai.accounts.account-threshold-override` is retired. An account's own switch level is `ai.accounts.hard-switch-level`
+at scope account, so every threshold resolves through one scope ladder, global, project, provider and account, the
+most specific set value winning. The retired row stays in the registry marked superseded, as
+`general.visual.basic-color-scheme` is, only so that a stored value can be read once and carried to
+`ai.accounts.hard-switch-level` at scope account; no surface draws, reads or writes it after that, and the row count
+stays 916.
+
 ### F3-442 - Project Settings Modal Reconciliation
 
 ```yaml

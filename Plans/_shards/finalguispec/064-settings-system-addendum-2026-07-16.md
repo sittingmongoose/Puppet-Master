@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30758-L31638
+Source lines: L30758-L31646
 
-Source SHA256: `4ec30f657e469012700abae3e452003960b098edd6129590f51e5ef02c699b4e`
+Source SHA256: `af98e0bd38c07f485ffa415151aadb91d204d7b5e3eea1427b54fe29a62f3677`
 
 ---
 
@@ -707,6 +707,14 @@ Settings > AI > Providers & Accounts and, for the toggle and the switch level, a
 provider controls (`Plans/usage-feature.md#UF-107`); both are the same row, written only through the Settings owner's
 `cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with `scope=provider` (SSYS-009, SSYS-018,
 SSYS-044), and neither surface keeps a copy.
+
+Amended 2026-10-10 (owner decision USG-1, `Plans/Decision_Log.md#DL-174`, owner `Plans/Multi-Account.md#MA-073`):
+`ai.accounts.account-threshold-override` is retired. An account's own switch level is `ai.accounts.hard-switch-level`
+at scope account, so every threshold resolves through one scope ladder, global, project, provider and account, the
+most specific set value winning. The retired row stays in the registry marked superseded, as
+`general.visual.basic-color-scheme` is, only so that a stored value can be read once and carried to
+`ai.accounts.hard-switch-level` at scope account; no surface draws, reads or writes it after that, and the row count
+stays 916.
 
 ### F3-442 - Project Settings Modal Reconciliation
 
