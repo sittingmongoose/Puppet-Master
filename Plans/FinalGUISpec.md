@@ -43987,17 +43987,24 @@ canonical_text: >-
   Ctrl+Shift+A every tab, Ctrl+PgDn and Ctrl+PgUp the next and previous tab in the panel, Alt+1..8 tab N and Alt+9 the
   last tab, Ctrl+Shift+PgUp and Ctrl+Shift+PgDn move the tab left and right, Alt+arrows focus the panel in that
   direction, Alt+Shift+1..9 focus panel N, Alt+Shift+arrows move the tab to the panel in that direction (splitting that
-  way when there is none and it fits), F6 and Shift+F6 cycle the rail, the panels and the chat, Ctrl+\ split right,
+  way when there is none and it fits), F6 and Shift+F6 cycle the rail, the panels and the chat composer, Ctrl+\ split right,
   Ctrl+Shift+\ split down, Shift+Escape maximize or restore (Escape also restores while focus is in a strip), Tab to a
   divider and then the divider keys (F3-630), the ARIA tab keys in a strip with Shift+F10 for the tab menu (F3-631), and
   Enter on a panel grip for Move panel. Pinning is in the tab menu only; no binding is a bare letter or digit; Escape
   closes only the innermost open thing (F3-568). The panels hold these keys while focus is in the centre; while focus is
   inside a tab body the kind is asked first, a terminal keeps the shell's keys and gives back the host keys F3-640
-  lists, and text inputs keep their own keys. Web-client mapping rule: in a web browser the four chords the browser
+  lists, and ordinary text inputs keep their own keys. Web-client mapping rule: in a web browser the four chords the browser
   keeps, Ctrl+T, Ctrl+W, Ctrl+Shift+T and Ctrl+Tab, are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+` (Alt+Shift+`
   backwards), and every label, menu shortcut and hover tag shows the key that works where the app runs. This supersedes
   F3-HOME-001's typed surface kinds and F3-152's terminal-and-browser-only tab identity, which now holds for every kind.
   The channel shown in `output` is view state, never part of its id (Addendum 2 D28).
+  A tab's typing field, including the terminal input and the editor's IME field, passes the panels'
+  navigation keys to the host once the tab declines the key: Alt+1..9, Alt+Shift+1..9, Alt+arrows,
+  Alt+Shift+arrows, Alt+PgUp/PgDn in the web client (Ctrl+PgUp/PgDn in the desktop app), Ctrl+P,
+  Ctrl+Shift+A and Alt+W on Windows and Linux. On a Mac, Option+letter and Option+backtick type text in
+  fields and the editor, and never trigger the Alt stand-ins; a Dead key never triggers them on any
+  platform. Keys during IME composition are ignored. F6 is handled before the tab's key claim and reaches
+  the chat composer from every region.
 gui_related: true
 gui_classification_reason: Defines the list of tab kinds, how a kind plugs into a panel, the shared header row, the overlay order and the panel keyboard.
 split_recommended: false
@@ -44015,6 +44022,7 @@ acceptance_criteria:
   - "Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare letter or digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T and Alt+` replace the four browser-owned chords with every label showing the key that works."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "Output has id output and switches channel as view state; Open in new tab produces output:<channel> showing only that channel."
+  - "Typing fields pass host navigation keys after the tab declines them, with the Mac typing rule and IME composition respected; F6 reaches the chat composer from every region."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -44031,6 +44039,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-181"
@@ -44076,6 +44085,7 @@ compatibility_only_notes:
   - "The concept's registration call, host API names, container name and z-index values are concept lineage; the stacking order is canon, its numbers are not."
   - "The concept spells the tool kind debug-console in its id prefix; the kind's schema name is debug_console."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Passes host navigation keys from tab typing fields and cycles F6 to the chat composer."
   - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
 owner_hints:
   - Plans/FinalGUISpec.md
