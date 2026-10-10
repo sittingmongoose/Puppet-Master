@@ -98,11 +98,18 @@ PM_HOME.registerKind('terminal', {
     sub() { return PMT.profiles(); },   // optional sub-row: [{ id, label, detail, icon, group? }] (below)
     spec(subId) { return { kind: 'terminal', profile: subId || null }; }
   },
+  tabMenu(state, tabId) {       // optional: rows appended to the tab's menu (right-click, Shift+F10) after a hairline
+    return [{ id: 'notify-mute', label: 'Mute notifications', detail: 'System notifications from this terminal', checked: false, run() {} }];
+  },
   mount(host, state, api) {     // build the tab's body; return the instance (below)
     return { unmount() {}, serialize() { return {}; } };
   }
 });
 ```
+
+`tabMenu(state, tabId)` gets the tab's saved state (what `serialize` last wrote) and returns items in `api.menu`'s
+shape (section 4): `detail` is the second line, `checked` is honoured, `run` is called; missing or `[]` adds nothing.
+The rows go last in the tab menu, after a hairline (the terminal's notification mute, D38).
 
 `plus.sub()` returns one flat list. Entries without a `group` are the row's inline sub-row, every one of them unless
 the kind caps them with `plus.subMax` (the Terminal row lists all the installed shells, D39). Entries with a `group` go
@@ -172,8 +179,8 @@ board lives in the board's own store, written by the engine.
   80 characters at most; "Dashboard n" is the default and is not stored). Rename dashboard... sets it and renames the
   tab with `cmd.panel_tab.rename`; a rename of the tab sets it too, and clearing that rename clears it. The name shows on the
   tab, in the header facts, in the Board menu's dashboards, in the "+" menu's Dashboard sub-row and in the catalog
-  (`PM_HOME.catalog`, item `dashboard:dash-<n>`; the catalog has no removal yet, so an item added for a dashboard that
-  is later deleted, or that belongs to the project left behind, stays in it until the page reloads). A project lists only
+  (`PM_HOME.catalog`, item `dashboard:dash-<n>`; an item for a dashboard that is deleted, or that belongs to the project
+  left behind, is removed with `PM_HOME.catalog.remove`). A project lists only
   its own custom dashboards: the open ones, the stored ones (a closed one keeps its key while it is in the reopen list,
   P6) and the named ones. Delete dashboard... (custom only, confirmed) closes the tab, drops it from the reopen list and
   forgets it. Home, Metrics, Monitoring and Agents can be reset but never renamed as a board or deleted.
@@ -302,7 +309,7 @@ records why.
   Double-click keeps it open.") and carries `data-pmh-tag="literal"`, the hover thread's opt-out: without it the
   page's tag controller swaps any text that looks like a path, a file name or host:port for generic copy. Tabs carry it
   too, and any element whose tag must show such text should. `PM_HOME.fileExists(path)` says whether the demo project has the file.
-- `PM_HOME.catalog.add(kind, items)` / `.list()` / `.find()` / `.open(id, o)` and `PMW.catalogPicker(anchor, { kind |
+- `PM_HOME.catalog.add(kind, items)` / `.remove(kind, ids)` / `.list()` / `.find()` / `.open(id, o)` and `PMW.catalogPicker(anchor, { kind |
   kinds, title, placeholder, panelId, newPanel, sectionLabels })`: every openable thing a kind knows, and the one
   picker over them (`sectionLabels` names each kind's section).
 - `PMW.registerIcon(name, svgPath, retroGlyph)` (also `PM_HOME.registerIcon`): a named icon in the 16 px stroke grammar
@@ -392,6 +399,9 @@ calls `show()`; it never changes the page in front, Enter and Space do the same 
 focusable, a press that becomes the rail's drag still reorders the rail (or hides the entry in More) and toggles nothing,
 and the entry is lit while the column is shown (its folded strip counts). A popped-out chat starts back in its column
 after a restart (D32): the float is never saved, while the column's visibility (`pm.home.chat:v1`) and `chat.width` are.
+Until publish retires Settings' Chat Layout row (the planner's ruling on D3 and D32), a pop out the page asks for
+through `PM_HOME_WORKSPACE.popOutChat` before the person's first press or key (that row's saved Overlay or Detached
+replaying at start) leaves the chat in its column.
 
 The chat takes the browser kind's bus events: `'browser:capture'` `{ tabId, capture: { kind, w, h, comp, at, title,
 url } }` becomes an attachment card in its composer (a 1 px box with the look's corner, never a pill), and
@@ -672,4 +682,7 @@ root. A kind never appends its own overlay to `document.body`.
   (`widget_layout:v1:<project>:<board>`, adopted once from the unscoped key, re-keyed on a project switch), custom
   dashboards made, named per project (`pm.home.dashboards:v1:<project>`) and deleted, Start from with `set_id`, saved
   presets, Live readings and Play the next hour, other widget sources in Add widget, the empty board, and the Board
-  menu's rows in order; sections 2 and 7 name the custom dashboards.
+  menu's rows in order; sections 2 and 7 name the custom dashboards. Section 3: the `tabMenu(state, tabId)` hook
+  (rows after a hairline; asked by the terminal for D38). Section 5: `PM_HOME.catalog.remove`. Section 6.1: the D32
+  interim guard. A named layout keeps at most 64 KB of dashboard contents (canon); a larger save keeps the layout
+  without them and says so.

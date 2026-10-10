@@ -322,7 +322,7 @@ D10 round two as built (P3, P4, P5, P12, P13, D35/PLN-4); CONTRACT section 3.1 s
 | Done-conditions | open_from_plus = menus.plus used and then a created 'open' event or a new tab id. open_file_from_rail = an editor tab created since the step began. split_by_drag = an applied cmd.panel_tab.move with args.split since the step began, and the panel count grew. |
 | Split Show Me drop point | 34 px inside the documents panel's right edge, or 30 px above its bottom edge. This keeps the drop clear of the centre's 12 px outer root band. Ready when PMW.gesture.active.zone.type is 'split'. |
 | Fit at 1920x1080 | in the Home layout (rail open, chat about 600 px): documents panel 511x598, editor minimum 280x120, so only Split down fits and the copy names Split down. |
-| widget_action | waits up to 1500 ms for #pm6DashAddBtn after revealing dashboard:home. The file step waits up to 900 ms for a file row. |
+| widget_action | opens dashboard:home and waits up to 1500 ms (each frame) for its board; hides Upcoming resets (ov-resets) when the board shows it; done at an accepted cmd.widget.add then move or resize of ov-resets in room home. The file step waits up to 900 ms for a file row. |
 | Restore sources | 'guided_tour_restore' (Skip or Finish, through PM_HOME_WORKSPACE.o55RestoreSnapshot) and 'guided_tour_back' (Back). |
 
 ## Keyboard (CONTRACT section 9)
@@ -347,7 +347,7 @@ there). F6 cycles rail, panels and chat from any of them. Full table: CONTRACT s
 | Chat | cmd.panel.switch (show/hide), cmd.panel.undock / cmd.panel.redock (pop out / dock back), cmd.workspace_layout.resize_surface with { surface: 'chat', width } |
 | Aliases | cmd.editor.close_tab -> cmd.panel_tab.close; cmd.file.open, cmd.nav.open_subject, cmd.browser.open_workspace_preview, cmd.terminal.open -> cmd.panel_tab.open |
 | Event | workspace.layout_changed per structural commit; plus the page's pm:command-dispatch (cancelable: a cancel rolls back) and pm:dispatch-receipt |
-| Storage (concept) | pm.home.panels:v1:<project> (layout), pm.home.panels:quarantine:v1:<project> (the newest set-aside record plus an `earlier` list of up to 2), pm.home.panels.saved:v1 (named layouts), pm.home.settings:v1 (settings model), pm.home.recent:v1, pm.home.chat:v1 (chat visibility) |
+| Storage (concept) | pm.home.panels:v1:<project> (layout), pm.home.panels:quarantine:v1:<project> (the newest set-aside record plus an `earlier` list of up to 2), pm.home.panels.saved:v1 (named layouts; each keeps at most 64 KB of dashboard contents in `boards`, a larger save keeps `boardsSkipped` and says so), pm.home.settings:v1 (settings model), pm.home.recent:v1, pm.home.chat:v1 (chat visibility) |
 | Settings keys | panels.layout.named, panels.tabs.preview, panels.tabs.sizing, panels.tabs.closeOnLeft, panels.plus.default, panels.files.revealIfOpen, panels.empty.closePanel, editor.scheme, editor.font.family, editor.font.size, editor.lineHeight, editor.minimap, editor.stickyScroll, editor.diff.layout, editor.wordWrap, chat.width, chat.history, chat.pinOpen (the terminal registers terminal.*) |
 | Serialize cap | 16 KB of state per tab |
 | Z ladder | panel content 0-10; strip and dividers 20; #pmw-overlay 2147481800 (menus, "+N" list, drag chip and landing preview inside it: above the page's status bar 2147481700, below the demo pill 2147482600 and the hover tags and tour 2147483000) |

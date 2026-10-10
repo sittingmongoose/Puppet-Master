@@ -796,7 +796,7 @@ function deleteDash(rec) {
 function forget(board, project) {
   var p = project || boardProject();
   try { if (engineReady() && PMU.boards.forgetKey) PMU.boards.forgetKey(board, p); } catch (err) { logError('dashboard forget failed', err); }
-  if (dashNumber(board)) setName(board, null, p);
+  if (dashNumber(board)) { setName(board, null, p); refreshCatalog(); }
 }
 
 /* ---- a quiet note in the stage (no Usage engine in this build, an id this kind does not run) ---- */
@@ -1141,6 +1141,9 @@ function refreshCatalog() {
     return { id: 'dashboard:' + b, label: name, sub: 'Your dashboard', icon: 'dashboard', keywords: 'dashboard board widgets custom ' + name,
       spec: { kind: 'dashboard', board: b, id: 'dashboard:' + b, label: name } };
   });
+  var now = {}; items.forEach(function (it) { now[it.id] = true; });
+  var stale = PM_HOME.catalog.list('dashboard').filter(function (it) { return DASH_TAB.test(it.id) && !now[it.id]; }).map(function (it) { return it.id; });
+  if (stale.length && PM_HOME.catalog.remove) PM_HOME.catalog.remove('dashboard', stale);
   if (items.length) PM_HOME.catalog.add('dashboard', items);
 }
 

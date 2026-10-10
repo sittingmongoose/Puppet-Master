@@ -404,7 +404,8 @@ PMW.saveNamedLayout = function (name) {
   var ok = PMW.saveNamed(name, L());
   pushLog(commandLog, { seq: ++cmdSeq, command_id: CMD.saveNamed, args: { name: name }, at: Date.now() });
   pushLog(receiptLog, { seq: cmdSeq, command_id: CMD.saveNamed, outcome: ok ? 'applied' : 'rejected' });
-  if (ok) announce('Layout saved as ' + name);
+  var skipped = ok && (PMW.savedLayouts()[name] || {}).boardsSkipped;
+  if (ok) announce('Layout saved as ' + name + (skipped ? '. Its dashboards hold too much to keep with it, so applying it leaves their widgets as they are' : ''));
   return ok;
 };
 
