@@ -12,18 +12,11 @@
   var G = window.PMG; if (!G) return;
   var RING = '<circle cx="12" cy="12" r="7.5"/>';
 
-  /* failed: a ring with a cross (GLY-1, answered A by Jared 2026-10-10, D44). The triangle is warning's alone. PMConcept7
-     already drew failure as a cross (the rail's fail, the tools and document error marks), so only the chat's drawing
-     changes: PMG redraws the chat's own st-failed, so every surface that asks for status('failed') gets the ring. A
-     ring with an exclamation mark was the first sketch; it is the vertical twin of info's ring and i, and the two
-     blurred at 12 px. The cross is 5.4 units, with skipped's clearance, so the two read apart by count (one stroke
-     against two). Static; the wrapper keeps the chat's irregular stutter, reserved for failed. */
-  var FAILED = [RING, '<path d="m9.3 9.3 5.4 5.4M14.7 9.3l-5.4 5.4"/>'];
-  G.def('st-failed', {
-    family: 'status', role: 'status', act: 'none', redraw: 'GLY-1 A (Jared, 2026-10-10, D44): the triangle is warning; failed is a ringed cross',
-    meaning: 'Failed: the run, step or command ended in an error.', aliases: ['st-failed-ring'],
-    replaces: ['the chat set\'s st-failed (the warning triangle)', 'rail fail (a cross)', 'panels tools and document error marks (a circled cross)'],
-    parts: FAILED
+  /* failed: a ring with a cross (GLY-1, answered A by Jared 2026-10-10, D44). The chat set draws it itself since the
+     rollout's chat step (neon-icons.js st-failed); this record says what it replaces. */
+  G.map('st-failed', {
+    family: 'status', meaning: 'Failed: the run, step or command ended in an error.',
+    replaces: ['the chat set\'s former st-failed (the warning triangle)', 'rail fail (a cross)', 'panels tools and document error marks (a circled cross)']
   });
   /* warning: the chat set's warning triangle as a status mark (GLY-1 A). */
   G.def('st-warning', {

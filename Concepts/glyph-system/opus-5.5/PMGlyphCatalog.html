@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="pmg-build" content="78af26dc362c">
+<meta name="pmg-build" content="3af1e8630f4f">
 <title>Puppet Master glyphs: the neon set for every surface</title>
 <script>
 /* first paint: the look, mode and motion come from the URL (frames) or the last choice, before any CSS paints */
@@ -1575,7 +1575,10 @@ window.PMG_DATA = {"decisions":{"cards":[{"id":"GLY-0","title":"Make this the Pu
       'st-idle': G([C(12, 12, 4.5)], 'none', 'status'),
       'st-complete': G([M(P('m5 12.5 4.5 4.5L19 7.5'), { ac: '0 20 0 4', ae: '0 4 0 4' })], 'none', 'status'),
       'st-blocked': G([R(5, 11, 14, 9, 2), M(P('M8 11V8a4 4 0 0 1 8 0v3'), { ay: -3 })], 'none', 'status'),
-      'st-failed': G([P('M12 4.2 21 19.5H3z'), P('M12 10v4.2M12 17.1v.1')], 'none', 'status'),
+      /* failed: a ring with a cross (Jared, 2026-10-10, D44/GLY-1: the triangle is warning's alone; PMConcept7 already
+         drew failure as a cross). The ring is the set's r 7.5; the cross is 5.4 units with skipped's clearance, so the
+         two read apart by count. A ring and "!" mirrored info's ring and i at 12 px. Static; the wrapper stutters. */
+      'st-failed': G([C(12, 12, 7.5), P('m9.3 9.3 5.4 5.4M14.7 9.3l-5.4 5.4')], 'none', 'status'),
       'st-paused': G([P('M9 6.5v11M15 6.5v11')], 'none', 'status'),
       'st-recovering': G([M([P('M18.34 9.04A7 7 0 0 0 5.66 9.04'), P('M8.02 7.94 5.66 9.04 4.99 6.53'), P('M5.66 14.96A7 7 0 0 0 18.34 14.96'), P('M15.98 16.06 18.34 14.96 19.01 17.47')], { ar: -180, o: [12, 12] })], 'tick2', 'status'),
       /* pending: six long dashes (4 on, 3.85 off) that do not break into specks on light themes */
@@ -2052,18 +2055,11 @@ window.PMG_DATA = {"decisions":{"cards":[{"id":"GLY-0","title":"Make this the Pu
   var G = window.PMG; if (!G) return;
   var RING = '<circle cx="12" cy="12" r="7.5"/>';
 
-  /* failed: a ring with a cross (GLY-1, answered A by Jared 2026-10-10, D44). The triangle is warning's alone. PMConcept7
-     already drew failure as a cross (the rail's fail, the tools and document error marks), so only the chat's drawing
-     changes: PMG redraws the chat's own st-failed, so every surface that asks for status('failed') gets the ring. A
-     ring with an exclamation mark was the first sketch; it is the vertical twin of info's ring and i, and the two
-     blurred at 12 px. The cross is 5.4 units, with skipped's clearance, so the two read apart by count (one stroke
-     against two). Static; the wrapper keeps the chat's irregular stutter, reserved for failed. */
-  var FAILED = [RING, '<path d="m9.3 9.3 5.4 5.4M14.7 9.3l-5.4 5.4"/>'];
-  G.def('st-failed', {
-    family: 'status', role: 'status', act: 'none', redraw: 'GLY-1 A (Jared, 2026-10-10, D44): the triangle is warning; failed is a ringed cross',
-    meaning: 'Failed: the run, step or command ended in an error.', aliases: ['st-failed-ring'],
-    replaces: ['the chat set\'s st-failed (the warning triangle)', 'rail fail (a cross)', 'panels tools and document error marks (a circled cross)'],
-    parts: FAILED
+  /* failed: a ring with a cross (GLY-1, answered A by Jared 2026-10-10, D44). The chat set draws it itself since the
+     rollout's chat step (neon-icons.js st-failed); this record says what it replaces. */
+  G.map('st-failed', {
+    family: 'status', meaning: 'Failed: the run, step or command ended in an error.',
+    replaces: ['the chat set\'s former st-failed (the warning triangle)', 'rail fail (a cross)', 'panels tools and document error marks (a circled cross)']
   });
   /* warning: the chat set's warning triangle as a status mark (GLY-1 A). */
   G.def('st-warning', {
