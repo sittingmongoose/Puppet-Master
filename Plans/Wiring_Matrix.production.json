@@ -69074,7 +69074,7 @@
         "cmd.workspace_layout.reset is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
         "home.settings.reset_layout reads state.home_workspace.home_settings_reset_layout.availability and shows state.home_workspace.home_settings_reset_layout.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.settings.reset_layout dispatches cmd.workspace_layout.reset exactly once per activation and preserves command_id, correlation_id and the receipt.",
-        "Dispatches the same cmd.workspace_layout.reset as the Home options menu after one confirmation (UIW-020, SSYS-039); every open tab stays open.",
+        "Dispatches the same cmd.workspace_layout.reset as the Home options menu after one confirmation (UIW-020; the action-row confirm flow of Plans/Settings_System.md#SSYS-040 and the row's wording in SSYS-050); every open tab stays open.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "A changed commit writes pm.home_workspace_layout.v2 once (SP-330) and emits exactly one workspace.layout_changed with the v2 payload naming the change (CV-361); nothing else is emitted."
       ],
