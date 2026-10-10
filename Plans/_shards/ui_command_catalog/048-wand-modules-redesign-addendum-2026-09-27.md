@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L13534-L14631
+Source lines: L13534-L14632
 
-Source SHA256: `5705578cb997d259f3f92c0269cc237d9b9444008a8134b52a77a08a61654ad0`
+Source SHA256: `2cd8dce39a1fff33f094dbddb8aa0592f67e11c49efb4e00738486da45af0ad9`
 
 ---
 
@@ -22,7 +22,7 @@ The redesigned Assistant wand popups and their in-chat presence (Crew, Chat Room
 | `bsd_note` | The Back Seat Driver advisor note in the transcript, with its catch-up, failure and safety lines (BSD-030). | `cmd.bsd.finding.open`, `cmd.bsd.assignment.resume`, `cmd.bsd.assignment.retry`, `cmd.chat.open_thread_context_details` |
 | `schedule_sheet` | The Schedule Message sheet. The wand row only opens it; its primary commits. | `cmd.chat.schedule_message` |
 | `scheduled_message_card` | A scheduled message in the transcript (SQR-012). | `cmd.chat.schedule_message.update`, `cmd.chat.schedule_message.cancel`, `cmd.chat.open_thread` |
-| `schedule_manager` | The Scheduled and Automations manager. | `cmd.chat.schedule_message.update`, `cmd.chat.schedule_message.cancel`, `cmd.execution_window.update`, `cmd.execution_window.cancel`, `cmd.chat.open_thread` |
+| `schedule_manager` | The Scheduled and Automations manager. | `cmd.chat.schedule_message.update`, `cmd.chat.schedule_message.cancel`, `cmd.execution_window.update`, `cmd.execution_window.cancel`, `cmd.chat.open_thread`, `cmd.chat.plan.open_version` (a build row's Open plan, DL-157) |
 | `memory_sheet` | The Memory sheet. | `cmd.chat.memory.verify`, `cmd.chat.memory.pin`, `cmd.chat.memory.discard`, `cmd.chat.memory.preview_capsule`, `cmd.chat.memory.toggle_auto_save_unverified`, `cmd.chat.teach.capture` |
 | `message_files_row` | The files row under an assistant message that changed files (ACD-478). It opens the Revert confirm sheet, which is not a command. | none of its own; it leads to `revert_confirm` |
 | `revert_confirm` | The Revert confirm sheet over the turn's change manifest (ACD-478). | `cmd.chat.revert` |
@@ -377,6 +377,7 @@ A row may list several controls, and then it gives each its disposition. The Sur
 | Cancel schedule | Command, `cmd.execution_window.cancel` by schedule_id | `plan_card`, `schedule_manager` |
 | Edit a build schedule | Command, `cmd.execution_window.update` | `schedule_manager`, `plan_card` |
 | Plan schedule line; overnight receipt Open | View | `plan_card` |
+| Open plan on a build schedule's row | Command, `cmd.chat.plan.open_version` with the schedule's bound version (DL-157, UCC-176) | `schedule_manager` |
 | Manager tabs, search, status, sort, focused view, all build windows | View | `schedule_manager` |
 | Manager rows | Command, the same as the matching card and Plan card controls | `schedule_manager` |
 | "Pause all automations" switch in Resume & Safety Policy | New, `cmd.runtime.automation_pause.set` with paused true (UCC-174, DL-136). Turning the switch off while paused is the same as Turn back on. | `schedule_manager` |

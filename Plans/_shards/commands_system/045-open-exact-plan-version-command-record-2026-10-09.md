@@ -2,15 +2,15 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L7527-L7585
+Source lines: L7527-L7586
 
-Source SHA256: `3d495203def2da1154d34f51f34f3b60183738e948b44ccd0e6202e194078c7c`
+Source SHA256: `1b8a5ba9c99e33b99cfaa8c515874821f5b2dd5cc5ec7f923de243418c1d5d4d`
 
 ---
 
 ## Open Exact Plan Version Command Record (2026-10-09)
 
-The owner's decision DL-157 gives a bound Goal's Open exact Plan · Vn a command of its own. Its central contract record is in the table of central command contract records above; this unit states its boundary for this owner.
+The owner's decision DL-157 gives a bound Goal's Open exact Plan · Vn, and every Open plan button, a command of their own. Its central contract record is in the table of central command contract records above; this unit states its boundary for this owner.
 
 ### CS-088 - cmd.chat.plan.open_version Opens One Exact Plan Version's Document
 
@@ -25,10 +25,11 @@ canonical_text: >-
   RouteResult in Plans/assistant_plan_runtime_contracts.schema.json, the same pending owner schema as its neighbour
   cmd.chat.plan.open_details. It keeps handler_unavailable until native evidence exists and expected_event_types=[]:
   opening a version's document is a route, never a Plan, run, Goal, To-Do or artifact mutation. Its source surfaces
-  are goal_activity and goal_hover, the bound Goal's Open exact Plan · Vn (UCC-176). It is not an alias of
-  cmd.chat.plan.open_details, which opens Plan Details, and no chat-local or Goal-owned peer command for opening a
-  Plan version exists. The concept's goal-open-plan-version action name is concept lineage under CS-079, not a
-  command identity.
+  are plan_card and schedule_manager, for every Open plan button (the card's action row, its Build-started and
+  Plan-revised receipts, a build schedule's row), and goal_activity and goal_hover, for the bound Goal's Open exact
+  Plan · Vn (UCC-176). It is not an alias of cmd.chat.plan.open_details, which opens Plan Details, and no
+  chat-local or Goal-owned peer command for opening a Plan version exists. The concept's goal-open-plan-version and
+  pd-open-version action names are concept lineage under CS-079, not command identities.
 gui_related: true
 gui_classification_reason: "Registers the bound Goal's exact-Plan opener as its own command record."
 split_recommended: false
@@ -37,7 +38,7 @@ unblocks: [WM-065]
 acceptance_criteria:
   - "The central contract records hold exactly one row for cmd.chat.plan.open_version, naming handlers::assistant_plan::plan_open_version and AssistantPlanVersionRoute -> RouteResult."
   - "cmd.chat.plan.open_version keeps handler_unavailable and expected_event_types=[]."
-  - "No alias or peer command opens a Plan version from a Goal surface."
+  - "No alias or peer command opens a Plan version from a Goal surface, and every Open plan button raises cmd.chat.plan.open_version."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -61,7 +62,7 @@ preserved_exact_tokens:
   - "AssistantPlanVersionRoute"
 negative_constraints:
   - "Do not register cmd.chat.plan.open_version as an alias of cmd.chat.plan.open_details."
-  - "Do not register the concept action goal-open-plan-version as a command identity."
+  - "Do not register the concept actions goal-open-plan-version or pd-open-version as command identities."
 owner_hints:
   - Plans/Commands_System.md
 ```

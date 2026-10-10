@@ -1436,6 +1436,15 @@ The Plan is a transcript card because it is a human-readable deliverable. It is
   **Build**, **Revise** (only while the Plan is Ready) and **Open plan**. It
   sits on the card's content edge with the card's own padding below it. There
   is no tinted band and no inset of its own.
+- **Open plan opens the version it names** (`pd-open-version`; product command
+  `cmd.chat.plan.open_version`, Jared 2026-10-10, Plans DL-157). On the card it
+  is the card's version; on a "Build started" or "Plan revised" line, the
+  version in that line; on a build schedule's row in Scheduled, the schedule's
+  bound version. While that version is the Plan's version it opens the Plan's
+  own tab; once a later version exists it opens that version's retained
+  read-only document, so the V1 "Build started" line still shows V1 after a
+  revision. It never opens Plan Details. The Plan title, Expand and Details
+  links still open the Plan's tab (`pd-info`).
 - **One action row everywhere a Plan shows actions.** The transcript card's
   footer, the editor's sticky footer and its More row, the compact
   Completed/Canceled card, a Building plan's attention actions (Resume,

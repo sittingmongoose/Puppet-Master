@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3666-L12604
+Source lines: L3668-L12612
 
-Source SHA256: `496ed28aa4a9508af034dcdb2c8cf1fd6dcf9abf6fa20047cb8d573cccee715e`
+Source SHA256: `ac8e686926982efdb377d18c53f7726a00fced6a1c3a6ae6b029121324634477`
 
 ---
 
@@ -8894,7 +8894,10 @@ canonical_text: >-
   gets a new command, cmd.chat.plan.open_version (navigation_wrapper, owner Assistant_Plan_Runtime, handler
   handlers::assistant_plan::plan_open_version, AssistantPlanVersionRoute -> RouteResult), raised from goal_activity
   and goal_hover; it opens Plan Vn's document, the Plan's own tab while Vn is current and Vn's retained read-only
-  document otherwise, and never Plan Details or a newer version (UCC-176, CS-088, WM-065, UIW-026, F3-593). Third,
+  document otherwise, and never Plan Details or a newer version (UCC-176, CS-088, WM-065, UIW-026, F3-593); by the
+  owner's answer of 2026-10-10 the same command serves every Open plan button, each with the version its surface
+  names: the Plan card's action row and its Build-started and Plan-revised receipts (plan_card) and a build
+  schedule's row (schedule_manager) (F3-606, APR-014). Third,
   activity bar domain previews are the one exception to the hover tag rule: no control inside an open preview opens
   a hover tag, since a tag would replace the preview card, and the controls F3-590 lists keep a native title or none
   (F3-590, UIW-013). The record states the decisions in plain words, quoting only his short answers.
@@ -8906,6 +8909,7 @@ unblocks: [SQR-015, UCC-176, CS-088, WM-065, UIW-026, F3-593, F3-590]
 acceptance_criteria:
   - "SQR-015 and DL-156 state the Schedule ended wording as the owner's approved decision of 2026-10-09."
   - "Open exact Plan · Vn is cmd.chat.plan.open_version in the catalog, Commands_System and the production wiring, and F3-593 binds it; it never opens Plan Details."
+  - "Every Open plan button raises cmd.chat.plan.open_version with the version its surface names (F3-606, APR-014)."
   - "F3-590 and UIW-013 state the preview exception and list the controls it covers; no other surface is exempted."
   - "The decisions are recorded with their date, 2026-10-09, and the source is cited by path and SHA-256."
 validation_surfaces:
@@ -8927,12 +8931,14 @@ implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Concepts/chat-assistant-concepts/5.6 Pro/goals.js
   - Concepts/chat-assistant-concepts/5.6 Pro/plans.js
+  - Concepts/chat-assistant-concepts/5.6 Pro/scheduling.js
 node_compile_hint:
   mode: owner_decision_record
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/JARED_DECISIONS.md, SHA-256 4a23e31ad4aa68385092c9f16132cf765c59f9da1d890dfdab1f8c33ac8b3208"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/JARED_DECISION_20261010.md, SHA-256 49590354c89d8c6bae54ff77eea7fc252a70d27716fccdc3a46086057c2df498"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/preview-title-census.json, SHA-256 c05c8ca808724193643af423b228fdeb9d6df7800940d7f47d1ab07b041d9048"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
 preserved_exact_tokens:
@@ -8941,7 +8947,7 @@ preserved_exact_tokens:
   - "cmd.chat.plan.open_version"
   - "Previews as exception"
 negative_constraints:
-  - "Do not bind Open exact Plan · Vn to Plan Details."
+  - "Do not bind Open exact Plan · Vn or an Open plan button to Plan Details."
   - "Do not extend the preview exception beyond controls inside an open activity bar domain preview."
 owner_hints:
   - Plans/Decision_Log.md
