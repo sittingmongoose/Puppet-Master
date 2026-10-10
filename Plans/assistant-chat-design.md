@@ -1152,7 +1152,7 @@ Thread identity is canonical and stable across reopen, restore, archive, and bra
 Required fields and relationships:
 - `thread_id`: format `thr_{ulid}`; minted on the first user message; globally unique within the PM instance
 - `dev_session_id`: optional reference to the originating development/runtime session; one dev session may span multiple threads
-- `terminal_session_id`: optional lineage field when the thread was spawned from a terminal context
+- `terminal_session_id`: optional lineage field when the thread was spawned from a terminal context (amended 2026-10-09, DL-181: a terminal session the thread's own agent opened or drove; the terminal has no action that starts or asks a chat thread, ACD-077, ACD-502)
 - thread metadata includes `created_at`, `updated_at`, `title`, `mode_overlay`, `requested_persona`, `effective_persona`, `persona_selection_source`, and `persona_override_owner_id`; `crew_auto_override` is an optional nullable boolean (true or false overrides the project, absent or null inherits), persisted on this same thread record through reopen (DL-138); `persona_id` remains registry/storage lineage only and is not a thread runtime Persona identity field
 
 Generation and lineage rules:
@@ -1617,6 +1617,8 @@ Compatibility/source-lineage disposition: this extract preserves web/provider pa
 
 This section defines the canonical contract for this surface.
 
+Amended 2026-10-09 (DL-181): the terminal is a tab of the home panels with one session per tab (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`). The chat's compact command card is ACD-500's and its card actions are ACD-502's: Detach/Pop-Out and Pop Out Terminal retire with no replacement, Open in Terminal reveals the session's terminal tab wherever it is, and New terminal here opens a new terminal tab in a folder. In this section and the carry-through below, a pane, tab, section, dock entry or detached window reads as the terminal tab and its panel; the terminal workspace, search, command blocks, empty and restore states, badges, transcript actions, labels and diagnostics are owned by the terminal owners (SMPFS-180, SMPFS-183, `Plans/FinalGUISpec.md#F3-640`, `#F3-641`), which win where these paragraphs differ.
+
 Core rules:
 - Inline mini-terminal and operation cards are locked to bounded inline previews, persistent per-command cards, narrative-order placement, and shared card anatomy.
 - Terminal promotion and handoff are locked so interactive or long-running work binds to a stable terminal session while chat retains only bounded preview and audit ownership.
@@ -1627,7 +1629,7 @@ Fields:
 - Open in Terminal
 - Show Terminal
 - Rerun in Terminal
-- Detach/Pop-Out
+- Detach/Pop-Out (retired 2026-10-09, DL-181)
 
 Rules:
 - Collapsed preview: 5 lines
@@ -1650,8 +1652,8 @@ Rules:
 - inline cards persist across thread reload and re-render from persisted metadata
 - search and diff do not stream progressively
 - `/collapsible` result behavior is shared across command, search, and diff activity cards: collapsed cards retain material status, subject summary, failure line when present, and the primary reveal action; expansion exposes only bounded preview/detail, with full payloads kept behind refs/blobs or the owning surface.
-- `pop-out-to-terminal` behavior normalizes to terminal-owned reveal/detach actions over the existing `terminal_session_id`: `Open in Terminal` and `Show Terminal` focus the live session, while `Detach/Pop-Out` changes terminal surface placement without creating a chat-owned terminal transcript.
-- Command-card `/edit/manage` menus expose terminal-focus, `View output`, `View output log`, `Retry attach`, and `Stop process` only when the referenced terminal/session state supports them. The legacy `Pop Out Terminal` label is a deprecated alias for `Detach/Pop-Out`.
+- `pop-out-to-terminal` behavior normalizes to terminal-owned reveal over the existing `terminal_session_id`: `Open in Terminal` and `Show Terminal` reveal the live session's terminal tab; `Detach/Pop-Out` is retired (DL-181, ACD-502), and nothing creates a chat-owned terminal transcript.
+- Command-card `/edit/manage` menus expose terminal-focus, `View output`, `View output log`, `Retry attach`, and `Stop process` only when the referenced terminal/session state supports them. The legacy `Pop Out Terminal` label and `Detach/Pop-Out` are retired (DL-181, ACD-502).
 - Completed inline commands without a real `terminal_session_id` expose `View output` and `Rerun in Terminal` follow-up actions, but must not fabricate `Open in Terminal`.
 
 ### Terminal consumer carry-through
@@ -2179,12 +2181,14 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matri
 ### Dev-session and terminal binding
 A dev session may own or link multiple terminal sessions without collapsing them into one PTY identity.
 
+Amended 2026-10-09 (DL-181): workgroups, leaf panes, editor-embedded terminal panels, the editor stack and the bottom workspace are retired. A dev session's terminals are terminal tabs, one session each, in any panel (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`); Show Output, Show Problems and Show Ports reveal or open those tool tabs by `Plans/FinalGUISpec.md#F3-634`'s kind affinity, and Open in Terminal reveals the primary or last-active terminal tab (ACD-210). The two mirroring rules below retire with ACD-211, which ACD-502 supersedes.
+
 Rules:
-- a dev session may span multiple workgroups, leaf panes, and editor-embedded terminal panels.
+- a dev session may span multiple terminal tabs in any panels (before 2026-10-09: workgroups, leaf panes, and editor-embedded terminal panels).
 - `Show Output`, `Show Problems`, and `Show Ports` reveal the surfaces linked to the current `dev_session_id` without changing the canonical owning runtime records.
-- `Open in Terminal` from a dev-status row reveals the primary or last-active terminal leaf pane for that dev session when one exists.
-- closing a workgroup or pane that is mirrored in the editor stack must remove or update the associated editor panel references.
-- if a pane exists only in the editor stack, the bottom workspace surfaces placeholder guidance rather than pretending the pane no longer exists.
+- `Open in Terminal` from a dev-status row reveals the primary or last-active terminal tab for that dev session when one exists.
+- Retired 2026-10-09 (DL-181): closing a workgroup or pane that is mirrored in the editor stack must remove or update the associated editor panel references.
+- Retired 2026-10-09 (DL-181): if a pane exists only in the editor stack, the bottom workspace surfaces placeholder guidance rather than pretending the pane no longer exists.
 - stopping a dev session preserves historical shell evidence and linked surface history even when the live process has exited.
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
@@ -2192,6 +2196,7 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 - switching projects recalculates effective shell, tool, and dev-session state for the new project context
 - background activity from the old project remains visible through badges and attention surfaces tied to its own project and session identities
 - closing a workspace tab or terminal tab with an active dev session requires explicit consequence disclosure; Puppet Master MUST NOT silently orphan the background workflow by default
+- Amended 2026-10-09 (DL-181): closing a panel that holds such a terminal tab discloses the same consequence, and closing a terminal tab ends its session after its inline ask (SMPFS-180, ACD-214)
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Run_Modes.md
 ## 23. Gaps, Competitive Comparison, and Enhancements
@@ -24566,6 +24571,13 @@ floating case is re-pointed. This note creates no WorkNodes, NodeSeeds, executab
 queues, implementation files, runtime artifacts, generated wiring rows, production
 build tasks, final manifests, or PNC-019 receipts.
 
+Superseded 2026-10-09 (DL-180): the in-canvas Home float layer is retired. The
+chat's only mounts are its fixed column (`Plans/FinalGUISpec.md#F3-637`) and, when
+popped out, its own window, which Dock back returns to the column
+(`Plans/UI_Command_Catalog.md#UCC-203`); nothing floats the chat inside the window.
+The floating mount of ACD-440 and ACD-441 reads as the popped-out chat, and their
+behaviour contracts are otherwise unchanged (ACD-500).
+
 ### ACD-442 - Header Chrome Menu Sprouts And Theme-Matched Popout Chrome
 
 ```yaml
@@ -24768,6 +24780,9 @@ other primary pages. Page changes do not construct a second Assistant, do not co
 page-local store, and do not reset the active thread, draft, attachments, activity projection, context
 state, Context Detail Pane, or focus-return target. Returning Home restores the same component to the saved
 Home dock; boot never restores a floating Home placement.
+
+Amended 2026-10-09 (DL-180): Home's seat is the fixed chat column on the right (`Plans/FinalGUISpec.md#F3-637`), not a
+saved dock, and More Details opens or reveals the thread's context tab in the home centre (ACD-448, ACD-500).
 
 The context ring is the compact projection of the active thread's actual context state. Its compact surface
 shows current-window usage/percentage, effective window and tokens loaded, cache hit, and source
