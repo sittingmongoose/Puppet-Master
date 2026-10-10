@@ -14988,7 +14988,7 @@ A click on a tab is `ui.panel_tab.activate`; a double click on a preview tab is 
 | Move tab left / right | Ctrl+Shift+PgUp / Ctrl+Shift+PgDn | same | `cmd.panel_tab.move` |
 | Focus the panel in a direction / panel N | Alt+arrows / Alt+Shift+1..9 | same | `ui.workspace_layout.focus_panel` |
 | Move the tab to the panel in a direction | Alt+Shift+arrows | same | `cmd.panel_tab.move` |
-| Cycle regions: rail, panels, chat | F6 / Shift+F6 | same | keyboard focus movement owned by FinalGUISpec's keyboard rules; no action id |
+| Cycle regions: rail, panels, chat composer | F6 / Shift+F6 | same | keyboard focus movement owned by FinalGUISpec's keyboard rules; no action id |
 | Split right / down | Ctrl+\\ / Ctrl+Shift+\\ | same | `cmd.workspace_layout.split` |
 | Maximize / restore | Shift+Escape (Escape restores while focus is in a strip) | same | `ui.workspace_layout.maximize` |
 | Resize | Tab to a divider, then the divider keys | same | `cmd.workspace_layout.resize_surface` |
@@ -15069,6 +15069,7 @@ acceptance_criteria:
   - "A dashboard tab's widget commands are cmd.widget.* addressed by board_id and emit no workspace.layout_changed; cmd.dashboard.add_widget dispatches only as UCC-202's alias."
   - "In the web client the four browser-owned chords are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+`, and every label shows the key that works where the app runs."
   - "The channel picker switches output with ui.output.select_channel as view state, with no command, receipt or event; Open in new tab dispatches cmd.panel_tab.open with output:<channel>."
+  - "F6 and Shift+F6 cycle the rail, panels and chat composer from every region, as Plans/FinalGUISpec.md#F3-635 requires."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -15086,6 +15087,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64; D1, D2, D5 to D10)"
@@ -15128,6 +15130,7 @@ compatibility_only_notes:
   - "cmd.editor.close_tab is recorded alias metadata of cmd.panel_tab.close with no handler of its own."
   - "cmd.workspace_layout.size_surface still normalizes to cmd.workspace_layout.resize_surface (CS-068)."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Names the chat composer in the F6 region cycle table."
   - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
   - "Amended 2026-10-10 (lead ruling L10): The Dashboard row opens or reveals dashboard:home and its sub-rows the other starting boards, without board creation, rename or deletion."
   - "Supersedes UCC-144 (2026-10-09, DL-180): four editor panels, Panel 1 to 4 routing, the singleton Dashboard, chat grab and in-canvas float, cmd.terminal.move_workgroup and Collapse Bottom Terminal retire; its leaf semantics carry forward here."
