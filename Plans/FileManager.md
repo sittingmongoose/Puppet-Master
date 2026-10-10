@@ -373,6 +373,12 @@ ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/stora
 
 ### 2.8 Keyboard shortcuts
 
+Amended 2026-10-09 (DL-180): there is no floating editor window any more (F-017); the editor is the editor tab kind in a
+home panel (`Plans/FinalGUISpec.md#F3-635`, `#F3-639`), and where an open-file action lands is F-090's and
+`Plans/FinalGUISpec.md#F3-634`'s. Closing a tab and moving between tabs use the panel keyboard map of
+`Plans/FinalGUISpec.md#F3-635`, which gives Ctrl+Tab and Ctrl+Shift+Tab to recent tabs; the next and previous tab keys
+below are lineage. Save, Go to line and Save As stay editor keys while focus is in an editor tab (F-029).
+
 
 - **Editor shortcuts (when focus in editor):** Save (Ctrl+S), Close tab (Ctrl+W, with unsaved prompt), Go to line (Ctrl+G), Next tab (Ctrl+Tab), Previous tab (Ctrl+Shift+Tab). Save As via menu or command palette.
 - **Focus rule:** When focus is in the editor (docked or floating), these shortcuts are handled by the editor; when focus is elsewhere, app/chat shortcuts apply. **Floating editor:** Editor shortcuts apply when **any editor window has OS focus** (docked or floating). So Ctrl+S in the floating editor window saves the current buffer. Open-file actions target the editor surface; when the editor is floating, focus the floating window and open the file there (§4, §5).
@@ -2099,10 +2105,11 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   Editor focus handles Save, Close tab, Go to line, Next/Previous tab, Save As, and app/chat shortcut routing; floating editor windows handle editor shortcuts when any editor window has OS focus and open-file actions target/focus the floating editor.
+  Amended 2026-10-09 (DL-180): floating editor windows retire with the File Editor strip (F-017), and the editor is the editor tab kind in a home panel (Plans/FinalGUISpec.md#F3-635, #F3-639); where an open-file action lands is F-090's and Plans/FinalGUISpec.md#F3-634's; the keys that close a tab and move between tabs, including next and previous tab, are the panel keyboard map of Plans/FinalGUISpec.md#F3-635, which gives Ctrl+Tab and Ctrl+Shift+Tab to recent tabs. Save, Go to line and Save As stay editor keys while focus is in an editor tab, and the dirty-tab prompt on close stays.
 gui_related: true
 gui_classification_reason: This unit covers user-visible keyboard shortcuts and floating-editor focus routing.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
@@ -2135,7 +2142,8 @@ preserved_exact_tokens:
 negative_constraints:
 - When focus is elsewhere, app/chat shortcuts apply instead of editor shortcuts.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): floating editor windows and their focus routing retire; open-file actions follow F-090 and F3-634, and the tab navigation and close keys are F3-635''s panel keyboard map (Ctrl+Tab is recent tabs, not next tab).'
 owner_boundary_notes: []
 owner_hints:
 - Plans/FileManager.md
