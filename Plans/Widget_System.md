@@ -1514,11 +1514,7 @@ owner_doc: Plans/Widget_System.md
 canonical_text: >-
   Widget layout has one schema family with separate canonical namespaces per host. Usage writes
   `widget_layout:v1:usage`; Dashboard writes `widget_layout:v1:dashboard`; Home shell surfaces remain under
-  `home_workspace_layout.v1` (amended 2026-10-09, DL-180: Dashboard writes one namespace per board,
-  `widget_layout:v1:dashboard:<board_id>` with `host_id` `dashboard:<board_id>`, and Home shell surfaces live in
-  `home_workspace_layout.v2` (Plans/storage-plan.md#SP-330); `widget_layout:v1:dashboard` and
-  `home_workspace_layout.v1` are read-only migration inputs, WS-030). The named public Usage contract is
-  `UsageWidgetLayoutRecord`. Its required closed
+  `home_workspace_layout.v1`. The named public Usage contract is `UsageWidgetLayoutRecord`. Its required closed
   fields are `layout_schema_version`, `default_set_version`, `host_id`, `room_id`, `widget_id`, `visible`,
   `order_index`, `slot_id`, `geometry_id`, `semantic_tier_id`, `preset_id`, `configuration_refs`, and
   `committed_revision`, with the exact types and nullability defined immediately above this unit. Each
@@ -1526,13 +1522,16 @@ canonical_text: >-
   and UF-060; filter payloads remain in that configuration record and are not copied into the layout record. Preview
   rectangles, pointers or pointer coordinates, ghosts,
   placeholders, animation state, and drafts or per-frame drafts are forbidden. A widget operation cannot write
-  the Home surface record, and a Home surface operation cannot write a widget-layout record.
+  the Home surface record, and a Home surface operation cannot write a widget-layout record. Amended 2026-10-09
+  (DL-180): Dashboard writes one namespace per board, `widget_layout:v1:dashboard:<board_id>` with `host_id`
+  `dashboard:<board_id>`, Home shell surfaces live in `home_workspace_layout.v2` (Plans/storage-plan.md#SP-330), and
+  `widget_layout:v1:dashboard` and `home_workspace_layout.v1` are read only as migration inputs (WS-030).
 gui_related: true
 gui_classification_reason: The record determines restored widget placement, semantic size, and cross-surface ownership.
-depends_on: [UF-060, WS-004, WS-009, WS-018, WS-019, DL-180]
+depends_on: [UF-060, WS-004, WS-009, WS-018, WS-019]
 unblocks: []
 acceptance_criteria:
-  - "Usage and Dashboard restore from their own namespaces while Home surfaces restore only from home_workspace_layout.v1. Amended 2026-10-09 (DL-180): each dashboard board restores from its own widget_layout:v1:dashboard:<board_id> and Home surfaces restore only from home_workspace_layout.v2, with widget_layout:v1:dashboard and home_workspace_layout.v1 read only as migration inputs (WS-030, SP-330)."
+  - Usage and Dashboard restore from their own namespaces while Home surfaces restore only from home_workspace_layout.v1.
   - "UsageWidgetLayoutRecord is the named public contract for a settled Usage widget layout and has exactly the required fields layout_schema_version, default_set_version, host_id, room_id, widget_id, visible, order_index, slot_id, geometry_id, semantic_tier_id, preset_id, configuration_refs, and committed_revision, including semantic size or preset identity in addition to supported geometry so adaptive content restores deterministically; every configuration_ref resolves to an existing stable, non-secret widget-configuration identity governed by WS-004 and UF-060, and filter payloads remain in the configuration record rather than becoming new UsageWidgetLayoutRecord fields."
   - "No preview rectangle, pointer or pointer coordinate, ghost, placeholder, animation state, draft, or per-frame draft appears in UsageWidgetLayoutRecord."
   - A widget mutation never writes Home surface placement and a Home surface mutation never writes Usage or Dashboard widget placement.
@@ -1584,7 +1583,8 @@ the move of today's one Dashboard layout into the Home board. How a dashboard ta
 `Plans/FinalGUISpec.md#F3-638`; the tab kind is `#F3-635`; the open rules are `#F3-634`. It amends WS-009 (one
 namespace per board), WS-013 (every Usage widget) and the PMConcept7 Home Workspace boundary addendum (panels, dashboard
 tabs and one gesture kit) with dated notes, and the section 2 and 3 rules that named one Dashboard namespace. It cites
-and does not edit WS-017, WS-019 and WS-020, which the Usage thread is amending (`Plans/Decision_Log.md#DL-176`). It
+and does not edit WS-017 and WS-019, which the Usage thread is amending (`Plans/Decision_Log.md#DL-176`), and adds only
+one dated sentence at the end of WS-020's canonical text for the per-board namespace and the v2 Home record. It
 creates no WorkNodes, NodeSeeds, executable queues, implementation files or production build tasks.
 
 ### WS-030 - Dashboard Tabs, Their Boards And One Widget Layout Per Board
@@ -1601,8 +1601,9 @@ canonical_text: >-
   reveals its tab where it is (F3-634). The board_id, never the tab id, is the domain reference a dashboard tab keeps
   in the Home layout record (Plans/storage-plan.md#SP-330). `dashboard:home` is the default board, the pinned Home
   dashboard of the default layout (F3-630). A project starts with four boards, Home, Metrics, Monitoring and Agents,
-  after the panels concept; the "+" menu's Dashboard row lists the project's boards, and its row body opens a new tab on
-  a new, empty board that the dashboard kind makes (Plans/UI_Command_Catalog.md#UCC-200). Closing a dashboard tab
+  after the panels concept; the "+" menu's Dashboard row lists the project's boards in its sub-row, each opening or
+  revealing that board's tab, and its row body opens or reveals `dashboard:home`, as the panels concept does
+  (Plans/UI_Command_Catalog.md#UCC-200). Closing a dashboard tab
   closes the tab only: its board and widget layout stay and can be opened again from that row. The Home board starts
   with the Dashboard's existing default set, `widget-orchestrator-progress`, `widget-active-lanes`,
   `widget-recent-results` and `widget-custom-metrics`, which the concept's Home board also shows. Each board keeps its
@@ -1636,7 +1637,7 @@ depends_on: [DL-180, F3-635, F3-638, WS-009, WS-013, WS-019, WS-020, UF-062]
 unblocks: [ATS-075, GRRC-040]
 acceptance_criteria:
   - "Several dashboard tabs can be open at once, each showing a different board, and opening a board that is already open reveals its tab instead of opening a second one."
-  - "A new project shows the boards Home, Metrics, Monitoring and Agents in the \"+\" menu's Dashboard row, `dashboard:home` is pinned in the default layout, and the row body opens a new tab on a new, empty board."
+  - "A new project shows the boards Home, Metrics, Monitoring and Agents in the \"+\" menu's Dashboard row, `dashboard:home` is pinned in the default layout, each sub-row opens or reveals its board's tab, and the row body opens or reveals `dashboard:home`."
   - "Closing a dashboard tab keeps its board and widget layout, and the board opens again from the Dashboard row as it was."
   - "Each board restores from and writes to its own `widget_layout:v1:dashboard:<board_id>` with `host_id` `dashboard:<board_id>`, and no dashboard widget state appears in the Home layout record."
   - "On first read after upgrade a saved `widget_layout:v1:dashboard` becomes the Home board's layout with every widget, size, order, visibility and configuration kept, nothing is reset, and later writes never touch the old key."
