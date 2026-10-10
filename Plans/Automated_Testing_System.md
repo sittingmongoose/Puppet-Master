@@ -3050,6 +3050,17 @@ owner_hints:
 
 ## PMConcept7 Home Workspace test contract — 2026-08-04
 
+Superseded 2026-10-09 (DL-180, DL-181): Home is one universal panel system and a terminal is one session per tab, so
+the four-panel live matrix and the exact 72-case visual matrix below no longer certify Home. ATS-075 certifies the
+panels (the split tree, the tab strip, "+", "+N", the opening rules, the narrow ladder, the chat column, dashboard tabs,
+named layouts, keys, migration, every look and the bans) and ATS-076 the terminal tab. What carries over from this
+passage into both: a fixture that covers a visible outcome asserts that outcome (rendered geometry, a rendered buffer,
+a visible mark) and never only a dispatch count or a global marker; a cancelled or rejected gesture proves the model
+restored exactly and nothing dispatched or saved; identity fixtures prove no duplicate buffer, browser session, chat
+identity, terminal session or PTY; listeners for console and page errors are installed before navigation and every
+case records zero errors; and a screenshot is evidence only beside the harness result and its error log. ATS-029 is
+superseded by ATS-075.
+
 Amended 2026-08-12 — the matrix must assert observable geometry, not dispatch counts. Two
 Home defects shipped green because their fixtures asserted only that one command was
 emitted, or only that a global "last opened file" marker was set. Every fixture that
@@ -3105,13 +3116,16 @@ when paired with the live harness result and page/console error log.
 ```yaml
 plan_unit_id: ATS-029
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: Home Workspace certification combines source-hashed control-to-command coverage, live visible interaction tests, persistence and fault-injection tests, stable-identity lifecycle tests, zero browser errors, and an exact 72-case visual matrix plus a direct headful pass.
+superseded_by: ATS-075
+canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The four-panel Home matrix, its terminal section and workgroup limits, its terminal-max layout and its exact 72-case visual matrix are retired with the four fixed editor panels and the docked terminal sections; the universal panels are certified by ATS-075 and the terminal tab by ATS-076. The text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product truth. Superseded by ATS-075 (DL-180).
+  Home Workspace certification combines source-hashed control-to-command coverage, live visible interaction tests, persistence and fault-injection tests, stable-identity lifecycle tests, zero browser errors, and an exact 72-case visual matrix plus a direct headful pass.
 gui_related: true
 gui_classification_reason: The verification exercises and captures user-visible Home behavior across themes, sizes, layouts, motion, menus, gestures, and failures.
 split_recommended: false
-depends_on: [ATS-028, F3-501, F3-502, F3-503, UIW-010, SP-245]
+depends_on: [ATS-028, F3-501, F3-502, F3-503, UIW-010, SP-245, DL-180]
 unblocks: []
 acceptance_criteria:
 - All four editor and Browser targets and all four File Manager targets are exercised through visible production controls, and each asserts the rendered buffer rather than a dispatch count or a global marker.
@@ -3143,6 +3157,7 @@ compatibility_only_notes: []
 stale_retired_dispositions:
 - The prior 15-check 34-shot Home harness is retired as certification authority.
 - "Amended 2026-08-12: fixtures that assert only command/persist counts are retired as sufficient evidence for a visible outcome; the drop-rail target fixtures and the per-surface Move or dock menu-inventory fixture are retired with the affordances they covered; loss of pointer capture is retired as a cancellation vector."
+- "Superseded 2026-10-09 (DL-180, DL-181): the four editor and Browser targets, the four File Manager targets, the fifth pane and fifth section rejections, the terminal-max layout and the 72-case matrix retire; the rendered-outcome, exact-restoration, identity and zero-error rules carry over into ATS-075 and ATS-076."
 - "Amended 2026-08-13: the window-exit-floats drag fixture branch is retired with the behavior it covered (window exit is now invalid_target); the three-row compact-menu assertion and the reset-forbidden regex are retired with the four-row menu; any fixture that accepts a floating surface at boot is retired (boot demotes floating to last_docked_host)."
 owner_hints: [Plans/Automated_Testing_System.md, Plans/UI_Wiring_Rules.md]
 ```
@@ -4227,12 +4242,15 @@ depends_on:
 - SSYS-034
 - UCC-160
 - WM-052
+- DL-182
 unblocks: []
 acceptance_criteria:
 - 'P3 keyboard profile: non-mutating capability queries; bounded push/pop; independent normal/alternate stacks;
   byte/chunk boundaries; reset and crash behavior; and one owner per input. Cover modifier/key identity, IME, accessibility,
   shortcuts, paste and local/Windows/SSH/tmux paths against pinned toolkit/platform field availability. Unsupported
-  fields cannot be advertised from engine-only evidence; images remain outside approval.'
+  fields cannot be advertised from engine-only evidence; images remain outside approval. Amended 2026-10-09 (DL-182):
+  image protocols are now approved (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-181) and certified by ATS-076;
+  this P3 case still covers the keyboard profile only.'
 - 'P4 richer shell context: split sequences at byte boundaries; output before completion; malformed/forged sequences;
   nested/continuation/right prompts; and capability-qualified rich properties. Local, remote and replayed projections
   agree on source-qualified metadata; malformed/opaque signals never invent authoritative boundaries or completion.
@@ -4266,7 +4284,8 @@ acceptance_criteria:
   draining/displaying; unlock preserves the exact session; and close obeys the existing selected confirmation policy
   without implying suspension. Visible and accessible scope agrees with the admitted router. Reconnect/PM reopen
   retains protection only for the same verified live session; replacement starts unlocked and pane preference inheritance
-  is rejected. Historical metadata cannot establish liveness. Agent-input cases assert an explicit blocked result and zero child writes through every admitted input path, including command-mediated insertion. No blocked input is silently replayed on unlock. Separate interrupt/terminate controls retain their existing behavior; these fixtures are obligations, not executed passes.'
+  is rejected. Amended 2026-10-09 (DL-180, DL-181): protection stays with the session when its tab is moved, collapsed,
+  maximized, hidden or restored or its layout is applied, and ATS-076 adds those cases. Historical metadata cannot establish liveness. Agent-input cases assert an explicit blocked result and zero child writes through every admitted input path, including command-mediated insertion. No blocked input is silently replayed on unlock. Separate interrupt/terminate controls retain their existing behavior; these fixtures are obligations, not executed passes.'
 - Cross-surface regression preserves existing native layout/style, command-palette parity, keyboard/focus/IME/accessibility,
   requested/effective state and meaningful unavailable reasons. Rendering or parser replay alone cannot certify
   native input, remote writes, provider continuity or lifecycle behavior.
@@ -4301,10 +4320,13 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0012
 negative_constraints:
 - No image protocol, new provider integration, environment-intake expansion, snapshot-history retention, automatic
-  remote setup or implicit P10 policy is admitted.
+  remote setup or implicit P10 policy is admitted. Amended 2026-10-09 (DL-182), which admits the image protocols
+  through SMPFS-181 with ATS-076 certifying them; the rest of this constraint stands.
 - Do not promote planned fixtures, static schema checks, missing runners or research claims into native execution
   or shipping evidence.
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-182): 'images remain outside approval' and the image-protocol exclusion are replaced by DL-182; ATS-076 certifies the image protocols, their hardening and saved scrollback with images."
 ```
 
 ## ATS-048 — Existing Session and Bundle Command Bindings
