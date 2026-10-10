@@ -31975,9 +31975,8 @@ canonical_text: >-
   Renaming a terminal is the panel tab rename (`cmd.panel_tab.rename`, F3-631): from the tab's menu the user sets a
   label that replaces the terminal's own label (F3-640) until it is cleared. Workgroups retire, and workgroup rename
   with them (DL-181). The 8-color accent swatch and the 20-icon catalog are not drawn on the redesigned strip, which
-  marks a tab only with its silhouette and the one mark set (F3-631, DL-141); whether a terminal tab may carry a
-  user-chosen icon or colour is an open owner question, and no such choice may ever be drawn as a coloured border or
-  stripe (DR-069).
+  marks a tab only with its silhouette and the one mark set (F3-631, DL-141), and no colour is ever drawn on a tab as
+  a coloured border or stripe (DR-069).
 gui_related: true
 gui_classification_reason: This unit defines visible terminal tab rename, color, and icon customization controls.
 split_recommended: false
@@ -32011,7 +32010,7 @@ compatibility_only_notes:
 - "Slint portability: context and customize menus render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 - "Earlier text, lineage only: Terminal workgroups and individual terminals support user customization from terminal tab context and customize menus: per-workgroup rename, per-terminal rename, an accent color chosen from an 8-color swatch, and an icon chosen from a 20-icon catalog. Chosen names, colors, and icons render on the corresponding workgroup and terminal tabs."
 stale_retired_dispositions:
-- "Amended 2026-10-09 (DL-181): workgroup rename retires, terminal rename becomes the panel tab rename, and the accent swatch and icon catalog are held off the strip until the owner decides."
+- "Amended 2026-10-09 (DL-181): workgroup rename retires, terminal rename becomes the panel tab rename, and the accent swatch and icon catalog are not drawn on the strip."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
