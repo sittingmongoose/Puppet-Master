@@ -378,6 +378,8 @@ Each row MUST identify:
 ### Minimum required rows
 The following rows are required for the promoted Section 15 feature set and the reconciled terminal/editor integration model.
 
+Amended 2026-10-09 (DL-180, DL-181): a terminal is one tab kind with one session per tab in the universal panels (`Plans/UI_Command_Catalog.md#UCC-201`, WM-091). Terminal sections, workgroups, sub-tabs, panes inside a tab, the editor terminal stack and detached sections are retired, and so are the rows below that name them; they stay for lineage, marked "(retired 2026-10-09, WM-091)". Fourteen of those ids existed only in this table, and none is promoted: a new terminal is `cmd.panel_tab.open` with a terminal spec; a terminal tab is activated with `ui.panel_tab.activate`, reordered or moved with `cmd.panel_tab.move`, renamed with `cmd.panel_tab.rename`, pinned with `cmd.panel_tab.pin` and closed with `cmd.panel_tab.close`; Split and Add Pane become `cmd.workspace_layout.split` with a terminal spec (`Plans/UI_Command_Catalog.md#UCC-200`). `cmd.terminal.detach`, `cmd.terminal.close_pane` and `cmd.terminal.reattach_section` retire with no replacement, because no tab pops out. `cmd.terminal.restart_session` is a retired spelling of `cmd.terminal.restart_replace` and `cmd.terminal.focus_session` an alias of `cmd.terminal.focus` (`Plans/UI_Command_Catalog.md#UCC-202`). The terminal toolbar is now the tab's header row and More menu (`Plans/FinalGUISpec.md#F3-640`); WM-091's tables give the wiring row of every control in it.
+
 | UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
 |---|---|---|---|---|
 | Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
@@ -409,32 +411,32 @@ The following rows are required for the promoted Section 15 feature set and the 
 | Browser recovery banner `Reopen` | `cmd.browser.reopen` | browser recovery banner / attention center | browser-session controller | Recreate a recoverable browser session after failure |
 | Browser recovery banner `Retry` | `cmd.browser.retry` | browser recovery banner / attention center | browser-session controller / runtime controller | Retry the failed browser launch or action path |
 | Browser recovery banner `Keep Closed` | `cmd.browser.keep_closed` | browser recovery banner / attention center | browser-session controller | Keep the failed browser session closed while preserving auditability |
-| Chat command card `Open in Terminal` | `cmd.terminal.open` | assistant chat command card | terminal workspace controller | Reveal the exact existing session, workgroup, leaf pane, or historical receipt bound to the referenced terminal runtime |
+| Chat command card `Open in Terminal` | `cmd.terminal.open` | assistant chat command card | terminal workspace controller | Reveal the terminal tab of the exact existing session wherever it is, or the historical receipt bound to the referenced terminal runtime (amended 2026-10-09, DL-181) |
 | Chat command card `Show Terminal` | `cmd.terminal.show` | assistant chat command card / derived runtime surfaces | terminal workspace controller | Focus the same live or historical terminal session already bound to the card context |
 | Chat command card `Rerun in Terminal` | `cmd.terminal.rerun` | assistant chat command card | terminal workspace controller / process-host controller | Replay the command through the terminal launch context without collapsing it into show/focus |
-| Terminal command card `Detach/Pop-Out` | `cmd.terminal.detach` | assistant chat command card / terminal surfaces | terminal workspace controller | Detach the referenced terminal session or pane while preserving terminal identity |
-| Command palette `New Terminal` | `cmd.terminal.new_tab` | command palette / terminal header | terminal workspace controller / process-host controller | Create a new workgroup or new root terminal tab in the chosen section |
-| Terminal workgroup pill | `cmd.terminal.activate_workgroup` | bottom workgroup strip | terminal workspace controller | Activate the target terminal workgroup and reveal its subtabs |
-| Terminal subtab chip | `cmd.terminal.activate_subtab` | subtab row | terminal workspace controller | Focus the target leaf pane within the active workgroup |
-| Terminal workgroup drag-reorder | `cmd.terminal.reorder_workgroup` | workgroup strip | terminal workspace controller | Reorder workgroups without changing leaf pane identity |
-| Terminal subtab drag-reorder | `cmd.terminal.reorder_subtab` | subtab row | terminal workspace controller | Swap or reorder leaf panes inside the same workgroup tree |
-| Terminal pane chrome `Split` | `cmd.terminal.split_pane` | terminal pane chrome | terminal workspace controller / process-host controller | Create a new leaf pane and bound terminal session with deterministic split direction |
-| Terminal strip `Add Pane` | `cmd.terminal.add_leaf` | bottom strip action cluster | terminal workspace controller / process-host controller | Add a new leaf pane to the active workgroup |
-| Terminal editor drop target | `cmd.terminal.embed_in_editor` | editor drop host | terminal workspace controller | Add the dropped pane reference to the editor terminal panel stack |
-| Editor terminal panel close | `cmd.terminal.remove_from_editor` | editor terminal panel chrome | terminal workspace controller | Remove the pane reference from the editor stack without destroying the underlying terminal session |
-| Editor terminal stack `Undock All` | `cmd.terminal.undock_all_from_editor` | editor terminal stack chrome | terminal workspace controller | Clear all editor panel references for the current stack |
-| Output or Problems or Ports `Show Terminal` link | `cmd.terminal.focus_session` | derived runtime surfaces | terminal workspace controller | Focus the owning terminal session without spawning a duplicate shell |
-| Terminal tab context `Move to Other Section` | `cmd.terminal.move_tab_to_section` | terminal tab context menu | terminal workspace controller | Move the tab between sections while preserving tab and session identity |
-| Terminal tab inline rename | `cmd.terminal.rename_tab` | terminal tab chrome | terminal workspace controller | Update visible tab label without changing session identity |
-| Terminal tab pin toggle | `cmd.terminal.pin_tab` | terminal tab chrome | terminal workspace controller | Toggle pin state and update bulk-close behavior |
-| Terminal pane close affordance | `cmd.terminal.close_pane` | terminal pane chrome | terminal workspace controller | Close the pane and apply explicit termination policy if a live session is attached |
-| Terminal tab close affordance | `cmd.terminal.close_tab` | terminal tab chrome | terminal workspace controller | Close the tab and its pane tree with explicit termination behavior when needed |
-| Terminal toolbar `Clear` | `cmd.terminal.clear_scrollback` | terminal toolbar / command palette | terminal session controller | Clear retained scrollback without minting a new runtime identity |
-| Terminal toolbar `Restart` | `cmd.terminal.restart_session` | terminal toolbar / recovery banner | terminal session controller / process-host controller | Replace the runtime with a new terminal session bound to the chosen pane or tab |
+| Terminal command card `Detach/Pop-Out` | `cmd.terminal.detach` (retired 2026-10-09, WM-091) | assistant chat command card / terminal surfaces | terminal workspace controller | Detach the referenced terminal session or pane while preserving terminal identity |
+| Command palette `New Terminal` | `cmd.terminal.new_tab` (retired 2026-10-09, WM-091) | command palette / terminal header | terminal workspace controller / process-host controller | Create a new workgroup or new root terminal tab in the chosen section |
+| Terminal workgroup pill | `cmd.terminal.activate_workgroup` (retired 2026-10-09, WM-091) | bottom workgroup strip | terminal workspace controller | Activate the target terminal workgroup and reveal its subtabs |
+| Terminal subtab chip | `cmd.terminal.activate_subtab` (retired 2026-10-09, WM-091) | subtab row | terminal workspace controller | Focus the target leaf pane within the active workgroup |
+| Terminal workgroup drag-reorder | `cmd.terminal.reorder_workgroup` (retired 2026-10-09, WM-091) | workgroup strip | terminal workspace controller | Reorder workgroups without changing leaf pane identity |
+| Terminal subtab drag-reorder | `cmd.terminal.reorder_subtab` (retired 2026-10-09, WM-091) | subtab row | terminal workspace controller | Swap or reorder leaf panes inside the same workgroup tree |
+| Terminal pane chrome `Split` | `cmd.terminal.split_pane` (retired 2026-10-09, WM-091) | terminal pane chrome | terminal workspace controller / process-host controller | Create a new leaf pane and bound terminal session with deterministic split direction |
+| Terminal strip `Add Pane` | `cmd.terminal.add_leaf` (retired 2026-10-09, WM-091) | bottom strip action cluster | terminal workspace controller / process-host controller | Add a new leaf pane to the active workgroup |
+| Terminal editor drop target | `cmd.terminal.embed_in_editor` (retired 2026-10-09, WM-091) | editor drop host | terminal workspace controller | Add the dropped pane reference to the editor terminal panel stack |
+| Editor terminal panel close | `cmd.terminal.remove_from_editor` (retired 2026-10-09, WM-091) | editor terminal panel chrome | terminal workspace controller | Remove the pane reference from the editor stack without destroying the underlying terminal session |
+| Editor terminal stack `Undock All` | `cmd.terminal.undock_all_from_editor` (retired 2026-10-09, WM-091) | editor terminal stack chrome | terminal workspace controller | Clear all editor panel references for the current stack |
+| Output or Problems or Ports `Show Terminal` link | `cmd.terminal.focus_session` (alias of `cmd.terminal.focus` from 2026-10-09, WM-091) | derived runtime surfaces | terminal workspace controller | Focus the owning terminal session without spawning a duplicate shell |
+| Terminal tab context `Move to Other Section` | `cmd.terminal.move_tab_to_section` (retired 2026-10-09, WM-091) | terminal tab context menu | terminal workspace controller | Move the tab between sections while preserving tab and session identity |
+| Terminal tab inline rename | `cmd.terminal.rename_tab` (retired 2026-10-09, WM-091) | terminal tab chrome | terminal workspace controller | Update visible tab label without changing session identity |
+| Terminal tab pin toggle | `cmd.terminal.pin_tab` (retired 2026-10-09, WM-091) | terminal tab chrome | terminal workspace controller | Toggle pin state and update bulk-close behavior |
+| Terminal pane close affordance | `cmd.terminal.close_pane` (retired 2026-10-09, WM-091) | terminal pane chrome | terminal workspace controller | Close the pane and apply explicit termination policy if a live session is attached |
+| Terminal tab close affordance | `cmd.terminal.close_tab` (retired 2026-10-09, WM-091) | terminal tab chrome | terminal workspace controller | Close the tab and its pane tree with explicit termination behavior when needed |
+| Terminal More menu `Clear scrollback` (was toolbar `Clear`; More menu `Clear` is `cmd.terminal.clear` from 2026-10-09, WM-091) | `cmd.terminal.clear_scrollback` | terminal toolbar / command palette | terminal session controller | Clear retained scrollback without minting a new runtime identity |
+| Terminal toolbar `Restart` | `cmd.terminal.restart_session` (retired spelling of `cmd.terminal.restart_replace` from 2026-10-09, WM-091) | terminal toolbar / recovery banner | terminal session controller / process-host controller | Replace the runtime with a new terminal session bound to the chosen pane or tab |
 | Terminal toolbar `Terminate` | `cmd.terminal.terminate_session` | terminal toolbar | terminal session controller / process-host controller | Request graceful shutdown for the selected live session |
 | Terminal recovery action `Kill` | `cmd.terminal.kill_session` | terminal toolbar / recovery banner | terminal session controller / process-host controller | Force termination for the selected live session |
-| Terminal section header `Detach` | `cmd.terminal.detach_section` | terminal section header / command palette | shell layout controller | Present the chosen terminal section in a detached window without changing section identity |
-| Detached terminal window `Reattach` | `cmd.terminal.reattach_section` | detached terminal window chrome | shell layout controller | Return the section to docked layout with preserved tab and pane state |
+| Terminal section header `Detach` | `cmd.terminal.detach_section` (retired 2026-10-09, WM-091) | terminal section header / command palette | shell layout controller | Present the chosen terminal section in a detached window without changing section identity |
+| Detached terminal window `Reattach` | `cmd.terminal.reattach_section` (retired 2026-10-09, WM-091) | detached terminal window chrome | shell layout controller | Return the section to docked layout with preserved tab and pane state |
 | Chat live-tool action | `cmd.dev.start_session` | chat action / toolbar | dev-session controller | Start dev session and route output to linked shell panes |
 | Dev stop button | `cmd.dev.stop_session` | toolbar / ports / terminal | dev-session controller | Stop active dev session deterministically |
 | Dev restart button | `cmd.dev.restart_session` | toolbar / ports / terminal | dev-session controller | Restart the dev session and refresh linked shell surfaces |
@@ -447,6 +449,8 @@ The following rows are required for the promoted Section 15 feature set and the 
 Terminal wiring owner split: `Plans/Section15_MVP_Promoted_Features_Spec.md §3.14` owns terminal section/tab/pane/session identity, `/reveal` and focus behavior, interaction modes, shell-integration disclosure, lifecycle states, capability `/degradation`, and non-ship terminal-core rules; `storage-plan.md` owns `/runtime-queryable` persistence for `terminal_workspace_state`, `terminal_session_record`, `terminal_command_block`, `dev_session_record`, renderer state, shell-integration tier, capability degradations, restore outcome, and transcript-retention tier. `UI_Command_Catalog.md` and this Wiring Matrix expose the controller split between terminal workspace controller, terminal session controller, process-host controller, dev-session controller, and runtime-surfaces controller; restart or `/replacement` mints a new runtime identity only when the command says so.
 
 Terminal workspace-structure commands must distinguish content-only actions from destructive workspace mutations: `replace-with-new-terminal` keeps the pane slot and attaches a new live-session `terminal_session_id`, `/close` removes pane/tab/section workspace structure only after user-visible `/escalation` and `/cleanup` rules, `/disconnected/review-only` and other non-live panes can be replaced without pretending the old session remains live, and clear or `/reset` affects terminal content without implying restart.
+
+Superseded 2026-10-09 (DL-181): the workgroup activation, sub-tab focus, split-pane tree, editor terminal stack, strip regions and accent-led sub-tab focus named in the next paragraph are retired with terminal sections; a terminal tab is moved, split and resized as a panel tab (WM-090, WM-091). The paragraph stays for lineage. Its last rule holds for the panels: no drag, reorder or split preview dims a terminal's screen.
 
 Terminal/editor wiring treats `Concepts/PMConcept.html` (`/PMConcept.html`) as GUI concept lineage only while preserving the command coverage implied by that concept. Wiring rows cover `/workgroup` activation, active-group `/subtab` focus, split-pane tree operations, editor-integrated multi-panel terminal stacks, pane/subtab/workgroup `/drop` payloads, `/center/right` strip regions, `/right` action clusters for split `/add/collapse`, visible gutters and `/resizers`, accent-led subtab focus, command-log removal, and the rule that split-parent opacity effects must not dim terminal grids during reorder or drag operations.
 
@@ -1889,7 +1893,7 @@ plan_unit_id: WM-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: 'Terminal, dev, and catalog wiring rows cover terminal reveal/show/rerun/detach/new/split/add/embed/focus/move/rename/pin/close/clear/restart/terminate/kill/reattach commands, dev session start/stop/restart/status commands, and catalog install/remove lifecycle commands.'
+canonical_text: 'Terminal, dev, and catalog wiring rows cover terminal open/reveal/show/rerun/focus/clear/restart/terminate/kill commands for one session per tab, dev session start/stop/restart/status commands, and catalog install/remove lifecycle commands. Amended 2026-10-09 (DL-181): the detach/new/split/add/embed/move/rename/pin/close/reattach terminal rows of the sections, workgroups, sub-tabs, panes and editor terminal stack model are retired and stay in the runtime-recovery table as lineage; a terminal tab is opened, moved, renamed, pinned, split and closed by the panel tab rows of WM-090, and the controls inside it are WM-091.'
 gui_related: true
 gui_classification_reason: 'The unit defines user-visible terminal, dev, and catalog command wiring rows.'
 split_recommended: false
@@ -1899,6 +1903,8 @@ depends_on:
 - PDS-005
 - PNC-001
 - WM-004
+- DL-181
+- WM-091
 unblocks: []
 acceptance_criteria:
 - WM-021 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
@@ -1954,8 +1960,10 @@ preserved_exact_tokens:
 - 'cmd.catalog.remove_item'
 negative_constraints: []
 preserved_contractrefs: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- 'The preserved tokens cmd.terminal.detach, new_tab, activate_workgroup, activate_subtab, reorder_workgroup, reorder_subtab, split_pane, add_leaf, embed_in_editor, remove_from_editor, undock_all_from_editor, move_tab_to_section, rename_tab, pin_tab, close_pane, close_tab, detach_section and reattach_section are retired ids kept as lineage; cmd.terminal.restart_session is a retired spelling of cmd.terminal.restart_replace and cmd.terminal.focus_session an alias of cmd.terminal.focus (UCC-201, UCC-202).'
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-181): the terminal rows of the sections and workgroups model retire; one session per tab keeps open, reveal, show, rerun, focus, clear_scrollback, restart_replace, terminate_session and kill_session.'
 owner_hints:
 - 'Plans/Wiring_Matrix.md'
 - 'Plans/Section15_MVP_Promoted_Features_Spec.md'
@@ -1970,7 +1978,7 @@ plan_unit_id: WM-022
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: 'Terminal wiring preserves terminal workspace/session identity, distinguishing content-only actions from destructive workspace mutations, preserving `/replacement`, `/close`, `/disconnected/review-only`, `Concepts/PMConcept.html` GUI lineage, drag/drop layout concepts, and the rule that split-parent opacity effects must not dim terminal grids.'
+canonical_text: 'Terminal wiring preserves terminal workspace/session identity, distinguishing content-only actions from destructive workspace mutations, preserving `/replacement`, `/close`, `/disconnected/review-only`, `Concepts/PMConcept.html` GUI lineage, and the rule that split-parent opacity effects must not dim terminal grids. Amended 2026-10-09 (DL-181): the drag/drop layout concepts of workgroups, sub-tabs, split-pane trees and editor terminal stacks are retired; a terminal tab is moved, split and resized as a panel tab (WM-090), moving, collapsing, maximizing or hiding it never touches its session (SMPFS-180), and no drag, reorder or split preview dims a terminal''s screen.'
 gui_related: true
 gui_classification_reason: 'The unit preserves user-visible terminal identity, layout, and GUI concept lineage constraints.'
 split_recommended: false
@@ -1980,6 +1988,8 @@ depends_on:
 - PDS-005
 - PNC-001
 - WM-021
+- DL-181
+- WM-090
 unblocks: []
 acceptance_criteria:
 - WM-022 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
@@ -2013,15 +2023,10 @@ preserved_exact_tokens:
 - 'clear'
 - '/reset'
 - 'Concepts/PMConcept.html'
-- '/workgroup'
-- '/subtab'
-- 'split-pane tree operations'
-- 'multi-panel terminal stacks'
 - '/drop'
 - '/center/right'
 - '/right'
 - '/resizers'
-- 'accent-led subtab focus'
 - 'command-log removal'
 - 'must not dim terminal grids'
 negative_constraints:
@@ -2029,7 +2034,9 @@ negative_constraints:
 preserved_contractrefs: []
 compatibility_only_notes:
 - 'Concepts/PMConcept.html is GUI concept lineage only while preserving implied command coverage.'
-stale_retired_dispositions: []
+- 'Retired 2026-10-09 (DL-181), lineage only: /workgroup, /subtab, split-pane tree operations, multi-panel terminal stacks and accent-led subtab focus.'
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-181): the workgroup, sub-tab, split-pane tree and terminal stack layout tokens leave the preserved tokens; the identity rules and the no-dimming rule hold for terminal tabs in panels.'
 owner_hints:
 - 'Plans/Wiring_Matrix.md'
 - 'Plans/Section15_MVP_Promoted_Features_Spec.md'
