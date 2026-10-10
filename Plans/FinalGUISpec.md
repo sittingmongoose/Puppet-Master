@@ -164,20 +164,22 @@ Orchestrator worker identity rows from `Orchestrator_Page` / `Orchestrator_Page.
 
 ## 1. Executive Summary
 
-This document is the authoritative GUI specification for the Puppet Master desktop application, replacing the retired Rust/Iced-lineage GUI with a Slint 1.17.1 implementation on Rust stable 1.96.1. The design follows an IDE-shell layout (Activity Bar + Primary Content + Side Panel + Bottom Panel) with eight built-in themes across four families (Friendly, Glass, Retro, Basic; untouched first-open/fresh-project factory default Basic Dark) backed by deterministic built-in palette variants plus user-created custom themes, detachable panels, and a rearrangeable dashboard. An existing project's explicit saved theme and layout always win over that factory seed, and a copied project receives a detached theme/layout snapshot that does not follow its source project.
+Amended 2026-10-09 (DL-180, DL-184): the Bottom Panel is no longer a fixed shell zone. Home's primary content is one universal panel system, an n-ary split tree of panels that each hold any tab kind, Terminal, Problems, Output, Ports and Debug Console included, with a full-width bottom row in the default layout that is an ordinary panel row (F3-630, F3-635); the chat is a fixed column on the right that moves only by Pop out (F3-637); and no box with a coloured side, no emoji and no pills appear anywhere (F3-648). The sentences below that said otherwise are amended in place.
+
+This document is the authoritative GUI specification for the Puppet Master desktop application, replacing the retired Rust/Iced-lineage GUI with a Slint 1.17.1 implementation on Rust stable 1.96.1. The design follows an IDE-shell layout (Activity Bar + Primary Content + Side Panel, with a chat column on the right; Home's primary content is one universal panel system) with eight built-in themes across four families (Friendly, Glass, Retro, Basic; untouched first-open/fresh-project factory default Basic Dark) backed by deterministic built-in palette variants plus user-created custom themes, detachable side panels, and rearrangeable dashboards that open as tabs. An existing project's explicit saved theme and layout always win over that factory seed, and a copied project receives a detached theme/layout snapshot that does not follow its source project.
 
 The current GUI uses a two-row header with 16 flat navigation buttons above a single full-width content area. This wastes screen real estate and forces constant page-switching. The new layout follows a three-column IDE shell inspired by VS Code / JetBrains, dressed in the existing retro-futuristic aesthetic.
 
 Key changes from the retired Rust/Iced-lineage GUI:
-- **Layout:** Single-page-at-a-time replaced with persistent IDE shell (Activity Bar, Primary Content, Side Panel, Bottom Panel)
+- **Layout:** Single-page-at-a-time replaced with persistent IDE shell (Activity Bar, Primary Content, Side Panel, chat column)
 - **Navigation:** 16 flat buttons replaced with 5-group Activity Bar + Command Palette
 - **Settings and owner routing:** `Plans/Settings_System.md` owns the Settings shell and ordinary-setting semantics; the Doctor registry/router/projection remains separate and owner-routed inside the K3 shell; auth/account owners retain Login; Final GUI owns presentation, chrome, theme, and motion
 - **New views:** Usage page, File Manager panel, editor surface, Chat panel, Agent Activity pane, Artifacts, Source Control, Actions & Pipelines, Docker Manager, and Run & Debug side-panel surfaces
-- **Bottom runtime zone:** Terminal, Problems, Output, Ports, and the classical **Debugger** / **DAP Debugger** live here; normal browsing and HTML preview remain editor-tab or detached-window browser surfaces rather than bottom-panel tabs
-- Coarse surface vocabulary treats primary-content pages `/views`, side-panel destinations, bottom-panel surfaces, and Orchestrator tabs as shell categories, not interchangeable route identities.
+- **Runtime tools:** Terminal, Problems, Output, Ports, and Debug Console (the classical **Debugger** / **DAP Debugger** surface) are tab kinds that open in any panel, landing beside the terminals, and the default Home layout keeps them in a full-width bottom row (F3-630, F3-634); normal browsing and HTML preview remain Browser tabs or detached-window browser surfaces
+- Coarse surface vocabulary treats primary-content pages `/views`, side-panel destinations, panel tab kinds, and Orchestrator tabs as shell categories, not interchangeable route identities.
 - **Themes:** Four theme families (eight built-in themes) with full extensibility and deterministic built-in variants
 - **Real-time:** Event-driven updates via Rust channels and `invoke_from_event_loop`, not polling
-- **Panels:** Chat and File Manager are detachable; shell state remains identity-safe when re-docked
+- **Panels:** the home centre is one universal panel system whose panels hold any tab kind (F3-630); the chat is a fixed column that moves only by Pop out (F3-637); side panels such as File Manager are detachable; shell state remains identity-safe when re-docked
 - **Project bar:** Instant project switching from title bar with full state preservation and reload
 - **Language detection:** Auto-detect project languages, display badges, and suggest LSP/tool presets
 - **Sound effects:** Optional audio feedback for key events via `rodio`
@@ -278,6 +280,12 @@ canonical record shape, migration rules, and persistence key live in
 `Plans/home_workspace_layout.schema.json` and `Plans/storage-plan.md`; consumers cite
 those owners instead of copying field definitions.
 
+Superseded 2026-10-09 (DL-180): the GUI owner of the home centre is now the DL-180 to
+DL-185 addendum at the end of this document (F3-630 to F3-639 and F3-647), and the
+record is the v2 Home layout record (`Plans/storage-plan.md#SP-330`,
+`Plans/home_workspace_layout_v2.schema.json`). The units below stay findable as
+lineage; each carries a dated note saying what survives.
+
 ### F3-HOME-001 — Home composition and stable surface identity
 
 Home is one shell workspace with a flexible `home_main` center and five in-app host
@@ -315,6 +323,19 @@ and resurrected the stale persisted flag, which made `cmd.terminal.split_pane`
 appear to have editor side-effects. `mountActiveBrowser` now enforces a single
 active tab in the owning strip (removing any stale file-tab highlight) and
 un-hides a chip-collapsed browser tab when mounting.
+
+Superseded 2026-10-09 (DL-180): the composition above came from an audit packet
+(`PMConcept7_Home_Workspace_Audit_Packet_v1`), not from an owner decision, and is
+superseded. The five host registries, the four stable editor surfaces
+`editor_panel_1` to `editor_panel_4` with Panels 1 and 2 open by default, the
+singleton Dashboard, the Chat as a movable surface and terminal sections docked at
+the bottom give way to one universal panel system: an n-ary split tree of panels,
+each a tab group that holds any tab kind (F3-630), the tab kinds and their ids
+(F3-635), and a chat column fixed on the right that moves only by Pop out (F3-637).
+One rule here carries over: the layout stores references and presentation state
+only, and buffers, terminal sessions, browser sessions, dashboard widget layouts and
+chat messages stay with their domain owners (tab identity versus domain identity,
+F3-635). The paragraphs above remain lineage.
 
 ### F3-HOME-002 — Model-first movement and resize behavior
 
@@ -432,6 +453,24 @@ projected width, mirroring the `normalizeMainRowBases` re-sum the commit will
 run, so the preview and the committed layout agree. The PM_EDGE band geometry
 defers during ALL Home gestures — move and workgroup drags participate in the
 `pm-resizing`/`PM_DRAGEND` deferral alongside resize.
+
+Amended 2026-10-09 (DL-180): the gesture transaction above survives and now moves
+panels and tabs (F3-630). It keeps a committed layout and a local draft, a local
+preview that never re-renders a tab body, one typed command on a changed release,
+the exact restore on Escape, pointer cancel, window blur, an invalid target or an
+unchanged drop, the rule that loss of pointer capture alone is not a cancellation,
+the `invalid_target` result for a pointer past the workspace, the keyboard path with
+polite announcements, and adjacent-pair resize. What it moves changes: a whole panel
+by its grip or Move panel (`cmd.workspace_layout.move_surface`) and a tab by its
+strip (`cmd.panel_tab.move`), onto a panel's edge band, a strip, the centre's outer
+edge or the "+N" list, with F3-630's edge bands, thresholds, dwell, hysteresis and
+motion; the Usage board's gesture kit is the same kit (DR-066). Retired with this
+dated disposition: the five host registries and host adjacency for the keyboard
+path, the host caps and `host_full`, the per-kind fair-share minimums (editor
+220 px, chat 260 px, dashboard 240 px, terminal 150 px) and the host clamp bands (a
+panel's minimum is the largest content minimum of its tabs, F3-635), the floating
+corner handle, and the row-dock `size.cross_basis_px` track (every split keeps its
+own proportions, F3-630). The chat is never moved by a gesture (F3-637).
 
 ### F3-HOME-003 — Shell controls and capability envelope
 
@@ -642,6 +681,23 @@ floating. Native Slint 1.17.1 multi-window behavior remains the desktop authorit
 All eight themes and Light/Dark/Auto remain supported, and no new control may use
 emoji or non-inline image assets.
 
+Superseded 2026-10-09 (DL-180) where it moves the chat or names fixed panels and
+the bottom terminal. The `Home more options` menu loses `Open Panel` and
+`Open Browser in Panel` with their Panel 1 to Panel 4 flyouts, and
+`Collapse Bottom Terminal` with its runtime relabel: things open through the "+"
+menu and the one set of opening rules (F3-632, F3-634), any panel collapses to its
+strip (F3-630), and the menu's rows are F3-502's as amended. The chat loses its
+grip, its in-window float and its `Dock back` to a host: it is a fixed column that
+moves only by Pop out, and `Dock back` returns a popped-out chat to its column
+(F3-637). The bottom terminal's collapse chevron, workgroup movement, the
+empty-section guidance and the reseed rules above go with the terminal sections
+(DL-181, F3-640). What carries over to panels: each panel keeps a small lines-only
+corner grip as its whole-panel move affordance, with Enter on it opening Move panel,
+and a three-dot panel menu at the end of its strip (F3-630); opening a menu or a
+flyout stays view-local and every chosen leaf dispatches exactly one command or a
+typed no-change receipt; and opening something already open reveals it instead of
+duplicating it (F3-634). The web boundary is F3-504's.
+
 ### F3-HOME-004 — Transactional persistence and identity
 
 `HomeWorkspaceLayoutV1` is the only Home shell layout authority. A candidate
@@ -656,6 +712,18 @@ the next reload must be clean. Layout movement/reload never mints editor panel,
 editor group, worktree, buffer, dirty-buffer, terminal section, workgroup, pane,
 PTY/session, Browser, Dashboard, or Chat identity.
 
+Amended 2026-10-09 (DL-180): the Home layout authority is now the v2 record
+`home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, schema id
+`pm.home_workspace_layout.v2` (`Plans/storage-plan.md#SP-330`,
+`Plans/home_workspace_layout_v2.schema.json`), which holds the split tree, the tab
+records and the chat column (F3-630, F3-635, F3-637). `HomeWorkspaceLayoutV1` and the
+Home part of `layout:v1` become read-only migration inputs, converted on first read
+and never reset. The transaction above (validate, write, read back, then commit;
+exact restore on failure; quarantine and a disclosed recovery for a corrupt record)
+and the rule that layout movement and reload never mint domain identity stand for the
+v2 record; in the new words, movement never mints a tab's domain reference (a path, a
+terminal session, a browser session, a board or a chat), F3-635.
+
 ### F3-HOME-005 — Native Slint portability contract
 
 The native Rust implementation owns the committed/draft layout model, command
@@ -668,6 +736,15 @@ Window size and position may be persisted, but exact position restoration on
 Wayland is best effort; an unprovable placement falls back to the last valid dock
 or `home_main`. DOM clone/FLIP mechanics remain prototype-only and cannot become
 native layout authority.
+
+Amended 2026-10-09 (DL-180): the contract holds for the split tree. Rust owns the
+committed and draft split tree, the tab records, the tab-kind registry (F3-635), the
+command transaction, persistence and the multi-window registry, which now holds only
+the popped-out chat (F3-637). One reusable Slint panel component renders every panel,
+its strip and its body, recursively inside row and column splits; one reusable strip
+component renders every tab strip (F3-631); tab bodies are the kinds' own components
+mounted when first shown. Input areas stay projections over the Rust model. An
+unprovable window placement for the popped-out chat falls back to its column.
 
 ### Explicit superseded dispositions
 
@@ -733,18 +810,36 @@ gesture; and DOM-only browser-tab deactivation is superseded by model-first
 `deactivateBrowserProjection` (restoreOwnerRefs can no longer resurrect a stale
 browser-active flag).
 
+Superseded 2026-10-09 (DL-180): the four stable editor panel model, four terminal
+sections with their default bottom placement, the Home host registries and host caps,
+the singleton Dashboard and the movable Chat are superseded by the universal panel
+system of the DL-180 to DL-185 addendum (F3-630 to F3-637): one split tree of panels
+that each hold any tab kind, a full-width bottom row in the default layout that is an
+ordinary panel row, and a chat column fixed on the right. The dispositions above
+remain lineage; the gesture transaction they refine survives for panels and tabs
+(F3-HOME-002 as amended).
+
 ### F3-501 - Home Workspace Model And Stable Identity
 
 ```yaml
 plan_unit_id: F3-501
 unit_type: requirement
-status: accepted
+status: superseded
+superseded_by: F3-630
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: Home is rendered from one Rust-owned HomeWorkspaceLayoutV1 across home_main, four outer docks, and a floating host; four editors, Dashboard, Chat, and up to four terminal sections retain stable domain-owner identities across move, close, reopen, float, re-dock, persistence, and reload.
+canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The four fixed editor panels, the singleton
+  Dashboard and Chat surfaces, up to four terminal sections, the outer docks and the floating host are retired: the home
+  centre is one split tree of panels that each hold any tab kind, and the chat is a fixed column that moves only by Pop
+  out. The text below is retained verbatim for lineage and audit and must not be accepted or indexed as active
+  current-product truth. Superseded by F3-630 (DL-180).
+  Home is rendered from one Rust-owned HomeWorkspaceLayoutV1 across home_main, four outer docks, and a floating host;
+  four editors, Dashboard, Chat, and up to four terminal sections retain stable domain-owner identities across move,
+  close, reopen, float, re-dock, persistence, and reload.
 gui_related: true
 gui_classification_reason: This unit owns the user-visible Home shell composition and stable surface behavior.
 split_recommended: false
-depends_on: [F3-500]
+depends_on: [F3-500, DL-180]
 unblocks: [SP-245, UCC-144, CV-323, F3-502, F3-503, F3-504]
 acceptance_criteria:
 - Exactly four editor panel identities exist; Panels 1 and 2 default open and Panels 3 and 4 default closed.
@@ -770,6 +865,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - The HTML5/CSS-order Home swap demo is retired source lineage only.
+- "Superseded 2026-10-09 (DL-180): the four-editor-panel Home model came from an audit packet, not an owner decision; the universal panel system replaces it (F3-630, F3-635, F3-637)."
 owner_hints: [Plans/FinalGUISpec.md, Plans/storage-plan.md]
 ```
 
@@ -780,17 +876,33 @@ plan_unit_id: F3-502
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: "The 28 by 28 Home more-options trigger immediately left of Theme opens one compact body-portaled four-row popup (amended 2026-08-13): Open Panel, Open Browser in Panel, divider, Collapse Bottom Terminal, and Reset Layout; the first two rows expose Panel 1 through Panel 4 side flyouts, Reset Layout dispatches cmd.workspace_layout.reset as a dual surface with the Settings Startup & Recovery row, and all other Home actions live at their owner surfaces. Amended 2026-08-13 (tweak wave) - the Collapse row is a toggle: it relabels at runtime to Expand Bottom Terminal while the terminal is collapsed and expands it, dispatching cmd.workspace_layout.set_collapsed with the negated current value; the authored markup label stays Collapse Bottom Terminal."
+canonical_text: >-
+  The 28 by 28 Home more-options trigger immediately left of Theme opens one compact body-portaled four-row popup
+  (amended 2026-08-13): Open Panel, Open Browser in Panel, divider, Collapse Bottom Terminal, and Reset Layout; the
+  first two rows expose Panel 1 through Panel 4 side flyouts, Reset Layout dispatches cmd.workspace_layout.reset as a
+  dual surface with the Settings Startup & Recovery row, and all other Home actions live at their owner surfaces.
+  Amended 2026-08-13 (tweak wave) - the Collapse row is a toggle: it relabels at runtime to Expand Bottom Terminal while
+  the terminal is collapsed and expands it, dispatching cmd.workspace_layout.set_collapsed with the negated current
+  value; the authored markup label stays Collapse Bottom Terminal.
+  Amended 2026-10-09 (DL-180): Open Panel and Open Browser in Panel with their Panel 1 to Panel 4 flyouts, and Collapse
+  Bottom Terminal with its runtime Expand Bottom Terminal relabel, retire: things open through the "+" menu and the one
+  set of opening rules (F3-632, F3-634), and every panel collapses to its strip by itself (F3-630). The trigger stays.
+  Its popup now holds, in order: the named layouts (Home, Build, Terminals 2x2, Focus, then the user's saved layouts,
+  the current one checked; cmd.workspace_layout.apply_named); the chat's rows, Show the chat or Hide the chat
+  (cmd.panel.switch), Pop out the chat or Dock the chat back (cmd.panel.undock, cmd.panel.redock) and Keep the chat open
+  in narrow windows (F3-637); Save this layout... (cmd.workspace_layout.save_named); Restore home layout, the former
+  Reset Layout row, which still dispatches cmd.workspace_layout.reset as a dual surface with the Settings row
+  general.startup.reset-home-layout; and directly below it the Run setup wizard row of F3-520.
 gui_related: true
 gui_classification_reason: This unit owns the visible title-bar menu inventory, placement, keyboard behavior, and disabled treatment.
 split_recommended: false
-depends_on: [F3-501, UCC-144, UIW-010]
+depends_on: [F3-501, UCC-144, UIW-010, DL-180]
 unblocks: []
 acceptance_criteria:
-- The popup has exactly the four ordered top-level actions (Open Panel, Open Browser in Panel, Collapse Bottom Terminal, Reset Layout) and no File Manager, Move/Dock, pop-out, close, count, recovery, revision, or debug row.
+- "The popup lists, in order, the named and saved layouts, the chat's Show or Hide, Pop out or Dock back and Keep the chat open in narrow windows rows, Save this layout..., Restore home layout and Run setup wizard, and no File Manager, Move/Dock, numbered panel, bottom terminal, close, count, recovery, revision, or debug row (amended 2026-10-09, DL-180)."
 - Flyouts support hover bridge, Enter/Right Arrow, Left Arrow, roving focus, Escape/outside dismissal, viewport flipping, reduced motion, and trigger focus restoration.
-- The Collapse row toggles; it reads Expand Bottom Terminal at runtime while the terminal is collapsed, round-trips collapse and expand with one cmd.workspace_layout.set_collapsed per activation, and exposes the canonical disabled reason when no eligible bottom terminal exists.
-- Reset is dual-surface; the top-bar Reset Layout row and Settings -> General & Appearance -> Startup & Recovery both dispatch cmd.workspace_layout.reset, no new command ID is minted, and the concept demo's post-reset page reload is demo behavior only, not part of the typed command contract.
+- "No row opens a numbered panel or collapses a bottom terminal; collapsing is per panel (F3-630) (amended 2026-10-09, DL-180)."
+- "Restore home layout is dual-surface: the title-bar row and the Settings row general.startup.reset-home-layout both dispatch cmd.workspace_layout.reset, keep every open tab, and mint no new command ID; the concept demo's post-reset page reload is demo behavior only."
 validation_surfaces:
 - node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
 - python3 Concepts/pm7-tools/build_pm7.py
@@ -812,6 +924,7 @@ stale_retired_dispositions:
 - Diagnostics, File Manager, Move/Dock, pop-out, close, count, recovery, and revision rows in the title-bar Home menu remain retired.
 - "Amended 2026-08-13: the 2026-08-04 reset prohibition in the title-bar Home menu is itself retired — Reset Layout is a required fourth row, dual-surface with the Settings Startup & Recovery row, both dispatching cmd.workspace_layout.reset. The three-row inventory is retired with it."
 - "Amended 2026-08-13 (tweak wave): the one-way Collapse contract (Collapse stays Collapse, never an Expand alias) is retired — the row is a toggle with a runtime Expand Bottom Terminal relabel while collapsed."
+- "Amended 2026-10-09 (DL-180): Open Panel, Open Browser in Panel, their Panel 1 to Panel 4 flyouts and the Collapse Bottom Terminal toggle with its Expand relabel are retired; Reset Layout reads Restore home layout; the popup gains the named layouts, Save this layout... and the chat's rows."
 owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md]
 ```
 
@@ -928,25 +1041,35 @@ canonical_text: >-
   four PM_EDGE bands report display none; home_main shows 2 dividers for 3 visible
   surfaces. At 1180 px home_main computes overflow-x auto with a zero scrollbar gutter,
   and returns to the clip path at 1920.
+  Amended 2026-10-09 (DL-180): the transaction, the shared resizer glow and recovery, the four-edge scroll dissolve, the
+  change-gated landing preview, the hysteresis, the latch-based geometric targeting, the invalid_target window exit and
+  the scroll lock now serve panels and tabs in the split tree (F3-630): what moves is a whole panel or a tab, the
+  targets are panel edge bands, strips, the centre's outer edge and the "+N" list, and F3-630 owns the edge bands,
+  thresholds, dwell, hysteresis and motion. Retired with this dated disposition: the five hosts, the host caps (left and
+  right 3, top and bottom 2, floating 4) and host_full, the per-kind fair-share minimums and the host clamp bands (a
+  panel's minimum is F3-635's), floating surfaces and their corner handle, the row-dock size.cross_basis_px track, and
+  the deliberate below-1320 px home_main overflow-x auto exception: the centre never scrolls sideways and narrow windows
+  follow F3-636's ladder.
 gui_related: true
 gui_classification_reason: This unit owns visible layout gestures, previews, resize feedback, scrolling-edge treatment, and recovery.
 split_recommended: false
-depends_on: [F3-501, UIW-010]
+depends_on: [F3-501, UIW-010, DL-180]
 unblocks: []
 acceptance_criteria:
 - Pickup retains pointer offset and shows landing placeholder, neighbor reflow, and narrow theme-aware edge previews.
 - Escape, pointercancel, blur, invalid targets, and unchanged drops restore the exact committed model with no command, persistence, or success event; loss of pointer capture alone is not a cancellation vector.
 - Every eligible boundary uses the shared theme-aware diamond glow/recovery controller and commits once on changed pointer-up only.
 - Every new vertical or horizontal scrollport enrolls in the shared four-edge dissolve system with no-overflow and reduced-motion handling.
-- The drag placeholder projects the target geometry (fair share of the destination host; full width plus the dock's track thickness in a row-axis dock), sits at the correct flex order, and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a host expanded only by the preview never captures the hit-test for that expansion, and dragging past the workspace root shows the invalid_target no-drop state and never floats the surface.
-- The top and bottom docks resize on both axes; column dividers transfer width between the adjacent pair inside the row, and the full-width track handle changes the dock's rendered thickness by writing size.cross_basis_px (host-max semantics, host-band clamped), with pre-field layouts migrating cross_basis_px from basis_px.
+- "The landing preview projects the target geometry (the share F3-630's insertion rule gives a panel split from a panel edge band or the centre's outer edge, or the tab's slot in the destination strip) and re-seats only when the resolved target (an edge band, a strip, the outer edge or the \"+N\" list) or the insertion index changes; a pickup still inside its source panel resolves to the source placement, a panel expanded only by the preview never captures the hit-test for that expansion, and dragging past the workspace root shows the invalid_target no-drop state and never floats the panel or tab (amended 2026-10-09, DL-180; F3-630)."
+- "Every split resizes by adjacent-pair transfer on its own dividers and keeps its own proportions; the row-dock size.cross_basis_px track is retired (amended 2026-10-09, DL-180; F3-630)."
 - A candidate drop target must survive two consecutive resolved frames before the placeholder re-seats; a surface carrying data-pm-home-flip is invisible to the drag hit-test; auto-scroll does not re-apply without actual scroll or pointer movement; and the placeholder's previewed width equals the proportional share the post-commit normalizeMainRowBases re-sum would grant (wave 3, 2026-08-13).
-- Host targeting reads only latched geometry; per-dock entry/exit bands freeze at pickup and no drop-target resolution reads the painted element stack, so approaching an occupied row dock produces exactly one host transition and one track opening per approach (wave 4, 2026-08-13).
-- A divider drag transfers pixels between the adjacent pair only (+N/-N exactly), non-adjacent surfaces are untouched, and commit produces no settle flash; effective minimums degrade to fair share so every boundary stays reachable, and floating surfaces resize on both axes from the bottom-right corner handle.
-- At render, boot, and window resize the visible home_main bases re-sum to the host width; a degenerate persisted layout self-heals with no host background band wider than the gap token, and a full host refuses an incoming drop with an announced host_full disposition while normalization spills overflow to home_main.
+- "Drop targeting reads only latched geometry: every panel's edge bands and strip and the centre's outer edge band freeze at pickup, and no drop-target resolution reads the painted element stack, so approaching a panel edge produces exactly one target transition and one landing preview per approach (wave 4, 2026-08-13; amended 2026-10-09, DL-180; F3-630)."
+- "A divider drag transfers pixels between the two panels it separates only (+N/-N exactly), other panels are untouched, and commit produces no settle flash; each panel stops at its own minimum (F3-635, never less than 280 x 120 px) and a panel dragged below half its minimum collapses to its strip, and no Home surface floats (amended 2026-10-09, DL-180; F3-630)."
+- "At render, boot, and window resize the split tree's proportions fill the centre with no dead space and a degenerate persisted layout self-heals on normalization; host caps and host_full are retired (amended 2026-10-09, DL-180; F3-630)."
 - "At the default width no Home box is scrollable: the workspace, the host grid, the owning dashboard panel and every host report scrollWidth == clientWidth and scrollHeight == clientHeight, forcing scrollLeft leaves it at 0, and a horizontal or vertical wheel storm over any pane moves nothing (wave 8, 2026-08-15)."
-- "An empty dock measures 0 px on its cross axis and its four PM_EDGE frost bands are display none until it gains real size; home_main renders exactly visible-minus-one resize dividers so every divider has a right-hand pair partner, while the column docks keep their last-surface track handle (wave 8, 2026-08-15)."
-- "Host scrollbars occupy zero space on every engine (scrollbar-width none plus a zero-size ::-webkit-scrollbar, ID-anchored), and below 1320 px home_main deliberately regains overflow-x auto so min-width-floored pane content stays reachable, still with a zero-width gutter (wave 8, 2026-08-15)."
+- "A scrollport that measures 0 px on either axis keeps its four edge frost bands display none until it gains real size, and every split renders exactly one divider fewer than its children so every divider has a neighbour on each side; empty docks and the column docks' last-surface track handle are retired (wave 8, 2026-08-15; amended 2026-10-09, DL-180; F3-630)."
+- "Host scrollbars occupy zero space on every engine (scrollbar-width none plus a zero-size ::-webkit-scrollbar), and the centre never scrolls sideways at any width; the below-1320 px overflow-x exception is retired (amended 2026-10-09, DL-180; F3-636)."
+- "Panels and tabs move with this transaction: nothing dispatches during a drag, a changed release commits one command, and every cancel path restores the exact earlier layout (F3-630)."
 validation_surfaces:
 - node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
 risk_class: home_gesture_regression
@@ -969,6 +1092,8 @@ stale_retired_dispositions:
 - "Amended 2026-08-13 (wave 3): instant single-frame target adoption is retired in favour of the two-frame hysteresis; mid-FLIP surfaces are excluded from hit-testing; per-frame auto-scroll re-application is retired (actual movement only); the fair-share placeholder width is refined to the proportional projected width mirroring normalizeMainRowBases; PM_EDGE deferral widens from resize-only to all Home gestures."
 - "Amended 2026-08-13 (wave 4): painted-stack drop-target resolution (elementsFromPoint) is retired — reading painted geometry starved under its own preview (FLIP-marked surfaces and drop-active docks both skipped, falling through to home_main, collapsing and re-adopting the dock at roughly 9 Hz with ~120 px placeholder jumps); latch-based geometric targeting yields exactly one host transition and one track opening per approach into an occupied dock."
 - "Amended 2026-08-15 (wave 8): the wave-7 scroll-lock rationale is retired. Three claims go with it — that overflow-x clip beside overflow-y auto forbids programmatic scrollLeft (it computes to hidden per CSS Overflow 3 §3.1, the hosts stayed scroll containers and scrollLeft still moved 12 px, and Safari ≤ 15 drops the declaration entirely); that the host-level `scrollbar-color: var(--border-light) transparent` declaration suppressed gutters (it defeated the scrollbar opt-in list's transparent idle ink and produced an always-visible thumb, and it never applied at all on the Safari builds where the 10 px webkit bars were actually stealing space); and that the tab silhouette contributed the residual horizontal overflow (its flare box overhangs the START edge, which does not count toward scrollWidth in LTR). The overflow is removed at its three measured sources instead — empty-dock padding, zero-extent frost bands, and the pairless last home_main divider — with a both-axes clip belt and ID-anchored zero-width host scrollbars, and the sub-1320 px home_main overflow-x auto is a documented reachability exception, not a leak."
+- "Amended 2026-10-09 (DL-180): the gesture transaction now moves panels and tabs; the five hosts, host caps and host_full, per-kind fair-share minimums, host clamp bands, floating surfaces, the cross_basis_px track and the below-1320 px overflow-x exception are retired."
+- "Amended 2026-10-09 (DL-180): four more acceptance criteria are rewritten for panels and the split tree; their fair-share host projection, per-dock latch bands, fair-share minimum degradation, floating corner handle, empty dock and column-dock track handle wording is lineage only."
 owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Wiring_Rules.md]
 ```
 
@@ -988,18 +1113,26 @@ canonical_text: >-
   cannot cover the title bar, and cannot produce a second chat surface. Floating is never
   a boot state; persisted floating surfaces demote to last_docked_host at boot with a
   storage.boot_demote_floating receipt.
+  Amended 2026-10-09 (DL-180): the chat is a fixed column and Pop out is its only way to move (F3-637). Pop out is a
+  desktop app action (native builds, D3): it opens the one chat in its own native window through the multi-window
+  registry, and Dock back returns it to its column. In the web client the chat is never floated, docked or moved inside
+  the page either, so the in-canvas chat float above is retired; whether the web client offers a Pop out of its own is
+  not decided here and stays an open question for the lead. No other Home surface floats or opens a window: panels and
+  tabs move only inside the split tree (F3-630). The chat's popped-out state belongs to the chat column state the v2
+  Home layout record keeps (SP-330).
 gui_related: true
 gui_classification_reason: This unit owns visible native/web capability behavior and degradation disclosure.
 split_recommended: false
-depends_on: [F3-501]
+depends_on: [F3-501, DL-180]
 unblocks: []
 acceptance_criteria:
 - Native reusable surfaces are backed by shared Rust models and a multi-window registry; Slint input areas do not own layout identity.
 - Wayland window position restoration is best effort with a valid in-app fallback.
-- window.open is never the only path, is attempted only under direct user activation, and blocked popup state falls back to in-canvas floating.
+- "window.open is never the only path and is attempted only under direct user activation; a blocked popup never falls back to floating the chat inside the page (amended 2026-10-09, DL-180)."
 - Reduced motion disables interpolation but retains target and state cues.
-- The chat pop-out floats in-canvas in the Home float layer with no full-viewport scrim, the title bar stays visible above it, and no re-render while it is open yields a second chat surface.
+- "The chat never floats in-canvas: no Home surface has an in-window or in-page float, no full-viewport scrim covers the title bar, and no re-render yields a second chat surface (amended 2026-10-09, DL-180; the in-canvas chat pop-out is lineage)."
 - A reload never restores a floating surface; each persisted floating surface demotes to its last_docked_host and the demotion persists with a storage.boot_demote_floating receipt.
+- "In the desktop app Pop out opens the one chat in its own window and Dock back returns it to its column; no panel or tab floats (amended 2026-10-09, DL-180; F3-637)."
 validation_surfaces:
 - node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
 - python3 scripts/pm-plan-index.py validate
@@ -1016,9 +1149,12 @@ preserved_exact_tokens: [Slint 1.17.1, Wayland, direct user activation, in-canva
 negative_constraints:
 - Do not claim OS docking or unrestricted popup placement as a web guarantee.
 - Do not reintroduce a full-viewport chat overlay or any scrim that can cover the title bar.
+- "Do not float the chat inside the page in the web client (DL-180)."
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "Amended 2026-08-13: the PM6 base full-screen chat overlay (.pm6-chat-overlay fixed panel plus viewport scrim) is retired in PM7 via a T20-anchored guard on the base applyLayout; its scrim CSS remains dead code in the base for census stability but no code path can show it."
+- "Amended 2026-10-09 (DL-180): editor panels and the Dashboard no longer pop out or float; Pop out is the chat's alone and returns to the chat's fixed column (F3-637)."
+- "Amended 2026-10-09 (DL-180): the web client's in-canvas chat float is retired with every other in-window float; Pop out is a desktop app action (D3), and a web Pop out is an open question for the lead, not canon."
 owner_hints: [Plans/FinalGUISpec.md]
 ```
 
@@ -1186,17 +1322,26 @@ canonical_text: >-
   bit this wave: T16 is a RAW SUBSTRING COUNT over the whole assembled document, so a
   CSS COMMENT that merely spells the property name trips it - the comment was reworded
   and the count returned to 134.
+  Amended 2026-10-09 (DL-180): this silhouette becomes the one tab silhouette of every panel and every tab kind; F3-631
+  consumes it and F3-647 draws it in each look. The strip is 35 px in every panel with 31 px tabs whose plate overlaps
+  the body by 1 px, 8 px apart (Retro 2 px); contact is measured to the neighbour's content inset by 8 px within the 20
+  px morph window; the crown, shoulder and flare radii per look are F3-631's. The fused shape is the only active-tab
+  marker: Basic's 2 px accent-blue crown strip is retired, and no look gives the active tab a separately coloured plate,
+  Glass dark included (Jared, 2026-10-10); the per-theme skins above yield to F3-631 and F3-647 where they differ. The
+  dashboard's own Main, Metrics and Monitoring strip retires: a dashboard is a tab in a panel's strip (F3-638). The
+  rotating Retro trio, the pointer-capture reorder, the snap-while-dragging contract and the minimap as the code pane's
+  only scrollbar stand, and now apply in every strip (F3-631, F3-639).
 gui_related: true
 gui_classification_reason: This unit defines the visible active-editor-tab chrome, its joined-surface geometry, and its motion.
 split_recommended: false
-depends_on: [F3-421, F3-466]
+depends_on: [F3-421, F3-466, DL-180]
 unblocks: []
 acceptance_criteria:
 - "The active tab, its corner helpers and the code canvas resolve to one fill token, the rail resolves darker, and no border or seam separates the active tab from the canvas at any frame."
 - "leftProgress and rightProgress are computed independently against a 20 px threshold; a flush side renders canvasRx 0 and cutoutRx 0 while the opposite side keeps its corner."
-- "Only the horizontal extent of a corner animates, driven by the per-side progress custom properties --ed-lp/--ed-rp; as of the 2026-08-13 tweak wave the CSS derives the radii from that progress against the 12 px shoulder/canvas maxima and the theme's --ed-top-radius crown (13 px default; friendly 16, glass 14, retro 6)."
-- "The dashboard tab strip participates in the same connected-surface system with the shared rail recipe at the same alpha, and tabs start flush at the panel's left edge."
-- "Per-theme silhouette skins resolve through --ed-shape-outline, --ed-shape-crown/--ed-shape-crown-h, and --ed-tab-inactive-ring: retro renders its hard outline with square inactive rings, basic renders the 2 px accent-blue crown at a 9 px radius, and glass renders the 1 px --glass-edge crown strip clipped by the silhouette path at 84 percent rail alpha (wave 6 re-tune of the wave-3 three-edge bevel)."
+- "Only the horizontal extent of a corner animates, driven by the per-side contact progress --ed-lp/--ed-rp against the 20 px window; the crown, shoulder and flare radii per look are F3-631's (amended 2026-10-09, DL-180; the tweak-wave 13, 16, 14 and 6 px crowns are lineage)."
+- "Every panel's strip, a dashboard tab's panel included, participates in the same connected-surface system, and tabs start flush at the panel's left edge (amended 2026-10-09, DL-180; F3-631, F3-638)."
+- "Per-look silhouette skins follow F3-631 and F3-647: no look draws an accent crown strip, an underline or a separately coloured plate on the active tab; Glass keeps its 1 px glass rim along the fused shape's crown as part of its material, never in an accent colour (amended 2026-10-09, DL-180)."
 - "The silhouette is one JS-composed clip-path path() per frame (superellipse-approximating crown cubics, handle factor 0.5523 + 0.35 x progress; ogee descents with a 10:8 canvas-neck to shoulder-flare ratio), progress is linear in gap/20, per-side gap measures to the nearest contact (strip content-box edge or adjacent tab's transform-free layout edge), strip-end caps key off the strip box only, and rendering is identical in Safari and Chromium (wave 6, 2026-08-14)."
 - "The editor minimap is the only code-pane scrollbar; native scrollbars are suppressed and the minimap band aligns with the frosted rail via margin, not padding."
 - "Dragging tracks the pointer one-to-one with corner values derived in the same frame; selection by click, snap or keyboard produces the identical transition."
@@ -1235,6 +1380,7 @@ stale_retired_dispositions:
 - "Wave-3 follow-up (2026-08-13): the retro hard outline on the travelling connected shape is retired — the outline renders on the active tab as a three-edge inset ring that snaps on arrival."
 - "Amended 2026-08-14 (wave 6): the border-radius crown, the corner-shape/superellipse @supports enhancement blocks (engine-split, Chromium-only — the explicit motivation for the change), the masked shoulder pseudo-elements, and the glass three-edge inset box-shadow bevel are all retired — the silhouette is one JS-composed clip-path path() per frame and the glass edge is a 1 px --glass-edge crown strip clipped by that path. The uniform 12 px shoulder/canvas radii are re-tuned to the reference 10:8 canvas-neck to shoulder-flare ratio, and the first/last-laid-tab gap track is retired (it froze the morph when dragging the end tabs and wobbled under FLIP transforms) in favour of nearest-contact per-side gap measurement. Follow-up defect-fix refinement: the unclamped ogee (which inverted the wall segment into a visible hump), corner-meet-agnostic inflection placement, and token-scaled bezier handles (which doubled back on short chords) are retired for the height-clamped ogee, natural-corner inflection, and 0.55-of-own-radius handles."
 - "Amended 2026-08-14 (wave 6): three retro tab-motion prototype concepts initially shipped pane-gated and EXPERIMENTAL (phosphor/crt/dos via data-retro-motion on editor panes 1/2/3), with two retunes (timings ~2.3x slower; then phosphor dither 240 ms / afterglow 650 ms, CRT outgoing collapse-to-line removed as it read like the old tab blacking out, DOS block caret removed). RESOLVED 2026-08-14 (third follow-up, user decision): ALL THREE concepts are canon as a ROTATING TRIO — every selection click and every reorder gesture rolls a mode from a shuffle bag (fair rotation, no immediate repeats). The pane gates (data-retro-motion) are removed everywhere; the effects cover all editor strips and the dashboard strip under retro themes; the steady state is the standard retro active ring, with phosphor gaining a 650 ms solid-hold fade and CRT a 500 ms scanline-hold fade so each flourish hands back cleanly. Reorder: phosphor and dos gestures quantize the glide to 8 px cells, crt glides smooth; the drop cues (crt roll / dos blink) are unchanged; reduced motion suppresses all of it. Part-25 integration routes through PM6_RETRO_MOTION.beginDrag(). The single-winner plan and the EXPERIMENTAL status are retired with this dated disposition."
+- "Amended 2026-10-09 (DL-180): the editor-and-dashboard scope widens to every panel strip (F3-631); Basic's 2 px accent-blue crown, any separately coloured active plate (Glass dark's included) and the dashboard's own Main/Metrics/Monitoring strip are retired; the strip is 35 px for every panel."
 owner_boundary_notes:
 - "F3-421 owns editor tab close, pane close and the width-aware +N more overflow chip; F3-466 owns the friendly-theme editor tab shape; F3-464 owns the title-bar page-tab sliding ink and is unaffected by this unit. As of the 2026-08-13 tweak wave this unit covers editor file tabs AND the dashboard tab strip (Main/Metrics/Monitoring); title-bar page tabs remain out of scope."
 owner_hints: [Plans/FinalGUISpec.md]
@@ -1503,6 +1649,30 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ### 3.1 IDE Shell Structure
 
+Superseded 2026-10-09 (DL-180): the diagram below is lineage. It draws the side panel on
+the right (the rail is on the left since F3-481) and a fixed, collapsible bottom panel
+for Terminal, Problems and Output, which no longer exists as a shell zone. The shell is
+now the title bar, the activity bar and its side panel on the left, the primary content,
+the chat column fixed on the right (F3-637) and the status bar; on Home the primary
+content is one universal panel system whose panels hold any tab kind, Terminal, Problems,
+Output, Ports and Debug Console included, and whose default layout keeps a full-width
+bottom row that is an ordinary panel row (F3-630, F3-635):
+
+```
++-----------------------------------------------------------------------+
+|  TITLE BAR                                                      28px  |
++------+------------+--------------------------------------+------------+
+| ACT  | SIDE PANEL |  HOME CENTRE: panels in a split tree | CHAT       |
+| BAR  | (left)     |  +----------------+----------------+ | COLUMN     |
+|      | 240-480px  |  | tabs / body    | tabs / body    | | fixed,     |
+| 48px |            |  +----------------+----------------+ | 400-760px  |
+|      |            |  | tabs / body (bottom row, 0.4)   | |            |
+|      |            |  +---------------------------------+ |            |
++------+------------+--------------------------------------+------------+
+|  STATUS BAR                                                     24px  |
++-----------------------------------------------------------------------+
+```
+
 
 ```
 +-----------------------------------------------------------------+
@@ -1540,16 +1710,19 @@ vertical padding remains 2 px through `--pm-home-pad-y`/`--pm-home-gap-y`.
 
 ### 3.2 Structural Zones
 
+Amended 2026-10-09 (DL-180): the fixed bottom panel row is retired and a chat column row is added; the side panel is on the left (F3-481). On Home the primary content is the universal panel system (F3-630).
+
 | Zone | Slint Container | Size | Behavior |
 |------|----------------|------|----------|
 | **Title bar** | `HorizontalLayout` | height: 28px fixed | App name (theme font, bold 14px; F3-430), compact current-project context, title-bar page tabs, title-bar search, rightward notification stack with count badge (sitting between the title-bar page tabs and the title-bar search, exactly centred in that gap by two auto margins; F3-460 as amended 2026-08-13), theme selector (morphing sun/moon/auto icon trigger with Light/Dark/Auto mode control), settings gear |
 | **Activity bar** | `VerticalLayout` | width: 48px fixed | Icon-only vertical nav; always visible |
 | **Primary content** | `VerticalLayout` (flex: 1) | fills remaining space | Active page view; scrollable internally per page |
 | **Side panel** | `VerticalLayout` | width: 240-480px, resizable | Hosts the currently selected activity-bar side-panel surface; one visible at a time; detachable where supported |
-| **Bottom panel** | `VerticalLayout` | height: 120-300px, collapsible | Terminal, Problems, Output tabs |
+| **Bottom panel** | (retired) | (retired) | Superseded 2026-10-09 (DL-180): no fixed bottom zone. Terminal, Problems, Output, Ports and Debug Console are tab kinds in any panel; the default Home layout keeps a full-width bottom row that is an ordinary panel row (F3-630, F3-635) |
+| **Chat column** | `VerticalLayout` | width: clamp(400, 0.26667 x window width + 88, 640) px by default, dragged between 400 and 760 px | Fixed on the right from the title bar to the status bar; never a tab; moves only by Pop out (F3-637) |
 | **Status bar** | `HorizontalLayout` | height: 24px fixed | Full-width layout participant on every primary page. It renders the F3-448 inventory: workspace status menu, orchestrator status, regex-index progress / refresh disclosure, ports, branch, and sync; it has no platform/model/mode/context or notifications/bell item and never overlays page content. The 2026-08-13 removal prose is superseded by the 2026-08-27 §3.1 disposition. |
 
-`FinalGUISpec.md §3.1` is the shell confirmation for right-hand side-panel occupants: the side panel is the Activity Bar surface slot with a 240-480px width budget. Legacy labels such as `/File`, `/Source`, `/GitHub`, and `/etc` are migration labels for occupants or groups, not separate page surfaces that bypass the right-hand side-panel model.
+`FinalGUISpec.md §3.1` is the shell confirmation for left-hand side-panel occupants (F3-481; the right-hand wording here was lineage until amended 2026-10-09, DL-180): the side panel is the Activity Bar surface slot with a 240-480px width budget. Legacy labels such as `/File`, `/Source`, `/GitHub`, and `/etc` are migration labels for occupants or groups, not separate page surfaces that bypass the left-hand side-panel model.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 
@@ -1597,6 +1770,8 @@ Non-canonical after this section:
 - shell semantics that assume only one active project context exists in the application at a time
 ### 3.5 Spacing and Density
 
+Amended 2026-10-09 (DL-180, DL-184): the default selection mark is no longer a coloured edge stripe anywhere (F3-648), and the density metric no longer assumes a bottom panel; the two sentences below that said otherwise are amended in place.
+
 **Global spacing tokens** (base design tokens; independent of UI scaling):
 
 | Token | Base (px) | Use |
@@ -1609,14 +1784,16 @@ Non-canonical after this section:
 
 **Border widths:**
 - Primary panel borders: 2px (reduced from current 3px for density)
-- Active/selected indicator: 3px left-edge accent stripe (not in the left rail: since 2026-10-09 the rail marks selection with a fill or an outline on the element's own box and draws no coloured side bar, F3-618 and F3-619, DL-162)
+- Active/selected indicator: a fill or an outline on the element's own box, the fused tab silhouette for tabs (F3-631), the NieR square cursor or Retro reverse video, never a coloured edge stripe (amended 2026-10-09, DL-184: the former default "3px left-edge accent stripe" is retired shell-wide, F3-648; the left rail had already dropped it under DL-162, F3-618 and F3-619)
 - Dividers within panels: 1px
 
 **Hard shadow:** Offset `(2, 2)` on major containers; `(4, 4)` on floating/detached windows. No blur (retro aesthetic).
 
-**Density metric:** At 1920x1080, the primary content area is at minimum 900px wide when both side panel and bottom panel are open. At 1280x720, the side panel auto-collapses to an icon tab, and the bottom panel collapses to its header row.
+**Density metric:** amended 2026-10-09 (DL-180): Home's density follows the centre-width ladder of F3-636, keyed on the window minus the rail and the chat column, with its measured widths from 1920 px down to 900 px; there is no bottom panel. The earlier metric (a primary area of at least 900px with side and bottom panels open at 1920x1080, and a bottom panel collapsed to its header row at 1280x720) is lineage.
 
 ### 3.6 Space Accounting (1920x1080 reference)
+
+Superseded 2026-10-09 (DL-180): the accounting below is lineage; it assumes a 380 px side panel and a 160 px bottom panel. The home centre's width is now the window minus the activity bar, the side panel and the chat column, and its height the window minus the title bar and the status bar, with no bottom panel; F3-636 lists the measured widths (at 1920 px the rail 240, the chat 600 and the centre 1041 px).
 
 ```
 Title bar:      28px
@@ -1662,7 +1839,7 @@ Required shell rules:
 - None of those surfaces are described as canonical primary-content pages unless the statement is explicitly about a routed detail page launched from the surface.
 - Activity-bar labels, tooltips, shortcuts, and command IDs MUST use the same surface vocabulary across shell chrome, command palette, and wiring tables.
 - Detachable side-panel surfaces return to the same left-hand slot when re-docked.
-- The bottom runtime zone remains terminal/output/problems/debug/ports territory; normal browsing and HTML preview remain editor/workspace-tab hosted.
+- Terminal, Output, Problems, Debug Console and Ports are panel tab kinds that land beside the terminals in any panel (F3-634, F3-635; amended 2026-10-09, DL-180: no bottom runtime zone remains); normal browsing and HTML preview remain Browser tabs (F3-302).
 
 ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
@@ -1687,7 +1864,7 @@ Actions & Pipelines is the `repository_automation` side-panel owner for shell en
 
 #### Run & Debug side-panel owner
 
-Run & Debug is the `run_debug` side-panel owner for runtime diagnostics entry, Problems, Output, Debug Console, and Ports reveal/focus behavior. This shell-surface owner-boundary does not create duplicate runtime records; its actions reveal or focus the canonical bottom runtime zone panes while preserving linked dev-session identity, historical/live badges, and recovery outcome context.
+Run & Debug is the `run_debug` side-panel owner for runtime diagnostics entry, Problems, Output, Debug Console, and Ports reveal/focus behavior. This shell-surface owner-boundary does not create duplicate runtime records; its actions reveal or focus the Problems, Output, Debug Console and Ports tabs wherever they are, opening them by F3-634's rules when none is open (amended 2026-10-09, DL-180), while preserving linked dev-session identity, historical/live badges, and recovery outcome context.
 
 #### Search side-panel owner
 
@@ -1763,6 +1940,8 @@ Orchestrator shortcut candidates include focus global Orchestrator search, next 
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FileManager.md
 
+Amended 2026-10-09 (DL-180): the panel keys of F3-635 hold while focus is in the home centre, with the web-client mapping rule; the rows below that named the bottom runtime panel, terminal sections or a singleton Dashboard are amended in place, and where a chord here and a panel key meet, the panel key holds while focus is in the centre.
+
 **Tier 1 -- Essential (learn day one):**
 
 | Shortcut | Action |
@@ -1785,9 +1964,9 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Fil
 | `Ctrl+Enter` | Confirm dialog (primary action), dialog-scoped (F3-568) |
 | `Tab` | Queue message (in chat, steer mode; composer-scoped) |
 | `Ctrl+Shift+,` | Open settings |
-| `Ctrl+\` | Toggle current side-panel occupant |
+| `Ctrl+\` | Toggle current side-panel occupant; while focus is in the home centre, split the focused panel right (F3-635) |
 | `Ctrl+Shift+H` | Show Search with replace focus |
-| `Ctrl+Shift+\`` | Toggle bottom runtime panel |
+| `Ctrl+Shift+\`` | New terminal tab (F3-635; the bottom runtime panel it toggled is retired, amended 2026-10-09, DL-180) |
 | `Ctrl+W` | Close current tab/panel |
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
@@ -1796,8 +1975,8 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Fin
 
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl+Shift+D` | Toggle Dashboard |
-| `Ctrl+Shift+\` | Detach/re-dock active detachable side-panel or terminal section |
+| `Ctrl+Shift+D` | Reveal the Home dashboard tab (`dashboard:home`) where it is (F3-634, F3-638; amended 2026-10-09, DL-180: the Dashboard is a tab, not a toggled surface) |
+| `Ctrl+Shift+\` | Detach/re-dock the active detachable side panel; while focus is in the home centre, split the focused panel down (F3-635; terminal sections are retired, amended 2026-10-09, DL-180) |
 | `Alt+Up/Down` | Cycle through chat threads |
 | `Ctrl+Shift+C` | Compact current session |
 | `Ctrl+Shift+P` | Open project switcher |
@@ -1817,6 +1996,8 @@ ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-p
 
 ## 5. Panel System
 
+Amended 2026-10-09 (DL-180, DL-181): this section now covers the left rail's side panels and the chat's Pop out. The home centre is the universal panel system of F3-630 to F3-637: its panels live in one split tree, never dock or float, and hold any tab kind; terminals are tabs in any panel, one session per tab (SMPFS-180, F3-640); and the chat is a fixed column that moves only by Pop out (F3-637). The sentences below that said otherwise are amended in place.
+
 ### 5.1 Detachable Panels
 The shell supports detachable panels, but detachment never changes canonical surface identity.
 
@@ -1824,15 +2005,15 @@ ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Command_
 
 Required detachable surfaces:
 - Search panel
-- Chat panel
+- Chat panel (Pop out only, returning to its fixed column; F3-637)
 - File Manager panel
-- bottom terminal workspace
-- editor-embedded terminal panels when they are promoted out of the editor stack
+- (retired 2026-10-09, DL-180: the bottom terminal workspace; a terminal is a tab in any panel)
+- (retired 2026-10-09, DL-181: editor-embedded terminal panels promoted out of the editor stack; there is no editor terminal stack)
 
 Rules:
 - re-docking restores the same logical surface identity rather than minting a new panel type.
-- the bottom terminal workspace remains the canonical host for runtime terminals.
-- editor-embedded terminal panels are secondary presentations of terminal leaf panes, not separate PTY sessions.
+- a terminal is a tab of the terminal kind in any panel, one session per tab, and there is no bottom terminal workspace (amended 2026-10-09, DL-180, DL-181; F3-635, SMPFS-180).
+- (retired 2026-10-09, DL-181: editor-embedded terminal panels were secondary presentations of terminal leaf panes, not separate PTY sessions; there is no editor terminal stack, and each terminal session belongs to one terminal tab, SMPFS-180, F3-640.)
 - normal browsing and preview/browser sessions remain governed by the browser/session model, not by terminal detachment rules.
 - desktop-first terminal `/presentation` is the MVP SSOT: browser or `/remoted` terminal access is a sibling transport/presentation layer over the same terminal tabs, panes, command metadata, and PTY model, not a provider-style or shell-like second ownership model.
 - Terminal integration APIs may expose structured `/query`, `/focus/send-input/interrupt/resize/state` capture, `/create-terminal`, and `/input/session` controls for PM-owned `/workflows` and `/preview/summarization`, but arbitrary third-party plugins or open-ended extension hooks cannot mutate core rendering, input, or session semantics.
@@ -1844,6 +2025,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Sec
 ### Terminal section presentation rules
 
 Superseded 2026-10-09 (DL-180, DL-181, DL-184): this block is lineage. The bottom runtime zone, terminal sections, workgroups, sub-tabs, the split tree inside a workgroup and the editor terminal stack are retired. A terminal is one tab kind holding one session in any panel (F3-635, SMPFS-180), with its chrome in F3-640 and its features in F3-641; its splits are new panels, side-by-side terminals are panels, and four-up is the Terminals 2x2 layout of F3-630. The workgroup pill below is retired by DL-184 (F3-648). F3-062 is superseded by F3-640; F3-063, F3-064 and F3-065 are amended to keep only their surviving rules (no second session for a second presentation, no split-parent fade, drag cleanup, Reduced Motion).
+
 
 The bottom runtime zone uses a workgroup-first terminal information architecture.
 
@@ -1896,6 +2078,8 @@ Reduced motion applies to terminal enter animations where those animations are s
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
 ### 5.2 Panel State Machine
 
+Amended 2026-10-09 (DL-180): this state machine covers the left rail's side panels and the chat's Pop out only. Home panels never dock or float: they live in the split tree (F3-630). The chat is not a `PanelDock` participant beyond Pop out and Dock back to its fixed column (F3-637). `DockSide::Bottom` and the bottom runtime zone are retired, and `DockSide::Right` as the default for Chat and File Manager is lineage (the rail is on the left, F3-481; the chat's column is fixed on the right).
+
 Per panel: **DOCKED** <-> **FLOATING**. Same Slint component is used inline when docked or as the root of a separate Slint `Window` when floating.
 
 ```
@@ -1922,6 +2106,8 @@ enum DockSide {
 
 ### 5.3 Undock Triggers
 
+Amended 2026-10-09 (DL-180): these triggers apply to the left rail's side panels and to the chat's Pop out. Dragging a home panel's tab off its strip tears it off inside the split tree and never opens a window (F3-630); the chat has no drag trigger, only Pop out (F3-637); and while focus is in the home centre `Ctrl+Shift+\` is Split down (F3-635).
+
 - **Double-click** the panel's title bar tab
 - **Drag** the panel's title bar tab away from the edge
 - **Pop-out button** in panel header (window-with-arrow icon)
@@ -1930,6 +2116,8 @@ enum DockSide {
 - **Command palette:** "pop out chat" or "detach file manager"
 
 ### 5.4 Snap Zones
+
+Amended 2026-10-09 (DL-180, DL-184): home panels use F3-630's edge bands, landing preview and motion, not these snap zones. The 2px accent strip cue on the target edge is retired under DL-184 (F3-648); a side panel docking back shows the look's landing preview treatment (F3-647) instead.
 
 When a floating panel window is dragged near the main window edge:
 - Proximity threshold: 25px from the main window edge
@@ -1947,12 +2135,16 @@ When a floating panel window is dragged near the main window edge:
 
 ### 5.6 Discoverability
 
+Superseded 2026-10-09 (DL-180): the six-dot grip and the first-run pop-out banner below are retired (the 2026-08-13 Home dispositions had already retired the head-row six-dot grip). Home panels carry the small corner grip and the panel menu of F3-630; the chat's Pop out sits in its own menu and in the title bar's Home options menu (F3-637, F3-502); the Guided Tour teaches the panels (`Plans/Planning_Wizard.md#PWIZ-035`).
+
 Three-signal system for panel detach discovery:
 1. **Drag handle + tooltip:** Subtle grip icon (6 dots) in panel header. Hover tooltip: "Drag to detach, or double-click to pop out."
 2. **Explicit "Pop Out" button:** Small window-with-arrow icon button in panel header (right side)
 3. **First-run hint (one-time):** On first use of Chat or File Manager, inline banner: "This panel can be popped out into its own window. [Try it] [Dismiss]." Dismissed permanently after first interaction.
 
 ### 5.7 Panel Persistence
+
+Amended 2026-10-09 (DL-180): Home's panels, tabs and chat column persist in the v2 Home layout record (`Plans/storage-plan.md#SP-330`); the dock state here covers the side panels and the popped-out chat's window only.
 
 
 **Layout persistence per project:** Panel dock state (docked side and width, or floating position/size), **activity bar icon order**, and **which panel was last visible** are persisted **per project** in redb (e.g. under keys scoped by `project_id`). Restored on startup and when switching projects. If a floating window was on a monitor no longer connected, fall back to docked state.
@@ -1966,7 +2158,7 @@ Three-signal system for panel detach discovery:
 
 **Focus management:** When a floating panel window closes (user clicks X or presses Escape), focus returns to the main window. Tab key does NOT cross window boundaries -- each window has its own focus chain.
 
-**Zero-width prevention:** Minimum panel width is 240px. If a resize drag would reduce below this, clamp at 240px. Bottom panel minimum height is 80px (collapse to 24px header via collapse button only, not via resize drag).
+**Zero-width prevention:** Minimum side-panel width is 240px (F3-471). If a resize drag would reduce below this, clamp at 240px. Home panels follow F3-630: a panel's minimum is the largest content minimum of its tabs and never less than 280 x 120 px, and a panel dragged below half its minimum collapses to its 35 px strip (amended 2026-10-09, DL-180: the bottom panel's 80px minimum and 24px collapsed header are retired).
 
 ---
 
@@ -2287,9 +2479,11 @@ Orchestrator consumes the named Progress catalog from FinalGUISpec Appendix C. T
 
 ### 7.2 Dashboard
 
-Dashboard is the first-pass operational summary surface. It uses a rearrangeable card grid with grid-based resizing and an Add Widget command, but only source-backed Dashboard widgets are live canon for MVP. The default Dashboard widget set is exactly `widget-orchestrator-progress`, `widget-active-lanes`, `widget-recent-results`, and `widget-custom-metrics`; broader `widget.*` catalog entries are compatibility, candidate, or widget-library material unless promoted by a specific owner PlanUnit.
+Amended 2026-10-09 (DL-180): a dashboard is a tab kind, not a singleton surface. Several dashboard tabs may be open, each a board with its own widget layout, and `dashboard:home` is the pinned Home dashboard (F3-638); a dashboard tab can show every Usage widget, with Orchestrator widgets after that page's redesign (`Plans/usage-feature.md#UF-062`, `Plans/Widget_System.md#WS-030`). The sentences below that said otherwise are amended in place.
 
-Dashboard layout state uses `widget_layout:v1:dashboard` as the live layout family. `dashboard_layout:v1` remains a read-only migration and backup key. Dashboard may deep-link into Orchestrator, Usage, History, Ledger, Evidence, Source Control, Actions & Pipelines, Docker Manager, and Runtime Artifacts, but it does not re-own those destination records or commands.
+Dashboard is the first-pass operational summary surface. It uses a rearrangeable card grid with grid-based resizing and an Add Widget command, but only source-backed Dashboard widgets are live canon for MVP. A dashboard tab can show every Usage widget (F3-638); the Home dashboard's default widgets and the catalogue are `Plans/Widget_System.md#WS-030`'s. Amended 2026-10-09 (DL-180): the earlier exact default set (`widget-orchestrator-progress`, `widget-active-lanes`, `widget-recent-results`, `widget-custom-metrics`) stays as the Home board's starting set (WS-030) and is lineage only as a limit on the catalogue; the rule that broader `widget.*` entries wait for an owner's promotion is lineage, and DL-180 is that promotion for Usage widgets.
+
+Each dashboard board keeps its own widget layout under `widget_layout:v1:dashboard:<board_id>`, never inside the Home layout record; today's `widget_layout:v1:dashboard` converts into `widget_layout:v1:dashboard:home`, the Home dashboard's board, as WS-030 says (amended 2026-10-09, DL-180). `dashboard_layout:v1` remains a read-only migration and backup key. Dashboard may deep-link into Orchestrator, Usage, History, Ledger, Evidence, Source Control, Actions & Pipelines, Docker Manager, and Runtime Artifacts, but it does not re-own those destination records or commands.
 
 ### 7.3 Shared route and open behavior
 
@@ -2311,7 +2505,7 @@ Graph and evidence schemas add work-package `/seam/promotion/account/lane` ident
 
 Route payload passthroughs include `correlation_id` as a matrix-verifiable field when owner contracts require it, rather than relying on prose-only correlation.
 
-Route destination classes include `bottom_panel` for terminal, problems, output, ports, browser, and debug; `embedded_surface` covers embedded sub-surfaces such as `document_pane` and `agent_activity` without turning those panes into route-object taxonomy.
+A route whose destination is a terminal, problems, output, ports, browser or debug console opens a tab of that kind through the one opening module (F3-634), carrying the placement fields of `Plans/Contracts_V0.md#CV-360`; the `bottom_panel` destination class is retired (amended 2026-10-09, DL-180). `embedded_surface` covers embedded sub-surfaces such as `document_pane` and `agent_activity` without turning those panes into route-object taxonomy.
 
 Usage-event identity stays primary for Usage `/Ledger` navigation, while node `/attempt` identity stays primary for runtime and graph inspectors.
 
@@ -2598,6 +2792,8 @@ Evidence presents artifact, receipt, validation, and corroboration references th
 
 Artifacts routes to Runtime Artifacts Panel and project-output artifact owners. It may mirror previews and links from Dashboard or Orchestrator, but artifact kind, envelope, projector, and schema authority stay with the artifact owners.
 
+Amended 2026-10-09 (DL-180): an artifact opened in the home centre opens as an artifact tab (`artifact:<artifact_id>`, F3-635), placed by F3-634; the viewer inside it is `Plans/Runtime_Artifacts_Panel.md#RAP-065`'s.
+
 ### 7.13 Source Control
 
 Source Control is the Git/worktree mutation and inspection surface. It consumes WorktreeGitImprovement, storage, Contracts, and FileManager open/review behavior while preserving lane, package, safe-point, and worktree identity.
@@ -2622,7 +2818,7 @@ Layout:
 #### 7.16.1 Thread header and message stream
 
 Chat context and message detail requirements:
-- The chat-header context indicator is the GUI entrypoint for thread context state. Hover opens the lightweight usage/status module, `More Details` focuses or opens the thread-scoped context-detail editor tab, and click may reveal `Compact Now` without dispatching compaction until the user chooses that action.
+- The chat-header context indicator is the GUI entrypoint for thread context state. Hover opens the lightweight usage/status module, `More Details` focuses or opens the thread-scoped context-detail editor tab (amended 2026-10-09, DL-180: a context tab, `context:<threadId>`, F3-635, placed by F3-634), and click may reveal `Compact Now` without dispatching compaction until the user chooses that action.
 - The context-detail tab is keyed by thread and live-updates as thread data changes. Its top-level header summary is followed by a top-level view toggle with `Curated` and `Raw`; `Curated` contains Overview, Breakdown, and Messages, while Raw exposes serialized payloads and provider/runtime debugging data through the shared Contracts and Usage rules.
 - Message rows expose an under-message icon row for copy, message actions, and message-level info-popover access. The info-popover consumes the closed field and label rules from Assistant Chat and Contracts, including runtime identity fields for provider, model, persona, account, requested/effective state, and `/model/persona/account` inspector disclosure where material.
 
@@ -2685,10 +2881,12 @@ Required behavior summary:
 
 ### 7.18 File Editor
 
+Amended 2026-10-09 (DL-180): the editor is a document tab kind in the universal panels (F3-635, F3-639); its editor groups are panels (F3-630), and the first bullet below is amended in place.
+
 The File Editor is the canonical in-app code and document editing surface.
 
 Required behavior summary:
-- tabbed editor groups with shared buffers, diff view, preview modes, and detach / re-dock support
+- editor tabs in any panel (the panels are the editor groups, F3-630) with shared buffers, diff view, preview modes and preview tabs (amended 2026-10-09, DL-180: detach / re-dock of editor groups is retired; editor tabs move between panels)
 - LSP-backed diagnostics, hover, completion, signature help, inlay hints, code actions, code lens, semantic highlighting, and go-to-definition
 - SSH remote editing, stale-write disclosure, and recoverable unsaved local buffer persistence
 - embedded rendering for markdown, mermaid, HTML, SVG, and image documents through the shared preview pipeline
@@ -2790,7 +2988,9 @@ Required behavior:
 
 ### 7.20 Bottom runtime zone
 
-The bottom runtime zone is the canonical host for Terminal, Problems, Output, Debug Console, Ports, and linked runtime-adjacent panes.
+Superseded 2026-10-09 (DL-180): there is no bottom runtime zone. Terminal, Problems, Output, Debug Console and Ports are tab kinds (F3-635) that open in any panel by F3-634's affinity, the tool kinds beside the terminals, and the default Home layout keeps them in its full-width bottom row, an ordinary panel row (F3-630). The behaviour below stands for those tabs wherever they are. The heading stays for anchor stability.
+
+Terminal, Problems, Output, Debug Console, Ports, and linked runtime-adjacent panes are panel tabs (amended 2026-10-09, DL-180; formerly hosted by the bottom runtime zone).
 
 Required behavior summary:
 - tabbed runtime panes with stable identity and restore behavior
@@ -2799,7 +2999,7 @@ Required behavior summary:
 
 #### 7.20.1 Terminal and browser tab management
 
-Terminal sections, terminal tabs, browser tabs, and detached previews remain identity-stable across docking, focus changes, and restart recovery.
+Every tab, terminal and browser tabs included, and detached previews remain identity-stable across moves between panels, focus changes, and restart recovery (F3-635; amended 2026-10-09, DL-180: terminal sections are retired, DL-181).
 
 Rules:
 - runtime tabs persist selection, order, labels, and pin state
@@ -2808,13 +3008,13 @@ Rules:
 
 #### 7.20.2 Debug, Problems, Output, and Ports
 
-The runtime zone must provide:
+These tool kinds provide (amended 2026-10-09, DL-180: they are tabs, not runtime-zone panes):
 - **Problems:** aggregated diagnostics, file links, and source ownership disclosure
 - **Output:** task/build/dev output streams with source tags and search within stream
 - **Debug Console:** adapter and evaluation output for the active debug session
 - **Ports:** detected ports, local/remote accessibility, open-in-browser actions, and hot-reload controls
 
-`Run & Debug` side-panel actions reveal and focus these bottom-panel panes rather than creating duplicate runtime records.
+`Run & Debug` side-panel actions reveal and focus these tabs wherever they are, opening them by F3-634 when none is open, rather than creating duplicate runtime records (amended 2026-10-09, DL-180).
 
 ## 8. Widget Catalog
 
@@ -2838,6 +3038,8 @@ Major widget families:
 - **Display:** Tree, List, Table, Card
 - **Feedback:** Toast, Dialog, ProgressBar, Badge
 - **Navigation:** Breadcrumb, SideNav, CommandPalette
+
+Amended 2026-10-09 (DL-180): in the Layout family, SplitPane is a split of the home centre's split tree, TabGroup the one tab strip (F3-631) and Panel the one panel (F3-630); every panel and every tab kind reuses them.
 
 Catalog rules:
 - atomic widgets define behavior, focus, and theme-token usage once and are reused across all surfaces
@@ -3091,11 +3293,13 @@ The GUI must never visually "jump" or "flicker" when background data updates arr
 
 ### 12.1 Breakpoints
 
+Amended 2026-10-09 (DL-180): on Home these window breakpoints yield to the centre-width ladder of F3-636, keyed on the window minus the rail and the chat column; there is no bottom panel to compact or collapse. The table still describes the shell around other pages.
+
 | Window Width | Layout Adaptation |
 |-------------|-------------------|
 | >= 1360px | **Full layout:** All panels visible at comfortable widths |
-| 1080-1359px | **Compact:** Side panel at minimum (240px); bottom panel compact |
-| 720-1079px | **Collapsed:** Side panel auto-collapses to 48px icon tab; bottom panel collapses to header row (24px) |
+| 1080-1359px | **Compact:** Side panel at minimum (240px) (the bottom panel clause is retired, DL-180) |
+| 720-1079px | **Collapsed:** Side panel auto-collapses to 48px icon tab (the bottom panel clause is retired, DL-180) |
 | < 720px | **Single-column:** Activity bar only; panels accessible as overlays/drawers from activity bar icons |
 
 At narrow widths where panels become `/overlays` or drawers, `AnnotationDrawer`, `AnnotationActionMenu`, and `ContextChipStrip` collapse into overlay/drawer patterns without hiding keyboard access or breaking `keyboard-shortcut` expectations.
@@ -3113,6 +3317,8 @@ At narrow widths where panels become `/overlays` or drawers, `AnnotationDrawer`,
 Since 2026-10-09 the left rail's panels do not abbreviate text at any width; they fit by layout (F3-620, DL-162).
 
 ### 12.3 Dashboard Grid Responsive
+
+Superseded 2026-10-09 (DL-180): a dashboard tab's columns follow the tab's own width, never the window (F3-638, F3-636); the board's column ladder is `Plans/Widget_System.md#WS-030`'s, with the Usage thread's presets tested at 400, 550 and 700 px still to come. The window-width table below is lineage.
 
 | Window Width | Grid Columns |
 |-------------|-------------|
@@ -3153,7 +3359,7 @@ All themes must show visible focus indicators:
 ### 13.3 Keyboard Navigation
 
 - All interactive elements reachable via Tab navigation
-- Focus order follows visual layout: Activity bar -> primary content -> side panel -> bottom panel -> status bar
+- Focus order follows visual layout: Activity bar -> side panel -> primary content (on Home the panels in tree order) -> chat column -> status bar; F6 and Shift+F6 cycle the rail, the panels and the chat (amended 2026-10-09, DL-180: the former order through a bottom panel is lineage; F3-635)
 - Every list, table, and tree supports: Up/Down arrow navigation, Enter to select/activate, Escape to deselect/go back, Home/End to jump to first/last item
 - Type-ahead filtering where appropriate (thread list, project list, file tree)
 
@@ -3320,12 +3526,15 @@ Chat messages, file trees, log outputs, evidence lists, and other long lists use
 
 ### 15.1 redb Schema
 
+Amended 2026-10-09 (DL-180): the Home layout lives in the v2 Home layout record `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (`Plans/storage-plan.md#SP-330`), the only Home layout authority; `layout:v1` loses its Home part, which becomes a read-only migration input converted on first read and never reset, and each dashboard board keeps its own widget layout (WS-030).
+
 **Shell, layout, and editor state**
 
 | Key | Content | Write Frequency |
 |-----|---------|----------------|
-| `layout:v1` | Panel/editor layout geometry only: panel dock state per panel (docked side + width, or floating position/size), center splits, bottom runtime-panel height, detached-window geometry, and split ratios for terminal sections. It is not terminal topology or terminal session identity. Single JSON blob for atomic read/write. | On change (debounced 300ms) |
-| `widget_layout:v1:dashboard` | Canonical dashboard widget grid layout, positions, sizes, and widget IDs | On change (debounced 300ms) |
+| `layout:v1` | Side-panel and detached-window layout geometry only: side-panel dock state (docked side + width, or floating position/size) and the popped-out chat window's geometry. Amended 2026-10-09 (DL-180): its Home part (center splits, the bottom runtime-panel height, terminal section split ratios) is a read-only migration input to the v2 Home layout record (SP-330), converted on first read and never reset. It is not terminal topology or terminal session identity. Single JSON blob for atomic read/write. | On change (debounced 300ms) |
+| `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` | The only Home layout authority, schema `pm.home_workspace_layout.v2`: the split tree, the tab records, the view state, the chat column, saved named layouts and the closed-tab stack; the fields are SP-330's (added 2026-10-09, DL-180) | On each committed change, written and read back before it commits (F3-HOME-004) |
+| `widget_layout:v1:dashboard` | Dashboard widget grid layout, positions, sizes, and widget IDs. Amended 2026-10-09 (DL-180): each dashboard board keeps `widget_layout:v1:dashboard:<board_id>` and this key moves into the Home dashboard's board as WS-030 says | On change (debounced 300ms) |
 | `activity_bar_order:v1` | Ordered list of activity bar item IDs + separator position | On change (debounced 300ms) |
 | `theme:v1` | Theme family + presentation mode (Light/Dark/Auto), with the resolved ThemeVariant enum value kept for readers | On change |
 | `glass_background_mode:v1` | Glass wallpaper background mode (mesh, depth, or minimal) for the Glass theme family | On change |
@@ -3424,10 +3633,13 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.
 - Ledger search
 
 ### 15.4 Startup Restore
+
+Amended 2026-10-09 (DL-180): Home restores from its v2 layout record `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (`Plans/storage-plan.md#SP-330`), the only Home layout authority: the split tree, its tabs, the view state and the chat column. A v1 Home layout converts on first read and is never reset. `layout:v1` restores only the side panels' dock state and the popped-out chat window's geometry, and each dashboard board restores its own widget layout (`Plans/Widget_System.md#WS-030`). Steps 1 and 3 are amended in place.
+
 On startup:
-1. Resolve the active Project's detached shell snapshot. Read its `layout:v1` and restore panel positions, sizes, dock states, and detached-terminal geometry; only a genuinely absent fresh-project snapshot receives the factory layout. A copied Project reads its destination-owned snapshot, never a live source-project value.
+1. Resolve the active Project's detached shell snapshot. Read its `layout:v1` and restore panel positions, sizes, dock states, and detached-terminal geometry; only a genuinely absent fresh-project snapshot receives the factory layout. A copied Project reads its destination-owned snapshot, never a live source-project value. Amended 2026-10-09 (DL-180): `layout:v1` restores only side-panel dock state and the popped-out chat window's geometry, and detached-terminal geometry goes with the bottom terminal (F3-061); the home panels, their tabs and the chat column restore from `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), and the factory layout is the Home named layout (F3-630).
 2. Read the active Project's `theme:v1` and apply its explicit saved selection. Only an untouched first-open/fresh-project absence seeds Basic Dark; startup never replaces an existing saved selection with either Basic Dark or the superseded Friendly Dark default.
-3. Read `widget_layout:v1:dashboard` and restore dashboard widget layout. On first launch after migration, read from deprecated `dashboard_layout:v1` only when the canonical key is absent, then write back to `widget_layout:v1:dashboard`.
+3. Read `widget_layout:v1:dashboard` and restore dashboard widget layout. On first launch after migration, read from deprecated `dashboard_layout:v1` only when the canonical key is absent, then write back to `widget_layout:v1:dashboard`. Amended 2026-10-09 (DL-180): each dashboard board restores its widget layout from `widget_layout:v1:dashboard:<board_id>`; `widget_layout:v1:dashboard` converts into `widget_layout:v1:dashboard:home` on first read and is never reset, and stays, like `dashboard_layout:v1`, a read-only migration input (WS-030).
 4. Read `activity_bar_order:v1` and restore icon order.
 5. Read `editor_workspace_state.v1:{project_id}` and restore open tabs and view positions. Restore each dirty per-file buffer from `editor_state.v1:{project_id}:{file_path_hash}` before focusing the active tab; if the disk baseline differs, present a diff and never overwrite either side implicitly.
 6. Read `project_state:v1:{project_id}` and restore the active project-facing shell state.
@@ -4073,7 +4285,7 @@ These decisions are final and must not be revisited during implementation:
 1. **Rust stable 1.96.1 verified 2026-07-02; Slint 1.17.1 selected/currentness decision 2026-07-07** -- no other native UI framework: Slint owns layout, input, focus, text editing, clipboard, drag and drop and windows, and replacing it needs a new owner decision (DL-139; a GPUI fork was considered and rejected on 2026-10-02); reverify official stable releases before coding/build work
 2. **winit + Skia only** -- Skia on the GPU by default, Skia's own CPU raster as the only fallback, extended by Puppet Master's Skia renderer extensions (F3-582); FemtoVG and Slint's separate software renderer are retired (DL-139); on a software GPU adapter the CPU raster is always used, even over an explicit GPU choice, with a warning that no GPU was detected
 3. **No React/Tauri product UI** -- native desktop is Rust + Slint `.slint` markup; the web GUI is a Rust Leptos client drawn with browser elements and CSS, with JavaScript limited to generated or minimal glue (DL-139, F3-583)
-4. **IDE shell layout** -- Activity Bar + Primary Content + Side Panel + Bottom Panel
+4. **IDE shell layout** -- Activity Bar + Side Panel (left) + Primary Content + chat column (right); Home's primary content is one universal panel system (amended 2026-10-09, DL-180: the Bottom Panel is no longer a zone; F3-630, F3-637)
 5. **Four theme families / eight built-in themes** -- Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, Basic Light (built-in variants + custom themes via TOML). The untouched first-open/fresh-project factory default is Basic Dark; explicit saved project theme/layout customization survives, and a copied project receives a detached snapshot. This supersedes the Friendly Dark default and the earlier three-family lock while preserving both as historical lineage.
 6. **Settings and presentation ownership** -- `Plans/Settings_System.md` owns the Settings shell and ordinary-setting semantics; `Plans/newtools.md` N2-151 owns the Doctor registry/router/projection; auth/account owners retain Login; Final GUI owns their K3-shell presentation, chrome, theme, layout, and motion rather than a unified semantic Settings + Login + Doctor owner.
 7. **Event-driven updates** via `invoke_from_event_loop`, not polling
@@ -4092,6 +4304,8 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Sec
 
 This appendix extends the Dashboard (section 7.2) from a rearrangeable card grid to a full widget grid with grid-based resizing, and introduces the add-widget flow for the Dashboard.
 
+Amended 2026-10-09 (DL-180, DL-184): a dashboard is now a tab kind and several boards may be open (F3-638); a dashboard tab can show every Usage widget, Orchestrator widgets after that page's redesign, so C.4's four-entry named catalogue and C.4.1's limit no longer bind dashboard tabs (`Plans/usage-feature.md#UF-062`, `Plans/Widget_System.md#WS-030`); C.1's window-width columns yield to the tab's own width (F3-636, F3-638); and the call-to-action cards' accent-left-border is retired (F3-648). The sentences below that said otherwise are amended in place.
+
 ### C.1 Dashboard Upgrade: Card Grid to Widget Grid
 
 
@@ -4100,12 +4314,12 @@ The Dashboard (section 7.2) is upgraded from a simple rearrangeable card grid (d
 **What changes from section 7.2:**
 - Cards become **widgets** from the widget catalog (Plans/Widget_System.md section 2). Each widget has configurable `col_span` and `row_span`.
 - Drag-to-swap is upgraded to **drag-to-reorder** within the grid. Widgets can also be **resized** by dragging their edges (grid-snapping, per Plans/Widget_System.md section 3).
-- Grid system follows Plans/Widget_System.md section 3: responsive column counts (2 at <1200px, 3 at 1200-1600px, 4 at >1600px per section 12.3).
+- Grid system follows the Usage widget board inside the dashboard tab; its column count follows the tab's own width, never the window (amended 2026-10-09, DL-180; F3-638, WS-030; the window-width counts of section 12.3 are lineage).
 - Widget gutters: 8px (MD spacing token) between widgets.
 
 **What stays the same from section 7.2:**
 - All existing Dashboard card types remain as default widgets.
-- The card visual style is preserved: paper texture on retro themes, drag handle (4px crosshatch pattern in top-left corner), elevated surface for CtA cards with accent-left-border.
+- The card visual style is preserved: paper texture on retro themes, drag handle (4px crosshatch pattern in top-left corner), elevated surface for CtA cards (the accent-left-border is retired, amended 2026-10-09, DL-184; F3-648).
 - CtA (Calls to Action) behavior: HITL approval, run interrupted, rate limit, warning, and `wizard_attention_required` cards function identically (see §7.2 for full specs).
 - Persistence location changes from `dashboard_layout:v1` to `widget_layout:v1:dashboard` (see section C.5 for migration).
 
@@ -4140,7 +4354,7 @@ Widget_System consumes this named catalog directly; it does not invent new widge
 
 ### C.4.1 Larger Widget Library Compatibility Note
 
-Earlier Appendix C drafts listed a broader `widget.*` library, including Usage widgets (`widget.quota_summary`, `widget.budget_donuts`, `widget.analytics_chart`, `widget.tool_usage`, `widget.multi_account`, etc.) and Orchestrator Progress widgets (`widget.orchestrator_status`, `widget.current_task`, `widget.progress_bars`, etc.). That list is compatibility/candidate-library lineage only for Dashboard hosting. It is not the Dashboard named catalog, and it does not authorize Widget_System to invent IDs. A Dashboard widget outside the four named entries in C.4 must be promoted by its owning doc before it becomes selectable.
+Earlier Appendix C drafts listed a broader `widget.*` library, including Usage widgets (`widget.quota_summary`, `widget.budget_donuts`, `widget.analytics_chart`, `widget.tool_usage`, `widget.multi_account`, etc.) and Orchestrator Progress widgets (`widget.orchestrator_status`, `widget.current_task`, `widget.progress_bars`, etc.). That list is compatibility/candidate-library lineage only for Dashboard hosting. It is not the Dashboard named catalog, and it does not authorize Widget_System to invent IDs. A Dashboard widget outside the four named entries in C.4 must be promoted by its owning doc before it becomes selectable. Promoted 2026-10-09 (DL-180): every Usage widget is selectable in a dashboard tab (UF-062, F3-638, WS-030); Orchestrator widgets follow after that page's redesign.
 
 Dashboard customization still uses the explicit **"Add Widget"** control from C.3, including menu, floating action button, or toolbar entrypoints, but the selectable set is the named catalog unless an owner promotes a new dashboard widget.
 
@@ -5894,11 +6108,15 @@ canonical_text: >-
   Widget layout migration uses widget_layout as the active layout family while dashboard_layout
   and dashboard_layout:v1 remain read-only migration or backup names with explicit persistence
   scope.
+  Amended 2026-10-09 (DL-180): the active Dashboard family is one namespace per board,
+  `widget_layout:v1:dashboard:<board_id>` (WS-030); `widget_layout:v1:dashboard` joins `dashboard_layout:v1` as a
+  read-only migration input and backup, converting into `widget_layout:v1:dashboard:home` on first read and never
+  reset.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -5930,6 +6148,7 @@ compatibility_only_notes:
 - "dashboard_layout and dashboard_layout:v1 are backup/migration names."
 stale_retired_dispositions:
 - "Retired layout keys are read-only migration backups."
+- "Amended 2026-10-09 (DL-180): `widget_layout:v1:dashboard` is no longer the active Dashboard key; each board has its own (WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -6347,11 +6566,14 @@ canonical_text: >-
   the legacy github_actions input normalizes to repository_automation with a GitHub automation binding and never
   creates another occupant. Routes normalize message, scheduler, package, lane, worktree, concern, promotion, and graph lineage
   through one object-first route shape.
+  Amended 2026-10-09 (DL-180): a route that opens something in the home centre lands as a tab of an F3-635 kind placed
+  by F3-634 and carries CV-360's placement fields (`where`, `mode`, `by`, `background`); the targets named here are
+  side-panel occupants and the embedded document pane, which are not panel tabs.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -6382,7 +6604,8 @@ preserved_exact_tokens:
 - "/worktree/concern/promotion/graph"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): routes into the home centre land as panel tabs through F3-634, carrying CV-360's placement fields."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -6398,12 +6621,14 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Contracts_V0 owns the canonical route payload, target model, and object_kind enum while
   Glossary.md owns user-facing object_kind vocabulary for help and downstream copy.
+  Amended 2026-10-09 (DL-180): the placement fields a route carries into the home centre are Contracts_V0's too
+  (CV-360).
 gui_related: false
 gui_classification_reason: >-
   This unit defines terminology, owner-boundary, runtime, storage, or governance behavior rather
   than visual presentation.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -6432,7 +6657,8 @@ preserved_exact_tokens:
 - "target model"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): Contracts_V0 also owns the route's placement fields (CV-360)."
 owner_boundary_notes:
 - "Contracts_V0 owns route payload schema; Glossary.md owns user-facing object_kind vocabulary."
 owner_hints:
@@ -6760,11 +6986,15 @@ canonical_text: >-
   The Slint GUI replaces the Iced GUI with an IDE shell of Activity Bar, Primary Content, Side
   Panel, Bottom Panel, status bar, deterministic themes, detachable panels, dashboard
   rearrangement, and event-driven updates.
+  Amended 2026-10-09 (DL-180): the shell's zones are the activity bar with its side panel on the left, the primary
+  content, a chat column fixed on the right (F3-637) and the status bar; the Bottom Panel is no longer a zone. On Home
+  the primary content is one universal panel system (F3-630) whose panels hold any tab kind, and dashboards are tabs
+  (F3-638); detachable means the side panels and the chat's Pop out.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -6798,7 +7028,8 @@ preserved_exact_tokens:
 - "invoke_from_event_loop"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): Bottom Panel as a shell zone and detachable home panels are retired; the chat column and the universal panel system take their place."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/GitHub_Integration.md"
 owner_hints:
@@ -7157,11 +7388,16 @@ canonical_text: >-
   The master layout uses a fixed title bar, activity bar, primary content area, right side panel,
   collapsible bottom panel, and status bar with the dimensions and roles shown by the IDE shell
   diagram.
+  Amended 2026-10-09 (DL-180): the diagram's right side panel and collapsible bottom panel are lineage. The shell is a
+  fixed title bar, the activity bar and its side panel on the left (F3-481), the primary content, a chat column fixed on
+  the right from the title bar to the status bar (F3-637), and the status bar; on Home the primary content is the
+  universal panel system, whose default layout keeps a full-width bottom row that is an ordinary panel row (F3-630).
+  Section 3.1 carries the current diagram.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -7193,7 +7429,8 @@ preserved_exact_tokens:
 - "120-300px"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the right side panel and the collapsible bottom panel of the diagram are retired; the rail is on the left and the bottom row is an ordinary panel row."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -7212,11 +7449,14 @@ canonical_text: >-
   bottom panel, and right-hand side-panel occupants rather than separate page surfaces.
   Superseded lineage (2026-07-16, kept findable): the prior contract specified a 240-480px side
   panel.
+  Amended 2026-10-09 (DL-180): the collapsible bottom panel zone is retired (Terminal, Problems, Output, Ports and Debug
+  Console are tab kinds in any panel, F3-635), a chat column zone is added (F3-637), and side-panel occupants are
+  left-hand (F3-481); the side panel's width envelope is F3-471's.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -7250,7 +7490,8 @@ negative_constraints:
 - "Legacy labels such as /File, /Source, /GitHub, and /etc must not bypass the right-hand side-panel model."
 compatibility_only_notes:
 - "Legacy labels /File, /Source, /GitHub, and /etc are migration labels for occupants or groups."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the bottom panel zone and the right-hand side-panel wording are retired."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md"
 owner_hints:
@@ -7425,11 +7666,14 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Global spacing, border, active indicator, divider, hard-shadow, and density metrics define
   compact shell layout and panel behavior at desktop and collapsed sizes.
+  Amended 2026-10-09 (DL-184): the active indicator token is no longer a 3px left-edge accent stripe; selection is a
+  fill or an outline on the element's own box, the fused tab silhouette, the NieR square cursor or Retro reverse video
+  (F3-648). The density metric no longer assumes a bottom panel; Home's density follows F3-636 (DL-180).
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-184, DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -7462,7 +7706,8 @@ preserved_exact_tokens:
 - "1280x720"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-184): the preserved 3px left-edge accent stripe active-indicator token is retired shell-wide (F3-648); the bottom-panel density metric is retired (DL-180)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -7478,11 +7723,14 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Reference space accounting records expected title/status/activity/side/bottom panel dimensions
   and resulting primary content dimensions for 1920x1080 and 1280x720 layouts.
+  Amended 2026-10-09 (DL-180): the bottom panel no longer exists; the home centre's width is the window minus the
+  activity bar, the side panel and the chat column, and its height the window minus the title bar and the status bar,
+  with the measured widths of F3-636.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -7514,7 +7762,8 @@ preserved_exact_tokens:
 - "644px"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the bottom panel dimension and the 380 px side panel reference are lineage (section 3.6 as amended)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -7531,11 +7780,14 @@ canonical_text: >-
   The Activity Bar is the canonical entry point for persistent right-hand side-panel operational
   surfaces, with required surfaces occupying one right-hand side-panel slot and bottom runtime
   territory kept separate from editor-hosted browsing and preview.
+  Amended 2026-10-09 (DL-180): the side-panel slot is left-hand (F3-481), and there is no separate bottom runtime
+  territory: Terminal, Output, Problems, Debug Console and Ports are tab kinds in any panel (F3-635), while normal
+  browsing and preview stay Browser tabs (F3-302).
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -7565,7 +7817,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "Side-panel surfaces must not be described as canonical primary-content pages unless the statement is explicitly about a routed detail page."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the right-hand side-panel wording and the bottom runtime territory are retired."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md"
 - "ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md"
@@ -8541,11 +8794,14 @@ canonical_text: >-
   Detachable panels keep the same canonical surface identity and required detachable surfaces
   include Search, Chat, File Manager, bottom terminal workspace, and editor-embedded terminal
   panels promoted out of the editor stack.
+  Amended 2026-10-09 (DL-180, DL-181): the required detachable surfaces are the Search and File Manager side panels and
+  the chat, whose only move is Pop out back to its fixed column (F3-637); the bottom terminal workspace and
+  editor-embedded terminal panels are retired, a terminal being one tab in any panel (F3-635, SMPFS-180).
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -8574,7 +8830,8 @@ preserved_exact_tokens:
 - "bottom terminal workspace"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the bottom terminal workspace and editor-embedded terminal panels are no longer detachable surfaces; they are retired."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md"
 owner_hints:
@@ -8592,11 +8849,15 @@ canonical_text: >-
   Terminal detachment keeps the bottom terminal workspace canonical, treats browser/remoted
   terminal access as sibling presentation over the same PTY model, blocks third-party mutation of
   core terminal semantics, and stabilizes derived labels after rename.
+  Amended 2026-10-09 (DL-180, DL-181): the bottom terminal workspace is no longer canonical; a terminal is one tab of
+  the terminal kind in any panel, one session per tab (F3-635, SMPFS-180). Browser or remote terminal access as a
+  sibling presentation over the same PTY model and the block on third-party mutation stand; terminal labels follow
+  F3-640.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -8627,7 +8888,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "Arbitrary third-party plugins or open-ended extension hooks cannot mutate core terminal rendering, input, or session semantics."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): \"keeps the bottom terminal workspace canonical\" is retired."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md"
 owner_hints:
@@ -8875,11 +9137,14 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Panel docking uses DOCKED and FLOATING states with PanelDock and DockSide variants for right,
   left, and bottom docking, including snap-to-edge and close-floating-window transitions.
+  Amended 2026-10-09 (DL-180): the dock state machine covers the left rail's side panels and the chat's Pop out and Dock
+  back only; home panels live in the split tree and never dock or float (F3-630), the chat is not a docking participant
+  (F3-637), and DockSide::Bottom is retired.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -8910,7 +9175,8 @@ preserved_exact_tokens:
 - "WindowId"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): DockSide::Bottom and docking of home panels and the chat are retired."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -8926,11 +9192,14 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Panels undock through double-click title tab, drag away from edge, pop-out button, right-click
   tab menu, keyboard shortcut Ctrl+Shift+\, or command palette actions.
+  Amended 2026-10-09 (DL-180): these undock triggers apply to the side panels and the chat's Pop out; dragging a home
+  panel's tab off its strip tears it off inside the split tree and never opens a window (F3-630), and while focus is in
+  the home centre Ctrl+Shift+\ is Split down (F3-635).
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -8959,7 +9228,8 @@ preserved_exact_tokens:
 - "Command palette"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): drag-away undocking of home panels and the chat is retired."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -8975,11 +9245,13 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Floating panel snap zones use a 25px edge threshold, a 2px Theme.accent-blue visual cue, instant
   no-easing snap animation, and dock on drop.
+  Amended 2026-10-09 (DL-180, DL-184): home panels use F3-630's edge bands and landing preview, not snap zones; the 2px
+  accent-blue edge cue is retired (F3-648) and a docking side panel shows the look's landing preview (F3-647).
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180, DL-184]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -9008,7 +9280,8 @@ preserved_exact_tokens:
 - "Snap Zones"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-184): the 2px Theme.accent-blue edge strip cue is retired as a coloured side stripe."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -9071,16 +9344,21 @@ owner_hints:
 ```yaml
 plan_unit_id: F3-070
 unit_type: requirement
-status: accepted
+status: superseded
+superseded_by: F3-630
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The six-dot grip, its tooltip and the
+  first-run pop-out banner are retired: home panels carry a small corner grip and a panel menu, the chat's only move is
+  Pop out from its menu, and the Guided Tour teaches the panels. The text below is retained verbatim for lineage and
+  audit and must not be accepted or indexed as active current-product truth. Superseded by F3-630 (DL-180).
   Panel detach discovery uses a 6-dot grip with tooltip copy, an explicit Pop Out button, and a
   one-time first-run hint for Chat or File Manager.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -9109,7 +9387,8 @@ preserved_exact_tokens:
 - "Dismiss"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Superseded 2026-10-09 (DL-180): the six-dot grip and first-run pop-out hint are retired (F3-630, F3-637, PWIZ-035)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -9126,11 +9405,13 @@ canonical_text: >-
   Panel dock state, activity bar icon order, and last visible panel persist per project in redb
   scoped by project_id and restore on startup or project switch, with disconnected-monitor
   fallback.
+  Amended 2026-10-09 (DL-180): Home's panels, tabs and chat column persist in the v2 Home layout record (SP-330); this
+  unit's dock state covers the side panels and the popped-out chat's window only.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -9160,7 +9441,8 @@ preserved_exact_tokens:
 - "floating window"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): Home layout persistence moves to the v2 record (SP-330)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -9177,11 +9459,14 @@ canonical_text: >-
   Panel edge-case recovery keeps shared models synchronized in place, re-docks orphaned floating
   windows on monitor disconnect, resolves snap conflicts deterministically, restores focus to main
   window, prevents cross-window tab traversal, and clamps panel sizes.
+  Amended 2026-10-09 (DL-180): home panels clamp by F3-630 (a panel's minimum is the largest content minimum of its
+  tabs, never less than 280 x 120 px, and below half of it the panel collapses to its 35 px strip); the bottom panel's
+  80 px minimum and 24 px collapsed header are retired; the 240 px clamp stays for side panels (F3-471).
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -9211,7 +9496,8 @@ preserved_exact_tokens:
 - "24px"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the bottom panel minimum and collapsed header are retired; home panels clamp by F3-630."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -10838,11 +11124,14 @@ canonical_text: >-
   Search results, palette actions, widgets, recovery links, and cross-surface pivots emit one
   shared route/deep-link payload; resume_url is only serialized transport, and widget actions plus
   cmd.nav wrappers use the shared command and wiring/gate stack.
+  Amended 2026-10-09 (DL-180): a route payload that opens something in the home centre carries the placement fields of
+  CV-360 (where, mode, by, background) and resolves through the one opening module of F3-634; a dashboard tab's widget
+  actions use this payload unchanged (F3-638).
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible routing, navigation, widget action, and command behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180, F3-634]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -10875,7 +11164,8 @@ negative_constraints:
 - "Catalog commands cannot bypass owner checks or force every consumer surface to restate route semantics."
 - "`resume_url` is the serialized transport form of that payload, not a second routing model."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): opens into the home centre add CV-360's placement fields and resolve through F3-634."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -12510,10 +12800,12 @@ canonical_text: >-
   Assistant Chat and Contracts label rules, including visible progress and failure/degraded feedback for explicit
   Compact Now actions plus already-running, cancelled, no-op, unavailable, retry, reload, completed, and failed
   command-result states.
+  Amended 2026-10-09 (DL-180): the thread-scoped context detail tab is the context tab kind (`context:<threadId>`,
+  F3-635), opened and placed by F3-634 in a home panel.
 gui_related: true
 gui_classification_reason: This unit defines visible thread context, message details, action rows, and popovers.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -12555,6 +12847,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "The former context.compaction.failed event implication remains retired; completion-only admission under ACD-461 / SP-259 does not authorize a failed event or a completion event for failure."
+- "Amended 2026-10-09 (DL-180): the context detail editor tab is the context tab kind (F3-635)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -12946,10 +13239,13 @@ canonical_text: >-
   File Editor is the canonical in-app editing surface with shared buffers, tabbed editor groups,
   diff view, preview modes, LSP-backed affordances, remote editing disclosure, recoverable buffers,
   and a shared preview pipeline for document and media types.
+  Amended 2026-10-09 (DL-180): the editor is a document tab kind in the universal panels (F3-635, F3-639); its tabbed
+  editor groups are panels (F3-630), and detach and re-dock of editor groups are retired: editor tabs move between
+  panels.
 gui_related: true
 gui_classification_reason: This unit defines visible File Editor editing, preview, LSP, and tab behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -12982,7 +13278,8 @@ preserved_exact_tokens:
 - "/offline/stale-state"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): editor groups as their own layout concept and their detach / re-dock are retired."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -13109,10 +13406,14 @@ canonical_text: >-
   commands through canonical browser/session commands, and treat legacy preview_mode,
   browser_panel, Bottom Panel Browser, generic Browser tab, and bottom-panel-primary labels as
   compatibility aliases only.
+  Amended 2026-10-09 (DL-180): "Browser" is now the canonical label of the browser tab kind in the universal panels
+  (F3-635), the one in-shell browser host; the compatibility aliases listed here (preview_mode, browser_panel, Bottom
+  Panel Browser, bottom-panel-primary) stay retired, and a "Browser tab" means a tab of that kind, never a bottom-panel
+  browser.
 gui_related: true
 gui_classification_reason: This unit constrains visible browser/preview commands, tabs, aliases, and session routing.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -13146,7 +13447,8 @@ negative_constraints:
 - "`Bottom Panel Browser`, generic `Browser tab`, bottom-panel-primary, and normal-browsing wording are not canonical owners for built-in browser or click-to-context flows."
 compatibility_only_notes:
 - "Legacy `preview_mode` and `browser_panel` labels are compatibility aliases only."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the generic \"Browser tab\" alias is superseded by the browser tab kind of F3-635."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -13531,10 +13833,15 @@ canonical_text: >-
   The bottom runtime zone is the canonical host for Terminal, Problems, Output, Debug Console,
   Ports, and linked runtime-adjacent panes with stable tab identity, restore behavior,
   owner-pane reveal, dev-session state, badges, and recovery visibility.
+  Amended 2026-10-09 (DL-180): there is no bottom runtime zone. Terminal, Problems, Output, Debug Console and Ports are
+  tab kinds in any panel (F3-635), placed by F3-634 with the tool kinds beside the terminals, and the default Home
+  layout keeps them in its full-width bottom row, an ordinary panel row (F3-630). Stable tab identity, restore
+  behaviour, revealing the owning tab instead of opening a parallel console, dev-session state, badges and recovery
+  visibility stand for those tabs wherever they are.
 gui_related: true
 gui_classification_reason: The bottom runtime zone is a visible shell area despite the source span inference being false.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180, F3-635]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -13565,7 +13872,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "Terminal/browser/editor integrations reveal the owning pane rather than minting parallel per-feature consoles."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): \"the bottom runtime zone is the canonical host\" is retired; the runtime panes are panel tabs."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -13582,10 +13890,14 @@ canonical_text: >-
   Terminal sections, terminal tabs, browser tabs, and detached previews remain identity-stable
   across docking, focus changes, and restart recovery, with persisted tab selection, order, labels,
   pin state, browser-session routing, and owning runtime/preview status.
+  Amended 2026-10-09 (DL-180, DL-181): this identity rule now holds for every tab kind (F3-635): a tab keeps its id, its
+  order, its label and its pinned state (F3-631) across moves between panels, focus changes and restart recovery, and
+  browser tabs route through browser-session identity and never migrate to the chat. Terminal sections are retired; a
+  terminal is one tab, one session (SMPFS-180).
 gui_related: true
 gui_classification_reason: This unit defines visible terminal/browser tabs, labels, pin state, and preview ownership.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180, F3-635]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -13616,7 +13928,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "Browser and preview tabs never silently migrate ownership to chat."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): terminal sections and docking as the frame of tab identity are retired; the rule widens to every tab kind."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -13633,10 +13946,13 @@ canonical_text: >-
   The runtime zone provides Problems, Output, Debug Console, and Ports panes with diagnostics,
   file links, stream search, active debug output, detected port accessibility, browser actions,
   hot-reload controls, and Run & Debug reveal/focus behavior.
+  Amended 2026-10-09 (DL-180): Problems, Output, Debug Console and Ports are tool tab kinds in any panel, not panes of a
+  runtime zone (F3-635); Run & Debug reveals and focuses those tabs wherever they are, opening them by F3-634 when none
+  is open.
 gui_related: true
 gui_classification_reason: This unit defines visible runtime-zone panes and Run & Debug focus behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -13667,7 +13983,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "`Run & Debug` side-panel actions reveal and focus these bottom-panel panes rather than creating duplicate runtime records."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): \"bottom-panel panes\" and \"the runtime zone\" read as the tool tab kinds of F3-635."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -13683,10 +14000,12 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Section 8 defines the atomic widget catalog used to compose pages and panels and aligns detailed
   widget references with the local Widget Catalog plus Widget_System hostability and catalog-linkage sections.
+  Amended 2026-10-09 (DL-180): the home centre's panel, tab strip and split are atomic widgets of this catalog, one
+  component each (F3-630, F3-631; section 8.2's Layout family).
 gui_related: true
 gui_classification_reason: This unit defines visible widget catalog scope and GUI composition vocabulary.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -13716,6 +14035,7 @@ negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "Plans/WIDGETS_VISUAL_REFERENCE.md and Plans/WIDGETS_QUICK_REFERENCE.md are retired standalone-doc placeholders; current owners are Plans/FinalGUISpec.md#8-widget-catalog and Plans/Widget_System.md."
+- "Amended 2026-10-09 (DL-180): the Layout family's widgets are the one panel, tab strip and split of F3-630 and F3-631."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -13782,10 +14102,12 @@ canonical_text: >-
   Widget categories cover layout, input, display, feedback, and navigation families, and catalog
   rules require atomic behavior, focus, theme-token reuse, accessible labels, stable identity, and
   deterministic fallback states across surfaces.
+  Amended 2026-10-09 (DL-180): in the Layout family, SplitPane is a split of the home centre's split tree, TabGroup
+  the one tab strip (F3-631) and Panel the one panel (F3-630); every panel and every tab kind reuses them.
 gui_related: true
 gui_classification_reason: This unit defines visible widget families and accessibility/fallback behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -13819,7 +14141,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "Page widgets in `Plans/Widget_System.md` are composed from this catalog and are not a substitute for the atomic widget list here."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): SplitPane, TabGroup and Panel are the split tree's split, the one tab strip and the one panel (F3-630, F3-631)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -14082,10 +14405,14 @@ canonical_text: >-
   Persistence boundaries discard unpromoted ephemeral state, require stable keys and versioned
   migrations, rewrite deprecated keys during forward migration, and keep shell persistence plus
   Orchestrator Progress widget layout in narrow project shell records.
+  Amended 2026-10-09 (DL-180): Home's shell layout persists in its own record,
+  `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), and each dashboard board's widget layout in
+  `widget_layout:v1:dashboard:<board_id>` (WS-030); the Orchestrator Progress widget layout and the narrow project
+  shell records are unchanged.
 gui_related: true
 gui_classification_reason: This unit defines GUI shell persistence, widget layout, and view-state storage behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -14122,6 +14449,7 @@ compatibility_only_notes:
 - "Migration reads from deprecated keys are allowed only during forward migration and must rewrite to the canonical family."
 stale_retired_dispositions:
 - "Deprecated key reads are forward-migration only."
+- "Amended 2026-10-09 (DL-180): Home's layout and the dashboard boards' widget layouts are not kept in the project shell records (SP-330, WS-030)."
 owner_boundary_notes:
 - "Shell persistence remains in narrow project shell records, not in canonical blocked or `/attention` truth."
 owner_hints:
@@ -15845,11 +16173,13 @@ canonical_text: >-
   Window width breakpoints map to full, compact, collapsed, and single-column layouts, and
   narrow `/overlays` or drawers keep AnnotationDrawer, AnnotationActionMenu, and
   ContextChipStrip keyboard-accessible.
+  Amended 2026-10-09 (DL-180): on Home these window breakpoints yield to the centre-width ladder of F3-636, keyed on the
+  window minus the rail and the chat column; there is no bottom panel to compact or collapse.
 gui_related: true
 gui_classification_reason: >-
   This unit defines responsive breakpoints, collapsed panels, and overlay/drawer behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180, F3-636]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -15882,7 +16212,8 @@ preserved_exact_tokens:
 - "keyboard-shortcut"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): window-width breakpoints no longer drive Home; the bottom panel clauses are retired."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -15947,9 +16278,14 @@ owner_hints:
 ```yaml
 plan_unit_id: F3-197
 unit_type: requirement
-status: accepted
+status: superseded
+superseded_by: F3-638
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Window-width dashboard columns are retired:
+  a dashboard tab's columns follow the tab's own width, never the window, and the board's column ladder is WS-030's. The
+  text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product
+  truth. Superseded by F3-638 (DL-180).
   Dashboard grid columns respond to width: two columns below 1200px, three columns from
   1200-1600px, and four columns above 1600px.
 gui_related: true
@@ -15957,7 +16293,7 @@ gui_classification_reason: >-
   This unit defines visible Dashboard grid column counts despite the source inference being
   false.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -15986,7 +16322,8 @@ preserved_exact_tokens:
 - "4 columns"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Superseded 2026-10-09 (DL-180): the 1200 px and 1600 px window breakpoints for dashboard columns are retired (F3-638, F3-636, WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -16227,11 +16564,14 @@ canonical_text: >-
   All interactive elements are reachable by Tab; focus order follows Activity bar to primary
   content to side panel to bottom panel to status bar; lists, tables, and trees support
   Up/Down, Enter, Escape, Home/End, and type-ahead filtering where appropriate.
+  Amended 2026-10-09 (DL-180): the visual order is now the activity bar, the side panel, the primary content (on Home
+  the panels in tree order), the chat column and the status bar, so focus follows that order; F6 and Shift+F6 cycle the
+  rail, the panels and the chat (F3-635).
 gui_related: true
 gui_classification_reason: >-
   This unit defines keyboard navigation and focus order.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -16264,7 +16604,8 @@ preserved_exact_tokens:
 - "file tree"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): \"side panel to bottom panel\" in the focus order is retired; there is no bottom panel and the side panel is on the left."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -16381,12 +16722,15 @@ canonical_text: >-
   `ui/widgets/*` components, and `ui/views/*` page-level views including dashboard, settings,
   wizard, interview, nodes, evidence, metrics, history, memory, ledger, coverage, projects,
   setup, usage, file_editor, agent_activity, and not_found.
+  Amended 2026-10-09 (DL-180): on Home, `views/dashboard.slint` and `views/file_editor.slint` are the dashboard and
+  editor tab kinds' bodies, mounted inside panels (F3-635), and the panel, strip and split components are F3-206's as
+  amended.
 gui_related: true
 gui_classification_reason: >-
   This unit covers the Slint root, theme, reusable widget, and page-level view file layout
   from the directory map.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -16425,7 +16769,8 @@ preserved_exact_tokens:
 - "not_found.slint"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the dashboard and file editor views are tab kind bodies inside panels on Home (F3-635, F3-206)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -16442,11 +16787,14 @@ canonical_text: >-
   Slint panel and window files live under `ui/panels/` and `ui/windows/`, including chat, file
   manager, bottom runtime panel, shared browser panel, debug panel, floating panel, and about
   window surfaces.
+  Amended 2026-10-09 (DL-180): the bottom runtime panel and the floating panel are no longer host surfaces; the home
+  centre is one reusable panel component inside row and column splits with one tab strip component (F3-HOME-005 as
+  amended), and each tab kind's body is its own component (F3-635).
 gui_related: true
 gui_classification_reason: >-
   This unit covers visible detachable panel and secondary-window Slint file placement.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -16478,7 +16826,8 @@ preserved_exact_tokens:
 - "about.slint"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the bottom runtime panel and floating panel host files are retired for Home."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -17035,12 +17384,17 @@ canonical_text: >-
   first-open/fresh-project snapshot receives Basic Dark and the factory layout, an existing
   Project's explicit saved theme/layout survives every open and Project switch, and Project
   copy materializes a detached destination snapshot with no continuing source inheritance.
+  Amended 2026-10-09 (DL-180): the Home layout persists in `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`,
+  the only Home layout authority (SP-330); `layout:v1` loses its Home part (center splits, the bottom runtime-panel
+  height, terminal section split ratios), which becomes a read-only migration input converted on first read and never
+  reset, and keeps only side-panel and detached-window geometry; each dashboard board keeps
+  `widget_layout:v1:dashboard:<board_id>` (WS-030).
 gui_related: true
 gui_classification_reason: >-
   This unit defines GUI shell, layout, editor, search, project, GitHub Actions, and artifact
   persistence keys.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -17079,7 +17433,8 @@ negative_constraints:
 - "`layout:v1` is not terminal topology or terminal session identity."
 - "Do not reapply factory theme/layout over an existing Project or keep a copied Project live-linked to its source snapshot."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): `layout:v1` is no longer a Home layout authority; the v2 Home layout record is."
 owner_boundary_notes:
 - "Project state is a lightweight shell/UX projection cache, not a canonical state store."
 owner_hints:
@@ -17533,11 +17888,15 @@ canonical_text: >-
   hot-reload state, project onboarding/tour state, and safe detached-window coordinates from
   canonical persistence keys. Resettable corruption is secured before a disclosed reset;
   canonical editor loss uses mandatory-backup recovery and never becomes a false empty project.
+  Amended 2026-10-09 (DL-180): Home's layout restores from `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`
+  (SP-330), the only Home layout authority, with `layout:v1` holding only side-panel dock state and the popped-out
+  chat window's geometry; each dashboard board's widget layout restores from `widget_layout:v1:dashboard:<board_id>`
+  (WS-030); section 15.4 gives the order.
 gui_related: true
 gui_classification_reason: >-
   This unit defines startup restoration of visible shell state.
 split_recommended: false
-depends_on: [F3-458]
+depends_on: [F3-458, DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -17576,6 +17935,7 @@ negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "`dashboard_layout:v1`, `editor_state:v1:{project_id}`, `hotreload_state:v1:{project_id}`, and `onboarding:v1` are read-only coordinator migration inputs; ordinary startup does not use them as fallbacks."
+- "Amended 2026-10-09 (DL-180): `layout:v1` no longer restores the Home layout or detached-terminal geometry, and the single `widget_layout:v1:dashboard` is a read-only migration input into `widget_layout:v1:dashboard:home` (SP-330, WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -18109,11 +18469,13 @@ canonical_text: >-
   New Slint surfaces include `views/usage.slint`, `views/file_editor.slint`, embedded
   `views/agent_activity.slint`, side-panel `panels/chat_panel.slint`, and side-panel
   `panels/file_manager_panel.slint`.
+  Amended 2026-10-09 (DL-180): `views/file_editor.slint` is the editor tab kind's body inside a panel (F3-639), and
+  `panels/chat_panel.slint` hosts the fixed chat column (F3-637), not a side-panel occupant.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves new Slint page and panel mappings.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -18144,7 +18506,8 @@ preserved_exact_tokens:
 - "Embedded"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the chat is a fixed column, not a side-panel occupant, and the file editor is a tab kind body (F3-637, F3-639)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -20086,11 +20449,14 @@ canonical_text: >-
   auth/account owners, and Final GUI limited to their presentation, chrome, theme, layout, and motion,
   event-driven updates, redb/seglog/Tantivy persistence/search, model/platform dropdowns, and
   product name Puppet Master.
+  Amended 2026-10-09 (DL-180): the IDE shell layout is the activity bar and side panel on the left, the primary content
+  and the chat column fixed on the right, with no Bottom Panel zone; Home's primary content is one universal panel
+  system (Appendix B item 4 as amended; F3-630, F3-637).
 gui_related: true
 gui_classification_reason: >-
   This unit locks visible shell, framework, theme, settings, and persistence decisions.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -20133,6 +20499,7 @@ compatibility_only_notes: []
 stale_retired_dispositions:
 - "The Friendly Dark factory-default and unified Settings + Login + Doctor ownership summaries are superseded by the later factory-default and owner-routing contracts."
 - "DL-139 supersedes the winit + FemtoVG-wgpu fallback and the no-HTML/CSS rule for the web GUI: desktop is Skia only, and the web GUI is a Rust Leptos client drawn with browser elements and CSS."
+- "Amended 2026-10-09 (DL-180): the preserved \"Activity Bar + Primary Content + Side Panel + Bottom Panel\" shell token is lineage."
 owner_boundary_notes:
 - "Settings_System owns the Settings shell and ordinary-setting semantics; N2-151 owns Doctor registry/router/projection; auth/account owners retain Login; Final GUI owns presentation only."
 owner_hints:
@@ -20366,11 +20733,13 @@ canonical_text: >-
   style, retro paper texture, drag handle, elevated CTA surfaces, accent-left-border, and CTA
   behavior for HITL approval, run interrupted, rate limit, warning, and
   `wizard_attention_required` cards.
+  Amended 2026-10-09 (DL-184): the accent-left-border on call-to-action cards is retired; a call-to-action card keeps
+  its elevated surface and states its kind with a mark and a word (F3-648).
 gui_related: true
 gui_classification_reason: >-
   This unit preserves Dashboard widget visual continuity and CTA behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-184]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -20405,7 +20774,8 @@ preserved_exact_tokens:
 - "wizard_attention_required"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-184): the CtA accent-left-border is retired as a coloured side border (F3-648)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -20421,11 +20791,13 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Default Dashboard layout includes `widget-orchestrator-progress`, `widget-active-lanes`, and
   `widget-recent-results` with IDs `orch-progress-v1`, `lanes-view-v1`, and `results-v1`.
+  Amended 2026-10-09 (DL-180): this default is the Home board's starting set (`dashboard:home`), which WS-030 owns and
+  states in full (its set adds `widget-custom-metrics`); the other boards' starting layouts are WS-030's too.
 gui_related: true
 gui_classification_reason: >-
   This unit defines the default visible Dashboard widgets.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -20459,7 +20831,8 @@ preserved_exact_tokens:
 - "artifact links"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the default Dashboard layout is now the Home board's starting set, owned by WS-030."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -20477,11 +20850,14 @@ canonical_text: >-
   opens the Widget Catalog overlay filtered to the named Dashboard catalog unless an owner has
   promoted another dashboard widget, lets the user choose placement and sizing, places widgets at
   the next available grid position with default size, and persists layout immediately.
+  Amended 2026-10-09 (DL-180): Add widget sits inside each dashboard tab, in its header row, adds to that board only,
+  and can place any Usage widget (F3-638, WS-030, UF-062); the menu, floating action button or toolbar choice and the
+  filter to the named Dashboard catalog are lineage.
 gui_related: true
 gui_classification_reason: >-
   This unit defines the visible Dashboard add-widget workflow and control.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -20531,6 +20907,7 @@ compatibility_only_notes:
 - "The broader widget.* list is compatibility/candidate-library lineage unless promoted by an owner doc."
 stale_retired_dispositions:
 - "The duplicated C.3/C.4 add-widget/catalog blocks are reconciled; the larger widget.* list is not the Dashboard named catalog."
+- "Amended 2026-10-09 (DL-180): Add widget lives in each dashboard tab's header row and its catalogue is every Usage widget (WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -20541,9 +20918,15 @@ owner_hints:
 ```yaml
 plan_unit_id: F3-279
 unit_type: requirement
-status: accepted
+status: superseded
+superseded_by: F3-638
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The exact four-widget Dashboard catalogue
+  is retired: a dashboard tab can show every Usage widget, Orchestrator widgets join after that page's redesign, and the
+  catalogue is WS-030's. DL-180 is the owner-doc promotion that the 2026-06-13 confirmation allowed for. The text below
+  is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product truth.
+  Superseded by F3-638 (DL-180).
   The Dashboard named widget catalog is exactly `widget-orchestrator-progress`,
   `widget-active-lanes`, `widget-recent-results`, and `widget-custom-metrics`; Widget_System
   consumes this named catalog directly without inventing or synthesizing widget IDs.
@@ -20551,7 +20934,7 @@ gui_related: true
 gui_classification_reason: >-
   This unit preserves the Dashboard named-widget catalog.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -20603,6 +20986,7 @@ compatibility_only_notes:
 - "The broader widget.* catalog is future/candidate/library lineage unless promoted by an owner doc."
 stale_retired_dispositions:
 - "Duplicate Appendix C C.3/C.4 sections and the broader widget.* Dashboard list are not peer canon."
+- "Superseded 2026-10-09 (DL-180): the four-entry Dashboard named catalogue is retired by Jared's decision that a dashboard tab shows every Usage widget (F3-638, UF-062, WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -20680,11 +21064,14 @@ canonical_text: >-
   Dashboard layout persistence migrates from `dashboard_layout:v1` card-order input to
   `widget_layout:v1:dashboard` by mapping card IDs to Widget Catalog IDs, assigning default
   grid positions/sizes, and writing the richer widget layout schema.
+  Amended 2026-10-09 (DL-180): the Dashboard now keeps one widget layout per board,
+  `widget_layout:v1:dashboard:<board_id>`; the `widget_layout:v1:dashboard` this migration writes converts into
+  `widget_layout:v1:dashboard:home` on first read and is never reset (WS-030).
 gui_related: false
 gui_classification_reason: >-
   This unit defines storage migration logic rather than a visible GUI surface.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -20721,6 +21108,7 @@ compatibility_only_notes:
 - "`dashboard_layout:v1` is migration input only."
 stale_retired_dispositions:
 - "`dashboard_layout:v1` is deprecated after migration."
+- "Amended 2026-10-09 (DL-180): `widget_layout:v1:dashboard` is no longer the end of this migration; it is a read-only migration input into the Home board's `widget_layout:v1:dashboard:home` (WS-030)."
 owner_boundary_notes:
 - "storage-plan.md and Widget_System.md own storage namespace and widget schema details."
 owner_hints:
@@ -20738,11 +21126,15 @@ canonical_text: >-
   After widget layout migration, future reads use `widget_layout:v1:dashboard` only; if both
   dashboard layout keys exist, `widget_layout:v1:dashboard` takes precedence and
   `dashboard_layout:v1` does not remain canonical.
+  Amended 2026-10-09 (DL-180): future reads now use each board's `widget_layout:v1:dashboard:<board_id>` (WS-030);
+  `widget_layout:v1:dashboard` is itself a read-only migration input that converts into
+  `widget_layout:v1:dashboard:home` on first read and is never reset, and once it has converted the per-board key is
+  the one read.
 gui_related: false
 gui_classification_reason: >-
   This unit constrains legacy dashboard layout key usage.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -20773,7 +21165,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "`dashboard_layout:v1` must not remain canonical after migration completes."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the single dashboard key is no longer the read target; each board reads its own `widget_layout:v1:dashboard:<board_id>` (WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -21519,11 +21912,14 @@ canonical_text: >-
   embedding and native detached windows, appear in the web GUI only as the Web Capability Matrix allows. Protected
   AuthBrowserSession is a separate foreground
   human-only security surface and is excluded from this shared rendering/capture inventory.
+  Amended 2026-10-09 (DL-180): the editor-tab Browser is the browser tab kind (F3-635), and there is no bottom panel:
+  the bottom-panel browser-adjacent surfaces are the tool tabs output, problems, ports and debug_console, placed by
+  F3-634.
 gui_related: true
 gui_classification_reason: >-
   This unit defines the rendering addendum and shared browser-capable surface inventory.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -21567,7 +21963,8 @@ negative_constraints:
 - "Bottom-panel browser-adjacent surfaces do not own the canonical browsing session."
 - "The auth_session token is legacy source-lineage only; protected AuthBrowserSession cannot be captured, inspected, recorded, persisted, or controlled through shared rendering surfaces."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the editor-tab Browser and the bottom-panel surfaces are the browser kind and the tool kinds (F3-635)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -29551,19 +29948,24 @@ canonical_text: >-
   lag 0.00 px across 2,615 samples of a deliberately slow drag (40 moves of
   0.4 px with pauses) on a non-active tab, while a click-to-select still travels
   through 18 distinct intermediate positions, monotonic and without overshoot.
+  Amended 2026-10-09 (DL-180): the width-aware "+N more" chip and its picker are superseded by F3-633's "+N" list in
+  every strip; per-tab close and its bookkeeping, the pointer-capture reorder and its snap-while-dragging contract now
+  serve every panel and every tab kind (F3-631). Editor panes are panels (F3-630): "all four editor panes" reads as
+  every panel, the pane-close row is the panel menu's Close panel, and closing the last tab follows F3-630's lifecycle
+  (the panel closes unless it is the only or a locked panel, which shows the empty-panel launcher of F3-632).
 gui_related: true
 gui_classification_reason: This unit defines visible editor tab, pane, and overflow controls.
 split_recommended: false
-depends_on: [F3-140, F3-131, F3-132, F3-152]
+depends_on: [F3-140, F3-131, F3-132, F3-152, DL-180]
 unblocks: []
 acceptance_criteria:
-- "Closing a tab updates the open-tab model and activates a neighboring tab; closing the last tab yields the editor empty state or the underlying view."
-- "Closing a pane expands the sibling pane; when no panes remain visible the editor empty state is shown."
-- "A width-aware +N more overflow chip exposes hidden tabs through a picker with per-item close while the active tab stays visible."
+- "Closing a tab updates the open-tab model and activates a neighbouring tab; closing the last tab follows F3-630's lifecycle: the panel closes and its neighbour takes the space, unless it is the only panel in the centre or a locked panel, which stays and shows the empty-panel launcher of F3-632 (amended 2026-10-09, DL-180; the editor empty state and the underlying view are lineage)."
+- "Closing a panel gives its share to its previous sibling, else to the next, and closes its tabs, each kind asking first where it asks (F3-630, F3-635; amended 2026-10-09, DL-180; sibling-pane expansion and the editor empty state are lineage)."
+- "Tabs that do not fit are reached through F3-633's plain-text \"+N\" list with per-item close, and the active tab stays visible (amended 2026-10-09, DL-180)."
 - "Thread context detail tabs and browser preview tabs participate in close and overflow behavior."
-- "Dragging a tab to a new position persists on all four editor panes and survives any re-render or fitter pass; a newly opened tab inserts at its model index rather than appending."
-- "The overflow chip and its picker use the shared portal menu family styling with no bespoke accent glow."
-- "The overflow chip sits immediately left of the actions cluster, fitting runs live on tab add/remove, and a newly opened overflowing tab stays visible while the chip-adjacent non-active tab moves into the picker (wave 3, 2026-08-13)."
+- "Dragging a tab to a new position persists in every panel's strip and survives any re-render or fitter pass; a newly opened tab inserts at its model index rather than appending (amended 2026-10-09, DL-180)."
+- "The \"+N\" list opens in the one overlay root with no bespoke accent glow (F3-633, DR-067; amended 2026-10-09, DL-180)."
+- "\"+N\" follows F3-631's width cascade and F3-633, fitting live on tab add and remove, and a newly opened tab stays visible (amended 2026-10-09, DL-180; the chip-left-of-actions placement is lineage)."
 - "Tab drag-reorder animates: no native drag ghost, the dragged tab tracks the pointer transform-only with its layout at the insertion slot, reduced motion is instant, and the silhouette stays at the insertion slot throughout; as of wave 4 the gesture is pointer-capture (4 px threshold, 1:1 translateX glide, 220 ms neighbour FLIP, 200 ms low-bounce settle), works identically in Safari, survives its first re-slot, and defers the model re-render to settle-end."
 - "Grabbing a NON-ACTIVE tab never springs the travelling plate: any EDSHAPE sync while the strip contains .tab.dragging snaps in-frame, so the plate never lags the carried tab and never exposes the tab underneath (worst lag 0.00 px over 2,615 slow-drag samples), while click-to-select springs still travel (18 monotonic intermediate positions, no overshoot) (wave 8, 2026-08-15)."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
@@ -29585,13 +29987,15 @@ preserved_exact_tokens:
 - "+N more"
 - "empty state"
 negative_constraints:
-- "Closing the last visible editor pane must not leave a dead surface; it must show the editor empty state or yield to the underlying view."
+- "Closing the last tab of a panel must not leave a dead surface: its neighbour takes the space, or the only or a locked panel shows the empty-panel launcher of F3-632 (amended 2026-10-09, DL-180; the editor empty state and the underlying view are lineage)."
 compatibility_only_notes:
 - "Slint portability: the overflow picker, drag affordances, and pane-close overlays are opaque surfaces; no arbitrary-content backdrop blur or SVG filters, and color math is precomputed."
 stale_retired_dispositions:
 - "Amended 2026-08-13: pane-1-only reorder persistence (DOM-only reorder on panes 2-4 that the next re-render scrambled) is retired; the lime-accent pill chip and its generic gray picker are retired in favour of the app portal-menu family."
 - "Amended 2026-08-13 (tweak wave): the dedicated per-pane close glyph is retired; the kebab Close Panel row is the single pane-close affordance, with pane-close semantics unchanged."
 - "Amended 2026-08-13 (wave 4): HTML5 DnD tab reorder is retired along with the wave-3 attached-ghost/-webkit-user-drag Safari shim. Root causes recorded: Safari's sparse dragover cadence, the native drag snapshot taken when the custom drag image is unrenderable (opacity 0), and the lostpointercapture-on-reparent trap — a re-slot insertBefore releases pointer capture, so a tab-scoped cancel killed the gesture on the first re-slot, the same trap the T20 grip comments document. The pointer-capture gesture uses gesture-scoped window listeners (the T07 document-pointermove pin is untouched)."
+- "Amended 2026-10-09 (DL-180): the editor-only \"+N more\" chip and picker, the four-pane scope and the per-pane wording are retired; F3-631 and F3-633 own the strip and its overflow for every panel."
+- "Amended 2026-10-09 (DL-180): the two close criteria and the negative constraint now follow F3-630's panel lifecycle and F3-632's empty-panel launcher; the editor empty state, the underlying view and sibling-pane expansion are lineage."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -29624,10 +30028,13 @@ canonical_text: >-
   shrink so floating-footer reserve changes cannot crush embedded cards. Superseded lineage
   (2026-07-16 float repair, kept findable): the initial promotion reserved scrollport space
   under the stream, which rendered an opaque band around the pill.
+  Amended 2026-10-09 (DL-184): the floating footer is no longer a pill: it is a content-sized rectangle with the look's
+  inner radius, never a radius of half its height or more (F3-648); its centring, see-through stream, reserve and
+  jump-to-latest rules stand.
 gui_related: true
 gui_classification_reason: This unit defines visible chat footer pill geometry and jump-to-latest placement.
 split_recommended: false
-depends_on: [F3-131, F3-189, F3-420]
+depends_on: [F3-131, F3-189, F3-420, DL-184]
 unblocks: []
 acceptance_criteria:
 - "The footer pill floats centered over the stream, sized to its content with no fixed side gutters, in both the docked panel and the floating window; the stream is visible around and beneath the pill, with no opaque band or full-width strip."
@@ -29635,6 +30042,7 @@ acceptance_criteria:
 - "The jump-to-latest control renders above the footer pill at a higher z-order, appears only when scrolled more than 24px away from the bottom, and returns the stream to the latest message."
 - "Pinned-to-bottom reserve changes re-scroll so the newest content stays visible above the pill; stream children do not flex-shrink."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "The footer has no capsule shape in any look (amended 2026-10-09, DL-184; F3-648)."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -29660,7 +30068,8 @@ negative_constraints:
 - "The footer pill must not use fixed side gutters or full-width footer bars; it is content-sized and centered."
 compatibility_only_notes:
 - "Slint portability: the pill and jump control are anchored overlay surfaces expressed as layout constraints rather than measure-then-write style passes; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-184): the footer's pill shape is retired (F3-648)."
 owner_boundary_notes:
 - "Plans/assistant-chat-design.md owns footer content semantics (ACD-435); this unit records geometry and scroll-reserve behavior only."
 owner_hints:
@@ -29683,15 +30092,18 @@ canonical_text: >-
   max(380px, min(var(--floating-chat-w), 40vw)) so the selector row is not clipped on first
   open. The docked #chatPanel mount and the floating #floatingChat mount render both layouts
   from the shared chat template of the unified component.
+  Amended 2026-10-09 (DL-180): the chat no longer floats inside the window or the page. This 380px floor now holds only
+  for the chat's popped-out window in the desktop app (F3-504, F3-637), which the user sizes and places above it; the
+  chat column's own width is F3-637's.
 gui_related: true
 gui_classification_reason: This unit defines visible composer, selector row, and floating chat width layout.
 split_recommended: false
-depends_on: [F3-135, F3-131, F3-253, F3-420, ACD-437]
+depends_on: [F3-135, F3-131, F3-253, F3-420, ACD-437, DL-180]
 unblocks: []
 acceptance_criteria:
 - "Composer left rail renders attach plus ELI5, YOLO, and CREW toggles; the right side renders the rewind FAB with an extra gap before icon-only inline-SVG send and stop controls."
 - "The selector row renders Persona, Model, and Mode as equal-shrink slots with label ellipsis when narrow, in both mounts."
-- "The floating chat window width floor resolves as max(380px, min(var(--floating-chat-w), 40vw)) and the selector row is not clipped on first open."
+- "The desktop app's popped-out chat window is never narrower than 380px and the selector row is not clipped on first open; the expression max(380px, min(var(--floating-chat-w), 40vw)) is lineage of the retired in-page float (amended 2026-10-09, DL-180)."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -29721,7 +30133,9 @@ negative_constraints:
 - "Send and stop controls are icon-only inline SVG glyphs; no emoji glyphs and no text-labeled send button."
 compatibility_only_notes:
 - "Slint portability: the width floor maps to a min-width constraint on the floating window; toggles and FABs are opaque precomputed surfaces with no arbitrary-content backdrop blur, no SVG filters, and precomputed color math."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the floating chat floor no longer applies to the chat in the window; F3-637 owns the column's width."
+- "Amended 2026-10-09 (DL-180): the floor applies to the desktop app's popped-out chat window, not to a web float; the web client floats no chat."
 owner_boundary_notes:
 - "Plans/assistant-chat-design.md owns selector-row behavior semantics (ACD-437); this unit records layout geometry."
 owner_hints:
@@ -31753,10 +32167,13 @@ canonical_text: >-
   beneath it; the mask returns immediately after the picker closes. Amended 2026-10-09 (DL-162): the
   left rail's segmented sub-view strips neither scroll nor truncate a label with an ellipsis; they fit
   as F3-620 says, full labels, then the active tab's label with icons for the rest, then icons only.
+  Amended 2026-10-09 (DL-180): bottom-panel tabs no longer exist. Every home panel's strip, the dashboard's included,
+  follows F3-631 and F3-633 (the width cascade and "+N", never scrolling sideways); this recipe keeps page tabs and the
+  side-panel occupant tabs F3-620 does not cover.
 gui_related: true
 gui_classification_reason: This unit defines visible tabstrip layout, scrolling, and label truncation for non-editor tab systems.
 split_recommended: false
-depends_on: [F3-421]
+depends_on: [F3-421, DL-180]
 unblocks: []
 acceptance_criteria:
 - "Page tabs, side-panel occupant tabs, and bottom-panel tabs render on one non-wrapping row that scrolls horizontally on overflow with ellipsized labels; when the PMConcept7 title-bar page overflow picker is present, every hidden page remains reachable, the picker stays above and owns hit testing across its full painted rectangle, the ancestor edge-fade mask is disabled only for its opening/open/closing lifecycle, and no click falls through to an underlying page control."
@@ -31787,7 +32204,8 @@ negative_constraints:
 - "Do not leave the title-bar edge-fade mask active over an open in-tree page picker or disable that mask after the picker closes."
 compatibility_only_notes:
 - "Slint portability: the tabstrip renders as an opaque horizontally scrollable row of precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): bottom-panel tabs and every home strip leave this recipe for F3-631 and F3-633."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -32434,10 +32852,13 @@ canonical_text: >-
   with the active tab at step-3. Retro and basic keep the legacy underline chrome strip.
   The strip carries bottom margin so the Node Graph pane and other panes do not sit flush
   beneath it.
+  Amended 2026-10-09 (DL-184): Friendly's cozy pill bar and mint pill tabs and Glass's rounded frosted bar become
+  rectangles with the look's inner radius, never capsules (F3-648); the tab set, the active fill and the bottom margin
+  stand.
 gui_related: true
 gui_classification_reason: This unit defines visible Orchestrator tab-strip theme skins and the content gap beneath the strip.
 split_recommended: false
-depends_on: []
+depends_on: [DL-184]
 unblocks: []
 acceptance_criteria:
 - "The Orchestrator tab set (Progress, Plan Compile, Seams, Node Graph, Evidence, History, Ledger) is unchanged by this unit; only presentation changes."
@@ -32465,7 +32886,8 @@ negative_constraints:
 - "Do not change the Orchestrator tab set, tab order, or tab semantics from this unit; presentation only."
 compatibility_only_notes:
 - "Slint portability: the tab strip renders as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-184): the Orchestrator strip's pill skins are retired (F3-648)."
 owner_boundary_notes:
 - "The Orchestrator tab set and tab semantics are owned by Plans/Orchestrator_Page.md; this unit owns tab-strip theme presentation and the content gap only."
 owner_hints:
@@ -32492,10 +32914,13 @@ canonical_text: >-
   fonts-ready. Under reduced motion the ink snaps and the panel animation is skipped
   entirely. First paint never runs an enter animation; page transitions gate until after
   boot.
+  Amended 2026-10-09 (DL-184): Glass's step-3 frost pill and Friendly's mint-mix pill become ink slabs with the look's
+  inner radius, never capsules (F3-648); the shared spring, the directional page transitions and the reduced-motion
+  rules stand.
 gui_related: true
 gui_classification_reason: This unit defines visible page-tab active chrome motion and directional page transitions.
 split_recommended: false
-depends_on: [F3-034]
+depends_on: [F3-034, DL-184]
 unblocks: []
 acceptance_criteria:
 - "A single shared ink element animates position and width between page tabs with spring stiffness 500 and damping 35, and the active tab keeps only text color and weight."
@@ -32528,7 +32953,8 @@ negative_constraints:
 - "Do not insert a blank gap between the leaving and entering pages and do not blur the full page during transitions."
 compatibility_only_notes:
 - "Slint portability: the ink and page panels render as opaque precomputed surfaces with translate/opacity/width animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-184): the Glass and Friendly page-tab ink pills are retired (F3-648)."
 owner_boundary_notes:
 - "F3-445 owns the non-editor tabstrip layout recipe; F3-468 owns the boot paint and first-paint transition gate this unit consumes; this unit owns the shared ink and directional transition presentation."
 - "Scope clarified 2026-08-12: this unit covers the title-bar PAGE tabs only. Editor file tabs are owned by F3-505 (contact-aware silhouette) and F3-466 (friendly tab shape); the sliding ink is not applied to editor file tabs."
@@ -32621,10 +33047,12 @@ canonical_text: >-
   On the friendly theme family, editor file tabs render as top-rounded folder tabs with
   radius-md applied to the top corners only and a cozy mint active fill; they do not
   render as full pills on a bordered strip.
+  Amended 2026-10-09 (DL-180): Friendly's editor tabs are F3-631's one strip with the Friendly crown, shoulder and flare
+  (16, 16 and 25 px); the active tab takes its body's own fill and is never a pill.
 gui_related: true
 gui_classification_reason: This unit defines the visible friendly-theme editor file tab shape and active fill.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "Friendly editor file tabs round only their top corners at radius-md and use the cozy mint active fill."
@@ -32650,7 +33078,8 @@ negative_constraints:
 - "Do not render friendly editor file tabs as full pills on a bordered strip."
 compatibility_only_notes:
 - "Slint portability: editor tabs render as opaque precomputed surfaces with per-corner radii; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the Friendly editor tab shape is now F3-631's per-look silhouette."
 owner_boundary_notes:
 - "F3-421 owns editor tab overflow behavior; this unit owns the friendly-theme tab shape and active fill only."
 owner_hints:
@@ -32669,10 +33098,13 @@ canonical_text: >-
   fields and pill controls, carries enough inline padding, roughly half the control height
   and 12-14px at default sizes, that glyphs clear the rounded ends, and overflow stays
   visible so the focus glow is not clipped.
+  Amended 2026-10-09 (DL-184): Friendly's pill controls and pill-shaped fields are retired: they take the look's rounded
+  rectangle, never a radius of half their height or more (F3-648); the inline padding rule (glyphs clear the corners,
+  the focus glow is not clipped) stands.
 gui_related: true
 gui_classification_reason: This unit defines visible friendly-theme pill field padding and focus glow clearance.
 split_recommended: false
-depends_on: []
+depends_on: [DL-184]
 unblocks: []
 acceptance_criteria:
 - "Friendly pill fields and pill controls pad inline by roughly half the control height (12-14px at default sizes) so glyphs clear the rounded ends."
@@ -32698,7 +33130,8 @@ negative_constraints:
 - "Do not clip the focus glow on friendly pill chrome and do not let glyphs enter the rounded ends."
 compatibility_only_notes:
 - "Slint portability: pill fields render as opaque precomputed surfaces with static padding values; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-184): Friendly's pill field and control skins are retired (F3-648)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -32784,10 +33217,12 @@ canonical_text: >-
   bar and border and per-theme shadows: retro hard offset, glass soft glow, friendly
   cozy. The presentation applies to both the docked and pop-out chat mounts, which share
   the sidebar builder.
+  Amended 2026-10-09 (DL-184): the 3 px inset left accent bar on the selected thread and the left accent bar on active
+  collapsed rows are retired; selection is the tinted fill, the hairline ring and the bolder title (F3-648).
 gui_related: true
 gui_classification_reason: This unit defines visible chats rail labeling, collapse geometry, row chrome, and selection presentation.
 split_recommended: false
-depends_on: []
+depends_on: [DL-184]
 unblocks: []
 acceptance_criteria:
 - "The rail label reads Chats at 11.5px in both expanded and collapsed states, and the compact new-thread control is 18x18 and vertically centered."
@@ -32824,6 +33259,7 @@ compatibility_only_notes:
 - "Slint portability: rail rows, glow, and accent bars render as opaque precomputed surfaces with width-threshold state switching; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
 - "The HISTORY rail label, the chevron collapse control, and the stream provenance banner are retired per PMConcept7 chats rail cleanup; resize-driven collapse and the Chats label supersede them."
+- "Amended 2026-10-09 (DL-184): the inset left accent bar and the collapsed rows' left accent bar are retired as coloured side bars (F3-648)."
 owner_boundary_notes:
 - "Chat rail behavior, thread lifecycle, and rail data semantics are owned by Plans/assistant-chat-design.md (ACD-444 chats rail cleanup); this unit owns geometry, thresholds, and presentation."
 owner_hints:
@@ -33213,10 +33649,12 @@ canonical_text: >-
   ui/<domain>/ path, both spellings denote one planned host surface, with the panels/
   spelling as the panel-occupant host. These paths are planned GUI host locations only;
   they create no implementation files and authorize no source tree.
+  Amended 2026-10-09 (DL-180): `panels/` here means the left rail's side panels; the home centre's panels, tab strips
+  and tab bodies are F3-206's as amended (F3-630, F3-635).
 gui_related: true
 gui_classification_reason: This unit names the planned Slint host files behind visible side-panel occupants.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The panels/ inventory lists host files for search, source control, Actions & Pipelines, testing, agents, and artifacts panels in addition to the existing file manager and docker manager entries."
@@ -33249,6 +33687,7 @@ compatibility_only_notes:
 - "Slint portability: host files are the planned mount points for opaque precomputed panel surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
 - "The prior panels/ inventory state that named only chat and file manager panel host files is superseded by this fuller inventory; the FABLE Slint Host File Inventory table remains findable lineage for its ui/<domain>/ spellings."
+- "Amended 2026-10-09 (DL-180): `panels/` names side-panel hosts only; home panels are F3-206's."
 owner_boundary_notes:
 - "This unit amends the host-file inventory only; panel behavior stays with each panel's owner units and docs."
 owner_hints:
@@ -33672,10 +34111,14 @@ canonical_text: >-
   FinalGUISpec F3-619's glyph and word in place of the rail chip and status dots: initializing as pending, running
   as live, paused as the paused glyph, terminated as the stopped ring and adapter_crashed as failed. Every surface
   still reads the one session store.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. "The bottom Debug tab" and "bottom-tab chrome" read as the Debug
+  tab. The Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it, placed
+  beside the terminals by F3-634's tool affinity; the default Home layout's tools row is where it usually lands
+  (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the visible session-state chips, transport enablement, and inspection clear/populate behavior driven by DAP events.
 split_recommended: false
-depends_on: [F3-259]
+depends_on: [F3-259, DL-180]
 unblocks: []
 acceptance_criteria:
 - "All six states (none, initializing, running, paused, terminated, adapter_crashed) and the stated DAP event-to-UI mapping hold on every debug surface."
@@ -33723,7 +34166,8 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: session state maps to a single observable model with derived bindings per surface; state chips and transport enablement are plain property bindings."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the bottom Debug tab reads as a Debug Console tab in any panel (F3-635)."
 owner_boundary_notes:
 - "This unit owns the session state machine and transport enablement law; F3-259 owns the reliability risk row (timeouts, single auto-restart) it references."
 owner_hints:
@@ -33751,10 +34195,13 @@ canonical_text: >-
   Amended 2026-10-09 (DL-162): in the rail the session picker opens as the chat picker (F3-621) and lists each
   session with its state glyph and word by F3-483's mapping in place of coloured dots and a spinner; a terminated
   session keeps its struck-through label, the focused session is checked, and the per-row close action is unchanged.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. "The bottom Debug tab" reads as the Debug tab. The Debug tab is
+  a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it, placed beside the terminals
+  by F3-634's tool affinity; the default Home layout's tools row is where it usually lands (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the visible session picker, focus model, and per-session sub-tab behavior.
 split_recommended: false
-depends_on: [F3-483]
+depends_on: [F3-483, DL-180]
 unblocks: []
 acceptance_criteria:
 - "Multiple concurrent sessions per project run simultaneously, with child sessions nested under parents in the picker."
@@ -33789,7 +34236,8 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: the picker dropdown renders via PopupWindow; status dots are precomputed color glyphs with no runtime color mixing."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the bottom Debug tab reads as a Debug Console tab in any panel (F3-635)."
 owner_boundary_notes:
 - "This unit owns session multiplicity, nesting, picking, and focus; session states themselves are owned by F3-483."
 owner_hints:
@@ -34199,10 +34647,14 @@ canonical_text: >-
   mirrored state chip as F3-619's glyph and word, marks the selected session sub-tab with an ink, shows stream tags
   as coloured lowercase words, and opens its configuration menu as the chat picker (F3-621). In TERMINATED the
   retained console scrollback stays visible under the ended chrome, as this unit already requires.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. "The bottom-zone Debug tab" and "the bottom zone's debugger
+  occupant" read as the Debug tab; its three states, session chrome, Console and Process panes stand. The Debug tab is a
+  tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it, placed beside the terminals by
+  F3-634's tool affinity; the default Home layout's tools row is where it usually lands (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the visible bottom-zone Debug tab states, session chrome, console, and conditional process pane.
 split_recommended: false
-depends_on: [F3-483, F3-489]
+depends_on: [F3-483, F3-489, DL-180]
 unblocks: []
 acceptance_criteria:
 - "The tab renders EMPTY, ATTACHED, and TERMINATED states exactly as specified; EMPTY names no rail panel."
@@ -34244,6 +34696,7 @@ compatibility_only_notes:
 - "Slint portability: the PROCESS pane reuses the existing terminal widget; the CONSOLE pane is a virtualized scrollback view with a bottom input row."
 stale_retired_dispositions:
 - "The bottom-zone enumeration inconsistency between the §7.20.2 pane list's 'Debug Console' entry and the locked-decision 'classical debugger surface' entry is resolved: both resolve to this Debug tab."
+- "Amended 2026-10-09 (DL-180): the bottom zone is retired; the Debug tab is a Debug Console tab in any panel (F3-635, F3-634)."
 owner_boundary_notes:
 - "This unit owns the Debug tab's states, chrome, and pane composition; Debug Console REPL semantics are owned by Plans/Section15_MVP_Promoted_Features_Spec.md; reveal/focus handoff is owned by F3-491."
 owner_hints:
@@ -34271,10 +34724,15 @@ canonical_text: >-
   boundary (referenced) and names the command ids that perform reveals:
   cmd.run_debug.console.reveal and cmd.run_debug.terminal.reveal, whose semantics
   are referenced from Plans/Commands_System.md §7.2, not restated.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. Reveal Output reveals the Debug tab wherever it is, expanding
+  its panel if it is collapsed and opening it by F3-634 when none is open; on session start the Debug tab is revealed
+  the same way without taking keyboard focus; and the unread-output badge is the tab's attention mark (F3-631). The
+  Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it, placed beside
+  the terminals by F3-634's tool affinity; the default Home layout's tools row is where it usually lands (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the visible focus, reveal, and unread-badge behavior across the rail panel, bottom tab, and editor.
 split_recommended: false
-depends_on: [F3-483]
+depends_on: [F3-483, DL-180]
 unblocks: []
 acceptance_criteria:
 - "Reveal Output and Show in Run & Debug perform the stated focus moves, including bottom-zone un-collapse."
@@ -34309,7 +34767,8 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: reveal-without-focus is a visibility/tab-selection change decoupled from focus transfer; the unread badge is a precomputed dot plus count on the tab header."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): \"un-collapsing the bottom zone\" reads as expanding the Debug tab's panel; the bottom tab is a Debug Console tab in any panel."
 owner_boundary_notes:
 - "This unit extends the F3-044 reveal/focus owner boundary for debug surfaces; F3-044 retains the general run_debug owner boundary; command semantics stay owned by Plans/Commands_System.md."
 owner_hints:
@@ -34334,10 +34793,14 @@ canonical_text: >-
   rail, or bottom zone has focus, and never inside text inputs. On macOS, F-key
   normalization accounts for the fn-layer so the same bindings hold whether the
   hardware row sends function keys or media keys.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. "The bottom zone has focus" reads as focus in the Debug tab or
+  another tool tab. The Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel
+  holds it, placed beside the terminals by F3-634's tool affinity; the default Home layout's tools row is where it
+  usually lands (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the keyboard-facing debug command bindings and their dispatch scoping.
 split_recommended: false
-depends_on: [F3-483, F3-059]
+depends_on: [F3-483, F3-059, DL-180]
 unblocks: []
 acceptance_criteria:
 - "The six bindings (F5, Ctrl+F5, F10, F11, Shift+F11, Shift+F5) map to the stated cmd.run_debug.* commands, including the F5 start-versus-continue split and the attach-session disconnect swap."
@@ -34380,7 +34843,8 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: key dispatch scopes map to focused-surface checks in the Rust-side registry; no platform-specific key handling leaks into Slint view code."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): bottom-zone focus reads as focus in a tool tab (F3-635)."
 owner_boundary_notes:
 - "F3-059 owns the shortcut tiers and key labels; this unit owns only the debug command bindings; command semantics are owned by Plans/Commands_System.md §7.2."
 owner_hints:
@@ -34538,10 +35002,14 @@ canonical_text: >-
   assistant-investigation scoped (Plans/Commands_System.md §7.1, referenced) and
   the classical debugger family is cmd.run_debug.* (Plans/Commands_System.md §7.2,
   referenced).
+  Amended 2026-10-09 (DL-180): there is no bottom zone. "Debug Console" is no longer a bottom-zone pane: it is the
+  Console pane of the Debug tab. The Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in
+  whichever panel holds it, placed beside the terminals by F3-634's tool affinity; the default Home layout's tools row
+  is where it usually lands (F3-630).
 gui_related: true
 gui_classification_reason: This unit fixes the user-visible names and labels that distinguish the four debug-adjacent surfaces.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The four names (\"Debug\" icon, \"Debug & Run\" panel, \"Assistant Debug Mode\", \"Debug Console\") and the `system.advanced.debug-mode` row are used exactly and never collapsed across docs, palettes, labels, and help text."
@@ -34576,7 +35044,8 @@ negative_constraints:
 - "Do not use cmd.debug.* for classical debugger actions or cmd.run_debug.* for assistant-investigation actions."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the bottom-zone REPL pane reads as the Debug tab's Console pane in a Debug Console tab (F3-635)."
 owner_boundary_notes:
 - "This unit owns only the terminology boundary; Assistant Debug Mode semantics stay owned by Plans/assistant-chat-design.md and Debug Console pane semantics by Plans/Section15_MVP_Promoted_Features_Spec.md."
 owner_hints:
@@ -34600,10 +35069,14 @@ canonical_text: >-
   store mirrors F3-483's state machine so demo actions (start, stop, select,
   reveal) drive both surfaces. Concepts/pm6-build/** remains illustrative
   source-lineage only per Plans/usage-feature.md.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. The demo's bottom Debug tab is a Debug Console tab in the home
+  panels. The Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it,
+  placed beside the terminals by F3-634's tool affinity; the default Home layout's tools row is where it usually lands
+  (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the demo-renderable fixture composition of the run/debug rail panel and bottom tab.
 split_recommended: false
-depends_on: [F3-485, F3-490]
+depends_on: [F3-485, F3-490, DL-180]
 unblocks: []
 acceptance_criteria:
 - "The PMConcept7 demo `panel-run` view renders F3-485..F3-488 with the stated fixture data (two sessions, populated locals, two watches, four-frame main thread, four breakpoint kinds plus exception filters)."
@@ -34633,7 +35106,8 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: demo fixtures map to static model data behind the same Slint model views used by the live surfaces."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the demo's bottom Debug tab reads as a Debug Console tab (F3-635)."
 owner_boundary_notes:
 - "This unit owns only demo fixture composition; live panel, tab, and state-machine semantics stay owned by F3-483 through F3-491."
 owner_hints:
@@ -35134,14 +35608,17 @@ canonical_text: >-
   no-op, and every other noncommitted outcome remain event-silent. No context.compaction.started or
   context.compaction.failed family is introduced.
   The full-width status bar participates in layout, never covers content, and contains no notification or bell item.
+  Amended 2026-10-09 (DL-180): Home seats the Assistant in the chat column fixed on the right, as every page does
+  (F3-637); there is no saved Home dock, and the only move is Pop out, which keeps the same Assistant identity and Dock
+  back returns to the column.
 gui_related: true
 gui_classification_reason: This unit governs the visible shared Assistant, Context ring/detail surfaces, and status bar continuity.
 split_recommended: false
-depends_on: [F3-513, ACD-448, WM-045, UIW-012]
+depends_on: [F3-513, ACD-448, WM-045, UIW-012, DL-180]
 unblocks: [F3-517, F3-518, ATS-037, ATS-038, ATS-040]
 acceptance_criteria:
   - "Exactly one Assistant node/controller/store identity exists and is re-seated across pages without transcript, draft, attachment, thread, or context loss."
-  - "A failed or stale re-seat restores the prior host and preserves the saved Home dock rather than creating a second Assistant or blank seat."
+  - "A failed or stale re-seat restores the Assistant in its column rather than creating a second Assistant or a blank seat (amended 2026-10-09, DL-180; the saved Home dock is retired)."
   - "The context ring and detail pane expose current-window percentage, effective context window, loaded tokens, cache hit, source composition, Curated/Raw details, routing/fallback, limits, and compaction history."
   - "Compact Now uses cmd.chat.compact_context result and receipt projection, with exactly one context.compaction.completed only after successful committed compaction under ACD-461 / SP-259 and no event for any noncommitted outcome; More Details reuses the existing Context Detail Pane commands."
   - "The status bar spans the application layout, does not cover content, and has no notifications or bell affordance."
@@ -35172,6 +35649,8 @@ negative_constraints:
   - "Do not create a second Assistant, transcript store, context store, or Context Detail Pane."
   - "Do not register context compaction lifecycle events merely to mirror a local working animation."
   - "Do not put notifications or a bell in the status bar."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): \"Home seats that identity in its saved dock\" is retired; the chat column is fixed on the right on Home as on every page (F3-637)."
 owner_hints: [Plans/FinalGUISpec.md, Plans/assistant-chat-design.md]
 ```
 
@@ -35204,10 +35683,15 @@ canonical_text: >-
   and must not rewrite global theme tokens, Settings, or the protected Chat design. The title-bar page-overflow
   picker remains above and hit-testable at narrow widths; its ancestor edge-fade mask is disabled only while the
   picker is opening, open, or closing, so clicks cannot fall through to page controls beneath it.
+  Amended 2026-10-09 (DL-180): Home and Dashboard no longer keep distinct tab models: a dashboard is a tab in a panel's
+  one strip (F3-631, F3-638), and the shared Usage grammar for move, options, resize and settled sizing is one gesture
+  kit (DR-066) that moves panels and tabs in the split tree and widgets only inside a dashboard tab. Home's narrow
+  composition is the centre-width ladder of F3-636 (one panel column with a switcher, never a sideways scroll), and
+  "Home editor and terminal surfaces" read as panel tabs (F3-635).
 gui_related: true
 gui_classification_reason: This unit governs visible compatibility across shell, Home, Dashboard, panels, themes, and motion.
 split_recommended: false
-depends_on: [F3-513, F3-514, F3-516]
+depends_on: [F3-513, F3-514, F3-516, DL-180]
 unblocks: [F3-518, ATS-037, ATS-038, ATS-039]
 acceptance_criteria:
   - "Basic, Friendly, Retro, and Glass dark/light variants preserve the recovered font, palette, tab, panel, and inactive-state behavior without changing functional inventory; component-scoped contrast repairs do not mutate global theme tokens, Settings, or protected Chat surfaces."
@@ -35249,6 +35733,8 @@ negative_constraints:
   - "Do not let the outer presentation grid directly own or mutate Dashboard cards, and do not give pointer and keyboard movement different commit semantics."
   - "Do not accept geometry-only checks as proof that pixels and motion are correct."
   - "Do not use this repair lane to change Settings or Chat GUI bytes or to rewrite global theme tokens."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): \"Home and Dashboard preserve their distinct tab models\" is retired; the acceptance wording on Panel 1, Home editor and terminal surfaces and Home's single-column collapse reads through F3-630, F3-635 and F3-636."
 owner_hints: [Plans/FinalGUISpec.md]
 ```
 
@@ -35491,7 +35977,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false
-depends_on: [F3-519, PWIZ-021, PWIZ-022, PWIZ-024, PWIZ-029, RAS-014, SCS-012, FGI-011]
+depends_on: [F3-519, PWIZ-021, PWIZ-022, PWIZ-024, PWIZ-029, RAS-014, SCS-012, FGI-011, DL-180]
 unblocks: [F3-521, F3-524, F3-598, F3-599]
 acceptance_criteria:
   - "Onboarding is a bounded, centered modal window over the visibly preserved live application at every desktop width; narrow and short windows retain an explicit outer margin and modal chrome rather than becoming a full-page route."
@@ -35520,7 +36006,7 @@ acceptance_criteria:
   - "Server, Storage, Client, source location, local Safe History, online copy, and access choices remain independently editable; selecting an already-owned Server exposes the appropriate discovery and pairing presentation without silently forcing storage or Client placement."
   - "Paid-provider setup offers compact provider tiles and the selected provider's current owner-supported auth path; Free Models follows even after paid-provider Skip, groups underlying-provider setup through existing owners, and offers explicit Skip. Detection is an observation, not authorization or readiness. Close after commit preserves the existing Project, settled phases and exact continuation; resume never recreates it or replays settled setup."
   - "Ready presents one dominant enter action, a phase-safe Back action where reversible, and an optional Guided Tour without trapping the user. Back never undoes/repeats Project commit or returns to a fake uncreated draft; a deferred Project stays deferred. Starting the Tour transfers and clears saved focus ownership and releases inertness before the Tour starts, while an unavailable or throwing Tour start records no successful handoff and restores the saved workspace initiator/fallback."
-  - "The Home dropdown beside the theme selector contains exactly one `Run setup wizard` item directly below `Reset Layout`; it invokes typed local action `ui.onboarding.start` with source surface `home_menu`, reopens the same modal at Welcome, and does not create a second onboarding state machine or domain command."
+  - "The Home dropdown beside the theme selector contains exactly one `Run setup wizard` item directly below `Reset Layout` (amended 2026-10-09, DL-180: that row now reads Restore home layout, formerly Reset Layout, F3-502); it invokes typed local action `ui.onboarding.start` with source surface `home_menu`, reopens the same modal at Welcome, and does not create a second onboarding state machine or domain command."
   - "Every visible sentence and disabled reason is understandable to a person who has never coded or used an IDE; `shell`, internal owner names, command IDs, schema IDs, route IDs, and unexplained implementation vocabulary never appear as product copy."
   - "Help uses one anchored explainer surface at a time: activating a typed SVG `?` opens a plain-language explanation attached to that exact option, replaces or closes any prior explanation, and never expands empty peer sections. The visible shared explainer is the control's actual `aria-controls` target and its active `aria-describedby` target; obsolete hidden per-card copies are absent. Primary and secondary card actions have visibly button-shaped treatment, consistent alignment and spacing, and recommended versus alternate choices differ through hierarchy, shape, iconography, and state rather than copy alone."
   - "All stages use one consistent grid, selection state, action hierarchy, explainer grammar, spacing rhythm, and in-flow footer model; specialized fields may vary by route, but controls do not change alignment or interaction rules from one setup screen to the next."
@@ -35645,21 +36131,25 @@ canonical_text: >-
   closing note says what was put back (DL-153). Finish restores the temporary arrangement by default
   or keeps it only on explicit selection, removes practice content, and lands on the real Planning Wizard with the
   committed Project selected and no work auto-started. Close/reload resumes a safe checkpoint after owner revalidation.
+  Amended 2026-10-09 (DL-180): the workspace practice no longer asks the learner to move or dock the chat, which is a
+  fixed column (F3-637). It teaches opening a tab from the "+" menu (F3-632), opening a file from the rail into a panel
+  (F3-634), splitting by dragging a tab to a panel's edge (F3-630), and adding a widget to the dashboard (F3-638); Skip
+  and Finish restore the captured v2 Home layout. The steps and their contracts are PWIZ-035's.
 gui_related: true
 gui_classification_reason: This unit owns the directed tour story, focus, overlay, choreography, and accessible presentation.
 split_recommended: false
-depends_on: [F3-520, PWIZ-023, ACD-431, ACD-484, F3-581]
+depends_on: [F3-520, PWIZ-023, ACD-431, ACD-484, F3-581, DL-180, PWIZ-035]
 unblocks: [F3-524, F3-598, F3-599]
 acceptance_criteria:
   - "The three chapters occur in exact Assistant Chat/Teacher, workspace, Planning Wizard order; the September 3 correction supersedes both predecessor controllers without reviving their old step boundaries. Replay and Back preserve the current story."
   - "Every enabled Back or forward control moves exactly one valid story beat, remains reachable and visibly button-shaped, and preserves the scene's mounted state; a coached beat with a required real target advances only from that target's observed action rather than from unrelated clicks, elapsed time, or a generic forward control."
   - "The brief opening introduces `ui.guided_tour.toggle_eli5` (labelled `ELI5: Off` until turned on) beside Pause and Skip Tour and explains Reduced Motion; it reads `general.visual.reduce-animations` and directs changes to Settings without inventing a separate toggle or detour."
   - "The Tour bar keeps the persistent Look menu (`Change the look`: four families plus Light/Dark, then a NieR Mode checkbox with an Adjust NieR look button whose editor opens as a popup dialog above the Tour) and sound control reachable by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`, and for NieR Mode `general.visual.nier-mode`, `general.visual.nier-parts` and `general.visual.nier-background`) at once with presentation-only effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference toggle beside `ui.guided_tour.toggle_eli5`. Neither is a `ui.guided_tour.*` action: Look choices, the NieR Mode checkbox, live editor edits and the sound control dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply, and Adjust NieR look emits ui.settings.nier_editor.open (DL-153)."
-  - "Workspace practice explains page navigation and panel purpose, asks the learner to move/dock Chat and add, move, resize, or focus a real widget, and makes the destination and persisted owner result readable. The temporary layout is reversible."
+  - "Workspace practice explains page navigation and panel purpose, then has the learner open a tab from the \"+\" menu, open a file from the rail into a panel, split a panel by dragging a tab to its edge and add a widget to the dashboard, and makes each destination and persisted owner result readable; the temporary layout is reversible and the chat is never moved (amended 2026-10-09, DL-180; PWIZ-035)."
   - "Every important action offers visible Try it and Show Me (`ui.guided_tour.show_me`) using the same owner handler and success predicate. Highlighting, narration, elapsed time, look-alike controls, generic Next, or unrelated changes never count as completion. Pre-cue, travel, arrival, and settle remain visible and interruptible."
   - "Planning receives at least half of meaningful action count and meaningful dwell time, measured against a declared step census. The book-club goal becomes next-meeting/current-book/how-to-join outcomes, followed by who-can-edit, why, review, edit consequence, and the no-work-before-approval boundary using the real current Wizard names/modes."
   - "The learner changes an answer rather than an Edit button silently choosing for them; only the dependent shared-access consequence changes, unaffected outcomes retain object identity/position, and an unsure answer stays unresolved."
-  - "Assistant Chat opens first through its real shell action and retains the same conversation when moved; successful Finish lands on the real Planning Wizard, not Chat, without starting work."
+  - "Assistant Chat opens first through its real shell action and keeps the same conversation throughout; successful Finish lands on the real Planning Wizard, not Chat, without starting work (amended 2026-10-09, DL-180: the chat is not moved by the Tour)."
   - "Teacher's built-in example is deterministic and local, presents an ordinary-language question and answer in the real Chat surface, and uses no provider, model, network, token budget, protected browser content, or AI-plan execution."
   - "Teacher normal and ELI5 answers preserve the same facts but are materially different: Normal gives useful adult-beginner detail; ELI5 uses clearer words, shorter structure, and less assumed knowledge without baby talk, forced metaphors, or inaccurate simplification. The already-visible answer never changes; the ELI5 version is one extra reply written by Explain this reply simply (`cmd.chat.eli5.explain_reply`, DL-126)."
   - "Every one of the current 47 supported Teacher topics is discoverable through compact categories, search, or grouped sample questions in the real Chat surface; the initial suggestions stay calm, but the full corpus is not hidden behind knowledge of an exact phrase. Unsupported questions offer relevant categories and examples rather than one tiny hard-coded list or an unrelated fallback answer."
@@ -35715,6 +36205,8 @@ negative_constraints:
   - "Do not use left-edge accent rails, paint-only theme variants, target-covering callouts when a safe placement exists, or any black/empty transition frame."
   - "Do not silently keep the demonstrated layout, auto-start work, or leave a practice surface over the final real Planning Wizard."
   - "Do not promote mounted browser-concept owner observations or concept effect receipts into production handler, persistence, native Slint, or certification claims."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the move-or-dock-chat step and the docked/undocked chat state sharing are retired from the workspace practice (PWIZ-035 owns the new steps)."
 owner_boundary_notes:
   - "Planning Wizard owns tour state and typed local actions; Settings owns `general.visual.reduce-animations`; Assistant Chat, Home/workspace-layout, Usage widget, page-navigation, and Planning owners retain performed action and state authority; Final GUI owns story, focus, overlay, copy presentation, and motion."
 owner_hints: [Plans/FinalGUISpec.md, Plans/Planning_Wizard.md, Plans/assistant-chat-design.md]
@@ -36400,7 +36892,7 @@ What a wand module attaches to an ordinary reply is one line each (F3-570): the 
 
 ### 6. Plan card
 
-The Plan is a transcript card because it is a human-readable deliverable. Its header carries the Plan title, a `Plan · V5` badge, and a `Rich Text` / `Markdown` toggle with Rich Text selected by default. The body renders headings, paragraphs, tables, lists, code, Mermaid, charts, images, diagrams and supported artifacts with stable scroll and selection, **no editable caret**, an optional step-status gutter while building, and embedded artifacts that open in the normal artifact viewer. The Markdown view is read-only and preserves block identity.
+The Plan is a transcript card because it is a human-readable deliverable. Its header carries the Plan title, a `Plan · V5` badge, and a `Rich Text` / `Markdown` toggle with Rich Text selected by default. The body renders headings, paragraphs, tables, lists, code, Mermaid, charts, images, diagrams and supported artifacts with stable scroll and selection, **no editable caret**, an optional step-status gutter while building, and embedded artifacts that open in the normal artifact viewer (amended 2026-10-09, DL-180: an artifact tab, F3-635 and `Plans/Runtime_Artifacts_Panel.md#RAP-065`, placed by F3-634). The Markdown view is read-only and preserves block identity.
 
 The footer carries exactly one primary status control that changes label rather than being replaced by a separate badge. Before build the actions are `[Build] [Build With Crew] [Build At…] [Revise] [Send To Planning Wizard] [Export] [Cancel]`. During execution the primary control reads `Building…` alongside `Open To-Dos` and `Cancel`. After a terminal result it reads `Completed` or `Canceled`. A pause, quota wait or window boundary may appear as small support copy such as `Building… · paused until 10:00 PM`, but the button itself still reads `Building…`. The transcript card's status zone and its one action row are F3-606, and the schedule line's layout is F3-607 (DL-156).
 
@@ -36424,7 +36916,7 @@ Dynamic domains become `Goal · To-Dos · Subagents · Crew · BrainStorm · Rev
 
 The presentation of these surfaces is the wand modules GUI contract, F3-566 (sheets) and F3-569 (run cards, receipts and run views). One shared configuration sheet grammar and participant-row grammar serves all four kinds, with workflow-specific sections added rather than forked. A participant row exposes the role, the model, the Persona, and the requested-versus-effective disclosure when they differ. Wonderer and Grill Me appear as additive rows rather than replacing a core participant.
 
-Each run renders one transcript card that changes density in place as the run moves (Collaborative_Workflows CWR-019) and opens the run view, an editor document showing the same run (ACD-480). Participants are clickable and open their own transcripts. The BrainStorm sheet shows the effective question maximum including the Grill extension; the Review sheet shows the reviewer count control across one to eight with repeated model choices permitted; the Chat Room sheet shows turn policy and rounds; the Crew sheet shows coordinator, roles, assignment strategy and parallelism.
+Each run renders one transcript card that changes density in place as the run moves (Collaborative_Workflows CWR-019) and opens the run view, an editor document showing the same run (ACD-480; amended 2026-10-09, DL-180: a run tab, F3-635, placed by F3-634). Participants are clickable and open their own transcripts. The BrainStorm sheet shows the effective question maximum including the Grill extension; the Review sheet shows the reviewer count control across one to eight with repeated model choices permitted; the Chat Room sheet shows turn policy and rounds; the Crew sheet shows coordinator, roles, assignment strategy and parallelism.
 
 ### 11. BSD GUI
 
@@ -36961,6 +37453,8 @@ invariants.
 
 ### 22. Plan Left Editor Tab Navigation, Surface Controls, and Responsive Resizing
 
+Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels by the one set of opening rules (F3-634, `Plans/assistant-chat-design.md#ACD-500`). "The left editor tab bar" reads as the panel F3-634 picks; opening a plan that is already open reveals its tab wherever it is; a collapsed panel holding it expands; and the chat column's width is F3-637's, never below 400 px inside the window, so the 360 px minimum below is met by construction (F3-540).
+
 - **Left Editor Plan Tab Navigation (APR-036):** Clicking a plan title, the "Details" link,
   "Expand", or "Open plan" in a transcript Plan card opens or focuses the plan in the left editor
   tab bar. Opening an already open plan focuses the existing tab without tab duplication.
@@ -37357,9 +37851,13 @@ canonical_text: >-
   the left editor tab bar with tab deduplication. The left plan tab provides the full suite of owner-backed
   plan controls equivalent to the transcript Plan card. Activating a plan opens a readable editor pane
   even from a collapsed split, and subsequent divider resizing preserves a minimum functional chat width.
+  Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels by the one set of opening rules
+  (F3-634, ACD-500): "the left editor tab bar" reads as the panel F3-634 picks, opening a plan that is already open
+  reveals its tab wherever it is, a collapsed panel holding it expands, and the chat column's width is F3-637's, never
+  below 400 px inside the window, so the 360 px minimum is met by construction.
 gui_related: true
 gui_classification_reason: Governs left editor plan tab navigation, control parity, and responsive split behavior.
-depends_on: [F3-533, F3-534]
+depends_on: [F3-533, F3-534, DL-180]
 unblocks: []
 acceptance_criteria:
   - Transcript plan actions open or focus the left plan tab without tab duplication.
@@ -37389,6 +37887,8 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not open duplicate tabs for the same plan.
   - Do not squeeze chat into the resize handle dead zone.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the left editor tab bar and the editor-to-chat divider are retired as placement terms; F3-634 places the plan tab and F3-637 owns the chat's width."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -38943,10 +39443,13 @@ canonical_text: >-
   its own line rather than pushing past the edge, a ledger line's title ellipsizes and shows in full
   on hover or focus, text inside cards breaks long unbroken tokens, and the turn spine is paint-only
   (ACD-469). Send and Stop remain reachable at every width (section 16).
+  Amended 2026-10-09 (DL-180): inside the window the chat column never drops below 400 px; in narrow windows it folds to
+  its edge strip instead (F3-637, F3-636). These resilience rules now hold for the desktop app's popped-out chat window
+  (F3-504) when it is narrower than that.
 gui_related: true
 gui_classification_reason: "Keeps the transcript intact in narrow chat panes."
 split_recommended: false
-depends_on: [ACD-469]
+depends_on: [ACD-469, DL-180]
 unblocks: []
 acceptance_criteria:
   - "No demo thread overflows the transcript sideways at a 234px pane or at full width."
@@ -38970,6 +39473,8 @@ preserved_exact_tokens:
   - "234px"
 negative_constraints:
   - "Do not let any transcript item widen the transcript's scrollable area."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the 234 px in-window chat width is retired; it applies only to a popped-out chat window."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -39292,13 +39797,16 @@ canonical_text: >-
   The chat pane beside an open plan or document has a minimum width of 360 px (DL-138;
   Assistant_Plan_Runtime APR-014). The card's S tier measures its own content box after padding and
   remains available below 360 px; it does not lower the chat pane minimum.
+  Amended 2026-10-09 (DL-180): Open Panel opens the run view as a run tab placed by F3-634, "the active editor tab"
+  reads as the run tab being active in its panel, and the chat pane's width is F3-637's: the column never drops below
+  400 px inside the window, which meets the 360 px minimum beside an open plan or document.
 gui_related: true
 gui_classification_reason: "Fixes run card geometry, receipts and the run view hand-off."
 split_recommended: false
-depends_on: [F3-566, ACD-480, DL-111, DL-123, DL-149]
+depends_on: [F3-566, ACD-480, DL-111, DL-123, DL-149, DL-180]
 unblocks: []
 acceptance_criteria:
-  - "The editor/chat split preserves a 360 px minimum chat pane while card tiers continue to measure card content width."
+  - "The chat column keeps at least 400 px inside the window (F3-637), which meets the 360 px minimum beside an open plan or document, while card tiers continue to measure card content width (amended 2026-10-09, DL-180)."
   - "A collapsed or sub-520 px card reaches Open Panel, Message and More through Expand; a finished run's Message prints why it is disabled."
   - "The Coordinator's mark never paints the accent."
   - "No run card or run view shows Technical details (DL-149)."
@@ -39338,6 +39846,8 @@ negative_constraints:
   - "Do not grow a card on a tick."
   - "Do not treat the S tier as a minimum chat width."
   - "Do not render a run-changing control in both the card and the run view at once."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): \"beside the chat\" and the editor/chat split are retired as placement terms; F3-634 places run tabs and F3-637 owns the chat's width."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Collaborative_Workflows.md
@@ -42195,6 +42705,8 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-153, ContractName:Plans/Final
 
 This addendum compiles the owner decision DL-162: on 2026-10-09 Jared chose concept D, "Polish", of the left-rail review copy `Concepts/LeftRailPMConcept7.html` for the left rail. Polish keeps the Cozy Shelves structure and its coloured shelf boxes (F3-472, F3-474, F3-497) and polishes them: tighter geometry where horizontal space is short, one readable type ladder, statuses as glyph and word instead of pills, text that fits by layout instead of by abbreviation, the chat's picker for every dropdown, and motion in each theme family's own voice. The units below own the rail's presentation only; behaviour, state vocabularies and commands stay with the panel owners (`Plans/FileManager.md`, `Plans/Source_Control_System.md`, `Plans/Jujutsu_Integration.md`, `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/Containers_Registry_and_Unraid.md`, `Plans/Automated_Testing_System.md`, `Plans/Runtime_Artifacts_Panel.md`, and the Run & Debug and Agents units F3-482 to F3-496, F3-452 and F3-477), and `Plans/DRY_Rules.md#DR-057` keeps this grammar in one place. F3-480 (3) is amended in place for the rail. The concept is source lineage only (`Concepts/leftrail-redesign/src/concepts/d/` at commit c93e341606): its class names, its measured pixel values outside these units and its demo data are not canon. Settled later on 2026-10-09 under the same decision: the Jujutsu view of Source Control has its own five tabs (DL-163, F3-623 and F3-624); the remaining six panels and the bottom Debug tab take this grammar through amendments in their owner units, with no new command, action or wiring row; and the activity bar's More tray is F3-625. Published on 2026-10-09: `Concepts/PMConcept7.html` carries the Polish rail, built into it through the opus-5.5 build from the same concept sources the review copy uses, and the review copy `Concepts/LeftRailPMConcept7.html` keeps concepts A, B and C and "Original", the rail before Polish (still reached as `current`), for comparison. The NieR Mode kit reaches the rail through two hooks it now names, a cursor hook for rail rows and picker items and a brackets hook for chosen tabs whose box changes when chosen (F3-621); both are concept plumbing, not canon.
 
+Amended 2026-10-09 (DL-180): the bottom Debug tab named above is now a tab of the Debug Console tool kind (`debug_console`, F3-635) in whichever panel holds it, placed beside the terminals by F3-634; there is no bottom zone (F3-490 as amended). Nothing else in this addendum changes.
+
 ### F3-618 — The Left Rail's Geometry, Shelves And Type
 
 ```yaml
@@ -42812,6 +43324,1269 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-163, ContractName:Plans/FinalGUISpec.md#F3-623, ContractName:Plans/Jujutsu_Integration.md#JJI-003, ContractName:Plans/Jujutsu_Integration.md#JJI-012, ContractName:Plans/Jujutsu_Integration.md#JJI-014, ContractName:Plans/Jujutsu_Integration.md#JJI-019, ContractName:Plans/Decision_Log.md#DL-057
+
+
+## DL-180 to DL-185 — One Universal Panel System, A Fixed Chat Column, Shell-Wide Bans And One Demo Studio (2026-10-09)
+
+This addendum compiles the owner decisions DL-180 (the home centre becomes one universal panel system and the chat a
+fixed column on the right), DL-184 (no box with a coloured side, no emoji and no pills, anywhere in Puppet Master),
+DL-185 (one Demo Studio for PMConcept7) and the panel side of DL-181 (a terminal is one tab kind, Split makes a new
+panel beside it, and Terminals 2x2 is a named layout of four panels). The Home model of the 2026-08-04 reconciliation
+addendum (F3-HOME-001 to F3-HOME-005), F3-501 to F3-504, the fixed bottom runtime zone of sections 3.1, 3.2, 5 and
+7.20, and the movable chat did not come from an owner decision: they came from an audit packet of the concept as it
+stood in August (`PMConcept7_Home_Workspace_Audit_Packet_v1`), and they are superseded here. What survives of them is
+named in their own dated notes: the gesture transaction of F3-HOME-002 and F3-503 now moves panels and tabs, F3-505's
+contact-aware silhouette becomes the one tab silhouette, F3-HOME-004's write-then-read-back transaction and F3-HOME-005's
+Rust-owned model carry over to the split tree, and F3-504 keeps the web and native boundary, with Pop out a desktop app
+action.
+Superseded with a dated note: F3-501 (by F3-630), F3-070 (by F3-630), F3-197 (by F3-638) and F3-279 (by F3-638).
+Amended in place, each with a dated note: the 2026-08-04 block's heading paragraph, F3-HOME-001 to F3-HOME-005 and the
+block's superseded dispositions; F3-502 to F3-505; the executive summary; sections 3.1, 3.2, 3.5, 3.6, 4.1, 4.4, 5
+(5.1, the terminal section presentation rules, 5.2 to 5.4 and 5.6 to 5.8), 7.2, 7.3, 7.12, 7.16.1, 7.18, 7.20, 8.2,
+12.1, 12.3, 13.3, 15.1, 15.4 and 22 (the APR-036 to APR-038 rows), and the Assistant redesign's Plan card (section 6)
+and run views (section 10); Appendix B item 4; Appendix C; F3-010, F3-019, F3-020, F3-027, F3-034, F3-035, F3-039 to
+F3-041, F3-060, F3-061, F3-066 to F3-068, F3-071, F3-072, F3-102, F3-132, F3-140, F3-143, F3-151 to F3-154, F3-156,
+F3-162, F3-195, F3-202, F3-205, F3-206, F3-217, F3-225, F3-234, F3-271, F3-276 to F3-278, F3-281, F3-282, F3-297,
+F3-421 to F3-423, F3-445, F3-463, F3-464, F3-466, F3-467, F3-469, F3-476, F3-516, F3-517, F3-520, F3-521, F3-540,
+F3-565 and F3-569; and, where their DL-162 notes or text name the bottom Debug tab or the bottom zone, the Run & Debug
+units F3-483, F3-484, F3-490 to F3-492, F3-495 and F3-496 and the DL-162 addendum's heading paragraph, which now point
+at the Debug Console tool kind. The left rail otherwise keeps its own canon (DL-162, DL-163, F3-618 to F3-625, DR-057):
+its side panels, their segmented strips, its More tray and its looks are not home panels and are not changed here. The
+terminal tab's own chrome, features, appearance, effects, faces, images and agents are F3-640 to F3-646
+(DL-181 to DL-183). Behaviour and records stay with their owners and are cited, never restated: the v2 Home layout
+record (`Plans/storage-plan.md#SP-330`, `Plans/home_workspace_layout_v2.schema.json`), the placement fields and the
+layout event (`Plans/Contracts_V0.md#CV-360`, `#CV-361`), the commands (`Plans/UI_Command_Catalog.md#UCC-200` to
+`#UCC-203`, `Plans/Commands_System.md#CS-100`, `#CS-101`), wiring (`Plans/Wiring_Matrix.md#WM-090`,
+`Plans/UI_Wiring_Rules.md#UIW-040`, `#UIW-041`), settings (`Plans/Settings_System.md#SSYS-050`), the dashboard's
+boards (`Plans/Widget_System.md#WS-030`), the file tree's opens (`Plans/FileManager.md#F-090`), the chat's opens and
+its port (`Plans/assistant-chat-design.md#ACD-500`, `#ACD-501`), the DRY rules (`Plans/DRY_Rules.md#DR-065` to
+`#DR-071`) and the words (`Plans/Glossary.md#G-030`: a panel is a tab group in the home centre, the left rail's panels
+are side panels, a workspace tab is still a project tab). The panels concept (its host contract, its numbers as built
+and the anatomy mock) is source lineage only: its class names, data attributes, scripts, storage keys, demo contents
+and harness hooks are not canon.
+
+### F3-630 — The Universal Panel Model And Its Layout
+
+```yaml
+plan_unit_id: F3-630
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The home centre, between the left rail and the chat column (F3-637), is one universal panel system (DL-180). Its
+  layout is an n-ary split tree: a split is a row or a column of two or more children, each child a panel or another
+  split, and every leaf is a panel. A panel is a tab group, one tab strip (F3-631) over one body, and any panel can hold
+  any tab kind (F3-635). Every split has its own sizes, stored as proportions of that split, never as pixels, so panel
+  widths and heights are independent. The tree always keeps these invariants: every leaf is a panel; a split has two or
+  more children and never runs in its parent's direction; every size is above 0.02; a tab lives in exactly one panel;
+  pinned tabs come first in their strip; a panel has at most one preview tab. A panel's minimum is the largest content
+  minimum of its tabs (F3-635) and never less than 280 x 120 px. Inserting a panel beside another gives the new panel
+  half of that panel's share and changes no other size; a new panel along the centre's outer edge takes 0.34 of the
+  root. Removing a panel gives its share to its previous sibling, else to the next. Closing the last tab of a panel
+  closes the panel and its neighbour takes the space, unless it is the only panel in the centre or the user locked it:
+  then it stays and shows the empty-panel launcher (F3-632). Closing a panel closes its tabs, each kind asking first
+  where it asks (F3-635). Locking a panel keeps it in place when its last tab closes, and automatic placement skips it
+  (F3-634). Split fit rule: a split, or a new panel, goes to the right when both halves stay at least the larger of the
+  two minimums wide, else below when both halves stay at least that tall, else no split is offered. Panels are 6 px
+  apart, the divider line in the middle of the gap, and the centre is inset 6 px from the rail, the chat and the bars; a
+  divider's hit target is 8 px. Dragging a divider moves only the two neighbours it separates and commits once on
+  release (cmd.workspace_layout.resize_surface); from the keyboard, Tab reaches a divider, arrows move it 8 px,
+  Shift+arrows 48 px, Home and End move it to a neighbour's minimum, and Enter or a double click evens the two sides. A
+  panel dragged below half its minimum along the divider's axis collapses to its 35 px strip and keeps every tab and its
+  state; dragging it out again, or Expand in its panel menu, restores it (cmd.workspace_layout.set_collapsed). This
+  replaces Collapse Bottom Terminal for every panel. Maximize is a flag outside the tree: the maximized panel fills the
+  centre and the tree underneath does not change; Shift+Escape, the panel menu, or Escape while focus is in its strip
+  restores it (ui.workspace_layout.maximize, view state with no receipt and no event). Each panel has a small corner
+  grip and a panel menu (⋮) at the end of its strip: Split right, Split down, Maximize or Restore, Collapse or Expand,
+  Move panel, Lock panel or Unlock panel, Layouts, and Close panel. A whole panel moves by its grip, or by Move panel
+  from the menu or Enter on the grip (cmd.workspace_layout.move_surface): beside another panel on any edge, along the
+  centre's outer edge, or into another panel as its tabs. A tab dragged onto a panel's edge band splits that panel on
+  that side (cmd.panel_tab.move with a split target); dropped on a strip, it moves into that panel at the drop position;
+  pulled off its strip by 14 px vertically or 40 px horizontally beyond the strip band, it tears off and follows the
+  pointer until it lands on a strip, an edge band or the "+N" list (F3-633). Edge bands are clamp(15 % of the body's
+  axis, 32, 72) px deep, and the centre's outer edge band is 12 px; a drag starts after 4 px of travel, a zone is
+  adopted after 100 ms of dwell (skipped on release and under Reduced Motion), and an adopted zone holds while the
+  pointer stays within 12 px of it. Every drag runs the gesture transaction Home already uses and shares with the Usage
+  board's gesture kit (F3-HOME-002, F3-503, DR-066): the preview is local, nothing dispatches while dragging, a changed
+  release commits one command, an unchanged release, Escape, a pointer cancel, a lost window or a drop past the
+  workspace commits nothing and restores the exact earlier picture, and a failed commit rolls back. Every drag outcome
+  also has a menu path and a keyboard path (Move panel, Move to panel, Alt+Shift+arrows; F3-635). Motion: a panel glides
+  into its new place in 180 ms by default, in Friendly 220 ms, Glass 260 ms, Basic 200 ms, Retro 140 ms in steps and
+  NieR Mode 200 ms; the landing preview glides in 160 ms and fades in 140 ms; neighbours slide aside in 250 ms on
+  cubic-bezier(.22,1,.36,1); a tab settles in 160 ms on cubic-bezier(.17,.84,.29,.99); a drop settles on a critically
+  damped spring of stiffness 520 and damping 45.6; a cancel returns in 300 ms; under Reduced Motion every one of these
+  is 0. The default layout, Home, keeps a full-width bottom row where the terminal sat before, 0.4 of the centre's
+  height: an ordinary panel row that holds any tab kind and can be split side by side. Four named layouts ship. Home: a
+  column of a row of 0.6 (a dashboard panel 0.5 holding the pinned Home dashboard, F3-638, and a documents panel 0.5)
+  over a tools row of 0.4 holding terminals and Output. Build: a column of a row of 0.62 (documents 0.66 and a side
+  panel 0.34 for browsers and dashboards) over a row of 0.38 (terminals 0.6 and tools 0.4 holding Output and Problems).
+  Terminals 2x2: a column of two rows of two terminal panels, every size 0.5, one terminal in each, new ones started
+  where fewer than four are open, and every other tab joining the first panel in the background. Focus: one panel
+  holding every tab. Applying a named layout keeps every open tab: no terminal session ends, no unsaved buffer is
+  dropped, and each tab moves to the slot that holds its kind (cmd.workspace_layout.apply_named). Restore home layout
+  (cmd.workspace_layout.reset; the Settings row general.startup.reset-home-layout) applies Home the same way, keeping
+  every tab. A user can save the current arrangement as a named layout (cmd.workspace_layout.save_named); a saved layout
+  keeps its shape, its sizes and the kinds each slot holds, never the tabs themselves. The named and saved layouts, Save
+  this layout... and Restore home layout sit in the panel menu's Layouts submenu and in the title bar's Home options
+  menu (F3-502). The layout persists in the v2 Home layout record
+  `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, the only Home layout authority
+  (Plans/storage-plan.md#SP-330, Plans/home_workspace_layout_v2.schema.json), through F3-HOME-004's write-then-read-back
+  transaction; this unit does not restate its fields. Narrow states (F3-636), menus, overlays and drags are never saved.
+  A layout from before this redesign is converted on first read and never reset: an upgrade never loses a user's tabs or
+  layout. Every committed change emits the one existing event workspace.layout_changed (CV-361); a reveal of an open tab
+  emits nothing. This unit supersedes F3-501 and the composition of F3-HOME-001 (four fixed editor panels, the singleton
+  dashboard, the chat as a movable surface, terminal sections docked at the bottom), the fixed bottom runtime zone of
+  sections 3.1, 3.2, 5 and 7.20 (F3-034, F3-035, F3-060, F3-061, F3-066, F3-151), F3-502's Collapse Bottom Terminal row,
+  the host registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503, and, for home panels,
+  section 5.8's 240 px panel minimum.
+gui_related: true
+gui_classification_reason: Defines the home centre's panel model, its layout tree, its named layouts and how panels move, split, collapse and persist.
+split_recommended: false
+depends_on: [DL-180, DL-181, F3-HOME-002, F3-HOME-004, F3-HOME-005, F3-503, F3-635]
+unblocks: [SP-330, CV-361, UCC-200, CS-100, WM-090, UIW-040, UIW-041, SSYS-050, DR-065, DR-066, ATS-075, GRRC-040]
+acceptance_criteria:
+  - "The layout is an n-ary split tree whose leaves are panels, sizes are proportions per split, and after every commit the invariants hold: every leaf a panel, two or more children per split, no split in its parent's direction, every size above 0.02, each tab in exactly one panel, pinned tabs first, at most one preview tab per panel."
+  - "Inserting a panel beside another gives it half of that panel's share and changes no other size; a new panel at the centre's outer edge takes 0.34 of the root; a removed panel's share goes to its previous sibling, else the next."
+  - "Closing the last tab closes the panel unless it is the only panel or locked, which then shows the empty-panel launcher; a locked panel is skipped by automatic placement."
+  - "A split is offered to the right only when both halves keep the larger minimum width, else below when both keep that height, else not at all."
+  - "A divider drag moves only its two neighbours and commits once on release; the divider keys move 8 px and 48 px, Home and End reach a neighbour's minimum, and Enter or a double click evens the sides."
+  - "A panel dragged below half its minimum collapses to its 35 px strip with every tab and its state kept, and any panel, the bottom row included, can collapse."
+  - "Maximize leaves the tree unchanged and restores with Shift+Escape, the panel menu or Escape in the strip; it emits no event."
+  - "The default layout Home has a full-width bottom row of 0.4 that holds any tab kind, and Home, Build, Terminals 2x2 and Focus build exactly the trees and proportions stated here."
+  - "Applying a named layout or Restore home layout ends no terminal session, drops no unsaved buffer and closes no tab."
+  - "A tab dragged to a panel's edge band splits that panel; a tab pulled 14 px vertically or 40 px horizontally off its strip tears off; a whole panel moves by its grip or Move panel; each drag has a menu and keyboard equivalent."
+  - "During a drag nothing dispatches; a changed release commits one command; Escape, pointer cancel, window blur, a drop past the workspace and an unchanged release restore the exact earlier layout with no command, persistence or event; a failed commit rolls back."
+  - "Under Reduced Motion every glide, slide, settle and cancel duration is 0 and every drag still shows its landing preview."
+  - "An existing Home layout from before this redesign opens converted, with its tabs, on first read; no upgrade resets it."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/storage-plan.md
+  - Plans/home_workspace_layout_v2.schema.json
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-180"
+  - "Plans/Decision_Log.md#DL-181"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1, D2, D11)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)"
+  - "Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)"
+preserved_exact_tokens:
+  - "n-ary split tree"
+  - "0.34"
+  - "0.02"
+  - "280 x 120"
+  - "35 px"
+  - "Home"
+  - "Build"
+  - "Terminals 2x2"
+  - "Focus"
+  - "Restore home layout"
+  - "cmd.workspace_layout.resize_surface"
+  - "cmd.workspace_layout.set_collapsed"
+  - "cmd.workspace_layout.move_surface"
+  - "ui.workspace_layout.maximize"
+  - "home_workspace_layout.v2:{project_id}:{workspace_tab_id}"
+  - "workspace.layout_changed"
+negative_constraints:
+  - "Do not reintroduce fixed editor panel slots, a singleton dashboard surface, terminal sections or a fixed bottom runtime zone."
+  - "Do not store panel sizes in pixels or equalize siblings when a panel is inserted."
+  - "Do not save a narrow state, a menu, an overlay or a drag in the layout record."
+  - "Do not reset a user's layout on upgrade or end a terminal session or drop an unsaved buffer when a layout is applied."
+  - "Do not dispatch a command, write the record or emit an event while a gesture is in progress."
+compatibility_only_notes:
+  - "Slint portability: the split tree, the strip, the silhouette and every gesture are projections over the Rust-owned layout model (F3-HOME-005); the concept's DOM and CSS mechanics are not the product mechanism."
+  - "The concept seeds its Home layout with demo files, a demo plan and two terminals; the seed contents are illustrative, the tree and proportions are canon."
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/storage-plan.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/DRY_Rules.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/DRY_Rules.md#DR-065, ContractName:Plans/DRY_Rules.md#DR-066
+
+### F3-631 — One Tab Strip For Every Panel
+
+```yaml
+plan_unit_id: F3-631
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Every panel has the same tab strip, the dashboard's included (DL-180, D5); no panel and no tab kind draws a strip of
+  its own. The strip is 35 px tall in every panel, the change Jared asked for in PMConcept7 revision 19 ("Strips
+  shortened: editor 40 -> 35px") applied to every panel, and its tabs are 31 px tall with 8 px between tabs, 2 px in
+  Retro (the 8 px gap approved by Jared on 2026-10-10). The active tab's plate overlaps the body by 1 px and joins it
+  through the contact-aware silhouette of F3-505, generalised here from the editor and dashboard strips to every panel
+  and every tab kind, so the active tab and its panel read as one shape. That fused shape is the only mark of the active
+  tab: no underline, no accent line, no accent crown strip, no pill. In Friendly, Glass and Basic, light and dark, the
+  plate takes the body's own fill; no look gives the active tab a separately coloured plate, Glass dark included (Jared,
+  2026-10-10: its purple plate is dropped), and Glass keeps only its 1 px glass rim along the plate's crown, part of its
+  material and never in an accent colour. Retro fills the fused shape in reverse video and NieR Mode in ink (F3-647).
+  Contact is measured to the neighbouring content, its box inset by 8 px, with a 20 px linear morph window on each side.
+  Crown, shoulder and flare radii per look: Friendly 16, 16 and 25 px; Glass 16, 16 and 25 px; Basic 9, 14 and 22 px;
+  Retro 6, 8 and 14 px on a stepped profile; NieR Mode 9, 14 and 22 px, or a 6, 0 and 14 px chamfer with a straight foot
+  when its square part is installed. Drag to reorder is the pointer-capture gesture of F3-421 and F3-505, kept and
+  polished in every strip: it starts after 4 px of travel, the carried tab tracks the pointer one to one, the silhouette
+  follows it in the same frame without springing, neighbours slide aside, widths do not reflow while a tab is carried,
+  and a changed release commits one cmd.panel_tab.move; the same gesture carries a tab to another strip, onto a panel's
+  edge or off its strip (F3-630). Under Retro every selection and every reorder rolls one of the three Retro effects of
+  F3-505 (phosphor, CRT and DOS) from a shuffle bag with no immediate repeat, in every strip, and each ends on the
+  steady reverse-video tab; Reduced Motion shows the end at once. Widths: a tab's natural width is 96 to 200 px; when
+  the strip runs short, inactive tabs shrink to 72 px, then become 36 px icon-only tabs; the active tab keeps at least
+  120 px and its label and never hides; after that a contiguous window of tabs around the active tab stays visible and
+  the "+N" of F3-633 counts the rest. A shrunk file name keeps its start and its end and loses its middle (rec…es.rs).
+  Pinned tabs are 36 px, icon only, sit at the left in pin order and never hide; Pin and Unpin are in the tab menu only
+  (cmd.panel_tab.pin, cmd.panel_tab.unpin). Marks: a file with unsaved changes shows a 7 px dot in the close slot until
+  the pointer is over the tab (Retro an asterisk after the label, NieR Mode a 6 px square); a preview tab has an italic
+  label (F3-634); a tab that opened in the background shows a 6 px hollow square until the user activates it; a terminal
+  whose last command failed shows the exit code after its label in the error colour; a tab an agent is using shows the 7
+  px square agent mark and its hover tag names the agent; a running process shows a static busy glyph, never a spinner
+  in Retro or NieR Mode. Every mark that names a state comes from the one status set (DL-141, F3-585), no tab invents
+  its own, and every mark is also in the tab's accessible name. The close target is 24 x 24 px with a 12 px glyph; it is
+  hidden on inactive tabs narrower than 96 px, where a middle click and Delete still close. The "+" (F3-632) is 28 x 28
+  px, right after the last visible tab. "+N" is plain text in the strip's own type ("+7"; Retro "[+7]"; NieR Mode small
+  caps after a hairline), never a badge. The strip is an ARIA tablist: arrows move between tabs, Home and End go to the
+  ends, Enter or Space activates, Delete closes, and Shift+F10 opens the tab menu. The tab menu holds Close, Keep open
+  (on a preview tab), Pin or Unpin, Rename..., Move to new panel, Move to panel, and Split right or Split down with this
+  tab, each one command (cmd.panel_tab.close, keep, pin, unpin, rename, move). Rename sets a user label that the kind's
+  own label no longer overrides; an empty name gives the kind's label back. Activating a tab is view state
+  (ui.panel_tab.activate), with no receipt and no event. A tab label never shows an internal id. Tabs, strip buttons and
+  dividers take at most a static tint on hover (F3-647). This unit supersedes the editor-and-dashboard scope of F3-505,
+  the editor-only strip rules of F3-421, the dashboard's own Main, Metrics and Monitoring strip, and Basic's 2 px accent
+  crown strip on the active tab.
+gui_related: true
+gui_classification_reason: Defines the one tab strip every panel uses, its silhouette, widths, marks, reorder and keyboard.
+split_recommended: false
+depends_on: [DL-180, DL-141, F3-505, F3-421, F3-585, F3-630, F3-635]
+unblocks: [F3-633, F3-647, DR-065, UCC-200, ATS-075]
+acceptance_criteria:
+  - "Every panel, the dashboard's included, renders the same 35 px strip with 31 px tabs, 8 px apart (2 px in Retro)."
+  - "The active tab and its body form one shape through the silhouette, and no underline, accent line, crown strip or pill marks the active tab in any look; in Friendly, Glass and Basic, light and dark, the plate has the body's fill."
+  - "Contact is measured to the neighbour's content inset by 8 px with a 20 px morph window, and each look uses the crown, shoulder and flare radii listed here."
+  - "Reorder starts after 4 px, the silhouette tracks the carried tab in the same frame, widths do not reflow while carrying, and a changed release commits one cmd.panel_tab.move in every strip."
+  - "Under Retro the three effects rotate from a shuffle bag with no immediate repeat on selection and reorder in every strip, and Reduced Motion shows the end state at once."
+  - "Tabs are 96-200 px, then 72 px, then 36 px icons; the active tab keeps at least 120 px and its label and never hides; a contiguous window around it stays visible; shrunk file names keep both ends."
+  - "Pinned tabs are 36 px, icon only, leftmost and never hidden; pin and unpin are reachable only from the tab menu."
+  - "The dirty dot, italic preview label, hollow square, exit code, agent mark and busy glyph render as stated, come from the one status set, and are announced in the tab's accessible name."
+  - "Close targets are 24 x 24 px and hidden on inactive tabs under 96 px, where middle click and Delete still close."
+  - "The strip is an ARIA tablist with arrows, Home, End, Enter, Space, Delete and Shift+F10, and the tab menu's rows each dispatch one command."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-180"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D5, D21, D23)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
+  - "Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)"
+preserved_exact_tokens:
+  - "35 px"
+  - "31 px"
+  - "8 px"
+  - "96"
+  - "200"
+  - "72"
+  - "36"
+  - "120"
+  - "+N"
+  - "Strips shortened: editor 40 -> 35px"
+  - "cmd.panel_tab.move"
+  - "ui.panel_tab.activate"
+negative_constraints:
+  - "Do not mark the active tab with an underline, an accent line, a crown strip, a pill or a separately coloured plate."
+  - "Do not give any panel or tab kind a strip of its own."
+  - "Do not scroll a strip sideways or wrap it onto a second row."
+  - "Do not draw a spinner in Retro or NieR Mode, or invent a status mark outside the one status set."
+  - "Do not show an internal id in a tab label."
+compatibility_only_notes:
+  - "Slint portability: the split tree, the strip, the silhouette and every gesture are projections over the Rust-owned layout model (F3-HOME-005); the concept's DOM and CSS mechanics are not the product mechanism."
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-505, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/DRY_Rules.md#DR-065, ContractName:Plans/UI_Command_Catalog.md#UCC-200
+
+### F3-632 — The "+" Menu And The Empty Panel
+
+```yaml
+plan_unit_id: F3-632
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The "+" right after the last tab of every strip opens the "+" menu; it never makes a tab by itself (DL-180, D6).
+  Ctrl+Shift+Space opens it from the keyboard. Each row's body opens its item as a new tab in this panel; the row's
+  trailing cell, 34 x 34 px, opens it as a new panel placed by the fit rule (F3-630), and Alt+click or Alt+Enter on the
+  row does the same. Ctrl+T (Alt+T in a web browser, F3-635) makes a new tab of the panel's usual kind without the menu:
+  the panel's dedicated kind, else its active tab's kind, else an editor buffer. The rows, in this order: a
+  type-to-filter field, "Open anything: kinds, files, URLs", focused when the menu opens, whose typing also finds files
+  and an address; Terminal (Ctrl+Shift+`), with a sub-row of shell profiles and SSH hosts from the terminal kind
+  (F3-640); Browser (Ctrl+Shift+B), with a sub-row of recent addresses; File... (Ctrl+P), with the three most recent
+  files inline, each clickable; Dashboard, with a sub-row of the project's dashboard boards (F3-638); Plan or
+  document...; Artifact...; one row "Output, Problems, Ports, Debug Console" whose submenu lists those four tool kinds;
+  a hairline; Split right (Ctrl+\); Split down (Ctrl+Shift+\); Reopen closed tab (Ctrl+Shift+T, Alt+Shift+T in a web
+  browser). Kinds join the menu through their registration (F3-635) in this order, and every row shows the shortcut that
+  works where the app runs. Recent files open as kept tabs (F3-634). A row that cannot act is shown disabled with its
+  reason on the row (Split right where the centre is too narrow to split, Reopen closed tab when nothing has been
+  closed). Opening, filtering, browsing and closing the menu dispatch nothing; the chosen row dispatches its one open or
+  split command (cmd.panel_tab.open, cmd.workspace_layout.split, cmd.panel_tab.reopen_closed). The menu opens in the one
+  overlay root (DR-067) in the look's menu style (F3-647). An empty panel (the only panel in the centre, or a locked
+  panel whose last tab closed) shows the same rows as a launcher: 32 px full-width list rows with the kind's icon, its
+  label and its shortcut, no tiles and no pills, then the five most recent files, then a one-line hint. The menu and the
+  launcher read one row list, so a kind that joins one joins the other. This supersedes F3-HOME-003's and F3-502's Open
+  Panel and Open Browser in Panel rows with their Panel 1 to Panel 4 flyouts.
+gui_related: true
+gui_classification_reason: Defines the plus menu after the last tab and the empty-panel launcher.
+split_recommended: false
+depends_on: [DL-180, F3-630, F3-631, F3-634, F3-635]
+unblocks: [UCC-200, WM-090, PWIZ-035, ATS-075]
+acceptance_criteria:
+  - "The \"+\" opens the menu and never creates a tab by itself; Ctrl+T creates a tab of the panel's usual kind."
+  - "The menu lists exactly, in order: the filter field, Terminal, Browser, File..., Dashboard, Plan or document..., Artifact..., the one Output, Problems, Ports, Debug Console row with its submenu, a hairline, Split right, Split down, Reopen closed tab, with the shortcuts and sub-rows stated here."
+  - "A row's body opens a new tab in this panel; its 34 x 34 px trailing cell, Alt+click or Alt+Enter opens a new panel by the fit rule."
+  - "Opening and browsing the menu dispatch nothing; each chosen row dispatches one command; disabled rows show their reason."
+  - "An empty panel shows the same rows as 32 px full-width list rows, then five recent files, then a hint, with no tiles and no pills."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-180"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D6)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
+  - "Concepts/home-redesign/src/panels/js/38-menus.js on branch concept/home-panels-20261009 at 1565156bce (the disabled Split and Reopen closed tab rows with their reasons; concept lineage only)"
+preserved_exact_tokens:
+  - "Open anything: kinds, files, URLs"
+  - "Terminal"
+  - "Browser"
+  - "File..."
+  - "Dashboard"
+  - "Plan or document..."
+  - "Artifact..."
+  - "Output, Problems, Ports, Debug Console"
+  - "Split right"
+  - "Split down"
+  - "Reopen closed tab"
+  - "34 x 34"
+  - "32 px"
+negative_constraints:
+  - "Do not make the \"+\" create a default tab."
+  - "Do not draw the launcher as tiles or pills, or keep a second row list for it."
+  - "Do not dispatch anything when the menu opens, filters or closes."
+compatibility_only_notes:
+  - "The contract's Split down shortcut Ctrl+K Ctrl+\\ is retired: the shell owns Ctrl+K, and Split down is Ctrl+Shift+\\ (F3-635)."
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/UI_Command_Catalog.md#UCC-200
+
+### F3-633 — The "+N" List Of Hidden Tabs
+
+```yaml
+plan_unit_id: F3-633
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  When a strip cannot show every tab after the width cascade of F3-631, a plain-text "+N" after the last visible tab
+  counts only the hidden tabs and opens the "+N" list (DL-180, D5). It is in every strip, the dashboard's included, and
+  works in the narrowest panel (280 px). The list opens in the one overlay root (DR-067), with a search field at the
+  top, focused, and the panel's tabs grouped by kind under each kind's group name (F3-635); each row shows the kind's
+  icon, the label, a dim path or address, its marks (F3-631) and a 24 x 24 px close target. Arrows move, Enter activates
+  the tab and brings it into the visible window, Delete closes it, and Escape closes the list with focus back on "+N".
+  Its accessible name says how many tabs are hidden (the concept's wording, for example "7 more tabs", is illustrative). While a tab is carried, "+N" is a drop target that
+  takes the tab into this panel among its hidden tabs. Ctrl+Shift+A opens the same searchable list over every tab in the
+  centre. A strip never scrolls sideways, never wraps onto a second row and never hides its active tab. Opening,
+  searching and closing the list dispatch nothing; choosing a row is view state (ui.panel_tab.activate), and closing or
+  moving a tab from it is one command. This supersedes F3-421's editor-only "+N more" chip and its picker, and F3-445's
+  sideways-scrolling recipe for home strips; page tabs keep their own owner (F3-464) and the left rail's strips keep
+  F3-620's fit.
+gui_related: true
+gui_classification_reason: Defines the plain-text +N control and the searchable list of tabs that do not fit a strip.
+split_recommended: false
+depends_on: [DL-180, F3-631, F3-421, F3-445]
+unblocks: [UCC-200, ATS-075]
+acceptance_criteria:
+  - "Every strip whose tabs do not fit after the width cascade shows a plain-text \"+N\" counting only hidden tabs, with no badge or capsule."
+  - "The list is searchable, grouped by kind, shows marks and per-row close, and is fully operable by keyboard with focus returning to \"+N\" on Escape."
+  - "\"+N\" accepts a carried tab as a drop target."
+  - "Ctrl+Shift+A opens the list over every tab in the centre."
+  - "No home strip scrolls sideways or wraps, and the active tab is never in the hidden set."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-180"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D5)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
+  - "Concepts/home-redesign/src/panels/js/32-strip.js on branch concept/home-panels-20261009 at 1565156bce (the \"+N\" accessible name; concept lineage only)"
+preserved_exact_tokens:
+  - "+N"
+  - "+7"
+  - "[+7]"
+negative_constraints:
+  - "Do not draw \"+N\" as a badge, pill or chip."
+  - "Do not scroll a home strip sideways or hide its active tab."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-631, ContractName:Plans/FinalGUISpec.md#F3-421, ContractName:Plans/FinalGUISpec.md#F3-445
+
+### F3-634 — Opening Things In Panels
+
+```yaml
+plan_unit_id: F3-634
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  One opening module places everything that opens in the home centre, for every caller (DL-180, D7, D8; DR-071): the
+  file tree (F-090), file names and paths in chat messages and cards, the chat's diff views and Changes rows, transcript
+  file records, search results, Ctrl+P, the "+" menu and the empty-panel launcher (F3-632), everything the chat and its
+  wizards open, plans, run views, transcripts, context details, records, artifacts, browsers and terminals (ACD-500),
+  agents, and the terminal's `path:line:col` links and command marks (F3-641). No caller keeps a placement or dedupe
+  rule of its own. Every open route carries the one placement field set, `where`, `mode`, `by` and `background`
+  (Plans/Contracts_V0.md#CV-360); cmd.file.open, cmd.nav.open_subject, cmd.browser.open_workspace_preview and
+  cmd.terminal.open keep their ids and resolve through this module like cmd.panel_tab.open. The rules, in order. One id,
+  one tab: an id already open anywhere in the workspace is revealed where it is, activated in its panel, pulled out of
+  the "+N" list into the visible window, its collapsed panel expanded, and focused when the open takes focus; it is
+  never opened twice and never moved, and a reveal commits nothing and emits nothing. A kind may map alias ids to one
+  canonical tab id, so a plan's query form and its plan id open one tab. Preview: a single click on any file reference a
+  person clicks (the file tree, chat file references, diff views and Changes rows, transcript file records, search
+  results, terminal links) opens the panel's one preview tab, with an italic label, which the next single click
+  replaces; a double click, an edit in the tab, or dragging the tab keeps it (cmd.panel_tab.keep). Ctrl+P with Enter,
+  the "+" menu's recent files and every file an agent opens open kept tabs. Placement of a new tab: a document kind goes
+  to the last-focused panel that holds documents; panels holding only dedicated kinds (terminals, browsers, dashboards,
+  tool kinds) and locked panels are skipped. A terminal, browser or dashboard goes to the last-focused panel already
+  holding that kind, else the last-focused document panel. A tool kind (Output, Problems, Ports, Debug Console) goes to
+  the last-focused panel holding that kind, then to the last-focused panel holding a terminal, then to the last-focused
+  document panel, so tools land beside the terminals. With no such panel, a new panel by the fit rule (F3-630).
+  Alt+click anywhere opens a new panel by the fit rule; an open may also ask for the panel it came from or a split of it
+  to the right or below. Focus: what the user clicked, in the chat or anywhere else, opens and takes focus. What an
+  agent opened by itself lands as a background tab with the 6 px hollow square (F3-631) and a polite announcement naming
+  it; it never takes keyboard focus and never changes the active tab of a panel the user is typing in. A background open
+  requested by the user opens without taking focus. Narrow centre: below a centre width of 600 px no new panel is
+  created; an open that asks for a new panel or a split opens in the next panel of the panel switcher instead and its
+  announcement says so (F3-636); a reveal needs no room and works at every width. The kinds and their ids are F3-635's,
+  the placement fields CV-360's, the file tree's single and double click F-090's, and what the chat opens and how its
+  narrow return works ACD-500's. This supersedes the per-caller open rules for Home: F3-HOME-003's Open Panel and Open
+  Browser in Panel targets, section 7.3's bottom_panel destination class, the "left editor tab
+  bar" of APR-036 to APR-038, the "beside the chat" wording of F3-569, and, through F-090, F-080's four-panel routing.
+gui_related: true
+gui_classification_reason: Defines the one set of rules that decides where anything opened in the home centre lands and whether it takes focus.
+split_recommended: false
+depends_on: [DL-180, F3-630, F3-631, F3-635, F3-636]
+unblocks: [CV-360, F-090, ACD-500, DR-071, UCC-200, WM-090, ATS-075]
+acceptance_criteria:
+  - "Every caller listed here opens through the one module with the one placement field set, and no caller has its own placement or dedupe rule."
+  - "Opening an id that is already open anywhere reveals that tab where it is (activating it, pulling it out of \"+N\", expanding its collapsed panel) and never opens a second tab or moves it; a reveal emits no event."
+  - "A single click on a file reference from any listed surface opens the panel's one italic preview tab, which the next single click replaces; a double click, an edit or a drag keeps it; Ctrl+P with Enter, recent files and agent opens are kept."
+  - "A new document lands in the last-focused document panel, skipping dedicated-only and locked panels; a terminal, browser or dashboard in the last-focused panel holding that kind; a tool kind beside the terminals; else a new panel by the fit rule."
+  - "Alt+click opens a new panel by the fit rule from any caller."
+  - "A user click opens with focus; an agent's open lands in the background with the hollow square and an announcement, never takes keyboard focus and never changes the active tab of a panel the user is typing in."
+  - "Below a centre width of 600 px no new panel is created and the announcement says where the item opened."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Contracts_V0.md
+  - Plans/FileManager.md
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-180"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D7, D8)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5 (sections 9 and 10; audit lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)"
+preserved_exact_tokens:
+  - "where"
+  - "mode"
+  - "by"
+  - "background"
+  - "cmd.panel_tab.open"
+  - "cmd.panel_tab.keep"
+  - "cmd.file.open"
+  - "cmd.nav.open_subject"
+  - "cmd.browser.open_workspace_preview"
+  - "cmd.terminal.open"
+  - "path:line:col"
+negative_constraints:
+  - "Do not give any caller its own placement or dedupe rule."
+  - "Do not open an already-open id a second time or move its tab."
+  - "Do not let an agent's open take keyboard focus or change the active tab of a panel the user is typing in."
+  - "Do not create a new panel below a centre width of 600 px."
+compatibility_only_notes:
+  - "The concept names its module PM_HOME.open and its chat bridge openEditor; those names are concept lineage, not product names."
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Contracts_V0.md
+  - Plans/FileManager.md
+  - Plans/assistant-chat-design.md
+  - Plans/DRY_Rules.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Contracts_V0.md#CV-360, ContractName:Plans/FileManager.md#F-090, ContractName:Plans/assistant-chat-design.md#ACD-500, ContractName:Plans/DRY_Rules.md#DR-071
+
+### F3-635 — Tab Kinds, The Host Contract And The Keys
+
+```yaml
+plan_unit_id: F3-635
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Every tab in the home centre is one of fifteen kinds (DL-180, D9), each registered once, with its tab id prefixes:
+  editor (`file:<path>`, `buffer:<n>`; a diff mode and preview tabs; F3-639); terminal (`terminal:<session>`, one
+  session per tab, the session id minted by the terminal kind; F3-640, SMPFS-180); browser (`browser:<n>`, and `link:`
+  for a page the chat fetched; DevTools docked inside it and the capture toolbar); dashboard (`dashboard:<board_id>`,
+  `dashboard:home` the pinned Home dashboard; F3-638); plan (`plan:<id>`, the plan query form and
+  `deep-discovery:<run>`; the plan viewer with its sticky Build, Revise and More footer); document (`teach:`, `memory:`,
+  `revert:`, `debug:`, `lens-source:`, `lens-effective:`, `wonderer:`, `wonder-source:`, `doc:<path>`: rules, memory,
+  revert, debug investigation, lens source, wonderer); artifact (`artifact:<artifact_id>`, `artifact:<artifact_id>@v<n>` and the chat's
+  artifact ids; a subtype per artifact kind, versioned; RAP-065); run (`collab-run:`, `crew-work:`, `review:`, `room:`,
+  `brainstorm:`, `review-evidence:`, `brainstorm-evidence:`: Crew, Review, Chat Room, BrainStorm and their evidence);
+  transcript (`thread-<agentId>`: an agent's read-only live feed); context (`context:<threadId>`: thread-keyed context
+  detail); record (`search:`, `mcp:`, `app:`, `work-record:`: read-only records); output (`output:<channel>`); problems
+  (`problems`); ports (`ports`); and debug_console (`debug-console:<session>`). The document kinds are editor, plan,
+  document, artifact, run, transcript, context and record; terminal, browser, dashboard and the four tool kinds output,
+  problems, ports and debug_console are dedicated; a panel holding only tool kinds and terminals has the role tools.
+  Problems and Ports are one tab each per workspace. Never a kind: the chat's Goal tab (DL-147), Activity Detail (it
+  stays inside the chat, F3-637), the chat's lab-only workspaces, and wand setup sheets (they stay app modals). A tab id
+  is opaque and stable, its prefix names its kind, and one id is one tab in the whole workspace; an id with an unknown
+  prefix opens nothing, and two kinds claiming one prefix is a start-up error. Tab identity is separate from domain
+  identity: the path, terminal_session_id, board id or artifact id a tab shows is its domain reference, and moving,
+  collapsing, maximizing, hiding or restoring a tab never changes it. No internal id (tab, panel, session, nonce) ever
+  appears as text in the interface. Older canon that names one of these surfaces by its former host means the kind here,
+  placed by F3-634: the run view called an editor document (ACD-480, F3-569, F3-576 and the 2026-09-03 redesign's
+  section 10) is a run tab, ACD-485's subagent transcript a transcript tab, the context-detail editor tab (section
+  7.16.1, F3-132) a context tab, the Plan card's "normal artifact viewer" and an artifact opened from section 7.12 an
+  artifact tab (RAP-065), the Your rules document (F3-579) a document tab, and F3-297's editor-tab Browser a browser
+  tab. Each kind registers its label, its group name for the "+N" list, its icon (a bundled
+  SVG icon_id, never an emoji), its id prefixes, its content minimum, whether it is dedicated, its "+" menu row and
+  sub-row, how it makes a tab id for an open (the terminal mints a new session), how it mounts, what it serializes and
+  whether a tab may close now. Content minimums: terminal 320 x 120 px, browser 360 x 200, dashboard 320 x 120, run 360
+  x 200, every other kind 280 x 120. The host mounts a tab's body only when the tab is first shown, so a restored
+  background tab costs nothing until it is opened. A kind's serialized state is at most 16 KB of plain data, with no
+  scrollback and no buffers. Before a tab closes its kind may ask first: a dirty editor offers to save, and a running
+  terminal says what will stop (F3-640). A tab body is its own box, sized by its panel: it never sizes against the
+  window, only against its own width and height; it is told when they change, with a last call once a divider drag or a
+  layout animation has settled so costly work can wait for it; it is told when it is shown, hidden, focused and blurred
+  and when the look changes, and stops animation while hidden. Every kind that needs a row of controls above its content
+  uses the one shared header row (D12): 30 px tall, 24 px targets, 12 px text and 11 px for secondary facts, labels when
+  the body is at least 520 px wide and icons with hover tags below that, and the row hidden when the body is under 150
+  px tall; a kind draws a row of its own only when nothing in the shared one fits, and its owner unit says why. Menus,
+  the "+" menu, the "+N" list, panel menus, drag ghosts and landing previews open in one overlay root
+  (Plans/DRY_Rules.md#DR-067), one stacking order: panel content, then strips and dividers, then the overlay root, which
+  sits above the status bar and below the Demo Studio's controls (F3-649), hover tags and the Guided Tour; no kind
+  appends an overlay of its own. Keys: the shell owns Ctrl+1..9 and Ctrl+K, so the panels use neither and there are no
+  Ctrl+K chords. In the desktop app: Ctrl+T a new tab of the panel's usual kind, Ctrl+W close the tab, Ctrl+Shift+T
+  reopen the last closed tab, Ctrl+Tab and Ctrl+Shift+Tab step through recent tabs across panels and kinds (hold, step,
+  release), Ctrl+Shift+Space the "+" menu, Ctrl+Shift+` a new terminal, Ctrl+Shift+B a new browser, Ctrl+P open a file,
+  Ctrl+Shift+A every tab, Ctrl+PgDn and Ctrl+PgUp the next and previous tab in the panel, Alt+1..8 tab N and Alt+9 the
+  last tab, Ctrl+Shift+PgUp and Ctrl+Shift+PgDn move the tab left and right, Alt+arrows focus the panel in that
+  direction, Alt+Shift+1..9 focus panel N, Alt+Shift+arrows move the tab to the panel in that direction (splitting that
+  way when there is none and it fits), F6 and Shift+F6 cycle the rail, the panels and the chat, Ctrl+\ split right,
+  Ctrl+Shift+\ split down, Shift+Escape maximize or restore (Escape also restores while focus is in a strip), Tab to a
+  divider and then the divider keys (F3-630), the ARIA tab keys in a strip with Shift+F10 for the tab menu (F3-631), and
+  Enter on a panel grip for Move panel. Pinning is in the tab menu only; no binding is a bare letter or digit; Escape
+  closes only the innermost open thing (F3-568). The panels hold these keys while focus is in the centre; while focus is
+  inside a tab body the kind is asked first, a terminal keeps the shell's keys and gives back the host keys F3-640
+  lists, and text inputs keep their own keys. Web-client mapping rule: in a web browser the four chords the browser
+  keeps, Ctrl+T, Ctrl+W, Ctrl+Shift+T and Ctrl+Tab, are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+` (Alt+Shift+`
+  backwards), and every label, menu shortcut and hover tag shows the key that works where the app runs. This supersedes
+  F3-HOME-001's typed surface kinds and F3-152's terminal-and-browser-only tab identity, which now holds for every kind.
+gui_related: true
+gui_classification_reason: Defines the list of tab kinds, how a kind plugs into a panel, the shared header row, the overlay order and the panel keyboard.
+split_recommended: false
+depends_on: [DL-180, DL-181, DL-147, F3-568, F3-630]
+unblocks: [F3-640, SP-330, UCC-200, CS-100, RAP-065, WS-030, DR-065, DR-067, G-030, ATS-075]
+acceptance_criteria:
+  - "Exactly the fifteen kinds listed here are registered, each with the id prefixes stated, and no Goal tab, Activity Detail, lab-only workspace or setup sheet is a kind."
+  - "Opening an id with a known prefix lands in that kind; an unknown prefix opens no tab; two kinds claiming one prefix fail at start-up."
+  - "Moving, collapsing, maximizing, hiding or restoring a tab never changes its domain reference, and no tab, panel or session id appears as text."
+  - "Each kind's content minimum is as stated and a panel's minimum is the largest of its tabs' minimums."
+  - "A restored background tab is mounted only when first shown; serialized state above 16 KB is refused."
+  - "No tab body reads the window's size; each responds to its own width and height and gets a final size call after a drag or animation settles."
+  - "Every kind with a control row uses the shared header row with the stated heights, targets, text sizes, label threshold and hide threshold."
+  - "Every menu, list, ghost and preview opens in the one overlay root in the stated order, and no kind appends its own overlay."
+  - "Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare letter or digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T and Alt+` replace the four browser-owned chords with every label showing the key that works."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/home_workspace_layout_v2.schema.json
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-180"
+  - "Plans/Decision_Log.md#DL-181"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D9, D11, D12)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5 (sections 9 and 10; audit lineage only)"
+  - "Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)"
+preserved_exact_tokens:
+  - "editor"
+  - "terminal"
+  - "browser"
+  - "dashboard"
+  - "plan"
+  - "document"
+  - "artifact"
+  - "run"
+  - "transcript"
+  - "context"
+  - "record"
+  - "output"
+  - "problems"
+  - "ports"
+  - "debug_console"
+  - "dashboard:home"
+  - "16 KB"
+  - "30 px"
+  - "520 px"
+  - "150 px"
+  - "Alt+T"
+  - "Alt+W"
+  - "Alt+Shift+T"
+  - "Alt+`"
+negative_constraints:
+  - "Do not make the chat, Activity Detail, the Goal tab or a setup sheet a tab kind."
+  - "Do not size a tab body against the window."
+  - "Do not show a tab, panel or session id in the interface."
+  - "Do not bind a panel action to Ctrl+K, a Ctrl+K chord, Ctrl+1..9 or a bare letter or digit."
+  - "Do not let a tab kind append its own overlay outside the one overlay root."
+compatibility_only_notes:
+  - "The concept's registration call, host API names, container name and z-index values are concept lineage; the stacking order is canon, its numbers are not."
+  - "The concept spells the tool kind debug-console in its id prefix; the kind's schema name is debug_console."
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/DRY_Rules.md
+  - Plans/Glossary.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/DRY_Rules.md#DR-065, ContractName:Plans/DRY_Rules.md#DR-067, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Commands_System.md#CS-100
+
+### F3-636 — Narrow Windows: The Centre-Width Ladder
+
+```yaml
+plan_unit_id: F3-636
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Narrow windows fold in one fixed order, keyed on the centre's width C, the window's width minus the rail and the chat
+  column, never on the window's width (DL-180, D4; Jared: "Rail, then chat"). C below 960 px: the rail's side panel
+  eases to 240 px, F3-471's minimum. C below 760 px: the side panel folds to its icon bar and opens over the panels as
+  an overlay when the user picks it, then the chat eases toward 400 px. C below 600 px: the centre shows one panel
+  column, with a panel switcher ("2/3") in the visible panel's strip that steps through the panels; the real split tree
+  is kept unchanged underneath, new panels are not created, and an open or a split that asks for one lands in the next
+  panel of the switcher and says so (F3-634). C below 480 px: the chat folds to a 32 px edge strip that opens it again,
+  unless the user turned on "Keep the chat open in narrow windows" (F3-637). Each step undoes itself only when C has
+  come back 48 px past its threshold, so a window near a boundary never flickers. None of these states is ever saved:
+  widening the window or opening it again shows the saved layout. Measured with the default rail and chat: at a 1920 px
+  window the rail is 240, the chat 600 and C 1041; at 1680 the chat is 441 and C 960; at 1470 the rail is folded, the
+  chat 473 and C 960; at 1440 the chat is 443; at 1280 the chat is 400 and C 847; at 1024 the centre is one panel column
+  with C 567; at 900 the chat is its edge strip and C 811. Everything inside a tab responds to its own tab body, never
+  to the window (F3-635): a dashboard's columns follow its tab's width (F3-638) and the shared header row its body's
+  width. The centre never scrolls sideways as a narrow fallback. This supersedes, for Home and dashboard tabs, the
+  window-width breakpoints of section 12.1 and F3-195 and of section 12.3 and Appendix C.1 (F3-197, the dashboard's
+  window-width columns, is superseded by F3-638), F3-503's below-1320
+  px overflow-x exception, F3-517's rule that Home collapses to a single column, and the chat's own narrow-width rules
+  as they apply to Home (APR-038's full-width plan tab is read through the switcher and ACD-500).
+gui_related: true
+gui_classification_reason: Defines what gives way, and in what order, when the room left for the panels gets narrow.
+split_recommended: false
+depends_on: [DL-180, F3-471, F3-630, F3-637]
+unblocks: [SSYS-050, ACD-500, ATS-075]
+acceptance_criteria:
+  - "Every narrow step keys on the centre width (window minus rail minus chat), never on the window width."
+  - "Below 960 the side panel eases to 240; below 760 it folds to its icon bar and opens as an overlay, then the chat eases toward 400; below 600 one panel column shows with a switcher and the tree is kept; below 480 the chat folds to a 32 px strip unless kept open."
+  - "Each step reverts only 48 px past its threshold, and no narrow state is written to the layout record."
+  - "At the measured window widths the rail, chat and centre widths match the values stated here."
+  - "No dashboard, header row or other tab content reads the window width, and the centre never scrolls sideways."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-180"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D4)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
+preserved_exact_tokens:
+  - "960"
+  - "760"
+  - "600"
+  - "480"
+  - "48 px"
+  - "2/3"
+  - "Keep the chat open in narrow windows"
+negative_constraints:
+  - "Do not key a Home narrow rule on the window width."
+  - "Do not save a narrow state or destroy the split tree to fit a narrow window."
+  - "Do not fold the chat before the rail's side panel."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/FinalGUISpec.md#F3-471, ContractName:Plans/Settings_System.md#SSYS-050
+
+### F3-637 — The Chat Column
+
+```yaml
+plan_unit_id: F3-637
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The chat is a fixed column on the right of the window (DL-180, D3). It runs from the title bar to the status bar,
+  which both stay full width (Jared, 2026-08-13, PMConcept7 revision 15: "The chat assistant window should be full
+  vertical height, unless it pops out, then the user can adjust it."). It is never a tab and never in the split tree,
+  and it is never moved, docked, grabbed or floated inside the window: it carries no grip and no surface menu of the
+  home centre. Its default width follows the window: clamp(400, 0.26667 x window width + 88, 640) px, so 480 px on a
+  1470 px window, 600 px at 1920 px and 640 px from 2070 px. The user drags the column's inner edge between 400 and 760
+  px, never so wide that the centre drops below 600 px; the drag previews locally and commits once on release as
+  cmd.workspace_layout.resize_surface with the surface chat and its width, kept in the v2 layout record (SP-330), and a
+  width the user never set follows the window. Showing and hiding the chat stay cmd.panel.switch with chat. The narrow
+  ladder (F3-636) eases it toward 400 px and, below a centre width of 480 px, folds it to a 32 px edge strip that opens
+  it again; the setting "Keep the chat open in narrow windows" (SSYS-050) keeps it open instead. Pop out is the only way
+  to move it (D3: the desktop app). In the desktop app Pop out opens the same chat, with its History and Activity
+  Detail, in its own window that the user sizes and places (cmd.panel.undock with chat; panel.undocked, F3-527), and
+  Dock back returns it to its column (cmd.panel.redock; panel.redocked); exactly one chat exists at a time. In the web
+  client the chat never floats inside the page (F3-504), and whether the web client offers a Pop out is an open question
+  for the lead. The title bar's Home options menu carries Show the chat or Hide the
+  chat, Pop out the chat or Dock the chat back, and Keep the chat open in narrow windows (F3-502). The 5.6 Pro chat's
+  History list is a flyout over the chat by default; pinning it widens the chat by the list's own width instead of
+  squeezing the messages. Activity Detail stays inside the chat as the 5.6 Pro chat designs it (APR-001), never a panel
+  tab. One thread-history list survives, the 5.6 Pro one. The chat sizes itself by its own column, never by the window
+  (ACD-501). Everything the chat opens lands in the centre through F3-634 (ACD-500). This supersedes chat docking to any
+  host, the chat's grip, its grab and keyboard move, floating it inside the window and its Dock back to a host
+  (F3-HOME-001, F3-HOME-002 and F3-HOME-003 as they apply to the chat; F3-516's saved dock), and the four different chat
+  minimums: F3-HOME-002's 260 px nominal minimum, F3-423's floating floor (it now holds only for the desktop app's
+  popped-out chat window), F3-565's narrowest chat (its resilience rules now hold for a popped-out window narrower than 400 px),
+  and the 360 px chat beside an open document of APR-038 and F3-569.
+gui_related: true
+gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout and Activity Detail.
+split_recommended: false
+depends_on: [DL-180, F3-504, F3-527, F3-630, F3-636]
+unblocks: [ACD-500, ACD-501, SSYS-050, UCC-203, PWIZ-035, ATS-075]
+acceptance_criteria:
+  - "The chat column spans from the title bar to the status bar at full width of both bars, and no gesture, menu or key moves it inside the window."
+  - "The default width equals clamp(400, 0.26667 x window width + 88, 640) px (480 at 1470, 600 at 1920, 640 from 2070) until the user drags it."
+  - "A width drag stays within 400-760 px and never leaves the centre below 600 px, and commits once on release as cmd.workspace_layout.resize_surface with the surface chat."
+  - "Pop out in the desktop app opens the one chat in its own window and Dock back returns it to its column; no second chat surface ever exists."
+  - "History opens as a flyout by default and pinning it widens the column by the list's width without narrowing the messages; Activity Detail stays in the chat."
+  - "Below a centre width of 480 px the chat folds to a 32 px strip unless Keep the chat open in narrow windows is on."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+  - Plans/Settings_System.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-180"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5 (sections 9 and 10; audit lineage only)"
+  - "Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)"
+preserved_exact_tokens:
+  - "clamp(400, 0.26667 x window width + 88, 640)"
+  - "400"
+  - "760"
+  - "600"
+  - "Pop out"
+  - "Dock back"
+  - "cmd.panel.switch"
+  - "cmd.panel.undock"
+  - "cmd.panel.redock"
+  - "Keep the chat open in narrow windows"
+  - "The chat assistant window should be full vertical height, unless it pops out, then the user can adjust it."
+negative_constraints:
+  - "Do not dock, grab, float or move the chat inside the window or, in the web client, inside the page, or make it a tab."
+  - "Do not size the chat against the window inside its column."
+  - "Do not make Activity Detail or the History list a panel tab."
+  - "Do not keep a second thread-history list."
+compatibility_only_notes:
+  - "The concept floats the popped-out chat inside the page at 440 x min(720, window - 140) px with Dock back; that is the concept's browser stand-in, not a canon size."
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/assistant-chat-design.md#ACD-500, ContractName:Plans/assistant-chat-design.md#ACD-501, ContractName:Plans/FinalGUISpec.md#F3-504, ContractName:Plans/UI_Command_Catalog.md#UCC-203
+
+### F3-638 — The Dashboard Tab
+
+```yaml
+plan_unit_id: F3-638
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  A dashboard is a tab kind (F3-635), not a singleton surface (DL-180, D10). A dashboard tab shows the Usage page's
+  widget design and can show every Usage widget; Orchestrator widgets join after the Orchestrator page's own redesign,
+  and Plans/usage-feature.md#UF-062's rule that every Usage widget can be hosted on the dashboard now holds. Several
+  dashboard tabs may be open, each a board with its own widget layout; `dashboard:home` is the Home dashboard, pinned in
+  the default layout (F3-630), and the "+" menu's Dashboard row lists the project's boards (F3-632). A dashboard tab
+  sits in the same tab strip as every other tab (F3-631): it has no strip of its own and no second tab model. Inside the
+  tab the board is the Usage widget board: its snapping widget grid, its Add widget flow, its widget gestures and its
+  settled sizes live inside the tab only, and never lay out panels (DR-066). The board's columns follow the dashboard
+  tab's own width (F3-635), never the window. Hosting, the boards, the per-board widget layout
+  `widget_layout:v1:dashboard:<board_id>`, the catalogue and the move of today's one dashboard into `dashboard:home` are
+  Plans/Widget_System.md#WS-030's. The Usage board engine runs several boards at once after the Usage port lands (this
+  thread family does that refactor), and the per-kind widget presets tested at 400, 550 and 700 px come later from the
+  Usage thread. A dashboard's widget layout is never stored inside the Home layout record, and Home's panels are not
+  widgets. This supersedes F3-279's exact four-widget catalogue and the dashboard catalogue limit of Appendix C.4 and
+  C.4.1, F3-517's "distinct tab models" for Home and Dashboard, section 7.2's singleton dashboard, and the dashboard's
+  own Main, Metrics and Monitoring strip of F3-505.
+gui_related: true
+gui_classification_reason: Defines how a dashboard looks and behaves as a tab kind in any panel.
+split_recommended: false
+depends_on: [DL-180, F3-514, F3-631, F3-635]
+unblocks: [WS-030, ATS-075]
+acceptance_criteria:
+  - "A dashboard opens as a tab of kind dashboard in any panel; several may be open, each with its own board and layout."
+  - "A dashboard tab can show every Usage widget, and no four-widget limit applies."
+  - "A dashboard tab uses the panel's one strip and has no strip of its own."
+  - "The widget grid, Add widget and widget gestures act only inside the tab and never move or size panels."
+  - "The board's column count follows the tab's own width, and a dashboard's widget layout is never written into the Home layout record."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Widget_System.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-180"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D10)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)"
+preserved_exact_tokens:
+  - "dashboard:home"
+  - "widget_layout:v1:dashboard:<board_id>"
+  - "UF-062"
+negative_constraints:
+  - "Do not limit a dashboard tab to the four widgets of F3-279."
+  - "Do not lay out panels with the widget grid or store dashboard widget layout in the Home layout record."
+  - "Do not give a dashboard tab a strip or tab model of its own."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Widget_System.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/usage-feature.md#UF-062, ContractName:Plans/FinalGUISpec.md#F3-279
+
+### F3-639 — The Code Editor Tab
+
+```yaml
+plan_unit_id: F3-639
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The editor is a document tab kind (F3-635) that keeps the two things Jared likes and polishes them (DL-180, D21): its
+  tabs are the contact-aware strip of F3-631, and its scrollbar is the minimap, the only scrollbar of the code pane,
+  with its change marks. Plans/FileManager.md#F-073 stays the minimap scrollbar's file-side owner (its canvas, its
+  thumb, click to jump, drag to scrub, one scroll authority); this unit owns how it looks in each look (F3-647). The
+  editor adds sticky scroll, so the scopes that enclose the top visible line stay pinned at the top of the code pane;
+  find and replace in the file; go to line; a diff mode that shows the two sides side by side when the tab body is wide
+  and inline when it is narrow, switching by the body's own width (F3-635); preview tabs (F3-634); syntax colours per
+  look from each look's token table (F3-426); and the JetBrains Mono code face in every look, Retro included (D17a;
+  F3-644 owns the face, and DL-161, F3-426 and F3-430 own general code text elsewhere). It uses the shared header row
+  only where it needs one (F3-635). Its settings (font size, minimap, sticky scroll, diff layout, word wrap) are
+  SSYS-050's. This amends F3-140 and section 7.18 (editor groups are now panels, F3-630) and F3-505's editor-only scope.
+gui_related: true
+gui_classification_reason: Defines the code editor as a tab kind and the editing features it adds.
+split_recommended: false
+depends_on: [DL-180, DL-183, F3-505, F3-631, F3-635, F-073]
+unblocks: [SSYS-050, ATS-075]
+acceptance_criteria:
+  - "The editor's tabs use the one strip and silhouette, and the minimap is the only code-pane scrollbar with its change marks."
+  - "Sticky scroll, find and replace, go to line and preview tabs work in every editor tab."
+  - "The diff mode shows side by side when the tab body is wide and inline when it is narrow, decided by the body's width, never the window's."
+  - "Syntax colours follow each look's token table, and the code face is JetBrains Mono in every look, Retro included."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/FileManager.md
+  - Plans/Settings_System.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-180"
+  - "Plans/Decision_Log.md#DL-183"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D21, D17)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-1.md, SHA-256 1651ae9c41a61f215ee960288b27bb78ee8d9ad804c741495e3313ff4a33e299 (D17a)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
+preserved_exact_tokens:
+  - "sticky scroll"
+  - "find and replace"
+  - "go to line"
+  - "JetBrains Mono"
+negative_constraints:
+  - "Do not add a native scrollbar beside the minimap scrollbar."
+  - "Do not switch the diff layout by the window's width."
+  - "Do not use IBM Plex Mono or VT323 as the editor's code face in Retro."
+compatibility_only_notes:
+  - "The width at which the diff turns inline is a concept number still to come (wave 2)."
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/FileManager.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FileManager.md#F-073, ContractName:Plans/FinalGUISpec.md#F3-644, ContractName:Plans/FinalGUISpec.md#F3-505
+
+### F3-647 — Panels And Tabs In Every Look
+
+```yaml
+plan_unit_id: F3-647
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Every panel surface, the strip, the "+" menu, the "+N" list, the empty-panel launcher, the panel and tab menus, the
+  dividers, drag ghosts and landing previews, is designed in Friendly, Glass, Retro and Basic, light and dark, and in
+  NieR Mode and Reduced Motion, from the first build (DL-180, D23). Friendly, Glass and Basic draw the fused silhouette
+  with their own crown, shoulder and flare (F3-631), the active tab one surface with its body; Glass keeps its 1 px
+  glass rim on the plate, goes to .92 opacity only while a tab is carried (F3-505), adds no backdrop blur of its own to
+  panels or strips, and F3-431's closed blur budget is unchanged. Retro: reverse-video tabs (the
+  active tab a phosphor-filled block with dark text), bracket glyphs ("[+7]", "[+]"), stepped corners on the silhouette,
+  kind icons as one-cell glyphs from the code face (never emoji), the dirty mark an asterisk after the label, box-drawn
+  menus with a hard frame and reverse-video rows, dividers drawn as a single box-drawing line that doubles while
+  hovered or dragged, and a dithered landing preview with a box-drawn outline; Retro motion snaps and never springs, and
+  its three rotating effects play on selection and reorder (F3-631). NieR Mode paints only while NieR Mode is on, and
+  each touch is gated by its own installed part, using the existing part keys only and never a new part (SSYS-043,
+  F3-598, DL-152): square gives the chamfered silhouette with a straight foot (crown 6, shoulder 0, flare 14 px), an ink
+  rule under each strip, square dirty and attention marks, hairline dividers with ticks and a hatched landing preview;
+  cursor fills the active tab and hovered or chosen menu and launcher rows with ink, the YoRHa menu cursor, puts the
+  square list cursor before the focused panel's active label and gives other panels' active tabs a half-ink plate;
+  headers sets tab labels, "+N" and menu headings in the YoRHa caption treatment; brackets puts target brackets on the
+  focused or chosen item; icons draws kind icons with square strokes; empty draws the empty-panel launcher's ink empty
+  state; ground shows the parchment dot grid between panels. NieR colours come only from the NieR token tables or the
+  ordinary theme tokens NieR repaints; NieR motion is stepped, with no glow, filter or blur, loops only by transform or
+  opacity, and no surface larger than 340 x 256 px reverses its opacity more than once a second; there is one NieR Mode
+  editor and one reboot plate (DR-056). Reduced Motion: every gesture, glide, settle, spring and effect is instant
+  (every duration of F3-630 and F3-631 is 0), the Retro effects and NieR fills show their end state at once, drags still
+  work and still show their landing previews, and NieR's Still and Colors only presets show end states at once. Hover
+  follows the merged hover system: Plans/DRY_Rules.md#DR-059 owns its grammar and boundary and F3-465 its behaviour.
+  Tabs, strip buttons, dividers and editor or terminal text take at most a static tint; magnet displacement and glow
+  touch cards, rows and tiles only, never a tab, a tab button or a divider; header-row and terminal icon buttons are the
+  icon kind with a static tint; and hover rests while a divider is dragged. No look draws a pill, a coloured side stripe
+  or an emoji (F3-648). This supersedes F3-505's and F3-466's per-theme tab skins where they differ, and gives the home
+  panels the NieR Mode treatment they lacked (DL-144 and DL-152 covered the chat, onboarding and the Tour).
+gui_related: true
+gui_classification_reason: Defines how panels, strips, menus, dividers and drags render in each look, NieR Mode and Reduced Motion.
+split_recommended: false
+depends_on: [DL-180, DL-152, SSYS-043, F3-598, F3-465, F3-631, F3-632, F3-633]
+unblocks: [ATS-075]
+acceptance_criteria:
+  - "Each panel surface listed here renders in the eight family variants, NieR Mode and Reduced Motion with the treatments stated."
+  - "Retro shows reverse-video tabs, bracket glyphs, stepped corners, box-drawn menus and dividers and one-cell kind glyphs, and its motion snaps."
+  - "With NieR Mode off no NieR touch draws; with it on each touch appears only when its part is installed, every colour resolves to NieR or repainted theme tokens, and no glow, filter or blur is used."
+  - "Under Reduced Motion every panel and tab duration is 0 and drags still show landing previews."
+  - "No tab, tab button or divider receives magnet displacement or glow; at most a static tint."
+  - "Glass adds no backdrop blur for panels or strips."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-180"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D23, D24)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md, SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728 (the NieR lead's rule for new surfaces)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
+  - "Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)"
+preserved_exact_tokens:
+  - "NieR Mode"
+  - "square"
+  - "cursor"
+  - "headers"
+  - "brackets"
+  - "icons"
+  - "empty"
+  - "ground"
+  - "[+7]"
+  - "[+]"
+negative_constraints:
+  - "Do not add a NieR part, or paint a NieR touch while NieR Mode is off or its part is not installed."
+  - "Do not give tabs, tab buttons or dividers magnet displacement or glow."
+  - "Do not add a backdrop blur for panels or strips."
+  - "Do not use an emoji as a kind icon in any look."
+compatibility_only_notes:
+  - "The concept also gates some touches by its own hook names and by part keys outside this list; only the existing part keys named here are canon."
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/DRY_Rules.md#DR-059, ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/DRY_Rules.md#DR-056, ContractName:Plans/FinalGUISpec.md#F3-598
+
+### F3-648 — No Side Stripes, No Emoji, No Pills: Presentation
+
+```yaml
+plan_unit_id: F3-648
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Puppet Master's chrome follows one shell-wide rule (DL-184; the rule is Plans/DRY_Rules.md#DR-069): no box with a
+  coloured border or stripe on one side, no emoji, and no pills, meaning fully rounded capsules used as tabs, tags,
+  badges, buttons or status chips. Keyboard key caps are the one capsule-like shape allowed, and a program's own output
+  in a terminal may contain emoji. This unit owns how the rule looks. Selection is shown by the surface itself: the
+  fused tab silhouette (F3-631), a filled or tinted row, the NieR square cursor, Retro reverse video, or a fill or
+  outline on the element's own box; never an edge stripe. A status is a mark and a word from the one status set (DL-141,
+  F3-585; the rail's glyphs, F3-619), a count is a plain number, and an icon is a bundled SVG icon_id (section 2.6).
+  Where an owner unit says pill, chip or badge for a status or a count, it renders as a mark and a word or a plain
+  number; where a pill was a button or a tab, it renders as the look's own rectangle with the look's inner radius, never
+  a radius of half its height or more. Retired defaults, each amended in place with a dated note: section 3.5's "3px
+  left-edge accent stripe" as the active or selected indicator and F3-039's token for it; Appendix C's and F3-276's
+  accent left border on call-to-action cards; F3-469's 3 px inset left accent bar; the workgroup pill of section 5.1;
+  and the pill skins of F3-422 (the chat footer pill), F3-463 (the Orchestrator strip's pills), F3-464 (the page tabs'
+  frost and mint-mix pills) and F3-467 (Friendly's pill fields). The chat's, Settings' and the left rail's own
+  statements of the rule (APR-034, F3-534, Settings section 22, F3-618, F3-619, DR-057) stay, as instances of this one
+  rule. Checks: F3-619's pill detector (an element whose corner radius is at least half its height and which has a fill
+  or a border, key caps excepted) and a side-border detector (a coloured border, or an inset shadow standing in for one,
+  of 2 px or more on one side only) find nothing in any look, and no emoji appears in chrome text or icons.
+gui_related: true
+gui_classification_reason: Owns how the shell-wide ban on side stripes, emoji and pills looks, and lists the retired defaults.
+split_recommended: false
+depends_on: [DL-184, DL-141, F3-585, F3-619]
+unblocks: [DR-069, ATS-075]
+acceptance_criteria:
+  - "The pill detector and the side-border detector find nothing on any surface in any look or NieR Mode, key caps excepted."
+  - "No emoji appears in Puppet Master's chrome; a terminal program's own output is exempt."
+  - "Every retired default listed here carries a dated note in its own unit or section."
+  - "Selection everywhere is shown by the element's own surface, never by an edge stripe."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-184"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D22 and Jared's brief)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
+preserved_exact_tokens:
+  - "3px left-edge accent stripe"
+  - "accent-left-border"
+  - "pill"
+  - "key caps"
+negative_constraints:
+  - "Do not draw a coloured border or stripe on one side of a box."
+  - "Do not draw a pill-shaped tab, tag, badge, button or status chip."
+  - "Do not put an emoji in Puppet Master's chrome."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-184, ContractName:Plans/DRY_Rules.md#DR-069, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-585
+
+### F3-649 — One Demo Studio
+
+```yaml
+plan_unit_id: F3-649
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  PMConcept7 has one Demo Studio for every concept surface, modelled on the 5.6 Pro chat's (DL-185, D26; the rule is
+  Plans/DRY_Rules.md#DR-070). The Guided Tour's and onboarding's demo controls, the chat's demo controls, the home demos
+  and, later, the Orchestrator and Planning Wizard pages' demo controls are sections of that one studio; no surface
+  draws a demo panel of its own. The Demo Studio and every control in it are lab only, in the pattern of
+  Plans/assistant-chat-design.md#ACD-474: never a product control, setting, command, wiring row, saved value or test
+  gate, never shown in the product's menus or Settings, and no canon number comes from them. In the concept it opens
+  above the one overlay root and below hover tags and the Guided Tour (F3-635). It follows the bans (F3-648) and the
+  looks (F3-647) like any surface. This supersedes the concept practice of a demo panel per surface and changes no
+  product unit.
+gui_related: true
+gui_classification_reason: Defines the one Demo Studio for PMConcept7's concept surfaces and keeps it out of the product.
+split_recommended: false
+depends_on: [DL-185, ACD-474]
+unblocks: [DR-070, ACD-501]
+acceptance_criteria:
+  - "Every PMConcept7 concept surface's demo controls are sections of the one Demo Studio, and no surface draws its own demo panel."
+  - "No product catalog, settings inventory, wiring matrix, persisted key or test gate names the Demo Studio or a control in it."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-185"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D26)"
+preserved_exact_tokens:
+  - "Demo Studio"
+negative_constraints:
+  - "Do not give the Demo Studio or any demo control a command, setting, wiring row, saved value or test gate."
+  - "Do not draw a separate demo panel per surface."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-185, ContractName:Plans/DRY_Rules.md#DR-070, ContractName:Plans/assistant-chat-design.md#ACD-474
 
 ## DL-181 to DL-183 — The Terminal As A Tab: Chrome, Features, Appearance, Effects, Fonts, Images And Agents (2026-10-09)
 
