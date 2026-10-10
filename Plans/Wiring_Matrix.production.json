@@ -63894,7 +63894,7 @@
     },
     "home.launcher.artifact": {
       "ui_element_id": "home.launcher.artifact",
-      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Artifact..., then a choice in its picker",
+      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Artifact..., then a choice in its picker > the row's body",
       "ui_command_id": "cmd.nav.open_subject",
       "handler_location": "handlers::nav::open_subject",
       "expected_event_types": [
@@ -63905,7 +63905,7 @@
         "home.launcher.artifact reads state.home_workspace.home_launcher_artifact.availability and shows state.home_workspace.home_launcher_artifact.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.launcher.artifact dispatches cmd.nav.open_subject exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The picker is view-local; the choice dispatches the artifact subject.",
-        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; a row opens its item in this panel, and Alt+click or Alt+Enter opens it as a new panel by the fit rule.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; the row's body opens its item as a new tab in this panel (where: tab), and its trailing cell, Alt+click and Alt+Enter are home.launcher.artifact_new_panel.",
         "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
@@ -63960,9 +63960,77 @@
         "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
       ]
     },
+    "home.launcher.artifact_new_panel": {
+      "ui_element_id": "home.launcher.artifact_new_panel",
+      "ui_location": "Home > an empty panel > launcher > Artifact..., then a choice in its picker > the row's 34 x 34 px trailing cell, or Alt+click or Alt+Enter on the row",
+      "ui_command_id": "cmd.nav.open_subject",
+      "handler_location": "handlers::nav::open_subject",
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
+      "acceptance_checks": [
+        "cmd.nav.open_subject is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
+        "home.launcher.artifact_new_panel reads state.home_workspace.home_launcher_artifact_new_panel.availability and shows state.home_workspace.home_launcher_artifact_new_panel.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
+        "home.launcher.artifact_new_panel dispatches cmd.nav.open_subject exactly once per activation and preserves command_id, correlation_id and the receipt.",
+        "The picker is view-local; the choice dispatches the artifact subject.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id. The trailing cell, Alt+click and Alt+Enter open the item as a new panel placed by the fit rule (where: panel, F3-630). In the narrow one-column state no panel is created: the item opens in the next panel of the switcher and the announcement says so (F3-636).",
+        "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
+        "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
+        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
+      ],
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-632. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
+      "state_selector": "state.home_workspace.home_launcher_artifact_new_panel.availability",
+      "disabled_reason_projection": "state.home_workspace.home_launcher_artifact_new_panel.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "mixed",
+        "description": "An open through the one opening module (F3-634, DR-071) with CV-360's placement fields where, mode, by and background. An open that adds a tab is a structural change and emits the one workspace.layout_changed with its v2 payload (CV-361); an open of an id that is already open reveals it where it is, returns its receipt and emits nothing.",
+        "receipt_or_event_refs": [
+          "workspace.layout_changed",
+          "cmd.nav.open_subject.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "A button named Open Artifact... in a new panel, inside the launcher row; the choice made in its picker opens there",
+        "keyboard_access": "Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell",
+        "focus_management": "home.launcher.artifact_new_panel keeps focus where its owner contract says after an applied, no-change, failed or cancelled result; an agent's open never takes focus.",
+        "disabled_announcement": "home.launcher.artifact_new_panel announces state.home_workspace.home_launcher_artifact_new_panel.disabled_reason and dispatches zero commands when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.home.launcher.artifact_new_panel.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The visible home.launcher.artifact_new_panel control dispatches cmd.nav.open_subject exactly once with the typed payload and the handler handlers::nav::open_subject."
+        },
+        {
+          "test_id": "wiring.home.launcher.artifact_new_panel.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.home_workspace.home_launcher_artifact_new_panel.availability and the disabled copy reads state.home_workspace.home_launcher_artifact_new_panel.disabled_reason; a disabled control dispatches nothing."
+        },
+        {
+          "test_id": "wiring.home.launcher.artifact_new_panel.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Assert the exact effect delta for home.launcher.artifact_new_panel: workspace.layout_changed."
+        },
+        {
+          "test_id": "wiring.home.launcher.artifact_new_panel.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "The rendered home.launcher.artifact_new_panel control has its accessible name and state, is reachable by keyboard (Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell) and returns focus as its owner says."
+        },
+        {
+          "test_id": "wiring.home.launcher.artifact_new_panel.transaction",
+          "evidence_kind": "event_test",
+          "requirement": "Menu opening, hovering, drag preview and cancel emit nothing; one changed commit emits exactly workspace.layout_changed; a reveal or a failed commit emits nothing."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.nav.open_subject preserves command_id, correlation_id, the expected layout revision and idempotency.",
+        "Assert exact effects for home.launcher.artifact_new_panel: workspace.layout_changed; no unexpected event.",
+        "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
+      ]
+    },
     "home.launcher.browser": {
       "ui_element_id": "home.launcher.browser",
-      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Browser",
+      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Browser > the row's body",
       "ui_command_id": "cmd.panel_tab.open",
       "handler_location": "handlers::panel_tab::open",
       "expected_event_types": [
@@ -63973,7 +64041,7 @@
         "home.launcher.browser reads state.home_workspace.home_launcher_browser.availability and shows state.home_workspace.home_launcher_browser.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.launcher.browser dispatches cmd.panel_tab.open exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is { kind: browser }: a blank browser tab.",
-        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; a row opens its item in this panel, and Alt+click or Alt+Enter opens it as a new panel by the fit rule.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; the row's body opens its item as a new tab in this panel (where: tab), and its trailing cell, Alt+click and Alt+Enter are home.launcher.browser_new_panel.",
         "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
@@ -64028,9 +64096,77 @@
         "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
       ]
     },
+    "home.launcher.browser_new_panel": {
+      "ui_element_id": "home.launcher.browser_new_panel",
+      "ui_location": "Home > an empty panel > launcher > Browser > the row's 34 x 34 px trailing cell, or Alt+click or Alt+Enter on the row",
+      "ui_command_id": "cmd.panel_tab.open",
+      "handler_location": "handlers::panel_tab::open",
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
+      "acceptance_checks": [
+        "cmd.panel_tab.open is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
+        "home.launcher.browser_new_panel reads state.home_workspace.home_launcher_browser_new_panel.availability and shows state.home_workspace.home_launcher_browser_new_panel.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
+        "home.launcher.browser_new_panel dispatches cmd.panel_tab.open exactly once per activation and preserves command_id, correlation_id and the receipt.",
+        "The payload is { kind: browser }: a blank browser tab.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id. The trailing cell, Alt+click and Alt+Enter open the item as a new panel placed by the fit rule (where: panel, F3-630). In the narrow one-column state no panel is created: the item opens in the next panel of the switcher and the announcement says so (F3-636).",
+        "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
+        "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
+        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
+      ],
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-632. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
+      "state_selector": "state.home_workspace.home_launcher_browser_new_panel.availability",
+      "disabled_reason_projection": "state.home_workspace.home_launcher_browser_new_panel.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "mixed",
+        "description": "An open through the one opening module (F3-634, DR-071) with CV-360's placement fields where, mode, by and background. An open that adds a tab is a structural change and emits the one workspace.layout_changed with its v2 payload (CV-361); an open of an id that is already open reveals it where it is, returns its receipt and emits nothing.",
+        "receipt_or_event_refs": [
+          "workspace.layout_changed",
+          "cmd.panel_tab.open.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "A button named Open Browser in a new panel, inside the launcher row",
+        "keyboard_access": "Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell",
+        "focus_management": "home.launcher.browser_new_panel keeps focus where its owner contract says after an applied, no-change, failed or cancelled result; an agent's open never takes focus.",
+        "disabled_announcement": "home.launcher.browser_new_panel announces state.home_workspace.home_launcher_browser_new_panel.disabled_reason and dispatches zero commands when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.home.launcher.browser_new_panel.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The visible home.launcher.browser_new_panel control dispatches cmd.panel_tab.open exactly once with the typed payload and the handler handlers::panel_tab::open."
+        },
+        {
+          "test_id": "wiring.home.launcher.browser_new_panel.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.home_workspace.home_launcher_browser_new_panel.availability and the disabled copy reads state.home_workspace.home_launcher_browser_new_panel.disabled_reason; a disabled control dispatches nothing."
+        },
+        {
+          "test_id": "wiring.home.launcher.browser_new_panel.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Assert the exact effect delta for home.launcher.browser_new_panel: workspace.layout_changed."
+        },
+        {
+          "test_id": "wiring.home.launcher.browser_new_panel.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "The rendered home.launcher.browser_new_panel control has its accessible name and state, is reachable by keyboard (Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell) and returns focus as its owner says."
+        },
+        {
+          "test_id": "wiring.home.launcher.browser_new_panel.transaction",
+          "evidence_kind": "event_test",
+          "requirement": "Menu opening, hovering, drag preview and cancel emit nothing; one changed commit emits exactly workspace.layout_changed; a reveal or a failed commit emits nothing."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.panel_tab.open preserves command_id, correlation_id, the expected layout revision and idempotency.",
+        "Assert exact effects for home.launcher.browser_new_panel: workspace.layout_changed; no unexpected event.",
+        "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
+      ]
+    },
     "home.launcher.dashboard": {
       "ui_element_id": "home.launcher.dashboard",
-      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Dashboard",
+      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Dashboard > the row's body",
       "ui_command_id": "cmd.panel_tab.open",
       "handler_location": "handlers::panel_tab::open",
       "expected_event_types": [
@@ -64041,7 +64177,7 @@
         "home.launcher.dashboard reads state.home_workspace.home_launcher_dashboard.availability and shows state.home_workspace.home_launcher_dashboard.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.launcher.dashboard dispatches cmd.panel_tab.open exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is { kind: dashboard } with no board_id: a new board.",
-        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; a row opens its item in this panel, and Alt+click or Alt+Enter opens it as a new panel by the fit rule.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; the row's body opens its item as a new tab in this panel (where: tab), and its trailing cell, Alt+click and Alt+Enter are home.launcher.dashboard_new_panel.",
         "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
@@ -64096,9 +64232,77 @@
         "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
       ]
     },
+    "home.launcher.dashboard_new_panel": {
+      "ui_element_id": "home.launcher.dashboard_new_panel",
+      "ui_location": "Home > an empty panel > launcher > Dashboard > the row's 34 x 34 px trailing cell, or Alt+click or Alt+Enter on the row",
+      "ui_command_id": "cmd.panel_tab.open",
+      "handler_location": "handlers::panel_tab::open",
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
+      "acceptance_checks": [
+        "cmd.panel_tab.open is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
+        "home.launcher.dashboard_new_panel reads state.home_workspace.home_launcher_dashboard_new_panel.availability and shows state.home_workspace.home_launcher_dashboard_new_panel.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
+        "home.launcher.dashboard_new_panel dispatches cmd.panel_tab.open exactly once per activation and preserves command_id, correlation_id and the receipt.",
+        "The payload is { kind: dashboard } with no board_id: a new board.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id. The trailing cell, Alt+click and Alt+Enter open the item as a new panel placed by the fit rule (where: panel, F3-630). In the narrow one-column state no panel is created: the item opens in the next panel of the switcher and the announcement says so (F3-636).",
+        "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
+        "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
+        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
+      ],
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-632. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
+      "state_selector": "state.home_workspace.home_launcher_dashboard_new_panel.availability",
+      "disabled_reason_projection": "state.home_workspace.home_launcher_dashboard_new_panel.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "mixed",
+        "description": "An open through the one opening module (F3-634, DR-071) with CV-360's placement fields where, mode, by and background. An open that adds a tab is a structural change and emits the one workspace.layout_changed with its v2 payload (CV-361); an open of an id that is already open reveals it where it is, returns its receipt and emits nothing.",
+        "receipt_or_event_refs": [
+          "workspace.layout_changed",
+          "cmd.panel_tab.open.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "A button named Open Dashboard in a new panel, inside the launcher row",
+        "keyboard_access": "Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell",
+        "focus_management": "home.launcher.dashboard_new_panel keeps focus where its owner contract says after an applied, no-change, failed or cancelled result; an agent's open never takes focus.",
+        "disabled_announcement": "home.launcher.dashboard_new_panel announces state.home_workspace.home_launcher_dashboard_new_panel.disabled_reason and dispatches zero commands when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.home.launcher.dashboard_new_panel.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The visible home.launcher.dashboard_new_panel control dispatches cmd.panel_tab.open exactly once with the typed payload and the handler handlers::panel_tab::open."
+        },
+        {
+          "test_id": "wiring.home.launcher.dashboard_new_panel.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.home_workspace.home_launcher_dashboard_new_panel.availability and the disabled copy reads state.home_workspace.home_launcher_dashboard_new_panel.disabled_reason; a disabled control dispatches nothing."
+        },
+        {
+          "test_id": "wiring.home.launcher.dashboard_new_panel.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Assert the exact effect delta for home.launcher.dashboard_new_panel: workspace.layout_changed."
+        },
+        {
+          "test_id": "wiring.home.launcher.dashboard_new_panel.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "The rendered home.launcher.dashboard_new_panel control has its accessible name and state, is reachable by keyboard (Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell) and returns focus as its owner says."
+        },
+        {
+          "test_id": "wiring.home.launcher.dashboard_new_panel.transaction",
+          "evidence_kind": "event_test",
+          "requirement": "Menu opening, hovering, drag preview and cancel emit nothing; one changed commit emits exactly workspace.layout_changed; a reveal or a failed commit emits nothing."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.panel_tab.open preserves command_id, correlation_id, the expected layout revision and idempotency.",
+        "Assert exact effects for home.launcher.dashboard_new_panel: workspace.layout_changed; no unexpected event.",
+        "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
+      ]
+    },
     "home.launcher.debug_console": {
       "ui_element_id": "home.launcher.debug_console",
-      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Debug Console",
+      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Debug Console > the row's body",
       "ui_command_id": "cmd.panel_tab.open",
       "handler_location": "handlers::panel_tab::open",
       "expected_event_types": [
@@ -64109,7 +64313,7 @@
         "home.launcher.debug_console reads state.home_workspace.home_launcher_debug_console.availability and shows state.home_workspace.home_launcher_debug_console.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.launcher.debug_console dispatches cmd.panel_tab.open exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is { kind: debug_console }.",
-        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; a row opens its item in this panel, and Alt+click or Alt+Enter opens it as a new panel by the fit rule.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; the row's body opens its item as a new tab in this panel (where: tab), and its trailing cell, Alt+click and Alt+Enter are home.launcher.debug_console_new_panel.",
         "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
@@ -64164,9 +64368,77 @@
         "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
       ]
     },
+    "home.launcher.debug_console_new_panel": {
+      "ui_element_id": "home.launcher.debug_console_new_panel",
+      "ui_location": "Home > an empty panel > launcher > Debug Console > the row's 34 x 34 px trailing cell, or Alt+click or Alt+Enter on the row",
+      "ui_command_id": "cmd.panel_tab.open",
+      "handler_location": "handlers::panel_tab::open",
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
+      "acceptance_checks": [
+        "cmd.panel_tab.open is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
+        "home.launcher.debug_console_new_panel reads state.home_workspace.home_launcher_debug_console_new_panel.availability and shows state.home_workspace.home_launcher_debug_console_new_panel.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
+        "home.launcher.debug_console_new_panel dispatches cmd.panel_tab.open exactly once per activation and preserves command_id, correlation_id and the receipt.",
+        "The payload is { kind: debug_console }.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id. The trailing cell, Alt+click and Alt+Enter open the item as a new panel placed by the fit rule (where: panel, F3-630). In the narrow one-column state no panel is created: the item opens in the next panel of the switcher and the announcement says so (F3-636).",
+        "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
+        "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
+        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
+      ],
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-632. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
+      "state_selector": "state.home_workspace.home_launcher_debug_console_new_panel.availability",
+      "disabled_reason_projection": "state.home_workspace.home_launcher_debug_console_new_panel.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "mixed",
+        "description": "An open through the one opening module (F3-634, DR-071) with CV-360's placement fields where, mode, by and background. An open that adds a tab is a structural change and emits the one workspace.layout_changed with its v2 payload (CV-361); an open of an id that is already open reveals it where it is, returns its receipt and emits nothing.",
+        "receipt_or_event_refs": [
+          "workspace.layout_changed",
+          "cmd.panel_tab.open.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "A button named Open Debug Console in a new panel, inside the launcher row",
+        "keyboard_access": "Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell",
+        "focus_management": "home.launcher.debug_console_new_panel keeps focus where its owner contract says after an applied, no-change, failed or cancelled result; an agent's open never takes focus.",
+        "disabled_announcement": "home.launcher.debug_console_new_panel announces state.home_workspace.home_launcher_debug_console_new_panel.disabled_reason and dispatches zero commands when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.home.launcher.debug_console_new_panel.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The visible home.launcher.debug_console_new_panel control dispatches cmd.panel_tab.open exactly once with the typed payload and the handler handlers::panel_tab::open."
+        },
+        {
+          "test_id": "wiring.home.launcher.debug_console_new_panel.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.home_workspace.home_launcher_debug_console_new_panel.availability and the disabled copy reads state.home_workspace.home_launcher_debug_console_new_panel.disabled_reason; a disabled control dispatches nothing."
+        },
+        {
+          "test_id": "wiring.home.launcher.debug_console_new_panel.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Assert the exact effect delta for home.launcher.debug_console_new_panel: workspace.layout_changed."
+        },
+        {
+          "test_id": "wiring.home.launcher.debug_console_new_panel.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "The rendered home.launcher.debug_console_new_panel control has its accessible name and state, is reachable by keyboard (Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell) and returns focus as its owner says."
+        },
+        {
+          "test_id": "wiring.home.launcher.debug_console_new_panel.transaction",
+          "evidence_kind": "event_test",
+          "requirement": "Menu opening, hovering, drag preview and cancel emit nothing; one changed commit emits exactly workspace.layout_changed; a reveal or a failed commit emits nothing."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.panel_tab.open preserves command_id, correlation_id, the expected layout revision and idempotency.",
+        "Assert exact effects for home.launcher.debug_console_new_panel: workspace.layout_changed; no unexpected event.",
+        "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
+      ]
+    },
     "home.launcher.output": {
       "ui_element_id": "home.launcher.output",
-      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Output",
+      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Output > the row's body",
       "ui_command_id": "cmd.panel_tab.open",
       "handler_location": "handlers::panel_tab::open",
       "expected_event_types": [
@@ -64177,7 +64449,7 @@
         "home.launcher.output reads state.home_workspace.home_launcher_output.availability and shows state.home_workspace.home_launcher_output.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.launcher.output dispatches cmd.panel_tab.open exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is { kind: output }.",
-        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; a row opens its item in this panel, and Alt+click or Alt+Enter opens it as a new panel by the fit rule.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; the row's body opens its item as a new tab in this panel (where: tab), and its trailing cell, Alt+click and Alt+Enter are home.launcher.output_new_panel.",
         "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
@@ -64232,9 +64504,77 @@
         "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
       ]
     },
+    "home.launcher.output_new_panel": {
+      "ui_element_id": "home.launcher.output_new_panel",
+      "ui_location": "Home > an empty panel > launcher > Output > the row's 34 x 34 px trailing cell, or Alt+click or Alt+Enter on the row",
+      "ui_command_id": "cmd.panel_tab.open",
+      "handler_location": "handlers::panel_tab::open",
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
+      "acceptance_checks": [
+        "cmd.panel_tab.open is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
+        "home.launcher.output_new_panel reads state.home_workspace.home_launcher_output_new_panel.availability and shows state.home_workspace.home_launcher_output_new_panel.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
+        "home.launcher.output_new_panel dispatches cmd.panel_tab.open exactly once per activation and preserves command_id, correlation_id and the receipt.",
+        "The payload is { kind: output }.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id. The trailing cell, Alt+click and Alt+Enter open the item as a new panel placed by the fit rule (where: panel, F3-630). In the narrow one-column state no panel is created: the item opens in the next panel of the switcher and the announcement says so (F3-636).",
+        "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
+        "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
+        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
+      ],
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-632. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
+      "state_selector": "state.home_workspace.home_launcher_output_new_panel.availability",
+      "disabled_reason_projection": "state.home_workspace.home_launcher_output_new_panel.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "mixed",
+        "description": "An open through the one opening module (F3-634, DR-071) with CV-360's placement fields where, mode, by and background. An open that adds a tab is a structural change and emits the one workspace.layout_changed with its v2 payload (CV-361); an open of an id that is already open reveals it where it is, returns its receipt and emits nothing.",
+        "receipt_or_event_refs": [
+          "workspace.layout_changed",
+          "cmd.panel_tab.open.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "A button named Open Output in a new panel, inside the launcher row",
+        "keyboard_access": "Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell",
+        "focus_management": "home.launcher.output_new_panel keeps focus where its owner contract says after an applied, no-change, failed or cancelled result; an agent's open never takes focus.",
+        "disabled_announcement": "home.launcher.output_new_panel announces state.home_workspace.home_launcher_output_new_panel.disabled_reason and dispatches zero commands when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.home.launcher.output_new_panel.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The visible home.launcher.output_new_panel control dispatches cmd.panel_tab.open exactly once with the typed payload and the handler handlers::panel_tab::open."
+        },
+        {
+          "test_id": "wiring.home.launcher.output_new_panel.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.home_workspace.home_launcher_output_new_panel.availability and the disabled copy reads state.home_workspace.home_launcher_output_new_panel.disabled_reason; a disabled control dispatches nothing."
+        },
+        {
+          "test_id": "wiring.home.launcher.output_new_panel.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Assert the exact effect delta for home.launcher.output_new_panel: workspace.layout_changed."
+        },
+        {
+          "test_id": "wiring.home.launcher.output_new_panel.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "The rendered home.launcher.output_new_panel control has its accessible name and state, is reachable by keyboard (Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell) and returns focus as its owner says."
+        },
+        {
+          "test_id": "wiring.home.launcher.output_new_panel.transaction",
+          "evidence_kind": "event_test",
+          "requirement": "Menu opening, hovering, drag preview and cancel emit nothing; one changed commit emits exactly workspace.layout_changed; a reveal or a failed commit emits nothing."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.panel_tab.open preserves command_id, correlation_id, the expected layout revision and idempotency.",
+        "Assert exact effects for home.launcher.output_new_panel: workspace.layout_changed; no unexpected event.",
+        "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
+      ]
+    },
     "home.launcher.plan_or_document": {
       "ui_element_id": "home.launcher.plan_or_document",
-      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Plan or document..., then a choice in its picker",
+      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Plan or document..., then a choice in its picker > the row's body",
       "ui_command_id": "cmd.nav.open_subject",
       "handler_location": "handlers::nav::open_subject",
       "expected_event_types": [
@@ -64245,7 +64585,7 @@
         "home.launcher.plan_or_document reads state.home_workspace.home_launcher_plan_or_document.availability and shows state.home_workspace.home_launcher_plan_or_document.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.launcher.plan_or_document dispatches cmd.nav.open_subject exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The picker is view-local; the choice dispatches the plan or document subject.",
-        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; a row opens its item in this panel, and Alt+click or Alt+Enter opens it as a new panel by the fit rule.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; the row's body opens its item as a new tab in this panel (where: tab), and its trailing cell, Alt+click and Alt+Enter are home.launcher.plan_or_document_new_panel.",
         "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
@@ -64300,9 +64640,77 @@
         "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
       ]
     },
+    "home.launcher.plan_or_document_new_panel": {
+      "ui_element_id": "home.launcher.plan_or_document_new_panel",
+      "ui_location": "Home > an empty panel > launcher > Plan or document..., then a choice in its picker > the row's 34 x 34 px trailing cell, or Alt+click or Alt+Enter on the row",
+      "ui_command_id": "cmd.nav.open_subject",
+      "handler_location": "handlers::nav::open_subject",
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
+      "acceptance_checks": [
+        "cmd.nav.open_subject is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
+        "home.launcher.plan_or_document_new_panel reads state.home_workspace.home_launcher_plan_or_document_new_panel.availability and shows state.home_workspace.home_launcher_plan_or_document_new_panel.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
+        "home.launcher.plan_or_document_new_panel dispatches cmd.nav.open_subject exactly once per activation and preserves command_id, correlation_id and the receipt.",
+        "The picker is view-local; the choice dispatches the plan or document subject.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id. The trailing cell, Alt+click and Alt+Enter open the item as a new panel placed by the fit rule (where: panel, F3-630). In the narrow one-column state no panel is created: the item opens in the next panel of the switcher and the announcement says so (F3-636).",
+        "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
+        "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
+        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
+      ],
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-632. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
+      "state_selector": "state.home_workspace.home_launcher_plan_or_document_new_panel.availability",
+      "disabled_reason_projection": "state.home_workspace.home_launcher_plan_or_document_new_panel.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "mixed",
+        "description": "An open through the one opening module (F3-634, DR-071) with CV-360's placement fields where, mode, by and background. An open that adds a tab is a structural change and emits the one workspace.layout_changed with its v2 payload (CV-361); an open of an id that is already open reveals it where it is, returns its receipt and emits nothing.",
+        "receipt_or_event_refs": [
+          "workspace.layout_changed",
+          "cmd.nav.open_subject.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "A button named Open Plan or document... in a new panel, inside the launcher row; the choice made in its picker opens there",
+        "keyboard_access": "Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell",
+        "focus_management": "home.launcher.plan_or_document_new_panel keeps focus where its owner contract says after an applied, no-change, failed or cancelled result; an agent's open never takes focus.",
+        "disabled_announcement": "home.launcher.plan_or_document_new_panel announces state.home_workspace.home_launcher_plan_or_document_new_panel.disabled_reason and dispatches zero commands when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.home.launcher.plan_or_document_new_panel.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The visible home.launcher.plan_or_document_new_panel control dispatches cmd.nav.open_subject exactly once with the typed payload and the handler handlers::nav::open_subject."
+        },
+        {
+          "test_id": "wiring.home.launcher.plan_or_document_new_panel.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.home_workspace.home_launcher_plan_or_document_new_panel.availability and the disabled copy reads state.home_workspace.home_launcher_plan_or_document_new_panel.disabled_reason; a disabled control dispatches nothing."
+        },
+        {
+          "test_id": "wiring.home.launcher.plan_or_document_new_panel.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Assert the exact effect delta for home.launcher.plan_or_document_new_panel: workspace.layout_changed."
+        },
+        {
+          "test_id": "wiring.home.launcher.plan_or_document_new_panel.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "The rendered home.launcher.plan_or_document_new_panel control has its accessible name and state, is reachable by keyboard (Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell) and returns focus as its owner says."
+        },
+        {
+          "test_id": "wiring.home.launcher.plan_or_document_new_panel.transaction",
+          "evidence_kind": "event_test",
+          "requirement": "Menu opening, hovering, drag preview and cancel emit nothing; one changed commit emits exactly workspace.layout_changed; a reveal or a failed commit emits nothing."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.nav.open_subject preserves command_id, correlation_id, the expected layout revision and idempotency.",
+        "Assert exact effects for home.launcher.plan_or_document_new_panel: workspace.layout_changed; no unexpected event.",
+        "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
+      ]
+    },
     "home.launcher.ports": {
       "ui_element_id": "home.launcher.ports",
-      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Ports",
+      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Ports > the row's body",
       "ui_command_id": "cmd.panel_tab.open",
       "handler_location": "handlers::panel_tab::open",
       "expected_event_types": [
@@ -64313,7 +64721,7 @@
         "home.launcher.ports reads state.home_workspace.home_launcher_ports.availability and shows state.home_workspace.home_launcher_ports.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.launcher.ports dispatches cmd.panel_tab.open exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is { kind: ports }; the one Ports tab is revealed when open.",
-        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; a row opens its item in this panel, and Alt+click or Alt+Enter opens it as a new panel by the fit rule.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; the row's body opens its item as a new tab in this panel (where: tab), and its trailing cell, Alt+click and Alt+Enter are home.launcher.ports_new_panel.",
         "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
@@ -64368,9 +64776,77 @@
         "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
       ]
     },
+    "home.launcher.ports_new_panel": {
+      "ui_element_id": "home.launcher.ports_new_panel",
+      "ui_location": "Home > an empty panel > launcher > Ports > the row's 34 x 34 px trailing cell, or Alt+click or Alt+Enter on the row",
+      "ui_command_id": "cmd.panel_tab.open",
+      "handler_location": "handlers::panel_tab::open",
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
+      "acceptance_checks": [
+        "cmd.panel_tab.open is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
+        "home.launcher.ports_new_panel reads state.home_workspace.home_launcher_ports_new_panel.availability and shows state.home_workspace.home_launcher_ports_new_panel.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
+        "home.launcher.ports_new_panel dispatches cmd.panel_tab.open exactly once per activation and preserves command_id, correlation_id and the receipt.",
+        "The payload is { kind: ports }; the one Ports tab is revealed when open.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id. The trailing cell, Alt+click and Alt+Enter open the item as a new panel placed by the fit rule (where: panel, F3-630). In the narrow one-column state no panel is created: the item opens in the next panel of the switcher and the announcement says so (F3-636).",
+        "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
+        "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
+        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
+      ],
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-632. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
+      "state_selector": "state.home_workspace.home_launcher_ports_new_panel.availability",
+      "disabled_reason_projection": "state.home_workspace.home_launcher_ports_new_panel.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "mixed",
+        "description": "An open through the one opening module (F3-634, DR-071) with CV-360's placement fields where, mode, by and background. An open that adds a tab is a structural change and emits the one workspace.layout_changed with its v2 payload (CV-361); an open of an id that is already open reveals it where it is, returns its receipt and emits nothing.",
+        "receipt_or_event_refs": [
+          "workspace.layout_changed",
+          "cmd.panel_tab.open.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "A button named Open Ports in a new panel, inside the launcher row",
+        "keyboard_access": "Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell",
+        "focus_management": "home.launcher.ports_new_panel keeps focus where its owner contract says after an applied, no-change, failed or cancelled result; an agent's open never takes focus.",
+        "disabled_announcement": "home.launcher.ports_new_panel announces state.home_workspace.home_launcher_ports_new_panel.disabled_reason and dispatches zero commands when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.home.launcher.ports_new_panel.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The visible home.launcher.ports_new_panel control dispatches cmd.panel_tab.open exactly once with the typed payload and the handler handlers::panel_tab::open."
+        },
+        {
+          "test_id": "wiring.home.launcher.ports_new_panel.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.home_workspace.home_launcher_ports_new_panel.availability and the disabled copy reads state.home_workspace.home_launcher_ports_new_panel.disabled_reason; a disabled control dispatches nothing."
+        },
+        {
+          "test_id": "wiring.home.launcher.ports_new_panel.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Assert the exact effect delta for home.launcher.ports_new_panel: workspace.layout_changed."
+        },
+        {
+          "test_id": "wiring.home.launcher.ports_new_panel.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "The rendered home.launcher.ports_new_panel control has its accessible name and state, is reachable by keyboard (Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell) and returns focus as its owner says."
+        },
+        {
+          "test_id": "wiring.home.launcher.ports_new_panel.transaction",
+          "evidence_kind": "event_test",
+          "requirement": "Menu opening, hovering, drag preview and cancel emit nothing; one changed commit emits exactly workspace.layout_changed; a reveal or a failed commit emits nothing."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.panel_tab.open preserves command_id, correlation_id, the expected layout revision and idempotency.",
+        "Assert exact effects for home.launcher.ports_new_panel: workspace.layout_changed; no unexpected event.",
+        "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
+      ]
+    },
     "home.launcher.problems": {
       "ui_element_id": "home.launcher.problems",
-      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Problems",
+      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Problems > the row's body",
       "ui_command_id": "cmd.panel_tab.open",
       "handler_location": "handlers::panel_tab::open",
       "expected_event_types": [
@@ -64381,7 +64857,7 @@
         "home.launcher.problems reads state.home_workspace.home_launcher_problems.availability and shows state.home_workspace.home_launcher_problems.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.launcher.problems dispatches cmd.panel_tab.open exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is { kind: problems }; the one Problems tab is revealed when open.",
-        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; a row opens its item in this panel, and Alt+click or Alt+Enter opens it as a new panel by the fit rule.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; the row's body opens its item as a new tab in this panel (where: tab), and its trailing cell, Alt+click and Alt+Enter are home.launcher.problems_new_panel.",
         "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
@@ -64433,6 +64909,74 @@
       "event_test_requirements": [
         "Assert cmd.panel_tab.open preserves command_id, correlation_id, the expected layout revision and idempotency.",
         "Assert exact effects for home.launcher.problems: workspace.layout_changed; no unexpected event.",
+        "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
+      ]
+    },
+    "home.launcher.problems_new_panel": {
+      "ui_element_id": "home.launcher.problems_new_panel",
+      "ui_location": "Home > an empty panel > launcher > Problems > the row's 34 x 34 px trailing cell, or Alt+click or Alt+Enter on the row",
+      "ui_command_id": "cmd.panel_tab.open",
+      "handler_location": "handlers::panel_tab::open",
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
+      "acceptance_checks": [
+        "cmd.panel_tab.open is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
+        "home.launcher.problems_new_panel reads state.home_workspace.home_launcher_problems_new_panel.availability and shows state.home_workspace.home_launcher_problems_new_panel.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
+        "home.launcher.problems_new_panel dispatches cmd.panel_tab.open exactly once per activation and preserves command_id, correlation_id and the receipt.",
+        "The payload is { kind: problems }; the one Problems tab is revealed when open.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id. The trailing cell, Alt+click and Alt+Enter open the item as a new panel placed by the fit rule (where: panel, F3-630). In the narrow one-column state no panel is created: the item opens in the next panel of the switcher and the announcement says so (F3-636).",
+        "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
+        "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
+        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
+      ],
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-632. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
+      "state_selector": "state.home_workspace.home_launcher_problems_new_panel.availability",
+      "disabled_reason_projection": "state.home_workspace.home_launcher_problems_new_panel.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "mixed",
+        "description": "An open through the one opening module (F3-634, DR-071) with CV-360's placement fields where, mode, by and background. An open that adds a tab is a structural change and emits the one workspace.layout_changed with its v2 payload (CV-361); an open of an id that is already open reveals it where it is, returns its receipt and emits nothing.",
+        "receipt_or_event_refs": [
+          "workspace.layout_changed",
+          "cmd.panel_tab.open.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "A button named Open Problems in a new panel, inside the launcher row",
+        "keyboard_access": "Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell",
+        "focus_management": "home.launcher.problems_new_panel keeps focus where its owner contract says after an applied, no-change, failed or cancelled result; an agent's open never takes focus.",
+        "disabled_announcement": "home.launcher.problems_new_panel announces state.home_workspace.home_launcher_problems_new_panel.disabled_reason and dispatches zero commands when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.home.launcher.problems_new_panel.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The visible home.launcher.problems_new_panel control dispatches cmd.panel_tab.open exactly once with the typed payload and the handler handlers::panel_tab::open."
+        },
+        {
+          "test_id": "wiring.home.launcher.problems_new_panel.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.home_workspace.home_launcher_problems_new_panel.availability and the disabled copy reads state.home_workspace.home_launcher_problems_new_panel.disabled_reason; a disabled control dispatches nothing."
+        },
+        {
+          "test_id": "wiring.home.launcher.problems_new_panel.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Assert the exact effect delta for home.launcher.problems_new_panel: workspace.layout_changed."
+        },
+        {
+          "test_id": "wiring.home.launcher.problems_new_panel.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "The rendered home.launcher.problems_new_panel control has its accessible name and state, is reachable by keyboard (Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell) and returns focus as its owner says."
+        },
+        {
+          "test_id": "wiring.home.launcher.problems_new_panel.transaction",
+          "evidence_kind": "event_test",
+          "requirement": "Menu opening, hovering, drag preview and cancel emit nothing; one changed commit emits exactly workspace.layout_changed; a reveal or a failed commit emits nothing."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.panel_tab.open preserves command_id, correlation_id, the expected layout revision and idempotency.",
+        "Assert exact effects for home.launcher.problems_new_panel: workspace.layout_changed; no unexpected event.",
         "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
       ]
     },
@@ -64707,7 +65251,7 @@
     },
     "home.launcher.terminal": {
       "ui_element_id": "home.launcher.terminal",
-      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Terminal",
+      "ui_location": "Home > an empty panel (the only panel in the centre, or a locked panel whose last tab closed) > launcher > Terminal > the row's body",
       "ui_command_id": "cmd.panel_tab.open",
       "handler_location": "handlers::panel_tab::open",
       "expected_event_types": [
@@ -64718,7 +65262,7 @@
         "home.launcher.terminal reads state.home_workspace.home_launcher_terminal.availability and shows state.home_workspace.home_launcher_terminal.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.launcher.terminal dispatches cmd.panel_tab.open exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is { kind: terminal } with the default profile.",
-        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; a row opens its item in this panel, and Alt+click or Alt+Enter opens it as a new panel by the fit rule.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id; the row's body opens its item as a new tab in this panel (where: tab), and its trailing cell, Alt+click and Alt+Enter are home.launcher.terminal_new_panel.",
         "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
@@ -64770,6 +65314,74 @@
       "event_test_requirements": [
         "Assert cmd.panel_tab.open preserves command_id, correlation_id, the expected layout revision and idempotency.",
         "Assert exact effects for home.launcher.terminal: workspace.layout_changed; no unexpected event.",
+        "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
+      ]
+    },
+    "home.launcher.terminal_new_panel": {
+      "ui_element_id": "home.launcher.terminal_new_panel",
+      "ui_location": "Home > an empty panel > launcher > Terminal > the row's 34 x 34 px trailing cell, or Alt+click or Alt+Enter on the row",
+      "ui_command_id": "cmd.panel_tab.open",
+      "handler_location": "handlers::panel_tab::open",
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
+      "acceptance_checks": [
+        "cmd.panel_tab.open is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
+        "home.launcher.terminal_new_panel reads state.home_workspace.home_launcher_terminal_new_panel.availability and shows state.home_workspace.home_launcher_terminal_new_panel.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
+        "home.launcher.terminal_new_panel dispatches cmd.panel_tab.open exactly once per activation and preserves command_id, correlation_id and the receipt.",
+        "The payload is { kind: terminal } with the default profile.",
+        "The launcher reads the same row list as the \"+\" menu and dispatches the same id. The trailing cell, Alt+click and Alt+Enter open the item as a new panel placed by the fit rule (where: panel, F3-630). In the narrow one-column state no panel is created: the item opens in the next panel of the switcher and the announcement says so (F3-636).",
+        "The File... row opens Quick Open (view-local) and the hint line dispatches nothing.",
+        "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
+        "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
+      ],
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-632. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
+      "state_selector": "state.home_workspace.home_launcher_terminal_new_panel.availability",
+      "disabled_reason_projection": "state.home_workspace.home_launcher_terminal_new_panel.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "mixed",
+        "description": "An open through the one opening module (F3-634, DR-071) with CV-360's placement fields where, mode, by and background. An open that adds a tab is a structural change and emits the one workspace.layout_changed with its v2 payload (CV-361); an open of an id that is already open reveals it where it is, returns its receipt and emits nothing.",
+        "receipt_or_event_refs": [
+          "workspace.layout_changed",
+          "cmd.panel_tab.open.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "A button named Open Terminal in a new panel, inside the launcher row",
+        "keyboard_access": "Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell",
+        "focus_management": "home.launcher.terminal_new_panel keeps focus where its owner contract says after an applied, no-change, failed or cancelled result; an agent's open never takes focus.",
+        "disabled_announcement": "home.launcher.terminal_new_panel announces state.home_workspace.home_launcher_terminal_new_panel.disabled_reason and dispatches zero commands when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.home.launcher.terminal_new_panel.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The visible home.launcher.terminal_new_panel control dispatches cmd.panel_tab.open exactly once with the typed payload and the handler handlers::panel_tab::open."
+        },
+        {
+          "test_id": "wiring.home.launcher.terminal_new_panel.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.home_workspace.home_launcher_terminal_new_panel.availability and the disabled copy reads state.home_workspace.home_launcher_terminal_new_panel.disabled_reason; a disabled control dispatches nothing."
+        },
+        {
+          "test_id": "wiring.home.launcher.terminal_new_panel.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Assert the exact effect delta for home.launcher.terminal_new_panel: workspace.layout_changed."
+        },
+        {
+          "test_id": "wiring.home.launcher.terminal_new_panel.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "The rendered home.launcher.terminal_new_panel control has its accessible name and state, is reachable by keyboard (Tab reaches the launcher list; arrows move, Enter chooses, Alt+Enter chooses as a new panel; Alt+Enter on a row is this cell) and returns focus as its owner says."
+        },
+        {
+          "test_id": "wiring.home.launcher.terminal_new_panel.transaction",
+          "evidence_kind": "event_test",
+          "requirement": "Menu opening, hovering, drag preview and cancel emit nothing; one changed commit emits exactly workspace.layout_changed; a reveal or a failed commit emits nothing."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.panel_tab.open preserves command_id, correlation_id, the expected layout revision and idempotency.",
+        "Assert exact effects for home.launcher.terminal_new_panel: workspace.layout_changed; no unexpected event.",
         "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
       ]
     },
@@ -66305,7 +66917,7 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "A button named Open Artifact..., then a choice in its picker in a new panel, inside the menu row",
+        "role_or_semantics": "A button named Open Artifact... in a new panel, inside the menu row; the choice made in its picker opens there",
         "keyboard_access": "Ctrl+Shift+Space opens the \"+\" menu; arrows move, Enter chooses, Alt+Enter chooses as a new panel, Escape closes it; Alt+Enter on a row is this cell",
         "focus_management": "home.plus_menu.artifact_new_panel keeps focus where its owner contract says after an applied, no-change, failed or cancelled result; an agent's open never takes focus.",
         "disabled_announcement": "home.plus_menu.artifact_new_panel announces state.home_workspace.home_plus_menu_artifact_new_panel.disabled_reason and dispatches zero commands when unavailable."
@@ -67400,7 +68012,7 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "A button named Open Plan or document..., then a choice in its picker in a new panel, inside the menu row",
+        "role_or_semantics": "A button named Open Plan or document... in a new panel, inside the menu row; the choice made in its picker opens there",
         "keyboard_access": "Ctrl+Shift+Space opens the \"+\" menu; arrows move, Enter chooses, Alt+Enter chooses as a new panel, Escape closes it; Alt+Enter on a row is this cell",
         "focus_management": "home.plus_menu.plan_or_document_new_panel keeps focus where its owner contract says after an applied, no-change, failed or cancelled result; an agent's open never takes focus.",
         "disabled_announcement": "home.plus_menu.plan_or_document_new_panel announces state.home_workspace.home_plus_menu_plan_or_document_new_panel.disabled_reason and dispatches zero commands when unavailable."

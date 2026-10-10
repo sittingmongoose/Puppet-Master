@@ -2039,7 +2039,8 @@ canonical_text: >-
   File... with its three recent files, Dashboard with its boards, Plan or document..., Artifact..., the Output,
   Problems, Ports, Debug Console row with its submenu, Split right, Split down and Reopen closed tab, each item's body
   (a new tab in this panel) and its trailing cell, Alt+click or Alt+Enter (a new panel). Quick Open. The empty-panel
-  launcher's rows, its five recent files and its hint. The "+N" list and the every-tab list (a row, its close target,
+  launcher's rows, each row's body (a new tab in this panel) and its trailing cell, Alt+click or Alt+Enter (a new
+  panel), its five recent files and its hint. The "+N" list and the every-tab list (a row, its close target,
   the search field). A panel's grip and Move panel, its dividers (drag, double click, the divider keys), and its panel
   menu (Split right, Split down, Maximize or Restore panels, Collapse to tabs or Expand, Lock or Unlock panel, Show all
   tabs in this panel, Layouts with the named and saved layouts, Save this layout... and Restore home layout, Close
