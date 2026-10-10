@@ -44183,7 +44183,8 @@ canonical_text: >-
   Tabs, strip buttons, dividers and editor or terminal text take at most a static tint; magnet displacement and glow
   touch cards, rows and tiles only, never a tab, a tab button or a divider; header-row and terminal icon buttons are the
   icon kind with a static tint; and hover rests while a divider is dragged. No look draws a pill, a coloured side stripe
-  or an emoji (F3-648).
+  or an emoji (F3-648). This supersedes F3-505's and F3-466's per-theme tab skins where they differ, and gives the home
+  panels the NieR Mode treatment they lacked (DL-144 and DL-152 covered the chat, onboarding and the Tour).
 gui_related: true
 gui_classification_reason: Defines how panels, strips, menus, dividers and drags render in each look, NieR Mode and Reduced Motion.
 split_recommended: false
