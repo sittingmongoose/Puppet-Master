@@ -1,11 +1,11 @@
-/* Terminal faces (D17). Each @font-face embeds one WOFF2 from src/terminal/fonts/ through an o55font: reference that
-   the home layer inlines as a data: URI; nothing loads from the network. Licence texts and metrics: fonts/SOURCE.md.
+/* Terminal faces (D17). None is declared here any more: since 2026-10-10 every face the terminal uses is the page's own,
+   embedded once through the onboarding concept's DL-161 pipeline (Concepts/onboarding/opus-5.5/src/css/01-webfonts.css,
+   files and licences in its src/fonts, origins and SHA-256 in src/fonts/SOURCE.md). The standalone harness declares the
+   same faces in its page stand-in (harness/mock-host.css).
 
-   Roles
-   - JetBrains Mono, the code face in every look, is not declared here: it is the page's own face, added by the chat
-     orchestrator's code-face branch (fix/fonts-scripts-codeface-20261009, DL-161 pipeline, the PM NieR Mono bytes).
-     The terminal names it first in its font stack. The standalone harness declares it in its page stand-in
-     (harness/mock-host.css, files in harness/fonts/).
+   Roles (js/42-appearance.js FONTS)
+   - JetBrains Mono: the code face in every look but Retro, upright and its own italic, so SGR italic draws the real
+     italic.
    - VT323: the Retro terminal default. Sixtyfour and Sixtyfour Raster (a static instance at SCAN 45, BLED 40, because
      a canvas cannot set custom axes): Retro options with a motion-free CRT look. Departure Mono: a Retro option. None of
      the four has a bold weight; bold is synthesised.
@@ -15,13 +15,3 @@
    includes the box-drawing lines U+2500, U+2502 and U+2550. The terminal draws box drawing (U+2500-257F), blocks
    (U+2580-259F), braille (U+2800-28FF), powerline (U+E0B0-E0BF) and sextants itself (js/22-glyphs.js), so it never looks
    them up in a face; the PM Symbols pairing on the page's JetBrains Mono is harmless to it. */
-
-@font-face { font-family: 'VT323'; font-style: normal; font-weight: 400; font-display: swap; src: url("o55font:pmt-vt323-latin-400.woff2") format("woff2"); }
-@font-face { font-family: 'Sixtyfour'; font-style: normal; font-weight: 400; font-display: swap; src: url("o55font:pmt-sixtyfour-latin-var.woff2") format("woff2"); }
-@font-face { font-family: 'Atkinson Hyperlegible Mono'; font-style: normal; font-weight: 200 800; font-display: swap; src: url("o55font:pmt-atkinson-hyperlegible-mono-latin-var.woff2") format("woff2"); }
-@font-face { font-family: 'Atkinson Hyperlegible Mono'; font-style: italic; font-weight: 200 800; font-display: swap; src: url("o55font:pmt-atkinson-hyperlegible-mono-latin-var-italic.woff2") format("woff2"); }
-@font-face { font-family: 'Departure Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url("o55font:pmt-departure-mono-400.woff2") format("woff2"); }
-
-/* Sixtyfour Raster: a static instance of Sixtyfour at SCAN 45, BLED 40, baked with fontTools varLib.instancer because a
-   canvas cannot set custom variation axes. It gives the motion-free CRT look of the font's own scanlines and bleed. */
-@font-face { font-family: 'Sixtyfour Raster'; src: url("o55font:pmt-sixtyfour-raster-latin.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }

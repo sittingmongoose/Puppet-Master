@@ -1,7 +1,14 @@
-/* The page's code face, standing in for PMConcept7's 'JetBrains Mono' (DL-161 pipeline, the PM NieR Mono bytes).
-   Harness only: in the review copy the page provides it. Files in harness/fonts/. */
-@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 800; font-display: swap; src: url("o55font:pmt-jetbrains-mono-latin-var.woff2") format("woff2"); }
-@font-face { font-family: 'JetBrains Mono'; font-style: italic; font-weight: 100 800; font-display: swap; src: url("o55font:pmt-jetbrains-mono-latin-var-italic.woff2") format("woff2"); }
+/* The page's faces, standing in for PMConcept7's own @font-face rules (Concepts/onboarding/opus-5.5/src/css/
+   01-webfonts.css, DL-161): the code face 'JetBrains Mono' and the terminal faces. Harness only: in the review copy the
+   page provides them. Latin files only; build_harness.py reads them from the onboarding concept's font folders. */
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 800; font-display: swap; src: url("o55font:jetbrains-mono-latin-var.woff2") format("woff2"); }
+@font-face { font-family: 'JetBrains Mono'; font-style: italic; font-weight: 100 800; font-display: swap; src: url("o55font:jetbrains-mono-latin-100-800-italic.woff2") format("woff2"); }
+@font-face { font-family: 'VT323'; font-style: normal; font-weight: 400; font-display: swap; src: url("o55font:vt323-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: 'Sixtyfour'; font-style: normal; font-weight: 400; font-display: swap; src: url("o55font:sixtyfour-latin-var-normal.woff2") format("woff2"); }
+@font-face { font-family: 'Sixtyfour Raster'; font-style: normal; font-weight: 400; font-display: swap; src: url("o55font:sixtyfour-raster-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: 'Atkinson Hyperlegible Mono'; font-style: normal; font-weight: 200 800; font-display: swap; src: url("o55font:atkinson-hyperlegible-mono-latin-200-800-normal.woff2") format("woff2"); }
+@font-face { font-family: 'Atkinson Hyperlegible Mono'; font-style: italic; font-weight: 200 800; font-display: swap; src: url("o55font:atkinson-hyperlegible-mono-latin-200-800-italic.woff2") format("woff2"); }
+@font-face { font-family: 'Departure Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url("o55font:departure-mono-400-normal.woff2") format("woff2"); }
 
 /* Terminal harness: the mock panels host's styles. Harness-only; the home layer never inlines this file.
 

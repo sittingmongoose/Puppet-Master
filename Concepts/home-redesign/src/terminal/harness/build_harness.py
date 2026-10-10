@@ -9,7 +9,8 @@
 
 Assembly (the same order and wrapping as the layer, with harness/mock-host.* standing in for the panels part):
   CSS  harness/mock-host.css, then src/terminal/css/*.css sorted. Every url("o55font:<file>") is inlined as a
-       data:font/woff2;base64 URI looked up in src/terminal/fonts/.
+       data:font/woff2;base64 URI looked up in the onboarding concept's src/fonts (and NieR's fonts), the files the
+       page embeds through its DL-161 pipeline.
   JS   harness/mock-host.js (the panels core: publishes window.PM_HOME), then the terminal: src/terminal/js/*.js
        sorted, concatenated into ONE scope wrapped as
          try { (function (PM_HOME) { 'use strict'; <files> })(window.PM_HOME); }
@@ -32,7 +33,11 @@ from pathlib import Path
 
 HARNESS = Path(__file__).resolve().parent
 TERM = HARNESS.parent                      # src/terminal
-JS_DIR, CSS_DIR, FONT_DIR = TERM / 'js', TERM / 'css', TERM / 'fonts'
+JS_DIR, CSS_DIR = TERM / 'js', TERM / 'css'
+# The page's faces, from the onboarding concept's DL-161 pipeline (the terminal faces moved there on 2026-10-10;
+# JetBrains Mono's upright is NieR's bytes): the harness reads the same files the page embeds, so there is one copy
+O55 = TERM.parents[2] / 'onboarding' / 'opus-5.5' / 'src'
+FONT_DIRS = [O55 / 'fonts', O55 / 'settings' / 'nier' / 'fonts']
 TEMPLATE = HARNESS / 'harness.template.html'
 DEMOS = HARNESS / 'demos.js'                # optional: harness demo scripts (window.PMT_HARNESS_DEMOS)
 DEFAULT_OUT = HARNESS / 'terminal-harness.html'
@@ -85,11 +90,9 @@ def sources(folder: Path, suffix: str) -> list[Path]:
 def inline_fonts(css: str, where: str, problems: list[str] | None = None) -> str:
     def sub(m: re.Match) -> str:
         name = m.group(2)
-        f = FONT_DIR / name
-        if not f.is_file():
-            f = HARNESS / 'fonts' / name           # page stand-in faces (JetBrains Mono): harness only
+        f = next((d / name for d in FONT_DIRS if (d / name).is_file()), FONT_DIRS[0] / name)
         if '/' in name or '\\' in name or not f.is_file():
-            msg = f'{where}: font o55font:{name} not found in {rel(FONT_DIR)}'
+            msg = f'{where}: font o55font:{name} not found in {", ".join(rel(d) for d in FONT_DIRS)}'
             if problems is None:
                 raise BuildError(msg)
             problems.append(msg)

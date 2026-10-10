@@ -74,20 +74,23 @@ Ctrl+Alt+click opens it in a new panel; a plain click selects text, as in every 
 
 All are terminal faces: never mirrored into PM Symbols; box-drawing (U+2500-257F), block elements (U+2580-259F),
 braille (U+2800-28FF), powerline (U+E0B0-E0BF) and sextants (U+1FB00-1FB3B) are drawn by the terminal, so no patched
-font is needed. Files and SHA-256 in `fonts/SOURCE.md`.
+font is needed. Since 2026-10-10 every face is the page's own, embedded once through the onboarding concept's DL-161
+pipeline (`Concepts/onboarding/opus-5.5/src/css/01-webfonts.css`; files, licences, origins and SHA-256 in its
+`src/fonts/SOURCE.md`); the terminal package carries no font files.
 
-| Family | Role | Licence | File (woff2) | Bytes | Axes |
+| Family | Role | Licence | Files (woff2, Latin last) | Latin bytes | Axes |
 |---|---|---|---|---|---|
-| JetBrains Mono | the code face in every look (editor and terminal); provided by the page (chat orchestrator's code-face branch, DL-161 pipeline, the PM NieR Mono bytes), not by the terminal | OFL-1.1 | the page's face | (31,432) | wght 400-800 |
-| JetBrains Mono Italic | italic: synthesised unless the page's code face adds the italic file (43 KB, offered) | OFL-1.1 | harness only | (42,964) | wght 100-800 |
-| VT323 | Retro default | OFL-1.1 | `pmt-vt323-latin-400.woff2` | 17,936 | none |
-| Sixtyfour | Retro raster option (motion-free CRT look from its own axes) | OFL-1.1 | `pmt-sixtyfour-latin-var.woff2` | 4,236 | SCAN -53-100, BLED 0-100 |
-| Atkinson Hyperlegible Mono | accessibility | OFL-1.1 | `pmt-atkinson-hyperlegible-mono-latin-var.woff2` + italic | 17,752 + 19,084 | wght 200-800 |
-| Departure Mono | Retro option | OFL-1.1 (the v1.500 release ships the SIL OFL, not MIT) | `pmt-departure-mono-400.woff2` | 22,496 | none |
+| JetBrains Mono | the code face in every look but Retro (editor and terminal), the PM NieR Mono bytes | OFL-1.1 | per-script slices + Latin, upright and italic | 31,432 + 42,964 | wght 100-800 |
+| VT323 | Retro default | OFL-1.1 | Vietnamese, Latin Extended, Latin | 17,936 | none |
+| Sixtyfour | Retro raster option (motion-free CRT look from its own axes) | OFL-1.1 | Latin Extended, Latin | 4,236 | SCAN -53-100, BLED 0-100 |
+| Sixtyfour Raster | Retro option: Sixtyfour baked at SCAN 45, BLED 40 | OFL-1.1 | Latin | 3,068 | none |
+| Atkinson Hyperlegible Mono | accessibility, every look | OFL-1.1 | Latin Extended, Latin; upright and italic | 17,752 + 19,084 | wght 200-800 |
+| Departure Mono | Retro option | OFL-1.1 (the v1.500 release ships the SIL OFL, not MIT) | the whole font (1186 glyphs) | 22,496 | none |
 
-| Sixtyfour Raster | Retro option: Sixtyfour baked at SCAN 45, BLED 40 | OFL-1.1 | `pmt-sixtyfour-raster-latin.woff2` | 3,068 | none |
+SGR italic draws JetBrains Mono's own italic (the page embeds it); VT323, Sixtyfour and Departure Mono have no italic and
+it is synthesised.
 
-The terminal's own faces total 84,572 bytes before base64. Retro's terminal default is VT323: settled (D17a). Sixtyfour,
+The terminal-only faces total 84,572 bytes of Latin before base64 (plus 47,780 of Latin Extended and Vietnamese slices). Retro's terminal default is VT323: settled (D17a). Sixtyfour,
 Sixtyfour Raster and Departure Mono are Retro options and JetBrains Mono stays selectable; Retro's interface and its code
 text outside the editor and terminal stay IBM Plex Mono. Default sizes and line heights per face (CSS px): JetBrains Mono 13 / 1.30,
 Atkinson 13 / 1.35, VT323 19 / 1.05, Departure Mono 13.75 / 1.20, Sixtyfour 10 / 1.45, system monospace 13 / 1.30.
