@@ -30091,6 +30091,16 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
   transition: grid-template-rows var(--d-t3) var(--d-spring), opacity var(--d-t2) var(--d-ease) !important;
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-acc]:not(.open) > :is(.sh-accb, .sh-wt-b) { transition: grid-template-rows var(--d-t2) var(--d-ease), opacity var(--d-t1) var(--d-ease) !important; }
+/* A view that a click brings in comes in with its boxes already open: no replay of their open animation.
+   - The shell's mouseup listener (remeasureOpenAccordions) pins every open body in the slot to its measured height and
+     lets go on the next frame.
+   - A body in a pane or panel that is still hidden measures 0 px. So when the click that follows showed it, letting go
+     replayed the body's open transition. px to fr does not interpolate, so the body sat at 0 px for half of it, a
+     Retro print measured its box collapsed, and the lines came in bunches.
+   - Only a real mouse sends mouseup: element.click() and the Arrow keys never showed it.
+   For the two frames of a tab click (data-d-fitview, 31-tabs) and of a panel switch (data-d-viewin, 30-motion), the
+   bodies in the slot take their height without a transition. */
+[data-rail-skin="d"] #sidePanelSlot:is([data-d-fitview], [data-d-viewin]) .side-panel-view [data-acc] > :is(.sh-accb, .sh-wt-b, .cr-acc-b) { transition: none !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-accchev, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-wt-h > .chev, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .fm-cchev, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .fm-chevron {
   transition: transform var(--d-t2) var(--d-spring) !important;
 }
@@ -123661,6 +123671,25 @@ function deal(list, o) {
   }
 }
 
+/* A panel switch (the activity bar, the More tray, the slot shown again). The click's mouseup pinned the open accordion
+   bodies of the panel, which was still hidden, to 0 px. For the switch's two frames the slot carries data-d-viewin, and
+   30-shelves lets those bodies take their height without replaying their open transition (the same as data-d-fitview
+   does for a tab click, 31-tabs). It is set while the click is handled (the host calls show from its observer) and
+   cleared two frames later, after the shell let go. */
+let viewInSeq = 0;
+function viewIn() {
+  const slot = document.getElementById('sidePanelSlot');
+  if (!slot) return;
+  if (!slot.hasAttribute('data-d-viewin')) slot.setAttribute('data-d-viewin', '');
+  const id = ++viewInSeq;
+  requestAnimationFrame(() => requestAnimationFrame(() => { if (id === viewInSeq) slot.removeAttribute('data-d-viewin'); }));
+}
+function viewInOff() {
+  viewInSeq++;
+  const slot = document.getElementById('sidePanelSlot');
+  if (slot) slot.removeAttribute('data-d-viewin');
+}
+
 /* the panel comes in: its chrome settles first, the content deals in right behind it. The content is the shown tab's
    pane; a panel without tab panes (Testing, Debug & Run, Agents, Runtime artifacts) deals its scroller's own list. */
 function enterPanel(panel) {
@@ -123850,7 +123879,11 @@ function placeInk(st, force) {
    frame. For the frame of a tab click the slot carries data-d-fitview, and 22-tabs keeps the inactive panels and the
    hidden panes out of that measure: the pane the click shows is fitted exactly as before, a hidden pane when a click
    shows it, in a fraction of the time. Every other pass (a resize, a panel's first show) is untouched. The flag is
-   cleared two frames later, after the pass ran. */
+   cleared two frames later, after the pass ran.
+   The same two frames bring in the view without replaying its boxes' open animation. The shell's mouseup listener pins
+   every open accordion body to its measured height, which is 0 px in a hidden pane, and lets go on the next frame.
+   While this flag is set, 30-shelves takes the bodies' transition away. So the new view's boxes are at full height
+   when its print or deal measures them (on the next frame, after the shell let go). */
 let fitViewSeq = 0;
 function fitViewOnly(ev) {
   const slot = document.getElementById('sidePanelSlot');
@@ -123963,7 +123996,8 @@ function moveTabs(st, from, dir, anims) {
       if (from.fg) add(items[at].animate([{ '--d-tab-fg': from.fg }, { '--d-tab-fg': from.fg }], { duration: n * TICK }));
     }
     /* landed: the chosen tab in inverse video for one tick */
-    add(st.animate([{ '--d-tab-inv': '1', '--d-tab-fg': 'var(--d-on-accent)' }, { '--d-tab-inv': '1', '--d-tab-fg': 'var(--d-on-accent)' }], { duration: TICK, delay: n * TICK }));
+    const inv = add(st.animate([{ '--d-tab-inv': '1', '--d-tab-fg': 'var(--d-on-accent)' }, { '--d-tab-inv': '1', '--d-tab-fg': 'var(--d-on-accent)' }], { duration: TICK, delay: n * TICK, fill: 'forwards' }));
+    holdOneFrame(inv);
     return;
   }
   const g = TAB_GLIDE[f] || TAB_GLIDE.basic;
@@ -123997,6 +124031,25 @@ function moveTabs(st, from, dir, anims) {
     if (Math.abs(dx) >= .5) add(k.animate(curve(p => ({ translate: (dx * (1 - p)).toFixed(2) + 'px 0' })), timing));
   }));
   if (lab && lab.getBoundingClientRect().width) add(lab.animate([{ opacity: 0 }, { opacity: 0, offset: .4 }, { opacity: 1 }], { duration: g.dur, easing: 'linear', fill: 'backwards' }));
+}
+/* Retro's inverse tick is one tick long, a 33 ms window on the animation clock, and a slow frame (67-83 ms on the VM)
+   stepped over it: the landing showed no inverse at all. So it fills forwards and ends on the first frame after its
+   tick that comes after a frame which drew it. With frames on time it ends exactly as before, and after a slow frame it
+   stays one frame longer. The check runs from the frame after startTogether set the start time (two frames on: this is
+   called inside playTabs' frame), and a new change or unmount cancels it like every other 'd-tab' animation
+   (stopTabs). */
+function holdOneFrame(a) {
+  let drawn = false;
+  const check = () => {
+    if (!D.on || a.playState === 'idle') return;
+    const t = a.currentTime, ct = a.effect && a.effect.getComputedTiming();
+    if (t == null || !ct) return;
+    if (drawn && t >= ct.delay + ct.activeDuration) { a.cancel(); return; }
+    /* this frame draws it: the animation is past its delay and still held (rAF runs before the frame is drawn) */
+    if (t >= ct.delay) drawn = true;
+    requestAnimationFrame(check);
+  };
+  requestAnimationFrame(() => requestAnimationFrame(check));
 }
 /* Glass: the ink stretches along its path (the leading edge runs ahead, the box thins a little), then settles with
    one soft give on landing */
@@ -125585,6 +125638,7 @@ function unmountSkin() {
     p.querySelectorAll(STATUS_SEL).forEach(el => { delete el._dSeen; });
   });
   clearFit();
+  viewInOff();
   panelEls().forEach(p => hooksFor(p, 'unmount').forEach(h => h.unmount(p)));
   undoAll();
 }
@@ -125597,6 +125651,7 @@ PMR.concepts.register('d', {
       show(info) {
         const p = document.getElementById(info && info.target);
         if (!p) return;
+        if (info.reason === 'switch' && D.on) viewIn();
         requestAnimationFrame(() => {
           fitAll(p);
           if (info.reason === 'switch' || info.reason === 'concept') enterPanel(p);

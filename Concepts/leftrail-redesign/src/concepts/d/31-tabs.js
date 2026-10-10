@@ -71,7 +71,11 @@ function placeInk(st, force) {
    frame. For the frame of a tab click the slot carries data-d-fitview, and 22-tabs keeps the inactive panels and the
    hidden panes out of that measure: the pane the click shows is fitted exactly as before, a hidden pane when a click
    shows it, in a fraction of the time. Every other pass (a resize, a panel's first show) is untouched. The flag is
-   cleared two frames later, after the pass ran. */
+   cleared two frames later, after the pass ran.
+   The same two frames bring in the view without replaying its boxes' open animation. The shell's mouseup listener pins
+   every open accordion body to its measured height, which is 0 px in a hidden pane, and lets go on the next frame.
+   While this flag is set, 30-shelves takes the bodies' transition away. So the new view's boxes are at full height
+   when its print or deal measures them (on the next frame, after the shell let go). */
 let fitViewSeq = 0;
 function fitViewOnly(ev) {
   const slot = document.getElementById('sidePanelSlot');
@@ -184,7 +188,8 @@ function moveTabs(st, from, dir, anims) {
       if (from.fg) add(items[at].animate([{ '--d-tab-fg': from.fg }, { '--d-tab-fg': from.fg }], { duration: n * TICK }));
     }
     /* landed: the chosen tab in inverse video for one tick */
-    add(st.animate([{ '--d-tab-inv': '1', '--d-tab-fg': 'var(--d-on-accent)' }, { '--d-tab-inv': '1', '--d-tab-fg': 'var(--d-on-accent)' }], { duration: TICK, delay: n * TICK }));
+    const inv = add(st.animate([{ '--d-tab-inv': '1', '--d-tab-fg': 'var(--d-on-accent)' }, { '--d-tab-inv': '1', '--d-tab-fg': 'var(--d-on-accent)' }], { duration: TICK, delay: n * TICK, fill: 'forwards' }));
+    holdOneFrame(inv);
     return;
   }
   const g = TAB_GLIDE[f] || TAB_GLIDE.basic;
@@ -218,6 +223,25 @@ function moveTabs(st, from, dir, anims) {
     if (Math.abs(dx) >= .5) add(k.animate(curve(p => ({ translate: (dx * (1 - p)).toFixed(2) + 'px 0' })), timing));
   }));
   if (lab && lab.getBoundingClientRect().width) add(lab.animate([{ opacity: 0 }, { opacity: 0, offset: .4 }, { opacity: 1 }], { duration: g.dur, easing: 'linear', fill: 'backwards' }));
+}
+/* Retro's inverse tick is one tick long, a 33 ms window on the animation clock, and a slow frame (67-83 ms on the VM)
+   stepped over it: the landing showed no inverse at all. So it fills forwards and ends on the first frame after its
+   tick that comes after a frame which drew it. With frames on time it ends exactly as before, and after a slow frame it
+   stays one frame longer. The check runs from the frame after startTogether set the start time (two frames on: this is
+   called inside playTabs' frame), and a new change or unmount cancels it like every other 'd-tab' animation
+   (stopTabs). */
+function holdOneFrame(a) {
+  let drawn = false;
+  const check = () => {
+    if (!D.on || a.playState === 'idle') return;
+    const t = a.currentTime, ct = a.effect && a.effect.getComputedTiming();
+    if (t == null || !ct) return;
+    if (drawn && t >= ct.delay + ct.activeDuration) { a.cancel(); return; }
+    /* this frame draws it: the animation is past its delay and still held (rAF runs before the frame is drawn) */
+    if (t >= ct.delay) drawn = true;
+    requestAnimationFrame(check);
+  };
+  requestAnimationFrame(() => requestAnimationFrame(check));
 }
 /* Glass: the ink stretches along its path (the leading edge runs ahead, the box thins a little), then settles with
    one soft give on landing */

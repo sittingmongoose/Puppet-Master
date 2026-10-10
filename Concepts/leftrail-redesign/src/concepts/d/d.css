@@ -460,6 +460,16 @@
   transition: grid-template-rows var(--d-t3) var(--d-spring), opacity var(--d-t2) var(--d-ease) !important;
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-acc]:not(.open) > :is(.sh-accb, .sh-wt-b) { transition: grid-template-rows var(--d-t2) var(--d-ease), opacity var(--d-t1) var(--d-ease) !important; }
+/* A view that a click brings in comes in with its boxes already open: no replay of their open animation.
+   - The shell's mouseup listener (remeasureOpenAccordions) pins every open body in the slot to its measured height and
+     lets go on the next frame.
+   - A body in a pane or panel that is still hidden measures 0 px. So when the click that follows showed it, letting go
+     replayed the body's open transition. px to fr does not interpolate, so the body sat at 0 px for half of it, a
+     Retro print measured its box collapsed, and the lines came in bunches.
+   - Only a real mouse sends mouseup: element.click() and the Arrow keys never showed it.
+   For the two frames of a tab click (data-d-fitview, 31-tabs) and of a panel switch (data-d-viewin, 30-motion), the
+   bodies in the slot take their height without a transition. */
+[data-rail-skin="d"] #sidePanelSlot:is([data-d-fitview], [data-d-viewin]) .side-panel-view [data-acc] > :is(.sh-accb, .sh-wt-b, .cr-acc-b) { transition: none !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-accchev, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-wt-h > .chev, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .fm-cchev, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .fm-chevron {
   transition: transform var(--d-t2) var(--d-spring) !important;
 }

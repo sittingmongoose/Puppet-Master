@@ -180,6 +180,25 @@ function deal(list, o) {
   }
 }
 
+/* A panel switch (the activity bar, the More tray, the slot shown again). The click's mouseup pinned the open accordion
+   bodies of the panel, which was still hidden, to 0 px. For the switch's two frames the slot carries data-d-viewin, and
+   30-shelves lets those bodies take their height without replaying their open transition (the same as data-d-fitview
+   does for a tab click, 31-tabs). It is set while the click is handled (the host calls show from its observer) and
+   cleared two frames later, after the shell let go. */
+let viewInSeq = 0;
+function viewIn() {
+  const slot = document.getElementById('sidePanelSlot');
+  if (!slot) return;
+  if (!slot.hasAttribute('data-d-viewin')) slot.setAttribute('data-d-viewin', '');
+  const id = ++viewInSeq;
+  requestAnimationFrame(() => requestAnimationFrame(() => { if (id === viewInSeq) slot.removeAttribute('data-d-viewin'); }));
+}
+function viewInOff() {
+  viewInSeq++;
+  const slot = document.getElementById('sidePanelSlot');
+  if (slot) slot.removeAttribute('data-d-viewin');
+}
+
 /* the panel comes in: its chrome settles first, the content deals in right behind it. The content is the shown tab's
    pane; a panel without tab panes (Testing, Debug & Run, Agents, Runtime artifacts) deals its scroller's own list. */
 function enterPanel(panel) {

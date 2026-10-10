@@ -38,6 +38,7 @@ function unmountSkin() {
     p.querySelectorAll(STATUS_SEL).forEach(el => { delete el._dSeen; });
   });
   clearFit();
+  viewInOff();
   panelEls().forEach(p => hooksFor(p, 'unmount').forEach(h => h.unmount(p)));
   undoAll();
 }
@@ -50,6 +51,7 @@ PMR.concepts.register('d', {
       show(info) {
         const p = document.getElementById(info && info.target);
         if (!p) return;
+        if (info.reason === 'switch' && D.on) viewIn();
         requestAnimationFrame(() => {
           fitAll(p);
           if (info.reason === 'switch' || info.reason === 'concept') enterPanel(p);
