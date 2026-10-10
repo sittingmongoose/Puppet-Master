@@ -1,9 +1,10 @@
 /* Accounts kinds and actions (owner: content; DESIGN-SPEC 10, DESIGN-SPEC-ATLAS 10, ARCHITECTURE.md 4.11 and 6):
    provider (one account: the single plate; two or more: the provider plate with aligned window columns), switch (the
    bound auto-switch strip), providers (compact rows for providers not set up), setup (the canon "Provider Setup
-   Required" card). Who exists comes from Settings (PMU.roster), and every control writes through the Settings owner:
-   the toggle and the switch level through PMU.settings.set (setSettingFromHost), "Use this account" through
-   cmd.account.select_profile plus the Settings action "Use for the next run". */
+   Required" card). Who exists comes from Settings (PMU.roster), and every control writes through the Settings owner: a
+   provider's own toggle and switch level through PMU.settings.setProvider (cmd.settings.transaction.preview + apply with
+   scope=provider, then PM51.providerPolicy.set), the shared ones through PMU.settings.set (setSettingFromHost), "Use this
+   account" through cmd.account.select_profile plus the Settings action "Use for the next run". */
 (function () {
   var C = PMU.content, st = PMU.core.state, b = C.b;
   var LEVELS = [5, 10, 15, 20, 25, 30];   /* % left choices (B v2 10.8): 95 % used .. 70 % used */
@@ -43,6 +44,11 @@
   }
   function meterOpts(a, p, size, w, narrow, noReset) {
     var m = C.meterSpec(w, { size: size, effective: a.effective, prov: p.id, stale: a.fresh.stale, age: a.ageText, hoverName: p.name + ' · ' + a.nickname });
+    /* item 2: every meter's notch sits at its own provider's switch point (this account's own, where it has one) and dims
+       with that provider's toggle, and on a provider with one account (it does not switch: w.autoOn false) */
+    var pol = a.policy || polOf(p);
+    if (m.notch) m.notch = { at: 100 - pol.switchLeft, faint: !a.effective, off: !pol.auto || w.autoOn === false };
+    m.thresholds = { warn: 100 - pol.warnLeft, switch: 100 - pol.switchLeft };
     if (noReset && w.pct !== null) { m.hover = { label: p.name + ' · ' + a.nickname + ' · ' + w.label, detail: C.fmt(w.pct, 'pct') + ' used · ' + C.fmt(100 - w.pct, 'pct') + ' left · ' + m.resetText + (w.amount ? ' · ' + w.amount : '') + ' · ' + m.source }; m.resetText = ''; }
     if (narrow && w.pct === null) m.vsWord = { not_exposed: 'Not exposed', unknown: 'Unknown', disabled: 'Disabled' }[m.vs] || m.vsWord;
     return m;
@@ -50,7 +56,9 @@
   function fallbackSentence(p) {
     var ex = p.exhausted[0];
     if (!ex) return '';
-    var others = p.accounts.filter(function (a) { return a !== ex && (a.state === 'active' || a.state === 'standby') && a.binding && a.binding.left > 0; });
+    /* only an account that could take over (signed in, a fresh trusted reading with room: the auto-switch rule) counts, so
+       this line never promises another account while the policy band says none has room */
+    var others = p.accounts.filter(function (a) { return a !== ex && (a.state === 'active' || a.state === 'standby') && a.binding && a.binding.left > 0 && !(PMU.roster.whyNot && PMU.roster.whyNot(a)); });
     return others.length ? t('accounts.exhausted_fallback', { name: ex.nickname }) : ex.nickname + ': Usage exhausted. No other eligible account has room until a reset.';
   }
   function mostRoom(p) {
@@ -66,6 +74,118 @@
     return (d.offset === 0 ? '' : d.label === 'Yesterday' ? 'Yesterday ' : PMU.fmt.day(ms) + ' ') + PMU.fmt.clock(ms);
   }
 
+  /* ================================================================== per-provider auto-switch (Jared 2026-10-09 item 2)
+     Every provider with two or more accounts has its own toggle and switch level (AAC: one policy per provider), bound to
+     the Settings rows of that provider (PMU.settings.setProvider: the Settings transaction, then the Settings owner's
+     write); a provider without its own value follows the shared one. A provider with one account shows one quiet line
+     instead. The same controls appear on the provider's plate (the policy band), in the Auto-switch hero (one cell per
+     provider) and in the Overview's headroom card (a switch on each provider row). */
+  function polOf(p) { return (p && p.policy) || PMU.roster.thresholds(p ? p.id : null); }
+  /* the same test Settings uses to draw the provider's choices (two or more accounts, of a kind that has accounts to
+     switch between), so Usage never shows a band Settings has no rows for */
+  function switchable(p) { if (!p || p.accounts.length < 2) return false; var m = PMU.settings.providerMulti ? PMU.settings.providerMulti(p.id) : null; return m !== false; }
+  function ownAny(pol) { var o = (pol && pol.own) || {}; return !!(o.auto || o.switchLeft || o.warnLeft || o.cooldown); }
+  function polAt(p) { return 100 - polOf(p).switchLeft; }
+  /* the words of a provider's policy for its hover tags and Details */
+  function polDetail(p) {
+    var pol = polOf(p), sh = pol.shared || pol, st = p.auto || {};
+    var bits = [pol.auto ? 'On · switches at ' + (100 - pol.switchLeft) + '% used' : 'Off', 'warns at ' + (100 - pol.warnLeft) + '% used',
+      ownAny(pol) ? p.name + '’s own setting (the shared one: ' + (sh.auto ? 'on' : 'off') + ', ' + (100 - sh.switchLeft) + '% used)' : 'the shared setting'];
+    if (st.words && st.state !== 'off' && st.state !== 'single') bits.push(st.words);
+    return bits.join(' · ') + '. Shared with Settings > AI > Providers & Accounts. ' + t('accounts.not_consent');
+  }
+  function polToggle(p, share) {
+    var pol = polOf(p), ok = pol.available;
+    return '<button type="button" class="pmu-toggle' + (pol.auto ? ' on' : '') + '" role="switch" aria-checked="' + pol.auto + '" aria-label="Auto-switch for ' + esc(p.name) + '" data-pmu-act="auto" data-prov="' + esc(p.id) + '"' +
+      (share ? C.shareAttr('ctl:auto:' + p.id) : '') + (ok ? '' : ' disabled') + C.hover('Auto-switch · ' + p.name, ok ? polDetail(p) : 'Settings is not available') + '></button>';
+  }
+  /* the level as a stepper "at [- 90% +] used" (the plate) */
+  function polStepper(p) {
+    var pol = polOf(p), ok = pol.available, used = 100 - pol.switchLeft, pid = esc(p.id);
+    return '<span class="pmu-swat">at</span><span class="pmu-stepper" data-prov="' + pid + '"' + C.hover('Switch level · ' + p.name, ok ? polDetail(p) : 'Settings is not available') + '>' +
+      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="1" aria-label="Switch ' + esc(p.name) + ' earlier"' + (ok && pol.switchLeft + 5 < Math.min(35, pol.warnLeft) ? '' : ' disabled') + '>' + SVG.minus + '</button>' +
+      '<button type="button" class="pmu-stepval" data-pmu-act="sw-pick" data-prov="' + pid + '" aria-haspopup="menu"' + (ok ? '' : ' disabled') + '>' + used + '%</button>' +
+      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="-1" aria-label="Switch ' + esc(p.name) + ' later"' + (ok && pol.switchLeft > 5 ? '' : ' disabled') + '>' + SVG.plus + '</button></span><span class="pmu-swat">used</span>';
+  }
+  /* the level as one value that opens the level menu (the hero's cells) */
+  function polValue(p) {
+    var pol = polOf(p), ok = pol.available;
+    return '<button type="button" class="pmu-polval" data-pmu-act="sw-pick" data-prov="' + esc(p.id) + '" aria-haspopup="menu" aria-label="' + esc(p.name) + ' switches at ' + (100 - pol.switchLeft) + '% used"' + (ok ? '' : ' disabled') +
+      (pol.auto ? '' : ' data-off') + C.hover(p.name + ' · switch level', ok ? polDetail(p) : 'Settings is not available') + '>' + (100 - pol.switchLeft) + '%</button>';
+  }
+  /* what auto-switch is doing, when there is something to say (AAC: a stuck switch says why on the row itself) */
+  function polStatus(p) {
+    var st = p.auto, pol = polOf(p); if (!st || !st.words) return null;
+    var show = st.state === 'waiting_idle' || st.state === 'due' || st.state === 'no_candidate' || (st.state === 'off' && st.past) || (st.state === 'unread' && pol.auto);
+    if (!show) return null;
+    var c = st.candidate, now = st.state === 'waiting_idle' && c && c.supportsManual && c.eligible.ok ? 'Use ' + c.nickname + ' now' : '';
+    var why = (st.blocked || []).map(function (x) { return x.account.nickname + ': ' + x.why; });
+    return { state: st.state, tone: st.warn ? 'warn' : '', words: st.words, now: now, nowKey: c ? c.key : '', why: why,
+      html: '<div class="pmu-polstat" data-state="' + st.state + '"' + (st.warn ? ' data-tone="warn"' : '') + C.hover('Auto-switch · ' + p.name, st.words + (why.length ? ' · ' + why.join(' · ') : '')) + '>' +
+        C.glyph(st.state === 'waiting_idle' || st.state === 'due' ? 'hourglass' : 'alert') + '<span>' + esc(st.words) + (now ? ' <button type="button" class="pmu-textbtn pmu-polnow" data-pmu-act="acct-use" data-value="' + esc(c.key) + '"' +
+        C.hover(now, 'Switches now instead of when ' + st.tool + ' goes idle · ' + t('accounts.use_override')) + '>' + esc(now) + '</button>' : '') + '</span></div>' };
+  }
+  /* the plate's policy band: [toggle] Auto-switch at [- 90% +] used ... Shared setting, and the status line under it.
+     Its height is known before it is drawn (the plate's fit budget); data-shape names what decides that height, so a
+     change that keeps it is patched in place */
+  function polBand(p, bw) {
+    var pol = polOf(p), st = polStatus(p), full = bw >= 360, mid = bw >= 290;
+    var scope = full ? '<span class="pmu-polscope"' + C.hover(ownAny(pol) ? p.name + '’s own setting' : 'Shared setting', polDetail(p)) + '>' + (ownAny(pol) ? 'Own setting' : 'Shared setting') + '</span>' : '';
+    var lines = st ? Math.min(3, C.wrapLines(st.words + (st.now ? ' ' + st.now + ' xx' : ''), bw - 24, 12.5)) : 0;
+    var shape = (full ? 'f' : mid ? 'm' : 'n') + lines;
+    var html = '<div class="pmu-accpol" data-prov="' + esc(p.id) + '" data-shape="' + shape + '"' + (pol.auto ? '' : ' data-off') + '>' +
+      '<div class="pmu-polrow">' + polToggle(p) + (mid ? '<span class="pmu-swlabel">Auto-switch</span>' : '') + polStepper(p) + scope + '</div>' + (st ? st.html : '') + '</div>';
+    /* measured: 41 px in Basic, 45 in NieR and Retro (their switches and the stepper run taller); the plate's last row is
+       folded by the fit pass when the band is under-counted, so the larger one is reserved */
+    return { html: html, h: 46 + (lines ? 3 + 18 * lines : 0), shape: shape };
+  }
+  /* one string of what the policy shows (a plate whose policy or status changed is patched, never left stale) */
+  function polSig(p) {
+    if (!switchable(p)) return '';
+    var pol = polOf(p), st = p.auto || {};
+    return [pol.auto, pol.switchLeft, pol.warnLeft, ownAny(pol), st.state, st.candidate ? st.candidate.key : '', st.words].join('|');
+  }
+  /* a live policy element takes the next one's state in place: switches slide on their own CSS transition, a level rolls
+     (odometer 220), words cross-fade (160); nothing is re-rendered */
+  function patchPolIn(live, next, ctx) {
+    var fin = ctx && (ctx.liveFinal || ctx.reason === 'live');
+    Array.prototype.forEach.call(next.querySelectorAll('.pmu-toggle[data-prov]'), function (t1) {
+      var t0 = live.querySelector('.pmu-toggle[data-prov="' + t1.getAttribute('data-prov') + '"]'); if (!t0) return;
+      t0.classList.toggle('on', t1.classList.contains('on')); t0.setAttribute('aria-checked', t1.getAttribute('aria-checked')); t0.disabled = t1.disabled; copyHover(t1, t0);
+    });
+    Array.prototype.forEach.call(next.querySelectorAll('.pmu-stepval[data-prov], .pmu-polval[data-prov]'), function (v1) {
+      var sel = (v1.classList.contains('pmu-polval') ? '.pmu-polval' : '.pmu-stepval') + '[data-prov="' + v1.getAttribute('data-prov') + '"]', v0 = live.querySelector(sel); if (!v0) return;
+      v0.toggleAttribute('data-off', v1.hasAttribute('data-off')); copyHover(v1, v0); if (v1.hasAttribute('aria-label')) v0.setAttribute('aria-label', v1.getAttribute('aria-label'));
+      if (v0.textContent === v1.textContent) return;
+      var from = parseFloat(v0.textContent), to = parseFloat(v1.textContent);
+      if (!fin && PMU.film && PMU.film.odometer && isFinite(from) && isFinite(to)) PMU.film.odometer(v0, to, function (v) { return Math.round(v) + '%'; }, { from: from, change: true, dur: 220 });
+      else v0.textContent = v1.textContent;
+    });
+    Array.prototype.forEach.call(next.querySelectorAll('[data-pmu-act="sw-step"][data-prov]'), function (b1) {
+      var b0 = live.querySelector('[data-pmu-act="sw-step"][data-prov="' + b1.getAttribute('data-prov') + '"][data-value="' + b1.getAttribute('data-value') + '"]'); if (b0) b0.disabled = b1.disabled;
+    });
+    Array.prototype.forEach.call(next.querySelectorAll('.pmu-stepper[data-prov]'), function (s1) { var s0 = live.querySelector('.pmu-stepper[data-prov="' + s1.getAttribute('data-prov') + '"]'); if (s0) copyHover(s1, s0); });
+    ['.pmu-polscope', '.pmu-polstat', '.pmu-polshared'].forEach(function (sel) {
+      var a0 = live.querySelector(sel), a1 = next.querySelector(sel);
+      if (!a0 || !a1) return;
+      if (a0.innerHTML !== a1.innerHTML) { C.setHtml(a0, a1.innerHTML); if (!fin) PMU.motion.animate(a0, [{ opacity: 0.25 }, { opacity: 1 }], { dur: 160, easing: 'cubic-bezier(.22,.8,.28,1)' }); }
+      ['data-state', 'data-tone'].forEach(function (an) { var v = a1.getAttribute(an); if (v === null) a0.removeAttribute(an); else a0.setAttribute(an, v); });
+      copyHover(a1, a0);
+    });
+    if (live.hasAttribute('data-prov')) live.toggleAttribute('data-off', next.hasAttribute('data-off'));
+  }
+  /* the plate's band patched in place; false when it has to be drawn again (it came, went or changed height) */
+  function patchPol(body, p, ctx) {
+    var live = body.querySelector(':scope > .pmu-accpol'), want = switchable(p) && !!body.querySelector(':scope > .pmu-acc.is-group');
+    if (!live) return !want;
+    if (!want) return false;
+    var tmp = document.createElement('div'); tmp.innerHTML = polBand(p, ctx.tier.bw).html;
+    var next = tmp.firstChild;
+    if (!next || live.getAttribute('data-shape') !== next.getAttribute('data-shape')) return false;
+    patchPolIn(live, next, ctx);
+    return true;
+  }
+
   /* ================================================================== provider: group plate (A1 10.1) and single plate (A1 10.2) */
   /* every meter of a plate is recorded with its spec (C.recMeter); a Settings change patches the plate in place (C.patch) */
   function meter(body, key, host, spec, opts, make) { C.recMeter(body, key, host, spec, opts); var rs = body._pmuMeterRecs; if (rs && rs.length) rs[rs.length - 1].make = make || null; }
@@ -73,12 +193,12 @@
   function renderPlate(body, ctx, p) {
     body._pmuMeterRecs = []; body._pmuSig = null;
     if (p.accounts.length > 1) group(body, ctx, p); else single(body, ctx, p, p.accounts[0]);
-    if (!body._pmuDry) body._pmuPlateShape = plateShape(p);
+    if (!body._pmuDry) { body._pmuPlateShape = plateShape(p); body._pmuPlateRows = plateRows(p); }
   }
   /* what a plate shows, as one string (a live beat that leaves it unchanged leaves the plate alone) */
   function plateSig(p) {
-    var th = PMU.roster.thresholds();
-    return p ? JSON.stringify([th.auto, th.switchLeft, th.warnLeft, p.accounts.map(function (a) { return [a.key, a.shownState, a.stateWord, a.effective, a.override, a.eligible.ok, a.ageText, a.windows.map(function (w) { return [w.pct, w.resetAt ? Math.round(w.resetAt / 60000) : null, w.truth]; })]; })]) : '';
+    var th = polOf(p);
+    return p ? JSON.stringify([th.auto, th.switchLeft, th.warnLeft, polSig(p), p.accounts.map(function (a) { return [a.key, a.shownState, a.stateWord, a.effective, a.override, a.eligible.ok, a.ageText, a.windows.map(function (w) { return [w.pct, w.resetAt ? Math.round(w.resetAt / 60000) : null, w.truth]; })]; })]) : '';
   }
   C.kind('provider', {
     liveSig: function (ctx) { return plateSig(PMU.roster.provider(ctx.id.replace(/^acct-/, ''))); },
@@ -93,8 +213,12 @@
     update: function (body, ctx) {
       var p = PMU.roster.provider(ctx.id.replace(/^acct-/, ''));
       if (!p || !p.accounts.length) return false;
+      /* the policy band first (item 2): a toggle or a level is patched in place; a band that changes height renders again */
+      if (!patchPol(body, p, ctx)) return false;
+      /* a policy change alone: the band is patched above and every meter takes its new notch, nothing is rendered dry */
+      if (body._pmuPlateRows && body._pmuPlateRows === plateRows(p) && body._pmuPlateShape !== plateShape(p) && ctx.reason === 'settings' && metersTo(body, p, ctx)) { body._pmuPlateShape = plateShape(p); return true; }
       var fn = function (dry) { renderPlate(dry, ctx, p); };
-      if (C.patch(body, fn, '.pmu-accfoot, .pmu-accsfoot', ctx)) { body._pmuPlateShape = plateShape(p); return true; }
+      if (C.patch(body, fn, '.pmu-accfoot, .pmu-accsfoot', ctx)) { body._pmuPlateShape = plateShape(p); body._pmuPlateRows = plateRows(p); return true; }
       return platePatch(body, fn, ctx);
     }
   });
@@ -159,7 +283,7 @@
       if (swLine && swLine.textContent !== swText0 && PMU.film && PMU.film.flash) PMU.film.flash(swLine, { delay: 380, noSweep: true });
     }
     body._pmuSig = dry._pmuSig; body._pmuFoot = dry._pmuFoot;
-    var pv = PMU.roster.provider(ctx.id.replace(/^acct-/, '')); if (pv) body._pmuPlateShape = plateShape(pv);
+    var pv = PMU.roster.provider(ctx.id.replace(/^acct-/, '')); if (pv) { body._pmuPlateShape = plateShape(pv); body._pmuPlateRows = plateRows(pv); }
     return true;
   }
 
@@ -185,19 +309,24 @@
     var fb = fallbackSentence(p); if (fb) footLines.push({ glyph: 'alert', tone: 'warn', html: esc(fb) });
     var mr = mostRoom(p); if (mr && p.windows.length) footLines.push({ glyph: 'info', html: esc(t('accounts.most_room', { name: mr.account.nickname, left: Math.round(mr.left) + '%' })) + (mr.account.fresh.stale ? ' <em>(' + esc(mr.account.ageText) + ')</em>' : '') });
     var evs = switchEvents(p, 2);
-    if (!fb && evs.length) footLines.push({ glyph: 'refresh', html: esc((th.auto ? 'Auto-switch on' : 'Auto-switch off') + ' · ' + evs.map(function (e) { return whenText(e.at) + ' ' + e.text; }).join(' · ')) });
+    /* the last switches (the policy band above says whether auto-switch is on: item 2) */
+    if (!fb && evs.length) footLines.push({ glyph: 'refresh', html: esc(evs.map(function (e) { return whenText(e.at) + ' ' + e.text; }).join(' · ')) });
     return footLines;
   }
   /* what a plate shows apart from its window readings (a live beat that only moves readings keeps this) */
-  function plateShape(p) {
-    var th = PMU.roster.thresholds();
-    return JSON.stringify([th.auto, th.switchLeft, th.warnLeft, p.accounts.map(function (a) { return [a.key, a.shownState, a.stateWord, a.effective, a.override, a.eligible.ok, a.ageText, a.binding ? a.binding.key : '', a.windows.map(function (w) { return w.pct === null ? 'n' : w.resetAt ? Math.round(w.resetAt / 60000) : 0; })]; })]);
+  /* what a plate shows of its accounts apart from their readings and the policy */
+  function plateRows(p) {
+    return JSON.stringify(p.accounts.map(function (a) { return [a.key, a.shownState, a.stateWord, a.effective, a.override, a.eligible.ok, a.ageText, a.binding ? a.binding.key : '', a.windows.map(function (w) { return w.pct === null ? 'n' : w.resetAt ? Math.round(w.resetAt / 60000) : 0; })]; }));
   }
-  /* a live beat on a plate: the readings move, nothing else did -> each meter takes its next spec through charts'
-     chart.live (an unchanged meter is not touched), the foot lines patch their words; no dry render (E3-7 budget) */
-  function plateLive(body, ctx) {
-    var p = PMU.roster.provider(ctx.id.replace(/^acct-/, '')), recs = body._pmuMeterRecs;
-    if (!p || !recs || !recs.length || body._pmuPlateShape !== plateShape(p) || recs.some(function (r) { return !r.make || !r.chart; })) return false;
+  function plateShape(p) {
+    var th = polOf(p);
+    return JSON.stringify([th.auto, th.switchLeft, th.warnLeft, polSig(p)]) + plateRows(p);
+  }
+  /* every meter takes its next spec (an unchanged one is not touched): the readings of a live beat, or the notches of a
+     policy change (item 2: no dry render in the toggle's click task) */
+  function metersTo(body, p, ctx) {
+    var recs = body._pmuMeterRecs;
+    if (!recs || !recs.length || recs.some(function (r) { return !r.make || !r.chart; })) return false;
     var acc = {}; p.accounts.forEach(function (a) { acc[a.key] = a; });
     recs.forEach(function (r) {
       var k = r.key.split('|'), a = acc[k[0]]; if (!a) return;
@@ -206,7 +335,14 @@
       try { same = JSON.stringify(spec) === JSON.stringify(r.spec); } catch (error) {}
       if (!same) { C.chartTo(r.chart, spec, ctx); r.spec = spec; }
     });
-    var lines = footLinesOf(p, PMU.roster.thresholds()), shown = body.querySelectorAll('.pmu-accfootline > span:not(.pmu-ico)');   /* integ3: the glyph span is not a text slot (a live beat wrote each line into the one before it) */
+    return true;
+  }
+  /* a live beat on a plate: the readings move, nothing else did -> each meter takes its next spec through charts'
+     chart.live (an unchanged meter is not touched), the foot lines patch their words; no dry render (E3-7 budget) */
+  function plateLive(body, ctx) {
+    var p = PMU.roster.provider(ctx.id.replace(/^acct-/, '')), recs = body._pmuMeterRecs;
+    if (!p || !recs || !recs.length || body._pmuPlateShape !== plateShape(p) || !metersTo(body, p, ctx)) return false;
+    var lines = footLinesOf(p, polOf(p)), shown = body.querySelectorAll('.pmu-accfootline > span:not(.pmu-ico)');   /* integ3: the glyph span is not a text slot (a live beat wrote each line into the one before it) */
     Array.prototype.forEach.call(shown, function (sp, i) { if (lines[i] && sp.innerHTML !== lines[i].html) C.setHtml(sp, lines[i].html); });
     return true;
   }
@@ -245,33 +381,52 @@
     /* the word's measure plus its padding; a state word keeps 8 px (Mac film: "Active · override" wrapped at +2) */
     var wOf = function (x) { return x.t ? tw(x.t, 12.5, x.btn ? 600 : 640) * 1.04 + (x.btn ? 22 : 8) : 0; };
     var actW = Math.ceil(Math.max(48, Math.max.apply(null, p.accounts.map(function (a) { return Math.max.apply(null, canWords(a, false).map(wOf)); }))));
-    var fullAct = n && bw >= 150 + n * 112 + 176 + GAP * (n + 1);
-    if (fullAct) actW = Math.ceil(Math.max(actW, Math.max.apply(null, p.accounts.map(function (a) { return Math.max.apply(null, canWords(a, true).map(wOf)); }))));
+    /* the identity column keeps every name's longest word whole: the state glyph (16 px) and its gap (8) beside it, 4 px
+       spare, in the theme's face at the effective row's weight (item 2 review: "sittingmongoo / se" at 1440 in Glass and
+       Retro, where the full action words took 220 px of a 514 px plate) */
+    var NAMECOL = Math.ceil(Math.max.apply(null, p.accounts.map(function (a) { return Math.max.apply(null, String(a.nickname || '').split(/\s+/).map(function (x) { return tw(x, 13.5, 680) * 1.04; })); }).concat([0]))) + 28;
+    var fullActW = Math.ceil(Math.max(actW, Math.max.apply(null, p.accounts.map(function (a) { return Math.max.apply(null, canWords(a, true).map(wOf)); }))));
+    /* the full action words ("Use this account · override") only where the identity column keeps 150 px and its names
+       beside them and every window keeps 112 px (the row's own padding, 28 px, counted) */
+    var fullAct = n && bw - 28 >= Math.max(150, NAMECOL) + n * 112 + fullActW + GAP * (n + 1);
+    if (fullAct) actW = fullActW;
     /* a window column keeps "78% used" and "resets in 1h 41m" on one line each from about 104 px */
-    var IDENT = 112, WIN = 104;
+    var IDENT = Math.max(112, NAMECOL), WIN = 104, IDENT_B = Math.max(100, NAMECOL);
     /* with two or more windows the identity column may go to 100 px, so a plate whose action column reserves its widest
        word ("Sign in") keeps its 5-hour and weekly columns at 1920 instead of falling back to the binding window */
-    if (n >= 2 && bw < IDENT + n * WIN + actW + GAP * (n + 1)) IDENT = 100;
+    if (n >= 2 && bw < IDENT + n * WIN + actW + GAP * (n + 1)) IDENT = IDENT_B;
     /* lane d-plans (2026-10-09, Jared's review: the Claude plate at 1920 in Glass, Retro and Friendly showed one BINDING
        WINDOW column, and Qwen's three windows did too): every window keeps its column before the plate falls back to the
-       binding window; the window columns may narrow to 88 px (a reset line then wraps to two lines, the row grows) */
+       binding window; the window columns may narrow to 88 px (a reset line then wraps to two lines, the row grows). The
+       identity column keeps every name's longest word whole first (lane d-switch, NAMECOL) */
     if (n >= 2 && bw < IDENT + n * WIN + actW + GAP * (n + 1)) WIN = Math.max(88, Math.min(WIN, Math.floor((bw - IDENT - actW - GAP * (n + 1)) / n)));
-    var mode = !n ? 'none' : bw >= IDENT + n * WIN + actW + GAP * (n + 1) ? 'full' : bw >= 100 + WIN + actW + GAP * 2 ? 'binding' : 'narrow';
+    var mode = !n ? 'none' : bw >= IDENT + n * WIN + actW + GAP * (n + 1) ? 'full' : bw >= IDENT_B + WIN + actW + GAP * 2 ? 'binding' : 'narrow';
     var winTmpl = mode === 'full' ? p.windows.map(function () { return 'minmax(' + WIN + 'px,1fr)'; }).join(' ') : mode === 'binding' ? 'minmax(' + WIN + 'px,1fr)' : '';
     var tmpl = mode === 'none' ? 'minmax(0,1.3fr) minmax(0,1fr) ' + actW + 'px'
       : mode === 'narrow' ? 'minmax(0,1fr) ' + actW + 'px'
-      : 'minmax(' + (mode === 'full' ? IDENT : 100) + 'px,1.5fr) ' + winTmpl + ' ' + actW + 'px';
+      : 'minmax(' + (mode === 'full' ? IDENT : IDENT_B) + 'px,1.5fr) ' + winTmpl + ' ' + actW + 'px';
     var band = !n || mode === 'narrow' ? '' : '<div class="pmu-colhead pmu-accband" style="grid-template-columns:' + tmpl + '"><span class="pmu-cap">ACCOUNT</span>' +
       (mode === 'binding' ? '<span class="pmu-cap">BINDING WINDOW</span>' : p.windows.map(function (w) { return '<span class="pmu-cap">' + esc(w.label.replace(/ window$/i, '').toUpperCase()) + '</span>'; }).join('')) +
       '<span></span></div>';
     /* foot copy (R-ACCT-10), most room, Codex: auto-switch state and the last two switch events */
-    var th = PMU.roster.thresholds(), footLines = footLinesOf(p, th);
-    var bandH = band ? 26 : 0, rowsN = p.accounts.length;
+    var th = polOf(p), footLines = footLinesOf(p, th);
+    /* the provider's own auto-switch controls (item 2): always drawn, so the rows give way first */
+    var polB = switchable(p) ? polBand(p, bw) : null;
+    var rowsN = p.accounts.length;
     /* the grid's own share of the width (fr columns above their minimums), for the wrap-aware row heights */
     var free = bw - actW - GAP * ((mode === 'full' ? n : mode === 'narrow' ? 0 : 1) + 1);
-    var identW = mode === 'narrow' ? bw - actW - GAP : mode === 'none' ? free * 1.3 / 2.3 : mode === 'binding' ? Math.max(100, free * 1.5 / 2.5) : Math.max(IDENT, free * 1.5 / (1.5 + n));
+    var identW = mode === 'narrow' ? bw - actW - GAP : mode === 'none' ? free * 1.3 / 2.3 : mode === 'binding' ? Math.max(IDENT_B, free * 1.5 / 2.5) : Math.max(IDENT, free * 1.5 / (1.5 + n));
     var winW = mode === 'full' ? Math.max(WIN, (free - identW) / n) : mode === 'binding' ? Math.max(WIN, free - identW) : mode === 'narrow' ? bw : free - identW;
     if (mode === 'full' && (free - n * WIN) < identW) { identW = Math.max(IDENT, free - n * WIN); winW = WIN; }
+    /* the column head takes a second line where a window's name does not fit its column ("PREMIUM / REQUESTS": 40 px, not
+       26; item 2: the fit pass folded Copilot's second account behind a free band). Measured in the caps' face (mono 11 px,
+       its tracking) */
+    var capW = function (s) { var ls = PMU.theme.look().nier ? 0.10 : 0.05; return (PMU.charts && PMU.charts.textW ? PMU.charts.textW(s, 11, true, 400) : s.length * 6.4) + s.length * 11 * ls; };
+    var capFits = function (s) { return capW(s) * 1.08 <= winW - 8; };   /* the grid's column runs a little narrower than winW */
+    var capLines = mode === 'full' ? (p.windows.every(function (w) { return capFits(w.label.replace(/ window$/i, '').toUpperCase()); }) ? 1 : 2) : mode === 'binding' ? (capFits('BINDING WINDOW') ? 1 : 2) : 1;
+    var bandH = (band ? 27 + 13 * (capLines - 1) : 0) + (polB ? polB.h : 0);
+    /* with the policy band the budget is exact (its reserve already covers the tallest look), so only 4 px of slack */
+    var SLACK = polB ? 4 : 10;
     var footHOf = function (k) { if (!k) return 0; var h = 10; footLines.slice(0, k).forEach(function (l) { h += 19 * Math.min(3, C.wrapLines(l.html, bw - 26, 12.5)); }); return h; };
     var textW = identW - 24;
     var metaOf = function (a) {
@@ -296,7 +451,9 @@
       });
       if (!n || allHidden(a)) mh = 22 * Math.min(3, a.amounts.length + 1);
       var h = mode === 'narrow' ? ih + 6 + mh : Math.max(ih, mh);
-      return Math.max(66, Math.ceil(h + 20));
+      /* measured on the GPU in all nine looks (item 2 calibration): a comfortable row lays out 2-6 px taller than its
+         lines (line boxes, the meter's caption); counted, so a row the budget admits is never folded behind free room */
+      return Math.max(66, Math.ceil(h + 20)) + (polB ? 6 : 0);
     };
     /* a compact row's one meta line (the state word, or the plan beside "Active") wraps rather than run under the
        window cell beside it ("Cooldown until 08:33" over "Not exposed", Mac stills 2026-10-02) */
@@ -306,18 +463,29 @@
       return (mode === 'narrow' ? 92 : 44) + 16 * (lines - 1);
     };
     var sumRows = function (f, k) { var s = 0; p.accounts.slice(0, k).forEach(function (a) { s += f(a); }); return s; };
-    /* priority: every account in comfortable rows; then fewer foot lines; then compact rows; then fewer rows */
-    var footCap = Math.min(footLines.length, C.w(ctx, 'm') ? 3 : 2), comfy = false;
-    for (var k = footCap; k >= 0 && !comfy; k--) { if (bandH + sumRows(comfyHOf, rowsN) + footHOf(k) <= bh + 10) { comfy = true; footCap = k; } }
-    if (!comfy) footCap = Math.min(footLines.length, 1);
-    var rowHOf = comfy ? comfyHOf : compactHOf;
+    /* priority: every account in comfortable rows; then fewer foot lines; then the LAST accounts in compact rows while the
+       first ones keep their facts (item 2: the policy band takes about 40 px, and an all-compact plate left a free band
+       under its rows); then compact rows; then fewer rows */
+    var footCap = Math.min(footLines.length, C.w(ctx, 'm') ? 3 : 2), comfy = false, comfyN = 0;
+    for (var k = footCap; k >= 0 && !comfy; k--) { if (bandH + sumRows(comfyHOf, rowsN) + footHOf(k) <= bh + SLACK) { comfy = true; footCap = k; comfyN = rowsN; } }
+    if (!comfy) {
+      var mixOf = function (m) { var s = 0; p.accounts.forEach(function (a, i) { s += i < m ? comfyHOf(a) : compactHOf(a); }); return s; };
+      for (var kk = Math.min(footLines.length, 1); kk >= 0 && !comfyN; kk--) for (var m = rowsN - 1; m >= 1 && !comfyN; m--) if (bandH + mixOf(m) + footHOf(kk) <= bh + SLACK) { comfyN = m; footCap = kk; }
+      if (!comfyN) footCap = Math.min(footLines.length, 1);
+    }
+    /* by key: a live beat's make() gets the account from a newer roster read */
+    var comfyKeys = {}; p.accounts.slice(0, comfyN).forEach(function (a) { comfyKeys[a.key] = true; });
+    var isComfy = function (a) { return !!comfyKeys[a.key]; };
+    var rowHOf = function (a) { return isComfy(a) ? comfyHOf(a) : compactHOf(a); };
     var shownN = rowsN;
-    while (shownN > 1 && bandH + sumRows(rowHOf, shownN) + footHOf(footCap) + (shownN < rowsN ? 22 : 0) > bh + 10) shownN -= 1;
+    while (shownN > 1 && bandH + sumRows(rowHOf, shownN) + footHOf(footCap) + (shownN < rowsN ? 22 : 0) > bh + SLACK) shownN -= 1;
     if (shownN < rowsN && footCap > 1) footCap = 1;
+    /* room left under every account: the next foot line takes it (Most room now) rather than leave a free band */
+    if (polB) while (shownN === rowsN && footCap < Math.min(footLines.length, 3) && bandH + sumRows(rowHOf, rowsN) + footHOf(footCap + 1) <= bh + SLACK) footCap += 1;
     var shown = p.accounts.slice(0, shownN);
-    var size = comfy ? 'c' : 'k';
+    var sizeOf = function (a) { return isComfy(a) ? 'c' : 'k'; };
     var rows = shown.map(function (a) {
-      var hidden = allHidden(a), act = actText(a, fullAct);
+      var hidden = allHidden(a), act = actText(a, fullAct), comfy = isComfy(a);
       /* the effective row's state is in the action column; its meta line shows the plan */
       var stateInAct = act.t && !act.btn;
       var longState = String(a.stateWord || '').length > 12;
@@ -347,18 +515,18 @@
     var accFold = p.accounts.slice(shown.length).map(function (a) { return a.nickname + ' · ' + a.stateWord + (a.binding && a.binding.pct !== null ? ' · ' + a.binding.short + ' ' + C.fmt(a.binding.pct, 'pct') + ' used' : ''); })
       .concat(footLines.slice(footCap).map(function (l) { return String(l.html).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(); }));
     body.innerHTML = '<div class="pmu-acc is-group" data-mode="' + mode + '"' + (rowsN > shown.length ? '' : C.foldHover(accFold)) + '>' + band + '<div class="pmu-accrows">' + rows + '</div>' + C.more(rowsN - shown.length, rowsN - shown.length === 1 ? 'account' : 'accounts', false, accFold) + '</div>' +
-      (foot ? '<div class="pmu-cardfoot pmu-accfoot">' + foot + '</div>' : '');
+      (polB ? polB.html : '') + (foot ? '<div class="pmu-cardfoot pmu-accfoot">' + foot + '</div>' : '');
     shown.forEach(function (a) {
       var row = body.querySelector('.pmu-accrow[data-acct="' + a.key + '"]');
       if (!row || allHidden(a) || !n) return;
       if (mode !== 'full') {
         var b = a.binding || a.windows[0];
         var host = row.querySelector('[data-win="binding"]');
-        var mkB = function (a2, w2) { return Object.assign(meterOpts(a2, p, size, w2, true, !comfy), { label: w2.short }); };
+        var mkB = function (a2, w2) { return Object.assign(meterOpts(a2, p, sizeOf(a2), w2, true, !isComfy(a2)), { label: w2.short }); };
         if (b) meter(body, a.key + '|binding', host, mkB(a, b), { label: a.nickname + ' ' + b.label }, mkB);
         return;
       }
-      var mkW = function (a2, w2) { return Object.assign(meterOpts(a2, p, size, w2, true, !comfy), { noLabel: true }); };
+      var mkW = function (a2, w2) { return Object.assign(meterOpts(a2, p, sizeOf(a2), w2, true, !isComfy(a2)), { noLabel: true }); };
       a.windows.forEach(function (w) {
         var h = row.querySelector('[data-win="' + w.key + '"]');
         /* a window column names its window in the column head, so a missing reading says "Not exposed" at every width
@@ -394,7 +562,11 @@
        of an empty band); a fact's height follows its wrapped label and value. A wide plate (a 10 x 5 strip) lays them
        out in columns under its meters (C.factLayout) instead of one per line (round 3: OpenCode Go at 1920 showed no fact
        over a 75 px band) */
-    var plateFacts = [['Plan', a.planLine || a.plan], ['Route role', a.routeRole], ['Auth', a.auth], ['Source', a.fresh.source], ['Default', a.isDefault ? 'yes' : 'no']]
+    /* item 2 (AAC): a provider with one account has no auto-switch controls, only this quiet line */
+    /* the value is short ("Off · one account"), so the line shows on a narrow plate too (a three-line value was the first
+       fact folded); its hover tag says it whole */
+    var plateFacts = [['Plan', a.planLine || a.plan], ['Auto-switch', p.auto && p.auto.state === 'single' ? t('accounts.auto_single') : '', { hover: t('accounts.auto_needs_two') + '. Auto-switch moves work between the accounts of one provider; ' + p.name + '’s own toggle and switch level appear when it has two (Settings > AI > Providers & Accounts).' }],
+      ['Route role', a.routeRole], ['Auth', a.auth], ['Source', a.fresh.source], ['Default', a.isDefault ? 'yes' : 'no']]
       .concat(a.legacy ? [['Billing', a.legacy.billing_basis], ['Entitlement', a.legacy.entitlement_class], ['Settlement', a.legacy.settlement_status]] : [])
       .filter(function (f) { return f[1]; });
     var wideFacts = ctx.tier.bw >= 360 && plateFacts.length > 1;
@@ -436,31 +608,74 @@
 
   var FAM_SHORT = { 'claude-code': 'Claude', 'openai-codex': 'Codex', 'qwen-coding': 'Qwen', 'github-copilot': 'Copilot', 'kimi-coding': 'Kimi', 'gemini-direct': 'Gemini' };
   function famShort(p) { return FAM_SHORT[p.id] || p.name; }
+  C.famShort = famShort;
   /* ================================================================== switch: the bound auto-switch strip (A1 10.3) */
   var switchImpl;
-  /* Details of the switch strips and the not-set-up lists (CONTENT-3): the shared thresholds, then each family's most
-     room now; every provider of the group with its state */
+  /* the providers whose auto-switch is drawn (item 2: two or more accounts, in scope), in Settings order */
+  function polFams() { return PMU.roster.read().providers.filter(function (p) { return switchable(p) && PMU.data.settingsInScope(p.id); }); }
+  /* the shared setting and the providers whose own switch point or toggle differs, as one caption (the Overview
+     skyline's subtitle, item 2): "auto-switch at 90% used · Codex 85%" */
+  C.autoCaption = function () {
+    var g = PMU.roster.thresholds(), diff = polFams().filter(function (p) { var pol = polOf(p); return pol.auto !== g.auto || pol.switchLeft !== g.switchLeft; });
+    /* the providers' own points are trailing " · " parts, so a narrow head drops them first (the towers' notches and their
+       hover tags still say them) */
+    return (g.auto ? 'auto-switch at ' + (100 - g.switchLeft) + '%' + (diff.length ? '' : ' used') : 'auto-switch off') + diff.map(function (p) { var pol = polOf(p); return ' · ' + famShort(p) + ' ' + (pol.auto ? (100 - pol.switchLeft) + '%' : 'off'); }).join('');
+  };
+  /* the providers whose own toggle, switch level or warn level differs from the shared setting (the Attention room's
+     alert-rules card names them beside the shared levels; integration of lanes d-switch and d-plans) */
+  C.policyDiffs = function () {
+    var g = PMU.roster.thresholds();
+    return polFams().map(function (p) { return { p: p, pol: polOf(p), short: famShort(p) }; })
+      .filter(function (d) { return d.pol.auto !== g.auto || d.pol.switchLeft !== g.switchLeft || d.pol.warnLeft !== g.warnLeft; });
+  };
+  /* the shared setting, for every provider without its own choice (one quiet line; opens the Settings row) */
+  function sharedLine(cls, short) {
+    var g = PMU.roster.thresholds(), follow = polFams().filter(function (p) { return !ownAny(polOf(p)); }).map(function (p) { return p.name; });
+    var words = short ? 'Shared ' + (g.auto ? b((100 - g.switchLeft) + '%') : b('off'))
+      : 'Shared: ' + (g.auto ? 'switch at ' + b((100 - g.switchLeft) + '%') : 'auto-switch ' + b('off')) + ' · warn at ' + b((100 - g.warnLeft) + '%') + ' used';
+    return '<span class="pmu-polshared' + (cls ? ' ' + cls : '') + '" data-pmu-act="pol-shared" role="button" tabindex="0"' + C.hover('The shared auto-switch setting', (g.auto ? 'Switches at ' + (100 - g.switchLeft) + '% used' : 'Off') + ' · warns at ' + (100 - g.warnLeft) + '% used. ' +
+      (follow.length ? follow.join(', ') + ' follow' + (follow.length === 1 ? 's' : '') + ' it' : 'Every service here has its own setting') + '. Settings > AI > Providers & Accounts > Limits & switching · ' + t('accounts.not_consent')) + '>' + words + '</span>';
+  }
+  /* Details of the switch strips and the not-set-up lists (CONTENT-3): each provider's own policy and what it is doing,
+     the shared setting, each family's most room now */
   C.kindReadings.switch = function () {
-    var th = PMU.roster.thresholds(), rows = [['Auto-switch', th.auto ? 'on · switches at ' + (100 - th.switchLeft) + '% used (' + th.switchLeft + '% left)' : 'off'], ['Warn level', (100 - th.warnLeft) + '% used (' + th.warnLeft + '% left)']];
-    PMU.roster.read().providers.forEach(function (p) {
-      if (!(p.accounts.length > 1 && p.windows.length && PMU.data.settingsInScope(p.id))) return;
-      var mr = mostRoom(p); if (mr) rows.push([p.name + ' · most room now', mr.text]);
+    var g = PMU.roster.thresholds(), rows = [];
+    polFams().forEach(function (p) {
+      var pol = polOf(p), st = p.auto || {};
+      rows.push([p.name + ' · auto-switch', (pol.auto ? 'on · switches at ' + (100 - pol.switchLeft) + '% used (' + pol.switchLeft + '% left)' : 'off') + ' · warns at ' + (100 - pol.warnLeft) + '% used · ' + (ownAny(pol) ? 'its own setting' : 'shared setting')]);
+      if (st.words && st.state !== 'off') rows.push([p.name + ' · now', st.words + ((st.blocked || []).length ? ' (' + st.blocked.map(function (x) { return x.account.nickname + ': ' + x.why; }).join('; ') + ')' : '')]);
+      var mr = p.windows.length ? mostRoom(p) : null; if (mr) rows.push([p.name + ' · most room now', mr.text]);
     });
+    rows.push(['Shared setting', (g.auto ? 'on · switches at ' + (100 - g.switchLeft) + '% used' : 'off') + ' · warns at ' + (100 - g.warnLeft) + '% used']);
+    var single = PMU.roster.read().providers.filter(function (p) { return p.accounts.length === 1 && PMU.data.settingsInScope(p.id); });
+    if (single.length) rows.push(['One account', single.map(function (p) { return p.name; }).join(', ') + ': auto-switch is off until a second account is signed in']);
     return rows;
   };
   C.kindReadings.providers = function (ctx) {
     var group = ctx.model && ctx.model.group, ro = PMU.roster.read(), g = ro.groups.filter(function (x) { return x.id === group; })[0];
     return g ? g.providers.filter(function (p) { return !p.accounts.length; }).map(function (p) { return [p.name, p.statusWord + ' · ' + (p.windows.length ? p.windows.map(function (w) { return w.label; }).join(', ') : 'no plan windows') + ' · ' + p.product]; }) : [];
   };
+  /* the hero's sub line, one short line beside the number (a longer one stacked the head and ran the hero 8-15 px past its
+     body at 1920): where the providers switch ("switch at 85–90% used", the range of their own points), how many have
+     auto-switch off, how many accounts are at their switch point; the trailing parts give way first */
+  function heroSub(rows) {
+    var fams = polFams(), on = fams.filter(function (p) { return polOf(p).auto; });
+    var past = rows.filter(function (r) { return r.a.pastSwitch; }).length;
+    var ats = on.map(polAt).filter(function (v, i, all) { return all.indexOf(v) === i; }).sort(function (x, y) { return x - y; });
+    var lead = !fams.length ? 'auto-switch needs two accounts' : !on.length ? 'auto-switch ' + b('off') : 'switch at ' + b(ats.length > 1 ? ats[0] + '–' + ats[ats.length - 1] + '%' : ats[0] + '%') + ' used';
+    return lead + (on.length && on.length < fams.length ? ' · ' + b(fams.length - on.length) + ' off' : '') + (past ? ' · ' + b(past) + ' at the switch point' : '');
+  }
   /* a live beat on the ladder (a binding window moved): same rows in the same order -> each row's bar, value and ramp move
      in place (ladMove), the hero number rolls and its sub follows; anything else -> the dry-render update */
   function ladderLive(body, ctx) {
     var lad = body.querySelector('.pmu-ladder'); if (!lad) return false;
-    var L = C.ladderRows(), rows = lad.querySelectorAll('.pmu-ladrow'), th = PMU.roster.thresholds();
+    var L = C.ladderRows(), rows = lad.querySelectorAll('.pmu-ladrow');
     var byAcct = {}; L.rows.forEach(function (r) { byAcct[r.a.key] = r; });
     var order = L.rows.map(function (r) { return r.a.key; }).slice(0, rows.length).join(',');
     var shown = Array.prototype.slice.call(rows).sort(function (a, z) { return (a.style.order !== '' ? +a.style.order : 0) - (z.style.order !== '' ? +z.style.order : 0); });
     if (shown.map(function (r) { return r.getAttribute('data-acct'); }).join(',') !== order) return false;
+    /* a policy change or a status change is not a reading: the update path patches it */
+    if (body._pmuPolSig !== polFams().map(polSig).join('/')) return false;
     Array.prototype.forEach.call(rows, function (r0) {
       var r = byAcct[r0.getAttribute('data-acct')]; if (!r) return;
       var usedV = Math.max(0, Math.min(100, 100 - r.left)), tone = r.w.tone || 'calm';
@@ -472,91 +687,144 @@
     });
     var top = L.rows[0], hn = lad.querySelector('.pmu-herohead .pmu-num[data-k]');
     if (top && hn) { var o = parseFloat(hn.getAttribute('data-v')), z = Math.round(top.left); if (isFinite(o) && o !== z) { hn.setAttribute('data-v', String(z)); if (ctx.liveFinal) hn.textContent = C.numOnly(z, 'pct'); else PMU.motion.countUp(hn, o, z, function (v) { return C.numOnly(v, 'pct'); }, { dur: 'value' }); } }
-    var past = L.rows.filter(function (r) { return r.left <= th.switchLeft; }).length, sub = lad.querySelector('.pmu-herosub');
+    var sub = lad.querySelector('.pmu-herosub');
     /* integ3: the render dropped trailing " · " parts by measure (heroHead); a live patch keeps that many parts (a beat had
        grown "switch at 90% used" into "... · 2 past the line" past the measured width) */
-    if (sub) { var sh = (th.auto ? 'switch at ' + b((100 - th.switchLeft) + '%') + ' used' : 'auto-switch ' + b('off')) + (past ? ' · ' + b(past) + ' past the line' : ''); var nShown = sub.innerHTML.split(' · ').length, shp = sh.split(' · '); if (shp.length > nShown) sh = shp.slice(0, nShown).join(' · '); if (sub.innerHTML !== sh) C.setHtml(sub, sh); }
+    if (sub) { var sh = heroSub(L.rows); var nShown = sub.innerHTML.split(' · ').length, shp = sh.split(' · '); if (shp.length > nShown) sh = shp.slice(0, nShown).join(' · '); if (sub.innerHTML !== sh) C.setHtml(sub, sh); }
+    return true;
+  }
+  /* one provider's cell in the hero: its mark (and name where the cell is wide), its switch and its switch level */
+  function polCell(p, named) {
+    var pol = polOf(p);
+    return '<div class="pmu-polcell' + (named ? ' is-named' : '') + '" data-prov="' + esc(p.id) + '"' + (pol.auto ? '' : ' data-off') + (p.auto && p.auto.warn ? ' data-tone="warn"' : '') + '>' +
+      '<span class="pmu-polmark"' + C.hover(p.name, polDetail(p)) + '>' + PMU.mark(p.id, 16) + (named ? '<span class="pmu-polname">' + esc(famShort(p)) + '</span>' : '') + '</span>' +
+      polToggle(p, true) + polValue(p) + '</div>';
+  }
+  /* the cells' grid: as many columns as fit cells of minW */
+  function polCells(fams, width) {
+    if (!fams.length) return '<p class="pmu-polshared is-none">' + esc(t('accounts.auto_needs_two')) + '</p>';
+    /* a cell names its provider where that costs no extra row of cells (the mark alone otherwise; the hover names it) */
+    var n = fams.length, plain = Math.max(1, Math.min(n, Math.floor((width + 10) / 110))), namedC = Math.max(1, Math.min(n, Math.floor((width + 10) / 160)));
+    var named = Math.ceil(n / namedC) <= Math.ceil(n / plain), cols = named ? namedC : plain;
+    return '<div class="pmu-polcells" style="grid-template-columns:repeat(' + cols + ',minmax(0,1fr))">' + fams.map(function (p) { return polCell(p, named); }).join('') + '</div>';
+  }
+  /* what the ladder shows apart from the policies: its rows, in order, with their readings and states */
+  function ladRowsSig(L) { return JSON.stringify(L.rows.map(function (r) { return [r.a.key, Math.round(r.left), r.a.effective, r.a.shownState]; })) + L.none.length; }
+  /* a policy change on the ladder (item 2): the cells, the shared line, the sub and every row's notch and tone are patched
+     in place without a dry render of the hero (the toggle's click task; PERF-3 "Toggle / threshold under 16 ms") */
+  function ladderPol(body, ctx) {
+    var lad = body.querySelector('.pmu-ladder'); if (!lad || !body._pmuLadRows) return false;
+    var L = C.ladderRows(); if (body._pmuLadRows !== ladRowsSig(L)) return false;
+    var fams = polFams(), cells = lad.querySelectorAll('.pmu-polcell');
+    if (cells.length !== fams.length || fams.some(function (p, i) { return cells[i].getAttribute('data-prov') !== p.id; })) return false;
+    var named = !!(cells[0] && cells[0].classList.contains('is-named')), reduced = PMU.motion.reduced && PMU.motion.reduced();
+    var f = PMU.motion.family ? PMU.motion.family() : 'basic', stp = f === 'retro' || f === 'nier';
+    var stackedNow = lad.classList.contains('is-stacked');
+    var tmp = document.createElement('div'); tmp.innerHTML = '<div>' + fams.map(function (p) { return polCell(p, named); }).join('') + sharedLine('is-cap', !stackedNow) + '</div>';
+    var next = tmp.firstChild;
+    patchPolIn(lad, next, ctx);
+    Array.prototype.forEach.call(next.querySelectorAll('.pmu-polcell'), function (c1, i) {
+      var c0 = cells[i]; c0.toggleAttribute('data-off', c1.hasAttribute('data-off'));
+      var tn = c1.getAttribute('data-tone'); if (tn) c0.setAttribute('data-tone', tn); else c0.removeAttribute('data-tone');
+      var m1 = c1.querySelector('.pmu-polmark'), m0 = c0.querySelector('.pmu-polmark'); if (m1 && m0) copyHover(m1, m0);
+    });
+    var byKey = {}; L.rows.forEach(function (r) { byKey[r.a.key] = r; });
+    var tw = body._pmuLadTrackW || 0;
+    Array.prototype.forEach.call(lad.querySelectorAll('.pmu-ladrow'), function (r0) {
+      var r = byKey[r0.getAttribute('data-acct')]; if (!r) return;
+      var pol = r.a.policy || polOf(r.p), z = pol.switchLeft / 100, a = parseFloat(r0.style.getPropertyValue('--swf')), n0 = r0.querySelector('.pmu-ladnotch');
+      if (n0 && isFinite(a) && a !== z) {
+        r0.style.setProperty('--swf', String(z));
+        if (!reduced && tw) n0._pmuSlides = [PMU.motion.animate(n0, [{ transform: 'translateX(' + (-(z - a) * tw).toFixed(1) + 'px)' }, { transform: 'none' }], { dur: stp ? 160 : 320, easing: stp ? 'steps(4,jump-start)' : 'cubic-bezier(.2,.8,.2,1)' })];
+      }
+      if (n0) n0.toggleAttribute('data-off', !pol.auto);
+      var tone = r.w.tone || 'calm';
+      if (r0.getAttribute('data-tone') !== tone) {
+        r0.setAttribute('data-tone', tone);
+        var rk = PMU.charts && PMU.charts.ramp ? PMU.charts.ramp(Math.max(0, Math.min(100, 100 - r.left)), tone) : null;
+        if (rk && rk.ramp != null) r0.setAttribute('data-ramp', String(rk.ramp));
+        if (ctx.reason !== 'live') C.flashRow(r0);
+      }
+    });
+    var sub = lad.querySelector('.pmu-herosub');
+    if (sub) { var sh = heroSub(L.rows), nShown = sub.innerHTML.split(' · ').length, shp = sh.split(' · '); if (shp.length > nShown) sh = shp.slice(0, nShown).join(' · '); if (sub.innerHTML !== sh) { C.setHtml(sub, sh); if (!reduced) PMU.motion.animate(sub, [{ opacity: 0.25 }, { opacity: 1 }], { dur: 160, easing: 'cubic-bezier(.22,.8,.28,1)' }); } }
+    body._pmuPolSig = fams.map(polSig).join('/');
     return true;
   }
   C.kind('switch', switchImpl = {
     live: function (body, ctx) { return body._pmuSw && body._pmuSw.form === 'ladder' ? ladderLive(body, ctx) : false; },
     liveSig: function () {
-      var th = PMU.roster.thresholds();
-      return JSON.stringify([th.auto, th.switchLeft, th.warnLeft, C.ladderRows().rows.map(function (r) { return [r.a.key, r.left, r.a.effective, r.w.tone]; }),
+      return JSON.stringify([polFams().map(polSig), C.ladderRows().rows.map(function (r) { return [r.a.key, r.left, r.a.effective, r.w.tone]; }),
         PMU.roster.read().providers.map(function (p) { var mr = p.accounts.length > 1 ? mostRoom(p) : null; return mr ? [p.id, mr.account.key, mr.left] : 0; })]);
     },
     render: function (body, ctx) {
-      var th = PMU.roster.thresholds(), ok = th.available;
-      var used = 100 - th.switchLeft, warnUsed = 100 - th.warnLeft;
       var panel = ctx.tier.w === 'xs' || ctx.tier.w === 's' || (ctx.tier.bw < 470 && ctx.tier.bh >= 96);   /* the one-line controls need about 450 px */
-      var dis = ok ? '' : ' disabled';
-      var reason = ok ? '' : 'Settings is not available';
-      var toggle = '<button type="button" class="pmu-toggle' + (th.auto ? ' on' : '') + '" role="switch" aria-checked="' + th.auto + '" data-pmu-act="auto" data-share="ctl:auto-switch"' + dis +
-        C.hover('Auto-switch', reason || 'Shared with Settings > AI > Providers & Accounts (ai.accounts.multi-account-switching). ' + t('accounts.not_consent')) + '></button><span class="pmu-swlabel">Auto-switch</span>';
-      var stepper = '<span class="pmu-swat">at</span><span class="pmu-stepper" data-share="ctl:threshold"' + C.hover('Switch level', reason || 'ai.accounts.hard-switch-level: switch at ' + used + '% used (' + th.switchLeft + '% left)') + '>' +
-        '<button type="button" data-pmu-act="sw-step" data-value="1" aria-label="Switch earlier"' + (ok && th.switchLeft < 30 ? '' : ' disabled') + '>' + SVG.minus + '</button>' +
-        '<button type="button" class="pmu-stepval" data-pmu-act="sw-pick" aria-haspopup="menu"' + dis + '>' + used + '%</button>' +
-        '<button type="button" data-pmu-act="sw-step" data-value="-1" aria-label="Switch later"' + (ok && th.switchLeft > 5 ? '' : ' disabled') + '>' + SVG.plus + '</button></span><span class="pmu-swat">used</span>';
-      var warn = '<span class="pmu-swwarn"' + C.hover('Warn level', 'ai.accounts.soft-warning-level: warn at ' + warnUsed + '% used (' + th.warnLeft + '% left)') + '>Warn at <b>' + warnUsed + '%</b> used</span>';
-      var ro = PMU.roster.read();
-      var fams = ro.providers.filter(function (p) { return p.accounts.length > 1 && p.windows.length && PMU.data.settingsInScope(p.id); }).map(function (p) { return { p: p, mr: mostRoom(p) }; }).filter(function (x) { return x.mr; });
-      var famHtml = function (x, i) {
-        return '<span class="pmu-swfam" data-prov="' + esc(x.p.id) + '"' + C.hover(x.p.name + ' · most room now', x.mr.text + ' · ' + x.mr.account.binding.short + ' window') + '>' + PMU.mark(x.p.id, 16) +
-          '<span class="pmu-swfamname">' + esc(famName(x.p)) + '</span><span class="pmu-swbar" data-i="' + i + '"></span></span>';
-      };
-      /* a family's Settings name where it fits (panel rows: 16 px mark, a bar of at least 44 px, two 6 px gaps), else
-         its short word (final fix M8) */
-      /* the panel row's name column is what the 16 px mark, two 6 px gaps and the bar (up to 46 %) leave (CONTENT-3, census
-         1440: "ChatGPT / Codex" was measured against a 44 px bar and ended in an ellipsis) */
-      var famName = function (p) { return !panel || C.fitsW(p.name, ctx.tier.bw * 0.54 - 16 - 12 - 2, 13, 400) ? (panel ? p.name : famShort(p)) : famShort(p); };
-      var famFold = function (list) { return list.map(function (x) { return x.p.name + ' · most room now ' + x.mr.text; }); };
+      var fams = polFams(), famsR = fams.filter(function (p) { return p.windows.length; }).map(function (p) { return { p: p, mr: mostRoom(p) }; });
+      if (!body._pmuDry) body._pmuPolSig = fams.map(polSig).join('/');
       var ladder = ctx.tier.bw >= 420 && ctx.tier.bh >= 200 || (!panel && ctx.tier.bh >= 140 && ctx.tier.bw >= 560);
-      if (ladder) { body.innerHTML = ladderHtml(ctx, th, toggle, stepper, warn); body._pmuSw = { form: 'ladder' }; return; }
+      if (ladder) { var lh = ladderHtml(ctx, fams); body.innerHTML = lh.html; if (!body._pmuDry) { body._pmuLadTrackW = lh.trackW; body._pmuLadRows = ladRowsSig(C.ladderRows()); } body._pmuSw = { form: 'ladder' }; return; }
       body._pmuSw = { form: panel ? 'panel' : 'strip' };
+      /* a family row (panel) or item (strip): mark, name, its most room now, its own switch (item 2) */
+      var famHtml = function (p, i, mr) {
+        var hv = C.hover(p.name + ' · auto-switch', (mr ? 'Most room now ' + mr.text + ' · ' : '') + polDetail(p));
+        return '<span class="pmu-swfam" data-prov="' + esc(p.id) + '"' + (polOf(p).auto ? '' : ' data-off') + hv + '>' + PMU.mark(p.id, 16) +
+          '<span class="pmu-swfamname">' + esc(famName(p)) + '</span>' + (mr ? '<span class="pmu-swbar" data-i="' + i + '"></span>' : '<span class="pmu-swbar is-none">' + esc(PMU.roster.vsWord({ vs: 'unknown' })) + '</span>') + polToggle(p, true) + '</span>';
+      };
+      /* a family's Settings name where it fits (panel rows: the 16 px mark, a bar of at least 44 px, the 30 px switch and
+         three 6 px gaps), else its short word (final fix M8), else the mark alone (its hover tag names it): item 2 put a
+         switch on every row, and "Cl…", "Co…", "Co…" named nothing (Codex and Copilot read the same) */
+      /* every row names its provider the same way (all full names, all short words or all marks alone) */
+      var nameAvail = ctx.tier.bw - 16 - 36 - 30 - 18;
+      var nameForm = !panel ? 'short' : fams.every(function (p) { return C.fitsW(p.name, nameAvail, 12.5, 400); }) ? 'full' : fams.every(function (p) { return C.fitsW(famShort(p), nameAvail, 12.5, 400); }) ? 'short' : 'none';
+      var famName = function (p) { return nameForm === 'full' ? p.name : nameForm === 'short' ? famShort(p) : ''; };
+      /* one name column for every row (the bars line up), as wide as its widest name */
+      var nameCol = panel ? Math.ceil(Math.min(nameAvail, Math.max.apply(null, fams.map(function (p) { var nm = famName(p); return nm ? C.wrapW(nm, 12.5) * (PMU.theme.look().nier || PMU.theme.look().family === 'retro' ? 1.12 : 1.02) : 0; }).concat([0])))) : 0;
+      var famFold = function (list) { return list.map(function (p) { var mr = mostRoom(p); return p.name + ' · auto-switch ' + (polOf(p).auto ? 'at ' + polAt(p) + '% used' : 'off') + (mr ? ' · most room now ' + mr.text : ''); }); };
+      var mrOf = function (p) { var x = famsR.filter(function (y) { return y.p === p; })[0]; return x ? x.mr : null; };
       if (panel) {
-        /* toggle and level share a row from about 300 px; the MOST ROOM NOW caption shows only with at least one family */
-        var joined = ctx.tier.bw >= 280, ctlRows = joined ? 2 : 3;
-        /* 4 px of margin (Retro at 1440 ran the panel 2 px past the body); families past the room are counted on one "N
-           more families" line whose hover tag lists them (CONTENT-3) */
-        var fit = C.fit(ctx.tier.bh - 4, 30, ctlRows * 34 + 22);
-        if (fit < fams.length && fit > 0) fit = C.fit(ctx.tier.bh - 4 - 25, 30, ctlRows * 34 + 22);
+        /* one row per provider, under the caption; the shared setting on the last line; providers past the room are
+           counted on one "N more" line whose hover tag lists them (CONTENT-3) */
+        var fit = C.fit(ctx.tier.bh - 4 - 22 - 26, 30, 0);
+        if (fit < fams.length && fit > 0) fit = C.fit(ctx.tier.bh - 4 - 22 - 26 - 25, 30, 0);
         var famHid = fams.slice(fit);
-        body.innerHTML = '<div class="pmu-switch is-panel"' + (fit ? '' : C.foldHover(famFold(famHid))) + '>' + (joined ? '<div class="pmu-swrow">' + toggle + stepper + '</div>' : '<div class="pmu-swrow">' + toggle + '</div><div class="pmu-swrow">' + stepper + '</div>') + '<div class="pmu-swrow">' + warn + '</div>' +
-          (fams.length && fit ? '<div class="pmu-cap pmu-swcap">MOST ROOM NOW</div>' + fams.slice(0, fit).map(famHtml).join('') + C.more(famHid.length, 'families', ctx.tier.bw < 260, famFold(famHid)) : '') + '</div>';
+        var narrowP = ctx.tier.bw < 270;
+        body.innerHTML = '<div class="pmu-switch is-panel" style="--swn:' + nameCol + 'px"' + (fit ? '' : C.foldHover(famFold(famHid))) + '>' +
+          '<div class="pmu-cap pmu-swcap">' + (narrowP ? 'AUTO-SWITCH' : 'AUTO-SWITCH · MOST ROOM NOW') + '</div>' + (fams.length ? fams.slice(0, fit).map(function (p, i) { return famHtml(p, i, mrOf(p)); }).join('') + C.more(famHid.length, 'services', ctx.tier.bw < 260, famFold(famHid)) : '<p class="pmu-polshared is-none">' + esc(t('accounts.auto_needs_two')) + '</p>') +
+          sharedLine('is-foot', ctx.tier.bw < 330) + '</div>';
       } else {
-        /* two lines when the body has the height; on one line the families take what the controls (about 450 px) and
-           the MOST ROOM NOW caption (about 110 px) leave, whole families only */
+        /* two lines when the body has the height; on one line the families take what the caption (about 110 px) and the
+           shared line (about 250 px) leave, whole families only */
         var two = ctx.tier.bh >= 56;
-        var avail = two ? ctx.tier.bw - 120 : ctx.tier.bw - 450 - 110, n = 0;
-        fams.forEach(function (x) { var wpx = 150 + 7 * famShort(x.p).length; if (n === fams.indexOf(x) && avail - wpx >= 0) { avail -= wpx + 18; n += 1; } });
-        if (two) n = fams.length;   /* two-line form: the families wrap; whole ones that do not fit are hidden by the fit pass */
+        var avail = two ? ctx.tier.bw : ctx.tier.bw - 250 - 110, n = 0;
+        fams.forEach(function (p, i) { var wpx = 150 + 36 + 7 * famShort(p).length; if (n === i && avail - wpx >= 0) { avail -= wpx + 18; n += 1; } });
         /* the families a one-line strip has no room for are listed in the strip's hover tag (CONTENT-3) */
-        body.innerHTML = '<div class="pmu-switch' + (two ? ' is-two' : '') + '"' + C.foldHover(famFold(fams.slice(n))) + '><div class="pmu-swctl">' + toggle + stepper + warn + '</div>' +
-          (fams.length && n ? '<div class="pmu-swfams"><span class="pmu-cap">MOST ROOM NOW</span>' + fams.slice(0, n).map(famHtml).join('') + '</div>' : '') + '</div>';
+        body.innerHTML = '<div class="pmu-switch' + (two ? ' is-two' : '') + '"' + C.foldHover(famFold(fams.slice(n))) + '>' +
+          (fams.length && n ? '<div class="pmu-swfams"><span class="pmu-cap">AUTO-SWITCH</span>' + fams.slice(0, n).map(function (p, i) { return famHtml(p, i, mrOf(p)); }).join('') + '</div>' : '') + sharedLine() + '</div>';
       }
       body._pmuSwCharts = [];
-      fams.forEach(function (x, i) {
-        var h = body.querySelector('.pmu-swbar[data-i="' + i + '"]');
-        var spec = { pct: x.mr.left, tone: x.mr.account.binding.tone, label: x.p.name, hover: { label: x.p.name + ' · most room now', detail: x.mr.text + ' · ' + x.mr.account.binding.short + ' window' } };
-        if (h) body._pmuSwCharts.push({ spec: spec, chart: body._pmuDry ? null : C.chart(body, 'headroom', h, spec, { label: x.p.name + ' headroom' }) });
+      fams.forEach(function (p, i) {
+        var h = body.querySelector('.pmu-swbar[data-i="' + i + '"]'), mr = mrOf(p); if (!h || !mr) return;
+        var spec = { pct: mr.left, tone: mr.account.binding.tone, label: p.name, hover: { label: p.name + ' · most room now', detail: mr.text + ' · ' + mr.account.binding.short + ' window · switches at ' + polAt(p) + '% used' } };
+        body._pmuSwCharts.push({ spec: spec, chart: body._pmuDry ? null : C.chart(body, 'headroom', h, spec, { label: p.name + ' headroom' }) });
       });
     },
     enter: function (body, ctx, delay) { if (body.querySelector('.pmu-ladder')) enterLadder(body, ctx, delay); else C.enterAll(body, ctx, delay || 0); },
-    /* the toggle and the switch level are patched in place (WOW-SPEC 3.9, WOW-TASKS N-3): the knob slides on its own
-       CSS transition, the level rolls (odometer 220), the switch line slides 320 ms, words cross-fade; the room is never
-       rendered again for them */
+    /* every switch and level is patched in place (WOW-SPEC 3.9, WOW-TASKS N-3): a knob slides on its own CSS transition, a
+       level rolls (odometer 220), the provider's notches slide 320 ms (dim when its auto-switch is off), words cross-fade;
+       the room is never rendered again for them */
     update: function (body, ctx) {
       var live = body.querySelector('.pmu-switch, .pmu-ladder'); if (!live || !body._pmuSw) return false;
+      if (body._pmuSw.form === 'ladder' && ctx.reason === 'settings' && ladderPol(body, ctx)) return true;
       var dry = document.createElement('div'); dry._pmuDry = true;
       try { switchImpl.render(dry, ctx); } catch (error) { return false; }
       var norm = function (root) {
         var c = root.cloneNode(true);
         Array.prototype.forEach.call(c.querySelectorAll('[data-pmu-chart]'), function (el) { el.remove(); });
-        Array.prototype.forEach.call(c.querySelectorAll('.pmu-stepval, .pmu-swwarn b, .pmu-herosub, .pmu-heronum, .pmu-ladval'), function (el) { el.textContent = ''; });
+        Array.prototype.forEach.call(c.querySelectorAll('.pmu-stepval, .pmu-polval, .pmu-polshared, .pmu-herosub, .pmu-heronum, .pmu-ladval'), function (el) { el.textContent = ''; });
         /* the ladder's rows compared as a set per column (a re-rank moves them in place, ladRerank) */
         Array.prototype.forEach.call(c.querySelectorAll('.pmu-ladcol'), function (col) {
           var rs = Array.prototype.slice.call(col.querySelectorAll(':scope > .pmu-ladrow')).sort(function (x, y) { return x.getAttribute('data-acct') < y.getAttribute('data-acct') ? -1 : 1; });
-          var line = col.querySelector(':scope > .pmu-ladline'); rs.forEach(function (r) { col.insertBefore(r, line); });
+          rs.forEach(function (r) { col.appendChild(r); });
         });
         /* the app's hover-tag controller adds its own attributes to live nodes (data-pm-hover-*, aria-describedby) */
         return c.innerHTML.replace(/ (?:aria-checked|aria-label|aria-describedby|data-pm-hover-[a-z-]+|style|data-tone|data-ramp|data-v|data-off|disabled)(?:="[^"]*")?/g, '').replace(/ on"/g, '"');
@@ -567,49 +835,39 @@
       /* a re-rank (the order of the ladder changed): rows FLIP to their new places (WOW-SPEC-3 8.4) */
       if (order(next) !== order(live) && !ladRerank(live, next, ctx)) return false;
       if (norm(next) !== norm(live)) { body._pmuPatchMiss = [norm(live), norm(next)]; return false; }
-      var f = PMU.motion.family ? PMU.motion.family() : 'basic', st = f === 'retro' || f === 'nier';
-      /* toggle */
-      var t0 = live.querySelector('.pmu-toggle'), t1 = next.querySelector('.pmu-toggle');
-      if (t0 && t1) { t0.classList.toggle('on', t1.classList.contains('on')); t0.setAttribute('aria-checked', t1.getAttribute('aria-checked')); copyHover(t1, t0); }
-      /* the level: its digits roll */
-      var v0 = live.querySelector('.pmu-stepval'), v1 = next.querySelector('.pmu-stepval');
-      if (v0 && v1 && v0.textContent !== v1.textContent) {
-        var from = parseFloat(v0.textContent), to = parseFloat(v1.textContent);
-        if (PMU.film && PMU.film.odometer && isFinite(from) && isFinite(to)) PMU.film.odometer(v0, to, function (v) { return Math.round(v) + '%'; }, { from: from, change: true, dur: 220 });
-        else v0.textContent = v1.textContent;
-      }
-      Array.prototype.forEach.call(next.querySelectorAll('[data-pmu-act="sw-step"]'), function (bt, i) { var lb = live.querySelectorAll('[data-pmu-act="sw-step"]')[i]; if (lb) lb.disabled = bt.disabled; });
-      var st0 = live.querySelector('.pmu-stepper'), st1 = next.querySelector('.pmu-stepper'); if (st0 && st1) copyHover(st1, st0);
-      /* words cross-fade */
-      ['.pmu-swwarn', '.pmu-herosub', '.pmu-herolabel'].forEach(function (sel) {
-        var a0 = live.querySelector(sel), a1 = next.querySelector(sel);
-        if (a0 && a1 && a0.innerHTML !== a1.innerHTML) { C.setHtml(a0, a1.innerHTML); copyHover(a1, a0); if (ctx.reason !== 'live') PMU.motion.animate(a0, [{ opacity: 0.25 }, { opacity: 1 }], { dur: 160, easing: 'cubic-bezier(.22,.8,.28,1)' }); }
+      var f = PMU.motion.family ? PMU.motion.family() : 'basic', st = f === 'retro' || f === 'nier', reduced = PMU.motion.reduced && PMU.motion.reduced();
+      /* the providers' switches, levels, cells and the shared line */
+      patchPolIn(live, next, ctx);
+      Array.prototype.forEach.call(next.querySelectorAll('.pmu-polcell[data-prov], .pmu-swfam[data-prov]'), function (c1) {
+        var c0 = live.querySelector((c1.classList.contains('pmu-polcell') ? '.pmu-polcell' : '.pmu-swfam') + '[data-prov="' + c1.getAttribute('data-prov') + '"]'); if (!c0) return;
+        c0.toggleAttribute('data-off', c1.hasAttribute('data-off')); var tn = c1.getAttribute('data-tone'); if (tn) c0.setAttribute('data-tone', tn); else c0.removeAttribute('data-tone');
+        copyHover(c1, c0); var m1 = c1.querySelector('.pmu-polmark'), m0 = c0.querySelector('.pmu-polmark'); if (m1 && m0) copyHover(m1, m0);
       });
-      /* the ladder's switch line slides to the new level (or dims when auto-switch is off); rows take their new tone */
-      var cols0 = live.querySelectorAll('.pmu-ladcol'), cols1 = next.querySelectorAll('.pmu-ladcol');
-      Array.prototype.forEach.call(cols0, function (c0, i) {
-        var c1 = cols1[i]; if (!c1) return;
-        var ln = c0.querySelector('.pmu-ladline'), ln1 = c1.querySelector('.pmu-ladline');
-        var a = parseFloat(c0.style.getPropertyValue('--swf')), z = parseFloat(c1.style.getPropertyValue('--swf'));
-        if (ln && isFinite(a) && isFinite(z) && a !== z) {
-          var tw = ln.parentNode.querySelector('.pmu-ladtrack'), px = tw ? (z - a) * tw.clientWidth : 0;
-          c0.style.setProperty('--swf', String(z));
-          ln._pmuSlides = [PMU.motion.animate(ln, [{ transform: 'translateX(' + (-px).toFixed(1) + 'px)' }, { transform: 'none' }], { dur: st ? 160 : 320, easing: st ? 'steps(4,jump-start)' : 'cubic-bezier(.2,.8,.2,1)' })];
+      /* words cross-fade */
+      ['.pmu-herosub', '.pmu-herolabel'].forEach(function (sel) {
+        var a0 = live.querySelector(sel), a1 = next.querySelector(sel);
+        if (a0 && a1 && a0.innerHTML !== a1.innerHTML) { C.setHtml(a0, a1.innerHTML); copyHover(a1, a0); if (ctx.reason !== 'live' && !reduced) PMU.motion.animate(a0, [{ opacity: 0.25 }, { opacity: 1 }], { dur: 160, easing: 'cubic-bezier(.22,.8,.28,1)' }); }
+      });
+      /* each ladder row: its provider's notch slides to the new level (or dims when that provider's auto-switch is off), the
+         row takes its new tone; the track's width is known from the render (no layout read in the click task) */
+      var tw = body._pmuLadTrackW || 0;
+      Array.prototype.forEach.call(next.querySelectorAll('.pmu-ladrow'), function (r1) {
+        var r0 = live.querySelector('.pmu-ladrow[data-acct="' + r1.getAttribute('data-acct') + '"]'); if (!r0) return;
+        var n0 = r0.querySelector('.pmu-ladnotch'), n1 = r1.querySelector('.pmu-ladnotch');
+        var a = parseFloat(r0.style.getPropertyValue('--swf')), z = parseFloat(r1.style.getPropertyValue('--swf'));
+        if (n0 && isFinite(a) && isFinite(z) && a !== z) {
+          r0.style.setProperty('--swf', String(z));
+          if (!reduced && tw) n0._pmuSlides = [PMU.motion.animate(n0, [{ transform: 'translateX(' + (-(z - a) * tw).toFixed(1) + 'px)' }, { transform: 'none' }], { dur: st ? 160 : 320, easing: st ? 'steps(4,jump-start)' : 'cubic-bezier(.2,.8,.2,1)' })];
         }
-        if (ln && ln1 && ln.hasAttribute('data-off') !== ln1.hasAttribute('data-off')) {
-          var off = ln1.hasAttribute('data-off');
-          ln.toggleAttribute('data-off', off);
-          ln._pmuSlides = (ln._pmuSlides || []).concat([PMU.motion.animate(ln, off ? [{ opacity: 1 }, { opacity: 0.25 }] : [{ opacity: 0.25 }, { opacity: 1 }], { dur: st ? 120 : 240, easing: st ? 'steps(3,jump-start)' : 'cubic-bezier(.2,.8,.2,1)' })]);
-        }
-        Array.prototype.forEach.call(c1.querySelectorAll('.pmu-ladrow'), function (r1) {
-          var r0 = c0.querySelector('.pmu-ladrow[data-acct="' + r1.getAttribute('data-acct') + '"]'); if (!r0) return;
-          var toneChanged = r0.getAttribute('data-tone') !== r1.getAttribute('data-tone');
-          if (toneChanged) r0.setAttribute('data-tone', r1.getAttribute('data-tone'));
-          ladMove(r0, r1, ctx);
-          if (toneChanged && ctx.reason !== 'live') C.flashRow(r0);
-        });
+        if (n0 && n1 && n0.hasAttribute('data-off') !== n1.hasAttribute('data-off')) n0.toggleAttribute('data-off', n1.hasAttribute('data-off'));
+        var toneChanged = r0.getAttribute('data-tone') !== r1.getAttribute('data-tone');
+        if (toneChanged) r0.setAttribute('data-tone', r1.getAttribute('data-tone'));
+        ladMove(r0, r1, ctx);
+        if (toneChanged && ctx.reason !== 'live') C.flashRow(r0);
       });
       (dry._pmuSwCharts || []).forEach(function (r, i) { var lc = (body._pmuSwCharts || [])[i]; if (lc && lc.chart && JSON.stringify(lc.spec) !== JSON.stringify(r.spec)) { C.chartTo(lc.chart, r.spec, ctx); lc.spec = r.spec; } });
+      body._pmuPolSig = dry._pmuPolSig || polFams().map(polSig).join('/');
+      if (body._pmuSw.form === 'ladder') body._pmuLadRows = ladRowsSig(C.ladderRows());
       return true;
     }
   });
@@ -677,7 +935,10 @@
   /* a ladder bar is full width and translated (transform, so a live change runs on the compositor) */
   function ladOff(left) { return -(100 - Math.max(0.5, Math.min(100, left))).toFixed(1); }
   C.ladOff = ladOff;
-  function ladderHtml(ctx, th, toggle, stepper, warn) {
+  /* the hero (item 2): the side column holds the number, one cell per provider with two or more accounts (its mark, its
+     own switch, its own level) and the shared setting under them; every ladder row carries its own provider's notch at that
+     provider's switch point (the rows of providers that share a level line up into one dashed line). -> {html, trackW} */
+  function ladderHtml(ctx, fams) {
     var L = C.ladderRows(), rows = L.rows, bw = ctx.tier.bw, bh = ctx.tier.bh;
     /* a narrow card stacks the number and the controls above the ladder */
     var stacked = bw < 600, sideW = stacked ? bw : Math.min(300, Math.max(230, Math.round(bw * 0.3))), lw = stacked ? bw : bw - sideW - 28;
@@ -689,48 +950,48 @@
       return (tw(r.a.nickname, 13, r.a.effective ? 680 : 540) + 6 + tw((dup[r.a.nickname] > 1 ? famShort(r.p) + ' ' : '') + winWordOf(r), 12, 400)) * 1.04 + 4;
     }).concat([0]))));
     var rowMin = 104 + nameCol + 48;
-    /* the side column keeps "Auto-switch at [- 90% +] used" on one line where the two ladder columns still fit (Retro's
-       mono pushed "used" to a line of its own) */
-    var lk = PMU.theme.look(), wideFace = lk.nier || lk.family === 'retro' || lk.family === 'glass' ? 1.1 : 1;
-    var ctlW = Math.ceil((34 + C.wrapW('Auto-switch', 12.5, 540) + C.wrapW('at', 12.5) + 94 + C.wrapW('used', 12.5) + 4 * 7 + 4) * wideFace);
-    if (!stacked && ctlW > sideW && ctlW <= 340 && bw - ctlW - 28 >= 2 * rowMin + 28) { sideW = ctlW; lw = bw - sideW - 28; }
     if (!stacked && lw < 2 * rowMin + 28 && lw >= 2 * Math.min(rowMin, 104 + 110 + 48) + 28) nameCol = Math.min(nameCol, Math.floor((lw - 28) / 2) - 152);
     var colsN = lw >= 2 * (104 + nameCol + 48) + 28 ? 2 : 1, rowH = 24, capH = 22, footH = L.none.length ? 20 + (stacked ? 16 : 0) : 0;
-    if (stacked) bh -= 66 + 40;
+    /* the policy cells: rows of cells in the side column (or across a stacked card) */
+    var namedCols = Math.floor((sideW + 10) / 160), plainCols = Math.floor((sideW + 10) / 110), n = fams.length || 1;
+    var cellRows = Math.ceil(n / Math.max(1, Math.min(n, plainCols)));
+    if (stacked) bh -= 66 + 10 + cellRows * 30 + 20;
     var perCol = Math.max(1, Math.floor((bh - capH - footH) / rowH)), cap = perCol * colsN;
     if (rows.length <= cap) perCol = Math.ceil(rows.length / colsN);   /* balanced columns when every row fits */
     var shown = rows.slice(0, cap), top = rows[0];
-    var past = rows.filter(function (r) { return r.left <= th.switchLeft; }).length;
     /* the hero head sits in the side column: its words wrap at the column's width (CONTENT-3: measured at the card's
        864 px it took four lines in Glass at 1920 and ran the card 9 px past its body) */
     var headCtx = stacked ? ctx : Object.assign({}, ctx, { tier: Object.assign({}, ctx.tier, { bw: sideW }) });
-    var head = top ? C.heroHead(headCtx, { value: Math.round(top.left), fmt: 'pct', label: 'left · ' + top.a.nickname + (top.a.nickname.indexOf(famShort(top.p)) >= 0 ? '' : ' · ' + famShort(top.p)),
-      sub: (th.auto ? 'switch at ' + b((100 - th.switchLeft) + '%') + ' used' : 'auto-switch ' + b('off')) + (past ? ' · ' + b(past) + ' past the line' : '') }) : '';
+    var head = top ? C.heroHead(headCtx, { value: Math.round(top.left), fmt: 'pct', label: 'left · ' + top.a.nickname + (top.a.nickname.indexOf(famShort(top.p)) >= 0 ? '' : ' · ' + famShort(top.p)), sub: heroSub(rows) }) : '';
     var cols = []; for (var c = 0; c < colsN; c++) cols.push(shown.slice(c * perCol, (c + 1) * perCol));
+    /* the track's width in px, for the notch slides (the row's fixed columns and gaps take 104 px and the name column) */
+    var trackW = Math.max(48, Math.floor((lw - 28 * (colsN - 1)) / colsN) - 104 - nameCol);
     /* the provider mark names the family, so a row says the account and its window ("Qwen Global wk"); the family word
        comes back only where two rows would read the same (Mac stills 2026-10-02: "Qwen Global Qwen wk" clipped) */
     var seen = dup;
-    var rowHtml = function (r, i) {
-      var winWord = winWordOf(r);
+    var rowHtml = function (r) {
+      var winWord = winWordOf(r), pol = r.a.policy || polOf(r.p);
       var tone = r.w.tone || 'calm', eff = r.a.effective;
       var usedV = Math.max(0, Math.min(100, 100 - r.left)), rk = PMU.charts && PMU.charts.rampAttr ? PMU.charts.rampAttr(usedV, tone) : '';
-      return '<div class="pmu-ladrow' + (eff ? ' is-eff' : '') + '" data-tone="' + tone + '"' + rk + ' style="--v:' + (+usedV.toFixed(1)) + '" data-acct="' + esc(r.a.key) + '" data-pmu-act="acct-inspect" data-value="' + esc(r.a.key) + '" role="button" tabindex="0"' +
-        C.hover(r.p.name + ' · ' + r.a.nickname, C.fmt(r.left, 'pct') + ' left in the ' + r.w.short.toLowerCase() + ' window · ' + PMU.fmt.resetLine(r.w).text + ' · ' + r.a.stateWord + ' · ' + r.a.ageText) + '>' +
+      return '<div class="pmu-ladrow' + (eff ? ' is-eff' : '') + '" data-tone="' + tone + '"' + rk + ' style="--v:' + (+usedV.toFixed(1)) + ';--swf:' + (pol.switchLeft / 100) + '" data-acct="' + esc(r.a.key) + '" data-prov="' + esc(r.p.id) + '" data-pmu-act="acct-inspect" data-value="' + esc(r.a.key) + '" role="button" tabindex="0"' +
+        C.hover(r.p.name + ' · ' + r.a.nickname, C.fmt(r.left, 'pct') + ' left in the ' + r.w.short.toLowerCase() + ' window · ' + PMU.fmt.resetLine(r.w).text + ' · ' + r.a.stateWord + ' · ' + r.a.ageText + ' · ' + (pol.auto ? r.p.name + ' switches at ' + (100 - pol.switchLeft) + '% used' + (pol.scope === 'account' ? ' (this account’s own point)' : '') : 'auto-switch off for ' + r.p.name)) + '>' +
         PMU.mark(r.p.id, 16) + '<span class="pmu-ladname"><b' + C.shareAttr('acct:' + r.a.key) + '>' + esc(r.a.nickname) + '</b><em>' + esc((seen[r.a.nickname] > 1 ? famShort(r.p) + ' ' : '') + winWord) + '</em></span>' +
         '<span class="pmu-ladtrack"' + C.shareAttr('win:' + r.a.key + '/' + r.w.key) + '><i class="pmu-ladfill" style="transform:translateX(' + ladOff(r.left) + '%)"></i></span>' +
-        '<b class="pmu-ladval" data-share-v="win:' + esc(r.a.key + '/' + r.w.key) + '"><span class="pmu-num" data-v="' + Math.round(r.left) + '">' + esc(C.numOnly(Math.round(r.left), 'pct')) + '</span>%</b>' + (eff ? '<span class="pmu-ladact">' + C.glyph('checkCircle') + '</span>' : '<span class="pmu-ladact"></span>') + '</div>';
+        '<b class="pmu-ladval" data-share-v="win:' + esc(r.a.key + '/' + r.w.key) + '"><span class="pmu-num" data-v="' + Math.round(r.left) + '">' + esc(C.numOnly(Math.round(r.left), 'pct')) + '</span>%</b>' + (eff ? '<span class="pmu-ladact">' + C.glyph('checkCircle') + '</span>' : '<span class="pmu-ladact"></span>') +
+        '<i class="pmu-ladnotch"' + (pol.auto ? '' : ' data-off') + ' aria-hidden="true"></i></div>';
     };
-    return '<div class="pmu-ladder' + (stacked ? ' is-stacked' : '') + '" style="grid-template-columns:' + (stacked ? 'minmax(0,1fr)' : sideW + 'px minmax(0,1fr)') + ';--ln:' + nameCol + 'px">' +
-      '<div class="pmu-ladside">' + head + '<div class="pmu-swctl pmu-ladctl">' + toggle + stepper + '</div><div class="pmu-ladwarn">' + warn + '</div></div>' +
+    var html = '<div class="pmu-ladder' + (stacked ? ' is-stacked' : '') + '" style="grid-template-columns:' + (stacked ? 'minmax(0,1fr)' : sideW + 'px minmax(0,1fr)') + ';--ln:' + nameCol + 'px">' +
+      '<div class="pmu-ladside">' + head + '<div class="pmu-ladpol"><div class="pmu-polcap"><span class="pmu-cap">' + 'AUTO-SWITCH AT % USED' + '</span>' + sharedLine('is-cap', !stacked) + '</div>' + polCells(fams, stacked ? bw : sideW) + '</div></div>' +
       '<div class="pmu-ladmain"><div class="pmu-ladcap"><span class="pmu-cap">MOST ROOM NOW</span><span class="pmu-cap">LEFT IN THE BINDING WINDOW</span></div>' +
       '<div class="pmu-ladcols" style="grid-template-columns:repeat(' + colsN + ',minmax(0,1fr))">' + cols.map(function (cl) {
-        return '<div class="pmu-ladcol" style="--swf:' + (th.switchLeft / 100) + '">' + cl.map(rowHtml).join('') + '<i class="pmu-ladline"' + (th.auto ? '' : ' data-off') + ' aria-hidden="true"></i></div>';
+        return '<div class="pmu-ladcol">' + cl.map(rowHtml).join('') + '</div>';
       }).join('') + '</div>' +
       (rows.length > shown.length || L.none.length ? '<p class="pmu-ladfoot"' + C.foldHover(rows.slice(shown.length).map(function (r) { return r.p.name + ' · ' + r.a.nickname + ' ' + C.fmt(Math.round(r.left), 'pct') + ' left in the ' + r.w.short.toLowerCase() + ' window'; })) + '>' + esc([rows.length > shown.length ? (rows.length - shown.length) + ' more at a taller size' : '', L.none.length ? L.none.map(function (x) { return x.a.nickname + ' (' + famShort(x.p) + ')'; }).join(', ') + ': Usage unknown' : ''].filter(Boolean).join(' · ')) + '</p>' : '') +
       '</div></div>';
+    return { html: html, trackW: trackW };
   }
-  /* the ladder's entrance: the bars fill from the left 36 ms apart down the rows, the switch line drops in (WOW-SPEC 4,
-     Accounts) */
+  /* the ladder's entrance: the bars fill from the left 36 ms apart down the rows, then each row's switch notch drops in, in
+     reading order (WOW-SPEC 4, Accounts) */
   function enterLadder(body, ctx, delay) {
     var d = delay || 0, f = PMU.motion.family ? PMU.motion.family() : 'basic', st = f === 'retro' || f === 'nier';
     C.enterAll(body, ctx, d);
@@ -738,9 +999,8 @@
       var fill = row.querySelector('.pmu-ladfill');
       if (fill) PMU.motion.animate(fill, [{ transform: 'translateX(-100%)' }, { transform: fill.style.transform || 'translateX(0)' }], { dur: 900, delay: d + 36 * i, easing: st ? 'steps(6,jump-start)' : 'cubic-bezier(.16,1,.3,1)', fill: 'backwards' });
       PMU.motion.animate(row, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { dur: 280, delay: d + 36 * i, easing: st ? 'steps(3,jump-start)' : 'cubic-bezier(.22,.8,.28,1)', fill: 'backwards' });
-    });
-    Array.prototype.forEach.call(body.querySelectorAll('.pmu-ladline'), function (ln) {
-      if (PMU.film && PMU.film.drop) PMU.film.drop(ln, { from: 24, delay: d + 700 });
+      var notch = row.querySelector('.pmu-ladnotch');
+      if (notch) PMU.motion.animate(notch, [{ opacity: 0, transform: 'translateY(-8px) scaleY(.4)' }, { opacity: 1, transform: 'none' }], { dur: st ? 160 : 300, delay: d + 640 + 22 * i, easing: st ? 'steps(3,jump-start)' : 'cubic-bezier(.34,1.3,.64,1)', fill: 'backwards' });
     });
   }
   C.enterLadder = enterLadder;
@@ -800,14 +1060,18 @@
   /* ================================================================== actions (ARCHITECTURE 4.11, DESIGN-SPEC 10.8) */
   /* the cards that hold the bound controls, notches, switch lines and active marks are named first (NOTES3-perf C3: the
      engine may patch these in the click task and slice the rest; a refresh that does not know the option ignores it) */
-  function boundCards() {
-    var board = document.getElementById('pmuBoard'), ids = [];
+  function boundCards(pid) {
+    /* item 2: a provider's own change touches only the cards that show that provider (its plate, the hero's cell and
+       rows, its meters elsewhere): those patch in the click task, every other card follows in slices (the old click task
+       re-rendered every bound card dry: 47-55 ms of the 98-117 ms toggle task, PERF-3) */
+    var board = document.getElementById('pmuBoard'), ids = [], leg = pid && PMU.roster.settingsToLegacy ? PMU.roster.settingsToLegacy(pid) : null;
+    var sel = pid ? '[data-prov="' + pid + '"]' + (leg ? ', [data-prov="' + leg + '"]' : '') : '.pmu-notch, .pmu-ladnotch, .pmu-skyswitch, .pmu-skynotch, .pmu-toggle, .pmu-accrow.is-eff, .pmu-stepper';
     if (board) Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card'), function (c) {
-      if (c.querySelector('.pmu-notch, .pmu-ladline, .pmu-skyswitch, .pmu-toggle, .pmu-accrow.is-eff, .pmu-stepper')) ids.push(c.getAttribute('data-widget'));
+      if (c.querySelector(sel)) ids.push(c.getAttribute('data-widget'));
     });
     return ids;
   }
-  function refreshAccounts() { PMU.roster.invalidate(); if (PMU.data.invalidate) PMU.data.invalidate(); if (PMU.board && PMU.board.refresh) PMU.board.refresh('settings', { first: boundCards() }); }
+  function refreshAccounts(pid) { PMU.roster.invalidate(); if (PMU.data.invalidate) PMU.data.invalidate(); if (PMU.board && PMU.board.refresh) PMU.board.refresh('settings', { first: boundCards(pid) }); }
   /* the Settings change ripples down the board (WOW-SPEC 3.9): every notch keeps its old look until its row's turn,
      30 ms apart in reading order (24 ms for a level change), then eases to the new one; the rows are patched in place,
      so the notch elements are the same before and after */
@@ -816,7 +1080,7 @@
      in the card (the old per-notch rect read was a 23-33 ms forced layout on the VM); the rail's --at is a style read */
   function rippleCapture() {
     var board = document.getElementById('pmuBoard'); if (!board || reducedNow()) return null;
-    var ns = Array.prototype.slice.call(board.querySelectorAll('.pmu-notch, .pmu-ladline, .pmu-skyswitch'));
+    var ns = Array.prototype.slice.call(board.querySelectorAll('.pmu-notch, .pmu-ladnotch, .pmu-skyswitch, .pmu-skynotch'));
     var local = new Map(), tops = ns.map(function (n) {
       var card = n.closest('.pmu-card'); if (!card) return null;
       var k = local.get(card) || 0; local.set(card, k + 1);
@@ -832,7 +1096,7 @@
     cap.forEach(function (c) {
       var n = c.el; if (!n.isConnected) return;
       var d = (step || 30) * c.rank;
-      if (n.classList.contains('pmu-notch')) {
+      if (n.classList.contains('pmu-notch') || n.classList.contains('pmu-ladnotch')) {
         var off = n.hasAttribute('data-off'), faint = n.hasAttribute('data-faint');
         if (off !== c.off || faint !== c.faint) PMU.motion.animate(n, [vis(c.off, c.faint), vis(off, faint)], { dur: stp ? 120 : 240, delay: d, easing: stp ? 'steps(3,jump-start)' : 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' });
         /* the rail's notch slide is kept on the rail by the chart kit (rail._pmuSlide): retimed directly, no getAnimations()
@@ -842,23 +1106,72 @@
       } else (n._pmuSlides || []).forEach(function (a) { if (a && a.playState !== 'finished') { try { a.effect.updateTiming({ delay: d * sp, fill: 'backwards' }); } catch (error) {} } });
     });
   }
+  /* one auto-switch write (item 2): a provider id writes that provider's own value through the Settings transaction
+     and the Settings owner (PMU.settings.setProvider); no provider id writes the shared value (setSettingFromHost). The
+     notches of the providers that changed ripple down the board; the toast names the provider. */
+  var POL_WORD = { 'ai.accounts.multi-account-switching': 'auto-switch', 'ai.accounts.hard-switch-level': 'switch level', 'ai.accounts.soft-warning-level': 'warn level', 'ai.accounts.cooldown-policy': 'rest after a rate limit' };
+  function writePolicy(pid, id, value, step) {
+    var cap = rippleCapture(), ok, p = pid ? PMU.roster.provider(pid) : null, r = null, ids = Array.isArray(id) ? id : [id];
+    if (pid) { r = PMU.settings.setProviderMany(pid, ids.map(function (x) { return { id: x, value: value }; }), 'usage.accounts'); ok = !!(r && r.ok); }
+    else ok = PMU.settings.set(id, value);
+    if (!ok) { PMU.shell.toast('Not saved: ' + ((r && r.reason) || 'Settings is not available')); return false; }
+    refreshAccounts(pid);
+    id = ids.length > 1 ? null : ids[0];
+    var pol = PMU.roster.thresholds(pid || null), what = !id ? 'follows the shared settings' : id === 'ai.accounts.multi-account-switching' ? (pol.auto ? 'auto-switch on' : 'auto-switch off')
+      : id === 'ai.accounts.hard-switch-level' ? 'switches at ' + (100 - pol.switchLeft) + '% used' : id === 'ai.accounts.soft-warning-level' ? 'warns at ' + (100 - pol.warnLeft) + '% used' : POL_WORD[id] + ' ' + pol.cooldown;
+    PMU.shell.toast(t('toast.saved_settings') + ' · ' + (p ? p.name : 'shared setting') + ': ' + what + (pid && id && value === null ? ' (shared)' : ''));
+    ripplePlay(cap, step || 30);
+    return true;
+  }
+  var IDS = function () { return PMU.roster.POLICY_IDS; };
   PMU.accounts = {
-    toggleAutoSwitch: function () {
-      var next = !PMU.roster.thresholds().auto, cap = rippleCapture();
-      var ok = PMU.settings.set('ai.accounts.multi-account-switching', next);
-      if (ok) { PMU.shell.toast(t('toast.saved_settings')); refreshAccounts(); ripplePlay(cap, 30); }
-      return ok;
+    /* providerId: that provider's own switch (item 2); none: the shared setting */
+    toggleAutoSwitch: function (providerId) {
+      return writePolicy(providerId || null, IDS().auto, !PMU.roster.thresholds(providerId || null).auto, 30);
     },
-    setSwitchLevel: function (pctLeft) {
-      var v = Math.max(5, Math.min(30, Math.round(Number(pctLeft) / 5) * 5)), cap = rippleCapture();
-      var ok = PMU.settings.set('ai.accounts.hard-switch-level', v);
-      if (ok) { PMU.shell.toast(t('toast.saved_settings')); refreshAccounts(); ripplePlay(cap, 24); }
-      return ok;
+    setSwitchLevel: function (pctLeft, providerId) {
+      var th = PMU.roster.thresholds(providerId || null);
+      var v = Math.max(5, Math.min(30, Math.round(Number(pctLeft) / 5) * 5));
+      if (v >= th.warnLeft) v = Math.max(5, th.warnLeft - 5);   /* the switch point stays under the warn level */
+      if (v === th.switchLeft && !(providerId && !th.own.switchLeft)) return false;
+      return writePolicy(providerId || null, IDS().switchLeft, v, 24);
     },
-    setWarnLevel: function (pctLeft) {
-      var ok = PMU.settings.set('ai.accounts.soft-warning-level', Number(pctLeft));
-      if (ok) { PMU.shell.toast(t('toast.saved_settings')); refreshAccounts(); }
-      return ok;
+    setWarnLevel: function (pctLeft, providerId) { return writePolicy(providerId || null, IDS().warnLeft, Number(pctLeft), 24); },
+    /* a provider follows the shared setting again for one value (or all four: id omitted) */
+    useShared: function (providerId, id) {
+      if (!providerId) return false;
+      var ids = id ? [id] : [IDS().auto, IDS().switchLeft, IDS().warnLeft, IDS().cooldown], own = PMU.roster.thresholds(providerId).own || {};
+      var keys = { 'ai.accounts.multi-account-switching': 'auto', 'ai.accounts.hard-switch-level': 'switchLeft', 'ai.accounts.soft-warning-level': 'warnLeft', 'ai.accounts.cooldown-policy': 'cooldown' };
+      var todo = ids.filter(function (x) { return own[keys[x]]; }); if (!todo.length) return false;
+      /* one transaction for every value cleared: a host that cancels it leaves all of them as they were */
+      return writePolicy(providerId, todo.length > 1 ? todo : todo[0], null, 24);
+    },
+    /* "Use this account" on an account already at its provider's switch point asks first (AAC: the inline question before
+       activating an account past the switch point); the answer is never consent for auto-switch */
+    askUse: function (key, anchor) {
+      var a = PMU.roster.account(key); if (!a || !a.eligible.ok) return null;
+      if (!a.pastSwitch || !a.binding) return PMU.accounts.useAccount(key);
+      var p = PMU.roster.provider(a.providerId), pol = a.policy || PMU.roster.thresholds(a.providerId), at = 100 - pol.switchLeft, used = Math.round(a.binding.pct);
+      var el = anchor && anchor.isConnected ? anchor : document.querySelector('#pmuBoard .pmu-accrow[data-acct="' + key + '"] .pmu-usebtn');
+      /* from the inspector in a room without this provider's plate there is no row to hang the question from: it opens
+         centred over the board, under a still point (item 2 review: it opened at the menu's top-left fallback) */
+      var pin = null;
+      if (!el) {
+        var host = document.getElementById('pmuScroll') || document.getElementById('panel-usage') || document.body, hr = host.getBoundingClientRect();
+        pin = document.getElementById('pmuAskPin');
+        if (!pin) { pin = document.createElement('span'); pin.id = 'pmuAskPin'; pin.setAttribute('aria-hidden', 'true'); document.body.appendChild(pin); }
+        pin.style.cssText = 'position:fixed;width:1px;height:1px;pointer-events:none;left:' + Math.round(hr.left + hr.width / 2) + 'px;top:' + Math.round(hr.top + Math.max(60, hr.height * 0.28)) + 'px';
+        el = pin;
+      }
+      var qTitle = used + '% used, above the ' + at + '% switch point';
+      /* the menu is as wide as its question (at 320 px the title was cut: "... switch poi…") */
+      PMU.menu.choice(el, { title: qTitle, current: '', width: Math.min(440, Math.max(320, Math.ceil(C.wrapW(qTitle, 14, 700) * 1.12) + 48)),
+        foot: (pol.auto ? 'Auto-switch would move off it again on its next check. ' : 'Auto-switch is off for ' + (p ? p.name : 'this provider') + ', so it stays until you switch. ') + t('accounts.not_consent'),
+        options: [{ value: 'use', label: 'Use ' + a.nickname + ' anyway', sub: (a.binding.short || 'Binding') + ' window ' + used + '% used · ' + PMU.fmt.resetLine(a.binding).text },
+          { value: 'keep', label: p && p.effective ? 'Keep ' + p.effective.nickname : 'Cancel', sub: p && p.effective && p.effective.binding ? Math.round(p.effective.binding.pct) + '% used' : '' }],
+        align: pin ? 'center' : undefined,
+        onPick: function (v) { if (v === 'use') PMU.accounts.useAccount(key); } });
+      return null;
     },
     useAccount: function (key) {
       var a = PMU.roster.account(key); if (!a || !a.eligible.ok) return null;
@@ -913,7 +1226,7 @@
       var a = PMU.roster.account(key); if (!a) return;
       var p = PMU.roster.provider(a.providerId), L = a.legacy;
       var acts = [];
-      if (a.supportsManual) acts.push({ label: t('accounts.use_override'), primary: true, disabled: !a.eligible.ok, reason: a.eligible.reason, onClick: function () { PMU.accounts.useAccount(key); PMU.inspector.close(); } });
+      if (a.supportsManual) acts.push({ label: t('accounts.use_override'), primary: true, disabled: !a.eligible.ok, reason: a.eligible.reason, onClick: function () { PMU.inspector.close(); PMU.accounts.askUse(key); } });
       acts.push({ label: 'Refresh Usage', onClick: function () { if (window.PM7_USAGE) window.PM7_USAGE.refresh(); } });
       acts.push({ label: 'Open Provider Settings', onClick: function () { PMU.accounts.openSettings(a.providerId, a.id); } });
       var row = function (k, v) { return [k, esc(v == null || v === '' ? '-' : v)]; };
@@ -944,15 +1257,36 @@
     }
   };
 
-  C.act('auto', function () { PMU.accounts.toggleAutoSwitch(); });
-  C.act('sw-step', function (el) { var th = PMU.roster.thresholds(); PMU.accounts.setSwitchLevel(th.switchLeft + 5 * (+el.getAttribute('data-value') || 0)); });
+  /* the switches and levels name their provider (data-prov, item 2); without one they are the shared setting */
+  C.act('auto', function (el) { PMU.accounts.toggleAutoSwitch(el.getAttribute('data-prov') || null); });
+  C.act('sw-step', function (el) { var pid = el.getAttribute('data-prov') || null, th = PMU.roster.thresholds(pid); PMU.accounts.setSwitchLevel(th.switchLeft + 5 * (+el.getAttribute('data-value') || 0), pid); });
   C.act('sw-pick', function (el) {
-    var th = PMU.roster.thresholds();
-    PMU.menu.choice(el, { title: 'Switch accounts at', value: th.switchLeft, current: (100 - th.switchLeft) + '% used', foot: 'Shared with Settings > AI > Providers & Accounts. ' + t('accounts.not_consent'),
-      options: LEVELS.map(function (v) { return { value: v, label: (100 - v) + '% used', sub: v + '% left' + (v === 10 ? ' · default' : ''), disabled: v >= th.warnLeft, reason: v >= th.warnLeft ? 'At or above the warn level (' + th.warnLeft + '% left)' : '' }; }),
-      onPick: function (v) { PMU.accounts.setSwitchLevel(v); } });
+    var pid = el.getAttribute('data-prov') || null, th = PMU.roster.thresholds(pid), p = pid ? PMU.roster.provider(pid) : null, g = PMU.roster.thresholds();
+    var own = !p || (th.own && th.own.switchLeft), warnAt = 100 - th.warnLeft;
+    /* one line per level ("85% used", its % left on the right), so the whole list fits the room above a plate at 1440
+       (item 2 review: the 75 % row was cut and the 70 % row hidden behind a scroll); a level at or past the warn level
+       is shown dim, its reason in the section label and its hover tag */
+    var levels = LEVELS.map(function (v) { var off = v >= th.warnLeft; return { value: v, label: (100 - v) + '% used', right: v + '% left' + (p ? '' : v === 10 ? ' · default' : ''), disabled: off, hover: off ? 'At or past the warn level (' + warnAt + '% used)' : '' }; });
+    var anyOff = levels.some(function (o) { return o.disabled; });
+    /* the head is the question alone, in the provider's Settings name where it fits (the "Current · 90% used" meta beside
+       it cut the title to "Switch Claude accounts…" in five looks); the check on the active row says the current level */
+    var MW = 400, title = 'Switch accounts at';
+    if (p) { title = 'Switch ' + p.name + ' accounts at'; if (C.wrapW(title, 13, 650) * (PMU.theme.look().nier ? 1.3 : 1) > MW - 40) title = 'Switch ' + famShort(p) + ' accounts at'; }
+    var spec = { title: title, value: own ? th.switchLeft : 'shared', current: '', width: MW,
+      foot: (p ? p.name + ' only, shared with Settings. ' : 'Shared with Settings > AI > Providers & Accounts. ') + t('accounts.not_consent'),
+      onPick: function (v) { if (v === 'shared') PMU.accounts.useShared(pid, IDS().switchLeft); else PMU.accounts.setSwitchLevel(v, pid); } };
+    /* a provider's menu leads with the shared setting (what it follows when it has no level of its own) */
+    if (p) spec.sections = [{ rows: [{ value: 'shared', label: 'Shared setting · ' + (100 - g.switchLeft) + '% used', sub: 'Follows Settings > Limits & switching', active: !own }] },
+      { label: 'Its own level' + (anyOff ? ' · under the ' + warnAt + '% warn level' : ''), rows: levels.map(function (o) { return Object.assign({ active: own && o.value === th.switchLeft }, o); }) }];
+    else { spec.options = levels; if (anyOff) spec.foot = 'Under the ' + warnAt + '% warn level. ' + spec.foot; }
+    PMU.menu.choice(el, spec);
   });
-  C.act('acct-use', function (el) { PMU.accounts.useAccount(el.getAttribute('data-value')); });
+  /* the shared setting's line opens its Settings row (UCC-147: Settings opens reuse cmd.settings.open) */
+  C.act('pol-shared', function () {
+    var receipt = command('cmd.settings.open', { category: 'ai', setting_id: 'ai.accounts.hard-switch-level', provider_id: null, account_id: null }, { opened: true });
+    if (receipt.dispatch_accepted !== false) PMU.settings.open(null, 'ai.accounts.hard-switch-level');
+  });
+  C.act('acct-use', function (el) { PMU.accounts.askUse(el.getAttribute('data-value'), el); });
   C.act('acct-settings', function (el) { var k = el.getAttribute('data-value').split('/'); PMU.accounts.openSettings(k[0], k[1]); });
   C.act('acct-inspect', function (el) { PMU.accounts.inspect(el.getAttribute('data-value'), el); });
   C.act('prov-setup', function (el) { PMU.accounts.openSettings(el.getAttribute('data-value')); });

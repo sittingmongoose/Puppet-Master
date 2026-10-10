@@ -26,7 +26,8 @@
   function slotTitle(sl) { return sl.live ? sl.al.title : (PMU_BOARDS.widgets['alert-' + sl.i] || {}).title || sl.al.title; }
   function slotWhen(sl) { return sl.live || sl.al.time === 'now' ? 'now' : sl.al.time + ' ago'; }
   function liveX(al) {
-    var a = al.account ? PMU.roster.account(al.account) : null, th = PMU.roster.thresholds();
+    /* the warn line the alert crossed is its account's own (item 2: the provider's level, or the account's own) */
+    var a = al.account ? PMU.roster.account(al.account) : null, th = (a && a.policy) || PMU.roster.thresholds(al.provider_id || null);
     return { disposition: 'route watch', threshold: 'crossed the ' + (100 - th.warnLeft) + '% warn line', scope: C.legName(al.provider_id) + (a ? ' · ' + a.nickname : ''),
       receipt: 'live demo reading · no receipt yet', foot: 'Review route · ' + C.legName(al.provider_id) };
   }
@@ -73,9 +74,13 @@
     if (r.dispatch_accepted !== false) PMU.shell.toast('Route change requested for ' + legName(al.provider_id) + '. New work moves to the next eligible route.');
   });
   def('attention-policy', 'attention', { meta: function () { return 'current · alert rules'; }, model: function () {
-    var th = PMU.roster.thresholds();
+    /* the shared levels, then each provider whose own differ (item 2: auto-switch and its levels are per provider) */
+    var th = PMU.roster.thresholds(), diffs = C.policyDiffs ? C.policyDiffs() : [];
+    var own = diffs.map(function (d) { return d.short + ' ' + (d.pol.warnLeft !== th.warnLeft ? 'warn ' + (100 - d.pol.warnLeft) + '% · ' : '') + (d.pol.auto ? 'switch ' + (100 - d.pol.switchLeft) + '%' : 'switch off'); });
+    var thHover = 'Shared: warn at ' + (100 - th.warnLeft) + '% used, ' + (th.auto ? 'switch at ' + (100 - th.switchLeft) + '% used' : 'auto-switch off') + '. ' +
+      (diffs.length ? diffs.map(function (d) { return d.p.name + ': warn at ' + (100 - d.pol.warnLeft) + '% used, ' + (d.pol.auto ? 'switch at ' + (100 - d.pol.switchLeft) + '% used' : 'auto-switch off'); }).join('. ') + '. Every other service follows the shared levels' : 'Every service follows the shared levels');
     return { text: '4', unit: ' / 4', sub: 'alert rules reporting · ' + b('healthy'), facts: [['Allowance', 'on'], ['Pricing', 'on'], ['Freshness', 'on'], ['Fallback', 'on'], ['Last review', '2d'],
-      ['Thresholds', 'warn ' + (100 - th.warnLeft) + '% used · switch ' + (100 - th.switchLeft) + '% used'], ['Quiet window', 'not set', { vs: 'disabled', word: 'not set' }]],
+      ['Thresholds', 'warn ' + (100 - th.warnLeft) + '% used · switch ' + (100 - th.switchLeft) + '% used' + (own.length ? ' · ' + own.join(' · ') : ''), { hover: thHover }], ['Quiet window', 'not set', { vs: 'disabled', word: 'not set' }]],
       foot: '<button type="button" class="pmu-textbtn" data-pmu-act="policy-settings">Adjust in Settings</button>' };
   } });
   C.act('policy-settings', function () { var r = command('cmd.settings.open', { category: 'ai', setting_id: 'ai.accounts.soft-warning-level' }, { opened: true }); if (r.dispatch_accepted !== false) PMU.settings.open(null, 'ai.accounts.soft-warning-level'); });

@@ -864,7 +864,10 @@
     try {
       /* while the demo hour runs (8.6) the demo minute is part of every signature: relative times ("resets in 1h 41m")
          change as plain text each step */
-      var th = PMU.roster.thresholds(), pre = [th.auto, th.switchLeft, th.warnLeft, ctx.tier ? ctx.tier.bw + 'x' + ctx.tier.bh : '', PMU.clock && PMU.clock.demo && PMU.clock.demo() ? Math.floor(PMU.clock.now() / 60000) : ''].join('|') + '|';
+      /* every provider's and account's own auto-switch policy too (item 2): a per-provider change re-renders the cards
+         whose notch or tone it moves (18-model.js policySig) */
+      var th = PMU.roster.thresholds(), ro = PMU.roster.read ? PMU.roster.read() : null;
+      var pre = [th.auto, th.switchLeft, th.warnLeft, ro && ro.policySig || '', ctx.tier ? ctx.tier.bw + 'x' + ctx.tier.bh : '', PMU.clock && PMU.clock.demo && PMU.clock.demo() ? Math.floor(PMU.clock.now() / 60000) : ''].join('|') + '|';
       return impl.liveSig ? pre + String(impl.liveSig(ctx)) : ctx.model && typeof ctx.model === 'object' ? pre + JSON.stringify(ctx.model) : null;
     } catch (error) { return null; }
   }

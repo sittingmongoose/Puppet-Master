@@ -253,7 +253,7 @@
     var rows = D.providers().map(function (p) {
       var v = D.planView(p.id), w = v && v.binding;
       return { id: p.id, name: legName(p.id), short: SHORT_NAME[p.id], role: (w ? w.short : p.primaryLabel) + ' · ' + C.pace(p.pace), value: w ? w.pct : p.used, valueText: C.fmt(w ? w.pct : p.used, 'pct') + ' used', valueShort: C.fmt(w ? w.pct : p.used, 'pct'),
-        tone: w ? w.tone : PMU.roster.tone(p.used), vendor: PMU.markOf(PMU.roster.legacyProvider(p.id)).vendor, mark: PMU.roster.legacyProvider(p.id), prov: PMU.roster.legacyProvider(p.id),
+        tone: w ? w.tone : PMU.roster.tone(p.used, p.id), vendor: PMU.markOf(PMU.roster.legacyProvider(p.id)).vendor, mark: PMU.roster.legacyProvider(p.id), prov: PMU.roster.legacyProvider(p.id),
         /* N3-1: the row's bar is its provider's binding window (effective account); its mark the provider's */
         shareKey: w && v.account ? 'win:' + v.account.key + '/' + w.key : null, markShare: 'prov:' + PMU.roster.legacyProvider(p.id),
         hover: (w ? w.label : p.primaryLabel) + ' · ' + C.pace(p.pace) + ' · ' + C.routeEstimate(p) };
@@ -346,7 +346,7 @@
     /* numeric rows like route-pressure (the ranked chart reads value / valueText / role); the pace, the watch or healthy
        word and the labelled estimate stay in the role line and the hover */
     var rows = D.providers().map(function (p) {
-      var tone = PMU.roster.tone(p.used), watch = p.status === 'watch' ? 'watch' : 'healthy';
+      var tone = PMU.roster.tone(p.used, p.id), watch = p.status === 'watch' ? 'watch' : 'healthy';   /* item 2: the provider's own levels */
       return { id: p.id, name: legName(p.id), short: SHORT_NAME[p.id], role: p.primaryLabel + ' · ' + C.pace(p.pace) + ' · ' + watch, value: p.used, valueText: C.fmt(p.used, 'pct') + ' used', valueShort: C.fmt(p.used, 'pct'),
         tone: tone, vendor: PMU.markOf(PMU.roster.legacyProvider(p.id)).vendor, mark: PMU.roster.legacyProvider(p.id), prov: PMU.roster.legacyProvider(p.id),
         hover: p.primaryLabel + ' · ' + C.pace(p.pace) + ' · ' + watch + ' · ' + C.routeEstimate(p) };
@@ -513,15 +513,9 @@
       aside: function (ctx) {
         var r = PMU.roster.provider(p.id); if (!r || !r.accounts.length) return '';
         if (r.accounts.length > 1) {
-          /* the provider's own switch point (thresholds(providerId); the shared levels where it has none). Lane d-switch's
-             plate policy band carries it instead and returns '' here: at integration its hunk wins */
-          if (ctx && ctx.form === 'plate' && r.group === 'plan' && r.windows.length) { var th = PMU.roster.thresholds(p.id);
-            var tw = ctx.tier ? ctx.tier.w : 'l'; if (tw === 'xs' || tw === 's') return '';
-            /* the long words only where the subtitle beside them stays whole (Retro 2026-10-02: "4 accounts · Work Claude ...") */
-            var longW = 'Auto-switch at ' + (100 - th.switchLeft) + '% used', metaT = providerMeta(p.id)();
-            var longOk = tw !== 'm' && C.wrapLines(metaT, (ctx.tier.bw || 0) - 44 - C.wrapW(longW, 12.5) - 40, 12.5) <= 1;
-            var words = th.auto ? (longOk ? longW : 'Switch at ' + (100 - th.switchLeft) + '%') : 'Auto-switch off';
-            return { html: '<span class="pmu-asw"' + C.hover('Auto-switch', (th.auto ? 'Switches at ' + (100 - th.switchLeft) + '% used. ' : '') + 'Shared with Settings; change it in the Auto-switch strip or in Settings') + '>' + SVG.notch + esc(words) + '</span>' }; }
+          /* d-switch (item 2): the plate's own policy band (54-w-accounts.js) carries the provider's switch and switch
+             level, so the head no longer repeats them (each state said once, LOOK-REVIEW-2 16) */
+          if (ctx && ctx.form === 'plate' && r.group === 'plan' && r.windows.length) return '';
           return r.accounts.length + ' accounts';
         }
         var a = r.accounts[0];

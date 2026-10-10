@@ -15,6 +15,9 @@
   var STATE_WORD = { active: 'Active', standby: 'Standby', exhausted: 'Usage exhausted', cooldown: 'Cooldown', 'signed-out': 'Signed out', 'needs-seat': 'Needs a seat', unknown: 'Usage unknown' };
   var STATE_GLYPH = { active: 'checkCircle', exhausted: 'alert', cooldown: 'hourglass', 'signed-out': 'key', 'needs-seat': 'minusCircle', unknown: 'dashedCircle' };
   var STATE_TONE = { active: 'good', exhausted: 'crit', cooldown: 'warn', 'signed-out': 'warn', 'needs-seat': 'muted', standby: 'muted', unknown: 'muted' };
+  /* a window reading that cannot decide a switch: an estimate, a local inference or one waiting for a recheck (AAC: local
+     session logs never decide; a reading with an unknown reset time still can) */
+  var UNTRUSTED = { pm_estimate: 1, locally_inferred: 1, pending_recheck: 1 };
   var loadedAt = clockNow();
   var cache = null, memo = {};
   var st = PMU.core.state;
@@ -31,30 +34,58 @@
   function num(v) { return typeof v === 'number' && isFinite(v) ? v : null; }
   function sum(a) { var s = 0; (a || []).forEach(function (v) { if (typeof v === 'number') s += v; }); return s; }
 
-  /* ---------------------------------------------------------------- thresholds and the A1 state colours (4.2) */
-  function thresholds() {
-    var auto = PMU.settings.value('ai.accounts.multi-account-switching');
-    var sw = Number(PMU.settings.value('ai.accounts.hard-switch-level')), warn = Number(PMU.settings.value('ai.accounts.soft-warning-level'));
-    return { auto: auto !== false && auto !== 'off' && auto !== 'false', switchLeft: isFinite(sw) && sw > 0 ? sw : 10, warnLeft: isFinite(warn) && warn > 0 ? warn : 20,
-      available: PMU.settings.available() };
+  /* ---------------------------------------------------------------- thresholds and the A1 state colours (4.2)
+     Auto-switch is per provider (Jared 2026-10-09 item 2; AAC research R3 section 1). Four Settings rows carry a provider
+     scope: ai.accounts.multi-account-switching, hard-switch-level and soft-warning-level (% LEFT; Usage shows % used) and
+     cooldown-policy. One value resolves as: account override (ai.accounts.account-threshold-override, the switch level
+     only) > the provider's own value > project > global; the concept keeps project and global as one value (the Settings
+     value), and that value is the default for every provider without one of its own. The provider values live in the
+     Settings owner (PM51 providers manager, p.props[id], the providers-service scope); Usage reads them through
+     PMU.settings and writes them only through the Settings owner (54-w-accounts.js PMU.accounts.setPolicy).
+     thresholds() -> the global policy (unchanged contract); thresholds(providerId) -> that provider's resolved policy;
+     thresholds(providerId, accountId) -> the same with the account's own switch level. A legacy provider id ('claude')
+     resolves to its Settings id. Fields: auto, switchLeft, warnLeft (% left), cooldown, available, providerId, scope
+     ('global' | 'provider' | 'account'), own {auto, switchLeft, warnLeft, cooldown}: true where the provider has its own
+     value, shared: the global policy. */
+  var POLICY_IDS = { auto: 'ai.accounts.multi-account-switching', switchLeft: 'ai.accounts.hard-switch-level', warnLeft: 'ai.accounts.soft-warning-level', cooldown: 'ai.accounts.cooldown-policy' };
+  var ACCOUNT_SWITCH_ID = 'ai.accounts.account-threshold-override';
+  var policyMemo = {}, cooldownEnd = null;
+  function autoOn(v) { return v !== false && v !== 'off' && v !== 'false' && v != null; }
+  function levelOf(v, dflt) { if (v === '' || v === null || v === undefined) return dflt; var n = Number(v); return isFinite(n) && n > 0 && n < 100 ? n : dflt; }
+  function cooldownOf(v) { return v === '' || v === null || v === undefined ? 'provider defaults' : String(v); }
+  function globalPolicy() {
+    if (policyMemo._g) return policyMemo._g;
+    var auto = PMU.settings.value(POLICY_IDS.auto);
+    return (policyMemo._g = { auto: auto === undefined ? true : autoOn(auto), switchLeft: levelOf(PMU.settings.value(POLICY_IDS.switchLeft), 10), warnLeft: levelOf(PMU.settings.value(POLICY_IDS.warnLeft), 20),
+      cooldown: cooldownOf(PMU.settings.value(POLICY_IDS.cooldown)), available: PMU.settings.available(), scope: 'global', providerId: null, own: {}, shared: null });
   }
-  /* lane d-plans (2026-10-09): a provider's own switch and warn levels (lane d-switch makes thresholds() take a provider
-     id; until then, or for a provider without its own values, the shared levels apply) */
-  function thFor(providerId) {
-    var t = null;
-    if (providerId) { try { t = thresholds(providerId); } catch (error) { t = null; } }
-    return t || thresholds();
+  function thresholds(providerId, accountId) {
+    var g = globalPolicy(); if (!providerId) return g;
+    var pid = LEGACY_PROVIDER[providerId] || providerId, key = pid + '/' + (accountId || '');
+    if (policyMemo[key]) return policyMemo[key];
+    var own = (PMU.settings.providerPolicy && PMU.settings.providerPolicy(pid, POLICY_IDS)) || {};
+    var has = function (k) { return Object.prototype.hasOwnProperty.call(own, k) && own[k] !== null && own[k] !== undefined && own[k] !== ''; };
+    var pol = { auto: has('auto') ? autoOn(own.auto) : g.auto, switchLeft: has('switchLeft') ? levelOf(own.switchLeft, g.switchLeft) : g.switchLeft,
+      warnLeft: has('warnLeft') ? levelOf(own.warnLeft, g.warnLeft) : g.warnLeft, cooldown: has('cooldown') ? cooldownOf(own.cooldown) : g.cooldown,
+      available: g.available && !!(PMU.settings.providerWritable && PMU.settings.providerWritable()), scope: 'provider', providerId: pid,
+      own: { auto: has('auto'), switchLeft: has('switchLeft'), warnLeft: has('warnLeft'), cooldown: has('cooldown') }, shared: g };
+    if (accountId) {
+      var ov = PMU.settings.accountValue ? PMU.settings.accountValue(pid, accountId, ACCOUNT_SWITCH_ID) : null, n = levelOf(ov, null);
+      if (n !== null) pol = Object.assign({}, pol, { switchLeft: n, scope: 'account', accountId: accountId, accountOverride: n });
+    }
+    return (policyMemo[key] = pol);
   }
-  /* calm | warn | crit | exhausted | over | null (null = missing: no bar); providerId: that provider's levels */
-  function tone(pctUsed, providerId) {
+  /* calm | warn | crit | exhausted | over | null (null = missing: no bar); with a provider id, that provider's levels */
+  function toneWith(pctUsed, th) {
     if (pctUsed === null || pctUsed === undefined || !isFinite(pctUsed)) return null;
-    var th = thFor(providerId), left = 100 - pctUsed;
+    var left = 100 - pctUsed;
     if (pctUsed > 100) return 'over';
     if (left <= 0) return 'exhausted';
     if (left <= th.switchLeft) return 'crit';
     if (left <= th.warnLeft) return 'warn';
     return 'calm';
   }
+  function tone(pctUsed, providerId, accountId) { return toneWith(pctUsed, thresholds(providerId, accountId)); }
 
   /* ---------------------------------------------------------------- windows */
   function amountText(f) {
@@ -69,10 +100,13 @@
   /* src: {pid, sampledAt (the account's reading time), source, readAt (a newer reading of this window: the demo hour's
      poll after a reset)}. Reset truth (lane d-plans, from AAC's pendingReset): a window whose reset time has passed while
      its reading predates that reset has no current reading: pct is null, vs 'reset_pending', and it reads "Reset at
-     <time> · new reading pending" (never 0 %, never the old %; the old reading stays history only, in quota history) */
-  function windowView(key, label, fact, governed, rolls, src) {
+     <time> · new reading pending" (never 0 %, never the old %; the old reading stays history only, in quota history).
+     pol (lane d-switch, item 2): the account's resolved auto-switch policy, thresholds(providerId, accountId); without it
+     the provider's own policy (src.pid), else the shared one */
+  function windowView(key, label, fact, governed, rolls, src, pol) {
     fact = fact || { vs: 'unknown' };
     src = src || {};
+    pol = pol || thresholds(src.pid);
     var pct = num(fact.pct);
     var resetAt = num(fact.reset_in_min) !== null ? loadedAt + fact.reset_in_min * MIN : num(fact.reset_passed_min) !== null ? loadedAt - fact.reset_passed_min * MIN
       : fact.reset_rule === 'next_month' ? nextMonthStart() : null;
@@ -89,8 +123,10 @@
     var vsState = passed ? 'reset_pending' : fact.vs && fact.vs !== 'ok' && fact.vs !== 'estimated' ? fact.vs : pct === null ? 'unknown' : (pct === 0 && fact.zero ? 'zero' : 'ok');
     return { key: key, label: label, short: shortLabel(key, label), pct: pct, left: pct === null ? null : Math.max(0, 100 - pct), used: passed ? null : num(fact.used), limit: num(fact.limit),
       unit: fact.unit || '', amount: passed ? '' : amountText(fact), resetAt: resetAt, truth: truth, conf: fact.conf || '', vs: vsState, est: fact.vs === 'estimated',
-      note: fact.note || '', tone: tone(pct, src.pid), pace: pace, pacePts: passed ? null : num(fact.pace_pts), governed: !!governed, binding: false,
-      resetPending: passed, lastPct: passed ? lastPct : null, sampledAt: sampledAt, source: src.source || '', providerId: src.pid || '' };
+      note: fact.note || '', tone: toneWith(pct, pol), pace: pace, pacePts: passed ? null : num(fact.pace_pts), governed: !!governed, binding: false,
+      resetPending: passed, lastPct: passed ? lastPct : null, sampledAt: sampledAt, source: src.source || '',
+      /* this window's own provider policy (item 2): the notch of every meter sits at switchAt (% used) */
+      providerId: pol.providerId || src.pid || '', switchAt: 100 - pol.switchLeft, warnAt: 100 - pol.warnLeft, autoOn: !!pol.auto };
   }
   /* "Reset at 13:50 · new reading pending" (a reset earlier today), "Reset at Tue 13:50 · ..." (this week), "Reset at Oct 2 · ..." */
   function resetPendingWord(w) {
@@ -137,6 +173,76 @@
     return s || 'Not set up';
   }
 
+  /* ---------------------------------------------------------------- what auto-switch is doing for one provider
+     (item 2; AAC policies() and codexFoot, research R3 section 1). One closed set of states, said in plain words:
+       single        fewer than two accounts: "Auto-switch is off until a second account is signed in"
+       no_windows    the provider reports no usage window to switch on
+       off           the provider's toggle is off (past its switch point: the active account stays until you switch)
+       unread        the active account has no fresh, identity-bound reading, so nothing is decided
+       watching      the active account is under its switch point
+       waiting_idle  past the switch point with a target chosen, the provider's tool is mid-work: the switch waits
+       due           past the switch point with a target chosen and the tool idle: the next check switches
+       no_candidate  past the switch point and no other account has a fresh reading with room (credits: paid credits
+                     are being drawn by new work)
+     The target is the eligible account with the most remaining (ties by priority); an account is eligible when it is
+     signed in, not exhausted or cooling down, has a fresh trusted reading and is under its own switch point. */
+  var TOOL = { 'claude-code': 'Claude Code', 'openai-codex': 'Codex', 'github-copilot': 'Copilot', 'qwen-coding': 'Qwen Code', 'kimi-coding': 'Kimi Code', 'gemini-direct': 'Gemini CLI',
+    'cursor-cli': 'Cursor', antigravity: 'Antigravity', muse: 'Muse Code', 'zai-coding': 'Z.AI', 'opencode-go': 'OpenCode', grok: 'Grok Build', 'minimax-coding': 'MiniMax' };
+  function toolOf(view) { return TOOL[view.id] || view.name; }
+  /* a provider's tool is busy while one of its live attempts is pending (the overlay's own attempt rows) */
+  function busyOf(view) {
+    var o = OV(); if (!o || !o._attempts) return false;
+    return o._attempts.some(function (x) { return x && !x.settled && (LEGACY_PROVIDER[x.provider] || x.provider) === view.id; });
+  }
+  /* why an account cannot take over, in plain words ('' = it can) */
+  function whyNot(a) {
+    if (!a.signedIn || a.state === 'signed-out') return 'signed out';
+    if (a.state === 'needs-seat') return 'needs a seat';
+    if (a.state === 'exhausted') { var x = a.windows.filter(function (w) { return w.pct !== null && w.pct >= 100; })[0]; return x && x.resetAt ? 'usage exhausted until ' + PMU.fmt.clock(x.resetAt) : 'usage exhausted'; }
+    if (a.state === 'cooldown') return a.cooldown ? 'cooling down until ' + PMU.fmt.clock(a.cooldown.untilAt) : 'cooling down';
+    if (!a.hasFacts) return 'no reading yet';
+    if (!a.binding) return 'no usage window reported';
+    if (a.fresh.stale) return 'its reading is ' + PMU.fmt.age(a.fresh.ageS) + ' old';
+    if (UNTRUSTED[a.binding.truth]) return 'its reading is an estimate';
+    if (a.binding.left <= a.policy.switchLeft) return Math.round(100 - a.binding.left) + '% used, at its switch point';
+    return '';
+  }
+  function hasCredits(a) {
+    return !!((a.credits && a.credits.vs !== 'not_exposed' && a.credits.left > 0) || (a.extra || []).some(function (x) { return /credit/i.test(x.label || '') && x.vs === 'ok'; }));
+  }
+  function autoStatus(view) {
+    var pol = view.policy, a = view.effective, name = view.name, tool = toolOf(view);
+    var at = a && a.policy ? 100 - a.policy.switchLeft : 100 - pol.switchLeft;
+    var out = { providerId: view.id, name: name, policy: pol, switchAt: at, tool: tool, active: a, candidate: null, blocked: [], past: false, warn: false, credits: false, state: 'watching', words: '' };
+    if (view.accounts.length < 2) { out.state = 'single'; out.words = 'Auto-switch is off until a second account is signed in'; return out; }
+    if (!view.windows.length) { out.state = 'no_windows'; out.words = name + ' reports no usage window, so auto-switch moves on only when an account runs out'; return out; }
+    out.past = !!(a && a.pastSwitch);
+    if (!pol.auto) {
+      out.state = 'off'; out.warn = out.past;
+      out.words = out.past ? a.nickname + ' is at ' + Math.round(a.binding.pct) + '% used, ' + (Math.round(a.binding.pct) <= at ? 'at' : 'past') + ' the ' + at + '% switch point. Auto-switch is off, so it stays active until you switch' : 'Auto-switch is off for ' + name;
+      return out;
+    }
+    if (!a) { out.state = 'unread'; out.words = 'No ' + name + ' account is active'; return out; }
+    if (!a.readable) { out.state = 'unread'; out.words = 'Waiting for a fresh reading of ' + a.nickname + ' (' + (whyNot(a) || 'no reading yet') + ')'; return out; }
+    if (!out.past) { out.state = 'watching'; out.words = a.nickname + ' moves on at ' + at + '% used'; return out; }
+    var others = view.accounts.filter(function (x) { return x !== a; });
+    var cands = others.filter(function (x) { return !whyNot(x); }).sort(function (x, y) { return (y.binding.left - x.binding.left) || (x.priority - y.priority); });
+    out.blocked = others.filter(function (x) { return whyNot(x); }).map(function (x) { return { account: x, why: whyNot(x) }; });
+    out.warn = true;
+    /* an account that has run out says so, not that it "reached the 90% switch point" */
+    var reached = a.binding.left <= 0 ? a.nickname + ' has run out' : a.nickname + ' reached the ' + at + '% switch point';
+    if (!cands.length) {
+      out.state = 'no_candidate'; out.credits = a.binding.left <= 0 && hasCredits(a);
+      out.words = reached + '. No other ' + name + ' account has a fresh reading with room' +
+        (out.credits ? '. New ' + tool + ' work draws on ' + a.nickname + '’s paid credits' : '');
+      return out;
+    }
+    out.candidate = cands[0];
+    if (busyOf(view)) { out.state = 'waiting_idle'; out.words = 'Will switch to ' + out.candidate.nickname + ' when ' + tool + ' goes idle'; }
+    else { out.state = 'due'; out.words = reached + '. Switching to ' + out.candidate.nickname + ' on the next check'; }
+    return out;
+  }
+
   function build() {
     var providers = PMU.settings.providers() || [], next = PMU.settings.nextAccount(), ovr = overrideMap(), bridge = bridgeKey();
     var th = thresholds();
@@ -166,8 +272,10 @@
         : nextKey && keys.indexOf(nextKey) >= 0 ? nextKey
         : factEff || (p.defaultAccount && keys.indexOf(p.id + '/' + p.defaultAccount) >= 0 ? p.id + '/' + p.defaultAccount : keys[0]);
       var isOverride = eff !== factEff && (!!(ovr[p.id] && ovr[p.id] === eff) || nextKey === eff);
+      /* the provider's own auto-switch policy (item 2); an account with its own switch level reads it on its windows */
+      view.policy = thresholds(p.id);
       accs.forEach(function (a, i) {
-        var key = p.id + '/' + a.id, f = (ROSTER.facts || {})[key] || null;
+        var key = p.id + '/' + a.id, f = (ROSTER.facts || {})[key] || null, apol = thresholds(p.id, a.id);
         var wins = view.windows.map(function (w) {
           var fact = f && f.windows ? f.windows[w.key] : null;
           if (!fact && !f && a.usage && a.usage.windows && a.usage.windows[w.key] && typeof a.usage.windows[w.key].pct === 'number') fact = { pct: a.usage.windows[w.key].pct, truth: 'unknown' };
@@ -176,8 +284,12 @@
             fact = Object.assign({}, fact, { pct: Math.max(0, Math.round((fact.pct + dw) * 10) / 10) });
             if (num(fact.used) !== null && num(fact.limit) !== null) fact.used = Math.round(fact.used + dw / 100 * fact.limit);
           }
-          return windowView(w.key, w.label, fact, governed, ov('roll:' + key + '/' + w.key),
-            { pid: p.id, sampledAt: f && f.fresh && num(f.fresh.age_s) !== null ? loadedAt - f.fresh.age_s * 1000 : null, source: f && f.fresh ? f.fresh.source || '' : '', readAt: OV() ? OV()['read:' + key + '/' + w.key] : null });
+          var wv = windowView(w.key, w.label, fact, governed, ov('roll:' + key + '/' + w.key),
+            { pid: p.id, sampledAt: f && f.fresh && num(f.fresh.age_s) !== null ? loadedAt - f.fresh.age_s * 1000 : null, source: f && f.fresh ? f.fresh.source || '' : '', readAt: OV() ? OV()['read:' + key + '/' + w.key] : null }, apol);
+          /* a provider with one account does not switch (AAC; its plate says "Off · one account"), so its notch is dim on
+             every meter that reads autoOn (the Plans & limits meters too) */
+          if (accs.length < 2) wv.autoOn = false;
+          return wv;
         });
         var known = wins.filter(function (w) { return w.pct !== null; });
         var binding = known.slice().sort(function (x, y) { return (x.left - y.left) || (WINDOW_ORDER.indexOf(x.key) - WINDOW_ORDER.indexOf(y.key)); })[0] || null;
@@ -187,7 +299,14 @@
         var effective = key === eff;
         var cooldown = f && f.cooldown ? { untilAt: loadedAt + (f.cooldown.until_in_min || 0) * MIN, reason: f.cooldown.reason, source: f.cooldown.source, retry: f.cooldown.retry_budget } : null;
         /* the bridge's seconds count down on the real clock: anchored there, the demo hour's clock passes the end (8.6) */
-        if (cooldown && window.PM7_USAGE && Number(window.PM7_USAGE.cooldown_seconds) > 0) cooldown.untilAt = Date.now() + Number(window.PM7_USAGE.cooldown_seconds) * 1000;
+        /* the app's countdown (seconds left, ticked by the host) gives the same end each second within its jitter: the end
+           seen first is kept while a new reading lands within 5 s of it, so "Cooldown until 00:42" never flips to 00:43 and
+           back between two roster builds (d-switch: the flip re-rendered the Codex plate in the auto-switch click task) */
+        if (cooldown && window.PM7_USAGE && Number(window.PM7_USAGE.cooldown_seconds) > 0) {
+          var cdAt = Date.now() + Number(window.PM7_USAGE.cooldown_seconds) * 1000;
+          if (cooldownEnd !== null && Math.abs(cdAt - cooldownEnd) < 5000) cdAt = cooldownEnd;
+          cooldown.untilAt = cooldownEnd = cdAt;
+        }
         if (cooldown && cooldown.untilAt <= clockNow()) { cooldown = null; if (state === 'cooldown') state = 'standby'; }
         var supports = !!(f && f.supports_manual_set_active) && accs.length > 1;
         var exhaustedWin = wins.filter(function (w) { return w.pct !== null && w.pct >= 100; })[0];
@@ -221,11 +340,16 @@
           windows: wins, binding: binding, amounts: amounts, noWindowsWord: noWindowsWord, extra: (f && f.extra) || [], credits: f && f.credits, spend: f && f.spend, cooldown: cooldown,
           failure: f && f.failure, routeRole: f ? f.route_role : '', legacy: f && f.legacy_id ? legacyFor(f.legacy_id) : null, legacyId: f ? f.legacy_id : null,
           supportsManual: supports, eligible: eligible, history: (f && f.history) || {}, hasFacts: !!f, roles: (a.props && a.props['ai.accounts.account-roles']) || [],
-          billingEntity: a.props ? a.props['ai.accounts.billing-entity'] || '' : '' };
+          billingEntity: a.props ? a.props['ai.accounts.billing-entity'] || '' : '',
+          /* item 2: this account's resolved policy and whether its binding window is at or past its switch point; only a
+             fresh, identity-bound reading may decide a switch (AAC assessRemaining): a reading the provider reported for
+             this account, not a cached one */
+          policy: apol, pastSwitch: !!(binding && binding.left <= apol.switchLeft), readable: !!(f && !fresh.stale && binding && !UNTRUSTED[binding.truth]) };
         view.accounts.push(av); accounts.push(av);
       });
       view.effective = view.accounts.filter(function (a) { return a.effective; })[0] || null;
       view.exhausted = view.accounts.filter(function (a) { return a.state === 'exhausted'; });
+      view.auto = autoStatus(view);
       views.push(view);
       var g = groups.filter(function (x) { return x.id === view.group; })[0] || groups[groups.length - 1];
       g.providers.push(view);
@@ -237,7 +361,10 @@
       return { at: e.at_ms != null ? e.at_ms : loadedAt - e.at_min_ago * MIN, providerId: e.provider, providerName: p ? p.name : e.provider, from: e.from, to: e.to, fromName: e.from ? nick(e.from) : '', toName: e.to ? nick(e.to) : '',
         code: e.code, text: e.text, outcome: e.outcome };
     }).sort(function (a, b) { return b.at - a.at; });
-    return { groups: groups, providers: views, accounts: accounts, switchLog: log, thresholds: th };
+    /* every resolved auto-switch policy in one string (item 2): the card memo signature (50-w-common.js msig) holds it, so
+       a per-provider or per-account change re-renders the cards that draw a notch or a tone */
+    var policySig = accounts.map(function (a) { var q = a.policy || th; return a.key + ':' + (q.auto ? 1 : 0) + '/' + q.switchLeft + '/' + q.warnLeft; }).join(',');
+    return { groups: groups, providers: views, accounts: accounts, switchLog: log, thresholds: th, policySig: policySig };
   }
 
   PMU.roster = {
@@ -257,11 +384,16 @@
     settingsToLegacy: function (id) { return SETTINGS_LEGACY[id] || null; },
     thresholds: thresholds,
     tone: tone,
+    /* item 2: one provider's resolved policy and what its auto-switch is doing (autoStatus); the Settings ids */
+    policy: function (id, accountId) { return thresholds(id, accountId); },
+    autoStatus: function (id) { var p = PMU.roster.provider(LEGACY_PROVIDER[id] || id); return p ? p.auto : null; },
+    whyNot: whyNot,
+    POLICY_IDS: POLICY_IDS,
     vsWord: vsWord,
     loadedAt: loadedAt,
-    invalidate: function () { cache = null; memo = {}; }
+    invalidate: function () { cache = null; memo = {}; policyMemo = {}; }
   };
-  PMU.settings.onChange(function () { cache = null; memo = {}; });
+  PMU.settings.onChange(function () { cache = null; memo = {}; policyMemo = {}; });
 
   /* ---------------------------------------------------------------- one fixture clock (REVIEW-jared must-fix 8)
      The series and the roster facts are anchored to the page's load time; the old page's frozen clock strings
@@ -580,13 +712,14 @@
     return { days: days, unknown: unknown, passed: passed, beyond: beyond.length, beyondList: beyond, count: events.length };
   }
 
-  /* quota history rows (A1 7.9): step runs, each coloured by its own state; a reset starts a new run with no connector */
-  function runsOf(points) {
+  /* quota history rows (A1 7.9): step runs, each coloured by its own state; a reset starts a new run with no connector.
+     pol: the row account's resolved auto-switch policy (item 2), so a run turns warn or crit at that account's own levels */
+  function runsOf(points, pol) {
     var runs = [], n = points.length, cur = null;
     points.forEach(function (v, i) {
       if (v === null || v === undefined) { cur = null; return; }
       var prev = i > 0 ? points[i - 1] : null, reset = prev !== null && prev !== undefined && v < prev - 4;
-      var tn = tone(v) || 'calm';
+      var tn = (pol ? toneWith(v, pol) : tone(v)) || 'calm';
       if (!cur || reset || cur.tone !== tn) { cur = { i0: i, i1: i, v: [v], from: reset || !cur ? null : cur.v[cur.v.length - 1], tone: tn }; runs.push(cur); }
       else { cur.i1 = i; cur.v.push(v); }
     });
@@ -608,7 +741,7 @@
            the soonest reset of any window stays in the hover */
         var known = function (w) { return w && w.resetAt && w.resetAt > clockNow() && w.truth !== 'unknown'; };
         var upcoming = a.windows.filter(known).sort(function (x, y) { return x.resetAt - y.resetAt; })[0] || null;
-        return { account: a, main: main, points: pts, runs: pts ? runsOf(pts) : [], next: known(main) ? main : null, soonest: upcoming,
+        return { account: a, main: main, points: pts, runs: pts ? runsOf(pts, a.policy) : [], next: known(main) ? main : null, soonest: upcoming,
           focus: a.windows.map(function (w) { return { label: w.short, key: w.key, points: qh[a.key + '/' + w.key] || null, resetAt: w.resetAt, pct: w.pct }; }) };
       });
       var mainKey = rows[0] && rows[0].main ? rows[0].main.key : p.windows[0].key;
@@ -657,7 +790,7 @@
     sum: sum,
     rangeLabel: function (range) { return { '5h': '5 hours', '24h': '24 hours', '7d': '7 days', '30d': '30 days' }[rangeKey(range)] || range; },
     scopeText: function () { var s = st.scope || 'all'; return s === 'all' ? 'All providers' : PMU.shell && PMU.shell.scopeLabel ? PMU.shell.scopeLabel(s) : s; },
-    invalidate: function () { memo = {}; cache = null; },
+    invalidate: function () { memo = {}; cache = null; policyMemo = {}; },
     ov: ov,
     /* tokens of one legacy provider in the range, the live NOW bucket included (the token tiles) */
     provTokens: function (range, legacyId) {
@@ -772,9 +905,11 @@
          clock by two demo minutes before calling). Readings rise every step (roster.json live.hour); the climbing window
          is the effective account's, so after an auto-switch the next account climbs; a window whose reset time the demo
          clock passed starts its next window (0 % used, its reset moved on, "Usage exhausted" ends); a cooldown ends by
-         the clock (the roster already reads it); the auto-switch happens when the effective account's binding window
-         reaches the Settings switch line and auto-switch is on: the eligible account with the most room becomes
-         effective and the switch history gains "Auto-switch (demo)". Settings is never written; DATA never changes.
+         the clock (the roster already reads it); the auto-switch is per provider (item 2): it happens when that
+         provider's toggle is on and its active account's fresh reading reaches that provider's own switch point, to the
+         eligible account with a fresh reading and the most room, once the provider's tool is idle (a pending live attempt
+         of that provider holds it: "Will switch to X when <tool> goes idle"); the switch history gains "Auto-switch
+         (demo)". Settings is never written; DATA never changes.
          Returns {shares, lead} like apply(): every changed number and every account whose state, effective flag or
          window readings changed. */
       hourStep: function (o, now, step) {
@@ -793,6 +928,9 @@
           PMU.roster.read().accounts.forEach(function (a) {
             out[a.key] = JSON.stringify([a.shownState, a.stateWord, a.effective, a.windows.map(function (w) { return [w.key, w.pct, w.resetAt]; })]);
           });
+          /* what auto-switch is doing for each provider (item 2): a change patches the provider's cards through its active
+             account's keys */
+          PMU.roster.read().providers.forEach(function (p) { if (p.auto && p.accounts.length > 1) out['auto:' + p.id] = p.auto.state + '|' + (p.auto.candidate ? p.auto.candidate.key : '') + '|' + (p.effective ? p.effective.key : ''); });
           return out;
         };
         var before = o._hourSnap || snap();
@@ -801,6 +939,9 @@
         every(H.every); every(H.every3, 3); every(H.every4, 4);
         /* a live attempt arrives every attempt_every steps, its receipt pending until the next step's value */
         if (H.attempt && H.attempt_every && step % H.attempt_every === 0 && addAttempt(o, H.attempt, now)) changed.attempts = true;
+        /* more providers' tools at work (item 2: a provider's tool is busy while its live attempt is pending, and its
+           auto-switch waits for it to go idle): {provider, tokens, every, from} */
+        (H.attempts || []).forEach(function (x) { if (x && x.every && step >= (x.from || 0) && (step - (x.from || 0)) % x.every === 0 && addAttempt(o, x, now)) changed.attempts = true; });
         /* 2 the climbing windows: the effective account of each provider in the script */
         inval();
         var crossedWarn = [];
@@ -808,7 +949,7 @@
           var pv = PMU.roster.provider(c.provider), a = pv && pv.effective; if (!a) return;
           Object.keys(c.windows || {}).forEach(function (wk) {
             var w = a.windows.filter(function (x) { return x.key === wk; })[0]; if (!w || w.pct === null) return;
-            var k = 'win:' + a.key + '/' + wk, was = w.pct, thl = PMU.roster.thresholds();
+            var k = 'win:' + a.key + '/' + wk, was = w.pct, thl = a.policy || PMU.roster.thresholds(pv.id);
             add(k, c.windows[wk]);
             if (was < 100 - thl.warnLeft && was + c.windows[wk] >= 100 - thl.warnLeft) crossedWarn.push(a);
             if (!lead.length) lead.push(k);
@@ -833,19 +974,20 @@
           });
           if (reset && a.state === 'exhausted' && !a.windows.some(function (w) { return w.pct !== null && w.pct >= 100 && !(w.resetAt !== null && w.resetAt <= now); })) o['state:' + a.key] = 'standby';
         });
-        /* 4 the auto-switch (only when Settings has it on) */
+        /* 4 the auto-switch, per provider (item 2, AAC rules): each provider in the climb script follows its own policy
+           (PMU.roster.provider(id).auto, autoStatus): it switches only when its toggle is on, its active account's fresh
+           reading reached that provider's own switch point, an eligible account with a fresh reading and room exists (the
+           one with the most remaining) and its tool is idle; "waiting_idle" waits for the next step, "no_candidate" and
+           "unread" say why on the plate and never switch */
         inval();
-        var th = PMU.roster.thresholds();
-        if (th.auto) (H.climb || []).forEach(function (c) {
-          var pv = PMU.roster.provider(c.provider), a = pv && pv.effective;
-          if (!a || !a.binding || a.binding.left > th.switchLeft || o['eff:' + pv.id]) return;   /* one demo switch per provider */
-          var next = pv.accounts.filter(function (x) { return x !== a && x.binding && x.signedIn && (x.state === 'standby' || x.state === 'active'); })
-            .sort(function (x, y) { return y.binding.left - x.binding.left; })[0];
-          if (!next) return;
+        (H.climb || []).forEach(function (c) {
+          var pv = PMU.roster.provider(c.provider), a = pv && pv.effective, st = pv && pv.auto;
+          if (!a || !st || st.state !== 'due' || !st.candidate || o['eff:' + pv.id]) return;   /* one demo switch per provider */
+          var next = st.candidate;
           o['eff:' + pv.id] = next.key;
           if (a.state === 'active') o['state:' + a.key] = 'standby';
           o._switches = (o._switches || []).concat([{ provider: pv.id, from: a.id, to: next.id, at: now,
-            text: (H.switch_text || 'Auto-switch (demo)') + ' · ' + a.nickname + ' reached ' + Math.round(100 - th.switchLeft) + '% used; switched to ' + next.nickname }]);
+            text: (H.switch_text || 'Auto-switch (demo)') + ' · ' + a.nickname + ' reached ' + st.switchAt + '% used; switched to ' + next.nickname }]);
           lead.unshift('acct:' + next.key);
         });
         /* 5 the warn line crossed: the same alert the 1x loop plays once (beat 7), if it has not arrived yet */
@@ -861,6 +1003,11 @@
         PMU.roster.read().accounts.forEach(function (a) { a.windows.forEach(function (w) { if (w.resetAt !== null && w.pct !== null) shares.push('win:' + a.key + '/' + w.key); }); });
         Object.keys(after).forEach(function (key) {
           if (before[key] === after[key]) return;
+          if (key.indexOf('auto:') === 0) {
+            var pa = PMU.roster.provider(key.slice(5)), ea = pa && pa.effective;
+            if (ea) { shares.push('acct:' + ea.key); ea.windows.forEach(function (w) { shares.push('win:' + ea.key + '/' + w.key); }); if (lead.indexOf('acct:' + ea.key) < 0) lead.push('acct:' + ea.key); }
+            return;
+          }
           shares.push('acct:' + key);
           var a = PMU.roster.account(key); (a ? a.windows : []).forEach(function (w) { shares.push('win:' + key + '/' + w.key); });
         });

@@ -179,7 +179,7 @@
   },
   "switch_log": [
     { "at_min_ago": 18, "provider": "openai-codex", "from": "team-codex", "to": null, "code": "cooldown_active", "text": "Team rate limited (429); cooldown for 42 minutes", "outcome": "cooldown" },
-    { "at_min_ago": 184, "provider": "openai-codex", "from": "team-codex", "to": "jared", "code": "threshold_preemptive_switch", "text": "Team reached 90% used; switched before the limit", "outcome": "switched" },
+    { "at_min_ago": 184, "provider": "openai-codex", "from": "team-codex", "to": "jared", "code": "threshold_preemptive_switch", "text": "Team reached 85% used; switched before the limit", "outcome": "switched" },
     { "at_min_ago": 286, "provider": "claude-code", "from": "personal-claude", "to": "work-claude", "code": "hard_exhaustion_failover", "text": "Personal 5-hour limit reached; moved to the next eligible account", "outcome": "switched" },
     { "at_min_ago": 421, "provider": "claude-code", "from": "studio-claude", "to": null, "code": "credentials_expired", "text": "Studio skipped: sign-in expired", "outcome": "blocked" },
     { "at_min_ago": 1072, "provider": "claude-code", "from": "lab-claude", "to": "work-claude", "code": "preferred_recovered", "text": "Preferred account Work Claude recovered (priority 1)", "outcome": "switched" },
@@ -200,12 +200,13 @@
       {"beat": 10, "lead": ["num:tokens.total", "chart:tokens", "num:attempts.count"], "deltas": {"tok:qwen": 12600, "cache.read": 10000}, "attempt": {"provider": "qwen", "tokens": 12600}}
     ],
     "hour": {
-      "_note": "concept_fixture_only: \"Play the next hour\" (WOW-SPEC-3 8.6, flag playHour): 30 steps of two demo minutes on the 2 s demo tick. Every step adds 'every', every third step 'every3'; every 'attempt_every' steps an 'attempt' arrives (receipt pending; the next step's value settles it). 'climb' raises the windows of each listed provider's EFFECTIVE account (after the auto-switch the next account climbs). Resets the demo clock passes start their next window; cooldowns end by the clock; the auto-switch follows the Settings switch line and happens only when auto-switch is on. Overlay only: DATA and Settings never change; Back to now clears it.",
+      "_note": "concept_fixture_only: \"Play the next hour\" (WOW-SPEC-3 8.6, flag playHour): 30 steps of two demo minutes on the 2 s demo tick. Every step adds 'every', every third step 'every3'; every 'attempt_every' steps an 'attempt' arrives (receipt pending; the next step's value settles it). 'climb' raises the windows of each listed provider's EFFECTIVE account (after the auto-switch the next account climbs). Resets the demo clock passes start their next window; cooldowns end by the clock; the auto-switch is per provider (d-switch, item 2): each provider follows its own Settings policy (its toggle and switch point; Codex has its own 85% in the Settings fixture, Claude follows the shared 90%), switches only on a fresh reading to the eligible account with the most room, and waits while its tool is busy ('attempts': {provider, tokens, every, from} adds more tools at work; a pending attempt of that provider holds its switch). Overlay only: DATA and Settings never change; Back to now clears it.",
       "steps": 30, "step_min": 2,
       "every": {"spend.month": 0.03, "value.window": 0.03, "tok:claude": 4200, "tok:codex": 2600},
       "every3": {"cache.read": 6000, "cache.saved": 0.01},
       "attempt_every": 4, "attempt": {"provider": "claude", "tokens": 16800},
-      "climb": [{"provider": "claude-code", "windows": {"fiveHour": 0.5, "weekly": 0.05}}],
+      "attempts": [{"provider": "codex", "tokens": 9600, "every": 6, "from": 4}],
+      "climb": [{"provider": "claude-code", "windows": {"fiveHour": 0.5, "weekly": 0.05}}, {"provider": "openai-codex", "windows": {"fiveHour": 1.0, "weekly": 0.1}}],
       "switch_text": "Auto-switch (demo)"
     }
   }

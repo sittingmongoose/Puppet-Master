@@ -264,7 +264,8 @@
         var host = body.querySelector('.pmu-qline[data-key="' + r.account.key + '"]');
         if (!host) return;
         if (!r.points) { host.innerHTML = '<span class="pmu-qnone">' + esc(r.main && r.main.pct === null ? '' : 'no history yet') + '</span>'; return; }
-        C.chart(body, 'qspark', host, { runs: r.runs, ref100: true, points: r.points }, { label: r.account.nickname + ' ' + (r.main ? r.main.short : '') + ' history, 7 days' });
+        /* the row's runs turn warn and crit at its account's own levels (item 2), never the shared ones */
+        C.chart(body, 'qspark', host, { runs: r.runs, ref100: true, points: r.points, toneOf: function (v) { return PMU.roster.tone(v, r.account.providerId, r.account.id); } }, { label: r.account.nickname + ' ' + (r.main ? r.main.short : '') + ' history, 7 days' });
       };
       /* NOTES3-perf C4: the body was one 50-110 ms task on the VM (cold), most of it the rows' history lines. The first six
          lines are drawn with the body; the rest follow in frames of at most about 5 ms each (rows keep their place, so
@@ -286,8 +287,9 @@
       if (open) {
         var r = rowsDrawn.filter(function (x) { return x.account.key === open; })[0], fh = body.querySelector('.pmu-qfocushost');
         if (r && fh) {
-          /* the account's own provider's switch and warn lines (lane d-plans: thresholds(providerId), shared levels as fallback) */
-          var th = r.account.policy || (r.account.providerId && PMU.roster.thresholds(r.account.providerId, r.account.id)) || PMU.roster.thresholds();
+          /* the account's own provider policy (item 2: AAC draws the provider's own threshold line on the focus chart): the
+             account's resolved policy, else thresholds(providerId, accountId) (shared levels without a provider) */
+          var th = r.account.policy || PMU.roster.thresholds(r.account.providerId, r.account.id);
           var bands = activeSpans(r.account, q.now).map(function (sp) { return { from: sp.from, to: sp.to, label: 'active' }; });
           var wins = cmpOn ? [r].concat(cmpG.g.rows.filter(function (x) { return x !== r; })).map(function (x, i) {
             var f = x.focus.filter(function (ff) { return ff.key === cmpG.key; })[0], pts = x.main && x.main.key === cmpG.key && x.points ? x.points : f && f.points;
@@ -443,8 +445,10 @@
   };
   function agUsedHtml(ev) {
     var used = ev.used.filter(function (u) { return u !== null && u !== undefined; });
-    return used.length > 1 && used.every(function (u) { return u === used[0]; }) ? '<b data-tone="' + (PMU.roster.tone(used[0]) || 'calm') + '">' + esc(C.fmt(used[0], 'pct')) + '</b><em>both</em>'
-      : used.map(function (u) { return '<b data-tone="' + (PMU.roster.tone(u) || 'calm') + '">' + esc(C.fmt(u, u < 10 && u % 1 ? 'pct1' : 'pct')) + '</b>'; }).join('');
+    /* item 2: the tone uses this account's own warn and switch levels, not the shared ones */
+    var ac = ev.account || null, tone = function (u) { return ac ? PMU.roster.tone(u, ac.providerId, ac.id) : PMU.roster.tone(u); };
+    return used.length > 1 && used.every(function (u) { return u === used[0]; }) ? '<b data-tone="' + (tone(used[0]) || 'calm') + '">' + esc(C.fmt(used[0], 'pct')) + '</b><em>both</em>'
+      : used.map(function (u) { return '<b data-tone="' + (tone(u) || 'calm') + '">' + esc(C.fmt(u, u < 10 && u % 1 ? 'pct1' : 'pct')) + '</b>'; }).join('');
   }
   /* a live beat (a window reading moved): the lines keep their place; each shown line's used % patches in place. Lines that
      come or go (a reset passing) are a new structure: false (the wrapper defers an idle re-render) */

@@ -187,9 +187,10 @@
       lastAt = Math.max(lastAt, at);
     };
     if (finite(prevR) && newR != null && prevR !== newR && !spec.left) {
-      /* the value where each step starts: 50 (cyan), the warn and switch points of the tones, 100 */
-      var starts = { 0: 0, 1: 50 };
-      for (var v = 50; v <= 101; v += 1) { var r = rampOf(meterTone({ pct: v }), v); if (starts[r] == null) starts[r] = v; }
+      /* the value where each step starts: 50 (cyan), the warn and switch points of the tones, 100. A meter that carries its
+         own warn and switch points (its provider's policy, item 2: C.meterSpec thresholds) steps at those, not the shared */
+      var starts = { 0: 0, 1: 50 }, thr = spec.thresholds && finite(spec.thresholds.warn) && finite(spec.thresholds.switch) ? spec.thresholds : null;
+      for (var v = 50; v <= 101; v += 1) { var r = rampOf(thr ? (v > 100 ? 'over' : v >= 100 ? 'exhausted' : v >= thr.switch ? 'crit' : v >= thr.warn ? 'warn' : 'calm') : meterTone({ pct: v }), v); if (starts[r] == null) starts[r] = v; }
       var dir = newR > prevR ? 1 : -1;
       for (var step = prevR + dir; dir > 0 ? step <= newR : step >= newR; step += dir) {
         var at = starts[dir > 0 ? step : step + 1];

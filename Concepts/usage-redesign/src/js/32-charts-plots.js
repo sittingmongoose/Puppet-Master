@@ -1556,6 +1556,9 @@
   function toneOf(v, spec) {
     if (!finite(v)) return null;
     if (spec.toneOf) return spec.toneOf(v);
+    /* the chart's own switch and warn lines (the account's provider policy, item 2) colour its runs before the shared levels */
+    var thr = spec.thresholds;
+    if (thr && finite(thr.warn) && finite(thr.switch)) return v > 100 ? 'over' : v >= 100 ? 'exhausted' : v >= thr.switch ? 'crit' : v >= thr.warn ? 'warn' : 'calm';
     if (PMU.roster && PMU.roster.tone) { var tn = PMU.roster.tone(v); if (tn === 'hot') tn = 'crit'; if (tn === 'watch') tn = 'calm'; return tn || 'calm'; }
     return v > 100 ? 'over' : v >= 100 ? 'exhausted' : v >= 90 ? 'crit' : v >= 80 ? 'warn' : 'calm';
   }
