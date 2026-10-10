@@ -515,43 +515,18 @@
     var mode = !n ? 'none' : bw >= IDENT + n * WIN + actW + GAP * (n + 1) ? 'full' : bw >= IDENT_B + WIN + actW + GAP * 2 ? 'binding' : 'narrow';
     /* D43: the switch levels take their own column (SWITCH AT, the value with "own level" or the provider's name under it)
        where the plate keeps the window columns it would draw without them, each at 128 px or more, and the action column
-       its short words (the column wins over the full "Use this account · override"); otherwise they fold: under the
-       action word, or beside the binding meter on a narrow plate. One form for every row of a plate. */
+       its short words (the column wins over the full "Use this account · override"), and where the column costs no
+       account, comfortable row or foot line (plan() below); otherwise they fold: under the action word, or beside the
+       binding meter on a narrow plate. One form for every row of a plate. */
     var SWCOL = swOn ? Math.ceil(Math.max(SWB, Math.max(tw(t('accounts.acc_sw_own'), 12, 500), tw(famShort(p), 12, 500)) * 1.06 + 9)) : 0;
-    var nCol = mode === 'full' ? n : 1;
-    var swForm = !swOn ? '' : (mode === 'full' || mode === 'binding') && bw >= (mode === 'full' ? IDENT : IDENT_B) + nCol * 128 + SWCOL + actShort + GAP * (nCol + 2) ? 'col' : mode === 'narrow' ? 'row2' : 'stack';
-    if (swForm === 'col') { actW = actShort; fullAct = false; }
-    /* a stacked action cell whose action is a button (Use, Sign in, Set up) needs 46 px: its compact row is 50 */
-    var swBtnRow = function (a) { return swForm === 'stack' && actText(a, fullAct).btn; };
-    var swColT = swForm === 'col' ? ' ' + SWCOL + 'px' : '';
-    var winTmpl = mode === 'full' ? p.windows.map(function () { return 'minmax(' + WIN + 'px,1fr)'; }).join(' ') : mode === 'binding' ? 'minmax(' + WIN + 'px,1fr)' : '';
-    var tmpl = mode === 'none' ? 'minmax(0,1.3fr) minmax(0,1fr) ' + actW + 'px'
-      : mode === 'narrow' ? 'minmax(0,1fr) ' + actW + 'px'
-      : 'minmax(' + (mode === 'full' ? IDENT : IDENT_B) + 'px,1.5fr) ' + winTmpl + swColT + ' ' + actW + 'px';
-    var band = !n || mode === 'narrow' ? '' : '<div class="pmu-colhead pmu-accband" style="grid-template-columns:' + tmpl + '"><span class="pmu-cap">ACCOUNT</span>' +
-      (mode === 'binding' ? '<span class="pmu-cap">BINDING WINDOW</span>' : p.windows.map(function (w) { return '<span class="pmu-cap">' + esc(w.label.replace(/ window$/i, '').toUpperCase()) + '</span>'; }).join('')) +
-      (swForm === 'col' ? '<span class="pmu-cap pmu-accswcap"' + C.hover('Switch level', t('accounts.acc_sw_cap')) + '>SWITCH AT</span>' : '') + '<span></span></div>';
+    var nCol = mode === 'full' ? n : 1, actStack = actW, fullActStack = fullAct;
+    var colOk = swOn && (mode === 'full' || mode === 'binding') && bw >= (mode === 'full' ? IDENT : IDENT_B) + nCol * 128 + SWCOL + actShort + GAP * (nCol + 2);
     /* foot copy (R-ACCT-10), most room, Codex: auto-switch state and the last two switch events */
     var th = polOf(p), footLines = footLinesOf(p, th);
     /* the provider's own auto-switch controls (item 2): always drawn, so the rows give way first */
     var polB = switchable(p) ? polBand(p, bw) : null;
     var rowsN = p.accounts.length;
-    /* the grid's own share of the width (fr columns above their minimums), for the wrap-aware row heights */
-    var free = bw - actW - GAP * ((mode === 'full' ? n : mode === 'narrow' ? 0 : 1) + 1) - (swForm === 'col' ? SWCOL + GAP : 0);
-    var identW = mode === 'narrow' ? bw - actW - GAP : mode === 'none' ? free * 1.3 / 2.3 : mode === 'binding' ? Math.max(IDENT_B, free * 1.5 / 2.5) : Math.max(IDENT, free * 1.5 / (1.5 + n));
-    var winW = mode === 'full' ? Math.max(WIN, (free - identW) / n) : mode === 'binding' ? Math.max(WIN, free - identW) : mode === 'narrow' ? bw : free - identW;
-    if (mode === 'full' && (free - n * WIN) < identW) { identW = Math.max(IDENT, free - n * WIN); winW = WIN; }
-    /* the column head takes a second line where a window's name does not fit its column ("PREMIUM / REQUESTS": 40 px, not
-       26; item 2: the fit pass folded Copilot's second account behind a free band). Measured in the caps' face (mono 11 px,
-       its tracking) */
-    var capW = function (s) { var ls = PMU.theme.look().nier ? 0.10 : 0.05; return (PMU.charts && PMU.charts.textW ? PMU.charts.textW(s, 11, true, 400) : s.length * 6.4) + s.length * 11 * ls; };
-    var capFits = function (s) { return capW(s) * 1.08 <= winW - 8; };   /* the grid's column runs a little narrower than winW */
-    var capLines = mode === 'full' ? (p.windows.every(function (w) { return capFits(w.label.replace(/ window$/i, '').toUpperCase()); }) ? 1 : 2) : mode === 'binding' ? (capFits('BINDING WINDOW') ? 1 : 2) : 1;
-    var bandH = (band ? 27 + 13 * (capLines - 1) : 0) + (polB ? polB.h : 0);
-    /* with the policy band the budget is exact (its reserve already covers the tallest look), so only 4 px of slack */
-    var SLACK = polB ? 4 : 10;
     var footHOf = function (k) { if (!k) return 0; var h = 10; footLines.slice(0, k).forEach(function (l) { h += 19 * Math.min(3, C.wrapLines(l.html, bw - 26, 12.5)); }); return h; };
-    var textW = identW - 24;
     var metaOf = function (a) {
       var act = actText(a, false), stateIn = act.t && !act.btn, longState = String(a.stateWord || '').length > 12;
       var l1 = stateIn ? a.plan || '' : longState ? a.stateWord : [a.stateWord, a.plan].filter(Boolean).join(' · ');
@@ -559,59 +534,96 @@
       var l2 = [!stateIn && longState ? a.plan : '', a.host, (a.fresh && a.fresh.stale ? 'M ' : '') + a.ageText].filter(Boolean).join(' · ');
       return { l1: l1, l2: l2 };
     };
-    /* a comfortable row: the name, the state or plan, the host and age, and a credits line (or a merged "not exposed"
-       cell with its spend); a narrow plate puts the binding meter under the identity. Each line's height comes from
-       its own wrapped text (a fixed 66 px row let a wrapped meta line run under the plate's foot) */
-    /* D43: a stacked action cell is the action word over the 20 px switch-level button, 2 px apart: a button (28 px; 24 in
-       a compact row, which keeps 2 px above and below) makes it 50 px, "Active" 16 px a line, no word only the button */
-    var stackHOf = function (a) {
-      if (swForm !== 'stack') return 0;
-      var x = actText(a, fullAct);
-      return x.btn ? 50 : (x.t ? 16 * Math.min(2, C.wrapLines(x.t, actW, 12.5, 640)) + 2 : 0) + 20;
-    };
-    var comfyHOf = function (a) {
-      var mt = metaOf(a);
-      var ih = 18 * C.wrapLines(a.nickname, textW, 13.5, 600) + 16 * (C.wrapLines(mt.l1, textW, 12, actText(a, false).t && !actText(a, false).btn ? 400 : 600) + C.wrapLines(mt.l2, textW, 12)) +
-        (a.amounts.length && !allHidden(a) && n ? 16 * C.wrapLines(a.amounts[0].label + ' ' + (a.amounts[0].value || a.amounts[0].word) + ' ' + (a.amounts[0].suffix || ''), textW, 12) : 0);
-      var mh = 0;
-      if (n && !allHidden(a)) (mode === 'full' ? a.windows : [a.binding || a.windows[0]]).forEach(function (w) {
-        if (!w) return;
-        var rt = w.pct === null ? '' : PMU.fmt.resetLine(w).text;
-        mh = Math.max(mh, 22 + 12 + (rt ? 16 * C.wrapLines(rt, winW, 12) : 0));
-      });
-      if (!n || allHidden(a)) mh = 22 * Math.min(3, a.amounts.length + 1);
-      var h = mode === 'narrow' ? ih + 6 + mh : Math.max(ih, mh, stackHOf(a));
-      /* measured on the GPU in all nine looks (item 2 calibration): a comfortable row lays out 2-6 px taller than its
-         lines (line boxes, the meter's caption); counted, so a row the budget admits is never folded behind free room */
-      return Math.max(66, Math.ceil(h + 20)) + (polB ? 6 : 0);
-    };
-    /* a compact row's one meta line (the state word, or the plan beside "Active") wraps rather than run under the
-       window cell beside it ("Cooldown until 08:33" over "Not exposed", Mac stills 2026-10-02) */
-    var compactHOf = function (a) {
-      var act = actText(a, false), stateIn = act.t && !act.btn;
-      var lines = Math.min(3, C.wrapLines(stateIn ? a.plan || '' : a.stateWord || '', textW, 12, stateIn ? 400 : 600) || 1);
-      return Math.max((mode === 'narrow' ? 92 : 44) + 16 * (lines - 1), stackHOf(a));
-    };
     var sumRows = function (f, k) { var s = 0; p.accounts.slice(0, k).forEach(function (a) { s += f(a); }); return s; };
-    /* priority: every account in comfortable rows; then fewer foot lines; then the LAST accounts in compact rows while the
-       first ones keep their facts (item 2: the policy band takes about 40 px, and an all-compact plate left a free band
-       under its rows); then compact rows; then fewer rows */
-    var footCap = Math.min(footLines.length, C.w(ctx, 'm') ? 3 : 2), comfy = false, comfyN = 0;
-    for (var k = footCap; k >= 0 && !comfy; k--) { if (bandH + sumRows(comfyHOf, rowsN) + footHOf(k) <= bh + SLACK) { comfy = true; footCap = k; comfyN = rowsN; } }
-    if (!comfy) {
-      var mixOf = function (m) { var s = 0; p.accounts.forEach(function (a, i) { s += i < m ? comfyHOf(a) : compactHOf(a); }); return s; };
-      for (var kk = Math.min(footLines.length, 1); kk >= 0 && !comfyN; kk--) for (var m = rowsN - 1; m >= 1 && !comfyN; m--) if (bandH + mixOf(m) + footHOf(kk) <= bh + SLACK) { comfyN = m; footCap = kk; }
-      if (!comfyN) footCap = Math.min(footLines.length, 1);
+    /* one layout of the plate for one form of the switch levels: its columns, its column head and the fit of its rows */
+    function plan(swForm) {
+      var actW = swForm === 'col' ? actShort : actStack, fullAct = swForm === 'col' ? false : fullActStack;
+      var swColT = swForm === 'col' ? ' ' + SWCOL + 'px' : '';
+      var winTmpl = mode === 'full' ? p.windows.map(function () { return 'minmax(' + WIN + 'px,1fr)'; }).join(' ') : mode === 'binding' ? 'minmax(' + WIN + 'px,1fr)' : '';
+      var tmpl = mode === 'none' ? 'minmax(0,1.3fr) minmax(0,1fr) ' + actW + 'px'
+        : mode === 'narrow' ? 'minmax(0,1fr) ' + actW + 'px'
+        : 'minmax(' + (mode === 'full' ? IDENT : IDENT_B) + 'px,1.5fr) ' + winTmpl + swColT + ' ' + actW + 'px';
+      var band = !n || mode === 'narrow' ? '' : '<div class="pmu-colhead pmu-accband" style="grid-template-columns:' + tmpl + '"><span class="pmu-cap">ACCOUNT</span>' +
+        (mode === 'binding' ? '<span class="pmu-cap">BINDING WINDOW</span>' : p.windows.map(function (w) { return '<span class="pmu-cap">' + esc(w.label.replace(/ window$/i, '').toUpperCase()) + '</span>'; }).join('')) +
+        (swForm === 'col' ? '<span class="pmu-cap pmu-accswcap"' + C.hover('Switch level', t('accounts.acc_sw_cap')) + '>SWITCH AT</span>' : '') + '<span></span></div>';
+      /* the grid's own share of the width (fr columns above their minimums), for the wrap-aware row heights */
+      var free = bw - actW - GAP * ((mode === 'full' ? n : mode === 'narrow' ? 0 : 1) + 1) - (swForm === 'col' ? SWCOL + GAP : 0);
+      var identW = mode === 'narrow' ? bw - actW - GAP : mode === 'none' ? free * 1.3 / 2.3 : mode === 'binding' ? Math.max(IDENT_B, free * 1.5 / 2.5) : Math.max(IDENT, free * 1.5 / (1.5 + n));
+      var winW = mode === 'full' ? Math.max(WIN, (free - identW) / n) : mode === 'binding' ? Math.max(WIN, free - identW) : mode === 'narrow' ? bw : free - identW;
+      if (mode === 'full' && (free - n * WIN) < identW) { identW = Math.max(IDENT, free - n * WIN); winW = WIN; }
+      /* the column head takes a second line where a window's name does not fit its column ("PREMIUM / REQUESTS": 40 px, not
+         26; item 2: the fit pass folded Copilot's second account behind a free band). Measured in the caps' face (mono 11 px,
+         its tracking) */
+      var capW = function (s) { var ls = PMU.theme.look().nier ? 0.10 : 0.05; return (PMU.charts && PMU.charts.textW ? PMU.charts.textW(s, 11, true, 400) : s.length * 6.4) + s.length * 11 * ls; };
+      var capFits = function (s) { return capW(s) * 1.08 <= winW - 8; };   /* the grid's column runs a little narrower than winW */
+      var capLines = mode === 'full' ? (p.windows.every(function (w) { return capFits(w.label.replace(/ window$/i, '').toUpperCase()); }) ? 1 : 2) : mode === 'binding' ? (capFits('BINDING WINDOW') ? 1 : 2) : 1;
+      var bandH = (band ? 27 + 13 * (capLines - 1) : 0) + (polB ? polB.h : 0);
+      /* with the policy band the budget is exact (its reserve already covers the tallest look), so only 4 px of slack */
+      var SLACK = polB ? 4 : 10;
+      var textW = identW - 24;
+      /* a comfortable row: the name, the state or plan, the host and age, and a credits line (or a merged "not exposed"
+         cell with its spend); a narrow plate puts the binding meter under the identity. Each line's height comes from
+         its own wrapped text (a fixed 66 px row let a wrapped meta line run under the plate's foot) */
+      /* D43: a stacked action cell is the action word over the 20 px switch-level button, 2 px apart: a button (28 px; 24 in
+         a compact row, which keeps 2 px above and below) makes it 50 px, "Active" 16 px a line, no word only the button */
+      var stackHOf = function (a) {
+        if (swForm !== 'stack') return 0;
+        var x = actText(a, fullAct);
+        return x.btn ? 50 : (x.t ? 16 * Math.min(2, C.wrapLines(x.t, actW, 12.5, 640)) + 2 : 0) + 20;
+      };
+      var comfyHOf = function (a) {
+        var mt = metaOf(a);
+        var ih = 18 * C.wrapLines(a.nickname, textW, 13.5, 600) + 16 * (C.wrapLines(mt.l1, textW, 12, actText(a, false).t && !actText(a, false).btn ? 400 : 600) + C.wrapLines(mt.l2, textW, 12)) +
+          (a.amounts.length && !allHidden(a) && n ? 16 * C.wrapLines(a.amounts[0].label + ' ' + (a.amounts[0].value || a.amounts[0].word) + ' ' + (a.amounts[0].suffix || ''), textW, 12) : 0);
+        var mh = 0;
+        if (n && !allHidden(a)) (mode === 'full' ? a.windows : [a.binding || a.windows[0]]).forEach(function (w) {
+          if (!w) return;
+          var rt = w.pct === null ? '' : PMU.fmt.resetLine(w).text;
+          mh = Math.max(mh, 22 + 12 + (rt ? 16 * C.wrapLines(rt, winW, 12) : 0));
+        });
+        if (!n || allHidden(a)) mh = 22 * Math.min(3, a.amounts.length + 1);
+        var h = mode === 'narrow' ? ih + 6 + mh : Math.max(ih, mh, stackHOf(a));
+        /* measured on the GPU in all nine looks (item 2 calibration): a comfortable row lays out 2-6 px taller than its
+           lines (line boxes, the meter's caption); counted, so a row the budget admits is never folded behind free room */
+        return Math.max(66, Math.ceil(h + 20)) + (polB ? 6 : 0);
+      };
+      /* a compact row's one meta line (the state word, or the plan beside "Active") wraps rather than run under the
+         window cell beside it ("Cooldown until 08:33" over "Not exposed", Mac stills 2026-10-02) */
+      var compactHOf = function (a) {
+        var act = actText(a, false), stateIn = act.t && !act.btn;
+        var lines = Math.min(3, C.wrapLines(stateIn ? a.plan || '' : a.stateWord || '', textW, 12, stateIn ? 400 : 600) || 1);
+        return Math.max((mode === 'narrow' ? 92 : 44) + 16 * (lines - 1), stackHOf(a));
+      };
+      /* priority: every account in comfortable rows; then fewer foot lines; then the LAST accounts in compact rows while the
+         first ones keep their facts (item 2: the policy band takes about 40 px, and an all-compact plate left a free band
+         under its rows); then compact rows; then fewer rows */
+      var footCap = Math.min(footLines.length, C.w(ctx, 'm') ? 3 : 2), comfy = false, comfyN = 0;
+      for (var k = footCap; k >= 0 && !comfy; k--) { if (bandH + sumRows(comfyHOf, rowsN) + footHOf(k) <= bh + SLACK) { comfy = true; footCap = k; comfyN = rowsN; } }
+      if (!comfy) {
+        var mixOf = function (m) { var s = 0; p.accounts.forEach(function (a, i) { s += i < m ? comfyHOf(a) : compactHOf(a); }); return s; };
+        for (var kk = Math.min(footLines.length, 1); kk >= 0 && !comfyN; kk--) for (var m = rowsN - 1; m >= 1 && !comfyN; m--) if (bandH + mixOf(m) + footHOf(kk) <= bh + SLACK) { comfyN = m; footCap = kk; }
+        if (!comfyN) footCap = Math.min(footLines.length, 1);
+      }
+      /* by key: a live beat's make() gets the account from a newer roster read */
+      var comfyKeys = {}; p.accounts.slice(0, comfyN).forEach(function (a) { comfyKeys[a.key] = true; });
+      var isComfy = function (a) { return !!comfyKeys[a.key]; };
+      var rowHOf = function (a) { return isComfy(a) ? comfyHOf(a) : compactHOf(a); };
+      var shownN = rowsN;
+      while (shownN > 1 && bandH + sumRows(rowHOf, shownN) + footHOf(footCap) + (shownN < rowsN ? 22 : 0) > bh + SLACK) shownN -= 1;
+      if (shownN < rowsN && footCap > 1) footCap = 1;
+      /* room left under every account: the next foot line takes it (Most room now) rather than leave a free band */
+      if (polB) while (shownN === rowsN && footCap < Math.min(footLines.length, 3) && bandH + sumRows(rowHOf, rowsN) + footHOf(footCap + 1) <= bh + SLACK) footCap += 1;
+      return { form: swForm, actW: actW, fullAct: fullAct, tmpl: tmpl, band: band, winW: winW, footCap: footCap, shownN: shownN, comfyN: comfyN, isComfy: isComfy };
     }
-    /* by key: a live beat's make() gets the account from a newer roster read */
-    var comfyKeys = {}; p.accounts.slice(0, comfyN).forEach(function (a) { comfyKeys[a.key] = true; });
-    var isComfy = function (a) { return !!comfyKeys[a.key]; };
-    var rowHOf = function (a) { return isComfy(a) ? comfyHOf(a) : compactHOf(a); };
-    var shownN = rowsN;
-    while (shownN > 1 && bandH + sumRows(rowHOf, shownN) + footHOf(footCap) + (shownN < rowsN ? 22 : 0) > bh + SLACK) shownN -= 1;
-    if (shownN < rowsN && footCap > 1) footCap = 1;
-    /* room left under every account: the next foot line takes it (Most room now) rather than leave a free band */
-    if (polB) while (shownN === rowsN && footCap < Math.min(footLines.length, 3) && bandH + sumRows(rowHOf, rowsN) + footHOf(footCap + 1) <= bh + SLACK) footCap += 1;
+    var P = plan(colOk ? 'col' : !swOn ? '' : mode === 'narrow' ? 'row2' : 'stack');
+    /* the column only where it costs the plate nothing the folded button keeps: as many accounts shown, as many of them in
+       comfortable rows and as many foot lines (its narrower identity column cost Copilot's second account its facts at
+       1440 in Friendly, Glass and Retro) */
+    if (P.form === 'col') { var Q = plan('stack'); if (Q.shownN > P.shownN || (Q.shownN === P.shownN && (Q.comfyN > P.comfyN || (Q.comfyN === P.comfyN && Q.footCap > P.footCap)))) P = Q; }
+    var swForm = P.form, tmpl = P.tmpl, band = P.band, winW = P.winW, footCap = P.footCap, shownN = P.shownN, isComfy = P.isComfy;
+    actW = P.actW; fullAct = P.fullAct;
+    /* a stacked action cell whose action is a button (Use, Sign in, Set up) needs 46 px: its compact row is 50 */
+    var swBtnRow = function (a) { return swForm === 'stack' && actText(a, fullAct).btn; };
     var shown = p.accounts.slice(0, shownN);
     var sizeOf = function (a) { return isComfy(a) ? 'c' : 'k'; };
     var rows = shown.map(function (a) {
